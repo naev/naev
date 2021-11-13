@@ -37,7 +37,7 @@ local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 --    0. have to find spy
 --    1. kidnap spy and take to torture ship
 --    2. defend torture ship
-misn_state = nil
+mem.misn_state = nil
 local mainship, spawned_dvaereds, spawned_pirates -- Non-persistent state
 
 function create ()
@@ -56,8 +56,8 @@ end
 function accept ()
    approach_pir()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -66,7 +66,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   sysmarker = misn.markerAdd( planet.get("Minerva Station") )
+   mem.sysmarker = misn.markerAdd( planet.get("Minerva Station") )
 
    minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 
@@ -79,9 +79,9 @@ function accept ()
 end
 
 function generate_npc ()
-   npc_pir = nil
-   if planet.cur() == planet.get("Minerva Station") and misn_state < 1 then
-      npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   mem.npc_pir = nil
+   if planet.cur() == planet.get("Minerva Station") and mem.misn_state < 1 then
+      mem.npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
    end
 end
 
@@ -92,7 +92,7 @@ function approach_pir ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if misn_state==nil then
+   if mem.misn_state==nil then
       -- Not accepted
       vn.na(_("You approach the sketchy individual who seems to be somewhat excited."))
       pir(_([["It seems like we have finally started to get the fruits of our labour. We believe we have found the mole, and would like you to help us deal with them. Are you up to the task? Things might get a little… messy though."
@@ -107,7 +107,7 @@ They beam you a smile.]]))
       vn.done()
 
       vn.label("accept")
-      vn.func( function () misn_state=0 end )
+      vn.func( function () mem.misn_state=0 end )
       pir(_([["Glad to have you onboard again! So we have tracked down the mole and know that they are infiltrated in the station from the intercepted messages. It appears that they are most likely working at the station. Now there are not many places to work at the station so it is likely that they are involved in the gambling facility."]]))
       pir(_([["The bad news is we don't exactly know who the mole is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
 They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on it and hands it to you.]]))
@@ -161,30 +161,30 @@ They make a cutting gesture from their belly up to their neck.
    -- Add illegal cargo
    local c = misn.cargoNew( N_("Dvaered Mole"), N_("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
    c:illegalto{"Dvaered"}
-   cargo_mole = misn.cargoAdd( c, 0 )
+   mem.cargo_mole = misn.cargoAdd( c, 0 )
 
    -- Signal they were caught
    var.pop("minerva_caninputcode")
    hook.trigger( "minerva_molecaught" )
 
    -- On to next state
-   misn_state = 1
+   mem.misn_state = 1
    misn.osdCreate( _("Minerva Mole"), {
       fmt.f(_("Take the mole to the interrogation facility at {sys}"), {sys=mainsys}),
    } )
    misn.markerMove( misnmarker, mainsys )
-   misn.npcRm( npc_pir )
+   misn.npcRm( mem.npc_pir )
 end
 
 
 function enter ()
-   if misn_state==2 then
+   if mem.misn_state==2 then
       player.msg(_("#rMISSION FAILED! You were supposed to protect the interrogation ship!"))
       var.pop("minerva_chuckaluck_change")
       misn.finish(false)
    end
 
-   if misn_state==1 and system.cur()==mainsys then
+   if mem.misn_state==1 and system.cur()==mainsys then
       -- Clear system
       -- TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
       pilot.clear()
@@ -214,7 +214,7 @@ function enter ()
       hook.pilot( mainship, "stealth", "mainship_stealth" )
 
       -- Increase state
-      misn_state=2
+      mem.misn_state=2
    end
 end
 
@@ -247,7 +247,7 @@ They rush off into the depths of the ship.]]))
    vn.run()
 
    -- Set up stuff
-   misn.cargoRm( cargo_mole )
+   misn.cargoRm( mem.cargo_mole )
    mainship:setActiveBoard(false)
    mainship:control(false) -- Should fight back a bit
 
@@ -270,16 +270,16 @@ They rush off into the depths of the ship.]]))
 end
 
 function mainship_attacked ()
-   if attacked_spam then
+   if mem.attacked_spam then
       return
    end
 
    mainship:comm(_("We are under attack!"), true)
-   attacked_spam = true
+   mem.attacked_spam = true
    hook.time( 6e3, "attack_spam_over" )
 end
 function attack_spam_over ()
-   attacked_spam = false
+   mem.attacked_spam = false
 end
 
 function mainship_stealth( _p, status )

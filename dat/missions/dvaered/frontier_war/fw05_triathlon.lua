@@ -83,22 +83,21 @@ function create()
    misn.setReward(_("Say goodbye to Lieutenant Strafer"))
    misn.markerAdd(destsys, "low")
 
-   stage = 0
+   mem.stage = 0
    hook.land("land")
    hook.takeoff("takeoff")
    hook.jumpout("testEscape")
    hook.load("spawnNpcs")
-   enterhook = hook.enter("enter")
+   mem.enterhook = hook.enter("enter")
 
-   portrait_dad = portrait.getMaleMil("Dvaered")
-   portrait_wdw = portrait.getFemale()
-   portrait_sst = portrait.getFemaleMil("Dvaered")
-   portrait_pvt = portrait.getMaleMil("Dvaered")
+   mem.portrait_dad = portrait.getMaleMil("Dvaered")
+   mem.portrait_wdw = portrait.getFemale()
+   mem.portrait_sst = portrait.getFemaleMil("Dvaered")
+   mem.portrait_pvt = portrait.getMaleMil("Dvaered")
 
    -- Prepare storing of total scores of competitors
-   score_total = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-   score_total["__save"] = true
-   competitors_names = { _("Major Tam"),
+   mem.score_total = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+   mem.competitors_names = { _("Major Tam"),
                          _("Captain Leblanc"),
                          _("General Klank"),
                          _("Sergeant Strafer"),
@@ -108,7 +107,6 @@ function create()
                          _("Private Ernst"),
                          _("Lieutenant Guo"),
                          player.name(), }
-   competitors_names["__save"] = true
 end
 
 local cargo_flowers
@@ -122,7 +120,7 @@ end
 -- Entering (Dvaer)
 function enter()
    if system.cur() == destsys then
-      hook.rm(enterhook)
+      hook.rm(mem.enterhook)
       local cflowers = _flowers()
       for i = 1, 100 do -- Flowers
          local pos = destpla:pos() + vec2.newP( rnd.rnd(0,1000), rnd.rnd(0,360) )
@@ -166,7 +164,7 @@ end
 function land()
    testEscape()
    local cflowers = _flowers()
-   if stage == 5 or stage == 0 then -- Player may have picked up flowers
+   if mem.stage == 5 or mem.stage == 0 then -- Player may have picked up flowers
       player.pilot():cargoRm( cflowers, 100 )
    end
 
@@ -175,7 +173,7 @@ end
 
 -- Sorting functions
 local function sortTotal(i,j)
-   return score_total[i] < score_total[j]
+   return mem.score_total[i] < mem.score_total[j]
 end
 local function sortThrow(i,j)
    return score_throw[i] < score_throw[j]
@@ -192,23 +190,23 @@ function spawnNpcs()
       -- First, compute the people's scores
       local iter = {1,2,3,4,5,6,7,8,9,10}
       table.sort( iter, sortTotal )
-      totalTitle = _("Total Scores")
-      totalString = ""
+      mem.totalTitle = _("Total Scores")
+      mem.totalString = ""
       for i = 10, 1, -1 do
-         totalString = (totalString..competitors_names[iter[i]]..": "..score_total[iter[i]].."\n")
+         mem.totalString = (mem.totalString..mem.competitors_names[iter[i]]..": "..mem.score_total[iter[i]].."\n")
       end
 
-      if stage == 0 then
-         npc = misn.npcAdd( "approach", _("Dvaered People"), portrait.getMil( "Dvaered" ), _([[A rather large group is gathered around a few reserved tables. You recognize many faces, among which General Klank, Major Tam and the members of their group. But there are people you do not know as well, mostly military, but also civilians. You can tell they're all there for the ceremony from their black armbands and the slow military music broadcasted by the speakers.]]))
+      if mem.stage == 0 then
+         mem.npc = misn.npcAdd( "approach", _("Dvaered People"), portrait.getMil( "Dvaered" ), _([[A rather large group is gathered around a few reserved tables. You recognize many faces, among which General Klank, Major Tam and the members of their group. But there are people you do not know as well, mostly military, but also civilians. You can tell they're all there for the ceremony from their black armbands and the slow military music broadcasted by the speakers.]]))
       else
          populate_bar()
 
-         if stage == 1 or stage == 3 or stage == 5 then
+         if mem.stage == 1 or mem.stage == 3 or mem.stage == 5 then
             misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
-         elseif stage == 7 then
-            tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
+         elseif mem.stage == 7 then
+            tk.msg( mem.totalTitle, mem.totalString ) -- Ex-aequo always profit the player.
             tk.msg("", fmt.f(_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremonies, announces:
-   "Congratulations to {name}, who is the great winner of the Mace Ballet! All participants will be rewarded depending to their rank."]]), {name=competitors_names[10]}))
+   "Congratulations to {name}, who is the great winner of the Mace Ballet! All participants will be rewarded depending to their rank."]]), {name=mem.competitors_names[10]}))
 
             player.outfitAdd("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
 
@@ -271,7 +269,7 @@ end
 
 -- All the cases where the player is not authorized to land nor jump
 function testEscape()
-   if stage == 2 or stage == 4 or stage == 6 then
+   if mem.stage == 2 or mem.stage == 4 or mem.stage == 6 then
       tk.msg( _("You left the system."), _("You were supposed to take part in the competition, not leave the system.") )
       misn.finish(false)
    end
@@ -282,8 +280,8 @@ function approach()
    tk.msg("",fmt.f(_([[You approach the group, and get close to Major Tam. "Good day, citizen {player}. I hope you are ready for the mace ballet!" You answer that you have no idea what this ballet is about, but you are always ready when it comes to mace rockets.
    "The mace ballet, also known as mace triathlon, is a series of three events where pilots must honour the memory of their fallen comrade and show their skills. The members of the Nightclaws squadron will take part to the event, along with both of us, General Klank, a few members of Strafer's family, and some of his former comrades before he joined the squadron. From the outcome of the competition will depend how Strafer's personnal outfits will be distributed. This includes two Vendettas, nice core outfits, weapons and utilities.
    "Come at me when you're ready to take off.]]), {player=player.name()}) )
-   misn.npcRm(npc)
-   stage = 1
+   misn.npcRm(mem.npc)
+   mem.stage = 1
    spawnNpcs()
 end
 
@@ -293,10 +291,10 @@ function populate_bar()
    misn.npcAdd("discussKlk", _("General Klank"), fw.portrait_klank, _("The general is talking to Major Tam."))
    misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems to be very cautious in order not to harm them."))
    misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, _("Hamfresser stays behind a group of army technicians. He bows towards them, probably attempting to take part to the conversation, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame not to be able to fit among the group. He swings his unused cybernetic arms around his hips."))
-   misn.npcAdd("discussWdw", _("Well-dressed woman"), portrait_wdw, _("One of the rare civilians around, this woman seems however to fit in the place. You think that she must be used to hang out with soldiers."))
-   misn.npcAdd("discussDad", _("Retired soldier"), portrait_dad, _("An old captain who seems to have ironed his pageantry uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face is bent over by days of anguish for comrades he loved and lost fighting up there."))
-   misn.npcAdd("discussSst", _("Sergeant"), portrait_sst, _("This pilot is not a member of Leblanc's squadron, however, she discusses with them."))
-   misn.npcAdd("discussPvt", _("Technician"), portrait_pvt, _("A military technician encourages his comrades who are arm-wrestling with Nikolov."))
+   misn.npcAdd("discussWdw", _("Well-dressed woman"), mem.portrait_wdw, _("One of the rare civilians around, this woman seems however to fit in the place. You think that she must be used to hang out with soldiers."))
+   misn.npcAdd("discussDad", _("Retired soldier"), mem.portrait_dad, _("An old captain who seems to have ironed his pageantry uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face is bent over by days of anguish for comrades he loved and lost fighting up there."))
+   misn.npcAdd("discussSst", _("Sergeant"), mem.portrait_sst, _("This pilot is not a member of Leblanc's squadron, however, she discusses with them."))
+   misn.npcAdd("discussPvt", _("Technician"), mem.portrait_pvt, _("A military technician encourages his comrades who are arm-wrestling with Nikolov."))
 end
 
 -- Discussions
@@ -330,36 +328,36 @@ end
 function tamCommon()
    local c = tk.choice("", _("What do you want to ask Major Tam?"), _("Explain next stage"), _("Display the scores"))
    if c == 1 then
-      if stage == 1 then
+      if mem.stage == 1 then
          tamStage1()
-      elseif stage == 3 then
+      elseif mem.stage == 3 then
          tamStage2()
-      else --if stage == 5 then
+      else --if mem.stage == 5 then
          tamStage3()
       end
    else -- Display the scores
-      tk.msg(totalTitle, totalString)
+      tk.msg(mem.totalTitle, mem.totalString)
    end
 end
 function tamStage1()
    tk.msg( "", _([[The first event consists in the "Mace Throw". There is a series of targets (old Llamas) and you have to hit them in the shortest time. The quickest pilot wins. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]) )
-   stage = 2
+   mem.stage = 2
 end
 function tamStage2()
    tk.msg( "", fmt.f(_([[The second event consists in the "Mace Stadion". Crowns of flowers have been dropped out there, and some junior pilots from the academy camp in the gather zone with their mace launchers. They will aim at the competitors, and if your shield is disabled, you are eliminated. There are {tonnes} of flowers in total. The pilot who has gathered the most flowers before being eliminated, or when time runs out, wins. It is forbidden to shoot at other competitors. Are you ready? Have you checked you have enough free cargo space?]]), {tonnes=fmt.tonnes(60)}) )
-   stage = 4
+   mem.stage = 4
 end
 function tamStage3()
-   tk.msg( "", fmt.f(_([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners receive 7 points, and your adversary is {name}. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]), {name=competitors_names[5]}) )
-   stage = 6
+   tk.msg( "", fmt.f(_([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners receive 7 points, and your adversary is {name}. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]), {name=mem.competitors_names[5]}) )
+   mem.stage = 6
 end
 
 -- Take off for the next stage
 function takeoff()
    local pos
-   center = destpla:pos() + vec2.new(0,radius)
+   mem.center = destpla:pos() + vec2.new(0,radius)
 
-   if stage == 2 then -- Mace Throw: spawn Llamas and competitors.
+   if mem.stage == 2 then -- Mace Throw: spawn Llamas and competitors.
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
@@ -374,20 +372,20 @@ function takeoff()
          pilot.clear()
          spawnCompetitors()
          player.pilot():control()
-         player.pilot():face(center)
+         player.pilot():face(mem.center)
 
          targets = {}
          for i = 1, 30 do
-            pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
             targets[i] = pilot.add( "Llama", "Warlords", pos, _("Target "))
             targets[i]:control()
             targets[i]:setHostile() -- Just in case
-            pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
             targets[i]:moveto( pos, false, false )
             hook.pilot( targets[i], "idle", "targetIdle" )
             hook.pilot( targets[i], "attacked", "targetHit" )
          end
-         targetShot = 0
+         mem.targetShot = 0
 
           -- Remember which joy cries have been used  /!\ this should have the same length as joy /!\
          joyyesno = {true,true,true,true,true,true,true,true,true,true}
@@ -397,18 +395,18 @@ function takeoff()
          hook.timer( 6.0, "message", {pilot = competitors[2], msg = _("My rockets can't wait to fly for Strafer")} )
          hook.timer( 9.0, "message", {pilot = competitors[4], msg = _("Poor small Llamas!")} )
          hook.timer( 10.0, "startThrow" )
-         countdown = 10
+         mem.countdown = 10
          hook.timer( 1.0, "timerIncrement")
-         omsg = player.omsgAdd(tostring(countdown), 0, 50)
+         mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
 
       else -- Need to land and continue at previous stage
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
          tk.msg("", mace_fail)
-         stage = 1
+         mem.stage = 1
       end
 
-   elseif stage == 4 then -- Mace Stadion: spawn flowers, competitors and annoyers
+   elseif mem.stage == 4 then -- Mace Stadion: spawn flowers, competitors and annoyers
       -- No need to check the player only has mace rockets
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Ballet"), {
@@ -422,7 +420,7 @@ function takeoff()
       pilot.clear()
       spawnCompetitors( )
       player.pilot():control()
-      player.pilot():face(center)
+      player.pilot():face(mem.center)
 
       for i, p in ipairs(competitors) do
          p:setNoDeath() -- Bouuuh! they r cheating!
@@ -431,7 +429,7 @@ function takeoff()
 
       annoyers = {}
       for i = 1, 10 do
-         pos = center + vec2.newP( rnd.rnd(0,radius-500), rnd.rnd(0,360) )
+         pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.rnd(0,360) )
          annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, _("Shooter"))
          fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
@@ -440,28 +438,28 @@ function takeoff()
 
       local cflowers = _flowers()
       for i = 1, 60 do
-         pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+         pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
          system.addGatherable( cflowers, 1, pos, vec2.new(0,0), 3600 )
       end
 
-      playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHitS" ) -- If player has zero shield: eliminated
+      mem.playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHitS" ) -- If player has zero shield: eliminated
 
       -- Timer and messages
       hook.timer( 3.0, "message", {pilot = competitors[2], msg = _("Time to pick up flowers")} )
       hook.timer( 6.0, "message", {pilot = competitors[4], msg = _("You may as well give up now, I'm invincible!")} )
       hook.timer( 9.0, "message", {pilot = competitors[8], msg = _("Flower Power, I'm coming!")} )
       hook.timer( 10.0, "startStadion" )
-      countdown = 10
+      mem.countdown = 10
       hook.timer( 1.0, "timerIncrement")
-      omsg = player.omsgAdd(tostring(countdown), 0, 50)
+      mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
 
-   elseif stage == 6 then -- Mace Pankration: competitors and make teams
+   elseif mem.stage == 6 then -- Mace Pankration: competitors and make teams
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Ballet"), {
             _("Wait for the signal"),
-            fmt.f(_("Defeat your opponent {name} (nullify their shield)"), {name=competitors_names[5]}),
+            fmt.f(_("Defeat your opponent {name} (nullify their shield)"), {name=mem.competitors_names[5]}),
             fmt.f(_("Land on {pnt}"), {pnt=destpla}),
          } )
 
@@ -470,31 +468,31 @@ function takeoff()
          pilot.clear()
          spawnCompetitors( )
          player.pilot():control()
-         player.pilot():face(center)
+         player.pilot():face(mem.center)
 
          compHitHook = {nil,nil,nil,nil,nil,nil,nil,nil,nil}
-         playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHit" )
+         mem.playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHit" )
 
          -- Mark this one as player's opponent
          competitors[5]:setFaction("Warlords")
          competitors[5]:setHostile()
          competitors[5]:setHilight()
-         duelsEnded = 0
+         mem.duelsEnded = 0
 
          -- Timer and messages
          hook.timer( 3.0, "message", {pilot = competitors[6], msg = _("Hey, Tamtam, take your protein pills and put your helmet on, because I'M COMING FOR YOU!")} )
          hook.timer( 6.0, "message", {pilot = competitors[4], msg = _("I will win for my brother!")} )
          hook.timer( 9.0, "message", {pilot = competitors[5], msg = fmt.f(_("{player}, are you ready for the punishment?"), {player=player.name()})} )
          hook.timer( 10.0, "startPankration" )
-         countdown = 10
+         mem.countdown = 10
          hook.timer( 1.0, "timerIncrement")
-         omsg = player.omsgAdd(tostring(countdown), 0, 50)
+         mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
 
       else
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
          tk.msg("", mace_fail)
-         stage = 5
+         mem.stage = 5
       end
    end
 end
@@ -512,23 +510,23 @@ end
 
 -- Increment the printing timer
 function timerIncrement()
-   countdown = countdown - 1
-   if countdown == 0 then
-      player.omsgChange(omsg, _("Go!"), 3)
+   mem.countdown = mem.countdown - 1
+   if mem.countdown == 0 then
+      player.omsgChange(mem.omsg, _("Go!"), 3)
    else
       hook.timer( 1.0, "timerIncrement")
-      player.omsgChange(omsg, tostring(countdown), 0)
+      player.omsgChange(mem.omsg, tostring(mem.countdown), 0)
    end
 end
 
 -- Increment the time over timer
 function timerIncrementT()
-   countdown = countdown - 1
-   if countdown == 0 then
-      player.omsgChange(omsg, _("Time Over!"), 3)
+   mem.countdown = mem.countdown - 1
+   if mem.countdown == 0 then
+      player.omsgChange(mem.omsg, _("Time Over!"), 3)
    else
       hook.timer( 1.0, "timerIncrementT")
-      player.omsgChange(omsg, tostring(countdown), 0)
+      player.omsgChange(mem.omsg, tostring(mem.countdown), 0)
    end
 end
 
@@ -561,9 +559,9 @@ end
 
 -- Timer for the end of the Stadion
 function endTimer()
-   countdown = 10
+   mem.countdown = 10
    hook.timer( 1.0, "timerIncrementT" ) -- Near-end timer
-   omsg = player.omsgAdd(tostring(countdown), 0, 50)
+   mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
 end
 
 function startPankration()
@@ -615,20 +613,20 @@ end
 function spawnCompetitors( )
    competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
-      local pos = center + vec2.newP( radius, i*360/10 - 90 )
-      competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[i])
+      local pos = mem.center + vec2.newP( radius, i*360/10 - 90 )
+      competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, mem.competitors_names[i])
       fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
       competitors[i]:setVisible()
       competitors[i]:control()
-      competitors[i]:face(center)
+      competitors[i]:face(mem.center)
       hook.pilot( competitors[i], "death", "compDie" )
    end
 end
 
 -- One of the targets is idle (Mace Throw)
 function targetIdle( self )
-   local pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+   local pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
    self:moveto( pos, false, false )
 end
 
@@ -642,15 +640,15 @@ function targetHit( victim, attacker )
 
    if attacker == player.pilot() then
       score_throw[10] = score_throw[10] + 1
-      score_total[10] = score_total[10] + 1
+      mem.score_total[10] = mem.score_total[10] + 1
    else
       local ind = attacker:memory().Cindex
       score_throw[ind] = score_throw[ind] + 1
-      score_total[ind] = score_total[ind] + 1
+      mem.score_total[ind] = mem.score_total[ind] + 1
    end
 
-   targetShot = targetShot + 1
-   if targetShot >= #targets then
+   mem.targetShot = mem.targetShot + 1
+   if mem.targetShot >= #targets then
       hook.timer( 3.0, "endThrow" )
    end
 
@@ -669,7 +667,7 @@ function endThrow()
       p:control()
       p:land(destpla)
    end
-   stage = 3
+   mem.stage = 3
    misn.osdActive(3)
 
    -- Sort and print top scores
@@ -678,7 +676,7 @@ function endThrow()
    local throwTitle = _("Scores for the Mace Throw")
    local throwString = ""
    for i = 10, 1, -1 do
-      throwString = (throwString..competitors_names[iter[i]]..": "..score_throw[iter[i]].."\n")
+      throwString = (throwString..mem.competitors_names[iter[i]]..": "..score_throw[iter[i]].."\n")
    end
    tk.msg( throwTitle, throwString )
 end
@@ -696,15 +694,15 @@ function compHitS( _victim, attacker )
          p:taskClear()
          p:land( destpla )
       end
-      score_total[10] = score_total[10] - 5
-      stage = 3 -- Back to previous stage
+      mem.score_total[10] = mem.score_total[10] - 5
+      mem.stage = 3 -- Back to previous mem.stage
    end
 end
 
 -- Player is hit during Stadion
 function playerHitS()
    if player.pilot():health() < 100 then -- Player has lost
-      hook.rm(playerHitHook)
+      hook.rm(mem.playerHitHook)
       player.pilot():setInvincible()
       player.pilot():control()
       player.pilot():brake()
@@ -722,29 +720,29 @@ function endStadion()
       p:taskClear()
       p:land(destpla)
    end
-   stage = 5
+   mem.stage = 5
    misn.osdActive(3)
 
    local cflowers = _flowers()
    for i = 1, 9 do
       score_stadion[i] = competitors[i]:cargoHas(cflowers)
-      score_total[i] = score_total[i] + score_stadion[i]
+      mem.score_total[i] = mem.score_total[i] + score_stadion[i]
    end
    score_stadion[10] = player.pilot():cargoHas(cflowers)
-   score_total[10]   = score_total[10] + score_stadion[10]
+   mem.score_total[10]   = mem.score_total[10] + score_stadion[10]
 
    local iter = {1,2,3,4,5,6,7,8,9,10}
    table.sort( iter, sortStadion )
    local stadionTitle = _("Scores for the Mace Stadion")
    local stadionString = ""
    for i = 10, 1, -1 do
-      stadionString = (stadionString..competitors_names[iter[i]]..": "..score_stadion[iter[i]].."\n")
+      stadionString = (stadionString..mem.competitors_names[iter[i]]..": "..score_stadion[iter[i]].."\n")
    end
    tk.msg( _("Time Over"), _("Land on Dvaer Prime.") )
    tk.msg( stadionTitle, stadionString )
 
    -- Free the player
-   hook.rm(playerHitHook)
+   hook.rm(mem.playerHitHook)
    player.pilot():setInvincible(false)
    player.pilot():control(false)
 end
@@ -752,16 +750,16 @@ end
 -- One of the competitors (or the player) is hit (Mace Pankration)
 function playerHit()
    if player.pilot():health() < 100 then -- Player has lost
-      hook.rm(playerHitHook)
+      hook.rm(mem.playerHitHook)
       hook.rm(compHitHook[5])
-      duelsEnded = duelsEnded + 1
+      mem.duelsEnded = mem.duelsEnded + 1
       score_pankration[5] = score_pankration[5] + 7
-      score_total[5] = score_total[5] + 7
+      mem.score_total[5] = mem.score_total[5] + 7
       competitors[5].taskClear()
       competitors[5].land(destpla)
       competitors[5]:setHostile(false)
       competitors[5]:setInvincible()
-      player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[5],competitors_names[10]}))
+      player.msg(fmt.f(_("{1} won against {2}!"), {mem.competitors_names[5],mem.competitors_names[10]}))
       endPankration()
    end
 end
@@ -769,44 +767,44 @@ function compHit( victim )
    if victim:health() < 100 then -- Identify who has lost
       local ind = victim:memory().Cindex
       if ind == 5 then -- Player won
-         hook.rm(playerHitHook)
+         hook.rm(mem.playerHitHook)
          hook.rm(compHitHook[5])
-         duelsEnded = duelsEnded + 1
+         mem.duelsEnded = mem.duelsEnded + 1
          score_pankration[10] = score_pankration[10] + 7
-         score_total[10] = score_total[10] + 7
+         mem.score_total[10] = mem.score_total[10] + 7
          competitors[5]:taskClear()
          competitors[5]:land(destpla)
          competitors[5]:setHostile(false)
          competitors[5]:setInvincible()
-         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[10],competitors_names[5]}))
+         player.msg(fmt.f(_("{1} won against {2}!"), {mem.competitors_names[10],mem.competitors_names[5]}))
          endPankration()
       elseif ind < 5 then
          hook.rm(compHitHook[ind+5])
          hook.rm(compHitHook[ind])
-         duelsEnded = duelsEnded + 1
+         mem.duelsEnded = mem.duelsEnded + 1
          score_pankration[ind+5] = score_pankration[ind+5] + 7
-         score_total[ind+5] = score_total[ind+5] + 7
+         mem.score_total[ind+5] = mem.score_total[ind+5] + 7
          competitors[ind]:taskClear()
          competitors[ind]:land(destpla)
          competitors[ind+5]:taskClear()
          competitors[ind+5]:land(destpla)
          competitors[ind+5]:setInvincible()
          competitors[ind]:setInvincible()
-         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[ind+5],competitors_names[ind]}))
+         player.msg(fmt.f(_("{1} won against {2}!"), {mem.competitors_names[ind+5],mem.competitors_names[ind]}))
          endPankration()
       else
          hook.rm(compHitHook[ind-5])
          hook.rm(compHitHook[ind])
-         duelsEnded = duelsEnded + 1
+         mem.duelsEnded = mem.duelsEnded + 1
          score_pankration[ind-5] = score_pankration[ind-5] + 7
-         score_total[ind-5] = score_total[ind-5] + 7
+         mem.score_total[ind-5] = mem.score_total[ind-5] + 7
          competitors[ind]:taskClear()
          competitors[ind]:land(destpla)
          competitors[ind-5]:taskClear()
          competitors[ind-5]:land(destpla)
          competitors[ind]:setInvincible()
          competitors[ind-5]:setInvincible()
-         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[ind-5],competitors_names[ind]}))
+         player.msg(fmt.f(_("{1} won against {2}!"), {mem.competitors_names[ind-5],mem.competitors_names[ind]}))
          endPankration()
       end
    end
@@ -814,12 +812,12 @@ end
 
 -- See if all duels are over
 function endPankration()
-   if duelsEnded >= 5 then
+   if mem.duelsEnded >= 5 then
       hook.timer(1.0, "endPankrationT")
    end
 end
 function endPankrationT()
-   stage = 7
+   mem.stage = 7
    misn.osdActive(3)
 
    local iter = {1,2,3,4,5,6,7,8,9,10}
@@ -827,7 +825,7 @@ function endPankrationT()
    local pankrationTitle = _("Scores for the Mace Pankration")
    local pankrationString = ""
    for i = 10, 1, -1 do
-      pankrationString = (pankrationString..competitors_names[iter[i]]..": "..score_pankration[iter[i]].."\n")
+      pankrationString = (pankrationString..mem.competitors_names[iter[i]]..": "..score_pankration[iter[i]].."\n")
    end
    tk.msg( pankrationTitle, pankrationString )
 end

@@ -81,9 +81,9 @@ ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the l
 
 -- Customization of car.calculateRoute in common.cargo
 local function ferry_calculateRoute (dplanet, dsys)
-    origin_p, origin_s = planet.cur()
-    local routesys = origin_s
-    local routepos = origin_p:pos()
+    mem.origin_p, mem.origin_s = planet.cur()
+    local routesys = mem.origin_s
+    local routepos = mem.origin_p:pos()
 
     -- Select mission tier.
     -- determines class of Sirian citizen
@@ -97,7 +97,7 @@ local function ferry_calculateRoute (dplanet, dsys)
     end
 
     local speed = rnd.rnd(0,2)  -- how long you have; priority of the ticket
-    local numjumps   = origin_s:jumpDist(dsys)
+    local numjumps   = mem.origin_s:jumpDist(dsys)
     local traveldist = car.calculateDistance(routesys, routepos, dsys, dplanet)
     return dplanet, dsys, numjumps, traveldist, speed, rank --cargo, tier
 end
@@ -117,52 +117,52 @@ function create()
        misn.finish(false)
     end
 
-    origin_p, origin_s = planet.cur()
-    if origin_s == dest_sys then
+    mem.origin_p, mem.origin_s = planet.cur()
+    if mem.origin_s == dest_sys then
        misn.finish(false)
     end
 
     -- Calculate the route, distance, jumps, time limit, and priority
-    destplanet, destsys, numjumps, traveldist, print_speed, rank = ferry_calculateRoute(dest_planet, dest_sys)
+    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.print_speed, mem.rank = ferry_calculateRoute(dest_planet, dest_sys)
 
-    if numjumps < 2 then  -- don't show mission on really close systems; they don't need you for short hops
+    if mem.numjumps < 2 then  -- don't show mission on really close systems; they don't need you for short hops
        misn.finish(false)
     end
 
     -- Calculate time limit. Depends on priority and rank.
     -- The second time limit is for the reduced reward.
-    local speed = print_speed + rank - 1    -- higher-ranked citizens want faster transport
+    local speed = mem.print_speed + mem.rank - 1    -- higher-ranked citizens want faster transport
     local stuperpx   = 0.2 - 0.02 * speed
     local stuperjump = 11000 - 200 * speed
     local stupertakeoff = 12000 - 75 * speed
-    local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+    local allowance  = mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps
 
     -- Allow extra time for refuelling stops.
-    local jumpsperstop = 3 + rank
-    if numjumps > jumpsperstop then
-        allowance = allowance + math.floor((numjumps-1) / jumpsperstop) * stuperjump
+    local jumpsperstop = 3 + mem.rank
+    if mem.numjumps > jumpsperstop then
+        allowance = allowance + math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump
     end
 
-    timelimit  = time.get() + time.create(0, 0, allowance)
-    timelimit2 = time.get() + time.create(0, 0, allowance * 1.3)
+    mem.timelimit  = time.get() + time.create(0, 0, allowance)
+    mem.timelimit2 = time.get() + time.create(0, 0, allowance * 1.3)
 
     -- Choose mission reward. This depends on the priority and the passenger rank.
     local jumpreward = 15e3
     local distreward = 0.25
-    reward     = 1.4^(speed + rank) * (numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma()) / (2-rank/2.0)
+    mem.reward     = 1.4^(speed + mem.rank) * (mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma()) / (2-mem.rank/2.0)
 
     -- Set some mission constants.
-    distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
-    distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
+    mem.distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
+    mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
-    misn.markerAdd(destsys, "computer")
-    misn.setTitle( fmt.f(_("SR: {tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[print_speed], rank=prank[rank]}) )
-    car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[print_speed], pnt=destplanet, rank=prank[rank]}), nil, nil, destplanet, timelimit )
-    misn.setReward(fmt.credits(reward))
+    misn.markerAdd(mem.destsys, "computer")
+    misn.setTitle( fmt.f(_("SR: {tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
+    car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
+    misn.setReward(fmt.credits(mem.reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
-    destpicky = rnd.rnd(1,4)
-    shippicky = rank*2 + rnd.rnd(-1,1)
+    mem.destpicky = rnd.rnd(1,4)
+    mem.shippicky = mem.rank*2 + rnd.rnd(-1,1)
 
 end
 
@@ -181,24 +181,24 @@ end
 
 -- Mission is accepted
 function accept()
-    local playerbest = car.getTransit( numjumps, traveldist )
-    if timelimit < playerbest then
+    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
+    if mem.timelimit < playerbest then
         if not tk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
 
-Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playerbest - time.get()), pnt=destplanet}) ) then
+Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet}) ) then
             misn.finish()
         end
     end
 
     --if faction.get('Sirius'):playerStanding() <= 75 then
-    local can_land = destplanet:canLand()  -- Player with rank < 75 will not be allowed to land on Mutris
+    local can_land = mem.destplanet:canLand()  -- Player with mem.rank < 75 will not be allowed to land on Mutris
     if not can_land then
-        -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if reward is reduced
+        -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if mem.reward is reduced
         -- Then ask player if they're OK with that
 
         local counter = 0
         local altplanets = {}
-        for key,dplanet in ipairs( destsys:planets() ) do
+        for key,dplanet in ipairs( mem.destsys:planets() ) do
             if dplanet:canLand() then
                 counter = counter + 1
                 altplanets[counter] = dplanet
@@ -211,13 +211,13 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
             misn.finish()
         end
 
-        altdest = rnd.rnd(1,counter)
+        mem.altdest = rnd.rnd(1,counter)
 
         local ok = false
 	local can_downgrade = true
 	local no_clearance_text
         --local picky = rnd.rnd(1,4)  -- initialized in the create function
-        local outcome = nc_probs[rank][destpicky]
+        local outcome = nc_probs[mem.rank][mem.destpicky]
 
         if outcome == 3 then
             -- Rank 2 will demand to be delivered to Sirius
@@ -225,15 +225,15 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
             no_clearance_text = _("Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience...\"")
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
-            reward = reward / 2
-            no_clearance_text = fmt.f(_("However, if you're on the way to Aesir, I could be willing to pay {credits} for transportation to {pnt}.\""), {credits=fmt.credits(reward), pnt=altplanets[altdest]})
+            mem.reward = mem.reward / 2
+            no_clearance_text = fmt.f(_("However, if you're on the way to Aesir, I could be willing to pay {credits} for transportation to {pnt}.\""), {credits=fmt.credits(mem.reward), pnt=altplanets[mem.altdest]})
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
-            reward = reward * 0.6666
-            no_clearance_text = fmt.f(_("However, I suppose if you can take me to {pnt}, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than {credits}.\""), {pnt=altplanets[altdest], credits=fmt.credits(reward)})
+            mem.reward = mem.reward * 0.6666
+            no_clearance_text = fmt.f(_("However, I suppose if you can take me to {pnt}, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than {credits}.\""), {pnt=altplanets[mem.altdest], credits=fmt.credits(mem.reward)})
         else
             -- Rank 0 will take whatever they can get
-            no_clearance_text = fmt.f(_("However, if you can take me as far as {pnt}, I will be satisfied with that.\""), {pnt=altplanets[altdest]})
+            no_clearance_text = fmt.f(_("However, if you can take me as far as {pnt}, I will be satisfied with that.\""), {pnt=altplanets[mem.altdest]})
         end
 
         local no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
@@ -246,14 +246,14 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
             misn.finish()
         end
 
-        destplanet = altplanets[altdest]
-        car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[print_speed], pnt=destplanet, rank=prank[rank]}), nil, nil, destplanet, timelimit )
-        --wants_sirian = false    -- Don't care what kind of ship you're flying
+        mem.destplanet = altplanets[mem.altdest]
+        car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
+        --mem.wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
     -- Sirians prefer to make their pilgrimage in a Sirian ship
     if not player_has_sirian_ship() then
-        local picky = shippicky -- initialized in the create function
+        local picky = mem.shippicky -- initialized in the create function
 
         if not can_land then picky = picky - 1 end  -- less picky about ship when going to alternate destination
 
@@ -263,8 +263,8 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
             misn.finish()
         elseif picky > 0 then
             -- Could be persuaded, for a discount
-            reward = reward*0.6666
-            if not tk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(reward)})) then
+            mem.reward = mem.reward*0.6666
+            if not tk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(mem.reward)})) then
                 misn.finish() -- Player won't offer a discount
             end
             if picky > 1 then
@@ -277,14 +277,14 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
             tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship, and you catch a hint of disappointment on their face, before they notice you and quickly hide it.")) -- ok with the arrangements
         end
 
-        wants_sirian = false  -- Will not expect to arrive in a Sirian ship
+        mem.wants_sirian = false  -- Will not expect to arrive in a Sirian ship
     else
-        wants_sirian = true   -- Will expect to arrive in a Sirian ship
+        mem.wants_sirian = true   -- Will expect to arrive in a Sirian ship
     end
 
     misn.accept()
-    intime = true
-    overtime = false
+    mem.intime = true
+    mem.overtime = false
     local c = misn.cargoNew( N_("Pilgrims"), N_("A bunch of giddy Sirian pilgrims.") )
     misn.cargoAdd(c, 0)  -- We'll assume you can hold as many pilgrims as you want?
     tick()
@@ -294,46 +294,46 @@ end
 
 -- Land hook
 function land()
-    if planet.cur() == destplanet then
+    if planet.cur() == mem.destplanet then
 
         -- Check if we're still flying a Sirian ship
-        has_sirian_ship = player_has_sirian_ship()
+        mem.has_sirian_ship = player_has_sirian_ship()
 
-        change = 0
-        if wants_sirian and not has_sirian_ship then
-            change = 1  -- Bad: they wanted a Sirian ship and you switched on them
-            reward = reward / (rank+1.5)
-            tk.msg( _("Altering the deal"), fmt.f( _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you {credits}, but it's definitely less than you were expecting."), {credits=fmt.credits(reward)} ) )
-            player.pay(reward)
+        mem.change = 0
+        if mem.wants_sirian and not mem.has_sirian_ship then
+            mem.change = 1  -- Bad: they wanted a Sirian ship and you switched on them
+            mem.reward = mem.reward / (mem.rank+1.5)
+            tk.msg( _("Altering the deal"), fmt.f( _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you {credits}, but it's definitely less than you were expecting."), {credits=fmt.credits(mem.reward)} ) )
+            player.pay(mem.reward)
             misn.finish(true)
-        elseif not wants_sirian and has_sirian_ship then
-            change = 2  -- Good: they weren't expecting a Sirian ship, but they got one anyway
+        elseif not mem.wants_sirian and mem.has_sirian_ship then
+            mem.change = 2  -- Good: they weren't expecting a Sirian ship, but they got one anyway
         end
 
-        if intime then
-            local distbonus = math.max(math.min(numjumps,distbonus_maxjumps)-distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<distbonus_minjumps jumps) to 4 (>=distbonus_maxjumps jumps)
-            faction.modPlayerSingle("Sirius", rnd.rnd(distbonus, distbonus+rank+1))
+        if mem.intime then
+            local distbonus = math.max(math.min(mem.numjumps,mem.distbonus_maxjumps)-mem.distbonus_minjumps+1, 0) / 2  -- ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
+            faction.modPlayerSingle("Sirius", rnd.rnd(distbonus, distbonus+mem.rank+1))
 
-            tk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[rank], {passenger=ferry_land_p1[rank]} ) )
-        elseif overtime then
+            tk.msg(_("Successful arrival!"), fmt.f( ferry_land_p2[mem.rank], {passenger=ferry_land_p1[mem.rank]} ) )
+        elseif mem.overtime then
             tk.msg(_("Passenger transport failure"), _("Well, you arrived, but with this late of an arrival, you can't hope for any payment."))
             misn.finish(false)
         else
             -- You were late
-            reward = reward / (rank + 1)
-            tk.msg(_("Late arrival"), fmt.f(ferry_land_p3[rank], {passenger=ferry_land_p1[rank], credits=fmt.credits(reward)}))
+            mem.reward = mem.reward / (mem.rank + 1)
+            tk.msg(_("Late arrival"), fmt.f(ferry_land_p3[mem.rank], {passenger=ferry_land_p1[mem.rank], credits=fmt.credits(mem.reward)}))
         end
 
-        if change == 2 then
+        if mem.change == 2 then
             -- A little bonus for doing something nice
             faction.modPlayerSingle("Sirius", 1)
             tk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
-            reward = reward * 1.25
+            mem.reward = mem.reward * 1.25
         end
 
-        player.pay(reward)
+        player.pay(mem.reward)
         misn.finish(true)
-    elseif timelimit2 <= time.get() then
+    elseif mem.timelimit2 <= time.get() then
         -- if we missed the second deadline, drop the person off at the planet.
         tk.msg(_("Passenger transport failure"), _("You drop the upset pilgrim off at the nearest spaceport."))
         misn.finish(false)
@@ -343,26 +343,26 @@ end
 -- Date hook
 function tick()
     local osd_msg = {}
-    osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time}"), {pnt=destplanet, sys=destsys, time=timelimit})
-    if timelimit >= time.get() then
+    osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time}"), {pnt=mem.destplanet, sys=mem.destsys, time=mem.timelimit})
+    if mem.timelimit >= time.get() then
         -- Case still in time
-        osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(timelimit - time.get())})
+        osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(mem.timelimit - time.get())})
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
-    elseif timelimit2 <= time.get() and not overtime then
+    elseif mem.timelimit2 <= time.get() and not mem.overtime then
         -- Case missed second deadline
         player.msg(_("You're far too late ... best to drop your passengers off on the nearest planet before tempers run any higher."))
         misn.osdCreate( _("Pilgrim drop-off"),
             {_("Drop off the pilgrims at the nearest planet")})
-        overtime = true
-    elseif intime then
+        mem.overtime = true
+    elseif mem.intime then
         -- Case missed first deadline
         player.msg(_("You've missed the scheduled arrival time! But better late than never..."))
         osd_msg[2] = _("You've missed the scheduled arrival time! But better late than never...")
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
-        intime = false
+        mem.intime = false
     end
 end
 
 function abort()
-    tk.msg(_("Passenger transport aborted"), fmt.f(_("Informing the pilgrim that their flight to {pnt} has been canceled, you promise to drop them off at the nearest planet."), {pnt=destplanet}))
+    tk.msg(_("Passenger transport aborted"), fmt.f(_("Informing the pilgrim that their flight to {pnt} has been canceled, you promise to drop them off at the nearest planet."), {pnt=mem.destplanet}))
 end

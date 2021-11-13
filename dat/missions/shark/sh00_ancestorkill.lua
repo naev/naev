@@ -54,12 +54,12 @@ function create ()
 end
 
 function accept()
-   stage = 0
+   mem.stage = 0
 
    if tk.yesno(_("Nexus Shipyards needs you"), _([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
     "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])) then
       misn.accept()
-      piratename = pilotname.pirate() --for now, we only need his name
+      mem.piratename = pilotname.pirate() --for now, we only need his name
       tk.msg(_("Wonderful"), fmt.f(_([["Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} system. I'll be with my boss and our customer, Baron Sauterfeldt."]]), {sys=missys, pnt=mispla}))
 
       misn.setTitle(_("A Shark Bites"))
@@ -72,11 +72,11 @@ function accept()
       })
       misn.osdActive(1)
 
-      markeri = misn.markerAdd(missys, "low")
+      mem.markeri = misn.markerAdd(missys, "low")
 
-      jumpouthook = hook.jumpout("jumpout")
-      landhook = hook.land("land")
-      enterhook = hook.enter("enter")
+      mem.jumpouthook = hook.jumpout("jumpout")
+      mem.landhook = hook.land("land")
+      mem.enterhook = hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
       misn.finish(false)
@@ -87,18 +87,18 @@ end
 function land()
 
    -- Did the player reach Ulios ?
-   if planet.cur() == mispla and stage == 0 then
+   if planet.cur() == mispla and mem.stage == 0 then
       misn.npcAdd("beginbattle", _("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
    end
 
    -- Did the player land again on Ulios after having killed the pirate
-   if planet.cur() == mispla and stage == 4 then
+   if planet.cur() == mispla and mem.stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
       player.pay(shark.rewards.sh00)
       misn.osdDestroy()
-      hook.rm(enterhook)
-      hook.rm(landhook)
-      hook.rm(jumpouthook)
+      hook.rm(mem.enterhook)
+      hook.rm(mem.landhook)
+      hook.rm(mem.jumpouthook)
       shark.addLog( _([[You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor.]]) )
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
@@ -107,7 +107,7 @@ end
 
 --jumping out the system
 function jumpout()
-   if stage == 2 then   --You were supposed to kill him, not to go away !
+   if mem.stage == 2 then   --You were supposed to kill him, not to go away !
       player.msg( "#r" .. _("MISSION FAILED: You left the pirate.") .. "#0" )
       misn.finish(false)
    end
@@ -115,7 +115,7 @@ end
 
 function enter()
    --Jumping in Toaxis for the battle
-   if system.cur() == battlesys and stage == 1 then
+   if system.cur() == battlesys and mem.stage == 1 then
       --Check if the player uses a Shark
       local playership = player.pilot():ship()
       local playershipname = playership:nameRaw()
@@ -131,7 +131,7 @@ function enter()
 
       -- spawns the bad guy
       local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid") )
-      badboy:rename(piratename)
+      badboy:rename(mem.piratename)
       badboy:setHostile()
       badboy:setVisplayer()
       badboy:setHilight()
@@ -144,15 +144,15 @@ end
 --Chatting with Smith and begin the battle
 function beginbattle()
 
-   misn.markerRm(markeri)
+   misn.markerRm(mem.markeri)
 
    tk.msg(_("Ready for action"), fmt.f(_([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
     Arnold Smith guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.
     Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at {sys}. Now go show them what your ship can do!" Time to head back to the ship, then.]]), {sys=battlesys}))
    misn.osdActive(2)
-   stage = 1
+   mem.stage = 1
 
-   marker1 = misn.markerAdd(battlesys, "low")
+   mem.marker1 = misn.markerAdd(battlesys, "low")
    player.takeoff()
 end
 
@@ -162,8 +162,8 @@ function pirate_jump()  --he went away
 end
 
 function pirate_dead()  --wou win
-   stage = 4
-   misn.markerRm(marker1)
-   marker2 = misn.markerAdd(missys, "low")
+   mem.stage = 4
+   misn.markerRm(mem.marker1)
+   mem.marker2 = misn.markerAdd(missys, "low")
    misn.osdActive(3)
 end

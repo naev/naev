@@ -39,7 +39,7 @@ local fmt = require "format"
 --  1: Destroy Bounty Hunter
 --  2: meet Dr. Strangelove
 --  3: return to kex
-misn_state = nil
+mem.misn_state = nil
 local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
 
 local landed_lab -- Forward-declared functions
@@ -96,12 +96,12 @@ function accept ()
    vn.na(fmt.f(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=targetsys}))
 
    vn.func( function ()
-      misn_state = 0
+      mem.misn_state = 0
    end )
    vn.run()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
    misn.accept()
@@ -111,7 +111,7 @@ function accept ()
    misn.osdCreate( _("Freeing Kex"),
       { fmt.f(_("Go find Dr. Strangelove in the {sys} system"), {sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( targetsys )
+   mem.misn_marker = misn.markerAdd( targetsys )
 
    hook.enter("enter")
    hook.land("landed")
@@ -120,10 +120,10 @@ end
 
 function landed ()
    -- Can't use planet.get() here for when the diff is removed
-   if misn_state==1 and planet.cur() == targetplanet then
+   if mem.misn_state==1 and planet.cur() == targetplanet then
       landed_lab()
 
-   elseif misn_state==3 and planet.get("Minerva Station")==planet.cur() then
+   elseif mem.misn_state==3 and planet.get("Minerva Station")==planet.cur() then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
    end
 end
@@ -207,7 +207,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_state==2 and system.cur() ~= targetsys then
+   if mem.misn_state==2 and system.cur() ~= targetsys then
       player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
       misn.finish(false)
    end
@@ -225,7 +225,7 @@ function enter ()
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
       end
-      if misn_state==0 then
+      if mem.misn_state==0 then
          table.insert( thugs, 1, "Vigilance" )
       end
       local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="baddie_norun"} )
@@ -249,18 +249,18 @@ function enter ()
       else
          thug_leader:brake()
       end
-      thug_following = dofollow
+      mem.thug_following = dofollow
    end
 
-   thug_chance = thug_chance or 0.2
+   mem.thug_chance = mem.thug_chance or 0.2
    if system.cur() == targetsys then
       -- No spawns nor anything in Westhaven
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      if misn_state == 0 then
+      if mem.misn_state == 0 then
          -- TODO better handling, maybe more fighting with drones and a close-up cinematic?
-         thug_chance = thug_chance / 0.8
+         mem.thug_chance = mem.thug_chance / 0.8
          local pos = targetplanet:pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
@@ -281,10 +281,10 @@ function enter ()
             p:setInvisible(true)
             p:disable()
          end
-      elseif misn_state == 1 then
+      elseif mem.misn_state == 1 then
          -- Do nothing (just in case the player kills bounty hunters and goes off somewhere)
 
-      elseif misn_state == 2 then
+      elseif mem.misn_state == 2 then
          -- Should be taking off from the Lab
 
          -- Spawn
@@ -301,7 +301,7 @@ function enter ()
          hook.timer( 5, "strangelove_hail" )
       end
 
-   elseif misn_state~=1 and rnd.rnd() < thug_chance then
+   elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
       -- Make sure system isn't claimed, but we don't claim it
       if misn.claim( system.cur(), true ) then
          -- Spawn near the center, they home in on player
@@ -329,14 +329,14 @@ function thug_heartbeat ()
          _("Target locked. Engaging."),
       }
       -- Broadcast after hostile
-      if misn_state==0 then
+      if mem.misn_state==0 then
          thug_leader:broadcast( _("Looks like we have company!"), true )
       else
          thug_leader:broadcast( msglist[ rnd.rnd(1,#msglist) ], true )
       end
 
       -- Decrease chance
-      thug_chance = thug_chance * 0.8
+      mem.thug_chance = mem.thug_chance * 0.8
 
       -- Reset autonav just in case
       player.autonavReset( 5 )
@@ -346,16 +346,16 @@ function thug_heartbeat ()
    -- Only chase if not hidden
    local pp = player.pilot()
    if pp:flags("stealth") then
-      if thug_following then
+      if mem.thug_following then
          thug_leader:taskClear()
          thug_leader:brake()
-         thug_following = false
+         mem.thug_following = false
       end
    else
-      if not thug_following then
+      if not mem.thug_following then
          thug_leader:taskClear()
          thug_leader:follow( pp )
-         thug_following = true
+         mem.thug_following = true
       end
    end
 
@@ -385,7 +385,7 @@ function thugs_cleared ()
    vn.na(_([[All that remains of the bounty hunters is floating debris. It seems like you should be able to safely land and search for Dr. Strangelove at his laboratory now.]]))
    vn.run()
 
-   misn_state = 1
+   mem.misn_state = 1
    player.allowLand( true )
 end
 
@@ -454,7 +454,7 @@ function landed_lab ()
    vn.run()
 
    -- Take off
-   misn_state = 2
+   mem.misn_state = 2
    player.takeoff()
 
    -- Disable landing, will get disabled on entering new system
@@ -697,9 +697,9 @@ He seems to be looking at something in the distance.]]))
    diff.remove( eccdiff )
 
    -- Advance mission
-   misn_state = 3
+   mem.misn_state = 3
    misn.osdActive(2)
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
    player.unboard()
    local strangelove_death = var.peek("strangelove_death")
    if strangelove_death=="shot" then

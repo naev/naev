@@ -33,10 +33,10 @@ local targetworld, targetworld_sys = planet.getS("Halir")
 function create ()
    -- Note: this mission does not make any system claims.
    -- Get the planet and system at which we currently are.
-   startworld, startworld_sys = planet.cur()
+   mem.startworld, mem.startworld_sys = planet.cur()
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
-   if targetworld == startworld then --makes sure pilot is not currently on Gamma Polaris
+   if targetworld == mem.startworld then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)
     end
 end
@@ -62,14 +62,14 @@ function accept ()
    -- Set up the goal
    hook.land("land")
    local c = misn.cargoNew( N_("Diplomat"), N_("An Imperial trade representative.") )
-   person = misn.cargoAdd( c, 0 )
+   mem.person = misn.cargoAdd( c, 0 )
 end
 
 
 function land()
 
    if planet.cur() == targetworld then
-         misn.cargoRm( person )
+         misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc6 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[Lieutenant Czesc exits your ship and takes a deep breath of air. "I love the smell of bureaucracy in the morning." He shakes your hand. "Thanks for all your help, Captain! Follow me to headquarters and we can do some paperwork to get you all set up. After that you should start to receive long-distance shipping missions. They pay better than our regular shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions. Again, I can't thank you enough! The Empire does not quickly forget such dedication."]]) )

@@ -37,7 +37,7 @@ local runawaysys = system.get("Pultatis")
 --    2: Survive
 --    3: Run away
 --    4: Get back to Minerva STation
-misn_state = nil
+mem.misn_state = nil
 local boss, drone, thugs -- Non-persistent state
 
 
@@ -73,7 +73,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function ()
-      misn_state=0
+      mem.misn_state=0
    end )
    pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
    pir(_([["I know what you're thinking, that's a great idea right? So it's very simple. Some Dvaered thugs are stationed around the system, they are not the cleverest of folks, so I want you to provoke them. You know, just rough them up a little and get out of there."]]))
@@ -83,8 +83,8 @@ function accept ()
 They beam a smile at you.]]), {sys=runawaysys}))
    vn.run()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -98,7 +98,7 @@ They beam a smile at you.]]), {sys=runawaysys}))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   misnmarker = misn.markerAdd( system.cur() )
+   mem.misnmarker = misn.markerAdd( system.cur() )
 
    hook.enter("enter")
    hook.load("land")
@@ -107,7 +107,7 @@ end
 
 
 function land ()
-   if misn_state==4 then
+   if mem.misn_state==4 then
       vn.clear()
       vn.scene()
       vn.music( minerva.loops.pirate )
@@ -131,53 +131,53 @@ end
 
 
 function enter ()
-   if misn_state==1 or misn_state==2 then
+   if mem.misn_state==1 or mem.misn_state==2 then
       player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
       misn.finish(false)
    end
 
-   if misn_state==3 then
+   if mem.misn_state==3 then
       if system.cur()==runawaysys then
-         misn_state=4
+         mem.misn_state=4
          misn.osdActive(4)
-         misn.markerMove( misnmarker, planet.get("Minerva Station") )
+         misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
       else
          player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
          misn.finish(false)
       end
    end
 
-   if system.cur()==mainsys and misn_state==0 then
+   if system.cur()==mainsys and mem.misn_state==0 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      thugpos = vec2.new( 6000, -4000 )
-      dronepos = vec2.new( -12000, -12000 )
+      mem.thugpos = vec2.new( 6000, -4000 )
+      mem.dronepos = vec2.new( -12000, -12000 )
 
-      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
+      mem.fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
 
-      local pos = thugpos
-      boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
+      local pos = mem.thugpos
+      boss = pilot.add( "Dvaered Vigilance", mem.fthugs, pos )
       boss:control()
       boss:brake()
       hook.pilot( boss, "attacked", "thugs_attacked" )
       hook.pilot( boss, "death", "thugs_dead" )
       thugs = { boss }
       for i = 1,3 do
-         pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
-         local p = pilot.add( "Dvaered Vendetta", fthugs, pos )
+         pos = mem.thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
+         local p = pilot.add( "Dvaered Vendetta", mem.fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
          hook.pilot( p, "death", "thugs_dead" )
          table.insert( thugs, p )
       end
 
-      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
-      drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
+      mem.fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
+      drone = pilot.add( "Za'lek Light Drone", mem.fdrone, mem.dronepos )
       drone:control()
       drone:brake()
 
-      dronemarker = system.mrkAdd( drone:pos(), _("Za'lek Drone") )
-      thugsmarker = system.mrkAdd( boss:pos(), _("Dvaered Thugs") )
+      mem.dronemarker = system.mrkAdd( drone:pos(), _("Za'lek Drone") )
+      mem.thugsmarker = system.mrkAdd( boss:pos(), _("Dvaered Thugs") )
 
       hook.timer( 0.5, "heartbeat" )
    end
@@ -189,11 +189,11 @@ function heartbeat ()
    local dist =  pp:pos():dist( drone:pos() )
    if dist < 1000 then
       player.msg(_("#gThe drone begins to follow you."))
-      misn_state=1
+      mem.misn_state=1
       misn.osdActive(2)
       drone:taskClear()
       drone:follow(pp)
-      system.mrkRm( dronemarker )
+      system.mrkRm( mem.dronemarker )
       return
    end
    hook.timer( 0.5, "heartbeat" )
@@ -201,19 +201,19 @@ end
 
 
 function thugs_attacked ()
-   if misn_state==0 then
+   if mem.misn_state==0 then
       player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
       pilot.toggleSpawn(true)
       misn.finish(false)
-   elseif misn_state==1 then
-      faction.dynEnemy( fdrone, fthugs ) -- Make enemies
+   elseif mem.misn_state==1 then
+      faction.dynEnemy( mem.fdrone, mem.fthugs ) -- Make enemies
       boss:broadcast(_("I'm going to wash my ship's hull with your blood, Za'lek Scum!"))
       boss:control(false)
-      misn_state=2
+      mem.misn_state=2
       for k,v in ipairs(thugs) do
          v:setHostile()
       end
-      total_harassment = 0
+      mem.total_harassment = 0
       hook.timer( 1.0, "harassed" )
    end
 end
@@ -228,27 +228,27 @@ end
 
 function harassed ()
    local pp = player.pilot()
-   local dist = pp:pos():dist( thugpos )
+   local dist = pp:pos():dist( mem.thugpos )
    if dist > 5000 then
-      if failingdistance==nil then
+      if mem.failingdistance==nil then
          player.msg(_("#rYou are moving too far away from the harassment point!"))
-         failingdistance = 0
+         mem.failingdistance = 0
       end
-      failingdistance = failingdistance + 1
-      if failingdistance > 6 then
+      mem.failingdistance = mem.failingdistance + 1
+      if mem.failingdistance > 6 then
          player.msg(_("#rMISSION FAILED! You moved too far away from the harassment location!"))
          pilot.toggleSpawn(true)
          misn.finish(false)
       end
    else
-      failingdistance = nil
+      mem.failingdistance = nil
    end
-   total_harassment = total_harassment + 1
-   if total_harassment > time_needed then
+   mem.total_harassment = mem.total_harassment + 1
+   if mem.total_harassment > time_needed then
       player.msg(_("#gThe thugs seem to be sufficiently riled up."))
-      misn_state=3
+      mem.misn_state=3
       misn.osdActive(3)
-      system.mrkRm( thugsmarker )
+      system.mrkRm( mem.thugsmarker )
       return
    end
    hook.timer( 1.0, "harassed" )

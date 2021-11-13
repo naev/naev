@@ -41,7 +41,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-reward = 300e3
+mem.reward = 300e3
 
 local defense_fleet, raider_fleet, raiders_left -- Non-persistent state
 local defend_system -- Forward-declared functions
@@ -49,14 +49,14 @@ local defend_system -- Forward-declared functions
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
 
-   this_planet, this_system = planet.cur()
-   if ( pir.systemPresence(this_system) > 0
-         or this_system:presences()["Collective"]
-         or this_system:presences()["FLF"] ) then
+   mem.this_planet, mem.this_system = planet.cur()
+   if ( pir.systemPresence(mem.this_system) > 0
+         or mem.this_system:presences()["Collective"]
+         or mem.this_system:presences()["FLF"] ) then
       misn.finish(false)
    end
 
-   local missys = {this_system}
+   local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
@@ -67,11 +67,11 @@ function create()
     "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
-      misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
+      misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(mem.reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
-      misn.markerAdd( this_system, "low" )
-      defender = true
+      misn.markerAdd( mem.this_system, "low" )
+      mem.defender = true
 
       -- hook an abstract deciding function to player entering a system
       hook.enter( "enter_system")
@@ -86,7 +86,7 @@ function create()
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Observe the action."))
-      defender = false
+      mem.defender = false
 
       -- hook an abstract deciding function to player entering a system when not part of defense
       hook.enter( "enter_system")
@@ -96,16 +96,16 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.cur() and defender == true then
+      if mem.this_system == system.cur() and mem.defender == true then
          defend_system()
-      elseif victory == true and defender == true then
+      elseif mem.victory == true and mem.defender == true then
          hook.timer(1.0, "ship_enters")
-      elseif defender == true then
+      elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.cur() and been_here_before ~= true then
-         been_here_before = true
+      elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
+         mem.been_here_before = true
          defend_system()
       else
          misn.finish( true)
@@ -123,7 +123,7 @@ function defend_system()
   -- Set up distances
       local angle, defense_position, raider_position
       angle = rnd.rnd() * 360
-      if defender == true then
+      if mem.defender == true then
          raider_position  = vec2.newP( 400, angle )
          defense_position = vec2.new( 0, 0 )
       else
@@ -146,13 +146,13 @@ function defend_system()
 
   --[[ Set conditions for the end of the Battle:
     hook fleet departure to disabling or killing ships]]
-      casualties = 0
+      mem.casualties = 0
       for k, v in ipairs( raider_fleet) do
          hook.pilot (v, "death", "add_cas_and_check")
          hook.pilot (v, "disable", "add_cas_and_check")
       end
 
-      if defender == false then
+      if mem.defender == false then
          misn.finish( true)
       end
 
@@ -161,15 +161,15 @@ end
 -- Record each raider death and make the raiders flee after too many casualties
 function add_cas_and_check()
 
-      casualties = casualties + 1
-      if casualties > 9 then
+      mem.casualties = mem.casualties + 1
+      if mem.casualties > 9 then
 
          raiders_left = pilot.get( { faction.get(fraider) } )
          for k, v in ipairs( raiders_left ) do
             v:changeAI("flee")
          end
-         if victory ~= true then  -- A few seconds after victory, the system is back under control
-            victory = true
+         if mem.victory ~= true then  -- A few seconds after victory, the system is back under control
+            mem.victory = true
             player.msg( _("We've got them on the run!") )
             hook.timer(8.0, "victorious")
          end
@@ -194,9 +194,9 @@ end
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
 
-      if victory == true then
+      if mem.victory == true then
          tk.msg( _("On the way in"), _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]) )
-         player.pay( reward )
+         player.pay( mem.reward )
          faction.modPlayerSingle( "Empire", 3)
          tk.msg( _("Thank you"), _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]]) )
          misn.finish( true)
@@ -216,13 +216,13 @@ end
 function congratulations()
       tk.msg( _("Good job!"), fmt.f( _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
     "Please hold course and confirm your identity, {ship}."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on {pnt}. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
-]]), {ship=player.ship(), pnt=this_planet}))
+]]), {ship=player.ship(), pnt=mem.this_planet}))
       misn.finish( true)
 
 end
 
 function abort()
-      if victory ~= true then
+      if mem.victory ~= true then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
          player.msg( fmt.f( _("Comm Trader>You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )

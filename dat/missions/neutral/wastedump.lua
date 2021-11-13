@@ -58,10 +58,10 @@ function create ()
 
    -- Note: this mission makes no system claims
 
-   credits_factor = 1e3 * dist
-   credits_mod = 10e3 * rnd.sigma()
+   mem.credits_factor = 1e3 * dist
+   mem.credits_mod = 10e3 * rnd.sigma()
 
-   landed = true
+   mem.landed = true
 
    for i, j in ipairs( dest_planets ) do
       local p = planet.get( j )
@@ -71,7 +71,7 @@ function create ()
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
    misn.setDesc( _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
-   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(credits_factor)} ) )
+   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
 end
 
 
@@ -79,14 +79,14 @@ function accept ()
    misn.accept()
 
    local q = player.pilot():cargoFree()
-   credits = credits_factor * q + credits_mod
+   mem.credits = mem.credits_factor * q + mem.credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   vntk.msg( "", fmt.f( txt, {credits = fmt.credits( credits ) } ) )
+   vntk.msg( "", fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
 
    local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
-   cid = misn.cargoAdd( c, q )
-   player.pay( credits )
+   mem.cid = misn.cargoAdd( c, q )
+   player.pay( mem.credits )
 
    misn.osdCreate( _("Waste Dump"), {_("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")} )
 
@@ -96,12 +96,12 @@ end
 
 
 function takeoff ()
-   landed = false
+   mem.landed = false
 end
 
 
 function land ()
-   landed = true
+   mem.landed = true
 
    for i, j in ipairs( dest_planets ) do
       if planet.get(j) == planet.cur() then
@@ -115,9 +115,9 @@ end
 
 
 function abort ()
-   if landed then
-      misn.cargoRm( cid )
-      local fine = 2 * credits
+   if mem.landed then
+      misn.cargoRm( mem.cid )
+      local fine = 2 * mem.credits
       vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
       player.pay( -fine )
       misn.finish( false )
@@ -125,7 +125,7 @@ function abort ()
       local txt = abort_text[ rnd.rnd( 1, #abort_text ) ]
       vntk.msg( "", txt )
 
-      misn.cargoJet( cid )
+      misn.cargoJet( mem.cid )
 
       -- Make everyone angry
       for i, j in ipairs( pilot.get() ) do

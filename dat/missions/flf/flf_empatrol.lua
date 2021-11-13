@@ -33,11 +33,10 @@ misn_title[4] = _("FLF: Large Empire patrol in {sys}")
 misn_title[5] = _("FLF: Dangerous Empire patrol in {sys}")
 misn_title[6] = _("FLF: Highly Dangerous Empire patrol in {sys}")
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system")
-osd_desc[2] = _("Eliminate the Empire patrol")
-osd_desc[3] = _("Return to FLF base")
-osd_desc["__save"] = true
+mem.osd_desc    = {}
+mem.osd_desc[1] = _("Fly to the {sys} system")
+mem.osd_desc[2] = _("Eliminate the Empire patrol")
+mem.osd_desc[3] = _("Return to FLF base")
 
 
 function setDescription ()
@@ -45,19 +44,19 @@ function setDescription ()
    desc = fmt.f( n_(
          "There is {n} Empire ship patrolling the {sys} system. Eliminate this ship.",
          "There is an Empire patrol with {n} ships in the {sys} system. Eliminate this patrol.",
-         ships ), {n=ships, sys=missys} )
+         mem.ships ), {n=mem.ships, sys=mem.missys} )
 
-   if has_vigilance then
+   if mem.has_vigilance then
       desc = desc .. _(" There is a Pacifier among them, so you must proceed with caution.")
    end
-   if has_goddard then
+   if mem.has_goddard then
       desc = desc .. _(" There is a Hawking among them, so you must be very careful.")
    end
-   if flfships > 0 then
+   if mem.flfships > 0 then
       desc = desc .. fmt.f( n_(
             " You will be accompanied by {n} other FLF pilot for this mission.",
             " You will be accompanied by {n} other FLF pilots for this mission.",
-            flfships ), {n=flfships} )
+            mem.flfships ), {n=mem.flfships} )
    end
    return desc
 end
@@ -69,22 +68,22 @@ end
 
 
 function enter ()
-   if not job_done then
-      if system.cur() == missys then
+   if not mem.job_done then
+      if system.cur() == mem.missys then
          misn.osdActive( 2 )
          local boss
-         if has_goddard then
+         if mem.has_goddard then
             boss = "Empire Hawking"
-         elseif has_vigilance then
+         elseif mem.has_vigilance then
             boss = "Empire Pacifier"
          end
-         patrol_spawnEmpire( ships, boss )
+         patrol_spawnEmpire( mem.ships, boss )
 
-         if flfships > 0 then
-            if not late_arrival then
-               patrol_spawnFLF( flfships, last_system, _("Alright, let's have at them!") )
+         if mem.flfships > 0 then
+            if not mem.late_arrival then
+               patrol_spawnFLF( mem.flfships, mem.last_system, _("Alright, let's have at them!") )
             else
-               hook.timer( late_arrival_delay, "timer_lateFLF" )
+               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -117,6 +116,6 @@ function patrol_spawnEmpire( n, boss )
       p:setVisible( true )
       p:setHilight( true )
       fleetDV[i] = p
-      dv_ships_left = dv_ships_left + 1
+      mem.dv_ships_left = mem.dv_ships_left + 1
    end
 end

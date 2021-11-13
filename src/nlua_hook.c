@@ -156,13 +156,14 @@ static int hookL_rm( lua_State *L )
    hook_rm( (unsigned int) h );
 
    /* Clean up hook data. */
-   nlua_getenv(__NLUA_CURENV, "__hook_arg");
+   nlua_getenv(__NLUA_CURENV, "mem");   /* t */
+   lua_getfield(L, -1, "__hook_arg");   /* t, t */
    if (!lua_isnil(L,-1)) {
-      lua_pushnumber( L, h ); /* t, n */
-      lua_pushnil( L );       /* t, n, nil */
-      lua_settable( L, -3 );  /* t */
+      lua_pushnumber( L, h );           /* t, t, n */
+      lua_pushnil( L );                 /* t, t, n, nil */
+      lua_settable( L, -3 );            /* t, t */
    }
-   lua_pop( L, 1 );        /* */
+   lua_pop( L, 2 );                     /* */
 
    return 0;
 }
@@ -178,26 +179,19 @@ static int hookL_setarg( unsigned int hook, int ind )
 {
    nlua_env env = hook_env(hook);
 
-   /* If a table set __save, this won't work for tables of tables however. */
-   if (lua_istable(naevL, ind)) {
-      lua_pushboolean( naevL, 1 );/* b */
-      lua_setfield( naevL, ind, "__save" ); /* v */
-   }
-
    /* Create if necessary the actual hook argument table. */
-   nlua_getenv(env, "__hook_arg");  /* t */
-   if (lua_isnil(naevL,-1)) {       /* nil */
-      lua_pop( naevL, 1 );          /* */
-      lua_newtable( naevL );        /* t */
-      lua_pushvalue( naevL, -1 );   /* t, t */
-      nlua_setenv(env, "__hook_arg");/*t */
-      lua_pushboolean( naevL, 1 );  /* t, s */
-      lua_setfield( naevL, -2, "__save" );/* t */
+   nlua_getenv(env, "mem");                  /* t */
+   lua_getfield(naevL, -1, "__hook_arg");    /* t, t */
+   if (lua_isnil(naevL,-1)) {                /* t, nil */
+      lua_pop( naevL, 1 );                   /* t */
+      lua_newtable( naevL );                 /* t, t */
+      lua_pushvalue( naevL, -1 );            /* t, t, t */
+      lua_setfield(naevL, -3, "__hook_arg"); /* t, t */
    }
-   lua_pushnumber( naevL, hook ); /* t, k */
-   lua_pushvalue( naevL, ind );   /* t, k, v */
-   lua_settable( naevL, -3 );     /* t */
-   lua_pop( naevL, 1 );           /* */
+   lua_pushnumber( naevL, hook );            /*t, t, k */
+   lua_pushvalue( naevL, ind );              /*t, t, k, v */
+   lua_settable( naevL, -3 );                /*t, t */
+   lua_pop( naevL, 2 );                      /* */
    return 0;
 }
 
@@ -211,13 +205,14 @@ void hookL_unsetarg( unsigned int hook )
    if (env == LUA_NOREF)
        return;
 
-   nlua_getenv(env, "__hook_arg"); /* t */
+   nlua_getenv(env, "mem");               /* t */
+   lua_getfield(naevL, -1, "__hook_arg"); /* t, t */
    if (!lua_isnil(naevL,-1)) {
       lua_pushnumber( naevL, hook );      /* t, h */
       lua_pushnil( naevL );               /* t, h, n */
       lua_settable( naevL, -3 );          /* t */
    }
-   lua_pop( naevL, 1 );
+   lua_pop( naevL, 2 );
 }
 
 /**
@@ -235,12 +230,14 @@ int hookL_getarg( unsigned int hook )
        return 0;
    }
 
-   nlua_getenv(env, "__hook_arg"); /* t */
-   if (!lua_isnil(naevL,-1)) {    /* t */
-      lua_pushnumber( naevL, hook ); /* t, k */
-      lua_gettable( naevL, -2 );  /* t, v */
-      lua_remove( naevL, -2 );    /* v */
+   nlua_getenv(env, "mem");              /* t */
+   lua_getfield(naevL, -1, "__hook_arg");/* t, t */
+   if (!lua_isnil(naevL,-1)) {           /* t, t */
+      lua_pushnumber( naevL, hook );     /* t, t, k */
+      lua_gettable( naevL, -2 );         /* t, t, v */
+      lua_remove( naevL, -2 );           /* t, v */
    }
+   lua_remove( naevL, -2 );              /* v */
    return 0;
 }
 

@@ -17,4 +17,4 @@
 
 require "missions.rehab_common"
 
-fac = faction.get("Za'lek")
+mem.fac = faction.get("Za'lek")

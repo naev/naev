@@ -33,11 +33,10 @@ npctext[2] = _([["Hello! I'm looking to join someone's fleet. Here's my credenti
 npctext[3] = _([["Hi! You look like you could use a pilot! I'm available and charge some of the best rates in the galaxy, and I promise you I'm perfect for the job! Here's my info. Well, what do you think? Would you like to add me to your fleet?"]])
 
 function create ()
-   lastplanet = nil
-   lastsys = system.cur()
+   mem.lastplanet = nil
+   mem.lastsys = system.cur()
    npcs = {}
-   escorts = {}
-   escorts["__save"] = true
+   mem.escorts = {}
 
    hook.land("land")
    hook.load("land")
@@ -99,7 +98,6 @@ local function createPilotNPCs ()
       local p = pilot.add(shipchoice.ship, fac)
       local _n, deposit = p:ship():price()
       newpilot.outfits = {}
-      newpilot.outfits["__save"] = true
 
       for j, o in ipairs(p:outfits()) do
          deposit = deposit + o:price()
@@ -134,7 +132,7 @@ end
 
 local function getTotalRoyalties ()
    local royalties = 0
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive then
          royalties = royalties + edata.royalty
       end
@@ -160,16 +158,15 @@ end
 
 
 function land ()
-   lastplanet = planet.cur()
+   mem.lastplanet = planet.cur()
    npcs = {}
-   hook.rm(standing_hook)
-   standing_hook = nil
+   hook.rm(mem.standing_hook)
+   mem.standing_hook = nil
 
    -- Clean up dead escorts so it doesn't build up, and create NPCs for
    -- existing escorts.
    local new_escorts = {}
-   new_escorts["__save"] = true
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive then
          local j = #new_escorts + 1
          edata.pilot = nil
@@ -185,9 +182,9 @@ function land ()
          new_escorts[j] = edata
       end
    end
-   escorts = new_escorts
+   mem.escorts = new_escorts
 
-   if #escorts <= 0 then
+   if #mem.escorts <= 0 then
       evt.save(false)
    end
 
@@ -205,7 +202,7 @@ end
 
 
 function jumpout ()
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive and edata.pilot ~= nil and edata.pilot:exists() then
          edata.temp = edata.pilot:temp()
          edata.armor, edata.shield, edata.stress = edata.pilot:health()
@@ -236,25 +233,25 @@ end
 function enter ()
    if var.peek( "hired_escorts_disabled" ) then return end
 
-   if standing_hook == nil then
-      standing_hook = hook.standing("standing")
+   if mem.standing_hook == nil then
+      mem.standing_hook = hook.standing("standing")
    end
 
    local spawnpoint
-   if lastsys == system.cur() then
-      spawnpoint = lastplanet
+   if mem.lastsys == system.cur() then
+      spawnpoint = mem.lastplanet
    else
       spawnpoint = player.pos()
-      for i, sys in ipairs(lastsys:adjacentSystems()) do
+      for i, sys in ipairs(mem.lastsys:adjacentSystems()) do
          if sys == system.cur() then
-            spawnpoint = lastsys
+            spawnpoint = mem.lastsys
          end
       end
    end
-   lastsys = system.cur()
+   mem.lastsys = system.cur()
 
    local pp = player.pilot()
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive then
          local f = faction.get(edata.faction)
 
@@ -321,7 +318,7 @@ function pay( amount, reason )
    if not reason or not whitelist[reason] then return end
 
    local royalty = 0
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive and edata.royalty then
          royalty = royalty + amount * edata.royalty
       end
@@ -331,7 +328,7 @@ end
 
 
 function standing ()
-   for i, edata in ipairs(escorts) do
+   for i, edata in ipairs(mem.escorts) do
       if edata.alive and edata.faction ~= nil and edata.pilot ~= nil
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
@@ -365,7 +362,7 @@ end
 
 -- Pilot was hailed by the player
 function pilot_hail( _p, arg )
-   local edata = escorts[arg]
+   local edata = mem.escorts[arg]
    if not edata.alive then
       return
    end
@@ -383,7 +380,7 @@ function pilot_attacked( p, attacker, _dmg, _arg )
       if attacker == l or attacker:leader() == l then
          -- Since all the escorts will turn on the player, we might as well
          -- just have them all disband at once and attack.
-         for i, edata in ipairs(escorts) do
+         for i, edata in ipairs(mem.escorts) do
             if edata.pilot and edata.pilot:exists() then
                shiplog.append( logidstr, fmt.f(_("You turned on your hired escort '{name}' ({ship})."), edata) )
                pilot_disbanded( edata )
@@ -396,7 +393,7 @@ end
 
 -- Escort got killed
 function pilot_death( _p, _attacker, arg )
-   local edata = escorts[arg]
+   local edata = mem.escorts[arg]
    shiplog.append( logidstr, fmt.f(_("'{name}' ({ship}) was killed in combat."), edata) )
    pilot_disbanded( edata )
 end
@@ -438,9 +435,9 @@ function approachPilot( npc_id )
       player.pay(-pdata.deposit, true)
    end
 
-   local i = #escorts + 1
+   local i = #mem.escorts + 1
    pdata.alive = true
-   escorts[i] = pdata
+   mem.escorts[i] = pdata
    evt.npcRm(npc_id)
    npcs[npc_id] = nil
    local id = evt.npcAdd(
@@ -449,7 +446,7 @@ function approachPilot( npc_id )
    npcs[id] = pdata
    evt.save(true)
 
-   local edata = escorts[i]
+   local edata = mem.escorts[i]
    shiplog.create( logidstr, _("Hired Escorts"), _("Hired Escorts") )
    shiplog.append( logidstr, fmt.f(_("You hired a {ship} ship named '{name}' for {deposit_text} and {royalty_percent:.1f}% of mission earnings."), edata ) )
 end

@@ -63,7 +63,7 @@ local stealthsys = system.get("Zerantix")
 --    3: talked to old man again
 --    4: talk to scavengers, going to zerantix
 --    5: looted ship
-misn_state = nil
+mem.misn_state = nil
 local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 
 local scavengers_encounter -- Forward-declared functions
@@ -82,8 +82,8 @@ end
 function accept ()
    approach_maikki()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -102,7 +102,7 @@ end
 function generate_npc ()
    if planet.cur() == planet.get("Cerberus") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
-      if misn_state==3 or misn_state==4 or bribed_scavengers==true then
+      if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
    elseif planet.cur() == planet.get("Minerva Station") then
@@ -115,13 +115,13 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
-   if misn_state==nil then
+   if mem.misn_state==nil then
       maikki:rename( _("Distraught Young Woman") )
    end
    vn.music( minerva.loops.maikki )
    vn.transition("hexagon")
 
-   if misn_state==nil then
+   if mem.misn_state==nil then
       -- Start mission
       vn.na(_("You approach a young woman who seems somewhat distraught. It looks like she has something important on her mind."))
       maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so…"
@@ -146,7 +146,7 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn_state = -1
+         mem.misn_state = -1
          minerva.log.maikki(_("You have agreed to help Maikki find her father (Kex)."))
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
@@ -190,7 +190,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       {_("Ask about her father"), "father"},
       {_("Leave"), "leave"},
    }
-   if misn_state and misn_state >=4 then
+   if mem.misn_state and mem.misn_state >=4 then
       table.insert( opts, 1, {_("Show her the picture"), "showloot"} )
    end
    vn.label( "menu" )
@@ -210,11 +210,11 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
    maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
    vn.func( function ()
-      if misn_state < 0 then
-         misn_state = 0
+      if mem.misn_state < 0 then
+         mem.misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
             { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
-         misn_marker = misn.markerAdd( searchsys, "low" )
+         mem.misn_marker = misn.markerAdd( searchsys, "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
       end
    end )
@@ -241,7 +241,7 @@ She looks clearly excited at the possibility.]]))
    vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      mission_finish = true
+      mem.mission_finish = true
       minerva.log.maikki(_("You gave Maikki the information you found in the nebula about her father.") )
    end )
    vn.done("hexagon")
@@ -256,7 +256,7 @@ She looks clearly excited at the possibility.]]))
    vn.run()
 
    -- Can't run it in the VN or it causes an error
-   if mission_finish then
+   if mem.mission_finish then
       misn.finish(true)
    end
 end
@@ -277,13 +277,13 @@ function approach_oldman ()
       {_("Ask about the Nebula"), "nebula"},
       {_("Leave"), "leave"},
    }
-   if misn_state>=2 then
+   if mem.misn_state>=2 then
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
-   if misn_state >=4 then
+   if mem.misn_state >=4 then
       table.insert( opts, 1, {fmt.f(_("Ask about {sys}"), {sys=stealthsys}), "stealthmisn"} )
    end
-   if misn_state >=5 then
+   if mem.misn_state >=5 then
       table.insert( opts, 1, {_("Show him the picture"), "showloot"} )
    end
    vn.menu( opts )
@@ -296,9 +296,9 @@ He nods reflectively.]]))
 He takes a long swig from his drink.]]))
    om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
    vn.func( function ()
-      if misn_state==0 then
-         misn.markerMove( misn_marker, cutscenesys )
-         misn_state=1
+      if mem.misn_state==0 then
+         misn.markerMove( mem.misn_marker, cutscenesys )
+         mem.misn_state=1
       end
    end )
    vn.jump( "menu_msg" )
@@ -328,8 +328,8 @@ He downs his drink and orders another.]]))
    om(_([["Suppose not. However, you could ask them over there. Those two look like they could be scavengers."]]))
    vn.na(_("He points to a table with two fairly drunk people."))
    vn.func( function ()
-      if misn_state==2 then
-         misn_state=3
+      if mem.misn_state==2 then
+         mem.misn_state=3
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
    end )
@@ -364,7 +364,7 @@ function approach_scavengers ()
          { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
 
-   if bribed_scavengers==true then
+   if mem.bribed_scavengers==true then
       -- TODO maybe more text?
       scavB(_([["What are you looking at?"]]))
       vn.done()
@@ -372,7 +372,7 @@ function approach_scavengers ()
 
    vn.na(_("You see some scavengers at the bar. They are clearly plastered. They don't really seem to be aware of your presence."))
 
-   if misn_state==4 then
+   if mem.misn_state==4 then
       -- Already got mission, just give player a refresher
       scavB(_([["Aren't you drinking too much. Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
       scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
@@ -394,11 +394,11 @@ He pats his biceps in a fairly uninspiring way.]]))
       scavA(_([["To our future success in Zerantix!"]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
-         if misn_state==3 then
+         if mem.misn_state==3 then
             misn.osdCreate( _("Finding Maikki's Father"),
                { fmt.f(_("Follow the scavengers in the {sys} system"), {sys=stealthsys}) } )
-            misn.markerMove( misn_marker, stealthsys )
-            misn_state=4
+            misn.markerMove( mem.misn_marker, stealthsys )
+            mem.misn_state=4
             minerva.log.maikki(_("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
       end )
@@ -410,7 +410,7 @@ end
 
 
 function enter ()
-   if system.cur() == cutscenesys and misn_state==1 then
+   if system.cur() == cutscenesys and mem.misn_state==1 then
       -- Set up system
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -424,12 +424,12 @@ function enter ()
       pscavB = pilot.add( "Vendetta", fscav, pos, _("Scavenger Vendetta"), {ai="independent"} )
       pscavB:control()
       pscavB:brake()
-      cuttimer = hook.timer( 3.0, "cutscene_timer" )
+      mem.cuttimer = hook.timer( 3.0, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
       -- Timer in case the player doesn't find them in a long while
-      sysmarker = nil
-      cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
-   elseif system.cur() == stealthsys and misn_state==4 then
+      mem.sysmarker = nil
+      mem.cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
+   elseif system.cur() == stealthsys and mem.misn_state==4 then
       -- Set up system
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -458,7 +458,7 @@ function enter ()
    end
 end
 
-cutscene_msg = 0
+mem.cutscene_msg = 0
 local cutscene_messages = {
    _("Sensors damaged. Requesting assistance."),
    _("S.O.S. Scavenger here, sensors damaged."),
@@ -470,35 +470,35 @@ function cutscene_timer ()
    if not pscavB:exists() then return end
    local dist = pscavB:pos():dist( player.pos() )
    pscavB:taskClear()
-   hook.rm( hailhook )
-   hailhook = nil
+   hook.rm( mem.hailhook )
+   mem.hailhook = nil
    if (dist < 1000) then
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()
-      hailhook = hook.pilot( pscavB, "hail", "cutscene_hail" )
+      mem.hailhook = hook.pilot( pscavB, "hail", "cutscene_hail" )
       -- Get rid of the timeout hook
-      if cuttimeout then
-         hook.rm( cuttimeout )
-         cuttimeout = nil
+      if mem.cuttimeout then
+         hook.rm( mem.cuttimeout )
+         mem.cuttimeout = nil
       end
-      if sysmarker then
-         system.mrkRm( sysmarker )
-         sysmarker = nil
+      if mem.sysmarker then
+         system.mrkRm( mem.sysmarker )
+         mem.sysmarker = nil
       end
    else
       pscavB:brake()
-      cutscene_msg = (cutscene_msg % #cutscene_messages)+1
-      local msg = cutscene_messages[ cutscene_msg ]
+      mem.cutscene_msg = (mem.cutscene_msg % #cutscene_messages)+1
+      local msg = cutscene_messages[ mem.cutscene_msg ]
       pscavB:broadcast( msg )
    end
-   cuttimer = hook.timer( 3.0, "cutscene_timer" )
+   mem.cuttimer = hook.timer( 3.0, "cutscene_timer" )
 end
 
 
 function cutscene_timeout ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
-   cuttimeout = nil
+   mem.sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
+   mem.cuttimeout = nil
 end
 
 
@@ -538,15 +538,15 @@ function cutscene_hail ()
    -- Was player an asshole?
    if asshole then
       pscavB:broadcast(_("Asshole!"))
-      hook.rm( cuttimer ) -- reset timer
-      cuttimer = hook.timer( 3.0, "cutscene_timer" )
+      hook.rm( mem.cuttimer ) -- reset timer
+      mem.cuttimer = hook.timer( 3.0, "cutscene_timer" )
    else
       pscavB:broadcast(_("Thanks!"))
       pscavB:taskClear()
       pscavB:hyperspace( searchsys )
-      misn.markerMove( misn_marker, searchsys )
-      misn_state = 2
-      hook.rm( cuttimer ) -- reset timer
+      misn.markerMove( mem.misn_marker, searchsys )
+      mem.misn_state = 2
+      hook.rm( mem.cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
       minerva.log.maikki(_("You helped a scavenger in Arandon."))
    end
@@ -559,7 +559,7 @@ function stealthstart ()
    pp:brake()
 
    -- Start the cinematics
-   stealthanimation = 0
+   mem.stealthanimation = 0
    player.cinematics( true )
    camera.set( waypoints[1], true )
    hook.timer( 1.0, "stealthstartanimation" )
@@ -567,28 +567,28 @@ end
 
 
 function stealthstartanimation ()
-   stealthanimation = stealthanimation+1
-   if stealthanimation==1 then
+   mem.stealthanimation = mem.stealthanimation+1
+   if mem.stealthanimation==1 then
       pscavB:broadcast( _("Damnit! I thought I told you to fix the sensors.") , true )
       hook.timer( 4.0, "stealthstartanimation" )
-   elseif stealthanimation==2 then
+   elseif mem.stealthanimation==2 then
       pscavA:broadcast( _("Hey! I fixed them, it's this damn nebula that must have broken them again."), true )
       hook.timer( 4.0, "stealthstartanimation" )
-   elseif stealthanimation==3 then
+   elseif mem.stealthanimation==3 then
       pscavB:broadcast( _("Damnit. I really dislike broadcasting, but my encryption also seems damaged now."), true )
       hook.timer( 4.0, "stealthstartanimation" )
-   elseif stealthanimation==4 then
+   elseif mem.stealthanimation==4 then
       pscavA:broadcast( _("Don't worry, it's not like there's anybody else here."), true )
       hook.timer( 4.0, "stealthstartanimation" )
-   elseif stealthanimation==5 then
+   elseif mem.stealthanimation==5 then
       pscavB:broadcast( _("Let's just get this over with."), true )
       hook.timer( 4.0, "stealthstartanimation" )
-   elseif stealthanimation==6 then
+   elseif mem.stealthanimation==6 then
       -- Back to player
       player.cinematics( false )
       camera.set( nil, true )
       player.pilot():control(false)
-      stealthtarget = 0
+      mem.stealthtarget = 0
       hook.timer( 4.0, "stealthheartbeat" )
    end
 end
@@ -618,17 +618,17 @@ function stealthbroadcast ()
       { pscavB, -1, _("That's what you said last time too!") }
    }
 
-   stealthmsg = stealthmsg or 0
-   stealthmsg = stealthmsg+1
-   if stealthmsg > #stealthmessages then
+   mem.stealthmsg = mem.stealthmsg or 0
+   mem.stealthmsg = mem.stealthmsg+1
+   if mem.stealthmsg > #stealthmessages then
       return
    end
 
-   local msg = stealthmessages[ stealthmsg ]
+   local msg = stealthmessages[ mem.stealthmsg ]
    msg[1]:broadcast( msg[3] )
 
    if msg[2] > 0 then
-      stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
+      mem.stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
    end
 end
 
@@ -636,12 +636,12 @@ function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
    if not pp:flags("stealth") and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
-      if stealthfailing==nil then
-         stealthfailing = 0
+      if mem.stealthfailing==nil then
+         mem.stealthfailing = 0
          player.msg("#rYou are about to be discovered!")
       end
-      stealthfailing = stealthfailing+1
-      if stealthfailing > 6 then
+      mem.stealthfailing = mem.stealthfailing+1
+      if mem.stealthfailing > 6 then
          pscavA:broadcast( _("Run!") )
          pscavB:broadcast( _("There's definately something there! Scram!") )
          for k,p in ipairs{pscavA, pscavB} do
@@ -652,12 +652,12 @@ function stealthheartbeat ()
          return
       end
    elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
-      if stealthfailing==nil then
-         stealthfailing = 0
+      if mem.stealthfailing==nil then
+         mem.stealthfailing = 0
          player.msg( _("#rYou are about to lose track of the scavengers!!") )
       end
-      stealthfailing = stealthfailing+1
-      if stealthfailing > 6 then
+      mem.stealthfailing = mem.stealthfailing+1
+      if mem.stealthfailing > 6 then
          pscavA:rm()
          pscavB:rm()
          if wreck ~= nil then
@@ -667,26 +667,26 @@ function stealthheartbeat ()
          return
       end
    else
-      stealthfailing = nil
+      mem.stealthfailing = nil
    end
 
-   if stealthtarget==0 then
+   if mem.stealthtarget==0 then
       -- Starting out
       pscavB:broadcast( _("Let's get going.") )
       pscavA:taskClear()
       pscavB:taskClear()
       pscavA:follow( pscavB )
-      stealthtarget = 1
-      pscavB:moveto( waypoints[stealthtarget] )
+      mem.stealthtarget = 1
+      pscavB:moveto( waypoints[mem.stealthtarget] )
       hook.timer( 3.0, "stealthbroadcast" )
    else
       -- Check if made it to next target
-      local pos = waypoints[ stealthtarget ]
+      local pos = waypoints[ mem.stealthtarget ]
       dist = pscavA:pos():dist( pos )
       if dist < 500 then
          -- Finished current target, go to next
-         stealthtarget = stealthtarget+1
-         if stealthtarget > #waypoints then
+         mem.stealthtarget = mem.stealthtarget+1
+         if mem.stealthtarget > #waypoints then
             -- Made it to target
             for k,p in ipairs{ pscavA, pscavB } do
                p:taskClear()
@@ -697,34 +697,34 @@ function stealthheartbeat ()
             pp:brake()
             player.cinematics( true )
             camera.set( waypoints[ #waypoints ], true )
-            wreckscene = 0
+            mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
             return
          else
             -- pscavA is following pscavB
-            if stealthtarget==4 then
-               if not stopped_once then
+            if mem.stealthtarget==4 then
+               if not mem.stopped_once then
                   pscavB:taskClear()
                   pscavB:brake()
                   pscavB:broadcast( _("Did you see something?") )
-                  stealthtarget = 3 -- Should trigger another catch
-                  stopped_once = true
+                  mem.stealthtarget = 3 -- Should trigger another catch
+                  mem.stopped_once = true
                   hook.timer( 5.0, "stealthheartbeat" )
                   return
                else
                   pscavA:broadcast( _("It's your imagination. Let's get this over with.") )
                   pscavB:taskClear()
-                  pscavB:moveto( waypoints[stealthtarget] )
+                  pscavB:moveto( waypoints[mem.stealthtarget] )
                   hook.timer( 3.0, "stealthbroadcast" )
                end
             else
                pscavB:taskClear()
-               pscavB:moveto( waypoints[stealthtarget] )
+               pscavB:moveto( waypoints[mem.stealthtarget] )
             end
          end
 
          -- Spawn the wreck
-         if stealthtarget==4 then
+         if mem.stealthtarget==4 then
             pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
             wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
             wreck:disable()
@@ -741,18 +741,18 @@ end
 
 
 function wreckcutscene ()
-   wreckscene = wreckscene + 1
-   if wreckscene==1 then
+   mem.wreckscene = mem.wreckscene + 1
+   if mem.wreckscene==1 then
       pscavB:broadcast( _("Looks like we made it!"), true )
-   elseif wreckscene==2 then
+   elseif mem.wreckscene==2 then
       pscavA:broadcast( _("We came all the way for this wreck? It better be worth it…"), true )
-   elseif wreckscene==3 then
+   elseif mem.wreckscene==3 then
       pscavB:broadcast( _("They said it was whatshisname… Xex? Vex? Some famous guy's wreck."), true )
-   elseif wreckscene==4 then
+   elseif mem.wreckscene==4 then
       pscavA:broadcast( _("Wait, someone is there!"), true )
-   elseif wreckscene==5 then
+   elseif mem.wreckscene==5 then
       scavengers_encounter()
-      found_wreck = true
+      mem.found_wreck = true
       local pp = player.pilot()
       pp:control( false )
       player.cinematics( false )
@@ -808,7 +808,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          vn.jump("poor")
       else
          player.pay( -bribeamount )
-         bribed_scavengers = true
+         mem.bribed_scavengers = true
          var.push( "maikki_scavengers_alive", true )
          for k,p in ipairs{ pscavA, pscavB } do
             p:taskClear()
@@ -849,7 +849,7 @@ end
 
 
 function scav_attacked ()
-   if found_wreck then return end
+   if mem.found_wreck then return end
    player.msg(_("MISSION FAILED! Scavenger attacked."))
    for k,p in ipairs{pscavA, pscavB} do
       if p:exists() then
@@ -915,8 +915,8 @@ function board_wreck ()
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
          { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=mainsys}) } )
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
-   misn_state=5
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   mem.misn_state=5
 
    -- Clear scavengers if exist
    for k,p in ipairs{pscavA, pscavB} do

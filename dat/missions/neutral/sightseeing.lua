@@ -64,27 +64,26 @@ ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they conte
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
 function create ()
-   paying_faction = planet.cur():faction()
-   startingplanet = planet.cur()
-   startingsystem = system.cur()
+   mem.paying_faction = planet.cur():faction()
+   mem.startingplanet = planet.cur()
+   mem.startingsystem = system.cur()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2 )
-   systems[ #systems + 1 ] = startingsystem
+   systems[ #systems + 1 ] = mem.startingsystem
 
    if #systems <= 0 then
       misn.finish( false )
    end
 
-   missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   local planets = missys:planets()
+   local planets = mem.missys:planets()
    local numpoints = rnd.rnd( 2, #planets )
-   attractions = numpoints
-   points = {}
-   points["__save"] = true
+   mem.attractions = numpoints
+   mem.points = {}
    while numpoints > 0 and #planets > 0 do
       local p = rnd.rnd( 1, #planets )
-      points[ #points + 1 ] = planets[p]
+      mem.points[ #mem.points + 1 ] = planets[p]
       numpoints = numpoints - 1
 
       local new_planets = {}
@@ -95,36 +94,36 @@ function create ()
       end
       planets = new_planets
    end
-   if #points < 2 then
+   if #mem.points < 2 then
       misn.finish( false )
    end
 
-   local friend = missys:presence("friendly")
-   local foe = missys:presence("hostile")
+   local friend = mem.missys:presence("friendly")
+   local foe = mem.missys:presence("hostile")
    if friend < foe then
       misn.finish( false )
    end
 
-   credits = system.cur():jumpDist(missys) * 2500 + attractions * 4000
-   credits_nolux = credits + rnd.sigma() * ( credits / 3 )
-   credits = credits * rnd.rnd( 2, 6 )
-   credits = credits + rnd.sigma() * ( credits / 5 )
-   nolux = false
-   nolux_known = false
+   mem.credits = system.cur():jumpDist(mem.missys) * 2500 + mem.attractions * 4000
+   mem.credits_nolux = mem.credits + rnd.sigma() * ( mem.credits / 3 )
+   mem.credits = mem.credits * rnd.rnd( 2, 6 )
+   mem.credits = mem.credits + rnd.sigma() * ( mem.credits / 5 )
+   mem.nolux = false
+   mem.nolux_known = false
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=missys} ) )
-   misn.setDesc( fmt.f(_("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the {sys} system."), {sys=missys} ) )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=mem.missys} ) )
+   misn.setDesc( fmt.f(_("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the {sys} system."), {sys=mem.missys} ) )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
    if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-      if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(credits_nolux)} ) ) then
-         nolux_known = true
-         misn.setReward( fmt.credits( credits_nolux ) )
+      if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
+         mem.nolux_known = true
+         misn.setReward( fmt.credits( mem.credits_nolux ) )
       else
          misn.finish()
       end
@@ -133,13 +132,13 @@ function accept ()
    misn.accept()
 
    misn.osdCreate( _("Sightseeing"), {
-      fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
+      fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} ),
       _("Go to all indicated points"),
-      fmt.f(_("Return to {pnt} in the {sys} system and collect your pay"), {pnt=startingplanet, sys=startingsystem} ),
+      fmt.f(_("Return to {pnt} in the {sys} system and collect your pay"), {pnt=mem.startingplanet, sys=mem.startingsystem} ),
    } )
    local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
-   civs = misn.cargoAdd( c, 0 )
-   job_done = false
+   mem.civs = misn.cargoAdd( c, 0 )
+   mem.job_done = false
 
    hook.enter( "enter" )
    hook.jumpout( "jumpout" )
@@ -148,9 +147,9 @@ end
 
 
 function enter ()
-   if system.cur() == missys and not job_done then
+   if system.cur() == mem.missys and not mem.job_done then
       if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-         nolux = true
+         mem.nolux = true
       end
       set_marks()
       timer()
@@ -159,9 +158,9 @@ end
 
 
 function jumpout ()
-   if not job_done and system.cur() == missys then
+   if not mem.job_done and system.cur() == mem.missys then
       misn.osdActive( 1 )
-      hook.rm( timer_hook )
+      hook.rm( mem.timer_hook )
       if marks ~= nil then
          for i, m in ipairs(marks) do
             if m ~= nil then
@@ -176,13 +175,13 @@ end
 
 function land ()
    jumpout()
-   if job_done and planet.cur() == startingplanet then
-      misn.cargoRm( civs )
+   if mem.job_done and planet.cur() == mem.startingplanet then
+      misn.cargoRm( mem.civs )
 
       local ttl = _("Mission Completed")
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
-      if nolux ~= nolux_known then
-         if nolux then
+      if mem.nolux ~= mem.nolux_known then
+         if mem.nolux then
             ttl = _("Disappointment")
             txt = pay_s_nolux_text[ rnd.rnd( 1, #pay_s_nolux_text ) ]
          else
@@ -194,10 +193,10 @@ function land ()
       vntk.msg( ttl, txt )
 
       pir.reputationNormalMission(rnd.rnd(2,3))
-      if nolux then
-         player.pay( credits_nolux )
+      if mem.nolux then
+         player.pay( mem.credits_nolux )
       else
-         player.pay( credits )
+         player.pay( mem.credits )
       end
 
       misn.finish( true )
@@ -206,18 +205,17 @@ end
 
 
 function timer ()
-   hook.rm( timer_hook )
+   hook.rm( mem.timer_hook )
 
    local player_pos = player.pos()
 
-   if #points > 0 then
+   if #mem.points > 0 then
       misn.osdActive( 2 )
 
       local updated = false
       local new_points = {}
-      new_points["__save"] = true
 
-      for i, p in ipairs(points) do
+      for i, p in ipairs(mem.points) do
          local point_pos = p:pos()
 
          if player_pos:dist( point_pos ) < 500 then
@@ -230,21 +228,21 @@ function timer ()
       end
 
       if updated then
-         points = new_points
+         mem.points = new_points
          set_marks()
       end
    end
 
    -- Another check since the previous block could change the result
-   if #points <= 0 then
-      job_done = true
-      player.msg( fmt.f(_("All attractions visited. Return to {pnt} and collect your pay."), {pnt=startingplanet} ) )
+   if #mem.points <= 0 then
+      mem.job_done = true
+      player.msg( fmt.f(_("All attractions visited. Return to {pnt} and collect your pay."), {pnt=mem.startingplanet} ) )
       misn.osdActive( 3 )
-      misn.markerMove( marker, startingsystem )
+      misn.markerMove( mem.marker, mem.startingsystem )
    end
 
-   if not job_done then
-      timer_hook = hook.timer( 0.05, "timer" )
+   if not mem.job_done then
+      mem.timer_hook = hook.timer( 0.05, "timer" )
    end
 end
 
@@ -261,7 +259,7 @@ function set_marks ()
 
    -- Add new marks
    marks = {}
-   for i, p in ipairs(points) do
+   for i, p in ipairs(mem.points) do
       marks[i] = system.mrkAdd( p:pos(), _("Attraction") )
    end
 end

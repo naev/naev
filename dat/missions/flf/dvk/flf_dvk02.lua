@@ -38,15 +38,15 @@ comm_boss_insults[3] = _("What, did you really think I would be impressed that e
 comm_boss_insults[4] = _("Keep hailing all you want, but I don't listen to weaklings!")
 comm_boss_insults[5] = _("We'll have your ship plundered in no time at all!")
 
-osd_desc    = {__save=true}
-osd_desc[2] = _("Find pirates and try to talk to (hail) them")
+mem.osd_desc    = {}
+mem.osd_desc[2] = _("Find pirates and try to talk to (hail) them")
 
-osd_desc[3] = _("Return to FLF base")
+mem.osd_desc[3] = _("Return to FLF base")
 
 function create ()
-   missys = system.get( "Tormulex" )
-   missys2 = system.get( "Anger" )
-   if not misn.claim( missys ) then
+   mem.missys = system.get( "Tormulex" )
+   mem.missys2 = system.get( "Anger" )
+   if not misn.claim( mem.missys ) then
       misn.finish( false )
    end
 
@@ -57,34 +57,34 @@ end
 function accept ()
    tk.msg( _("The enemy of my enemy..."), fmt.f( _([[Benito motions for you to sit. She doesn't seem quite as calm and relaxed as she usually is.
     "Hello again, {player}. Look: we have a pretty bad situation here. As you may have guessed, we rely on... unconventional sources for supplies. Unfortunately, we seem to have hit a bit of a snag. See, one of our important sources has stopped supplying us, and I fear we may be cut off and no longer able to carry out our operations before long if we don't do something.
-    "But that being said, I think I may have found a solution. See, we have reason to believe that we are actually neighboring a pirate stronghold. We're not entirely sure, but we have detected some evidence of occasional pirate activity in the nearby {sys} system."]]), {player=player.name(), sys=missys} ) )
+    "But that being said, I think I may have found a solution. See, we have reason to believe that we are actually neighboring a pirate stronghold. We're not entirely sure, but we have detected some evidence of occasional pirate activity in the nearby {sys} system."]]), {player=player.name(), sys=mem.missys} ) )
    if tk.yesno( _("The enemy of my enemy..."), fmt.f( _([[You raise an eyebrow. It seems rather odd that pirates would be in such a remote system. Perhaps it could be a gateway of some sort?
     "You must be thinking the same thing," Benito pipes up. "Yes, that is a very strange system to see pirates in, even occasionally. That's why we think there is a secret pirate stronghold nearby. It may even be the one associated with piracy in the Frontier.
-    "We must establish trading relations with that stronghold at once. This could give us just the edge we need against the Dvaereds. I honestly don't know how you can go about doing it, but my recommendation would be to go to the {sys} system and see if you find any pirates. Tell them you're on official FLF business, and that we're seeking to become trade partners with them. Are you in?"]]), {sys=missys} ) ) then
+    "We must establish trading relations with that stronghold at once. This could give us just the edge we need against the Dvaereds. I honestly don't know how you can go about doing it, but my recommendation would be to go to the {sys} system and see if you find any pirates. Tell them you're on official FLF business, and that we're seeking to become trade partners with them. Are you in?"]]), {sys=mem.missys} ) ) then
       tk.msg( _("...is my friend."), fmt.f( _([["Excellent! I knew you would do it." Benito becomes visibly more relaxed, almost her usual self. "Now, {player}, I'm sure you're well aware of this, but please remember that pirates are extremely dangerous. They will probably attack you, and they may have demands. I'm counting on you to overcome any... obstacles you may encounter and secure a deal." You nod in understanding. "Good," she says. "Report back here with your results." Benito then excuses herself, presumably to take care of other things.]]), {player=player.name()} ) )
 
       misn.accept()
 
-      osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
-      misn.osdCreate( _("Pirate Alliance"), osd_desc )
+      mem.osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} )
+      misn.osdCreate( _("Pirate Alliance"), mem.osd_desc )
       misn.setTitle( _("Pirate Alliance") )
-      misn.setDesc( fmt.f( _("You are to seek out pirates in the {sys} system and try to convince them to become trading partners with the FLF."), {sys=missys} ) )
-      marker = misn.markerAdd( missys, "plot" )
+      misn.setDesc( fmt.f( _("You are to seek out pirates in the {sys} system and try to convince them to become trading partners with the FLF."), {sys=mem.missys} ) )
+      mem.marker = misn.markerAdd( mem.missys, "plot" )
       misn.setReward( _("Supplies for the FLF") )
 
-      stage = 0
-      pirates_left = 0
-      boss_hailed = false
-      boss_impressed = false
+      mem.stage = 0
+      mem.pirates_left = 0
+      mem.boss_hailed = false
+      mem.boss_impressed = false
       boss = nil
       pirates = nil
-      boss_hook = nil
+      mem.boss_hook = nil
 
-      ore_needed = 40
-      credits = 300e3
-      reputation = 1
-      pir_reputation = 10
-      pir_starting_reputation = faction.get("Dreamer Clan"):playerStanding()
+      mem.ore_needed = 40
+      mem.credits = 300e3
+      mem.reputation = 1
+      mem.pir_reputation = 10
+      mem.pir_starting_reputation = faction.get("Dreamer Clan"):playerStanding()
 
       hook.enter( "enter" )
    else
@@ -95,7 +95,7 @@ end
 
 function pilot_hail_pirate ()
    player.commClose()
-   if stage <= 1 then
+   if mem.stage <= 1 then
       player.msg( _("Har, har, har! You're hailing the wrong ship, buddy. Latest word from the boss is you're a weakling just waiting to be plundered!") )
    else
       player.msg( _("I guess you're not so bad after all!") )
@@ -105,9 +105,9 @@ end
 
 function pilot_hail_boss ()
    player.commClose()
-   if stage <= 1 then
-      if boss_impressed then
-         stage = 2
+   if mem.stage <= 1 then
+      if mem.boss_impressed then
+         mem.stage = 2
          local standing = faction.get("Dreamer Clan"):playerStanding()
          if standing < 25 then
             faction.get("Dreamer Clan"):setPlayerStanding( 25 )
@@ -132,42 +132,42 @@ function pilot_hail_boss ()
     "L-look, we got off on the wrong foot, eh? I've misjudged you lot. I guess FLF pilots can fight after all."]]) )
          tk.msg( _("Not So Weak After All"), fmt.f( _([[You begin to talk to the pirate about what you and the FLF are after, and the look of fear on the pirate's face fades away. "Supplies? Yeah, we've got supplies, alright. But it'll cost you! Heh, heh, heh..." You inquire as to what the cost might be. "Simple, really. We want to build another base in the {sys} system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need another {tonnes} of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
     "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the {sys} system when you have the loot."]]),
-            {sys=missys2:name(), tonnes=fmt.tonnes(ore_needed)} ) )
+            {sys=mem.missys2, tonnes=fmt.tonnes(mem.ore_needed)} ) )
 
          player.outfitAdd( "Map: FLF-Pirate Route" )
-         if marker ~= nil then misn.markerRm( marker ) end
-         marker = misn.markerAdd( missys2, "plot" )
+         if mem.marker ~= nil then misn.markerRm( mem.marker ) end
+         mem.marker = misn.markerAdd( mem.missys2, "plot" )
 
-         osd_desc[4] = fmt.f( _("Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"), {tonnes=fmt.tonnes(ore_needed), sys=missys2} )
-         osd_desc[5] = _("Return to FLF base")
-         misn.osdCreate( _("Pirate Alliance"), osd_desc )
+         mem.osd_desc[4] = fmt.f( _("Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"), {tonnes=fmt.tonnes(mem.ore_needed), sys=mem.missys2} )
+         mem.osd_desc[5] = _("Return to FLF base")
+         misn.osdCreate( _("Pirate Alliance"), mem.osd_desc )
          misn.osdActive( 4 )
       else
-         if boss_hailed then
+         if mem.boss_hailed then
             player.msg( comm_boss_insults[ rnd.rnd( 1, #comm_boss_insults ) ] )
          else
-            boss_hailed = true
-            if stage <= 0 then
+            mem.boss_hailed = true
+            if mem.stage <= 0 then
                tk.msg( _("Who are you calling a weakling?"), _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why would I want to talk to a normie like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
     The pirate immediately cuts his connection. Well, if these pirates won't talk to you, maybe it's time to show him what you're made of. Destroying just one or two of his escorts should do the trick.]]) )
-               osd_desc[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
-               osd_desc[4] = _("Return to FLF base")
-               misn.osdCreate( _("Pirate Alliance"), osd_desc )
+               mem.osd_desc[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
+               mem.osd_desc[4] = _("Return to FLF base")
+               misn.osdCreate( _("Pirate Alliance"), mem.osd_desc )
                misn.osdActive( 3 )
             else
                tk.msg( _("Still Not Impressed"), _([[The pirate leader comes on your screen once again. "Lucky shot, normie!" he says before promptly terminating the connection once again. Perhaps you need to destroy some more of his escorts so he can see you're just a bit more than a "normie".]]) )
             end
          end
       end
-   elseif player.pilot():cargoHas( "Ore" ) >= ore_needed then
+   elseif player.pilot():cargoHas( "Ore" ) >= mem.ore_needed then
       tk.msg( _("I knew we could work something out"), _([["Ha, you came back after all! Wonderful. I'll just take that ore, then." You hesitate for a moment, but considering the number of pirates around, they'll probably take it from you by force if you refuse at this point. You jettison the cargo into space, which the Kestrel promptly picks up with a tractor beam. "Excellent! Well, it's been a pleasure doing business with you. Send your mates over to the new station whenever you're ready. It should be up and running in just a couple periods or so. And in the meantime, you can consider yourselves one of us! Bwa ha ha!"
     You exchange what must for lack of a better word be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]]) )
-      stage = 3
-      player.pilot():cargoRm( "Ore", ore_needed )
-      hook.rm( boss_hook )
+      mem.stage = 3
+      player.pilot():cargoRm( "Ore", mem.ore_needed )
+      hook.rm( mem.boss_hook )
       hook.land( "land" )
       misn.osdActive( 5 )
-      if marker ~= nil then misn.markerRm( marker ) end
+      if mem.marker ~= nil then misn.markerRm( mem.marker ) end
    else
       player.msg( _("Don't be bothering me without the loot, you hear?") )
    end
@@ -175,12 +175,12 @@ end
 
 
 function pilot_death_pirate ()
-   if stage <= 1 then
-      pirates_left = pirates_left - 1
-      stage = 1
-      boss_hailed = false
-      if pirates_left <= 0 or rnd.rnd() < 0.25 then
-         boss_impressed = true
+   if mem.stage <= 1 then
+      mem.pirates_left = mem.pirates_left - 1
+      mem.stage = 1
+      mem.boss_hailed = false
+      if mem.pirates_left <= 0 or rnd.rnd() < 0.25 then
+         mem.boss_impressed = true
       end
    end
 end
@@ -193,9 +193,9 @@ end
 
 
 function enter ()
-   if stage <= 1 then
-      stage = 0
-      if system.cur() == missys then
+   if mem.stage <= 1 then
+      mem.stage = 0
+      if system.cur() == mem.missys then
          pilot.clear()
          pilot.toggleSpawn( false )
          local r = system.cur():radius()
@@ -207,8 +207,8 @@ function enter ()
          boss:setHostile()
          boss:setHilight()
 
-         pirates_left = 4
-         pirates = fleet.add( pirates_left, "Hyena", "Dreamer Clan", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
+         mem.pirates_left = 4
+         pirates = fleet.add( mem.pirates_left, "Hyena", "Dreamer Clan", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -217,19 +217,19 @@ function enter ()
 
          misn.osdActive( 2 )
       else
-         osd_desc[3] = _("Return to FLF base")
-         osd_desc[4] = nil
-         misn.osdCreate( _("Pirate Alliance"), osd_desc )
+         mem.osd_desc[3] = _("Return to FLF base")
+         mem.osd_desc[4] = nil
+         misn.osdCreate( _("Pirate Alliance"), mem.osd_desc )
          misn.osdActive( 1 )
       end
-   elseif stage <= 2 then
-      if system.cur() == missys2 then
+   elseif mem.stage <= 2 then
+      if system.cur() == mem.missys2 then
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
          boss = pilot.add( "Pirate Kestrel", "Dreamer Clan", vec, nil, {ai="pirate_norun"} )
          hook.pilot( boss, "death", "pilot_death_boss" )
-         boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
+         mem.boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()
          boss:setHilight()
          boss:setVisible()
@@ -239,15 +239,15 @@ end
 
 
 function land ()
-   if stage >= 3 and planet.cur():faction() == faction.get( "FLF" ) then
+   if mem.stage >= 3 and planet.cur():faction() == faction.get( "FLF" ) then
       tk.msg( _("Just The Edge We Need"), fmt.f( _([[You greet Benito in a friendly manner as always, sharing your story and telling her the good news before handing her a chip with the map data on it. She seems pleased. "Excellent," she says. "We'll begin sending our trading convoys out right away. We'll need lots of supplies for our next mission! Thank you for your service, {player}. Your pay has been deposited into your account. It will be a while before we'll be ready for your next big mission, so you can do some missions on the mission computer in the meantime. And don't forget to visit the Pirate worlds yourself and bring your own ship up to par!
     "Oh, one last thing. Make sure you stay on good terms with the pirates, yeah? The next thing you should probably do is buy a Skull and Bones ship; pirates tend to respect those who use their ships more than those who don't. And make sure to destroy Dvaered scum with the pirates around! That should keep your reputation up." You make a mental note to do what she suggests as she excuses herself and heads off.]]), {player=player.name()} ) )
       diff.apply( "Fury_Station" )
       diff.apply( "flf_pirate_ally" )
-      player.pay( credits )
+      player.pay( mem.credits )
       flf.setReputation( 50 )
-      faction.get("FLF"):modPlayer( reputation )
-      faction.get("Dreamer Clan"):modPlayerSingle( pir_reputation )
+      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("Dreamer Clan"):modPlayerSingle( mem.pir_reputation )
       flf.addLog( _([[You helped the Pirates to build a new base in the Anger system and established a trade alliance between the FLF and the Pirates. Benito suggested that you should buy a Skull and Bones ship from the pirates and destroy Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you may want to upgrade your ship now that you have access to the black market.]]) )
       misn.finish( true )
    end
@@ -255,7 +255,7 @@ end
 
 
 function abort ()
-   faction.get("Dreamer Clan"):setPlayerStanding( pir_starting_reputation )
+   faction.get("Dreamer Clan"):setPlayerStanding( mem.pir_starting_reputation )
    local hj1, hj2 = jump.get( "Tormulex", "Anger" )
    hj1:setKnown( false )
    hj2:setKnown( false )

@@ -27,17 +27,17 @@ local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_rogue"
 
 function create ()
-   missys = system.get( "Sigur" )
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = system.get( "Sigur" )
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   level = 3
-   ships = 4
-   flfships = 2
+   mem.level = 3
+   mem.ships = 4
+   mem.flfships = 2
 
-   credits = 100e3
+   mem.credits = 100e3
 
-   late_arrival = true
-   late_arrival_delay = rnd.uniform( 10.0, 120.0 )
+   mem.late_arrival = true
+   mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
    misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("Benito seems to be frantically searching for a pilot.") )
 end
@@ -53,14 +53,14 @@ function accept ()
       misn.setTitle( _("The Split") )
       misn.setDesc( _("A fleet of FLF soldiers has betrayed the FLF. Destroy this fleet.") )
       misn.setReward( _("Getting rid of treacherous scum") )
-      marker = misn.markerAdd( missys, "high" )
+      mem.marker = misn.markerAdd( mem.missys, "high" )
 
-      osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
-      misn.osdCreate( _("Rogue FLF"), osd_desc )
+      mem.osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} )
+      misn.osdCreate( _("Rogue FLF"), mem.osd_desc )
 
-      rogue_ships_left = 0
-      job_done = false
-      last_system = planet.cur()
+      mem.rogue_ships_left = 0
+      mem.job_done = false
+      mem.last_system = planet.cur()
 
       hook.enter( "enter" )
       hook.jumpout( "leave" )
@@ -73,10 +73,10 @@ end
 
 function land_flf ()
    leave()
-   last_system = nil
+   mem.last_system = nil
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", _([[Upon your return to the station, you are greeted by Benito. "Thanks once again for a job well done. I really do appreciate it. Not only have those traitors been taken care of, the others have become much more open to the idea that, hey, traitors are traitors and must be eliminated." She hands you a credit chip. "Here is your pay. Thank you again."]]) )
-      player.pay( credits )
+      player.pay( mem.credits )
       flf.setReputation( 98 )
       flf.addLog( _([[Regrettably, some rogue FLF pilots have turned traitor, forcing you to destroy them. Your action helped to assure fellow FLF pilots that treacherous FLF pilots who turn on their comrades are enemies just like any other.]]) )
       misn.finish( true )

@@ -17,4 +17,4 @@
 
 require "missions.rehab_common"
 
-fac = faction.get("Traders Guild")
+mem.fac = faction.get("Traders Guild")

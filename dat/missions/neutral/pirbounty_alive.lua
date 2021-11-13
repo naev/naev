@@ -60,16 +60,16 @@ misn_title[2] = _("Small Alive Bounty in {sys}")
 misn_title[3] = _("Moderate Alive Bounty in {sys}")
 misn_title[4] = _("High Alive Bounty in {sys}")
 misn_title[5] = _("Dangerous Alive Bounty in {sys}")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
-osd_msg[2] = _("Capture {plt}")
+mem.osd_msg[2] = _("Capture {plt}")
 
 function pilot_death ()
-   if board_failed then
+   if mem.board_failed then
       succeed()
-      target_killed = true
+      mem.target_killed = true
    else
-      fail( fmt.f( _("MISSION FAILURE! {plt} has been killed."), {plt=name} ) )
+      fail( fmt.f( _("MISSION FAILURE! {plt} has been killed."), {plt=mem.name} ) )
    end
 end
 
@@ -86,13 +86,13 @@ end
 
 function board_fail ()
    if rnd.rnd() < 0.25 then
-      board_failed = true
-      credits = credits / 5
+      mem.board_failed = true
+      mem.credits = mem.credits / 5
       local t = fmt.f( kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ],
-         {plt=name, credits=fmt.credits(credits)} )
+         {plt=mem.name, credits=fmt.credits(mem.credits)} )
       vntk.msg( _("Better Dead than Free"), t )
-      osd_msg[2] = fmt.f( _("Kill {plt}"), {plt=name} )
-      misn.osdCreate( osd_title, osd_msg )
+      mem.osd_msg[2] = fmt.f( _("Kill {plt}"), {plt=mem.name} )
+      misn.osdCreate( mem.osd_title, mem.osd_msg )
       misn.osdActive( 2 )
    end
 end

@@ -30,7 +30,7 @@ local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Zhiru")
 
 function create ()
-   startworld, startworld_sys = planet.cur()
+   mem.startworld, mem.startworld_sys = planet.cur()
 
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end
@@ -58,7 +58,7 @@ function accept ()
    misn.osdActive(1)
 
    local c = misn.cargoNew( cargoname, cargodesc )
-   cargoID = misn.cargoAdd( c, 0 )
+   mem.cargoID = misn.cargoAdd( c, 0 )
 
    misn.setTitle( _("The Runaway") )
 
@@ -75,7 +75,7 @@ end
 function land ()
   --If we land, check if we're at our destination
    if planet.cur() == targetworld then
-      misn.cargoRm( cargoID )
+      misn.cargoRm( mem.cargoID )
       player.pay( reward )
 
       tk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind yourself.

@@ -159,6 +159,10 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
 
+   /* Create the "mem" table for persistence. */
+   lua_newtable(naevL);
+   nlua_setenv(mission->env, "mem");
+
    /* load the file */
    if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {
       WARN(_("Error loading mission file: %s\n"

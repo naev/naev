@@ -38,18 +38,17 @@ local neu = require "common.neutral"
 
 local reward = 200e3
 
-local badguys, misn_marker -- Non-persistent state
+local badguys, broship, misn_marker -- Non-persistent state
 local spawn_baddies -- Forward-declared functions
 
 function create ()
-   targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
-   targetsys["__save"] = true
+   mem.targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
 
    -- randomly select spawn system and planet where brother will be
-   brosys = targetsys[math.random(3)]
-   bropla = brosys:planets()[math.random(#brosys:planets())]
+   mem.brosys = mem.targetsys[math.random(3)]
+   mem.bropla = mem.brosys:planets()[math.random(#mem.brosys:planets())]
 
-   if not misn.claim(brosys) then
+   if not misn.claim(mem.brosys) then
       misn.finish(false)
    end
 
@@ -72,22 +71,21 @@ function accept ()
    misn.accept()
 
    -- Some variables for keeping track of the mission
-   misn_done      = false
-   attackedTraders = {}
-   attackedTraders["__save"] = true
-   fledTraders = 0
-   misn_base, misn_base_sys = planet.cur()
+   mem.misn_done      = false
+   mem.attackedTraders = {}
+   mem.fledTraders = 0
+   mem.misn_base, mem.misn_base_sys = planet.cur()
 
    -- Set mission details
    misn.setTitle( _("The Lost Brother") )
    misn.setReward( _("Some money and a happy sister.") )
-   local desc = fmt.f(_("Locate the brother in the {1} system, the {2} system, or the {3} system"), targetsys)
+   local desc = fmt.f(_("Locate the brother in the {1} system, the {2} system, or the {3} system"), mem.targetsys)
    misn.setDesc( desc )
    misn.osdCreate(_("The Lost Brother"), {
 	   desc,
 	   _("Hail the Poppy Seed and board it to reunite the siblings"),
    })
-   misn_marker = {[1]=misn.markerAdd( targetsys[1], "low" ), [2]=misn.markerAdd( targetsys[2], "low" ), [3]=misn.markerAdd( targetsys[3], "low" )}
+   misn_marker = {[1]=misn.markerAdd( mem.targetsys[1], "low" ), [2]=misn.markerAdd( mem.targetsys[2], "low" ), [3]=misn.markerAdd( mem.targetsys[3], "low" )}
 
    -- Some flavour text
    tk.msg( _("In the Bar"), _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
@@ -119,11 +117,11 @@ end
 
 function sys_enter ()
    -- Check to see if reaching target system
-   if system.cur() ~= brosys then
-      nmsys = #targetsys
-      for i=1,#targetsys do
-         if system.cur() == targetsys[i] then
-            table.remove(targetsys,i)
+   if system.cur() ~= mem.brosys then
+      mem.nmsys = #mem.targetsys
+      for i=1,#mem.targetsys do
+         if system.cur() == mem.targetsys[i] then
+            table.remove(mem.targetsys,i)
             misn.markerRm(misn_marker[i])
             table.remove(misn_marker,i)
             -- we can break, we found what we were looking for
@@ -132,13 +130,13 @@ function sys_enter ()
          end
       end
       -- if we visited a system without the brother: update OSD
-      if nmsys ~= #targetsys then
+      if mem.nmsys ~= #mem.targetsys then
          misn.osdDestroy()
          local desc
-         if #targetsys == 2 then
-            desc = fmt.f(_("Locate the brother in the {1} system or the {2} system"), targetsys)
+         if #mem.targetsys == 2 then
+            desc = fmt.f(_("Locate the brother in the {1} system or the {2} system"), mem.targetsys)
          else
-            desc = fmt.f(_("Locate the brother in the {1} system"), targetsys)
+            desc = fmt.f(_("Locate the brother in the {1} system"), mem.targetsys)
          end
          misn.osdCreate(_("The Lost Brother"), {
             desc,
@@ -150,7 +148,7 @@ function sys_enter ()
       end
    else
       hook.timer( 3.0, "do_msg2" )
-      broship = pilot.add( "Gawain", "Independent", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
+      broship = pilot.add( "Gawain", "Independent", mem.bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
       broship:outfitRm("cores")
       broship:cargoRm("all")
       broship:outfitAdd("Unicorp D-2 Light Plating")
@@ -163,18 +161,18 @@ function sys_enter ()
       broship:setHilight(true)
       broship:setVisible(true)
       broship:setFuel(true)
-      broship:moveto(bropla:pos() + vec2.new( 400, -400), false)
+      broship:moveto(mem.bropla:pos() + vec2.new( 400, -400), false)
       -- just some moving around, stolen from baron missions ;D
-      idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
+      mem.idlehook = hook.pilot(broship, "idle", "idle",broship,mem.bropla)
       misn.osdActive(2)
       -- get point between jumpgate and broship to spawn mercenaries disencouraging him from following
-      jpt = get_nearest_jump(broship)
+      mem.jpt = get_nearest_jump(broship)
       -- set spawn point between the broship and jumppoint
-      local sp = jpt:pos() * (2/3) + broship:pos() * (1/3)
+      local sp = mem.jpt:pos() * (2/3) + broship:pos() * (1/3)
       badguys = {}
       badguys = spawn_baddies(sp)
 
-      hook.pilot(broship,"hail","got_hailed",broship,jpt,badguys)
+      hook.pilot(broship,"hail","got_hailed",broship,mem.jpt,badguys)
    end
 end
 
@@ -185,8 +183,8 @@ function got_hailed(shipp)
    shipp:taskClear()
    shipp:brake()
    shipp:setActiveBoard(true)
-   hook.pilot(shipp, "board", "got_boarded",shipp,jpt,badguys)
-   hook.rm(idlehook)
+   hook.pilot(shipp, "board", "got_boarded",shipp,mem.jpt,badguys)
+   hook.rm(mem.idlehook)
    player.commClose()
 end
 
@@ -196,7 +194,7 @@ function got_boarded(shipp)
    shipp:setHilight(false)
    shipp:setActiveBoard(false)
    --get nearest jumppoints and let ship escape in this direction
-   shipp:hyperspace(jpt:dest())
+   shipp:hyperspace(mem.jpt:dest())
    tk.msg(_("The Deception"), _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
     You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]]))
    -- turn mercs hostile

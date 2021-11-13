@@ -43,12 +43,12 @@ function create ()
       misn.finish( false )
    end
 
-   missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   pirname = pilotname.pirate()
-   credits = 300e3
-   started = false
+   mem.pirname = pilotname.pirate()
+   mem.credits = 300e3
+   mem.started = false
 
    misn.setNPC( _("Chelsea"), "soromid/unique/chelsea.webp", _("Oh, it's Chelsea! You feel an urge to say hello.") )
 end
@@ -56,23 +56,23 @@ end
 
 function accept ()
    local txt
-   if started then
+   if mem.started then
       txt = fmt.f( _([["Hey, {player}! Any chance you could reconsider? I could use your help."]]), {player=player.name()} )
    else
       txt = fmt.f(_([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
     "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as {plt}. Trouble is they're piloting a ship that's stronger than my own...."
-    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in {sys}. I'll give you {credits} for the trouble. How about it?"]]), {plt=pirname, sys=missys, credits=fmt.credits(credits)} )
+    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in {sys}. I'll give you {credits} for the trouble. How about it?"]]), {plt=mem.pirname, sys=mem.missys, credits=fmt.credits(mem.credits)} )
    end
-   started = true
+   mem.started = true
 
    if tk.yesno( _("A Great Opportunity"), txt ) then
-      tk.msg( _("A Great Opportunity"), fmt.f( _([["Fantastic! Thank you for the help! I'll meet you in {sys} and we can take the pirate out. Let's do this!"]]), {sys=missys} ) )
+      tk.msg( _("A Great Opportunity"), fmt.f( _([["Fantastic! Thank you for the help! I'll meet you in {sys} and we can take the pirate out. Let's do this!"]]), {sys=mem.missys} ) )
       misn.accept()
 
       misn.setTitle( _("Moving Up") )
-      misn.setDesc( fmt.f( _("Chelsea needs you help them kill a wanted pirate in {sys}."), {sys=missys} ) )
-      misn.setReward( fmt.credits( credits ) )
-      marker = misn.markerAdd( missys, "high" )
+      misn.setDesc( fmt.f( _("Chelsea needs you help them kill a wanted pirate in {sys}."), {sys=mem.missys} ) )
+      misn.setReward( fmt.credits( mem.credits ) )
+      mem.marker = misn.markerAdd( mem.missys, "high" )
 
       hook.enter( "enter" )
       hook.jumpout( "leave" )
@@ -85,7 +85,7 @@ end
 
 
 function enter ()
-   if system.cur() == missys then
+   if system.cur() == mem.missys then
       spawn()
    end
 end
@@ -106,9 +106,9 @@ function spawn ()
    p:setVisible( true )
    p:setHilight( true )
 
-   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    -- Spawn Chelsea
-   chelsea = pilot.add( "Lancelot", fass, lastsys, _("Chelsea"), {naked=true} )
+   chelsea = pilot.add( "Lancelot", mem.fass, mem.lastsys, _("Chelsea"), {naked=true} )
    equipopt.generic( chelsea, nil, "elite" )
 
    chelsea:setHealth( 100, 100 )
@@ -128,8 +128,8 @@ end
 
 
 function leave ()
-   lastsys = system.cur()
-   if lastsys == missys then
+   mem.lastsys = system.cur()
+   if mem.lastsys == mem.missys then
       fail( _("MISSION FAILED: You have abandoned the mission.") )
    end
 end
@@ -154,7 +154,7 @@ end
 
 function win_timer ()
    tk.msg( _("Death Of A Pirate"), fmt.f( _([[Chelsea pops up on your viewscreen and grins. "We did it!" they say. "Thanks for all the help, {player}. I've transferred the money into your account. See you next time with my new ship!" You say your goodbyes and go back to your own adventures.]]), {player=player.name()} ) )
-   player.pay( credits )
+   player.pay( mem.credits )
 
    local t = time.get():tonumber()
    var.push( "comingout_time", t )

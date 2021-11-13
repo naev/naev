@@ -41,7 +41,7 @@ local mainsys = system.get("Gammacron")
 --    1. fly to mainsys
 --    2. mission time!
 --    3. hacking center disabled
-misn_state = nil
+mem.misn_state = nil
 local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
 
 
@@ -58,8 +58,8 @@ end
 function accept ()
    approach_zuri()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -69,7 +69,7 @@ function accept ()
       _("Destroy the hacking center"),
       _("Return to Minerva Station"),
    } )
-   mrk_mainsys = misn.markerAdd( mainsys )
+   mem.mrk_mainsys = misn.markerAdd( mainsys )
 
    minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking center at the {sys} system"), {sys=mainsys}) )
    local c = misn.cargoNew( N_("High-Density Explosives"), N_("Explosives that can be used to detonate all sorts of critical infrastructure.") )
@@ -94,7 +94,7 @@ function approach_zuri ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if misn_state==3 then
+   if mem.misn_state==3 then
       vn.na(_("You approach Zuri to report your success. They listen to you intently as you explain how things went down when you took down the hacking center."))
       zuri(_([["Great work out there. This will definitely set the Za'lek scheme back a few decaperiods. Must have been satisfying see the show of fireworks as the hacking station went down. I just wish I was able to see it, but I haven't been able to properly pilot a ship in ages. Boss just never cuts me any slack."]]))
       zuri(_([["I've wired you your reward as always."
@@ -109,7 +109,7 @@ They grin at you.
       vn.na(fmt.reward(reward_amount))
       vn.run()
       misn.finish(true)
-   elseif  misn_state==nil then
+   elseif  mem.misn_state==nil then
       -- Not accepted
       vn.na(_("You approach Zuri who seems to be motioning to you. They seem faintly tired."))
       zuri(_([["I suppose you have a lot of questions, but first things first. Remember the suspicious Za'lek drones? Well, we were able to look more into that, and it seems like they were part of the scouts of an advanced hacking attack on Minerva Station."]]))
@@ -126,7 +126,7 @@ They smile at you.]]))
       vn.done()
 
       vn.label("accept")
-      vn.func( function () misn_state=0 end )
+      vn.func( function () mem.misn_state=0 end )
       zuri(fmt.f(_([["Great! We are always counting on you.
 So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=mainsys}))
       zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
@@ -183,15 +183,15 @@ end
 function enter ()
    -- Must be goal system
    if system.cur() ~= mainsys then
-      if misn_state == 2 then
+      if mem.misn_state == 2 then
          misn.osdActive(1)
-         misn_state = 1
+         mem.misn_state = 1
       end
       return
    end
    -- Must be in mission mode (we allow the player to run away and come back)
-   if misn_state == 3 then return end
-   misn_state = 2
+   if mem.misn_state == 3 then return end
+   mem.misn_state = 2
    misn.osdActive(2)
 
    -- Clear pilots
@@ -453,8 +453,8 @@ function drone_control_update ()
    end
 end
 function hacking_center_dead ()
-   misn.markerMove( mrk_mainsys, planet.get("Minerva Station") )
+   misn.markerMove( mem.mrk_mainsys, planet.get("Minerva Station") )
    misn.osdActive(3)
-   misn_state = 3
+   mem.misn_state = 3
    player.msg("#gThe hacking center has been destroyed!#0")
 end

@@ -26,19 +26,18 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-local civ_fleet, pir_boss, pir_fleet -- Non-persistent state
+local civ_fleet, dv_base, dv_fleet, flf_fleet, pir_boss, pir_fleet -- Non-persistent state
 local finish -- Forward-declared functions
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
-osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
-osd_desc[3] = _("Attack Raglan Outpost until it is destroyed")
-osd_desc[4] = _("Return to FLF base")
-osd_desc["__save"] = true
+mem.osd_desc    = {}
+mem.osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
+mem.osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
+mem.osd_desc[3] = _("Attack Raglan Outpost until it is destroyed")
+mem.osd_desc[4] = _("Return to FLF base")
 
 function create ()
-   missys = system.get( "Haleb" )
-   if not misn.claim( missys ) then
+   mem.missys = system.get( "Haleb" )
+   if not misn.claim( mem.missys ) then
       misn.finish( false )
    end
 
@@ -53,19 +52,19 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
-      misn.osdCreate( _("Assault on Haleb"), osd_desc )
+      mem.osd_desc[1] = fmt.f( mem.osd_desc[1], {sys=mem.missys} )
+      misn.osdCreate( _("Assault on Haleb"), mem.osd_desc )
       misn.setTitle( _("Assault on Haleb") )
       misn.setDesc( _("Join with the other FLF pilots for the assault on Raglan Outpost.") )
-      marker = misn.markerAdd( missys, "plot" )
+      mem.marker = misn.markerAdd( mem.missys, "plot" )
       misn.setReward( _("Another great victory against the Dvaereds") )
 
-      credits = 750e3
-      reputation = 5
+      mem.credits = 750e3
+      mem.reputation = 5
 
-      started = false
-      attacked_station = false
-      completed = false
+      mem.started = false
+      mem.attacked_station = false
+      mem.completed = false
 
       hook.enter( "enter" )
    else
@@ -76,18 +75,18 @@ end
 
 
 function enter ()
-   if not completed then
-      started = false
-      attacked_station = false
+   if not mem.completed then
+      mem.started = false
+      mem.attacked_station = false
       misn.osdActive( 1 )
-      hook.rm( timer_start_hook )
-      hook.rm( timer_pirates_hook )
+      hook.rm( mem.timer_start_hook )
+      hook.rm( mem.timer_pirates_hook )
 
       if diff.isApplied( "raglan_outpost_death" ) then
          diff.remove( "raglan_outpost_death" )
       end
 
-      if system.cur() == missys then
+      if system.cur() == mem.missys then
          pilot.clear()
          pilot.toggleSpawn( false )
 
@@ -136,7 +135,7 @@ function enter ()
             hook.pilot( j, "attacked", "pilot_attacked" )
          end
 
-         timer_start_hook = hook.timer( 4.0, "timer_start" )
+         mem.timer_start_hook = hook.timer( 4.0, "timer_start" )
          diff.apply( "raglan_outpost_death" )
       end
    end
@@ -144,7 +143,7 @@ end
 
 
 function timer_start ()
-   hook.rm( timer_start_hook )
+   hook.rm( mem.timer_start_hook )
 
    local player_pos = player.pos()
    local proximity = false
@@ -154,9 +153,9 @@ function timer_start ()
    end
 
    if proximity then
-      started = true
+      mem.started = true
       flf_fleet[1]:comm( fmt.f( _("You're just in time, {player}! The chaos is just about to unfold."), {player=player.name()} ) )
-      timer_pirates_hook = hook.timer( 4.0, "timer_pirates" )
+      mem.timer_pirates_hook = hook.timer( 4.0, "timer_pirates" )
       misn.osdActive( 2 )
 
       for i, j in ipairs( flf_fleet ) do
@@ -179,7 +178,7 @@ function timer_start ()
          hook.pilot( j, "death", "pilot_death_civilian" )
       end
    else
-      timer_start_hook = hook.timer( 0.05, "timer_start" )
+      mem.timer_start_hook = hook.timer( 0.05, "timer_start" )
    end
 end
 
@@ -218,7 +217,7 @@ end
 
 function hail ()
    player.commClose()
-   if not attacked_station then
+   if not mem.attacked_station then
       local comm_done = false
       for i, j in ipairs( flf_fleet ) do
          if j:exists() then
@@ -229,7 +228,7 @@ function hail ()
             end
          end
       end
-      attacked_station = true
+      mem.attacked_station = true
       misn.osdActive( 3 )
    end
 end
@@ -292,10 +291,10 @@ function pilot_death_station( pilot, _attacker, _arg )
       end
    end
 
-   completed = true
+   mem.completed = true
    pilot.toggleSpawn( true )
    misn.osdActive( 4 )
-   if marker ~= nil then misn.markerRm( marker ) end
+   if mem.marker ~= nil then misn.markerRm( mem.marker ) end
    hook.land( "land" )
 end
 
@@ -310,16 +309,16 @@ end
 
 
 function finish ()
-   player.pay( credits )
+   player.pay( mem.credits )
    flf.setReputation( 90 )
-   faction.get("FLF"):modPlayer( reputation )
+   faction.get("FLF"):modPlayer( mem.reputation )
    flf.addLog( _([[You led the charge to destroy Raglan Outpost, a source of deep penetration of Dvaered forces into the Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF has ever done so and a major victory for the Frontier.]]) )
    misn.finish( true )
 end
 
 
 function abort ()
-   if completed then
+   if mem.completed then
       finish()
    else
       if diff.isApplied( "raglan_outpost_death" ) then

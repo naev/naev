@@ -43,9 +43,9 @@ local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb 
 local paypla, paysys = planet.getS("Darkshed")
 
 function create ()
-   mispla, missys = planet.getLandable(faction.get("Sirius"))
+   mem.mispla, mem.missys = planet.getLandable(faction.get("Sirius"))
 
-   if not misn.claim(missys) or not mispla:services()["bar"] then
+   if not misn.claim(mem.missys) or not mem.mispla:services()["bar"] then
       misn.finish(false)
    end
 
@@ -53,8 +53,8 @@ function create ()
 end
 
 function accept()
-   stage = 0
-   proba = 0.4  --the chances you have to get an ambush
+   mem.stage = 0
+   mem.proba = 0.4  --the chances you have to get an ambush
 
    if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
     "Listen, I need to explain some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
@@ -62,21 +62,21 @@ function accept()
     "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.
     "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]), {pnt=paypla, sys=paysys})) then
       misn.accept()
-      tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mispla, sys=missys}))
+      tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mem.mispla, sys=mem.missys}))
 
       misn.setTitle(_("Unfair Competition"))
       misn.setReward(fmt.credits(shark.rewards.sh02))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
       misn.osdCreate(_("Unfair Competition"), {
-         fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mispla, sys=missys}),
+         fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mem.mispla, sys=mem.missys}),
          fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
-      marker = misn.markerAdd(missys, "low")
+      mem.marker = misn.markerAdd(mem.missys, "low")
 
-      landhook = hook.land("land")
-      enterhook = hook.enter("enter")
+      mem.landhook = hook.land("land")
+      mem.enterhook = hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["OK, sorry to bother you."]]))
       misn.finish(false)
@@ -85,19 +85,19 @@ end
 
 function land()
    --The player is landing on the mission planet to get the box
-   if stage == 0 and planet.cur() == mispla then
-      agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
+   if mem.stage == 0 and planet.cur() == mem.mispla then
+      mem.agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done
-   if stage == 1 and planet.cur() == paypla then
-      if misn.cargoRm(records) then
+   if mem.stage == 1 and planet.cur() == paypla then
+      if misn.cargoRm(mem.records) then
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(shark.rewards.sh02)
          misn.osdDestroy()
-         hook.rm(enterhook)
-         hook.rm(landhook)
+         hook.rm(mem.enterhook)
+         hook.rm(mem.landhook)
          shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )
          misn.finish(true)
       end
@@ -106,34 +106,34 @@ end
 
 function enter()
    -- Ambush !
-   if stage == 1 and rnd.rnd() < proba then
+   if mem.stage == 1 and rnd.rnd() < mem.proba then
       hook.timer( 2.0, "ambush" )
-      proba = proba - 0.1
-   elseif stage == 1 then
+      mem.proba = mem.proba - 0.1
+   elseif mem.stage == 1 then
       --the probability of an ambush goes up when you cross a system without meeting any ennemy
-      proba = proba + 0.1
+      mem.proba = mem.proba + 0.1
    end
 end
 
 function beginrun()
    tk.msg(_("Time to go back to Alteris"), _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
    local c = misn.cargoNew(N_("Recorder"), N_("A holophone recorder."))
-   records = misn.cargoAdd(c, 0)  --Adding the cargo
-   stage = 1
+   mem.records = misn.cargoAdd(c, 0)  --Adding the cargo
+   mem.stage = 1
    misn.osdActive(2)
-   misn.markerRm(marker)
-   marker2 = misn.markerAdd(paysys, "low")
+   misn.markerRm(mem.marker)
+   mem.marker2 = misn.markerAdd(paysys, "low")
 
    --remove the spy
-   misn.npcRm(agent)
+   misn.npcRm(mem.agent)
 
    -- Initialize number of mercenaries
-   nInterce = 5
-   nFighter = 4
-   nBombers = 3
-   nCorvett = 3
-   nCruiser = 1
-   nLlamas  = 1
+   mem.nInterce = 5
+   mem.nFighter = 4
+   mem.nBombers = 3
+   mem.nCorvett = 3
+   mem.nCruiser = 1
+   mem.nLlamas  = 1
 end
 
 function ambush()
@@ -149,13 +149,13 @@ function ambush()
    -- The kind of enemy is choosen randomly, but the weight is changed depending on the player's ship
    -- And depending on the number of avaliable ships of the given class
    if playerSize <= 2 then
-      choose( 3*nInterce, 2*nFighter, nBombers, nCorvett, nCruiser )
+      choose( 3*mem.nInterce, 2*mem.nFighter, mem.nBombers, mem.nCorvett, mem.nCruiser )
    elseif playerSize <= 4 then
-      choose( nInterce, 2*nFighter, nBombers, 4*nCorvett, 5*nCruiser )
+      choose( mem.nInterce, 2*mem.nFighter, mem.nBombers, 4*mem.nCorvett, 5*mem.nCruiser )
    elseif playerSize <= 6 then
-      choose( nInterce, nFighter, 5*nBombers, nCorvett, 5*nCruiser )
+      choose( mem.nInterce, mem.nFighter, 5*mem.nBombers, mem.nCorvett, 5*mem.nCruiser )
    else -- We're never too sure
-      choose( nInterce, nFighter, nBombers, nCorvett, nCruiser )
+      choose( mem.nInterce, mem.nFighter, mem.nBombers, mem.nCorvett, mem.nCruiser )
    end
 end
 
@@ -180,7 +180,7 @@ end
 
 function interceptors()
    --spawning high speed Hyenas
-   local nb = rndNb( nInterce )
+   local nb = rndNb( mem.nInterce )
    for i = 1, nb do
       badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
@@ -205,7 +205,7 @@ end
 
 function hvy_intercept()
    --spawning Lancelots
-   local nb = rndNb( nFighter )
+   local nb = rndNb( mem.nFighter )
    for i = 1, nb do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
@@ -232,7 +232,7 @@ end
 
 function corvette()
    --spawning Admonishers
-   local nb = rndNb( nCorvett )
+   local nb = rndNb( mem.nCorvett )
    for i = 1, nb do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
@@ -260,8 +260,8 @@ end
 
 function cruiser()
    --spawning a Kestrel with massive missile weaponry
-   if nCruiser == 1 then
-      origin = pilot.choosePoint( faction.get("Mercenary") )
+   if mem.nCruiser == 1 then
+      local origin = pilot.choosePoint( faction.get("Mercenary") )
 
       local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
       badguy:setHostile()
@@ -286,7 +286,7 @@ function cruiser()
       hook.pilot( badguys[i], "death", "CruiserDead")
 
       -- Escort
-      if nCorvett >= 1 then
+      if mem.nCorvett >= 1 then
          badguys[1] = pilot.add( "Admonisher", "Mercenary", origin, _("Mercenary") )
          hook.pilot( badguys[1], "death", "CorvetteDead")
          badguys[1]:setLeader(badguy)
@@ -297,11 +297,11 @@ end
 
 function bombers()
    --spawning Ancestors
-   local nb = rndNb( nBombers )
-   local nI = nInterce
-   local nF = nFighter
+   local nb = rndNb( mem.nBombers )
+   local nI = mem.nInterce
+   local nF = mem.nFighter
    for i = 1, nb do
-      origin = pilot.choosePoint( faction.get("Mercenary") )
+      local origin = pilot.choosePoint( faction.get("Mercenary") )
 
       badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary") )
       badguys[i]:setHostile()
@@ -340,7 +340,7 @@ end
 
 function add_llama()
    --adding an useless Llama
-   if nLlamas == 1 then
+   if mem.nLlamas == 1 then
       local useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
       useless:setHostile()
       hook.pilot( badguys[i], "death", "LlamaDead")
@@ -359,27 +359,27 @@ end
 
 -- Death functions: decrement enemy numbers
 function LlamaDead()
-   nLlamas = nLlamas - 1
+   mem.nLlamas = mem.nLlamas - 1
 end
 function BomberDead()
-   nBombers = nBombers - 1
+   mem.nBombers = mem.nBombers - 1
 end
 function CruiserDead()
-   nCruiser = nCruiser - 1
+   mem.nCruiser = mem.nCruiser - 1
 end
 function CorvetteDead()
-   nCorvett = nCorvett - 1
+   mem.nCorvett = mem.nCorvett - 1
 end
 function FighterDead()
-   nFighter = nFighter - 1
+   mem.nFighter = mem.nFighter - 1
 end
 function InterceptorDead()
-   nInterce = nInterce - 1
+   mem.nInterce = mem.nInterce - 1
 end
 
 function abort()
-   if stage == 1 then
-      misn.cargoRm(records)
+   if mem.stage == 1 then
+      misn.cargoRm(mem.records)
    end
    misn.finish(false)
 end

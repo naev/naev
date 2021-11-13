@@ -29,7 +29,7 @@ local reward = 600e3
 local capship, defenders, thugs -- Non-persistent state
 
 function create ()
-   targetsystem = system.get("Ogat")
+   mem.targetsystem = system.get("Ogat")
 
    misn.setNPC( _("A detective"), "neutral/unique/hunter.webp", _("A private detective is signalling you to come speak with him.") )
 end
@@ -41,7 +41,7 @@ function accept ()
    I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
    He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
-   Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=targetsystem}
+   Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=mem.targetsystem}
           ) ) then --if accepted
       misn.finish()
    end
@@ -51,12 +51,12 @@ function accept ()
    "Be careful out there. I doubt you'll be able to get far without being noticed."]]) )
    misn.setTitle( _("Crimelord") )
    misn.setReward( _("A generous compensation") )
-   misn.setDesc( fmt.f( _("Evade the thugs and deliver the evidence to {sys}"), {sys=targetsystem} ) )
-   misn.markerAdd( targetsystem, "low" )
-   misn.osdCreate(_("Crimelord"), {fmt.f(_("Evade the thugs and deliver the evidence to {sys}"), {sys=targetsystem})})
+   misn.setDesc( fmt.f( _("Evade the thugs and deliver the evidence to {sys}"), {sys=mem.targetsystem} ) )
+   misn.markerAdd( mem.targetsystem, "low" )
+   misn.osdCreate(_("Crimelord"), {fmt.f(_("Evade the thugs and deliver the evidence to {sys}"), {sys=mem.targetsystem})})
 
-   startsystem = system.cur() --needed to make thugs appear random in the first system
-   last_system = system.cur() --ignore this one, it's just the initialization of the variable
+   mem.startsystem = system.cur() --needed to make thugs appear random in the first system
+   mem.last_system = system.cur() --ignore this one, it's just the initialization of the variable
 
    hook.enter("enter")
    hook.jumpout("jumpout")
@@ -67,9 +67,9 @@ end
 function enter ()
    hook.timer(4.0, "spawnBaddies")
 
-   if system.cur() == targetsystem then
+   if system.cur() == mem.targetsystem then
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
-      local jumpin = jump.pos(targetsystem, last_system)
+      local jumpin = jump.pos(mem.targetsystem, mem.last_system)
       defenders = fleet.add( 1, defenderships, "Associates", jumpin )
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw()
@@ -98,23 +98,23 @@ function enter ()
 end
 
 function jumpout ()
-   last_system = system.cur()
+   mem.last_system = system.cur()
 end
 
 function spawnBaddies ()
-   if last_system == startsystem then
-      ai = "baddie"
+   if mem.last_system == mem.startsystem then
+      mem.ai = "baddie"
    else
-      ai = "baddie_norun"
+      mem.ai = "baddie_norun"
    end
 
    local sp = nil
-   if last_system ~= system.cur() then
-      sp = last_system
+   if mem.last_system ~= system.cur() then
+      sp = mem.last_system
    end
 
    local pp = player.pilot()
-   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
+   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=mem.ai} )
    for pilot_number, pilot_object in ipairs(thugs) do
       -- TODO Modern optimized equipping, or at least a manual equip from "naked"
       pilot_object:setHostile(true)
@@ -126,14 +126,14 @@ function spawnBaddies ()
       pilot_object:outfitAdd("Milspec Jammer")
       pilot_object:outfitAdd("Engine Reroute")
       pilot_object:outfitAdd("Shield Capacitor II")
-      if system.cur() ~= targetsystem then
+      if system.cur() ~= mem.targetsystem then
          -- TODO more sophisticated way of detecting the player
          if pilot_object:inrange( pp ) then
             pilot_object:control()
             pilot_object:attack( pp )
          end
       else
-         thugs_alive = #thugs
+         mem.thugs_alive = #thugs
          hook.pilot(pilot_object, "exploded", "pilotKilled")
       end
    end
@@ -147,8 +147,8 @@ function spawnBaddies ()
 end
 
 function pilotKilled ()
-   thugs_alive = thugs_alive - 1
-   if thugs_alive == 0 then
+   mem.thugs_alive = mem.thugs_alive - 1
+   if mem.thugs_alive == 0 then
       capship:hailPlayer()
       hook.pilot(capship[1], "hail", "capHailed")
    end

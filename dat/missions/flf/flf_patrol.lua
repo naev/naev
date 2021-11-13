@@ -35,11 +35,10 @@ text[1] = _("After you are handed your pay, an FLF soldier congratulates you for
 text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
 text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system")
-osd_desc[2] = _("Eliminate the Dvaered patrol")
-osd_desc[3] = _("Return to FLF base")
-osd_desc["__save"] = true
+mem.osd_desc    = {}
+mem.osd_desc[1] = _("Fly to the {sys} system")
+mem.osd_desc[2] = _("Eliminate the Dvaered patrol")
+mem.osd_desc[3] = _("Return to FLF base")
 
 
 function setDescription ()
@@ -47,19 +46,19 @@ function setDescription ()
    desc = fmt.f( n_(
          "There is {n} Dvaered ship patrolling the {sys} system. Eliminate this ship.",
          "There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this patrol.",
-         ships ), {n=ships, sys=missys} )
+         mem.ships ), {n=mem.ships, sys=mem.missys} )
 
-   if has_vigilance then
+   if mem.has_vigilance then
       desc = desc .. _(" There is a Vigilance among them, so you must proceed with caution.")
    end
-   if has_goddard then
+   if mem.has_goddard then
       desc = desc .. _(" There is a Goddard among them, so you must be very careful.")
    end
-   if flfships > 0 then
+   if mem.flfships > 0 then
       desc = desc .. fmt.f( n_(
             " You will be accompanied by {n} other FLF pilot for this mission.",
             " You will be accompanied by {n} other FLF pilots for this mission.",
-            flfships ), {n=flfships} )
+            mem.flfships ), {n=mem.flfships} )
    end
    return desc
 end
@@ -71,70 +70,70 @@ end
 
 
 function create ()
-   missys = patrol_getSystem()
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = patrol_getSystem()
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   level = rnd.rnd( 1, #misn_title )
-   ships = 0
-   has_vigilance = false
-   has_goddard = false
-   flfships = 0
-   reputation = 0
-   if level == 1 then
-      ships = 1
-   elseif level == 2 then
-      ships = rnd.rnd( 2, 3 )
-      reputation = 1
-   elseif level == 3 then
-      ships = 4
+   mem.level = rnd.rnd( 1, #misn_title )
+   mem.ships = 0
+   mem.has_vigilance = false
+   mem.has_goddard = false
+   mem.flfships = 0
+   mem.reputation = 0
+   if mem.level == 1 then
+      mem.ships = 1
+   elseif mem.level == 2 then
+      mem.ships = rnd.rnd( 2, 3 )
+      mem.reputation = 1
+   elseif mem.level == 3 then
+      mem.ships = 4
       if rnd.rnd() < 0.5 then
-         flfships = 2
+         mem.flfships = 2
       end
-      reputation = 2
-   elseif level == 4 then
-      ships = 5
-      flfships = rnd.rnd( 2, 4 )
-      reputation = 5
-   elseif level == 5 then
-      ships = 5
-      has_vigilance = true
-      flfships = rnd.rnd( 4, 6 )
-      reputation = 10
-   elseif level == 6 then
-      ships = rnd.rnd( 5, 6 )
-      has_goddard = true
-      flfships = rnd.rnd( 8, 10 )
-      reputation = 20
+      mem.reputation = 2
+   elseif mem.level == 4 then
+      mem.ships = 5
+      mem.flfships = rnd.rnd( 2, 4 )
+      mem.reputation = 5
+   elseif mem.level == 5 then
+      mem.ships = 5
+      mem.has_vigilance = true
+      mem.flfships = rnd.rnd( 4, 6 )
+      mem.reputation = 10
+   elseif mem.level == 6 then
+      mem.ships = rnd.rnd( 5, 6 )
+      mem.has_goddard = true
+      mem.flfships = rnd.rnd( 8, 10 )
+      mem.reputation = 20
    end
 
-   credits = ships * 30e3 - flfships * 1e3
-   if has_vigilence then credits = credits + 120e3 end
-   if has_goddard then credits = credits + 270e3 end
-   credits = credits * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 80e3
+   mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
+   if has_vigilence then mem.credits = mem.credits + 120e3 end
+   if mem.has_goddard then mem.credits = mem.credits + 270e3 end
+   mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
+   mem.credits = mem.credits + rnd.sigma() * 80e3
 
    local desc = setDescription()
 
-   late_arrival = rnd.rnd() < 0.05
-   late_arrival_delay = rnd.uniform( 10.0, 120.0 )
+   mem.late_arrival = rnd.rnd() < 0.05
+   mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
+   misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
    misn.accept()
 
-   osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
-   misn.osdCreate( _("FLF Patrol"), osd_desc )
+   mem.osd_desc[1] = fmt.f( mem.osd_desc[1], {sys=mem.missys} )
+   misn.osdCreate( _("FLF Patrol"), mem.osd_desc )
 
-   dv_ships_left = 0
-   job_done = false
-   last_system = planet.cur()
+   mem.dv_ships_left = 0
+   mem.job_done = false
+   mem.last_system = planet.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -143,22 +142,22 @@ end
 
 
 function enter ()
-   if not job_done then
-      if system.cur() == missys then
+   if not mem.job_done then
+      if system.cur() == mem.missys then
          misn.osdActive( 2 )
          local boss
-         if has_goddard then
+         if mem.has_goddard then
             boss = "Dvaered Goddard"
-         elseif has_vigilance then
+         elseif mem.has_vigilance then
             boss = "Dvaered Vigilance"
          end
-         patrol_spawnDV( ships, boss )
+         patrol_spawnDV( mem.ships, boss )
 
-         if flfships > 0 then
-            if not late_arrival then
-               patrol_spawnFLF( flfships, last_system, _("Alright, let's have at them!") )
+         if mem.flfships > 0 then
+            if not mem.late_arrival then
+               patrol_spawnFLF( mem.flfships, mem.last_system, _("Alright, let's have at them!") )
             else
-               hook.timer( late_arrival_delay, "timer_lateFLF" )
+               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -170,24 +169,24 @@ end
 
 function leave ()
    hook.rm( spawner )
-   dv_ships_left = 0
-   last_system = system.cur()
+   mem.dv_ships_left = 0
+   mem.last_system = system.cur()
 end
 
 
 function timer_lateFLF ()
    local systems = system.cur():adjacentSystems()
    local source = systems[ rnd.rnd( 1, #systems ) ]
-   patrol_spawnFLF( flfships, source, _("Sorry we're late! Did we miss anything?") )
+   patrol_spawnFLF( mem.flfships, source, _("Sorry we're late! Did we miss anything?") )
 end
 
 
 function pilot_death_dv ()
-   dv_ships_left = dv_ships_left - 1
-   if dv_ships_left <= 0 then
-      job_done = true
+   mem.dv_ships_left = mem.dv_ships_left - 1
+   if mem.dv_ships_left <= 0 then
+      mem.job_done = true
       misn.osdActive( 3 )
-      misn.markerRm( marker )
+      misn.markerRm( mem.marker )
       hook.land( "land_flf" )
       pilot.toggleSpawn( true )
       if fleetFLF ~= nil then
@@ -203,11 +202,11 @@ end
 
 function land_flf ()
    leave()
-   last_system = planet.cur()
+   mem.last_system = planet.cur()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
-      player.pay( credits )
-      faction.get("FLF"):modPlayer( reputation )
+      player.pay( mem.credits )
+      faction.get("FLF"):modPlayer( mem.reputation )
       misn.finish( true )
    end
 end
@@ -236,7 +235,7 @@ function patrol_spawnDV( n, boss )
       p:setVisible( true )
       p:setHilight( true )
       fleetDV[i] = p
-      dv_ships_left = dv_ships_left + 1
+      mem.dv_ships_left = mem.dv_ships_left + 1
    end
 end
 

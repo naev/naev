@@ -35,8 +35,8 @@ local fmt = require "format"
 --  3: go to totoran
 --  4: duel finished
 --  5: return to Kex
-misn_state = nil
-local enemies, enemies_weak, pmalik, thug_leader, thug_pilots -- Non-persistent state
+mem.misn_state = nil
+local enemies, enemies_weak, noise_shader, pmalik, thug_leader, thug_pilots -- Non-persistent state
 
 local gauntlet_start -- Forward-declared functions
 
@@ -63,8 +63,8 @@ end
 function accept ()
    approach_kex()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -75,7 +75,7 @@ function accept ()
    misn.osdCreate( _("Freeing Kex"),
       { fmt.f(_("Go to {pnt} in the {sys} system to find Major Malik"), {pnt=targetplanet, sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( targetplanet )
+   mem.misn_marker = misn.markerAdd( targetplanet )
 
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -89,7 +89,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == targetplanet then
+   elseif mem.misn_state==0 and planet.cur() == targetplanet then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -99,17 +99,17 @@ function generate_npc ()
       vn.run()
 
       -- Advance the state
-      misn_state = 1
-      misn.markerMove( misn_marker, lastplanet )
+      mem.misn_state = 1
+      misn.markerMove( mem.misn_marker, lastplanet )
       misn.osdCreate( _("Freeing Kex"),
          { fmt.f(_("Look for Major Malik at {pnt} in the {sys} system"), {pnt=lastplanet, sys=lastsys} ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif (misn_state==2 or misn_state==3) and planet.cur() == lastplanet then
-      misn_state = 3
+   elseif (mem.misn_state==2 or mem.misn_state==3) and planet.cur() == lastplanet then
+      mem.misn_state = 3
       misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
-   elseif misn_state==4 and planet.cur() == lastplanet then
+   elseif mem.misn_state==4 and planet.cur() == lastplanet then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -122,9 +122,9 @@ function generate_npc ()
       vn.na(_([[You better head over to Kex to rely the information back at Minerva Station.]]))
       vn.run()
 
-      misn_state = 5 -- We're done here, go back to kex:)
+      mem.misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
-      misn.markerMove( misn_marker, planet.get("Minerva Station") )
+      misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
    end
 end
 
@@ -136,7 +136,7 @@ function approach_kex ()
    vn.transition("hexagon")
 
    -- Mission is over
-   if misn_state==5 then
+   if mem.misn_state==5 then
 
       vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled ingrained in your memory, and approach Kex."))
       kex(_([["You look like a mess, kid. What happened?"]]))
@@ -160,7 +160,7 @@ He seems satisfied at his pun.]]))
       misn.finish( true )
       return
 
-   elseif misn_state==nil then
+   elseif mem.misn_state==nil then
       vn.na(_("You find Kex taking a break at his favourite spot at Minerva station. His eyes light up when he sees you and he runs over to you."))
       kex(_([["Good news kid! It looks like the information obtained from Baroness Eve got some dirt on the CEO. It seems like they're involved in some sort of money laundering, but this alone won't get us anywhere, we need more intel."]]))
       kex(_([["We have another lead on another co-conspirator, this time in Dvaered space. Some individual named Major Malik seems to also be in the money laundering. Would you be up for paying them a visit and seeing what you can get out of them?"]]))
@@ -178,7 +178,7 @@ He seems satisfied at his pun.]]))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in case they don't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
-         misn_state = 0
+         mem.misn_state = 0
       end )
    else
       vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
@@ -196,7 +196,7 @@ He winks his cyborg eye at you.]]))
    end )
 
    vn.label("job")
-   if not misn_state or misn_state < 1 then
+   if not mem.misn_state or mem.misn_state < 1 then
       kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
       kex(fmt.f(_([["You should be able to find him at {pnt} in the {sys} system. I don't think he should give much trouble."]]), {pnt=targetplanet, sys=targetsys}))
    else
@@ -266,14 +266,14 @@ function enter ()
       end
    end
 
-   if misn_state==1 and system.cur() == targetsys then
+   if mem.misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player should likely be going to Dvaer
       spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
-      misn_state = 2
+      mem.misn_state = 2
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
-   elseif misn_state==2 and system.cur() == lastsys then
+   elseif mem.misn_state==2 and system.cur() == lastsys then
       -- Spawn thugs from Totoran
       spawn_thugs(lastplanet:pos(), false )
       -- Timer
@@ -378,15 +378,15 @@ function enter_the_ring ()
 
    -- Set up Player
    local player_vendetta = player.addShip( "Vendetta", _("Ketchup"), true )
-   player_prevship = player.pilot():name() -- Ship to go back to
+   mem.player_prevship = player.pilot():name() -- Ship to go back to
    player.swapShip( player_vendetta, true )
    equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )
    hook.pilot( player.pilot(), "death", "player_death" )
 
    -- Set up Major Malik
-   enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
+   mem.enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
    local pos = vec2.new( -1500, 1500 )
-   pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik") )
+   pmalik = pilot.add( "Dvaered Vendetta", mem.enemy_faction, pos, _("Major Malik") )
    pmalik:setInvincible(true)
    pmalik:setHostile(true)
    pmalik:control(true)
@@ -407,7 +407,7 @@ function leave_the_ring ()
    -- Clear pilots so escorts get docked
    pilot.clear()
    -- Give the player back their old ship
-   player.swapShip( player_prevship, true, true )
+   player.swapShip( mem.player_prevship, true, true )
    -- Fix the map up
    gauntletsys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
@@ -420,7 +420,7 @@ end
    Countdown stuff
 --]]
 function countdown_start ()
-   omsg_id = player.omsgAdd( _("5…"), 1.1 )
+   mem.omsg_id = player.omsgAdd( _("5…"), 1.1 )
    hook.timer( 1, "countdown", _("4…") )
    hook.timer( 2, "countdown", _("3…") )
    hook.timer( 3, "countdown", _("2…") )
@@ -429,11 +429,11 @@ function countdown_start ()
 end
 function countdown( str )
    -- TODO play countdown sound
-   player.omsgChange( omsg_id, str, 1.1 )
+   player.omsgChange( mem.omsg_id, str, 1.1 )
 end
 function countdown_done ()
    -- TODO play sound and cooler text
-   player.omsgChange( omsg_id, _("FIGHT!"), 3 )
+   player.omsgChange( mem.omsg_id, _("FIGHT!"), 3 )
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
@@ -451,10 +451,10 @@ function malik_taunt ()
          _("Youth is overrated!"),
          _("Feel the taste of my cannons!"),
       }
-      tauntperm = tauntperm or rnd.permutation(taunts)
-      tauntid = tauntid or rnd.rnd(1,#taunts)
-      tauntid = (tauntid % #taunts)+1
-      pmalik:comm( player.pilot(), tauntperm[tauntid], true )
+      mem.tauntperm = mem.tauntperm or rnd.permutation(taunts)
+      mem.tauntid = mem.tauntid or rnd.rnd(1,#taunts)
+      mem.tauntid = (mem.tauntid % #taunts)+1
+      pmalik:comm( player.pilot(), mem.tauntperm[mem.tauntid], true )
 
       hook.timer( 7, "malik_taunt" )
    end
@@ -474,7 +474,7 @@ local function malik_respawn ()
    hook.timer( 2, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
-   pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"), {naked=true})
+   pmalik = pilot.add("Dvaered Goddard", mem.enemy_faction, pos, _("Major Malik"), {naked=true})
    equipopt.dvaered( pmalik, {
       type_range = {
          ["Beam Turret"] = { max = 0 },
@@ -514,7 +514,7 @@ function malik_spawn_more ()
    hook.timer( 2, "malik_spawn_more_real", pos )
 end
 function malik_spawn_more_real( pos )
-   local p = pilot.add("Dvaered Vendetta", enemy_faction, pos )
+   local p = pilot.add("Dvaered Vendetta", mem.enemy_faction, pos )
    p:setHostile(true)
    table.insert( enemies, p )
    table.insert( enemies_weak, p )
@@ -602,8 +602,8 @@ local function malik_music ()
 end
 
 function malik_speech ()
-   malik_speech_state = malik_speech_state or 0
-   malik_speech_state = malik_speech_state + 1
+   mem.malik_speech_state = mem.malik_speech_state or 0
+   mem.malik_speech_state = mem.malik_speech_state + 1
    local speeches = {
       { delay=5, txt=_("You come to my office to harass me…"), func=malik_music },
       { delay=5, txt=_("You interrupt my leisure with blackmail…") },
@@ -619,7 +619,7 @@ function malik_speech ()
       { delay=5, txt=_("What the hell?!") },
    }
 
-   local s = speeches[ malik_speech_state ]
+   local s = speeches[ mem.malik_speech_state ]
    if not s then return end
    if s.txt then
       player.omsgAdd( s.txt, s.delay-0.1 )
@@ -634,6 +634,6 @@ end
 
 function malik_boarded ()
    player.unboard()
-   misn_state = 4
+   mem.misn_state = 4
    hook.safe( "leave_the_ring" )
 end

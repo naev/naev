@@ -35,14 +35,14 @@ local fmt = require "format"
 --  0: mission accepted try to go to targetplanet
 --  1: fight with dude
 --  2: return to kex
-misn_state = nil
+mem.misn_state = nil
 local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Jorlan")
 
 -- TODO custom graphic?
-jie_portrait = portrait.get()
-jie_image = portrait.getFullPath(jie_portrait)
+mem.jie_portrait = portrait.get()
+mem.jie_image = portrait.getFullPath(mem.jie_portrait)
 
 local money_reward = minerva.rewards.kex4
 
@@ -60,8 +60,8 @@ end
 function accept ()
    approach_kex()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
    misn.accept()
@@ -71,7 +71,7 @@ function accept ()
    misn.osdCreate( _("Freeing Kex"),
       { fmt.f(_("Go to {pnt} in the {sys} system to find Jie de Luca"), {pnt=targetplanet, sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( targetplanet )
+   mem.misn_marker = misn.markerAdd( targetplanet )
 
    hook.land("generate_npc")
    hook.load("load_game")
@@ -81,14 +81,14 @@ function accept ()
 end
 
 function load_game ()
-   if misn_state == 1 then
-      misn_state = 0
+   if mem.misn_state == 1 then
+      mem.misn_state = 0
    end
    generate_npc()
 end
 
 function generate_npc ()
-   if misn_state==1 then
+   if mem.misn_state==1 then
       player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
       misn.finish(false)
    end
@@ -96,8 +96,8 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == targetplanet then
-      misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
+   elseif mem.misn_state==0 and planet.cur() == targetplanet then
+      misn.npcAdd( "approach_jie", _("Jie de Luca"), mem.jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
 end
@@ -105,7 +105,7 @@ end
 function approach_kex ()
    love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
    local pitch = 0.9
-   if misn_state==2 then
+   if mem.misn_state==2 then
       pitch = 0.8
    end
 
@@ -116,7 +116,7 @@ function approach_kex ()
    vn.transition("hexagon")
 
    -- Mission is over
-   if misn_state==2 then
+   if mem.misn_state==2 then
       vn.na(_("You head towards Kex's usual spot."))
       kex(_([[He looks fairly tired.
 "What's up kid?"]]))
@@ -137,7 +137,7 @@ He gives a sort of half-hearted grin and disappears into the shadows.]]))
       misn.finish( true )
       return
 
-   elseif misn_state==nil then
+   elseif mem.misn_state==nil then
       vn.na(_("You approach Kex, who is once again taking a break at his favourite spot at Minerva station."))
       kex(_([[He looks at you fairly somberly straight in the eyes.
 "You ever wonder what's the meaning of all this?"]]))
@@ -175,7 +175,7 @@ His eyes don't seem to have changed.]]))
       kex(fmt.f(_([["Thanks. Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=targetplanet, sys=targetsys}))
       kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
       vn.func( function ()
-         misn_state = 0
+         mem.misn_state = 0
       end )
    else
       vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
@@ -229,7 +229,7 @@ end
 function approach_jie ()
    vn.clear()
    vn.scene()
-   local jie = vn.newCharacter( _("Jie de Luca"), {image=jie_image} )
+   local jie = vn.newCharacter( _("Jie de Luca"), {image=mem.jie_image} )
    vn.transition()
    vn.na(_("You approach a nonchalantly drink-sipping Jie de Luca. They seem to be reading some sort of document."))
    jie(_([[Without looking up they address you.
@@ -259,7 +259,7 @@ You rush to your ship to see if you can catch them in pursuit!]]))
    vn.run()
 
    -- Advance
-   misn_state = 1
+   mem.misn_state = 1
    player.takeoff()
    misn.osdCreate( _("Freeing Kex"),
       { _("Deal with Jie de Luca"),
@@ -269,7 +269,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_state==1 and system.cur() ~= targetsys then
+   if mem.misn_state==1 and system.cur() ~= targetsys then
       player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
       misn.finish(false)
    end
@@ -308,17 +308,17 @@ function enter ()
       else
          thug_leader:brake()
       end
-      thug_following = dofollow
+      mem.thug_following = dofollow
    end
 
-   thug_chance = thug_chance or 0.2
-   if misn_state==0 and system.cur() == targetsys and player.pos():dist( targetplanet:pos() ) > 1000 then
-      thug_chance = thug_chance / 0.8
+   mem.thug_chance = mem.thug_chance or 0.2
+   if mem.misn_state==0 and system.cur() == targetsys and player.pos():dist( targetplanet:pos() ) > 1000 then
+      mem.thug_chance = mem.thug_chance / 0.8
       -- Spawn thugs around planet
       spawn_thugs( targetplanet:pos(), false )
       hook.timer( 5, "thug_heartbeat" )
 
-   elseif misn_state~=1 and rnd.rnd() < thug_chance then
+   elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
       -- Make sure system isn't claimed, but we don't claim it
       if misn.claim( system.cur(), true ) then
          -- Spawn near the center, they home in on player
@@ -327,7 +327,7 @@ function enter ()
          hook.timer( 5, "thug_heartbeat" )
       end
 
-   elseif misn_state==1 then
+   elseif mem.misn_state==1 then
       -- Main stuff
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -387,7 +387,7 @@ function thug_heartbeat ()
       thug_leader:broadcast( msglist[ rnd.rnd(1,#msglist) ], true )
 
       -- Decrease chance
-      thug_chance = thug_chance * 0.8
+      mem.thug_chance = mem.thug_chance * 0.8
 
       -- Reset autonav just in case
       player.autonavReset( 5 )
@@ -397,16 +397,16 @@ function thug_heartbeat ()
    -- Only chase if not hidden
    local pp = player.pilot()
    if pp:flags("stealth") then
-      if thug_following then
+      if mem.thug_following then
          thug_leader:taskClear()
          thug_leader:brake()
-         thug_following = false
+         mem.thug_following = false
       end
    else
-      if not thug_following then
+      if not mem.thug_following then
          thug_leader:taskClear()
          thug_leader:follow( pp )
-         thug_following = true
+         mem.thug_following = true
       end
    end
 
@@ -415,9 +415,9 @@ function thug_heartbeat ()
 end
 
 function jie_death ()
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
    misn.osdActive(2)
-   misn_state = 2
+   mem.misn_state = 2
 
    hook.timer( 5, "jie_epilogue" )
 end
@@ -425,7 +425,7 @@ end
 function jie_board ()
    vn.clear()
    vn.scene()
-   local cjie = vn.Character.new( _("Jie de Luca"), {image=jie_image} )
+   local cjie = vn.Character.new( _("Jie de Luca"), {image=mem.jie_image} )
    vn.transition()
    vn.na(_("You board the ship with your weapons drawn and make your way to the command center. You don't encounter any resistance on the way there."))
    vn.na(_("Eventually you reach the command center and enter cautiously. The room is empty except for a chair in the center with it's back facing towards you."))

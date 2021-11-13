@@ -5,7 +5,8 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
-local btn_modifiers, btn_options, btn_types -- Non-persistent state
+local gauntlet_option, gauntlet_start, gauntlet_type
+local btn_enter, btn_modifiers, btn_options, btn_types, headerh, modifiers_divider, options_divider
 
 local gauntlet_modifiers = {
    { id = "doubledmgtaken", str = _("Double Damage Enemies (#g+50%#0)"), var = "gauntlet_unlock_doubledmgtaken", enabled = false },
@@ -83,7 +84,7 @@ local function gauntlet_setoption( wgt )
    for k,v in ipairs(gauntlet_modifiers) do
       table.insert( strlist, v.str )
    end
-   btn_modifiers, bh = button_list( wdw, strlist,
+   btn_modifiers = button_list( wdw, strlist,
          0, headerh+160, 240, 60, w, 100, gauntlet_setmodifier )
    for k,v in ipairs(gauntlet_modifiers) do
       if v.var and not var.peek(v.var) then
@@ -120,7 +121,7 @@ local function gauntlet_settype( wgt )
    local wdw = wgt.parent
    local w = wdw.w
    if newtype == "Challenge" then
-      btn_options, bh = button_list( wdw,
+      btn_options = button_list( wdw,
             {_("Skirmisher"), _("Warrior"), _("Warlord")},
             0, headerh+90, 160, 40, w, 100, gauntlet_setoption )
       if not var.peek("gauntlet_unlock_warrior") then

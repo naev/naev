@@ -61,16 +61,15 @@ msg[1] = _("MISSION FAILURE! Your target got away.")
 msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
 msg[3] = _("MISSION FAILURE! You have left the {sys} system.")
 
-osd_title = _("Bounty Hunt")
-osd_msg    = {}
-osd_msg[1] = _("Fly to the {sys} system")
-osd_msg[2] = _("Kill or capture your target")
-osd_msg[3] = _("Land in {fct} territory to collect your bounty")
-osd_msg["__save"] = true
+mem.osd_title = _("Bounty Hunt")
+mem.osd_msg    = {}
+mem.osd_msg[1] = _("Fly to the {sys} system")
+mem.osd_msg[2] = _("Kill or capture your target")
+mem.osd_msg[3] = _("Land in {fct} territory to collect your bounty")
 
 
 function create ()
-   paying_faction = planet.cur():faction()
+   mem.paying_faction = planet.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -83,27 +82,27 @@ function create ()
       misn.finish( false )
    end
 
-   missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 5 )
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd( 5 )
    if rnd.rnd() < 0.05 then
-      jumps_permitted = jumps_permitted - 1
+      mem.jumps_permitted = mem.jumps_permitted - 1
    end
 
-   level = 1
-   name = _("Target Dissident")
-   pship = "Schroedinger"
-   credits = 50e3
-   reputation = 0
-   board_failed = false
-   pship, credits, reputation = bounty_setup()
+   mem.level = 1
+   mem.name = _("Target Dissident")
+   mem.pship = "Schroedinger"
+   mem.credits = 50e3
+   mem.reputation = 0
+   mem.board_failed = false
+   mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {missys} ) )
-   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive."), {sys=missys, fct=paying_faction} ) )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {mem.missys} ) )
+   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive."), {sys=mem.missys, fct=mem.paying_faction} ) )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 

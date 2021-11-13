@@ -36,10 +36,10 @@ function create ()
       evt.finish( false )
    end
 
-   found_thurion = false
+   mem.found_thurion = false
 
-   bar_hook = hook.land( "enter_bar", "bar" )
-   abort_hook = hook.enter( "takeoff_abort" )
+   mem.bar_hook = hook.land( "enter_bar", "bar" )
+   mem.abort_hook = hook.enter( "takeoff_abort" )
 end
 
 
@@ -49,8 +49,8 @@ function enter_bar ()
       "Divert the Dvaered Forces", "Eliminate an Empire Patrol",
       "FLF Pirate Disturbance", "Rogue FLF" }
    if not lmisn.anyMissionActive( flf_missions ) then
-      hook.rm( bar_hook )
-      hook.rm( abort_hook )
+      hook.rm( mem.bar_hook )
+      hook.rm( mem.abort_hook )
       music.stop()
       music.load( "tension" )
       music.play()
@@ -64,7 +64,7 @@ function enter_bar ()
       tk.msg( _("Catastrophe Looms"), _([[There's no time to lose. You go to the hangar bay and immediately take off.]]) )
       var.pop( "music_off" )
 
-      takeoff_hook = hook.enter( "takeoff" )
+      mem.takeoff_hook = hook.enter( "takeoff" )
       player.takeoff()
    end
 end
@@ -76,7 +76,7 @@ end
 
 
 function takeoff ()
-   hook.rm( takeoff_hook )
+   hook.rm( mem.takeoff_hook )
 
    pilot.toggleSpawn( false )
    pilot.clear()
@@ -259,20 +259,20 @@ end
 
 
 function jumpin ()
-   if not found_thurion and system.cur() == system.get("Oriantis") then
+   if not mem.found_thurion and system.cur() == system.get("Oriantis") then
       music.stop()
       music.load( "intro" )
       music.play()
       var.push( "music_wait", true )
       hook.timer( 5.0, "timer_thurion" )
-   elseif found_thurion and system.cur() == system.get("Metsys") then
+   elseif mem.found_thurion and system.cur() == system.get("Metsys") then
       diff.apply( "Thurion_found" )
    end
 end
 
 
 function timer_thurion ()
-   found_thurion = true
+   mem.found_thurion = true
    tk.msg( _("Strange Happenings"), _([[Your instruments go haywire and your ship goes dark. You swear under your breath as you try to get the system back online. This isn't good. How could your core system fail, and at such a critical moment? Is this going to be the end for you, just like Benito and your other comrades moments ago?
     Just as you start to panic, the power comes back on and you breathe a sigh of relief. An unfamiliar face appears on your viewscreen. She glares silently for what seems like an eternity. Finally, she speaks up.]]) )
    tk.msg( _("Strange Happenings"), _([["So the FLF is dead, I see. Well, not so much dead as a shadow of its former self. I can see that you did manage to more or less achieve your goal; Dvaered forces have largely withdrawn from Frontier space. I suppose that was the double-edged sword you wielded when you got pirates involved. The Empire was never going to allow you to live once you did that, but it did give you the edge you needed to weaken the Dvaered forces temporarily.

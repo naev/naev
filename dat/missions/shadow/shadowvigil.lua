@@ -52,13 +52,13 @@ end
 -- After having accepted the mission from the hailing Vendetta
 function create()
    misn.accept()
-   stage = 0
+   mem.stage = 0
    hook.jumpin("jumpin")
    hook.timer(1.0, "delayedClaim")
 
    misn.setDesc(fmt.f(_([[You are invited to a meeting in {sys}]]), {sys=rebinasys}))
    misn.setReward(_("???"))
-   marker = misn.markerAdd(rebinasys, "low")
+   mem.marker = misn.markerAdd(rebinasys, "low")
    misn.osdCreate(_("Unknown"), {
        fmt.f(_("Fly to the {sys} system."), {sys=rebinasys}),
    })
@@ -73,7 +73,7 @@ end
 
 -- Boarding the Seiryuu at the beginning of the mission
 local function meeting()
-    first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
+    local first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)
         tk.msg(_("Reunion with Rebina"), fmt.f(_([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in gray uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
@@ -101,18 +101,17 @@ local function meeting()
 end
 
 function accept_m()
-    alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
-    alive["__save"] = true
-    stage = 1 -- Keeps track of the mission stage
-    nextsys = lmisn.getNextSystem(system.cur(), misssys[stage]) -- This variable holds the system the player is supposed to jump to NEXT.
-    seirsys = system.cur() -- Remember where the Seiryuu is.
-    origin = system.cur() -- The place where the AI ships spawn from.
-    chattered = false
-    kills = 0 -- Counter to keep track of enemy kills.
+    mem.alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
+    mem.stage = 1 -- Keeps track of the mission stage
+    mem.nextsys = lmisn.getNextSystem(system.cur(), misssys[mem.stage]) -- This variable holds the system the player is supposed to jump to NEXT.
+    mem.seirsys = system.cur() -- Remember where the Seiryuu is.
+    mem.origin = system.cur() -- The place where the AI ships spawn from.
+    mem.chattered = false
+    mem.kills = 0 -- Counter to keep track of enemy kills.
 
-    accepted = false
-    missend = false
-    landfail = false
+    mem.accepted = false
+    mem.missend = false
+    mem.landfail = false
 
     tk.msg(_("Shadow Vigil"), fmt.f(_([["Excellent, {player}." Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty of installing a specialized IFF transponder onto your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best that you refrain from communication with the other escorts as much as possible. I think you might have an inkling as to why."
     Rebina straightens up. "That will be all for now, {player}," she says in a more formal, captain-like manner. "You have your assignment; I suggest you go about it."
@@ -121,7 +120,7 @@ function accept_m()
 
     misn.setDesc(_([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]]))
     misn.setReward(_("A sum of money."))
-    marker = misn.markerAdd(misssys[1], "low")
+    mem.marker = misn.markerAdd(misssys[1], "low")
 
     misn.osdCreate(_("Shadow Vigil"), {
         fmt.f(_("Fly to the {sys} system and join the other escorts"), {sys=misssys[1]}),
@@ -139,67 +138,67 @@ end
 
 -- Function hooked to jumpout. Used to retain information about the previously visited system.
 function jumpout()
-    if stage == 4 and not dpjump then
+    if mem.stage == 4 and not mem.dpjump then
         tk.msg(_("You have left your charge behind!"), _([[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]))
         shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
-    origin = system.cur()
-    nextsys = lmisn.getNextSystem(system.cur(), misssys[stage])
+    mem.origin = system.cur()
+    mem.nextsys = lmisn.getNextSystem(system.cur(), misssys[mem.stage])
 end
 
 -- Function hooked to landing. Only used to prevent a fringe case.
 function land()
-    if landfail then
+    if mem.landfail then
         tk.msg(_("You abandoned your charge!"), _("You have landed, but you were supposed to escort the diplomat. Your mission is a failure!"))
-    elseif planet.cur() == planet.get("Nova Shakar") and stage == 2 then
+    elseif planet.cur() == planet.get("Nova Shakar") and mem.stage == 2 then
         local dist = system.cur():jumpDist(misssys[4])
         local refueltext = n_(
            "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jump worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.",
            "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jumps worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.", dist )
         tk.msg(_("Preparing for the job"), refueltext:format(dist))
-        stage = 3 -- Fly to the diplomat rendezvous point.
+        mem.stage = 3 -- Fly to the diplomat rendezvous point.
         misn.osdActive(3)
-        landfail = true
-        origin = planet.cur()
+        mem.landfail = true
+        mem.origin = planet.cur()
     end
 end
 
 -- Function hooked to takeoff.
 function takeoff()
-    if stage == 3 and landfail then -- We're taking off from Nova Shakar. Can't be anything else.
+    if mem.stage == 3 and mem.landfail then -- We're taking off from Nova Shakar. Can't be anything else.
         jumpin()
     end
 end
 
 -- Function hooked to jumpin AND takeoff. Handles events that should occur in either case.
 function enter()
-    if system.cur() == misssys[1] and stage == 1 and missend == false then
+    if system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
         -- case enter system where escorts wait
         escorts = fleet.add( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
-            if not alive[i] then j:rm() end -- Dead escorts stay dead.
+            if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
                 j:control()
                 j:setInvincPlayer()
                 hook.pilot(j, "death", "escortDeath")
             end
         end
-        rend_point = vec2.new(0,0)
-        start_marker = system.mrkAdd( rend_point, _("Rendezvous point") )
-        proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
+        local rend_point = vec2.new(0,0)
+        mem.start_marker = system.mrkAdd( rend_point, _("Rendezvous point") )
+        mem.proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
     end
 end
 
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
-    sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
+    mem.sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
 
-    if pahook then -- Remove the hook on the player being attacked, if needed
-        hook.rm( pahook )
+    if mem.pahook then -- Remove the hook on the player being attacked, if needed
+        hook.rm( mem.pahook )
     end
 
-    if stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
+    if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
         seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
         seiryuu:control(true)
         seiryuu:setActiveBoard(true)
@@ -209,15 +208,15 @@ function jumpin()
         hook.pilot(seiryuu, "board", "board")
     end
 
-    if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
+    if mem.stage >= 3 and system.cur() ~= mem.nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(_("You diverged!"), _([[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]]))
         shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
 
-    if stage == 4 then
+    if mem.stage == 4 then
         -- Spawn the diplomat.
-        diplomat = pilot.add( "Gawain", "Diplomatic", origin, _("Imperial Diplomat") )
+        diplomat = pilot.add( "Gawain", "Diplomatic", mem.origin, _("Imperial Diplomat") )
         hook.pilot(diplomat, "death", "diplomatDeath")
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
@@ -229,33 +228,33 @@ function jumpin()
         diplomat:setHilight(true)
         diplomat:setVisplayer()
         diplomat:setVisible() -- Hack to make ambushes more reliable.
-        dpjump = false
-        misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
+        mem.dpjump = false
+        misn.markerRm(mem.marker) -- No mem.marker. Player has to follow the NPCs.
     end
-    if stage >= 2 then
+    if mem.stage >= 2 then
         for k,f in ipairs(pir.factions) do
             pilot.toggleSpawn(f)
             pilot.clearSelect(f) -- Not sure if we need a claim for this.
         end
 
         -- Spawn the escorts.
-        escorts = fleet.add( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), {ai="baddie_norun"} )
+        escorts = fleet.add( 3, "Lancelot", "Four Winds", mem.origin, _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
-            if not alive[i] then j:rm() end -- Dead escorts stay dead.
+            if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
                 j:control()
                 j:setHilight(true)
                 j:setInvincPlayer()
                 hook.pilot(j, "death", "escortDeath")
-                controlled = true
+                mem.controlled = true
                 j:memory().angle = 90*(i-2)
             end
         end
 
         -- Ships spawned, now decide what to do with them.
-        if system.cur() == misssys[2] and stage == 2 then -- case land on Nova Shakar
+        if system.cur() == misssys[2] and mem.stage == 2 then -- case land on Nova Shakar
            for i, j in ipairs(escorts) do
-               if not alive[i] then j:rm() end -- Dead escorts stay dead.
+               if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
                if j:exists() then
                   j:land(planet.get("Nova Shakar"))
                end
@@ -272,7 +271,7 @@ function jumpin()
             diplomat:setHilight(true)
             diplomat:setVisplayer()
             diplomat:setVisible() -- Hack to make ambushes more reliable.
-            proxy = hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
+            mem.proxy = hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     j:follow(diplomat,true) -- Follow the diplomat.
@@ -295,30 +294,30 @@ function jumpin()
             dvaerplomat:setFaction("Diplomatic")
             diplomat:setInvincible(true)
             diplomat:moveto(vec2.new(1850, 4000), true)
-            diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
+            mem.diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
         else -- case en route, handle escorts flying to the next system, possibly combat
             for i, j in ipairs(escorts) do
                 if j:exists() then
-                    if stage == 4 then
-                        diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
+                    if mem.stage == 4 then
+                        diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.
                         j:follow(diplomat,true) -- Follow the diplomat.
                     else
-                        j:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
+                        j:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.
                     end
                 end
             end
-            if not chattered then
+            if not mem.chattered then
                 hook.timer(10.0, "chatter", {pilot = escorts[2], text = _("So do you guys think we'll run into any trouble?")})
                 hook.timer(20.0, "chatter", {pilot = escorts[3], text = _("Not if we all follow the plan. I didn't hear of any trouble coming our way from any of the others.")})
                 hook.timer(30.0, "chatter", {pilot = escorts[2], text = _("I just hope Z. knows what he's doing.")})
                 hook.timer(35.0, "chatter", {pilot = escorts[1], text = _("Cut the chatter, two, three. This is a low-profile operation. Act the part, please.")})
-                chattered = true
+                mem.chattered = true
             end
-            jp2go = system.cur():jumpDist(misssys[4])
-            if jp2go <= 2 and jp2go > 0 then -- Encounter
+            mem.jp2go = system.cur():jumpDist(misssys[4])
+            if mem.jp2go <= 2 and mem.jp2go > 0 then -- Encounter
                 local ambush_ships = {{"Pirate Ancestor", "Hyena", "Hyena"}, {"Pirate Ancestor", "Pirate Vendetta", "Hyena", "Hyena"}}
-                ambush = fleet.add( 1,  ambush_ships[3 - jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
-                kills = 0
+                ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
+                mem.kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
                         j:setHilight(true)
@@ -334,15 +333,15 @@ function jumpin()
                         hook.pilot(j, "attacked", "diplomatAttacked")
                     end
                 end
-                pahook = hook.pilot(player.pilot(), "attacked", "diplomatAttacked")
+                mem.pahook = hook.pilot(player.pilot(), "attacked", "diplomatAttacked")
             end
         end
 
-    elseif system.cur() == seirsys then -- not escorting.
+    elseif system.cur() == mem.seirsys then -- not escorting.
         -- case enter system where Seiryuu is
         seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
         seiryuu:setInvincible(true)
-        if missend then
+        if mem.missend then
             seiryuu:setActiveBoard(true)
             seiryuu:setHilight(true)
             seiryuu:setVisplayer(true)
@@ -350,22 +349,22 @@ function jumpin()
             hook.pilot(seiryuu, "board", "board")
         end
     else
-        if proxy then
-            hook.rm( proxy )
+        if mem.proxy then
+            hook.rm( mem.proxy )
         end
     end
 end
 
 -- The player has successfully joined up with the escort fleet. Cutscene -> departure.
 function escortStart()
-    if start_marker ~= nil then
-       system.mrkRm( start_marker )
+    if mem.start_marker ~= nil then
+       system.mrkRm( mem.start_marker )
     end
-    stage = 2 -- Fly to the refuel planet.
+    mem.stage = 2 -- Fly to the refuel planet.
     misn.osdActive(2)
-    misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
+    misn.markerRm(mem.marker) -- No marker. Player has to follow the NPCs.
     escorts[1]:comm(_("There you are at last. Fancy boat you've got there. We're gonna head to Nova Shakar first, to grab some fuel. Just stick with us, okay?"))
-    local nextjump = lmisn.getNextSystem( system.cur(), misssys[stage] )
+    local nextjump = lmisn.getNextSystem( system.cur(), misssys[mem.stage] )
     for i, j in pairs(escorts) do
         if j:exists() then
             j:setHilight(true)
@@ -376,17 +375,17 @@ end
 
 -- The player has successfully rendezvoused with the diplomat. Now the real work begins.
 function escortNext()
-    stage = 4 -- The actual escort begins here.
+    mem.stage = 4 -- The actual escort begins here.
     misn.osdActive(4)
-    diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
-    dpjump = false
+    diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.
+    mem.dpjump = false
 end
 
 -- Handle the death of the scripted attackers. Once they're dead, recall the escorts.
 function attackerDeath()
-    kills = kills + 1
+    mem.kills = mem.kills + 1
 
-    if kills < #ambush then return end
+    if mem.kills < #ambush then return end
 
     local myj
     for i, j in ipairs(escorts) do
@@ -396,13 +395,13 @@ function attackerDeath()
             j:memory().angle = 90*(i-2)
             j:control()
             j:follow(diplomat,true)
-            diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
-            controlled = true
+            diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.
+            mem.controlled = true
         end
     end
 
     myj:comm(_("All hostiles eliminated, resume standing orders."))
-    sysclear = true -- safety flag to prevent the escorts from being released twice.
+    mem.sysclear = true -- safety flag to prevent the escorts from being released twice.
 end
 
 -- Puts the escorts under AI control again, and makes them fight.
@@ -417,8 +416,8 @@ end
 
 -- Handle the death of the escorts. Abort the mission if all escorts die.
 function escortDeath()
-    if alive[3] then alive[3] = false
-    elseif alive[2] then alive[2] = false
+    if mem.alive[3] then mem.alive[3] = false
+    elseif mem.alive[2] then mem.alive[2] = false
     else -- all escorts dead
         tk.msg(_("The escorts are dead!"), _([[All of the escorts have been destroyed. With the flight leader out of the picture, the diplomat has decided to call off the mission.]]))
         shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
@@ -440,32 +439,32 @@ end
 
 -- Handle the departure of the diplomat. Escorts will follow.
 function diplomatJump()
-    dpjump = true
-    misn.markerRm(marker)
-    marker = misn.markerAdd(lmisn.getNextSystem(system.cur(), misssys[stage]), "low")
+    mem.dpjump = true
+    misn.markerRm(mem.marker)
+    mem.marker = misn.markerAdd(lmisn.getNextSystem(system.cur(), misssys[mem.stage]), "low")
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(true)
             j:taskClear()
-            j:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
+            j:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(fmt.f(_("Mission update: The diplomat has jumped to {sys}."), {sys=lmisn.getNextSystem(system.cur(), misssys[stage])}))
+    player.msg(fmt.f(_("Mission update: The diplomat has jumped to {sys}."), {sys=lmisn.getNextSystem(system.cur(), misssys[mem.stage])}))
 end
 
 -- Handle the diplomat getting attacked.
 function diplomatAttacked()
     player.autonavReset(5)
-    if controlled and not sysclear then
+    if mem.controlled and not mem.sysclear then
         chatter({pilot = escorts[1], text = _("Those rats are eyeballing us - take them out!")})
         escortFree()
         diplomat:taskClear()
         diplomat:brake()
-        controlled = false
+        mem.controlled = false
     end
-    if shuttingup == true then return
+    if mem.shuttingup == true then return
     else
-        shuttingup = true
+        mem.shuttingup = true
         diplomat:comm(_("Diplomatic vessel under fire!"))
         hook.timer(10.0, "diplomatShutup") -- Shuts him up for at least 10s.
     end
@@ -487,7 +486,7 @@ function diplomatIdle()
         end
     end
 
-    proxy = hook.timer(0.1, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
+    mem.proxy = hook.timer(0.1, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
 end
 
 -- This is the final cutscene.
@@ -508,12 +507,12 @@ function diplomatCutscene()
 end
 
 function diplomatShutup()
-    shuttingup = false
+    mem.shuttingup = false
 end
 
 function diplomatGo()
     diplomat:moveto(dvaerplomat:pos(), true)
-    hook.rm(diplomatidle)
+    hook.rm(mem.diplomatidle)
 end
 
 function killDiplomats()
@@ -529,7 +528,7 @@ function killDiplomats()
     diplomat:hookClear()
     hook.timer(0.5, "diplomatKilled")
     hook.timer(5.0, "escortFlee")
-    landfail = false
+    mem.landfail = false
 end
 
 function diplomatKilled()
@@ -554,18 +553,18 @@ function escortFlee()
             hook.pilot(j, "board", "board_escort")
         end
     end
-    boarded_escort = false
+    mem.boarded_escort = false
 
     misn.osdActive(5)
-    marker = misn.markerAdd(seirsys, "low")
-    stage = 1 -- no longer spawn things
-    missend = true
+    mem.marker = misn.markerAdd(mem.seirsys, "low")
+    mem.stage = 1 -- no longer spawn things
+    mem.missend = true
 end
 
 -- Function hooked to boarding. Only used on the Seiryuu.
 function board()
-    if stage == 0 then
-       misn.markerRm(marker)
+    if mem.stage == 0 then
+       misn.markerRm(mem.marker)
        misn.osdDestroy()
        meeting()
     else
@@ -586,7 +585,7 @@ end
 
 -- The player boards one of the escort at the end of the mission.
 function board_escort( pilot )
-   if not boarded_escort then
+   if not mem.boarded_escort then
       tk.msg( _("The Pill of Silence"), _([[After managing to bypass the ship's security system, you enter the cockpit and notice that the fighter has been sabotaged and might soon explode: you have little time to find and capture the pilot. You head to the living cabin. As you cross the access hatch, you see him, floating weightlessly close to the floor. As he turns his livid face towards yours, you find yourself horrified by the awful mask of pain on his face. His bulging, bloodshot eyes stare at you, as if they wanted to pierce your skin. His twisted mouth splits a repugnant creamy fluid as he starts to speak, in a groan:
    "Good job out there. Hum. But, you see? You won't catch me alive. Oh, no. The pill of silence will make sure of that. Hmf. It looks painful, doesn't it? You know what? It's even worse than it looks. I guarantee it. Gbf. Oh, it makes me throw up... I'm sorry about that."
    You approach the man, and ask him why he killed the diplomats. "You have no idea what is going on, right? Uh. Let me tell you something: they are coming! And they won't show any mercy. Oooh! They're so close! They're far worse than your darkest nightmares! And one day they'll get you. That day, you will envy... You will envy my vomit-eating agony! Sooooo much!"
@@ -594,7 +593,7 @@ function board_escort( pilot )
       player.unboard()
       player.outfitAdd("Vacuum Cleaner?")
       pilot:setHealth(0, 0) -- Make ship explode
-      boarded_escort = true
+      mem.boarded_escort = true
    end
 end
 

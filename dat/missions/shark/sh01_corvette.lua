@@ -53,7 +53,7 @@ function create ()
 end
 
 function accept()
-   stage = 0
+   mem.stage = 0
 
    if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating destroyer class ships.
     "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
@@ -70,11 +70,11 @@ function accept()
       })
       misn.osdActive(1)
 
-      marker = misn.markerAdd(battlesys, "low")
+      mem.marker = misn.markerAdd(battlesys, "low")
 
-      jumpouthook = hook.jumpout("jumpout")
-      landhook = hook.land("land")
-      enterhook = hook.enter("enter")
+      mem.jumpouthook = hook.jumpout("jumpout")
+      mem.landhook = hook.land("land")
+      mem.enterhook = hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["OK, that's alright."]]))
       misn.finish(false)
@@ -82,25 +82,25 @@ function accept()
 end
 
 function jumpout()
-   if stage == 1 then --player trying to escape
+   if mem.stage == 1 then --player trying to escape
       player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
       misn.finish(false)
    end
 end
 
 function land()
-   if stage == 1 then --player trying to escape
+   if mem.stage == 1 then --player trying to escape
       player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
       misn.finish(false)
    end
-   if stage == 2 and planet.cur() == paypla then
+   if mem.stage == 2 and planet.cur() == paypla then
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(shark.rewards.sh01)
       misn.osdDestroy()
-      hook.rm(enterhook)
-      hook.rm(landhook)
-      hook.rm(jumpouthook)
+      hook.rm(mem.enterhook)
+      hook.rm(mem.landhook)
+      hook.rm(mem.jumpouthook)
       shark.addLog( _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer-class ship.]]) )
       misn.finish(true)
    end
@@ -109,7 +109,7 @@ end
 function enter()
    local playerclass = player.pilot():ship():class()
    --Jumping in Toaxis for the battle with a destroyer class ship
-   if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
+   if system.cur() == battlesys and mem.stage == 0 and playerclass == "Destroyer" then
       pilot.clear()
       pilot.toggleSpawn( false )
 
@@ -139,10 +139,10 @@ function lets_go()
    sharkboy:setHealth(100,100)
    sharkboy:setEnergy(100)
    sharkboy:setFuel(true)
-   stage = 1
+   mem.stage = 1
 
-   shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
-   disabled_hook = hook.pilot( player.pilot(), "disable", "disabled" )
+   mem.shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
+   mem.disabled_hook = hook.pilot( player.pilot(), "disable", "disabled" )
 end
 
 function shark_dead()  --you killed the shark
@@ -152,10 +152,10 @@ end
 
 function disabled(pilot, attacker)
    if attacker == sharkboy then
-      stage = 2
+      mem.stage = 2
       misn.osdActive(2)
-      misn.markerRm(marker)
-      marker2 = misn.markerAdd(paysys, "low")
+      misn.markerRm(mem.marker)
+      mem.marker2 = misn.markerAdd(paysys, "low")
       pilot.toggleSpawn( true )
    end
    sharkboy:control()
@@ -164,6 +164,6 @@ function disabled(pilot, attacker)
    sharkboy:setNoDeath(true)
 
    -- Clean up now unneeded hooks
-   hook.rm(shark_dead_hook)
-   hook.rm(disabled_hook)
+   hook.rm(mem.shark_dead_hook)
+   hook.rm(mem.disabled_hook)
 end

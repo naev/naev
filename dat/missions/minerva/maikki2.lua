@@ -85,7 +85,7 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 --    4: Destroy drones
 --    5: Got the artifacts
 --    6: Going back to Minerva Station
-misn_state = nil
+mem.misn_state = nil
 local defense_systems, feral_drone_boss -- Non-persistent state
 
 local hintosd -- Forward-declared functions
@@ -104,15 +104,15 @@ end
 function accept ()
    approach_maikki()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
    -- Set up mission stuff
-   markerhint1 = misn.markerAdd( planet.get(hintpnt[1]), "low")
-   markerhint2 = misn.markerAdd( planet.get(hintpnt[2]), "low")
-   markerhint3 = misn.markerAdd( planet.get(hintpnt[3]), "low")
+   mem.markerhint1 = misn.markerAdd( planet.get(hintpnt[1]), "low")
+   mem.markerhint2 = misn.markerAdd( planet.get(hintpnt[2]), "low")
+   mem.markerhint3 = misn.markerAdd( planet.get(hintpnt[3]), "low")
    hintosd()
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -131,17 +131,17 @@ function hintosd ()
       table.insert( osd, fmt.f(_("\tGo to {pnt} in {sys}"), {pnt=_(hintpnt[id]), sys=hintsys[id]}) )
    end
 
-   if misn_state==0 then
-      if not visitedhint1 then
+   if mem.misn_state==0 then
+      if not mem.visitedhint1 then
          addhint(1)
       end
-      if not visitedhint2 then
+      if not mem.visitedhint2 then
          addhint(2)
       end
-      if not visitedhint3 then
+      if not mem.visitedhint3 then
          addhint(3)
       end
-   elseif misn_state==1 then
+   elseif mem.misn_state==1 then
       addhint(4)
    else
       return
@@ -170,7 +170,7 @@ and {name3} in the {sys3} system."]]), {
    vn.transition("hexagon")
 
    vn.na(_("You approach Maikki who seems to have a fierce determination in her look."))
-   if misn_state==nil then
+   if mem.misn_state==nil then
       maikki(_([[She looks encouraged by your findings in the nebula.
 "From what you told me, I think I have a good idea for our next lead. Would you be interested in helping again?"]]))
       vn.menu( {
@@ -184,7 +184,7 @@ and {name3} in the {sys3} system."]]), {
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn_state = 0
+         mem.misn_state = 0
          minerva.log.maikki(_("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )
       maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
@@ -232,7 +232,7 @@ She winks at you.]]))
       {_("Leave"), "leave"},
    }
    -- TODO more options as more researchers are found
-   if misn_state==6 then
+   if mem.misn_state==6 then
       table.insert( opts, 1, {_("Tell her want you found"), "news"} )
    end
    vn.label( "menu" )
@@ -272,7 +272,7 @@ Her eyes sparkle with determination.]]))
    vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      mission_finish = true
+      mem.mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       minerva.log.maikki(_("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
@@ -291,7 +291,7 @@ Her eyes sparkle with determination.]]))
    vn.run()
 
    -- Can't run it in the VN or it causes an error
-   if mission_finish then
+   if mem.mission_finish then
       misn.finish(true)
    end
 end
@@ -310,24 +310,24 @@ function generate_npc ()
    elseif planet.cur() == planet.get( hintpnt[3] ) then
       misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
+   elseif mem.misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
       misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
 
-   elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
-      npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
+   elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and mem.misn_state < 6 then
+      mem.npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
    end
 end
 
 
 local function visitedhints ()
    local visits = 0
-   if visitedhint1 then
+   if mem.visitedhint1 then
       visits = visits + 1
    end
-   if visitedhint2 then
+   if mem.visitedhint2 then
       visits = visits + 1
    end
-   if visitedhint3 then
+   if mem.visitedhint3 then
       visits = visits + 1
    end
    return visits
@@ -335,9 +335,9 @@ end
 
 
 local function visited ()
-   if misn_state==0 and visitedhints()==3 then
-      misn_state = 1
-      markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
+   if mem.misn_state==0 and visitedhints()==3 then
+      mem.misn_state = 1
+      mem.markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
       minerva.log.maikki(_("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
@@ -354,9 +354,9 @@ end
 
 
 function approach_hint1 ()
-   if not visitedhint1 then
-      visitedhint1 = true
-      misn.markerRm( markerhint1 )
+   if not mem.visitedhint1 then
+      mem.visitedhint1 = true
+      misn.markerRm( mem.markerhint1 )
       visited()
    end
 
@@ -384,9 +384,9 @@ end
 
 
 function approach_hint2 ()
-   if not visitedhint2 then
-      visitedhint2 = true
-      misn.markerRm( markerhint2 )
+   if not mem.visitedhint2 then
+      mem.visitedhint2 = true
+      misn.markerRm( mem.markerhint2 )
       visited()
    end
 
@@ -417,9 +417,9 @@ end
 
 
 function approach_hint3 ()
-   if not visitedhint3 then
-      visitedhint3 = true
-      misn.markerRm( markerhint3 )
+   if not mem.visitedhint3 then
+      mem.visitedhint3 = true
+      misn.markerRm( mem.markerhint3 )
       visited()
    end
 
@@ -448,7 +448,7 @@ end
 
 function approach_hint4 ()
    local name
-   if met_drshrimp then
+   if mem.met_drshrimp then
       name = _("Dr. Shrimp")
    else
       name = hint4_name
@@ -467,7 +467,7 @@ function approach_hint4 ()
 "PERSON. PERSON."]]))
    drshrimp(_([[The young man grumbles.
 "I told you I already submitted my temporal research proposal clarification application yesterday."]]))
-   if not met_drshrimp then
+   if not mem.met_drshrimp then
       drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
 "Wait, what? Who are you?"]]))
       shrimp(_([["PERSON. PERSON. PERSON."]]))
@@ -481,7 +481,7 @@ function approach_hint4 ()
       drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
       drshrimp:rename(_("Dr. Shrimp"))
       drshrimp(_([["My name is Cayne, but you can call me Dr. Shrimp. What would you like to know?"]]))
-      vn.func( function () met_drshrimp = true end )
+      vn.func( function () mem.met_drshrimp = true end )
    else
       drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
 "Ah, it is you again. Is there anything else you would want to know about?"]]))
@@ -495,12 +495,12 @@ function approach_hint4 ()
          {_("Ask about other members."), "members" },
          {_("Leave"), "leave" },
       }
-      if asked_drshrimp then
+      if mem.asked_drshrimp then
          table.insert( opts, 1, {_("Ask about Calliope"), "calliope"} )
       end
-      if asked_strangelove then
+      if mem.asked_strangelove then
          table.insert( opts, 1, {_("Ask about Dr. Strangelove"), "strangelove"} )
-      elseif asked_members and asked_artifacts then
+      elseif mem.asked_members and mem.asked_artifacts then
          table.insert( opts, 1, {_("Anything else?…"), "strangelove"} )
       end
       return opts end )
@@ -514,7 +514,7 @@ He taps the tank of the floating shrimp next to him.]]))
 He enthusiastically points towards Calliope.
 "Isn't she the cutest?"]]))
    drshrimp(_([["After focusing on shrimp for a few cycles, people started calling me Dr. Shrimp and the name stuck. Honestly, it's the best nickname they could give me. Makes me feel like getting my PhD was finally worth it!"]]))
-   vn.func( function () asked_drshrimp = true end )
+   vn.func( function () mem.asked_drshrimp = true end )
    vn.jump("menu_msg")
 
    vn.label("calliope")
@@ -532,7 +532,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
    drshrimp(_([["When the project failed, most of the artifacts were confiscated to hell who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
    drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artifacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged away. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
-   vn.func( function () asked_artifacts = true end )
+   vn.func( function () mem.asked_artifacts = true end )
    vn.jump("menu_msg")
 
    vn.label("members")
@@ -540,7 +540,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["After it went to hell, many of the researchers lost their posts or went into hiding. The few I know that still are active are Prof. Stova, Prof. Sato, and Prof. Hsu. I think they even got some stupid promotion, while me and the other post docs lost our jobs."]]))
    drshrimp(_([["It's pretty incredible to think that there were originally 100ish people in the project. Yet even with all the people fired for falsification of results, not a single tenured post opened! It's ridiculous! If industry wasn't so horrible I would quit academia in an instance!"]]))
    drshrimp(_([["Now that I think of it, there was another guy. What was his name? I totally forget. Oh well."]]))
-   vn.func( function () asked_members = true end )
+   vn.func( function () mem.asked_members = true end )
    vn.jump("menu_msg")
 
    vn.label("strangelove")
@@ -550,12 +550,12 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
    drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps though."]]))
    vn.func( function ()
-      asked_strangelove = true
-      if misn_state==1 then
-         misn_state = 2
+      mem.asked_strangelove = true
+      if mem.misn_state==1 then
+         mem.misn_state = 2
          misn.osdCreate( _("Finding Maikki's Father"), {fmt.f(_("\tGo to {sys}"), {sys=eccsys})} )
-         misn.markerRm( markerhint4 )
-         marker_ecc = misn.markerAdd( eccsys, "low" )
+         misn.markerRm( mem.markerhint4 )
+         mem.marker_ecc = misn.markerAdd( eccsys, "low" )
          minerva.log.maikki(_("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
       end
    end )
@@ -572,11 +572,11 @@ end
 
 
 function enter ()
-   if misn_state==2 and system.cur() == eccsys then
+   if mem.misn_state==2 and system.cur() == eccsys then
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 30.0, "ecc_timer" )
-   elseif misn_state==4 then
+   elseif mem.misn_state==4 then
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -590,7 +590,7 @@ function enter ()
 
       -- Spawn the drones
       local pos = eccpos + vec2.newP( 5000, rnd.rnd(0,359) )
-      attacked_feral_drones = false
+      mem.attacked_feral_drones = false
       local b = spawn_single( "Za'lek Heavy Drone", pos )
       feral_drone_boss = b
       b:rename(_("Feral Alpha Drone"))
@@ -612,7 +612,7 @@ end
 
 function ecc_timer ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   sysmarker = system.mrkAdd( eccpos, _("Curious Signal") )
+   mem.sysmarker = system.mrkAdd( eccpos, _("Curious Signal") )
    hook.timer( 0.5, "ecc_dist" )
 end
 
@@ -622,7 +622,7 @@ function ecc_dist ()
    local dist = pp:pos():dist( eccpos )
 
    if dist < math.min( pp:detectedDistance(), 3000 ) then
-      system.mrkRm( sysmarker )
+      system.mrkRm( mem.sysmarker )
       local spawners = {
          "Za'lek Heavy Drone",
          "Za'lek Light Drone",
@@ -666,7 +666,7 @@ function ecc_timer_dead ()
    player.msg(_("Your ships detect that one of the asteroids isn't what it seems…"))
    vn.sfxEerie()
    diff.apply( eccdiff )
-   misn_state = 3
+   mem.misn_state = 3
    minerva.log.maikki(_("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
 end
 
@@ -694,8 +694,8 @@ function ecc_feral_boss_dead ()
    vn.run()
 
    local c = misn.cargoNew( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
-   nebula_artifacts = misn.cargoAdd( c, 0 )
-   misn_state = 5
+   mem.nebula_artifacts = misn.cargoAdd( c, 0 )
+   mem.misn_state = 5
    misn.osdCreate( _("Finding Maikki's Father"), {_("Go back to Dr. Strangelove")} )
    minerva.log.maikki(_("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
@@ -711,10 +711,10 @@ local drone_msgs = {
 }
 
 function ecc_feral_boss_attacked( _p )
-   if not attacked_feral_drones then
-      attacked_feral_drones = true
+   if not mem.attacked_feral_drones then
+      mem.attacked_feral_drones = true
       feral_drone_boss:broadcast( drone_msgs[1] )
-      drone_msgid = 0
+      mem.drone_msgid = 0
       hook.timer( 2.0, "ecc_feral_boss_msg" )
 
       -- We go with nebula music
@@ -725,9 +725,9 @@ function ecc_feral_boss_attacked( _p )
 end
 
 function ecc_feral_boss_msg ()
-   drone_msgid = (drone_msgid % #drone_msgs)+1
+   mem.drone_msgid = (mem.drone_msgid % #drone_msgs)+1
    if feral_drone_boss:exists() then
-      feral_drone_boss:broadcast( drone_msgs[ drone_msgid ] )
+      feral_drone_boss:broadcast( drone_msgs[ mem.drone_msgid ] )
       hook.timer( 7.0, "ecc_feral_boss_msg" )
    end
 end
@@ -739,7 +739,7 @@ function approach_eccentric ()
    local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
    vn.transition( "electric" )
 
-   if not ecc_visitedonce then
+   if not mem.ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
       dr(_([["How did you get in there? Who are you!"]]))
       vn.na(_("You explain to him that you are looking for information about nebula artifacts."))
@@ -748,7 +748,7 @@ He cackles manically.]]))
       dr(_([["I have hidden them very well, even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
       dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
-      ecc_visitedonce = true
+      mem.ecc_visitedonce = true
       minerva.log.maikki(_("You met an eccentric researcher named Dr. Strangelove in Westhaven." ))
    else
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
@@ -762,9 +762,9 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
          {_("Ask about this place"), "laboratory"},
          {_("Leave"), "leave"},
       }
-      if misn_state==5 then
+      if mem.misn_state==5 then
          table.insert( opts, 1, {_("Hand over the artifact"), "handover"} )
-      elseif misn_state==4 then
+      elseif mem.misn_state==4 then
          table.insert( opts, 1, {_("Ask about job"), "job"} )
       end
       return opts
@@ -785,7 +785,7 @@ He coughs, wracking his body.]]))
    vn.label("bodies")
    dr(_([["Ahaha. You are interested, no? That information won't come cheap. I have a job that I would like you to do, and in exchange I might give you the information you seek."]]))
    -- skip back to message if already accepted job
-   vn.func( function () if misn_state>=4 then vn.jump("menu_msg") end end )
+   vn.func( function () if mem.misn_state>=4 then vn.jump("menu_msg") end end )
    vn.menu( {
       {_("Accept the job"), "jobaccept"},
       {_("Refuse the job"), "jobrefuse"},
@@ -803,7 +803,7 @@ He glares at you.]]))
       misn.osdCreate( _("Finding Maikki's Father"), {
          fmt.f(_("Recover nebula artifacts from the {sys} asteroid field"), {sys=eccsys}),
       } )
-      misn_state = 4
+      mem.misn_state = 4
       minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
    vn.jump("menu_msg")
@@ -861,12 +861,12 @@ He coughs softly.]]))
 His voice gets softer and softer as he keeps on mumbling.]]))
    vn.na(_("You try to get his attention again, but it doesn't seem to work. He seems to have fallen into a stupor. You feel you have enough information to report to Maikki again."))
    vn.func( function ()
-      misn.cargoRm( nebula_artifacts )
-      misn_state = 6
-      misn.npcRm( npc_ecc )
+      misn.cargoRm( mem.nebula_artifacts )
+      mem.misn_state = 6
+      misn.npcRm( mem.npc_ecc )
       misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
       misn.markerAdd( planet.get("Minerva Station"), "low")
-      misn.markerRm( marker_ecc )
+      misn.markerRm( mem.marker_ecc )
       minerva.log.maikki(_("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))

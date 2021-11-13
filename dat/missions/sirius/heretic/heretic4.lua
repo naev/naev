@@ -37,10 +37,10 @@ local targetasset, targetsys = planet.getS("Ulios") --this will be the new HQ fo
 function create()
    --this mission make no system claims.
    --initialize your variables
-   nasin_rep = faction.playerStanding("Nasin")
-   misn_tracker = var.peek("heretic_misn_tracker")
-   reward = math.floor((100e3+(math.random(5,8)*2e3)*(nasin_rep^1.315))*.01+.5)/.01
-   homeasset = planet.cur()
+   mem.nasin_rep = faction.playerStanding("Nasin")
+   mem.misn_tracker = var.peek("heretic_misn_tracker")
+   mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
+   mem.homeasset = planet.cur()
    --set some mission stuff
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
 end
@@ -58,16 +58,16 @@ function accept()
     As the Sirii approach ever closer, Draga yells at you to get the ship going and take off. You begin taking off just in time to see Draga under fire by a Sirian soldier who has infiltrated the base. The last thing you see as you take off is him lying on the ground, lifeless.]]))
    --convo over. time to finish setting the mission stuff.
    misn.markerAdd(targetsys,"high")
-   free_cargo = player.pilot():cargoFree()
-   people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
+   local free_cargo = player.pilot():cargoFree()
+   mem.people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(_("The Egress"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward(fmt.credits(mem.reward))
    misn.setDesc(fmt.f(_("Assist the Nasin refugees by flying to {pnt} in {sys}, and unloading them there."), {pnt=targetasset, sys=targetsys}))
    misn.osdCreate(_("The Egress"), {
       fmt.f(_("Fly the refugees to {pnt} in the {sys} system."), {pnt=targetasset, sys=targetsys}),
    })
    local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
-   refugees = misn.cargoAdd(c,free_cargo)
+   mem.refugees = misn.cargoAdd(c,free_cargo)
    player.takeoff()
    --get the hooks.
    hook.takeoff("takeoff")
@@ -93,12 +93,12 @@ function takeoff()
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) ) --left over fleets from the prior mission.
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   fleet.add( 3, {"Mule", "Llama", "Llama"}, "Nasin", homeasset, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} ) --other escapees.
-   fleet.add( 2, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", homeasset, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} ) --these are trying to help.
+   fleet.add( 3, {"Mule", "Llama", "Llama"}, "Nasin", mem.homeasset, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} ) --other escapees.
+   fleet.add( 2, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", mem.homeasset, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} ) --these are trying to help.
 end
 
 function lastsys()
-   last_sys_in = system.cur()
+   mem.last_sys_in = system.cur()
 end
 
 function attacked() --several systems where the Sirius have 'strategically placed' an assault fleet to try and kill some Nasin.
@@ -123,10 +123,10 @@ function attacked() --several systems where the Sirius have 'strategically place
    end
    local chance_help,chance_civvie = rnd.rnd(1,3),rnd.rnd(1,3) --attack fleet and civvies are meant as a distraction to help the player.
    if chance_help == 1 then
-      fleet.add( 1, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", last_sys_in, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} )
+      fleet.add( 1, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", mem.last_sys_in, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} )
    end
    for i = 1,chance_civvie do
-      fleet.add( 1, {"Mule", "Llama", "Llama"}, "Nasin", last_sys_in, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} )
+      fleet.add( 1, {"Mule", "Llama", "Llama"}, "Nasin", mem.last_sys_in, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} )
    end
 end
 
@@ -134,11 +134,11 @@ function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
       tk.msg(_("The Egress"), fmt.f(_([[You land on {pnt} and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]), {pnt=targetasset} ))
-      player.pay(reward)
-      misn.cargoRm(refugees)
-      misn_tracker = misn_tracker + 1
+      player.pay(mem.reward)
+      misn.cargoRm(mem.refugees)
+      mem.misn_tracker = mem.misn_tracker + 1
       faction.modPlayer("Nasin",25) --big boost to the Nasin, for completing the prologue
-      var.push("heretic_misn_tracker",misn_tracker)
+      var.push("heretic_misn_tracker", mem.misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)
       srs.addHereticLog( _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]]) )
@@ -147,8 +147,8 @@ function misn_over() --aren't you glad thats over?
 end
 
 function abort()
-   tk.msg(_("The Egress"), fmt.f(_([[You decide that this mission is just too much. You open up the cargo doors and jettison all {n} people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]), {n=fmt.number(people_carried)}))
-   misn.cargoJet(refugees)
+   tk.msg(_("The Egress"), fmt.f(_([[You decide that this mission is just too much. You open up the cargo doors and jettison all {n} people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]), {n=fmt.number(mem.people_carried)}))
+   misn.cargoJet(mem.refugees)
    faction.modPlayerSingle("Nasin",-200)
    player.allowSave(true)
    misn.finish(true)

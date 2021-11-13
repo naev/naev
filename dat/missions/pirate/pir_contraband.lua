@@ -41,14 +41,14 @@ function create()
       misn.finish(false)
    end
 
-   reward_faction = pir.systemClanP( system.cur() )
-   local faction_text = pir.reputationMessage( reward_faction )
+   mem.reward_faction = pir.systemClanP( system.cur() )
+   local faction_text = pir.reputationMessage( mem.reward_faction )
 
-   origin_p, origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = planet.cur()
 
    -- target destination. Override "always_available" to true.
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( rnd.rnd(5, 10), true )
-   if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
+   if mem.destplanet == nil or pir.factionIsPirate( mem.destplanet:faction() ) then
       misn.finish(false)
    end
 
@@ -110,79 +110,79 @@ function create()
       }
    }
    -- Add faction cargoes as necessary
-   fc = fact_cargoes[ destplanet:faction():nameRaw() ]
+   local fc = fact_cargoes[ mem.destplanet:faction():nameRaw() ]
    if fc then
       for k,v in ipairs(fc) do
          table.insert( cargoes, v )
       end
    end
    -- Choose a random cargo and create it
-   cargo = cargoes[rnd.rnd(1, #cargoes)]
-   local c = misn.cargoNew( cargo[1], cargo[2] )
+   mem.cargo = cargoes[rnd.rnd(1, #cargoes)]
+   local c = misn.cargoNew( mem.cargo[1], mem.cargo[2] )
    -- TODO make this more nuanced
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
-   cargo = cargo[1] -- set it to name only
+   mem.cargo = mem.cargo[1] -- set it to name only
 
    -- mission generics
-   local stuperpx   = 0.3 - 0.015 * tier
-   local stuperjump = 11000 - 200 * tier
-   local stupertakeoff = 12000 - 50 * tier
-   timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
+   local stuperpx   = 0.3 - 0.015 * mem.tier
+   local stuperjump = 11000 - 200 * mem.tier
+   local stupertakeoff = 12000 - 50 * mem.tier
+   mem.timelimit  = time.get() + time.create(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
-   local jumpsperstop = 3 + math.min(tier, 1)
-   if numjumps > jumpsperstop then
-      timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
+   local jumpsperstop = 3 + math.min(mem.tier, 1)
+   if mem.numjumps > jumpsperstop then
+      mem.timelimit:add(time.create( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
-   amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
+   mem.amount    = rnd.rnd(10 + 3 * mem.tier, 20 + 4 * mem.tier)
    local jumpreward = 3000
    local distreward = 0.50
-   reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward + math.max(1,amount/20)) * (1 + 0.05*rnd.twosigma())
+   mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
 
-   if pir.factionIsClan( reward_faction ) then
+   if pir.factionIsClan( mem.reward_faction ) then
       misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(amount),
-         cargo=_(cargo), fct=reward_faction} ) )
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(mem.amount),
+         cargo=_(mem.cargo), fct=mem.reward_faction} ) )
    else
       misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(amount),
-         cargo=_(cargo)} ) )
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(mem.amount),
+         cargo=_(mem.cargo)} ) )
    end
-   misn.markerAdd(destplanet, "computer")
+   misn.markerAdd(mem.destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
-      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    else
-      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    end
 
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward( fmt.credits(mem.reward) )
 end
 
 -- Mission is accepted
 function accept()
-   local playerbest = car.getTransit( numjumps, traveldist )
-   if timelimit < playerbest then
+   local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
+   if mem.timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-	    {time_limit=(timelimit - time.get()), time=(playerbest - time.get()), pnt=destplanet} ) ) then
+	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          misn.finish()
       end
    end
-   if player.pilot():cargoFree() < amount then
+   if player.pilot():cargoFree() < mem.amount then
       tk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short}more than you have)."),
-         { tonnes_free = fmt.tonnes(amount), tonnes_short = fmt.tonnes( amount - player.pilot():cargoFree() ) } ) )
+         { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
       misn.finish()
    end
 
    misn.accept()
 
-   carg_id = misn.cargoAdd( cargo, amount )
+   mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
    tk.msg( _("Mission Accepted"), fmt.f(
       _("{tonnes} of {cargo} are loaded onto your ship."),
-      {tonnes=fmt.tonnes(amount), cargo=_(cargo)} ) )
+      {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
@@ -190,28 +190,28 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == destplanet then
+   if planet.cur() == mem.destplanet then
          tk.msg( _("Successful Delivery"), fmt.f(
-            _("The containers of {cargo} are unloaded at the docks."), {cargo=_(cargo)} ) )
-      player.pay(reward)
-      n = var.peek("ps_misn") or 0
+            _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
+      player.pay(mem.reward)
+      local n = var.peek("ps_misn") or 0
       var.push("ps_misn", n+1)
 
       -- increase faction
-      faction.modPlayerSingle(reward_faction, rnd.rnd(2, 4))
+      faction.modPlayerSingle(mem.reward_faction, rnd.rnd(2, 4))
       misn.finish(true)
    end
 end
 
 -- Date hook
 function tick()
-   if timelimit >= time.get() then
+   if mem.timelimit >= time.get() then
       -- Case still in time
-      misn.osdCreate(fmt.f(_("Smuggling {cargo}"), {cargo=_(cargo)}), {
+      misn.osdCreate(fmt.f(_("Smuggling {cargo}"), {cargo=_(mem.cargo)}), {
          fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-               {pnt=destplanet, sys=destsys, time_limit=timelimit, time=(timelimit - time.get())})
+               {pnt=mem.destplanet, sys=mem.destsys, time_limit=mem.timelimit, time=(mem.timelimit - time.get())})
       })
-   elseif timelimit <= time.get() then
+   elseif mem.timelimit <= time.get() then
       -- Case missed deadline
       player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))
       misn.finish(false)

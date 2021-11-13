@@ -22,16 +22,16 @@ local lmisn = require "lmisn"
 local der = require "common.derelict"
 
 function create ()
-   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Independent" )
+   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Independent" )
 
    -- See if we got something
-   if not destpnt then
+   if not mem.destpnt then
       -- Can't find target so just make everyone be dead
       vntk.msg(_("Empty derelict"), _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship. You decide to give them a decent space burial before moving on.]]))
       misn.finish(false)
    end
 
-   reward_amount = 20e3 + 20e3 * destsys:jumpDist()
+   mem.reward_amount = 20e3 + 20e3 * mem.destsys:jumpDist()
 
    local doaccept = false
    vn.clear()
@@ -39,7 +39,7 @@ function create ()
    vn.music( der.sfx.ambient )
    vn.sfx( der.sfx.board )
    vn.transition()
-   vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {pnt} in the {sys} system."), {pnt=destpnt:name(), sys=destsys, credits=fmt.credits(reward_amount)}))
+   vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {pnt} in the {sys} system."), {pnt=mem.destpnt, sys=mem.destsys, credits=fmt.credits(mem.reward_amount)}))
    vn.menu{
       { _("Help them out"), "help" },
       { _("Refuse to help"), "refuse" },
@@ -68,31 +68,31 @@ function create ()
    misn.accept()
 
    misn.setTitle(_("Derelict Rescue"))
-   misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
-   misn.setReward(fmt.credits(reward_amount))
+   misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {pnt} in the {sys} system."), {pnt=mem.destpnt, sys=mem.destsys}))
+   misn.setReward(fmt.credits(mem.reward_amount))
 
    local c = misn.cargoNew( N_("Rescued Crew"), N_("Some crew you rescued from a derelict ship.") )
-   civs = misn.cargoAdd( c, 0 )
+   mem.civs = misn.cargoAdd( c, 0 )
 
    misn.osdCreate( _("Derelict Rescue"), {
-      fmt.f(_("Take the rescued crew to {pnt} in {sys}"), {pnt=destpnt, sys=destsys})
+      fmt.f(_("Take the rescued crew to {pnt} in {sys}"), {pnt=mem.destpnt, sys=mem.destsys})
    } )
-   misn.markerAdd( destpnt, "low" )
+   misn.markerAdd( mem.destpnt, "low" )
 
    hook.land("land")
 end
 
 
 function land ()
-   if planet.cur() ~= destpnt then return end
+   if planet.cur() ~= mem.destpnt then return end
 
    vn.clear()
    vn.scene()
    vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a while the captain comes over you and gives you the credits you were promised.]])
       .. "\n\n"
-      .. fmt.reward(reward_amount))
+      .. fmt.reward(mem.reward_amount))
    vn.func( function ()
-      player.pay( reward_amount )
+      player.pay( mem.reward_amount )
    end )
    vn.sfxVictory()
    vn.run()
@@ -108,7 +108,7 @@ function abort ()
       vntk.msg(nil, _("You inform the crew you rescued from the derelict that you won't be taking them any further. They thank you and get off your ship."))
    else
       vntk.msg(nil, _("You jet the crew you rescued from the derelict out of the airlock."))
-      misn.cargoJet( civs )
+      misn.cargoJet( mem.civs )
    end
    misn.finish(false)
 end

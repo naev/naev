@@ -63,9 +63,9 @@ function accept ()
    misn.accept()
 
    -- Mission data
-   misn_stage = 0
-   misn_marker = misn.markerAdd( misn_target_sys2, "low" )
-   misn_marker = misn.markerAdd( misn_final_sys, "high" )
+   mem.misn_stage = 0
+   mem.misn_marker = misn.markerAdd( misn_target_sys2, "low" )
+   mem.misn_marker = misn.markerAdd( misn_final_sys, "high" )
 
    -- Mission details
    misn.setTitle(_("Operation Cold Metal"))
@@ -91,13 +91,13 @@ end
 
 
 function jumpout ()
-   last_sys = system.cur()
+   mem.last_sys = system.cur()
 end
 
 
 -- Handles jumping to target system
 function jumpin ()
-    if misn_stage == 0 then
+    if mem.misn_stage == 0 then
         -- Entering target system?
         if system.cur() == misn_final_sys then
             pilot.clear()
@@ -108,16 +108,16 @@ function jumpin ()
             fleetC = {}
             droneC = {}
             local fleetCpos = vec2.new(0, 0)
-            deathsC = 0
+            mem.deathsC = 0
 
-            fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", last_sys )
-            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", last_sys )
+            fleetE[#fleetE + 1] = pilot.add( "Empire Peacemaker", "Empire", mem.last_sys )
+            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
+            fleetE[#fleetE + 1] = pilot.add( "Empire Hawking", "Empire", mem.last_sys )
             for i = 1, 6 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Pacifier", "Empire", last_sys )
+                fleetE[#fleetE + 1] = pilot.add( "Empire Pacifier", "Empire", mem.last_sys )
             end
             for i = 1, 15 do
-                fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", last_sys )
+                fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys )
             end
 
             fleetC[#fleetC + 1] = pilot.add( "Goddard", "Empire", fleetCpos, _("Starfire"), {ai="collective"} )
@@ -157,20 +157,20 @@ function jumpin ()
 
             fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
             misn.osdActive(2)
-            misn_stage = 1
+            mem.misn_stage = 1
         elseif system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
             pilot.clear()
             pilot.toggleSpawn(false)
             misn.osdActive(1)
-            misn_stage = 0
+            mem.misn_stage = 0
         else
             misn.osdActive(1)
-            misn_stage = 0
+            mem.misn_stage = 0
         end
-    elseif misn_stage == 1 and system.cur() ~= misn_final_sys then
+    elseif mem.misn_stage == 1 and system.cur() ~= misn_final_sys then
         pilot.clear()
         pilot.toggleSpawn(false)
-        misn_stage = 0
+        mem.misn_stage = 0
         diff.apply("collective_dead")
         hook.timer( 4.0, "fail_timer" )
     end
@@ -196,7 +196,7 @@ end
 
 local function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Empire Rainmaker", "Empire", last_sys, _("Fuel Tanker"), {ai="empire_refuel"} )
+   refship = pilot.add( "Empire Rainmaker", "Empire", mem.last_sys, _("Fuel Tanker"), {ai="empire_refuel"} )
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
@@ -210,8 +210,8 @@ local function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", "Empire", last_sys, nil, {ai="empire_idle"} )
-   refesc[2] = pilot.add( "Empire Lancelot", "Empire", last_sys, nil, {ai="empire_idle"} )
+   refesc[1] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys, nil, {ai="empire_idle"} )
+   refesc[2] = pilot.add( "Empire Lancelot", "Empire", mem.last_sys, nil, {ai="empire_idle"} )
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end
@@ -223,21 +223,21 @@ end
 
 -- Handles collective death
 function col_dead( _victim )
-    deathsC = deathsC + 1
-    if var.peek("trinity") and deathsC < 2 then
+    mem.deathsC = mem.deathsC + 1
+    if var.peek("trinity") and mem.deathsC < 2 then
         return
     end
     misn.osdActive(3)
     addRefuelShip()
     diff.apply("collective_dead")
-    misn_stage = 4
+    mem.misn_stage = 4
 end
 
 
 -- Handles arrival back to base
 function land ()
    -- Final landing stage
-   if misn_stage == 4 and planet.cur() == misn_base then
+   if mem.misn_stage == 4 and planet.cur() == misn_base then
 
       tk.msg( _("Mission Success"), fmt.f(_([[As you do your approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )

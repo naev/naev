@@ -22,7 +22,7 @@ local vn = require 'vn'
 local taiomi = require 'common.taiomi'
 
 local drones_create -- Forward-declared function
-drone_faction = "Independent" -- Constant
+local drone_faction = "Independent" -- Constant
 local drones, d_scav, evt_state -- Event state, never saved.
 
 --[[

@@ -55,8 +55,8 @@ function create ()
     "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
       misn.accept()
 
-      misn_stage = 0
-      misn_marker = misn.markerAdd( misn_target_sys, "low" )
+      mem.misn_stage = 0
+      mem.misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(_("Collective Extraction"))
@@ -80,7 +80,7 @@ function enter()
 
     local empire_flanking_fleet = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
 
-    if system.cur() == misn_target_sys and misn_stage == 0 then
+    if system.cur() == misn_target_sys and mem.misn_stage == 0 then
         -- Case jumped in before landing
         pilot.clear()
         pilot.toggleSpawn(false)
@@ -127,9 +127,9 @@ function enter()
 
         hook.timer(0.5, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
 
-        misn_stage = 1
+        mem.misn_stage = 1
         misn.osdActive(2)
-    elseif system.cur() == misn_target_sys and misn_stage == 2 then
+    elseif system.cur() == misn_target_sys and mem.misn_stage == 2 then
         -- Case taken off from the planet
         pilot.clear()
         pilot.toggleSpawn(false)
@@ -165,13 +165,13 @@ function enter()
 
         player.allowLand(false, _("You can't land now! Get to the jump point!"))
         misn.osdActive(3)
-    elseif misn_stage == 1 then
+    elseif mem.misn_stage == 1 then
         -- Case jumped back out without landing
-        misn_stage = 0
+        mem.misn_stage = 0
         misn.osdActive(1)
-    elseif misn_stage == 2 then
+    elseif mem.misn_stage == 2 then
         -- Case jumped out after landing
-        misn_stage = 3
+        mem.misn_stage = 3
     end
 end
 
@@ -219,7 +219,7 @@ end
 -- Handles arrival back to base
 function land ()
    -- Just landing
-   if misn_stage == 1 and planet.cur() == misn_target then
+   if mem.misn_stage == 1 and planet.cur() == misn_target then
       player.allowSave(false) -- This prevents the player from starting on Eiroik if he dies after taking off.
       player.takeoff()
 
@@ -239,14 +239,14 @@ function land ()
 
       -- Add goods
       local c = misn.cargoNew( N_("Datapad"), N_("A dead soldier's datapad.") )
-      misn_cargo = misn.cargoAdd( c, 0 )
-      misn_stage = 2
+      mem.misn_cargo = misn.cargoAdd( c, 0 )
+      mem.misn_stage = 2
 
-   elseif misn_stage == 3 and planet.cur() == misn_base then
+   elseif mem.misn_stage == 3 and planet.cur() == misn_base then
 
       tk.msg( _("Mission Accomplished"), _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
     "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )
-      misn.cargoRm( misn_cargo )
+      misn.cargoRm( mem.misn_cargo )
       var.pop("emp_commando")
 
       -- Rewards

@@ -32,7 +32,7 @@ local destplanet = planet.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions
-local fleethooks, hawk, jump_fleet -- Non-persistent state
+local bomber, fleetdv, fleethooks, hawk, jump_fleet -- Non-persistent state
 
 local chatter = {}
 chatter[5] = _("Khan is dead! Who will be our warlord now?")
@@ -64,10 +64,10 @@ function accept()
       })
       misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
       misn.setTitle(_("A Small Distraction"))
-      marker = misn.markerAdd( destsys, "low" )
+      mem.marker = misn.markerAdd( destsys, "low" )
 
-      missionstarted = false
-      jump_fleet_entered = false
+      mem.missionstarted = false
+      mem.jump_fleet_entered = false
 
       hook.jumpout("jumpout")
       hook.enter("enter")
@@ -79,11 +79,11 @@ function accept()
 end
 
 function jumpout()
-   last_sys = system.cur()
+   mem.last_sys = system.cur()
 end
 
 local function player_left_mission_theater()
-   if missionstarted then -- The player has landed, which instantly ends the mission.
+   if mem.missionstarted then -- The player has landed, which instantly ends the mission.
       tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
       faction.get("Dvaered"):modPlayerSingle(-5)
       abort()
@@ -93,17 +93,17 @@ end
 function enter()
    if system.cur() == destsys then
       -- Create the custom factions
-      hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
-      attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
-      faction.dynEnemy( hawkfaction, attkfaction )
+      mem.hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
+      mem.attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
+      faction.dynEnemy( mem.hawkfaction, mem.attkfaction )
 
       -- Spawn people
       pilot.toggleSpawn(false)
       pilot.clear()
       misn.osdActive(2)
-      missionstarted = true
-      j = jump.get(destsys, destjump)
-      v = j:pos()
+      mem.missionstarted = true
+      local j = jump.get(destsys, destjump)
+      local v = j:pos()
       hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, {ai="dvaered_norun"} )
       hawk:outfitRm("all")
       hawk:outfitRm("cores")
@@ -117,17 +117,17 @@ function enter()
       hawk:control()
       hawk:hyperspace(destjump)
       hawk:broadcast(fmt.f(_("Alright folks, this will be Hawk's maiden jump. Continue on course to the {sys} jump gate."), {sys=destjump}))
-      hawk:setFaction(hawkfaction)
+      hawk:setFaction(mem.hawkfaction)
       fleethooks = {}
-      fleetdv = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
-      for i, j in ipairs(fleetdv) do
-         j:changeAI("dvaered_norun")
-         j:setHilight(true)
-         j:setVisible(true)
-         j:control()
-         j:moveto(v)
-         j:setFaction(hawkfaction)
-         table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
+      bomber = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
+      for i, bi in ipairs(bomber) do
+         bi:changeAI("dvaered_norun")
+         bi:setHilight(true)
+         bi:setVisible(true)
+         bi:control()
+         bi:moveto(v)
+         bi:setFaction(mem.hawkfaction)
+         table.insert(fleethooks, hook.pilot(bi, "attacked", "fleetdv_attacked"))
       end
 
       hook.pilot( hawk, "jump", "hawk_jump" )
@@ -157,21 +157,21 @@ function hawk_land(_plt, pnt) -- Got away
 end
 
 function hawk_attacked () -- chased
-   if not jump_fleet_entered then
+   if not mem.jump_fleet_entered then
       hawk:broadcast(_("How dare they attack me! Get them!"))
       hawk:control()
       hawk:hyperspace(destjump)
-      broadcast_first(fleetdv, _("You heard Warlord Khan, blow them to pieces!"))
+      broadcast_first(bomber, _("You heard Warlord Khan, blow them to pieces!"))
    end
 
    update_fleet()
 end
 
 function fleetdv_attacked () -- chased
-   if not jump_fleet_entered then
+   if not mem.jump_fleet_entered then
       hawk:control()
       hawk:hyperspace(destjump)
-      broadcast_first(fleetdv, _("They're attacking us, blow them to pieces!"))
+      broadcast_first(bomber, _("They're attacking us, blow them to pieces!"))
    end
 
    update_fleet()
@@ -192,10 +192,10 @@ end
 function hawk_dead () -- mission accomplished
    hawk:broadcast(_("Arrgh!"))
 
-   faction.dynEnemy( hawkfaction, attkfaction, true )
-   faction.dynEnemy( attkfaction, hawkfaction, true )
+   faction.dynEnemy( mem.hawkfaction, mem.attkfaction, true )
+   faction.dynEnemy( mem.attkfaction, mem.hawkfaction, true )
    local messages = {5, 6, 7}
-   for k, v in ipairs(fleetdv) do
+   for k, v in ipairs(bomber) do
       if v:exists() then
          local _armour, _shield, disabled = v:health()
          if not disabled then
@@ -227,10 +227,10 @@ function update_fleet() -- Wrangles the fleet defending the Hawk
       return
    end
 
-   for i, j in ipairs(fleetdv) do
+   for i, j in ipairs(bomber) do
       if j:exists() then
          j:control()
-         if jump_fleet_entered then
+         if mem.jump_fleet_entered then
             j:changeAI("dvaered_norun")
             j:control(false)
             else
@@ -240,7 +240,7 @@ function update_fleet() -- Wrangles the fleet defending the Hawk
       end
    end
 
-   if jump_fleet_entered then
+   if mem.jump_fleet_entered then
       for k, v in ipairs(fleethooks) do
          hook.rm(v)
       end
@@ -253,13 +253,13 @@ function spawn_fleet() -- spawn warlord killing fleet
    -- Cancel autonav.
    player.cinematics(true)
    player.cinematics(false)
-   jump_fleet_entered = true
+   mem.jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
    jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", destjump, nil, {ai="dvaered_norun"} )
    broadcast_first(jump_fleet, fmt.f(_("{pnt} will be ours! Khan, prepare to die!"), {pnt=destplanet}))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")
-      j:setFaction(attkfaction)
+      j:setFaction(mem.attkfaction)
       j:setHilight(true)
       j:setVisible()
       j:control()
@@ -268,11 +268,11 @@ function spawn_fleet() -- spawn warlord killing fleet
    hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
    camera.set(hawk)
    hawk:broadcast(_("All units, defend Hawk, we are under attack!"))
-   broadcast_first(fleetdv, _("All units, defend Hawk, we are under attack!"))
+   broadcast_first(bomber, _("All units, defend Hawk, we are under attack!"))
    hawk:control()
    hawk:land(destplanet)
 
-   for i, j in ipairs(fleetdv) do
+   for i, j in ipairs(bomber) do
       if j:exists() then
          j:changeAI("dvaered_norun")
          j:control(false)
@@ -286,7 +286,7 @@ function spawn_fleet() -- spawn warlord killing fleet
 end
 
 function undo_invuln()
-   for k, v in ipairs(fleetdv) do
+   for k, v in ipairs(bomber) do
       if v:exists() then
          v:setInvincible(false)
       end
@@ -301,7 +301,7 @@ function jump_fleet_cap_dead () -- mission failed
    tk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hawk:land(destplanet)
-   for i, j in ipairs(fleetdv) do
+   for i, j in ipairs(bomber) do
       if j:exists() then
          j:control()
          j:follow(hawk)
@@ -332,11 +332,11 @@ function cleanup()
       end
    end
 
-   if not fleetdv then
+   if not bomber then
       return
    end
 
-   for k, v in ipairs(fleetdv) do
+   for k, v in ipairs(bomber) do
       if v:exists() then
          v:setHilight(false)
          v:setVisible(false)

@@ -66,7 +66,7 @@ function create()
 
    misn.setNPC(_("Dvaered officer"), fw.portrait_tam, _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?"))
 
-   previous = planet:cur()
+   mem.previous = planet:cur()
 end
 
 function accept()
@@ -80,74 +80,74 @@ function accept()
    misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla1})} )
    misn.setDesc(_("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords."))
    misn.setReward(_("Dvaered never talk about money."))
-   mark1 = misn.markerAdd(destsys1, "low")
+   mem.mark1 = misn.markerAdd(destsys1, "low")
 
-   stage = 0
-   nextsys = system.cur()
-   tamJumped = true -- Because the player has no right to enter a system if tamJumped is false
+   mem.stage = 0
+   mem.nextsys = system.cur()
+   mem.tamJumped = true -- Because the player has no right to enter a system if mem.tamJumped is false
 
-   enterhook = hook.enter("enter")
-   landhook = hook.land("land")
-   loadhook = hook.load("loading")
+   mem.enterhook = hook.enter("enter")
+   mem.landhook = hook.land("land")
+   mem.loadhook = hook.load("loading")
 end
 
 function enter()
-   if not (tamJumped and system.cur() == nextsys) then
+   if not (mem.tamJumped and system.cur() == mem.nextsys) then
       tk.msg(_("What are you doing here?"), _("You were supposed to escort Major Tam, weren't you?"))
       misn.finish(false)
    end
 
    testPlayerSpeed()
 
-   spawnTam( previous )
-   tamJumped = false
+   spawnTam( mem.previous )
+   mem.tamJumped = false
 
-   if stage == 0 then   -- Go to first rendezvous
+   if mem.stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
          encounterWarlord( _("Lady Bitterfly"), destpla1 )
          hook.timer( 2.0, "meeting_msg1" )
       else
-         nextsys = lmisn.getNextSystem(system.cur(), destsys1)
+         mem.nextsys = lmisn.getNextSystem(system.cur(), destsys1)
          majorTam:control()
-         majorTam:hyperspace(nextsys)
-         jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
+         majorTam:hyperspace(mem.nextsys)
+         mem.jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
       end
 
-   elseif stage == 2 then  -- Travel to second rendezvous
+   elseif mem.stage == 2 then  -- Travel to second rendezvous
       if system.cur() == destsys2 then -- Spawn the Baddies
          encounterWarlord( _("Lord Battleaddict"), destpla2 )
-         jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
+         mem.jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
          hook.timer( 2.0, "meeting_msg2" )
       else
-         nextsys = lmisn.getNextSystem(system.cur(), destsys2)
+         mem.nextsys = lmisn.getNextSystem(system.cur(), destsys2)
          majorTam:control()
-         majorTam:hyperspace(nextsys)
-         jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
+         majorTam:hyperspace(mem.nextsys)
+         mem.jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
       end
 
-   elseif stage == 3 then  -- Fleeing to flee planet
+   elseif mem.stage == 3 then  -- Fleeing to flee planet
       hook.timer( 2.5, "explain_battle") -- Explain what happened
       majorTam:control()
       majorTam:land(fleepla)
-      stage = 4
+      mem.stage = 4
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=fleepla})} )
       misn.osdActive(2)
 
-   elseif stage == 5 then  -- Travel to third rendezvous
+   elseif mem.stage == 5 then  -- Travel to third rendezvous
       if system.cur() == destsys3 then -- Spawn the Warlord and Hamelsen
          hamelsenAmbush()
          encounterWarlord( _("Lord Jim"), destpla3 )
          hook.timer( 2.0, "meeting_msg3" )
       else
-         nextsys = lmisn.getNextSystem(system.cur(), destsys3)
+         mem.nextsys = lmisn.getNextSystem(system.cur(), destsys3)
          majorTam:control()
-         majorTam:hyperspace(nextsys)
-         jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
+         majorTam:hyperspace(mem.nextsys)
+         mem.jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
       end
    end
 
-   previous = system.cur()
+   mem.previous = system.cur()
 end
 
 function testPlayerSpeed()
@@ -196,7 +196,7 @@ function spawnTam( origin )
    majorTam:setFuel(true)
    majorTam:cargoRm( "all" )
 
-   dyingTam = hook.pilot(majorTam, "death", "tamDied")
+   mem.dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
 
 function encounterWarlord( name, origin )
@@ -223,12 +223,12 @@ function encounterWarlord( name, origin )
    majorTam:memory().radius = 0
    majorTam:follow(warlord, true)
 
-   proxHook = hook.timer(0.5, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
+   mem.proxHook = hook.timer(0.5, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
 end
 
 function tamJump()
-   tamJumped = true
-   player.msg(fmt.f(_("Major Tam has jumped for the {sys} system."), {sys=nextsys}))
+   mem.tamJumped = true
+   player.msg(fmt.f(_("Major Tam has jumped for the {sys} system."), {sys=mem.nextsys}))
 end
 
 function tamDied()
@@ -240,35 +240,35 @@ function tamDied()
 end
 
 function land() -- The player is only allowed to land on special occasions
-   if stage == 1 then
-      stage = 2
+   if mem.stage == 1 then
+      mem.stage = 2
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla2})} )
-      misn.markerRm(mark1)
-      mark2 = misn.markerAdd(destsys2, "low")
-   elseif stage == 4 then
-      stage = 5
+      misn.markerRm(mem.mark1)
+      mem.mark2 = misn.markerAdd(destsys2, "low")
+   elseif mem.stage == 4 then
+      mem.stage = 5
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla3})} )
-      misn.markerRm(mark2)
-      mark3 = misn.markerAdd(destsys3, "low")
-   elseif stage == 8 then
+      misn.markerRm(mem.mark2)
+      mem.mark3 = misn.markerAdd(destsys3, "low")
+   elseif mem.stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
       tk.msg(_("Thank you, citizen"), fmt.f(_([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth {credits}! One always needs Gauss Guns, no?"]]), {credits=fmt.credits(fw.credits_00)}))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
-      GGprice = outfit.get("Gauss Gun"):price()
-      nb = math.floor(fw.credits_00/GGprice+0.5)
-      player.outfitAdd("Gauss Gun", nb)
+      mem.GGprice = outfit.get("Gauss Gun"):price()
+      mem.nb = math.floor(fw.credits_00/mem.GGprice+0.5)
+      player.outfitAdd("Gauss Gun", mem.nb)
       misn.finish(true)
    else
       tk.msg(_("What are you doing here?"), _("You were supposed to escort Major Tam, weren't you?"))
       misn.finish(false)
    end
-   --hook.rm(jumpingTam)
-   tamJumped = true
-   previous = planet.cur()
+   --hook.rm(mem.jumpingTam)
+   mem.tamJumped = true
+   mem.previous = planet.cur()
    misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
@@ -289,34 +289,34 @@ function meeting()
 
    player.pilot():control(false) -- Free the player
 
-   if stage == 0 then
+   if mem.stage == 0 then
       tk.msg(_("Everything is right"), fmt.f(meet_text1, {pnt=destpla1}))
-      stage = 1
+      mem.stage = 1
       majorTam:taskClear()
       majorTam:land(destpla1)
       misn.osdActive(2)
 
-   elseif stage == 2 then
+   elseif mem.stage == 2 then
 
-      nextsys = fleesys
-      tk.msg(_("They're after me!"), fmt.f(_([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to {sys}! Let me jump first!"]]), {sys=nextsys}))
-      stage = 3
+      mem.nextsys = fleesys
+      tk.msg(_("They're after me!"), fmt.f(_([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to {sys}! Let me jump first!"]]), {sys=mem.nextsys}))
+      mem.stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
       quickie:setFaction("Warlords")
 
       majorTam:taskClear()
       majorTam:memory().careful = true
-      majorTam:runaway(quickie, jump.get( system.cur(), nextsys )) -- Runaway towards next system
+      majorTam:runaway(quickie, jump.get( system.cur(), mem.nextsys )) -- Runaway towards next system
 
       hook.timer( 2.0, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
 
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escort"), {fmt.f(_("Ensure Major Tam safely jumps to {sys} and follow him"), {sys=fleesys})} )
 
-   elseif stage == 5 then
+   elseif mem.stage == 5 then
       tk.msg(_("Everything is right"), fmt.f(meet_text1, {pnt=destpla3}))
-      stage = 8
+      mem.stage = 8
       majorTam:taskClear()
       majorTam:land(destpla3)
       misn.osdActive(2)
@@ -352,7 +352,8 @@ end
 
 -- Spawn colonel Hamelsen and her mates
 function hamelsenAmbush()
-   local jp     = jump.get(system.cur(), previous)
+   local jp     = jump.get(system.cur(), mem.previous)
+   local x, y, pos
    ambush = {}
    for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
@@ -387,9 +388,9 @@ function hamelsenAmbush()
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
    hamelsen:setNoDisable()
 
-   attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
+   mem.attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 
-   nambush = #ambush + 1
+   mem.nambush = #ambush + 1
 
    -- Pre-position Captain Leblanc and her mates, but as Dvaered
    savers = {}
@@ -404,8 +405,8 @@ function hamelsenAmbush()
    savers[1]:setNoDeath()
    savers[1]:setNoDisable()
 
-   msg = hook.timer( 4.0, "ambush_msg" )
-   killed_ambush = 0
+   mem.msg = hook.timer( 4.0, "ambush_msg" )
+   mem.killed_ambush = 0
 end
 
 function ambush_msg()
@@ -413,7 +414,7 @@ function ambush_msg()
    ambush[1]:comm(_("You wanted to meet Lord Jim? What about you meet your doom instead?"))
 
    majorTam:control(false)
-   hook.rm(proxHook) -- To avoid triggering by mistake
+   hook.rm(mem.proxHook) -- To avoid triggering by mistake
 
    for i, pi in ipairs(savers) do
       pi:setFaction("DHC")
@@ -428,14 +429,14 @@ function hamelsen_attacked( )
       hamelsen:control()
       hamelsen:memory().careful = true
       hamelsen:runaway(player.pilot(), jump.get( system.cur(), "Radix")) -- I don't want her to try to jump at closest one
-      hook.rm(attack)
+      hook.rm(mem.attack)
       ambushDied() -- One less
    end
 end
 
 function ambushDied()
-   killed_ambush = killed_ambush + 1
-   if killed_ambush >= nambush then -- Everything back to normal: we meet Lord Jim
+   mem.killed_ambush = mem.killed_ambush + 1
+   if mem.killed_ambush >= mem.nambush then -- Everything back to normal: we meet Lord Jim
       majorTam:control()
       majorTam:follow(warlord, true)
       hook.timer(0.5, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
@@ -453,9 +454,9 @@ end
 
 function discussWithTam()
    -- Major Tam is not senile: he says different things at the different stops
-   if stage == 2 then
+   if mem.stage == 2 then
       tk.msg(_("Major Tam is ready"), _([[How do you do, citizen? Did you enjoy the trip so far? I'm ready for next stop. I'll follow you when you take off.]]))
-   elseif stage == 5 then
+   elseif mem.stage == 5 then
       if tk.yesno(_("Major Tam is talkative today"), _([["Hello, citizen. Did you already recover from Lord Battleaddict's last joke? It reminded me of my youth, when I used to belong to a fighter's squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])) then
          tk.msg(_("Major Tam before he was at the Headquarters"), _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords.
    "Warlords' forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...

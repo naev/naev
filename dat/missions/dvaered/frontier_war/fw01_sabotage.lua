@@ -51,7 +51,7 @@ local intpla, intsys     = planet.getS("Timu")
 
 -- Non-persistent state
 local p, ps -- active pilot/fleet
-local battleaddict, hamelsen, klank, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
+local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
 
@@ -81,29 +81,29 @@ function accept()
    misn.setDesc(_("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel."))
    misn.setReward(_("Focus on the mission, pilot."))
 
-   stage = 0
+   mem.stage = 0
    hook.land("land")
    misn.osdCreate( _("Dvaered Sabotage"), {
       fmt.f(_("Pick up Hamfresser in {pnt} in {sys}. Use a civilian ship with at least {tonnes} of free cargo"), {pnt=hampla, sys=hamsys, tonnes=fmt.tonnes(bombMass)}),
       fmt.f(_("Meet Battleaddict around {pnt} in {sys}"), {pnt=sabotpla, sys=sabotsys}),
       fmt.f(_("Deposit Hamfresser on {pnt} in {sys}"), {pnt=duelpla, sys=duelsys}),
    } )
-   mark = misn.markerAdd(hamsys, "low")
+   mem.mark = misn.markerAdd(hamsys, "low")
 end
 
 function land()
-   if stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
+   if mem.stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
       misn.npcAdd("hamfresser", _("Captain Hamfresser"), fw.portrait_hamfresser, _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him."))
 
-   elseif stage == 2 then -- The player landed somewhere on Battleaddict's system
+   elseif mem.stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
       misn.finish(false)
 
-   elseif stage == 5 and planet.cur() == duelpla then -- Report back
+   elseif mem.stage == 5 and planet.cur() == duelpla then -- Report back
       misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
       misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
 
-   elseif stage == 7 and planet.cur() == duelpla then -- Epilogue
+   elseif mem.stage == 7 and planet.cur() == duelpla then -- Epilogue
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_tam, _("Tam and Leblanc are congratulating their general."))
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_klank, _("Tam and Leblanc are congratulating their general."))
@@ -118,14 +118,14 @@ function hamfresser()
    "Last period, we intercepted a message from Battleaddict to a plumber. His cruiser has issues with sewage disposal and he requested an intervention. So we abducted the plumber and we disguised an EMP bomb as a sewage emptier. We will dock with his ship, plant the bomb, repair the breakdown (so he won't suspect us) and go away. Private Ling here is a Goddard-plumber, so she will lead us." A young and smiling soldier raises her hand, saying "Hi".]]) )
       tk.msg( _("New passengers"), fmt.f(_([[While you wonder whether the plan is awesomely brilliant or dead stupid, Hamfresser begins the introductions. "This is Sergeant Nikolov, she is my second in command, this is Private Tronk, from my squad, and Corporal Therus, our medical support. Oh, and the guy in his corner over there is Lieutenant Strafer. He is a pilot from the Special Operations. He is here in case we need to switch to plan B." As you ask what plan B is, Hamfresser simply answers, "you don't want to switch to plan B.
    "As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in {sys}".]]), {pnt=sabotpla, sys=sabotsys}) )
-      stage = 1
+      mem.stage = 1
       hook.enter("enter")
       local c = misn.cargoNew( N_("Bomb"), N_("A gift from the High Command to Lord Battleaddict.") )
-      bomblet = misn.cargoAdd( c, bombMass )
+      mem.bomblet = misn.cargoAdd( c, bombMass )
 
-      misn.markerRm(mark)
+      misn.markerRm(mem.mark)
       misn.osdActive(2)
-      mark = misn.markerAdd(sabotsys, "low")
+      mem.mark = misn.markerAdd(sabotsys, "low")
       player.takeoff()
    else
       tk.msg(_("Not enough free space"), fmt.f(_("Your ship does not have enough free space. Come back with {tonnes} free."), {tonnes=fmt.tonnes(bombMass)}))
@@ -134,7 +134,7 @@ end
 
 function enter()
    -- Spawn Battleaddict and his team
-   if stage == 1 and system.cur() == sabotsys then
+   if mem.stage == 1 and system.cur() == sabotsys then
       pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
       pilot.clearSelect("FLF") --
       for k,f in ipairs(pir.factions) do
@@ -170,33 +170,33 @@ function enter()
       hook.timer(0.5, "proximity", {anchor = warlord, radius = 2000, funcname = "meeting", focus = player.pilot()})
       hook.timer(0.5, "proximity", {anchor = warlord, radius = 300, funcname = "killing", focus = player.pilot()})
 
-   elseif stage == 2 then
+   elseif mem.stage == 2 then
       hook.timer(2.0, "enter2_message")
-      stage = 3
+      mem.stage = 3
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Sabotage"), {
          fmt.f(_("Go to {sys}, approach {pnt} and wait for the Phalanx"), {sys=intsys, pnt=intpla}),
          _("Disable and board the Phalanx"),
          fmt.f(_("Report back on {pnt} in {sys}"), {pnt=duelpla, sys=duelsys})} )
-      mark = misn.markerAdd(intsys, "low")
+      mem.mark = misn.markerAdd(intsys, "low")
 
-   elseif stage == 3 and system.cur() == intsys then
+   elseif mem.stage == 3 and system.cur() == intsys then
       hook.timer(0.5, "proximity", {location = intpla:pos(), radius = 1000, funcname = "spawn_phalanx", focus = player.pilot()})
 
-   elseif stage == 6 and system.cur() == duelsys then
+   elseif mem.stage == 6 and system.cur() == duelsys then
       pilot.toggleSpawn(false)
       pilot.clear()
 
-      mypos = duelpla:pos()
-      step = 150
+      mem.mypos = duelpla:pos()
+      mem.step = 150
 
-      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2) )
+      klank = pilot.add( "Dvaered Goddard", "Dvaered", mem.mypos + vec2.new(-mem.step, mem.step/2) )
       klank:rename( "General Klank" )
       klank:control(true)
       klank:setFaction("DHC")
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
-      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2) )
+      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mem.mypos + vec2.new(mem.step, mem.step/2) )
       battleaddict:rename( "Lord Battleaddict" )
       battleaddict:control(true)
       battleaddict:setFaction("Warlords")
@@ -205,36 +205,36 @@ function enter()
       klank:face(battleaddict)
       battleaddict:face(klank)
 
-      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2) )
+      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(0, 3*mem.step/2) )
       urnus:rename( "Colonel Urnus" )
       urnus:control(true)
-      urnus:face( mypos + vec2.new(0, step/2) )
+      urnus:face( mem.mypos + vec2.new(0, mem.step/2) )
 
-      tam = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(-2*step, 3*step/2) )
+      tam = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(-2*mem.step, 3*mem.step/2) )
       tam:rename( "Major Tam" )
       tam:control(true)
       tam:face(battleaddict)
 
-      leblanc = pilot.add( "Dvaered Phalanx", "Dvaered", mypos + vec2.new(-2*step, -step/2) )
+      leblanc = pilot.add( "Dvaered Phalanx", "Dvaered", mem.mypos + vec2.new(-2*mem.step, -mem.step/2) )
       leblanc:rename( "Captain Leblanc" )
       leblanc:control(true)
       leblanc:face(battleaddict)
 
-      hamelsen = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(2*step, 3*step/2) )
+      hamelsen = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(2*mem.step, 3*mem.step/2) )
       hamelsen:rename( "Colonel Hamelsen" )
       hamelsen:control(true)
       hamelsen:face(klank)
 
-      randguy = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(2*step, -step/2) )
+      randguy = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(2*mem.step, -mem.step/2) )
       randguy:control(true)
       randguy:face(klank)
 
       player.pilot():control()
-      player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
+      player.pilot():moveto( mem.mypos + vec2.new(0, -mem.step/2) ) -- To avoid being in the range
       player.cinematics( true, { gui = true } )
       player.pilot():setInvincible()
 
-      camera.set( mypos + vec2.new(0, step/2) )
+      camera.set( mem.mypos + vec2.new(0, mem.step/2) )
 
       hook.timer(5.0, "beginDuel")
       hook.timer(15.0, "disableDuel")
@@ -291,11 +291,11 @@ function killing()
    Suddenly, a message makes everyone come to a halt: "So, Colonel, when do we blow those fake plumbers out? I look forward to using my shredders a bit!" "Shut up, Corporal!" "Oah, come on, I'm on the encoded channel. Plumbers are unable to break our code." "But they're NOT plumbers, stupid!"
    Hamfresser looks at you, and simply declares "We abort the mission. Get us out of that system, {player}!" Strangely enough, none of the soldiers seem to show any signs of panic.]]), {player=player.name()}))
    release_baddies()
-   stage = 2
+   mem.stage = 2
 
    misn.osdDestroy()
    misn.osdCreate( _("Dvaered Sabotage"), {_("Jump out. Do NOT land in this system")} )
-   misn.markerRm(mark)
+   misn.markerRm(mem.mark)
 end
 
 function release_baddies()
@@ -320,8 +320,8 @@ function spawn_phalanx()
    p:rename("Gorgon")
    p:control()
 
-   nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
-   p:hyperspace( nextsys ) -- Go towards Battleaddict's place
+   mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
+   p:hyperspace( mem.nextsys ) -- Go towards Battleaddict's place
 
    p:outfitRm("all")
    p:outfitRm("cores")
@@ -337,20 +337,20 @@ function spawn_phalanx()
    p:setEnergy(100)
    p:setFuel(true)
 
-   pattacked = hook.pilot( p, "attacked", "phalanx_attacked" )
-   pboarded = hook.pilot( p, "board", "phalanx_boarded" )
+   mem.pattacked = hook.pilot( p, "attacked", "phalanx_attacked" )
+   mem.pboarded = hook.pilot( p, "board", "phalanx_boarded" )
    hook.pilot( p, "death", "phalanx_died" )
    hook.pilot( p, "jump", "phalanx_safe" )
    hook.pilot( p, "land", "phalanx_safe" )
 
-   stage = 4
+   mem.stage = 4
    misn.osdActive(2)
    -- TODO: not possible to jump out nor land
 end
 
 -- Decide if the Phalanx flees or fight
 function phalanx_attacked()
-   hook.rm(pattacked)
+   hook.rm(mem.pattacked)
    if player.pilot():ship():size() > 3 then
       p:taskClear()
       p:comm( _("Just try to catch me, you pirate!") )
@@ -362,21 +362,21 @@ function phalanx_attacked()
 end
 
 function phalanx_boarded()
-   hook.rm(pboarded)
+   hook.rm(mem.pboarded)
    tk.msg( _("Boarding"), fmt.f(_([[All the members of the commando have put on their battle suits. Hamfresser gives the last orders. "Nikolov, Tronk and I will enter first and clean the area. Remember that we don't have our usual Dudley combat androids, we're stuck with the two useless plumber bots and the few security droids of {player}'s ship. As much to say, we'll have to work by hand. I recall for everyone that corvettes are typically protected by a few 629 Spitfires and an occasional 711 Grillmeister. That's not very much, but still enough to send the inattentive soldier ad patres."
    When the corvette's airlock falls under Nikolov's circular saw, the captain waves and the small team enters the ship. You then hear shots and explosions coming from further and further in the enemy ship. Finally, you hear a laconic message coming from the disabled corvette: "Strafer here, everything went well. We transfer now the cargo into the Phalanx... All right, the maneuver is finished, you may leave." Happy to have survived the operation so far, you start your engines and respond "Good luck, folks!". The lieutenant answers "Thanks, citizen, I'm glad I've met you."]]), {player=player.name()}) )
-   stage = 5
-   misn.cargoRm(bomblet)
+   mem.stage = 5
+   misn.cargoRm(mem.bomblet)
 
    player.unboard() -- Prevent the player form actually boarding the ship
    p:setFaction("DHC")
    p:control(true)
    p:taskClear()
-   p:hyperspace( nextsys )
+   p:hyperspace( mem.nextsys )
 
    misn.osdActive(3)
-   misn.markerRm(mark)
-   mark = misn.markerAdd(duelsys, "low")
+   misn.markerRm(mem.mark)
+   mem.mark = misn.markerAdd(duelsys, "low")
 end
 
 -- Mission failed: phalanx died
@@ -394,11 +394,11 @@ end
 function majorTam()
    tk.msg( _("Ready to attend to the show?"), fmt.f(_([[As you sit at the table, Tam starts to speak: "I got a message from Captain Hamfresser. Apparently, everything went according to the plan this time. They should have docked with the Goddard, allegedly to add their mission log to the central database. Then they planted the bomb in the plumbing, close to the central unit, and they faked an accident while landing on {pnt}. I guess they should be hiking somewhere on the planet's surface by now, looking for the opportunity to steal an unfortunate civilian's Llama in order to make their trip back.
    "Our boss, the General Klank, is ready for the duel. The Captain and I are his duel witnesses, so we should be joining our pageantry ships by now. Oh, and the duel commissioner is someone you already know, the Colonel Urnus. In about a period, Lord Battleaddict should arrive, so if you take off soon, you will see the duel."]]), {pnt=sabotpla}) )
-   stage = 6
+   mem.stage = 6
 
    misn.osdDestroy()
    misn.osdCreate( _("Dvaered Sabotage"), {_("Attend to the duel"), fmt.f(_("Land on {pnt}"), {pnt=duelpla})} )
-   misn.markerRm(mark)
+   misn.markerRm(mem.mark)
 end
 
 -- Starts the duel
@@ -486,10 +486,10 @@ function fighterDuel()
    battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
-   battleaddict2:moveto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
+   battleaddict2:moveto( mem.mypos + vec2.new(mem.step,mem.step/4), false, false ) -- Prevent them from staying on the top of their ships
    battleaddict2:attack(klank2)
    klank2:control()
-   klank2:moveto( mypos + vec2.new(-step,step/4), false, false )
+   klank2:moveto( mem.mypos + vec2.new(-mem.step,mem.step/4), false, false )
    klank2:attack(battleaddict2)
    hook.pilot( battleaddict2, "exploded", "battleaddict_killed" )
 
@@ -509,7 +509,7 @@ function battleaddict_killed()
    player.cinematics( false )
    player.pilot():setInvincible( false )
 
-   stage = 7
+   mem.stage = 7
    misn.osdActive(2)
 end
 

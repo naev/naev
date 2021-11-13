@@ -88,8 +88,8 @@ function accept ()
    misn.accept()
 
    -- Mission data
-   misn_stage = 0
-   misn_marker = misn.markerAdd( misn_target_sys, "high" )
+   mem.misn_stage = 0
+   mem.misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
    misn.setTitle(_("Operation Black Trinity"))
@@ -118,12 +118,12 @@ end
 
 
 function jumpout ()
-   last_sys = system.cur()
+   mem.last_sys = system.cur()
 end
 
 
 function jumpin ()
-   enter( last_sys )
+   enter( mem.last_sys )
 end
 
 function takeoff ()
@@ -134,13 +134,13 @@ end
 -- Handles jumping to target system
 function enter ( from_sys )
    -- Only done for stage 1
-   if misn_stage == 0 then
+   if mem.misn_stage == 0 then
       local sys = system.cur()
 
       -- Create some havoc
       if sys == misn_target_sys then
          -- Escorts enter a while back
-         enter_vect = player.pos()
+         mem.enter_vect = player.pos()
          if from_sys == nil then
             add_escorts( true )
          else -- Just jumped
@@ -151,7 +151,7 @@ function enter ( from_sys )
          pilot.clear()
          pilot.toggleSpawn(false)
 
-         misn_stage = 1
+         mem.misn_stage = 1
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
@@ -163,18 +163,18 @@ function enter ( from_sys )
          hook.pilot( trinity, "death", "trinity_kill" )
          hook.pilot( trinity, "jump", "trinity_jump" )
 
-         final_fight = 0
+         mem.final_fight = 0
          hook.timer(rnd.uniform(6.0, 8.0) , "final_talk") -- Escorts should be in system by now
       end
 
    -- Player ran away from combat - big disgrace.
-   elseif misn_stage == 1 then
+   elseif mem.misn_stage == 1 then
 
-      misn_stage = 3
+      mem.misn_stage = 3
       player.msg( _("Mission Failure: Return to base.") )
       misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
             {pnt=misn_base, sys=misn_base_sys} ))
-      misn.markerMove( misn_marker, misn_base_sys )
+      misn.markerMove( mem.misn_marker, misn_base_sys )
    end
 end
 
@@ -182,19 +182,20 @@ end
 -- Little talk when ESS Trinity is encountered.
 function final_talk ()
    -- Empire talks about arresting
-   if final_fight == 0 then
+   local talker
+   if mem.final_fight == 0 then
       talker = paci
       talker:broadcast( _("ESS Trinity: Please turn off your engines and prepare to be boarded.") )
 
-      final_fight = 1
+      mem.final_fight = 1
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
-   elseif final_fight == 1 then
+   elseif mem.final_fight == 1 then
       talker = trinity
       talker:broadcast( _("You will never take me alive!") )
 
-      final_fight = 2
+      mem.final_fight = 2
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
-   elseif final_fight == 2 then
+   elseif mem.final_fight == 2 then
       -- Talk
       talker = paci
       talker:broadcast( _("Very well then. All units engage ESS Trinity.") )
@@ -203,12 +204,12 @@ function final_talk ()
       trinity:setFaction("Collective")
       trinity:setHostile()
 
-      final_fight = 3
+      mem.final_fight = 3
       hook.timer(rnd.uniform( 4.0, 5.0 ), "final_talk")
-   elseif final_fight == 3 then
-      tri_flee  = false
+   elseif mem.final_fight == 3 then
+      mem.tri_flee  = false
       hook.timer( 3.0, "trinity_check" )
-      tri_checked = 0
+      mem.tri_checked = 0
       for i, j in ipairs( escorts ) do
          if j:exists() then
             j:control(false)
@@ -219,19 +220,19 @@ end
 
 
 function trinity_check ()
-   if tri_flee then
+   if mem.tri_flee then
       return
    end
-   tri_checked = tri_checked + 1
+   mem.tri_checked = mem.tri_checked + 1
 
-   if tri_checked == 3 then
+   if mem.tri_checked == 3 then
       trinity:broadcast( _("It is too late! The plan is being put into motion!") )
-   elseif tri_checked == 6 then
+   elseif mem.tri_checked == 6 then
       trinity:broadcast( _("You have no idea who you're messing with!") )
    end
 
    local a = trinity:health()
-   if a < 100 or tri_checked > 100 then
+   if a < 100 or mem.tri_checked > 100 then
       trinity_flee()
    else
       hook.timer( 3.0, "trinity_check" )
@@ -241,7 +242,7 @@ end
 
 -- Trinity runs away
 function trinity_flee ()
-   tri_flee = true
+   mem.tri_flee = true
    trinity:control()
    trinity:hyperspace( misn_flee_sys, true )
    trinity:broadcast( _("My drones will make mincemeat of you!") )
@@ -255,7 +256,7 @@ function call_drones_jump ()
    local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
    drone_reinforcements = fleet.add( 1, sml_swarm, "Collective", misn_flee_sys, _("Collective Drone") )
    drone_reinforcements[4]:rename(_("Collective Heavy Drone"))
-   drone_controlled = true
+   mem.drone_controlled = true
    local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do
       v:setHostile()
@@ -270,8 +271,8 @@ end
 
 -- Support drones attacked
 function drone_attacked ()
-   if drone_controlled then
-      drone_controlled = false
+   if mem.drone_controlled then
+      mem.drone_controlled = false
       for k,v in ipairs(drone_reinforcements) do
          if v:exists() then
             v:control(false)
@@ -283,8 +284,8 @@ end
 
 -- Drone killed
 local function drone_dead ()
-   num_drone = num_drone - 1
-   if num_drone < 2 and not tri_flee then
+   mem.num_drone = mem.num_drone - 1
+   if mem.num_drone < 2 and not mem.tri_flee then
       trinity_flee()
    end
 end
@@ -294,9 +295,9 @@ end
 function add_escorts( landed )
    local param
    if landed then
-      param = enter_vect
+      param = mem.enter_vect
    else
-      param = last_sys
+      param = mem.last_sys
    end
 
    paci = pilot.add( "Empire Pacifier", "Empire", param, nil, {ai="escort_player"} )
@@ -324,9 +325,9 @@ function land ()
    local credits = emp.rewards.ec05
 
    -- Just landing
-   if (misn_stage == 2 or misn_stage == 3) and pnt == misn_base then
+   if (mem.misn_stage == 2 or mem.misn_stage == 3) and pnt == misn_base then
 
-      if trinity_alive or misn_stage == 3 then
+      if mem.trinity_alive or mem.misn_stage == 3 then
          -- Failure to kill
          tk.msg( _("Mission Failure"), _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]]) )
@@ -353,19 +354,19 @@ end
 -- Trinity hooks
 function trinity_kill () -- Got killed
    player.msg( _("Mission Success: Return to base.") )
-   misn_stage = 2
+   mem.misn_stage = 2
    misn.osdActive(3)
-   trinity_alive = false
+   mem.trinity_alive = false
    misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
-   misn.markerMove( misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base_sys )
 end
 
 
 function trinity_jump () -- Got away
    player.msg( _("Mission Failure: Return to base.") )
-   misn_stage = 2
+   mem.misn_stage = 2
    misn.osdActive(3)
-   trinity_alive = true
+   mem.trinity_alive = true
    misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
-   misn.markerMove( misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base_sys )
 end

@@ -204,6 +204,10 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadAudio(ev->env);
    nlua_loadTk(ev->env);
 
+   /* Create the "mem" table for persistence. */
+   lua_newtable(naevL);
+   nlua_setenv(ev->env, "mem");
+
    /* Load file. */
    if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {
       WARN(_("Error loading event file: %s\n"

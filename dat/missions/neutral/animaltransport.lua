@@ -47,9 +47,9 @@ function create ()
       abort()
    end
 
-   index = rnd.rnd(1, #planets)
-   destplanet = planets[index][1]
-   destsys = planets[index][2]
+   local index = rnd.rnd(1, #planets)
+   mem.destplanet = planets[index][1]
+   mem.destsys = planets[index][2]
 
 
    misn.setNPC(_("A Fyrra civilian"), "sirius/unique/rodentman.webp", _("There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him."))
@@ -57,13 +57,13 @@ end
 
 
 function accept ()
-   if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pnt} in the {sys} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pnt} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pnt=destplanet, sys=destsys})) then
+   if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pnt} in the {sys} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pnt} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pnt=mem.destplanet, sys=mem.destsys})) then
       misn.accept()
-      misn.setDesc(fmt.f(_("You've been hired to transport a crate of specially engineered rodents to {pnt} ({sys} system)."), {pnt=destplanet, sys=destsys}))
+      misn.setDesc(fmt.f(_("You've been hired to transport a crate of specially engineered rodents to {pnt} ({sys} system)."), {pnt=mem.destplanet, sys=mem.destsys}))
       misn.setReward(fmt.f(_("You will be paid {credits} on arrival."),{credits=fmt.credits(money_reward)}))
-      misn.osdCreate(_("Animal transport"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=destsys, pnt=destplanet})})
+      misn.osdCreate(_("Animal transport"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=mem.destsys, pnt=mem.destplanet})})
       tk.msg(_("Animal transport"), _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]))
-      misn.markerAdd( destplanet, "high" )
+      misn.markerAdd( mem.destplanet, "high" )
       hook.land("land")
    else
       misn.finish()
@@ -71,7 +71,7 @@ function accept ()
 end
 
 function land()
-   if planet.cur() == destplanet then
+   if planet.cur() == mem.destplanet then
       tk.msg(_("Animal transport"), fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)}))
       player.pay(money_reward)
       var.push("shipinfested", true)

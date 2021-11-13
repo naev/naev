@@ -36,9 +36,9 @@ end
 
 -- Land is unified for all types of combat
 function land ()
-   local rewardcredits = total_score
+   local rewardcredits = mem.total_score
    -- TODO only give emblems from bosses or special clears?
-   local rewardemblems = total_score/100
+   local rewardemblems = mem.total_score/100
 
    vn.clear()
    vn.scene()
@@ -55,15 +55,15 @@ function land ()
 end
 
 function approach_gauntlet ()
-   gtype, gopt, gmods = gauntlet_gui.run()
-   if gtype == nil then
+   mem.gtype, mem.gopt, gmods = gauntlet_gui.run()
+   if mem.gtype == nil then
       return
    end
 
-   wave_category = string.lower( gopt )
+   mem.wave_category = string.lower( mem.gopt )
 
    -- See if we start the event
-   if wave_category==nil then
+   if mem.wave_category==nil then
       return
    end
 
@@ -87,8 +87,8 @@ function approach_gauntlet ()
    player.takeoff() -- take off and enter the ring!
 
    -- Wave meta-information
-   gauntlet_enter = "enter_wave"
-   wave_round = 1
+   mem.gauntlet_enter = "enter_wave"
+   mem.wave_round = 1
 end
 function loaded ()
    misn.finish(false)
@@ -117,7 +117,7 @@ end
 function enter_the_ring ()
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
    local sys = gauntletsys
-   hook.enter( gauntlet_enter )
+   hook.enter( mem.gauntlet_enter )
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
    end
@@ -132,8 +132,8 @@ function enter_the_ring ()
 
    -- Player lost info
    local pp = player.pilot()
-   pp_hook_disable = hook.pilot( pp, "disable", "player_lost_disable" )
-   pp_hook_dead = hook.pilot( pp, "exploded", "player_lost" )
+   mem.pp_hook_disable = hook.pilot( pp, "disable", "player_lost_disable" )
+   mem.pp_hook_dead = hook.pilot( pp, "exploded", "player_lost" )
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
@@ -159,7 +159,7 @@ end
    Countdown stuff
 --]]
 local function countdown_start ()
-   omsg_id = player.omsgAdd( _("5…"), 1.1 )
+   mem.omsg_id = player.omsgAdd( _("5…"), 1.1 )
    hook.timer( 1.0, "countdown", _("4…") )
    hook.timer( 2.0, "countdown", _("3…") )
    hook.timer( 3.0, "countdown", _("2…") )
@@ -168,13 +168,13 @@ local function countdown_start ()
 end
 function countdown( str )
    -- TODO play countdown sound
-   player.omsgChange( omsg_id, str, 1.1 )
+   player.omsgChange( mem.omsg_id, str, 1.1 )
 end
 function countdown_done ()
    -- TODO play sound and cooler text
-   player.omsgChange( omsg_id, _("FIGHT!"), 3 )
-   wave_started = true
-   wave_started_time = naev.ticks()
+   player.omsgChange( mem.omsg_id, _("FIGHT!"), 3 )
+   mem.wave_started = true
+   mem.wave_started_time = naev.ticks()
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
@@ -198,9 +198,9 @@ local function enemy_out( p )
    if idx then
       table.remove( enemies, idx )
    end
-   if wave_started and #enemies == 0 then
-      wave_started = false
-      all_enemies_dead()
+   if mem.wave_started and #enemies == 0 then
+      mem.wave_started = false
+      mem.all_enemies_dead()
    end
 end
 function p_disabled( p )
@@ -219,12 +219,12 @@ function player_lost_disable ()
    pp:setInvisible( true )
    -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 4.5 )
-   if not leave_hook then
-      leave_hook = hook.timer( 5.0, "leave_the_ring" )
+   if not mem.leave_hook then
+      mem.leave_hook = hook.timer( 5.0, "leave_the_ring" )
    end
 end
 function player_lost ()
-   hook.rm( pp_hook_disable )
+   hook.rm( mem.pp_hook_disable )
    local pp = player.pilot()
    pp:setHealth( 100, 100 ) -- Heal up to avoid game over if necessary
    pp:setHide( true )
@@ -234,8 +234,8 @@ function player_lost ()
    -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 5 )
    --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
-   if not leave_hook then
-      leave_hook = hook.timer( 3.0, "leave_the_ring")
+   if not mem.leave_hook then
+      mem.leave_hook = hook.timer( 3.0, "leave_the_ring")
    end
 end
 
@@ -253,10 +253,10 @@ function enter_wave ()
    pilot.toggleSpawn(false)
 
    -- Metafactions
-   enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
+   mem.enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
 
    -- Start round
-   total_score = 0
+   mem.total_score = 0
    wave_round_setup()
 end
 function wave_round_setup ()
@@ -275,7 +275,7 @@ function wave_round_setup ()
    pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
-      local p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
+      local p = pilot.add( shipname, mem.enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
       equipopt.generic( p, nil, "elite" )
       p:setInvincible(true)
       p:control(true)
@@ -333,8 +333,8 @@ function wave_round_setup ()
       return e
    end
 
-   local round_enemies = tables.wave_round_enemies[wave_category]
-   local enemies_list = round_enemies[wave_round]
+   local round_enemies = tables.wave_round_enemies[mem.wave_category]
+   local enemies_list = round_enemies[mem.wave_round]
    if gmods.doubleenemy then
       local doublelist = {}
       for k,v in ipairs(enemies_list) do
@@ -347,10 +347,10 @@ function wave_round_setup ()
    wave_enemies = enemies_list
 
    -- Count down
-   player.omsgAdd( string.format( _("#pWAVE %d#0"), wave_round ), 8 )
+   player.omsgAdd( string.format( _("#pWAVE %d#0"), mem.wave_round ), 8 )
    countdown_start()
 
-   all_enemies_dead = wave_end
+   mem.all_enemies_dead = wave_end
 end
 local function wave_compute_score ()
    local pp = player.pilot()
@@ -358,7 +358,7 @@ local function wave_compute_score ()
    local bonus = 100
    local str = {}
 
-   local elapsed = (naev.ticks()-wave_started_time)
+   local elapsed = (naev.ticks()-mem.wave_started_time)
    table.insert( str, string.format(_("%.1f seconds"), elapsed) )
 
    wave_killed = wave_killed or {}
@@ -382,7 +382,7 @@ local function wave_compute_score ()
       bonus = bonus + b
    end
    local c = pp:ship():class()
-   if wave_category == "skirmisher" then
+   if mem.wave_category == "skirmisher" then
       if c=="Corvette" then
          newbonus( "Corvette %d%%", -20 )
       elseif c=="Destroyer" then
@@ -399,7 +399,7 @@ local function wave_compute_score ()
       elseif elapsed > 90 then
          newbonus( "Slow Clear (>90s) %d%%", -25 )
       end
-   elseif wave_category == "warrior" then
+   elseif mem.wave_category == "warrior" then
       if c=="Fighter" then
          newbonus( "Fighter %d%%", 100 )
       elseif c=="Bomber" then
@@ -418,7 +418,7 @@ local function wave_compute_score ()
       elseif elapsed > 120 then
          newbonus( "Slow Clear (>120s) %d%%", -25 )
       end
-   elseif wave_category == "warlord" then
+   elseif mem.wave_category == "warlord" then
       if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
          newbonus( "Fighter %d%%", 500 )
       elseif c=="Bomber" then
@@ -447,8 +447,8 @@ local function wave_compute_score ()
 
    score = math.max( 0, score * bonus / 100 )
 
-   total_score = total_score + score
-   table.insert( str, string.format(_("TOTAL %d (#g+%d#0)"), total_score, score ) )
+   mem.total_score = mem.total_score + score
+   table.insert( str, string.format(_("TOTAL %d (#g+%d#0)"), mem.total_score, score ) )
    return str, score
 end
 function wave_end_msg( d )
@@ -456,19 +456,19 @@ function wave_end_msg( d )
    -- TODO add sound
 end
 function wave_end ()
-   if wave_round < #tables.wave_round_enemies[wave_category] then
+   if mem.wave_round < #tables.wave_round_enemies[mem.wave_category] then
       -- TODO Cooler animation or something
       local score_str = wave_compute_score()
       local n = #score_str
       local s = 1.2 -- time to display each message
       local f = (n+2)*s
-      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0"), wave_round ), f )
+      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0"), mem.wave_round ), f )
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s
          hook.timer( 1.0*start, "wave_end_msg", {v, f-start} )
       end
-      wave_round = wave_round + 1
+      mem.wave_round = mem.wave_round + 1
       hook.timer( (f+1)*1.0, "wave_round_setup" )
       return
    end

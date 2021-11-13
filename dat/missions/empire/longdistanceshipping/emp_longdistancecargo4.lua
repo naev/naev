@@ -34,7 +34,7 @@ local misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier 
 function create ()
    -- Note: this mission does not make any system claims.
    -- Get the planet and system at which we currently are.
-   startworld, startworld_sys = planet.cur()
+   mem.startworld, mem.startworld_sys = planet.cur()
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end
@@ -60,14 +60,14 @@ function accept ()
    -- Set up the goal
    hook.land("land")
    local c = misn.cargoNew( N_("Diplomat"), N_("An Imperial trade representative.") )
-   person = misn.cargoAdd( c, 0 )
+   mem.person = misn.cargoAdd( c, 0 )
 end
 
 
 function land()
 
    if planet.cur() == targetworld then
-         misn.cargoRm( person )
+         misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc4 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]) )

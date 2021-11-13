@@ -32,7 +32,7 @@ local fmt = require "format"
 --  0: mission accepted go to targetplanet
 --  1: run away and return alive to minerva station
 --  2: got away
-misn_state = nil
+mem.misn_state = nil
 local blockade -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Niflheim")
@@ -53,8 +53,8 @@ end
 function accept ()
    approach_kex()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -66,7 +66,7 @@ function accept ()
       { fmt.f(_("Go to {pnt} in the {sys} system and hack the main database"), {pnt=targetplanet, sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
 
-   misn_marker = misn.markerAdd( targetplanet )
+   mem.misn_marker = misn.markerAdd( targetplanet )
 
    hook.land("generate_npc")
    hook.load("loadfunc")
@@ -78,8 +78,8 @@ end
 
 function loadfunc ()
    -- Reset state on load if player got killed when trying to flee
-   if misn_state == 1 then
-      misn_state = 0
+   if mem.misn_state == 1 then
+      mem.misn_state = 0
    end
    generate_npc()
 end
@@ -88,7 +88,7 @@ end
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
-   elseif planet.cur() == targetplanet and misn_state==0 then
+   elseif planet.cur() == targetplanet and mem.misn_state==0 then
       misn.npcAdd( "approach_terminal", _("Terminal"), minerva.terminal.portrait, _("A discrete terminal in the corner of the landing bay, you should be able to connect the program Kex gave you to it.") )
    end
 end
@@ -106,8 +106,8 @@ function approach_terminal ()
    vn.run()
 
    -- Advance mission and get out of there
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
-   misn_state = 1
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   mem.misn_state = 1
    misn.osdActive(2)
    player.takeoff()
 end
@@ -120,7 +120,7 @@ function approach_kex ()
    vn.transition("hexagon")
 
    -- Mission is over
-   if misn_state==2 then
+   if mem.misn_state==2 then
 
       vn.na(_("You return tired from your escapade once again to Kex, who is at his favourite spot at Minerva station."))
       kex(_([["You look like a mess kid, You alright?"]]))
@@ -151,10 +151,10 @@ He plugs in the program directly into a port under his wing and his eyes go blan
          { _("Ask about being a duck"), "duck" },
          { _("Leave"), "leave" },
       }
-      if misn_state == nil then
+      if mem.misn_state == nil then
          table.insert( opts, 1, { _("Ask about Baroness Eve"), "baroness" } )
       end
-      if misn_state == 0 then
+      if mem.misn_state == 0 then
          table.insert( opts, 1, { _("Ask about the job"), "job" } )
       end
       return opts
@@ -173,7 +173,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    vn.label("accept")
    kex(fmt.f(_([["Great! Let me get you set up with the program. All you have to do is land on {pnt} and plug it in to any terminal that there should be around the docks. That should also make it easier for you to get out of there if things go sour."]]), {pnt=targetplanet}))
    vn.func( function ()
-      misn_state = 0
+      mem.misn_state = 0
    end )
    vn.jump("menu_msg")
 
@@ -209,14 +209,14 @@ end
 
 function enter ()
    -- Main stuff starts
-   if misn_state==1 and system.cur() == targetsys then
+   if mem.misn_state==1 and system.cur() == targetsys then
       player.allowSave(true)
       player.allowLand(false)
 
-      fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
+      mem.fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
       local pos = vec2.new( 9000, 3500 )
       local function addenemy( shipname )
-         local p = pilot.add( shipname, fbaroness, pos+vec2.newP( 800*rnd.rnd(), 359*rnd.rnd()) )
+         local p = pilot.add( shipname, mem.fbaroness, pos+vec2.newP( 800*rnd.rnd(), 359*rnd.rnd()) )
          p:control()
          p:brake()
          p:setHostile(true)
@@ -231,7 +231,7 @@ function enter ()
       }
 
       -- Spawn chasing guys
-      spawn_hook = hook.timer( 10.0, "spawn_enemies" )
+      mem.spawn_hook = hook.timer( 10.0, "spawn_enemies" )
 
       hook.timer( 0.5, "heartbeat" )
 
@@ -276,7 +276,7 @@ end
 -- Spawn enemies that will eventually bog down the player
 function spawn_enemies ()
    local function addenemy( shipname )
-      local p = pilot.add( shipname, fbaroness, targetplanet )
+      local p = pilot.add( shipname, mem.fbaroness, targetplanet )
       p:setHostile(true)
       return p
    end
@@ -296,11 +296,11 @@ function spawn_enemies ()
    end
    addenemy( strongenemies[ rnd.rnd(1,#strongenemies) ] )
 
-   spawn_hook = hook.timer( 20.0, "spawn_enemies" )
+   mem.spawn_hook = hook.timer( 20.0, "spawn_enemies" )
 end
 
 function gotaway ()
    spawn_enemies = function () end
-   misn_state = 2
+   mem.misn_state = 2
 end
 

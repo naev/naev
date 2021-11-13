@@ -29,7 +29,7 @@ local sys2 = system.get("Ingot")
 local pnt = planet.get("Varia")
 
 local credits = baron.rewards.baron
-local vendetta1, vendetta2 -- Non-persistent state
+local pinnacle, vendetta1, vendetta2 -- Non-persistent state
 
 function create ()
    local missys = {system.get("Darkstone")}
@@ -71,10 +71,10 @@ function accept()
       fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=sys2}),
    })
 
-   misn_marker = misn.markerAdd( pnt, "low" )
+   mem.misn_marker = misn.markerAdd( pnt, "low" )
 
-   talked = false
-   stopping = false
+   mem.talked = false
+   mem.stopping = false
 
    hook.land("land")
    hook.enter("jumpin")
@@ -82,16 +82,16 @@ function accept()
 end
 
 function land()
-   if planet.cur() == pnt and not talked then
+   if planet.cur() == pnt and not mem.talked then
       local npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
-      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
-      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
-      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
+      mem.thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
+      mem.thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
+      mem.thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
    end
 end
 
 function jumpin()
-   if talked and system.cur() == sys2 then
+   if mem.talked and system.cur() == sys2 then
       pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:rename(_("Pinnacle"))
@@ -99,7 +99,7 @@ function jumpin()
       pinnacle:control()
       pinnacle:setHilight(true)
       pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
-      idlehook = hook.pilot(pinnacle, "idle", "idle")
+      mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
@@ -112,13 +112,13 @@ function idle()
 end
 
 function hail()
-   if talked then
+   if mem.talked then
       tk.msg(_("Green light for docking"), _([[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]))
       pinnacle:taskClear()
       pinnacle:brake()
       pinnacle:setActiveBoard(true)
       hook.pilot(pinnacle, "board", "board")
-      hook.rm(idlehook)
+      hook.rm(mem.idlehook)
       player.commClose()
    end
 end
@@ -147,23 +147,23 @@ function talkthieves()
    tk.msg(_("Cloak and dagger"), _([[As it turns out, they didn't. They have only just reached the docking bridge leading into your ship when several armed Dvaered security forces come bursting into the docking hangar. They spot the three agents and immediately open fire. One of them goes down, the others hurriedly push the crate over the bridge towards your ship. Despite the drastic change in the situation, you have time to note that the Dvaered seem more interested in punishing the criminals than retrieving their possession intact.]]))
    tk.msg(_("Cloak and dagger"), _([[The second agent is caught by a Dvaered bullet, and topples off the docking bridge and into the abyss below. The third manages to get the cart with the chest into your airlock before catching a round with his chest as well. As the Dvaered near your ship, you seal the airlock, fire up your engines and punch it out of the docking hangar.]]))
 
-   misn.npcRm(thief1)
-   misn.npcRm(thief2)
-   misn.npcRm(thief3)
+   misn.npcRm(mem.thief1)
+   misn.npcRm(mem.thief2)
+   misn.npcRm(mem.thief3)
 
-   talked = true
+   mem.talked = true
    local c = misn.cargoNew( N_("The Baron's holopainting"), N_("A rectangular chest containing a holopainting.") )
-   carg_id = misn.cargoAdd(c, 0)
+   mem.carg_id = misn.cargoAdd(c, 0)
    c:illegalto( "Dvaered" )
 
    misn.osdActive(2)
-   misn.markerMove( misn_marker, sys2 )
+   misn.markerMove( mem.misn_marker, sys2 )
 
    player.takeoff()
 end
 
 function takeoff()
-   if talked and system.cur() == sys1 then
+   if mem.talked and system.cur() == sys1 then
       hook.timer( 3, "takeoff_delay" )
    end
 end

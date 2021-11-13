@@ -43,7 +43,7 @@ function create ()
 end
 
 function accept()
-   stage = 0
+   mem.stage = 0
 
    if tk.yesno(_("Let's go"), _([["Is your ship ready for the dangers of the Nebula?"]])) then
       misn.accept()
@@ -58,13 +58,13 @@ function accept()
       })
       misn.osdActive(1)
 
-      marker = misn.markerAdd(missys, "low")
+      mem.marker = misn.markerAdd(missys, "low")
 
       local c = misn.cargoNew( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
-      smith = misn.cargoAdd( c, 0 )
+      mem.smith = misn.cargoAdd( c, 0 )
 
-      landhook = hook.land("land")
-      enterhook = hook.enter("enter")
+      mem.landhook = hook.land("land")
+      mem.enterhook = hook.enter("enter")
       else
       tk.msg(_("...Or not"), _([["Come back when you are ready."]]))
       misn.finish(false)
@@ -73,14 +73,14 @@ end
 
 function land()
    --Job is done
-   if stage == 1 and planet.cur() == paypla then
-      if misn.cargoRm(smith) then
+   if mem.stage == 1 and planet.cur() == paypla then
+      if misn.cargoRm(mem.smith) then
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(shark.rewards.sh06)
          misn.osdDestroy()
-         hook.rm(enterhook)
-         hook.rm(landhook)
+         hook.rm(mem.enterhook)
+         hook.rm(mem.landhook)
          shark.addLog( _([[You transported Arnold Smith to a meeting with someone from the FLF. He said that he had good results.]]) )
          misn.finish(true)
       end
@@ -134,10 +134,10 @@ function board()
    player.unboard()
    pacifier:control(false)
    pacifier:setActiveBoard(false)
-   stage = 1
+   mem.stage = 1
    misn.osdActive(2)
-   misn.markerRm(marker)
-   marker2 = misn.markerAdd(paysys, "low")
+   misn.markerRm(mem.marker)
+   mem.marker2 = misn.markerAdd(paysys, "low")
 end
 
 function dead()  --Actually, I don't know how it could happened...
@@ -149,6 +149,6 @@ function failed()
 end
 
 function abort()
-   misn.cargoRm(smith)
+   misn.cargoRm(mem.smith)
    misn.finish(false)
 end

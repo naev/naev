@@ -58,8 +58,8 @@ function create ()
    end
 
    -- Determine paying faction probabilistic
-   paying_faction = pir.systemClanP( system.cur() )
-   local faction_text = pir.reputationMessage( paying_faction )
+   mem.paying_faction = pir.systemClanP( system.cur() )
+   local faction_text = pir.reputationMessage( mem.paying_faction )
 
    local target_factions = {
       "Independent",
@@ -90,15 +90,15 @@ function create ()
       misn.finish( false )
    end
 
-   missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   target_faction = nil
-   while target_faction == nil and #target_factions > 0 do
+   mem.target_faction = nil
+   while mem.target_faction == nil and #target_factions > 0 do
       local i = rnd.rnd( 1, #target_factions )
-      local p = missys:presences()[ target_factions[i] ]
+      local p = mem.missys:presences()[ target_factions[i] ]
       if p ~= nil and p > 0 then
-         target_faction = target_factions[i]
+         mem.target_faction = target_factions[i]
       else
          for j = i, #target_factions do
             target_factions[j] = target_factions[j + 1]
@@ -106,28 +106,28 @@ function create ()
       end
    end
 
-   if target_faction == nil then
+   if mem.target_faction == nil then
       -- Should not happen, but putting this here just in case.
       misn.finish( false )
    end
 
-   jumps_permitted = system.cur():jumpDist(missys, true) + rnd.rnd( 3, 10 )
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 10 )
    if rnd.rnd() < 0.05 then
-      jumps_permitted = jumps_permitted - 1
+      mem.jumps_permitted = mem.jumps_permitted - 1
    end
 
-   name = pilotname.generic()
-   level = level_setup()
-   pship, credits, reputation = bounty_setup()
+   mem.name = pilotname.generic()
+   mem.level = level_setup()
+   mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   if pir.factionIsClan( paying_faction ) then
-      misn.setTitle( fmt.f( misn_title[level], {sys=missys:name(), msg=fmt.f(_(" ({fct})"), {fct=paying_faction} )} ) )
+   if pir.factionIsClan( mem.paying_faction ) then
+      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys:name(), msg=fmt.f(_(" ({fct})"), {fct=mem.paying_faction} )} ) )
    else
-      misn.setTitle( fmt.f( misn_title[level], {sys=missys, msg=""} ) )
+      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=""} ) )
    end
 
-   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=target_faction, plt=name, sys=missys, shipclass=ship.get(pship):classDisplay(), msg=faction_text } )
+   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
    if not pir.factionIsPirate( planet.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
@@ -135,8 +135,8 @@ function create ()
    end
    misn.setDesc( mdesc )
 
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
@@ -144,11 +144,11 @@ function accept ()
    misn.accept()
 
    misn.osdCreate( _("Assassination"), {
-      fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
-      fmt.f( _("Kill {plt}"), {plt=name} ),
+      fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} ),
+      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
    } )
 
-   last_sys = system.cur()
+   mem.last_sys = system.cur()
 
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
@@ -158,11 +158,11 @@ end
 
 function jumpin ()
    -- Nothing to do.
-   if system.cur() ~= missys then
+   if system.cur() ~= mem.missys then
       return
    end
 
-   local pos = jump.pos( system.cur(), last_sys )
+   local pos = jump.pos( system.cur(), mem.last_sys )
    local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
    local yrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
@@ -172,10 +172,10 @@ end
 
 
 function jumpout ()
-   jumps_permitted = jumps_permitted - 1
-   last_sys = system.cur()
-   if not job_done and last_sys == missys then
-      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=last_sys} ) )
+   mem.jumps_permitted = mem.jumps_permitted - 1
+   mem.last_sys = system.cur()
+   if not job_done and mem.last_sys == mem.missys then
+      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
 
@@ -243,17 +243,17 @@ end
 
 -- Set up the level of the mission
 function level_setup ()
-   local num_pirates = missys:presences()[target_faction]
+   local num_pirates = mem.missys:presences()[mem.target_faction]
    local level
-   if target_faction == "Independent" then
+   if mem.target_faction == "Independent" then
       level = 1
-   elseif target_faction == "Trader" or target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Guild" then
       if num_pirates <= 100 then
          level = rnd.rnd( 1, 2 )
       else
          level = rnd.rnd( 2, 3 )
       end
-   elseif target_faction == "Dvaered" then
+   elseif mem.target_faction == "Dvaered" then
       if num_pirates <= 200 then
          level = 2
       elseif num_pirates <= 300 then
@@ -265,13 +265,13 @@ function level_setup ()
       else
          level = rnd.rnd( 4, 5 )
       end
-   elseif target_faction == "Frontier" then
+   elseif mem.target_faction == "Frontier" then
       if num_pirates <= 150 then
          level = rnd.rnd( 1, 2 )
       else
          level = rnd.rnd( 2, 3 )
       end
-   elseif target_faction == "Sirius" then
+   elseif mem.target_faction == "Sirius" then
       if num_pirates <= 150 then
          level = 1
       elseif num_pirates <= 200 then
@@ -285,7 +285,7 @@ function level_setup ()
       end
       -- House Sirius does not have a Destroyer class ship
       if level == 4 then level = 3 end
-   elseif target_faction == "Za'lek" then
+   elseif mem.target_faction == "Za'lek" then
       if num_pirates <= 300 then
          level = 3
       elseif num_pirates <= 500 then
@@ -320,34 +320,34 @@ function bounty_setup ()
    local credits = 50e3
    local reputation = 0
 
-   if target_faction == "Empire" then
-      if level == 1 then
+   if mem.target_faction == "Empire" then
+      if mem.level == 1 then
          pship = "Empire Shark"
          credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
-      elseif level == 2 then
+      elseif mem.level == 2 then
          pship = "Empire Lancelot"
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level == 3 then
+      elseif mem.level == 3 then
          pship = "Empire Admonisher"
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
-      elseif level == 4 then
+      elseif mem.level == 4 then
          pship = "Empire Pacifier"
          credits = 850e3 + rnd.sigma() * 100e3
          reputation = 6
-      elseif level == 5 then
+      elseif mem.level == 5 then
          pship = "Empire Hawking"
          credits = 1500e3 + rnd.sigma() * 200e3
          reputation = 10
-      elseif level == 6 then
+      elseif mem.level == 6 then
          pship = "Empire Peacemaker"
          credits = 2.3e6 + rnd.sigma() * 300e3
          reputation = 20
       end
-   elseif target_faction == "Dvaered" then
-      if level <= 2 then
+   elseif mem.target_faction == "Dvaered" then
+      if mem.level <= 2 then
          if rnd.rnd() < 0.5 then
             pship = "Dvaered Ancestor"
          else
@@ -355,25 +355,25 @@ function bounty_setup ()
          end
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level == 3 then
+      elseif mem.level == 3 then
          pship = "Dvaered Phalanx"
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
-      elseif level == 4 then
+      elseif mem.level == 4 then
          pship = "Dvaered Vigilance"
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
-      elseif level >= 5 then
+      elseif mem.level >= 5 then
          pship = "Dvaered Goddard"
          credits = 1.9e6 + rnd.sigma() * 200e3
          reputation = 10
       end
-   elseif target_faction == "Soromid" then
-      if level == 1 then
+   elseif mem.target_faction == "Soromid" then
+      if mem.level == 1 then
          pship = "Soromid Brigand"
          credits = 150e3 + rnd.sigma() * 15e3
          reputation = 1
-      elseif level == 2 then
+      elseif mem.level == 2 then
          if rnd.rnd() < 0.5 then
             pship = "Soromid Reaver"
          else
@@ -381,19 +381,19 @@ function bounty_setup ()
          end
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level == 3 then
+      elseif mem.level == 3 then
          pship = "Soromid Odium"
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
-      elseif level == 4 then
+      elseif mem.level == 4 then
          pship = "Soromid Nyx"
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
-      elseif level == 5 then
+      elseif mem.level == 5 then
          pship = "Soromid Ira"
          credits = 1.8e6 + rnd.sigma() * 200e3
          reputation = 10
-      elseif level == 6 then
+      elseif mem.level == 6 then
          if rnd.rnd() < 0.5 then
             pship = "Soromid Arx"
          else
@@ -402,12 +402,12 @@ function bounty_setup ()
          credits = 2.5e6 + rnd.sigma() * 300e3
          reputation = 20
       end
-   elseif target_faction == "Frontier" then
-      if level == 1 then
+   elseif mem.target_faction == "Frontier" then
+      if mem.level == 1 then
          pship = "Hyena"
          credits = 100e3 + rnd.sigma() * 7.5e3
          reputation = 0
-      elseif level == 2 then
+      elseif mem.level == 2 then
          if rnd.rnd() < 0.5 then
             pship = "Lancelot"
          else
@@ -415,43 +415,43 @@ function bounty_setup ()
          end
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level >= 3 then
+      elseif mem.level >= 3 then
          pship = "Phalanx"
          credits = 500e3 + rnd.sigma() * 80e3
          reputation = 3
       end
-   elseif target_faction == "Sirius" then
-      if level == 1 then
+   elseif mem.target_faction == "Sirius" then
+      if mem.level == 1 then
          pship = "Sirius Fidelity"
          credits = 150e3 + rnd.sigma() * 15e3
          reputation = 1
-      elseif level == 2 then
+      elseif mem.level == 2 then
          pship = "Sirius Shaman"
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level == 3 or level == 4 then
+      elseif mem.level == 3 or mem.level == 4 then
          pship = "Sirius Preacher"
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
-      elseif level == 5 then
+      elseif mem.level == 5 then
          pship = "Sirius Dogma"
          credits = 1.5e6 + rnd.sigma() * 200e3
          reputation = 10
-      elseif level == 6 then
+      elseif mem.level == 6 then
          pship = "Sirius Divinity"
          credits = 2.2e6 + rnd.sigma() * 300e3
          reputation = 20
       end
-   elseif target_faction == "Za'lek" then
-      if level <= 3 then
+   elseif mem.target_faction == "Za'lek" then
+      if mem.level <= 3 then
          pship = "Za'lek Sting"
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
-      elseif level == 4 then
+      elseif mem.level == 4 then
          pship = "Za'lek Demon"
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
-      elseif level == 5 then
+      elseif mem.level == 5 then
          if rnd.rnd() < 0.5 then
             pship = "Za'lek Diablo"
          else
@@ -459,13 +459,13 @@ function bounty_setup ()
          end
          credits = 1.9e6 + rnd.sigma() * 200e3
          reputation = 10
-      elseif level == 6 then
+      elseif mem.level == 6 then
          pship = "Za'lek Hephaestus"
          credits = 3e6 + rnd.sigma() * 300e3
          reputation = 20
       end
-   elseif target_faction == "Trader" then
-      if level == 1 then
+   elseif mem.target_faction == "Trader" then
+      if mem.level == 1 then
          if rnd.rnd() < 0.5 then
             pship = "Gawain"
          else
@@ -473,7 +473,7 @@ function bounty_setup ()
          end
          credits = 100e3 + rnd.sigma() * 5e3
          reputation = 0
-      elseif level == 2 then
+      elseif mem.level == 2 then
          if rnd.rnd() < 0.5 then
             pship = "Koala"
          else
@@ -481,7 +481,7 @@ function bounty_setup ()
          end
          credits = 300e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level >= 3 then
+      elseif mem.level >= 3 then
          if rnd.rnd() < 0.5 then
             pship = "Rhino"
             credits = 700e3 + rnd.sigma() * 80e3
@@ -491,8 +491,8 @@ function bounty_setup ()
          end
          reputation = 3
       end
-   elseif target_faction == "Traders Guild" then
-      if level == 1 then
+   elseif mem.target_faction == "Traders Guild" then
+      if mem.level == 1 then
          if rnd.rnd() < 0.5 then
             pship = "Gawain"
          else
@@ -500,7 +500,7 @@ function bounty_setup ()
          end
          credits = 100e3 + rnd.sigma() * 5e3
          reputation = 0
-      elseif level == 2 then
+      elseif mem.level == 2 then
          if rnd.rnd() < 0.5 then
             pship = "Koala"
          else
@@ -508,7 +508,7 @@ function bounty_setup ()
          end
          credits = 300e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif level >= 3 then
+      elseif mem.level >= 3 then
          if rnd.rnd() < 0.5 then
             pship = "Rhino"
             credits = 700e3 + rnd.sigma() * 80e3
@@ -518,7 +518,7 @@ function bounty_setup ()
          end
          reputation = 3
       end
-   elseif target_faction == "Independent" then
+   elseif mem.target_faction == "Independent" then
       local choices = {}
       choices[1] = "Schroedinger"
       choices[2] = "Hyena"
@@ -535,17 +535,17 @@ end
 
 -- Spawn the ship at the location param.
 function spawn_pirate( param )
-   if job_done or system.cur() ~= missys then
+   if job_done or system.cur() ~= mem.missys then
       return
    end
 
-   if jumps_permitted < 0 then
+   if mem.jumps_permitted < 0 then
       fail( _("MISSION FAILURE! Target got away.") )
       return
    end
 
    misn.osdActive( 2 )
-   local target_ship = pilot.add( pship, target_faction, param, name )
+   local target_ship = pilot.add( mem.pship, mem.target_faction, param, mem.name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "attacked", "pilot_attacked" )
    hook.pilot( target_ship, "death", "pilot_death" )
@@ -557,8 +557,8 @@ end
 
 -- Succeed the mission
 function succeed ()
-   player.msg( "#g" .. fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{credits=fmt.credits(credits)}) .. "#0" )
-   player.pay( credits )
+   player.msg( "#g" .. fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{credits=fmt.credits(mem.credits)}) .. "#0" )
+   player.pay( mem.credits )
 
    -- Pirate rep cap increase
    local bounty_done = var.peek( "pir_bounty_done" )
@@ -567,7 +567,7 @@ function succeed ()
       var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
    end
 
-   if level >= 5 then
+   if mem.level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if not bounty_dangerous_done then
@@ -575,7 +575,7 @@ function succeed ()
          pir.modDecayFloor( 2 )
       end
 
-      if level >= 6 then
+      if mem.level >= 6 then
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if not bounty_highly_dangerous_done then
@@ -585,7 +585,7 @@ function succeed ()
       end
    end
 
-   paying_faction:modPlayerSingle( reputation )
+   mem.paying_faction:modPlayerSingle( mem.reputation )
    misn.finish( true )
 end
 

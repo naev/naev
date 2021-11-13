@@ -38,7 +38,7 @@ local lmisn = require "lmisn"
 require "factions.equip.generic"
 
 
-base_price = 100e3
+local base_price = 100e3
 
 local ships = {
    Dvaered = {
@@ -228,31 +228,29 @@ local function damage_standing(class, faction_name)
 end
 
 function create ()
-   theship = { __save = true }
+   mem.theship = {}
+   mem.reward_faction = pir.systemClanP( system.cur() )
+   mem.theship.planet  = random_planet()
 
-   reward_faction = pir.systemClanP( system.cur() )
-
-   theship.planet  = random_planet()
-
-   if not theship.planet or theship.planet:faction() == nil then
+   if not mem.theship.planet or mem.theship.planet:faction() == nil then
       -- If we’re here, it means we couldn’t get a planet close enough.
       misn.finish(false)
    end
 
-   theship.faction = theship.planet:faction():nameRaw()
-   theship.class   = random_class(theship.faction)
+   mem.theship.faction = mem.theship.planet:faction():nameRaw()
+   mem.theship.class   = random_class(mem.theship.faction)
 
-   if not theship.class then
+   if not mem.theship.class then
       -- If we’re here, it means we couldn’t get a ship of the right faction
       -- and of the right class.
       misn.finish(false)
    end
 
    -- We’re assuming ships[faction][class] is not empty, here…
-   theship.exact_class = random_ship(theship.faction, theship.class)
-   theship.price   = price(theship.class)
+   mem.theship.exact_class = random_ship(mem.theship.faction, mem.theship.class)
+   mem.theship.price   = price(mem.theship.class)
 
-   theship.system = theship.planet:system()
+   mem.theship.system = mem.theship.planet:system()
 
    misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
 end
@@ -261,24 +259,24 @@ function accept()
    if tk.yesno( _("Ship to steal"), fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
     "However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
     Do you want to pay to know where that ship is?]]), {
-         fct=_(theship.faction), class=_(theship.class), credits=fmt.credits(theship.price)} ) ) then
-      if player.credits() >= theship.price then
+         fct=_(mem.theship.faction), class=_(mem.theship.class), credits=fmt.credits(mem.theship.price)} ) ) then
+      if player.credits() >= mem.theship.price then
          tk.msg( _("Of course"), fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
     The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]), {
-            pnt=theship.planet, sys=theship.system} ) )
+            pnt=mem.theship.planet, sys=mem.theship.system} ) )
 
-         player.pay( -theship.price )
+         player.pay( -mem.theship.price )
          misn.accept()
 
-	 local title = fmt.f(_("Stealing a {class}"), {class=_(theship.class)} )
+	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.theship.class)} )
 	 local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
-                                    {pnt=theship.planet, sys=theship.system, class=_(theship.class)} )
+                                    {pnt=mem.theship.planet, sys=mem.theship.system, class=_(mem.theship.class)} )
          misn.setTitle( title )
-         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(theship.class)} ) )
+         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.theship.class)} ) )
          misn.setDesc( description )
 
          -- Mission marker
-         misn.markerAdd( theship.system, "low" )
+         misn.markerAdd( mem.theship.system, "low" )
 
          -- OSD
          misn.osdCreate( title, {description})
@@ -297,9 +295,9 @@ end
 
 function land()
    local landed = planet.cur()
-   if landed == theship.planet then
+   if landed == mem.theship.planet then
       -- Try to swap ships
-      local tmp = pilot.add( theship.exact_class, "Independent" )
+      local tmp = pilot.add( mem.theship.exact_class, "Independent" )
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!
@@ -314,12 +312,12 @@ function land()
          fmt.f(
             _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this {ship}, or maybe even to use it.
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
-            {ship=_(theship.exact_class)}
+            {ship=_(mem.theship.exact_class)}
          )
       )
 
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
-      faction.modPlayerSingle( reward_faction, rnd.rnd(3,5) )
+      faction.modPlayerSingle( mem.reward_faction, rnd.rnd(3,5) )
 
       -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.
@@ -334,7 +332,7 @@ function land()
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
-      damage_standing(theship.class, theship.faction)
+      damage_standing(mem.theship.class, mem.theship.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
       -- happy with it. Getting out of the system alive is the player’s
@@ -345,9 +343,9 @@ end
 
 function enter()
    -- A few faction ships guard the target planet.
-   if system.cur() == theship.system then
+   if system.cur() == mem.theship.system then
       -- We want the player to be able to land on the destination planet…
-      theship.planet:landOverride(true)
+      mem.theship.planet:landOverride(true)
    end
 end
 

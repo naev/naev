@@ -104,7 +104,7 @@ It seems like it wants to come back with you. What do you do?]]))
    } )
 
    -- Important variables
-   times_jumped = 0
+   mem.times_jumped = 0
 
    hook.enter("enter")
    hook.jumpin("jumpin")
@@ -170,45 +170,45 @@ end
 function event_check ()
    if rnd.rnd() < 0.05 then
       event()
-      event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
+      mem.event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
       return
    end
-   event_check_hook = hook.timer( 10+5*rnd.rnd(), "event_check" )
+   mem.event_check_hook = hook.timer( 10+5*rnd.rnd(), "event_check" )
 end
 
 function enter ()
-   if event_check_hook then
-      hook.rm( event_check_hook )
+   if mem.event_check_hook then
+      hook.rm( mem.event_check_hook )
    end
-   if not event_finish then
-      event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
+   if not mem.event_finish then
+      mem.event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
    end
 end
 
 function jumpin ()
    -- This hook is run _BEFORE_ the enter hook.
-   times_jumped = times_jumped+1
-   event_finish = false
-   local chance = math.max( (times_jumped-10)*0.05, 0 )
+   mem.times_jumped = mem.times_jumped+1
+   mem.event_finish = false
+   local chance = math.max( (mem.times_jumped-10)*0.05, 0 )
    if rnd.rnd() > chance or system.cur():presence("Wild Ones") < 50 then
       return
    end
 
    -- Set up event ending
-   event_finish = true
+   mem.event_finish = true
 
    local fwo = faction.get("Wild Ones")
-   fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
-   fpir:setPlayerStanding(0)
+   mem.fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
+   mem.fpir:setPlayerStanding(0)
 
    local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.rnd()*360 )
-   owner = pilot.add( "Pirate Shark", fpir, pos )
+   owner = pilot.add( "Pirate Shark", mem.fpir, pos )
    owner:control(true)
    owner:follow( player.pilot() )
    hook.timer( 1, "owner_hail_check" )
    hook.pilot( owner, "hail", "owner_hail" )
    hook.pilot( owner, "board", "owner_board" )
-   owner_was_hailed = false
+   mem.owner_was_hailed = false
 end
 
 function owner_hail_check ()
@@ -226,7 +226,7 @@ function owner_hail_check ()
 end
 
 function owner_hail ()
-   if owner_was_hailed then
+   if mem.owner_was_hailed then
       owner:comm( _("P-p-please bring them o-over.") )
       player.commClose()
       return
@@ -262,7 +262,7 @@ function owner_hail ()
    owner:setActiveBoard(true)
    owner:setHilight()
 
-   owner_was_hailed = true
+   mem.owner_was_hailed = true
    player.commClose()
 end
 

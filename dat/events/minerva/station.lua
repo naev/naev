@@ -89,9 +89,9 @@ local patron_messages = {
 function create()
 
    -- Create NPCs
-   npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
-   npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
-   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", _("Chuck-a-luck"), chuckaluck_portrait, _("A fast-paced luck-based betting game using dice."), gambling_priority )
+   mem.npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
+   mem.npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   mem.npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", _("Chuck-a-luck"), chuckaluck_portrait, _("A fast-paced luck-based betting game using dice."), gambling_priority )
 
    -- Some conditional NPCs
    if player.misnDone("Maikki's Father 2") then
@@ -101,7 +101,7 @@ function create()
          _("You see Maikki looking thoughtfully into the distance."),
       }
       local desc = desclist[ rnd.rnd(1,#desclist) ]
-      npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
+      mem.npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
    end
 
    -- Create random noise NPCs
@@ -125,7 +125,7 @@ function create()
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
-      greeterhook = hook.land( "bargreeter", "bar" )
+      mem.greeterhook = hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
    hook.takeoff( "leave" )
@@ -187,7 +187,7 @@ function bargreeter()
    vn.run()
 
    minerva.tokens_pay( 10 )
-   hook.rm( greeterhook ) -- Have to remove
+   hook.rm( mem.greeterhook ) -- Have to remove
 end
 
 function approach_terminal()
@@ -551,7 +551,7 @@ end
 -- The mole was caught, we have to change and redo the chuckaluck NPC
 function molecaught()
    var.push("minerva_chuckaluck_change", true)
-   evt.npcRm( npc_chuckaluck ) -- Just remove for now
+   evt.npcRm( mem.npc_chuckaluck ) -- Just remove for now
 end
 
 -- Just do random noise

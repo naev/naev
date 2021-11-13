@@ -51,14 +51,14 @@ local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
-   this_planet, this_system = planet.cur()
-   if ( pir.systemPresence(this_system) > 0
-         or this_system:presences()["Collective"]
-         or this_system:presences()["FLF"] ) then
+   mem.this_planet, mem.this_system = planet.cur()
+   if ( pir.systemPresence(mem.this_system) > 0
+         or mem.this_system:presences()["Collective"]
+         or mem.this_system:presences()["FLF"] ) then
       misn.finish(false)
    end
 
-   local missys = {this_system}
+   local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
@@ -66,14 +66,14 @@ function create ()
    if tk.yesno( _("In the bar"), fmt.f( _([[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around {pnt}.
     "A big fleet of pirates have just invaded the system," a woman wearing Nexus insignia explains. "They swarm any ship that tries to take off. Shipping is at a standstill. It's a disaster."
     There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
-    "Are you brave enough?"]]), {pnt=this_planet} ) ) then
+    "Are you brave enough?"]]), {pnt=mem.this_planet} ) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]))
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
-      misn.markerAdd( this_system, "low" )
-      defender = true
+      misn.markerAdd( mem.this_system, "low" )
+      mem.defender = true
 
       -- hook an abstract deciding function to player entering a system
       hook.enter( "enter_system")
@@ -88,7 +88,7 @@ function create ()
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Watch the action."))
-      defender = false
+      mem.defender = false
 
       -- hook an abstract deciding function to player entering a system when not part of defense
       hook.enter( "enter_system")
@@ -98,16 +98,16 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.cur() and defender == true then
+      if mem.this_system == system.cur() and mem.defender == true then
          defend_system()
-      elseif victory == true and defender == true then
+      elseif mem.victory == true and mem.defender == true then
          hook.timer(1.0, "ship_enters")
-      elseif defender == true then
+      elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.cur() and been_here_before ~= true then
-         been_here_before = true
+      elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
+         mem.been_here_before = true
          defend_system()
       else
          misn.finish( true)
@@ -125,7 +125,7 @@ function defend_system()
    -- Set up distances
    local angle, defense_position, raider_position
    angle = rnd.rnd() * 360
-   if defender == true then
+   if mem.defender == true then
       raider_position  = vec2.newP( 400, angle )
       defense_position = vec2.new( 0, 0 )
    else
@@ -148,13 +148,13 @@ function defend_system()
 
    --[[ How the Battle ends:
    hook fleet departure to disabling or killing ships]]
-   casualties = 0
+   mem.casualties = 0
    for k, v in ipairs( raider_fleet) do
       hook.pilot (v, "death", "add_cas_and_check")
       hook.pilot (v, "disable", "add_cas_and_check")
    end
 
-   if defender == false then
+   if mem.defender == false then
       misn.finish( true)
    end
 
@@ -166,15 +166,15 @@ end
 -- Record each raider death and make the raiders flee after too many casualties
 function add_cas_and_check()
 
-   casualties = casualties + 1
-   if casualties > 8 then
+   mem.casualties = mem.casualties + 1
+   if mem.casualties > 8 then
 
    raiders_left = pilot.get( { faction.get(fraider) } )
    for k, v in ipairs( raiders_left ) do
    v:changeAI("flee")
    end
-   if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
-   victory = true
+   if mem.victory ~= true then   -- A few seconds after the raiders start to flee declare victory
+   mem.victory = true
 player.msg( _("That's right, run away you cowards.") )
    hook.timer(8.0, "victorious")
    end
@@ -188,14 +188,14 @@ end
 
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
-   if victory == true then
+   if mem.victory == true then
       tk.msg( _("Welcome back"), _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
     Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]) )
       player.pay( reward )
       faction.modPlayerSingle( "Empire", 3)
       tk.msg( _("Over drinks"), fmt.f( _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of {sys},' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
-    "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]), {sys=this_system} ) )
+    "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]), {sys=mem.this_system} ) )
       misn.finish( true)
    else
       tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
@@ -205,19 +205,19 @@ end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-   enter_vect = player.pos()
-   pilot.add( "Mule", "Trader", enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
+   mem.enter_vect = player.pos()
+   pilot.add( "Mule", "Trader", mem.enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
    hook.timer(1.0, "congratulations")
 end
 function congratulations()
    tk.msg( _("Good job!"), fmt.f( _([[You jump out of {sys} with the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show that it too comes from combat with the pirates. Your comm beeps.
     "Good flying, mate. We got those pirates on the run!" the pilot exclaims. "You didn't want to go back for the cash either, eh? I don't blame you. I hate pirates, but I don't want the Empire's money!" He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
-]]), {sys=this_system} ))
+]]), {sys=mem.this_system} ))
    misn.finish( true)
 end
 
 function abort()
-   if victory ~= true then
+   if mem.victory ~= true then
       faction.modPlayerSingle( "Empire", -10)
       faction.modPlayerSingle( "Trader", -10)
       player.msg( fmt.f( _("Comm Trader>You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
