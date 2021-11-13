@@ -66,7 +66,6 @@ stds._Tk = {read_globals={"tk"}}
 stds.Transform = {read_globals={"transform"}}
 stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
-stds.__love_impl = {globals={"love"}}
 
 PILOT = "+_Pilot+Ship"
 STANDARD = "+Naev+Var+Planet+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
@@ -181,8 +180,42 @@ files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["save_updater.lua"].std = "API_save_updater"
 files["scripts/love.lua"].std = STANDARD .. "+__love_impl"
+files["scripts/luatk/core.lua"].std = STANDARD .. "+__love_impl"
+files["scripts/vn/main.lua"].std = STANDARD .. "+__love_impl"
 files["shipai.lua"].std = STANDARD .. "+API_shipai"
 files["snd/music.lua"].std = STANDARD .. "+Music"
 
 -- No way to be sure what type of environment will load these.
 files["scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+
+-- We actually implement the love2d API.
+stds.__love_impl = {
+   globals = {
+      love = {
+         fields = {
+            "_basepath",                                                            
+            "_codename",
+            "_focus",                                                                                    
+            "_path",                                                                   
+            "_started",                                                                    
+            "_unimplemented",                                                            
+            "_version_major",
+            "_version_minor",
+            "_version_patch",
+            "_vn",                                                                            
+            "exec",                                                                             
+            "fullscreen",                                                                           
+            "h",                                                                               
+            "title",                                                                                    
+            "w",                                                                     
+            "x",                                                                              
+            "y",
+            _default = {fields={"fullscreen", "h", "title", "w"}},
+            keyboard = {fields={"_keystate", "_repeat"}},
+            mouse = {fields={"down", "lx", "ly", "x", "y"}},
+            timer = {fields={"_adt", "_dt", "_edt"}},
+            window = {fields={"getDesktopDimensions"}},
+         },
+      }
+   }
+}
