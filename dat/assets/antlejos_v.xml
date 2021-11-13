@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Antlejos V">
  <pos>
-  <x>-6760.078461</x>
-  <y>-4297.903296</y>
+  <x>-4600.101436</x>
+  <y>-196.156312</y>
  </pos>
  <GFX>
   <space>moon-K00.webp</space>
@@ -12,6 +12,9 @@
   <class>D</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+   <land/>
+  </services>
+  <description>A cold and barren inhospitable moon devoid of all life.</description>
  </general>
 </asset>
