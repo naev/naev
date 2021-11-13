@@ -73,7 +73,7 @@ function accept ()
    if not accepted then
       return
    end
-   
+
    local c = misn.cargoNew( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
    misn.cargoAdd(c, cargo_amount)
 

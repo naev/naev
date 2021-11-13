@@ -2167,6 +2167,10 @@ dat/trails.xml
 dat/unidiff/FLF_base.xml
 dat/unidiff/Fury_Station.xml
 dat/unidiff/Thurion_found.xml
+dat/unidiff/antlejosv_1.xml
+dat/unidiff/antlejosv_2.xml
+dat/unidiff/antlejosv_3.xml
+dat/unidiff/antlejosv_4.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2423,6 +2427,8 @@ dat/missions/minerva/pirate4.lua
 dat/missions/minerva/pirate5.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/antlejos/ant01.lua
+dat/missions/neutral/antlejos/ant02.lua
+dat/missions/neutral/antlejos/ant03.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
