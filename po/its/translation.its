@@ -44,4 +44,8 @@
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
   <its:translateRule selector="/ssys/general/features" translate="yes"/>
+
+  <!-- Unidiff -->
+  <its:translateRule selector="/unidiff/system/features" translate="yes"/>
+  <its:translateRule selector="/unidiff/asset/description" translate="yes"/>
 </its:rules>
