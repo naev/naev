@@ -178,6 +178,7 @@ local function random_planet()
    end
 end
 
+--[[
 local function improve_standing(class, faction_name)
    local enemies = faction.get(faction_name):enemies()
    local standing = 0
@@ -202,6 +203,7 @@ local function improve_standing(class, faction_name)
       faction.modPlayerSingle(enemy, standing)
    end
 end
+]]
 
 local function damage_standing(class, faction_name)
    local modifier = 1
