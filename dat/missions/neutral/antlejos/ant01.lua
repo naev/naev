@@ -48,6 +48,7 @@ function accept ()
    }
 
    vn.label("decline")
+   v(_([["That's a shame. I'll be here if you change your mind."]]))
    vn.done()
 
    vn.label("nospace")
