@@ -37,7 +37,7 @@ local portrait = require "portrait"
 local fmt = require "format"
 
 message = fw.message -- common hooks
-local alpha, attackers, canland, controls, hamelsen, jules, spy, toldya, wrlrds -- Non-persistent state
+local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
 
 -- TODO: hooks to penalize attacking people
@@ -178,7 +178,7 @@ function takeoff()
 
       pilot.toggleSpawn(false)
       pilot.clear()
-      mem.targpos = targpla:pos()
+      targpos = targpla:pos()
 
       spawnBeta()
       spawnAlpha()
@@ -188,7 +188,7 @@ function takeoff()
    elseif mem.stage == 3 then
       pilot.toggleSpawn(false)
       pilot.clear()
-      mem.targpos = targpla:pos()
+      targpos = targpla:pos()
 
       spawnBeta()
       spawnAlpha()
@@ -376,8 +376,8 @@ function spawnControl()
    controls[mem.noCtrl]:control()
    controls[mem.noCtrl]:land(targpla)
 
-   hook.timer(0.5, "proximity", {location = mem.targpos, radius = 10000, funcname = ("incomingControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- First one for detection
-   hook.timer(0.5, "proximity", {location = mem.targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for loosing
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- First one for detection
+   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for loosing
 
    mem.noCtrl = mem.noCtrl + 1
 end
@@ -386,7 +386,7 @@ end
 function imDoingNothing( self )
    local rad = rnd.rnd() * 1000 + 1000
    local ang = rnd.rnd() * 2 * math.pi
-   self:moveto( mem.targpos + vec2.newP(rad, ang) )
+   self:moveto( targpos + vec2.newP(rad, ang) )
 end
 
 -- A controlled ship is too close from station
@@ -484,7 +484,7 @@ function spawnHam()
    hamelsen:land(targpla)
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
-   hook.timer(0.5, "proximity", {location = mem.targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
    jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
@@ -569,7 +569,7 @@ function StraferNspy()
 
    -- Compute the line on which to place the spy and Strafer
    local jppos = jump.pos( jump.get( system.cur(), "Gremlin" ) )
-   local unitline = (mem.targpos - jppos) * (1/vec2.dist(mem.targpos-jppos))
+   local unitline = (targpos - jppos) * (1/vec2.dist(targpos-jppos))
    local strpos = jppos + unitline * 15000
    local spypos = jppos + unitline * 12000
 
