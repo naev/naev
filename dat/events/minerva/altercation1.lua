@@ -189,9 +189,10 @@ function zl_dead ()
       dv:attack( player.pilot() )
    else
       hook.rm( angrytimer )
+      hook.rm( attacktimer )
       if dv:exists() then
          if player_side=="dvaered" then
-            zl:control()
+            dv:control()
             dv:brake()
             dv:hailPlayer()
             hail.pilot( dv, "hail", "dv_hail" )
@@ -226,6 +227,7 @@ function dv_dead ()
       zl:attack( player.pilot() )
    else
       hook.rm( angrytimer )
+      hook.rm( attacktimer )
       if zl:exists() then
          if player_side=="zalek" then
             zl:control()
