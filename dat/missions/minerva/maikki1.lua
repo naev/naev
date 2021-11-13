@@ -729,8 +729,7 @@ function stealthheartbeat ()
             wreck:setInvincible()
             hook.pilot( wreck, "board", "board_wreck" )
          end
-      else
-         -- Still travelling to target
+      -- Else, still travelling to target
       end
    end
 

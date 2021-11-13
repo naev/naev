@@ -281,8 +281,8 @@ function enter ()
             p:setInvisible(true)
             p:disable()
          end
-      elseif mem.misn_state == 1 then
-         -- Do nothing (just in case the player kills bounty hunters and goes off somewhere)
+
+      -- State 1: Do nothing (just in case the player kills bounty hunters and goes off somewhere)
 
       elseif mem.misn_state == 2 then
          -- Should be taking off from the Lab
