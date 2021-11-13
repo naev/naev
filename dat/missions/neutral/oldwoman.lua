@@ -70,7 +70,7 @@ function accept ()
       tk.msg(_("An elderly lady"), _([["Oh, that's good of you." The old woman gives you a wrinkly smile. "I haven't seen my cousin in such a long time, it'll be great to see how she's doing, and we can talk about old times. Ah, old times. It was all so different then. The space ways were much safer, for one. And people were politer to each other too, oh yes!"
    You escort the old lady to your ship, trying not to listen to her rambling. Perhaps it would be a good idea to get her to her destination as quickly as you can.]]))
       local c = misn.cargoNew( N_("Old Woman"), N_("A grumbling old woman.") )
-      mem.oldwoman = misn.cargoAdd(c, 0)
+      misn.cargoAdd(c, 0)
 
       misn.accept()
       misn.setDesc(fmt.f(_("An aging lady has asked you to ferry her to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys}))
