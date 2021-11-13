@@ -33,13 +33,12 @@ require "proximity"
 local portrait = require "portrait"
 
 -- NPC
-local npc_portrait = {}
-npc_portrait[2] = portrait.get()
-npc_portrait[3] = portrait.get()
-npc_portrait[4] = portrait.get("Empire")
-npc_portrait[5] = portrait.get("Dvaered")
-npc_portrait[6] = portrait.get("Pirate")
-npc_portrait["__save"] = true
+mem.npc_portrait = {}
+mem.npc_portrait[2] = portrait.get()
+mem.npc_portrait[3] = portrait.get()
+mem.npc_portrait[4] = portrait.get("Empire")
+mem.npc_portrait[5] = portrait.get("Dvaered")
+mem.npc_portrait[6] = portrait.get("Pirate")
 
 -- Non-persistent state
 local hooks = {}
@@ -62,19 +61,19 @@ end
 
 local function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", _("Pilot"), npc_portrait[2], _("This pilot looks very self-confident"))
+      misn.npcAdd("competitor1", _("Pilot"), mem.npc_portrait[2], _("This pilot looks very self-confident"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", _("Pilot"), npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
+      misn.npcAdd("competitor2", _("Pilot"), mem.npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", _("Imperial pilot"), npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
+      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", _("Dvaered pilot"), npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
+      misn.npcAdd("competitor4", _("Dvaered pilot"), mem.npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", _("Strange pilot"), npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
+      misn.npcAdd("competitor5", _("Strange pilot"), mem.npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
    end
 end
 
