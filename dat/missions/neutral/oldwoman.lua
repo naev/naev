@@ -78,7 +78,7 @@ function accept ()
       misn.osdCreate(_("The old woman"), {
          fmt.f(_("Take the old woman to {pnt} ({sys} system)"), {pnt=mem.destplanet, sys=mem.destsys}),
       })
-      misn.markerAdd(mem.destplanet, "high")
+      misn.markerAdd( mem.destplanet )
 
       mem.dist_total = car.calculateDistance(system.cur(), planet.cur():pos(), mem.destsys, mem.destplanet)
       mem.complaint = 0
