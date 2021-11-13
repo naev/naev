@@ -1196,24 +1196,25 @@ function __getscantarget ()
    -- See if we should scan a pilot
    local p = ai.pilot()
    local pv = {}
-   local inserted = {}
-   for k,v in ipairs(p:getVisible()) do
-      -- Only care about leaders
-      local l = v:leader()
-      if l and l:exists() then
-         v = l
-      end
-
-      if not __intable( inserted, v ) then
-         if __wanttoscan(p,v) then
-            local d = ai.dist2( v )
-            local m = v:mass()
-            table.insert( pv, {p=v, d=d, m=m} )
+   do
+      local inserted = {}
+      for k,v in ipairs(p:getVisible()) do
+         -- Only care about leaders
+         local l = v:leader()
+         if l and l:exists() then
+            v = l
          end
-         table.insert( inserted, v )
+
+         if not __intable( inserted, v ) then
+            if __wanttoscan( p, v ) then
+               local d = ai.dist2( v )
+               local m = v:mass()
+               table.insert( pv, {p=v, d=d, m=m} )
+            end
+            table.insert( inserted, v )
+         end
       end
    end
-   inserted = nil
    -- We do a sort by distance and mass categories so that the AI will prefer
    -- larger ships before trying smaller ships. This is to avoid having large
    -- ships chasing after tiny ships
