@@ -39,6 +39,7 @@ uniform sampler2D u_prevtex;
 const vec2 R      = vec2( %f, %f );
 const float THETA = %f;
 const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
+const mat2 IROT   = inverse(ROT);
 
 #define ITERATIONS   17
 #define VOLSTEPS     8
@@ -50,14 +51,15 @@ const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + R;
+   vec2 uv = ROT*((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w) + R;
    vec3 dir = vec3(uv, 1.0);
+   vec3 cam = vec3(1.0) + vec3(ROT*u_camera.xy, u_camera.z);
 
    float s = 0.1, fade = 0.01;
    vec4 colour = vec4( vec3(0.0), 1.0 );
 
    for (int r=0; r < VOLSTEPS; r++) {
-      vec3 p = vec3(1.0) + u_camera.xyz + dir * (s * 0.5);
+      vec3 p = cam + dir * (s * 0.5);
       p = abs(vec3(FREQVAR) - mod(p, vec3(FREQVAR * 2.0)));
 
       float prevlen = 0.0, a = 0.0;
