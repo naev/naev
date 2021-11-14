@@ -1514,8 +1514,7 @@ void factions_reset (void)
 int factions_load (void)
 {
    xmlNodePtr factions, node;
-   int r;
-   Faction *f, *sf;
+   Faction *f;
 
    /* Load the document. */
    xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
@@ -1575,9 +1574,8 @@ int factions_load (void)
 
       /* First run over allies and make sure it's mutual. */
       for (int j=0; j < array_size(f->allies); j++) {
-         sf = &faction_stack[ f->allies[j] ];
-
-         r = 0;
+         Faction *sf = &faction_stack[ f->allies[j] ];
+         int r = 0;
          for (int k=0; k < array_size(sf->allies); k++)
             if (sf->allies[k] == i) {
                r = 1;
@@ -1591,9 +1589,8 @@ int factions_load (void)
 
       /* Now run over enemies. */
       for (int j=0; j < array_size(f->enemies); j++) {
-         sf = &faction_stack[ f->enemies[j] ];
-
-         r = 0;
+         Faction *sf = &faction_stack[ f->enemies[j] ];
+         int r = 0;
          for (int k=0; k < array_size(sf->enemies); k++)
             if (sf->enemies[k] == i) {
                r = 1;
@@ -1604,13 +1601,10 @@ int factions_load (void)
             faction_addEnemy( f->enemies[j], i );
       }
    }
-
    xmlFreeDoc(doc);
 
    faction_computeGrid();
-
    DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
-
    return 0;
 }
 
@@ -1672,7 +1666,7 @@ int pfaction_save( xmlTextWriterPtr writer )
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
-      xmlw_elem(writer, "standing", "%f", faction_stack[i].player);
+      xmlw_elem(writer,"standing","%f",faction_stack[i].player);
 
       if (faction_isKnown_(&faction_stack[i]))
          xmlw_elemEmpty(writer, "known");
@@ -1740,7 +1734,7 @@ int *faction_getGroup( int which )
 {
    int *group;
 
-   switch(which) {
+   switch (which) {
       case 0: /* 'all' */
          return array_copy( int, faction_stack );
 
@@ -1819,7 +1813,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    Faction *f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
    f->name        = strdup( name );
-   f->displayname = display==NULL ? NULL : strdup( display );
+   f->displayname = (display==NULL) ? NULL : strdup( display );
    f->ai          = (ai==NULL) ? NULL : strdup( ai );
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
@@ -1865,11 +1859,12 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
 static void faction_computeGrid (void)
 {
    size_t n = array_size(faction_stack);
-   if (faction_mgrid <= n) {
+   if (faction_mgrid < n) {
       free( faction_grid );
       faction_grid = malloc( n * n * sizeof(int) );
       faction_mgrid = n;
    }
+   n = faction_mgrid;
    memset( faction_grid, 0, n*n*sizeof(int) );
    for (size_t i=0; i<n; i++) {
       Faction *fa = &faction_stack[i];
