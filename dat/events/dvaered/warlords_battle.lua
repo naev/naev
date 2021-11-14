@@ -324,7 +324,8 @@ function attackerDeath(victim, attacker)
    if batInProcess then
       attdeath = attdeath + 1
 
-      if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      local pp = player.pilot()
+      if attacker and (attacker == pp or attacker:leader() == pp) then
          attkilled = attkilled + victim:stats().mass
       end
 
@@ -348,7 +349,8 @@ function defenderDeath(victim, attacker)
    if batInProcess then
       defdeath = defdeath + 1
 
-      if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      local pp = player.pilot()
+      if attacker and (attacker == pp or attacker:leader() == pp) then
          defkilled = defkilled + victim:stats().mass
       end
 
