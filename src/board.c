@@ -111,6 +111,7 @@ int player_tryBoard( int noisy )
          return PLAYER_BOARD_IMPOSSIBLE;
       }
       player_message(_("#oYou recover your %s fighter."), p->name);
+      player.p->ptarget = NULL; /* Have to clear target cache. */
       return PLAYER_BOARD_OK;
    }
 
