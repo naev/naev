@@ -90,6 +90,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
    HUNK_TYPE_ASSET_DESCRIPTION,
    HUNK_TYPE_ASSET_DESCRIPTION_REVERT, /* For internal usage. */
+   HUNK_TYPE_ASSET_BAR,
+   HUNK_TYPE_ASSET_BAR_REVERT, /* For internal usage. */
    HUNK_TYPE_ASSET_SERVICE_ADD,
    HUNK_TYPE_ASSET_SERVICE_REMOVE,
    HUNK_TYPE_ASSET_SERVICE_REVERT, /* For internal usage. */
@@ -569,6 +571,19 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"bar")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_BAR;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"service_add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -815,6 +830,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] asset description revert: '%s'"), target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_ASSET_BAR:
+               WARN(_("   [%s] asset bar: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_BAR_REVERT:
+               WARN(_("   [%s] asset bar revert: '%s'"), target,
+                     fail->u.name );
+               break;
             case HUNK_TYPE_ASSET_EXTERIOR:
                WARN(_("   [%s] asset exterior: '%s'"), target,
                      fail->u.name );
@@ -973,6 +996,22 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p->description = (char*)hunk->o.name;
          return 0;
 
+      /* Changing asset bar description. */
+      case HUNK_TYPE_ASSET_BAR:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->bar_description;
+         p->bar_description = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_ASSET_BAR_REVERT:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->bar_description = (char*)hunk->o.name;
+         return 0;
+
+      /* Modifying asset services. */
       case HUNK_TYPE_ASSET_SERVICE_ADD:
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
@@ -981,7 +1020,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
          planet_addService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
-
       case HUNK_TYPE_ASSET_SERVICE_REMOVE:
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
@@ -990,7 +1028,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
          planet_rmService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
-
       case HUNK_TYPE_ASSET_SERVICE_REVERT:
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
@@ -1242,6 +1279,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_DESCRIPTION_REVERT;
             break;
 
+         case HUNK_TYPE_ASSET_BAR:
+            hunk.type = HUNK_TYPE_ASSET_BAR_REVERT;
+            break;
+
          case HUNK_TYPE_ASSET_SERVICE_ADD:
          case HUNK_TYPE_ASSET_SERVICE_REMOVE:
             hunk.type = HUNK_TYPE_ASSET_SERVICE_REVERT;
@@ -1326,6 +1367,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
       case HUNK_TYPE_ASSET_DESCRIPTION:
       case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
+      case HUNK_TYPE_ASSET_BAR:
+      case HUNK_TYPE_ASSET_BAR_REVERT:
       case HUNK_TYPE_ASSET_EXTERIOR:
       case HUNK_TYPE_ASSET_EXTERIOR_REVERT:
       case HUNK_TYPE_FACTION_VISIBLE:
