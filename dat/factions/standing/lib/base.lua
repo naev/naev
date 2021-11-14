@@ -43,7 +43,7 @@ _ftext_bribed   = _("Bribed")
 --[[
    @brief Clamps a value x between low and high.
 --]]
-function clamp( low, high, x )
+local function clamp( low, high, x )
    return math.max( low, math.min( high, x ) )
 end
 
@@ -51,7 +51,7 @@ end
 --[[
    @brief Linearly interpolates x between x1,y1 and x2,y2
 --]]
-function lerp( x, x1, y1, x2, y2 )
+local function lerp( x, x1, y1, x2, y2 )
    local m = (y1-y2)/(x1-x2)
    local b = y1-m*x1
    return m*x + b
@@ -61,7 +61,7 @@ end
 --[[
    @brief Same as lerp but clamps to [0,1].
 --]]
-function clerp( x, x1, y1, x2, y2 )
+local function clerp( x, x1, y1, x2, y2 )
    return clamp( 0, 1, lerp( x, x1, y1, x2, y2 ) )
 end
 
@@ -69,7 +69,7 @@ end
 --[[
    @brief Duplicates a table to avoid clobbering.
 --]]
-function clone(t)
+local function clone(t)
    local new = {}
    for k, v in pairs(t) do
       new[k] = v
