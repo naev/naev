@@ -23,6 +23,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_time.h"
+#include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "mission.h"
@@ -327,6 +328,19 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             /* key, value */
             break;
          }
+         else if (lua_isvector(L,-1)) {
+            Vector2d *vec = lua_tovector( L, -1 );
+            xmlw_startElem( writer, "data" );
+            xmlw_attr( writer, "type", VECTOR_METATABLE );
+            nxml_saveNameAttribute( writer, name, name_len );
+            xmlw_attr( writer, "x", "%.16e", vec->x );
+            xmlw_attr( writer, "y", "%.16e", vec->y );
+            xmlw_attr( writer, "mod", "%.16e", vec->mod );
+            xmlw_attr( writer, "angle", "%.16e", vec->angle );
+            xmlw_endElem( writer );
+            /* key, value */
+            break;
+         }
          /* Purpose fallthrough. */
 
       /* Rest gets ignored, like functions, etc... */
@@ -464,10 +478,18 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushcommodity(L, nxml_loadCommodity( node ) );
          else if (strcmp(type,OUTFIT_METATABLE)==0)
             lua_pushoutfit(L,outfit_get(xml_get(node)));
+         else if (strcmp(type, VECTOR_METATABLE)==0) {
+            Vector2d vec;
+            xmlr_attr_float( node, "x", vec.x );
+            xmlr_attr_float( node, "y", vec.y );
+            xmlr_attr_float( node, "mod", vec.mod );
+            xmlr_attr_float( node, "angle", vec.angle );
+            lua_pushvector( L, vec );
+         }
          else {
             /* There are a few types knowingly left out above.
              * Meaningless (?): PILOT_METATABLE.
-             * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
+             * Seems doable, use case unclear: ARTICLE_METATABLE.
              * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
              * */
             WARN(_("Unknown Lua data type!"));
