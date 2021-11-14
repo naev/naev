@@ -65,7 +65,8 @@ int player_tryBoard( int noisy )
        * could be more interesting. */
       player_targetNearest();
       p = pilot_getTarget( player.p );
-      if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
+      if ((p == NULL) ||
+            (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
          player_message( _("#rYou need a target to board first!") );
