@@ -42,6 +42,7 @@ static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
 static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
+static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2 );
 static int player_autonavBrake (void);
 
 /**
@@ -320,7 +321,7 @@ static void player_autonav (void)
    double d, t, tint;
    double vel;
 
-   (void)map_getDestination( &map_npath );
+   (void) map_getDestination( &map_npath );
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
@@ -455,7 +456,7 @@ static void player_autonav (void)
          p = pilot_getTarget( player.p );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         ret = player_autonavApproach( &p->solid->pos, &d, 1 );
+         ret = player_autonavApproachBoard( &p->solid->pos, &p->solid->vel, &d );
          if (ret)
             player.autonav = AUTONAV_PLT_BOARD_BRAKE;
          else if (!tc_rampdown)
@@ -574,6 +575,52 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
    /* If aiming exactly at the point, should say when approaching. */
    if (!follow)
       *dist2 = vect_dist( pos, &player.p->solid->pos );
+}
+
+static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2 )
+{
+   double d, t, velv, dist;
+   Vector2d dir;
+
+   /* Define the control coefficients. If needed, they could be adapted.
+      Maybe radius could be adjustable by the player. */
+   const double Kp = 10.;
+   const double Kd = 20.;
+
+   vect_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
+         (vel->x - player.p->solid->vel.x) *Kd,
+         (pos->y - player.p->solid->pos.y) * Kp +
+         (vel->y - player.p->solid->vel.y) *Kd );
+
+   d = pilot_face( player.p, VANGLE(dir) );
+
+   if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300.))
+      player_accel( 1. );
+   else
+      player_accel( 0. );
+
+   /* Get current time to reach target. */
+   t  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
+      (player.p->thrust / player.p->solid->mass);
+
+   /* Get velocity. */
+   velv  = MIN( player.p->speed, VMOD(player.p->solid->vel) );
+
+   /* Get distance. */
+   dist  = velv*(t+1.1*M_PI/player.p->turn) -
+      0.5*(player.p->thrust/player.p->solid->mass)*t*t;
+
+   /* Output distance^2 */
+   d        = vect_dist( pos, &player.p->solid->pos );
+   dist     = d - dist;
+   *dist2   = dist;
+
+   /* See if should start braking. */
+   if (dist < 0.) {
+      player_accelOver();
+      return 1;
+   }
+   return 0;
 }
 
 /**
