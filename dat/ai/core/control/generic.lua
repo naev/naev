@@ -699,13 +699,13 @@ function create_post ()
 end
 
 -- taunts
-function taunt ( _target, _offensive )
+function taunt( _target, _offensive )
    -- Empty stub
 end
 
 
 -- Handle distress signals
-function distress ( pilot, attacker )
+function distress( pilot, attacker )
    local p = ai.pilot()
 
    -- Make sure target exists
@@ -818,9 +818,7 @@ function gen_distress ( _target )
       end
       mem.distressed = 1
    end
-
 end
-
 
 -- Picks an appropriate weapon set for ships with mixed weaponry.
 function choose_weapset()

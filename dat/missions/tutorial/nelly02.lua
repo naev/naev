@@ -246,7 +246,6 @@ function enter ()
       --hook.pilot( rampant, "idle", "idle" )
       idle( rampant )
 
-
    elseif mem.misn_state == 2 and scur == mem.retsys then
       mem.jump_dest = jump.get( mem.retsys, mem.destsys )
       mem.fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
