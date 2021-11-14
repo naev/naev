@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Warlords battle">
+<event name="Warlords Battle">
  <trigger>enter</trigger>
  <chance>5</chance>
  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
@@ -22,6 +22,7 @@ local source_system, source_planet, inForm, batInProcess, side
 local attackers, attnum, attkilled, attdeath, defenders, defnum, defkilled, defdeath
 local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
 local baserew, reward
+local finvader, flocal
 
 function create ()
    source_system = system.cur()
@@ -61,6 +62,11 @@ function begin ()
    end
 
    source_planet = cand[rnd.rnd(1,#cand)]
+
+   local fdv = faction.get("Dvaered")
+   finvader = faction.dynAdd( fdv, "warlords_invaders", _("Warlords") )
+   flocal = faction.dynAdd( fdv, "warlords_locals", _("Warlords") )
+   faction.dynEnemy( finvader, flocal )
 
    hook.timer(3.0, "merchant")
    hook.timer(7.0, "attack")
@@ -129,6 +135,15 @@ local function arrangeList(list)
    return newlist
 end
 
+--chooses the first non nil pilot in a list
+local function chooseInList(list)
+   for i, p in ipairs(list) do
+      if p ~= nil and p:exists() then
+         return p
+      end
+   end
+end
+
 --Computes the reward
 --TODO: This looks fishy. Was it supposed to be called with attack=true to init and with attack=false for later kills?
 local function computeReward(attack, massOfVictims)
@@ -150,21 +165,13 @@ local function getLeader(list)
    end
 end
 
---chooses the first non nil pilot in a list
-local function chooseInList(list)
-   for i, p in ipairs(list) do
-      if p ~= nil and p:exists() then
-         return p
-      end
-   end
-end
-
 function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
    local name = _("Invader")
 
    attackers = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system, name) -- Give them Dvaered equipment
+
    attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
    attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
    attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system, name )
@@ -190,9 +197,10 @@ function attack ()
    local form = formation.random_key()
 
    for i, j in ipairs(attackers) do
-      j:setFaction("Invaders")
-      j:memory().formation = form
-      j:memory().aggressive = false
+      j:setFaction( finvader )
+      local m = j:memory()
+      m.formation = form
+      m.aggressive = false
 
       if j ~= goda then
          j:setLeader(goda)
@@ -228,16 +236,11 @@ function defense ()
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
    local form = formation.random_key()
 
-   -- I use Thugs and Associates based factions because they won't interact with anybody
-   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
-   local f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
-   faction.dynEnemy (f1, f2)
-   faction.dynEnemy (f2, f1)
-
    for i, j in ipairs(defenders) do
-      j:setFaction("Locals")
-      j:memory().formation = form
-      j:memory().aggressive = false
+      j:setFaction( flocal )
+      local m = j:memory()
+      m.formation = form
+      m.aggressive = false
 
       if j ~= godd then
          j:setLeader(godd)
@@ -321,7 +324,8 @@ function attackerDeath(victim, attacker)
    if batInProcess then
       attdeath = attdeath + 1
 
-      if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      local pp = player.pilot()
+      if attacker and (attacker == pp or attacker:leader() == pp) then
          attkilled = attkilled + victim:stats().mass
       end
 
@@ -345,7 +349,8 @@ function defenderDeath(victim, attacker)
    if batInProcess then
       defdeath = defdeath + 1
 
-      if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      local pp = player.pilot()
+      if attacker and (attacker == pp or attacker:leader() == pp) then
          defkilled = defkilled + victim:stats().mass
       end
 
