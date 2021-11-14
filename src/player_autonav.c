@@ -548,13 +548,13 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 
    /* Define the control coefficients. If needed, they could be adapted.
       Maybe radius could be adjustable by the player. */
-   const double Kp = 10;
-   const double Kd = 20;
-   radius = 100;
+   const double Kp = 10.;
+   const double Kd = 20.;
+   radius = 100.;
 
    /* Find a point behind the target at a distance of radius unless stationary, or not following. */
    if (!follow || (vel->x == 0 && vel->y == 0))
-      radius = 0;
+      radius = 0.;
    angle = M_PI + vel->angle;
    vect_cset( &point, pos->x + radius * cos(angle),
               pos->y + radius * sin(angle) );
@@ -566,7 +566,7 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 
    d = pilot_face( player.p, VANGLE(dir) );
 
-   if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300))
+   if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300.))
       player_accel( 1. );
    else
       player_accel( 0. );
@@ -584,9 +584,8 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 static int player_autonavBrake (void)
 {
    int ret;
-   Vector2d pos;
-
    if ((player.autonav == AUTONAV_JUMP_BRAKE) && (player.p->nav_hyperspace != -1)) {
+      Vector2d pos;
       JumpPoint *jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
 
       pilot_brakeDist( player.p, &pos );
