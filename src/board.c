@@ -128,12 +128,12 @@ int player_tryBoard( int noisy )
    /*
     * run hook if needed
     */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp       = p->id;
-   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   hparam[0].type = HOOK_PARAM_PILOT;
+   hparam[0].u.lp = p->id;
+   hparam[1].type = HOOK_PARAM_SENTINEL;
    hooks_runParam( "board", hparam );
    pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
-   hparam[0].u.lp       = PLAYER_ID;
+   hparam[0].u.lp = PLAYER_ID;
    pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
 
    if (board_stopboard) {
