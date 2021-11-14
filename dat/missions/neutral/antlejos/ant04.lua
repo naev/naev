@@ -185,8 +185,8 @@ function protest ()
    local p = plts[ rnd.rnd(1,#plts) ]
    if not attacked and p:inrange( player.pilot() ) then
       attacked = true
-      for _k,p in ipairs(plts) do
-         p:setHostile()
+      for _k, pk in ipairs(plts) do
+         pk:setHostile()
       end
       p:broadcast( fmt.f(_("Hey! That ship is helping to terraform {pnt}! Get them!"),{pnt=returnpnt}) )
       player.autonavReset(5)
