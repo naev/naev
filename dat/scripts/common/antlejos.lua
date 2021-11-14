@@ -69,7 +69,7 @@ antlejos.rewards = {
    ant01 = 200e3,
    ant02 = 350e3,
    ant03 = 500e3,
-   ant04 = 500e3,
+   ant04 = 600e3,
    ant05 = 700e3,
    ant06 = 300e3, -- Repeatable
 }
