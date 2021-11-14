@@ -100,9 +100,9 @@ function land ()
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
          return
       end
-      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
+      vntk.msg(_("Cargo Loaded"), fmt.f(_("The automated cargo drones load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
 
-      local c = misn.cargoNew( N_("Atmosphere Generator"), N_("A large industrial device used for generating atmospheric conditions on barren planets of Za'lek origin..") )
+      local c = misn.cargoNew( N_("Atmosphere Generator"), N_("A large industrial device used for generating atmospheric conditions on barren planets of Za'lek origin.") )
       misn.cargoAdd( c, cargo_amount )
       misn.osdActive(2)
       mem.state = 2
