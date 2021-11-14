@@ -487,10 +487,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushvector( L, vec );
          }
          else {
-            /* There are a few types knowingly left out above.
-             * Meaningless (?): PILOT_METATABLE.
-             * Seems doable, use case unclear: ARTICLE_METATABLE.
-             * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
+            /* There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:
+             * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
              * */
             WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);
