@@ -472,7 +472,7 @@ function approach_hint4 ()
 "Wait, what? Who are you?"]]))
       shrimp(_([["PERSON. PERSON. PERSON."]]))
       drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
-      shrimp:rename("Calliope")
+      shrimp:rename(_("Calliope"))
       shrimp(_([[A pellet of shrimp food is released into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
    "HAPPY. GOOD."]]))
       drshrimp(_([["What do you want?"]]))

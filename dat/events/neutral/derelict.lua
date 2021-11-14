@@ -81,9 +81,8 @@ function create ()
    -- Create the derelict.
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
-   derelict    = pilot.add(dship, "Derelict", pos, nil, {ai="dummy", naked=true})
+   derelict    = pilot.add(dship, "Derelict", pos, _("Derelict"), {ai="dummy", naked=true})
    derelict:disable()
-   derelict:rename("Derelict")
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
    hook.pilot(derelict, "board", "board")
    hook.pilot(derelict, "death", "destroyevent")
@@ -310,7 +309,7 @@ function badevent()
             local dist = 800 + 200 * ship.get(v):size()
             local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, 360*rnd.rnd() ) )
             if v == "Hyena" then
-               p:rename("Pirate Hyena")
+               p:rename(_("Pirate Hyena"))
             end
             p:setHostile( true ) -- Should naturally attack the player
             table.insert( pirates, p )
