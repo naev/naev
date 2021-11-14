@@ -39,22 +39,22 @@ typedef struct Vector2d_ {
 /*
  * misc
  */
-double angle_diff( const double ref, double a );
+double angle_diff( double ref, double a );
 
 /*
  * vector manipulation
  */
-void vect_cset( Vector2d* v, const double x, const double y );
-void vect_csetmin( Vector2d* v, const double x, const double y ); /* does not set mod nor angle */
-void vect_pset( Vector2d* v, const double mod, const double angle );
+void vect_cset( Vector2d* v, double x, double y );
+void vect_csetmin( Vector2d* v, double x, double y ); /* does not set mod nor angle */
+void vect_pset( Vector2d* v, double mod, double angle );
 void vectnull( Vector2d* v );
 double vect_angle( const Vector2d* ref, const Vector2d* v );
-void vect_cadd( Vector2d* v, const double x, const double y );
-void vect_padd( Vector2d* v, const double m, const double a );
-void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n );
-double vect_dot( Vector2d* a, Vector2d* b );
-void vect_uv(double* u, double *v, Vector2d* source, Vector2d* reference);
-void vect_uv_decomp(Vector2d* u, Vector2d* v, Vector2d* reference);
+void vect_cadd( Vector2d* v, double x, double y );
+void vect_padd( Vector2d* v, double m, double a );
+void vect_reflect( Vector2d* r, const Vector2d* v, const Vector2d* n );
+double vect_dot( const Vector2d* a, const Vector2d* b );
+void vect_uv( double* u, double *v, const Vector2d* source, const Vector2d* reference );
+void vect_uv_decomp( Vector2d* u, Vector2d* v, const Vector2d* reference );
 
 /**
  * @brief Represents a solid in the game.
@@ -67,15 +67,15 @@ typedef struct Solid_ {
    Vector2d pos; /**< Position of the solid. */
    double thrust; /**< Relative X force, basically simplified for our thrust model. */
    double speed_max; /**< Maximum speed. */
-   void (*update)( struct Solid_*, const double ); /**< Update method. */
+   void (*update)( struct Solid_*, double ); /**< Update method. */
 } Solid;
 
 /*
  * solid manipulation
  */
-double solid_maxspeed( Solid *s, double speed, double thrust );
-void solid_init( Solid* dest, const double mass, const double dir,
+double solid_maxspeed( const Solid *s, double speed, double thrust );
+void solid_init( Solid* dest, double mass, double dir,
       const Vector2d* pos, const Vector2d* vel, int update );
-Solid* solid_create( const double mass, const double dir,
+Solid* solid_create( double mass, double dir,
       const Vector2d* pos, const Vector2d* vel, int update );
 void solid_free( Solid* src );

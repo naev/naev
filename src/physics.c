@@ -31,7 +31,7 @@ static double angle_cleanup( double a )
  *    @param ref Reference angle.
  *    @param a Angle to get distance from ref.
  */
-double angle_diff( const double ref, double a )
+double angle_diff( double ref, double a )
 {
    /* Get angles. */
    double a1 = angle_cleanup(ref);
@@ -56,7 +56,7 @@ double angle_diff( const double ref, double a )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_cset( Vector2d* v, const double x, const double y )
+void vect_cset( Vector2d* v, double x, double y )
 {
    v->x     = x;
    v->y     = y;
@@ -71,7 +71,7 @@ void vect_cset( Vector2d* v, const double x, const double y )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_csetmin( Vector2d* v, const double x, const double y )
+void vect_csetmin( Vector2d* v, double x, double y )
 {
    v->x = x;
    v->y = y;
@@ -84,7 +84,7 @@ void vect_csetmin( Vector2d* v, const double x, const double y )
  *    @param mod Modulus of the vector.
  *    @param angle Angle of the vector.
  */
-void vect_pset( Vector2d* v, const double mod, const double angle )
+void vect_pset( Vector2d* v, double mod, double angle )
 {
    v->mod   = mod;
    v->angle = angle;
@@ -126,7 +126,7 @@ double vect_angle( const Vector2d* ref, const Vector2d* v )
  *    @param x X value to add to vector.
  *    @param y Y value to add to vector.
  */
-void vect_cadd( Vector2d* v, const double x, const double y )
+void vect_cadd( Vector2d* v, double x, double y )
 {
    v->x    += x;
    v->y    += y;
@@ -141,7 +141,7 @@ void vect_cadd( Vector2d* v, const double x, const double y )
  *    @param m Module of vector to add.
  *    @param a Angle of vector to add.
  */
-void vect_padd( Vector2d* v, const double m, const double a )
+void vect_padd( Vector2d* v, double m, double a )
 {
    v->x    += m*cos(a);
    v->y    += m*sin(a);
@@ -156,7 +156,7 @@ void vect_padd( Vector2d* v, const double m, const double a )
  *    @param v Vector to reflect.
  *    @param n Normal to reflect off of.
  */
-void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
+void vect_reflect( Vector2d* r, const Vector2d* v, const Vector2d* n )
 {
    double dot = vect_dot( v, n );
    r->x     = v->x - ((2. * dot) * n->x);
@@ -172,7 +172,7 @@ void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
  *    @param b Vector 2 for dot product.
  *    @return Dot product of vectors.
  */
-double vect_dot( Vector2d* a, Vector2d* b )
+double vect_dot( const Vector2d* a, const Vector2d* b )
 {
    return a->x * b->x + a->y * b->y;
 }
@@ -185,11 +185,11 @@ double vect_dot( Vector2d* a, Vector2d* b )
  *    @param source Source vector.
  *    @param reference_vector Reference vector.
  */
-void vect_uv( double* u, double* v, Vector2d* source, Vector2d* reference_vector )
+void vect_uv( double* u, double* v, const Vector2d* source, const Vector2d* reference_vector )
 {
    Vector2d unit_parallel, unit_perpendicular;
 
-   vect_uv_decomp(&unit_parallel, &unit_perpendicular, reference_vector);
+   vect_uv_decomp( &unit_parallel, &unit_perpendicular, reference_vector );
 
    *u = vect_dot(source, &unit_parallel);
    *v = vect_dot(source, &unit_perpendicular);
@@ -202,7 +202,7 @@ void vect_uv( double* u, double* v, Vector2d* source, Vector2d* reference_vector
  *    @param[out] v Perpendicular component of the reference vector.
  *    @param reference_vector The reference vector to decompose.
  */
-void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
+void vect_uv_decomp( Vector2d* u, Vector2d* v, const Vector2d* reference_vector )
 {
    vect_pset(u, 1, VANGLE(*reference_vector));
    vect_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
@@ -226,7 +226,7 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
  *   so watch out with big values for dt
  *
  */
-static void solid_update_euler (Solid *obj, const double dt)
+static void solid_update_euler( Solid *obj, double dt )
 {
    double px,py, vx,vy, ax,ay, th;
    double cdir, sdir;
@@ -290,7 +290,7 @@ static void solid_update_euler (Solid *obj, const double dt)
  *  instead of approximating the curve for a tiny straight line.
  */
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
-static void solid_update_rk4 (Solid *obj, const double dt)
+static void solid_update_rk4( Solid *obj, double dt )
 {
    int N; /* for iteration, and pass calculation */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
@@ -375,7 +375,7 @@ static void solid_update_rk4 (Solid *obj, const double dt)
 /**
  * @brief Gets the maximum speed of any object with speed and thrust.
  */
-double solid_maxspeed( Solid *s, double speed, double thrust )
+double solid_maxspeed( const Solid *s, double speed, double thrust )
 {
    return speed + thrust / (s->mass * 3.);
 }
@@ -389,7 +389,7 @@ double solid_maxspeed( Solid *s, double speed, double thrust )
  *    @param pos Initial solid position.
  *    @param vel Initial solid velocity.
  */
-void solid_init( Solid* dest, const double mass, const double dir,
+void solid_init( Solid* dest, double mass, double dir,
       const Vector2d* pos, const Vector2d* vel, int update )
 {
    memset(dest, 0, sizeof(Solid));
@@ -448,7 +448,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
  *    @param vel Initial solid velocity.
  *    @return A newly created solid.
  */
-Solid* solid_create( const double mass, const double dir,
+Solid* solid_create( double mass, double dir,
       const Vector2d* pos, const Vector2d* vel, int update )
 {
    Solid* dyn = malloc(sizeof(Solid));
