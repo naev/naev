@@ -605,6 +605,9 @@ function attacked_manual( attacker )
          p:msg( l, "f_attacked", attacker )
       end
    end
+
+   -- Generate distress if necessary
+   gen_distress_attacked( attacker )
 end
 
 -- Required "attacked" function
@@ -648,6 +651,9 @@ function attacked( attacker )
          p:msg( l, "f_attacked", attacker )
       end
    end
+
+   -- Generate distress if necessary
+   gen_distress_attacked( attacker )
 
    -- If forced we'll stop after telling friends
    if si.forced then return end
@@ -788,7 +794,7 @@ end
 
 
 -- Handles generating distress messages
-function gen_distress ( _target )
+function gen_distress( _target )
    if not mem.distress then return end
 
    -- Must have a valid distress rate
@@ -818,6 +824,20 @@ function gen_distress ( _target )
       end
       mem.distressed = 1
    end
+end
+
+function gen_distress_attacked( _attacker )
+   if not mem.distress then return end
+
+   -- Already attacked so ignore new hits (should reset)
+   if mem.attacked then return end
+
+   if mem.distressmsgfunc then
+      mem.distressmsgfunc()
+   else
+      ai.distress( mem.distressmsg )
+   end
+   mem.distressed = 1
 end
 
 -- Picks an appropriate weapon set for ships with mixed weaponry.
