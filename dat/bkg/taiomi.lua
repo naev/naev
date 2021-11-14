@@ -173,7 +173,7 @@ function background ()
    add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
 
    -- Default nebula background (no star)
-   starfield.init()
+   starfield.init{ nolocalstars = true }
 end
 function update ()
    -- Calculate player motion

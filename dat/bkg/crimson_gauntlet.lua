@@ -21,7 +21,7 @@ function background ()
    scircuit = bgshaders.init( shader, sf )
 
    -- Default nebula background (no star)
-   starfield.init()
+   starfield.init{ nolocalstars = true }
 end
 
 renderbg = starfield.render
