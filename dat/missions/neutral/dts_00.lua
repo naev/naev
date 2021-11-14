@@ -205,8 +205,8 @@ end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-   mem.enter_vect = player.pos()
-   pilot.add( "Mule", "Trader", mem.enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
+   local enter_vect = player.pos()
+   pilot.add( "Mule", "Trader", enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
    hook.timer(1.0, "congratulations")
 end
 function congratulations()
