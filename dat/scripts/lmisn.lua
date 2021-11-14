@@ -11,6 +11,7 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
+      money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
    }
 end
@@ -23,6 +24,10 @@ function lmisn.sfxVictory ()
 end
 
 function lmisn.sfxMoney ()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.money:clone()
+   sfx:play()
 end
 
 

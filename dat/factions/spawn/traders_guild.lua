@@ -9,7 +9,7 @@ local srhino      = ship.get("Rhino")
 --local sshark      = ship.get("Shark")
 
 -- @brief Spawns a small trade fleet.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -27,7 +27,7 @@ function spawn_patrol ()
 end
 
 -- @brief Spawns a larger trade fleet.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -70,5 +70,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
 
-   return scom.init( ftradersguild )
+   return scom.init( ftradersguild, weights, max )
 end

@@ -92,10 +92,10 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro, ms, s, nf
+         local ro, ms, nf
 
-         ro, s = planet.getS( "Raelid Outpost" )
-         ms, s = planet.getS( "Marius Station" )
+         ro = planet.get( "Raelid Outpost" )
+         ms = planet.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
          dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
@@ -139,8 +139,7 @@ function enter ()
          end
 
          -- Spawn FLF ships
-         local jmp, jmp2
-         jmp, jmp2 = jump.get( "Raelid", "Arcanis" )
+         local jmp = jump.get( "Raelid", "Arcanis" )
          flf_fleet = fleet.add( 14, "Vendetta", "FLF", jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do

@@ -52,6 +52,7 @@ local intpla, intsys     = planet.getS("Timu")
 -- Non-persistent state
 local p, ps -- active pilot/fleet
 local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
+local mypos, step -- location and spacing of the duel, initialized with the above pilots
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
 
@@ -142,8 +143,7 @@ function enter()
          pilot.clearSelect(f)
       end
 
-      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla )
-      warlord:rename( "Lord Battleaddict" )
+      warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla, _("Lord Battleaddict") )
       warlord:control(true)
       warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
       warlord:memory().formation = "circleLarge"
@@ -161,9 +161,8 @@ function enter()
       end
       ps[7] = pilot.add( "Dvaered Phalanx", "Dvaered", sabotpla )
       ps[7]:setLeader(warlord)
-      ps[8] = pilot.add( "Dvaered Vigilance", "Dvaered", sabotpla )
+      ps[8] = pilot.add( "Dvaered Vigilance", "Dvaered", sabotpla, _("Colonel Hamelsen") )
       ps[8]:setLeader(warlord)
-      ps[8]:rename("Colonel Hamelsen")
       ps[8]:setNoDeath()
 
       hook.timer(4.0, "enter1_message")
@@ -187,17 +186,15 @@ function enter()
       pilot.toggleSpawn(false)
       pilot.clear()
 
-      mem.mypos = duelpla:pos()
-      mem.step = 150
+      mypos = duelpla:pos()
+      step = 150
 
-      klank = pilot.add( "Dvaered Goddard", "Dvaered", mem.mypos + vec2.new(-mem.step, mem.step/2) )
-      klank:rename( "General Klank" )
+      klank = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(-step, step/2), _("General Klank") )
       klank:control(true)
       klank:setFaction("DHC")
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
-      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mem.mypos + vec2.new(mem.step, mem.step/2) )
-      battleaddict:rename( "Lord Battleaddict" )
+      battleaddict = pilot.add( "Dvaered Goddard", "Dvaered", mypos + vec2.new(step, step/2), _("Lord Battleaddict") )
       battleaddict:control(true)
       battleaddict:setFaction("Warlords")
       equipGoddard( battleaddict, false )
@@ -205,36 +202,32 @@ function enter()
       klank:face(battleaddict)
       battleaddict:face(klank)
 
-      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(0, 3*mem.step/2) )
-      urnus:rename( "Colonel Urnus" )
+      urnus = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(0, 3*step/2), _("Colonel Urnus") )
       urnus:control(true)
-      urnus:face( mem.mypos + vec2.new(0, mem.step/2) )
+      urnus:face( mypos + vec2.new(0, step/2) )
 
-      tam = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(-2*mem.step, 3*mem.step/2) )
-      tam:rename( "Major Tam" )
+      tam = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(-2*step, 3*step/2), _("Major Tam") )
       tam:control(true)
       tam:face(battleaddict)
 
-      leblanc = pilot.add( "Dvaered Phalanx", "Dvaered", mem.mypos + vec2.new(-2*mem.step, -mem.step/2) )
-      leblanc:rename( "Captain Leblanc" )
+      leblanc = pilot.add( "Dvaered Phalanx", "Dvaered", mypos + vec2.new(-2*step, -step/2), _("Captain Leblanc") )
       leblanc:control(true)
       leblanc:face(battleaddict)
 
-      hamelsen = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(2*mem.step, 3*mem.step/2) )
-      hamelsen:rename( "Colonel Hamelsen" )
+      hamelsen = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(2*step, 3*step/2), _("Colonel Hamelsen") )
       hamelsen:control(true)
       hamelsen:face(klank)
 
-      randguy = pilot.add( "Dvaered Vigilance", "Dvaered", mem.mypos + vec2.new(2*mem.step, -mem.step/2) )
+      randguy = pilot.add( "Dvaered Vigilance", "Dvaered", mypos + vec2.new(2*step, -step/2) )
       randguy:control(true)
       randguy:face(klank)
 
       player.pilot():control()
-      player.pilot():moveto( mem.mypos + vec2.new(0, -mem.step/2) ) -- To avoid being in the range
+      player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
       player.cinematics( true, { gui = true } )
       player.pilot():setInvincible()
 
-      camera.set( mem.mypos + vec2.new(0, mem.step/2) )
+      camera.set( mypos + vec2.new(0, step/2) )
 
       hook.timer(5.0, "beginDuel")
       hook.timer(15.0, "disableDuel")
@@ -314,10 +307,9 @@ end
 
 -- Spawn the Phalanx to disable
 function spawn_phalanx()
-   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla )
+   p = pilot.add( "Dvaered Phalanx", "Dvaered", intpla, _("Gorgon") )
    p:setFaction("Warlords")
    p:setHilight()
-   p:rename("Gorgon")
    p:control()
 
    mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
@@ -457,14 +449,12 @@ end
 
 -- Fighter duel
 function fighterDuel()
-   klank2 = pilot.add( "Dvaered Vendetta", "Dvaered", klank:pos() )
-   klank2:rename( "General Klank" )
+   klank2 = pilot.add( "Dvaered Vendetta", "Dvaered", klank:pos(), _("General Klank") )
    klank2:control(true)
    klank2:setFaction("DHC")
    fw.equipVendettaMace( klank2 ) -- Klank's superior equipment should ensure victory once more
 
-   battleaddict2 = pilot.add( "Dvaered Vendetta", "Dvaered", battleaddict:pos() )
-   battleaddict2:rename( "Lord Battleaddict" )
+   battleaddict2 = pilot.add( "Dvaered Vendetta", "Dvaered", battleaddict:pos(), _("Lord Battleaddict") )
    battleaddict2:control(true)
    battleaddict2:setFaction("Warlords")
 
@@ -486,10 +476,10 @@ function fighterDuel()
    battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
-   battleaddict2:moveto( mem.mypos + vec2.new(mem.step,mem.step/4), false, false ) -- Prevent them from staying on the top of their ships
+   battleaddict2:moveto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
    battleaddict2:attack(klank2)
    klank2:control()
-   klank2:moveto( mem.mypos + vec2.new(-mem.step,mem.step/4), false, false )
+   klank2:moveto( mypos + vec2.new(-step,step/4), false, false )
    klank2:attack(battleaddict2)
    hook.pilot( battleaddict2, "exploded", "battleaddict_killed" )
 

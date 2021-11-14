@@ -425,9 +425,7 @@ end
 function space_clue( target )
    if target:hostile() then -- Pilot doesn't like you
       local choice = tk.choice(_("I won't tell you"), quotes.noinfo[rnd.rnd(1,#quotes.noinfo)], _("Give up"), _("Threaten the pilot")) -- TODO maybe: add the possibility to pay
-      if choice == 1 then
-         -- End of function
-      else -- Threaten the pilot
+      if choice ~= 1 then
          if isScared( target ) and rnd.rnd() < .5 then
             tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
             next_sys()
@@ -463,9 +461,7 @@ function space_clue( target )
          else
             tk.msg( _("Not enough money"), _("You don't have enough money.") )
          end
-      elseif choice == 2 then
-         -- End of function
-      else -- Threaten the pilot
+      elseif choice == 3 then -- Threaten the pilot
 
          -- Everybody except the pirates takes offence if you threaten them
          if not target:faction() == faction.get("Pirate") then
@@ -556,8 +552,6 @@ function clue_bar()
             else
                tk.msg( _("Not enough money"), _("You don't have enough money.") )
             end
-         else
-            -- End of function
          end
 
       else -- NPC tells the clue

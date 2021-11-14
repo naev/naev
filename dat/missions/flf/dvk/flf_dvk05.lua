@@ -72,7 +72,6 @@ function accept ()
       hook.enter( "enter" )
       hook.jumpout( "leave" )
       hook.land( "leave" )
-   else
    end
 end
 

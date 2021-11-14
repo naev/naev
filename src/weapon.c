@@ -1174,8 +1174,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
-      Pilot *const* pilot_stack = pilot_getAll();
-
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);
 
@@ -1183,32 +1181,8 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
       if ((p->player_damage > PILOT_HOSTILE_THRESHOLD) ||
             (shooter->target==p->id)) {
          /* Inform attacked. */
-         ai_attacked( p, shooter->id, dmg );
-
-         /* Trigger a pseudo-distress that incurs no faction loss. */
-         for (int i=0; i<array_size(pilot_stack); i++) {
-            double d;
-
-            /* Skip if unsuitable. */
-            if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
-                  (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
-                  (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
-               continue;
-
-            /*
-             * Pilots within a radius of 1500 (in a zero-interference system)
-             * will immediately notice hostile actions.
-             */
-            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
-            if (d > pow2( pilot_sensorRange() * 0.2 )) /* 0.2^2 */
-               continue;
-
-            /* Send AI the distress signal. */
-            ai_getDistress( pilot_stack[i], p, shooter );
-         }
-
-         /* Set as hostile. */
          pilot_setHostile(p);
+         ai_attacked( p, shooter->id, dmg );
       }
    }
    /* Otherwise just inform of being attacked. */

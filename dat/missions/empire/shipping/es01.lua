@@ -153,16 +153,16 @@ function enter ()
       end
 
       -- Get player position
-      mem.enter_vect = player.pos()
+      local enter_vect = player.pos()
 
       -- Calculate where the enemies will be
       local r = rnd.rnd(0,4)
       -- Next to player (always if landed)
-      if mem.enter_vect:dist() < 1000 or r < 2 then
+      if enter_vect:dist() < 1000 or r < 2 then
          local a = rnd.rnd() * 360
          local d = rnd.rnd( 400, 1000 )
-         mem.enter_vect:add( vec2.newP( d, a ) )
-         enemies()
+         enter_vect:add( vec2.newP( d, a ) )
+         enemies( enter_vect )
       -- Enter after player
       else
          hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
@@ -171,7 +171,7 @@ function enter ()
 end
 
 
-function enemies ()
+function enemies( enter_vect )
    -- Choose mercenaries
    local merc = {}
    if rnd.rnd() < 0.3 then table.insert( merc, "Pacifier" ) end
@@ -183,9 +183,9 @@ function enemies ()
       -- Move position a bit
       local a = rnd.rnd() * 360
       local d = rnd.rnd( 50, 75 )
-      mem.enter_vect:add( vec2.newP( d, a ) )
+      enter_vect:add( vec2.newP( d, a ) )
       -- Add pilots
-      local p = pilot.add( v, "Mercenary", mem.enter_vect )
+      local p = pilot.add( v, "Mercenary", enter_vect )
       p:setHostile()
    end
 end

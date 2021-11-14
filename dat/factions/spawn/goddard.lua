@@ -4,7 +4,7 @@ local slancelot   = ship.get("Lancelot")
 local sgoddard    = ship.get("Goddard")
 
 -- @brief Spawns a capship with escorts.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
 
    -- Generate the capship

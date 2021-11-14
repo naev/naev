@@ -79,15 +79,6 @@ function create ()
    hook.enter("enter")
 end
 
--- Checks if the parameter system has planets you can land on. Return true if so, false otherwise.
-local function haslandable(sys)
-   for a, b in pairs(sys:planets()) do
-      if b:services()["inhabited"] then return true
-      end
-   end
-   return false
-end
-
 -- Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
 function getlandable(sys)
    for a, b in pairs(sys:planets()) do
@@ -146,7 +137,6 @@ function enter()
    if mem.harrassmsg then
       hook.timer(3.0, "harrassme")
       mem.harrassmsg = false
-   else
    end
 end
 

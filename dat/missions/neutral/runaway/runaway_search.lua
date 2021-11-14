@@ -30,7 +30,7 @@ local reward = 300e3
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
-local targetworld, targetworld_sys = planet.getS("Niflheim")
+local targetworld = planet.get("Niflheim")
 
 -- Here are stored the fake texts for the OSD
 mem.osd_text = {}

@@ -58,7 +58,7 @@ function __atk_g_capital( target, dist )
          __atk_keep_distance()
          ai.accel()
       else
-         dir = ai.iface(target)
+         ai.iface(target)
       end
 
    --at moderate range from the target, prepare to intercept and engage with turrets

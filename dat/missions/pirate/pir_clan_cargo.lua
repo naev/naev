@@ -125,16 +125,16 @@ function enter ()
       end
 
       -- Get player position
-      mem.enter_vect = player.pos()
+      local enter_vect = player.pos()
 
       -- Calculate where the enemies will be
       local r = rnd.rnd(0,4)
       -- Next to player (always if landed)
-      if mem.enter_vect:dist() < 1000 or r < 2 then
+      if enter_vect:dist() < 1000 or r < 2 then
          local a = rnd.rnd() * 360
          local d = rnd.rnd( 400, 1000 )
-         mem.enter_vect:add( vec2.newP( d, a ) )
-         invoke_enemies()
+         enter_vect:add( vec2.newP( d, a ) )
+         invoke_enemies( enter_vect )
       -- Enter after player
       else
          hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
@@ -148,7 +148,7 @@ end
 
 
 -- Mostly taken from es01.
-function invoke_enemies()
+function invoke_enemies( enter_vect )
    -- Choose mercenaries
    local merc = {}
    -- Note: New random numbers are *WANTED*.
@@ -167,9 +167,9 @@ function invoke_enemies()
       -- Move position a bit
       local a = rnd.rnd() * 360
       local d = rnd.rnd( 50, 75 )
-      mem.enter_vect:add( vec2.newP( d, a ) )
+      enter_vect:add( vec2.newP( d, a ) )
       -- Add pilots
-      local p = pilot.add( v, "Pirate", mem.enter_vect, nil, {ai="mercenary"} )
+      local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
       -- Set hostile
       for k2,v2 in ipairs(p) do
          v:setHostile()

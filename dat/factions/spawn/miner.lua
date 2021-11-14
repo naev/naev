@@ -6,7 +6,7 @@ local smule    = ship.get("Mule")
 local srhino   = ship.get("Rhino")
 
 -- @brief Spawns a small group of miners
-function spawn_lone_miner ()
+local function spawn_lone_miner ()
    local pilots = {}
    local r = rnd.rnd()
    if r < 0.4 then

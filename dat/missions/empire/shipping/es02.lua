@@ -134,12 +134,12 @@ function enter ()
       var.push( "music_combat_force", "FLF" )
 
       -- Put the VIP a ways off of the player but near the jump.
-      mem.enter_vect = jump.pos(mem.sys, mem.prevsys)
-      local m,a = mem.enter_vect:polar()
-      mem.enter_vect:setP( m-3000, a )
-      local v = pilot.add( "Gawain", "Trader", mem.enter_vect, _("Trader Gawain"), {ai="dummy"} )
+      local enter_vect = jump.pos(mem.sys, mem.prevsys)
+      local m,a = enter_vect:polar()
+      enter_vect:setP( m-3000, a )
+      local v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), {ai="dummy"} )
 
-      v:setPos( mem.enter_vect )
+      v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
       v:disable()
       v:setHilight(true)
@@ -151,12 +151,12 @@ function enter ()
 
       -- FLF Spawn around the Gawain
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
-      local p = fleet.add( 1, flf_med_force, "FLF", mem.enter_vect, _("FLF Ambusher") )
+      local p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
       for k,pk in ipairs(p) do
          pk:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "Vendetta", "FLF", mem.enter_vect )
+      p = pilot.add( "Vendetta", "FLF", enter_vect )
       p:setHostile()
       -- If player is seen, have them target player
       local pp = player.pilot()

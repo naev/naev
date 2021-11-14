@@ -123,12 +123,11 @@ function __atk_d_flyby( target, dist )
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
       else
-         dir = ai.iface(target)
+         ai.iface(target)
       end
 
    -- Midrange
    elseif dist > (0.75 * range) then
-
       --dir = ai.idir(target)
       dir = ai.aim(target)  -- drones need to aim more to avoid circling
       --test if we're facing the target. If we are, keep approaching
@@ -147,7 +146,6 @@ function __atk_d_flyby( target, dist )
 
    --otherwise we're close to the target and should attack until we start to zip away
    else
-
       dir = ai.aim(target)
       --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
@@ -186,7 +184,7 @@ function __atk_d_space_sup( target, dist )
          __atk_keep_distance()
          ai.accel()
       else
-         dir = ai.iface(target)
+         ai.iface(target)
          ai.accel()
       end
 

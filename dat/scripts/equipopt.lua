@@ -3,8 +3,9 @@
    Equips pilots based on mixed integer linear programming
 
 --]]
+local equipopt
 local function equipopt_load ()
-   local equipopt = {}
+   equipopt = {}
 
    equipopt.optimize = require 'equipopt.optimize'
    equipopt.params   = require 'equipopt.params'
@@ -20,14 +21,13 @@ local function equipopt_load ()
    equipopt.pirate   = require 'equipopt.templates.pirate'
    equipopt.thurion  = require 'equipopt.templates.thurion'
    equipopt.proteron = require 'equipopt.templates.proteron'
-
-   return equipopt
 end
 
 local lazy = setmetatable( {}, {
    __index = function( self, key )
       if not equipopt then
-         self.__index = equipopt_load ()
+         equipopt_load ()
+         self.__index = equipopt
       end
       return self.__index[key]
    end

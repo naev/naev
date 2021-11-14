@@ -15,7 +15,7 @@ local function add_hyena( pilots )
 end
 
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.7)
    local r = rnd.rnd()
@@ -36,7 +36,7 @@ function spawn_patrol ()
    return pilots
 end
 
-function spawn_loner ()
+local function spawn_loner ()
    local pilots = {}
    pilots.__nofleet = true
 
@@ -63,7 +63,7 @@ function spawn_loner ()
 end
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.6)
    local r = rnd.rnd()
@@ -97,7 +97,7 @@ function spawn_squad ()
 end
 
 -- @brief Spawns a capship with escorts.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.5)
    local r = rnd.rnd()

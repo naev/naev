@@ -60,7 +60,7 @@ local lmisn = require "lmisn"
    5: Flying back
 --]]
 mem.misn_state = nil
-local enemies, rampant, spotter -- Non-persistent state
+local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
 
 local reward_amount = tutnel.reward.nelly02
 
@@ -228,8 +228,8 @@ end
 function enter ()
    local scur = system.cur()
    if mem.misn_state <= 0  and scur == mem.retsys then
-      mem.rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
-      rampant = pilot.add( "Llama", "Dummy", mem.rampant_pos, _("Llaminator MK2") )
+      rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
+      rampant = pilot.add( "Llama", "Dummy", rampant_pos, _("Llaminator MK2") )
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
       rampant:intrinsicSet( "turn", -50 )
@@ -246,7 +246,6 @@ function enter ()
       --hook.pilot( rampant, "idle", "idle" )
       idle( rampant )
 
-
    elseif mem.misn_state == 2 and scur == mem.retsys then
       mem.jump_dest = jump.get( mem.retsys, mem.destsys )
       mem.fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
@@ -260,8 +259,8 @@ function enter ()
 
       local s = player.pilot():stats().ew_stealth
       local m, a = mem.jump_dest:pos():polar()
-      mem.spotter_pos = vec2.newP( m - 1.5 * s, a )
-      spotter = pilot.add( "Pacifier", "Mercenary", mem.spotter_pos )
+      spotter_pos = vec2.newP( m - 1.5 * s, a )
+      spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos )
       spotter:rename(_("Noisy Pacifier"))
       spotter:setVisplayer()
       spotter:setHilight()
@@ -276,11 +275,12 @@ end
 
 function idle ()
    if mem.misn_state > 0 then return end
+   if not rampant or not rampant:exists() then return end
    local radius = 200
    local samples = 18
-   mem.rampant_pos_idx = mem.rampant_pos_idx or 0
-   mem.rampant_pos_idx = math.fmod( mem.rampant_pos_idx, samples ) + 1
-   local pos = mem.rampant_pos + vec2.newP( radius, mem.rampant_pos_idx / samples * 360 )
+   rampant_pos_idx = rampant_pos_idx or 0
+   rampant_pos_idx = math.fmod( rampant_pos_idx, samples ) + 1
+   local pos = rampant_pos + vec2.newP( radius, rampant_pos_idx / samples * 360 )
    rampant:taskClear()
    rampant:moveto( pos, false, false )
 
@@ -574,7 +574,7 @@ function spotter_spot ()
    if mem.spotter_scanning and (iss or not scanned) then
       mem.spotter_scanning = false
       spotter:taskClear()
-      spotter:moveto( mem.spotter_pos )
+      spotter:moveto( spotter_pos )
       pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
 
    elseif mem.spotter_scanning and spotter:scandone() then
