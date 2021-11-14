@@ -47,5 +47,6 @@
 
   <!-- Unidiff -->
   <its:translateRule selector="/unidiff/system/features" translate="yes"/>
+  <its:translateRule selector="/unidiff/asset/bar" translate="yes"/>
   <its:translateRule selector="/unidiff/asset/description" translate="yes"/>
 </its:rules>
