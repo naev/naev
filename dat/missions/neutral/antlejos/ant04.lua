@@ -29,7 +29,7 @@ local ant = require "common.antlejos"
 local lmisn = require "lmisn"
 local fleet = require "fleet"
 
-local cargo_name = _("abiogenic pathogens")
+local cargo_name = _("abiogenic organisms")
 local cargo_amount = 100 -- Amount in mass
 local reward = ant.rewards.ant04
 
@@ -56,7 +56,7 @@ function create ()
    vn.transition()
    vn.na(_("Your ship touches ground and Verner comes to greet you."))
    v(fmt.f(_([[He beams a smile at you.
-"The amosphere is starting to take shape, we're almost ready for the next step. Without a vacuum we can now try to introduce some sort of stable form of life and bootstrap the final terraforming stages. I've found out a supplier of Abiogenic Pathogens that should be able to do just the job. Would you be able to go to {pnt} in the {sys} system to bring some {amount} of pathogens over? You'll get {creds} for your troubles. Are you interested?"]]),
+"The amosphere is starting to take shape, we're almost ready for the next step. Without a vacuum we can now try to introduce some sort of stable form of life and bootstrap the final terraforming stages. I've found out a supplier of Abiogenic Organisms that should be able to do just the job. Would you be able to go to {pnt} in the {sys} system to bring some {amount} of organisms over? You'll get {creds} for your troubles. Are you interested?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -106,7 +106,7 @@ function land ()
       end
       vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
 
-      local c = misn.cargoNew( N_("Abiogenic Pathogens"), N_("Containers filled to the brim with pathogens that are suitable for creating life from scratch.") )
+      local c = misn.cargoNew( N_("Abiogenic Organisms"), N_("Containers filled to the brim with organisms that are suitable for creating life from scratch.") )
       misn.cargoAdd( c, cargo_amount )
       misn.osdActive(2)
       mem.state = 2
@@ -122,7 +122,7 @@ function land ()
          {cargo=cargo_name}))
       v(_([["I see you met them. They are part of the #oPilots United Against Atmosphere Anthropocentrism#0 or #oPUAAA#0 for short. What they are is a bunch of assholes that reject progress and terraforming barren moons like this one into places suitable for human living."]]))
       v(_([["They must have noticed when the paperwork I filed at the Empire for terraforming permission was made public. I thought we would have had a lot more time before they started messing things up. Looks like we'll have to be careful from now on as they'll only get more aggressive as they see our wonderful progress."]]))
-      v(_([["The pathogens look like they're in tip-top shape, and we'll get to spreading them around right away. Things should start looking much better now that life should start to take a hold on this moon."]]))
+      v(_([["The organisms look like they're in tip-top shape, and we'll get to spreading them around right away. Things should start looking much better now that life should start to take a hold on this moon."]]))
       v(_([["We still have a ton of things for you to do. If you are interested, please meet me up here again after I organize things a bit."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
@@ -132,7 +132,7 @@ function land ()
       ant.unidiff( ant.unidiff_list[4] )
 
       player.pay( reward )
-      ant.log(fmt.f(_("You delivered some Soromid abiogenic pathogens to {pnt} to help Verner further terraform it."),{pnt=returnpnt}))
+      ant.log(fmt.f(_("You delivered some Soromid abiogenic organisms to {pnt} to help Verner further terraform it."),{pnt=returnpnt}))
       ant.dateupdate()
       misn.finish(true)
    end
