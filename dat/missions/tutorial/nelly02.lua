@@ -275,6 +275,7 @@ end
 
 function idle ()
    if mem.misn_state > 0 then return end
+   if not rampant or not rampant:exists() then return end
    local radius = 200
    local samples = 18
    rampant_pos_idx = rampant_pos_idx or 0
