@@ -50,8 +50,7 @@ const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy)*ROT + R;
-
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + R;
    vec3 dir = vec3(uv, 1.0);
 
    float s = 0.1, fade = 0.01;
