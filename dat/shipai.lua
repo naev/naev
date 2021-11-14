@@ -4,6 +4,7 @@
 local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
+local tk  = require "tk"
 
 -- Functions:
 local advice
