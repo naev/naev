@@ -54,6 +54,17 @@ function antlejos.datecheck ()
    return d and d==time.get()
 end
 
+--[[
+   Gets the Pilots United Against Atmosphere Anthropocentrism (PUAAA) faction or creates it if necessary
+--]]
+function antlejos.puaaa ()
+   local f = faction.exists("puaaa")
+   if f then
+      return f
+   end
+   return faction.dynAdd( nil, "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
+end
+
 antlejos.rewards = {
    ant01 = 150e3,
    ant02 = 200e3,
