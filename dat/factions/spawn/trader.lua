@@ -27,12 +27,12 @@ local function add_shark( pilots )
 end
 
 -- Doubles the credits of the pilot
-function double_credits( p )
+local function double_credits( p )
    p:credits( p:credits() )
 end
 
 -- @brief Spawns a small trade fleet.
-function spawn_loner ()
+local function spawn_loner ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -51,7 +51,7 @@ function spawn_loner ()
    return pilots
 end
 
-function spawn_fleet_small ()
+local function spawn_fleet_small ()
    local pilots = {}
 
    for i=1,rnd.rnd(2,5) do
@@ -68,7 +68,7 @@ function spawn_fleet_small ()
    return pilots
 end
 
-function spawn_fleet_small_guarded ()
+local function spawn_fleet_small_guarded ()
    local pilots = {}
 
    -- Base Fleet
@@ -97,7 +97,7 @@ function spawn_fleet_small_guarded ()
 end
 
 
-function spawn_fleet_med ()
+local function spawn_fleet_med ()
    local pilots = {}
 
    -- Leader
@@ -139,7 +139,7 @@ function spawn_fleet_med ()
    return pilots
 end
 
-function spawn_fleet_med_guarded ()
+local function spawn_fleet_med_guarded ()
    local pilots = spawn_fleet_med ()
 
    -- Give more money

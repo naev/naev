@@ -24,6 +24,7 @@
 #include "nluadef.h"
 
 /* Faction metatable methods */
+static int factionL_exists( lua_State *L );
 static int factionL_get( lua_State *L );
 static int factionL_eq( lua_State *L );
 static int factionL_name( lua_State *L );
@@ -47,6 +48,7 @@ static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
 static int factionL_dynEnemy( lua_State *L );
 static const luaL_Reg faction_methods[] = {
+   { "exists", factionL_exists },
    { "get", factionL_get },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
@@ -98,6 +100,25 @@ int nlua_loadFaction( nlua_env env )
  *
  * @luamod faction
  */
+/**
+ * @brief Gets a faction if it exists.
+ *
+ * @usage f = faction.exists( "Empire" )
+ *
+ *    @luatparam string name Name of the faction to get if exists.
+ *    @luatreturn Faction The faction matching name or nil if not matched.
+ * @luafunc exists
+ */
+static int factionL_exists( lua_State *L )
+{
+   const char *s = luaL_checkstring(L,1);
+   if (faction_exists(s)) {
+      lua_pushfaction(L, faction_get(s));
+      return 1;
+   }
+   return 0;
+}
+
 /**
  * @brief Gets the faction based on its name.
  *
@@ -544,7 +565,7 @@ static int factionL_setknown( lua_State *L )
  *
  * @note Defaults to known.
  *
- *    @luatparam Faction base Faction to base it off of or nil for new faction.
+ *    @luatparam Faction|nil base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
  *    @luatparam[opt] table params Table of parameters. Options include "ai" (string) to set the AI to use, "clear_allies" (boolean) to clear all allies, and "clear_enemies" (boolean) to clear all enemies.

@@ -23,7 +23,6 @@ local wave_end -- Forward-declared functions
 
 -- TODO replace portraits/images
 local npc_portrait   = "minerva_terminal.png"
-local npc_image      = "minerva_terminal.png"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 local gauntletsys = system.get("Crimson Gauntlet")

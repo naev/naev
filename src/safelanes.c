@@ -37,23 +37,24 @@
 #include "safelanes.h"
 
 #include "array.h"
+#include "conf.h"
 #include "log.h"
 #include "union_find.h"
 
 /*
  * Global parameters.
  */
-static const double ALPHA                  = 9.;       /**< Lane efficiency parameter. */
-static const double LAMBDA                 = 2e10;     /**< Regularization term for score. */
-static const double JUMP_CONDUCTIVITY      = 0.001;    /**< Conductivity value for inter-system jump-point connections. */
-static const double MIN_ANGLE              = M_PI/18.; /**< Path triangles can't be more acute. */
+static const double ALPHA            = 9.;       /**< Lane efficiency parameter. */
+static const double LAMBDA           = 2e10;     /**< Regularization term for score. */
+static const double JUMP_CONDUCTIVITY= 0.001;    /**< Conductivity value for inter-system jump-point connections. */
+static const double MIN_ANGLE        = M_PI/18.; /**< Path triangles can't be more acute. */
 enum {
-   STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   STORAGE_MODE_UNSYMMETRIC           = 0,             /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
-   STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   SORTED                             = 1,             /**< a named bool */
-   PACKED                             = 1,             /**< a named bool */
-   MODE_NUMERICAL                     = 1,             /**< yet another CHOLMOD magic number! */
+   STORAGE_MODE_LOWER_TRIANGULAR_PART= -1,       /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   STORAGE_MODE_UNSYMMETRIC          = 0,        /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
+   STORAGE_MODE_UPPER_TRIANGULAR_PART= +1,       /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   SORTED                            = 1,        /**< a named bool */
+   PACKED                            = 1,        /**< a named bool */
+   MODE_NUMERICAL                    = 1,        /**< yet another CHOLMOD magic number! */
 };
 
 /*
@@ -251,7 +252,8 @@ void safelanes_recalculate (void)
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
-   DEBUG( n_("Charted safe lanes for %d object in %.3f s.", "Charted safe lanes for %d objects in %.3f s.", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
+   if (conf.devmode)
+      DEBUG( n_("Charted safe lanes for %d object in %.3f s.", "Charted safe lanes for %d objects in %.3f s.", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
 }
 
 /**

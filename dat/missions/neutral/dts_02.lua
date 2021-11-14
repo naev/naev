@@ -260,7 +260,6 @@ end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-      mem.enter_vect = player.pos()
       hook.timer(1.0, "congratulations")
 end
 

@@ -11,6 +11,7 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
+      money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
    }
 end
@@ -23,13 +24,18 @@ function lmisn.sfxVictory ()
 end
 
 function lmisn.sfxMoney ()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.money:clone()
+   sfx:play()
 end
 
 
 function lmisn.getLandablePlanets( sys, fct, fctmatch )
    sys = sys or system.cur()
+   fct = faction.get(fct)
    local pnt_candidates = {}
-   for k,p in ipairs(sys:planets()) do
+   for _k,p in ipairs(sys:planets()) do
       local s = p:services()
       if s.land and s.inhabited and not p:tags().restricted then
          if not fct then
@@ -141,9 +147,9 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    for i=1,max do
       local nopen = {}
       -- Get all the adjacent system of the current set
-      for j,s in ipairs(open) do
+      for _j,s in ipairs(open) do
          local adjsys = s:adjacentSystems( hidden ) -- Get them all
-         for k,a in ipairs(adjsys) do
+         for _k,a in ipairs(adjsys) do
             -- Must not have been explored previously
             if not a:tags().restricted and close[ a:nameRaw() ] == nil then
                nopen[ #nopen+1 ] = a
@@ -177,9 +183,9 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, h
    if #candidates == 0 then
       return pnts
    end
-   for k,s in ipairs(candidates) do
+   for _k,s in ipairs(candidates) do
       local lp = lmisn.getLandablePlanets( s, fct, samefct )
-      for i,p in ipairs(lp) do
+      for _i,p in ipairs(lp) do
          if not filter or filter( p, data ) then
             table.insert( pnts, p )
          end

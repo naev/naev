@@ -91,12 +91,11 @@ function __atk_f_flyby( target, dist )
          __atk_keep_distance()
          ai.accel()
       else
-         dir = ai.iface(target)
+         ai.iface(target)
       end
 
    -- Midrange
    elseif dist > (0.75 * range) then
-
       dir = ai.idir(target)
       --test if we're facing the target. If we are, keep approaching
       if dir <= 30 and dir > -30 then
@@ -114,7 +113,6 @@ function __atk_f_flyby( target, dist )
 
    --otherwise we're close to the target and should attack until we start to zip away
    else
-
       dir = ai.aim(target)
       --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
@@ -155,7 +153,7 @@ function __atk_f_space_sup( target, dist )
          __atk_keep_distance()
          ai.accel()
       else
-         dir = ai.iface(target)
+         ai.iface(target)
       end
 
    elseif dist > 0.8* range then

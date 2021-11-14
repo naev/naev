@@ -1,7 +1,6 @@
 local fmt = require "format"
 
 -- Basic behaviour for non-combat ships when in distress
-
 mem.shield_run = 100
 mem.armour_run = 100
 mem.defensive  = false

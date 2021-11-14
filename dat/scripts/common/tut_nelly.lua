@@ -8,7 +8,6 @@ local mt = require 'merge_tables'
 
 local tutnel = {}
 
--- TODO replace with real portrait
 tutnel.nelly = {
    portrait = "nelly.webp",
    image = "nelly.webp",

@@ -5,7 +5,7 @@ local svendetta   = ship.get("Vendetta")
 local spacifier   = ship.get("Pacifier")
 
 -- @brief Spawns a small fleet.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -26,7 +26,7 @@ end
 
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 

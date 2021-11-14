@@ -8,7 +8,7 @@ local staciturnity   = ship.get("Thurion Taciturnity")
 local scertitude     = ship.get("Thurion Certitude")
 
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -27,7 +27,7 @@ function spawn_patrol ()
 end
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -52,7 +52,7 @@ function spawn_squad ()
 end
 
 -- @brief Spawns a capship with escorts.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
 
    -- Generate the capship

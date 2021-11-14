@@ -12,7 +12,7 @@
 
 local fmt = require "format"
 
-local boarded, destroyed, shipDV, shipFLF, timerDV, timerFLF
+local boarded, shipDV, shipFLF, timerDV, timerFLF
 
 function create()
    local csys = system.cur()
@@ -69,7 +69,6 @@ function create()
    timerFLF = hook.timer(12.0, "broadcastFLF")
 
    boarded = false
-   destroyed = false
 
    -- Set a bunch of vars, for no real reason
    var.push("flfbase_sysname", "Sigur") -- Caution: if you change this, change the location for base Sindbad in unidiff.xml as well!
@@ -108,7 +107,6 @@ end
 
 function deathDV()
    hook.rm(timerDV)
-   destroyed = true
    if not shipFLF:exists() then
       evt.finish(true)
    end
@@ -129,7 +127,6 @@ end
 
 function deathFLF()
    hook.rm(timerFLF)
-   destroyed = true
    var.push("flfbase_flfshipkilled", true)
    if not shipDV:exists() then
       evt.finish(true)
@@ -137,9 +134,5 @@ function deathFLF()
 end
 
 function enter()
-   if boarded == true then
-      evt.finish(true)
-   else
-      evt.finish(false)
-   end
+   evt.finish(boarded)
 end

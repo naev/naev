@@ -162,16 +162,17 @@ end
 function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
+   local name = _("Invader")
 
-   attackers = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system) -- Give them Dvaered equipment
-   attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
-   attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
-   attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
-   attackers[2*n+4] = pilot.add("Rhino", "Dvaered", source_system) --some transport ships
-   attackers[2*n+5] = pilot.add("Rhino", "Dvaered", source_system)
-   attackers[2*n+6] = pilot.add("Rhino", "Dvaered", source_system)
-   attackers[2*n+7] = pilot.add("Rhino", "Dvaered", source_system)
-   local goda       = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
+   attackers = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system, name) -- Give them Dvaered equipment
+   attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
+   attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
+   attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system, name )
+   attackers[2*n+4] = pilot.add("Rhino", "Dvaered", source_system, name) --some transport ships
+   attackers[2*n+5] = pilot.add("Rhino", "Dvaered", source_system, name)
+   attackers[2*n+6] = pilot.add("Rhino", "Dvaered", source_system, name)
+   attackers[2*n+7] = pilot.add("Rhino", "Dvaered", source_system, name)
+   local goda       = pilot.add( "Dvaered Goddard", "Dvaered", source_system, name )
    attackers[2*n+8] = goda
 
    -- The transport ships tend to run away
@@ -188,11 +189,7 @@ function attack ()
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
    local form = formation.random_key()
 
-   -- I use Thugs and Associates based factions because they won't interact with anybody
-   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
-
    for i, j in ipairs(attackers) do
-      j:rename("Invader")
       j:setFaction("Invaders")
       j:memory().formation = form
       j:memory().aggressive = false
@@ -219,23 +216,25 @@ end
 function defense ()
    defAttHook = {}
    local n = rnd.rnd(3,6)
+   local name = _("Local Warlord's Force")
 
-   defenders = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_planet)
-   defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
-   defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
-   defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet )
-   local godd       = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
+   defenders = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_planet, name)
+   defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
+   defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
+   defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet, name )
+   local godd       = pilot.add( "Dvaered Goddard", "Dvaered", source_planet, name )
    defenders[2*n+4] = godd
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
    local form = formation.random_key()
 
+   -- I use Thugs and Associates based factions because they won't interact with anybody
+   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
    local f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
    faction.dynEnemy (f1, f2)
    faction.dynEnemy (f2, f1)
 
    for i, j in ipairs(defenders) do
-      j:rename("Local Warlord's Force")
       j:setFaction("Locals")
       j:memory().formation = form
       j:memory().aggressive = false

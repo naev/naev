@@ -29,6 +29,9 @@
 --]]
 local fmt = require "format"
 
+-- Common utility functions, defined below.
+local land_civilian, land_military
+
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
    return land_civilian(pnt, 0, -30)

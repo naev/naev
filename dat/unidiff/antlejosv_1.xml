@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="antlejosv_1">
+ <asset name="Antlejos V">
+  <description>A cold and barren inhospitable moon devoid of all life except for a small base camp for terraforming the entire planet.</description>
+  <service_add>refuel</service_add>
+ </asset>
+</unidiff>

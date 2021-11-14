@@ -23,6 +23,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_time.h"
+#include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "mission.h"
@@ -171,13 +172,6 @@ static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
 {
    int ret;
-   const Ship *sh;
-   ntime_t t;
-   LuaJump *lj;
-   Commodity *com;
-   const Outfit *o;
-   Planet *pnt;
-   StarSystem *ss, *dest;
    char buf[32]; /* Buffer large enough for a formatted i64 (base 10). */
    const char *name, *str, *data;
    int keynum;
@@ -265,7 +259,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
       /* User data must be handled here. */
       case LUA_TUSERDATA:
          if (lua_isplanet(L,-1)) {
-            pnt = planet_getIndex( lua_toplanet(L,-1) );
+            Planet *pnt = planet_getIndex( lua_toplanet(L,-1) );
             if (pnt != NULL)
                nxml_saveData( writer, PLANET_METATABLE, name, name_len, pnt->name, keynum );
             else
@@ -274,7 +268,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             break;
          }
          else if (lua_issystem(L,-1)) {
-            ss = system_getIndex( lua_tosystem(L,-1) );
+            StarSystem *ss = system_getIndex( lua_tosystem(L,-1) );
             if (ss != NULL)
                nxml_saveData( writer, SYSTEM_METATABLE, name, name_len, ss->name, keynum );
             else
@@ -294,7 +288,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             break;
          }
          else if (lua_isship(L,-1)) {
-            sh = lua_toship(L,-1);
+            const Ship *sh = lua_toship(L,-1);
             str = sh->name;
             if (str == NULL)
                break;
@@ -303,34 +297,47 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             break;
          }
          else if (lua_istime(L,-1)) {
-            t = *lua_totime(L,-1);
+            ntime_t t = *lua_totime(L,-1);
             snprintf( buf, sizeof(buf), "%"PRId64, t );
             nxml_saveData( writer, TIME_METATABLE, name, name_len, buf, keynum );
             /* key, value */
             break;
          }
          else if (lua_isjump(L,-1)) {
-            lj = lua_tojump(L,-1);
-            ss = system_getIndex( lj->srcid );
-            dest = system_getIndex( lj->destid );
+            LuaJump *lj = lua_tojump(L,-1);
+            StarSystem *ss = system_getIndex( lj->srcid );
+            StarSystem *dest = system_getIndex( lj->destid );
             if ((ss == NULL) || (dest == NULL))
                WARN(_("Failed to save invalid jump."));
             else
                nxml_saveJump( writer, name, name_len, ss->name, dest->name );
          }
          else if (lua_iscommodity(L,-1)) {
-            com = lua_tocommodity(L,-1);
+            Commodity *com = lua_tocommodity(L,-1);
             if( nxml_saveCommodity( writer, name, name_len, com ) != 0)
                WARN( _("Failed to save invalid commodity.") );
             /* key, value */
             break;
          }
          else if (lua_isoutfit(L,-1)) {
-            o = lua_tooutfit(L,-1);
+            const Outfit *o = lua_tooutfit(L,-1);
             str = o->name;
             if (str == NULL)
                break;
             nxml_saveData( writer, OUTFIT_METATABLE, name, name_len, str, keynum );
+            /* key, value */
+            break;
+         }
+         else if (lua_isvector(L,-1)) {
+            Vector2d *vec = lua_tovector( L, -1 );
+            xmlw_startElem( writer, "data" );
+            xmlw_attr( writer, "type", VECTOR_METATABLE );
+            nxml_saveNameAttribute( writer, name, name_len );
+            xmlw_attr( writer, "x", "%.16e", vec->x );
+            xmlw_attr( writer, "y", "%.16e", vec->y );
+            xmlw_attr( writer, "mod", "%.16e", vec->mod );
+            xmlw_attr( writer, "angle", "%.16e", vec->angle );
+            xmlw_endElem( writer );
             /* key, value */
             break;
          }
@@ -385,9 +392,6 @@ int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
  */
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
-   LuaJump lj;
-   Planet *pnt;
-   StarSystem *ss, *dest;
    xmlNodePtr node;
    char *name, *type, *buf, *num, *data;
    size_t len;
@@ -436,7 +440,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             free( data );
          }
          else if (strcmp(type,PLANET_METATABLE)==0) {
-            pnt = planet_get(xml_get(node));
+            Planet *pnt = planet_get(xml_get(node));
             if (pnt != NULL) {
                lua_pushplanet(L,planet_index(pnt));
             }
@@ -444,7 +448,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
                WARN(_("Failed to load nonexistent planet '%s'"), xml_get(node));
          }
          else if (strcmp(type,SYSTEM_METATABLE)==0) {
-            ss = system_get(xml_get(node));
+            StarSystem *ss = system_get(xml_get(node));
             if (ss != NULL)
                lua_pushsystem(L,system_index( ss ));
             else
@@ -459,12 +463,11 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushtime(L,xml_getLong(node));
          }
          else if (strcmp(type,JUMP_METATABLE)==0) {
-            ss = system_get(xml_get(node));
+            StarSystem *ss = system_get(xml_get(node));
             xmlr_attr_strd(node,"dest",buf);
-            dest = system_get( buf );
+            StarSystem *dest = system_get( buf );
             if ((ss != NULL) && (dest != NULL)) {
-               lj.srcid = ss->id;
-               lj.destid = dest->id;
+               LuaJump lj = {.srcid = ss->id, .destid = dest->id};
                lua_pushjump(L,lj);
             }
             else
@@ -475,11 +478,17 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushcommodity(L, nxml_loadCommodity( node ) );
          else if (strcmp(type,OUTFIT_METATABLE)==0)
             lua_pushoutfit(L,outfit_get(xml_get(node)));
+         else if (strcmp(type, VECTOR_METATABLE)==0) {
+            Vector2d vec;
+            xmlr_attr_float( node, "x", vec.x );
+            xmlr_attr_float( node, "y", vec.y );
+            xmlr_attr_float( node, "mod", vec.mod );
+            xmlr_attr_float( node, "angle", vec.angle );
+            lua_pushvector( L, vec );
+         }
          else {
-            /* There are a few types knowingly left out above.
-             * Meaningless (?): PILOT_METATABLE.
-             * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
-             * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
+            /* There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:
+             * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
              * */
             WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);

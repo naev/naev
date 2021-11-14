@@ -459,11 +459,12 @@ local function controlFleet( fleetCur, pos, off )
     for i, j in ipairs( fleetCur ) do
         if j:exists() then
             local basedist = vec2.dist(j:pos(), base:pos())
+	    local nearest
 
             -- Get closest hostile
             local distance = 2500
             if fleetFLF ~= nil and #fleetFLF > 0 then
-                local nearest = nil
+                nearest = nil
                 -- Should all exist as we've pruned before
                 for k, v in ipairs(fleetFLF) do
                     local distanceCur = vec2.dist(j:pos(), v:pos())

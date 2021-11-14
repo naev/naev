@@ -27,7 +27,7 @@ function create ()
 
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position
-   mem.guarddodist   = 4000  + 1000 * ps:size()
+   mem.guarddodist   = 4000 + 1000 * ps:size()
    mem.guardreturndist = mem.guarddodist + 5000
    mem.enemyclose    = mem.guarddodist
 

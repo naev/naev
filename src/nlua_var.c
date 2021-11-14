@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_var.c
  *
  * @brief Lua Variable module.
  */
-
-
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
@@ -26,15 +23,15 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "nxml.h"
-
-
+#include "nlua_time.h"
 
 /* similar to Lua vars, but with less variety */
 enum {
    MISN_VAR_NIL, /**< Nil type. */
    MISN_VAR_NUM, /**< Number type. */
-   MISN_VAR_BOOL, /**< Boolean type. */
+   MISN_VAR_BOOL,/**< Boolean type. */
    MISN_VAR_STR, /**< String type. */
+   MISN_VAR_TIME,/**< Time type. */
 };
 
 /**
@@ -49,15 +46,14 @@ typedef struct misn_var_ {
       double num; /**< Used if type is number. */
       char* str; /**< Used if type is string. */
       int b; /**< Used if type is boolean. */
+      ntime_t time;
    } d; /**< Variable data. */
 } misn_var;
-
 
 /*
  * variable stack
  */
 static misn_var* var_stack = NULL; /**< Stack of mission variables. */
-
 
 /*
  * prototypes
@@ -71,7 +67,6 @@ static void var_free( misn_var* var );
 int var_save( xmlTextWriterPtr writer );
 int var_load( xmlNodePtr parent );
 
-
 /* var */
 static int varL_peek( lua_State *L );
 static int varL_pop( lua_State *L );
@@ -82,7 +77,6 @@ static const luaL_Reg var_methods[] = {
    { "push", varL_push },
    {0,0}
 }; /**< Mission variable Lua methods. */
-
 
 /**
  * @brief Loads the mission variable Lua library.
@@ -95,7 +89,6 @@ int nlua_loadVar( nlua_env env )
    return 0;
 }
 
-
 static int var_cmp( const void *p1, const void *p2 )
 {
    const misn_var *mv1, *mv2;
@@ -103,7 +96,6 @@ static int var_cmp( const void *p1, const void *p2 )
    mv2 = (const misn_var*) p2;
    return strcmp(mv1->name,mv2->name);
 }
-
 
 /**
  * @brief Gets a mission var by name.
@@ -116,7 +108,6 @@ static misn_var *var_get( const char *str )
    return bsearch( &mv, var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 }
 
-
 /**
  * @brief Saves the mission variables.
  *
@@ -125,11 +116,9 @@ static misn_var *var_get( const char *str )
  */
 int var_save( xmlTextWriterPtr writer )
 {
-   int i;
-
    xmlw_startElem(writer,"vars");
 
-   for (i=0; i<array_size(var_stack); i++) {
+   for (int i=0; i<array_size(var_stack); i++) {
       xmlw_startElem(writer,"var");
 
       xmlw_attr(writer,"name","%s",var_stack[i].name);
@@ -150,6 +139,10 @@ int var_save( xmlTextWriterPtr writer )
             xmlw_attr(writer,"type","str");
             xmlw_str(writer,"%s",var_stack[i].d.str);
             break;
+         case MISN_VAR_TIME:
+            xmlw_attr(writer,"type","time");
+            xmlw_str(writer,TIME_PRI,var_stack[i].d.time);
+            break;
       }
       xmlw_endElem(writer); /* "var" */
    }
@@ -157,7 +150,6 @@ int var_save( xmlTextWriterPtr writer )
 
    return 0;
 }
-
 
 /**
  * @brief Loads the vars from XML file.
@@ -167,20 +159,18 @@ int var_save( xmlTextWriterPtr writer )
  */
 int var_load( xmlNodePtr parent )
 {
-   char *str;
-   xmlNodePtr node, cur;
-   misn_var var;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    var_cleanup();
 
-   node = parent->xmlChildrenNode;
-
    do {
       if (xml_isNode(node,"vars")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
 
          do {
             if (xml_isNode(cur,"var")) {
+               misn_var var;
+               char *str;
                xmlr_attr_strd(cur,"name",var.name);
                xmlr_attr_strd(cur,"type",str);
                if (strcmp(str,"nil")==0)
@@ -197,6 +187,10 @@ int var_load( xmlNodePtr parent )
                   var.type = MISN_VAR_STR;
                   var.d.str = xml_getStrd(cur);
                }
+               else if (strcmp(str,"time")==0) {
+                  var.type = MISN_VAR_TIME;
+                  var.d.time = xml_getLong(cur);
+               }
                else { /* super error checking */
                   WARN(_("Unknown var type '%s'"), str);
                   free(var.name);
@@ -212,7 +206,6 @@ int var_load( xmlNodePtr parent )
 
    return 0;
 }
-
 
 /**
  * @brief Adds a var to the stack, strings will be SHARED, don't free.
@@ -246,7 +239,6 @@ static int var_add( misn_var *new_var, int sort )
 
    return 0;
 }
-
 
 /**
  * @brief Mission variable Lua bindings.
@@ -306,6 +298,9 @@ static int varL_peek( lua_State *L )
       case MISN_VAR_STR:
          lua_pushstring(L,mv->d.str);
          break;
+      case MISN_VAR_TIME:
+         lua_pushtime(L,mv->d.time);
+         break;
    }
    return 1;
 }
@@ -348,6 +343,10 @@ static int varL_push( lua_State *L )
    /* store appropriate data */
    if (lua_isnil(L,2))
       var.type = MISN_VAR_NIL;
+   else if (lua_istime(L,2)) {
+      var.type = MISN_VAR_TIME;
+      var.d.time = luaL_validtime(L,2);
+   }
    else if (lua_isnumber(L,2)) {
       var.type = MISN_VAR_NUM;
       var.d.num = (double) lua_tonumber(L,2);
@@ -385,6 +384,7 @@ static void var_free( misn_var* var )
       case MISN_VAR_NIL:
       case MISN_VAR_NUM:
       case MISN_VAR_BOOL:
+      case MISN_VAR_TIME:
          break;
    }
    free(var->name);
@@ -395,12 +395,9 @@ static void var_free( misn_var* var )
  */
 void var_cleanup (void)
 {
-   int i;
-
-   for (i=0; i<array_size(var_stack); i++)
+   for (int i=0; i<array_size(var_stack); i++)
       var_free( &var_stack[i] );
 
    array_free( var_stack );
    var_stack   = NULL;
 }
-

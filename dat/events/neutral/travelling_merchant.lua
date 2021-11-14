@@ -16,7 +16,7 @@ Spawns a travelling merchant that can sell the player if interested.
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 
-local p, broadcastid, hailed_player, timerdelay, boardhook, hailhook, timer -- Non-persistent state
+local p, broadcastid, hailed_player, timerdelay -- Non-persistent state
 
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
@@ -71,10 +71,10 @@ function create ()
    timerdelay = 5.0
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
-   timer = hook.timer( timerdelay, "broadcast" )
+   hook.timer( timerdelay, "broadcast" )
    hailed_player = false
-   hailhook = hook.pilot( p, "hail", "hail" )
-   boardhook = hook.pilot( p, "board", "board" )
+   hook.pilot( p, "hail", "hail" )
+   hook.pilot( p, "board", "board" )
 
    hook.jumpout("leave")
    hook.land("leave")
@@ -96,7 +96,7 @@ function broadcast ()
    p:broadcast( broadcastmsg[broadcastid], true )
    broadcastid = broadcastid+1
    timerdelay = timerdelay * 2
-   timer = hook.timer( timerdelay, "broadcast" )
+   hook.timer( timerdelay, "broadcast" )
 
    if not hailed_player and not var.peek('travelling_trader_hailed') then
       p:hailPlayer()

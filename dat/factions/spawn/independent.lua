@@ -25,7 +25,7 @@ local function _advert( p )
    p:intrinsicSet( "ew_evade", -75 )
 end
 
-function spawn_advert ()
+local function spawn_advert ()
    local pilots = {}
    local civships = {
       sschroedinger,
@@ -40,7 +40,7 @@ end
 
 
 -- @brief Spawns a small patrol fleet.
-function spawn_solitary_civilians ()
+local function spawn_solitary_civilians ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -59,7 +59,7 @@ function spawn_solitary_civilians ()
    return pilots
 end
 
-function spawn_bounty_hunter( shiplist )
+local function spawn_bounty_hunter( shiplist )
    local pilots = {}
    local params = {name=_("Bounty Hunter"), ai="mercenary"}
    local shp    = shiplist[ rnd.rnd(1,#shiplist) ]
@@ -67,7 +67,7 @@ function spawn_bounty_hunter( shiplist )
    return pilots
 end
 
-function spawn_bounty_hunter_sml ()
+local function spawn_bounty_hunter_sml ()
    return spawn_bounty_hunter{
       shyena,
       sshark,
@@ -76,7 +76,7 @@ function spawn_bounty_hunter_sml ()
       sancestor,
    }
 end
-function spawn_bounty_hunter_med ()
+local function spawn_bounty_hunter_med ()
    return spawn_bounty_hunter{
       sadmonisher,
       sphalanx,
@@ -85,7 +85,7 @@ function spawn_bounty_hunter_med ()
       spacifier,
    }
 end
-function spawn_bounty_hunter_lrg ()
+local function spawn_bounty_hunter_lrg ()
    return spawn_bounty_hunter{
       skestrel,
       shawking,
