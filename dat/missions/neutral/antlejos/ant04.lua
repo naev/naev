@@ -118,7 +118,7 @@ function land ()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
-      vn.na(fmt.f(_([[You land your planet after all the commotion going on outside, and find Verner waiting for you. His gang unloads the {cargo} while he talks to you.]])
+      vn.na(fmt.f(_([[You land your planet after all the commotion going on outside, and find Verner waiting for you. His gang unloads the {cargo} while he talks to you.]]),
          {cargo=cargo_name}))
       v(_([["I see you met them. They are part of the #oPilots United Against Atmosphere Anthropocentrism#0 or #oPUAAA#0 for short. What they are is a bunch of assholes that reject progress and terraforming barren moons like this one into places suitable for human living."]]))
       v(_([["They must have noticed when the paperwork I filed at the Empire for terraforming permission was made public. I thought we would have had a lot more time before they started messing things up. Looks like we'll have to be careful from now on as they'll only get more aggressive as they see our wonderful progress."]]))
@@ -182,7 +182,7 @@ function protest ()
       return
    end
 
-   local p = plts[ rnd.rnd(1,#plts)
+   local p = plts[ rnd.rnd(1,#plts) ]
    if not attacked and p:inrange( player.pilot() ) then
       attacked = true
       for _k,p in ipairs(plts) do
