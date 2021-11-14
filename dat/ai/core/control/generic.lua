@@ -322,9 +322,7 @@ function control_attack( si )
    end
 
    -- Handle distress
-   if mem.distress then
-      gen_distress()
-   end
+   gen_distress()
 end
 
 -- Required "control" function
@@ -791,6 +789,8 @@ end
 
 -- Handles generating distress messages
 function gen_distress ( _target )
+   if not mem.distress then return end
+
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
       return
