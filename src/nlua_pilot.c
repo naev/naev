@@ -4327,7 +4327,6 @@ static int pilotL_land( lua_State *L )
    Pilot *p;
    Task *t;
    Planet *pnt;
-   int i;
    int shoot;
 
    NLUA_CHECKRW(L);
@@ -4347,6 +4346,7 @@ static int pilotL_land( lua_State *L )
       t = pilotL_newtask( L, p, "land" );
 
    if (pnt != NULL) {
+      int i;
       /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {
          if (cur_system->planets[i] == pnt) {
