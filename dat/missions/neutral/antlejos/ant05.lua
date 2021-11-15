@@ -132,11 +132,10 @@ local protestors, supplyships
 local function add_protestor( shipname, fromrear )
    -- They will just go to Antlejos V and attack any hostiles on their way, including the player.
    local ent = (fromrear and rearpoint) or entrypoint
-   local p = pilot.add( shipname, puaaa, ent, _("Protestor"), {ai="guard"} )
+   local p = pilot.add( shipname, puaaa, ent, _("Protestor"), {ai="baddiepos"} )
    p:setHostile()
    local m = p:memory()
    m.guardpos = mainpnt:pos()
-   m.guarddodist = math.huge
    table.insert( protestors, p )
 end
 
