@@ -3,7 +3,7 @@
 <event name="Warlords Battle">
  <trigger>enter</trigger>
  <chance>5</chance>
- <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
+ <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords Battle")</cond>
  <flags>
  </flags>
  <notes>

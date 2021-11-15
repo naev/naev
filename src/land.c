@@ -112,6 +112,7 @@ static void land_stranded (void);
  * prototypes
  */
 static void land_createMainTab( unsigned int wid );
+static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 /* spaceport bar */
@@ -900,44 +901,16 @@ unsigned int land_getWid( int window )
 }
 
 /**
- * @brief Recreates the land windows.
- *
- *    @param load Is loading game?
- *    @param changetab Should it change to the last open tab?
+ * @brief Sets up the tabs for the window.
  */
-void land_genWindows( int load, int changetab )
+static void land_setupTabs (void)
 {
    int j;
    const char *names[LAND_NUMWINDOWS];
-   int w, h;
-   Planet *p;
-   int regen;
 
-   /* Destroy old window if exists. */
-   if (land_wid > 0) {
-      land_regen = 2; /* Mark we're regenning. */
-      window_destroy(land_wid);
-
-      /* Mark tabs as not generated. */
-      land_generated = 0;
-   }
-   land_loaded = 0;
-
-   /* Get planet. */
-   p     = land_planet;
-   regen = landed;
-
-   /* Create window. */
-   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
-      w = -1; /* Fullscreen. */
-      h = -1;
-   }
-   else {
-      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
-      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
-   }
-   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
-   window_onClose( land_wid, land_cleanupWindow );
+   /* Destroy if exists. */
+   if (widget_exists( land_wid, "tabLand" ))
+      window_destroyWidget( land_wid, "tabLand" );
 
    /* Set window map to invalid. */
    for (int i=0; i<LAND_NUMWINDOWS; i++)
@@ -980,8 +953,51 @@ void land_genWindows( int load, int changetab )
       names[j++] = _("Commodity");
    }
 
-   /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names, 0 );
+}
+
+/**
+ * @brief Recreates the land windows.
+ *
+ *    @param load Is loading game?
+ *    @param changetab Should it change to the last open tab?
+ */
+void land_genWindows( int load, int changetab )
+{
+   int w, h;
+   Planet *p;
+   int regen;
+   unsigned int pntservices;
+
+   /* Destroy old window if exists. */
+   if (land_wid > 0) {
+      land_regen = 2; /* Mark we're regenning. */
+      window_destroy(land_wid);
+
+      /* Mark tabs as not generated. */
+      land_generated = 0;
+   }
+   land_loaded = 0;
+
+   /* Get planet. */
+   p     = land_planet;
+   regen = landed;
+   pntservices = p->services;
+
+   /* Create window. */
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
+      w = -1; /* Fullscreen. */
+      h = -1;
+   }
+   else {
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
+   }
+   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
+   window_onClose( land_wid, land_cleanupWindow );
+
+   /* Create tabbed window. */
+   land_setupTabs();
 
    /*
     * Order here is very important:
@@ -1007,6 +1023,10 @@ void land_genWindows( int load, int changetab )
       if (!load)
          hooks_run("land");
       events_trigger( EVENT_TRIGGER_LAND );
+
+      /* Make sure services didn't change or we have to do the tab window. */
+      if (land_planet->services != pntservices)
+         land_setupTabs();
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
