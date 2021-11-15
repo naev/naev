@@ -646,16 +646,20 @@ static int pilotL_add( lua_State *L )
       lj.srcid = jump->from->id;
       lj.destid = cur_system->id;
 
-      nlua_getenv( pplt->ai->env, AI_MEM );
-      lua_pushjump(L, lj);
-      lua_setfield(L,-2,"create_jump");
-      lua_pop(L,1);
+      if (pplt->ai != NULL) {
+         nlua_getenv( pplt->ai->env, AI_MEM );
+         lua_pushjump(L, lj);
+         lua_setfield(L,-2,"create_jump");
+         lua_pop(L,1);
+      }
    }
    else if (planet != NULL) {
-      nlua_getenv( pplt->ai->env, AI_MEM );
-      lua_pushplanet(L,planet->id);
-      lua_setfield(L,-2,"create_planet");
-      lua_pop(L,1);
+      if (pplt->ai != NULL) {
+         nlua_getenv( pplt->ai->env, AI_MEM );
+         lua_pushplanet(L,planet->id);
+         lua_setfield(L,-2,"create_planet");
+         lua_pop(L,1);
+      }
    }
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
