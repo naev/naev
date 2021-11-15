@@ -3,6 +3,8 @@
  <asset name="Antlejos V">
   <description>A heavily terraforming moon with a large sprawling base camp clearly visible from space. Despite the low gravity, there is a breathable atmosphere and a diversity of simple life forms such as fungus and lichens are colonizing the surface of the place. Faint sounds of heavy machinery operating under the surface can be heard from all around the moon. It doesn't seem like a great place to live at, but it has gone leaps and bounds from how the moon was when you first landed on it.</description>
   <bar>The Antlejos V cantina is fairly loud and crowded with terraforming workers, with the sound of heavy machinery near the moon core acting as background music. The bartender says he is working on developing a local brew, but you have no idea whether or not that is possible, nor if you even should brave to drink it if distilled.</bar>
+  <population>1000</population>
+  <faction>Independent</faction>
   <service_add>refuel</service_add>
   <service_add>bar</service_add>
   <exterior>uninhabited-rocky-cyan-04.webp</exterior>

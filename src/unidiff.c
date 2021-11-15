@@ -88,6 +88,8 @@ typedef enum UniHunkType_ {
    /* Target should be asset. */
    HUNK_TYPE_ASSET_FACTION,
    HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_ASSET_POPULATION,
+   HUNK_TYPE_ASSET_POPULATION_REMOVE, /* For internal usage. */
    HUNK_TYPE_ASSET_DESCRIPTION,
    HUNK_TYPE_ASSET_DESCRIPTION_REVERT, /* For internal usage. */
    HUNK_TYPE_ASSET_BAR,
@@ -558,6 +560,19 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"population")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_POPULATION;
+         hunk.u.data = xml_getUInt(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"description")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -822,6 +837,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] asset faction removal: '%s'"), target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_ASSET_POPULATION:
+               WARN(_("   [%s] asset population: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_POPULATION_REMOVE:
+               WARN(_("   [%s] asset population removal: '%s'"), target,
+                     fail->u.name );
+               break;
             case HUNK_TYPE_ASSET_DESCRIPTION:
                WARN(_("   [%s] asset description: '%s'"), target,
                      fail->u.name );
@@ -975,11 +998,37 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         hunk->o.name = faction_name( p->presence.faction );
+         if (p->presence.faction<0)
+            hunk->o.name = NULL;
+         else
+            hunk->o.name = faction_name( p->presence.faction );
          diff_universe_changed = 1;
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
-         return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         diff_universe_changed = 1;
+         if (hunk->o.name==NULL)
+            return planet_setFaction( p, -1 );
+         else
+            return planet_setFaction( p, faction_get(hunk->o.name) );
+
+      /* Changing asset population. */
+      case HUNK_TYPE_ASSET_POPULATION:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.data = p->population;
+         diff_universe_changed = 1;
+         p->population = hunk->u.data;
+         return 0;
+      case HUNK_TYPE_ASSET_POPULATION_REMOVE:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->population = hunk->o.data;
+         return 0;
 
       /* Changing asset description. */
       case HUNK_TYPE_ASSET_DESCRIPTION:
@@ -1273,6 +1322,10 @@ static int diff_removeDiff( UniDiff_t *diff )
 
          case HUNK_TYPE_ASSET_FACTION:
             hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
+            break;
+
+         case HUNK_TYPE_ASSET_POPULATION:
+            hunk.type = HUNK_TYPE_ASSET_POPULATION_REMOVE;
             break;
 
          case HUNK_TYPE_ASSET_DESCRIPTION:
