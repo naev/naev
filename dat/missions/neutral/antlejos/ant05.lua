@@ -162,7 +162,12 @@ function supplydeath ()
 end
 
 function enter ()
-   if mem.state~=2 and system.cur() ~= mainsys then
+   if mem.state==2 then
+      -- Nothing to do here
+      return
+   end
+   -- Wrong system
+   if system.cur() ~= mainsys then
       player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
       misn.finish(false)
       return
