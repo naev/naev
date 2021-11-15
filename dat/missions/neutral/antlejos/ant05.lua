@@ -122,7 +122,7 @@ function land ()
       ant.dateupdate()
       misn.finish(true)
    else
-      player.msg(_("#rMISSION FAILED: You were not supposed to guard the supply ships!"))
+      player.msg(_("#rMISSION FAILED: You were supposed to guard the supply ships!"))
       misn.finish(false)
    end
 end
@@ -142,7 +142,7 @@ end
 
 local function add_supplyship( shipname )
    local ent = (fromrear and rearpoint) or entrypoint
-   local p = pilot.add( shipname, fsup, ent, _("Supply Ship") )
+   local p = pilot.add( shipname, fsup, ent, _("Supply Ship"), {ai="independent"} )
    p:setFriendly()
    p:setVisplayer(true)
    p:setHilight(true)
@@ -163,7 +163,7 @@ function supplydeath ()
 end
 
 function enter ()
-   if mem.state==1 and system.cur() ~= returnsys then
+   if mem.state==1 and system.cur() ~= mainsys then
       player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
       misn.finish(false)
       return
@@ -254,6 +254,7 @@ function protest ()
    protestors = nprotestors
    if #protestors > 0 then
       -- Say some protest slogan
+      local p = protestors[ rnd.rnd(1,#protestors) ]
       p:broadcast( protest_lines[ protest_id ], true )
       protest_id = math.fmod(protest_id, #protest_lines)+1
    end
