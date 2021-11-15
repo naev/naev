@@ -2304,8 +2304,8 @@ static int aiL_land( lua_State *L )
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
    /* Check landability. */
-   if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-         (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
+   if (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
+         (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
             !planet_hasService(planet,PLANET_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
