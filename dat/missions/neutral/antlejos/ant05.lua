@@ -50,7 +50,7 @@ function create ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_("Verner is waiting for you as your ship tuoches gruond."))
+   vn.na(_("Verner is waiting for you as your ship touches ground."))
    v(fmt.f(_([["It seems like the PUAAA have started to get brave and are going to make things hard for us. I have some supply ships coming in from {sys}, and it looks like they will be facing hostilities before they get here. Would you be willing to guard through {cursys}? I would be able to pay you {creds} for your troubles."]]),
       {sys=nextsys, cursys=mainsys, creds=fmt.credits(reward)}))
    vn.menu{
