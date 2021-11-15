@@ -79,12 +79,12 @@ function create ()
    misn.setDesc(fmt.f(_("Defend the supply ships coming to {pnt} from the PUAAA."),{pnt=mainpnt}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate(_("Terraforming Antlejos V"), {
+      fmt.f(_("Go to the jump point from {sys} and wait for the supply ships"),{sys=nextsys}),
       _("Guard the supply ships from the PUAAA"),
       fmt.f(_("Return to {pnt}"),{pnt=mainpnt}),
    })
    mem.mrk = misn.markerAdd( mainsys )
-   sysmrk = system.mrkAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
-   mem.state = 1
+   mem.state = 0
 
    hook.land( "land" )
    hook.enter( "enter" )
@@ -163,7 +163,7 @@ function supplydeath ()
 end
 
 function enter ()
-   if mem.state==1 and system.cur() ~= mainsys then
+   if mem.state~=2 and system.cur() ~= mainsys then
       player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
       misn.finish(false)
       return
@@ -171,6 +171,20 @@ function enter ()
 
    pilot.clear()
    pilot.toggleSpawn(false)
+
+   sysmrk = system.mrkAdd( entrypoint:pos(), _("Supply Ship Entry Point") )
+   hook.timer( "3", "approaching" )
+end
+
+function approaching ()
+   if player.pos():dist( entrypoint:pos() ) > 3000 then
+      hook.timer( "3", "approaching" )
+      return
+   end
+
+   mem.state = 1
+   misn.osdActive(2)
+   player.msg(_("The supply ships will be incoming shortly!"))
 
    -- Initialize ship stuff
    protestors = {}
@@ -183,16 +197,16 @@ function enter ()
    supplydied = 0
 
    hook.timer( 10, "supply1" )
-   hook.timer( 25, "supply2" )
-   hook.timer( 50, "supply3" )
-   hook.timer( 80, "supply4" )
-   hook.timer( 100, "supply5" )
-   hook.timer( 100, "heartbeat")
+   hook.timer( 40, "supply2" )
+   hook.timer( 90, "supply3" )
+   hook.timer( 150, "supply4" )
+   hook.timer( 170, "supply5" )
+   hook.timer( 170, "heartbeat")
 
-   hook.timer( 15, "protestor1" )
-   hook.timer( 30, "protestor2" )
-   hook.timer( 60, "protestor3" )
-   hook.timer( 100, "protestor4" )
+   hook.timer( 20, "protestor1" )
+   hook.timer( 60, "protestor2" )
+   hook.timer( 120, "protestor3" )
+   hook.timer( 190, "protestor4" )
 
    hook.timer( 25, "protest" )
 end
@@ -215,6 +229,7 @@ function supply5 ()
    add_supplyship( "Koala" )
    add_supplyship( "Koala" )
    player.msg("The last supply ships have entered the system!")
+   system.mrkRm( sysmrk )
 end
 
 function protestor1 ()
@@ -228,8 +243,6 @@ end
 function protestor3 ()
    add_protestor( "Shark" )
    add_protestor( "Hyena" )
-   add_protestor( "Hyena", true )
-   add_protestor( "Hyena", true )
 end
 function protestor4 ()
    add_protestor( "Lancelot" )
@@ -274,15 +287,14 @@ function heartbeat ()
       hook.timer( 3, "heartbeat" )
       return
    end
-     
+
    if supplylanded <= 0 then
       player.msg(_("#rMISSION FAILED: No supply ships made it through!"))
       misn.finish(false)
    end
 
    -- Tell the player to land
-   misn.osdActive(2)
+   misn.osdActive(3)
    mem.state = 2
    mem.mrk = misn.markerMove( mem.mrk, mainpnt )
-   system.mrkRm( sysmrk )
 end
