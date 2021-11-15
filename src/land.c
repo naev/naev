@@ -900,6 +900,9 @@ unsigned int land_getWid( int window )
    return land_windows[ land_windowsMap[window] ];
 }
 
+/**
+ * @brief Sets up the tabs for the window.
+ */
 static void land_setupTabs (void)
 {
    int j;
