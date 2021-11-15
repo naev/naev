@@ -65,6 +65,15 @@ function antlejos.puaaa ()
    return faction.dynAdd( nil, "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
 end
 
+antlejos.protest_lines = {
+   _("No to terraforming!"),
+   _("Leave the planets alone!"),
+   _("The Universe is beautiful as it is!"),
+   _("No modifying atmospheres!"),
+   _("Keep our planets safe!"),
+   _("No to destroying planets!"),
+}
+
 antlejos.rewards = {
    ant01 = 200e3,
    ant02 = 350e3,

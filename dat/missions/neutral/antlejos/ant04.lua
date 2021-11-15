@@ -159,14 +159,7 @@ function enter ()
    hook.timer( 10, "protest" )
 end
 
-local protest_lines = {
-   _("No to terraforming!"),
-   _("Leave the planets alone!"),
-   _("The Universe is beautiful as it is!"),
-   _("No modifying atmospheres!"),
-   _("Keep our planets safe!"),
-   _("No to destroying planets!"),
-}
+local protest_lines = ant.protest_lines
 local protest_id, attacked
 function protest ()
    if protest_id == nil then
