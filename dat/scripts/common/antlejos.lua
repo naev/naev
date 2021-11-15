@@ -62,7 +62,7 @@ function antlejos.puaaa ()
    if f then
       return f
    end
-   return faction.dynAdd( nil, "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
+   return faction.dynAdd( nil, "puaaa", _("PUAAA") )
 end
 
 antlejos.protest_lines = {
@@ -73,6 +73,15 @@ antlejos.protest_lines = {
    _("Keep our planets safe!"),
    _("No to destroying planets!"),
 }
+
+function antlejos.supplied_total ()
+   return var.peek( "antlejos_supplied" ) or 0
+end
+
+function antlejos.supplied( amount )
+   local n = antlejos.supplied_total()
+   var.push( "antlejos_supplied", n+amount )
+end
 
 antlejos.rewards = {
    ant01 = 200e3,

@@ -101,7 +101,7 @@ function land ()
       vn.transition()
       if supplydied <= 0 then
          v(_([["That was incredible! All the ships made it through in one piece. You're a real life saver!"]]))
-      else if supplydied < 3 then
+      elseif supplydied < 3 then
          v(_([["Almost all the ships made it! Against those odds I think we did very good."]]))
       else
          v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take more than I was hoping for."]]))
