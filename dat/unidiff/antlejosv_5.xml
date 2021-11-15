@@ -7,6 +7,7 @@
   <faction>Independent</faction>
   <service_add>refuel</service_add>
   <service_add>bar</service_add>
+  <service_add>inhabited</service_add>
   <exterior>uninhabited-rocky-cyan-04.webp</exterior>
  </asset>
 </unidiff>
