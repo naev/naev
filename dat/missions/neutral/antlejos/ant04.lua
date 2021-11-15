@@ -38,6 +38,9 @@ local returnpnt, returnsys = planet.getS("Antlejos V")
 function create ()
    if ant.datecheck() then misn.finish() end
 
+   -- We claim Antlejos V
+   if not misn.claim(returnsys) then misn.finish() end
+
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Soromid", true, function( _p )
       -- TODO only look for agriculture Soromid planets
       --return p.tags().agriculture
@@ -183,7 +186,8 @@ function protest ()
    end
 
    local p = plts[ rnd.rnd(1,#plts) ]
-   if not attacked and p:inrange( player.pilot() ) then
+   local pp = player.pilot()
+   if not attacked and p:inrange(pp) and p:pos():dist(pp:pos()) < p:memory().guarddodist then
       attacked = true
       for _k, pk in ipairs(plts) do
          pk:setHostile()
