@@ -1866,7 +1866,7 @@ static void faction_computeGrid (void)
    }
    n = faction_mgrid;
    memset( faction_grid, 0, n*n*sizeof(int) );
-   for (size_t i=0; i<n; i++) {
+   for (size_t i=0; i<array_size(faction_stack); i++) {
       Faction *fa = &faction_stack[i];
       for (int k=0; k<array_size(fa->allies); k++) {
          int j = fa->allies[k];
