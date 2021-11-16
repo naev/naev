@@ -1,7 +1,7 @@
 --[[
    Some sort of stellar wind type background.
 --]]
-local bgshaders = require "bkg.bgshaders"
+local bgshaders = require "bkg.lib.bgshaders"
 local love_shaders = require 'love_shaders'
 local graphics = require "love.graphics"
 local lf = require 'love.filesystem'
