@@ -97,7 +97,7 @@ function starfield.init( params )
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = naev.conf().nebu_scale * 0.5
+   sf = math.max( 1.0, naev.conf().nebu_scale * 0.5 )
 
    -- Per system parameters
    prng:setSeed( system.cur():nameRaw() )
