@@ -40,7 +40,7 @@ end
 --]]
 function __atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
-   local dir
+   local aimdir, dir
    local shoot = false
    ai.weapset( mem.weapset )
 
