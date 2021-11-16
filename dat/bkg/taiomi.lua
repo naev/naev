@@ -147,6 +147,7 @@ function background ()
       local w = 2048
       local h = 2048
       local cvs = lg.newCanvas( w, h, {dpiscale=1} )
+      local oldcanvas = lg.getCanvas()
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
       lg.setColor( g, g, g, 1 )
@@ -160,7 +161,7 @@ function background ()
          p.y = h*(y+3) / 6
          lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
       end
-      lg.setCanvas()
+      lg.setCanvas(oldcanvas)
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
 
       -- Store in cache
