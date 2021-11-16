@@ -8,10 +8,32 @@
 uniform vec2 u_resolution;
 uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
 uniform sampler2D u_prevtex;
-const vec2 R      = vec2( %f, %f );
-const float THETA = %f;
-const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
-const mat2 IROT   = inverse(ROT);
+const vec3 R      = vec3( %f, %f, 1.0);
+const float theta = %f;
+const float cx = cos(theta);
+const float sx = sin(theta);
+const mat3 Rx = mat3(
+   1.0, 0.0, 0.0,
+   0.0,  cx,  sx,
+   0.0, -sx,  cx
+);
+const float phi = %f;
+const float cy = cos(phi);
+const float sy = sin(phi);
+const mat3 Ry = mat3(
+    cy, 0.0, -sy,
+   0.0, 1.0, 0.0,
+    sy, 0.0,  cy
+);
+const float psi = %f;
+const float cz = cos(psi);
+const float sz = sin(psi);
+const mat3 Rz = mat3(
+    cz,  sz, 0.0,
+   -sz,  cz, 0.0,
+   0.0, 0.0, 1.0
+);
+const mat3 ROT = Rx * Ry * Rz;
 
 const int ITERATIONS = 17;
 const int VOLSTEPS   = 8;
@@ -23,9 +45,9 @@ const float DISTFADING= 0.6800;
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = ROT*((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w) + R;
-   vec3 dir = vec3(uv, 1.0);
-   vec3 cam = vec3(1.0) + vec3(ROT*u_camera.xy, u_camera.z);
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w;
+   vec3 dir = ROT*vec3(uv, 1.0) + R;
+   vec3 cam = vec3(1.0) + ROT*u_camera.xyz;
 
    float s = 0.1, fade = 0.01;
    vec4 colour = vec4( vec3(0.0), 1.0 );
