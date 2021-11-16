@@ -2184,6 +2184,7 @@ dat/unidiff/strangelove.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
+dat/ai/baddiepos.lua
 dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
@@ -2250,8 +2251,9 @@ dat/autoequip.lua
 dat/bkg/bgshaders.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
+dat/bkg/lib/nebula.lua
+dat/bkg/lib/starfield.lua
 dat/bkg/old.lua
-dat/bkg/starfield.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua

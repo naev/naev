@@ -23,8 +23,8 @@ function nebula.init( params )
    local scale    = params.scale or 1
    local move     = params.move or (0.06 / scale )
    local offset   = params.offset or vec2.new()
-   local anle     = params.angle or 0
-  
+   local angle    = params.angle or 0
+
    -- Initialize seed
    prng:setSeed( system.cur():nameRaw() )
 
