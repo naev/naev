@@ -126,7 +126,7 @@ function enter()
         mem.standoff = 5000 -- The distance between the DV fleet and the base
         mem.safestandoff = 2000 -- This is the distance from the base where DV ships will turn back
         mem.stepsize = 180 / 10 -- The amount of points on the circle for the circular patrol
-        mem.angle = 180 * 1.5 - mem.stepsize
+        mem.angle = math.pi * 1.5 - mem.stepsize
 
         spawnbase()
         spawnDV()
@@ -252,7 +252,7 @@ function spawnDV()
 
     obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], nil, {ai="dvaered_norun"} )
     obstinate:rename(_("Obstinate"))
-    obstinate:setDir(90)
+    obstinate:setDir(math.pi/2)
     obstinate:setFriendly()
     obstinate:setNoDisable(true)
     obstinate:control()
@@ -271,7 +271,7 @@ function spawnDV()
 
     for i = 1, 4 do
         vigilance = pilot.add( "Dvaered Vigilance", "Dvaered", fleetpos[i + 1], nil, {ai="dvaered_norun"} )
-        vigilance:setDir(90)
+        vigilance:setDir(math.pi/2)
         vigilance:setFriendly()
         vigilance:control()
         vigilance:setVisplayer(true)
@@ -281,7 +281,7 @@ function spawnDV()
 
     for i = 1, 6 do
         vendetta = pilot.add( "Dvaered Vendetta", "Dvaered", fighterpos[i], nil, {ai="dvaered_norun"} )
-        vendetta:setDir(90)
+        vendetta:setDir(math.pi/2)
         vendetta:setFriendly()
         vendetta:setVisplayer(true)
         vendetta:control()
@@ -584,7 +584,7 @@ function idle()
 end
 
 function updatepos()
-    mem.angle = (mem.angle + mem.stepsize) % 360
+    mem.angle = math.fmod(mem.angle + mem.stepsize, 2*math.pi)
     fleetpos[1] = basepos + vec2.newP(mem.standoff, mem.angle)
     fleetpos[2] = fleetpos[1] + vec2.new(110, 0)
     fleetpos[3] = fleetpos[1] + vec2.new(-110, 0)

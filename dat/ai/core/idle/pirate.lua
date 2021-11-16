@@ -107,7 +107,7 @@ local function __loiter( p, taskname )
       if rnd.rnd() < 0.1 then
          targetdir = nil
       else
-         targetdir = targetdir + rnd.sigma() * 15
+         targetdir = targetdir + rnd.sigma() * math.rad(15)
       end
    end
    local target = lanes.getNonPointP( p, nil, nil, nil, targetdir )

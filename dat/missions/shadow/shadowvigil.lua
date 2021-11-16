@@ -247,7 +247,7 @@ function jumpin()
                 j:setInvincPlayer()
                 hook.pilot(j, "death", "escortDeath")
                 mem.controlled = true
-                j:memory().angle = 90*(i-2)
+                j:memory().angle = (i-2)*math.pi/2
             end
         end
 
@@ -290,7 +290,7 @@ function jumpin()
             dvaerplomat:control()
             dvaerplomat:setHilight(true)
             dvaerplomat:setVisplayer()
-            dvaerplomat:setDir(180)
+            dvaerplomat:setDir(math.pi)
             dvaerplomat:setFaction("Diplomatic")
             diplomat:setInvincible(true)
             diplomat:moveto(vec2.new(1850, 4000), true)
@@ -392,7 +392,7 @@ function attackerDeath()
         if j:exists() then
             myj = j
             j:changeAI("baddie_norun")
-            j:memory().angle = 90*(i-2)
+            j:memory().angle = (i-2)*math.pi/2
             j:control()
             j:follow(diplomat,true)
             diplomat:hyperspace(lmisn.getNextSystem(system.cur(), misssys[mem.stage])) -- Hyperspace toward the next destination system.

@@ -202,7 +202,7 @@ static int vectorL_new( lua_State *L )
  * @usage vec2.newP() -- creates a vector at (0,0)
  *
  *    @luatparam[opt=0] number m If set, the modulus for the new vector.
- *    @luatparam[opt=0] number a If set, the angle for the new vector, in degrees.
+ *    @luatparam[opt=0] number a If set, the angle for the new vector, in radians.
  *    @luatreturn Vec2 The new vector.
  * @luafunc newP
  */
@@ -213,7 +213,7 @@ static int vectorL_newP( lua_State *L )
 
    if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
       m = lua_tonumber(L, 1);
-      a = lua_tonumber(L, 2) / 180. * M_PI;
+      a = lua_tonumber(L, 2);
    }
    else {
       m = 0.;
@@ -501,7 +501,7 @@ static int vectorL_get( lua_State *L )
 /**
  * @brief Gets polar coordinates of a vector.
  *
- * The angle is in degrees, not radians.
+ * The angle is in radians.
  *
  * @usage modulus, angle = my_vec:polar()
  *
@@ -514,7 +514,7 @@ static int vectorL_polar( lua_State *L )
 {
    Vector2d *v1 = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v1));
-   lua_pushnumber(L, VANGLE(*v1)*180./M_PI);
+   lua_pushnumber(L, VANGLE(*v1));
    return 2;
 }
 
@@ -549,7 +549,7 @@ static int vectorL_set( lua_State *L )
  *
  *    @luatparam Vec2 v Vector to set coordinates of.
  *    @luatparam number m Modulus to set.
- *    @luatparam number a Angle to set, in degrees.
+ *    @luatparam number a Angle to set, in radians.
  * @luafunc setP
  */
 static int vectorL_setP( lua_State *L )
@@ -560,7 +560,7 @@ static int vectorL_setP( lua_State *L )
    /* Get parameters. */
    v1 = luaL_checkvector(L,1);
    m  = luaL_checknumber(L,2);
-   a  = luaL_checknumber(L,3)/180.*M_PI;
+   a  = luaL_checknumber(L,3);
 
    vect_pset( v1, m, a );
    return 0;

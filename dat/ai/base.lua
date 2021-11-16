@@ -47,7 +47,7 @@ function attack( target )
    local dir   = ai.aim(target)
 
    if dist < range then
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot(false)
       elseif ai.hasturrets() then
          ai.shoot(false,1)

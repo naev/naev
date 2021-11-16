@@ -124,7 +124,7 @@ function defend_system()
 
    -- Set up distances
    local angle, defense_position, raider_position
-   angle = rnd.rnd() * 360
+   angle = rnd.angle()
    if mem.defender == true then
       raider_position  = vec2.newP( 400, angle )
       defense_position = vec2.new( 0, 0 )

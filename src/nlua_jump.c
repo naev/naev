@@ -300,7 +300,7 @@ static int jumpL_position( lua_State *L )
 }
 
 /**
- * @brief Gets the angle of a jump in degrees.
+ * @brief Gets the angle of a jump in radians.
  *
  * @usage v = j:angle()
  *    @luatparam Jump j Jump to get the angle of.
@@ -310,7 +310,7 @@ static int jumpL_position( lua_State *L )
 static int jumpL_angle( lua_State *L )
 {
    JumpPoint *jp = luaL_validjump(L,1);
-   lua_pushnumber(L, jp->angle * 180. / M_PI);
+   lua_pushnumber(L, jp->angle);
    return 1;
 }
 

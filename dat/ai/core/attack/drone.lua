@@ -46,7 +46,7 @@ function __atk_drone_ranged( target, dist )
 
    -- Check if in range
    if dist < ai.getweaprange( 4 ) then
-      if dir < 30 then
+      if dir < math.rad(30) then
          ai.weapset( 4 ) -- Weaponset 4 contains weaponset 9
       else
          ai.weapset( 9 )
@@ -62,7 +62,7 @@ function __atk_drone_ranged( target, dist )
    ai.weapset( 5 )
 
    -- Approach for melee
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -118,7 +118,7 @@ function __atk_d_flyby( target, dist )
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          --__atk_keep_distance()
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
@@ -131,12 +131,12 @@ function __atk_d_flyby( target, dist )
       --dir = ai.idir(target)
       dir = ai.aim(target)  -- drones need to aim more to avoid circling
       --test if we're facing the target. If we are, keep approaching
-      if dir <= 30 and dir > -30 then
+      if dir <= math.rad(30) and dir > -math.rad(30) then
          ai.iface(target)
-         if dir < 10 and dir > -10 then
+         if dir < math.rad(10) and dir > -math.rad(10) then
             ai.accel()
          end
-      elseif dir > 30 and dir < 180 then
+      elseif dir > math.rad(30) and dir < math.pi then
          ai.turn(1)
          ai.accel()
       else
@@ -153,7 +153,7 @@ function __atk_d_flyby( target, dist )
       end
 
       -- Shoot if should be shooting.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -180,7 +180,7 @@ function __atk_d_space_sup( target, dist )
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then
       dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          __atk_keep_distance()
          ai.accel()
       else
@@ -193,7 +193,7 @@ function __atk_d_space_sup( target, dist )
       --course facing and accelerate to close
       --dir = ai.iface(target)
       dir = ai.aim(target)
-      if dir < 15 and dir > -15 then
+      if dir < math.rad(15) and dir > -math.rad(15) then
          ai.accel()
       end
 
@@ -204,12 +204,12 @@ function __atk_d_space_sup( target, dist )
 
       --accelerate and try to close
       --but only accel if it will be productive
-      if dir2 < 15 and dir2 > -15 and ai.relvel(target) > -10 then
+      if dir2 < math.rad(15) and dir2 > -math.rad(15) and ai.relvel(target) > -math.rad(10) then
          ai.accel()
       end
 
       -- Shoot if should be shooting.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -218,7 +218,7 @@ function __atk_d_space_sup( target, dist )
    else
       dir = ai.aim(target)
       -- Shoot if should be shooting.
-      if dir < 15 then  -- mod: was 10
+      if dir < math.rad(15) then  -- mod: was 10
          ai.shoot()
       end
       ai.shoot(true)

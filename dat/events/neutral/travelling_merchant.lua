@@ -51,10 +51,10 @@ function create ()
    local spawn_pos
    if planets == nil or #planets==0 then
       local rad = scur:radius()
-      spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.rnd(0,360) )
+      spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.angle() )
    else
       local pnt = planets[rnd.rnd(1,#planets)]
-      spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.rnd(0,360) )
+      spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.angle() )
    end
 
    -- Create pilot

@@ -273,7 +273,7 @@ function enter ()
    -- Fuzzes a position a bit
    local function fuzz_pos( pos, max_offset )
       max_offset = max_offset or 100
-      return vec2.newP(max_offset*rnd.rnd(), 360*rnd.rnd()) + pos
+      return vec2.newP(max_offset*rnd.rnd(), rnd.angle()) + pos
    end
    local function spawn_drone( shipname, pos )
       local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )

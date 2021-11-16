@@ -466,11 +466,10 @@ static int texL_sprites( lua_State *L )
 /**
  * @brief Gets the sprite that corresponds to a direction.
  *
- * @usage sx, sy = t:spriteFromdir( math.pi )
+ * @usage sx, sy = t:spriteFromDir( math.pi )
  *
  *    @luatparam Tex t Texture to get sprite of.
- *    @luatparam number a Direction to have sprite facing (in degrees).
- *    @luatparam[opt=false] boolean b Whether radians should be used instead of degrees.
+ *    @luatparam number a Direction to have sprite facing (in radians).
  *    @luatreturn number The x position of the sprite.
  *    @luatreturn number The y position of the sprite.
  * @luafunc spriteFromDir
@@ -486,11 +485,7 @@ static int texL_spriteFromDir( lua_State *L )
    /* Params. */
    tex = luaL_checktex( L, 1 );
 
-   /* Use radians if requested, otherwise convert to degrees. */
-   if (lua_gettop(L) > 2 && (lua_toboolean(L, 3)))
-      a = luaL_checknumber( L, 2 );
-   else
-      a = luaL_checknumber( L, 2 ) / 180. * M_PI;
+   a = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */
    if ((a >= 2.*M_PI) || (a < 0.)) {

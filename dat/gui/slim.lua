@@ -1029,7 +1029,7 @@ function render( dt, dt_mod )
       local ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.
-      local x, y = target_dir:spriteFromDir( ta_pnt_dir, true )
+      local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, cols.txt_top )
 
       gfx.print( true, nav_planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, cols.txt_top )

@@ -123,8 +123,8 @@ function enter()
       hook.rm(mem.enterhook)
       local cflowers = _flowers()
       for i = 1, 100 do -- Flowers
-         local pos = destpla:pos() + vec2.newP( rnd.rnd(0,1000), rnd.rnd(0,360) )
-         local vel = vec2.newP( rnd.rnd(0,10), rnd.rnd(0,360) )
+         local pos = destpla:pos() + vec2.newP( rnd.rnd(0,1000), rnd.angle() )
+         local vel = vec2.newP( rnd.rnd(0,10), rnd.angle() )
          system.addGatherable( cflowers, 1, pos, vel, 3600 )
       end
       leader = pilot.add("Dvaered Goddard","Dvaered",destpla,_("General Klank"))
@@ -376,11 +376,11 @@ function takeoff()
 
          targets = {}
          for i = 1, 30 do
-            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
             targets[i] = pilot.add( "Llama", "Warlords", pos, _("Target "))
             targets[i]:control()
             targets[i]:setHostile() -- Just in case
-            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+            pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
             targets[i]:moveto( pos, false, false )
             hook.pilot( targets[i], "idle", "targetIdle" )
             hook.pilot( targets[i], "attacked", "targetHit" )
@@ -429,7 +429,7 @@ function takeoff()
 
       annoyers = {}
       for i = 1, 10 do
-         pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.rnd(0,360) )
+         pos = mem.center + vec2.newP( rnd.rnd(0,radius-500), rnd.angle() )
          annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, _("Shooter"))
          fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
@@ -438,7 +438,7 @@ function takeoff()
 
       local cflowers = _flowers()
       for i = 1, 60 do
-         pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+         pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
          system.addGatherable( cflowers, 1, pos, vec2.new(0,0), 3600 )
       end
 
@@ -613,7 +613,7 @@ end
 function spawnCompetitors( )
    competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
-      local pos = mem.center + vec2.newP( radius, i*360/10 - 90 )
+      local pos = mem.center + vec2.newP( radius, i*math.pi/5 - math.pi/2 )
       competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, mem.competitors_names[i])
       fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
@@ -626,7 +626,7 @@ end
 
 -- One of the targets is idle (Mace Throw)
 function targetIdle( self )
-   local pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+   local pos = mem.center + vec2.newP( rnd.rnd(0,radius), rnd.angle() )
    self:moveto( pos, false, false )
 end
 
