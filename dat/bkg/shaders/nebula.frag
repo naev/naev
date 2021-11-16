@@ -5,10 +5,10 @@
 #include "lib/colour.glsl"
 
 /* Constants be here. */
-const int STEPS         = 48;
+const int STEPS         = %d;
 const float RADIUS      = 1.0;
-const float HUE_INNER   = 1.0;
-const float HUE_OUTTER  = 0.67;
+const float HUE_INNER   = %f;
+const float HUE_OUTTER  = %f;
 const float ABSORPTION  = 45.0;
 const float OPACITY     = 60.0;
 const vec2 RESOLUTION   = vec2( %f, %f );

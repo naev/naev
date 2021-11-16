@@ -1,8 +1,8 @@
 --[[
    Nearby Nebula background
 --]]
-local starfield = require "bkg.starfield"
-local nebula = require "bkg.nebula"
+local starfield = require "bkg.lib.starfield"
+local nebula = require "bkg.lib.nebula"
 
 function background ()
    nebula.init()

@@ -5,7 +5,7 @@
 --]]
 
 -- We use the default background too!
-local starfield = require "bkg.starfield"
+local starfield = require "bkg.lib.starfield"
 local love = require 'love'
 local lg = require 'love.graphics'
 

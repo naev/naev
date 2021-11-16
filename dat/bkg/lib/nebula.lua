@@ -17,6 +17,9 @@ local nebula = {}
 
 function nebula.init( params )
    params = params or {}
+   local steps = params.stops or 48
+   local hue_inner = params.hue_inner or 1.0
+   local hue_outter = params.hue_outter or 240/360
   
    -- Initialize seed
    prng:setSeed( system.cur():nameRaw() )
@@ -24,7 +27,7 @@ function nebula.init( params )
    -- Initialize shader
    local w, h = 1024, 1024
    local shader = lg.newShader(
-      string.format(nebulafrag, w, h, R(), R(), R()),
+      string.format(nebulafrag, steps, hue_inner, hue_outter, w, h, R(), R(), R()),
       love_shaders.vertexcode )
    local cvs = lg.newCanvas( w, h, {dpiscale=1} )
 
