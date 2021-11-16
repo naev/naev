@@ -86,7 +86,7 @@ local function add_local_stars ()
    local i = 0
    local added = {}
    while n and i < n do
-      num = star_add( added, i )
+      local num = star_add( added, i )
       added[ num ] = true
       i = i + 1
    end
