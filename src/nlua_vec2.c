@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_vec2.c
  *
@@ -9,7 +8,6 @@
  *
  * These bindings control the planets and systems.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -20,7 +18,6 @@
 
 #include "log.h"
 #include "nluadef.h"
-
 
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
@@ -65,7 +62,6 @@ static const luaL_Reg vector_methods[] = {
    {0,0}
 }; /**< Vector metatable methods. */
 
-
 /**
  * @brief Loads the vector metatable.
  *
@@ -77,7 +73,6 @@ int nlua_loadVector( nlua_env env )
    nlua_register(env, VECTOR_METATABLE, vector_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Represents a 2D vector in Lua.
@@ -457,7 +452,6 @@ static int vectorL_div__( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Dot product of two vectors.
  *
@@ -473,7 +467,6 @@ static int vectorL_dot( lua_State *L )
    lua_pushnumber( L, a->x*b->x + a->y*b->y );
    return 1;
 }
-
 
 /**
  * @brief Gets the cartesian positions of the vector.
