@@ -7,10 +7,10 @@
 /* Constants be here. */
 const int STEPS         = 48;
 const float RADIUS      = 1.0;
-const vec3 COLOUR_INNER = vec3( 1.0, 0.0, 0.0 );
-const vec3 COLOUR_OUTTER= vec3( 0.0, 0.0, 1.0 );
-const float ABSORPTION  = 40.0;
-const float OPACITY     = 80.0;
+const float HUE_INNER   = 1.0;
+const float HUE_OUTTER  = 0.67;
+const float ABSORPTION  = 45.0;
+const float OPACITY     = 60.0;
 const vec2 RESOLUTION   = vec2( %f, %f );
 
 /* Our nebula function (static version of the 2D turbulence noise in 3D) */
@@ -87,8 +87,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       /* Very simply lighting model based on scattering with some additional texture noise.
        * Two colours used for inside vs outside. */
       float k = OPACITY * densn * T;
-      color.rgb += k * mix( COLOUR_INNER, COLOUR_OUTTER, length(p) + 0.1*snoise(10.0*p) );
-      color.a += k;
+      float hue = mix( HUE_INNER, HUE_OUTTER, length(p) + 0.1*snoise(10.0*p) );
+      color += k * vec4( hsv2rgb( vec3( hue, 0.8, 1.0 ) ), 1.0 );
 
       /* Continue the marching. */
       depth += zstep;
