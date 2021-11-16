@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dev_sysedit.c
  *
  * @brief Handles the star system editor.
  */
-
 /** @cond */
 #include "physfs.h"
 #include "SDL.h"
@@ -35,14 +33,11 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-
 #define BUTTON_WIDTH    90 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
-
 #define SYSEDIT_EDIT_WIDTH       500 /**< System editor width. */
 #define SYSEDIT_EDIT_HEIGHT      400 /**< System editor height. */
-
 
 #define SYSEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
@@ -51,14 +46,12 @@
 #define SYSEDIT_ZOOM_MAX         1     /**< Maximum zoom level (close). */
 #define SYSEDIT_ZOOM_MIN         -23   /**< Minimum zoom level (far). */
 
-
 /*
  * Selection types.
  */
 #define SELECT_NONE        0 /**< No selection. */
 #define SELECT_PLANET      1 /**< Selection is a planet. */
 #define SELECT_JUMPPOINT   2 /**< Selection is a jump point. */
-
 
 /**
  * @brief Selection generic for stuff in a system.
@@ -75,7 +68,6 @@ static int sysedit_nselect       = 0; /**< Number of selections in current syste
 static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
 static Select_t sysedit_tsel;         /**< Temporary selection. */
 static int  sysedit_tadd         = 0; /**< Add to selection. */
-
 
 /*
  * System editor stuff.
@@ -97,7 +89,6 @@ static double sysedit_my      = 0.; /**< Cursor Y position. */
 /* Stored checkbox values. */
 static int jp_hidden = 0; /**< Jump point hidden checkbox value. */
 static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
-
 
 /*
  * System editor Prototypes.
@@ -243,7 +234,6 @@ void sysedit_open( StarSystem *sys )
    sysedit_deselect();
 }
 
-
 /**
  * @brief Handles keybindings.
  */
@@ -258,7 +248,6 @@ static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          return 0;
    }
 }
-
 
 /**
  * @brief Closes the system editor widget.
@@ -294,7 +283,6 @@ static void sysedit_close( unsigned int wid, const char *wgt )
    /* Unset. */
    sysedit_wid = 0;
 }
-
 
 /**
  * @brief Closes the planet editor, saving the changes made.
@@ -396,19 +384,15 @@ static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
    space_gfxLoad( sysedit_sys );
 }
 
-
 static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   int i;
-   char *name, *oldName, *newName, *filtered;
-   Select_t *sel;
-   Planet *p;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
+   for (int i=0; i<sysedit_nselect; i++) {
+      Select_t *sel = &sysedit_select[i];
       if (sel->type == SELECT_PLANET) {
-         p = sysedit_sys[i].planets[ sel->u.planet ];
+         char *name, *oldName, *newName, *filtered;
+         Planet *p = sysedit_sys[i].planets[ sel->u.planet ];
 
          /* Get new name. */
          name = dialogue_input( _("New Planet Creation"), 1, 32,
@@ -446,7 +430,6 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
    }
 }
 
-
 /**
  * @brief Removes planets.
  */
@@ -478,7 +461,6 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
    }
 }
 
-
 /**
  * @brief Resets jump points.
  */
@@ -486,10 +468,8 @@ static void sysedit_btnReset( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   Select_t *sel;
-   int i;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
+   for (int i=0; i<sysedit_nselect; i++) {
+      Select_t *sel = &sysedit_select[i];
       if (sel->type == SELECT_JUMPPOINT)
          sysedit_sys[i].jumps[ sel->u.jump ].flags |= JP_AUTOPOS;
    }
@@ -497,7 +477,6 @@ static void sysedit_btnReset( unsigned int wid_unused, const char *unused )
    /* Must reconstruct jumps. */
    systems_reconstructJumps();
 }
-
 
 /**
  * @brief Interface for scaling a system from the system view.
@@ -573,7 +552,6 @@ static void sysedit_btnGrid( unsigned int wid_unused, const char *unused )
 
    sysedit_grid = !sysedit_grid;
 }
-
 
 /**
  * @brief System editor custom widget rendering.
@@ -708,7 +686,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          (by + sysedit_my - y)/z );
 }
 
-
 /**
  * @brief Draws an asteroid field on the map.
  *
@@ -801,7 +778,6 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    gl_renderCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
 }
 
-
 /**
  * @brief Renders a sprite for the custom widget.
  */
@@ -841,7 +817,6 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
             tx - 50, ty - gl_smallFont.h - 5, col, -1., caption );
    }
 }
-
 
 /**
  * @brief Renders the overlay.
@@ -900,7 +875,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          else {
             mx -= w/2 - sysedit_xpos;
             my -= h/2 - sysedit_ypos;
-
 
             /* Check planets. */
             for (i=0; i<array_size(sys->planets); i++) {
@@ -1060,7 +1034,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             sysedit_dragSel   = 0;
 
-
             /* Save all planets in our selection - their positions might have changed. */
             if (conf.devautosave)
                for (i=0; i<sysedit_nselect; i++)
@@ -1113,7 +1086,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    return 0;
 }
 
-
 /**
  * @brief Handles the button zoom clicks.
  *
@@ -1143,7 +1115,6 @@ static void sysedit_buttonZoom( unsigned int wid, const char* str )
    sysedit_ypos *= sysedit_zoom;
 }
 
-
 /**
  * @brief Deselects everything.
  */
@@ -1158,7 +1129,6 @@ static void sysedit_deselect (void)
    /* Button check. */
    sysedit_checkButtons();
 }
-
 
 /**
  * @brief Checks to see which buttons should be active and the likes.
@@ -1202,7 +1172,6 @@ static void sysedit_checkButtons (void)
       window_disableButton( sysedit_wid, "btnEdit" );
 }
 
-
 /**
  * @brief Adds a system to the selection.
  */
@@ -1225,14 +1194,12 @@ static void sysedit_selectAdd( Select_t *sel )
    sysedit_checkButtons();
 }
 
-
 /**
  * @brief Removes a system from the selection.
  */
 static void sysedit_selectRm( Select_t *sel )
 {
-   int i;
-   for (i=0; i<sysedit_nselect; i++) {
+   for (int i=0; i<sysedit_nselect; i++) {
       if (sysedit_selectCmp( &sysedit_select[i], sel )) {
          sysedit_nselect--;
          memmove( &sysedit_select[i], &sysedit_select[i+1],
@@ -1245,7 +1212,6 @@ static void sysedit_selectRm( Select_t *sel )
    WARN(_("Trying to deselect item that is not in selection!"));
 }
 
-
 /**
  * @brief Compares two selections to see if they are the same.
  *
@@ -1255,7 +1221,6 @@ static int sysedit_selectCmp( Select_t *a, Select_t *b )
 {
    return (memcmp(a, b, sizeof(Select_t)) == 0);
 }
-
 
 /**
  * @brief Edits a planet.
@@ -1677,7 +1642,6 @@ static void sysedit_genServicesList( unsigned int wid )
    }
 }
 
-
 /**
  * @brief Adds a service to a planet.
  */
@@ -1698,7 +1662,6 @@ static void sysedit_btnAddService( unsigned int wid, const char *unused )
    /* Regenerate the list. */
    sysedit_genServicesList( wid );
 }
-
 
 /**
  * @brief Removes a service from a planet.
@@ -1723,7 +1686,6 @@ static void sysedit_btnRmService( unsigned int wid, const char *unused )
 
    sysedit_genServicesList( wid );
 }
-
 
 /**
  * @brief Edits a planet's tech.
@@ -1755,7 +1717,6 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
 
    sysedit_genTechList( wid );
 }
-
 
 /**
  * @brief Generates the planet tech list.
@@ -1835,7 +1796,6 @@ static void sysedit_genTechList( unsigned int wid )
    }
 }
 
-
 /**
  * @brief Adds a tech to a planet.
  */
@@ -1857,7 +1817,6 @@ static void sysedit_btnAddTech( unsigned int wid, const char *unused )
    /* Regenerate the list. */
    sysedit_genTechList( wid );
 }
-
 
 /**
  * @brief Removes a tech from a planet.
@@ -1884,7 +1843,6 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
    /* Regenerate the list. */
    sysedit_genTechList( wid );
 }
-
 
 /**
  * @brief Edits a planet's faction.
@@ -1942,7 +1900,6 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
    array_free( factions );
 }
 
-
 /**
  * @brief Actually modifies the faction.
  */
@@ -1972,7 +1929,6 @@ static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
    window_close( wid, unused );
 }
 
-
 /**
  * @brief Opens the system property editor.
  */
@@ -1980,16 +1936,12 @@ static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   Select_t *sel;
-
-   sel = &sysedit_select[0];
-
+   Select_t *sel = &sysedit_select[0];
    if (sel->type==SELECT_PLANET)
       sysedit_editPnt();
    else if (sel->type==SELECT_JUMPPOINT)
       sysedit_editJump();
 }
-
 
 /**
  * @brief Opens the planet landing or space graphic editor.
@@ -2060,7 +2012,6 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    toolkit_setImageArray( wid, "iarGFX", path );
 }
 
-
 /**
  * @brief Closes the planet graphic editor.
  */
@@ -2068,7 +2019,6 @@ static void sysedit_btnGFXClose( unsigned int wid, const char *wgt )
 {
    window_close( wid, wgt );
 }
-
 
 /**
  * @brief Apply new graphics.
@@ -2110,4 +2060,3 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
 }
-
