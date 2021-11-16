@@ -348,11 +348,11 @@ function lanes.getNonPoint( L, pos, rad, margin, biasdir )
 
    -- Just some brute force sampling at different scales
    local n = 18
-   local inc = 360 / n
+   local inc = 2*math.pi / n
    local sign = 1
    if rnd.rnd() < 0.5 then sign = -1 end
    for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
-      local a = biasdir or rnd.rnd() * 360
+      local a = biasdir or rnd.angle()
       local r = rad * s
       for i=1,n do
          local pp = pos + vec2.newP( r, a )
@@ -391,7 +391,7 @@ function lanes.getPointInterest( L, pos )
    -- Case nothing of interest we just return a random position like in the old days
    -- TODO do something smarter here
    if #lv == 0 then
-      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
+      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
    end
 
    -- Get the connected components
@@ -406,7 +406,7 @@ function lanes.getPointInterest( L, pos )
 
    -- No far points, this shouldn't happen, but return random point in this case
    if #Sfar == 0 then
-      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
+      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
    end
 
    -- Random far away point

@@ -26,6 +26,7 @@ static int rndL_sigma( lua_State *L );
 static int rndL_twosigma( lua_State *L );
 static int rndL_threesigma( lua_State *L );
 static int rndL_uniform( lua_State *L );
+static int rndL_angle( lua_State *L );
 static int rndL_permutation( lua_State *L );
 static const luaL_Reg rnd_methods[] = {
    { "rnd", rndL_int },
@@ -33,6 +34,7 @@ static const luaL_Reg rnd_methods[] = {
    { "twosigma", rndL_twosigma },
    { "threesigma", rndL_threesigma },
    { "uniform", rndL_uniform },
+   { "angle", rndL_angle },
    { "permutation", rndL_permutation },
    {0,0}
 }; /**< Random Lua methods. */
@@ -189,6 +191,19 @@ static int rndL_uniform( lua_State *L )
    else NLUA_INVALID_PARAMETER(L);
 
    return 1; /* unless it's returned 0 already it'll always return a parameter */
+}
+
+/**
+ * @brief Gets a random angle, i.e., a random number from 0 to 2*pi.
+ *
+ * @usage vec2.newP(radius, rnd.angle())
+ *    @luatreturn number A randomly generated angle, in radians.
+ * @luafunc angle
+ */
+static int rndL_angle( lua_State *L )
+{
+   lua_pushnumber( L, RNGF() * 2 * M_PI );
+   return 1;
 }
 
 /**

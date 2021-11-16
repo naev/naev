@@ -236,7 +236,7 @@ end
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
    tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]]))
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)), nil, {ai="dummy"} ) -- prototype is a scout drone
+   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()), nil, {ai="dummy"} ) -- prototype is a scout drone
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")

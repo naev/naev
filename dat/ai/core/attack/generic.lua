@@ -106,7 +106,7 @@ function ___atk_g_ranged_dogfight( target, dist )
 
    -- Check if in range to shoot missiles
    if dist < ai.getweaprange( 4 ) then
-      if dir < 30 then
+      if dir < math.rad(30) then
          ai.weapset( 4 ) -- Weaponset 4 contains weaponset 9
       else
          ai.weapset( 9 )
@@ -119,7 +119,7 @@ function ___atk_g_ranged_dogfight( target, dist )
    end
 
    -- Approach for melee
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
       ai.weapset( 3 ) -- Set turret/forward weaponset.
       ai.shoot()
@@ -155,7 +155,7 @@ function ___atk_g_ranged_strafe( target, dist )
 
    if (mem.mustapproach and not ai.timeup(1) ) or mem.outofrange then
       local dir   = ai.face(goal)
-      if dir < 10 and mod > 300 then
+      if dir < math.rad(10) and mod > 300 then
          ai.accel()
          --mem.stabilized = false
       -- ship must be stabilized since 2 secs
@@ -173,7 +173,7 @@ function ___atk_g_ranged_strafe( target, dist )
 
    else -- In range
       local dir  = ai.face(target)
-      if dir < 30 then
+      if dir < math.rad(30) then
          ai.set_shoot_indicator(false)
          ai.weapset( 4 )
          -- If he managed to shoot, reinitialize the timer
@@ -201,9 +201,9 @@ function ___atk_g_ranged_kite( target, dist )
    local selfpos = p:pos()
    local _unused, targetdir = (selfpos-targetpos):polar()
    local velmod, veldir = p:vel():polar()
-   if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > 30 then
+   if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > math.rad(30) then
       local dir = ai.face( target, true )
-      if math.abs(180-dir) < 30 then
+      if math.abs(math.pi-dir) < math.rad(30) then
          ai.accel()
       end
       return
@@ -211,12 +211,12 @@ function ___atk_g_ranged_kite( target, dist )
 
    -- We are flying away, so try to kite
    local dir = ai.aim(target) -- aim instead of facing
-   if dir < 30 then
+   if dir < math.rad(30) then
       if dist < range*0.95 then
          ai.weapset( 4 )
       end
 
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.weapset( 3 ) -- Set turret/forward weaponset.
          ai.shoot()
       end
@@ -261,12 +261,12 @@ end
 --]]
 function __atk_g_approach( target, _dist )
    local dir = ai.idir(target)
-   if dir < 10 and dir > -10 then
+   if dir < math.rad(10) and dir > -math.rad(10) then
       __atk_keep_distance()
    else
       dir = ai.iface(target)
    end
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -281,12 +281,12 @@ function __atk_g_melee( target, dist )
    ai.weapset( 3 ) -- Set turret/forward weaponset.
 
    -- Drifting away we'll want to get closer
-   if dir < 10 and dist > 0.5*range and ai.relvel(target) > -10 then
+   if dir < math.rad(10) and dist > 0.5*range and ai.relvel(target) > -10 then
       ai.accel()
    end
 
    -- Shoot if should be shooting.
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.shoot()
    end
    ai.shoot(true)

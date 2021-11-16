@@ -122,7 +122,7 @@ function defend_system()
 
   -- Set up distances
       local angle, defense_position, raider_position
-      angle = rnd.rnd() * 360
+      angle = rnd.angle()
       if mem.defender == true then
          raider_position  = vec2.newP( 400, angle )
          defense_position = vec2.new( 0, 0 )
@@ -183,7 +183,7 @@ function victorious()
    -- Call ships to base
       player.msg( _("Well done, pilots. Return to port.") )
    -- Get a position near the player for late Empire re-enforcements
-      local empire_vect = player.pos() + vec2.newP( rnd.rnd( 100, 200 ), rnd.rnd() * 360 )
+      local empire_vect = player.pos() + vec2.newP( rnd.rnd( 100, 200 ), rnd.angle() )
       local empire_med_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
                                  "Empire Admonisher", "Empire Admonisher",
                                  "Empire Pacifier", "Empire Hawking"}

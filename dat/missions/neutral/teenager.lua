@@ -57,7 +57,7 @@ end
 
 function enter()
     if system.cur() == mem.cursys and mem.targetlive then
-        local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.rnd() * 360)
+        local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
         target = pilot.add( "Gawain", "Independent", location )
         target:control()
         target:rename(_("Credence"))
@@ -78,7 +78,7 @@ function targetIdle()
         return
     end
     local location = target:pos()
-    local newlocation = vec2.newP(750, rnd.rnd() * 360)
+    local newlocation = vec2.newP(750, rnd.angle())
     target:taskClear()
     target:moveto(location + newlocation, false, false)
     hook.timer(5.0, "targetIdle")

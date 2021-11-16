@@ -105,7 +105,7 @@ function takeoff ()
    flf_ships = {}
    for i=1,5 do
       for k,s in ipairs(shptypes) do
-         local pos = ss:pos() + vec2.newP(2000*rnd.rnd(), 360*rnd.rnd()) + norm*1000
+         local pos = ss:pos() + vec2.newP(2000*rnd.rnd(), rnd.angle()) + norm*1000
          local p = pilot.add( s, factflf, pos, nil, {ai="guard"} )
          p:setVisible()
          table.insert( flf_ships, p )

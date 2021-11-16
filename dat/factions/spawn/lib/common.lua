@@ -135,7 +135,7 @@ function scom.spawn( pilots )
       -- Stealth should avoid pirates
       if pilots.__stealth then
          local r = system.cur():radius() * 0.8
-         local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
+         local p = vec2.newP( rnd.rnd() * r, rnd.angle() )
          local m = 3000 -- margin
          local L = lanes.get(fct, "non-friendly")
          for i = 1,20 do -- Just brute force sampling

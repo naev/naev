@@ -67,7 +67,7 @@ function create ()
    derelict_mule:rename(_("Derelict"))
 
    -- Drone
-   pos = derelict_mule:pos() + vec2.newP( 30, rnd.rnd()*359 )
+   pos = derelict_mule:pos() + vec2.newP( 30, rnd.angle() )
    drone = pilot.add( "Drone (Hyena)", "Independent", pos )
    drone:setInvisible(true)
    drone:setInvincible(true)
@@ -89,7 +89,7 @@ function leave () --event ends on player leaving the system or landing
 end
 
 function fidget ()
-   local pos = derelict_mule:pos() + vec2.newP( 30, rnd.rnd()*359 )
+   local pos = derelict_mule:pos() + vec2.newP( 30, rnd.angle() )
    drone:moveto( pos )
    if evt_state==0 then
       fidget_hook = hook.timer( 5.0, "fidget" )

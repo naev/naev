@@ -87,14 +87,14 @@ function attack ()
    -- In melee
    if dist < range then
       ai.weapset( 3 ) -- Forward/turret
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot() -- Forward
       end
       ai.shoot(true) -- Turret
    end
 
    -- Long-range
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.weapset( 4 ) -- Missiles, it's a fire group
    end
    ai.weapset( 9 ) -- Turreted Missiles

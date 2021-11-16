@@ -133,7 +133,7 @@ function enter ()
       var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
-      local ang = rnd.rnd(0, 360)
+      local ang = rnd.angle()
       local enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
@@ -147,15 +147,15 @@ function enter ()
 
       -- Get a far away position for fighting to happen
       local battle_pos = player.pos() +
-            vec2.newP( rnd.rnd(4000, 5000), ang + 180 )
+            vec2.newP( rnd.rnd(4000, 5000), ang + math.pi )
 
       -- We'll put the FLF first
-      enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.angle() )
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
       fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
 
       -- Now the Dvaered
-      enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
+      enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.angle() )
       local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
       fleet.add( 1, dv_med_force, "Dvaered", enter_vect )
 

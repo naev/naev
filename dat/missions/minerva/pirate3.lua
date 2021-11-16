@@ -270,7 +270,7 @@ function enter ()
       -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
+      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.angle() )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )

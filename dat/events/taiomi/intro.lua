@@ -73,7 +73,7 @@ function drones_create( n )
    -- Add frozen and invincible drones
    drones = {}
    for i = 1,n do
-      local pos = vec2.newP( 150+2000*rnd.rnd(), 359*rnd.rnd() )
+      local pos = vec2.newP( 150+2000*rnd.rnd(), rnd.angle() )
       local d = pilot.add( "Drone", drone_faction, pos )
       d:setInvisible(true)
       d:setInvincible(true)
@@ -142,7 +142,7 @@ end
 
 function cutscene00 ()
    -- Add scavenger drone
-   local pos = vec2.newP( 1500+1000*rnd.rnd(), 359*rnd.rnd() )
+   local pos = vec2.newP( 1500+1000*rnd.rnd(), rnd.angle() )
    d_scav = pilot.add( "Drone (Hyena)", drone_faction, pos )
    d_scav:rename(_("Scavenger Drone"))
    d_scav:setInvisible(true)

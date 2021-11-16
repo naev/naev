@@ -44,7 +44,7 @@ function create ()
     end
 
     -- Create the derelict.
-    local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.rnd()*360 )
+    local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.angle() )
     derelict    = pilot.add( dship, "Derelict", pos, nil, {ai="dummy"} )
     derelict:disable()
     derelict:rename(fmt.f(_("Shipwrecked {plt}"), {plt=shipname}))

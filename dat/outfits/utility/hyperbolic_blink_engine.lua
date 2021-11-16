@@ -24,7 +24,7 @@ function update( p, po, dt )
             dist = dist * masslimit / m
          end
          -- Direction is random
-         p:setPos( p:pos() + vec2.newP( dist, p:dir()+60*(2*rnd.rnd()-1) ) )
+         p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
          -- TODO Add blink effect and sound effect
 
          -- Set cooldown and maluses

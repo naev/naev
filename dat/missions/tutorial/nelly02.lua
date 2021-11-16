@@ -228,7 +228,7 @@ end
 function enter ()
    local scur = system.cur()
    if mem.misn_state <= 0  and scur == mem.retsys then
-      rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
+      rampant_pos = player.pos() + vec2.newP( 2000, rnd.angle() )
       rampant = pilot.add( "Llama", "Dummy", rampant_pos, _("Llaminator MK2") )
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
@@ -280,7 +280,7 @@ function idle ()
    local samples = 18
    rampant_pos_idx = rampant_pos_idx or 0
    rampant_pos_idx = math.fmod( rampant_pos_idx, samples ) + 1
-   local pos = rampant_pos + vec2.newP( radius, rampant_pos_idx / samples * 360 )
+   local pos = rampant_pos + vec2.newP( radius, 2*math.pi * rampant_pos_idx / samples )
    rampant:taskClear()
    rampant:moveto( pos, false, false )
 

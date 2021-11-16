@@ -1954,13 +1954,13 @@ static int pilotL_ew( lua_State *L )
  * @usage d = p:dir()
  *
  *    @luatparam Pilot p Pilot to get the direction of.
- *    @luatreturn number The pilot's current direction as a number (in degrees).
+ *    @luatreturn number The pilot's current direction as a number (in radians).
  * @luafunc dir
  */
 static int pilotL_dir( lua_State *L )
 {
    Pilot *p  = luaL_validpilot(L,1);
-   lua_pushnumber( L, p->solid->dir * 180./M_PI );
+   lua_pushnumber( L, p->solid->dir );
    return 1;
 }
 
@@ -2091,12 +2091,12 @@ static int pilotL_setVelocity( lua_State *L )
 /**
  * @brief Sets the pilot's direction.
  *
- * @note Right is 0, top is 90, left is 180, bottom is 270.
+ * @note Right is 0, top is math.pi/2, left is math.pi, bottom is 3*math.pi/2.
  *
  * @usage p:setDir( 180. )
  *
  *    @luatparam Pilot p Pilot to set the direction of.
- *    @luatparam number dir Direction to set.
+ *    @luatparam number dir Direction to set, in radians.
  * @luafunc setDir
  */
 static int pilotL_setDir( lua_State *L )
@@ -2111,7 +2111,7 @@ static int pilotL_setDir( lua_State *L )
    d     = luaL_checknumber(L,2);
 
    /* Set direction. */
-   p->solid->dir = fmodf( d*M_PI/180., 2*M_PI );
+   p->solid->dir = fmodf( d, 2*M_PI );
    if (p->solid->dir < 0.)
       p->solid->dir += 2*M_PI;
 

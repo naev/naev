@@ -164,7 +164,7 @@ function enter ()
       hook.pilot( boss, "death", "thugs_dead" )
       thugs = { boss }
       for i = 1,3 do
-         pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
+         pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.angle() )
          local p = pilot.add( "Dvaered Vendetta", mem.fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )

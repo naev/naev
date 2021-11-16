@@ -16,7 +16,7 @@ local function turnon( p, po )
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
    local s = p:ship()
-   local pos = p:pos() + vec2.newP( 0.1, rnd.rnd()*359 )
+   local pos = p:pos() + vec2.newP( 0.1, rnd.angle() )
    local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort"} )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
