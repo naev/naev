@@ -63,6 +63,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
    UNIEDIT_VIEW_VIRTUALASSETS,
    UNIEDIT_VIEW_RADIUS,
+   UNIEDIT_VIEW_BACKGROUND,
    UNIEDIT_VIEW_PRESENCE_SUM,
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
@@ -383,8 +384,9 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Assets"));
    str[2]= strdup(_("System Radius"));
-   str[3]= strdup(_("Sum of Presences"));
-   n     = 4; /* Number of special cases. */
+   str[3]= strdup(_("Background"));
+   str[4]= strdup(_("Sum of Presences"));
+   n     = 5; /* Number of special cases. */
    j     = n;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
@@ -478,10 +480,8 @@ static void uniedit_btnEdit( unsigned int wid_unused, const char *unused )
 
 static void uniedit_renderFactionDisks( double x, double y, double r )
 {
-   int i;
    const glColour *col;
    glColour c;
-   StarSystem *sys;
    double tx, ty, sr, presence;
 
    col = faction_colour( uniedit_view_faction );
@@ -490,8 +490,8 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    c.b = col->b;
    c.a = 0.5;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = system_getIndex( i );
 
       tx = x + sys->pos.x*uniedit_zoom;
       ty = y + sys->pos.y*uniedit_zoom;
@@ -511,9 +511,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
 
 static void uniedit_renderVirtualAssets( double x, double y, double r )
 {
-   glColour c;
-
-   c   = cWhite;
+   glColour c = cWhite;
    c.a = 0.3;
 
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -545,6 +543,29 @@ static void uniedit_renderRadius( double x, double y, double r )
 
       /* draws the disk representing the faction */
       sr = 5.*M_PI*sqrt(sys->radius / 10e3) * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
+static void uniedit_renderBackground( double x, double y, double r )
+{
+   glColour c = cWhite;
+   c.a = 0.3;
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+
+      if (sys->background==NULL)
+         continue;
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 7.*M_PI * uniedit_zoom;
 
       (void) r;
       gl_renderCircle( tx, ty, sr, &c, 1 );
@@ -597,6 +618,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_RADIUS:
          uniedit_renderRadius( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_BACKGROUND:
+         uniedit_renderBackground( x, y, r );
          break;
 
       case UNIEDIT_VIEW_PRESENCE_SUM:
@@ -742,6 +767,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    else if (uniedit_viewmode == UNIEDIT_VIEW_RADIUS) {
       scnprintf( &buf[0], sizeof(buf), _("System Radius: %s"), num2strU( sys->radius, 0 ));
       toolkit_drawAltText( x, y, buf);
+      return;
+   }
+
+   /* Handle radius view. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_BACKGROUND) {
+      if (sys->background != NULL) {
+         scnprintf( &buf[0], sizeof(buf), _("Background: %s"), sys->background );
+         toolkit_drawAltText( x, y, buf);
+      }
       return;
    }
 
@@ -1880,6 +1914,12 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==3) {
+      uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
+      uniedit_view_faction = -1;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==4) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       uniedit_view_faction = -1;
       window_close( wid, unused );
