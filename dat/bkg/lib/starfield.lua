@@ -105,11 +105,12 @@ function starfield.init( params )
    local phi = prng:random()*2*math.pi
    local psi = prng:random()*2*math.pi
    local rx, ry = vec2.newP( 6+1*prng:random(), 3+3*prng:random() ):get()
+   local rz = 1+1*prng:random()
    sz = 1+1*prng:random()
    sb = naev.conf().bg_brightness
 
    -- Initialize shader
-   shader = graphics.newShader( string.format(starfield_frag, rx, ry, theta, phi, psi), love_shaders.vertexcode )
+   shader = graphics.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
    sstarfield = bgshaders.init( shader, sf, {usetex=true} )
 
    if not params.nolocalstars then

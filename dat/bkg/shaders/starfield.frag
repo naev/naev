@@ -8,7 +8,7 @@
 uniform vec2 u_resolution;
 uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
 uniform sampler2D u_prevtex;
-const vec3 R      = vec3( %f, %f, 1.0);
+const vec3 R      = vec3( %f, %f, %f);
 const float theta = %f;
 const float cx = cos(theta);
 const float sx = sin(theta);
