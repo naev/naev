@@ -13,13 +13,13 @@ const float THETA = %f;
 const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
 const mat2 IROT   = inverse(ROT);
 
-#define ITERATIONS   17
-#define VOLSTEPS     8
-#define SPARSITY     0.7  // 0.4 to 0.5 (sparse)
-#define STEPSIZE     0.2
-#define FREQVAR      1.8 // 0.5 to 2.0
-#define BRIGHTNESS   0.0010
-#define DISTFADING   0.6800
+const int ITERATIONS = 17;
+const int VOLSTEPS   = 8;
+const float SPARSITY = 0.7; /* 0.4 to 0.5 (sparse) */
+const float STEPSIZE = 0.2;
+const float FREQVAR  = 1.8; /* 0.5 to 2.0 */
+const float BRIGHTNESS= 0.0010;
+const float DISTFADING= 0.6800;
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
