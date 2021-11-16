@@ -20,6 +20,7 @@ function nebula.init( params )
    local steps = params.stops or 48
    local hue_inner = params.hue_inner or 1.0
    local hue_outter = params.hue_outter or 240/360
+   local scale = params.scale or 1
   
    -- Initialize seed
    prng:setSeed( system.cur():nameRaw() )
@@ -41,7 +42,6 @@ function nebula.init( params )
    lg.setCanvas( oldcanvas )
 
    local move = 0.03
-   local scale = 5
    local angle = 1
    naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
 end
