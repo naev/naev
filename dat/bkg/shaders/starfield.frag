@@ -1,4 +1,3 @@
-#include "lib/gamma.glsl"
 /*
  * Based on http://casual-effects.blogspot.com/2013/08/starfield-shader.html by Morgan McGuire
  * which is based on Star Nest by Kali https://www.shadertoy.com/view/XlfGRj
@@ -8,6 +7,7 @@
 uniform vec2 u_resolution;
 uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
 uniform sampler2D u_prevtex;
+
 const vec3 R      = vec3( %f, %f, %f);
 const float theta = %f;
 const float cx = cos(theta);
@@ -34,7 +34,6 @@ const mat3 Rz = mat3(
    0.0, 0.0, 1.0
 );
 const mat3 ROT = Rx * Ry * Rz;
-
 const int ITERATIONS = 17;
 const int VOLSTEPS   = 8;
 const float SPARSITY = 0.7; /* 0.4 to 0.5 (sparse) */
@@ -90,4 +89,3 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    colour.rgb *= 0.8;
    return colour * colour_in;
 }
-
