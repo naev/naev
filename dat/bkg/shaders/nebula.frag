@@ -46,7 +46,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    /* Set up rays. */
    vec3 ro = vec3(0.0, 0.0, sqrt(2.0));
-	vec3 rd = normalize(vec3(uv, -1.0));
+   vec3 rd = normalize(vec3(uv, -1.0));
 
    /* Frustrum. */
    const float znear = (sqrt(2.0)-1.0)/2.0;
@@ -54,11 +54,11 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    const float zstep = RADIUS / float( STEPS );
 
    /* Some initial parameters. */
-	float T = 1.0;
+   float T = 1.0;
    color = vec4(0.0);
 
    float depth = znear;
-	for (int i=0; i < STEPS; i++) {
+   for (int i=0; i < STEPS; i++) {
       /* Out of the frutrum. */
       if (depth > zfar)
          break;
@@ -67,7 +67,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       vec3 p = ro + rd * depth;
 
       /* Compute the nebula density. */
-		float dens = density( p );
+      float dens = density( p );
 
       /* March faster when no density. */
       if (dens <= 0.0) {
@@ -78,7 +78,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       /* Computing the density integral so we have to normalize by sampling points. */
       float densn = dens / float(STEPS);
 
-      /* Transmit ligth along, with some getting absorbed. */ 
+      /* Transmit light along, with some getting absorbed. */
       T *= 1.0 - (densn * ABSORPTION);
       /* Stop when mostly absorbed. */
       if (T <= 0.01)
@@ -92,7 +92,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
       /* Continue the marching. */
       depth += zstep;
-	}
+   }
 
    return color;
 }
