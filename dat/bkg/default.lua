@@ -28,11 +28,11 @@ function background ()
       if neb > 0 and not nebu_blacklist[s:nameRaw()] then
          local d = s:pos():dist( cpos )
          local scale = (radius - d) / radius
-         maxscale = math.max( scale, maxscale )
+         maxscale = math.max( maxscale, scale )
       end
    end
    if maxscale > 0 then
-      nebula.init{ scale=8*maxscale }
+      nebula.init{ scale=8*maxscale, offset=(system.get("Sol"):pos()-cpos)*70 }
    end
 
    starfield.init()
