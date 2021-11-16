@@ -14,7 +14,6 @@ mem.guardreturndist = math.huge
 
 function create ()
    local p = ai.pilot()
-   local ps = p:ship()
 
    -- Choose attack format
    attack_choose()
