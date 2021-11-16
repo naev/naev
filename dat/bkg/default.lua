@@ -32,7 +32,7 @@ function background ()
       end
    end
    if maxscale > 0 then
-      nebula.init{ scale=8*maxscale, offset=(system.get("Sol"):pos()-cpos)*70 }
+      nebula.init{ scale=8*maxscale, offset=(system.get("Sol"):pos()-cpos)*2 }
    end
 
    starfield.init()
