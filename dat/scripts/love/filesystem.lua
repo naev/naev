@@ -33,7 +33,6 @@ end
 function filesystem.read( name, size )
    local f = filesystem.newFile( name )
    local ret, err = f:open('r')
-   print( name, ret, err )
    local buf,len
    if size then
       buf,len = f:read( size )
