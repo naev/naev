@@ -28,6 +28,7 @@ npc_desc[2] = _("Leblanc is relaxing at a table, with a group of Dvaered pilots.
 npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they don't use real money because "Dvaered Warriors never seize money of others, except the dead bodies of defeated enemies." As it is written on the Dvaered etiquette manual Strafer gave to you recently.]])
 
 -- luacheck: globals takeoff (Hook functions passed by name)
+-- luacheck: globals pay (NPC functions passed by name)
 
 -- Each time the player lands, he meets a member of the team who proposes to pay
 function create()

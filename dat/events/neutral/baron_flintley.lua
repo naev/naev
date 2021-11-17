@@ -16,6 +16,8 @@
 
 local fmt = require "format"
 
+-- luacheck: globals flintley (NPC functions passed by name)
+
 function create ()
     evt.npcAdd("flintley", "Flintley", "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 5)
 end

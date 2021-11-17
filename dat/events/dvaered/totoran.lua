@@ -17,6 +17,7 @@ local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
 
 -- luacheck: globals leave (Hook functions passed by name)
+-- luacheck: globals approach_bgnpc approach_guide (NPC functions passed by name)
 
 -- Unsaved global tables
 local bgnpcs
