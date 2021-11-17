@@ -22,7 +22,7 @@ function nebula.init( params )
    local opacity  = params.opacity or 60
    local absorption = params.absorption  or 45
    local scale    = params.scale or 1
-   local move     = params.move or (0.06 / scale )
+   local move     = params.move or (0.005 * scale )
    local offset   = params.offset or vec2.new()
    local angle    = params.angle or 0
 
