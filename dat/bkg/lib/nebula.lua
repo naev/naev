@@ -17,8 +17,8 @@ function nebula.init( params )
    local opacity  = params.opacity or 60
    local absorption = params.absorption  or 45
    local granularity = params.granularity or 1
-   local scale    = params.scale or 1024
-   local move     = params.move or (0.005 * scale / 1024 )
+   local size     = params.size or 1024
+   local move     = params.move or (0.005 * size / 1024 )
    local offset   = params.offset or vec2.new()
    local angle    = params.angle or 0
 
@@ -34,9 +34,9 @@ function nebula.init( params )
    end
 
    -- Initialize shader
-   local size = math.min( 0.25*scale, 1024 ) -- over 1024 makes intel GPUs choke
-   local w, h = size, size
-   scale = scale / size
+   local texsize = math.min( 0.25*size, 1024 ) -- over 1024 makes intel GPUs choke
+   local w, h = texsize, texsize
+   local scale = size / texsize
    local shader = lg.newShader(
       string.format(nebulafrag, steps, hue_inner, hue_outter, absorption, opacity, granularity, w, h, R(), R(), R()),
       love_shaders.vertexcode )
