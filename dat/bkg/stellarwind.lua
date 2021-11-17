@@ -1,11 +1,9 @@
 --[[
    Some sort of stellar wind type background.
 --]]
-
--- We use the default background too!
-local starfield = require "bkg.lib.starfield"
 local bgshaders = require "bkg.lib.bgshaders"
 local love_shaders = require 'love_shaders'
+-- We use the default background too!
 require "bkg.default"
 
 local shader, sf, swind
