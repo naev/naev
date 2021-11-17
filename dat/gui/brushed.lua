@@ -324,7 +324,7 @@ function update_target()
             ta_gfx_draw_h = ta_gfx_sh
          end
       else
-         if ta_gfx_sh > target_h then
+         if ta_gfx_sh > target_image_h then
             ta_gfx_draw_h = target_image_w
             ta_gfx_draw_w = target_image_w / ta_gfx_sh * ta_gfx_sw
          else
@@ -838,7 +838,7 @@ function render( _dt )
             end
          end
       else
-         gfx.renderTex( popup_empty, popup_left_ + mod_x, popup_left_y + mod_y )
+         gfx.renderTex( popup_empty, popup_left_x + mod_x, popup_left_y + mod_y )
       end
    else
       gfx.renderTex( popup_empty, popup_left_x + mod_x, popup_left_y + mod_y )
