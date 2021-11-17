@@ -36,11 +36,12 @@ require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
 
-message = fw.message -- common hooks
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
 -- luacheck: globals beepMe checkClearance1 checkClearance2 checkClearance3 checkClearance4 checkClearance5 checkHamelsen deathOfStrafer flee hamelsenLanded imDoingNothing incomingHamelsen killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
 -- luacheck: globals incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5 toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 (Dynamic proximity hooks)
+
+message = fw.message -- common hooks
 
 -- TODO: hooks to penalize attacking people
 
