@@ -6,9 +6,11 @@
 local starfield = require "bkg.lib.starfield"
 local bgshaders = require "bkg.lib.bgshaders"
 local love_shaders = require 'love_shaders'
+require "bkg.default"
 
 local shader, sf, swind
 
+local background_default = background
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
@@ -19,10 +21,8 @@ function background ()
    swind = bgshaders.init( shader, sf )
 
    -- Default nebula background
-   starfield.init()
+   background_default()
 end
-
-renderbg = starfield.render
 
 function renderfg( dt )
    -- Get camera properties
