@@ -47,7 +47,7 @@ local pir = require "common.pirate"
 escort_hailed = fw.escort_hailed -- common hooks
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
 local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron -- Forward-declared functions
--- luacheck: globals backDialog convoyEnter enter escort_died escort_hailed gather hailMe killed_zlk land landBar loading rmScanHooks spawnDrones spawnHewHew spawnStrafer takeoff targetAttacked targetBoarded targetDied targetEscaped tick weNeed2land (Hook functions passed by name)
+-- luacheck: globals backDialog convoyEnter enter escort_died escort_hailed gather hailMe killed_zlk land landBar loading rmScanHooks scanBloc spawnDrones spawnHewHew spawnStrafer straferDiscuss takeoff targetAttacked targetBoarded targetDied targetEscaped tick weNeed2land (Hook functions passed by name)
 
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten

@@ -25,7 +25,7 @@ local srs = require "common.sirius"
 local fmt = require "format"
 
 local harja -- Non-persistent state
--- luacheck: globals board date death disable enter hail jumpout land leave (Hook functions passed by name)
+-- luacheck: globals board date death disable detectHarja enter hail jumpout land leave (Hook functions passed by name)
 
 local reward = 1e6
 

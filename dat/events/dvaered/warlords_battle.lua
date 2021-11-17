@@ -24,7 +24,7 @@ local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
 local baserew, reward
 local finvader, flocal
 
--- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant (Hook functions passed by name)
+-- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattle (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()

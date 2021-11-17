@@ -36,7 +36,7 @@ local misssys = {
 
 local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
 local accept_m -- Forward-declared functions
--- luacheck: globals attackerDeath board board_escort chatter delayedClaim diplomatAttacked diplomatDeath diplomatGo diplomatIdle diplomatJump diplomatKilled diplomatShutup enter escortDeath escortFlee jumpin jumpout killDiplomats land takeoff (Hook functions passed by name)
+-- luacheck: globals attackerDeath board board_escort chatter delayedClaim diplomatAttacked diplomatCutscene diplomatDeath diplomatGo diplomatIdle diplomatJump diplomatKilled diplomatShutup enter escortDeath escortFlee escortNext escortStart jumpin jumpout killDiplomats land takeoff (Hook functions passed by name)
 
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:

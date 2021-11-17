@@ -22,7 +22,7 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 
 local vendetta, hailhook -- Non-persistent state.
--- luacheck: globals finish hail (Hook functions passed by name)
+-- luacheck: globals finish hail hailme (Hook functions passed by name)
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it

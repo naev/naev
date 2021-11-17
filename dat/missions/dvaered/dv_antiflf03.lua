@@ -38,7 +38,7 @@ local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates a
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
--- luacheck: globals attacked attackedObstinate broadcast control deathBase deathDVbomber deathFLF deathObstinate destroyBase engageBase enter idle land spawnDVbomber spawnFLFbombers spawnFLFdestroyers spawnFLFfighters timer_plcontrol (Hook functions passed by name)
+-- luacheck: globals attacked attackedObstinate broadcast control deathBase deathDVbomber deathFLF deathObstinate destroyBase engageBase enter idle land operationStart spawnDVbomber spawnFLFbombers spawnFLFdestroyers spawnFLFfighters timer_plcontrol (Hook functions passed by name)
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}

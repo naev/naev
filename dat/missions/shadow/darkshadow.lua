@@ -25,7 +25,7 @@ require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
 local spawnGenbu, spawnSquads -- Forward-declared functions
--- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis zoomTo (Hook functions passed by name)
+-- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis startAmbush zoomTo (Hook functions passed by name)
 
 -- Mission constants
 local seirplanet, seirsys = planet.getS("Edergast")
