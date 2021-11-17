@@ -218,6 +218,7 @@ function second_wave_attacks()
       end
 end
 
+--[[
 -- Separate mission for a mid-mission interjection <-- bad organization <-- FIXME: it's worse, nothing even refers to this.
 local function cadet_first_comm()
       if mem.cadet1_alive then
@@ -227,6 +228,7 @@ local function cadet_first_comm()
       else player.msg( fmt.f(_("Broadcast {pnt}> The raiders are retreating!"), {pnt=mem.this_planet}))
       end
 end
+--]]
 
 
 -- When the raiders are on the run then the Empire takes over
