@@ -8,8 +8,8 @@ local col_black, col_slot_bg, col_slot_heat, col_txt_enm, col_txt_std, col_txt_w
 local bar_w, bar_h, radar_h, radar_w, radar_x, radar_y, screen_h, screen_w, slot_w, slot_h, slot_img_offs_x, slot_img_offs_y, slot_img_w
 local aset, pp, stats, wset
 -- This script has a lot of globals. It really loves them.
--- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
---local active, active_icons, bar_bg, bar_bg_h, bar_bg_w, bar_sheen, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, ptarget, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, timers, time_w, time_x, time_y, weap_icons
+-- The below variables aren't part of the GUI API and aren't accessed via _G:
+-- luacheck: globals active active_icons bar_bg bar_bg_h bar_bg_w bar_sheen blinkcol cargo_free cargo_w cargo_x cargo_y cooldown cooldown_bg cooldown_bg_h cooldown_bg_w cooldown_bg_x cooldown_bg_y cooldown_frame cooldown_frame_h cooldown_frame_w cooldown_frame_x cooldown_frame_y cooldown_panel cooldown_panel_x cooldown_panel_y cooldown_sheen cooldown_sheen_x cooldown_sheen_y credits_w credits_x credits_y deffont_h lockonA lockonB lockon_h lockon_w max_slots player_pane pl_pane_h pl_pane_w pl_pane_x pl_pane_y ptarget slot_start_x slot_txt_offs_x slot_txt_offs_y slot_txt_w slot_w timers time_w time_x time_y weap_icons
 --Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
 -- Namespaces
