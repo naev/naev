@@ -1,3 +1,4 @@
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
 local fmt = require "format"
 local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
