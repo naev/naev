@@ -100,11 +100,12 @@ function starfield.init( params )
 
    -- Per system parameters
    prng:setSeed( system.cur():nameRaw() )
-   local theta = prng:random()*2*math.pi
-   local phi = prng:random()*2*math.pi
-   local psi = prng:random()*2*math.pi
-   local rx, ry = vec2.newP( 6+1*prng:random(), 3+3*prng:random() ):get()
-   local rz = 1+1*prng:random()
+   local theta = prng:random() * math.pi/10.0
+   local phi = prng:random() * math.pi/10.0
+   local psi = prng:random() * math.pi/10.0
+   local rx, ry = vec2.newP( 3+1*prng:random(), 7+1*prng:random() ):get()
+   local rz = 5+1*prng:random()
+   --rx, ry, rz = 5, 7, 11
    sz = 1+1*prng:random()
    sb = naev.conf().bg_brightness
 

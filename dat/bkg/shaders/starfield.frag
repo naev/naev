@@ -9,6 +9,11 @@ uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
 uniform sampler2D u_prevtex;
 
 const vec3 R      = vec3( %f, %f, %f);
+const vec3 UP     = vec3( 0.0, 1.0, 0.0 );
+const vec3 AZ     = normalize( -R );
+const vec3 AX     = normalize( cross( AZ, UP ) );
+const vec3 AY     = normalize( cross( AX, AZ ) );
+const mat3 A      = mat3( AX, AY, AZ );
 const float theta = %f;
 const float cx = cos(theta);
 const float sx = sin(theta);
@@ -33,7 +38,7 @@ const mat3 Rz = mat3(
    -sz,  cz, 0.0,
    0.0, 0.0, 1.0
 );
-const mat3 ROT = Rx * Ry * Rz;
+const mat3 ROT = A * Rx * Ry * Rz;
 const int ITERATIONS = 17;
 const int VOLSTEPS   = 8;
 const float SPARSITY = 0.7; /* 0.4 to 0.5 (sparse) */
