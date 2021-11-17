@@ -46,7 +46,7 @@ function background ()
       end
    end
    if maxscale > 0 then
-      nebula.init{ prng=prng, size=8000*maxscale, offset=(system.get("Sol"):pos()-cpos)*2 }
+      nebula.init{ prng=prng, size=8000*maxscale, offset=(system.get("Sol"):pos()-cpos)*2, movemod=0.2 }
    end
 
    -- Haven
@@ -56,7 +56,7 @@ function background ()
    nebula_add_local( cpos, system.get("Mizar"), 150, { prng=prng, hue_inner=80/360, hue_outter=120/360, opacity=55, granularity=0.3 } )
 
    -- PSO
-   nebula_add_local( cpos, system.get("PSO"), 300, { prng=prng, hue_inner=330/360, hue_outter=270/360, opacity=58, granularity=0.5 } )
+   nebula_add_local( cpos, system.get("PSO"), 300, { prng=prng, hue_inner=330/360, hue_outter=270/360, opacity=58, granularity=0.5, movemod=0.5 } )
 
    starfield.init()
 end

@@ -18,7 +18,8 @@ function nebula.init( params )
    local absorption = params.absorption  or 45
    local granularity = params.granularity or 1
    local size     = params.size or 1024
-   local move     = params.move or (0.005 * size / 1024 )
+   local movemod  = params.movemod or 1
+   local move     = params.move or (0.003 * size / 1024 * movemod)
    local offset   = params.offset or vec2.new()
    local angle    = params.angle or 0
 

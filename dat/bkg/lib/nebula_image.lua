@@ -35,9 +35,9 @@ function nebula_image.init( filename )
       local w,h   = img:dim()
       local r     = prng:random() * csys:radius()/2
       local a     = 2*math.pi*prng:random()
-      local x     = r*math.cos(a)
-      local y     = r*math.sin(a)
-      local move  = 0.01 + prng:random()*0.01
+      local move  = 0.002 + prng:random()*0.001
+      local x     = r*math.cos(a) / move
+      local y     = r*math.sin(a) / move
       local scale = 1 + (prng:random()*0.5 + 0.5)*((2048+2048)/(w+h))
       local angle = prng:random()*math.pi*2
       local md    = (w+h)/2
