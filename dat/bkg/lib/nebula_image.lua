@@ -1,6 +1,7 @@
 --[[
    Nebula framework.
 --]]
+local starfield = require "bkg.lib.starfield"
 local lf = require 'love.filesystem'
 local prng = require("prng").new()
 -- We use the default background too!
@@ -39,14 +40,20 @@ function nebula_image.init( filename )
       local move  = 0.01 + prng:random()*0.01
       local scale = 1 + (prng:random()*0.5 + 0.5)*((2048+2048)/(w+h))
       local angle = prng:random()*math.pi*2
-      if scale > 1.9 then
-         scale = 1.9
+      local md    = (w+h)/2
+      if 1280 < scale * md then
+         scale = 1280 / md
       end
       scale = scale * (nw*nh)/(1280*720)
       bkg.image( img, x, y, move, scale, angle )
 
       -- Default nebula background
-      background_default()
+      -- A bit too crowded so disabled for now
+      --background_default()
+
+      -- Just use starfield
+      starfield.init()
+      renderbg = starfield.render
    end
 end
 
