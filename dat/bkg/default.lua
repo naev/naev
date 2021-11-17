@@ -31,6 +31,8 @@ function background ()
    if nebud > 0 then
       return
    end
+   local prng = require("prng").new()
+   prng:setSeed( system.cur():nameRaw() )
 
    local cpos = csys:pos()
    local radius = 300

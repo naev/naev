@@ -22,8 +22,11 @@ function nebula.init( params )
    local angle    = params.angle or 0
 
    -- Initialize seed
-   local prng     = params.prng or require("prng").new()
-   prng:setSeed( system.cur():nameRaw() )
+   local prng     = params.prng
+   if not prng then
+      prng = require("prng").new()
+      prng:setSeed( system.cur():nameRaw() )
+   end
 
    local function R()
       return (2*prng:random()-1)*1000
