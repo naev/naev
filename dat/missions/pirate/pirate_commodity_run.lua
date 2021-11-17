@@ -28,11 +28,12 @@ require "missions.neutral.commodity_run"
 mem.misn_title = _("Exploit the Demand for {cargo}")
 mem.misn_desc = _("Pirates on {pnt} have been demanding a lot of {cargo} lately, and that's driving the price up. If you find some of it and bring it back, you can make some good money off of them.")
 
-cargo_land = {}
-cargo_land[1] = _("The containers of {cargo} are bought by the boatload, eventually earning you {credits}.")
-cargo_land[2] = _("The containers of {cargo} are quickly sold out, earning you {credits}.")
-cargo_land[3] = _("The containers of {cargo} are eventually all sold to the pirates, though it takes some time. Your total earnings in the end amount to {credits}.")
-cargo_land[4] = _("Pirates immediately line up to buy your {cargo}. Before you know it, you have none left, and you find that you're {credits} richer.")
+cargo_land = {
+   _("The containers of {cargo} are bought by the boatload, eventually earning you {credits}."),
+   _("The containers of {cargo} are quickly sold out, earning you {credits}."),
+   _("The containers of {cargo} are eventually all sold to the pirates, though it takes some time. Your total earnings in the end amount to {credits}."),
+   _("Pirates immediately line up to buy your {cargo}. Before you know it, you have none left, and you find that you're {credits} richer."),
+}
 
 mem.osd_title = _("Pirate Sales")
 

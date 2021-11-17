@@ -26,11 +26,13 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
-success_text = {}
-success_text[1] = _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]])
+success_text = {
+   _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]]),
+}
 
-pay_text = {}
-pay_text[1] = _([[When you return, Benito hands you the agreed-upon payment, after which you exchange some pleasantries before parting ways once again.]])
+pay_text = {
+   _([[When you return, Benito hands you the agreed-upon payment, after which you exchange some pleasantries before parting ways once again.]]),
+}
 
 function create ()
    mem.missys = system.get( "Theras" )

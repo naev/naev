@@ -21,51 +21,58 @@
 local fmt = require "format"
 require "missions.neutral.pirbounty_dead"
 
-subdue_text    = {}
-subdue_text[1] = _("You and your crew infiltrate the ship's pathetic security and subdue the dissident. You transport them to your ship.")
-subdue_text[2] = _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues the dissident.")
-subdue_text[3] = _("The ship's security system turns out to be no match for your crew. You infiltrate the ship and capture the dissident.")
-subdue_text[4] = _("Your crew infiltrates the ship and captures the dissident.")
-subdue_text[5] = _("Getting past this ship's security was surprisingly easy. Didn't this dissident know that they were wanted?")
+subdue_text = {
+   _("You and your crew infiltrate the ship's pathetic security and subdue the dissident. You transport them to your ship."),
+   _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues the dissident."),
+   _("The ship's security system turns out to be no match for your crew. You infiltrate the ship and capture the dissident."),
+   _("Your crew infiltrates the ship and captures the dissident."),
+   _("Getting past this ship's security was surprisingly easy. Didn't this dissident know that they were wanted?"),
+}
 
-subdue_fail_text    = {}
-subdue_fail_text[1] = _("Try as you might, you cannot get past the dissident's security system. Defeated, you and your crew return to the ship.")
-subdue_fail_text[2] = _("The ship's security system locks you out.")
-subdue_fail_text[3] = _("Your crew comes close to getting past the dissident's security system, but ultimately fails.")
-subdue_fail_text[4] = _("It seems your crew is no match for this ship's security system. You return to your ship.")
+subdue_fail_text = {
+   _("Try as you might, you cannot get past the dissident's security system. Defeated, you and your crew return to the ship."),
+   _("The ship's security system locks you out."),
+   _("Your crew comes close to getting past the dissident's security system, but ultimately fails."),
+   _("It seems your crew is no match for this ship's security system. You return to your ship."),
+}
 
-pay_kill_text    = {}
-pay_kill_text[1] = _("After verifying that you killed your target, an officer hands you your pay.")
-pay_kill_text[2] = _("After verifying that the target is indeed dead, the tired-looking officer smiles and hands you your pay.")
-pay_kill_text[3] = _("The officer thanks you and promptly hands you your pay.")
-pay_kill_text[4] = _("The officer takes you into a locked room, where the death of your target is quietly verified. The officer then pays you and sends you off.")
-pay_kill_text[5] = _("The officer verifies the death of your target, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
+pay_kill_text = {
+   _("After verifying that you killed your target, an officer hands you your pay."),
+   _("After verifying that the target is indeed dead, the tired-looking officer smiles and hands you your pay."),
+   _("The officer thanks you and promptly hands you your pay."),
+   _("The officer takes you into a locked room, where the death of your target is quietly verified. The officer then pays you and sends you off."),
+   _("The officer verifies the death of your target, goes through the necessary paperwork, and hands you your pay, looking bored the entire time."),
+}
 
-pay_capture_text    = {}
-pay_capture_text[1] = _("An officer takes the dissident into custody and hands you your pay.")
-pay_capture_text[2] = _("The dissident puts up a fight as you take them to the officer, who then hands you your pay.")
-pay_capture_text[3] = _("The officer you deal with seems to especially dislike dissidents. The one you captured is taken off your hands and you are handed your pay without a word.")
-pay_capture_text[4] = _("An officer rushes the fearful-looking dissident into a secure hold, pays you the appropriate bounty, and takes the dissident into custody.")
-pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured your target alive. Nonetheless, they politely take the dissident off of your hands and hand you your pay.")
+pay_capture_text = {
+   _("An officer takes the dissident into custody and hands you your pay."),
+   _("The dissident puts up a fight as you take them to the officer, who then hands you your pay."),
+   _("The officer you deal with seems to especially dislike dissidents. The one you captured is taken off your hands and you are handed your pay without a word."),
+   _("An officer rushes the fearful-looking dissident into a secure hold, pays you the appropriate bounty, and takes the dissident into custody."),
+   _("The officer you greet gives you a puzzled look when you say that you captured your target alive. Nonetheless, they politely take the dissident off of your hands and hand you your pay."),
+}
 
-share_text    = {}
-share_text[1] = _([["Greetings. I can see that you were trying to collect a bounty. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]])
-share_text[2] = _([["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]])
-share_text[3] = _([["Hey, thanks for the help back there. I don't know if I would have been able to handle that dissident alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]])
-share_text[4] = _([["Heh, thanks! I think I would have been able to take out the target by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]])
-share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]])
+share_text = {
+   _([["Greetings. I can see that you were trying to collect a bounty. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]]),
+   _([["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]]),
+   _([["Hey, thanks for the help back there. I don't know if I would have been able to handle that dissident alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]]),
+   _([["Heh, thanks! I think I would have been able to take out the target by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]]),
+   _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]]),
+}
 
 -- Messages
-msg    = {}
-msg[1] = _("MISSION FAILURE! Your target got away.")
-msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
-msg[3] = _("MISSION FAILURE! You have left the {sys} system.")
+msg = {
+   _("MISSION FAILURE! Your target got away."),
+   _("MISSION FAILURE! Another pilot eliminated your target."),
+   _("MISSION FAILURE! You have left the {sys} system."),
+}
 
 mem.osd_title = _("Bounty Hunt")
-mem.osd_msg    = {}
-mem.osd_msg[1] = _("Fly to the {sys} system")
-mem.osd_msg[2] = _("Kill or capture your target")
-mem.osd_msg[3] = _("Land in {fct} territory to collect your bounty")
+mem.osd_msg = {
+   _("Fly to the {sys} system"),
+   _("Kill or capture your target"),
+   _("Land in {fct} territory to collect your bounty"),
+}
 
 
 function create ()

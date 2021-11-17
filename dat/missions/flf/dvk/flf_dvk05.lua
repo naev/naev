@@ -26,8 +26,9 @@ local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_pirates"
 
 
-pay_text = {}
-pay_text[1] = _([[Benito seems pleased upon your return to hear that the mission was successful. "Excellent," she says. "It's kind of an annoying detour, I know, but I appreciate that your help very much. I'll try to have a better mission for you next time, eh?" You both grin and exchange some pleasantries before parting ways.]])
+pay_text = {
+   _([[Benito seems pleased upon your return to hear that the mission was successful. "Excellent," she says. "It's kind of an annoying detour, I know, but I appreciate that your help very much. I'll try to have a better mission for you next time, eh?" You both grin and exchange some pleasantries before parting ways.]]),
+}
 
 function create ()
    mem.missys = system.get( "Zylex" )
