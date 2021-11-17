@@ -50,6 +50,7 @@ local mispla, missys = planet.getS("Dvaer Prime")
 
 local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
 -- luacheck: globals assault enter escort_attacked jumpout land oppo_attacked oppo_boarded oppo_dead oppo_disabled oppo_jump player_disabled (Hook functions passed by name)
+-- luacheck: globals cleanNbegin competitor1 competitor2 competitor3 competitor4 competitor5 (NPC functions passed by name)
 
 function create ()
    if not misn.claim ( missys ) then

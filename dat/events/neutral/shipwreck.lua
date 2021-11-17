@@ -56,8 +56,8 @@ function create ()
     hook.timer(3.0, "broadcast")
 
     -- Set hooks
-    hook.pilot( p, "board", "rescue" )
-    hook.pilot( p, "death", "destroyevent" )
+    hook.pilot( derelict, "board", "rescue" )
+    hook.pilot( derelict, "death", "destroyevent" )
     hook.enter("endevent")
     hook.land("endevent")
 end

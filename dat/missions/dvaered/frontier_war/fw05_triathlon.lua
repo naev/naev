@@ -44,6 +44,7 @@ local portrait = require "portrait"
 local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
 local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
 -- luacheck: globals compDie compHit compHitS competitorIdle dehostilify endPankrationT endStadion endThrow endTimer enter introduction land message playerHit playerHitS spawnNpcs startPankration startStadion startThrow takeoff targetHit targetIdle testEscape timerIncrement timerIncrementT (Hook functions passed by name)
+-- luacheck: globals approach discussDad discussHam discussKlk discussLbl discussNkv discussPvt discussSst discussWdw tamCommon (NPC functions passed by name)
 
 -- common hooks
 message = fw.message

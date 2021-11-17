@@ -62,6 +62,7 @@ local lmisn = require "lmisn"
 mem.misn_state = nil
 local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
 -- luacheck: globals board death disable enter equip idle land reset_osd_hook spotter_spot timer_pirate timer_pirate_checkbribe timer_pirate_nelly timer_spotter timer_spotter_start (Hook functions passed by name)
+-- luacheck: globals approach_nelly (NPC functions passed by name)
 
 local reward_amount = tutnel.reward.nelly02
 

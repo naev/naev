@@ -43,7 +43,7 @@ local pir = require "common.pirate"
 
 mem.reward = 300e3
 
-local defense_fleet, raider_fleet, raiders_left -- Non-persistent state
+local defense_fleet, fraider, raider_fleet, raiders_left -- Non-persistent state
 local defend_system -- Forward-declared functions
 -- luacheck: globals add_cas_and_check celebrate_victory congratulations enter_system ship_enters victorious (Hook functions passed by name)
 
@@ -115,7 +115,7 @@ end
 
 -- There's a battle to defend the system
 function defend_system()
-   local fraider = faction.dynAdd( "Pirate", "Raider", _("Raider") )
+   fraider = faction.dynAdd( "Pirate", "Raider", _("Raider") )
 
   -- Makes the system empty except for the two fleets. No help coming.
       pilot.clear ()

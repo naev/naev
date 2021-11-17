@@ -39,6 +39,7 @@ local shark = require "common.shark"
 local badguys -- Non-persistent state
 local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
 -- luacheck: globals BomberDead CorvetteDead CruiserDead FighterDead InterceptorDead LlamaDead ambush enter land (Hook functions passed by name)
+-- luacheck: globals beginrun (NPC functions passed by name)
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
@@ -284,7 +285,7 @@ function cruiser()
       badguy:setHealth(100,100)
       badguy:setEnergy(100)
 
-      hook.pilot( badguys[i], "death", "CruiserDead")
+      hook.pilot( badguy, "death", "CruiserDead")
 
       -- Escort
       if mem.nCorvett >= 1 then
@@ -344,7 +345,7 @@ function add_llama()
    if mem.nLlamas == 1 then
       local useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
       useless:setHostile()
-      hook.pilot( badguys[i], "death", "LlamaDead")
+      hook.pilot( useless, "death", "LlamaDead")
    end
 end
 

@@ -38,6 +38,7 @@ local fmt = require "format"
 mem.misn_state = nil
 local enemies, enemies_weak, noise_shader, pmalik, thug_leader, thug_pilots -- Non-persistent state
 -- luacheck: globals countdown countdown_done countdown_start enter enter_the_ring generate_npc leave_the_ring maikki_arrives_extra maikki_arrives_extra_real maikki_arrives_real malik_boarded malik_death malik_disabled malik_respawn_real malik_spawn_more malik_spawn_more_real malik_speech malik_taunt player_death thug_heartbeat (Hook functions passed by name)
+-- luacheck: globals approach_kex approach_malik (NPC functions passed by name)
 
 local gauntlet_start -- Forward-declared functions
 

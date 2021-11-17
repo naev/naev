@@ -287,7 +287,7 @@ function accept()
          hook.land("land")
          hook.enter("enter")
       else
-         tk.msg( _("Not Enough Money"), not_enough_text )
+         tk.msg( _("Not Enough Money"), _([["Do you take me for a fool? Get out of here! Come back when you have enough money."]]) )
          misn.finish()
       end
    else

@@ -39,6 +39,7 @@ local lmisn = require "lmisn"
 local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
 local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
 -- luacheck: globals ambust_msg clue_attacked enter hail hail_ad hailme land player_flee target_death target_flee target_land (Hook functions passed by name)
+-- luacheck: globals clue_bar (NPC functions passed by name)
 
 local quotes = {}
 local comms = {}

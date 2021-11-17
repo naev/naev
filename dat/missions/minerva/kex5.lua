@@ -42,6 +42,7 @@ local fmt = require "format"
 mem.misn_state = nil
 local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
 -- luacheck: globals enter landed strangelove_board strangelove_dead strangelove_hail thug_check thug_heartbeat thugs_cleared (Hook functions passed by name)
+-- luacheck: globals approach_kex (NPC functions passed by name)
 
 local landed_lab -- Forward-declared functions
 

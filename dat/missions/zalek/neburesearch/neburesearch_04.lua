@@ -58,7 +58,7 @@ function accept()
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
         fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
-        fmt.f(_("Return to {pnt} in the {pnt} system."), {pnt=homeworld, hsys=omeworld_sys}),
+        fmt.f(_("Return to {pnt} in the {pnt} system."), {pnt=homeworld, sys=homeworld_sys}),
     })
 
     hook.land("land")
