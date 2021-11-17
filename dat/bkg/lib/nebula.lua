@@ -30,7 +30,7 @@ function nebula.init( params )
    prng:setSeed( system.cur():nameRaw() )
 
    -- Initialize shader
-   local size = math.min( 0.25*scale, 1024 )
+   local size = math.min( 0.25*scale, 1024 ) -- over 1024 makes intel GPUs choke
    local w, h = size, size
    scale = scale / size
    local shader = lg.newShader(
