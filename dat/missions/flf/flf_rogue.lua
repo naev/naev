@@ -22,7 +22,10 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+-- luacheck: globals enter land_flf leave (shared with derived mission flf_dvk07)
+
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
+local rogue_spawnFLF, rogue_spawnRogue -- Forward-declared functions
 
 local misn_title  = {}
 misn_title[1] = _("FLF: Rogue Pilot in {sys}")

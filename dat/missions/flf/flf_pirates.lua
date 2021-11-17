@@ -21,7 +21,7 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
+-- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
 
 misn_title = {
    _("FLF: Lone Pirate Disturbance in {sys}"),
@@ -39,12 +39,14 @@ pay_text = {
    _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised."),
 }
 
-
 mem.osd_desc = {
    _("Fly to the {sys} system"),
    _("Eliminate the pirates"),
    _("Return to FLF base"),
 }
+
+local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
+local patrol_spawnFLF, patrol_spawnPirates -- Forward-declared functions
 
 
 function setDescription ()

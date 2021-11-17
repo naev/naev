@@ -28,6 +28,8 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
+
 mem.misn_title = _("A Friend's Aid")
 mem.misn_desc = _("Chelsea needs you to escort her to {pnt}.")
 

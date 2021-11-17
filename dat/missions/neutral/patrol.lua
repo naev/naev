@@ -35,6 +35,8 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
+-- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
+
 pay_text    = {
    _("After going through some paperwork, an officer hands you your pay and sends you off."),
    _("A tired-looking officer verifies your mission log and hands you your pay."),

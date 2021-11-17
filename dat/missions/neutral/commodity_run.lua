@@ -30,6 +30,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
 
+-- luacheck: globals cargo_land commchoices (shared with derived missions flf.commodity_run, pirate.pirate_commodity_run)
+
 --Mission Details
 mem.misn_title = _("{cargo} Delivery")
 mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")

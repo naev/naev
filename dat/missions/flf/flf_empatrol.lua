@@ -19,9 +19,11 @@
    FLF Empire patrol elimination mission
 
 --]]
-require "missions.flf.flf_patrol"
 local flf = require "missions.flf.flf_common"
 local fmt = require "format"
+require "missions.flf.flf_patrol"
+
+-- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
 
 local patrol_spawnEmpire -- Forward-declared functions
 
