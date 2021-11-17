@@ -28,6 +28,7 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
+local fail -- Forward-declared functions
 -- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
 -- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 

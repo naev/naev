@@ -391,7 +391,7 @@ function imDoingNothing( self )
 end
 
 -- A controlled ship is too close from station
-function toocloseControl( ind )
+local function toocloseControl( ind )
    if (not canland[ind]) then -- Player failed to control a ship: penalty
       tk.msg( _("An unidentified ship came close to the station"), _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.") )
       mem.reward = mem.reward - 10e3
@@ -414,7 +414,7 @@ function toocloseControl5()
 end
 
 -- A ship approaches from DHC: assign it to player
-function incomingControl( self )
+local function incomingControl( self )
    audio.soundPlay( "jump" )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and control their security clearance code"), {player=player.name(), plt=self} ) )
    self:setHilight()

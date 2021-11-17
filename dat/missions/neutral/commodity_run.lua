@@ -53,7 +53,7 @@ mem.paying_faction = faction.get("Independent")
 commchoices = nil
 
 
-function update_active_runs( change )
+local function update_active_runs( change )
    local current_runs = var.peek( "commodity_runs_active" )
    if current_runs == nil then current_runs = 0 end
    var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )
