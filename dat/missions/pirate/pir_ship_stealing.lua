@@ -38,6 +38,7 @@ local lmisn = require "lmisn"
 require "factions.equip.generic"
 
 -- luacheck: globals enter land (Hook functions passed by name)
+-- luacheck: globals equip_generic (From "factions.equip.generic")
 
 local base_price = 100e3
 
