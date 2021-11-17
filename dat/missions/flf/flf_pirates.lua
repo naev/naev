@@ -163,7 +163,7 @@ function enter ()
             if not mem.late_arrival then
                patrol_spawnFLF( mem.flfships, mem.last_system, _("Alright, let's have at them!") )
             else
-               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
+               mem.spawner = hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -174,7 +174,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.pirate_ships_left = 0
    mem.last_system = system.cur()
 end
