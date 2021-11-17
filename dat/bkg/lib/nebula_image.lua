@@ -33,11 +33,11 @@ function nebula_image.init( filename )
       local img   = tex.open( path )
       local nw,nh = gfx.dim()
       local w,h   = img:dim()
-      local r     = prng:random() * csys:radius()/2
+      local r     = prng:random() * csys:radius()
       local a     = 2*math.pi*prng:random()
       local move  = 0.002 + prng:random()*0.001
-      local x     = r*math.cos(a) / move
-      local y     = r*math.sin(a) / move
+      local x     = 10*r*math.cos(a)
+      local y     = 10*r*math.sin(a)
       local scale = 1 + (prng:random()*0.5 + 0.5)*((2048+2048)/(w+h))
       local angle = prng:random()*math.pi*2
       local md    = (w+h)/2
