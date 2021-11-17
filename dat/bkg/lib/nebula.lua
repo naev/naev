@@ -21,8 +21,8 @@ function nebula.init( params )
    local hue_outter= params.hue_outter or 240/360
    local opacity  = params.opacity or 60
    local absorption = params.absorption  or 45
-   local scale    = params.scale or 1
-   local move     = params.move or (0.005 * scale )
+   local scale    = params.scale or 1024
+   local move     = params.move or (0.005 * scale / 1024 )
    local offset   = params.offset or vec2.new()
    local angle    = params.angle or 0
 
@@ -30,7 +30,9 @@ function nebula.init( params )
    prng:setSeed( system.cur():nameRaw() )
 
    -- Initialize shader
-   local w, h = 1024, 1024
+   local size = math.min( 0.25*scale, 1024 )
+   local w, h = size, size
+   scale = scale / size
    local shader = lg.newShader(
       string.format(nebulafrag, steps, hue_inner, hue_outter, absorption, opacity, w, h, R(), R(), R()),
       love_shaders.vertexcode )
