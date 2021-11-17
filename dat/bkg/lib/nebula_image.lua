@@ -2,7 +2,6 @@
    Nebula framework.
 --]]
 local starfield = require "bkg.lib.starfield"
-local lf = require 'love.filesystem'
 local prng = require("prng").new()
 -- We use the default background too!
 require "bkg.default"
