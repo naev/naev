@@ -61,6 +61,7 @@ local lmisn = require "lmisn"
 --]]
 mem.misn_state = nil
 local derelict -- Non-persistent state
+-- luacheck: globals board clear_target_hyperspace enter equip equipment info info_cargo info_mission info_reminder info_ship info_shiplog info_standing info_weapons land outfit_buy outfits talk_derelict target_hyperspace (Hook functions passed by name)
 
 -- Constants
 local cargo_type  = commodity.get("Food")

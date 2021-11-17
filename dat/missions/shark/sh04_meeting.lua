@@ -33,6 +33,7 @@ local shark = require "common.shark"
 
 local badguy, badguyprox -- Non-persistent state
 local ambush -- Forward-declared functions
+-- luacheck: globals enabling enter land reveal (Hook functions passed by name)
 
 --Change here to change the planets and the systems
 local mispla, missys = planet.getS("Curie")

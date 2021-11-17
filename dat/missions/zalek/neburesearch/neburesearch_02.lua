@@ -28,6 +28,8 @@ local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+-- luacheck: globals land (Hook functions passed by name)
+
 -- Mission constants
 local credits = 400e3
 local homeworld, homeworld_sys = planet.getS("Jorla")

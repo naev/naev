@@ -35,6 +35,7 @@ local giverimage = portrait.getFullPath(giverportrait)
 local receivername = _("Burly Individual")
 local receiverimage = portrait.getFullPath(portrait.get())
 
+-- luacheck: globals land (Hook functions passed by name)
 
 function create()
    -- Note: this mission does not make any system claims.

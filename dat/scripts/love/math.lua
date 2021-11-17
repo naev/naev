@@ -36,11 +36,13 @@ function love_math.Transform:setTransformation( ... )
       return self
    end
    local a = arg[3]
+   self:rotate( a )
    if n<4 then
       return self
    end
    local sx = arg[4]
    local sy = arg[5] or sx
+   self:scale( sx, sy )
    return self
 end
 function love_math.Transform:reset()

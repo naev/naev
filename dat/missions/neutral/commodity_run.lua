@@ -30,15 +30,19 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
 
+-- luacheck: globals cargo_land commchoices (shared with derived missions flf.commodity_run, pirate.pirate_commodity_run)
+-- luacheck: globals enter land (Hook functions passed by name)
+
 --Mission Details
 mem.misn_title = _("{cargo} Delivery")
 mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
-cargo_land = {}
-cargo_land[1] = _("The containers of {cargo} are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid {credits} and summarily dismissed.")
-cargo_land[2] = _("The containers of {cargo} are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}.")
-cargo_land[3] = _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined.")
-cargo_land[4] = _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish.")
+cargo_land = {
+   _("The containers of {cargo} are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid {credits} and summarily dismissed."),
+   _("The containers of {cargo} are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}."),
+   _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined."),
+   _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish."),
+}
 
 mem.osd_title = _("Commodity Delivery")
 mem.paying_faction = faction.get("Independent")
@@ -49,7 +53,7 @@ mem.paying_faction = faction.get("Independent")
 commchoices = nil
 
 
-function update_active_runs( change )
+local function update_active_runs( change )
    local current_runs = var.peek( "commodity_runs_active" )
    if current_runs == nil then current_runs = 0 end
    var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )

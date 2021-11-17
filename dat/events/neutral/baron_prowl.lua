@@ -16,6 +16,7 @@
 --]]
 
 local pnt = planet.get("Ulios")
+-- luacheck: globals idle (Hook functions passed by name)
 
 function create()
     -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.

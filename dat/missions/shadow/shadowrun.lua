@@ -33,6 +33,8 @@ local shipname = _("Seiryuu")
 
 local seiryuu -- Non-persistent state
 local dateresolution -- Forward-declared functions
+-- luacheck: globals abort board date enter land (Hook functions passed by name)
+-- luacheck: globals jorek officer soldier1 soldier2 (NPC functions passed by name)
 
 function create ()
    if not misn.claim( {sys, sys2} ) then

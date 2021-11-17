@@ -30,6 +30,7 @@ local neu = require 'common.neutral'
 local reward = 300e3
 
 local target -- Non-persistent state
+-- luacheck: globals enter land targetBoard targetDeath targetExploded targetIdle (Hook functions passed by name)
 
 function create ()
     mem.cursys = system.cur()

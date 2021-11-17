@@ -21,27 +21,33 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+-- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
+-- luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
+
+misn_title = {
+   _("FLF: Lone Pirate Disturbance in {sys}"),
+   _("FLF: Minor Pirate Disturbance in {sys}"),
+   _("FLF: Moderate Pirate Disturbance in {sys}"),
+   _("FLF: Substantial Pirate Disturbance in {sys}"),
+   _("FLF: Dangerous Pirate Disturbance in {sys}"),
+   _("FLF: Highly Dangerous Pirate Disturbance in {sys}"),
+}
+
+pay_text = {
+   _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand."),
+   _("While polite, something seems off about the smile plastered on the official who hands you your pay."),
+   _("The official thanks you dryly for your service and hands you a credit chip."),
+   _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised."),
+}
+
+mem.osd_desc = {
+   _("Fly to the {sys} system"),
+   _("Eliminate the pirates"),
+   _("Return to FLF base"),
+}
+
 local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
-
-misn_title = {}
-misn_title[1] = _("FLF: Lone Pirate Disturbance in {sys}")
-misn_title[2] = _("FLF: Minor Pirate Disturbance in {sys}")
-misn_title[3] = _("FLF: Moderate Pirate Disturbance in {sys}")
-misn_title[4] = _("FLF: Substantial Pirate Disturbance in {sys}")
-misn_title[5] = _("FLF: Dangerous Pirate Disturbance in {sys}")
-misn_title[6] = _("FLF: Highly Dangerous Pirate Disturbance in {sys}")
-
-pay_text = {}
-pay_text[1] = _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand.")
-pay_text[2] = _("While polite, something seems off about the smile plastered on the official who hands you your pay.")
-pay_text[3] = _("The official thanks you dryly for your service and hands you a credit chip.")
-pay_text[4] = _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised.")
-
-
-mem.osd_desc    = {}
-mem.osd_desc[1] = _("Fly to the {sys} system")
-mem.osd_desc[2] = _("Eliminate the pirates")
-mem.osd_desc[3] = _("Return to FLF base")
+local patrol_spawnFLF, patrol_spawnPirates -- Forward-declared functions
 
 
 function setDescription ()
@@ -157,7 +163,7 @@ function enter ()
             if not mem.late_arrival then
                patrol_spawnFLF( mem.flfships, mem.last_system, _("Alright, let's have at them!") )
             else
-               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
+               mem.spawner = hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -168,7 +174,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.pirate_ships_left = 0
    mem.last_system = system.cur()
 end

@@ -14,6 +14,9 @@
 local vn = require 'vn'
 local graphics = require 'love.graphics'
 
+-- luacheck: globals leave (Hook functions passed by name)
+-- luacheck: globals watchPoster (NPC functions passed by name)
+
 -- List of avaliable posters and index of the corresponding message
 local imagesNmsg = {
    {"gfx/vn/posters/dvaered/dv_athena.png", 1},

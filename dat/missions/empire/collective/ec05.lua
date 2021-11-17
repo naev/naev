@@ -60,6 +60,7 @@ local drone_reinforcements, paci, trinity
 local escorts = {}
 
 local enter, trinity_flee -- Forward-declared functions
+-- luacheck: globals add_escorts call_drones_jump drone_attacked final_talk jumpin jumpout land takeoff trinity_check trinity_jump trinity_kill (Hook functions passed by name)
 
 function create ()
    local missys = {misn_target_sys}

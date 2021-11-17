@@ -27,11 +27,15 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
-success_text = {}
-success_text[1] = _([[You receive a transmission. It's from Benito. "Operation successful!" she says. "You should get back to the base now before you get killed! I'll be waiting for you there."]])
+-- luacheck: globals enter land leave pay_text success_text (from base mission flf_diversion)
 
-pay_text = {}
-pay_text[1] = _([[As you dock the station, Benito approaches you with a smile. "Thank you for your help," she says. "The mission was a rousing success! What we've accomplished will greatly help our efforts against the Dvaereds in the future." She hands you a credit chip. "That's your payment. Until next time!" Benito sees herself out as a number of additional FLF soldiers congratulate you. It occurs to you that you never learned what the mission actually was. Perhaps you will find out some other time.]])
+success_text = {
+   _([[You receive a transmission. It's from Benito. "Operation successful!" she says. "You should get back to the base now before you get killed! I'll be waiting for you there."]]),
+}
+
+pay_text = {
+   _([[As you dock the station, Benito approaches you with a smile. "Thank you for your help," she says. "The mission was a rousing success! What we've accomplished will greatly help our efforts against the Dvaereds in the future." She hands you a credit chip. "That's your payment. Until next time!" Benito sees herself out as a number of additional FLF soldiers congratulate you. It occurs to you that you never learned what the mission actually was. Perhaps you will find out some other time.]]),
+}
 
 function create ()
    mem.missys = system.get( "Tuoladis" )

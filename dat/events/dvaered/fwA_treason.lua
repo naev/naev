@@ -32,6 +32,7 @@ local credits = 2e6
 local targetsys = system.get("Doranthex") -- TODO: not sure it's needed.
 
 local finish, jumphook, landhook, source_system, stage, vendetta, yohail -- Non-persistent state.
+-- luacheck: globals begin finish hail hailme leave reaction (Hook functions passed by name)
 
 -- Start at previous system
 function create ()

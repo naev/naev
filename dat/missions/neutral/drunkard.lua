@@ -28,6 +28,7 @@ local neu = require "common.neutral"
 local payment = 500e3
 
 local willie -- Non-persistent state
+-- luacheck: globals closehail hail land takeoff (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

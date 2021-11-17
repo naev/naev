@@ -25,6 +25,8 @@ local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
 local srm = require "common.soromid"
 
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
+
 mem.misn_title = _("Waste Collector")
 mem.misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
 

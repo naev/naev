@@ -24,6 +24,7 @@ local taiomi = require 'common.taiomi'
 local drones_create -- Forward-declared function
 local drone_faction = "Independent" -- Constant
 local drones, d_scav, evt_state -- Event state, never saved.
+-- luacheck: globals cutscene00 cutscene01 cutscene02 cutscene03 enter land (Hook functions passed by name)
 
 --[[
 -- Event states:

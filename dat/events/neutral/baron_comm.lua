@@ -26,6 +26,7 @@
 --]]
 
 local hyena, hailie
+-- luacheck: globals finish hail hailme (Hook functions passed by name)
 
 function create ()
     if not evt.claim(system.cur()) then

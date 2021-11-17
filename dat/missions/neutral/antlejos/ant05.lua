@@ -39,6 +39,8 @@ local rearpoint  = jump.get( mainsys, rearsys )
 local supplylanded, supplydied
 local sysmrk
 
+-- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyland (Hook functions passed by name)
+
 function create ()
    if ant.datecheck() then misn.finish() end
 

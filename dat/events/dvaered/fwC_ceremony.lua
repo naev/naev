@@ -21,6 +21,7 @@
 --]]
 
 local timer
+-- luacheck: globals finish msgme (Hook functions passed by name)
 
 function create ()
    local invasion_time = var.peek("invasion_time")

@@ -31,6 +31,7 @@ local broadcastmsg = {
    _("...and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
+-- luacheck: globals board broadcast hail leave (Hook functions passed by name)
 -- TODO boarding VN stuff should allow talking to Misi and such.
 
 function create ()

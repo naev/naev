@@ -19,6 +19,8 @@ DESCRIPTION:
 
 ]]--
 
+-- luacheck: globals enter_system (Hook functions passed by name)
+
 -- Stage one: something goes wrong in fabric of reality.
 local text = {}
 text[1] = _([[As you step out of your ship, the sunlight suddenly flickers. The local star in the sky turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.

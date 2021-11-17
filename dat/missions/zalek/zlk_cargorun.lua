@@ -21,6 +21,7 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 local logan -- Non-persistent state
+-- luacheck: globals closehail hail land takeoff (Hook functions passed by name)
 
 local payment = 800e3
 

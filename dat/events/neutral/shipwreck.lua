@@ -25,6 +25,7 @@ local fmt = require "format"
 
 local shipname = _("August")
 local bctimer, derelict, timer_delay -- Non-persistent state
+-- luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
@@ -55,8 +56,8 @@ function create ()
     hook.timer(3.0, "broadcast")
 
     -- Set hooks
-    hook.pilot( p, "board", "rescue" )
-    hook.pilot( p, "death", "destroyevent" )
+    hook.pilot( derelict, "board", "rescue" )
+    hook.pilot( derelict, "death", "destroyevent" )
     hook.enter("endevent")
     hook.land("endevent")
 end

@@ -31,6 +31,8 @@ local targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
 mem.reward = 50e3 -- Can get doubled, must be global!
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create () --No system shall be claimed by mission
    mem.started = false
 

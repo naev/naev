@@ -29,6 +29,7 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 local pacifier -- Non-persistent state
+-- luacheck: globals board dead enter failed flf_people hail_pacifier land wait_msg (Hook functions passed by name)
 
 --Change here to change the planets and the systems
 local missys = system.get("Arandon")

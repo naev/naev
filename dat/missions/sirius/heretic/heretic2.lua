@@ -28,6 +28,7 @@ local fmt = require "format"
 local srs = require "common.sirius"
 
 local attackers, recon -- Non-persistent state
+-- luacheck: globals death land out_sys_failure takeoff (Hook functions passed by name)
 
 function create()
    --this mission does make one system claim, in Suna.

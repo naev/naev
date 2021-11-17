@@ -36,6 +36,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+-- luacheck: globals board hail land (Hook functions passed by name)
+
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
 

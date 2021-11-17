@@ -19,24 +19,28 @@
    FLF Empire patrol elimination mission
 
 --]]
-require "missions.flf.flf_patrol"
 local flf = require "missions.flf.flf_common"
 local fmt = require "format"
+require "missions.flf.flf_patrol"
+
+-- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
 
 local patrol_spawnEmpire -- Forward-declared functions
 
-misn_title = {}
-misn_title[1] = _("FLF: Single Empire patrol in {sys}")
-misn_title[2] = _("FLF: Small Empire patrol in {sys}")
-misn_title[3] = _("FLF: Medium Empire patrol in {sys}")
-misn_title[4] = _("FLF: Large Empire patrol in {sys}")
-misn_title[5] = _("FLF: Dangerous Empire patrol in {sys}")
-misn_title[6] = _("FLF: Highly Dangerous Empire patrol in {sys}")
+misn_title = {
+   _("FLF: Single Empire patrol in {sys}"),
+   _("FLF: Small Empire patrol in {sys}"),
+   _("FLF: Medium Empire patrol in {sys}"),
+   _("FLF: Large Empire patrol in {sys}"),
+   _("FLF: Dangerous Empire patrol in {sys}"),
+   _("FLF: Highly Dangerous Empire patrol in {sys}"),
+}
 
-mem.osd_desc    = {}
-mem.osd_desc[1] = _("Fly to the {sys} system")
-mem.osd_desc[2] = _("Eliminate the Empire patrol")
-mem.osd_desc[3] = _("Return to FLF base")
+mem.osd_desc    = {
+   _("Fly to the {sys} system"),
+   _("Eliminate the Empire patrol"),
+   _("Return to FLF base"),
+}
 
 
 function setDescription ()

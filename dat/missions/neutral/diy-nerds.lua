@@ -30,6 +30,7 @@ local reward = 40e3
 
 -- helper functions, defined below
 local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
+-- luacheck: globals nerds_bar nerds_fly1 nerds_fly2 nerds_jump nerds_land1 nerds_land2 nerds_land3 nerds_takeoff (Hook functions passed by name)
 
 -- the mission cargo
 local misn_cargo1 = N_("Group of Nerds")

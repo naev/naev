@@ -21,6 +21,7 @@ local vn = require 'vn'
 
 local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
 local derelict -- Non-persistent state
+-- luacheck: globals board derelict_exploded destroyevent (Hook functions passed by name)
 
 local mission_list = {
    --[[

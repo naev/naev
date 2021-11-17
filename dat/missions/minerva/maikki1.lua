@@ -63,8 +63,9 @@ local stealthsys = system.get("Zerantix")
 --    5: looted ship
 mem.misn_state = nil
 local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
-
 local scavengers_encounter -- Forward-declared functions
+-- luacheck: globals board_wreck cutscene_hail cutscene_timeout cutscene_timer enter generate_npc scav_attacked stealthbroadcast stealthheartbeat stealthstart stealthstartanimation wreckcutscene (Hook functions passed by name)
+-- luacheck: globals approach_maikki approach_oldman approach_scavengers (NPC functions passed by name)
 
 function create ()
    if not misn.claim( {cutscenesys, stealthsys} ) then

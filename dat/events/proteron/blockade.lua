@@ -18,6 +18,8 @@
 local pos_top = vec2.new(-15000, 2500)
 local pos_bot = vec2.new(-11000, -6000)
 
+-- luacheck: globals cleanup heartbeat (Hook functions passed by name)
+
 local function spawn_fleet( pos )
    local ships  = {}
    if rnd.rnd() < 0.5 then

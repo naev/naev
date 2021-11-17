@@ -36,9 +36,13 @@ require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
 
-message = fw.message -- common hooks
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
+-- luacheck: globals beepMe checkClearance1 checkClearance2 checkClearance3 checkClearance4 checkClearance5 checkHamelsen deathOfStrafer flee hamelsenLanded imDoingNothing incomingHamelsen killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
+-- luacheck: globals incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5 toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 (Dynamic proximity hooks)
+-- luacheck: globals discussOff discussStr (NPC functions passed by name)
+
+message = fw.message -- common hooks
 
 -- TODO: hooks to penalize attacking people
 
@@ -389,7 +393,7 @@ function imDoingNothing( self )
 end
 
 -- A controlled ship is too close from station
-function toocloseControl( ind )
+local function toocloseControl( ind )
    if (not canland[ind]) then -- Player failed to control a ship: penalty
       tk.msg( _("An unidentified ship came close to the station"), _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.") )
       mem.reward = mem.reward - 10e3
@@ -412,7 +416,7 @@ function toocloseControl5()
 end
 
 -- A ship approaches from DHC: assign it to player
-function incomingControl( self )
+local function incomingControl( self )
    audio.soundPlay( "jump" )
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and control their security clearance code"), {player=player.name(), plt=self} ) )
    self:setHilight()

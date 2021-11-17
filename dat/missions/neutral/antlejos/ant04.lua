@@ -35,6 +35,8 @@ local reward = ant.rewards.ant04
 
 local returnpnt, returnsys = planet.getS("Antlejos V")
 
+-- luacheck: globals enter land protest (Hook functions passed by name)
+
 function create ()
    if ant.datecheck() then misn.finish() end
 

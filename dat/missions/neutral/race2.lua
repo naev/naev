@@ -23,6 +23,7 @@
 local fmt = require "format"
 
 local checkpoint, racers, target -- Non-persistent state
+-- luacheck: globals board counter jumpin land nexttarget1 nexttarget2 nexttarget3 racer1idle racer2idle racer3idle racerland stopcount takeoff (Hook functions passed by name)
 
 local chatter = {}
 chatter[1] = _("Let's do this!")

@@ -22,6 +22,7 @@ local vntk = require "vntk"
 
 local captainTP -- Non-persistent state
 local msg_info, spawn_captain_tp -- Forward-declared functions
+-- luacheck: globals enter enter_timer land land_bar land_commodity land_equipment land_mission land_outfits land_shipyard pilot_death pilot_death_timer takeoff taunt timer (Hook functions passed by name)
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )

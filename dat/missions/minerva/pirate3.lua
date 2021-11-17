@@ -52,6 +52,8 @@ local mainsys = system.get("Limbo")
 --    7. defend torture ship
 mem.misn_state = nil
 local harper -- Non-persistent state
+-- luacheck: globals enter generate_npc harper_board harper_death harper_gotattacked harper_hail harper_land start_spa (Hook functions passed by name)
+-- luacheck: globals approach_pir approach_spa (NPC functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then

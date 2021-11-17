@@ -37,6 +37,8 @@ local portrait = require "portrait"
 local lmisn = require "lmisn"
 require "factions.equip.generic"
 
+-- luacheck: globals enter land (Hook functions passed by name)
+-- luacheck: globals equip_generic (From "factions.equip.generic")
 
 local base_price = 100e3
 
@@ -286,7 +288,7 @@ function accept()
          hook.land("land")
          hook.enter("enter")
       else
-         tk.msg( _("Not Enough Money"), not_enough_text )
+         tk.msg( _("Not Enough Money"), _([["Do you take me for a fool? Get out of here! Come back when you have enough money."]]) )
          misn.finish()
       end
    else

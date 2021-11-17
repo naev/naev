@@ -21,17 +21,23 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
-success_text = {}
-success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
+-- luacheck: globals enter land leave pay_text success_text (shared with derived missions flf_dvk01, flf_dvk04)
+-- luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
 
-pay_text = {}
-pay_text[1] = _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay.")
-pay_text[2] = _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay.")
+success_text = {
+   _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base."),
+}
 
-mem.osd_desc    = {}
-mem.osd_desc[1] = _("Fly to the {sys} system")
-mem.osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
-mem.osd_desc[3] = _("Return to FLF base")
+pay_text = {
+   _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay."),
+   _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay."),
+}
+
+mem.osd_desc    = {
+   _("Fly to the {sys} system"),
+   _("Engage and destroy Dvaered ships to get their attention"),
+   _("Return to FLF base"),
+}
 
 
 function create ()
@@ -101,7 +107,7 @@ function update_dv ()
 end
 
 
-function add_attention( p )
+local function add_attention( p )
    p:setHilight( true )
 
    if not mem.job_done then

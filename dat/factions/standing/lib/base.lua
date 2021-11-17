@@ -22,17 +22,18 @@ _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 _fstanding_friendly = 70
 _fstanding_neutral = 0
 
-_ftext_standing = {}
-_ftext_standing[100] = _("Legend")
-_ftext_standing[90]  = _("Hero")
-_ftext_standing[70]  = _("Comrade")
-_ftext_standing[50]  = _("Ally")
-_ftext_standing[30]  = _("Partner")
-_ftext_standing[10]  = _("Associate")
-_ftext_standing[0]   = _("Neutral")
-_ftext_standing[-1]  = _("Outlaw")
-_ftext_standing[-30] = _("Criminal")
-_ftext_standing[-50] = _("Enemy")
+_ftext_standing = {
+   [100] = _("Legend"),
+   [90]  = _("Hero"),
+   [70]  = _("Comrade"),
+   [50]  = _("Ally"),
+   [30]  = _("Partner"),
+   [10]  = _("Associate"),
+   [0]   = _("Neutral"),
+   [-1]  = _("Outlaw"),
+   [-30] = _("Criminal"),
+   [-50] = _("Enemy"),
+}
 
 _ftext_friendly = _("Friendly")
 _ftext_neutral  = _("Neutral")

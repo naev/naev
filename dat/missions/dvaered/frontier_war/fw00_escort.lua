@@ -46,6 +46,8 @@ local fleepla, fleesys = planet.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
 local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
+-- luacheck: globals ambushDied ambush_end ambush_msg attackMe enter explain_battle hamelsen_attacked land loading meeting meeting_msg1 meeting_msg2 meeting_msg3 meeting_timer moreBadGuys tamDied tamJump (Hook functions passed by name)
+-- luacheck: globals discussWithTam (NPC functions passed by name)
 
 local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 

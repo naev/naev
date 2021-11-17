@@ -20,6 +20,7 @@
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
 
 local baddie, atthook, jumphook, source_system -- Non-persistent state.
+-- luacheck: globals ambusher baddieBoard baddieDead begin leave playerAttacked (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()

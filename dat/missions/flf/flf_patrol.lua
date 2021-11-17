@@ -22,23 +22,28 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-misn_title = {}
-misn_title[1] = _("FLF: Single Dvaered patrol in {sys}")
-misn_title[2] = _("FLF: Small Dvaered patrol in {sys}")
-misn_title[3] = _("FLF: Medium Dvaered patrol in {sys}")
-misn_title[4] = _("FLF: Large Dvaered patrol in {sys}")
-misn_title[5] = _("FLF: Dangerous Dvaered patrol in {sys}")
-misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in {sys}")
+-- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (shared with derived missions flf_empatrol, flf_pre02)
 
-local text = {}
-text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
-text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
-text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
+misn_title = {
+   _("FLF: Single Dvaered patrol in {sys}"),
+   _("FLF: Small Dvaered patrol in {sys}"),
+   _("FLF: Medium Dvaered patrol in {sys}"),
+   _("FLF: Large Dvaered patrol in {sys}"),
+   _("FLF: Dangerous Dvaered patrol in {sys}"),
+   _("FLF: Highly Dangerous Dvaered patrol in {sys}"),
+}
 
-mem.osd_desc    = {}
-mem.osd_desc[1] = _("Fly to the {sys} system")
-mem.osd_desc[2] = _("Eliminate the Dvaered patrol")
-mem.osd_desc[3] = _("Return to FLF base")
+local text = {
+   _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work."),
+   _("As you get your pay from the officer, FLF soldiers congratulate you for your victory."),
+   _("You collect your pay from the officer, who then congratulates you for your victory."),
+}
+
+mem.osd_desc    = {
+   _("Fly to the {sys} system"),
+   _("Eliminate the Dvaered patrol"),
+   _("Return to FLF base"),
+}
 
 
 function setDescription ()
@@ -107,7 +112,7 @@ function create ()
    end
 
    mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
-   if has_vigilence then mem.credits = mem.credits + 120e3 end
+   if mem.has_vigilence then mem.credits = mem.credits + 120e3 end
    if mem.has_goddard then mem.credits = mem.credits + 270e3 end
    mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
    mem.credits = mem.credits + rnd.sigma() * 80e3
@@ -168,7 +173,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.dv_ships_left = 0
    mem.last_system = system.cur()
 end

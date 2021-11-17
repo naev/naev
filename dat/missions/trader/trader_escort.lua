@@ -33,6 +33,7 @@ local vntk = require "vntk"
 
 local convoy -- Non-persistent state
 local continueToDest, fail, spawnConvoy -- Forward-declared functions
+-- luacheck: globals jumpin jumpout land takeoff timer_traderSafe traderAttacked traderDeath traderJump traderLand traderShutup (Hook functions passed by name)
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
@@ -244,6 +245,7 @@ function spawnConvoy ()
       ambush_src = lmisn.getNextSystem( system.cur(), mem.destsys )
    end
 
+   local ambush
    local ambushes = {
       {"Pirate Ancestor", "Pirate Vendetta", "Hyena", "Hyena"},
       {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"},
@@ -252,15 +254,15 @@ function spawnConvoy ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena", "Hyena"},
    }
    if mem.convoysize == 1 then
-      fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 2 then
-      fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 3 then
-      fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif mem.convoysize == 4 then
-      fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    else
-      fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    end
    for _,p in ipairs(ambush) do
       p:setHostile(true)

@@ -43,6 +43,7 @@ local credits = emp.rewards.ec04
 
 local fleet1, fleet2, swarm1, swarm2, swarm3 -- Non-persistent state
 local empireAttack, empireRetreat -- Forward-declared functions
+-- luacheck: globals enter idle land (Hook functions passed by name)
 
 function create ()
    local missys = {misn_target}
