@@ -50,13 +50,13 @@ function background ()
    end
 
    -- Haven
-   nebula_add_local( cpos, system.get("Haven"), 150, { prng=prng, hue_inner=160/360, hue_outter=200/360, opacity=55 } )
+   nebula_add_local( cpos, system.get("Haven"), 150, { prng=prng, hue_inner=160/360, hue_outter=200/360, opacity=55, granularity=0.3 } )
 
    -- Mizar
-   nebula_add_local( cpos, system.get("Mizar"), 150, { prng=prng, hue_inner=80/360, hue_outter=120/360, opacity=55 } )
+   nebula_add_local( cpos, system.get("Mizar"), 150, { prng=prng, hue_inner=80/360, hue_outter=120/360, opacity=55, granularity=0.3 } )
 
    -- PSO
-   nebula_add_local( cpos, system.get("PSO"), 300, { prng=prng, hue_inner=330/360, hue_outter=270/360, opacity=58 } )
+   nebula_add_local( cpos, system.get("PSO"), 300, { prng=prng, hue_inner=330/360, hue_outter=270/360, opacity=58, granularity=0.5 } )
 
    starfield.init()
 end

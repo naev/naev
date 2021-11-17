@@ -11,6 +11,7 @@ const float HUE_INNER   = %f;
 const float HUE_OUTTER  = %f;
 const float ABSORPTION  = %f;
 const float OPACITY     = %f;
+const float GRANULARITY = %f;
 const vec2 RESOLUTION   = vec2( %f, %f );
 
 /* Our nebula function (static version of the 2D turbulence noise in 3D) */
@@ -35,7 +36,7 @@ float density( in vec3 pos )
    //return pow(1.0-length(pos),1.0) * 0.5*(nebula( pos*3.0 )-0.1);
    //return smoothstep(0.0,1.0,1.0-length(pos)) * (2.0*(nebula( pos*5.0 )-0.5));
    //return smoothstep(0.0,1.0,1.0-length(pos)) * (1.0*(nebula( pos*3.0 )-0.3));
-   return smoothstep(0.0,1.0,1.0-length(pos)) * (-length(pos)+1.5*nebula( pos*4.0 )-0.1);
+   return smoothstep(0.0,1.0,1.0-length(pos)) * (-length(pos)+1.5*nebula( pos*4.0*GRANULARITY )-0.1);
    //return smoothstep(0.0,1.0,1.0-length(pos)) * (-length(pos)+1.5*nebula( pos*7.0 )-0.1);
 }
 
