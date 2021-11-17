@@ -4,8 +4,7 @@
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
 local love_shaders = require 'love_shaders'
-local prng_lib = require "prng"
-local prng = prng_lib.new()
+local prng = require("prng").new()
 
 local nebulafrag = lf.read('bkg/shaders/nebula.frag')
 
