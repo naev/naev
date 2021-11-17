@@ -22,6 +22,8 @@
 local srs = require "common.sirius"
 local fmt = require "format"
 
+-- luacheck: globals enter land (Hook functions passed by name)
+
 -- Mission constants
 local misn_reward = fmt.credits(400e3)
 local destplanet, destsys = planet.getS("Racheka")

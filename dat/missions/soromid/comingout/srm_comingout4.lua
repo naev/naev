@@ -24,6 +24,8 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
+-- luacheck: globals ambush_timer enter land (Hook functions passed by name)
+
 -- Mission constants
 local misplanet, missys = planet.getS( "Durea" )
 local misplanet2, missys2 = planet.getS( "Crow" )

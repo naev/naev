@@ -25,6 +25,7 @@ local fmt = require "format"
 
 local shipname = _("August")
 local bctimer, derelict, timer_delay -- Non-persistent state
+-- luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it

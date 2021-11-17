@@ -23,8 +23,8 @@ local lg = require 'love.graphics'
 local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
--- Unsaved global tables
-local npc_patrons
+local npc_patrons -- Non-persistent state
+-- luacheck: globals bargreeter leave molecaught start_alter1 start_alter2 start_spapropaganda (Hook functions passed by name)
 
 -- NPC Stuff
 local gambling_priority = 3

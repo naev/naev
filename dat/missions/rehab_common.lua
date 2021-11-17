@@ -9,6 +9,8 @@
 local fmt   = require "format"
 local vntk  = require 'vntk'
 
+-- luacheck: globals standing (Hook functions passed by name)
+
 function create()
     -- Note: this mission does not make any system claims.
 

@@ -32,6 +32,8 @@ local vntk = require "vntk"
 local car = require "common.cargo"
 local lmisn = require "lmisn"
 
+-- luacheck: globals land (Hook functions passed by name)
+
 local misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
 misn_desc[0] = _("Small shipment to {pnt} in the {sys} system.")

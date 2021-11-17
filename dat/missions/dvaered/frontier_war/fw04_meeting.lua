@@ -39,6 +39,7 @@ local fmt = require "format"
 message = fw.message -- common hooks
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
+-- luacheck: globals beepMe deathOfStrafer flee hamelsenLanded imDoingNothing killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
 
 -- TODO: hooks to penalize attacking people
 

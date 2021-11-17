@@ -37,6 +37,7 @@ local fmt = require "format"
 --  2: return to kex
 mem.misn_state = nil
 local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
+-- luacheck: globals enter generate_npc jie_board jie_death jie_epilogue jie_takeoff load_game thug_heartbeat (Hook functions passed by name)
 
 local targetplanet, targetsys = planet.getS("Jorlan")
 

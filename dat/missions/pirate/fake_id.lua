@@ -37,6 +37,7 @@ local misnvars = {
    --Miner       = "_fcap_miner"
 }
 local restore_standing -- Forward-declared functions
+-- luacheck: globals enter land player_scanned standing takeoff (Hook functions passed by name)
 mem.orig_standing = {}
 mem.orig_cap = {}
 

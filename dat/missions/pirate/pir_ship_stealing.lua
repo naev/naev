@@ -37,6 +37,7 @@ local portrait = require "portrait"
 local lmisn = require "lmisn"
 require "factions.equip.generic"
 
+-- luacheck: globals enter land (Hook functions passed by name)
 
 local base_price = 100e3
 

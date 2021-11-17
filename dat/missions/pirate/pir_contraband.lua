@@ -23,6 +23,8 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 
+-- luacheck: globals land tick (Hook functions passed by name)
+
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
 --   and pays a lot more then the rush missions

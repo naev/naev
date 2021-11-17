@@ -31,6 +31,8 @@ local pnt = planet.get("Varia")
 local credits = baron.rewards.baron
 local pinnacle, vendetta1, vendetta2 -- Non-persistent state
 
+-- luacheck: globals board hail idle jumpin land takeoff takeoff_delay (Hook functions passed by name)
+
 function create ()
    local missys = {system.get("Darkstone")}
    if not misn.claim(missys) then

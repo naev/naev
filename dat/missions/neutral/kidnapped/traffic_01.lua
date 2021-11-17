@@ -40,6 +40,7 @@ local reward = 200e3
 
 local badguys, broship, misn_marker -- Non-persistent state
 local spawn_baddies -- Forward-declared functions
+-- luacheck: globals do_msg do_msg2 got_boarded got_hailed idle sys_enter (Hook functions passed by name)
 
 function create ()
    mem.targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}

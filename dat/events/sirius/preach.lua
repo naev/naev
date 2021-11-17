@@ -19,6 +19,7 @@ local fmt = require "format"
 
 local restoreControl -- Forward-declared function
 local attackers, curr, follower, followers, hailHook, playerP, praiser, preacher, rep, target -- Event state, never saved.
+-- luacheck: globals anotherdead badCleanup cleanup funStartsSoon hail jumpCleanup landCleanup pirateSpawn praise preacherSpeak reHail release theFunBegins violence (Hook functions passed by name)
 
 local althoughEnemy={
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),

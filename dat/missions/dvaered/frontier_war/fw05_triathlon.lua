@@ -46,6 +46,7 @@ message = fw.message
 -- Non-persistent state
 local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
 local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
+-- luacheck: globals compDie compHit compHitS competitorIdle dehostilify endPankrationT endStadion endThrow endTimer enter land message playerHit playerHitS spawnNpcs startPankration startStadion startThrow takeoff targetHit targetIdle testEscape timerIncrement timerIncrementT (Hook functions passed by name)
 
 -- Mission constants
 local destpla, destsys = planet.getS("Dvaer Prime")

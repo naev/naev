@@ -38,6 +38,7 @@ local shark = require "common.shark"
 
 local badguys -- Non-persistent state
 local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
+-- luacheck: globals BomberDead CorvetteDead CruiserDead FighterDead InterceptorDead LlamaDead ambush enter land (Hook functions passed by name)
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")

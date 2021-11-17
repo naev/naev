@@ -179,6 +179,9 @@ function accept ()
    end
 end
 
+-- luacheck: globals land (Hook functions passed by name)
+-- ^^ That is a directive to Luacheck, telling it we're about to use a global variable for a legitimate reason.
+-- (More info here: https://github.com/naev/naev/issues/1566) Typically we put these at the top of the file.
 
 -- This is our land hook function. Once `hook.land( "land" )` is called,
 -- this function will be called any time the player lands.

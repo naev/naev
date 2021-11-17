@@ -25,6 +25,7 @@ local srs = require "common.sirius"
 local fmt = require "format"
 
 local bhfleet, harja -- Non-persistent state
+-- luacheck: globals attacked death enter grumble hail jumpin jumpout land (Hook functions passed by name)
 
 local grumblings = {
 	        _("Where's that Harja? He should be showing up any time now."),

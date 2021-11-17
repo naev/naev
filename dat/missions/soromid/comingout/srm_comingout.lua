@@ -23,6 +23,8 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
+-- luacheck: globals do_chatter init_chatter land (Hook functions passed by name)
+
 -- Mission constants
 local misplanet, missys = planet.getS( "Durea" )
 local credits = 50e3

@@ -29,6 +29,8 @@ local destpnt, destsys = planet.getS("Antlejos V")
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for them.") )

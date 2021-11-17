@@ -5,6 +5,8 @@ local diceio = require 'minigames.diceio'
 local love_math = require 'love.math'
 local fmt = require "format"
 
+-- luacheck: globals minerva_secretcode (Hook functions passed by name)
+
 local cl = { -- too lazy to write chuck-a-luck
    sound = {
       throw = diceio.sound.throw,

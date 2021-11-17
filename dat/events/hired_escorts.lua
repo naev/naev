@@ -22,8 +22,8 @@ local portrait = require "portrait"
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
--- Unsaved global tables
-local npcs
+local npcs -- Non-persistent state
+-- luacheck: globals enter jumpout land pay pilot_attacked pilot_death pilot_hail standing (Hook functions passed by name)
 
 local logidstr = "log_hiredescort"
 

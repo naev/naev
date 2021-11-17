@@ -34,6 +34,7 @@ local lab_coat_price = 25e3
 local glasses_price = 40e3
 
 local enter_ship, enter_spaceport, start_talk -- Forward-declared functions
+-- luacheck: globals land tick (Hook functions passed by name)
 
 function create()
     -- mission variables

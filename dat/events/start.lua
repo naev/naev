@@ -4,6 +4,9 @@
  <trigger>none</trigger>
 </event>
 --]]
+
+-- luacheck: globals timer_tutorial (Hook functions passed by name)
+
 local function name()
    local names = {
       _("Aluminum Mallard"), -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.

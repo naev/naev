@@ -31,6 +31,7 @@ local fmt = require "format"
 local vntk = require "vntk"
 
 -- luacheck: globals cargo_land commchoices (shared with derived missions flf.commodity_run, pirate.pirate_commodity_run)
+-- luacheck: globals enter land (Hook functions passed by name)
 
 --Mission Details
 mem.misn_title = _("{cargo} Delivery")

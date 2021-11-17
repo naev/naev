@@ -30,6 +30,7 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 
 local sconvoy, sescorts -- Non-persistent state
+-- luacheck: globals convoy_attacked convoy_board convoy_boarded convoy_done enter enter_delay land spawn_convoy (Hook functions passed by name)
 
 local function get_route( sys )
    local adj = sys:jumps()

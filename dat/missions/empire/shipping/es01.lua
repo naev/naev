@@ -28,8 +28,7 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
--- Mission details
--- Errors
+-- luacheck: globals enemies enter land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

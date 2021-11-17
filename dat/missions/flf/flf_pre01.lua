@@ -29,6 +29,7 @@ local fmt = require "format"
 local dv = require "common.dvaered"
 
 local fleetFLF -- Non-persistent state
+-- luacheck: globals annai commFLF enter inRange land outOfRange spawnbase wakeUpGregarYouLazyBugger (Hook functions passed by name)
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}

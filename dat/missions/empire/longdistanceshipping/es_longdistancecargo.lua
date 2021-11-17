@@ -23,6 +23,8 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
+-- luacheck: globals land tick (Hook functions passed by name)
+
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")

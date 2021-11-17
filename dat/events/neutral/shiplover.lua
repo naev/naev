@@ -21,6 +21,7 @@ local shiplover_image   = "shiplover.webp"
 local shiplover_priority= 5
 
 local question_data, reward -- Non-persistent state
+-- luacheck: globals event_end (Hook functions passed by name)
 
 local function getNUnique( t, n )
    local o = {}

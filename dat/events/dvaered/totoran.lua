@@ -16,6 +16,8 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
 
+-- luacheck: globals leave (Hook functions passed by name)
+
 -- Unsaved global tables
 local bgnpcs
 

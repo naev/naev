@@ -55,6 +55,7 @@ local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, ta
 local mypos, step -- location and spacing of the duel, initialized with the above pilots
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
+-- luacheck: globals battleaddict_killed beginDuel disableDuel enter enter1_message enter2_message everyoneLands fighterDuel land message moreSound1 moreSound2 phalanx_attacked phalanx_boarded phalanx_died phalanx_safe (Hook functions passed by name)
 
 function create()
    if planet.cur() == hampla then

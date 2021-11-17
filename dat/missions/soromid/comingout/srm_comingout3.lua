@@ -29,6 +29,7 @@ local car = require "common.cargo"
 local srm = require "common.soromid"
 
 -- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
+-- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 
 mem.misn_title = _("A Friend's Aid")
 mem.misn_desc = _("Chelsea needs you to escort her to {pnt}.")

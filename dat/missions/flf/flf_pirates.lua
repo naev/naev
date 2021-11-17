@@ -22,6 +22,7 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
 -- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
+-- luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
 
 misn_title = {
    _("FLF: Lone Pirate Disturbance in {sys}"),

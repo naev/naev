@@ -34,6 +34,7 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 -- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
+-- luacheck: globals hunter_hail hunter_leave jumpin jumpout land pilot_attacked pilot_board pilot_disable pilot_jump takeoff timer_hail (Hook functions passed by name)
 
 subdue_text = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),

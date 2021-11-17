@@ -25,6 +25,8 @@
 --]]
 local dv = require "common.dvaered"
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create()
    faction.get("FLF"):setKnown(true)
 

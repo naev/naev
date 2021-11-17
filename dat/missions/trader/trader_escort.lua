@@ -33,6 +33,7 @@ local vntk = require "vntk"
 
 local convoy -- Non-persistent state
 local continueToDest, fail, spawnConvoy -- Forward-declared functions
+-- luacheck: globals jumpin jumpout land takeoff timer_traderSafe traderAttacked traderDeath traderJump traderLand traderShutup (Hook functions passed by name)
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")

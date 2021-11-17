@@ -37,6 +37,8 @@ local misn_base, misn_base_sys = planet.getS("Omega Station")
 local targsys1 = system.get("C-43")
 local targsys2 = system.get("C-59")
 
+-- luacheck: globals enter land scantimer (Hook functions passed by name)
+
 function create ()
    -- Note: this mission does not make any system claims.
    misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )

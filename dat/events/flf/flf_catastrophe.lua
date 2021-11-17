@@ -21,6 +21,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 
 local dv_ships, emp_ships, flf_ships, flf_base -- State of battle phase (jumping out to save not allowed).
+-- luacheck: globals enter_bar jumpin land pilot_attacked_sindbad pilot_death_emp pilot_death_sindbad takeoff takeoff_abort timer_end timer_plcontrol timer_thurion (Hook functions passed by name)
 
 -- Event constants
 local emp_srcsys = system.get( "Arcanis" )

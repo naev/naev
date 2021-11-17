@@ -23,6 +23,7 @@ local graphics = require 'love.graphics'
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
+-- luacheck: globals board boardnothing drone_runaway fidget heartbeat leave returncontrol whatwasthat (Hook functions passed by name)
 
 -- Threshold distances to detect the drone
 local dist_detect_mule = 3e3 -- first encounter at mule

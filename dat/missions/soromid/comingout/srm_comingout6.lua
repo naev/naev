@@ -31,6 +31,7 @@ local lmisn = require "lmisn"
 
 local chelsea -- Non-persistent state
 local fail, spawn -- Forward-declared functions
+-- luacheck: globals chelsea_death chelsea_leave enter leave pirate_death win_timer (Hook functions passed by name)
 
 function create ()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,

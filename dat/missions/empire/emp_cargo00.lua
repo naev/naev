@@ -28,6 +28,8 @@ local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    -- Note: this mission does not make any system claims.
 

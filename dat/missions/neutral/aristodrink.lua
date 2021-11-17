@@ -31,6 +31,7 @@ local lmisn = require "lmisn"
 
 local payment = 200e3
 local getclueplanet, isPrevPlanet -- Forward-declared functions
+-- luacheck: globals land takeoff (Hook functions passed by name)
 
 -- defines Previous Planets table
 mem.prevPlanets = {}

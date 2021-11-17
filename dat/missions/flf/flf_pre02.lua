@@ -35,6 +35,7 @@ local fmt = require "format"
 require "missions.flf.flf_patrol"
 
 -- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
+-- luacheck: globals hail land_dv returnFLFControl timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
 
 local boss -- Non-persistent state
 

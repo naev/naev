@@ -39,6 +39,7 @@ local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")
 
 local droneC, fleetC, fleetE, refesc, refship -- Non-persistent state
+-- luacheck: globals col_dead fail_timer jumpin jumpout land refuelBroadcast (Hook functions passed by name)
 
 function create ()
     local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}

@@ -14,6 +14,8 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
 
+-- luacheck: globals tut_volatility (Hook functions passed by name)
+
 function create ()
    if tut.isDisabled() then evt.finish() end
 

@@ -38,6 +38,7 @@ local reward = baron.rewards.prince
 
 local isIn, mangle -- Forward-declared functions
 local pinnacle -- Non-persistent state
+-- luacheck: globals board enter hail idle land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission makes no system claims.

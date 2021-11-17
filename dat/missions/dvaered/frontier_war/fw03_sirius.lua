@@ -42,6 +42,7 @@ local pir = require "common.pirate"
 escort_hailed = fw.escort_hailed -- common hooks
 local attackhooks, badguys, escort, hamelsen, tamteam, target, targetList, toldya -- Non-persistent state
 local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddies, spawnEscort, spawnHamelsen, start_battle -- Forward-declared functions
+-- luacheck: globals baddie_attacked baddie_death baddie_jump baddie_land enter escort_died1 escort_died2 escort_died3 escort_hailed land lastOne_died lastOne_jumped lastOne_landed roastedTam strafer_choosePoint tamDied tamNattack (Hook functions passed by name)
 
 -- Mission constants
 local destpla, destsys = planet.getS("Mannannan")

@@ -25,6 +25,7 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
+-- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    mem.misplanet, mem.missys = planet.getS( "Crow" )

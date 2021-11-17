@@ -29,6 +29,8 @@ local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Zhiru")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end

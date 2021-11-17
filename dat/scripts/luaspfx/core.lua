@@ -15,6 +15,8 @@ local nw2, nh2 = nw/2, nh/2
 local luaspfx = {}
 luaspfx.effects = require 'luaspfx.effects'
 
+-- luacheck: globals __luaspfx_render __luaspfx_update (Hook functions passed by name)
+
 local function __update_table( tbl, dt )
    local toremove = {}
    for k,v in ipairs(tbl) do

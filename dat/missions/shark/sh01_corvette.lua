@@ -37,6 +37,7 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 local sharkboy -- Non-persistent state
+-- luacheck: globals disabled enter jumpout land lets_go shark_dead (Hook functions passed by name)
 
 --Change here to change the planet and the system
 local battlesys = system.get("Toaxis")

@@ -22,6 +22,8 @@ local jm_chance_max = 0.25
 -- State. Nothing persists.
 local jm_chance, msg_combined, npcs, seltargets
 
+-- luacheck: globals leave (Hook functions passed by name)
+
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
 -- Meant for factions which are either criminal (FLF, Pirate) or unaware

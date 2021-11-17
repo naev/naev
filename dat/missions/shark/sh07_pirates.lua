@@ -31,6 +31,7 @@ local shark = require "common.shark"
 local lmisn = require "lmisn"
 
 local baddie -- Non-persistent state
+-- luacheck: globals attacked enter gawain_dead generic_dead goddard_dead idle kestrel_dead1 kestrel_dead2 land (Hook functions passed by name)
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
