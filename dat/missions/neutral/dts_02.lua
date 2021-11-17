@@ -128,7 +128,7 @@ function defend_system()
 
   -- Set up distances
       local angle, defense_position, raider_position
-      angle = rnd.rnd() * 360
+      angle = rnd.angle()
       if mem.defender == true then
          raider_position  = vec2.newP( 400, angle )
          defense_position = vec2.new( 0, 0 )
@@ -218,6 +218,7 @@ function second_wave_attacks()
       end
 end
 
+--[[
 -- Separate mission for a mid-mission interjection <-- bad organization <-- FIXME: it's worse, nothing even refers to this.
 local function cadet_first_comm()
       if mem.cadet1_alive then
@@ -227,6 +228,7 @@ local function cadet_first_comm()
       else player.msg( fmt.f(_("Broadcast {pnt}> The raiders are retreating!"), {pnt=mem.this_planet}))
       end
 end
+--]]
 
 
 -- When the raiders are on the run then the Empire takes over

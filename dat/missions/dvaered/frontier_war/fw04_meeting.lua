@@ -385,8 +385,7 @@ end
 -- Some patrol pilot is idle.
 function imDoingNothing( self )
    local rad = rnd.rnd() * 1000 + 1000
-   local ang = rnd.rnd() * 2 * math.pi
-   self:moveto( targpos + vec2.newP(rad, ang) )
+   self:moveto( targpos + vec2.newP(rad, rnd.angle()) )
 end
 
 -- A controlled ship is too close from station

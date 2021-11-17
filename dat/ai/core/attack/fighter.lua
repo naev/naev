@@ -87,7 +87,7 @@ function __atk_f_flyby( target, dist )
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          __atk_keep_distance()
          ai.accel()
       else
@@ -98,12 +98,12 @@ function __atk_f_flyby( target, dist )
    elseif dist > (0.75 * range) then
       dir = ai.idir(target)
       --test if we're facing the target. If we are, keep approaching
-      if dir <= 30 and dir > -30 then
+      if dir <= math.rad(30) and dir > -math.rad(30) then
          ai.iface(target)
-         if dir < 10 and dir > -10 then
+         if dir < math.rad(10) and dir > -math.rad(10) then
             ai.accel()
          end
-      elseif dir > 30 and dir < 180 then
+      elseif dir > math.rad(30) and dir < math.pi then
          ai.turn(1)
          ai.accel()
       else
@@ -120,7 +120,7 @@ function __atk_f_flyby( target, dist )
       end
 
       -- Shoot if should be shooting.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -149,7 +149,7 @@ function __atk_f_space_sup( target, dist )
    --if we're far away from the target, then turn and approach
    if dist > (range) then
       dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          __atk_keep_distance()
          ai.accel()
       else
@@ -160,7 +160,7 @@ function __atk_f_space_sup( target, dist )
       --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
       dir = ai.iface(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          ai.accel()
       end
 
@@ -171,12 +171,12 @@ function __atk_f_space_sup( target, dist )
 
       --accelerate and try to close
       --but only accel if it will be productive
-      if dir2 < 15 and dir2 > -15 and ai.relvel(target) > -10 then
+      if dir2 < math.rad(15) and dir2 > -math.rad(15) and ai.relvel(target) > -math.rad(10) then
          ai.accel()
       end
 
       -- Shoot if should be shooting.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -188,7 +188,7 @@ function __atk_f_space_sup( target, dist )
    else
       dir = ai.aim(target)
       -- Shoot if should be shooting.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)

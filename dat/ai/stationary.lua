@@ -7,6 +7,23 @@ require 'ai.core.core'
 control_rate = 2
 
 
+local function attack_nearest( hostile )
+   -- Must not be same
+   local target       = ai.taskdata()
+   if target == hostile then
+      return
+   end
+
+   -- Engage closest
+   local dist_hostile = ai.dist( hostile )
+   local dist_enemy   = ai.dist( target )
+   if dist_hostile < dist_enemy*0.75 then
+      ai.poptask()
+      ai.pushtask( "attack", hostile )
+   end
+end
+
+
 function create ()
    ai.pushtask( "stationary" )
 end
@@ -27,23 +44,6 @@ end
 
 
 control_manual = control
-
-
-function attack_nearest( hostile )
-   -- Must not be same
-   local target       = ai.taskdata()
-   if target == hostile then
-      return
-   end
-
-   -- Engage closest
-   local dist_hostile = ai.dist( hostile )
-   local dist_enemy   = ai.dist( target )
-   if dist_hostile < dist_enemy*0.75 then
-      ai.poptask()
-      ai.pushtask( "attack", hostile )
-   end
-end
 
 
 function attacked( hostile )
@@ -87,14 +87,14 @@ function attack ()
    -- In melee
    if dist < range then
       ai.weapset( 3 ) -- Forward/turret
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot() -- Forward
       end
       ai.shoot(true) -- Turret
    end
 
    -- Long-range
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.weapset( 4 ) -- Missiles, it's a fire group
    end
    ai.weapset( 9 ) -- Turreted Missiles

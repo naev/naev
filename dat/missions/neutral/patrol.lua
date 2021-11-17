@@ -35,14 +35,16 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-pay_text    = {}
-pay_text[1] = _("After going through some paperwork, an officer hands you your pay and sends you off.")
-pay_text[2] = _("A tired-looking officer verifies your mission log and hands you your pay.")
-pay_text[3] = _("The officer you deal with thanks you for your work, hands you your pay, and sends you off.")
-pay_text[4] = _("An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee.")
+pay_text    = {
+   _("After going through some paperwork, an officer hands you your pay and sends you off."),
+   _("A tired-looking officer verifies your mission log and hands you your pay."),
+   _("The officer you deal with thanks you for your work, hands you your pay, and sends you off."),
+   _("An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee."),
+}
 
-abandon_text    = {}
-abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment.")
+abandon_text    = {
+   _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment."),
+}
 
 
 -- Mission details
@@ -50,19 +52,21 @@ mem.misn_title  = _("Patrol of the {sys} System")
 mem.misn_desc   = _("Patrol specified points in the {sys} system, eliminating any hostiles you encounter.")
 
 -- Messages
-msg    = {}
-msg[1] = _("Point secure.")
-msg[2] = _("Hostiles detected. Engage hostiles.")
-msg[3] = _("Hostiles eliminated.")
-msg[4] = _("Patrol complete. You can now collect your pay.")
-msg[5] = _("MISSION FAILURE! You showed up too late.")
-msg[6] = _("MISSION FAILURE! You have left the {sys} system.")
+msg = {
+   _("Point secure."),
+   _("Hostiles detected. Engage hostiles."),
+   _("Hostiles eliminated."),
+   _("Patrol complete. You can now collect your pay."),
+   _("MISSION FAILURE! You showed up too late."),
+   _("MISSION FAILURE! You have left the {sys} system."),
+}
 
-mem.osd_msg    = {}
-mem.osd_msg[1] = _("Fly to the {sys} system")
-mem.osd_msg[2] = "(null)"
-mem.osd_msg[3] = _("Eliminate hostiles")
-mem.osd_msg[4] = _("Land in {fct} territory to collect your pay")
+mem.osd_msg = {
+   _("Fly to the {sys} system"),
+   "(null)",
+   _("Eliminate hostiles"),
+   _("Land in {fct} territory to collect your pay"),
+}
 
 mem.use_hidden_jumps = false
 

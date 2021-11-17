@@ -46,7 +46,7 @@ local function spawn_fleet( pos )
          p:setLeader( leader )
       end
       table.insert( plts, p )
-      pos = pos + vec2.newP( 300, rnd.rnd()*360)
+      pos = pos + vec2.newP( 300, rnd.angle() )
    end
    return plts
 end

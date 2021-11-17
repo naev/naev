@@ -86,6 +86,26 @@ stds.AI.globals = {
    "hail",
    "mem",
    "refuel",
+   -- Also, numerous tasks are brought into the API by nlua_pilot.c functions:
+   "attack_forced",             -- pilotL_attack
+   "brake",                     -- pilotL_brake
+   "face",                      -- pilotL_face
+   "face_towards",              -- pilotL_face
+   "follow",                    -- pilotL_follow
+   "follow_accurate",           -- pilotL_follow
+   "gather",                    -- pilotL_gather
+   "hyperspace",                -- pilotL_hyperspace
+   "hyperspace_shoot",          -- pilotL_hyperspace
+   "land",                      -- pilotL_land
+   "land_shoot",                -- pilotL_land
+   "moveto_nobrake",            -- pilotL_moveto
+   "moveto_nobrake_raw",        -- pilotL_moveto
+   "moveto_precise",            -- pilotL_moveto
+   "runaway",                   -- pilotL_runaway
+   "runaway_jump",              -- pilotL_runaway
+   "runaway_land",              -- pilotL_runaway
+   "runaway_nojump",            -- pilotL_runaway
+   "stealth",                   -- pilotL_stealth
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
@@ -166,7 +186,7 @@ table.insert(stds.PilotOutfit.globals, "mem")
 
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
 files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["bkg/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
+files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
 files["board.lua"].std = STANDARD .. "+API_board"
 files["comm.lua"].std = STANDARD .. "+API_comm"
 files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK

@@ -177,10 +177,10 @@ const char *ship_classToString( ShipClass class )
          return N_("Courier");
       case SHIP_CLASS_FREIGHTER:
          return N_("Freighter");
-      case SHIP_CLASS_BULK_FREIGHTER:
-         return N_("Bulk Freighter");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
          return N_("Armoured Transport");
+      case SHIP_CLASS_BULK_FREIGHTER:
+         return N_("Bulk Freighter");
       /* Military. */
       case SHIP_CLASS_SCOUT:
          return N_("Scout");
@@ -220,8 +220,8 @@ ShipClass ship_classFromString( const char* str )
    STRTOSHIP( "Yacht",              SHIP_CLASS_YACHT );
    STRTOSHIP( "Courier",            SHIP_CLASS_COURIER );
    STRTOSHIP( "Freighter",          SHIP_CLASS_FREIGHTER );
-   STRTOSHIP( "Bulk Freighter",     SHIP_CLASS_BULK_FREIGHTER );
    STRTOSHIP( "Armoured Transport", SHIP_CLASS_ARMOURED_TRANSPORT );
+   STRTOSHIP( "Bulk Freighter",     SHIP_CLASS_BULK_FREIGHTER );
 
    /* Military */
    STRTOSHIP( "Scout",              SHIP_CLASS_SCOUT );

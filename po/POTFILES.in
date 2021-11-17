@@ -2171,6 +2171,7 @@ dat/unidiff/antlejosv_1.xml
 dat/unidiff/antlejosv_2.xml
 dat/unidiff/antlejosv_3.xml
 dat/unidiff/antlejosv_4.xml
+dat/unidiff/antlejosv_5.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2183,6 +2184,7 @@ dat/unidiff/strangelove.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
+dat/ai/baddiepos.lua
 dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
@@ -2430,6 +2432,7 @@ dat/missions/neutral/antlejos/ant01.lua
 dat/missions/neutral/antlejos/ant02.lua
 dat/missions/neutral/antlejos/ant03.lua
 dat/missions/neutral/antlejos/ant04.lua
+dat/missions/neutral/antlejos/ant05.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua

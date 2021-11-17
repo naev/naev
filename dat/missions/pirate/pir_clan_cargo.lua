@@ -131,9 +131,7 @@ function enter ()
       local r = rnd.rnd(0,4)
       -- Next to player (always if landed)
       if enter_vect:dist() < 1000 or r < 2 then
-         local a = rnd.rnd() * 360
-         local d = rnd.rnd( 400, 1000 )
-         enter_vect:add( vec2.newP( d, a ) )
+         enter_vect:add( vec2.newP( rnd.rnd(400, 1000), rnd.angle() ) )
          invoke_enemies( enter_vect )
       -- Enter after player
       else
@@ -165,9 +163,7 @@ function invoke_enemies( enter_vect )
    -- Add mercenaries
    for k,v in ipairs(merc) do
       -- Move position a bit
-      local a = rnd.rnd() * 360
-      local d = rnd.rnd( 50, 75 )
-      enter_vect:add( vec2.newP( d, a ) )
+      enter_vect:add( vec2.newP( rnd.rnd(50, 75), rnd.angle() ) )
       -- Add pilots
       local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
       -- Set hostile

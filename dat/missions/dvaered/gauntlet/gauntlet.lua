@@ -303,10 +303,10 @@ function wave_round_setup ()
          -- Determine position
          if layout=="circle" then
             local d,a = posbase:polar()
-            a = a +(k-1) * 360 / #ships
+            a = a +(k-1) * 2*math.pi / #ships
             pos = vec2.newP( d, a )
          elseif layout=="pincer" then
-            local offset = vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+            local offset = vec2.newP( 300+200*rnd.rnd(), rnd.angle() )
             if math.fmod(k,2)==1 then
                pos = posbase + offset
             else
@@ -314,7 +314,7 @@ function wave_round_setup ()
                pos = vec2.new(-x,-y) + offset
             end
          elseif layout=="cluster" then
-            pos = posbase + vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+            pos = posbase + vec2.newP( 300+200*rnd.rnd(), rnd.angle() )
          else
             warn(string.format("unknown layout '%s'",layout))
          end

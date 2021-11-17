@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_jump.c
  *
  * @brief Lua jump module.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -21,7 +19,6 @@
 #include "nlua_system.h"
 #include "land_outfits.h"
 #include "log.h"
-
 
 RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset );
 
@@ -52,7 +49,6 @@ static const luaL_Reg jump_methods[] = {
    {0,0}
 }; /**< Jump metatable methods. */
 
-
 /**
  * @brief Loads the jump library.
  *
@@ -64,7 +60,6 @@ int nlua_loadJump( nlua_env env )
    nlua_register(env, JUMP_METATABLE, jump_methods, 1);
    return 0; /* No error */
 }
-
 
 /**
  * @brief This module allows you to handle the jumps from Lua.
@@ -106,7 +101,6 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
    luaL_typerror(L, ind, JUMP_METATABLE);
    return NULL;
 }
-
 
 /**
  * @brief Back-end for luaL_validjump.
@@ -164,7 +158,6 @@ static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
    return jp;
 }
 
-
 /**
  * @brief Gets a jump directly.
  *
@@ -177,7 +170,6 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
    return luaL_validjumpSystem( L, ind, NULL );
 }
 
-
 /**
  * @brief Pushes a jump on the stack.
  *
@@ -187,13 +179,13 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
  */
 LuaJump* lua_pushjump( lua_State *L, LuaJump jump )
 {
-   LuaJump *j;
-   j = (LuaJump*) lua_newuserdata(L, sizeof(LuaJump));
+   LuaJump *j = (LuaJump*) lua_newuserdata(L, sizeof(LuaJump));
    *j = jump;
    luaL_getmetatable(L, JUMP_METATABLE);
    lua_setmetatable(L, -2);
    return j;
 }
+
 /**
  * @brief Checks to see if ind is a jump.
  *
@@ -216,7 +208,6 @@ int lua_isjump( lua_State *L, int ind )
    lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
-
 
 /**
  * @brief Gets a jump.
@@ -260,7 +251,6 @@ static int jumpL_get( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief You can use the '==' operator within Lua to compare jumps with this.
  *
@@ -279,7 +269,6 @@ static int jumpL_eq( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the jump's radius.
  *
@@ -294,7 +283,6 @@ static int jumpL_radius( lua_State *L )
    lua_pushnumber(L,jp->radius);
    return 1;
 }
-
 
 /**
  * @brief Gets the position of the jump in the system.
@@ -311,9 +299,8 @@ static int jumpL_position( lua_State *L )
    return 1;
 }
 
-
 /**
- * @brief Gets the angle of a jump in degrees.
+ * @brief Gets the angle of a jump in radians.
  *
  * @usage v = j:angle()
  *    @luatparam Jump j Jump to get the angle of.
@@ -323,10 +310,9 @@ static int jumpL_position( lua_State *L )
 static int jumpL_angle( lua_State *L )
 {
    JumpPoint *jp = luaL_validjump(L,1);
-   lua_pushnumber(L, jp->angle * 180. / M_PI);
+   lua_pushnumber(L, jp->angle);
    return 1;
 }
-
 
 /**
  * @brief Checks whether a jump is hidden.
@@ -343,7 +329,6 @@ static int jumpL_hidden( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks whether a jump is exit-only.
  *
@@ -358,7 +343,6 @@ static int jumpL_exitonly( lua_State *L )
    lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );
    return 1;
 }
-
 
 /**
  * @brief Gets the system that a jump point exists in.
@@ -375,7 +359,6 @@ static int jumpL_system( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the system that a jump point exits into.
  *
@@ -390,7 +373,6 @@ static int jumpL_dest( lua_State *L )
    lua_pushsystem(L,jp->targetid);
    return 1;
 }
-
 
 /**
  * @brief Checks to see if a jump is known by the player.

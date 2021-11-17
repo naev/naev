@@ -1673,7 +1673,7 @@ static int aiL_turn( lua_State *L )
  *    @luatparam Pilot|Vec2|number target Target to face.
  *    @luatparam[opt=false] boolean invert Invert away from target.
  *    @luatparam[opt=false] boolean compensate Compensate for velocity?
- *    @luatreturn number Angle offset in degrees.
+ *    @luatreturn number Angle offset in radians.
  * @luafunc face
  */
 static int aiL_face( lua_State *L )
@@ -1744,8 +1744,8 @@ static int aiL_face( lua_State *L )
    /* Make pilot turn. */
    pilot_turn = k_diff * diff;
 
-   /* Return angle in degrees away from target. */
-   lua_pushnumber(L, ABS(diff*180./M_PI));
+   /* Return angle away from target. */
+   lua_pushnumber(L, ABS(diff));
    return 1;
 }
 
@@ -1763,6 +1763,7 @@ static int aiL_face( lua_State *L )
  * Only visible ships are taken into account.
  *
  *    @luatparam Pilot|Vec2|number target Target to go to.
+ *    @luatreturn number Angle offset in radians.
  * @luafunc careful_face
  */
 static int aiL_careful_face( lua_State *L )
@@ -1840,8 +1841,8 @@ static int aiL_careful_face( lua_State *L )
    /* Make pilot turn. */
    pilot_turn = k_diff * diff;
 
-   /* Return angle in degrees away from target. */
-   lua_pushnumber(L, ABS(diff*180./M_PI));
+   /* Return angle away from target. */
+   lua_pushnumber(L, ABS(diff));
    return 1;
 }
 
@@ -1851,7 +1852,7 @@ static int aiL_careful_face( lua_State *L )
  * This method uses a polar UV decomposition to get a more accurate time-of-flight
  *
  *    @luatparam Pilot target The pilot to aim at
- *    @luatreturn number The offset from the target aiming position (in degrees).
+ *    @luatreturn number The offset from the target aiming position (in radians).
  * @luafunc aim
  */
 static int aiL_aim( lua_State *L )
@@ -1871,8 +1872,7 @@ static int aiL_aim( lua_State *L )
    diff = angle_diff(cur_pilot->solid->dir, angle);
    pilot_turn = mod * diff;
 
-   /* Return distance to target (in grad) */
-   lua_pushnumber(L, ABS(diff*180./M_PI));
+   lua_pushnumber(L, ABS(diff));
    return 1;
 }
 
@@ -1880,7 +1880,7 @@ static int aiL_aim( lua_State *L )
  * @brief Maintains an intercept pursuit course.
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to intercept.
- *    @luatreturn number The offset from the proper intercept course (in degrees).
+ *    @luatreturn number The offset from the proper intercept course (in radians).
  * @luafunc iface
  */
 static int aiL_iface( lua_State *L )
@@ -1959,7 +1959,7 @@ static int aiL_iface( lua_State *L )
    }
 
    /* Return angle in degrees away from target. */
-   lua_pushnumber(L, ABS(diff*180./M_PI));
+   lua_pushnumber(L, ABS(diff));
    return 1;
 }
 
@@ -1967,7 +1967,7 @@ static int aiL_iface( lua_State *L )
  * @brief calculates the direction that the target is relative to the current pilot facing.
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
- *    @luatreturn number The facing offset to the target (in degrees).
+ *    @luatreturn number The facing offset to the target (in radians).
  * @luafunc dir
  *
  */
@@ -2002,7 +2002,7 @@ static int aiL_dir( lua_State *L )
             vect_angle(&cur_pilot->solid->pos, vec));
 
    /* Return angle in degrees away from target. */
-   lua_pushnumber(L, diff*180./M_PI);
+   lua_pushnumber(L, diff);
    return 1;
 }
 
@@ -2010,7 +2010,7 @@ static int aiL_dir( lua_State *L )
  * @brief calculates angle between pilot facing and intercept-course to target.
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
- *    @luatreturn number The facing offset to intercept-course to the target (in degrees).
+ *    @luatreturn number The facing offset to intercept-course to the target (in radians).
  * @luafunc idir
  */
 static int aiL_idir( lua_State *L )
@@ -2072,20 +2072,20 @@ static int aiL_idir( lua_State *L )
    }
 
    /* Return angle in degrees away from target. */
-   lua_pushnumber(L, diff*180./M_PI);
+   lua_pushnumber(L, diff);
    return 1;
 }
 
 /**
  * @brief Calculate the offset between the pilot's current direction of travel and the pilot's current facing.
  *
- *    @luatreturn number Offset
+ *    @luatreturn number Offset (radians)
  *    @luafunc drift_facing
  */
 static int aiL_drift_facing( lua_State *L )
 {
     double drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
-    lua_pushnumber(L, drift*180./M_PI);
+    lua_pushnumber(L, drift);
     return 1;
 }
 
@@ -2305,7 +2305,8 @@ static int aiL_land( lua_State *L )
 
    /* Check landability. */
    if (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
-         !planet_hasService(planet,PLANET_SERVICE_INHABITED)) {
+         (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
+            !planet_hasService(planet,PLANET_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2533,7 +2534,7 @@ static int aiL_relvel( lua_State *L )
  *
  *    @luatparam Pilot target The pilot to follow
  *    @luatparam number radius The requested distance between p and target
- *    @luatparam number angle The requested angle between p and target
+ *    @luatparam number angle The requested angle between p and target (radians)
  *    @luatparam number Kp The first controller parameter
  *    @luatparam number Kd The second controller parameter
  *    @luatparam[opt] string method Method to compute goal angle
@@ -2560,14 +2561,14 @@ static int aiL_follow_accurate( lua_State *L )
       method = luaL_checkstring(L,6);
 
    if (strcmp( method, "absolute" ) == 0)
-      angle2 = angle * M_PI/180;
+      angle2 = angle;
    else if (strcmp( method, "keepangle" ) == 0) {
       vect_cset( &pv, p->solid->pos.x - target->solid->pos.x,
             p->solid->pos.y - target->solid->pos.y );
       angle2 = VANGLE(pv);
       }
    else /* method == "velocity" */
-      angle2 = angle * M_PI/180 + VANGLE( target->solid->vel );
+      angle2 = angle + VANGLE( target->solid->vel );
 
    vect_cset( &point, VX(target->solid->pos) + radius * cos(angle2),
          VY(target->solid->pos) + radius * sin(angle2) );
@@ -2593,7 +2594,7 @@ static int aiL_follow_accurate( lua_State *L )
  *    @luatparam vec2 pos The objective vector
  *    @luatparam vec2 vel The objective velocity
  *    @luatparam number radius The requested distance between p and target
- *    @luatparam number angle The requested angle between p and target
+ *    @luatparam number angle The requested angle between p and target (radians)
  *    @luatparam number Kp The first controller parameter
  *    @luatparam number Kd The second controller parameter
  *    @luareturn The point to go to as a vector2.
@@ -2602,7 +2603,7 @@ static int aiL_follow_accurate( lua_State *L )
 static int aiL_face_accurate( lua_State *L )
 {
    Vector2d point, cons, goal, *pos, *vel;
-   double radius, angle, Kp, Kd, angle2;
+   double radius, angle, Kp, Kd;
    Pilot *p = cur_pilot;
    pos = lua_tovector(L,1);
    vel = lua_tovector(L,2);
@@ -2611,10 +2612,8 @@ static int aiL_face_accurate( lua_State *L )
    Kp = luaL_checklong(L,5);
    Kd = luaL_checklong(L,6);
 
-   angle2 = angle * M_PI/180;
-
-   vect_cset( &point, pos->x + radius * cos(angle2),
-         pos->y + radius * sin(angle2) );
+   vect_cset( &point, pos->x + radius * cos(angle),
+         pos->y + radius * sin(angle) );
 
    /*  Compute the direction using a pd controller */
    vect_cset( &cons, (point.x - p->solid->pos.x) * Kp +

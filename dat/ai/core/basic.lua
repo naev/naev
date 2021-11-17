@@ -1,3 +1,4 @@
+local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret, moveto_raw -- Forward-declared functions
 --[[
 -- Basic tasks for a pilot, no need to reinvent the wheel with these.
 --
@@ -50,7 +51,7 @@ function face( target )
 end
 function face_towards( target )
    local off = ai.face( target )
-   if math.abs(off) < 5 then
+   if math.abs(off) < math.rad(5) then
       ai.poptask()
    end
 end
@@ -90,7 +91,8 @@ function __zigzag ( dir, angle )
       mem.pm = 1
    end
 
-   if (mem.pm*dir < angle-20) or (mem.pm*dir > angle+25) then
+   local M_5DEG = math.pi/36
+   if (mem.pm*dir < angle - 4*M_5DEG) or (mem.pm*dir > angle + 5*M_5DEG) then
       -- Orientation is totally wrong: reset timer
       ai.settimer(0, 2.0)
    end
@@ -99,7 +101,7 @@ function __zigzag ( dir, angle )
       ai.turn(-mem.pm)
    else
       ai.turn(mem.pm)
-      if (mem.pm*dir < angle+5) then -- Right orientation, wait for max vel
+      if (mem.pm*dir < angle + M_5DEG) then -- Right orientation, wait for max vel
          --if ai.ismaxvel() then -- TODO : doesn't work well
          if ai.timeup(0) then
             mem.pm = -mem.pm
@@ -156,7 +158,7 @@ function moveto_precise( target )
    local bdist    = ai.minbrakedist()
 
    -- Need to get closer
-   if dir < 10 and dist > bdist then
+   if dir < math.rad(10) and dist > bdist then
       ai.accel()
 
    -- Need to start braking
@@ -206,7 +208,7 @@ function __moveto_generic( target, dir, brake )
    end
 
    -- Need to get closer
-   if dir < 10 and dist > bdist then
+   if dir < math.rad(10) and dist > bdist then
       ai.accel()
 
    -- Need to start braking
@@ -233,7 +235,7 @@ function follow( target )
    local dist  = ai.dist(target)
 
    -- Must approach
-   if dir < 10 and dist > 300 then
+   if dir < math.rad(10) and dist > 300 then
       ai.accel()
    end
 end
@@ -253,7 +255,7 @@ function follow_accurate( target )
 
    --  Always face the goal
    local dir   = ai.face(goal)
-   if dir < 10 and mod > 300 then
+   if dir < math.rad(10) and mod > 300 then
       ai.accel()
    end
 end
@@ -271,7 +273,7 @@ function follow_fleet ()
    if mem.form_pos == nil then -- Simply follow unaccurately
       local dir  = ai.face(leader)
       local dist = ai.dist(leader)
-      if dist > 300 and dir < 10 then -- Must approach
+      if dist > 300 and dir < math.rad(10) then -- Must approach
          ai.accel()
       end
 
@@ -287,7 +289,7 @@ function follow_fleet ()
       if mem.app == 2 then
          local dir   = ai.face(goal)
          if dist > 300 then
-            if dir < 10 then  -- Must approach
+            if dir < math.rad(10) then  -- Must approach
                ai.accel()
             end
          else  -- Toggle precise positioning controller
@@ -302,7 +304,7 @@ function follow_fleet ()
             local dist0 = ai.dist(goal0)
             local dir = ai.face(goal0)
             if dist0 > 300 then
-               if dir < 10 then  -- Must approach
+               if dir < math.rad(10) then  -- Must approach
                   ai.accel()
                end
             else  -- No need to approach anymore
@@ -338,7 +340,7 @@ function hyperspace_shoot( target )
          return
       end
    end
-   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach_shoot", target )
 end
 function _hyp_approach_shoot( target )
@@ -385,7 +387,7 @@ function __choose_land_target ( target )
    end
 
    -- Decide exact land point
-   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
 
    return target
 end
@@ -412,7 +414,7 @@ function __landgo ( planet )
    end
 
    -- Need to get closer
-   if dir < 10 and dist > bdist then
+   if dir < math.rad(10) and dist > bdist then
       ai.accel()
 
    -- Need to start braking
@@ -450,10 +452,10 @@ function runaway( target )
    if p == nil and t == nil then
       ai.pushsubtask( "_run_target" )
    elseif p == nil then
-      mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+      mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.angle() )
       ai.pushsubtask( "_run_hyp", {target, t} )
    elseif t == nil then
-      mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+      mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.angle() )
       ai.pushsubtask( "_run_landgo", {target, p} )
    else
       -- find which one is the closest
@@ -461,10 +463,10 @@ function runaway( target )
       local modt = vec2.mod(t:pos()-pilpos)
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
-         mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+         mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.angle() )
          ai.pushsubtask( "_run_hyp", {target, t} )
       else
-         mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+         mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.angle() )
          ai.pushsubtask( "_run_landgo", {target, p} )
       end
    end
@@ -475,12 +477,12 @@ function runaway_nojump( target )
 end
 function runaway_jump( data )
    local t = data[2]
-   mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.angle() )
    ai.pushsubtask( "_run_hyp", data )
 end
 function runaway_land( data )
    local p = data[2]
-   mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.angle() )
    ai.pushsubtask( "_run_landgo", data )
 end
 
@@ -502,9 +504,9 @@ function __run_target( target )
    -- See whether we have a chance to outrun the attacker
    if __zigzag_run_decide( plt, target ) then
       -- Pilot is agile, but too slow to outrun the enemy: dodge
-      local dir = ai.dir(target) + 180      -- Reverse (run away)
-      if dir > 180 then dir = dir - 360 end -- Because of periodicity
-      __zigzag(dir, 70)
+      local dir = ai.dir(target) + math.pi      -- Reverse (run away)
+      if dir > math.pi then dir = dir - 2*math.pi end -- Because of periodicity
+      __zigzag(dir, math.rad(70))
    else
       ai.face(target, true)
       ai.accel()
@@ -562,14 +564,14 @@ function _run_hyp( data )
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
          local dir = ai.dir(jp_pos)
-         __zigzag(dir, 70)
+         __zigzag(dir, math.rad(70))
       else
          if jdist > 3*bdist and plt:stats().mass < 600 then
             jdir = ai.careful_face(jp_pos)
          else --Heavy ships should rush to jump point
             jdir = ai.face( jp_pos, nil, true )
          end
-         if jdir < 10 then
+         if jdir < math.rad(10) then
             ai.accel()
          end
       end
@@ -621,7 +623,7 @@ function _run_landgo( data )
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
          local dir = ai.dir(pl_pos)
-         __zigzag(dir, 70)
+         __zigzag(dir, math.rad(70))
       else
 
          -- 2 methods depending on mem.careful
@@ -631,7 +633,7 @@ function _run_landgo( data )
          else
             dir = ai.careful_face( pl_pos )
          end
-         if dir < 10 then
+         if dir < math.rad(10) then
             ai.accel()
          end
       end
@@ -675,7 +677,7 @@ function hyperspace( target )
          return
       end
    end
-   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
 end
 function _hyp_approach( target )
@@ -695,7 +697,7 @@ function __hyp_approach( target )
    end
 
    -- Need to get closer
-   if dir < 10 and dist > bdist then
+   if dir < math.rad(10) and dist > bdist then
       ai.accel()
    -- Need to start braking
    elseif dist < bdist then
@@ -741,7 +743,7 @@ function board( target )
    -- See if must brake or approach
    if dist < bdist then
       ai.pushsubtask( "_boardstop", target )
-   elseif dir < 10 then
+   elseif dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -813,7 +815,7 @@ function refuel( target )
    -- See if must brake or approach
    if dist < bdist then
       ai.pushsubtask( "_refuelstop", target )
-   elseif dir < 10 then
+   elseif dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -889,7 +891,7 @@ function mine( fieldNast )
    local dir  = ai.face(goal)
    local mod  = ai.dist(goal)
 
-   if dir < 10 and mod > mbd then
+   if dir < math.rad(10) and mod > mbd then
       ai.accel()
    end
 
@@ -923,7 +925,7 @@ function _killasteroid( fieldNast )
    end
 
    -- Second task : destroy it
-   if dir < 8 then
+   if dir < math.rad(8) then
       ai.weapset( 1 )
       ai.shoot()
       ai.shoot(true)
@@ -962,7 +964,7 @@ function gather ()
    local dir  = ai.face(goal)
    local mod  = ai.dist(goal)
 
-   if dir < 10 and mod > 100 then
+   if dir < math.rad(10) and mod > 100 then
       ai.accel()
    end
 end
@@ -987,7 +989,7 @@ function flyback( dock )
    local dist = ai.dist( goal )
 
    if dist > 300 then
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.accel()
       end
    else -- Time to dock
@@ -1054,7 +1056,7 @@ function loiter( target )
       ai.poptask()
       return
    end
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -1067,7 +1069,7 @@ function loiter_last( target )
       ai.poptask()
       return
    end
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
    end
 end
@@ -1264,7 +1266,7 @@ function ambush_moveto( target )
    end
    local dir = ai.face( target, nil, true )
    local dist = ai.dist( target )
-   if dir < 10 then
+   if dir < math.rad(10) then
       ai.accel()
    end
    if dist < 300 then
@@ -1295,7 +1297,7 @@ function ambush_stalk( target )
    if dist < range * mem.atk_aim then
       -- Go for the kill!
       ai.pushtask( "attack", target )
-   elseif dir < 10 and dist > 300 then
+   elseif dir < math.rad(10) and dist > 300 then
       ai.accel()
    end
 end

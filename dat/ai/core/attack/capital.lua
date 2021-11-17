@@ -40,7 +40,7 @@ end
 --]]
 function __atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
-   local dir
+   local aimdir, dir
    local shoot = false
    ai.weapset( mem.weapset )
 
@@ -54,7 +54,7 @@ function __atk_g_capital( target, dist )
    --if we're far from the target, then turn and approach
    if dist > range then
       dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          __atk_keep_distance()
          ai.accel()
       else
@@ -67,7 +67,7 @@ function __atk_g_capital( target, dist )
       --course facing and accelerate to close
       aimdir = ai.aim(target)
       dir    = ai.iface(target)
-      if dir < 10 and dir > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) then
          ai.accel()
       end
       shoot = true
@@ -78,7 +78,7 @@ function __atk_g_capital( target, dist )
       aimdir = ai.aim(target)
       dir    = ai.iface(target)
       -- Only accelerate if the target is getting away.
-      if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
+      if dir < math.rad(10) and dir > -math.rad(10) and ai.relvel(target) > -math.rad(10) then
          ai.accel()
       end
       -- Shoot if should be shooting.
@@ -88,7 +88,7 @@ function __atk_g_capital( target, dist )
    else
       dir = ai.aim(target)
       -- At point-blank range, we ignore recharge.
-      if dir < 10 then
+      if dir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -97,7 +97,7 @@ function __atk_g_capital( target, dist )
    if shoot then
       if not mem.recharge then
          -- test if, by chance, the target can be hit by cannons
-         if aimdir < 10 then
+         if aimdir < math.rad(10) then
             ai.shoot()
          end
          ai.shoot(true)

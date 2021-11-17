@@ -61,7 +61,7 @@ function __atk_decide_zz( target, dist )
    local d = d1-d2
 
    return ( (dist > range) and (ai.hasprojectile())
-           and (dir < 10) and (dir > -10) and (d < 10) and (d > -10) )
+           and (dir < math.rad(10)) and (dir > -math.rad(10)) and (d < math.rad(10)) and (d > -math.rad(10)) )
 end
 
 
@@ -96,7 +96,7 @@ function _atk_zigzag( target )
    end
 
    local dir = ai.dir( target )
-   __zigzag(dir, 30)
+   __zigzag(dir, math.pi/6)
 end
 
 
@@ -105,7 +105,7 @@ end
 --]]
 function __atk_dogfight_seekers( dist, dir )
    if dist > 100 then
-      if dist < ai.getweaprange( 4 ) and dir < 20  then
+      if dist < ai.getweaprange( 4 ) and dir < math.rad(20)  then
          ai.weapset( 4 )
       elseif dist < ai.getweaprange( 9 ) then
          ai.weapset( 9 )

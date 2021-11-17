@@ -42,7 +42,7 @@ function continueProblems()
     -- Fly off in a random direction
     local ps = player.pilot()
     local dist = 1000
-    local angle = rnd.rnd() * 90 + ps:dir() -- In theory, never deviate more than 90 degrees from the current course.
+    local angle = rnd.rnd() * math.pi/2 + ps:dir() -- In theory, never deviate more than 90 degrees from the current course.
     local newlocation = vec2.newP(dist, angle)
 
     ps:taskClear()

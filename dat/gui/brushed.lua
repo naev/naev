@@ -6,12 +6,13 @@ local fmt = require "format"
 local formation = require "formation"
 local playerform = require "playerform"
 
-local radar_h, radar_w, radar_x, radar_y, screen_h, screen_w
-local bar_w, bar_h, bar_x, bar_y, buttons, margin, pp, ptarget, ta_pnt_pane_x, ta_pnt_pane_y, tbar_w, tbar_h, tbar_y
+local radar_x, radar_y, screen_h, screen_w
+local bar_w, bar_h, bar_x, bar_y, buttons, margin, pp, ptarget, ta_pnt_pane_x, ta_pnt_pane_y, tbar_h, tbar_y
 local fields_w, fields_x, fields_y, nav_planet, nav_pnt, popup_right_x, popup_right_y, tbar_center_w, tbar_center_h, tbar_center_x
+local target_image_w, ta_flt_pane_x
 -- This script has a lot of globals. It really loves them.
 -- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
---local autonav_hyp, autonav_jumps, bar_bg, bar_frame, bar_frame_light, bar_light, bar_lock, bars, button_disabled, button_hilighted, button_mouseover, button_normal, button_pressed, buttontypes, cargo, circle_h, circle_w, cooldown_omsg, end_right, end_right_h, end_right_w, ext_right, field_bg_left, field_frame_center, field_frame_left, field_frame_right, field_h, field_w, first_time, fleet_pane_b, fleet_pane_m, fleet_pane_t, left_side_h, left_side_w, lmouse, main, mesg_w, mesg_x, mesg_y, nav_hyp, navstring, planet_bg, planet_pane_b, planet_pane_m, planet_pane_t, pl_speed_x, pl_speed_y, pntflags, popup_body, popup_bottom, popup_bottom2, popup_bottom_side_left, popup_empty, popup_left_x, popup_left_y, popup_pilot, popup_right_x, popup_right_y, popup_top, question, question_h, question_w, right_side_x, services, smallfont_h, speed_light, speed_light_double, speed_light_off, stats, ta_dir, ta_flt_pane_h, ta_flt_pane_h_b, ta_flt_pane_h_m, ta_flt_pane_w, ta_flt_pane_w_b, ta_flt_pane_w_m, ta_flt_pane_x, ta_flt_pane_y, ta_gfx, ta_gfx_draw_h, ta_gfx_draw_w, ta_pnt_center_x, ta_pnt_center_y, ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, ta_pnt_gfx, ta_pnt_gfx_draw_h, ta_pnt_gfx_draw_w, ta_pnt_gfx_h, ta_pnt_gfx_w, ta_pnt_image_x, ta_pnt_image_y, ta_pnt_pane_h_b, ta_pnt_pane_h_m, ta_pnt_pane_w_b, ta_pnt_pane_w_m, target_bg, target_frame, target_image_h, target_image_w, target_image_x, target_image_y, ta_stats, ta_sx, ta_sy, tbar_left_h, tbar_left_w, tbar_right_h, tbar_right_w, top_bar, top_bar_center, top_bar_left, top_bar_right, top_icon, weapbars
+--local autonav_hyp, autonav_jumps, bar_bg, bar_frame, bar_frame_light, bar_light, bar_lock, bars, button_disabled, button_hilighted, button_mouseover, button_normal, button_pressed, buttontypes, cargo, circle_h, circle_w, cooldown_omsg, end_right, end_right_h, end_right_w, ext_right, field_bg_left, field_frame_center, field_frame_left, field_frame_right, field_h, field_w, first_time, fleet_pane_b, fleet_pane_m, fleet_pane_t, left_side_h, left_side_w, lmouse, main, mesg_w, mesg_x, mesg_y, nav_hyp, navstring, planet_bg, planet_pane_b, planet_pane_m, planet_pane_t, pl_speed_x, pl_speed_y, pntflags, popup_body, popup_bottom, popup_bottom2, popup_bottom_side_left, popup_empty, popup_left_x, popup_left_y, popup_pilot, popup_right_x, popup_right_y, popup_top, question, question_h, question_w, right_side_x, services, smallfont_h, speed_light, speed_light_double, speed_light_off, stats, ta_dir, ta_flt_pane_h, ta_flt_pane_h_b, ta_flt_pane_h_m, ta_flt_pane_w, ta_flt_pane_w_b, ta_flt_pane_w_m, ta_flt_pane_y, ta_gfx, ta_gfx_draw_h, ta_gfx_draw_w, ta_pnt_center_x, ta_pnt_center_y, ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, ta_pnt_gfx, ta_pnt_gfx_draw_h, ta_pnt_gfx_draw_w, ta_pnt_gfx_h, ta_pnt_gfx_w, ta_pnt_image_x, ta_pnt_image_y, ta_pnt_pane_h_b, ta_pnt_pane_h_m, ta_pnt_pane_w_b, ta_pnt_pane_w_m, target_bg, target_frame, target_image_h, target_image_x, target_image_y, ta_stats, ta_sx, ta_sy, tbar_left_h, tbar_left_w, tbar_right_h, tbar_right_w, tbar_w, top_bar, top_bar_center, top_bar_left, top_bar_right, top_icon, weapbars
 --Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
 -- Namespaces
@@ -136,8 +137,8 @@ function create()
    --Radar
    radar_x = 263
    radar_y = 5
-   radar_w = 114
-   radar_h = 120
+   local radar_w = 114
+   local radar_h = 120
    gui.radarInit( false, radar_w, radar_h )
 
    bar_y = 2

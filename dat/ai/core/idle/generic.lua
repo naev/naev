@@ -58,9 +58,9 @@ function idle ()
       local pos = mem.route[1]
       table.remove( mem.route, 1 )
       if #mem.route==1 then
-         ai.pushtask("loiter_last", pos + vec2.newP(200*rnd.rnd(),360*rnd.rnd()) )
+         ai.pushtask("loiter_last", pos + vec2.newP(200*rnd.rnd(), rnd.angle()) )
       else
-         ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(),360*rnd.rnd()) )
+         ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(), rnd.angle()) )
       end
       return
 
@@ -111,7 +111,7 @@ function idle ()
             mem.loiter = mem.loiter - 1
             mem.route = nil
          end
-         ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(),360*rnd.rnd()) )
+         ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(), rnd.angle()) )
       end
    end
 end

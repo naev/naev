@@ -35,6 +35,7 @@ antlejos.unidiff_list = {
    "antlejosv_2",
    "antlejosv_3",
    "antlejosv_4",
+   "antlejosv_5",
 }
 
 function antlejos.unidiff( diffname )
@@ -62,7 +63,25 @@ function antlejos.puaaa ()
    if f then
       return f
    end
-   return faction.dynAdd( nil, "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
+   return faction.dynAdd( nil, "puaaa", _("PUAAA") )
+end
+
+antlejos.protest_lines = {
+   _("No to terraforming!"),
+   _("Leave the planets alone!"),
+   _("The Universe is beautiful as it is!"),
+   _("No modifying atmospheres!"),
+   _("Keep our planets safe!"),
+   _("No to destroying planets!"),
+}
+
+function antlejos.supplied_total ()
+   return var.peek( "antlejos_supplied" ) or 0
+end
+
+function antlejos.supplied( amount )
+   local n = antlejos.supplied_total()
+   var.push( "antlejos_supplied", n+amount )
 end
 
 antlejos.rewards = {

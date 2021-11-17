@@ -23,25 +23,28 @@ local flf = require "missions.flf.flf_common"
 
 local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
 
-misn_title = {}
-misn_title[1] = _("FLF: Lone Pirate Disturbance in {sys}")
-misn_title[2] = _("FLF: Minor Pirate Disturbance in {sys}")
-misn_title[3] = _("FLF: Moderate Pirate Disturbance in {sys}")
-misn_title[4] = _("FLF: Substantial Pirate Disturbance in {sys}")
-misn_title[5] = _("FLF: Dangerous Pirate Disturbance in {sys}")
-misn_title[6] = _("FLF: Highly Dangerous Pirate Disturbance in {sys}")
+misn_title = {
+   _("FLF: Lone Pirate Disturbance in {sys}"),
+   _("FLF: Minor Pirate Disturbance in {sys}"),
+   _("FLF: Moderate Pirate Disturbance in {sys}"),
+   _("FLF: Substantial Pirate Disturbance in {sys}"),
+   _("FLF: Dangerous Pirate Disturbance in {sys}"),
+   _("FLF: Highly Dangerous Pirate Disturbance in {sys}"),
+}
 
-pay_text = {}
-pay_text[1] = _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand.")
-pay_text[2] = _("While polite, something seems off about the smile plastered on the official who hands you your pay.")
-pay_text[3] = _("The official thanks you dryly for your service and hands you a credit chip.")
-pay_text[4] = _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised.")
+pay_text = {
+   _("The official mumbles something about the pirates being irritating as a credit chip is pressed into your hand."),
+   _("While polite, something seems off about the smile plastered on the official who hands you your pay."),
+   _("The official thanks you dryly for your service and hands you a credit chip."),
+   _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised."),
+}
 
 
-mem.osd_desc    = {}
-mem.osd_desc[1] = _("Fly to the {sys} system")
-mem.osd_desc[2] = _("Eliminate the pirates")
-mem.osd_desc[3] = _("Return to FLF base")
+mem.osd_desc = {
+   _("Fly to the {sys} system"),
+   _("Eliminate the pirates"),
+   _("Return to FLF base"),
+}
 
 
 function setDescription ()
@@ -224,7 +227,7 @@ function patrol_spawnPirates( n, boss )
 
    --fleetPirate = {}
    for i = 1, n do
-      local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), 360*rnd.rnd )
+      local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
       local pilotname = nil
       local shipname
       if i == 1 and boss ~= nil then

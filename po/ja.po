@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-11-12 21:22-0500\n"
-"PO-Revision-Date: 2021-10-31 14:27+0000\n"
+"PO-Revision-Date: 2021-11-14 17:50+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -13786,6 +13786,8 @@ msgid ""
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
 msgstr ""
+"これは限定版のネクサス造船所サンドイッチホルダーのようだ。無重力下で手を使わずにサンドイッチを食べるのにとても便利である。どうも CEO "
+"はほんとうに自分のサンドイッチが大好きなようだ。"
 
 #: dat/outfits/accessory/satellite_mockup.xml:2
 msgid "Satellite Mock-up"
@@ -19461,10 +19463,8 @@ msgstr ""
 "様に、これは敵爆撃機による攻撃には弱い。"
 
 #: dat/ships/empire_rainmaker.xml:2
-#, fuzzy
-#| msgid "Empire Peacemaker"
 msgid "Empire Rainmaker"
-msgstr "帝国ピースメイカー"
+msgstr "帝国レインメイカー"
 
 #: dat/ships/empire_rainmaker.xml:22
 msgid ""
@@ -19472,6 +19472,8 @@ msgid ""
 "transporting extensive amounts of material through dangerous territory as "
 "small groups of pirates are no threat due to its heavy armour."
 msgstr ""
+"レインメイカーは帝国が使用している最大の貨物船だ。これには危険な領域を抜けてぼうだいな量の原料を運ぶ能力がある。これがもつ重装甲のおかげで、小さな海賊団な"
+"ら脅威にならないからだ。"
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
@@ -21549,7 +21551,7 @@ msgstr "プロベクタス・ノバ"
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
-msgstr "PSO"
+msgstr " PSO "
 
 #: dat/ssys/pudas.xml:2
 msgid "Pudas"
@@ -22518,8 +22520,7 @@ msgstr "{butthead}が{badword}であることを広めよう。—{sponsor}"
 msgid ""
 "Remember to fill in your EX-29528-B form if returning to the Empire from "
 "Soromid territory."
-msgstr ""
-"ソロミド領域から帝国へ戻るなら、忘れずにEX-29528-B 書式を送付してください"
+msgstr "ソロミド領域から帝国へ戻るなら、忘れずに EX-29528-B 書式を送付してください"
 
 #. Za'lek messages
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
@@ -24979,10 +24980,8 @@ msgid "You have {freespace} of free space."
 msgstr "あなたの船倉には {freespace}の空きがある。"
 
 #: dat/board.lua:334
-#, fuzzy
-#| msgid "You looted {amount} of {cargo} from {plt}."
 msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
-msgstr "{plt}から {amount}の{cargo}を奪った。"
+msgstr "あなたの船は{plt}の部品を再利用して装甲 {armour:.0f} を得た。"
 
 #. Destroy if exists
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:26 dat/shipai.lua:39
@@ -25006,7 +25005,7 @@ msgstr "全部略奪"
 
 #: dat/board.lua:366
 msgid "Cannibalize"
-msgstr ""
+msgstr "共食い"
 
 #: dat/board.lua:369
 msgid "Boarding {shipname}"
@@ -25494,10 +25493,8 @@ msgid "You found #o{title} - {subtitle}!"
 msgstr "あなたは#o{title}#0を見つけた⸺#o{subtitle}！"
 
 #: dat/events/discovery.lua:369
-#, fuzzy
-#| msgid "You found #o{title} - {subtitle}!"
 msgid "You found #o{title}!"
-msgstr "あなたは#o{title}#0を見つけた⸺#o{subtitle}！"
+msgstr "あなたは#o{title}#0を見つけた！"
 
 #. Log and message
 #: dat/events/discovery.lua:373 src/map.c:1880
@@ -26398,10 +26395,8 @@ msgstr ""
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:79
-#, fuzzy
-#| msgid "Trader Rhino"
 msgid "Trader {ship}"
-msgstr "貿易商ライノ"
+msgstr "貿易商の{ship}"
 
 #: dat/events/dvaered/warlords_battle.lua:90
 msgid "A battle is about to begin"
@@ -31990,17 +31985,10 @@ msgstr "あなたはクイズに正解したので、宇宙船マニアから{cr
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:320
-#, fuzzy
-#| msgid ""
-#| "\"That's right! Damn, I thought you wouldn't know this one. This is the "
-#| "{n} time you got my quiz right! Here, take this as a reward for your "
-#| "performance.\""
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
-msgstr ""
-"｢正解！　ちくしょう、これは知らないと思ったんだけどな。{n} 回クイズに正解した"
-"ね！　ほら、これはその成績にたいする賞だよ｣"
+msgstr "｢正解！　ちくしょう、これは知らないと思ったんだけどな。もう {n} 回もクイズを解いたね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
 #: dat/events/neutral/shiplover.lua:325 dat/events/neutral/shiplover.lua:339
@@ -32011,7 +31999,7 @@ msgstr "宇宙船マニア"
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
-msgstr "小さな船の模型で遊んでいる驚くほど若い人物だとわかった。"
+msgstr "小さな船の模型で遊んでいる驚くほど若い人物に気づいた。"
 
 #. First meeting
 #: dat/events/neutral/shiplover.lua:344
@@ -32214,9 +32202,7 @@ msgstr "マキャベリアン・ミシの ｢みごとな｣ 製品"
 msgid ""
 "Machiavellian Misi's the name and selling fine shit is my game! Come get "
 "your outfits here!"
-msgstr ""
-"マキャベリアン・ミシの名前とみごとでくだらないものを売ってるのはわたしの楽し"
-"みです！　ここへ来て艤装品を手に入れよう！"
+msgstr "マキャベリアン・ミシの名前とみごとでくだらないものを売ってるのはわたしの娯楽です！　ここへ来て艤装品を手に入れよう！"
 
 #: dat/events/neutral/travelling_merchant.lua:27
 msgid ""
@@ -36549,7 +36535,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:80
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:83
 msgid "Mission accomplished"
-msgstr ""
+msgstr "任務完了"
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:106
 msgid ""
@@ -36784,7 +36770,7 @@ msgstr "{pnt}へ着陸せよ。"
 #: dat/missions/shark/sh04_meeting.lua:75 dat/missions/shark/sh05_flf.lua:70
 #: dat/missions/shark/sh07_pirates.lua:112
 msgid "Sorry, not interested"
-msgstr ""
+msgstr "残念ですが、興味ありません"
 
 #: dat/missions/dvaered/championship.lua:124
 msgid "\"That's your choice. Goodbye, then.\""
@@ -36836,7 +36822,7 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:161
 #: dat/missions/shark/sh06_arandon.lua:48
 msgid "Let's go"
-msgstr ""
+msgstr "さあ行こう"
 
 #: dat/missions/dvaered/championship.lua:161
 msgid ""
@@ -39681,7 +39667,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:588
 #: dat/missions/empire/shipping/es02.lua:140
 msgid "Trader Gawain"
-msgstr ""
+msgstr "貿易商ガウェイン"
 
 #. The player discuss with Strafer
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:604
@@ -40645,7 +40631,7 @@ msgstr ""
 #: dat/missions/shark/sh04_meeting.lua:61
 #: dat/missions/shark/sh06_arandon.lua:133
 msgid "The Meeting"
-msgstr ""
+msgstr "会合"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:112
 msgid ""
@@ -42235,7 +42221,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec00.lua:83
 #: dat/missions/shark/sh03_hailing.lua:62
 msgid "Report back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "{sys}星系の{pnt}に報告に戻れ。"
 
 #. Force Collective music (note: must clear these later on).
 #. Build the actual cutscene
@@ -43571,15 +43557,12 @@ msgid ""
 "flying into combat against gigantic warships with the Interception Division."
 "\""
 msgstr ""
-"｢船にようこそ｣ と、チェシチはいって、あなたと固い握手をかわした。｢最初は、貨"
-"物輸送任務で試されるだけです。同時にわれわれはあなたの飛ばす腕前について情報"
-"を集めます。あとになって、あなたはもっと重要な任務に呼ばれるかもしれません。"
-"ことによったら、あなたは次のヤオ・プテルノフになる可能性だってあります。われ"
-"われの艦隊に今までいたなかでも最高のパイロットですよ｣\n"
-"    チェシチが手首にあるコンピューターのボタンを二つたたくと、コンピューター"
-"はとつじょ活動を開始した。｢あなたのための簡単な仕事はもうあるようです。この小"
-"包を{pnt}へ配達してください。屈指のパイロットたちは書類の配達から始めて、最後"
-"は迎撃局に所属して戦いのなかを巨大な戦闘艦にむかって飛ぶことになるんです｣"
+"｢船にようこそ｣ と、大尉はいって、あなたと固い握手をかわした。｢最初は、貨物輸送任務で試されるだけです。同時にわれわれはあなたの飛ばす腕前について情報を"
+"集めます。あとになって、あなたはもっと重要な任務に呼ばれるかもしれません。ことによったら、あなたは次のヤオ・プテルノフになる可能性だってあります。われわれ"
+"の艦隊に今までいたなかでも最高のパイロットですよ｣\n"
+"    大尉が手首にあるコンピューターのボタンを二つたたくと、コンピューターはとつじょ活動を開始した。｢あなたのための簡単な仕事はもうあるようです。この小"
+"包を{pnt}へ配達してください。屈指のパイロットたちは書類の配達から始めて、最後は迎撃局に所属して戦いのなかを巨大な戦闘艦にむかって飛ぶことになるんです"
+"｣"
 
 #. Set up the goal
 #: dat/missions/empire/emp_cargo00.lua:77
@@ -43720,7 +43703,7 @@ msgstr "ES: {sys}星系の{pnt}への貨物輸送 ({tonnes})"
 
 #: dat/missions/empire/es_cargo.lua:86
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
-msgstr "{sys}星系の{pnt}への、帝国の公式な貨物の輸送。"
+msgstr "{sys}星系の{pnt}への、帝国の公式な貨物輸送。"
 
 #. Mission is accepted
 #. Set up passenger details so player cannot keep trying to get a better outcome
@@ -43849,7 +43832,7 @@ msgstr "帝国の輸送任務"
 msgid ""
 "#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 "#0"
-msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達に失敗しました！#0"
+msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！#0"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -43883,7 +43866,7 @@ msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達�
 msgid ""
 "Deliver a shipping diplomat for the Empire to Soromid Customs Central in the "
 "Oberon system"
-msgstr ""
+msgstr "帝国のために輸送局外交官をオベロン星系のソロミド・カスタムズ・セントラルに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:37
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:36
@@ -43894,7 +43877,7 @@ msgstr ""
 msgid ""
 "Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the "
 "bar."
-msgstr ""
+msgstr "帝国艦隊輸送局のチェシチ大尉がバーに座っている。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:45
 msgid ""
@@ -43905,6 +43888,10 @@ msgid ""
 "enormous untapped business potential. They need someone competent and "
 "trustworthy to help them out. That's where you come in. Interested?\""
 msgstr ""
+"あなたはチェシチ大尉に近づいた。あなたに気がつくと、大尉の表情があかるくなった。｢こんにちは！　あなたをさがしていたんです。あなたは帝国の貨物任務ではすば"
+"らしい仕事をしてくれています。それにわれわれは新しく刺激的な機会に恵まれています。つまり、局長がほかの党派への業務拡張を狙っているんですよ。そこには手をつ"
+"けられていなかった巨大な事業の可能性があります。局は有能で信頼できる人に助けてもらう必要があるんです。あなたが関係してくるのはそこです。ご興味ありますか？"
+"｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -43913,7 +43900,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:54
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:57
 msgid "Soromid Long Distance Recruitment"
-msgstr ""
+msgstr "ソロミドへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:49
 msgid ""
@@ -43931,6 +43918,12 @@ msgid ""
 "within Empire space handling minor trade disputes, so keep an eye out for me "
 "in the bar on Empire controlled planets.\""
 msgstr ""
+"｢あなたを当てにできるのはわかっていました｣ と、チェシチ大尉は大きな声でいった。｢この任務は長距離になります。つまり、ふつうは最低でも 3 回はジャンプ"
+"して届けにいかなければなりません。くわえて、他の党派の領域にいると気づくことになるのも多いでしょう。そこではたぶん、帝国はあなたを守れません。見返りとして"
+"、あなたにはきちんとした補償があります｣。大尉は手首のコンピューターのボタンを二つたたいた。｢まずは、ほかの党派と運営の準備をする必要があります。形式的手"
+"つづきの処理と運営を監督する官僚も必要となるでしょう。われわれはソロミドと始めるつもりです。あの遺伝子改造人間がちょっと気色悪いのは知っていますが、仕事は"
+"仕事です。官僚と同行してオベロン星系のソロミド・カスタムズ・セントラルへ行ってください。その官僚は、任務が達成されたらわたしのところへ報告に戻ることになっ"
+"ています。わたしは帝国宙域を旅して細かい貿易紛争に対処していることがよくあるので、帝国が支配する惑星のバーでわたしがいないかよく見ていてください｣"
 
 #. Set up the goal
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:60
@@ -43940,7 +43933,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:59
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:62
 msgid "Diplomat"
-msgstr ""
+msgstr "外交官"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:60
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:59
@@ -43949,7 +43942,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:59
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:62
 msgid "An Imperial trade representative."
-msgstr ""
+msgstr "帝国の貿易代表。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:70
 msgid ""
@@ -43957,6 +43950,8 @@ msgid ""
 "credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire "
 "space to continue the operation."
 msgstr ""
+"あなたはあの官僚をソロミド・カスタムズ・セントラルに降ろした。それから官僚はあなたにクレジットチップを手渡した。チェシチ大尉は帝国宙域で運営をつづけている"
+"自分に目を光らせておけといっていた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
 msgid ""
@@ -43964,6 +43959,8 @@ msgid ""
 "Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire "
 "space to continue the operation."
 msgstr ""
+"あなたは帝国のために、輸送局の官僚をソロミド・カスタムズ・セントラルへ連れていった。チェシチ大尉は帝国宙域で運営をつづけている自分に目を光らせておけといっ"
+"ていた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:44
 msgid ""
@@ -43973,6 +43970,9 @@ msgid ""
 "presses a button on his wrist computer. \"We're hoping to expand to Dvaered "
 "territory next. Can I count on your help?\""
 msgstr ""
+"あなたがバーに入ってきたのに気がつくと、チェシチ大尉は手をふって合図してきた。｢間にあううちに出会うのはわかっていました。あの官僚の輸送はすばらしい働きで"
+"した。ソロミド宙域ではすぐに立ちあがって動きはじめるはずです！｣。大尉は手首のコンピューターのボタンを押した。｢われわれは次にドベーレッド領域に広げたいと"
+"思っているんです。あなたの助けを当てにしていいですか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -43981,7 +43981,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:53
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:56
 msgid "Dvaered Long Distance Recruitment"
-msgstr ""
+msgstr "ドベーレッドへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:48
 msgid ""
@@ -43993,11 +43993,15 @@ msgid ""
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
 msgstr ""
+"｢すばらしい！｣ と、チェシチ大尉がいう。｢官僚に連絡をして、格納庫であなたに会うようにいっておきます。ドベーレッドはもちろん帝国の味方です。それでも、簡"
+"単に怒らせることをするんです。だからあまり話をしようとしないでください。あなたの任務は官僚をオガット星系のプラクシスに降ろすことです。その官僚は、輸送契約"
+"が承認されたら、それをもってわたしのところへ報告しに戻ることになっています。そのあとは、帝国宙域でわたしに目を光らせておいてください。そうすればこの活動を"
+"つづけられます｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:56
 msgid "Deliver a shipping diplomat for the Empire to Praxis in the Ogat system"
-msgstr ""
+msgstr "帝国のために輸送局の官僚をオガット星系のプラクシスに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:70
 msgid ""
@@ -44005,12 +44009,14 @@ msgid ""
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
+"あなたはあの官僚をプラクシスに降ろした。それから官僚はあなたにクレジットチップを手渡した。チェシチ大尉が、終わったら帝国が支配する惑星で自分をさがせといっ"
+"ていたのをあなたは思いだした。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
 msgid ""
 "You delivered a shipping bureaucrat to Praxis for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
-msgstr ""
+msgstr "あなたは帝国のために、輸送局の官僚をプラクシスへ連れていった。チェシチ大尉は、終わったら帝国が支配する惑星で自分をさがせといっていた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -44044,7 +44050,7 @@ msgstr ""
 msgid ""
 "Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth "
 "system"
-msgstr ""
+msgstr "帝国のために輸送局外交官をガンス星系のゲルハルト・ステーションに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:45
 msgid ""
@@ -44054,6 +44060,8 @@ msgid ""
 "next mission is to get House Za'lek on board. Interested in helping out "
 "again?\""
 msgstr ""
+"チェシチ大尉がバーに座っている。大尉はほんとうに帝国全体で業務に対処しているように見える。あなたは大尉の隣の席をとった。｢助力に感謝しています。帝国艦隊輸"
+"送局はすぐに銀河じゅうで仕事をすることになります。われわれの次の任務は、ザレク荘を船に乗せることです。また手を貸すことに興味はありますか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -44062,7 +44070,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:54
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:57
 msgid "Za'lek Long Distance Recruitment"
-msgstr ""
+msgstr "ザレクへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:49
 msgid ""
@@ -44073,6 +44081,9 @@ msgid ""
 "been established. There is still more work to be done, so I expect to see "
 "you again soon.\""
 msgstr ""
+"｢そうだろうと思っていました！｣ と、チェシチ大尉はいう。｢もうひとり官僚がいて、通商上のつながりを確立する準備ができています。ザレクはちょっと不思議なと"
+"ころなので、油断しないようにしてください。外交官はガンス星系のゲルハルト・ステーションに行く必要があるだけです。その外交官は、通商関係が確立したら、わたし"
+"に知らせることになっています。それでもやるべき仕事はまだあります。だからまたすぐにあなたと会えると期待しています｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:71
 msgid ""
@@ -44080,6 +44091,8 @@ msgid ""
 "chip. Lieutenant Czesc mentioned more work, so you figure you'll run into "
 "him at a bar again soon."
 msgstr ""
+"あなたはあの外交官をゲルハルト・ステーションに降ろした。それから外交官はあなたにクレジットチップを手渡した。チェシチ大尉はもっと仕事があるといっていたので"
+"、あなたは大尉とはバーですぐに会うことになると考えた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
 msgid ""
@@ -44087,6 +44100,8 @@ msgid ""
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
+"あなたは帝国のために、輸送局の官僚をゲルハルト・ステーションへ連れていった。チェシチ大尉はもっと仕事があるといっていたので、あなたは大尉とはバーですぐに会"
+"うことになると考えた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -44120,7 +44135,7 @@ msgstr ""
 msgid ""
 "Deliver a shipping diplomat for the Empire to The Frontier Council in "
 "Gilligan's Light system"
-msgstr ""
+msgstr "帝国のために輸送局外交官をガリガンズ・ライト星系の辺境評議会に連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:45
 msgid ""
@@ -44130,12 +44145,15 @@ msgid ""
 "We're hoping to extend our relations to the Frontier Alliance. You know the "
 "drill by this point. Ready to help?\""
 msgstr ""
+"｢こんなふうに偶然出会うのはやめなければなりませんね｣。チェシチ大尉は自分の冗談に笑った。｢ただの冗談ですよ。あの契約をまとめるのを助けていただいたことで"
+"、あなたに借りがあるのはわかっていますよね。いまのところ、すべてはわれわれのほうで順調に進んでいます。われわれは辺境同盟に関係を広げたいと思っているところ"
+"です。いままでのくり返しなのはわかりますね。手助けの用意はありますか？｣"
 
 #. Flavour text and mini-briefing
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:49
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:57
 msgid "Frontier Alliance Long Distance Recruitment"
-msgstr ""
+msgstr "辺境同盟への長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:49
 msgid ""
@@ -44146,12 +44164,15 @@ msgid ""
 "this, there should only be one more faction to bring into the fold. I expect "
 "to see you again soon.\""
 msgstr ""
+"｢あなたの献身を賞賛していますよ｣ と、チェシチ大尉はいった。｢それにこれがあまり刺激的な任務ではないのもわかっています。しかしとくべつ役に立っているんで"
+"す。辺境はちょっと危険なので、かならず準備をしておいてください。官僚はガリガンズ・ライト星系の辺境評議会に降ろさなければなりません。このあとは、もうひとつ"
+"の党派しか仲間に引きこむのはありません。またすぐあなたと会えると期待しています｣"
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:54
 msgid "Frontier Long Distance Recruitment"
-msgstr ""
+msgstr "辺境への長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:71
 msgid ""
@@ -44162,6 +44183,9 @@ msgid ""
 "of Empire bureaucracy. Only your loyalty to the Empire stopped you from "
 "sending her out into the vacuum of space."
 msgstr ""
+"あなたはあの外交官を辺境評議会に連れていった。それから外交官はあなたにクレジットチップを手渡した。ありがたいことに、チェシチ大尉はまたあなたの助力が必要な"
+"のは、もうひとつの任務だけだといっていた。この今回の官僚は自分の船室にとどまることを拒絶したのだ。船橋に出入りするのを好み、帝国の官僚式手つづきの一部始終"
+"をあなたにもたらした。帝国への義理だけが、この官僚を真空の宇宙に放りだすことを止めたのだった。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
 msgid ""
@@ -44172,6 +44196,9 @@ msgid ""
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
+"あなたは帝国のために、輸送局の官僚を辺境評議会に連れていった。ありがたいことに、チェシチ大尉はまたあなたの助力が必要なのは、もうひとつの任務だけだといって"
+"いた。この今回の官僚は自分の船室にとどまることを拒絶したのだ。船橋に出入りするのを好み、帝国の官僚式手つづきの一部始終をあなたにもたらした。帝国への義理だ"
+"けが、この官僚を真空の宇宙に放りだすことを止めたのだった。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:44
 msgid ""
@@ -44179,6 +44206,8 @@ msgid ""
 "Empire Armada employee. We're on track to establish a deal with House "
 "Sirius. This should be the last contract to be negotiated. Ready to go?\""
 msgstr ""
+"あなたがバーに入ると、チェシチ大尉が近づいてきた。｢わたしのお気に入りの帝国艦隊の請負人じゃないですか。われわれはシリウス荘との取引をまとめるところへ進ん"
+"でいます。これは協議すべき最後の契約になるはずです。行く用意はありますか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -44187,7 +44216,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:53
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:56
 msgid "Sirius Long Distance Recruitment"
-msgstr ""
+msgstr "シリウスへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:48
 msgid ""
@@ -44197,12 +44226,15 @@ msgid ""
 "time and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
+"｢もうどうやって進めるかわかってますね｣ と、チェシチ大尉がいう。｢官僚をエスカー星系のマドリアで降ろしてください。シリウス宙域はかなり遠いです。だからす"
+"べてのことに用意をしておいてください。そのあとで、わたしともういちど会ってください。この任務であなたが作ってくれたすべての書類仕事を終わらせてしまうつもり"
+"です｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:56
 msgid ""
 "Deliver a shipping diplomat for the Empire to Madria in the Esker system"
-msgstr ""
+msgstr "帝国のために輸送局外交官をエスカー星系のマドリアに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:70
 msgid ""
@@ -44210,6 +44242,8 @@ msgid ""
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
+"あなたはあの外交官をマドリアに降ろした。それから外交官はあなたにクレジットチップを手渡した。チェシチ大尉は書類仕事をするために、帝国のバーで自分をさがせと"
+"いっていた。官僚制の極致である。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
 msgid ""
@@ -44217,6 +44251,7 @@ msgid ""
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
+"あなたは帝国のために、輸送局の官僚をマドリアに連れていった。チェシチ大尉は書類仕事をするために、帝国のバーで自分をさがせといっていた。官僚制の極致である。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:47
 msgid ""
@@ -44227,6 +44262,9 @@ msgid ""
 "authorize you to help out with the long-distance shipping missions. Can I "
 "count on you?\""
 msgstr ""
+"あなたがバーにいたチェシチ大尉の隣の席をとると、大尉はあなたの背中をたたいた。｢われわれはやりました！　帝国艦隊輸送拠点を銀河じゅうにたくさん立ちあげたん"
+"です。わたしはもうひとつだけご好意をお願いします。わたしはガンマ・ポラリス星系のハリルへ戻る便を必要としています。そこへ着けば、長距離輸送任務への協力をあ"
+"なたに許可できます。あなたを頼っていいですか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -44235,7 +44273,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:56
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:59
 msgid "Empire Long Distance Recruitment"
-msgstr ""
+msgstr "帝国への長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:51
 msgid ""
@@ -44244,11 +44282,14 @@ msgid ""
 "Lieutenant Czesc excitedly gets up from the bar. \"Let's get going as soon "
 "as possible. There's no place like home!\""
 msgstr ""
+"心の中で、あなたはその考えにうめき声をあげていた。また銀河をわたって運搬しなければならないというのが、さらなる書類仕事のためなのだ。しかしすくなくとも、あ"
+"なたは新しい任務を手に入れることができる。チェシチ大尉は興奮してバーから立ちあがった。｢できるだけすぐに行くことにしましょう。故郷にまさる場所はありません"
+"よ！｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:58
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:59
 msgid "Deliver Lieutenant Czesc to Halir in the Gamma Polaris system"
-msgstr ""
+msgstr "チェシチ大尉をガンマ・ポラリス星系のハリルに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:73
 msgid ""
@@ -44263,6 +44304,11 @@ msgid ""
 "factions. Again, I can't thank you enough! The Empire does not quickly "
 "forget such dedication.\""
 msgstr ""
+"チェシチ大尉はあなたの船から出ると、深々と息をした。｢わたしは朝の官僚たちのにおいが大好きです｣。大尉があなたと握手する。｢助力すべてにお礼をいいます、船"
+"長！　本部までついてきてください。あなたが作ってくれたすべての書類仕事をいくらかこなせます。そのあとで、あなたは長距離輸送任務をうけられはじめるはずです。"
+"その任務は通常の輸送任務より支払いがよいですが、もっと長い距離を旅することや、ほかの党派が支配する領域へ旅する必要があることもよくあります。おそらく、帝国"
+"宙域の端のほうがその任務を見る機会がよくあるでしょう。そこで貨物はほかの党派へ出ていく用意がされるからです。かさねていいますが、わたしにはあなたへのお礼が"
+"じゅうぶんにはできません！　帝国がそのような献身をすぐに忘れることはありませんから｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
 msgid ""
@@ -44273,6 +44319,9 @@ msgid ""
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
+"あなたは書類仕事のためにチェシチ大尉をハリルに輸送した。あなたはもう帝国のための長距離貨物任務をうけることができる。その任務は通常の輸送任務より支払いがよ"
+"いが、もっと長い距離を旅することや、ほかの党派が支配する領域へ旅する必要があることもしばしばだ。おそらく、帝国宙域の端のほうがその任務を見る機会が多くなる"
+"。貨物はそこで、ほかの党派へ出ていく用意がされるからだ。"
 
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -44287,22 +44336,22 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:84
 msgid "ES: Long distance cargo transport ({tonnes} of {cargo})"
-msgstr ""
+msgstr "ES: 長距離貨物輸送 ({tonnes}の{cargo})"
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:87
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
-msgstr ""
+msgstr "{sys}星系の{pnt}への、帝国の公式な長距離貨物輸送。"
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:145
 msgid "Long Distance Empire Shipping"
-msgstr ""
+msgstr "帝国の長距離輸送任務"
 
 #. Case missed deadline
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:148
 msgid ""
 "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
-msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に失敗しました！"
+msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -44337,11 +44386,11 @@ msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に�
 #. Spaceport bar stuff
 #: dat/missions/empire/shipping/es00.lua:43
 msgid "Commander"
-msgstr ""
+msgstr "中佐"
 
 #: dat/missions/empire/shipping/es00.lua:43
 msgid "You see an Empire Commander. He seems to have noticed you."
-msgstr ""
+msgstr "帝国の中佐に気づいた。むこうもあなたに気づいているようだ。"
 
 #: dat/missions/empire/shipping/es00.lua:49
 msgid ""
@@ -44352,6 +44401,10 @@ msgid ""
 "missions, unlike the ones you've recently completed for the division. Would "
 "you be up for the challenge?\""
 msgstr ""
+"あなたは帝国の中佐に近づいた。\n"
+"    ｢こんにちは、あなたは{player}にちがいないですね。あなたのことは聞いていました。わたしは中佐のソルドナーです。帝国輸送局には、あなたのよう"
+"な人にやってもらう、さらに難しい任務があります。この任務のなかでは、いくつかほんとうの危険に巻きこまれることもあるでしょう。あなたが最近、局のためにやって"
+"くれたものとはちがいます。挑戦してみたいですか？｣"
 
 #. Accept mission
 #. target destination
@@ -44368,12 +44421,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es00.lua:94
 #: dat/missions/empire/shipping/es00.lua:98
 msgid "Prisoner Exchange"
-msgstr ""
+msgstr "捕虜交換"
 
 #: dat/missions/empire/shipping/es00.lua:64
 #: dat/missions/empire/shipping/es00.lua:70
 msgid "Go to {pnt} in the {sys} system to exchange prisoners with the FLF"
-msgstr ""
+msgstr "{sys}星系の{pnt}へ行き、FLF と捕虜を交換せよ。"
 
 #: dat/missions/empire/shipping/es00.lua:67
 msgid ""
@@ -44387,21 +44440,26 @@ msgid ""
 "in {ret_sys} for debriefing. You'll be compensated for your troubles. Good "
 "luck.\""
 msgstr ""
+"｢われわれは FLF との捕虜交換を、{dest_sys}星系の{dest_pnt}でおこなうようにまとめあげました。FLF "
+"は交換をするのにもっと中立なパイロットを求めています。あなたは自分の船に FLF の捕虜を乗せて{dest_pnt}へ行き、われわれのほうの者と交換しなけ"
+"ればなりません。あなたにはあきらかな護衛はつけられませんが、近隣区域の船にあなたの行動を見守らせるつもりです。\n"
+"    ｢FLF が捕らえていた者たちを引き取ったら、報告のために{ret_sys}星系の{ret_pnt}に連れてきてください。面倒をかけたことには補償"
+"があります。幸運を｣"
 
 #. Set up the goal
 #: dat/missions/empire/shipping/es00.lua:73
 msgid "Prisoners"
-msgstr ""
+msgstr "捕虜"
 
 #: dat/missions/empire/shipping/es00.lua:73
 msgid "FLF prisoners."
-msgstr ""
+msgstr "FLF の捕虜。"
 
 #: dat/missions/empire/shipping/es00.lua:75
 msgid ""
 "The Prisoners are loaded onto your ship along with a few marines to ensure "
 "nothing untoward happens."
-msgstr ""
+msgstr "捕虜があなたの船に乗せられた。困ったことがおきないように、二、三人の海兵隊員が同伴している。"
 
 #: dat/missions/empire/shipping/es00.lua:92
 msgid ""
@@ -44413,6 +44471,10 @@ msgid ""
 "them with guns to their backs. You see figures step out of the shadows with "
 "weapons too; most likely the FLF."
 msgstr ""
+"着陸すると、宇宙港は空っぽだということに気がついた。あなたはそのうえ、柱のいくつかに爆発物が取りつけられていることにも気がついた。これはよくない感じがする"
+"。海兵隊員たちがあなたにまだ座っているようにという。そのあいだに自分たちが出ていって、捕虜交換を完了させるように努力するというのだ。\n"
+"    操縦席から、あなたは海兵隊員たちが捕虜を連れていって、うしろで銃をもつ自分たちの前に行かせたのが見えた。それに人影が暗がりから踏みだし、その人たち"
+"は武器を持っているのが見えた。ほぼまちがいなく FLF だろう。"
 
 #: dat/missions/empire/shipping/es00.lua:94
 msgid ""
@@ -44425,11 +44487,16 @@ msgid ""
 "up many FLF and Dvaered ships. Looks like you're going to have quite a run "
 "to get the hell out of here. It didn't go as you expected."
 msgstr ""
+"不意にサイレンが鳴り響き、射撃が始まったのを聞いた。あなたはすばやくエンジンを始動して、離陸の用意をする。銃声が着陸格納庫じゅうに響きわたり、あなたが宇宙"
+"港を離れたときには二体の死体が見えた。あなたが爆発物のことを思いだしたちょうどそのとき、大きな爆発があなたの背後でおきた。これにはまったくよい感じがしない"
+"。\n"
+"    大気圏を出るために上昇を開始すると、あなたはたくさんの FLF "
+"とドベーレッドの船を連れてきていることに気がついた。どんどん逃げて、ここからさっさと消えることになりそうだ。あなたが思っていたとおりにはいっていなかった。"
 
 #: dat/missions/empire/shipping/es00.lua:97
 #: dat/missions/empire/shipping/es00.lua:99
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr ""
+msgstr "{sys}星系の{pnt}に戻って、なにがおきたのか報告せよ。"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -44438,7 +44505,7 @@ msgstr ""
 #. Flavour text
 #: dat/missions/empire/shipping/es00.lua:118
 msgid "Mission Report"
-msgstr ""
+msgstr "任務の報告"
 
 #: dat/missions/empire/shipping/es00.lua:118
 msgid ""
@@ -44453,6 +44520,12 @@ msgid ""
 "in the bar in a while. We get no rest around here. The payment has already "
 "been transferred to your bank account.\""
 msgstr ""
+"宇宙港にいる船から出ると、あなたはソルドナー中佐に会った。中佐の表情からすると、すでになにがおきたのか知っているようだ。\n"
+"    ｢すべてはドベーレッドの落ち度です。ちょうどどこからか現れて、撃ちはじめたんです。なんともひどい混乱でした。われわれはすでに責任を整理する仕事に取"
+"り組んでいます｣\n"
+"    中佐がため息をついた。｢われわれはあそこでは好人物というところでした。それからまちがいなくわれわれは、あなたにはあのようなめちゃくちゃから始めても"
+"らおうとは思っていませんでした。それでももしほかの仕事に興味があるようでしたら、しばらくしたらわたしとバーで会ってください。休みもなくこのあたりにいますか"
+"ら。報酬はもうあなたの銀行口座に振りこまれています｣"
 
 #: dat/missions/empire/shipping/es00.lua:122
 msgid ""
@@ -44462,6 +44535,8 @@ msgid ""
 "Soldner has asked you to meet him in the bar on Halir if you're interested "
 "in another mission."
 msgstr ""
+"あなたは FLF との捕虜交換に、帝国の代理として参加した。不幸なことに、捕虜交換は失敗した。｢すべてはドベーレッドの落ち度です。ちょうどどこからか現れて"
+"、撃ちはじめたんです｣。ソルドナー中佐は、次の任務に興味があるならハリルのバーで会ってくれとあなたに依頼した。"
 
 #. Force FLF combat music (note: must clear this later on).
 #. Get a random position near the player
@@ -44477,13 +44552,13 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:154
 #: dat/missions/empire/shipping/es02.lua:210
 msgid "FLF Ambusher"
-msgstr ""
+msgstr "FLF の伏兵"
 
 #. Now the Dvaered
 #. Player should not be able to reland
 #: dat/missions/empire/shipping/es00.lua:163
 msgid "The docking stabilizers have been damaged by weapons fire!"
-msgstr ""
+msgstr "接舷安定器が砲火で損傷した！"
 
 #. Storing the system the player jumped from.
 #.
@@ -44525,11 +44600,11 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:46
 #: dat/missions/empire/shipping/es02.lua:60
 msgid "Soldner"
-msgstr ""
+msgstr "ソルドナー"
 
 #: dat/missions/empire/shipping/es01.lua:46
 msgid "You see Commander Soldner who is expecting you."
-msgstr ""
+msgstr "ソルドナー中佐があなたを待っているのがわかった。"
 
 #. See if accept mission
 #. Flavour text and mini-briefing
@@ -44543,13 +44618,15 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:84
 #: dat/missions/empire/shipping/es02.lua:86
 msgid "Commander Soldner"
-msgstr ""
+msgstr "ソルドナー中佐"
 
 #: dat/missions/empire/shipping/es01.lua:52
 msgid ""
 "You approach Commander Soldner, who seems to be waiting for you.\n"
 "\"Hello, ready for your next mission?\""
 msgstr ""
+"あなたはソルドナー中佐に近づいた。中佐はあなたを待っていたように見える。\n"
+"｢こんにちは。次の任務の用意はいいですか？｣"
 
 #. target destination
 #. Mission details
@@ -44558,12 +44635,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:106
 #: dat/missions/empire/shipping/es01.lua:119
 msgid "Empire Shipping Delivery"
-msgstr ""
+msgstr "帝国の積み荷配達"
 
 #: dat/missions/empire/shipping/es01.lua:66
 #: dat/missions/empire/shipping/es01.lua:72
 msgid "Pick up a package at {pnt} in the {sys} system"
-msgstr ""
+msgstr "{sys}星系の{pnt}で小包を受けとれ。"
 
 #: dat/missions/empire/shipping/es01.lua:69
 msgid ""
@@ -44576,6 +44653,10 @@ msgid ""
 "actual delivery by yourself. This way we shouldn't arouse suspicion. You are "
 "to report here when you finish delivery and you'll be paid {credits}.\""
 msgstr ""
+"ソルドナー中佐が話しはじめた。｢{pickup_sys}星系の{pickup_pnt}で受けとって、{dropoff_sys}星系の{dropoff_pn"
+"t}に持っていかなければならない重要な小包があります。そのうえ、外部の勢力もそれを欲しがっていると信じる理由があります。\n"
+"    ｢計画では、先行する船団を送りますが、予想される敵を混乱させる試みとして、護衛をつけます。あなたはそのあと出発して、じっさいの配達はあなたがします"
+"。これは疑いをかきたてるはずのない方法です。配達を終えたらここへ出頭してください。そうすれば、あなたには {credits} を支払います｣"
 
 #: dat/missions/empire/shipping/es01.lua:76
 msgid ""
@@ -44583,12 +44664,14 @@ msgid ""
 "Since you are undercover, Empire ships won't assist you if you come under "
 "fire, so stay sharp. Good luck.\""
 msgstr ""
+"｢どんな犠牲を払っても敵を避けてください。小包は目的地に到着しなければなりません。あなたは秘密活動に従事するので、砲火にさらされることになっても、帝国の船"
+"はあなたを支援しません。だからつねに抜けめなくやってください。幸運を｣"
 
 #. Set hooks
 #. Make sure player has room.
 #: dat/missions/empire/shipping/es01.lua:92
 msgid "Need More Space"
-msgstr ""
+msgstr "もっと空きが必要"
 
 #: dat/missions/empire/shipping/es01.lua:93
 #, lua-format
@@ -44598,38 +44681,37 @@ msgid ""
 msgid_plural ""
 "You do not have enough space to load the packages. You need to make room for "
 "%d more tonnes."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "あなたには小包を積みこめるほどの空きがなかった。あと %dトンあける必要がある。"
 
 #. Update mission
 #: dat/missions/empire/shipping/es01.lua:100
 msgid "Packages"
-msgstr ""
+msgstr "小包"
 
 #: dat/missions/empire/shipping/es01.lua:100
 msgid "Several packages of \"food\"."
-msgstr ""
+msgstr "｢食料｣ の小包がいくつか。"
 
 #: dat/missions/empire/shipping/es01.lua:104
 #: dat/missions/empire/shipping/es01.lua:107
 msgid "Deliver the package to {pnt} in the {sys} system"
-msgstr ""
+msgstr "{sys}星系の{pnt}に小包を配達せよ。"
 
 #. Load message
 #: dat/missions/empire/shipping/es01.lua:111
 msgid "Loading Cargo"
-msgstr ""
+msgstr "貨物の積みこみ"
 
 #: dat/missions/empire/shipping/es01.lua:111
 msgid ""
 "The packages labelled \"Food\" are loaded discreetly onto your ship. Now to "
 "deliver them to {pnt} in the {sys} system."
-msgstr ""
+msgstr "｢食料｣ と荷札の貼られた小包が、慎重にあなたの船へと積みこまれた。もう{sys}星系の{pnt}へ配達するころあいだ。"
 
 #. Some text
 #: dat/missions/empire/shipping/es01.lua:122
 msgid "Cargo Delivery"
-msgstr ""
+msgstr "貨物の配達"
 
 #: dat/missions/empire/shipping/es01.lua:122
 msgid ""
@@ -44637,6 +44719,8 @@ msgid ""
 "notice that one of them gives you a note. Looks like you'll have to go to "
 "{pnt} in the {sys} system to report to Commander Soldner."
 msgstr ""
+"労働者たちは、積んだときと同様に謎めいた小包をすばやく降ろした。なかのひとりがあなたに覚え書きを渡そうとしているのに気がついた。{sys}星系の{prn}"
+"へ行って、ソルドナー中佐に報告にいかなければならないようだ。"
 
 #: dat/missions/empire/shipping/es01.lua:131
 msgid ""
@@ -44648,6 +44732,10 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
+"あなたは{pnt}に到着し、ソルドナー中佐に報告をした。中佐があなたを出迎えて、話を始めた。｢抵抗に出会ったことは聞いています。とにかく、あなたはうまく小"
+"包を配達できました。すばらしい仕事ぶりです。あなたには大型武器免許が許可されるようにしておきました。それでも免許を得るには手数料を支払う必要がありますが。"
+"\n"
+"    ｢さらなる仕事に興味があるなら、もうちょっとしたらバーで会ってください。さきに終わらせる必要がある書類仕事がすこしあるんです｣"
 
 #. The goods
 #: dat/missions/empire/shipping/es01.lua:137
@@ -44657,6 +44745,8 @@ msgid ""
 "outfitter. Commander Soldner said that you can meet him in the bar at Halir "
 "if you're interested in more work."
 msgstr ""
+"あなたは帝国のために小包の配達を首尾よく完了させた。その結果、あなたには大型武器免許が許可されて、もう艤装所からそれを買うことができる。ソルドナー中佐は、"
+"もしさらなる仕事に興味があるなら、ハリルのバーで会えるといった。"
 
 #. Mercenaries appear after a couple of jumps
 #. Get player position
@@ -44710,11 +44800,11 @@ msgstr ""
 msgid ""
 "You failed in your attempt to rescue a VIP for the Empire. Meet with "
 "Commander Soldner on Halir to try again."
-msgstr ""
+msgstr "あなたは帝国のための VIP 救出の試みに失敗した。ソルドナー中佐とハリルで会い、また試せ。"
 
 #: dat/missions/empire/shipping/es02.lua:60
 msgid "Commander Soldner is waiting for you."
-msgstr ""
+msgstr "ソルドナー中佐があなたを待っている。"
 
 #: dat/missions/empire/shipping/es02.lua:66
 msgid ""
@@ -44722,6 +44812,8 @@ msgid ""
 "    \"Hello again, {player}. Still interested in doing another mission? This "
 "one will be more dangerous.\""
 msgstr ""
+"またあなたはソルドナー中佐とバーで会った。\n"
+"    ｢こんどもよろしくお願いします、{player}。まだ次の任務をするのに興味はありますね？　これはもっと危険なことになるでしょう｣"
 
 #. Accept the mission
 #. Set marker
@@ -44730,12 +44822,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:87
 #: dat/missions/empire/shipping/es02.lua:227
 msgid "Empire VIP Rescue"
-msgstr ""
+msgstr "帝国 VIP の救出"
 
 #: dat/missions/empire/shipping/es02.lua:81
 #: dat/missions/empire/shipping/es02.lua:88
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr ""
+msgstr "{sys}星系の輸送船から VIP を救出せよ。"
 
 #: dat/missions/empire/shipping/es02.lua:84
 msgid ""
@@ -44752,6 +44844,12 @@ msgid ""
 "must not allow the transport ship to be destroyed before you rescue the VIP. "
 "His survival is vital.\""
 msgstr ""
+"ソルドナー中佐はうなずいてつづけた。｢VIP を輸送している輸送船が攻撃をうけていると報告があったんです。輸送船はどうにか逃げだせましたが、けっきょく{s"
+"ys}星系でエンジンが動かなくなりました。その船はいま機能停止状態なので、われわれはその船に移乗して VIP を救出する人を必要としています。"
+"その区域の近くには FLF の船がたくさん探知されていますが、どうにかドベーレッドの護衛を準備できました。\n"
+"    ｢あなたは{sys}星系に飛ぶ必要があります。その輸送船を見つけて移乗したら、VIP を救出してから戻ってきてください。その区域はきっと激しいこと"
+"になるはずです。それでドベーレッドの護衛が参加することになります。この任務では、敵対する可能性のあるすべての船の気を散らして手を出せないようにすることにな"
+"るでしょう。VIP を救出するまえに輸送船を破壊されてはなりません。その人が生きのびることは、きわめて重要です｣"
 
 #: dat/missions/empire/shipping/es02.lua:86
 msgid ""
@@ -44759,6 +44857,8 @@ msgid ""
 "accidentally destroy the transport ship. If all goes well, you'll be paid "
 "{credits} when you return with the VIP. Good luck, pilot.\""
 msgstr ""
+"｢ドベーレッドには注意してください。ちょっと鈍感なこともあるので、輸送船をうっかり破壊するかもしれません。もしすべてがうまくいけば、VIP "
+"とともに戻ったときに {credits} が支払われます。幸運を、パイロット｣"
 
 #: dat/missions/empire/shipping/es02.lua:118
 msgid ""
@@ -44770,19 +44870,24 @@ msgid ""
 "the Heavy Combat Vessel License; congratulations! We have nothing more for "
 "you now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"あなたは宇宙港に着陸した。VIP "
+"はすでに回復しているらしい。あなたにたっぷり礼をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んでいるようだ。こんどだけは。\n"
+"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなたはとても腕がたつパイロットだと証明してみせました。ああ、それであなたには"
+"大型戦闘艦免許の許可を与えました。おめでとう！　"
+"いまはあなたにしてもらうことはこれ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認してください｣"
 
 #: dat/missions/empire/shipping/es02.lua:121
 msgid ""
 "You successfully rescued a VIP for the Empire and have been cleared for the "
 "Heavy Combat Vessel License; you can now buy one at the outfitter."
-msgstr ""
+msgstr "あなたは帝国のために VIP を救出するのに成功し、大型戦闘艦免許の許可をもらった。あなたはもう艤装所で免許を買えるようになった。"
 
 #. Clear velocity
 #. VIP boards
 #: dat/missions/empire/shipping/es02.lua:148
 #: dat/missions/empire/shipping/es02.lua:219
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #. To make it more interesting a vendetta will solely target the player.
 #. If player is seen, have them target player
@@ -44796,33 +44901,33 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:185
 #: dat/missions/empire/shipping/es02.lua:249
 msgid "MISSION FAILED: You abandoned the VIP."
-msgstr ""
+msgstr "任務に失敗 : あなたは VIP を見捨てた。"
 
 #: dat/missions/empire/shipping/es02.lua:219
 msgid "A Very Important Person."
-msgstr ""
+msgstr "要人。"
 
 #: dat/missions/empire/shipping/es02.lua:221
 msgid "Disabled Ship"
-msgstr ""
+msgstr "無力化された船"
 
 #: dat/missions/empire/shipping/es02.lua:221
 msgid ""
 "The ship's hatch opens and immediately an unconscious VIP is brought aboard "
 "by his bodyguard. Looks like there is no one else aboard."
-msgstr ""
+msgstr "船のハッチを開くと、すぐに VIP の護衛が意識を失った VIP を船に連れてきた。ほかにはだれも乗りこんでこないようだ。"
 
 #. Update mission details
 #: dat/missions/empire/shipping/es02.lua:226
 #: dat/missions/empire/shipping/es02.lua:228
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr ""
+msgstr "VIPといっしょに{sys}星系の{pnt}へ戻れ。"
 
 #. Force unboard
 #. Notify of death
 #: dat/missions/empire/shipping/es02.lua:239
 msgid "MISSION FAILED: VIP is dead."
-msgstr ""
+msgstr "任務に失敗 : VIP が死んだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -47590,14 +47695,14 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:82
 #: dat/missions/pirate/pir_contraband_cake.lua:85
 msgid "Accept"
-msgstr ""
+msgstr "受けいれる"
 
 #: dat/missions/minerva/kex2.lua:170 dat/missions/minerva/kex3.lua:169
 #: dat/missions/minerva/kex3.lua:317 dat/missions/minerva/kex4.lua:167
 #: dat/missions/minerva/kex5.lua:83
 #: dat/missions/pirate/pir_contraband_cake.lua:86
 msgid "Decline"
-msgstr ""
+msgstr "辞退する"
 
 #: dat/missions/minerva/kex2.lua:174
 msgid ""
@@ -53736,9 +53841,8 @@ msgid ""
 "a swirling concoction in a martini glass with a disappointed look on his "
 "face every time he takes a sip."
 msgstr ""
-"貴族がバーのまんなかのテーブルに座っているのが見えた。マティーニのグラスに"
-"入った渦を巻く混合飲料を飲んでいる。ひと口飲むごとに失望したような表情をして"
-"見せていた。"
+"貴族がバーのまんなかのテーブルに座っているのが見えた。マティーニのグラスに入った渦を巻く混合飲料を飲んでいる。ひと口飲むごとに失望したような表情をしていた"
+"。"
 
 #: dat/missions/neutral/aristodrink.lua:68
 msgid ""
@@ -53880,20 +53984,14 @@ msgid ""
 "    When you get back to your ship you realize you have a drink left over. "
 "It might look good like an ornament?"
 msgstr ""
-"｢ああ！　あの飲み物をどれだけ欲しがっていたことかと、ちょうど思っていたところ"
-"だった。きみがどうにか見つけてきたとはとても喜ばしいことだ。それでも時間がか"
-"かったのはまちがいないようだな｣。あなたは飲み物を渡して、簡単ではなかったこと"
-"と、寄らなければならなかった星系がどれだけ多かったかを伝えた。｢うむ。それはか"
-"なり多いな。もっともきみがこれだけ遅れた理由にはならんが｣。貴族の男が飲み物を"
-"すこし飲んだ。｢ああ！　それでもこれはいい。きみは自分の苦労にたいする報酬を欲"
-"しがっているのだと思う。きみはほんとうに多くの困難を通りぬけてきた。いいかえ"
-"ると、きみはかなり長い時間をかけた。{credits} がふさわしいだろうと考える｣\n"
-"    あなたがしてきた努力の量を考えると、あなたはだまされたように感じた。それ"
-"でもごうまんな貴族と議論できるようには思わないので、男に飲み物を残してなにも"
-"言わずにただ立ち去った。とにかくあのような飲み物のために支払いがあっただけで"
-"も、たぶんこれ以上はないほどましなのだろう。\n"
-"    船に戻ると、あなたは飲み物が残っているのに気がついた。飾りにするのもいい"
-"かもしれない？"
+"｢ああ！　あの飲み物をどれだけ欲しがっていたことかと、ちょうど思っていたところだった。きみがどうにか見つけてきたとはとても喜ばしいことだ。それでも時間がか"
+"かったのはまちがいないようだな｣。あなたは飲み物を渡して、簡単ではなかったことと、寄らなければならなかった星系がどれだけ多かったかを伝えた。｢うむ。それは"
+"かなり多いな。もっともきみがこれだけ遅れた理由にはならんが｣。貴族の男が飲み物をすこし飲んだ。｢ああ！　それでもこれはいい。きみは自分の苦労にたいする報酬"
+"を欲しがっているのだと思う。きみはほんとうに多くの困難を通りぬけてきた。いいかえると、きみはかなり長い時間をかけた。{credits} "
+"がふさわしいだろうと考える｣\n"
+"    あなたがしてきた努力の量を考えると、あなたはだまされたように感じた。それでもごうまんな貴族と議論できるようには思わなかったので、男と飲み物を残して"
+"なにも言わずにただ立ち去った。とにかくあのような飲み物のために支払いがあっただけでも、たぶんこれ以上はないほどましなのだろう。\n"
+"    船に戻ると、あなたは飲み物が残っているのに気がついた。飾りにするのもいいかもしれない？"
 
 #: dat/missions/neutral/aristodrink.lua:157
 msgid "You delivered a special drink called a Swamp Bombing to an aristocrat."
@@ -53966,60 +54064,40 @@ msgstr "{sys}星系の{pnt}へのとても大量の貨物輸送。"
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:51 dat/missions/neutral/cargo_rush.lua:60
-#, fuzzy
-#| msgid ""
-#| "The containers of {cargo} are carried out of your ship by a sullen group "
-#| "of workers. The job takes inordinately long to complete, and the leader "
-#| "pays you without speaking a word."
 msgid ""
 "The containers of {cargo} are carried out of your ship by a sullen group of "
 "workers. The job takes inordinately long to complete, and the leader pays "
 "you #g{credits}#0 without speaking a word."
 msgstr ""
-"不機嫌な労働者の一団が、あなたの船から{cargo}のコンテナを運びだした。その仕事"
-"は異常に長くかかって終わり、リーダーはひと言もしゃべらずあなたに支払った。"
+"不機嫌な労働者の一団が、あなたの船から{cargo}のコンテナを運びだした。その仕事は異常に長くかかって終わり、リーダーはひと言もしゃべらずあなたに "
+"#g{credits}#0 支払った。"
 
 #: dat/missions/neutral/cargo.lua:52 dat/missions/neutral/cargo_rush.lua:61
-#, fuzzy
-#| msgid ""
-#| "The containers of {cargo} are rushed out of your vessel by a team shortly "
-#| "after you land. Before you can even collect your thoughts, one of them "
-#| "presses a credit chip in your hand and departs."
 msgid ""
 "The containers of {cargo} are rushed out of your vessel by a team shortly "
 "after you land. Before you can even collect your thoughts, one of them "
 "presses a credit chip worth #g{credits}#0 in your hand and departs."
 msgstr ""
-"あなたが着陸したすぐあとに、チームがあなたの船から{cargo}のコンテナをいそいで"
-"運びだした。かねを受けとろうと思う間もなく、なかのひとりがあなたの手にクレ"
-"ジットチップを押しつけてから出ていった。"
+"あなたが着陸したすぐあとに、チームがあなたの船から{cargo}のコンテナをいそいで運びだした。かねを受けとろうと思う間もなく、"
+"なかのひとりがあなたの手に #g{credits}#0 の価値のあるクレジットチップを押しつけてから出ていった。"
 
 #: dat/missions/neutral/cargo.lua:53 dat/missions/neutral/cargo_rush.lua:62
-#, fuzzy
-#| msgid ""
-#| "The containers of {cargo} are unloaded by an exhausted-looking bunch of "
-#| "dockworkers. Still, they make fairly good time, delivering your pay upon "
-#| "completion of the job."
 msgid ""
 "The containers of {cargo} are unloaded by an exhausted-looking bunch of "
 "dockworkers. Still, they make fairly good time, delivering your pay of "
 "#g{credits}#0 upon completion of the job."
 msgstr ""
-"疲れきった港湾労働者の群れが{cargo}のコンテナを荷降ろしした。それでもあまり時"
-"間をかけることなく、仕事を終えるとあなたに支払いを持ってきた。"
+"疲れきった港湾労働者の群れが{cargo}のコンテナを荷降ろしした。それでもあまり時間をかけることなく、仕事を終えるとあなたに #g{credits}#"
+"0 の支払いを持ってきた。"
 
 #: dat/missions/neutral/cargo.lua:54 dat/missions/neutral/cargo_rush.lua:63
-#, fuzzy
-#| msgid ""
-#| "The containers of {cargo} are unloaded by a team of robotic drones "
-#| "supervised by a human overseer, who hands you your pay when they finish."
 msgid ""
 "The containers of {cargo} are unloaded by a team of robotic drones "
 "supervised by a human overseer, who hands you your pay of #g{credits}#0 when "
 "they finish."
 msgstr ""
-"人間の監督ひとりに管理されたロボットドローンの群れが{cargo}のコンテナを荷降ろ"
-"しした。それが終わると、監督があなたに報酬を渡した。"
+"人間の監督ひとりに管理されたロボットドローンの群れが{cargo}のコンテナを荷降ろしした。それが終わると、監督があなたに #g{credits}#0 "
+"の報酬を渡した。"
 
 #. Create the mission
 #. Note: this mission does not make any system claims.
@@ -54310,17 +54388,17 @@ msgstr "{sys}星系の{pnt}に{cargo}を持っていけ。"
 #. Non-persistent state
 #: dat/missions/neutral/crimelord.lua:34
 msgid "A detective"
-msgstr ""
+msgstr "探偵"
 
 #: dat/missions/neutral/crimelord.lua:34
 msgid "A private detective is signalling you to come speak with him."
-msgstr ""
+msgstr "私立探偵が話に来るようにあなたに合図している。"
 
 #. Note: this mission does not make any system claims.
 #: dat/missions/neutral/crimelord.lua:39 dat/missions/neutral/crimelord.lua:52
 #: dat/missions/neutral/crimelord.lua:56
 msgid "Crimelord"
-msgstr ""
+msgstr "犯罪王"
 
 #: dat/missions/neutral/crimelord.lua:39
 msgid ""
@@ -54342,11 +54420,21 @@ msgid ""
 "   Given the dangers, you're not sure whether the reward will make this "
 "worth your while. Do you accept?"
 msgstr ""
+"私立探偵はあなたにあいさつをして、すぐに本題に入った。\n"
+"    ｢わたしは地元の犯罪王を追いかけて、証拠を集めています｣ "
+"と、探偵はいう。｢証拠はこのデータディスクにあります。あの犯罪王がなにより手に入れたがっているのがこれなんです。\n"
+"    ｢あなたにしてほしいのは、これを{sys}星系にいるわたしの仲間に持っていくことです。地元当局は腐敗していると証明されていますが、仲間はまちがいな"
+"くあの男をいるべき場所である、刑務所行きにします。とはいえ、あなたには注意しておかなければなりません。\n"
+"    ｢犯罪王はそうとうな影響力のある男です。たくさんの友人がいて、あなたを止めるために傭兵を送ってくるのに疑いはありません。振り払うためには速い船が必"
+"要になるでしょう。あなたが{sys}星系に着けば、仲間が気前のよい埋めあわせをします。\n"
+"    ｢遺憾ながら、あなたはわたしが本件にかんして接触した最初のパイロットではありません。前任者たちは{sys}星系で着陸しにいく途中で捕らえられました"
+"。犯罪王には多数の子分がいて、宇宙港のそばで待ち伏せしています⸺だからデータを届けるまで着陸してはなりません｣\n"
+"    危険があるとすれば、報酬でやる価値が生まれるのかどうかあなたにはよくわからなかった。引き受けるか？"
 
 #. if accepted
 #: dat/missions/neutral/crimelord.lua:50 dat/missions/shark/sh05_flf.lua:54
 msgid "Good luck"
-msgstr ""
+msgstr "幸運を"
 
 #: dat/missions/neutral/crimelord.lua:50
 msgid ""
@@ -54355,58 +54443,60 @@ msgid ""
 "   \"Be careful out there. I doubt you'll be able to get far without being "
 "noticed.\""
 msgstr ""
+"すばやくまわりをいちべつして、とくにだれも興味をもっていないのを確かめると、探偵はデータスティックをあなたの手に押しつけた。\n"
+"    ｢出たら注意してください。気づかれずにあなたが遠くへ行けるとは思っていません｣"
 
 #: dat/missions/neutral/crimelord.lua:53
 msgid "A generous compensation"
-msgstr ""
+msgstr "気前のよい埋めあわせ"
 
 #: dat/missions/neutral/crimelord.lua:54 dat/missions/neutral/crimelord.lua:56
 msgid "Evade the thugs and deliver the evidence to {sys}"
-msgstr ""
+msgstr "悪漢を避けて証拠を{sys}星系に届けろ。"
 
 #. needed to make thugs appear random in the first system
 #. ignore this one, it's just the initialization of the variable
 #: dat/missions/neutral/crimelord.lua:77
 msgid "Associate Lancelot"
-msgstr ""
+msgstr "仲間のランスロット"
 
 #: dat/missions/neutral/crimelord.lua:79
 msgid "Associate Admonisher"
-msgstr ""
+msgstr "仲間のアドマニシャー"
 
 #: dat/missions/neutral/crimelord.lua:81
 msgid "Associate Pacifier"
-msgstr ""
+msgstr "仲間のパシファイアー"
 
 #: dat/missions/neutral/crimelord.lua:83
 msgid "Associate Hawking"
-msgstr ""
+msgstr "仲間のホーキング"
 
 #: dat/missions/neutral/crimelord.lua:85
 msgid "Associate Kestrel"
-msgstr ""
+msgstr "仲間のケストレル"
 
 #: dat/missions/neutral/crimelord.lua:96
 msgid "We've got your back. Engaging hostiles."
-msgstr ""
+msgstr "支援する。敵を攻撃中。"
 
 #. TODO Modern optimized equipping, or at least a manual equip from "naked"
 #. TODO more sophisticated way of detecting the player
 #: dat/missions/neutral/crimelord.lua:141
 msgid "Surrender now and we'll let you live."
-msgstr ""
+msgstr "もう降伏しろ。そうすれば生かしておいてやる"
 
 #: dat/missions/neutral/crimelord.lua:142
 msgid "You're dead!"
-msgstr ""
+msgstr "おまえは死んだ！"
 
 #: dat/missions/neutral/crimelord.lua:143
 msgid "You won't make it out alive!"
-msgstr ""
+msgstr "生きのびられやしないぞ！"
 
 #: dat/missions/neutral/crimelord.lua:144
 msgid "Get back here!"
-msgstr ""
+msgstr "ここから立ち去れ！"
 
 #: dat/missions/neutral/crimelord.lua:158
 msgid ""
@@ -54414,10 +54504,12 @@ msgid ""
 "You've certainly done your part towards cleaning up the region. As for your "
 "compensation, I've had {credits} transferred to you.\""
 msgstr ""
+"｢すばらしい仕事ぶりだ。このデータでまちがいなく逮捕されてじんそくに起訴されるだろう。この領域の掃除を助ける仕事のあなたの部分はたしかにやってくれた。あな"
+"たへの埋めあわせとして、{credits} を送金しておいた｣"
 
 #: dat/missions/neutral/crimelord.lua:165
 msgid "He told you so..."
-msgstr ""
+msgstr "そういったのに……"
 
 #: dat/missions/neutral/crimelord.lua:165
 msgid ""
@@ -54426,6 +54518,8 @@ msgid ""
 "closing in on your position. Surrounded, and with several laser pistols "
 "trained on you, you see no option but to surrender the evidence."
 msgstr ""
+"船から踏みだしてエアロックを閉じると、あなたはたくましい男が断固としてあなたの方へ向かってくるのを見きわめた。あなたは振りむいて逃げようとしたが、ほかの者"
+"たちがあなたのところへ近づいてくる。囲まれて、いくつものレーザーピストルがあなたに向けられた。あなたには証拠を引き渡す以外の選択肢がないとわかった。"
 
 #: dat/missions/neutral/derelict_rescue.lua:42
 msgid ""
@@ -54981,14 +55075,10 @@ msgid ""
 "help me out? You can help me! It'll be good for you, it'll be good for me, "
 "it'll be good for everyone! Will you help me?\""
 msgstr ""
-"あなたはバーにいた酔っぱらい男のとなりに座り、いっていることを聞いた。この男"
-"はすすり泣きつつ飲んでいるようなものだった。｢もうすこしだったんだ！　もうお"
-"わったようなものだった！　手にしたところを感じることもできたんだ！　そしたら"
-"全部台なしさ！　どうしておれはあんなことをしたんだろう？　おい、ちょっと！　"
-"あんただよ！　あんたならおれを助けられる！｣。男があなたのえり首をつかんだ。"
-"｢ちょっとかねを作っておれを助けるってのはどうだ？　あんたならおれを助けられ"
-"る！　あんたのためにもなるし、おれのためにもなるし、みんなのためにもなる！　"
-"助けてくれないか？｣"
+"あなたはバーにいた酔っぱらい男のとなりに座り、いっていることを聞いた。この男はすすり泣きつつ飲んでいるようなものだった。｢もうすこしだったんだ！　"
+"もう取れたようなものだった！　手にしたところを感じることもできたんだ！　そしたら全部台なしさ！　どうしておれはあんなことをしたんだろう？　おい、ちょっと！"
+"　あんただよ！　あんたならおれを助けられる！｣。男があなたのえり首をつかんだ。｢ちょっとかねを作りたくないか？　それでおれを助けるってのは？　"
+"あんたならおれを助けられる！　あんたのためにもなるし、おれのためにもなるし、みんなのためにもなる！　助けてくれないか？｣"
 
 #: dat/missions/neutral/drunkard.lua:53 dat/missions/neutral/drunkard.lua:85
 #: dat/missions/trader/anxiousmerchant.lua:77
@@ -55061,29 +55151,19 @@ msgid ""
 "You figure you better take off before the drinks he's had take any more hold "
 "on him, and the bottle sucks you in."
 msgstr ""
-"｢ああ、ご先祖さま、ありがとう！　助けてくれると思ってたよ！｣。男はかなり気を"
-"楽にして、腕をあなたのまわりにまわした。｢飲んでくれ。そのあいだに説明するか"
-"ら｣。男はバーテンに飲みものを二つ持ってくるように合図した。｢ほら、おれはその"
-"女伯爵を知っててな。伯爵はまるで……むー……意味わかるよな？｣ と、男はあなたをひ"
-"じでつついた。｢だが伯爵は金持ちだ。自分用の護衛艦隊があるような金持ちで、金の"
-"シャトルやダイアモンドのレーザー砲塔があるような金持ちだ。\n"
-"    ええと、ときおり伯爵はあるものを輸送する必要があって、自分の運転手に取っ"
-"てこいとはちょっといえないんだ。だからおれにその包みを取ってこいというんだ"
-"な。おれはそれがなんなのかは知らないし、たずねない。伯爵もおれに教えない。そ"
-"ういうやりかたが伯爵は好きなんだ。でも海賊が横行する宙域を抜けてちょうど 72 "
-"時間たって、ジャンプの出口もないのにイナゴどもがみんな飛びこんできたんだ。だ"
-"からおれは一、二杯飲んで寝ることにしたんだよ。けっきょくその、あー、二杯が"
-"ちょっと進んでしまってな、三杯だか十二杯だかになったんだよ。もしかすると二十"
-"杯かな。知らんけど、あいつらはおれが賭けるのはあまり好きじゃなかったみたいだ"
-"な。次に気がついたら、顔に水をぶっかけられて目を覚ましたところだった。知りゃ"
-"されたのはおれが質入れして、船をとられちゃったってこと、わかる？　でもほら、"
-"みんなあんたがするのは、伯爵が{pickup_sys}星系の{pickup_pnt}で欲しがってるの"
-"をなんでも取りにいくってことだよ。激しすぎるのはないと思うが、子ネコや虹みた"
-"いに気楽ってこともなさそうだな。おれがもらうのは 25% だけだ。だからちょっと"
-"行って取ってきて、{dropoff_sys}星系の{dropoff_pnt}まで運んでくれ。とにかく伯"
-"爵にはあんたが運ぶっていっておく。それからあんまりじろじろ伯爵を見んなよ。さ"
-"もないと、うーむ、あー、意味わかるよな｣。男がこれ以上飲み物にのめりこんだり、"
-"あなたがボトルに取りつかれるまえに、離陸したほうがよいとわかった。"
+"｢ああ、ご先祖さま、ありがとう！　助けてくれると思ってたよ！｣。男はかなり気を楽にして、腕をあなたのまわりにまわした。｢飲んでくれ。そのあいだに説明するか"
+"ら｣。男はバーテンに飲みものを二つ持ってくるように合図した。｢ほら、おれはその女伯爵を知っててな。伯爵はまるで……むー……意味わかるよな？｣ "
+"と、男はあなたをひじでつついた。｢だが伯爵は金持ちだ。自分用の護衛艦隊があるような金持ちで、金のシャトルやダイアモンドのレーザー砲塔があるような金持ちだ。"
+"\n"
+"    ｢ええと、ときおり伯爵はあるものを輸送する必要があって、自分の運転手に取ってこいとはちょっといえないんだ。だからおれにその包みを取ってこいというん"
+"だな。おれはそれがなんなのかは知らないし、たずねない。伯爵もおれに教えない。そういうやりかたが伯爵は好きなんだ。でも海賊が横行する宙域を抜けてちょうど "
+"72 時間たって、ジャンプの出口もないのにイナゴどもがみんな飛びこんできたんだ。だからおれは一、二杯飲んで寝ることにしたんだよ。けっきょくその、あー、二杯"
+"がちょっと進んでしまってな、三杯だか十二杯だかになったんだよ。もしかすると二十杯かな。知らんけど、あいつらはおれが賭けるのはあまり好きじゃなかったみたいだ"
+"な。次に気がついたら、顔に水をぶっかけられて目を覚ましたところだった。知りゃされたのはおれが質入れして、船をとられちゃったってこと、わかる？　でもほら、み"
+"んなあんたがするのは、伯爵が{pickup_sys}星系の{pickup_pnt}で欲しがってるのをなんでも取りにいくってことだよ。激しすぎるのはないと思"
+"うが、子ネコや虹みたいに気楽ってこともなさそうだな。おれがもらうのは 25% だけだ。だからちょっと行って取ってきて、{dropoff_sys}星系の{d"
+"ropoff_pnt}まで運んでくれ。とにかく伯爵にはあんたが運ぶっていっておく。それからあんまりじろじろ伯爵を見んなよ。さもないと、うーむ、あー、意味わ"
+"かるよな｣。男がこれ以上飲み物にのめりこんだり、あなたがボトルに取りつかれるまえに、離陸したほうがよいとわかった。"
 
 #. Not enough space
 #: dat/missions/neutral/drunkard.lua:90
@@ -56087,22 +56167,15 @@ msgid ""
 "Brooks, but now we need to find someone who will rescue our children. We've "
 "heard of your skills; will you please help us?\""
 msgstr ""
-"｢こんにちは、{player}。呼びかけにこたえてくれて、ほんとうにありがとう！　あな"
-"たの手助けがあればほんとうにありがたいです｣ と、通信機のむこうからおおげさで"
-"やつれた男がいった。｢わたしの子どもたち、妻とわたしのことなんです。わたしたち"
-"は休暇でアンティカへ家族で出かけていました。わかりと思いますが、わたしたちは"
-"海賊団に襲われたんです……｣\n"
-"    ｢それで、夫は逃げきれると思ったんです｣ と、女性の声が急にしゃべりはじめ"
-"た。｢夫はちょっとパイロットをやっていたんですが、まだ交際しているときでした。"
-"わざわざエイペズ星系に飛んでわたしに会おうとしてたんです！　わたしたちに子ど"
-"もができるまえは……｣。女性の声が小さくなって消えた。\n"
-"    男がいそいでまた話をした。｢海賊たちはわたしたちの船を無力化したので、わた"
-"したちは助からないと思いました。でも海賊が乗りこんでくると、3 人の子どもたち"
-"を連れていってわたしたちは残していったんです！　わたしは戦おうとしましたが、"
-"海賊がナイフを子どもたちの首にあてて……。どうすればよかったんです？　それでわ"
-"たしたちはブルックスまで曳航されて戻ったんですが、今では子どもたちを救出でき"
-"る人を見つける必要がでてきました。わたしたちはあなたの腕前を聞きこみました。"
-"お願いですので助けていただけないでしょうか？｣"
+"｢こんにちは、{player}。呼びかけにこたえてくれて、ほんとうにありがとう！　あなたの手助けがあればほんとうにありがたいです｣ と、通信機のむこうから"
+"おおげさでやつれた男がいった。｢わたしの子どもたち、妻とわたしのことなんです。わたしたちは休暇でアンティカへ家族で出かけていました。おわかりかと思いますが"
+"、わたしたちは海賊団に襲われたんです……｣\n"
+"    ｢それで、夫は逃げきれると思ったんです｣ と、女性の声が急にしゃべりはじめた。｢夫はちょっとパイロットをやっていたんですが、まだ交際しているときで"
+"した。わざわざエイペズ星系に飛んでわたしに会おうとしてたんです！　わたしたちに子どもができるまえは……｣。女性の声が小さくなって消えた。\n"
+"    男がいそいでまた話をした。｢海賊たちはわたしたちの船を無力化したので、わたしたちは助からないと思いました。でも海賊が乗りこんでくると、3 "
+"人の子どもたちを連れていってわたしたちは残していったんです！　"
+"わたしは戦おうとしましたが、海賊がナイフを子どもたちの首にあてて……。どうすればよかったんです？　それでわたしたちはブルックスまで曳航されて戻ったんですが"
+"、今では子どもたちを救出できる人を見つける必要がでてきました。わたしたちはあなたの腕前を聞きこみました。お願いですので助けていただけないでしょうか？｣"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:52
 msgid "Rescue those children!"
@@ -56397,25 +56470,16 @@ msgid ""
 "    You watch her return to her family. A child jumps into her arms, and you "
 "climb up into your ship."
 msgstr ""
-"あなたはそれでいいと納得させた。それに申し出にはためらわずに応じるつもりであ"
-"ることも。しばらくすると、ほほえみが男の顔から消えていった。｢わたしの家族がど"
-"れだけ幸福なのかわかりますね？　ところで、ここにいるほかの子どもたちはどうで"
-"す。みんなまだ親から引き離されている。わたしは子どもたち全員を家に帰したい。"
-"それにこの人身売買全体とも戦いたい。でもそれにはたくさんの計画が必要です。さ"
-"しあたり、わたしは家族といたいと思います。もちろんあなたにその気があればすぐ"
-"に戻ってきます。わたしはなにか組織的なものにしたいんです｣\n"
-"    父親は子どもたちのところへ戻っていった。そしてあなたが船の方へ歩いてはじ"
-"めると、父と母が子どもたちへむやみに愛情を注いでいるのに気がついた。あなたは"
-"今では座りこんでいるほかの子どもたちを見わたした。愛情ある家族を羨望の目で見"
-"つめている。ため息をつき、あなたが船に乗りこもうとすると、母親があなたの方へ"
-"走ってきた。｢{player}、ちょっと待って！　わたしたちはあなたの名前を知っている"
-"けど、あなたはわたしたちの名前を知らないですよね。わたしはジャニスです｣。ジャ"
-"ニスが夫の方を見ると、生き生きと子どもたちと話していた。ジャニスがほほえむ。"
-"｢夫の名前はアンドルーです。なにもかもありがとう｣。涙がジャニスの顔を伝い落"
-"ち、あかるいくり色の目であなたを見つめると、ジャニスはあなたのほおにキスをし"
-"た。\n"
-"    ジャニスが家族のところへ戻っていくのをあなたは見守った。子どもがひとり、"
-"母の腕に飛びこむ。それからあなたは自分の船に乗りこんだ。"
+"あなたはそれでいいと納得させた。それに申し出にはためらわずに応じるつもりであることも。しばらくすると、ほほえみが男の顔から消えていった。｢わたしの家族がど"
+"れだけ幸福なのかわかりますね？　ところで、ここにいるほかの子どもたちはどうです。みんなまだ親から引き離されている。わたしは子どもたち全員を家に帰したい。そ"
+"れにこの人身売買全体とも戦いたい。でもそれにはたくさんの計画が必要です。さしあたり、わたしは家族といたいと思います。もちろんあなたにその気があればすぐに戻"
+"ってきます。わたしはなにか組織的なものにしたいんです｣\n"
+"    父親は子どもたちのところへ戻っていった。そしてあなたが船の方へ歩きはじめると、父と母が子どもたちへむやみに愛情を注いでいるのに気がついた。あなたは"
+"今では座りこんでいるほかの子どもたちを見わたした。愛情ある家族を羨望の目で見つめている。ため息をつき、あなたが船に乗りこもうとすると、母親があなたの方へ走"
+"ってきた。｢{player}、ちょっと待って！　わたしたちはあなたの名前を知っているけど、あなたはわたしたちの名前を知らないですよね。わたしはジャニスです"
+"｣。ジャニスが夫の方を見ると、生き生きと子どもたちと話していた。ジャニスがほほえむ。｢夫の名前はアンドルーです。なにもかもありがとう｣。涙がジャニスの顔を"
+"伝い落ち、あかるいくり色の目であなたを見つめると、ジャニスはあなたのほおにキスをした。\n"
+"    ジャニスが家族のところへ戻っていくのをあなたは見守った。子どもがひとり、母の腕に飛びこむ。それからあなたは自分の船に乗りこんだ。"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:216
 msgid ""
@@ -56536,11 +56600,10 @@ msgid ""
 "    And please hurry. Someone was sent to assassinate him. I don't have much "
 "to give, but whatever I have saved, you can have.\""
 msgstr ""
-"その女はあなたがこころよく助力するという合図をすると落ちついた。｢ああ、ありが"
-"たいことです！　弟がいつもうろついている場所は聞いています。わたしをそこへ連"
-"れていって、弟には話さなきゃならないことがあると伝えてください。\n"
-"    それからいそいでお願いします。弟を暗殺するためにだれかが送られたんです。"
-"わたしはあまり出せませんが、わたしの蓄えの中から、好きだなけもらってください｣"
+"その女はあなたがこころよく助力するという合図をすると落ちついた。｢ああ、ありがたいことです！　"
+"弟がいつもうろついている場所は聞いています。わたしをそこへ連れていって、弟には話さなきゃならないことがあると伝えてください。\n"
+"    "
+"｢それからいそいでお願いします。弟を暗殺するためにだれかが送られたんです。わたしはあまり出せませんが、わたしの蓄えの中から、好きだなけもらってください｣"
 
 #. Set hooks
 #. gets the nearest jumppoint from a pilot
@@ -57473,143 +57536,88 @@ msgstr ""
 "分の船に戻った。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:50
-#, fuzzy
-#| msgid ""
-#| "After verifying that you killed {plt}, an officer hands you your pay."
 msgid ""
 "After verifying that you killed {plt}, an officer hands you your pay of "
 "#g{credits}#0."
-msgstr ""
-"あなたが{plt}を殺したことを確かめてから、役人はあなたに報酬を手渡した。"
+msgstr "あなたが{plt}を殺したことを確かめてから、役人はあなたに #g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:51
-#, fuzzy
-#| msgid ""
-#| "After verifying that {plt} is indeed dead, the tired-looking officer "
-#| "smiles and hands you your pay."
 msgid ""
 "After verifying that {plt} is indeed dead, the tired-looking officer smiles "
 "and hands you your pay of #g{credits}#0."
-msgstr ""
-"{plt}がほんとうに死んだことを確かめてから、疲れた顔をした役人がほほえんだ。そ"
-"してあなたに報酬を手渡した。"
+msgstr "{plt}がほんとうに死んだことを確かめてから、疲れた顔をした役人がほほえんだ。そしてあなたに #g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:52
-#, fuzzy
-#| msgid ""
-#| "The officer seems pleased that {plt} is finally dead. They thank you and "
-#| "promptly hand you your pay."
 msgid ""
 "The officer seems pleased that {plt} is finally dead. They thank you and "
 "promptly hand you your pay of #g{credits}#0."
-msgstr ""
-"役人は{plt}がついに死んだことを喜んでいるようだ。あなたに礼をいうと、すぐに報"
-"酬を手渡した。"
+msgstr "役人は{plt}がついに死んだことを喜んでいるようだ。あなたに礼をいうと、すぐに #g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:53
-#, fuzzy
-#| msgid ""
-#| "The paranoid-looking officer takes you into a locked room, where the "
-#| "death of {plt} is quietly verified. The officer then pays you and sends "
-#| "you off."
 msgid ""
 "The paranoid-looking officer takes you into a locked room, where the death "
 "of {plt} is quietly verified. The officer then pays you of #g{credits}#0 and "
 "sends you off."
 msgstr ""
-"ひどく疑い深そうな顔つきの役人が、あなたを鍵のかかった部屋に連れていった。そ"
-"こで{plt}が死んだことは静かに確認された。それから役人があなたに報酬を支払っ"
-"て、あなたは送りだされた。"
+"ひどく疑い深そうな顔つきの役人が、あなたを鍵のかかった部屋に連れていった。そこで{plt}が死んだことは静かに確認された。それから役人があなたに "
+"#g{credits}#0 の報酬を支払って、あなたは送りだされた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:54
-#, fuzzy
-#| msgid ""
-#| "When you ask the officer for your bounty on {plt}, they sigh, lead you "
-#| "into an office, go through some paperwork, and hand you your pay, "
-#| "mumbling something about how useless the bounty system is."
 msgid ""
 "When you ask the officer for your bounty on {plt}, they sigh, lead you into "
 "an office, go through some paperwork, and hand you your pay of #g{credits}"
 "#0, mumbling something about how useless the bounty system is."
 msgstr ""
-"あなたが役人に{plt}の賞金を求めると、役人はため息をつき、あなたを事務所に案内"
-"して、いくつかの書類仕事をやってから、あなたに報酬を手渡した。賞金制度がどれ"
-"だけ無益かといったことをぶつぶついいながらだ。"
+"あなたが役人に{plt}の賞金を求めると、役人はため息をつき、あなたを事務所に案内して、いくつかの書類仕事をやってから、あなたに #g{credits}#"
+"0 の報酬を手渡した。賞金制度がどれだけ無益かといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:55
-#, fuzzy
-#| msgid ""
-#| "The officer verifies the death of {plt}, goes through the necessary "
-#| "paperwork, and hands you your pay, looking bored the entire time."
 msgid ""
 "The officer verifies the death of {plt}, goes through the necessary "
 "paperwork, and hands you your pay of #g{credits}#0, looking bored the entire "
 "time."
 msgstr ""
-"役人は{plt}が死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡"
-"した。そのあいだ役人はずっとうんざりした表情だった。"
+"役人は{plt}が死んだことを確かめて、必要な書類仕事をやると、あなたに #g{credits}#0 "
+"の報酬を手渡した。そのあいだ役人はずっとうんざりした表情だった。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:58
-#, fuzzy
-#| msgid "An officer takes {plt} into custody and hands you your pay."
 msgid ""
 "An officer takes {plt} into custody and hands you your pay of #g{credits}#0."
-msgstr "役人が{plt}を勾留して、あなたに報酬を手渡した。"
+msgstr "役人が{plt}を勾留して、あなたに #g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:59
-#, fuzzy
-#| msgid ""
-#| "The officer seems to think your decision to capture {plt} alive was "
-#| "foolish. They carefully take the pirate off your hands, taking "
-#| "precautions you think are completely unnecessary, and then hand you your "
-#| "pay"
 msgid ""
 "The officer seems to think your decision to capture {plt} alive was foolish. "
 "They carefully take the pirate off your hands, taking precautions you think "
 "are completely unnecessary, and then hand you your pay of #g{credits}#0."
 msgstr ""
-"役人は、あなたが{plt}を生け捕りにしようと決めたのは愚かだったと考えているよう"
-"だ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に不必"
-"要だと思える用心をしながらだ。それが終わると、役人はあなたに報酬を手渡した。"
+"役人は、あなたが{plt}を生け捕りにしようと決めたのは愚かだったと考えているようだ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に"
+"不必要だと思える用心をしながらだ。それが終わると、役人はあなたに #g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:60
-#, fuzzy
-#| msgid ""
-#| "The officer you deal with seems to especially dislike {plt}. The pirate "
-#| "is taken off your hands and you are handed your pay without a word."
 msgid ""
 "The officer you deal with seems to especially dislike {plt}. The pirate is "
 "taken off your hands and you are handed your pay of #g{credits}#0 without a "
 "word."
 msgstr ""
-"対応した役人は、{plt}がとくべつ嫌いなようだった。あなたの手から海賊を引き取る"
-"と、ひとこともなくあなたに報酬を手渡した。"
+"対応した役人は、{plt}がとくべつ嫌いなようだった。あなたの手から海賊を引き取ると、ひとこともなくあなたに #g{credits}#0 "
+"の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:61
-#, fuzzy
-#| msgid ""
-#| "A fearful-looking officer rushes {plt} into a secure hold, pays you the "
-#| "appropriate bounty, and then hurries off."
 msgid ""
 "A fearful-looking officer rushes {plt} into a secure hold, pays you the "
 "appropriate bounty of #g{credits}#0, and then hurries off."
 msgstr ""
-"恐ろしい表情をした役人が{plt}をしっかりと確保した。あなたにふさわしい賞金を支"
-"払ってから、役人はいそいで去っていった。"
+"恐ろしい表情をした役人が{plt}をしっかりと確保した。あなたにふさわしい賞金 #g{credits}#0 を支払ってから、役人はいそいで去っていった。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:62
-#, fuzzy
-#| msgid ""
-#| "The officer you greet gives you a puzzled look when you say that you "
-#| "captured {plt} alive. Nonetheless, they politely take the pirate off of "
-#| "your hands and hand you your pay."
 msgid ""
 "The officer you greet gives you a puzzled look when you say that you "
 "captured {plt} alive. Nonetheless, they politely take the pirate off of your "
 "hands and hand you your pay of #g{credits}#0."
 msgstr ""
-"あなたを出迎えた役人は、{plt}を生け捕りにしたと言うと当惑した表情を見せた。そ"
-"れでも礼儀正しくあなたの手から海賊を引き取ると、あなたに報酬を手渡した。"
+"あなたを出迎えた役人は、{plt}を生け捕りにしたと言うと当惑した表情を見せた。それでも礼儀正しくあなたの手から海賊を引き取ると、あなたに "
+"#g{credits}#0 の報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
 msgid ""
@@ -57827,8 +57835,7 @@ msgstr "のんびりした人"
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar."
-msgstr ""
-"のんびりとした人が見えた。その人は地元の人のようだ。バーを見まわしている。"
+msgstr "のんびりとした人に気づいた。その人は地元の人のようだ。バーを見まわしている。"
 
 #: dat/missions/neutral/race1.lua:45
 msgid "Looking for a 4th"
@@ -57986,9 +57993,7 @@ msgstr ""
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar, apparently in search of a suitable pilot."
-msgstr ""
-"のんびりとした人が見えた。その人は地元の人のようだ。バーを見まわしている。ど"
-"うもふさわしいパイロットをさがしているらしい。"
+msgstr "のんびりとした人に気づいた。その人は地元の人のようだ。バーを見まわしている。どうもふさわしいパイロットをさがしているらしい。"
 
 #: dat/missions/neutral/race2.lua:47
 msgid "Another race"
@@ -58083,13 +58088,10 @@ msgid ""
 "audience, and then a credit chip with the actual prize money on it. At least "
 "the trophy looks cool."
 msgstr ""
-"スーツにネクタイをした男があなたを連れてステージに上げた。男の上着には大きな"
-"名札があって、それには ｢メレンデズ株式会社｣ と書いてあった。｢あなたの勝利にお"
-"祝いを申しあげます｣ と、男はいい、あなたと握手する。｢すばらしいレースでした。"
-"メレンデズ株式会社の代理として、あなたにトロフィーと賞金の {credits} を贈りた"
-"いと思います！｣。男はあなたに偽物の巨大な小切手を観客に見せるために渡し、あと"
-"でじっさいの賞金をクレジットチップで渡してくれた。すくなくとも、トロフィーは"
-"かっこよかった。"
+"スーツにネクタイをした男があなたをステージに上げた。男の上着には大きな名札があって、それには ｢メレンデズ株式会社｣ "
+"と書いてあった。｢あなたの勝利にお祝いを申しあげます｣ と、男はいい、あなたと握手する。｢すばらしいレースでした。メレンデズ株式会社の代理として、"
+"あなたにトロフィーと賞金の {credits} を贈りたいと思います！｣。男はあなたに偽物の巨大な小切手を観客に見せるために渡し、あとでじっさいの賞金をク"
+"レジットチップで渡してくれた。すくなくとも、トロフィーはかっこよかった。"
 
 #: dat/missions/neutral/race2.lua:250
 msgid ""
@@ -58100,12 +58102,10 @@ msgid ""
 "He hands you one of those fake oversized cheques for the audience, and then "
 "a credit chip with the actual prize money on it."
 msgstr ""
-"スーツにネクタイをした男があなたを連れてステージに上げた。男の上着には大きな"
-"名札があって、それには ｢メレンデズ株式会社｣ と書いてあった。｢あなたの勝利にお"
-"祝いを申しあげます｣ と、男はいい、あなたと握手する。｢すばらしいレースでした。"
-"メレンデズ株式会社の代理として、あなたに賞金の {credits} を贈りたいと思いま"
-"す！｣。男はあなたに偽物の巨大な小切手を観客に見せるために渡し、あとでじっさい"
-"の賞金をクレジットチップで渡してくれた。"
+"スーツにネクタイをした男があなたをステージに上げた。男の上着には大きな名札があって、それには ｢メレンデズ株式会社｣ "
+"と書いてあった。｢あなたの勝利にお祝いを申しあげます｣ と、男はいい、あなたと握手する。｢すばらしいレースでした。メレンデズ株式会社の代理として、"
+"あなたに賞金の {credits} "
+"を贈りたいと思います！｣。男はあなたに偽物の巨大な小切手を観客に見せるために渡し、あとでじっさいの賞金をクレジットチップで渡してくれた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -60244,8 +60244,7 @@ msgid ""
 "bring them over. Funny how it always seems to be where you don't want it and "
 "when you need it you can't find it."
 msgstr ""
-"あなたはネコが見る範囲にいないことに気がついたので、連れていくためにさがしは"
-"じめた。なんともおかしなことに、ネコはいてほしくないときにはいつもいて、必要"
+"あなたはネコが見える範囲にいないことに気がついたので、連れていくためにさがしはじめた。なんともおかしなことに、ネコはいてほしくないときにはいつもいて、必要"
 "なときには見つからないのだ。"
 
 #: dat/missions/pirate/blackcat.lua:278
@@ -60910,348 +60909,349 @@ msgstr ""
 #. Serious stuff here
 #: dat/missions/pirate/pir_contraband.lua:58
 msgid "Stolen Goods"
-msgstr ""
+msgstr "盗品"
 
 #: dat/missions/pirate/pir_contraband.lua:58
 msgid "A lot of goods obtained by illicit and illegal means."
-msgstr ""
+msgstr "許可なく違法な手段で手に入れたたくさんの品物。"
 
 #: dat/missions/pirate/pir_contraband.lua:59
 msgid "Hacked Electronics"
-msgstr ""
+msgstr "違法改造電子機器"
 
 #: dat/missions/pirate/pir_contraband.lua:59
 msgid "An assortment of illegally modified electronic goods."
-msgstr ""
+msgstr "違法に改造した電子機器の詰めあわせ。"
 
 #: dat/missions/pirate/pir_contraband.lua:60
 msgid "Illegal Waste"
-msgstr ""
+msgstr "違法な投棄物"
 
 #: dat/missions/pirate/pir_contraband.lua:60
 msgid "A diversity of highly illegal waste."
-msgstr ""
+msgstr "雑多な高度に違法な廃棄物。"
 
 #: dat/missions/pirate/pir_contraband.lua:61
 msgid "Powerful Stimulants"
-msgstr ""
+msgstr "強力な刺激物"
 
 #: dat/missions/pirate/pir_contraband.lua:61
 msgid "A bunch of illegal stimulants."
-msgstr ""
+msgstr "違法な刺激物の束。"
 
 #: dat/missions/pirate/pir_contraband.lua:62
 msgid "Unmarked Boxes"
-msgstr ""
+msgstr "しるしのついていない箱"
 
 #: dat/missions/pirate/pir_contraband.lua:62
 msgid ""
 "A bunch of unmarked boxes containing what you can only assume to be highly "
 "illegal items."
-msgstr ""
+msgstr "しるしのついていない箱の集まりで、高度に違法な品物が入っているとしか思えない。"
 
 #: dat/missions/pirate/pir_contraband.lua:63
 msgid "Exotic Animals"
-msgstr ""
+msgstr "外来の動物"
 
 #: dat/missions/pirate/pir_contraband.lua:63
 msgid "A bunch of exotic animals that can not be legally traded."
-msgstr ""
+msgstr "外来の動物の群れで、合法的には取引できないものだ。"
 
 #: dat/missions/pirate/pir_contraband.lua:64
 msgid "Radioactive Materials"
-msgstr ""
+msgstr "放射性物質"
 
 #: dat/missions/pirate/pir_contraband.lua:64
 msgid "Highly dangerous and illegal radioactive materials."
-msgstr ""
+msgstr "とても危険で違法な放射性物質。"
 
 #: dat/missions/pirate/pir_contraband.lua:65
 msgid "Illegal Drugs"
-msgstr ""
+msgstr "違法薬物"
 
 #: dat/missions/pirate/pir_contraband.lua:65
 msgid "A bunch of drugs made illegal in most systems."
-msgstr ""
+msgstr "薬物の束で、ほとんどの星系では違法だ。"
 
 #: dat/missions/pirate/pir_contraband.lua:66
 msgid "Illegal Body Mods"
-msgstr ""
+msgstr "違法な身体改造用品"
 
 #: dat/missions/pirate/pir_contraband.lua:66
 msgid "A lot of illegal body modifications."
-msgstr ""
+msgstr "たくさんの違法な身体改造用品。"
 
 #: dat/missions/pirate/pir_contraband.lua:67
 msgid "Unauthorized Weapons"
-msgstr ""
+msgstr "無許可の武器"
 
 #: dat/missions/pirate/pir_contraband.lua:67
 msgid "A bunch of illegal weapons."
-msgstr ""
+msgstr "違法な武器の束。"
 
 #: dat/missions/pirate/pir_contraband.lua:68
 msgid "Contraband"
-msgstr ""
+msgstr "禁制品"
 
 #: dat/missions/pirate/pir_contraband.lua:68
 msgid "An diverse assortment of illegal contraband goods."
-msgstr ""
+msgstr "違法な禁制品の多様な詰めあわせ。"
 
 #: dat/missions/pirate/pir_contraband.lua:69
 msgid "Counterfeit Goods"
-msgstr ""
+msgstr "模造品"
 
 #: dat/missions/pirate/pir_contraband.lua:69
 msgid "An assortment of illegal counterfeit goods of many famous brands."
-msgstr ""
+msgstr "多数の有名ブランドの違法な模造品の詰めあわせ。"
 
 #: dat/missions/pirate/pir_contraband.lua:70
 msgid "Stolen Art"
-msgstr ""
+msgstr "盗難芸術品"
 
 #: dat/missions/pirate/pir_contraband.lua:70
 msgid "Artwork that was illegally seized from a collector or gallery."
-msgstr ""
+msgstr "収集家や画廊から不法に奪われた芸術品。"
 
 #. Below less serious stuff
 #: dat/missions/pirate/pir_contraband.lua:72
 msgid "User Databases"
-msgstr ""
+msgstr "ユーザーのデータベース"
 
 #: dat/missions/pirate/pir_contraband.lua:72
 msgid ""
 "Stolen user databases with lots of personal information obtained illegally."
-msgstr ""
+msgstr "盗みとられたユーザーデータベースで、違法に取得されたたくさんの個人情報が含まれる。"
 
 #: dat/missions/pirate/pir_contraband.lua:73
 msgid "Smelly Fruits"
-msgstr ""
+msgstr "強いにおいのするフルーツ"
 
 #: dat/missions/pirate/pir_contraband.lua:73
 msgid ""
 "Illegal fruits that have a strong smell that can stink up entire stations in "
 "minutes."
-msgstr ""
+msgstr "強くにおう違法なフルーツで、数分でステーション全体を悪臭でいっぱいにできる。"
 
 #: dat/missions/pirate/pir_contraband.lua:74
 msgid "Catnip"
-msgstr ""
+msgstr "ねこじゃらし"
 
 #: dat/missions/pirate/pir_contraband.lua:74
 msgid "Highly illegal drug that is very attractive to cats."
-msgstr ""
+msgstr "重罪薬物で、ネコをとてもひきつける。"
 
 #: dat/missions/pirate/pir_contraband.lua:75
 msgid "Hypnotoads"
-msgstr ""
+msgstr "ヒプノトーズ"
 
 #: dat/missions/pirate/pir_contraband.lua:75
 msgid "Illegal amphibian with some mind-control abilities."
-msgstr ""
+msgstr "違法な両生類で、いくらか精神支配能力がある。"
 
 #: dat/missions/pirate/pir_contraband.lua:76
 msgid "Extra Spicy Burritos"
-msgstr ""
+msgstr "エクストラ・スパイシー・ブリトー"
 
 #: dat/missions/pirate/pir_contraband.lua:76
 msgid "Burritos that are so spicy, they are illegal."
-msgstr ""
+msgstr "とてもスパイシーなブリトーで、違法である。"
 
 #: dat/missions/pirate/pir_contraband.lua:77
 msgid "Pineapple Pizza"
-msgstr ""
+msgstr "パイナップル・ピザ"
 
 #: dat/missions/pirate/pir_contraband.lua:77
 msgid "Pizza with pineapple on it, there is no way this is legal."
-msgstr ""
+msgstr "パイナップルが乗ったピザで、これが合法なわけがない。"
 
 #: dat/missions/pirate/pir_contraband.lua:78
 msgid "Illicit Shader Code"
-msgstr ""
+msgstr "不正なシェーダーコード"
 
 #: dat/missions/pirate/pir_contraband.lua:78
 msgid "Program used for rendering images with nefarious and illegal purposes."
-msgstr ""
+msgstr "極悪で違法な目的で画像を描画するのに使われるプログラム。"
 
 #: dat/missions/pirate/pir_contraband.lua:82
 msgid "Tax-evasion Documents"
-msgstr ""
+msgstr "脱税用文書"
 
 #: dat/missions/pirate/pir_contraband.lua:82
 msgid "Illegal documents detailing tax evasion by high empire officials."
-msgstr ""
+msgstr "帝国政府高官によって書かれた、脱税を詳しく解説した違法文書。"
 
 #: dat/missions/pirate/pir_contraband.lua:83
 msgid "Leaked Documents"
-msgstr ""
+msgstr "暴露された文書"
 
 #: dat/missions/pirate/pir_contraband.lua:83
 msgid "Documents illegally leaked from governmental entities."
-msgstr ""
+msgstr "政府自体から違法に流出した文書。"
 
 #: dat/missions/pirate/pir_contraband.lua:84
 msgid "Incriminating Evidence"
-msgstr ""
+msgstr "罪証"
 
 #: dat/missions/pirate/pir_contraband.lua:84
 msgid "Illegally obtained evidence that incriminates high empire officials."
-msgstr ""
+msgstr "帝国政府高官を有罪とする違法に取得された証拠。"
 
 #: dat/missions/pirate/pir_contraband.lua:85
 msgid "Unauthorized Office Supplies"
-msgstr ""
+msgstr "無許可の事務用品"
 
 #: dat/missions/pirate/pir_contraband.lua:85
 msgid ""
 "Office supplies that don't meet the standards of the Empire bureaucracy, "
 "including flimsy red staplers."
-msgstr ""
+msgstr "帝国の官僚的手つづきの基準にあっていない事務用品で、たとえば薄っぺらくて赤いホッチキスなどがある。"
 
 #: dat/missions/pirate/pir_contraband.lua:86
 msgid "Paper Deshredders"
-msgstr ""
+msgstr "ペーパーデシュレッダー"
 
 #: dat/missions/pirate/pir_contraband.lua:86
 msgid ""
 "Devices that are able to reconstruct original documents from their shredded "
 "remains."
-msgstr ""
+msgstr "裁断されたものの残りから、もとの文書を復元できる装置。"
 
 #: dat/missions/pirate/pir_contraband.lua:89
 msgid "Self-help Books"
-msgstr ""
+msgstr "自習書"
 
 #: dat/missions/pirate/pir_contraband.lua:89
 msgid "Books for self-betterment made illegal by the Dvaered authorities."
-msgstr ""
+msgstr "自己改善のための本で、ドベーレッド当局に違法とされた。"
 
 #: dat/missions/pirate/pir_contraband.lua:90
 msgid "Pacifist Manifestos"
-msgstr ""
+msgstr "平和主義者宣言"
 
 #: dat/missions/pirate/pir_contraband.lua:90
 msgid ""
 "Documents making the case for pacifism, made illegal by the Dvaered "
 "authorities."
-msgstr ""
+msgstr "平和主義を唱える本で、ドベーレッド当局に違法とされた。"
 
 #: dat/missions/pirate/pir_contraband.lua:91
 msgid "Zen Rock Gardens"
-msgstr ""
+msgstr "禅岩石庭園"
 
 #: dat/missions/pirate/pir_contraband.lua:91
 msgid ""
 "Sand and rock gardens with special rakes you can use for meditative "
 "purposes. Made illegal by the Dvaered authorities."
-msgstr ""
+msgstr "砂と小石の庭園で、瞑想のために使用できるとくべつな熊手がある。ドベーレッド当局に違法とされた。"
 
 #: dat/missions/pirate/pir_contraband.lua:92
 msgid "Scented Soap"
-msgstr ""
+msgstr "香水入り石けん"
 
 #: dat/missions/pirate/pir_contraband.lua:92
 msgid ""
 "Fragrant soaps that can lead you to have a peace of mind. Made illegal by "
 "the Dvaered authorities."
-msgstr ""
+msgstr "安らぎを与えてくれる香りのよい石けん。ドベーレッド当局に違法とされた。"
 
 #: dat/missions/pirate/pir_contraband.lua:95
 msgid "Unstable DNA"
-msgstr ""
+msgstr "不安定 DNA "
 
 #: dat/missions/pirate/pir_contraband.lua:95
 msgid "Illegal DNA with strong reactive properties."
-msgstr ""
+msgstr "強い反応性の性質をもつ違法な DNA。"
 
 #: dat/missions/pirate/pir_contraband.lua:96
 msgid "Bio-weapons"
-msgstr ""
+msgstr "生物兵器"
 
 #: dat/missions/pirate/pir_contraband.lua:96
 msgid "Highly dangerous illegal biological weapons."
-msgstr ""
+msgstr "とても危険で違法な生物学的兵器。"
 
 #: dat/missions/pirate/pir_contraband.lua:97
 msgid "Abducted Drosophila"
-msgstr ""
+msgstr "拉致されたショウジョウバエ"
 
 #: dat/missions/pirate/pir_contraband.lua:97
 msgid ""
 "Genetically modified small fruit flies illegally stolen from a laboratory."
-msgstr ""
+msgstr "遺伝子改変された小さなミバエで、研究所から違法に盗まれたものだ。"
 
 #: dat/missions/pirate/pir_contraband.lua:98
 msgid "Mislabeled Plasmids"
-msgstr ""
+msgstr "ラベルをまちがえたプラスミド"
 
 #: dat/missions/pirate/pir_contraband.lua:98
 msgid ""
 "Independently replicating DNA that has been mislabeled and is no longer "
 "clear what exactly it does. Illegal for its uncertain and dangerous nature."
 msgstr ""
+"個別に複写された DNA で、ラベルをまちがえて、もう正確にはなにをするのかはっきりしなくなったもの。不確かで危険な性質であるため、違法である。"
 
 #: dat/missions/pirate/pir_contraband.lua:101
 msgid "Heretical Documents"
-msgstr ""
+msgstr "異端文書"
 
 #: dat/missions/pirate/pir_contraband.lua:101
 msgid "Illegal documents referring to heresy."
-msgstr ""
+msgstr "異説に言及する違法な文書。"
 
 #: dat/missions/pirate/pir_contraband.lua:102
 msgid "Itch Powder"
-msgstr ""
+msgstr "かゆみ粉"
 
 #: dat/missions/pirate/pir_contraband.lua:102
 msgid "A banned substance with a history of disrupting robed processions."
-msgstr ""
+msgstr "ローブを着た行列を混乱させた歴史があるため禁止された物質。"
 
 #: dat/missions/pirate/pir_contraband.lua:103
 msgid "Unauthorized Sirichana Merchandise"
-msgstr ""
+msgstr "無許可のシリチャナ商品"
 
 #: dat/missions/pirate/pir_contraband.lua:103
 msgid ""
 "Horribly tacky and outright bad merchandise with Sirichana pasted all over "
 "it. Sirichana toenail clipper anyone?"
-msgstr ""
+msgstr "ひどく安っぽく、徹底的に粗悪な商品で、シリチャナがそこらじゅうに貼りつけられている。シリチャナの足用爪切りとかだれが欲しがるの？"
 
 #: dat/missions/pirate/pir_contraband.lua:106
 msgid "Scientific Preprints"
-msgstr ""
+msgstr "科学的論文の前刷り"
 
 #: dat/missions/pirate/pir_contraband.lua:106
 msgid "Non-paywalled illegal scientific papers."
-msgstr ""
+msgstr "有料でなくても見られる違法な科学論文。"
 
 #: dat/missions/pirate/pir_contraband.lua:107
 msgid "Sentient AI"
-msgstr ""
+msgstr "感覚のある AI "
 
 #: dat/missions/pirate/pir_contraband.lua:107
 msgid "Highly illegal AI that is assumed to be sentient."
-msgstr ""
+msgstr "感覚をもつと推定される高度に違法な AI。"
 
 #: dat/missions/pirate/pir_contraband.lua:108
 msgid "Bogus Proofs"
-msgstr ""
+msgstr "偽の証明"
 
 #: dat/missions/pirate/pir_contraband.lua:108
 msgid ""
 "Mathematical proofs with almost imperceptible modifications to make them "
 "illegally false."
-msgstr ""
+msgstr "ほとんど気づかれないほどの修正をくわえた数学的証明で、違法なほどまちがっている。"
 
 #: dat/missions/pirate/pir_contraband.lua:109
 msgid "p-Hacked Results"
-msgstr ""
+msgstr " P 値ハッキングした結果"
 
 #: dat/missions/pirate/pir_contraband.lua:109
 msgid ""
 "Scientific trial results obtained through unreliable and illegal uses of "
 "statistics."
-msgstr ""
+msgstr "当てにならないものと違法な統計の使用によって得られた科学的試験結果。"
 
 #. Add faction cargoes as necessary
 #. Choose a random cargo and create it
@@ -61262,42 +61262,42 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/pirate/pir_contraband.lua:146
 msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"
-msgstr ""
+msgstr "#r海賊行為 :#0 {tonnes}の{cargo}の密輸 ({fct})"
 
 #: dat/missions/pirate/pir_contraband.lua:150
 msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo}"
-msgstr ""
+msgstr "#r海賊行為 :#0 {tonnes}の{cargo}の密輸"
 
 #: dat/missions/pirate/pir_contraband.lua:155
 #: dat/missions/pirate/pir_contraband.lua:157
 msgid "Smuggling contraband goods to {pnt} in the {sys} system.{msg}"
-msgstr ""
+msgstr "{sys}星系の{pnt}への禁制品の密輸。{msg}"
 
 #: dat/missions/pirate/pir_contraband.lua:157
 msgid ""
 "#rWARNING:#0 Contraband is illegal in most systems and you will face "
 "consequences if caught by patrols."
-msgstr ""
+msgstr "#r注意 :#0 禁制品はほとんどの星系で違法であり、巡視隊に見つかると重大な結果に直面することになる。"
 
 #: dat/missions/pirate/pir_contraband.lua:184
 msgid "{tonnes} of {cargo} are loaded onto your ship."
-msgstr ""
+msgstr "{tonnes}の{cargo}があなたの船に積みこまれた。"
 
 #: dat/missions/pirate/pir_contraband.lua:195
 msgid "The containers of {cargo} are unloaded at the docks."
-msgstr ""
+msgstr "{cargo}のコンテナが着岸所に降ろされた。"
 
 #. increase faction
 #. Date hook
 #. Case still in time
 #: dat/missions/pirate/pir_contraband.lua:210
 msgid "Smuggling {cargo}"
-msgstr ""
+msgstr "{cargo}の密輸"
 
 #. Case missed deadline
 #: dat/missions/pirate/pir_contraband.lua:216
 msgid "MISSION FAILED: You have failed to deliver the goods on time!"
-msgstr ""
+msgstr "任務に失敗 : 制限時間内に品物を配達できなかった！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -61326,11 +61326,11 @@ msgstr ""
 #. TODO replace images with something meant for the VN
 #: dat/missions/pirate/pir_contraband_cake.lua:32
 msgid "Sweaty Individual"
-msgstr ""
+msgstr "汗くさい人"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:35
 msgid "Burly Individual"
-msgstr ""
+msgstr "たくましい人"
 
 #. Note: this mission does not make any system claims.
 #. target destination. Override "always_available" to true.
@@ -61338,11 +61338,11 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband_cake.lua:55
 msgid ""
 "You see a nervous looking individual that seems to be sweating profusely."
-msgstr ""
+msgstr "神経質な感じでやたらと汗をかいている人に気づいた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:65
 msgid "You approach the giddy looking character."
-msgstr ""
+msgstr "あなたは目まいがしているように見える人物に近づいた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:66
 msgid ""
@@ -61352,6 +61352,9 @@ msgid ""
 "\"Crikes! You scared the shit out of me.\"\n"
 "They clutch at their shirt as if trying to hold their heart in their ribcage."
 msgstr ""
+"その人はかなり考えごとにふけっていて、あなたに気づくまでしばらくかかった。そして前兆もなしに、とつぜんいすから飛びあがって、いすから落ちかけた。\n"
+"｢うわっ！　くそびっくりしましたよ｣\n"
+"そういうとシャツをつかんだ。まるで胸の中に心臓をとどめておこうとがんばっているかのようだ。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:69
 msgid ""
@@ -61362,6 +61365,9 @@ msgid ""
 "They coughs to the side somewhat exaggeratedly while looking at you from the "
 "corner of the eye."
 msgstr ""
+"それからしばらくあえぐと、いくらか平静を取り戻そうとして、もういちど座りなおした。まえよりもっと汗をかいているようだ。\n"
+"｢ああ、ちょっと、あなたはパイロットみたいですね。ほら、小包の配達を頼まれていたんですが、ちょっと気分がよくなくて……｣\n"
+"そういって横にむけてややおおげさにせきをしつつ、横目であなたの方を見やる。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:72
 msgid ""
@@ -61370,6 +61376,10 @@ msgid ""
 "They furrow their brows for a second.\n"
 "\"…a cake! To {pnt} in the {sys} system.\""
 msgstr ""
+"相手があなたの方へ乗りだして、声を低くした。\n"
+"｢配達を頼まれたんです。えー……｣\n"
+"1 秒ほどまゆを寄せた。\n"
+"｢ケーキです！　{sys}星系の{pnt}へ｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:76
 msgid ""
@@ -61379,6 +61389,9 @@ msgid ""
 "particular, any radiation can easily melt it even though it is shielded. "
 "Especially stuff like scanning radiation. You catch my drift?\""
 msgstr ""
+"｢ふつうでないことはなにもありません。誓います！　ただ見てわかるとおりこのケーキにはちょっと特殊なところがあって……ほんとうに傷つきやすい糖衣なんです。す"
+"ごく傷がつきやすいみたいで。わずかな外乱でも溶けることがあって、すべてが無駄になってしまうんです。とくに、どんな放射線でも簡単に溶ける可能性があります。そ"
+"れはシールドしてあってもです。スキャン放射がとくにだめですね。いっていることはわかりました？｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:77
 msgid ""
@@ -61388,6 +61401,10 @@ msgid ""
 "fly off onto the bar floor.\n"
 "\"Once you deliver it I'll split the money half and half with you.\""
 msgstr ""
+"｢あなたがしなければならないことは、ケーキを持って、{sys}星系の{pnt}へ行くことだけです。たちの悪いあのスキャン放射はなにもうけないようにしてくだ"
+"さい｣\n"
+"その人は震えて気分が悪いことをはっきりさせている。あなたは汗がバーの床に飛びちっていることに気がついた。\n"
+"｢配達したら、かねは半分ずつにわけましょう｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:81
 msgid ""
@@ -61396,26 +61413,32 @@ msgid ""
 "They extend their sweaty hand towards you.\n"
 "\"So, are you in?\""
 msgstr ""
+"｢いいです、いいですよ、全部取ってください。{credits} になるはずです。ただスキャンされなければ問題はおきないってことだけは覚えておいてください｣"
+"\n"
+"そういってから、汗で濡れた手をあなたの方に伸ばす。\n"
+"｢で、やりますか？｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:90
 msgid "You decline their offer."
-msgstr ""
+msgstr "あなたは申し出を断った。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:91
 msgid ""
 "They slump down in the chair in defeat.\n"
 "\"Shit, what am I going to do. Think Sam think!\""
 msgstr ""
+"相手はまいってしまっていすに倒れこんだ。\n"
+"｢くそっ、なにしてるんだか。考えろ、サム、考えるんだ！｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:93
 msgid ""
 "As you take your leave, you notice they have once again started to profusely "
 "sweat."
-msgstr ""
+msgstr "あなたが別れを告げると、あの人はまたやたらと汗をかきはじめたことに気がついた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:97
 msgid "You accept their mission without shaking their hand."
-msgstr ""
+msgstr "あなたは握手はせずに任務を引き受けた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:98
 msgid ""
@@ -61424,14 +61447,17 @@ msgid ""
 "\"One thing though, you do know how to stealth to get around scanning right?"
 "\""
 msgstr ""
+"｢あなたは救いの神ですよ！｣\n"
+"そういって前に乗りだすと、もうちょっと真剣になった。\n"
+"｢やっぱりもうひとつあります。ステルスを使ってスキャンを回避するってことはたしかにわかってますよね？｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:103
 msgid "Stealth?"
-msgstr ""
+msgstr "ステルス？"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:104
 msgid "Of course!"
-msgstr ""
+msgstr "もちろん！"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:108
 msgid ""
@@ -61442,6 +61468,9 @@ msgid ""
 "well they can target your ship and identify it. When within evasion range, "
 "ships can then scan you which does nasty things like melting cakes.\""
 msgstr ""
+"｢ああ、ちょっと、このケーキを無事に配達するのにステルスなしじゃできませんよ。ステルスはとても単純です。すべての船には 3 つのおもな統計値があって、探知"
+"される距離、回避距離、それからステルス距離です。探知はどれくらい離れた船からあなたの存在が探知できるかを決定します。いっぽう、回避距離はどれくらいうまくあ"
+"なたの船を選択して身元をあきらかにできるかを制御します。回避距離内にいると、船はあなたをスキャンできるので、ケーキが溶けるというような嫌なことがおきます｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:109
 msgid ""
@@ -61452,12 +61481,15 @@ msgid ""
 "and it is easier to stealth in asteroids or systems with interference. And "
 "if you get detected while in stealth, your cover will be blown.\""
 msgstr ""
+"｢つきとめられたりスキャンされたりするのを避けるために、{key} でステルスモードに入れます。とはいえ、ステルス中はふつうよりずっと動きが遅くなります。"
+"船があなたを探知できるのは、ステルス距離内に入ったときだけです。探知されなければ、スキャンされませんし、問題もおきません。ステルスにできるのは、船が近くに"
+"いないときだけです。そして小惑星帯や干渉のある星系ではステルスがしやすいです。そしてもしステルス中に探知されたら、あなたの被覆は吹き払われるでしょう｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:111
 msgid ""
 "\"So as long as you stealth with {key} and stay away from ships, you won't "
 "be scanned and the cake will be alright.\""
-msgstr ""
+msgstr "｢だから {key} でステルスにして船から離れているかぎり、あなたはスキャンされず、ケーキは無事です｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:115
 msgid ""
@@ -61468,31 +61500,35 @@ msgid ""
 "\"OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and "
 "watch out for scanning!\""
 msgstr ""
+"｢じゃあいいですね。ちょっとケーキを取りにいかせてください｣\n"
+"相手はトイレに行って、特徴のない茶色の箱を持って戻ってきた。その箱には ｢ケーキ｣ が入っているのだろう。その表面に ｢ケーキ｣ "
+"とあわてたように走り書きがされている。左右を確認しつつ、箱は即座にあなたの手に渡された。\n"
+"｢これでよし。それではこれで。まちがいなくこれを{sys}星系の{pnt}へ持っていってください。それとスキャンには気をつけて！｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:118
 msgid ""
 "As leave them behind you can hear them let out a big sigh of what you can "
 "only assume is relief."
-msgstr ""
+msgstr "あの汗をかいた人から離れると、ほっとしたからとしか思えない大きなため息があなたに聞こえた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:127
 msgid "Cake"
-msgstr ""
+msgstr "ケーキ"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:127
 msgid ""
 "A cake that is supposedly sensitive to scanning radiation. Don't let anyone "
 "scan it."
-msgstr ""
+msgstr "スキャン放射で傷つきやすいと推定されるケーキ。だれにもスキャンさせないこと。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:131
 #: dat/missions/pirate/pir_contraband_cake.lua:133
 msgid "Deliver Cake"
-msgstr ""
+msgstr "ケーキの配達"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:131
 msgid "Fly to {pnt} in the {sys} system without getting scanned"
-msgstr ""
+msgstr "スキャンをうけずに{sys}星系の{pnt}へ行け。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:135
 msgid ""
@@ -61500,24 +61536,26 @@ msgid ""
 "frosting and will be damaged if you are scanned. Use stealth to avoid "
 "getting scanned."
 msgstr ""
+"ケーキを{sys}星系の{pnt}へ配達せよ。どうもこれには特殊な糖衣がかけてあって、スキャンされると傷ついてしまうらしい。ステルスを使ってスキャンされる"
+"のを回避すること。"
 
 #. only hook after accepting
 #. Land hook
 #: dat/missions/pirate/pir_contraband_cake.lua:150
 msgid "After you land you are promptly greeted by a burly looking individual."
-msgstr ""
+msgstr "着陸すると、即座にたくましく見える人から出迎えられた。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:151
 msgid ""
 "\"So you've been sent by Sam? That weasel, I knew they weren't cut out for "
 "this work.\""
-msgstr ""
+msgstr "｢で、サムがよこしたのはあんただね？　あのイタチ、この仕事には向いてないってわかってたんだ｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:152
 msgid ""
 "You guess that this is the person you were supposed to deliver the cake to "
 "and hand it over."
-msgstr ""
+msgstr "この人にケーキを配達して手渡すことになっているのだとあなたは推測した。"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:153
 msgid ""
@@ -61525,6 +61563,8 @@ msgid ""
 "laughter. After a while they calm down and turn to you.\n"
 "\"This was their idea wasn't it? Always been a bit weird that one.\""
 msgstr ""
+"相手は箱に書かれた ｢ケーキ｣ という言葉を見て笑いを爆発させた。すこしたって落ちつくと、あなたの方を向く。\n"
+"｢これはあいつの考えだろ？　いつもちょっと妙なんだよな｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:155
 msgid ""
@@ -61534,6 +61574,10 @@ msgid ""
 "and if you're interested in doing new jobs look into the mission computers. "
 "I've white-listed you to act as a courier.\""
 msgstr ""
+"｢あんたはこれがケーキだと考えるほど世間知らずじゃないと思ってるが、そうだよな？｣\n"
+"たくましい人がにやにやする。\n"
+"｢とにかく、あんたはここへ持ってくる仕事をうまくやってくれた。報酬はつなげておくし、もし新しい仕事に興味があるならミッションコンピューターを見てくれ。あん"
+"たは配達人としていける人だと登録しておくから｣"
 
 #: dat/missions/pirate/pir_contraband_cake.lua:158
 msgid ""
@@ -61541,6 +61585,9 @@ msgid ""
 "As they lumber away, you suddenly notice that quite a few suspicious figures "
 "in the background disappear and follow them away. What have you gotten into?"
 msgstr ""
+"｢注意しとけ｣\n"
+"相手が重々しく去っていくと、あなたはとつぜん気がついた。かなり多数の怪しい人影が目立たないところから姿を消して、いっしょに去っていったのだ。あなたはなにに"
+"巻きこまれたのだろうか？"
 
 #. increase faction
 #.
@@ -63789,16 +63836,16 @@ msgstr ""
 #. Change here to change the planet and the system
 #: dat/missions/shark/sh00_ancestorkill.lua:53
 msgid "An honest-looking man"
-msgstr ""
+msgstr "誠実そうな男"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:53
 msgid "This man looks like a honest citizen. He glances in your direction."
-msgstr ""
+msgstr "この男は誠実な民間人に見える。男はあなたの方をひと目見た。"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:59
 #: dat/missions/shark/sh01_corvette.lua:58
 msgid "Nexus Shipyards needs you"
-msgstr ""
+msgstr "ネクサス造船所があなたを必要としている"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:59
 msgid ""
@@ -63811,49 +63858,56 @@ msgid ""
 "won't be illegal. The sum of the bounty will be paid to you and Nexus will "
 "add a little extra. Would you be interested?\""
 msgstr ""
+"あなたがその男に近づくと、男は自己紹介してきた。｢こんにちは、わたしの名前はアーノルド・スミスです。ネクサス造船所で働いています。潜在顧客のひとりに実演が"
+"できる、有能なパイロットをさがしています。\n"
+"    ｢とても簡単なことです、じっさい。ネクサスの船がどれだけすぐれた設計なのかを証明できる人を必要としているんです。海賊のアンセスターをわれわれの最下"
+"級の船であるシャークで破壊するのが、証明方法です。もちろん、アンセスターのパイロットは首に賞金がかかっている人なので、違法にはなりません。賞金はあなたに支"
+"払われ、ネクサスがすこす割増を払います。興味はありますか？｣"
 
 #. for now, we only need his name
 #: dat/missions/shark/sh00_ancestorkill.lua:63
 #: dat/missions/shark/sh01_corvette.lua:62
 msgid "Wonderful"
-msgstr ""
+msgstr "すばらしい"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:63
 msgid ""
 "\"Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} "
 "system. I'll be with my boss and our customer, Baron Sauterfeldt.\""
 msgstr ""
+"｢それはよかった！　"
+"あなたなら当てにできるとわかってましたよ。{sys}星系の{pnt}で会いましょう。上司と顧客を連れていきます。顧客はザウターフェルト男爵です｣"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:65
 #: dat/missions/shark/sh00_ancestorkill.lua:68
 msgid "A Shark Bites"
-msgstr ""
+msgstr "サメがかみつく"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:67
 msgid ""
 "Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the "
 "capabilities of Nexus designs."
-msgstr ""
+msgstr "ネクサス造船所は、ザウターフェルト男爵にネクサスが設計した船の能力を実演するために、あなたを必要としている。"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:69
 msgid ""
 "Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land "
 "on {pnt}"
-msgstr ""
+msgstr "シャーク (ただし海賊シャークではない) を 1 隻買ってから、{sys}星系に飛んで{pnt}に着陸せよ。"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:70
 msgid "Go to {sys} and kill the pirate with your Shark"
-msgstr ""
+msgstr "{sys}星系に行って、あなたのシャークで海賊を殺せ。"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:71
 msgid "Land on {pnt} and collect your fee"
-msgstr ""
+msgstr "{pnt}に着陸して謝礼を受けとれ。"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:81
 msgid ""
 "\"That's your choice,\" the man says. \"Don't hesitate to tell me if you "
 "change your mind.\""
-msgstr ""
+msgstr "｢それがあなたの選択ですね｣ と、男がいう。｢考えを変えたら、ためらわず教えてください｣"
 
 #. landing on any planet system
 #. Did the player reach Ulios ?
@@ -64072,18 +64126,18 @@ msgstr ""
 #: dat/missions/shark/sh06_arandon.lua:42
 #: dat/missions/shark/sh07_pirates.lua:65
 msgid "Arnold Smith"
-msgstr ""
+msgstr "アーノルド・スミス"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:91
 msgid ""
 "The Nexus employee who recruited you for a very special demo of the \"Shark"
 "\" fighter."
-msgstr ""
+msgstr "ネクサスの従業員で、｢シャーク｣ 戦闘機のとても特殊な実演のためにあなたを採用した。"
 
 #. Did the player land again on Ulios after having killed the pirate
 #: dat/missions/shark/sh00_ancestorkill.lua:96
 msgid "Congratulations!"
-msgstr ""
+msgstr "おめでとう！"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:96
 msgid ""
@@ -64093,31 +64147,33 @@ msgid ""
 "your pay. \"I may have another mission for you later. Be sure to check back!"
 "\""
 msgstr ""
+"あなたが地上に足を降ろすと、アーノルド・スミスが出迎えた。｢すばらしい実演でした！　ありがとうございます。結果のことはまだ男爵に話せていないんですが、印象"
+"づけられると確信しています｣。スミスはあなたに報酬を手渡した。｢あとで別の任務があるかもしれません。かならず確認するようにしてください！｣"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:102
 msgid ""
 "You helped Nexus Shipyards demonstrate the capabilities of their ships by "
 "destroying a Pirate Ancestor."
-msgstr ""
+msgstr "あなたはネクサス造船所に手を貸して、海賊のアンセスターを破壊することでネクサスの船の能力を実証した。"
 
 #. jumping out the system
 #. You were supposed to kill him, not to go away !
 #: dat/missions/shark/sh00_ancestorkill.lua:111
 msgid "MISSION FAILED: You left the pirate."
-msgstr ""
+msgstr "任務に失敗 : あなたは海賊を放置した。"
 
 #. Jumping in Toaxis for the battle
 #. Check if the player uses a Shark
 #: dat/missions/shark/sh00_ancestorkill.lua:124
 msgid "MISSION FAILED: You were supposed to use a Shark."
-msgstr ""
+msgstr "任務に失敗 : あなたはシャークを使うことになっていた。"
 
 #. Be sure that nobody unexpected will take part in our epic battle
 #. spawns the bad guy
 #. Chatting with Smith and begin the battle
 #: dat/missions/shark/sh00_ancestorkill.lua:149
 msgid "Ready for action"
-msgstr ""
+msgstr "交戦の準備ができた"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:149
 msgid ""
@@ -64132,17 +64188,24 @@ msgid ""
 "timing! The pirate has just arrived at {sys}. Now go show them what your "
 "ship can do!\" Time to head back to the ship, then."
 msgstr ""
+"｢また会えてうれしいです｣ と、スミスがほほえんでいった。｢海賊の尻をけとばす用意はできていると思ってます！　"
+"ついてきてください。あなたを上司であるネクサス造船所の営業部長に紹介します。ああ、それと男爵もですね｣\n"
+"    アーノルド・スミスはあなたを案内して、ある種の管制室に連れていった。そこには重要人物のように見える人たちがいるとわかった。そのなかの数人にあなたを"
+"紹介すると、スミスは任務を再確認した。というか、かかわりあう危険をおおげさに強調してみせた。そいつはただの海賊アンセスターだよ、けっきょく。それでも、男爵"
+"は興味をそそられていた。\n"
+"    アーノルド・スミスが電話をとった。こたえてから、スミスはあなたの方を向いた。｢完璧なタイミングです！　"
+"海賊がちょうど{sys}星系に到着しました。あなたになにができるのか、もう見せつけにいけますよ！｣。それでは船に戻るころあいだ。"
 
 #. he went away
 #: dat/missions/shark/sh00_ancestorkill.lua:160
 msgid "MISSION FAILED: The pirate ran away."
-msgstr ""
+msgstr "任務に失敗 : 海賊が逃げた。"
 
 #: dat/missions/shark/sh01_corvette.lua:52
 msgid ""
 "The Nexus employee seems to be looking for pilots. Maybe he has an other "
 "task for you."
-msgstr ""
+msgstr "ネクサスの従業員がパイロットをさがしているらしい。たぶんあなたに次の仕事があるのだ。"
 
 #: dat/missions/shark/sh01_corvette.lua:58
 msgid ""
@@ -64158,49 +64221,57 @@ msgid ""
 "let another pilot disable them with ion cannons.\n"
 "    \"What do you say? Are you interested?\""
 msgstr ""
+"｢次の仕事があります。残念ながら、われわれが思ったほど男爵には印象づけられませんでした。それでもっとよい実演が必要になったんです。なにをすべきかはわかって"
+"いると思っています。われわれのさらに高級な設計の戦闘機であるランスロットは、駆逐艦級の船を倒す以上の能力があると実証する予定です。\n"
+"    ｢さて、ひとつ小さな問題にわれわれは直面しています。それは海賊は駆逐艦級の船をほとんど使わないことです。海賊は戦闘機やコルベット、巡洋艦にこだわる"
+"傾向にあります。もっと重要なのは、じっさいに戦闘機を送って駆逐艦を追わせるのは、きわめて危険だということです。たとえ海賊が操縦するものを見つけられたとして"
+"もです。だからわれわれは別の計画を立てました。だれかに駆逐艦級の船を操縦させて、別のパイロットにイオンキャノンで無力化させるんです。\n"
+"    ｢どうでしょう、興味はありますか？｣"
 
 #: dat/missions/shark/sh01_corvette.lua:62
 msgid ""
 "\"Great! Go and meet our pilot in {battlesys}. After the job is done, meet "
 "me on {pnt} in the {sys} system.\""
 msgstr ""
+"｢それはよかった！　"
+"{battlesys}星系にいるわれわれのパイロットのところへ会いにいってください。仕事が終わったら、{sys}星系の{pnt}でわたしと会いましょう｣"
 
 #: dat/missions/shark/sh01_corvette.lua:64
 msgid "Sharkman is back"
-msgstr ""
+msgstr "サメ人間が戻ってきた"
 
 #: dat/missions/shark/sh01_corvette.lua:66
 msgid ""
 "Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a "
 "Destroyer class ship."
-msgstr ""
+msgstr "ネクサス造船所は、あなたに駆逐艦級の船を操縦させて、ランスロットにわざと負けさせたがっている。"
 
 #: dat/missions/shark/sh01_corvette.lua:67
 msgid "Sharkman Is Back"
-msgstr ""
+msgstr "サメ人間が戻ってきた"
 
 #: dat/missions/shark/sh01_corvette.lua:68
 msgid ""
 "Jump in {sys} with a destroyer class ship and let the Lancelot disable you"
-msgstr ""
+msgstr "駆逐艦級の船で{sys}星系にジャンプして、ランスロットにあなたを無力化させろ。"
 
 #: dat/missions/shark/sh01_corvette.lua:69
 msgid "Go to {pnt} in {sys} to collect your pay"
-msgstr ""
+msgstr "{sys}星系の{pnt}へ行って報酬を受けとれ。"
 
 #: dat/missions/shark/sh01_corvette.lua:79
 msgid "\"OK, that's alright.\""
-msgstr ""
+msgstr "｢そうですか、わかりました｣"
 
 #. player trying to escape
 #: dat/missions/shark/sh01_corvette.lua:86
 #: dat/missions/shark/sh01_corvette.lua:93
 msgid "MISSION FAILED: You ran away."
-msgstr ""
+msgstr "任務に失敗 : あなたは逃げた。"
 
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid "Reward"
-msgstr ""
+msgstr "報酬"
 
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid ""
@@ -64210,12 +64281,14 @@ msgid ""
 "fleet. As a reward, they give you twice the sum of credits they promised to "
 "you."
 msgstr ""
+"着陸すると、あなたを待っていたアーノルド・スミスを見つけた。スミスの説明によれば、男爵は戦いにとても感激して、ネクサス造船所との契約更新に署名したのだそう"
+"だ。これでネクサスは男爵の船団の主要供給元として立場を固めた。謝礼として、ネクサスはあなたに約束の 2 倍のクレジットを与えた。"
 
 #: dat/missions/shark/sh01_corvette.lua:104
 msgid ""
 "You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to "
 "disable your Destroyer-class ship."
-msgstr ""
+msgstr "あなたはネクサス造船所がいんちきな実演をするのに手を貸して、ランスロットにあなたの駆逐艦級の船を無力化させた。"
 
 #. Jumping in Toaxis for the battle with a destroyer class ship
 #. spawns the Shark
@@ -64223,16 +64296,16 @@ msgstr ""
 #. you killed the shark
 #: dat/missions/shark/sh01_corvette.lua:149
 msgid "MISSION FAILED: You destroyed the Lancelot."
-msgstr ""
+msgstr "任務に失敗 : あなたはランスロットを破壊してしまった。"
 
 #: dat/missions/shark/sh02_tapping.lua:52
 msgid "Arnold Smith is here. Perhaps he might have another job for you."
-msgstr ""
+msgstr "アーノルド・スミスがここにいる。もしかすると別の仕事があるのかもしれない。"
 
 #. the chances you have to get an ambush
 #: dat/missions/shark/sh02_tapping.lua:59
 msgid "Nexus Shipyards needs you (again)"
-msgstr ""
+msgstr "ネクサス造船所があなたを必要としている (また)"
 
 #: dat/missions/shark/sh02_tapping.lua:59
 msgid ""
@@ -64260,10 +64333,23 @@ msgid ""
 "delivery, so you almost certainly won't be implicated. What do you say? Is "
 "this something you can do?\""
 msgstr ""
+"あなたはスミスのテーブルに座って、仕事があるのかたずねた。｢もちろんです｣ と、スミスはこたえた。｢でも今回は、それが……えーと……\n"
+"    ｢聞いてください。いくらか背景を説明する必要があります。ご承知のとおり、ネクサスが設計した船は津々浦々の小規模な軍隊に使われています。帝国はたしか"
+"に最大の顧客ですが、辺境もわれわれのランスロットをいちじるしく大量に使用していますし、多くの独立勢力の星系も同じことをしています。それでも競争相手は手ごわ"
+"いです。たとえばドベーレッド荘のベンデッタですが、FLF にはかなり人気があります。いかにも皮肉なことですね。\n"
+"    ｢しかしわれわれにとって、事態がちょっと悪化したところです。シリウス荘が造船業にも加わろうとしているようなんです。そして辺境がその主要目標です。シ"
+"リウスが成功したら、ランスロットは辺境宙域から完全に押しだされてしまうかもしれません。そうなるとわれわれは、その市場でドベーレッド荘とシリウス荘の間にはさ"
+"まりぺちゃんこになってしまうでしょう。たしかに、FLF はそれでも少数のパシファイアーを使いつづけるでしょう。しかしそれはせいぜい名ばかりの事業といったと"
+"ころです。さらにいうまでもなく、権威筋がわれわれをテロリズムと結びつけはじめてしまいます。\n"
+"    ｢それでわれわれはちょっとしたスパイ活動をしました。われわれの調査員で、シリウス荘の営業部長と辺境の代表たちの間でかわされた会話をうまくいけば暴露"
+"できる記録をとった者がいます。われわれがあなたにしてほしいのは、その調査員と会って、記録を手に入れて、{sys}星系の{pnt}にいるわたしのところへ持ち"
+"かえることだけです｣。あなたは眉を上げた。\n"
+"    ｢厳密には合法ではありません。そうはいっても、あなたはちょっと配達をするだけです。だからあなたが巻きこまれないのはほぼたしかです。どうでしょう？　"
+"やってくれるでしょうか？｣"
 
 #: dat/missions/shark/sh02_tapping.lua:65
 msgid "The job"
-msgstr ""
+msgstr "仕事"
 
 #: dat/missions/shark/sh02_tapping.lua:65
 msgid ""
@@ -64271,42 +64357,44 @@ msgid ""
 "yes, and I suppose I should mention that I'm known as 'James Neptune' to the "
 "agent. Good luck!\""
 msgstr ""
+"｢そういってくれてうれしいです。{sys}星系の{pnt}にいる調査員に会いにいってください。ああ、そうだ、説明すべきだと思いますが、その調査員は『ジェイ"
+"ムズ・ネプチューン』という名でとおっています。幸運を！｣"
 
 #: dat/missions/shark/sh02_tapping.lua:67
 #: dat/missions/shark/sh02_tapping.lua:70
 msgid "Unfair Competition"
-msgstr ""
+msgstr "不正な競争"
 
 #: dat/missions/shark/sh02_tapping.lua:69
 msgid "Nexus Shipyards is in competition with House Sirius."
-msgstr ""
+msgstr "ネクサス造船所はシリウス荘と競合関係にある。"
 
 #: dat/missions/shark/sh02_tapping.lua:71
 msgid "Land on {pnt} in {sys} and meet the Nexus agent"
-msgstr ""
+msgstr "{sys}星系の{pnt}に着陸して、ネクサスの調査員と会え。"
 
 #: dat/missions/shark/sh02_tapping.lua:72
 msgid "Bring the recording back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "記録を{sys}星系の{pnt}へ持ちかえれ。"
 
 #: dat/missions/shark/sh02_tapping.lua:81
 msgid "\"OK, sorry to bother you.\""
-msgstr ""
+msgstr "｢わかりました。手間をかけてすみません｣"
 
 #. The player is landing on the mission planet to get the box
 #: dat/missions/shark/sh02_tapping.lua:89
 msgid "Nexus's agent"
-msgstr ""
+msgstr "ネクサスの調査員"
 
 #: dat/missions/shark/sh02_tapping.lua:89
 msgid "This guy seems to be the agent Arnold Smith was talking about."
-msgstr ""
+msgstr "この人がアーノルド・スミスのいっていた調査員のようだ。"
 
 #. Job is done
 #: dat/missions/shark/sh02_tapping.lua:95
 #: dat/missions/shark/sh03_hailing.lua:80
 msgid "Good job"
-msgstr ""
+msgstr "お疲れさま"
 
 #: dat/missions/shark/sh02_tapping.lua:95
 msgid ""
@@ -64314,6 +64402,8 @@ msgid ""
 "just need to spend a few hectoseconds analyzing these recordings. See if you "
 "can find me in the bar soon; I might have another job for you.\""
 msgstr ""
+"地上に降りるとあのネクサス従業員が出迎えた。｢すばらしい！　"
+"あとはその記録の解析に二、三百秒かける必要があるだけですよ。ちょっとしたらバーにわたしがいるか確認してもらえますか？　次の仕事があるかもしれません｣"
 
 #: dat/missions/shark/sh02_tapping.lua:101
 msgid ""
@@ -64321,12 +64411,14 @@ msgid ""
 "competition from House Sirius. Arnold Smith said to meet him in the bar "
 "soon; he may have another job for you."
 msgstr ""
+"あなたは競合相手への妨害行為の試みとして、ネクサス造船所がシリウス荘から情報を集めるのに手を貸した。アーノルド・スミスはすぐにバーで会おうといった。次の仕"
+"事があるのかもしれない。"
 
 #. Ambush !
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #: dat/missions/shark/sh02_tapping.lua:119
 msgid "Time to go back to Alteris"
-msgstr ""
+msgstr "オルタリスに戻る潮時"
 
 #: dat/missions/shark/sh02_tapping.lua:119
 msgid ""
@@ -64334,27 +64426,29 @@ msgid ""
 "leave, he suggests that you stay vigilant. \"They might come after you,\" he "
 "says."
 msgstr ""
+"あなたは調査員に近づいて、問題なく小包を入手した。あなたが立ち去ろうとすると、調査員は油断をおこたらないようにという。｢追いかけてくるかもしれない｣ "
+"と、調査員はいった。"
 
 #: dat/missions/shark/sh02_tapping.lua:120
 msgid "Recorder"
-msgstr ""
+msgstr "記録装置"
 
 #: dat/missions/shark/sh02_tapping.lua:120
 msgid "A holophone recorder."
-msgstr ""
+msgstr "ホロフォン記録機。"
 
 #. adding an useless Llama
 #: dat/missions/shark/sh02_tapping.lua:344
 msgid "Amateur Mercenary"
-msgstr ""
+msgstr "未熟な傭兵"
 
 #: dat/missions/shark/sh03_hailing.lua:45
 msgid "This guy is looking more and more shifty."
-msgstr ""
+msgstr "この男はますますずるそうに見える。"
 
 #: dat/missions/shark/sh03_hailing.lua:51
 msgid "A new job"
-msgstr ""
+msgstr "新しい仕事"
 
 #: dat/missions/shark/sh03_hailing.lua:51
 msgid ""
@@ -64368,33 +64462,39 @@ msgid ""
 "{next_pnt} in the {next_sys} system. He will understand.\n"
 "    \"Can I count on you to do this for me?\""
 msgstr ""
+"｢やあ、こんにちは。また会えてうれしいです！　あなたが持ってきたあの情報によると、辺境の役人とシリウス荘のあいだの交渉はとても速く進んでいます。われわれは"
+"いま行動しなければなりません。辺境評議会の一員にも、政治的理由からわれわれを助けられる人がいます。\n"
+"    ｢シリウス人に見ぬかれずにわたしがその人に連絡をとることはできません。それであなたに接触してもらう必要があります。その人はおそらく{sys}星系で"
+"自分のホーキングを操縦しています。そこへ行って、呼びかけてください。そして{next_sys}星系の{next_pnt}でわたしと会う必要があると知らせて"
+"ください。理解してくれるでしょう｣\n"
+"    ｢本件もあなたを頼りにしていいですか？｣"
 
 #: dat/missions/shark/sh03_hailing.lua:55
 #: dat/missions/shark/sh04_meeting.lua:56
 msgid "Time to go"
-msgstr ""
+msgstr "さあ行くぞ"
 
 #: dat/missions/shark/sh03_hailing.lua:55
 msgid ""
 "\"Fantastic! I am known as Donald Ulnish to the Council member. Good luck.\""
-msgstr ""
+msgstr "｢すばらしい！　わたしはその評議会員にはドナルド・アルニッシュと名のっています。幸運を｣"
 
 #: dat/missions/shark/sh03_hailing.lua:57
 #: dat/missions/shark/sh03_hailing.lua:60
 msgid "Invitation"
-msgstr ""
+msgstr "招待"
 
 #: dat/missions/shark/sh03_hailing.lua:59
 msgid "Nexus Shipyards asks you to help initiate a secret meeting"
-msgstr ""
+msgstr "ネクサス造船所は、秘密会合の開催にあなたの助力を依頼した。"
 
 #: dat/missions/shark/sh03_hailing.lua:61
 msgid "Go to {sys}, find and hail the Air Force One"
-msgstr ""
+msgstr "{sys}星系へ行って、エアフォースワンを見つけて呼びかけろ。"
 
 #: dat/missions/shark/sh03_hailing.lua:71
 msgid "\"OK, come back when you are interested.\""
-msgstr ""
+msgstr "｢わかりました。関心をもたれたら戻ってきてください｣"
 
 #: dat/missions/shark/sh03_hailing.lua:80
 msgid ""
@@ -64402,6 +64502,8 @@ msgid ""
 "\"Fantastic! I have another mission for you; meet me in the bar when you are "
 "ready to bring me to {pnt} in the {sys} system.\""
 msgstr ""
+"スミスはすべてが計画どおり進んだと聞いて、気を楽にしたようだ。｢すばらしい！　"
+"あなたには次の仕事があります。{sys}星系の{pnt}へわたしを連れていく用意ができたらバーで会ってください｣"
 
 #: dat/missions/shark/sh03_hailing.lua:86
 msgid ""
@@ -64410,16 +64512,18 @@ msgid ""
 "to meet him in the bar on Darkshed when you are ready to transport him to "
 "Curie."
 msgstr ""
+"あなたはネクサス造船所が辺境評議会の一員との秘密会合を開催するのを助けた。アーノルド・スミスはあなたに次の仕事があるといい、キュリーへ自分を連れていく用意"
+"ができたらダークシェドのバーで会ってくれといった。"
 
 #. the system where the player must look for the Hawking
 #: dat/missions/shark/sh03_hailing.lua:94
 msgid "Air Force One"
-msgstr ""
+msgstr "エアフォースワン"
 
 #. The player takes contact with the Hawking
 #: dat/missions/shark/sh03_hailing.lua:103
 msgid "Time to go back to {pnt}"
-msgstr ""
+msgstr "{pnt}へ戻るころあい"
 
 #: dat/missions/shark/sh03_hailing.lua:103
 msgid ""
@@ -64427,49 +64531,51 @@ msgid ""
 "from Donald Ulnish, he redirects you to one of his officers who takes the "
 "message. Now, back to {pnt}."
 msgstr ""
+"ホーキングの艦長があなたにこたえた。ドナルド・アルニッシュから連絡があるというと、艦長は士官のひとりとかわり、その士官が言伝を預かった。さあ、{pnt}に"
+"戻ろう。"
 
 #: dat/missions/shark/sh04_meeting.lua:46
 msgid "He is waiting for you."
-msgstr ""
+msgstr "スミスがあなたを待っている。"
 
 #: dat/missions/shark/sh04_meeting.lua:54
 msgid "\"OK, are you ready for the travel to {pnt} in the {sys} system?\""
-msgstr ""
+msgstr "｢さて、{sys}星系の{pnt}へ行く用意はできていますか？｣"
 
 #: dat/missions/shark/sh04_meeting.lua:56
 msgid "\"Let's go, then.\""
-msgstr ""
+msgstr "｢では、行きましょう｣"
 
 #: dat/missions/shark/sh04_meeting.lua:60
 msgid "Nexus Shipyards asks you to take part in a secret meeting"
-msgstr ""
+msgstr "ネクサス造船所があなたに秘密会合への参加を依頼した。"
 
 #: dat/missions/shark/sh04_meeting.lua:62
 msgid "Go to the {sys} system and land on {pnt}"
-msgstr ""
+msgstr "{sys}星系へ行って、{pnt}に着陸せよ。"
 
 #: dat/missions/shark/sh04_meeting.lua:63
 msgid "Bring Smith back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "スミスを{sys}星系の{pnt}に連れかえれ。"
 
 #: dat/missions/shark/sh04_meeting.lua:69
 #: dat/missions/shark/sh06_arandon.lua:63
 msgid "Smith"
-msgstr ""
+msgstr "スミス"
 
 #: dat/missions/shark/sh04_meeting.lua:69
 #: dat/missions/shark/sh06_arandon.lua:63
 msgid "Arnold Smith of Nexus Shipyards."
-msgstr ""
+msgstr "ネクサス造船所のアーノルド・スミス。"
 
 #: dat/missions/shark/sh04_meeting.lua:75
 msgid "\"OK, come back when you are ready.\""
-msgstr ""
+msgstr "｢わかりました。できるようになったら戻ってきてください｣"
 
 #. The player is landing on the mission planet
 #: dat/missions/shark/sh04_meeting.lua:83
 msgid "The meeting"
-msgstr ""
+msgstr "会合"
 
 #: dat/missions/shark/sh04_meeting.lua:83
 msgid ""
@@ -64480,11 +64586,15 @@ msgid ""
 "improve Nexus sales in the Frontier, but he was able to stop House Sirius "
 "from entering the picture, at least."
 msgstr ""
+"着陸すると、あなたの船を待っていた人びとが集まっているのが見えた。スミスがその人たちにあいさつをした。それから自分がバーのひと目につかないとこへ行っている"
+"あいだ、あなたは船で待っているようにという。\n"
+"    二、三時限たつと、スミスは戻ってきて、辺境へのネクサスの売上は改善できなかったと説明した。しかしすくなくとも、シリウス荘が事態に加わることは止めら"
+"れたという。"
 
 #. Job is done
 #: dat/missions/shark/sh04_meeting.lua:94
 msgid "End of mission"
-msgstr ""
+msgstr "任務の終わり"
 
 #: dat/missions/shark/sh04_meeting.lua:94
 msgid ""
@@ -64492,12 +64602,15 @@ msgid ""
 "that in our kind of job. Sometimes it works and sometimes it fails. It's not "
 "our fault. Anyway, here is your pay.\""
 msgstr ""
+"スミスがあなたの船から降りて、あなたを見た。ほほえんでいる。｢われわれの仕事というのはこのようなものなんですよ。ときどきはうまくいって、ときどきは失敗する"
+"。それはわれわれの落ち度ではありません。それはともかく、これがあなたの報酬です｣"
 
 #: dat/missions/shark/sh04_meeting.lua:100
 msgid ""
 "You transported Arnold Smith to a secret meeting for Nexus Shipyards. The "
 "meeting supposedly did not go as well as he hoped, but was a partial success."
 msgstr ""
+"あなたはネクサス造船所のために、アーノルド・スミスを秘密会合に連れていった。会合は期待したほどうまくいかなかったと思われるが、部分的には成功した。"
 
 #. This timer will ensure that the hacked drones don't reveal themselves during the jumping
 #. Ambush !
@@ -64510,13 +64623,13 @@ msgstr ""
 #. only if this happens a few time after the jumping/taking off
 #: dat/missions/shark/sh04_meeting.lua:145
 msgid "Hacked Drone"
-msgstr ""
+msgstr "乗っとられたドローン"
 
 #. Only one drone needs to trigger this function.
 #. Surprise message
 #: dat/missions/shark/sh04_meeting.lua:154
 msgid "What is going on?"
-msgstr ""
+msgstr "どうなってるの？"
 
 #: dat/missions/shark/sh04_meeting.lua:154
 msgid ""
@@ -64526,14 +64639,17 @@ msgid ""
 "wanted by the authorities, you are hereby granted authorization to destroy "
 "it.\""
 msgstr ""
+"とつぜん、ザレクのドローンがあなたを攻撃しはじめた！　どうなっているのか不思議に思っていると、遠くのザレク船からの一斉送信が聞こえてきた。｢みなさまにお知"
+"らせいたします。われわれのドローンの一部が故障したようです。もしドローンに攻撃されて、あなたが当局から指名手配もされていないなら、ここにそのドローンを破壊"
+"する許可を与えます｣"
 
 #: dat/missions/shark/sh05_flf.lua:45
 msgid "It looks like he has yet another job for you."
-msgstr ""
+msgstr "また別の仕事があるようだ。"
 
 #: dat/missions/shark/sh05_flf.lua:51
 msgid "Nice to see you again!"
-msgstr ""
+msgstr "また会えてよかった！"
 
 #: dat/missions/shark/sh05_flf.lua:51
 msgid ""
@@ -64546,6 +64662,11 @@ msgid ""
 "doesn't get out that we're supporting terrorists by selling them ships. What "
 "do you say? Can you help us once again?\""
 msgstr ""
+"｢こんにちは、{player}！　また営業任務に参加する用意はありますか？\n"
+"    ｢ご承知のとおり、FLF はわれわれの船の大口利用者です。しかし FLF はドベーレッドの船の大口利用者でもあります。ほとんどがベンデッタですが。"
+"ドベーレッド荘は FLF の敵なので、われわれはこれが売上拡大の好機だと見ています。ネクサスの船をもっと買って、ドベーレッドの船は減らすように、"
+"われわれは FLF の指導者を説得したい。これは偽装密輸会社をとおしておこなわれるので、われわれが船を売ってテロリストを支援しているという言質をとられるこ"
+"とはありません。どうでしょうか？　また助けてもらえますか？｣"
 
 #: dat/missions/shark/sh05_flf.lua:54
 msgid ""
@@ -64557,31 +64678,35 @@ msgid ""
 "response. If they won't talk, disable and board them so you can force them "
 "to listen. Pretty simple, really. Good luck!\""
 msgstr ""
+"｢申しぶんないです！　で、この任務はとても簡単です。この提案をむこうに伝えてほしいんです｣。スミスはあなたにデータチップを手渡した。｢それは FLF "
+"の指導者と{sys}星系で会いたいという提案です。すべてがうまくいけば、次はわたしをそこへ連れていくように依頼することになります。\n"
+"    ｢どの FLF 船でもうまくいくはずです。呼びかけて応答があるか確認してください。話をしてくれなかったら無力化して乗りこめば、話を聞かざるをえなく"
+"できます。とても簡単です。ほんとうに。幸運を！｣"
 
 #: dat/missions/shark/sh05_flf.lua:57 dat/missions/shark/sh05_flf.lua:60
 msgid "The FLF Contact"
-msgstr ""
+msgstr "FLF との接触"
 
 #: dat/missions/shark/sh05_flf.lua:59
 msgid "Nexus Shipyards is looking to strike a better deal with the FLF."
-msgstr ""
+msgstr "ネクサス造船所は FLF ともっとよい取引契約を結びたがっている。"
 
 #: dat/missions/shark/sh05_flf.lua:61
 msgid "Hail any FLF ship, or disable and board one if necessary"
-msgstr ""
+msgstr "FLFならどの船でもよいので呼びかけろ。あるいはもし必要なら、無力化して乗りこめ。"
 
 #: dat/missions/shark/sh05_flf.lua:62 dat/missions/shark/sh06_arandon.lua:57
 msgid "Go back to {pnt} in {sys}"
-msgstr ""
+msgstr "{sys}星系の{pnt}に戻れ。"
 
 #: dat/missions/shark/sh05_flf.lua:70
 msgid "\"Alright, then. I'll see if anyone else is interested.\""
-msgstr ""
+msgstr "｢わかりました。ではだれかほかに興味をもつ人を見つけます｣"
 
 #. Job is done
 #: dat/missions/shark/sh05_flf.lua:78
 msgid "Good news"
-msgstr ""
+msgstr "よい知らせ"
 
 #: dat/missions/shark/sh05_flf.lua:78
 msgid ""
@@ -64589,27 +64714,30 @@ msgid ""
 "FLF leaders are indeed interested. Meet me at the bar whenever you're ready "
 "to take me to {sys}. And here's your payment.\""
 msgstr ""
+"スミスはあきらかに結果を喜んでいた。｢FLF の指導者たちには、じっさい興味をもっているとの言葉をいただきました。{sys}星系にわたしを連れていく用意が"
+"できたらバーで会ってください。それからこれがあなたの報酬です｣"
 
 #: dat/missions/shark/sh05_flf.lua:81
 msgid ""
 "You helped Arnold Smith establish a contact with the FLF. He said to meet "
 "you at the bar on Alteris when you're ready to take him to Arandon."
 msgstr ""
+"あなたはアーノルド・スミスを助けて FLF との連絡をつけた。スミスはアランドンに自分を連れていく用意ができたら、オルタリスのバーで会ってくれといった。"
 
 #: dat/missions/shark/sh05_flf.lua:89
 msgid "Peaceful Resolution"
-msgstr ""
+msgstr "平和的な解決"
 
 #: dat/missions/shark/sh05_flf.lua:89
 msgid ""
 "The FLF ship peacefully responds to you. You explain the details of what is "
 "going on and transmit the proposal, after which you both go your separate "
 "ways."
-msgstr ""
+msgstr "FLF の船は穏やかに応答した。あなたはしようとしていることの詳細を説明し、提案を送信した。そのあとあなたたちは別々の道を進んだ。"
 
 #: dat/missions/shark/sh05_flf.lua:99
 msgid "Some Resistance Encountered"
-msgstr ""
+msgstr "いくらか抵抗に出会う"
 
 #: dat/missions/shark/sh05_flf.lua:99
 msgid ""
@@ -64617,61 +64745,65 @@ msgid ""
 "assure them that you're just here to talk. Eventually, you are able to give "
 "them a copy of the proposal and leave peacefully, for lack of a better word."
 msgstr ""
+"疑いもなく FLF 士官たちが戦いの用意をしていた。しかし制圧してから、あなたはここへはただ話をしに来ただけだと保証する。やっとあなたは提案の複写を受けと"
+"ってもらい、平和的に離れた。これにはもっとよい表現が思いつかない。"
 
 #: dat/missions/shark/sh06_arandon.lua:42
 msgid "He's waiting for you."
-msgstr ""
+msgstr "スミスがあなたを待っている。"
 
 #: dat/missions/shark/sh06_arandon.lua:48
 msgid "\"Is your ship ready for the dangers of the Nebula?\""
-msgstr ""
+msgstr "｢あなたの船は星雲の危険に準備ができていますか？｣"
 
 #: dat/missions/shark/sh06_arandon.lua:50
 msgid "Go"
-msgstr ""
+msgstr "行け"
 
 #: dat/missions/shark/sh06_arandon.lua:50
 msgid "Smith once again steps in your ship in order to go to a meeting."
-msgstr ""
+msgstr "スミスは会合に行くために、もういちどあなたの船に踏みいれた。"
 
 #: dat/missions/shark/sh06_arandon.lua:52
 #: dat/missions/shark/sh06_arandon.lua:55
 msgid "A Journey To {sys}"
-msgstr ""
+msgstr "{sys}星系への旅"
 
 #: dat/missions/shark/sh06_arandon.lua:54
 msgid ""
 "You are to transport Arnold Smith to {sys} so that he can talk about a deal."
-msgstr ""
+msgstr "あなたはアーノルド・スミスを{sys}星系に輸送して、取引について話せるようにしようとしている。"
 
 #: dat/missions/shark/sh06_arandon.lua:56
 msgid "Go to {sys} and wait for the FLF ship, then hail and board it."
-msgstr ""
+msgstr "{sys}星系へ行き、FLF の船を待て。それから呼びかけて移乗せよ。"
 
 #: dat/missions/shark/sh06_arandon.lua:69
 msgid "...Or not"
-msgstr ""
+msgstr "……それともだめか"
 
 #: dat/missions/shark/sh06_arandon.lua:69
 msgid "\"Come back when you are ready.\""
-msgstr ""
+msgstr "｢用意ができたら戻ってきてください｣"
 
 #. Job is done
 #: dat/missions/shark/sh06_arandon.lua:78
 msgid "Well done!"
-msgstr ""
+msgstr "よくやった！"
 
 #: dat/missions/shark/sh06_arandon.lua:78
 msgid ""
 "Smith thanks you for the job well done. \"Here is your pay,\" he says. \"I "
 "will be in the bar if I have another task for you.\""
 msgstr ""
+"スミスがあなたに、仕事をうまく終えたことに礼をいった。｢これがあなたの報酬です｣ "
+"と、スミスがいう。｢あなたにしてもらえる別の仕事があるときには、バーにいますから｣"
 
 #: dat/missions/shark/sh06_arandon.lua:84
 msgid ""
 "You transported Arnold Smith to a meeting with someone from the FLF. He said "
 "that he had good results."
-msgstr ""
+msgstr "あなたはアーノルド・スミスを輸送して、FLF のだれかと会えるようにした。スミスはよい答えが得られたといった。"
 
 #. Entering in Arandon in order to find the FLF Pacifier
 #. Lets unspawn everybody (if any)
@@ -64679,23 +64811,23 @@ msgstr ""
 #. Prevents the player from being impatient
 #: dat/missions/shark/sh06_arandon.lua:106
 msgid "Let's wait"
-msgstr ""
+msgstr "待ってみよう"
 
 #: dat/missions/shark/sh06_arandon.lua:106
 msgid ""
 "\"Mm. It looks like the others have not arrived yet.\" Smith says. \"Just "
 "wait close to the jump point, they should arrive soon.\""
-msgstr ""
+msgstr "｢うーん。ほかの人たちはまだ到着していないようですね｣ と、スミスがいう。｢ジャンプポイントのそばでちょっと待ちましょう。すぐに来るはずです｣"
 
 #. hailing the pacifier
 #: dat/missions/shark/sh06_arandon.lua:121
 msgid "Hail"
-msgstr ""
+msgstr "呼びかけ"
 
 #: dat/missions/shark/sh06_arandon.lua:121
 msgid ""
 "The Pacifier commander answers you and stops his ship, waiting to be boarded."
-msgstr ""
+msgstr "パシファイアーの指揮官があなたにこたえ、船を止めた。接舷するのを待っているのだ。"
 
 #: dat/missions/shark/sh06_arandon.lua:133
 msgid ""
@@ -64704,6 +64836,8 @@ msgid ""
 "on his side. He mentions that he had good results with a smile on his face "
 "before directing you to take him back to {sys}."
 msgstr ""
+"接舷すると、アーノルド・スミスは FLF の船にひとりで入ると強調した。二、三次元すると、スミスは満足したようすで戻ってきた。今回のつきはスミスの側にあっ"
+"たようだ。スミスは笑顔でよい結果が得られたと説明してから、{sys}星系へ連れてもどるように指示をした。"
 
 #. Actually, I don't know how it could happened...
 #.
@@ -64737,34 +64871,34 @@ msgstr ""
 #: dat/missions/shark/sh07_pirates.lua:38
 #: dat/missions/shark/sh07_pirates.lua:94
 msgid "The Last Detail"
-msgstr ""
+msgstr "最後の詳細"
 
 #. Will now pick systems between min and max jumps in distance
 #: dat/missions/shark/sh07_pirates.lua:48
 msgid "Houston, we have a problem!"
-msgstr ""
+msgstr "ヒューストン、問題がおきた！"
 
 #: dat/missions/shark/sh07_pirates.lua:65
 msgid "Perhaps it would be worthwhile to see if he has another job for you."
-msgstr ""
+msgstr "おそらく次の仕事があるのか確認する価値はあるだろう。"
 
 #. Initialization of dead pirate memory
 #. set the names of the pirates (and make sure they aren't duplicates)
 #: dat/missions/shark/sh07_pirates.lua:79
 msgid "{name} III"
-msgstr ""
+msgstr "{name} III 世"
 
 #: dat/missions/shark/sh07_pirates.lua:80
 msgid "{name} Jr."
-msgstr ""
+msgstr "{name}・ジュニア"
 
 #: dat/missions/shark/sh07_pirates.lua:81
 msgid "{name} II"
-msgstr ""
+msgstr "{name} II 世"
 
 #: dat/missions/shark/sh07_pirates.lua:83
 msgid "The mission"
-msgstr ""
+msgstr "任務"
 
 #: dat/missions/shark/sh07_pirates.lua:83
 msgid ""
@@ -64784,10 +64918,18 @@ msgid ""
 "them do have quite big ships, so you will have to make sure you can handle "
 "that. Are you willing to do this job for us?\""
 msgstr ""
+"｢こんどもよろしくお願いします。ご承知のとおり、FLF とは船の売上がおおいに増加する契約に合意しました。もちろん、この取引は秘密のままにしておかなければ"
+"なりません。それが偽装用のやみ取引業者をとおしてしなければならない理由です。\n"
+"    ｢とはいえ、数人の重大な影響力をもつ海賊が、どくろと骨の海賊船の潜在的買い手として FLF に目をつけている可能性があると疑う理由があるんです。"
+"FLF が海賊船に興味をもつことはないと考えていますが、海賊はその野心から、われわれの偽装業者の交易所を攻撃して、なんとかわれわれと FLF "
+"との取引を壊そうとしかねません。もちろんわれわれとしては、そのようなことはさせられません。\n"
+"    ｢それでわれわれがあなたにしてほしいことは、とても単純なことで、その海賊たちを除去することです。たくさんではありません。除去する必要があるのは "
+"4 人です。それからありがたいことに、その 4 人はみんなばらばらです。そうはいっても、そのなかの一部はかなり大きな船をぜったいに持っています。だからあな"
+"たはかならず手におえるようにしておかなければならなくなります。この仕事をやってくれるつもりはありますか？｣"
 
 #: dat/missions/shark/sh07_pirates.lua:87
 msgid "Very good"
-msgstr ""
+msgstr "ほんとうによかった"
 
 #: dat/missions/shark/sh07_pirates.lua:87
 msgid ""
@@ -64803,29 +64945,37 @@ msgid ""
 "escorts, according to our records.\n"
 "    \"And that's about it! Come back for your fee when you have finished.\""
 msgstr ""
+"｢では、その海賊たちについてわれわれが集めた詳細がこれです。\n"
+"    ｢{gawname}は{gawsys}星系にいて、ガウェインで飛んでいるはずです。この男は休暇に来ているようです。だからおそらく反撃できないので、"
+"ただ逃げようとするはずです。\n"
+"    ｢{kername1}は{kersys1}星系にいて、ケストレルで飛んでいるはずです。護衛がいるとわれわれは信じています。\n"
+"    ｢{kername2}は{kersys2}星系にいて、これもケストレルで飛んでいるはずです。われわれの記録によれば、この男にも護衛がいます。\n"
+"    ｢そして最後に、{godname}が{godsys}星系にいます。この男は最近ゴダードを盗んで強化しています。だからかならずそれに用意しておいてく"
+"ださい。そのうえわれわれの記録によれば、護衛がいます。\n"
+"    ｢こんなところです！　終わったら謝礼を取りに戻ってきてください｣"
 
 #: dat/missions/shark/sh07_pirates.lua:96
 msgid "Nexus Shipyards has tasked you with killing four pirates."
-msgstr ""
+msgstr "ネクサス造船所はあなたに 4 人の海賊を殺す仕事を課した。"
 
 #: dat/missions/shark/sh07_pirates.lua:98
 msgid "Kill the four pirates"
-msgstr ""
+msgstr "4 人の海賊を殺せ。"
 
 #: dat/missions/shark/sh07_pirates.lua:99
 msgid "Report back to {pnt} in {sys}"
-msgstr ""
+msgstr "{sys}星系の{pnt}に報告に戻れ。"
 
 #: dat/missions/shark/sh07_pirates.lua:112
 msgid ""
 "\"I'm sorry to hear that. Don't hesitate to come back if you change your "
 "mind.\""
-msgstr ""
+msgstr "｢それを聞いて残念です。考えを変えたらためらわずに戻ってきてください｣"
 
 #. Job is done
 #: dat/missions/shark/sh07_pirates.lua:120
 msgid "That was impressive"
-msgstr ""
+msgstr "感激した"
 
 #: dat/missions/shark/sh07_pirates.lua:120
 msgid ""
@@ -64836,18 +64986,22 @@ msgid ""
 "    He hands you a credit chip and what appears to be a Nexus Shipyards "
 "commemorative sandwich holder."
 msgstr ""
+"スミスはあなたが到着するのを宇宙港で待っていた。あなたが船から出ると、スミスはほほえみあなたの方へ歩いてきた。｢お疲れさまです｣ と、スミスはいう。｢われ"
+"われの取引の心配はなくなりました。あなたにお礼をいいます。これがあなたの報酬で、難しい仕事だったぶんの割増があります。これまでの助力すべてにお礼をいわせて"
+"ください！｣\n"
+"    スミスがあなたにクレジットチップと、ネクサス造船所の記念品と思われるサンドイッチホルダーを手渡した。"
 
 #: dat/missions/shark/sh07_pirates.lua:125
 msgid ""
 "You eliminated some pirates that were about to get in the way of Nexus "
 "Shipyards' business."
-msgstr ""
+msgstr "あなたはネクサス造船所の事業にさしさわるところだった、数人の海賊を除去した。"
 
 #: dat/missions/shark/sh07_pirates.lua:273
 msgid ""
 "You have killed the four pirates. Now to return to {sys} and collect your "
 "payment..."
-msgstr ""
+msgstr "あなたは 4 人の海賊を殺した。もう{sys}星系に戻って報酬を受けとろう……"
 
 #: dat/missions/sirius/achack/achack01.lua:35
 msgid "You see a young Fyrra man with a determined expression on his face."
@@ -68168,17 +68322,11 @@ msgid "Success!"
 msgstr "成功！"
 
 #: dat/missions/trader/trader_escort.lua:161
-#, fuzzy
-#| msgid ""
-#| "You successfully escorted the trading convoy to the destination. There "
-#| "wasn't a single casualty and you are rewarded the full amount."
 msgid ""
 "You successfully escorted the trading convoy to the destination. There "
 "wasn't a single casualty and you are rewarded the full amount of #g{credits}"
 "#0."
-msgstr ""
-"あなたは商船団を目的地まで護衛するのに成功した。一隻も犠牲を出さなかったの"
-"で、あなたは報酬を全額もらった。"
+msgstr "あなたは商船団を目的地まで護衛するのに成功した。一隻も犠牲を出さなかったので、あなたは #g{credits}#0 の報酬を全額もらった。"
 
 #: dat/missions/trader/trader_escort.lua:167
 #: dat/missions/trader/trader_escort.lua:172
@@ -68186,30 +68334,22 @@ msgid "Success with Casualties"
 msgstr "犠牲があった成功"
 
 #: dat/missions/trader/trader_escort.lua:167
-#, fuzzy
-#| msgid ""
-#| "You've arrived with the trading convoy more or less intact. Your pay is "
-#| "docked slightly due to the loss of part of the convoy."
 msgid ""
 "You've arrived with the trading convoy more or less intact. Your pay is "
 "docked slightly due to the loss of part of the convoy. You receive "
 "#g{credits}#0 of the original promised reward of {reward}."
 msgstr ""
-"あなたはほぼ完全な商船団とともに到着した。あなたの報酬は、失われた船団のぶん"
-"だけわずかに差し引かれた。"
+"あなたはほぼ完全な商船団とともに到着した。あなたの報酬は、失われた船団のぶんだけわずかに差し引かれた。あなたはもともと約束されていた報酬 {reward}"
+" のうちの#g{credits}#0 を受けとった。"
 
 #: dat/missions/trader/trader_escort.lua:172
-#, fuzzy
-#| msgid ""
-#| "You arrive with what's left of the convoy. It's not much, but it's better "
-#| "than nothing. You are paid a steeply discounted amount."
 msgid ""
 "You arrive with what's left of the convoy. It's not much, but it's better "
 "than nothing. You are paid a steeply discounted amount of #g{credits}#0 from "
 "the {reward} originally promised."
 msgstr ""
-"あなたは残った商船団とともに到着した。あまり多くはなかったが、なにもないより"
-"はましだ。あなたはひどく割り引かれた金額を支払われた。"
+"あなたは残った商船団とともに到着した。あまり多くはなかったが、なにもないよりはましだ。あなたはもともとの約束である {reward} から、"
+"ひどく割り引かれた金額である #g{credits}#0 を支払われた。"
 
 #: dat/missions/trader/trader_escort.lua:183
 msgid "MISSION FAILED! The convoy you were escorting has been destroyed."
@@ -69015,16 +69155,12 @@ msgstr ""
 "かった。それからネリーはにっこりとした表情で戻ってきた。"
 
 #: dat/missions/tutorial/nelly02.lua:341
-#, fuzzy
-#| msgid ""
-#| "\"Got the parts! Cheaper than I expected to. Hopefully this will bring an "
-#| "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgid ""
 "\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
-"｢部品を手に入れました！　思ったより安かったですね。うまくいけば、これでわたし"
-"の船の問題はなくなってくれます。#o{sys}#0星系の#o{pnt}#0に戻りましょう！｣"
+"｢部品を手に入れました！　"
+"そのうえ思ったより安かったですね。うまくいけば、これでわたしの船の問題はなくなってくれます。#o{sys}#0星系の#o{pnt}#0に戻りましょう！｣"
 
 #: dat/missions/tutorial/nelly02.lua:345
 msgid "Jumpdrive Repair Parts"
@@ -72994,11 +73130,11 @@ msgstr "#r敵対的#0"
 #. --
 #: dat/scripts/common/dvaered.lua:12
 msgid "Anti-FLF Campaign"
-msgstr ""
+msgstr "対 FLF キャンペーン"
 
 #: dat/scripts/common/empire.lua:23
 msgid "Empire Collective Campaign"
-msgstr ""
+msgstr "帝国・集合体キャンペーン"
 
 #. Character's portraits. TODO: create unique portraits for them
 #. Major Tam: main mission giver of this campaign
@@ -73012,23 +73148,23 @@ msgstr ""
 #. When an escort is hailed
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Instructions to escort"
-msgstr ""
+msgstr "僚船への指示"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "What do you want the escort to do?"
-msgstr ""
+msgstr "僚船にどうしてほしいですか？"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Attack nearby enemies"
-msgstr ""
+msgstr "近くの敵を攻撃"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Follow me"
-msgstr ""
+msgstr "あとにつづけ"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Never mind"
-msgstr ""
+msgstr "キャンセル"
 
 #. Test if an element is in a list
 #. Gets someone to make a message (useful for hook.timer)
@@ -73038,11 +73174,11 @@ msgstr ""
 #. --
 #: dat/scripts/common/gauntlet.lua:11
 msgid "Crimson Gauntlet Guide"
-msgstr ""
+msgstr "クリムゾン・ガントレットの手引き"
 
 #: dat/scripts/common/gauntlet.lua:14
 msgid "Information on the Crimson Gauntlet."
-msgstr ""
+msgstr "クリムゾン・ガントレットの情報。"
 
 #. Helpers to create main characters
 #. Emblem stuff
@@ -73051,8 +73187,7 @@ msgstr ""
 #, lua-format
 msgid "#r%s Crimson Emblems#0"
 msgid_plural "#r%s Crimson Emblems#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#r%s 個のクリムゾン記章#0"
 
 #: dat/scripts/common/minerva.lua:19
 msgid "You see Kex taking a break at his favourite spot at Minerva station."
@@ -73221,7 +73356,7 @@ msgstr[1] ""
 #. --
 #: dat/scripts/common/pirate.lua:145
 msgid "This mission will increase your reputation with {fct_longname}."
-msgstr ""
+msgstr "この任務は{fct_longname}にたいするあなたの評判を向上させる。"
 
 #.
 #. @brief Decrease pirate standings for doing normal missions.
@@ -73239,7 +73374,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/sciencegonewrong.lua:6
 msgid "Science Gone Wrong"
-msgstr ""
+msgstr "科学が道を誤った"
 
 #. Probably old save, just set to Gastan like before
 #.
@@ -73249,7 +73384,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/shadow.lua:9 dat/scripts/pilotname/generic.lua:76
 msgid "Shadow"
-msgstr ""
+msgstr "シャドウ"
 
 #. + "Sandwich Holder" accessory
 #.
@@ -73263,7 +73398,7 @@ msgstr ""
 
 #: dat/scripts/common/sirius.lua:15
 msgid "Heretic"
-msgstr ""
+msgstr "異端者"
 
 #: dat/scripts/common/taiomi.lua:15
 msgid "Worn-out Drone"
@@ -73371,7 +73506,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/zalek.lua:9
 msgid "Nebula Research"
-msgstr ""
+msgstr "星雲の研究"
 
 #. Checks to see if the player has a Za'lek ship.
 #. =======================================================================================
@@ -73414,7 +73549,7 @@ msgstr ""
 #. We assume standard cargo doesn't change over time
 #: dat/scripts/equipopt/cargo.lua:8
 msgid "No standard commodities!"
-msgstr ""
+msgstr "No standard commodities!"
 
 #. Bias towards fewer types
 #. Add the cargo
@@ -73512,35 +73647,35 @@ msgstr ""
 #. print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
 #: dat/scripts/equipopt/optimize.lua:198
 msgid "Trying to equip:"
-msgstr ""
+msgstr "Trying to equip:"
 
 #: dat/scripts/equipopt/optimize.lua:202
 msgid "Parameters:"
-msgstr ""
+msgstr "Parameters:"
 
 #: dat/scripts/equipopt/optimize.lua:213
 msgid "Equipment:"
-msgstr ""
+msgstr "Equipment:"
 
 #: dat/scripts/equipopt/optimize.lua:219
 #, lua-format
 msgid "CPU: %d / %d [%d < %d]"
-msgstr ""
+msgstr "CPU: %d / %d [%d < %d]"
 
 #: dat/scripts/equipopt/optimize.lua:220
 #, lua-format
 msgid "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:221
 #, lua-format
 msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:224
 #, lua-format
 msgid "Shield Regen: %.3f [%.3f > %.3f (%.1f)]"
-msgstr ""
+msgstr "Shield Regen: %.3f [%.3f > %.3f (%.1f)]"
 
 #. --
 #. Equips a pilot with cores and outfits chosen from a list through optimization.
@@ -73558,6 +73693,7 @@ msgstr ""
 msgid ""
 "Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"
 msgstr ""
+"Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"
 
 #. Handle cores
 #. Don't actually have to remove cores as it should overwrite default
@@ -73567,7 +73703,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:269
 #, lua-format
 msgid "Unable to equip core '%s' on '%s'!"
-msgstr ""
+msgstr "Unable to equip core '%s' on '%s'!"
 
 #. Global ship stuff
 #. Should include cores!!
@@ -73595,7 +73731,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:404
 #, lua-format
 msgid "Fighter bay '%s' does not have computed DPS!"
-msgstr ""
+msgstr "Fighter bay '%s' does not have computed DPS!"
 
 #. We add it as movement, but weaken the effect a bit
 #. Compute goodness
@@ -73613,7 +73749,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:485
 #, lua-format
 msgid "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
-msgstr ""
+msgstr "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
 
 #. Add limit checks
 #. Add outfit checks
@@ -73646,13 +73782,13 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:654
 #, lua-format
 msgid "Failed to solve equipopt linear program for pilot '%s': %s"
-msgstr ""
+msgstr "Failed to solve equipopt linear program for pilot '%s': %s"
 
 #. Interpret results
 #: dat/scripts/equipopt/optimize.lua:666
 #, lua-format
 msgid "Unable to equip outfit '%s' on '%s'!"
-msgstr ""
+msgstr "Unable to equip outfit '%s' on '%s'!"
 
 #. Due to the approximation, sometimes they end up with not enough
 #. energy, we'll try again with larger energy constraints
@@ -73661,14 +73797,14 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:685
 #, lua-format
 msgid "Failed to equip pilot '%s'!"
-msgstr ""
+msgstr "Failed to equip pilot '%s'!"
 
 #. Fill ammo
 #. Check
 #: dat/scripts/equipopt/optimize.lua:697
 #, lua-format
 msgid "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
-msgstr ""
+msgstr "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
 
 #.
 #. -- @brief Merges two tables while removing duplicates.
@@ -73894,7 +74030,7 @@ msgstr ""
 #. --
 #: dat/scripts/fleet.lua:13
 msgid "Warning: Tables are different lengths."
-msgstr ""
+msgstr "Warning: Tables are different lengths."
 
 #. --
 #. Wrapper for pilot.add() that can operate on tables of ships.
@@ -73918,7 +74054,7 @@ msgstr ""
 #. Put lone ship into table
 #: dat/scripts/fleet.lua:56
 msgid "fleet.add: Error, raw ships must have factions!"
-msgstr ""
+msgstr "fleet.add: Error, raw ships must have factions!"
 
 #. Repeat the pattern as necessary.
 #. --
@@ -82255,14 +82391,12 @@ msgid "#nMass:#0"
 msgstr "#n質量 :#0"
 
 #: src/map_find.c:663 src/map_system.c:638
-#, fuzzy
-#| msgid "#nPrice:#0 %s"
 msgid "#nPrice:#0"
-msgstr "#n価格 :#0 %s"
+msgstr "#n価格 :#0"
 
 #: src/map_find.c:664
 msgid "#nMoney:#0"
-msgstr ""
+msgstr "#n所持金 :#0"
 
 #: src/map_find.c:665
 msgid "#nLicense:#0"
@@ -84762,14 +84896,17 @@ msgid ""
 "\n"
 "     %.0f%% vs armour"
 msgstr ""
+"\n"
+"     対装甲 : %.0f%%"
 
 #: src/outfit.c:1335
-#, fuzzy, c-format
-#| msgid "%.0f%% Shield"
+#, c-format
 msgid ""
 "\n"
 "     %.0f%% vs shield"
-msgstr "シールド %.0f%%"
+msgstr ""
+"\n"
+"     対シールド : %.0f%%"
 
 #: src/outfit.c:1336
 #, c-format
@@ -84777,6 +84914,8 @@ msgid ""
 "\n"
 "     %.0f%% knockback"
 msgstr ""
+"\n"
+"     反動 : %.0f%%"
 
 #: src/outfit.c:1337 src/outfit.c:1483 src/outfit.c:1851 src/outfit.c:1921
 #: src/outfit.c:2685
@@ -86420,10 +86559,8 @@ msgid "Freighter"
 msgstr "貨物船"
 
 #: src/ship.c:181
-#, fuzzy
-#| msgid "Freighter"
 msgid "Bulk Freighter"
-msgstr "貨物船"
+msgstr "ばら積み貨物船"
 
 #: src/ship.c:183
 msgid "Armoured Transport"

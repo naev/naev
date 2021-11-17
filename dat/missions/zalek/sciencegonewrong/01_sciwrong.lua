@@ -75,8 +75,7 @@ end
 function sys_enter ()
    if system.cur() == mem.t_sys[2] and mem.targetalive then
       local dist = rnd.rnd() * system.cur():radius() *1/2
-      local angle = rnd.rnd() * 360
-      local location = vec2.newP(dist, angle) -- Randomly spawn the Ship in the system
+      local location = vec2.newP(dist, rnd.angle())
       target = pilot.add( "Soromid Odium", "Soromid", location )
       target:control()
       target:rename(shpnm)
@@ -103,8 +102,7 @@ function targetIdle()
    end
    local location = target:pos()
    local dist = 750
-   local angle = rnd.rnd() * 360
-   local newlocation = vec2.newP(dist, angle)
+   local newlocation = vec2.newP(dist, rnd.angle())
    target:taskClear()
    target:moveto(location + newlocation, false, false)
    hook.timer(5.0, "targetIdle")

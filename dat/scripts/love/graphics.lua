@@ -19,7 +19,7 @@ local graphics = {
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
-   else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
+   else   error( string.format(_("Unknown fill mode '%s'"), m ) )
    end
 end
 local function _H( x, y, r, sx, sy )
@@ -270,8 +270,8 @@ function graphics.setColor( red, green, blue, alpha )
 end
 function graphics.setDefaultFilter( min, mag, anisotropy )
    graphics._minfilter = min
-   graphics._magfilter = mag
-   graphics._anisotropy = 1
+   graphics._magfilter = mag or min
+   graphics._anisotropy = anisotropy or 1
 end
 function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
@@ -395,7 +395,7 @@ function graphics.printf( text, ... )
       end
       naev.gfx.printRestoreLast()
 
-      HH = H:translate( sx*tx, 0 )
+      local HH = H:translate( sx*tx, 0 )
       naev.gfx.printH( HH, font.font, v[1], col, font.outline )
       H = H:translate( 0, -font.lineheight );
    end

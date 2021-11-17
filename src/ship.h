@@ -30,8 +30,8 @@ typedef enum ShipClass_ {
    SHIP_CLASS_YACHT,       /**< Ultra-small ship. */
    SHIP_CLASS_COURIER,     /**< Small ship. */
    SHIP_CLASS_FREIGHTER,   /**< Medium ship. */
-   SHIP_CLASS_BULK_FREIGHTER, /**< Large ship. */
    SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
+   SHIP_CLASS_BULK_FREIGHTER, /**< Large ship. */
    /* Military. */
    SHIP_CLASS_SCOUT,       /**< Small scouter. */
    SHIP_CLASS_INTERCEPTOR, /**< Ultra small attack ship. */

@@ -1,3 +1,4 @@
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
 local fmt = require "format"
 local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
@@ -42,12 +43,12 @@ mem.lanes_useneutral = false -- Whether or not to use neutral lanes
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
-For example, radius = 100 and angle = 180 means that the pilot will stay
+For example, radius = 100 and angle = math.pi means that the pilot will stay
 behind his target at a distance of 100 units.
-angle = 90 will make the pilot try to be on the left of his target,
+angle = math.pi/2 will make the pilot try to be on the left of his target,
 angle = 0 means that the pilot tries to be in front of the target.]]
 mem.radius         = 100 --  Requested distance between follower and target
-mem.angle          = 180 --  Requested angle between follower and target's velocity
+mem.angle          = math.pi --  Requested angle between follower and target's velocity
 mem.Kp             = 10 --  First control coefficient
 mem.Kd             = 20 -- Second control coefficient
 

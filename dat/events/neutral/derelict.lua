@@ -80,7 +80,7 @@ function create ()
 
    -- Create the derelict.
    local dist  = rnd.rnd() * cursys:radius() * 0.8
-   local pos   = vec2.newP( dist, rnd.rnd()*360 )
+   local pos   = vec2.newP( dist, rnd.angle() )
    derelict    = pilot.add(dship, "Derelict", pos, _("Derelict"), {ai="dummy", naked=true})
    derelict:disable()
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
@@ -307,7 +307,7 @@ function badevent()
          local leader
          for _k,v in ipairs(enemies) do
             local dist = 800 + 200 * ship.get(v):size()
-            local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, 360*rnd.rnd() ) )
+            local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, rnd.angle() ) )
             if v == "Hyena" then
                p:rename(_("Pirate Hyena"))
             end

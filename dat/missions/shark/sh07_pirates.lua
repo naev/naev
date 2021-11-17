@@ -134,8 +134,7 @@ function enter ()
 
       -- Choose a random point in the system for him to stay around
       local sysrad = rnd.rnd() * system.cur():radius()
-      local angle = rnd.rnd() * 360
-      local pos = vec2.newP(sysrad, angle)
+      local pos = vec2.newP(sysrad, rnd.angle())
 
       baddie = pilot.add( "Gawain", fenemy, nil, mem.gawname, {ai="dummy"} )
       baddie:setHostile()

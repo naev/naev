@@ -280,7 +280,7 @@ function spawnEscort( origin )
       escort[1]:setHilight()
       escort[1]:setVisplayer()
 
-      escort[1]:memory().angle = 225
+      escort[1]:memory().angle = math.rad(225)
       escort[1]:memory().radius = 200
       escort[1]:memory().shield_run = 90
       escort[1]:memory().shield_return = 95
@@ -298,7 +298,7 @@ function spawnEscort( origin )
       hook.pilot(escort[2], "death", "escort_died2")
       escort[2]:control()
       escort[2]:follow(player.pilot(), true)
-      escort[2]:memory().angle = 225
+      escort[2]:memory().angle = math.rad(225)
       escort[2]:setHilight()
       escort[2]:setVisplayer()
    end
@@ -308,7 +308,7 @@ function spawnEscort( origin )
       hook.pilot(escort[3], "death", "escort_died3")
       escort[3]:control()
       escort[3]:follow(player.pilot(), true)
-      escort[3]:memory().angle = 135
+      escort[3]:memory().angle = math.rad(135)
       escort[3]:setHilight()
       escort[3]:setVisplayer()
    end
@@ -518,8 +518,7 @@ function strafer_choosePoint()
    escort[1]:control()
    escort[1]:taskClear()
    local sysrad = rnd.rnd() * system.cur():radius()
-   local angle = rnd.rnd() * 360
-   escort[1]:moveto( vec2.newP(sysrad, angle), false, false )
+   escort[1]:moveto( vec2.newP(sysrad, rnd.angle()), false, false )
 end
 
 function increment_baddie()

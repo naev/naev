@@ -589,7 +589,7 @@ function enter ()
       end
 
       -- Spawn the drones
-      local pos = eccpos + vec2.newP( 5000, rnd.rnd(0,359) )
+      local pos = eccpos + vec2.newP( 5000, rnd.angle() )
       mem.attacked_feral_drones = false
       local b = spawn_single( "Za'lek Heavy Drone", pos )
       feral_drone_boss = b
@@ -600,7 +600,7 @@ function enter ()
       b:setNoboard(true)
       local num = 4
       for i=1,num do
-         local fpos = pos + vec2.newP( 50, i*360/num )
+         local fpos = pos + vec2.newP( 50, 2*math.pi*i/num )
          local p = spawn_single( "Za'lek Light Drone", fpos )
          p:rename(_("Feral Drone"))
          p:setLeader( b )
@@ -631,7 +631,7 @@ function ecc_dist ()
       }
       defense_systems = {}
       for k,v in ipairs(spawners) do
-         local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
+         local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.angle() )
          local p = pilot.add( v, "Strangelove", pos, _("Security Drone") )
          p:control()
          p:setHostile()

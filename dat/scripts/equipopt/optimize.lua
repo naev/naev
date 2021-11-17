@@ -192,7 +192,8 @@ function optimize.goodness_default( o, p )
 end
 
 
-local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, _budget_row )
+   -- TODO: displaying budget_row could be useful.
    emod = emod or 1
    mmod = mmod or 1
    print(_("Trying to equip:"))
@@ -316,35 +317,36 @@ function optimize.optimize( p, cores, outfit_list, params )
    local ar = {}
 
    -- Figure out limits (both natural and artificial)
-   local limit_list = {}
+   local limits = {}
    local same_list = {}
    local same_limit = {}
-   for k,o in ipairs(outfit_list) do
-      local n = o:nameRaw()
-      -- Add limit if applicable
-      local lim = o:limit()
-      if lim then
-         limit_list[lim] = true
+   do
+      local limit_list = {}
+      for k,o in ipairs(outfit_list) do
+         local n = o:nameRaw()
+         -- Add limit if applicable
+         local lim = o:limit()
+         if lim then
+            limit_list[lim] = true
+         end
+         -- See if we want to limit the particular outfit
+         local t = o:slot()
+         if params.max_same_weap and t=="Weapon" then
+            table.insert( same_list, n )
+            table.insert( same_limit, params.max_same_weap )
+         elseif params.max_same_util and t=="Utility" then
+            table.insert( same_list, n )
+            table.insert( same_limit, params.max_same_util )
+         elseif params.max_same_stru and t=="Structure" then
+            table.insert( same_list, n )
+            table.insert( same_limit, params.max_same_stru )
+         end
       end
-      -- See if we want to limit the particular outfit
-      local t = o:slot()
-      if params.max_same_weap and t=="Weapon" then
-         table.insert( same_list, n )
-         table.insert( same_limit, params.max_same_weap )
-      elseif params.max_same_util and t=="Utility" then
-         table.insert( same_list, n )
-         table.insert( same_limit, params.max_same_util )
-      elseif params.max_same_stru and t=="Structure" then
-         table.insert( same_list, n )
-         table.insert( same_limit, params.max_same_stru )
+      -- Resort limits
+      for k,v in pairs(limit_list) do
+         table.insert( limits, k )
       end
    end
-   -- Resort limits
-   local limits = {}
-   for k,v in pairs(limit_list) do
-      table.insert( limits, k )
-   end
-   limit_list = nil
 
    -- Create outfit cache, it contains all sort of nice information like DPS and
    -- other stuff that can be used for our goodness function

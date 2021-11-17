@@ -75,7 +75,7 @@ function background_nebula ()
    local y     = r*math.sin(a)
    local move  = 0.01 + prng:random()*0.01
    local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
-   local angle = prng:random()*360
+   local angle = prng:random()*2*math.pi
    if scale > 1.9 then
       scale = 1.9
    end

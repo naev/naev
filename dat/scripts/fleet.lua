@@ -67,7 +67,7 @@ function fleet.add( count, ship, faction, location, pilotname, parameters )
       local leader = out[1]
       for k,v in ipairs(out) do
          if k~=1 then
-            v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.rnd() * 360 ) )
+            v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.angle() ) )
             v:setLeader( leader )
          end
       end

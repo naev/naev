@@ -19,14 +19,15 @@ _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 _fstanding_friendly = 40
 _fstanding_neutral = 0
 
-_ftext_standing = {}
-_ftext_standing[95] = _("Clan Legend")
-_ftext_standing[80] = _("Clan Lord")
-_ftext_standing[60] = _("Clan Warrior")
-_ftext_standing[40] = _("Clan Plunderer")
-_ftext_standing[20] = _("Clan Thug")
-_ftext_standing[0]  = _("Common Thief")
-_ftext_standing[-1] = _("Normie")
+_ftext_standing = {
+   [95] = _("Clan Legend"),
+   [80] = _("Clan Lord"),
+   [60] = _("Clan Warrior"),
+   [40] = _("Clan Plunderer"),
+   [20] = _("Clan Thug"),
+   [0]  = _("Common Thief"),
+   [-1] = _("Normie"),
+}
 
 _ftext_friendly = _("Friendly")
 _ftext_neutral  = _("Neutral")

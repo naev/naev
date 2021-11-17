@@ -322,7 +322,7 @@ function enter ()
       -- Make sure system isn't claimed, but we don't claim it
       if misn.claim( system.cur(), true ) then
          -- Spawn near the center, they home in on player
-         spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(),360*rnd.rnd()), false )
+         spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(), rnd.angle()), false )
          -- Timer
          hook.timer( 5, "thug_heartbeat" )
       end
