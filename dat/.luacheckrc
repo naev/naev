@@ -186,7 +186,7 @@ table.insert(stds.PilotOutfit.globals, "mem")
 
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
 files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
+files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
 files["board.lua"].std = STANDARD .. "+API_board"
 files["comm.lua"].std = STANDARD .. "+API_comm"
 files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
