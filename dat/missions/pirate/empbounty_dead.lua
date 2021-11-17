@@ -175,7 +175,7 @@ end
 function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
-   if not job_done and mem.last_sys == mem.missys then
+   if mem.last_sys == mem.missys then
       fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
@@ -536,10 +536,6 @@ end
 
 -- Spawn the ship at the location param.
 function spawn_pirate( param )
-   if job_done or system.cur() ~= mem.missys then
-      return
-   end
-
    if mem.jumps_permitted < 0 then
       fail( _("MISSION FAILURE! Target got away.") )
       return
