@@ -4,13 +4,8 @@
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
 local love_shaders = require 'love_shaders'
-local prng = require("prng").new()
 
 local nebulafrag = lf.read('bkg/shaders/nebula.frag')
-
-local function R()
-   return (2*prng:random()-1)*1000
-end
 
 local nebula = {}
 
@@ -27,7 +22,12 @@ function nebula.init( params )
    local angle    = params.angle or 0
 
    -- Initialize seed
+   local prng     = params.prng or require("prng").new()
    prng:setSeed( system.cur():nameRaw() )
+
+   local function R()
+      return (2*prng:random()-1)*1000
+   end
 
    -- Initialize shader
    local size = math.min( 0.25*scale, 1024 ) -- over 1024 makes intel GPUs choke
