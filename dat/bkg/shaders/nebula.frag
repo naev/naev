@@ -9,8 +9,8 @@ const int STEPS         = %d;
 const float RADIUS      = 1.0;
 const float HUE_INNER   = %f;
 const float HUE_OUTTER  = %f;
-const float ABSORPTION  = 45.0;
-const float OPACITY     = 60.0;
+const float ABSORPTION  = %f;
+const float OPACITY     = %f;
 const vec2 RESOLUTION   = vec2( %f, %f );
 
 /* Our nebula function (static version of the 2D turbulence noise in 3D) */

@@ -19,6 +19,8 @@ function nebula.init( params )
    local steps    = params.stops or 48
    local hue_inner= params.hue_inner or 1.0
    local hue_outter= params.hue_outter or 240/360
+   local opacity  = params.opacity or 60
+   local absorption = params.absorption  or 45
    local scale    = params.scale or 1
    local move     = params.move or (0.06 / scale )
    local offset   = params.offset or vec2.new()
@@ -30,7 +32,7 @@ function nebula.init( params )
    -- Initialize shader
    local w, h = 1024, 1024
    local shader = lg.newShader(
-      string.format(nebulafrag, steps, hue_inner, hue_outter, w, h, R(), R(), R()),
+      string.format(nebulafrag, steps, hue_inner, hue_outter, absorption, opacity, w, h, R(), R(), R()),
       love_shaders.vertexcode )
    local cvs = lg.newCanvas( w, h, {dpiscale=1} )
 

@@ -13,6 +13,18 @@ local nebu_blacklist = {
    ["Faust"] = true,
 }
 
+local function nebula_add_local( cpos, sys, radius, params )
+   params = params or {}
+   local spos  = sys:pos()
+   local d     = cpos:dist( spos )
+   local scale = (radius - d) / radius
+   if scale > 0 then
+      params.scale = 5*scale
+      params.offset = (spos-cpos)*2
+      nebula.init( params )
+   end
+end
+
 function background ()
    local csys = system.cur()
    local nebud, _nebuv = csys:nebula()
@@ -34,6 +46,15 @@ function background ()
    if maxscale > 0 then
       nebula.init{ scale=8*maxscale, offset=(system.get("Sol"):pos()-cpos)*2 }
    end
+
+   -- Haven
+   nebula_add_local( cpos, system.get("Haven"), 150, {hue_inner=160/360, hue_outter=200/360, opacity=50 } )
+
+   -- Mizar
+   nebula_add_local( cpos, system.get("Mizar"), 150, {hue_inner=80/360, hue_outter=120/360, opacity=50 } )
+
+   -- PSO
+   nebula_add_local( cpos, system.get("PSO"), 300, {hue_inner=330/360, hue_outter=270/360, opacity=50 } )
 
    starfield.init()
 end

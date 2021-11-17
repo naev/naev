@@ -37,7 +37,7 @@ function nebula_image.init( filename )
       local x     = r*math.cos(a)
       local y     = r*math.sin(a)
       local move  = 0.01 + prng:random()*0.01
-      local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
+      local scale = 1 + (prng:random()*0.5 + 0.5)*((2048+2048)/(w+h))
       local angle = prng:random()*math.pi*2
       if scale > 1.9 then
          scale = 1.9
