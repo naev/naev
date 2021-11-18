@@ -176,7 +176,7 @@ function background ()
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
 end
-function update ()
+local function update ()
    -- Calculate player motion
    local npos = camera.get()
    local diff = npos - pos
