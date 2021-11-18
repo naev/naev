@@ -3,6 +3,8 @@
 --Think functions for determining who to attack are found in another file
 --]]
 
+local atk = require "ai.core.attack.util"
+
 local __atk_d_flyby, __atk_d_space_sup, __atk_drone_ranged -- Forward-declared functions
 
 -- Initializes the drone
@@ -55,8 +57,8 @@ function __atk_drone_ranged( target, dist )
       end
    else
       -- First test if we should zz
-      if __atk_decide_zz( target, dist ) then
-         ai.pushsubtask("_atk_zigzag", target)
+      if atk.decide_zz( target, dist ) then
+         ai.pushsubtask("_attack_zigzag", target)
       end
    end
 
@@ -73,7 +75,7 @@ end
 -- Main control function for drone behavior.
 --]]
 function atk_drone( target, dokill )
-   target = __atk_com_think( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -81,7 +83,7 @@ function atk_drone( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -141,15 +143,15 @@ function __atk_d_flyby( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         --__atk_keep_distance()
+         --atk.keep_distance()
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
       else
@@ -203,15 +205,15 @@ function __atk_d_space_sup( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         __atk_keep_distance()
+         atk.keep_distance()
          ai.accel()
       else
          ai.iface(target)

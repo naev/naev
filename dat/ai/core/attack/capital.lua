@@ -1,3 +1,5 @@
+local atk = require "ai.core.attack.util"
+
 local __atk_g_capital -- Forward-declared functions
 
 function atk_capital_init ()
@@ -10,7 +12,7 @@ end
 -- Main control function for capital ship behavior.
 --]]
 function atk_capital( target, dokill )
-   target = __atk_com_think( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -18,7 +20,7 @@ function atk_capital( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -57,7 +59,7 @@ function __atk_g_capital( target, dist )
    if dist > range then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         __atk_keep_distance()
+         atk.keep_distance()
          ai.accel()
       else
          ai.iface(target)
@@ -106,7 +108,7 @@ function __atk_g_capital( target, dist )
       end
 
       -- Also try to shoot missiles
-      __atk_dogfight_seekers( dist, aimdir )
+      atk.dogfight_seekers( dist, aimdir )
    end
 end
 

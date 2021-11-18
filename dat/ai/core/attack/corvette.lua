@@ -1,3 +1,5 @@
+local atk = require "ai.core.attack.util"
+
 function atk_corvette_init ()
    mem.atk_think  = atk_heuristic_big_game_think
    mem.atk        = atk_corvette
@@ -8,7 +10,7 @@ end
 -- Main control function for corvette behavior.
 --]]
 function atk_corvette( target, dokill )
-   target = __atk_com_think( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -16,7 +18,7 @@ function atk_corvette( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance

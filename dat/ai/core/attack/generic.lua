@@ -2,6 +2,8 @@
 --    Generic attack functions
 --]]
 
+local atk = require "ai.core.attack.util"
+
 local __atk_g_approach, __atk_g_melee -- Forward-declared functions
 
 --[[
@@ -67,13 +69,13 @@ end
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
 function atk_generic( target, dokill )
-   target = __atk_com_think( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    ai.hostile(target) -- Mark as hostile
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Targeting stuff
    ai.settarget(target)
@@ -114,8 +116,8 @@ local function ___atk_g_ranged_dogfight( target, dist )
       end
    else
       -- Test if we should zz
-      if ai.pilot():stats().mass < 400 and __atk_decide_zz( target, dist ) then
-         ai.pushsubtask("_atk_zigzag", target)
+      if ai.pilot():stats().mass < 400 and atk.decide_zz( target, dist ) then
+         ai.pushsubtask("_attack_zigzag", target)
       end
    end
 
@@ -263,7 +265,7 @@ end
 function __atk_g_approach( target, _dist )
    local dir = ai.idir(target)
    if dir < math.rad(10) and dir > -math.rad(10) then
-      __atk_keep_distance()
+      atk.keep_distance()
    else
       dir = ai.iface(target)
    end
@@ -293,5 +295,5 @@ function __atk_g_melee( target, dist )
    ai.shoot(true)
 
    -- Also try to shoot missiles
-   __atk_dogfight_seekers( dist, dir )
+   atk.dogfight_seekers( dist, dir )
 end

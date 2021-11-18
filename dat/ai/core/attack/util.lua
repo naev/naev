@@ -2,12 +2,13 @@
 --    Attack utilitiesGeneric attack functions
 --]]
 
+local atk = {}
 
 --[[
 --Attempts to maintain a constant distance from nearby things
 --This modulates the distance between the current pilot and its nearest neighbor
 --]]
-function __atk_keep_distance()
+function atk.keep_distance()
    --anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
    --local flight_offset = ai.drift_facing()
 
@@ -34,7 +35,7 @@ end
 -- But the clean way would require to have stored the target position into memory
 -- This test should be put in any subtask of the attack task.
 --]]
-function __atk_check_seeable( target )
+function atk.check_seeable( target )
    if __check_seeable( target ) then
       return true
    end
@@ -46,7 +47,7 @@ end
 --[[
 -- Decides if zigzag is a good option
 --]]
-function __atk_decide_zz( target, dist )
+function atk.decide_zz( target, dist )
    -- Some AI will not do fancy maneuvers
    if mem.simplecombat then return false end
    if target:flags("disabled") then return false end -- Don't be fance with disabled ships
@@ -68,8 +69,8 @@ end
 --[[
 -- Zig zags towards the target
 --]]
-function _atk_zigzag( target )
-   target = __atk_com_think( target )
+function atk.zigzag( target )
+   target = atk.com_think( target )
    if target == nil then return end
    if target:flags("disabled") then
       ai.popsubtask()
@@ -77,7 +78,7 @@ function _atk_zigzag( target )
    end
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    ai.settarget(target)
 
@@ -103,7 +104,7 @@ end
 --[[
 -- Tries to shoot seekers at close range
 --]]
-function __atk_dogfight_seekers( dist, dir )
+function atk.dogfight_seekers( dist, dir )
    if dist > 100 then
       if dist < ai.getweaprange( 4 ) and dir < math.rad(20)  then
          ai.weapset( 4 )
@@ -117,7 +118,7 @@ end
 --[[
 -- Common control stuff
 --]]
-function __atk_com_think( target, dokill )
+function atk.com_think( target, dokill )
    -- make sure pilot exists
    if not target or not target:exists() then
       ai.poptask()
@@ -150,4 +151,4 @@ function __atk_com_think( target, dokill )
    return target
 end
 
-
+return atk

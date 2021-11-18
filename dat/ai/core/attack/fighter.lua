@@ -3,6 +3,8 @@
 --Think functions for determining who to attack are found in another file
 --]]
 
+local atk = require "ai.core.attack.util"
+
 -- Initializes the fighter
 function atk_fighter_init ()
    mem.atk_think  = atk_fighter_think
@@ -40,7 +42,7 @@ end
 -- Main control function for fighter behavior.
 --]]
 function atk_fighter( target, dokill )
-   target = __atk_com_think( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -48,7 +50,7 @@ function atk_fighter( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -80,15 +82,15 @@ function __atk_f_flyby( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         __atk_keep_distance()
+         atk.keep_distance()
          ai.accel()
       else
          ai.iface(target)
@@ -126,7 +128,7 @@ function __atk_f_flyby( target, dist )
       ai.shoot(true)
 
       -- Also try to shoot missiles
-      __atk_dogfight_seekers( dist, dir )
+      atk.dogfight_seekers( dist, dir )
    end
 end
 
@@ -142,15 +144,15 @@ function __atk_f_space_sup( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    --if we're far away from the target, then turn and approach
    if dist > (range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         __atk_keep_distance()
+         atk.keep_distance()
          ai.accel()
       else
          ai.iface(target)
@@ -182,7 +184,7 @@ function __atk_f_space_sup( target, dist )
       ai.shoot(true)
 
       -- Also try to shoot missiles
-      __atk_dogfight_seekers( dist, dir )
+      atk.dogfight_seekers( dist, dir )
 
    --within close range; aim and blast away with everything
    else
