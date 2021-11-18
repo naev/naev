@@ -166,5 +166,4 @@ void main(void) {
    colour_out.rgb *= mat.albedo;
    //colour_out = vec4(1.0);
    colour_out = vec4( mat.albedo, 1.0 );
-   colour_out = texture(baseColour_tex, tex_coord0);
 }
