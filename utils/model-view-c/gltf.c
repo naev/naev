@@ -80,7 +80,7 @@ struct Object_ {
    Node *nodes;         /**< Nodes the object has. */
    size_t nnodes;       /**< Number of nodes. */
    Material *materials; /**< Available materials. */
-   int nmaterials;      /**< Number of materials. */
+   size_t nmaterials;   /**< Number of materials. */
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
 };
 
@@ -251,7 +251,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    /* Depth testing. */
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);
-   
+
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
    /* TODO put everything in a single VBO */
@@ -305,7 +305,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
    glDisable(GL_DEPTH_TEST);
-   
+
    gl_checkErr();
 }
 
@@ -338,7 +338,7 @@ void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
       object_renderNode( obj, &node->children[i], H );
-   
+
    gl_checkErr();
 }
 
@@ -395,9 +395,54 @@ Object *object_loadFromFile( const char *filename )
    return obj;
 }
 
+static void object_freeNode( Node *node )
+{
+   for (size_t i=0; i<node->nmesh; i++) {
+      Mesh *m = &node->mesh[i];
+      if (m->vbo_idx)
+         glDeleteBuffers( 1, &m->vbo_idx );
+      if (m->vbo_pos)
+         glDeleteBuffers( 1, &m->vbo_pos );
+      if (m->vbo_nor)
+         glDeleteBuffers( 1, &m->vbo_nor );
+      if (m->vbo_tex)
+         glDeleteBuffers( 1, &m->vbo_tex );
+   }
+   free( node->mesh );
+   gl_checkErr();
+
+   for (size_t i=0; i<node->nchildren; i++)
+      object_freeNode( &node->children[i] );
+   free( node->children );
+}
+
+static void object_freeTex( GLuint tex )
+{
+   /* Don't have to free default textures. */
+   if (tex==tex_zero || tex==tex_ones)
+      return;
+
+   if (tex)
+      glDeleteTextures( 1, &tex );
+   gl_checkErr();
+}
+
 void object_free( Object *obj )
 {
-   /* TODO properly free shit. */
+   for (size_t i=0; i<obj->nnodes; i++)
+      object_freeNode( &obj->nodes[i] );
+   free( obj->nodes );
+
+   for (size_t i=0; i<obj->nmaterials; i++) {
+      Material *m = &obj->materials[i];
+      object_freeTex( m->baseColour_tex );
+      object_freeTex( m->metallic_tex );
+      object_freeTex( m->normal_tex );
+      object_freeTex( m->occlusion_tex );
+      object_freeTex( m->emissive_tex );
+   }
+   free( obj->materials );
+
    free( obj );
 }
 
@@ -429,4 +474,6 @@ int object_init (void)
 
 void object_exit (void)
 {
+   glDeleteTextures( 1, &tex_zero );
+   glDeleteTextures( 1, &tex_ones );
 }
