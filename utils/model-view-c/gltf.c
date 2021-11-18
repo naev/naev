@@ -85,21 +85,21 @@ struct Object_ {
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
 };
 
-static GLuint object_loadTexture( const cgltf_texture_view *ctex )
+static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
    GLuint tex;
    SDL_Surface *surface;
 
    /* Must haev texture to load it. */
    if ((ctex==NULL) || (ctex->texture==NULL))
-      return 0;
+      return def;
 
    glGenTextures( 1, &tex );
    glBindTexture( GL_TEXTURE_2D, tex );
 
    surface = IMG_Load( ctex->texture->image->uri );
    if (surface==NULL)
-      return 0;
+      return def;
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
@@ -132,8 +132,8 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
-      mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture );
-      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture );
+      mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture, tex_ones );
+      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
@@ -277,13 +277,9 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       glEnableVertexAttribArray( shd->vertex_tex0 );
    }
 
-   /* Texture. */
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
-
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 0.5;
+   const GLfloat sca = 0.2;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
@@ -296,6 +292,11 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+
+   /* Texture. */
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
+   glUniform1i( shd->baseColour_tex, 0 );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
