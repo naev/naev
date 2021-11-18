@@ -256,7 +256,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* TODO put everything in a single VBO */
    glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
-   glVertexAttribPointer( shd->vertex, 4, GL_FLOAT, GL_FALSE, 0, NULL );
+   glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, NULL );
    glEnableVertexAttribArray( shd->vertex );
    if (mesh->vbo_nor) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_nor );
@@ -275,7 +275,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 1.0;
+   const GLfloat sca = 0.1;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,

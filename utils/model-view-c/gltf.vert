@@ -1,7 +1,7 @@
 uniform mat4 projection;
 uniform mat4 model;
 
-in vec4 vertex;
+in vec3 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex0;
 out vec2 tex_coord0;
@@ -20,9 +20,11 @@ const mat4 view = mat4(
       0.0,             0.0,              0.0, 1.0 );
 
 void main(void) {
+   //vec4 pos    = view * model * vec4( vertex, 1.0 );
+   vec4 pos    = model * vec4( vertex, 1.0 );
    tex_coord0  = vec2(vertex_tex0.x, -vertex_tex0.y);
    normal      = mat3(model) * vertex_normal;
-   position    = (view * model * vertex).xyz;
-   gl_Position = projection * view * model * vertex;
-   gl_Position = vertex;
+   position    = pos.xyz;
+   gl_Position = projection * pos;
+   gl_Position = vec4( vertex, 1.0 );
 }
