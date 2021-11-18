@@ -114,25 +114,7 @@ stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
    "standing",                          -- C functions: faction_{modPlayerLua,isPlayerFriend,getStandingBroad,getStandingText}()
 }}
-stds.API_land = {globals={
-   "land",                              -- C function: planet_updateLand() -- and the rest come from XML files!
-   "dv_mil_command",
-   "dv_mil_restricted",
-   "emp_mil_omega",
-   "emp_mil_restricted",
-   "emp_mil_wrath",
-   "land_hiclass",
-   "land_lowclass",
-   "pir_clanworld",
-   "ptn_mil_restricted",
-   "srm_mil_kataka",
-   "srm_mil_restricted",
-   "srs_mil_mutris",
-   "srs_mil_restricted",
-   "thr_mil_restricted",
-   "zlk_mil_restricted",
-   "zlk_ruadan",
-}}
+stds.API_land = {globals={"land"}}      -- C function: planet_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_save_updater = {globals={"outfit"}}    -- C function: player_tryGetOutfit
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI

@@ -37,17 +37,20 @@ function land( pnt )
    return land_civilian(pnt, 0, -30)
 end
 
--- Low-class landing function. Low class planets let you land and bribe at much lower standings.
+-- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
+-- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
+
+-- luacheck: globals land_lowclass (Low-class landing function. Low class planets let you land and bribe at much lower standings.)
 function land_lowclass( pnt )
    return land_civilian(pnt, -20, -80)
 end
 
--- High class landing function. High class planets can't be bribed.
+-- luacheck: globals land_hiclass (High class landing function. High class planets can't be bribed.)
 function land_hiclass( pnt )
    return land_civilian(pnt, 0, 0)
 end
 
--- Empire military assets.
+-- luacheck: globals emp_mil_restricted (Empire military assets.)
 function emp_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -56,7 +59,7 @@ function emp_mil_restricted( pnt )
          _("\"Don't attempt to bribe an Empire official, pilot.\""))
 end
 
--- Empire Omega Station.
+-- luacheck: globals emp_mil_omega (Empire Omega Station.)
 function emp_mil_omega( pnt )
    local required = 50
 
@@ -71,7 +74,7 @@ function emp_mil_omega( pnt )
          _("\"Don't attempt to bribe an Empire official, pilot.\""))
 end
 
--- Empire Emperor's Wrath.
+-- luacheck: globals emp_mil_wrath (Empire Emperor's Wrath.)
 function emp_mil_wrath( pnt )
    return land_military(pnt, 90,
          _("The Emperor permits you to land."),
@@ -80,7 +83,7 @@ function emp_mil_wrath( pnt )
          _("\"Don't attempt to bribe an Empire official, pilot.\""))
 end
 
--- Sirius military assets.
+-- luacheck: globals srs_mil_restricted (Sirius military assets.)
 function srs_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -89,7 +92,7 @@ function srs_mil_restricted( pnt )
          _("\"The faithful will never be swayed by money.\""))
 end
 
--- Sirius Mutris.
+-- luacheck: globals srs_mil_mutris (Sirius Mutris.)
 function srs_mil_mutris( pnt )
    return land_military(pnt, 70,
          _("Welcome to Mutris, home of Sirichana."),
@@ -98,7 +101,7 @@ function srs_mil_mutris( pnt )
          _("\"The faithful will never be swayed by money.\""))
 end
 
--- Dvaered military assets.
+-- luacheck: globals dv_mil_restricted (Dvaered military assets.)
 function dv_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -107,7 +110,7 @@ function dv_mil_restricted( pnt )
          _("\"Money won't buy you access to our restricted facilities, citizen.\""))
 end
 
--- Dvaered High Command.
+-- luacheck: globals dv_mil_command (Dvaered High Command.)
 function dv_mil_command( pnt )
    return land_military(pnt, 70,
          _("Permission to land granted, captain."),
@@ -116,7 +119,7 @@ function dv_mil_command( pnt )
          _("\"Money won't buy you access to our restricted facilities, citizen.\""))
 end
 
--- Soromid military assets.
+-- luacheck: globals srm_mil_restricted (Soromid military assets.)
 function srm_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -125,7 +128,7 @@ function srm_mil_restricted( pnt )
          _("\"We don't need your money, outsider.\""))
 end
 
--- Soromid Kataka.
+-- luacheck: globals srm_mil_kataka (Soromid Kataka.)
 function srm_mil_kataka( pnt )
    return land_military(pnt, 75,
          _("Permission to land granted."),
@@ -134,7 +137,7 @@ function srm_mil_kataka( pnt )
          _("\"We don't need your money, outsider.\""))
 end
 
--- Za'lek's military assets.
+-- luacheck: globals zlk_mil_restricted (Za'lek's military assets.)
 function zlk_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Docking sequence transmitted."),
@@ -143,12 +146,12 @@ function zlk_mil_restricted( pnt )
          _("Money is irrelevant."))
 end
 
--- Za'lek's military center.
+-- luacheck: globals zlk_ruadan (Za'lek's military center.)
 function zlk_ruadan( _pnt )
    return false, "Permission denied. Ruadan space is off-limits to you."
 end
 
--- Proteron military assets.
+-- luacheck: globals ptn_mil_restricted (Proteron military assets.)
 function ptn_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -157,7 +160,7 @@ function ptn_mil_restricted( pnt )
          _("We Proteron don't take kindly to bribery."))
 end
 
--- Thurion military assets.
+-- luacheck: globals thr_mil_restricted (Thurion military assets.)
 function thr_mil_restricted( pnt )
    return land_military(pnt, 50,
          fmt.f(_("Welcome, friend {player}. You may dock when ready."), {player=player.name()}),
@@ -166,7 +169,7 @@ function thr_mil_restricted( pnt )
          _("We have no need for your credits."))
 end
 
--- Pirate clanworld.
+-- luacheck: globals pir_clanworld (Pirate clanworld.)
 function pir_clanworld( pnt )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
