@@ -22,11 +22,8 @@
    Defend ships bringing volunteers from the PUAAA
 --]]
 local vn = require "vn"
-local vntk = require "vntk"
 local fmt = require "format"
 local ant = require "common.antlejos"
-local lmisn = require "lmisn"
-local fleet = require "fleet"
 
 local reward = ant.rewards.ant05
 
@@ -95,8 +92,6 @@ end
 -- Land hook.
 function land ()
    if mem.state==2 and planet.cur() == mainpnt then
-      local rewardmod = 1
-
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
@@ -142,7 +137,7 @@ local function add_protestor( shipname, fromrear )
 end
 
 local function add_supplyship( shipname )
-   local ent = (fromrear and rearpoint) or entrypoint
+   local ent = entrypoint
    local p = pilot.add( shipname, fsup, ent, _("Supply Ship"), {ai="independent"} )
    p:setFriendly()
    p:setVisplayer(true)
@@ -257,7 +252,7 @@ function protestor4 ()
 end
 
 local protest_lines = ant.protest_lines
-local protest_id, attacked
+local protest_id
 function protest ()
    if protest_id == nil then
       protest_id = rnd.rnd(1,#protest_lines)
