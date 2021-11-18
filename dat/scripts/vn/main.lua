@@ -1,5 +1,7 @@
 local vn    = require 'vn.core'
 
+-- luacheck: globals love (vn overrides parts of love2d.)
+
 function love.keypressed( key )
    vn.keypressed( key )
 end

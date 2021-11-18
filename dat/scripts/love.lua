@@ -10,6 +10,9 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
+
+-- luacheck: globals love (We are *implementing* the love2d API.)
+
 love = {
    _basepath = "",
    _version_major = 11,
