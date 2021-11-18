@@ -290,7 +290,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
@@ -454,6 +454,20 @@ int object_init (void)
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
    Shader *shd = &object_shader;
 
+   /* Load textures. */
+   glGenTextures( 1, &tex_zero );
+   glBindTexture( GL_TEXTURE_2D, tex_zero );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_zero );
+   glGenTextures( 1, &tex_ones );
+   glBindTexture( GL_TEXTURE_2D, tex_ones );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
+   glBindTexture( GL_TEXTURE_2D, 0 );
+   gl_checkErr();
+
+   /* Set up default material. */
+   object_loadMaterial( &material_default, NULL );
+
+   /* Compile the shader. */
    shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
    if (shd->program==0)
       return -1;
@@ -464,8 +478,8 @@ int object_init (void)
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
-   shd->Hprojection     = glGetUniformLocation( shd->program, "projection ");
-   shd->Hmodel          = glGetUniformLocation( shd->program, "model ");
+   shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "model");
    /* Fragment uniforms. */
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
@@ -474,18 +488,23 @@ int object_init (void)
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );
    shd->clearcoat       = glGetUniformLocation( shd->program, "clearcoat" );
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
+   glUseProgram(0);
    gl_checkErr();
 
-   glGenTextures( 1, &tex_zero );
-   glBindTexture( GL_TEXTURE_2D, tex_zero );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_zero );
-   glGenTextures( 1, &tex_ones );
-   glBindTexture( GL_TEXTURE_2D, tex_ones );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
-   glBindTexture( GL_TEXTURE_2D, 0 );
-   gl_checkErr();
-
-   object_loadMaterial( &material_default, NULL );
+#if 0
+   GLint count;
+   glGetProgramiv( shd->program, GL_ACTIVE_UNIFORMS, &count );
+   DEBUG("Active Uniforms: %d", count);
+   for (GLint i=0; i < count; i++) {
+      GLint size; // size of the variable
+      GLenum type; // type of the variable (float, vec3 or mat4, etc)
+      const GLsizei bufSize = 16; // maximum name length
+      GLchar name[bufSize]; // variable name in GLSL
+      GLsizei length; // name length
+      glGetActiveUniform(shd->program, i, bufSize, &length, &size, &type, name);
+      DEBUG("Uniform #%d Type: %u Name: %s", i, type, name);
+   }
+#endif
 
    return 0;
 }
