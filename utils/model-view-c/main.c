@@ -28,7 +28,8 @@ int main( int argc, char *argv[] )
 
    object_init();
 
-   Object *obj = object_loadFromFile( "simple.gltf" );
+   Object *obj = object_loadFromFile( "minimal.gltf" );
+   //Object *obj = object_loadFromFile( "simple.gltf" );
    //Object *obj = object_loadFromFile( "admonisher.gltf" );
    gl_checkErr();
 
@@ -51,6 +52,7 @@ int main( int argc, char *argv[] )
             }
          }
       }
+      glClearColor( 0.2, 0.2, 0.2, 1.0 );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       object_render( obj );

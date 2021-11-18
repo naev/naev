@@ -24,4 +24,5 @@ void main(void) {
    normal      = mat3(model) * vertex_normal;
    position    = (view * model * vertex).xyz;
    gl_Position = projection * view * model * vertex;
+   gl_Position = vertex;
 }

@@ -275,7 +275,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 0.1;
+   const GLfloat sca = 1.0;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
