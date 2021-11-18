@@ -17,7 +17,6 @@ _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 _fstanding_friendly = 40
-_fstanding_neutral = 0
 
 _ftext_standing = {
    [95] = _("Clan Legend"),

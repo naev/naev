@@ -20,7 +20,6 @@ _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 _fstanding_friendly = 70
-_fstanding_neutral = 0
 
 _ftext_standing = {
    [100] = _("Legend"),
@@ -225,7 +224,7 @@ end
       @return true if the player is an enemy, false otherwise.
 --]]
 function faction_player_enemy( standing )
-   return standing < _fstanding_neutral
+   return standing < 0
 end
 
 

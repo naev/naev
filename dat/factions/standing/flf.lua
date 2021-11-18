@@ -9,7 +9,6 @@ _fcap_misn_var = "_fcap_flf"
 _fthis         = faction.get("FLF")
 
 _fstanding_friendly = 30
-_fstanding_neutral = 0
 
 
 function faction_hit( current, amount, source, secondary )
