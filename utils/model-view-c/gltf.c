@@ -340,27 +340,31 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    gl_checkErr();
 }
 
-void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
+static void matmul( GLfloat H[16], const GLfloat R[16] )
 {
-   /* Multiply matrices, can be animated so not caching. */
-   /* TODO cache when not animated. */
-   const GLfloat *pm = node->H;
    for (int i=0; i<4; i++) {
       float l0 = H[i * 4 + 0];
       float l1 = H[i * 4 + 1];
       float l2 = H[i * 4 + 2];
 
-      float r0 = l0 * pm[0] + l1 * pm[4] + l2 * pm[8];
-      float r1 = l0 * pm[1] + l1 * pm[5] + l2 * pm[9];
-      float r2 = l0 * pm[2] + l1 * pm[6] + l2 * pm[10];
+      float r0 = l0 * R[0] + l1 * R[4] + l2 * R[8];
+      float r1 = l0 * R[1] + l1 * R[5] + l2 * R[9];
+      float r2 = l0 * R[2] + l1 * R[6] + l2 * R[10];
 
       H[i * 4 + 0] = r0;
       H[i * 4 + 1] = r1;
       H[i * 4 + 2] = r2;
    }
-   H[12] += pm[12];
-   H[13] += pm[13];
-   H[14] += pm[14];
+   H[12] += R[12];
+   H[13] += R[13];
+   H[14] += R[14];
+}
+
+void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
+{
+   /* Multiply matrices, can be animated so not caching. */
+   /* TODO cache when not animated. */
+   matmul( H, node->H );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
@@ -373,14 +377,17 @@ void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
    gl_checkErr();
 }
 
-void object_render( const Object *obj )
+void object_render( const Object *obj, const GLfloat *H )
 {
-   GLfloat H[16] = { 1.0, 0.0, 0.0, 0.0,
-                     0.0, 1.0, 0.0, 0.0,
-                     0.0, 0.0, 1.0, 0.0,
-                     0.0, 0.0, 0.0, 1.0 };
+   GLfloat Ho[16] = { 1.0, 0.0, 0.0, 0.0,
+                      0.0, 1.0, 0.0, 0.0,
+                      0.0, 0.0, 1.0, 0.0,
+                      0.0, 0.0, 0.0, 1.0 };
+   if (H!=NULL)
+      matmul( Ho, H );
+
    for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNode( obj, &obj->nodes[i], H );
+      object_renderNode( obj, &obj->nodes[i], Ho );
 }
 
 Object *object_loadFromFile( const char *filename )

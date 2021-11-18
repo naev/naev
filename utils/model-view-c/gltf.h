@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "glad.h"
+
 struct Object_;
 typedef struct Object_ Object;
 
@@ -12,4 +14,4 @@ void object_exit (void);
 Object *object_loadFromFile( const char *filename );
 void object_free( Object *obj );
 
-void object_render( const Object *obj );
+void object_render( const Object *obj, const GLfloat *H );
