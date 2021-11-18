@@ -1,7 +1,7 @@
 -- Marauder faction standing script
 require "factions.standing.lib.pirate"
 
-standing = sbase.newStanding{
+standing = spir.newPirateStanding{
    fct            = faction.get("Marauder"),
    friendly_at    = 101, -- Can't get friendly
    text = {
