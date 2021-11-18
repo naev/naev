@@ -3,6 +3,8 @@
 --Think functions for determining who to attack are found in another file
 --]]
 
+local __atk_d_flyby, __atk_d_space_sup, __atk_drone_ranged -- Forward-declared functions
+
 -- Initializes the drone
 function atk_drone_init ()
    mem.atk_think  = atk_drone_think

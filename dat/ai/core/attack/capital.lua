@@ -1,3 +1,5 @@
+local __atk_g_capital -- Forward-declared functions
+
 function atk_capital_init ()
    mem.atk_think  = atk_heuristic_big_game_think
    mem.atk        = atk_capital

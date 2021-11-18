@@ -2,6 +2,7 @@
 --    Generic attack functions
 --]]
 
+local __atk_g_approach, __atk_g_melee -- Forward-declared functions
 
 --[[
 -- Required initialization function
@@ -96,7 +97,7 @@ function atk_generic( target, dokill )
 end
 
 
-function ___atk_g_ranged_dogfight( target, dist )
+local function ___atk_g_ranged_dogfight( target, dist )
    local dir
    if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
       dir = ai.face(target) -- Normal face the target
@@ -125,7 +126,7 @@ function ___atk_g_ranged_dogfight( target, dist )
       ai.shoot()
    end
 end
-function ___atk_g_ranged_strafe( target, dist )
+local function ___atk_g_ranged_strafe( target, dist )
 --[[ The pilot tries first to place himself at range and at constant velocity.
       When he is stabilized, he starts shooting until he has to correct his trajectory again
 
@@ -190,7 +191,7 @@ function ___atk_g_ranged_strafe( target, dist )
       ai.settimer(1, mod/p:stats().speed*0.7 )
    end
 end
-function ___atk_g_ranged_kite( target, dist )
+local function ___atk_g_ranged_kite( target, dist )
    local p = ai.pilot()
 
    -- Estimate the range
