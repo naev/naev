@@ -1,4 +1,3 @@
-local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret, moveto_raw -- Forward-declared functions
 --[[
 -- Basic tasks for a pilot, no need to reinvent the wheel with these.
 --
@@ -18,6 +17,8 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 --]]
 
 local fmt = require "format"
+
+local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret -- Forward-declared functions
 
 --[[
 -- Helper function that checks to see if a value is in a table
