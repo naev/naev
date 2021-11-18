@@ -271,7 +271,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
 {
    const Material *mat;
-   Shader *shd = &object_shader;
+   const Shader *shd = &object_shader;
 
    if (mesh->material < 0)
       mat = &material_default;
