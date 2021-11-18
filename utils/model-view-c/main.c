@@ -117,8 +117,8 @@ int main( int argc, char *argv[] )
           s,  0.0,  c,  0.0,
          0.0, 0.0, 0.0, 1.0
       };
-      matmul( Hx, Hy );
-      object_render( obj, Hx );
+      matmul( Hy, Hx );
+      object_render( obj, Hy );
 
       SDL_GL_SwapWindow( win );
 
