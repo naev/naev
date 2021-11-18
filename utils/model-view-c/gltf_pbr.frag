@@ -155,13 +155,14 @@ void main (void)
 
    /* Get the crew ready. */
    /* Point light for now. */
-   const vec3 lp  = vec3(3.0, 0.0, -3.0);
+   const vec3 lp  = vec3(10.0, 5.0, 1.0);
    const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
    vec3 p   = position;
-   vec3 l   = normalize(lp-p);
+   vec3 pl  = lp-p;
+   vec3 l   = normalize(pl);
    float NoL = max(0.0,dot(n,l));
 
-   vec3 colour = shade( mat, v, n, l, NoL ) * 100.0;
+   vec3 colour = shade( mat, v, n, l, NoL ) * length(pl);
 
    colour_out = vec4(colour * NoL, 1.0);
    //colour_out.rgb *= mat.albedo;

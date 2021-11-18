@@ -64,7 +64,7 @@ int main( int argc, char *argv[] )
 
    int quit = 0;
    float rotx = 0.;
-   float roty = 0.;
+   float roty = M_PI_2;
    const double dt = 1.0/60.0;
    while (!quit) {
       SDL_Event event;

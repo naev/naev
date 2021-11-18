@@ -158,8 +158,8 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    }
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
-      mat->metallicFactor  = 0.;
-      mat->roughnessFactor = 0.;
+      mat->metallicFactor  = 1.;
+      mat->roughnessFactor = 1.;
       mat->baseColour_tex  = tex_ones;
       mat->metallic_tex    = tex_ones;
    }
