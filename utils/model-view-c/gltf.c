@@ -467,7 +467,6 @@ int object_init (void)
    glBindTexture( GL_TEXTURE_2D, tex_ones );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
    glBindTexture( GL_TEXTURE_2D, 0 );
-
    gl_checkErr();
    return 0;
 }
