@@ -92,7 +92,7 @@ end
       @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
       @return The faction amount to set to.
 --]]
-function default_hit( current, amount, source, secondary )
+function faction_hit( current, amount, source, secondary )
    -- Comfort macro
    local f = current
    local delta = {-200, 200}

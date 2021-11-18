@@ -33,6 +33,7 @@ _ftext_neutral  = _("Neutral")
 _ftext_hostile  = _("Hostile")
 _ftext_bribed   = _("Paid Off")
 
+local default_hit = faction_hit
 function faction_hit( current, amount, source, secondary )
    local standing = math.max( -50, default_hit( current, amount, source, secondary ) )
 

@@ -1,9 +1,8 @@
+-- Marauder faction standing script
 require "factions.standing.lib.pirate"
 
 _fthis         = faction.get("Marauder")
-
 _fstanding_friendly = 101 -- Can't get friendly
-
 _ftext_standing = {
    [0]  = _("Ignored"),
    [-1] = _("Potential Victim"),
