@@ -541,7 +541,7 @@ function vn.State:isDone() return self.done end
 -- Scene
 --]]
 vn.StateScene ={}
-function vn.StateScene.new( background )
+function vn.StateScene.new()
    local s = vn.State.new()
    s._init = vn.StateScene._init
    s._type = "Scene"
@@ -1276,11 +1276,10 @@ end
 
 --[[--
 Starts a new scene.
-   @param background Background image to set or none if nil.
 --]]
-function vn.scene( background )
+function vn.scene()
    vn._checkstarted()
-   table.insert( vn._states, vn.StateScene.new( background ) )
+   table.insert( vn._states, vn.StateScene.new() )
 end
 
 --[[--
