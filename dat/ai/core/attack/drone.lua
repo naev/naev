@@ -103,6 +103,34 @@ end
 
 
 --[[
+-- Approaches the target evasively, never heading in a straight line
+-- This will tend to approach a target along a loose spiral, good for evading capship guns
+-- HISTORICAL NOTE: was removed in commit 5b3d7e12f "suppress useless stuff", which may or may not have been fair.
+--]]
+local function atk_spiral_approach( target, _dist )
+   local dir  = ai.idir(target)
+   local adir = math.abs(dir)
+
+   --these two detect in-cone approach vectors
+   if adir > math.rad(10) and adir < math.rad(30) then
+      ai.accel()
+   end
+
+   --facing away from the target, turn to face
+   if adir > math.rad(30) then
+      ai.iface(target)
+   end
+
+   --aiming right at the target; turn away
+   if dir > 0 and dir < math.rad(10) then
+      ai.turn(1)
+   elseif dir < 0 and dir > -math.rad(10) then
+      ai.turn(-1)
+   end
+end -- end spiral approach
+
+
+--[[
 -- Execute a sequence of close-in flyby attacks
 -- Uses a combination of facing and distance to determine what action to take
 -- This version is slightly less aggressive and cruises by the target
