@@ -1221,7 +1221,7 @@ Makes a character appear in the VN.
 --]]
 function vn.appear( c, name, seconds, transition )
    local shader
-   shader, seconds, transition = transitions.get( name, seconds, transition )
+   shader, seconds = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
@@ -1257,7 +1257,7 @@ The way it works is that the transition is played backwards, so if you want the 
 --]]
 function vn.disappear( c, name, seconds, transition )
    local shader
-   shader, seconds, transition = transitions.get( name, seconds, transition )
+   shader, seconds = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
