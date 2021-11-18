@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-17 22:21-0500\n"
+"POT-Creation-Date: 2021-11-18 12:12-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -28546,6 +28546,11 @@ msgstr ""
 #. Add pilot as spawned
 #. @brief adds a pilot to the table
 #. @brief Gets the presence value of a group of pilots
+#. @brief Spawns a small patrol fleet.
+#. @brief Spawns a medium sized squadron.
+#. @brief Spawns a capship with escorts.
+#. Generate the capship
+#. Generate the escorts
 #. @brief Creation hook.
 #. Create weights for spawn table
 #. fleetPirate = {}
@@ -28569,8 +28574,8 @@ msgstr ""
 #. The Goddard
 #. Faction's ships come with upgraded weaponry
 #. Spawn pirates
-#: dat/events/neutral/derelict.lua:313 dat/factions/spawn/marauder.lua:14
-#: dat/factions/spawn/pirate.lua:14 dat/missions/flf/dvk/flf_dvk02.lua:212
+#: dat/events/neutral/derelict.lua:313 dat/factions/spawn/lib/pirate.lua:15
+#: dat/factions/spawn/marauder.lua:14 dat/missions/flf/dvk/flf_dvk02.lua:212
 #: dat/missions/flf/dvk/flf_dvk03.lua:211
 #: dat/missions/flf/dvk/flf_dvk06.lua:194 dat/missions/flf/flf_pirates.lua:243
 #: dat/missions/neutral/dts_02.lua:212
@@ -30928,9 +30933,8 @@ msgstr ""
 msgid "Ship Quiz"
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:286 dat/factions/standing/lib/base.lua:31
-#: dat/factions/standing/lib/base.lua:38
-#: dat/factions/standing/lib/pirate.lua:32 dat/scripts/common/antlejos.lua:29
+#: dat/events/neutral/shiplover.lua:286 dat/factions/standing/lib/base.lua:40
+#: dat/factions/standing/lib/base.lua:49 dat/scripts/common/antlejos.lua:29
 #: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
 msgid "Neutral"
@@ -33163,21 +33167,13 @@ msgstr ""
 msgid "Miner Rhino"
 msgstr ""
 
-#. @brief Spawns a small patrol fleet.
-#. @brief Spawns a medium sized squadron.
-#. @brief Spawns a capship with escorts.
-#. Generate the capship
-#. Generate the escorts
 #. @brief Creation hook.
 #. Create weights for spawn table
-#. @brief Creation hook.
-#. Create weights for spawn table
-#. @brief Creation hook.
-#. Create weights for spawn table
-#. @brief Creation hook.
-#. Create weights for spawn table
-#. @brief Creation hook.
-#. Create weights for spawn table
+#. @brief Creation hook. (May be fine-tuned by reusing only spir.spawn_* and writing a custom create().)
+#. @brief Creation hook. (May be fine-tuned by reusing only spir.spawn_* and writing a custom create().)
+#. @brief Creation hook. (May be fine-tuned by reusing only spir.spawn_* and writing a custom create().)
+#. @brief Creation hook. (May be fine-tuned by reusing only spir.spawn_* and writing a custom create().)
+#. @brief Creation hook. (May be fine-tuned by reusing only spir.spawn_* and writing a custom create().)
 #. @brief Spawns a small patrol fleet.
 #. @brief Spawns a medium sized squadron.
 #. @brief Spawns a capship with escorts.
@@ -33273,35 +33269,23 @@ msgstr ""
 #. @brief Creation hook.
 #. Create weights for spawn table
 #. Collective faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Dvaered faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Empire faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. FLF faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Frontier faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Goddard faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #.
 #. Simple skeleton for your standard faction. This is more or less what the
 #. standard behaviour can be, but from here you can let your imagination go
@@ -33320,70 +33304,69 @@ msgstr ""
 #. Kills of the faction's allies
 #. Missions done for the faction's enemies
 #. Missions done for the faction's allies
-#: dat/factions/standing/lib/base.lua:25 src/info.c:779
+#. Standing value threshold between neutral and friendly.
+#: dat/factions/standing/lib/base.lua:34 src/info.c:779
 msgid "Legend"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:26
+#: dat/factions/standing/lib/base.lua:35
 msgid "Hero"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:27
+#: dat/factions/standing/lib/base.lua:36
 msgid "Comrade"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:28
+#: dat/factions/standing/lib/base.lua:37
 msgid "Ally"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:29
+#: dat/factions/standing/lib/base.lua:38
 msgid "Partner"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:30
+#: dat/factions/standing/lib/base.lua:39
 msgid "Associate"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:32 dat/scripts/pilotname/pirate.lua:399
+#: dat/factions/standing/lib/base.lua:41 dat/scripts/pilotname/pirate.lua:399
 msgid "Outlaw"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:33
+#: dat/factions/standing/lib/base.lua:42
 msgid "Criminal"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:34
+#: dat/factions/standing/lib/base.lua:43
 msgid "Enemy"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:37
-#: dat/factions/standing/lib/pirate.lua:31
+#: dat/factions/standing/lib/base.lua:48
 msgid "Friendly"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:39
-#: dat/factions/standing/lib/pirate.lua:33
+#: dat/factions/standing/lib/base.lua:50
 msgid "Hostile"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:40
+#: dat/factions/standing/lib/base.lua:51
 msgid "Bribed"
 msgstr ""
 
 #.
-#. @brief Clamps a value x between low and high.
+#. Clamps a value x between low and high.
 #. --
 #.
-#. @brief Linearly interpolates x between x1,y1 and x2,y2
+#. Linearly interpolates x between x1,y1 and x2,y2
 #. --
 #.
-#. @brief Same as lerp but clamps to [0,1].
+#. Same as lerp but clamps to [0,1].
 #. --
 #.
-#. @brief Duplicates a table to avoid clobbering.
+#. Duplicates a table to avoid clobbering.
 #. --
 #.
-#. @brief Handles a faction hit for a faction.
+#. Handles a faction hit for a faction.
 #.
 #. Possible sources:
 #. - "kill" : Pilot death.
@@ -33412,91 +33395,78 @@ msgstr ""
 #. Faction loss.
 #. No diminishing returns on loss.
 #.
-#. @brief Returns a text representation of the player's standing.
+#. Returns a text representation of the player's standing.
 #.
-#. @param standing Current standing of the player.
+#. @param value Current standing value of the player.
 #. @return The text representation of the current standing.
 #. --
 #.
-#. @brief Returns whether or not the player is a friend of the faction.
+#. Returns a text representation of the player's broad standing.
 #.
-#. @param standing Current standing of the player.
-#. @return true if the player is a friend, false otherwise.
-#. --
-#.
-#. @brief Returns a text representation of the player's broad standing.
-#.
-#. @param standing Current standing of the player.
+#. @param value Current standing value of the player.
 #. @param bribed Whether or not the respective pilot is bribed.
 #. @param override If positive it should be set to ally, if negative it should be set to hostile.
 #. @return The text representation of the current broad standing.
 #. --
 #. Kill cap
 #. Maximum change constraints
-#. Maximum change constraints
-#. Starting mission cap, gets overwritten
-#. _fthis         = faction.get("Pirate") -- Should be set seperately
 #. Secondary hit modifiers.
 #. Distress of the faction's enemies
 #. Distress of the faction's allies
 #. Kills of the faction's enemies
 #. Kills of the faction's allies
-#. Missions done for the faction's enemies
-#. Missions done for the faction's allies
-#: dat/factions/standing/lib/pirate.lua:22
+#. Standing value threshold between neutral and friendly.
+#: dat/factions/standing/lib/pirate.lua:26
 msgid "Clan Legend"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:23
+#: dat/factions/standing/lib/pirate.lua:27
 msgid "Clan Lord"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:24
+#: dat/factions/standing/lib/pirate.lua:28
 msgid "Clan Warrior"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:25
+#: dat/factions/standing/lib/pirate.lua:29
 msgid "Clan Plunderer"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:26
+#: dat/factions/standing/lib/pirate.lua:30
 msgid "Clan Thug"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:27 dat/factions/standing/pirate.lua:8
+#: dat/factions/standing/lib/pirate.lua:31 dat/factions/standing/pirate.lua:8
 msgid "Common Thief"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:28 dat/factions/standing/pirate.lua:9
+#: dat/factions/standing/lib/pirate.lua:32 dat/factions/standing/pirate.lua:9
 msgid "Normie"
 msgstr ""
 
-#: dat/factions/standing/lib/pirate.lua:34
+#: dat/factions/standing/lib/pirate.lua:37
 msgid "Paid Off"
 msgstr ""
 
-#. Get the maximum player standing with any pirate clan
+#. Get the maximum player value with any pirate clan
 #. Only get first parameter
 #. Update pirate and marauder standings
 #. Set current faction standing
 #. Marauder faction standing script
 #. Can't get friendly
-#: dat/factions/standing/marauder.lua:7
+#: dat/factions/standing/marauder.lua:8
 msgid "Ignored"
 msgstr ""
 
-#: dat/factions/standing/marauder.lua:8
+#: dat/factions/standing/marauder.lua:9
 msgid "Potential Victim"
 msgstr ""
 
 #. Doesn't change through hits
 #. Nasin faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
-#. Mission variable to use for limits
-#. Modulation from secondary
+#. cap_mod_sec  = 0.3, -- Modulation from secondary (TODO: hasn't worked since 2012. Bring it back?)
 #. Pirate faction standing script
 #: dat/factions/standing/pirate.lua:7
 msgid "Respected"
@@ -33508,37 +33478,25 @@ msgstr ""
 #. Raven Clan faction standing script
 #. Wild Ones faction standing script
 #. Proteron faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Sirius faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Soromid faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Static standing script: used for temporary/dynamic factions.
+#. Doesn't change through hits
 #. Thurion faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
-#. Mission variable to use for limits
 #. Trader faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #. Za'lek faction standing script
-#. Kill cap
 #. Maximum change constraints
 #. Maximum change constraints
-#. Starting mission cap, gets overwritten
 #.
 #. The new "brushed" UI.
 #. --
@@ -46102,8 +46060,8 @@ msgstr ""
 msgid "Transport"
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:284 src/faction.c:318 src/faction.c:1063
-#: src/faction.c:1111
+#: dat/missions/minerva/kex1.lua:284 src/faction.c:319 src/faction.c:1037
+#: src/faction.c:1086
 msgid "Escort"
 msgstr ""
 
@@ -48282,8 +48240,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:75 dat/missions/minerva/maikki2.lua:100
-#: dat/missions/shadow/shadowvigil.lua:61 src/faction.c:1068 src/faction.c:1081
-#: src/faction.c:1087 src/faction.c:1116
+#: dat/missions/shadow/shadowvigil.lua:61 src/faction.c:1042 src/faction.c:1056
+#: src/faction.c:1062 src/faction.c:1091
 msgid "???"
 msgstr ""
 
@@ -72531,7 +72489,8 @@ msgstr ""
 #. """
 #.
 #. --
-#: dat/scripts/love.lua:31
+#. luacheck: globals love (We are *implementing* the love2d API.)
+#: dat/scripts/love.lua:34
 msgid "unimplemented"
 msgstr ""
 
@@ -72558,7 +72517,7 @@ msgstr ""
 #. Doesn't actually get here until the dialogue is closed
 #. Reset libraries that were potentially crushed
 #. Restore the package.path
-#: dat/scripts/love.lua:160 dat/scripts/love.lua:258
+#: dat/scripts/love.lua:163 dat/scripts/love.lua:261
 msgid "can only run one Love2D instance at a time!"
 msgstr ""
 
@@ -72566,12 +72525,12 @@ msgstr ""
 #. only add to path if not there, saves path pollution if crashing
 #. Allows loading files relatively
 #. Run conf if exists
-#: dat/scripts/love.lua:193
+#: dat/scripts/love.lua:196
 #, lua-format
 msgid "'%s' is an unknown filetype '%s'"
 msgstr ""
 
-#: dat/scripts/love.lua:201
+#: dat/scripts/love.lua:204
 #, lua-format
 msgid "'%s' is not a valid love2d game!"
 msgstr ""
@@ -72860,6 +72819,7 @@ msgstr ""
 #.
 #. -- Global functions
 #. --
+#. luacheck: ignore
 #.
 #. -- Important functions
 #. --
@@ -75906,6 +75866,7 @@ msgstr ""
 #. Build the tables
 #. Determine offset
 #. Compile shaders
+#. luacheck: globals love (vn overrides parts of love2d.)
 #. Transparent background in Naev
 #. Check to see if running standalone
 #. Small test
@@ -76529,7 +76490,7 @@ msgstr ""
 msgid "Trying to modify temporary commodity '%s'!"
 msgstr ""
 
-#: src/commodity.c:652 src/faction.c:1497 src/tech.c:105
+#: src/commodity.c:652 src/faction.c:1484 src/tech.c:105
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
@@ -78045,7 +78006,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/event.c:490 src/faction.c:1306 src/mission.c:1019 src/nxml.c:82
+#: src/event.c:490 src/faction.c:1282 src/mission.c:1019 src/nxml.c:82
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
@@ -78113,7 +78074,7 @@ msgstr ""
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
 
-#: src/faction.c:180 src/nlua_faction.c:171
+#: src/faction.c:181 src/nlua_faction.c:171
 #, c-format
 msgid "Faction '%s' not found in stack."
 msgstr ""
@@ -78123,78 +78084,71 @@ msgstr ""
 #. f is invalid
 #. o is invalid
 #. f is invalid
-#: src/faction.c:245 src/faction.c:294 src/faction.c:313 src/faction.c:336
-#: src/faction.c:353 src/faction.c:370 src/faction.c:387 src/faction.c:399
-#: src/faction.c:411 src/faction.c:426 src/faction.c:442 src/faction.c:458
-#: src/faction.c:488 src/faction.c:521 src/faction.c:544 src/faction.c:549
-#: src/faction.c:589 src/faction.c:614 src/faction.c:637 src/faction.c:642
-#: src/faction.c:682 src/faction.c:701 src/faction.c:713 src/faction.c:815
-#: src/faction.c:853 src/faction.c:876 src/faction.c:910 src/faction.c:943
-#: src/faction.c:959
+#: src/faction.c:246 src/faction.c:295 src/faction.c:314 src/faction.c:337
+#: src/faction.c:354 src/faction.c:371 src/faction.c:388 src/faction.c:400
+#: src/faction.c:412 src/faction.c:427 src/faction.c:443 src/faction.c:459
+#: src/faction.c:489 src/faction.c:522 src/faction.c:545 src/faction.c:550
+#: src/faction.c:590 src/faction.c:615 src/faction.c:638 src/faction.c:643
+#: src/faction.c:683 src/faction.c:702 src/faction.c:714 src/faction.c:817
+#: src/faction.c:855 src/faction.c:878 src/faction.c:912 src/faction.c:945
+#: src/faction.c:961
 #, c-format
 msgid "Faction id '%d' is invalid."
 msgstr ""
 
-#: src/faction.c:555 src/faction.c:559 src/faction.c:648 src/faction.c:652
+#: src/faction.c:556 src/faction.c:560 src/faction.c:649 src/faction.c:653
 #, c-format
 msgid "%d is the player faction"
 msgstr ""
 
 #. Call function.
 #. An error occurred.
-#: src/faction.c:764 src/faction.c:987 src/faction.c:1079 src/faction.c:1129
+#: src/faction.c:766 src/faction.c:1054 src/faction.c:1105
 #, c-format
 msgid "Faction '%s': %s"
 msgstr ""
 
-#: src/faction.c:771
+#: src/faction.c:773
 #, c-format
 msgid ""
-"Lua script for faction '%s' did not return a number from 'faction_hit(...)'."
+"Lua script for faction '%s' did not return a number from 'standing:hit(...)'."
 msgstr ""
 
-#: src/faction.c:994
+#: src/faction.c:1061
 #, c-format
 msgid ""
-"Lua script for faction '%s' did not return a boolean from "
-"'faction_player_friend(...)'."
+"Lua script for faction '%s' did not return a string from 'standing:"
+"text_rank(...)'."
 msgstr ""
 
-#: src/faction.c:1086
+#: src/faction.c:1112
 #, c-format
 msgid ""
-"Lua script for faction '%s' did not return a string from "
-"'faction_standing_text(...)'."
+"Lua script for faction '%s' did not return a string from 'standing:"
+"text_broad(...)'."
 msgstr ""
 
-#: src/faction.c:1136
-#, c-format
-msgid ""
-"Lua script for faction '%s' did not return a string from "
-"'faction_standing_broad(...)'."
-msgstr ""
-
-#: src/faction.c:1273
+#: src/faction.c:1249
 #, c-format
 msgid "Faction '%s' has duplicate 'logo' tag."
 msgstr ""
 
-#: src/faction.c:1300
+#: src/faction.c:1276
 #, c-format
 msgid "Unknown node '%s' in faction '%s'"
 msgstr ""
 
-#: src/faction.c:1308
+#: src/faction.c:1284
 #, c-format
 msgid "Faction '%s' missing 'player' tag."
 msgstr ""
 
-#: src/faction.c:1310
+#: src/faction.c:1286
 #, c-format
 msgid "Faction '%s' is known but missing 'description' tag."
 msgstr ""
 
-#: src/faction.c:1332
+#: src/faction.c:1308
 #, c-format
 msgid ""
 "Failed to run standing script: %s\n"
@@ -78202,17 +78156,22 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1393
+#: src/faction.c:1330
+#, c-format
+msgid "Standing script did not set the \"standing\" variable: %s"
+msgstr ""
+
+#: src/faction.c:1380
 #, c-format
 msgid "Faction '%s' has duplicate 'standing' tag."
 msgstr ""
 
-#: src/faction.c:1401
+#: src/faction.c:1388
 #, c-format
 msgid "Faction '%s' has duplicate 'spawn' tag."
 msgstr ""
 
-#: src/faction.c:1407
+#: src/faction.c:1394
 #, c-format
 msgid ""
 "Failed to run spawn script: %s\n"
@@ -78220,12 +78179,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1421
+#: src/faction.c:1408
 #, c-format
 msgid "Faction '%s' has duplicate 'equip' tag."
 msgstr ""
 
-#: src/faction.c:1427
+#: src/faction.c:1414
 #, c-format
 msgid ""
 "Failed to run equip script: %s\n"
@@ -78233,19 +78192,19 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1466
+#: src/faction.c:1453
 #, c-format
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1503 src/map.c:2681 src/outfit.c:1150 src/ship.c:525
+#: src/faction.c:1490 src/map.c:2681 src/outfit.c:1150 src/ship.c:525
 #: src/ship.c:1000 src/space.c:1765 src/space.c:1823 src/space.c:3415
 #: src/tech.c:112
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/faction.c:1578
+#: src/faction.c:1565
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
@@ -80859,7 +80818,7 @@ msgstr ""
 msgid "Unable to initialize SDL: %s"
 msgstr ""
 
-#: src/naev.c:218 src/opengl.c:422
+#: src/naev.c:218 src/opengl.c:421
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr ""
@@ -82044,7 +82003,7 @@ msgstr ""
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr ""
 
-#: src/opengl.c:386
+#: src/opengl.c:385
 msgid "Screen size too small, upscaling..."
 msgstr ""
 
