@@ -101,7 +101,7 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    if (surface==NULL)
       return def;
    SDL_LockSurface( surface );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
          surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
@@ -113,6 +113,9 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctex->texture->sampler->wrap_s);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctex->texture->sampler->wrap_t);
    }
+
+   /* Free the surface. */
+   SDL_FreeSurface( surface );
 
    glBindTexture( GL_TEXTURE_2D, 0 );
 
@@ -271,11 +274,13 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       glVertexAttribPointer( shd->vertex_normal, 3, GL_FLOAT, GL_FALSE, 0, NULL );
       glEnableVertexAttribArray( shd->vertex_normal );
    }
+   gl_checkErr();
    if (mesh->vbo_tex) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex );
       glVertexAttribPointer( shd->vertex_tex0, 2, GL_FLOAT, GL_FALSE, 0, NULL );
       glEnableVertexAttribArray( shd->vertex_tex0 );
    }
+   gl_checkErr();
 
    /* Set up shader. */
    glUseProgram( shd->program );
@@ -292,11 +297,13 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+   gl_checkErr();
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
    glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
    glUniform1i( shd->baseColour_tex, 0 );
+   gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
