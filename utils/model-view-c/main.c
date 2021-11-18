@@ -13,6 +13,7 @@ int main( int argc, char *argv[] )
 {
    (void) argc;
    (void) argv;
+   GLuint VaoId;
 
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
@@ -21,6 +22,9 @@ int main( int argc, char *argv[] )
    SDL_SetWindowTitle( win, "Naev Model Viewer" );
    SDL_GL_CreateContext( win );
    gladLoadGLLoader(SDL_GL_GetProcAddress);
+
+   glGenVertexArrays(1, &VaoId);
+   glBindVertexArray(VaoId);
 
    object_init();
 

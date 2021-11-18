@@ -242,16 +242,16 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* TODO put everything in a single VBO */
    glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
-   glVertexAttribPointer( shd->vertex, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+   glVertexAttribPointer( shd->vertex, 4, GL_FLOAT, GL_FALSE, 0, NULL );
    glEnableVertexAttribArray( shd->vertex );
    if (mesh->vbo_nor) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_nor );
-      glVertexAttribPointer( shd->vertex_normal, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+      glVertexAttribPointer( shd->vertex_normal, 3, GL_FLOAT, GL_FALSE, 0, NULL );
       glEnableVertexAttribArray( shd->vertex_normal );
    }
    if (mesh->vbo_tex) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex );
-      glVertexAttribPointer( shd->vertex_tex0, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+      glVertexAttribPointer( shd->vertex_tex0, 2, GL_FLOAT, GL_FALSE, 0, NULL );
       glEnableVertexAttribArray( shd->vertex_tex0 );
    }
 
