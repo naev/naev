@@ -218,17 +218,6 @@ end
 
 
 --[[
-   @brief Returns whether or not the player is an enemy of the faction.
-
-      @param standing Current standing of the player.
-      @return true if the player is an enemy, false otherwise.
---]]
-function faction_player_enemy( standing )
-   return standing < 0
-end
-
-
---[[
    @brief Returns a text representation of the player's broad standing.
 
       @param standing Current standing of the player.
@@ -243,7 +232,7 @@ function faction_standing_broad( standing, bribed, override )
       return _ftext_bribed
    elseif override > 0 or faction_player_friend( standing ) then
       return _ftext_friendly
-   elseif override < 0 or faction_player_enemy( standing ) then
+   elseif override < 0 or standing < 0 then
       return _ftext_hostile
    else
       return _ftext_neutral

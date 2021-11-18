@@ -113,7 +113,6 @@ stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
    "faction_hit",                       -- C function: faction_modPlayerLua()
-   "faction_player_enemy",              -- C function: faction_isPlayerEnemy()
    "faction_player_friend",             -- C function: faction_isPlayerFriend()
    "faction_standing_broad",            -- C function: faction_getStandingBroad()
    "faction_standing_text",             -- C function: faction_getStandingText()

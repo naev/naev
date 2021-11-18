@@ -79,7 +79,6 @@ typedef struct Faction_ {
    nlua_env env; /**< Faction specific environment. */
    int lua_hit;        /**< "faction_hit" */
    int lua_player_friend; /**< "faction_player_friend" */
-   int lua_player_enemy; /**< "faction_player_enemy" */
    int lua_standing_text; /**< "faction_standing_text" */
    int lua_standing_broad; /**< "faction_standing_broad" */
 
@@ -1013,34 +1012,7 @@ int faction_isPlayerEnemy( int f )
 {
    Faction *faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
-      return 0;
-   else {
-      int r;
-      /* Set up the function:
-       * faction_player_enemy( standing ) */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_player_enemy );
-      lua_pushnumber( naevL, faction->player );
-
-      /* Call function. */
-      if (nlua_pcall( faction->env, 1, 1 )) {
-         /* An error occurred. */
-         WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
-         return 0;
-      }
-
-      /* Parse return. */
-      if (!lua_isboolean( naevL, -1 )) {
-         WARN( _("Lua script for faction '%s' did not return a boolean from 'faction_player_enemy(...)'."), faction->name );
-         r = 0;
-      }
-      else
-         r = lua_toboolean( naevL, -1 );
-      lua_pop( naevL, 1 );
-
-      return r;
-   }
+   return faction->player < 0;
 }
 
 /**
@@ -1369,7 +1341,6 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
    /* Set up the references. */
    temp->lua_hit           = nlua_refenvtype( temp->env, "faction_hit",           LUA_TFUNCTION );
    temp->lua_player_friend = nlua_refenvtype( temp->env, "faction_player_friend", LUA_TFUNCTION );
-   temp->lua_player_enemy  = nlua_refenvtype( temp->env, "faction_player_enemy",  LUA_TFUNCTION );
    temp->lua_standing_text = nlua_refenvtype( temp->env, "faction_standing_text", LUA_TFUNCTION );
    temp->lua_standing_broad= nlua_refenvtype( temp->env, "faction_standing_broad",LUA_TFUNCTION );
 }
