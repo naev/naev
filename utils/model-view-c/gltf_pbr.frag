@@ -144,7 +144,8 @@ void main(void) {
 
    /* Material values. */
    Material mat;
-   mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   //mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   mat.albedo        = baseColour.rgb;// * texture(baseColour_tex, tex_coord0).rgb;
    mat.roughness     = roughnessFactor;
    mat.metallic      = metallicFactor;
    mat.F0            = vec3(0.56); /* Iron. */

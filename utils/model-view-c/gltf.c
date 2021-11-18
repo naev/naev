@@ -98,8 +98,10 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    glBindTexture( GL_TEXTURE_2D, tex );
 
    surface = IMG_Load( ctex->texture->image->uri );
-   if (surface==NULL)
+   if (surface==NULL) {
+      WARN("Unable to load surface '%s'!", ctex->texture->image->uri);
       return def;
+   }
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
@@ -132,10 +134,13 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
    if (cmat && cmat->has_pbr_metallic_roughness) {
-      memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
       mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture, tex_ones );
+      if (mat->baseColour_tex == tex_ones)
+         memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
+      else
+         memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
       mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
    }
    else {
