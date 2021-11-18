@@ -30,6 +30,8 @@ typedef struct Shader_ {
    GLuint clearcoat_roughness;
 } Shader;
 static Shader object_shader;
+static GLuint tex_zero = -1;
+static GLuint tex_ones = -1;
 
 typedef struct Material_ {
    char *name;       /**< Name of the material if applicable. */
@@ -52,7 +54,7 @@ typedef struct Material_ {
    GLuint occlusion_tex;
    GLuint emissive_tex;
    GLfloat emissiveFactor[3];
-   GLuint tex0;
+   //GLuint tex0;
 } Material;
 
 typedef struct Mesh_ {
@@ -123,6 +125,7 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex )
  */
 static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 {
+   const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
    if (cmat->has_pbr_metallic_roughness) {
       memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
@@ -131,10 +134,21 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture );
       mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture );
    }
+   else {
+      memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
+      mat->metallicFactor  = 0.;
+      mat->roughnessFactor = 0.5;
+      mat->baseColour_tex  = tex_ones;
+      mat->metallic_tex    = tex_ones;
+   }
 
    if (cmat->has_clearcoat) {
       mat->clearcoat = cmat->clearcoat.clearcoat_factor;
       mat->clearcoat_roughness = cmat->clearcoat.clearcoat_roughness_factor;
+   }
+   else {
+      mat->clearcoat = 0.;
+      mat->clearcoat_roughness = 0.;
    }
    return 0;
 }
@@ -257,7 +271,8 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, mat->tex0 );
+   gl_checkErr();
+   glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
 
    /* Set up shader. */
    glUseProgram( shd->program );
@@ -276,6 +291,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
+   gl_checkErr();
 
    glUseProgram( 0 );
 
@@ -383,6 +399,8 @@ void object_free( Object *obj )
 
 int object_init (void)
 {
+   const GLubyte data_zero[4] = { 0, 0, 0, 0 };
+   const GLubyte data_ones[4] = { 255, 255, 255, 255 };
    object_shader.program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
    if (object_shader.program==0)
       return -1;
@@ -391,6 +409,16 @@ int object_init (void)
    object_shader.vertex_tex0   = glGetAttribLocation( object_shader.program, "vertex_tex0" );
    object_shader.Hprojection   = glGetUniformLocation( object_shader.program, "projection ");
    object_shader.Hmodel        = glGetUniformLocation( object_shader.program, "model ");
+   gl_checkErr();
+
+   glGenTextures( 1, &tex_zero );
+   glBindTexture( GL_TEXTURE_2D, tex_zero );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_zero );
+   glGenTextures( 1, &tex_ones );
+   glBindTexture( GL_TEXTURE_2D, tex_ones );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
    gl_checkErr();
    return 0;
 }
