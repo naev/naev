@@ -2336,6 +2336,7 @@ dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
 dat/factions/spawn/lib/common.lua
+dat/factions/spawn/lib/pirate.lua
 dat/factions/spawn/marauder.lua
 dat/factions/spawn/miner.lua
 dat/factions/spawn/pirate.lua
