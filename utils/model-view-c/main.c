@@ -4,6 +4,7 @@
 #include "common.h"
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "glad.h"
 
@@ -22,6 +23,8 @@ int main( int argc, char *argv[] )
    SDL_SetWindowTitle( win, "Naev Model Viewer" );
    SDL_GL_CreateContext( win );
    gladLoadGLLoader(SDL_GL_GetProcAddress);
+
+   IMG_Init(IMG_INIT_PNG);
 
    glGenVertexArrays(1, &VaoId);
    glBindVertexArray(VaoId);

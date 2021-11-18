@@ -94,14 +94,15 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    if ((ctex==NULL) || (ctex->texture==NULL))
       return def;
 
-   glGenTextures( 1, &tex );
-   glBindTexture( GL_TEXTURE_2D, tex );
-
    surface = IMG_Load( ctex->texture->image->uri );
    if (surface==NULL) {
       WARN("Unable to load surface '%s'!", ctex->texture->image->uri);
       return def;
    }
+
+   glGenTextures( 1, &tex );
+   glBindTexture( GL_TEXTURE_2D, tex );
+
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
@@ -289,7 +290,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 0.2;
+   const GLfloat sca = 1.0;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,

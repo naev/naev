@@ -12,9 +12,9 @@ uniform mat4 model = mat4(
 in vec3 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex0;
-out vec2 tex_coord0;
 out vec3 position;
 out vec3 normal;
+out vec2 tex_coord0;
 
 /* Not including math.glsl here because a python script reads this also and
 can't handle include preprocessor. */
@@ -30,7 +30,8 @@ const mat4 view = mat4(
 void main(void) {
    //vec4 pos    = view * model * vec4( vertex, 1.0 );
    vec4 pos    = model * vec4( vertex, 1.0 );
-   tex_coord0  = vec2(vertex_tex0.x, -vertex_tex0.y);
+   //tex_coord0  = vec2(vertex_tex0.x, -vertex_tex0.y);
+   tex_coord0  = vertex_tex0;
    normal      = mat3(model) * vertex_normal;
    position    = pos.xyz;
    gl_Position = projection * pos;
