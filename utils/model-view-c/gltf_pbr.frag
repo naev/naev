@@ -87,6 +87,7 @@ float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
 struct Material {
    vec3 albedo;         /**< Surface albedo. */
    float roughness;     /**< Surface roughness. */
+   float metallic;      /**< Metallicness of the object. */
    vec3 F0;             /**< Fresnel value at 0 degrees. */
    float roughness_cc;  /**< Clear coat roughness. */
    float clearCoat;     /**< Clear coat colour. */
@@ -145,6 +146,7 @@ void main(void) {
    Material mat;
    mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
    mat.roughness     = roughnessFactor;
+   mat.metallic      = metallicFactor;
    mat.F0            = vec3(0.56); /* Iron. */
    mat.clearCoat     = clearcoat;
    mat.roughness_cc  = clearcoat_roughness;
@@ -160,5 +162,6 @@ void main(void) {
    vec3 colour = shade( mat, v, n, l, NoL );
 
    colour_out = vec4(colour * NoL, 1.0) * 2.0;
+   colour_out.rgb *= mat.albedo;
    colour_out = vec4(1.0);
 }

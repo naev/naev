@@ -284,14 +284,18 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       0.0, 0.0, 0.0, 1.0 };
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H );
-   glUniform1f( shd->metallicFactor, mat->metallicFactor );
-   glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
-   glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
-   glUniform1f( shd->clearcoat, mat->clearcoat );
-   glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+   if (shd->metallicFactor)
+      glUniform1f( shd->metallicFactor, mat->metallicFactor );
+   if (shd->roughnessFactor)
+      glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
+   if (shd->baseColour)
+      glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
+   if (shd->clearcoat)
+      glUniform1f( shd->clearcoat, mat->clearcoat );
+   if (shd->clearcoat_roughness)
+      glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
-   gl_checkErr();
 
    glUseProgram( 0 );
 
