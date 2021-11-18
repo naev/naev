@@ -92,13 +92,13 @@ int main( int argc, char *argv[] )
       float rotxspeed = 0.0;
       float rotyspeed = 0.0;
       if (state[SDL_SCANCODE_LEFT])
-         rotyspeed -= 1.0;
+         rotyspeed -= M_PI_2;
       if (state[SDL_SCANCODE_RIGHT])
-         rotyspeed += 1.0;
+         rotyspeed += M_PI_2;
       if (state[SDL_SCANCODE_DOWN])
-         rotxspeed -= 1.0;
+         rotxspeed -= M_PI_2;
       if (state[SDL_SCANCODE_UP])
-         rotxspeed += 1.0;
+         rotxspeed += M_PI_2;
       rotx += rotxspeed * dt;
       roty += rotyspeed * dt;
       GLfloat c = cos(rotx);

@@ -204,6 +204,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H );
+   //cgltf_node_transform_world( cnode, node->H );
 
    if (cmesh == NULL) {
       node->nmesh = 0;
@@ -360,34 +361,35 @@ static void matmul( GLfloat H[16], const GLfloat R[16] )
    H[14] += R[14];
 }
 
-void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
+void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
-   matmul( H, node->H );
+   //matmul( H, node->H );
+   GLfloat HH[16];
+   memcpy( HH, node->H, sizeof(GLfloat)*16 );
+   matmul( HH, H );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMesh( obj, &node->mesh[i], H );
+      object_renderMesh( obj, &node->mesh[i], HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNode( obj, &node->children[i], H );
+      object_renderNode( obj, &node->children[i], HH );
 
    gl_checkErr();
 }
 
 void object_render( const Object *obj, const GLfloat *H )
 {
-   GLfloat Ho[16] = { 1.0, 0.0, 0.0, 0.0,
-                      0.0, 1.0, 0.0, 0.0,
-                      0.0, 0.0, 1.0, 0.0,
-                      0.0, 0.0, 0.0, 1.0 };
-   if (H!=NULL)
-      matmul( Ho, H );
+   const GLfloat I[16] = { 1.0, 0.0, 0.0, 0.0,
+                           0.0, 1.0, 0.0, 0.0,
+                           0.0, 0.0, 1.0, 0.0,
+                           0.0, 0.0, 0.0, 1.0 };
 
    for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNode( obj, &obj->nodes[i], Ho );
+      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : I );
 }
 
 Object *object_loadFromFile( const char *filename )
