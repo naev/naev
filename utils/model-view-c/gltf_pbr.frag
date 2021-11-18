@@ -134,7 +134,8 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
    return colour;
 }
 
-void main(void) {
+void main (void)
+{
    /* Compute normal taking into account the bump map. */
    vec3 n = normal;
    //if (bm > 0.01)
@@ -154,7 +155,7 @@ void main(void) {
 
    /* Get the crew ready. */
    /* Point light for now. */
-   const vec3 lp  = vec3(3.0, 3.0, 3.0);
+   const vec3 lp  = vec3(3.0, 3.0, -3.0);
    const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
    vec3 p   = position;
    vec3 l   = normalize(lp-p);
@@ -162,8 +163,8 @@ void main(void) {
 
    vec3 colour = shade( mat, v, n, l, NoL );
 
-   colour_out = vec4(colour * NoL, 1.0) * 2.0;
-   colour_out.rgb *= mat.albedo;
+   colour_out = vec4(colour * NoL, 1.0);
+   //colour_out.rgb *= mat.albedo;
    //colour_out = vec4(1.0);
-   colour_out = vec4( mat.albedo, 1.0 );
+   //colour_out = vec4( mat.albedo, 1.0 );
 }
