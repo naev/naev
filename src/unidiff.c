@@ -97,6 +97,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_SERVICE_ADD,
    HUNK_TYPE_ASSET_SERVICE_REMOVE,
    HUNK_TYPE_ASSET_SERVICE_REVERT, /* For internal usage. */
+   HUNK_TYPE_ASSET_TECH_ADD,
+   HUNK_TYPE_ASSET_TECH_REMOVE,
    HUNK_TYPE_ASSET_EXTERIOR,
    HUNK_TYPE_ASSET_EXTERIOR_REVERT, /* For internal usage. */
    /* Target should be faction. */
@@ -625,6 +627,32 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"tech_add")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_TECH_ADD;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"tech_remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_TECH_REMOVE;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"exterior")) {
          char str[PATH_MAX];
          hunk.target.type = base.target.type;
@@ -877,6 +905,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] asset service remove: '%s'"), target,
                      planet_getServiceName(fail->u.data) );
                break;
+            case HUNK_TYPE_ASSET_TECH_ADD:
+               WARN(_("   [%s] asset tech add: '%s'"), target,
+                     planet_getServiceName(fail->u.data) );
+               break;
+            case HUNK_TYPE_ASSET_TECH_REMOVE:
+               WARN(_("   [%s] asset tech remove: '%s'"), target,
+                     planet_getServiceName(fail->u.data) );
+               break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
                      fail->u.name );
@@ -1083,6 +1119,20 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          p->services = hunk->o.data;
          diff_universe_changed = 1;
+         return 0;
+
+      /* Modifying tech stuff. */
+      case HUNK_TYPE_ASSET_TECH_ADD:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         tech_addItemTech( p->tech, hunk->u.name );
+         return 0;
+      case HUNK_TYPE_ASSET_TECH_REMOVE:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         tech_rmItemTech( p->tech, hunk->u.name );
          return 0;
 
       /* Changing asset exterior graphics. */
@@ -1341,6 +1391,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_SERVICE_REVERT;
             break;
 
+         case HUNK_TYPE_ASSET_TECH_ADD:
+            hunk.type = HUNK_TYPE_ASSET_TECH_REMOVE;
+            break;
+         case HUNK_TYPE_ASSET_TECH_REMOVE:
+            hunk.type = HUNK_TYPE_ASSET_TECH_ADD;
+            break;
+
          case HUNK_TYPE_ASSET_EXTERIOR:
             hunk.type = HUNK_TYPE_ASSET_EXTERIOR_REVERT;
             break;
@@ -1420,6 +1477,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
       case HUNK_TYPE_ASSET_DESCRIPTION:
       case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
+      case HUNK_TYPE_ASSET_TECH_ADD:
+      case HUNK_TYPE_ASSET_TECH_REMOVE:
       case HUNK_TYPE_ASSET_BAR:
       case HUNK_TYPE_ASSET_BAR_REVERT:
       case HUNK_TYPE_ASSET_EXTERIOR:
