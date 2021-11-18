@@ -1,5 +1,6 @@
 -- Raven Clan faction standing script
 require "factions.standing.lib.pirate"
 
-_fthis         = faction.get("Raven Clan")
-
+standing = spir.newPirateStanding{
+   fct            = faction.get("Raven Clan"),
+}

@@ -116,6 +116,8 @@ stds.API_faction = {globals={
    "faction_player_friend",             -- C function: faction_isPlayerFriend()
    "faction_standing_broad",            -- C function: faction_getStandingBroad()
    "faction_standing_text",             -- C function: faction_getStandingText()
+   "standing",                          -- TODO funcs: faction_{modPlayerLua,isPlayerFriend,getStandingBroad,getStandingText}()
+   "sbase", "spir",                     -- TODO: until they're Proper Libraries
 }}
 stds.API_land = {globals={
    "land",                              -- C function: planet_updateLand() -- and the rest come from XML files!

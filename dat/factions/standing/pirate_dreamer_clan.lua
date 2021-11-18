@@ -1,5 +1,6 @@
 -- Dreamer Clan faction standing script
 require "factions.standing.lib.pirate"
 
-_fthis         = faction.get("Dreamer Clan")
-
+standing = spir.newPirateStanding{
+   fct            = faction.get("Dreamer Clan"),
+}

@@ -1,10 +1,12 @@
 -- Nasin faction standing script
 require "factions.standing.lib.base"
 
-_fcap_kill       = 20 -- Kill cap
-_fdelta_distress = {-1, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn       = 100 -- Starting mission cap, gets overwritten
-_fcap_misn_var   = "_fcap_nasin" -- Mission variable to use for limits
-_fcap_mod_sec    = 0.3 -- Modulation from secondary
-_fthis           = faction.get("Nasin")
+standing = sbase.newStanding{
+   fct            = faction.get("Nasin"),
+   cap_kill       = 20,
+   delta_distress = {-1, 0},    -- Maximum change constraints
+   delta_kill     = {-5, 1},    -- Maximum change constraints
+   cap_misn_init  = 100,
+   cap_misn_var   = "_fcap_nasin",
+   --cap_mod_sec  = 0.3, -- Modulation from secondary (TODO: hasn't worked since 2012. Bring it back?)
+}

@@ -1,9 +1,11 @@
 -- Soromid faction standing script
 require "factions.standing.lib.base"
 
-_fcap_kill     = 15 -- Kill cap
-_fdelta_distress = {-1, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_soromid"
-_fthis         = faction.get("Soromid")
+standing = sbase.newStanding{
+   fct            = faction.get("Soromid"),
+   cap_kill       = 15,
+   delta_distress = {-1, 0},    -- Maximum change constraints
+   delta_kill     = {-5, 1},    -- Maximum change constraints
+   cap_misn_init  = 30,
+   cap_misn_var   = "_fcap_soromid",
+}

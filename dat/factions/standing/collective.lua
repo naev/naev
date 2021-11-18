@@ -1,9 +1,10 @@
 -- Collective faction standing script
 require "factions.standing.lib.base"
 
-_fcap_kill     = 30 -- Kill cap
-_fdelta_distress = {0, 0} -- Maximum change constraints
-_fdelta_kill     = {0, 0} -- Maximum change constraints
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_collective"
-_fthis         = faction.get("Collective")
+standing = sbase.newStanding{
+   fct            = faction.get("Collective"),
+   cap_kill       = 30,
+   delta_distress = {0, 0},     -- Maximum change constraints
+   delta_kill     = {0, 0},     -- Maximum change constraints
+   cap_misn_var   = "_fcap_collective",
+}
