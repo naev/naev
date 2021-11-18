@@ -64,7 +64,7 @@ control_rate   = 2
    - fighting: the pilot is engaged in combat (including running away )
    - noattack: do not try to find new targets to attack
 --]]
-stateinfo = {
+local stateinfo = {
    attack = {
       fighting = true,
       attack   = true,
