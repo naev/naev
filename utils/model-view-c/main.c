@@ -31,14 +31,15 @@ int main( int argc, char *argv[] )
    glBindVertexArray(VaoId);
 
    glEnable( GL_FRAMEBUFFER_SRGB );
+   glClearColor( 0., 0., 0., 1. );
 
    object_init();
 
    //Object *obj = object_loadFromFile( "minimal.gltf" );
    //Object *obj = object_loadFromFile( "simple.gltf" );
-   Object *obj = object_loadFromFile( "simple_mat.gltf" );
+   //Object *obj = object_loadFromFile( "simple_mat.gltf" );
    //Object *obj = object_loadFromFile( "simple_tex.gltf" );
-   //Object *obj = object_loadFromFile( "admonisher.gltf" );
+   Object *obj = object_loadFromFile( "admonisher.gltf" );
    gl_checkErr();
 
    int quit = 0;

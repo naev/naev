@@ -28,8 +28,8 @@ const mat4 view = mat4(
       0.0,             0.0,              0.0, 1.0 );
 
 void main(void) {
-   //vec4 pos    = view * model * vec4( vertex, 1.0 );
-   vec4 pos    = model * vec4( vertex, 1.0 );
+   vec4 pos    = view * model * vec4( vertex, 1.0 );
+   //vec4 pos    = model * vec4( vertex, 1.0 );
    //tex_coord0  = vec2(vertex_tex0.x, -vertex_tex0.y);
    tex_coord0  = vertex_tex0;
    normal      = mat3(model) * vertex_normal;

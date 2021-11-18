@@ -103,12 +103,6 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    glGenTextures( 1, &tex );
    glBindTexture( GL_TEXTURE_2D, tex );
 
-   SDL_LockSurface( surface );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-         surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
-   SDL_UnlockSurface( surface );
-
    /* Set stuff. */
    if (ctex->texture->sampler != NULL) {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ctex->texture->sampler->mag_filter);
@@ -116,6 +110,24 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctex->texture->sampler->wrap_s);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctex->texture->sampler->wrap_t);
    }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   }
+
+   SDL_LockSurface( surface );
+   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+         surface->w, surface->h, 0,
+         surface->format->Amask ? GL_RGBA : GL_RGB,
+         GL_UNSIGNED_BYTE, surface->pixels );
+   SDL_UnlockSurface( surface );
+
+   /* Set up mipmaps. */
+   /* TODO only generate if necessary. */
+   glGenerateMipmap(GL_TEXTURE_2D);
 
    /* Free the surface. */
    SDL_FreeSurface( surface );
@@ -269,6 +281,9 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
+   glEnable(GL_BLEND);
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
    /* TODO put everything in a single VBO */
@@ -290,7 +305,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 1.0;
+   const GLfloat sca = 0.2;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
