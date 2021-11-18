@@ -18,7 +18,7 @@ int main( int argc, char *argv[] )
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-   SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+   SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 1280, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
    SDL_SetWindowTitle( win, "Naev Model Viewer" );
    SDL_GL_CreateContext( win );
    gladLoadGLLoader(SDL_GL_GetProcAddress);
@@ -52,7 +52,7 @@ int main( int argc, char *argv[] )
             }
          }
       }
-      glClearColor( 0.2, 0.2, 0.2, 1.0 );
+      //glClearColor( 0.2, 0.2, 0.2, 1.0 );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       object_render( obj );

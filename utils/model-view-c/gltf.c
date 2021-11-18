@@ -56,6 +56,7 @@ typedef struct Material_ {
    GLfloat emissiveFactor[3];
    //GLuint tex0;
 } Material;
+static Material material_default;
 
 typedef struct Mesh_ {
    size_t nidx;      /**< Number of indices. */
@@ -127,7 +128,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 {
    const GLfloat white[4] = { 1., 1., 1., 1. };
    /* TODO complete this. */
-   if (cmat->has_pbr_metallic_roughness) {
+   if (cmat && cmat->has_pbr_metallic_roughness) {
       memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
@@ -137,12 +138,12 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
    else {
       memcpy( mat->baseColour, white, sizeof(mat->baseColour) );
       mat->metallicFactor  = 0.;
-      mat->roughnessFactor = 0.5;
+      mat->roughnessFactor = 0.;
       mat->baseColour_tex  = tex_ones;
       mat->metallic_tex    = tex_ones;
    }
 
-   if (cmat->has_clearcoat) {
+   if (cmat && cmat->has_clearcoat) {
       mat->clearcoat = cmat->clearcoat.clearcoat_factor;
       mat->clearcoat_roughness = cmat->clearcoat.clearcoat_roughness_factor;
    }
@@ -202,6 +203,8 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
          /* Check material. */
          if (prim->material != NULL)
             mesh->material = prim->material - data->materials;
+         else
+            mesh->material = -1;
 
          /* Store indices. */
          glGenBuffers( 1, &mesh->vbo_idx );
@@ -245,8 +248,13 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 
 static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
 {
-   const Material *mat = &obj->materials[ mesh->material ];
+   const Material *mat;
    Shader *shd = &object_shader;
+
+   if (mesh->material < 0)
+      mat = &material_default;
+   else
+      mat = &obj->materials[ mesh->material ];
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
@@ -475,6 +483,9 @@ int object_init (void)
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_ones );
    glBindTexture( GL_TEXTURE_2D, 0 );
    gl_checkErr();
+
+   object_loadMaterial( &material_default, NULL );
+
    return 0;
 }
 

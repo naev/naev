@@ -164,4 +164,5 @@ void main(void) {
    colour_out = vec4(colour * NoL, 1.0) * 2.0;
    colour_out.rgb *= mat.albedo;
    //colour_out = vec4(1.0);
+   colour_out = vec4( mat.albedo, 1.0 );
 }
