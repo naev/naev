@@ -137,7 +137,7 @@ function cardio.CardWestern:draw( x, y )
    lg.print( s, font, x+6+(63-w)/2, y+5+50 )
 end
 cardio.DeckWestern = class.inheritsFrom( cardio.Deck )
-function cardio.newDeckWestern( joker )
+function cardio.newDeckWestern()
    local cards = {}
    for i,v in ipairs{ "heart", "spade", "club", "diamond" } do
       for n = 1,13 do
