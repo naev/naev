@@ -3,7 +3,7 @@
 --]]
 local bgshaders = require "bkg.lib.bgshaders"
 local love_shaders = require 'love_shaders'
-local graphics = require "love.graphics"
+local lg = require "love.graphics"
 local lf = require 'love.filesystem'
 local prng = require("prng").new()
 
@@ -91,12 +91,14 @@ local function add_local_stars ()
    end
 end
 
+local static = true
 function starfield.init( params )
    params = params or {}
+   local nconf = naev.conf()
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = math.max( 1.0, naev.conf().nebu_scale * 0.5 )
+   sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
    -- Per system parameters
    prng:setSeed( system.cur():nameRaw() )
@@ -109,9 +111,40 @@ function starfield.init( params )
    sz = 1+1*prng:random()
    sb = naev.conf().bg_brightness
 
+   local motionblur = 1
+   if static then
+      motionblur = 0
+   end
+
    -- Initialize shader
-   shader = graphics.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
-   sstarfield = bgshaders.init( shader, sf, {usetex=true} )
+   shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
+
+   if static then
+      local nw, nh = gfx.dim()
+      local aspect = nw / nh
+      local texw = nw / nconf.zoom_far
+      local texh = nh / nconf.zoom_far
+      local texs = 4096 / math.max( texw, texh )
+      if texs < 1 then
+         texw = texw / texs
+         texh = texh / texs
+      end
+      local cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
+      shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
+
+      local oldcanvas = lg.getCanvas()
+      lg.setCanvas( cvs )
+      lg.clear( 0, 0, 0, 0 )
+      lg.setShader( shader )
+      lg.setColor( {1,1,1,1} )
+      love_shaders.img:draw( 0, 0, 0, texw, texh )
+      lg.setShader()
+      lg.setCanvas( oldcanvas )
+
+      naev.bkg.image( cvs.t.tex, 0, 0, 0, texs, 0 )
+   else
+      sstarfield = bgshaders.init( shader, sf, {usetex=true} )
+   end
 
    if not params.nolocalstars then
       add_local_stars()
@@ -119,6 +152,7 @@ function starfield.init( params )
 end
 
 function starfield.render( dt )
+   if static then return end
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()
