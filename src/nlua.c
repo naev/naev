@@ -680,3 +680,23 @@ int nlua_refenvtype( nlua_env env, const char *name, int type )
    lua_pop(naevL, 1);
    return LUA_NOREF;
 }
+
+/**
+ * @brief Gets the reference to the specified field from an object reference.
+ *
+ *    @param objref Reference to the object to be indexed.
+ *    @param name Name of the field to get.
+ *    @return LUA_NOREF if no field found, reference otherwise.
+ */
+int nlua_reffield( int objref, const char *name )
+{
+   if (objref == LUA_NOREF)
+      return LUA_NOREF;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, objref );
+   lua_getfield( naevL, -1, name );
+   lua_remove( naevL, -2 );
+   if (!lua_isnil( naevL, -1 ))
+      return luaL_ref( naevL, LUA_REGISTRYINDEX );
+   lua_pop(naevL, 1);
+   return LUA_NOREF;
+}
