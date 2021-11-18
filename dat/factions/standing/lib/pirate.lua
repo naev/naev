@@ -28,10 +28,15 @@ _ftext_standing = {
    [-1] = _("Normie"),
 }
 
-_ftext_friendly = _("Friendly")
-_ftext_neutral  = _("Neutral")
-_ftext_hostile  = _("Hostile")
-_ftext_bribed   = _("Paid Off")
+local default_standing_broad = faction_standing_broad
+local text_bribed = _("Paid Off")
+function faction_standing_broad( standing, bribed, override )
+   if bribed then
+      return text_bribed
+   else
+      return default_standing_broad( standing, bribed, override )
+   end
+end
 
 local default_hit = faction_hit
 function faction_hit( current, amount, source, secondary )

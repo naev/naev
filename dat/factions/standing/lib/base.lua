@@ -34,10 +34,10 @@ _ftext_standing = {
    [-50] = _("Enemy"),
 }
 
-_ftext_friendly = _("Friendly")
-_ftext_neutral  = _("Neutral")
-_ftext_hostile  = _("Hostile")
-_ftext_bribed   = _("Bribed")
+local text_friendly = _("Friendly")
+local text_neutral  = _("Neutral")
+local text_hostile  = _("Hostile")
+local text_bribed   = _("Bribed")
 
 
 --[[
@@ -229,12 +229,12 @@ function faction_standing_broad( standing, bribed, override )
    if override == nil then override = 0 end
 
    if bribed then
-      return _ftext_bribed
+      return text_bribed
    elseif override > 0 or faction_player_friend( standing ) then
-      return _ftext_friendly
+      return text_friendly
    elseif override < 0 or standing < 0 then
-      return _ftext_hostile
+      return text_hostile
    else
-      return _ftext_neutral
+      return text_neutral
    end
 end
