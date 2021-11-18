@@ -569,21 +569,17 @@ end
 function startPankration()
    player.pilot():control(false)
    -- Make people attack each other.
-   competitors[5]:memory().atk = atk_generic -- A very agressive AI
-   competitors[5]:taskClear()
-   competitors[5]:attack(player.pilot())
-   compHitHook[5] = hook.pilot( competitors[5], "attacked", "compHit" )
-   for i = 1, 4 do
+   for i = 1, 9 do
       competitors[i]:setFaction("Warlords")
       competitors[i]:taskClear()
-      competitors[i]:attack(competitors[i+5])
-      competitors[i+5]:taskClear()
-      competitors[i+5]:attack(competitors[i])
-      compHitHook[i]   = hook.pilot( competitors[i], "attacked", "compHit" )
-      compHitHook[i+5] = hook.pilot( competitors[i+5], "attacked", "compHit" )
-      competitors[i]:memory().atk = atk_generic
-      competitors[i+5]:memory().atk = atk_generic
+      compHitHook[i] = hook.pilot( competitors[i], "attacked", "compHit" )
+      competitors[i]:memory().atk = atk_generic -- A very agressive AI
    end
+   for i = 1, 4 do
+      competitors[i]:attack(competitors[i+5])
+      competitors[i+5]:attack(competitors[i])
+   end
+   competitors[5]:attack(player.pilot())
    misn.osdActive(2)
 end
 

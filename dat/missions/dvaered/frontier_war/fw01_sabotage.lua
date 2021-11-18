@@ -467,15 +467,14 @@ function fighterDuel()
    hook.timer( 2.5, "message", {pilot = hamelsen, msg = _("You're the best, boss!")} )
    hook.timer( 3.0, "message", {pilot = randguy, msg = _("Yeah!")} )
 
-   -- Prevent both Goddards from colliding with Vendetta's ammo.
-   battleaddict:setFaction("Dvaered")
-   klank:setFaction("Dvaered")
+   -- Prevent both Goddards from colliding with Vendetta's ammo. Set the AI so that they don't get stuck.
+   for k,v in ipairs{battleaddict, klank} do
+      v:setFaction("Dvaered")
+      v:memory().atk = atk_generic --atk_drone
+   end
 
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
-
-   klank2:memory().atk = atk_generic --atk_drone  -- Set the AI so that they don't get stuck
-   battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
    battleaddict2:moveto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
