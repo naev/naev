@@ -1,5 +1,13 @@
-uniform mat4 projection;
-uniform mat4 model;
+uniform mat4 projection = mat4(
+   1.0, 0.0, 0.0, 0.0,
+   0.0, 1.0, 0.0, 0.0,
+   0.0, 0.0, 1.0, 0.0,
+   0.0, 0.0, 0.0, 1.0 );
+uniform mat4 model = mat4(
+   1.0, 0.0, 0.0, 0.0,
+   0.0, 1.0, 0.0, 0.0,
+   0.0, 0.0, 1.0, 0.0,
+   0.0, 0.0, 0.0, 1.0 );
 
 in vec3 vertex;
 in vec3 vertex_normal;
@@ -26,5 +34,4 @@ void main(void) {
    normal      = mat3(model) * vertex_normal;
    position    = pos.xyz;
    gl_Position = projection * pos;
-   gl_Position = vec4( vertex, 1.0 );
 }

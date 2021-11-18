@@ -283,7 +283,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 0.1;
+   const GLfloat sca = 0.5;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
@@ -458,6 +458,7 @@ int object_init (void)
    if (shd->program==0)
       return -1;
 
+   glUseProgram( shd->program );
    /** Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );

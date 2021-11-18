@@ -28,8 +28,8 @@ int main( int argc, char *argv[] )
 
    object_init();
 
-   Object *obj = object_loadFromFile( "minimal.gltf" );
-   //Object *obj = object_loadFromFile( "simple.gltf" );
+   //Object *obj = object_loadFromFile( "minimal.gltf" );
+   Object *obj = object_loadFromFile( "simple.gltf" );
    //Object *obj = object_loadFromFile( "admonisher.gltf" );
    gl_checkErr();
 
