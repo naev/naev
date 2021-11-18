@@ -189,7 +189,7 @@ end
 --[[
 -- Main drawing function.
 --]]
-local function _draw( tocanvas )
+local function _draw()
    local prevcanvas
    if vn._postshader then
       prevcanvas = graphics.getCanvas()
@@ -298,7 +298,7 @@ function vn.draw()
    if s and s.drawoverride then
       s:drawoverride()
    else
-      _draw( false )
+      _draw()
    end
 
    -- Draw on top
@@ -314,7 +314,7 @@ local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
    graphics.clear( 0, 0, 0, 0 )
-   _draw( true )
+   _draw()
    graphics.setCanvas( oldcanvas )
 end
 
