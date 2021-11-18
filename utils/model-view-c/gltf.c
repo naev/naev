@@ -249,8 +249,8 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    Shader *shd = &object_shader;
 
    /* Depth testing. */
-   glEnable(GL_DEPTH_TEST);
-   glDepthFunc(GL_LESS);
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_LESS );
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -271,7 +271,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
-   gl_checkErr();
    glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
 
    /* Set up shader. */
@@ -284,16 +283,11 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       0.0, 0.0, 0.0, 1.0 };
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H );
-   if (shd->metallicFactor)
-      glUniform1f( shd->metallicFactor, mat->metallicFactor );
-   if (shd->roughnessFactor)
-      glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
-   if (shd->baseColour)
-      glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
-   if (shd->clearcoat)
-      glUniform1f( shd->clearcoat, mat->clearcoat );
-   if (shd->clearcoat_roughness)
-      glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+   glUniform1f( shd->metallicFactor, mat->metallicFactor );
+   glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
+   glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
+   glUniform1f( shd->clearcoat, mat->clearcoat );
+   glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -450,14 +444,27 @@ int object_init (void)
 {
    const GLubyte data_zero[4] = { 0, 0, 0, 0 };
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
-   object_shader.program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
-   if (object_shader.program==0)
+   Shader *shd = &object_shader;
+
+   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
+   if (shd->program==0)
       return -1;
-   object_shader.vertex        = glGetAttribLocation( object_shader.program, "vertex" );
-   object_shader.vertex_normal = glGetAttribLocation( object_shader.program, "vertex_normal" );
-   object_shader.vertex_tex0   = glGetAttribLocation( object_shader.program, "vertex_tex0" );
-   object_shader.Hprojection   = glGetUniformLocation( object_shader.program, "projection ");
-   object_shader.Hmodel        = glGetUniformLocation( object_shader.program, "model ");
+
+   /** Attributes. */
+   shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
+   shd->vertex_normal   = glGetAttribLocation( shd->program, "vertex_normal" );
+   shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
+   /* Vertex uniforms. */
+   shd->Hprojection     = glGetUniformLocation( shd->program, "projection ");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "model ");
+   /* Fragment uniforms. */
+   shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
+   shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
+   shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
+   shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
+   shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );
+   shd->clearcoat       = glGetUniformLocation( shd->program, "clearcoat" );
+   shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    gl_checkErr();
 
    glGenTextures( 1, &tex_zero );
