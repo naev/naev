@@ -23,7 +23,7 @@ nebula_image.nebula_list = {
 }
 
 function nebula_image.init( filename )
-   local background_default = background
+   --local background_default = background
    function background ()
       local csys = system.cur()
       prng:setSeed( csys:nameRaw() )
