@@ -17,7 +17,6 @@ _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 _fstanding_friendly = 40
-_fstanding_neutral = 0
 
 _ftext_standing = {
    [95] = _("Clan Legend"),
@@ -34,6 +33,7 @@ _ftext_neutral  = _("Neutral")
 _ftext_hostile  = _("Hostile")
 _ftext_bribed   = _("Paid Off")
 
+local default_hit = faction_hit
 function faction_hit( current, amount, source, secondary )
    local standing = math.max( -50, default_hit( current, amount, source, secondary ) )
 

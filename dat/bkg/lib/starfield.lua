@@ -121,7 +121,6 @@ function starfield.init( params )
 
    if static then
       local nw, nh = gfx.dim()
-      local aspect = nw / nh
       local texw = nw / nconf.zoom_far
       local texh = nh / nconf.zoom_far
       local texs = 4096 / math.max( texw, texh )

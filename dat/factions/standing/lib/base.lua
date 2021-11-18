@@ -20,7 +20,6 @@ _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
 _fstanding_friendly = 70
-_fstanding_neutral = 0
 
 _ftext_standing = {
    [100] = _("Legend"),
@@ -93,7 +92,7 @@ end
       @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
       @return The faction amount to set to.
 --]]
-function default_hit( current, amount, source, secondary )
+function faction_hit( current, amount, source, secondary )
    -- Comfort macro
    local f = current
    local delta = {-200, 200}
@@ -219,17 +218,6 @@ end
 
 
 --[[
-   @brief Returns whether or not the player is an enemy of the faction.
-
-      @param standing Current standing of the player.
-      @return true if the player is an enemy, false otherwise.
---]]
-function faction_player_enemy( standing )
-   return standing < _fstanding_neutral
-end
-
-
---[[
    @brief Returns a text representation of the player's broad standing.
 
       @param standing Current standing of the player.
@@ -244,7 +232,7 @@ function faction_standing_broad( standing, bribed, override )
       return _ftext_bribed
    elseif override > 0 or faction_player_friend( standing ) then
       return _ftext_friendly
-   elseif override < 0 or faction_player_enemy( standing ) then
+   elseif override < 0 or standing < 0 then
       return _ftext_hostile
    else
       return _ftext_neutral

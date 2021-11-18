@@ -2172,6 +2172,8 @@ dat/unidiff/antlejosv_2.xml
 dat/unidiff/antlejosv_3.xml
 dat/unidiff/antlejosv_4.xml
 dat/unidiff/antlejosv_5.xml
+dat/unidiff/antlejosv_6.xml
+dat/unidiff/antlejosv_7.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2265,7 +2267,6 @@ dat/bkg/nebu_ncg_2392.lua
 dat/bkg/nebu_ncg_2440.lua
 dat/bkg/nebu_ncg_2440_2.lua
 dat/bkg/nebu_ncg_5189.lua
-dat/bkg/old.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
@@ -2335,6 +2336,7 @@ dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
 dat/factions/spawn/lib/common.lua
+dat/factions/spawn/lib/pirate.lua
 dat/factions/spawn/marauder.lua
 dat/factions/spawn/miner.lua
 dat/factions/spawn/pirate.lua

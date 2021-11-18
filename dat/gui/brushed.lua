@@ -19,7 +19,8 @@ local target_image_w, ta_flt_pane_x
 -- luacheck: globals l_col l_col_top l_icon l_x l_y (_G["l_" .. v])
 -- luacheck: globals col_armour col_energy col_fuel col_shield col_top_armour col_top_energy col_top_fuel col_top_shield icon_armour icon_energy icon_fuel icon_shield (_G[v .. "_" .. name])
 -- luacheck: globals icon_cargo icon_missions icon_ship icon_weapons (_G["icon_" .. v])
--- TODO: inventory the possible _G["icon_" .. weapon.dtype] values
+-- luacheck: globals icon_EMP icon_Energy icon_Ion icon_Kinetic icon_Radiation (_G["icon_" .. weapon.dtype])
+-- FIXME: The above line reflects a design dating from 2010, when there was a static list of allowed damage types!!
 
 -- Namespaces
 local actions = {}
@@ -650,7 +651,7 @@ local function renderButton( button )
 end
 
 function render( _dt )
-   local wbars_right
+   local stress, wbars_right
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
