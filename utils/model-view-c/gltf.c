@@ -11,29 +11,6 @@
 
 #include "shader_min.h"
 
-typedef struct glTexture_ {
-   char *name; /**< name of the graphic */
-
-   /* dimensions */
-   double w; /**< Real width of the image. */
-   double h; /**< Real height of the image. */
-
-   /* sprites */
-   double sx; /**< Number of sprites on the x axis. */
-   double sy; /**< Number of sprites on the y axis. */
-   double sw; /**< Width of a sprite. */
-   double sh; /**< Height of a sprite. */
-   double srw; /**< Sprite render width - equivalent to sw/w. */
-   double srh; /**< Sprite render height - equivalent to sh/h. */
-
-   /* data */
-   GLuint texture; /**< the opengl texture itself */
-   uint8_t* trans; /**< maps the transparency */
-
-   /* properties */
-   uint8_t flags; /**< flags used for texture properties */
-} glTexture;
-
 typedef struct Shader_ {
    GLuint program;
    /* Attriutes. */
