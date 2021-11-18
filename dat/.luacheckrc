@@ -156,11 +156,8 @@ stds.PilotOutfit.globals={
    "ontoggle",
    "outofenergy",
    "update",
-   "mem",
+   "mem", -- Automatically created using nlua_setenv().
 }
-
--- Finally, we use nlua_setenv() to make global variables part of the AI Profile and Pilot Outfit APIs.
-table.insert(stds.PilotOutfit.globals, "mem")
 
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
 files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
