@@ -5,7 +5,7 @@
 --]]
 local class = require "class"
 
-sbase = {} -- FIXME: not yet a "proper library"
+local sbase = {}
 
 sbase.Standing = class.inheritsFrom()
 function sbase.newStanding( args )
@@ -103,10 +103,6 @@ end
       @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
       @return The faction amount to set to.
 --]]
-function faction_hit( current, amount, source, secondary )
-   return standing:hit( current, amount, source, secondary )
-end
-
 function sbase.Standing:hit( current, amount, source, secondary )
    -- Comfort macro
    local f = current
@@ -211,10 +207,6 @@ end
       @param value Current standing value of the player.
       @return The text representation of the current standing.
 --]]
-function faction_standing_text( value )
-   return standing:text_rank( value )
-end
-
 function sbase.Standing:text_rank( value )
    for i = math.floor( value ), 0, ( value < 0 and 1 or -1 ) do
       if self.text[i] ~= nil then
@@ -226,17 +218,6 @@ end
 
 
 --[[
-   Returns whether or not the player is a friend of the faction.
-
-      @param value Current standing value of the player.
-      @return true if the player is a friend, false otherwise.
---]]
-function faction_player_friend( value )
-   return value >= standing.friendly_at
-end
-
-
---[[
    Returns a text representation of the player's broad standing.
 
       @param value Current standing value of the player.
@@ -244,16 +225,12 @@ end
       @param override If positive it should be set to ally, if negative it should be set to hostile.
       @return The text representation of the current broad standing.
 --]]
-function faction_standing_broad( value, bribed, override )
-   return standing:text_broad( value, bribed, override )
-end
-
 function sbase.Standing.text_broad( _self, value, bribed, override )
    if override == nil then override = 0 end
 
    if bribed then
       return text_bribed
-   elseif override > 0 or faction_player_friend( value ) then
+   elseif override > 0 or value >= standing.friendly_at then
       return text_friendly
    elseif override < 0 or value < 0 then
       return text_hostile
@@ -261,3 +238,5 @@ function sbase.Standing.text_broad( _self, value, bribed, override )
       return text_neutral
    end
 end
+
+return sbase

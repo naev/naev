@@ -1,5 +1,5 @@
 -- Static standing script: used for temporary/dynamic factions.
-require "factions.standing.lib.base"
+local sbase = require "factions.standing.lib.base"
 
 standing = sbase.newStanding{}
 

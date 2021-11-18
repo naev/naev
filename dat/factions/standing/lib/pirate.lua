@@ -1,8 +1,8 @@
 local class = require "class"
 local pir = require 'common.pirate'
-require "factions.standing.lib.base"
+local sbase = require "factions.standing.lib.base"
 
-spir = {} -- FIXME: not yet a "proper library"
+local spir = {}
 
 spir.PirateStanding = class.inheritsFrom( sbase.Standing )
 function spir.newPirateStanding( args )
@@ -62,3 +62,5 @@ function spir.PirateStanding:hit( current, amount, source, secondary )
    -- Set current faction standing
    return value
 end
+
+return spir

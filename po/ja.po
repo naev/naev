@@ -81568,36 +81568,27 @@ msgstr "Faction '%s': %s"
 #: src/faction.c:771
 #, c-format
 msgid ""
-"Lua script for faction '%s' did not return a number from 'faction_hit(...)'."
+"Lua script for faction '%s' did not return a number from 'standing:hit(...)'."
 msgstr ""
-"Lua script for faction '%s' did not return a number from 'faction_hit(...)'."
-
-#: src/faction.c:994
-#, c-format
-msgid ""
-"Lua script for faction '%s' did not return a boolean from "
-"'faction_player_friend(...)'."
-msgstr ""
-"Lua script for faction '%s' did not return a boolean from "
-"'faction_player_friend(...)'."
+"Lua script for faction '%s' did not return a number from 'standing:hit(...)'."
 
 #: src/faction.c:1086
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a string from "
-"'faction_standing_text(...)'."
+"'standing:text_rank(...)'."
 msgstr ""
 "Lua script for faction '%s' did not return a string from "
-"'faction_standing_text(...)'."
+"'standing:text_rank(...)'."
 
 #: src/faction.c:1136
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a string from "
-"'faction_standing_broad(...)'."
+"'standing:text_broad(...)'."
 msgstr ""
 "Lua script for faction '%s' did not return a string from "
-"'faction_standing_broad(...)'."
+"'standing:text_broad(...)'."
 
 #: src/faction.c:1273
 #, c-format

@@ -1,5 +1,5 @@
 -- Proteron faction standing script
-require "factions.standing.lib.base"
+local sbase = require "factions.standing.lib.base"
 
 standing = sbase.newStanding{
    fct            = faction.get("Proteron"),
