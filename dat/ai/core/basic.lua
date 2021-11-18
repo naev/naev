@@ -172,6 +172,7 @@ end
 --[[
 -- Goes to a target position roughly
 --]]
+-- luacheck: globals moveto (AI Task functions passed by name)
 function moveto( target )
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, true )
@@ -181,6 +182,7 @@ end
 --[[
 -- Goes to a point in order to inspect (same as moveto_nobrake, but pops when attacking)
 --]]
+-- luacheck: globals inspect_moveto (AI Task functions passed by name)
 function inspect_moveto( target )
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, false )
@@ -262,6 +264,7 @@ function follow_accurate( target )
 end
 
 -- Default action for non-leader pilot in fleet
+-- luacheck: globals follow_fleet (AI Task functions passed by name)
 function follow_fleet ()
    local plt    = ai.pilot()
    local leader = plt:leader()
@@ -654,6 +657,7 @@ end
 --[[
 -- Tries to return to the lane, shooting at nearby enemies if necessary
 --]]
+-- luacheck: globals return_lane (AI Task functions passed by name)
 function return_lane( data )
    local enemy = data[1]
    local target = data[2]
@@ -722,6 +726,7 @@ end
 --[[
 -- Boards the target
 --]]
+-- luacheck: globals board (AI Task functions passed by name)
 function board( target )
    -- Make sure pilot exists
    if not target:exists() then
@@ -862,6 +867,7 @@ end
 --[[
 -- Mines an asteroid
 --]]
+-- luacheck: globals mine (AI Task functions passed by name)
 function mine( fieldNast )
    ai.weapset( 1 )
    local field     = fieldNast[1]
@@ -972,12 +978,14 @@ end
 
 
 -- Holds position
+-- luacheck: globals hold (AI Task functions passed by name)
 function hold ()
    follow_fleet ()
 end
 
 
 -- Flies back and tries to either dock or stops when back at leader
+-- luacheck: globals flyback (AI Task functions passed by name)
 function flyback( dock )
    local target = ai.pilot():leader()
    if not target or not target:exists() then
@@ -1050,6 +1058,7 @@ end
 --[[
 -- Just loitering around.
 --]]
+-- luacheck: globals loiter (AI Task functions passed by name)
 function loiter( target )
    local dir   = ai.face( target, nil, true )
    local dist  = ai.dist( target )
@@ -1062,6 +1071,7 @@ function loiter( target )
    end
 end
 -- Last vertex, so poptask when at brakedistance
+-- luacheck: globals loiter_last (AI Task functions passed by name)
 function loiter_last( target )
    local dir   = ai.face( target, nil, true )
    local dist  = ai.dist( target )
@@ -1087,6 +1097,7 @@ end
 --[[
 -- Tries to get close to scan the enemy
 --]]
+-- luacheck: globals scan (AI Task functions passed by name)
 function scan( target )
    if not target:exists() then
       ai.poptask()
@@ -1259,6 +1270,7 @@ function stealth( _target )
 end
 
 
+-- luacheck: globals ambush_moveto (AI Task functions passed by name)
 function ambush_moveto( target )
    -- Make sure stealthed
    if not ai.stealth(true) then
@@ -1276,6 +1288,7 @@ function ambush_moveto( target )
 end
 
 
+-- luacheck: globals ambush_stalk (AI Task functions passed by name)
 function ambush_stalk( target )
    -- Make sure stealthed or attack
    if not ai.stealth(true) then
@@ -1305,12 +1318,14 @@ end
 
 
 -- Delays the ship when entering systems so that it doesn't leave right away
+-- luacheck: globals enterdelay (AI Task functions passed by name)
 function enterdelay ()
    if ai.timeup(0) then
       ai.pushtask("hyperspace")
    end
 end
 
+-- luacheck: globals idle_wait (AI Task functions passed by name)
 function idle_wait ()
    if ai.timeup(0) then
       ai.poptask()

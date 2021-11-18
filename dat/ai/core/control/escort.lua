@@ -19,6 +19,7 @@ function create ()
 end
 
 -- Just tries to guard mem.escort
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    ai.pushtask("follow_fleet")
 end

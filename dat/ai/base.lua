@@ -30,6 +30,7 @@ function attacked( attacker )
    end
 end
 
+-- luacheck: globals attack (AI Task functions passed by name)
 function attack( target )
    -- make sure pilot exists
    if not target:exists() then
@@ -57,5 +58,6 @@ function attack( target )
    end
 end
 
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
 end

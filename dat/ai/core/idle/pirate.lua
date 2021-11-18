@@ -179,6 +179,7 @@ function idle_nostealth ()
 end
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    -- Not doing stealth stuff
    if not mem.stealth then
@@ -226,6 +227,7 @@ function idle ()
 end
 
 -- Try to back off from the target
+-- luacheck: globals backoff (AI Task functions passed by name)
 function backoff( target )
    if not target or not target:exists() then
       ai.poptask()

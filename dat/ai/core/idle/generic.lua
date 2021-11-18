@@ -1,6 +1,7 @@
 local lanes = require 'ai.core.misc.lanes'
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local p = ai.pilot()
    local task = ai.taskname()

@@ -54,6 +54,7 @@ end
 --[[
 -- Wrapper for the attack functions.
 --]]
+-- luacheck: globals attack (AI Task functions passed by name)
 function attack( target )
    -- Don't go on the offensive when in the middle of cooling.
    if mem.cooldown then
@@ -82,6 +83,7 @@ end
 --[[
 -- Forced attack function that should focus on the enemy until enemy is killed
 --]]
+-- luacheck: globals attack_forced_kill (AI Task functions passed by name)
 function attack_forced_kill( target )
    if mem.atk ~= nil then
       mem.atk( target, true )

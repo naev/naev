@@ -1,3 +1,4 @@
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    if mem.aggressive then
       local enemy = ai.getenemy()
