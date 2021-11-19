@@ -219,6 +219,7 @@ void main (void)
    //f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
    //f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
+   f_diffuse += 0.5*M.c_diff; /* Just use ambience for now. */
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
@@ -227,7 +228,7 @@ void main (void)
       L.position  = 2.0*vec3(2.0, 1.0, -10.0);
       L.range     = -1.0;
       L.colour    = vec3(1.0);
-      L.intensity = 2000.0;
+      L.intensity = 500.0;
 
       vec3 pointToLight = L.position - position;
       vec3 l = normalize(pointToLight);
