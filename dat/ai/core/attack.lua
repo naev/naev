@@ -9,7 +9,6 @@
 --]]
 
 -- Utilities
-local atk = require "ai.core.attack.util"
 require 'ai.core.attack.target'
 
 -- Attack profiles
@@ -101,14 +100,6 @@ function attack_attacked( attacker )
    else
       atk_generic_attacked( attacker )
    end
-end
-
---[[
--- Wrapper for the atk.zigzag function. May be used as a subtask.
---]]
--- luacheck: globals _attack_zigzag (AI Task functions passed by name)
-function _attack_zigzag( target )
-   atk.zigzag( target )
 end
 
 

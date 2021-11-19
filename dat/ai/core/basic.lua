@@ -16,6 +16,7 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
 
+local atk = require "ai.core.attack.util"
 local fmt = require "format"
 
 local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret -- Forward-declared functions
@@ -88,7 +89,7 @@ end
 --[[
 -- Move in zigzag around a direction
 --]]
-function __zigzag ( dir, angle )
+local function __zigzag ( dir, angle )
    if mem.pm == nil then
       mem.pm = 1
    end
@@ -123,6 +124,42 @@ local function __zigzag_run_decide( self, target )
             and ai.hasprojectile()
             and (not ai.hasafterburner() or self:energy() < 10)
           )
+end
+
+
+--[[
+-- Zig zags towards the target
+--]]
+-- luacheck: globals _attack_zigzag (AI Task functions passed by name)
+function _attack_zigzag( target )
+   target = atk.com_think( target )
+   if target == nil then return end
+   if target:flags("disabled") then
+      ai.popsubtask()
+      return
+   end
+
+   -- See if the enemy is still seeable
+   if not atk.check_seeable( target ) then return end
+
+   ai.settarget(target)
+
+   -- Is there something to dodge?
+   if not ai.hasprojectile() then
+      ai.popsubtask()
+      return
+   end
+
+   -- Are we ready to shoot?
+   local dist = ai.dist( target )
+   local range = ai.getweaprange(3)
+   if dist < range then
+      ai.popsubtask()
+      return
+   end
+
+   local dir = ai.dir( target )
+   __zigzag(dir, math.pi/6)
 end
 
 
