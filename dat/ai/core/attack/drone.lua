@@ -7,17 +7,11 @@ local atk = require "ai.core.attack.util"
 
 local __atk_d_flyby, __atk_d_space_sup, __atk_drone_ranged -- Forward-declared functions
 
--- Initializes the drone
-function atk_drone_init ()
-   mem.atk_think  = atk_drone_think
-   mem.atk        = atk_drone
-end
-
 
 --[[
 -- Mainly targets small drones.
 --]]
-function atk_drone_think( target, _si )
+local function atk_drone_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -74,7 +68,7 @@ end
 --[[
 -- Main control function for drone behavior.
 --]]
-function atk_drone( target, dokill )
+local function atk_drone( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -258,3 +252,8 @@ function __atk_d_space_sup( target, dist )
 end
 
 
+-- Initializes the drone
+function atk_drone_init ()
+   mem.atk_think  = atk_drone_think
+   mem.atk        = atk_drone
+end

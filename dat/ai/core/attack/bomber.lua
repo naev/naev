@@ -1,17 +1,11 @@
 local atk = require "ai.core.attack.util"
 
-function atk_bomber_init ()
-   mem.atk_think  = atk_heuristic_big_game_think
-   mem.atk        = atk_bomber
-end
-
-
 --[[
 -- Main control function for bomber behavior.
 -- Bombers are expected to have heavy weapons and target
 --ships bigger than they are
 --]]
-function atk_bomber( target, dokill )
+local function atk_bomber( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -35,3 +29,8 @@ function atk_bomber( target, dokill )
    end
 end
 
+
+function atk_bomber_init ()
+   mem.atk_think  = atk_heuristic_big_game_think
+   mem.atk        = atk_bomber
+end

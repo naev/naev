@@ -2,16 +2,10 @@ local atk = require "ai.core.attack.util"
 
 local __atk_g_capital -- Forward-declared functions
 
-function atk_capital_init ()
-   mem.atk_think  = atk_heuristic_big_game_think
-   mem.atk        = atk_capital
-end
-
-
 --[[
 -- Main control function for capital ship behavior.
 --]]
-function atk_capital( target, dokill )
+local function atk_capital( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -113,3 +107,7 @@ function __atk_g_capital( target, dist )
 end
 
 
+function atk_capital_init ()
+   mem.atk_think  = atk_heuristic_big_game_think
+   mem.atk        = atk_capital
+end

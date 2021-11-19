@@ -5,17 +5,11 @@
 
 local atk = require "ai.core.attack.util"
 
--- Initializes the fighter
-function atk_fighter_init ()
-   mem.atk_think  = atk_fighter_think
-   mem.atk        = atk_fighter
-end
-
 
 --[[
 -- Mainly targets small fighters.
 --]]
-function atk_fighter_think( target, _si )
+local function atk_fighter_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -41,7 +35,7 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-function atk_fighter( target, dokill )
+local function atk_fighter( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -198,3 +192,8 @@ function __atk_f_space_sup( target, dist )
 end
 
 
+-- Initializes the fighter
+function atk_fighter_init ()
+   mem.atk_think  = atk_fighter_think
+   mem.atk        = atk_fighter
+end
