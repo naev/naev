@@ -2197,7 +2197,6 @@ dat/ai/core/attack/corvette.lua
 dat/ai/core/attack/drone.lua
 dat/ai/core/attack/fighter.lua
 dat/ai/core/attack/generic.lua
-dat/ai/core/attack/target.lua
 dat/ai/core/attack/util.lua
 dat/ai/core/basic.lua
 dat/ai/core/control/escort.lua

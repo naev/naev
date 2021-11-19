@@ -8,9 +8,6 @@
     - atk_target : Targeting utilities.
 --]]
 
--- Utilities
-require 'ai.core.attack.target'
-
 -- Attack profiles
 require 'ai.core.attack.generic'
 require 'ai.core.attack.fighter'

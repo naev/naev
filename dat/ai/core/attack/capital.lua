@@ -108,6 +108,6 @@ end
 
 
 function atk_capital_init ()
-   mem.atk_think  = atk_heuristic_big_game_think
+   mem.atk_think  = atk.heuristic_big_game_think
    mem.atk        = atk_capital
 end
