@@ -442,8 +442,8 @@ int lua_ispilot( lua_State *L, int ind )
  * @usage point = pilot.choosePoint( f, i, g )
  *
  *    @luatparam Faction f Faction the pilot will belong to.
- *    @luatparam[opt=false] boolean i Wether to ignore rules.
- *    @luatparam[opt=false] boolean g Wether to behave as guerilla (spawn in deep space)
+ *    @luatparam[opt=false] boolean i Whether to ignore rules.
+ *    @luatparam[opt=false] boolean g Whether to behave as guerilla (spawn in deep space)
  *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint
  */
