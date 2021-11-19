@@ -27,6 +27,7 @@
       major edits by Lukc
 
 ]]--
+local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
 
@@ -38,7 +39,7 @@ function create ()
 
    -- target destination
    local planets = {}
-   for _, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
+   for k, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
       if p ~= landed then
          planets[#planets+1] = { planet.getS(p) }
       end
@@ -136,7 +137,7 @@ function enter ()
          invoke_enemies( enter_vect )
       -- Enter after player
       else
-         hook.timer(rnd.uniform( 2.0, 5.0 ), "invoke_enemies")
+         hook.timer(rnd.uniform( 2.0, 5.0 ), "invoke_enemies", enter_vect)
       end
    end
 end
@@ -162,14 +163,8 @@ function invoke_enemies( enter_vect )
    if rnd.rnd() < 0.9 then table.insert( merc, "Hyena" ) end
 
    -- Add mercenaries
-   for k,v in ipairs(merc) do
-      -- Move position a bit
-      enter_vect:add( vec2.newP( rnd.rnd(50, 75), rnd.angle() ) )
-      -- Add pilots
-      local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
-      -- Set hostile
-      for k2,v2 in ipairs(p) do
-         v:setHostile()
-      end
+   local flt = fleet.add( 1, merc, "Pirate", enter_vect, nil, {ai="mercenary"} )
+   for k,p in ipairs(flt) do
+      p:setHostile()
    end
 end
