@@ -13,6 +13,8 @@ function sbase.newStanding( args )
 end
 
 function sbase.Standing:init( args )
+   self.fct               = args.fct                                 -- The faction
+
    -- Faction caps.
    self.cap_kill           = args.cap_kill            or 20          -- Kill cap
    self.delta_distress     = args.delta_distress      or {-1, 0}     -- Maximum change constraints
