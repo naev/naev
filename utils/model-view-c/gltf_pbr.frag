@@ -94,18 +94,24 @@ float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
    return lightScatter * viewScatter * (1.0 / M_PI);
 }
 
+vec3 BRDF_diffuse( vec3 diffuseColor, float roughness, float NoV, float NoL, float LoH )
+{
+   return diffuseColor * Fd_Burley( roughness, NoV, NoL, LoH );
+}
+#if 0
 vec3 BRDF_lambertian( vec3 f0, vec3 f90, vec3 diffuseColor, float specularWeight, float VdotH )
 {
    // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
    return (1.0 - specularWeight * F_Schlick(f0, f90, VdotH)) * (diffuseColor / M_PI);
 }
+#endif
 
 vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float specularWeight, float VdotH, float NdotL, float NdotV, float NdotH )
 {
-   vec3 F    = F_Schlick(f0, f90, VdotH);
-   float Vis = V_SmithGGXCorrelated( roughness, NdotV, NdotL );
-   float D   = D_GGX( roughness, NdotH );
-   return specularWeight * F * Vis * D;
+   float D = D_GGX( roughness, NdotH );
+   float V = V_SmithGGXCorrelated( roughness, NdotV, NdotL );
+   vec3 F  = F_Schlick( f0, f90, VdotH );
+   return specularWeight * (V * D) * F;
 }
 
 struct Material {
@@ -195,7 +201,7 @@ void main (void)
    Material M;
    //M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
    M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.roughness    = pow(roughnessFactor, 2.0); /* Convert from perceptual roughness. */
+   M.roughness    = roughnessFactor * roughnessFactor; /* Convert from perceptual roughness. */
    M.metallic     = metallicFactor;
    M.f0           = mix( vec3(0.04), M.albedo, M.metallic );
    M.f90          = vec3(1.0);
@@ -218,10 +224,10 @@ void main (void)
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
    //for (int i=0; i<1; i++) {
       Light L;
-      L.position  = 5.0*vec3(2.0, 1.0, -10.0);
-      L.range     = -1000.0;
+      L.position  = 2.0*vec3(2.0, 1.0, -10.0);
+      L.range     = -1.0;
       L.colour    = vec3(1.0);
-      L.intensity = 20000.0;
+      L.intensity = 2000.0;
 
       vec3 pointToLight = L.position - position;
       vec3 l = normalize(pointToLight);
@@ -237,8 +243,9 @@ void main (void)
       //if (NdotL > 0.0 || NdotV > 0.0) {
          vec3 intensity = light_intensity( L, length(pointToLight) );
 
-         f_diffuse  += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
-         f_specular += intensity * NdotL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VdotH, NdotL, NdotV, NdotH);
+         //f_diffuse  += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
+         f_diffuse += intensity * NdotL * BRDF_diffuse( M.c_diff, M.roughness, NdotV, NdotL, LdotH );
+         f_specular += intensity * NdotL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VdotH, NdotL, NdotV, NdotH );
       //}
 
    //}
