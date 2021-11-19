@@ -408,7 +408,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
 
    vn.label("play_yes")
    if question_data.type == "ship_class" then
-      sl(_([["Great! So here it goes. Listen carefully."]] .. "\n\n" .. question_data.question))
+      sl(_([["Great! So here it goes. Listen carefully."]]) .. "\n\n" .. question_data.question)
    elseif question_data.type == "ship_guess" then
       local nw, _nh = naev.gfx.dim()
       local shipgfx = lg.newImage( ship.get(question_data.answer):gfxComm() )
@@ -425,7 +425,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       vn.func( function ()
          vn.menu_x = math.min( -1, 500 - nw/2 )
       end )
-      sl(_([["Great! So take a look at this ship and listen carefully."]] .. "\n\n" .. question_data.question))
+      sl(_([["Great! So take a look at this ship and listen carefully."]]) .. "\n\n" .. question_data.question)
       function restore_vn ()
          vn.disappear( shipchar )
          vn.animation( 1, function( alpha, _dt, _params )
