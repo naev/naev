@@ -2187,7 +2187,6 @@ dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
 dat/ai/baddiepos.lua
-dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
