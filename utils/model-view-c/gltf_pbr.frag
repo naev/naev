@@ -24,29 +24,29 @@ float pow5(float x) {
    return x2 * x2 * x;
 }
 
-float D_GGX( float roughness, float NoH, const vec3 h )
+float D_GGX( float roughness, float NoH )
 {
-	/* Walter et al. 2007, "Microfacet Models for Refraction through Rough Surfaces" */
-	float oneMinusNoHSquared = 1.0 - NoH * NoH;
+   /* Walter et al. 2007, "Microfacet Models for Refraction through Rough Surfaces" */
+   float oneMinusNoHSquared = 1.0 - NoH * NoH;
 
-	float a = NoH * roughness;
-	float k = roughness / (oneMinusNoHSquared + a * a);
-	float d = k * k * (1.0 / M_PI);
-	return clamp(d,0.0,1.0);
+   float a = NoH * roughness;
+   float k = roughness / (oneMinusNoHSquared + a * a);
+   float d = k * k * (1.0 / M_PI);
+   return clamp(d,0.0,1.0);
 }
 
 float V_SmithGGXCorrelated( float roughness, float NoV, float NoL )
 {
-	/* Heitz 2014, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs" */
-	float a2 = roughness * roughness;
-	// TODO: lambdaV can be pre-computed for all the lights, it should be moved out of this function
-	float lambdaV = NoL * sqrt((NoV - a2 * NoV) * NoV + a2);
-	float lambdaL = NoV * sqrt((NoL - a2 * NoL) * NoL + a2);
-	float v = 0.5 / (lambdaV + lambdaL);
-	// a2=0 => v = 1 / 4*NoL*NoV   => min=1/4, max=+inf
-	// a2=1 => v = 1 / 2*(NoL+NoV) => min=1/4, max=+inf
-	// clamp to the maximum value representable in mediump
-	return clamp(v,0.0,1.0);
+   /* Heitz 2014, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs" */
+   float a2 = roughness * roughness;
+   // TODO: lambdaV can be pre-computed for all the lights, it should be moved out of this function
+   float lambdaV = NoL * sqrt((NoV - a2 * NoV) * NoV + a2);
+   float lambdaL = NoV * sqrt((NoL - a2 * NoL) * NoL + a2);
+   float v = 0.5 / (lambdaV + lambdaL);
+   // a2=0 => v = 1 / 4*NoL*NoV   => min=1/4, max=+inf
+   // a2=1 => v = 1 / 2*(NoL+NoV) => min=1/4, max=+inf
+   // clamp to the maximum value representable in mediump
+   return clamp(v,0.0,1.0);
 }
 
 float V_Kelemen( float LoH )
@@ -57,40 +57,63 @@ float V_Kelemen( float LoH )
 
 vec3 F_Schlick( const vec3 f0, float f90, float VoH )
 {
-	/* Schlick 1994, "An Inexpensive BRDF Model for Physically-Based Rendering" */
-	return f0 + (f90 - f0) * pow5(1.0 - VoH);
+   /* Schlick 1994, "An Inexpensive BRDF Model for Physically-Based Rendering" */
+   return f0 + (f90 - f0) * pow5(1.0 - VoH);
 }
 vec3 F_Schlick( const vec3 f0, float VoH )
 {
-	float f = pow5(1.0 - VoH);
-	return f + f0 * (1.0 - f);
+   float f = pow5(1.0 - VoH);
+   return f + f0 * (1.0 - f);
 }
 float F_Schlick( float f0, float f90, float VoH )
 {
-	return f0 + (f90 - f0) * pow5(1.0 - VoH);
+   return f0 + (f90 - f0) * pow5(1.0 - VoH);
+}
+vec3 F_Schlick(vec3 f0, vec3 f90, float VdotH)
+{
+   return f0 + (f90 - f0) * pow(clamp(1.0 - VdotH, 0.0, 1.0), 5.0);
 }
 
 float Fd_Lambert (void)
 {
-	return 1.0 / M_PI;
+   return 1.0 / M_PI;
 }
 
 float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
 {
-	/* Burley 2012, "Physically-Based Shading at Disney" */
-	float f90 = 0.5 + 2.0 * roughness * LoH * LoH;
-	float lightScatter = F_Schlick(1.0, f90, NoL);
-	float viewScatter  = F_Schlick(1.0, f90, NoV);
-	return lightScatter * viewScatter * (1.0 / M_PI);
+   /* Burley 2012, "Physically-Based Shading at Disney" */
+   float f90 = 0.5 + 2.0 * roughness * LoH * LoH;
+   float lightScatter = F_Schlick(1.0, f90, NoL);
+   float viewScatter  = F_Schlick(1.0, f90, NoV);
+   return lightScatter * viewScatter * (1.0 / M_PI);
+}
+
+vec3 BRDF_lambertian( vec3 f0, vec3 f90, vec3 diffuseColor, float specularWeight, float VdotH )
+{
+   // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
+   return (1.0 - specularWeight * F_Schlick(f0, f90, VdotH)) * (diffuseColor / M_PI);
+}
+
+vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float specularWeight, float VdotH, float NdotL, float NdotV, float NdotH )
+{
+   vec3 F    = F_Schlick(f0, f90, VdotH);
+   float Vis = V_SmithGGXCorrelated( roughness, NdotV, NdotL );
+   float D   = D_GGX( roughness, NdotH );
+   return specularWeight * F * Vis * D;
 }
 
 struct Material {
    vec3 albedo;         /**< Surface albedo. */
    float roughness;     /**< Surface roughness. */
    float metallic;      /**< Metallicness of the object. */
-   vec3 F0;             /**< Fresnel value at 0 degrees. */
+   vec3 f0;             /**< Fresnel value at 0 degrees. */
+	vec3 f90;				/**< Fresnel value at 90 degrees. */
+	vec3 c_diff;
    float roughness_cc;  /**< Clear coat roughness. */
    float clearCoat;     /**< Clear coat colour. */
+
+	/* KHR_materials_specular */
+	float specularWeight; /**< product of specularFactor and specularTexture.a */
 };
 
 struct Light {
@@ -110,6 +133,7 @@ vec3 light_intensity( Light L, float dist )
    return L.colour * L.intensity * attenuation;
 }
 
+#if 0
 vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 {
    vec3 h   = normalize(l+v); /* Halfway vector. */
@@ -130,9 +154,9 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
    vec3 Fd = mat.albedo * Fd_Burley( mat.roughness, NoV, NoL, LoH );
    //vec3 Fd = Td * Fd_Lambert();
 
-	/* The energy compensation term is used to counteract the darkening effect
-	 * at high roughness */
-	//vec3 colour = Fd + Fr * pixel.energyCompensation;
+   /* The energy compensation term is used to counteract the darkening effect
+    * at high roughness */
+   //vec3 colour = Fd + Fr * pixel.energyCompensation;
    vec3 colour = Fd + Fr;
 
    /* Clear coat Lobe. */
@@ -145,6 +169,12 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 
    return colour;
 }
+#endif
+
+float clampedDot(vec3 x, vec3 y)
+{
+   return clamp(dot(x, y), 0.0, 1.0);
+}
 
 void main (void)
 {
@@ -156,32 +186,56 @@ void main (void)
    n = normalize(n);
 
    /* Material values. */
-   Material mat;
-   //mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   mat.roughness     = roughnessFactor;
-   mat.metallic      = metallicFactor;
-   mat.F0            = vec3(0.56); /* Iron. */
-   mat.clearCoat     = clearcoat;
-   mat.roughness_cc  = clearcoat_roughness;
+   Material M;
+   //M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   M.roughness    = pow(roughnessFactor, 2.0); /* Convert from perceptual roughness. */
+   M.metallic     = metallicFactor;
+   M.f0           = mix( vec3(0.04), M.albedo, M.metallic );
+   M.f90          = vec3(1.0);
+	M.c_diff       = mix( M.albedo * (vec3(1.0) - M.f0), vec3(0), M.metallic);
+   M.clearCoat    = clearcoat;
+   M.roughness_cc = clearcoat_roughness;
+	M.specularWeight = 1.0;
 
-   /* Get the crew ready. */
+   vec3 f_specular = vec3(0.0);
+   vec3 f_diffuse  = vec3(0.0);
+   vec3 f_emissive = vec3(0.0);
+   vec3 f_clearcoat= vec3(0.0);
+
+   /* Would have to do IBL lighting here. */
+   //f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
+   //f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
+   //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
+
    /* Point light for now. */
-   Light L;
-   L.position  = vec3(2.0, 1.0, -10.0);
-   L.range     = 200.0;
-   L.colour    = vec3(1.0);
-   L.intensity = 100.0;
+   const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
+   //for (int i=0; i<1; i++) {
+      Light L;
+      L.position  = 5.0*vec3(2.0, 1.0, -10.0);
+      L.range     = -1000.0;
+      L.colour    = vec3(1.0);
+      L.intensity = 20000.0;
 
-   const vec3 v   = normalize( vec3(0.0, 0.0, 1.0) );
-   vec3 p         = position;
-   vec3 pl        = L.position-p;
-   vec3 l         = normalize(pl);
-   float NoL      = max(0.0,dot(n,l));
+      vec3 pointToLight = L.position - position;
+      vec3 l = normalize(pointToLight);
+      vec3 h = normalize(l + v); /* Halfway vector. */
+      float NdotL = clampedDot(n, l);
+      float NdotV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
+      float NdotH = clampedDot(n, h);
+      float LdotH = clampedDot(l, h);
+      float VdotH = clampedDot(v, h);
 
-   vec3 colour = shade( mat, v, n, l, NoL ) * light_intensity( L, length(pl) );
+      /* Habemus light. */
+      /* TODO this check will always be true if we do the NdotV trick above. */
+      //if (NdotL > 0.0 || NdotV > 0.0) {
+         vec3 intensity = light_intensity( L, length(pointToLight) );
 
-   colour_out = vec4(colour * NoL, 1.0);
-   //colour_out.rgb *= mat.albedo;
-   //colour_out = vec4(1.0);
+         f_diffuse += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
+         f_specular += intensity * NdotL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VdotH, NdotL, NdotV, NdotH);
+      //}
+
+   //}
+
+   colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
 }
