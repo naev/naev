@@ -2268,7 +2268,7 @@ static int aiL_getlandplanet( lua_State *L )
 /**
  * @brief Lands on a planet.
  *
- *    @luaparam [opt] Planet pnt planet to land on
+ *    @luatparam[opt] Planet pnt planet to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
@@ -2345,7 +2345,7 @@ static int aiL_land( lua_State *L )
 /**
  * @brief Tries to enter hyperspace.
  *
- *    @luaparam [opt] System sys Optional System to jump to
+ *    @luatparam[opt] System sys System to jump to
  *    @luatreturn number|nil Distance if too far away.
  *    @luafunc hyperspace
  */

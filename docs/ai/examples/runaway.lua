@@ -15,19 +15,17 @@ function attacked ( attacker )
 end
 
 -- runs away
-function runaway ()
-   target = ai.targetid()
-
-   if not ai.exists(target) then
-      ai.pushtask()
-      ai.pushtask(0,"hyperspace")
+function runaway( target )
+   if not target:exists() then
+      ai.poptask()
+      ai.pushtask("hyperspace")
       return
    end
 
    dir = ai.face( target, 1 )
    ai.accel()
    if ai.hasturrets() then
-      dist = ai.dist( ai.pos(target) )
+      dist = ai.dist( target:pos() )
       if dist < 300 then
          ai.settarget(target)
          ai.shoot()

@@ -14,7 +14,7 @@ end
 -- goes hyperspace
 function hyperspace ()
    dir = ai.face(-1) -- face away from (0,0)
-   if (dir < 10) then -- try to go straight
+   if (dir < math.rad(10)) then -- try to go straight
       ai.accel()
    end
 end
