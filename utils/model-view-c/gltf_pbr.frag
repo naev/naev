@@ -13,14 +13,20 @@ uniform vec4 baseColour;
 /* clearcoat */
 uniform float clearcoat;
 uniform float clearcoat_roughness;
+uniform vec3 emissive;
 
 in vec2 tex_coord0;
 in vec3 position;
 in vec3 normal;
 out vec4 colour_out;
 
-float pow5(float x) {
+float pow5( float x ) {
    float x2 = x * x;
+   return x2 * x2 * x;
+}
+
+vec3 pow5( vec3 x ) {
+   vec3 x2 = x * x;
    return x2 * x2 * x;
 }
 
@@ -71,7 +77,7 @@ float F_Schlick( float f0, float f90, float VoH )
 }
 vec3 F_Schlick(vec3 f0, vec3 f90, float VdotH)
 {
-   return f0 + (f90 - f0) * pow(clamp(1.0 - VdotH, 0.0, 1.0), 5.0);
+   return f0 + (f90 - f0) * pow5(clamp(1.0 - VdotH, 0.0, 1.0));
 }
 
 float Fd_Lambert (void)
@@ -171,7 +177,7 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 }
 #endif
 
-float clampedDot(vec3 x, vec3 y)
+float clampedDot( vec3 x, vec3 y )
 {
    return clamp(dot(x, y), 0.0, 1.0);
 }
@@ -231,11 +237,14 @@ void main (void)
       //if (NdotL > 0.0 || NdotV > 0.0) {
          vec3 intensity = light_intensity( L, length(pointToLight) );
 
-         f_diffuse += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
+         f_diffuse  += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
          f_specular += intensity * NdotL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VdotH, NdotL, NdotV, NdotH);
       //}
 
    //}
 
+   f_emissive = emissive;
+
    colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
+   //colour_out = vec4( M.albedo, 1.0 );
 }

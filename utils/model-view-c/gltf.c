@@ -28,6 +28,7 @@ typedef struct Shader_ {
    GLuint baseColour;
    GLuint clearcoat;
    GLuint clearcoat_roughness;
+   GLuint emissive;
 } Shader;
 static Shader object_shader;
 static GLuint tex_zero = -1;
@@ -172,6 +173,12 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->clearcoat = 0.;
       mat->clearcoat_roughness = 0.;
    }
+
+   if (cmat)
+      memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
+   else
+      memset( mat->emissiveFactor, 0, sizeof(GLfloat)*3 );
+
    return 0;
 }
 
@@ -319,6 +326,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+   glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    gl_checkErr();
 
    /* Texture. */
@@ -526,6 +534,7 @@ int object_init (void)
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );
    shd->clearcoat       = glGetUniformLocation( shd->program, "clearcoat" );
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
+   shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    glUseProgram(0);
    gl_checkErr();
 
