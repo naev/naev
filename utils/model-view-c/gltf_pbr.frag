@@ -95,8 +95,20 @@ struct Material {
 
 struct Light {
    vec3 position;
+   float range;
    vec3 colour;
+   float intensity;
 };
+
+vec3 light_intensity( Light L, float dist )
+{
+   float attenuation;
+   if (L.range < 0.0)
+      attenuation =  1.0 / pow(dist,2.0);
+   else
+      attenuation = max(min(1.0 - pow(dist / L.range, 4.0), 1.0), 0.0) / pow(dist, 2.0);
+   return L.colour * L.intensity * attenuation;
+}
 
 vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 {
@@ -155,14 +167,19 @@ void main (void)
 
    /* Get the crew ready. */
    /* Point light for now. */
-   const vec3 lp  = vec3(2.0, 1.0, -10.0);
-   const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
-   vec3 p   = position;
-   vec3 pl  = lp-p;
-   vec3 l   = normalize(pl);
-   float NoL = max(0.0,dot(n,l));
+   Light L;
+   L.position  = vec3(2.0, 1.0, -10.0);
+   L.range     = 200.0;
+   L.colour    = vec3(1.0);
+   L.intensity = 100.0;
 
-   vec3 colour = shade( mat, v, n, l, NoL ) * 20.0 / length(pl);
+   const vec3 v   = normalize( vec3(0.0, 0.0, 1.0) );
+   vec3 p         = position;
+   vec3 pl        = L.position-p;
+   vec3 l         = normalize(pl);
+   float NoL      = max(0.0,dot(n,l));
+
+   vec3 colour = shade( mat, v, n, l, NoL ) * light_intensity( L, length(pl) );
 
    colour_out = vec4(colour * NoL, 1.0);
    //colour_out.rgb *= mat.albedo;
