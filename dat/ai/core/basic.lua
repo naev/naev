@@ -74,6 +74,7 @@ end
 --[[
 -- Brakes the ship
 --]]
+-- luacheck: globals _subbrake (AI Task functions passed by name)
 function _subbrake ()
    ai.brake()
    if ai.isstopped() then
@@ -347,6 +348,8 @@ function hyperspace_shoot( target )
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach_shoot", target )
 end
+
+-- luacheck: globals _hyp_approach_shoot (AI Task functions passed by name)
 function _hyp_approach_shoot( target )
    -- Shoot and approach
    local enemy = ai.getenemy()
@@ -359,6 +362,7 @@ function land_shoot ( target )
    ai.pushsubtask( "_landgo_shoot", planet )
 end
 
+-- luacheck: globals _landgo_shoot (AI Task functions passed by name)
 function _landgo_shoot ( planet )
    local enemy = ai.getenemy()
    __shoot_turret( enemy )
@@ -400,9 +404,12 @@ function land ( target )
    local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end
+
+-- luacheck: globals _landgo (AI Task functions passed by name)
 function _landgo( planet )
    __landgo(planet)
 end
+
 function __landgo ( planet )
    local pl_pos = planet:pos() + mem.target_bias
 
@@ -428,6 +435,8 @@ function __landgo ( planet )
    end
 
 end
+
+-- luacheck: globals _landland (AI Task functions passed by name)
 function _landland ( planet )
    if not ai.land( planet ) then
       ai.popsubtask()
@@ -490,6 +499,7 @@ function runaway_land( data )
    ai.pushsubtask( "_run_landgo", data )
 end
 
+-- luacheck: globals _run_target (AI Task functions passed by name)
 function _run_target( target )
    __run_target( target )
 end
@@ -542,6 +552,8 @@ function __shoot_turret( target )
       end
    end
 end
+
+-- luacheck: globals _run_hyp (AI Task functions passed by name)
 function _run_hyp( data )
    local enemy  = data[1]
    local jump   = data[2]
@@ -598,6 +610,7 @@ function _run_hyp( data )
    end
 end
 
+-- luacheck: globals _run_landgo (AI Task functions passed by name)
 function _run_landgo( data )
    local enemy  = data[1]
    local planet = data[2]
@@ -685,6 +698,8 @@ function hyperspace( target )
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
 end
+
+-- luacheck: globals _hyp_approach (AI Task functions passed by name)
 function _hyp_approach( target )
    __hyp_approach( target )
 end
@@ -714,6 +729,8 @@ function __hyp_approach( target )
       end
    end
 end
+
+-- luacheck: globals _hyp_jump (AI Task functions passed by name)
 function _hyp_jump ( jump )
    if ai.hyperspace( jump ) == nil then
       local p = ai.pilot()
@@ -758,6 +775,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
+-- luacheck: globals _boardstop (AI Task functions passed by name)
 function _boardstop( target )
    -- make sure pilot exists
    if not target:exists() then
@@ -829,6 +847,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
+-- luacheck: globals _refuelstop (AI Task functions passed by name)
 function _refuelstop( target )
    -- make sure pilot exists
    if not target:exists() then
@@ -909,6 +928,8 @@ function mine( fieldNast )
       ai.pushsubtask("_killasteroid", fieldNast )
    end
 end
+
+-- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( fieldNast )
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
