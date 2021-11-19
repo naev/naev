@@ -86,7 +86,7 @@ function idle ()
 end
 
 -- Override the control function
-control_generic = control
+local control_generic = control
 function control ()
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return

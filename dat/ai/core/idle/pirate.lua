@@ -121,7 +121,7 @@ local function __loiter( p, taskname )
 end
 
 
-function idle_leave ()
+local function idle_leave ()
    -- Get a goal
    if not mem.goal then
       if mem.land_planet and not mem.tookoff then
@@ -155,7 +155,7 @@ function idle_leave ()
    return false
 end
 
-function idle_nostealth ()
+local function idle_nostealth ()
    local p = ai.pilot()
 
    if mem.aggressive then
