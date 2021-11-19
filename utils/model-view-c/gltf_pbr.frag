@@ -106,10 +106,10 @@ vec3 BRDF_lambertian( vec3 f0, vec3 f90, vec3 diffuseColor, float specularWeight
 }
 #endif
 
-vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float specularWeight, float VdotH, float NdotL, float NdotV, float NdotH )
+vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float specularWeight, float VdotH, float NoL, float NoV, float NoH )
 {
-   float D = D_GGX( roughness, NdotH );
-   float V = V_SmithGGXCorrelated( roughness, NdotV, NdotL );
+   float D = D_GGX( roughness, NoH );
+   float V = V_SmithGGXCorrelated( roughness, NoV, NoL );
    vec3 F  = F_Schlick( f0, f90, VdotH );
    return specularWeight * (V * D) * F;
 }
@@ -232,20 +232,20 @@ void main (void)
       vec3 pointToLight = L.position - position;
       vec3 l = normalize(pointToLight);
       vec3 h = normalize(l + v); /* Halfway vector. */
-      float NdotL = clampedDot(n, l);
-      float NdotV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
-      float NdotH = clampedDot(n, h);
-      float LdotH = clampedDot(l, h);
-      float VdotH = clampedDot(v, h);
+      float NoL = clampedDot(n, l);
+      float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
+      float NoH = clampedDot(n, h);
+      float LoH = clampedDot(l, h);
+      float VoH = clampedDot(v, h);
 
       /* Habemus light. */
-      /* TODO this check will always be true if we do the NdotV trick above. */
-      //if (NdotL > 0.0 || NdotV > 0.0) {
+      /* TODO this check will always be true if we do the NoV trick above. */
+      //if (NoL > 0.0 || NoV > 0.0) {
          vec3 intensity = light_intensity( L, length(pointToLight) );
 
-         //f_diffuse  += intensity * NdotL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
-         f_diffuse += intensity * NdotL * BRDF_diffuse( M.c_diff, M.roughness, NdotV, NdotL, LdotH );
-         f_specular += intensity * NdotL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VdotH, NdotL, NdotV, NdotH );
+         //f_diffuse  += intensity * NoL * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
+         f_diffuse += intensity * NoL * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
+         f_specular += intensity * NoL * BRDF_specularGGX( M.f0, M.f90, M.roughness, M.specularWeight, VoH, NoL, NoV, NoH );
       //}
 
    //}
