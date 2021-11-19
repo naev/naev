@@ -78,7 +78,7 @@ They furrow their brows for a second.
    g(fmt.f(_([["All you would have to do is take the cake and go to {pnt} in the {sys} system, without getting any of that nasty scanning radiation on you."
 They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
 "Once you deliver it I'll split the money half and half with you."]]), {pnt=mem.destplanet, sys=mem.destsys}))
-   vn.na("You stare at them coldly.")
+   vn.na(_("You stare at them coldly."))
    g(fmt.f(_([["Fine fine, take it all. It should be {credits}. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
 "So, are you in?"]]), {credits=fmt.credits(mem.reward)}))
