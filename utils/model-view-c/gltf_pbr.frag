@@ -14,6 +14,8 @@ uniform vec4 baseColour;
 uniform float clearcoat;
 uniform float clearcoat_roughness;
 uniform vec3 emissive;
+/* misc */
+uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 
 in vec2 tex_coord0;
 in vec3 position;
@@ -221,6 +223,10 @@ void main (void)
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
    f_diffuse += 0.5*M.c_diff; /* Just use ambience for now. */
 
+   /* Ambient occlusion. */
+   float ao = texture(occlusion_tex, tex_coord0).r;
+   f_diffuse *= ao;
+
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
    //for (int i=0; i<1; i++) {
@@ -256,4 +262,5 @@ void main (void)
 
    colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
    //colour_out = vec4( M.albedo, 1.0 );
+   //colour_out = vec4( vec3(ao), 1.0 );
 }
