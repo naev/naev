@@ -53,7 +53,8 @@ int main( int argc, char *argv[] )
    glEnable( GL_FRAMEBUFFER_SRGB );
    glClearColor( 0., 0., 0., 1. );
 
-   object_init();
+   if (object_init())
+      return -1;
 
    //Object *obj = object_loadFromFile( "minimal.gltf" );
    //Object *obj = object_loadFromFile( "simple.gltf" );
