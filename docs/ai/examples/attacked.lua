@@ -11,48 +11,42 @@ function attacked ( attacker )
       taunt( attacker )
 
       -- now pilot fights back
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask( "attack", attacker )
 
    elseif task == "attack" then
       if ai.targetid() ~= attacker then
-            ai.pushtask(0, "attack", attacker)
+            ai.pushtask( "attack", attacker )
       end
    end
 end
 
 -- taunts
-function taunt ( target )
-   num = ai.rnd(0,4)
-   if num == 0 then msg = "You dare attack me!"
-   elseif num == 1 then msg = "You are no match for the Empire!"
-   elseif num == 2 then msg = "The Empire will have your head!"
-   elseif num == 3 then msg = "You'll regret this!"
-   end
-   if msg then ai.comm(attacker, msg) end
+function taunt( target )
+   local taunts = {
+      _("You dare attack me!"),
+      _("You are no match for the Empire!"),
+      _("The Empire will have your head!"),
+      _("You'll regret this!"),
+   }
+   local msg = taunts[ rnd.rnd(1, #taunts) ]
+   if msg then ai.pilot():comm( attacker, msg ) end
 end
 
 -- attacks
-function attack ()
-   target = ai.targetid()
-
+function attack( target )
    -- make sure pilot exists
-   if not ai.exists(target) then
+   if not target:exists() then
       ai.poptask()
       return
    end
 
-   dir = ai.face( target )
-   dist = ai.dist( ai.pos(target) )
-   second = ai.secondary()
+   local dir = ai.face( target )
+   local dist = ai.dist( ai.pos(target) )
 
-   if ai.secondary() == "Launcher" then
-      ai.settarget(target)
-      ai.shoot(2)
-   end
-
-   if dir < 10 and dist > 300 then
+   -- Attack with primary weapon. Real AIs manage weapon sets so they can use missile launchers etc.
+   if math.abs(dir) < math.rad(10) and dist > 300 then
       ai.accel()
-   elseif (dir < 10 or ai.hasturrets()) and dist < 300 then
+   elseif (math.abs(dir) < math.rad(10) or ai.hasturrets()) and dist < 300 then
       ai.shoot()
    end
 end
