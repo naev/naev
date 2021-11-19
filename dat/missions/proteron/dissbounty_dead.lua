@@ -119,7 +119,7 @@ end
 local _target_faction
 function get_faction()
    if not _target_faction then
-      _target_faction = faction.dynAdd( "Independent", "Proteron Dissident", _("Proteron Dissident") )
+      _target_faction = faction.dynAdd( "Independent", "Proteron Dissident", _("Proteron Dissident"), {ai="proteron_dissident"} )
       --_target_faction:dynEnemy( "Proteron" ) -- Avoid letting the proteron kill them
    end
    return _target_faction
