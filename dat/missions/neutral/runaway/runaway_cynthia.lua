@@ -54,7 +54,7 @@ function accept ()
 
    misn.accept()
 
-   misn.osdCreate(_("The Runaway"), _("Deliver Cynthia to Zhiru in the Goddard system"))
+   misn.osdCreate(_("The Runaway"), {_("Deliver Cynthia to Zhiru in the Goddard system")})
    misn.osdActive(1)
 
    local c = misn.cargoNew( cargoname, cargodesc )
