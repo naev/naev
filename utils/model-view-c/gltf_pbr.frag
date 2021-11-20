@@ -197,14 +197,29 @@ float clampedDot( vec3 x, vec3 y )
    return clamp(dot(x, y), 0.0, 1.0);
 }
 
+vec3 get_normal (void)
+{
+   vec2 uv    = tex_coord0;
+   vec3 uv_dx = dFdx(vec3(uv, 0.0));
+   vec3 uv_dy = dFdy(vec3(uv, 0.0));
+   vec3 t_ = (uv_dy.t * dFdx(position) - uv_dx.t * dFdy(position)) /
+             (uv_dx.s * uv_dy.t - uv_dy.s * uv_dx.t);
+   vec3 n, t, b, ng;
+
+   ng = normalize(normal);
+   t = normalize(t_ - ng * dot(ng, t_));
+   b = cross(ng, t);
+
+   n = texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0);
+   //n *= vec3(u_NormalScale, u_NormalScale, 1.0);
+   n = mat3(t, b, ng) * normalize(n);
+
+   return n;
+}
+
 void main (void)
 {
-   /* Compute normal taking into account the bump map. */
-   vec3 n = normalize(normal);
-   n += normalH * (texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0));
-   n = normalize(n);
-   //n *= vec3(u_NormalScale, u_NormalScale, 1.0);
-   //n = mat3(t, b, ng) * normalize(n);
+   vec3 n = get_normal();
 
    /* Material values. */
    Material M;
