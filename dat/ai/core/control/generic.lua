@@ -587,8 +587,15 @@ function attacked_manual( attacker )
    local si = _stateinfo( task )
 
    -- Notify that pilot has been attacked before
-   mem.attacked = true
    local p = ai.pilot()
+   if not mem.attacked then
+      mem.attacked = true
+      if ai.hasfighterbays() then
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_clear" )
+         end
+      end
+   end
 
    -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
    -- bribe status
@@ -622,8 +629,15 @@ function attacked( attacker )
    local si = _stateinfo( task )
 
    -- Notify that pilot has been attacked before
-   mem.attacked = true
    local p = ai.pilot()
+   if not mem.attacked then
+      mem.attacked = true
+      if ai.hasfighterbays() then
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_clear" )
+         end
+      end
+   end
 
    -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
    -- bribe status
