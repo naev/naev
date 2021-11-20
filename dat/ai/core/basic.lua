@@ -34,18 +34,6 @@ local function __intable( t, val )
 end
 
 --[[
--- Helper function to see if two pilots belong to the same fleet or not
---]]
-function __sameFleet( pa, pb )
-   local la = pa:leader()
-   local lb = pa:leader()
-   if not la or not la:exists() then la = pa end
-   if not lb or not lb:exists() then lb = pb end
-   return la == lb
-end
-
-
---[[
 -- Faces the target.
 --]]
 function face( target )

@@ -238,6 +238,18 @@ function handle_messages( si, dopush )
    return taskchange
 end
 
+--[[
+-- Helper function to see if two pilots belong to the same fleet or not
+--]]
+local function sameFleet( pa, pb )
+   local la = pa:leader()
+   local lb = pa:leader()
+   if not la or not la:exists() then la = pa end
+   if not lb or not lb:exists() then lb = pb end
+   return la == lb
+end
+
+
 function should_attack( enemy, si )
    if not enemy or not enemy:exists() then
       return false
@@ -264,7 +276,7 @@ function should_attack( enemy, si )
          if ldata and ldata:exists() then
             -- Check to see if the pilot group the leader is fighting is the
             -- same as the current enenmy
-            if __sameFleet( ldata, enemy ) then
+            if sameFleet( ldata, enemy ) then
                return true
             end
          end
