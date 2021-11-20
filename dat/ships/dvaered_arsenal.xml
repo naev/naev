@@ -17,7 +17,7 @@
  <trail_generator x="-42" y="-13" h="6">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Large Civilian Vessel License</license>
- <description>...</description>
+ <description>The Arsenal is a heavily armed bulk freighter used by House Dvaered to transport large amount of supplies and troops whenever such a task would be too dangerous for lighter armoured freighters.</description>
  <health>
   <armour>1100</armour>
   <armour_regen>0</armour_regen>
