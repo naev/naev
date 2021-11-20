@@ -194,16 +194,16 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->clearcoat_roughness = 0.;
    }
 
-   if (cmat && cmat->emissive_texture.texture)
-      mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
-
-   if (cmat && cmat->occlusion_texture.texture)
-      mat->occlusion_tex = object_loadTexture( &cmat->occlusion_texture, tex_ones );
-
-   if (cmat)
+   if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-   else
+      mat->occlusion_tex = object_loadTexture( &cmat->occlusion_texture, tex_ones );
+      mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
+   }
+   else {
       memset( mat->emissiveFactor, 0, sizeof(GLfloat)*3 );
+      mat->emissive_tex = tex_ones;
+      mat->occlusion_tex = tex_ones;
+   }
 
    return 0;
 }

@@ -261,9 +261,10 @@ void main (void)
 
    //vec4 em = texture(emissive_tex, tex_coord0);
    //f_emissive = emissive * em.rgb * em.a;
-   f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb * M.c_diff;
+   f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb;
 
    colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
    //colour_out = vec4( M.albedo, 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
+   //colour_out = vec4( f_emissive, 1.0 );
 }
