@@ -41,10 +41,6 @@ function atk_corvette.atk( target, dokill )
    end
 end
 
-
-function atk_corvette.init ()
-   mem.atk_think  = atk.heuristic_big_game_think
-   mem.atk        = atk_corvette.atk
-end
+atk_corvette.atk_think = atk.heuristic_big_game_think
 
 return atk_corvette

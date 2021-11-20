@@ -129,13 +129,4 @@ function atk_generic.atk( target, dokill )
    end
 end
 
-
---[[
--- Required initialization function
---]]
-function atk_generic.init ()
-   mem.atk_think  = atk_generic.think
-   mem.atk        = atk_generic.atk
-end
-
 return atk_generic

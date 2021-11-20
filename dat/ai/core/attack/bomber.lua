@@ -31,10 +31,6 @@ function atk_bomber.atk( target, dokill )
    end
 end
 
-
-function atk_bomber.init ()
-   mem.atk_think  = atk.heuristic_big_game_think
-   mem.atk        = atk_bomber.atk
-end
+atk_bomber.atk_think = atk.heuristic_big_game_think
 
 return atk_bomber

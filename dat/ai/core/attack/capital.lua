@@ -108,10 +108,6 @@ function __atk_g_capital( target, dist )
    end
 end
 
-
-function atk_capital.init ()
-   mem.atk_think  = atk.heuristic_big_game_think
-   mem.atk        = atk_capital.atk
-end
+atk_capital.atk_think = atk.heuristic_big_game_think
 
 return atk_capital

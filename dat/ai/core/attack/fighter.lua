@@ -10,7 +10,7 @@ local atk_fighter = {}
 --[[
 -- Mainly targets small fighters.
 --]]
-local function atk_fighter_think( target, _si )
+function atk_fighter.think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -65,11 +65,5 @@ function atk_fighter.atk( target, dokill )
    end
 end
 
-
--- Initializes the fighter
-function atk_fighter.init ()
-   mem.atk_think  = atk_fighter_think
-   mem.atk        = atk_fighter.atk
-end
 
 return atk_fighter

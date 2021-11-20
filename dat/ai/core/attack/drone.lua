@@ -12,7 +12,7 @@ local atk_drone = {}
 --[[
 -- Mainly targets small drones.
 --]]
-local function atk_drone_think( target, _si )
+function atk_drone.think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -250,13 +250,6 @@ function __atk_d_space_sup( target, dist )
       end
       ai.shoot(true)
    end
-end
-
-
--- Initializes the drone
-function atk_drone.init ()
-   mem.atk_think  = atk_drone_think
-   mem.atk        = atk_drone.atk
 end
 
 return atk_drone

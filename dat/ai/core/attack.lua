@@ -58,22 +58,14 @@ function attack( target )
       return
    end
 
-   if mem.atk ~= nil then
-      mem.atk( target )
-   else
-      atk_generic.atk( target )
-   end
+   (mem.atk or atk_generic).atk( target )
 end
 
 --[[
 -- Forced attack function that should focus on the enemy until done
 --]]
 function attack_forced( target )
-   if mem.atk ~= nil then
-      mem.atk( target )
-   else
-      atk_generic.atk( target )
-   end
+   (mem.atk or atk_generic).atk( target )
 end
 
 --[[
@@ -81,11 +73,7 @@ end
 --]]
 -- luacheck: globals attack_forced_kill (AI Task functions passed by name)
 function attack_forced_kill( target )
-   if mem.atk ~= nil then
-      mem.atk( target, true )
-   else
-      atk_generic.atk( target, true )
-   end
+   (mem.atk or atk_generic).atk( target, true )
 end
 
 --[[
@@ -111,34 +99,34 @@ function attack_choose ()
 
    -- Lighter ships
    if class == "Bomber" then
-      atk_bomber.init()
+      mem.atk = atk_bomber
 
    elseif class == "Interceptor" then
-      atk_drone.init()
+      mem.atk = atk_drone
 
    elseif class == "Fighter" then
-      atk_fighter.init()
+      mem.atk = atk_fighter
 
    -- Medium ships
    elseif class == "Corvette" then
-      atk_corvette.init()
+      mem.atk = atk_corvette
 
    -- Capital ships
    elseif class == "Destroyer" then
-      atk_capital.init()
+      mem.atk = atk_capital
 
    elseif class == "Cruiser" then
-      atk_capital.init()
+      mem.atk = atk_capital
 
    elseif class == "Battleship" then
-      atk_capital.init()
+      mem.atk = atk_capital
 
    elseif class == "Carrier" then
-      atk_capital.init()
+      mem.atk = atk_capital
 
     -- Generic AI
    else
-      atk_generic.init()
+      mem.atk = atk_generic
    end
 end
 
