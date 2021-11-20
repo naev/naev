@@ -309,9 +309,7 @@ control_funcs.attack = function ()
       return true
    end
 
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return false
 end
 control_funcs.inspect_moveto = function ()

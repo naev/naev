@@ -307,6 +307,7 @@ function should_attack( enemy, si )
 end
 
 function control_attack( si )
+   si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
    -- Needs to have a target
    if not target or not target:exists() then
@@ -575,16 +576,12 @@ function control_funcs.board ()
    return true
 end
 function control_funcs.attack ()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return false
 end
 function control_funcs.attack_forced ()
    -- Independent of control_funcs.attack
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return true
 end
 function control_funcs.flyback () return true end
