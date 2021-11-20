@@ -68,3 +68,7 @@ function cooldown( p, po, done, _opt )
    if not done then return end
    reset( p, po )
 end
+
+function land( p, po )
+   disable( p, po )
+end

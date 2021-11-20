@@ -1146,6 +1146,9 @@ void land( Planet* p, int load )
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
 
+   /* Run outfits as necessary. */
+   pilot_outfitLOnland( player.p );
+
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
@@ -1433,6 +1436,7 @@ void takeoff( int delay )
 
    /* Update lua stuff. */
    pilot_outfitLInitAll( player.p );
+   pilot_outfitLOntakeoff( player.p );
 
    /* Reset speed */
    player_autonavResetSpeed();
