@@ -2976,7 +2976,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 int player_save( xmlTextWriterPtr writer )
 {
    char **guis;
-   int i;
    MissionData *m;
    const char *ev;
    int cycles, periods, seconds;
@@ -3012,20 +3011,20 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Ships. */
    xmlw_startElem(writer,"ships");
-   for (i=0; i<array_size(player_stack); i++)
+   for (int i=0; i<array_size(player_stack); i++)
       player_saveShip( writer, player_stack[i].p, player_stack[i].favourite );
    xmlw_endElem(writer); /* "ships" */
 
    /* GUIs. */
    xmlw_startElem(writer,"guis");
    guis = player_guiList();
-   for (i=0; i<array_size(guis); i++)
+   for (int i=0; i<array_size(guis); i++)
       xmlw_elem(writer,"gui","%s",guis[i]);
    xmlw_endElem(writer); /* "guis" */
 
    /* Outfits. */
    xmlw_startElem(writer,"outfits");
-   for (i=0; i<array_size(player_outfits); i++) {
+   for (int i=0; i<array_size(player_outfits); i++) {
       xmlw_startElem(writer, "outfit");
       xmlw_attr(writer, "quantity", "%d", player_outfits[i].q);
       xmlw_str(writer, "%s", player_outfits[i].o->name);
@@ -3035,7 +3034,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Licenses. */
    xmlw_startElem(writer, "licenses");
-   for (i=0; i<array_size(player_licenses); i++)
+   for (int i=0; i<array_size(player_licenses); i++)
       xmlw_elem(writer, "license", "%s", player_licenses[i]);
    xmlw_endElem(writer); /* "licenses" */
 
@@ -3043,7 +3042,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
-   for (i=0; i<array_size(missions_done); i++) {
+   for (int i=0; i<array_size(missions_done); i++) {
       m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
@@ -3052,7 +3051,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Events the player has done. */
    xmlw_startElem(writer, "events_done");
-   for (i=0; i<array_size(events_done); i++) {
+   for (int i=0; i<array_size(events_done); i++) {
       ev = event_dataName(events_done[i]);
       if (ev != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", ev);
