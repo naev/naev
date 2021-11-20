@@ -14,6 +14,7 @@ uniform vec4 baseColour;
 uniform float clearcoat;
 uniform float clearcoat_roughness;
 uniform vec3 emissive;
+uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 
@@ -258,7 +259,9 @@ void main (void)
 
    //}
 
-   f_emissive = emissive;
+   //vec4 em = texture(emissive_tex, tex_coord0);
+   //f_emissive = emissive * em.rgb * em.a;
+   f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb * M.c_diff;
 
    colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
    //colour_out = vec4( M.albedo, 1.0 );

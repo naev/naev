@@ -29,6 +29,7 @@ typedef struct Shader_ {
    GLuint clearcoat;
    GLuint clearcoat_roughness;
    GLuint emissive;
+   GLuint emissive_tex;
    GLuint occlusion_tex;
 } Shader;
 static Shader object_shader;
@@ -188,6 +189,9 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->clearcoat = 0.;
       mat->clearcoat_roughness = 0.;
    }
+
+   if (cmat && cmat->emissive_texture.texture)
+      mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
 
    if (cmat && cmat->occlusion_texture.texture)
       mat->occlusion_tex = object_loadTexture( &cmat->occlusion_texture, tex_ones );
@@ -349,11 +353,14 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
-   glUniform1i( shd->baseColour_tex, 0 );
+      glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
+      glUniform1i( shd->baseColour_tex, 0 );
    glActiveTexture( GL_TEXTURE1 );
-   glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
-   glUniform1i( shd->occlusion_tex, 1 );
+      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
+      glUniform1i( shd->emissive_tex, 1 );
+   glActiveTexture( GL_TEXTURE2 );
+      glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
+      glUniform1i( shd->occlusion_tex, 2 );
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
@@ -557,6 +564,7 @@ int object_init (void)
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
+   shd->emissive_tex   = glGetUniformLocation( shd->program, "emissive_tex" );
    glUseProgram(0);
    gl_checkErr();
 
