@@ -145,6 +145,7 @@ stds.PilotOutfit.globals={
    "cleanup",
    "cooldown",
    "init",
+   "land",
    "onadd",
    "onhit",
    "onload",
@@ -155,6 +156,7 @@ stds.PilotOutfit.globals={
    "onstealth",
    "ontoggle",
    "outofenergy",
+   "takeoff",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }
