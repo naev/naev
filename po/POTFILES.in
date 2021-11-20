@@ -2174,6 +2174,8 @@ dat/unidiff/antlejosv_4.xml
 dat/unidiff/antlejosv_5.xml
 dat/unidiff/antlejosv_6.xml
 dat/unidiff/antlejosv_7.xml
+dat/unidiff/antlejosv_8.xml
+dat/unidiff/antlejosv_9.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2301,6 +2303,7 @@ dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
 dat/events/neutral/travelling_merchant.lua
+dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
@@ -2448,6 +2451,7 @@ dat/missions/neutral/antlejos/ant02.lua
 dat/missions/neutral/antlejos/ant03.lua
 dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
+dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
@@ -2480,7 +2484,6 @@ dat/missions/neutral/teenager.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/pirate/blackcat.lua
 dat/missions/pirate/empbounty_dead.lua
-dat/missions/pirate/fake_id.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
 dat/missions/pirate/patrol.lua
