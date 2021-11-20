@@ -156,7 +156,7 @@ end
 --]]
 function moveto_nobrake( target )
    local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, false )
+   __moveto_generic( target, dir )
 end
 
 
@@ -165,14 +165,14 @@ end
 --]]
 function moveto_nobrake_raw( target )
    local dir      = ai.face( target )
-   __moveto_generic( target, dir, false )
+   __moveto_generic( target, dir )
 end
 
 
 --[[
--- Goes to a precise position.
+-- Goes to a target position
 --]]
-function moveto_precise( target )
+function moveto( target )
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
 
@@ -196,45 +196,21 @@ end
 
 
 --[[
--- Goes to a target position roughly
---]]
--- luacheck: globals moveto (AI Task functions passed by name)
-function moveto( target )
-   local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, true )
-end
-
-
---[[
 -- Goes to a point in order to inspect (same as moveto_nobrake, but pops when attacking)
 --]]
 -- luacheck: globals inspect_moveto (AI Task functions passed by name)
 function inspect_moveto( target )
    local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, false )
-end
-
-
---[[
--- moveto without velocity compensation.
---]]
-function moveto_raw( target )
-   local dir      = ai.face( target )
-   __moveto_generic( target, dir, true )
+   __moveto_generic( target, dir )
 end
 
 
 --[[
 -- Generic moveto function.
 --]]
-function __moveto_generic( target, dir, brake )
+function __moveto_generic( target, dir )
    local dist     = ai.dist( target )
-   local bdist
-   if brake then
-      bdist    = ai.minbrakedist()
-   else
-      bdist    = 50
-   end
+   local bdist    = 50
 
    -- Need to get closer
    if dir < math.rad(10) and dist > bdist then
@@ -243,9 +219,6 @@ function __moveto_generic( target, dir, brake )
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      if brake then
-         ai.pushtask("brake")
-      end
    end
 end
 

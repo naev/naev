@@ -4002,7 +4002,7 @@ static int pilotL_moveto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      tsk = "moveto_precise";
+      tsk = "moveto";
    }
    else {
       if (compensate)

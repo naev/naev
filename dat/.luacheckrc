@@ -98,9 +98,9 @@ stds.AI.globals = {
    "hyperspace_shoot",          -- pilotL_hyperspace
    "land",                      -- pilotL_land
    "land_shoot",                -- pilotL_land
+   "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
-   "moveto_precise",            -- pilotL_moveto
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway
