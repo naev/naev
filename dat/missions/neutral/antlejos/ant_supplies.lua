@@ -23,7 +23,6 @@ local vn = require "vn"
 local vntk = require "vntk"
 local fmt = require "format"
 local ant = require "common.antlejos"
-local lmisn = require "lmisn"
 local fleet = require "fleet"
 local car = require "common.cargo"
 
@@ -43,6 +42,8 @@ local levelup = {
    2000, -- +better outfits
    2500, -- +bad spaceships
 }
+
+-- luacheck: globals land enter protest (Hook functions passed by name)
 
 function create ()
    mem.tier = rnd.rnd(1,3)
