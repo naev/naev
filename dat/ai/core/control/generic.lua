@@ -831,8 +831,8 @@ function create_post ()
    mem.scanned    = {} -- must create for each pilot
    attack_choose()
 
-   -- Give a small delay
-   if mem.jumpedin then
+   -- Give a small delay... except for escorts?
+   if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("idle_wait")
    end
