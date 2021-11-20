@@ -190,7 +190,7 @@ end
 function refuelBroadcast ()
    if refship:exists() then
       refship:broadcast(_("Tanker in system, contact if in need of fuel."))
-      hook.timer(10.0, "refuelBroadcast")
+      hook.timer(30.0, "refuelBroadcast")
    end
 end
 
@@ -218,7 +218,7 @@ local function addRefuelShip ()
    end
 
    -- Broadcast spam
-   refuelBroadcast()
+   hook.timer(10.0, "refuelBroadcast")
 end
 
 
