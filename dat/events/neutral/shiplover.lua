@@ -110,6 +110,7 @@ local dvaered_ships = {
   "Dvaered Phalanx",
   "Dvaered Vigilance",
   "Dvaered Goddard",
+  "Dvaered Arsenal",
 }
 local empire_ships = {
   "Empire Shark",

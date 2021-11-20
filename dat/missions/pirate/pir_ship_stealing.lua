@@ -48,6 +48,7 @@ local ships = {
       bomber    = { "Dvaered Ancestor" },
       corvette  = { "Dvaered Phalanx" },
       destroyer = { "Dvaered Vigilance" },
+      carrier   = { "Dvaered Arsenal" },
       battleship= { "Dvaered Goddard" },
    },
    Empire = {
