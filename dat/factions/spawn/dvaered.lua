@@ -5,6 +5,7 @@ local sancestor   = ship.get("Dvaered Ancestor")
 local sphalanx    = ship.get("Dvaered Phalanx")
 local svigilance  = ship.get("Dvaered Vigilance")
 local sgoddard    = ship.get("Dvaered Goddard")
+local sarsenal    = ship.get("Dvaered Arsenal")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
@@ -58,7 +59,11 @@ local function spawn_capship ()
    local pilots = {}
 
    -- Generate the capship
-   scom.addPilot( pilots, sgoddard )
+   if rnd.rnd() < 0.1 then
+      scom.addPilot( pilots, sarsenal )
+   else
+      scom.addPilot( pilots, sgoddard )
+   end
 
    -- Generate the escorts
    local r = rnd.rnd()
