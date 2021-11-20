@@ -124,8 +124,8 @@ struct Material {
    vec3 f0;             /**< Fresnel value at 0 degrees. */
 	vec3 f90;				/**< Fresnel value at 90 degrees. */
 	vec3 c_diff;
-   float roughness_cc;  /**< Clear coat roughness. */
-   float clearCoat;     /**< Clear coat colour. */
+   float clearcoat;     /**< Clear coat colour. */
+   float clearcoat_roughness;/**< Clear coat roughness. */
 
 	/* KHR_materials_specular */
 	//float specularWeight; /**< product of specularFactor and specularTexture.a */
@@ -212,8 +212,8 @@ void main (void)
    M.f0           = mix( vec3(0.04), M.albedo, M.metallic );
    M.f90          = vec3(1.0);
 	M.c_diff       = mix( M.albedo * (vec3(1.0) - M.f0), vec3(0), M.metallic);
-   M.clearCoat    = clearcoat;
-   M.roughness_cc = clearcoat_roughness;
+   M.clearcoat    = clearcoat;
+   M.clearcoat_roughness = clearcoat_roughness * clearcoat_roughness;
 	//M.specularWeight = 1.0;
 
    vec3 f_specular = vec3(0.0);
@@ -249,20 +249,30 @@ void main (void)
       /* Habemus light. */
       /* TODO this check will always be true if we do the NoV trick above. */
       //if (NoL > 0.0 || NoV > 0.0) {
-         vec3 intensity = NoL * light_intensity( L, length(pointToLight) );
+         vec3 intensity = light_intensity( L, length(pointToLight) );
+         vec3 NoLintensity = NoL * intensity;
 
          //f_diffuse  += intensity * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
-         f_diffuse += intensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
-         f_specular += intensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
-      //}
+         f_diffuse += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
+         f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
+         /* Clear coat lobe. */
+         f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
+      //}
    }
 
-   //vec4 em = texture(emissive_tex, tex_coord0);
-   //f_emissive = emissive * em.rgb * em.a;
+   /* Do emissive. */
    f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb;
 
+   /* Combine diffuse, emissive, and specular.. */
    colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
+
+   /* Apply clearcoat. */
+   vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
+   f_clearcoat *= M.clearcoat;
+
+    colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
+
    //colour_out = vec4( M.albedo, 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
    //colour_out = vec4( f_emissive, 1.0 );
