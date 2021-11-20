@@ -36,16 +36,18 @@ local levelup = {
    0,
    0,
    0,
-   0,
+   0, -- bar, missions
    -- Up to 5 already done
-   1000,
-   1500,
+   1000, -- +commodity (TODO commodities are bugged)
+   1500, -- +bad outfits
+   2000, -- +better outfits
+   2500, -- +bad spaceships
 }
 
 function create ()
    mem.tier = rnd.rnd(1,3)
 
-   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,6)+mem.tier, true )
+   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, true )
    if not mem.destpnt then
       misn.finish(false)
       return

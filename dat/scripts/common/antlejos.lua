@@ -38,6 +38,8 @@ antlejos.unidiff_list = {
    "antlejosv_5",
    "antlejosv_6",
    "antlejosv_7",
+   "antlejosv_8",
+   "antlejosv_9",
 }
 
 function antlejos.unidiff( diffname )

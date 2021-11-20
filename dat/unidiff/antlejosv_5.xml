@@ -9,6 +9,6 @@
   <service_add>bar</service_add>
   <service_add>missions</service_add>
   <service_add>inhabited</service_add>
-  <exterior>uninhabited-rocky-cyan-04.webp</exterior>
+  <exterior>rocky_small.webp</exterior>
  </asset>
 </unidiff>
