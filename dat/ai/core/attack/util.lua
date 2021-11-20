@@ -2,6 +2,8 @@
 --    Attack utilitiesGeneric attack functions
 --]]
 
+local scans = require "ai.core.misc.scans"
+
 local atk = {}
 
 --[[
@@ -36,10 +38,10 @@ end
 -- This test should be put in any subtask of the attack task.
 --]]
 function atk.check_seeable( target )
-   if __check_seeable( target ) then
+   if scans.check_visible( target ) then
       return true
    end
-   __investigate_target( target )
+   scans.investigate( target )
    return false
 end
 

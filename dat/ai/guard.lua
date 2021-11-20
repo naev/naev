@@ -1,4 +1,5 @@
 require 'ai.core.core'
+local scans = require 'ai.core.misc.scans'
 
 --[[
 
@@ -70,9 +71,9 @@ function idle ()
 
    -- Scan if possible
    if mem.doscans then
-      local target = __getscantarget()
+      local target = scans.get_target()
       if target and gdist(target) < mem.guarddodist then
-         __push_scan( target )
+         scans.push( target )
          return
       end
    end

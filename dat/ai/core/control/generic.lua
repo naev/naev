@@ -2,6 +2,7 @@ local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_me
 local fmt = require "format"
 local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
+local scans = require 'ai.core.misc.scans'
 
 --[[
 -- Variables to adjust AI
@@ -502,9 +503,9 @@ end
 control_funcs = {}
 function control_funcs.loiter ()
    if mem.doscans and rnd.rnd() < 0.1 then
-      local target = __getscantarget()
+      local target = scans.get_target()
       if target then
-         __push_scan( target )
+         scans.push( target )
       end
    end
    return false
