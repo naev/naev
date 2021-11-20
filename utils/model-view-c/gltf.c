@@ -35,6 +35,7 @@ typedef struct Shader_ {
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
+   GLuint normal_tex;
    GLuint metallicFactor;
    GLuint roughnessFactor;
    GLuint baseColour;
@@ -196,7 +197,8 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->metallicFactor  = 1.;
       mat->roughnessFactor = 1.;
       mat->baseColour_tex  = tex_ones;
-      mat->metallic_tex    = tex_ones;
+      mat->metallic_tex    = tex_zero;
+      mat->normal_tex      = tex_zero;
    }
 
    if (cmat && cmat->has_clearcoat) {
@@ -210,13 +212,15 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 
    if (cmat) {
       memcpy( mat->emissiveFactor, cmat->emissive_factor, sizeof(GLfloat)*3 );
-      mat->occlusion_tex = object_loadTexture( &cmat->occlusion_texture, tex_ones );
+      mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
       mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
+      mat->normal_tex   = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
    }
    else {
       memset( mat->emissiveFactor, 0, sizeof(GLfloat)*3 );
-      mat->emissive_tex = tex_ones;
-      mat->occlusion_tex = tex_ones;
+      mat->emissive_tex    = tex_ones;
+      mat->occlusion_tex   = tex_ones;
+      mat->normal_tex      = tex_ones;
    }
 
    return 0;
@@ -353,7 +357,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const GLfloat sca = 0.2;
+   const GLfloat sca = 0.1;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
@@ -382,11 +386,14 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
       glUniform1i( shd->baseColour_tex, 0 );
    glActiveTexture( GL_TEXTURE1 );
-      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
-      glUniform1i( shd->emissive_tex, 1 );
+      glBindTexture( GL_TEXTURE_2D, mat->metallic_tex );
+      glUniform1i( shd->metallic_tex, 1 );
    glActiveTexture( GL_TEXTURE2 );
+      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
+      glUniform1i( shd->emissive_tex, 2 );
+   glActiveTexture( GL_TEXTURE3 );
       glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
-      glUniform1i( shd->occlusion_tex, 2 );
+      glUniform1i( shd->occlusion_tex, 3 );
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
@@ -583,6 +590,7 @@ int object_init (void)
    /* Fragment uniforms. */
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
+   shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );
    shd->metallicFactor  = glGetUniformLocation( shd->program, "metallicFactor" );
    shd->roughnessFactor = glGetUniformLocation( shd->program, "roughnessFactor" );
    shd->baseColour      = glGetUniformLocation( shd->program, "baseColour" );

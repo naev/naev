@@ -7,6 +7,7 @@ const float M_PI        = 3.14159265358979323846;  /* pi */
 /* pbr_metallic_roughness */
 uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform sampler2D metallic_tex; /**< Metallic texture. */
+uniform sampler2D normal_tex; /**< Normal map. */
 uniform float metallicFactor;
 uniform float roughnessFactor;
 uniform vec4 baseColour;
@@ -119,6 +120,7 @@ vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float VoH, float NoL,
 
 struct Material {
    vec3 albedo;         /**< Surface albedo. */
+   float perceptualRoughness;
    float roughness;     /**< Surface roughness. */
    float metallic;      /**< Metallicness of the object. */
    vec3 f0;             /**< Fresnel value at 0 degrees. */
@@ -207,8 +209,10 @@ void main (void)
    Material M;
    //M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
    M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.roughness    = roughnessFactor * roughnessFactor; /* Convert from perceptual roughness. */
-   M.metallic     = metallicFactor;
+   vec4 metallicroughness = texture(metallic_tex, tex_coord0);
+   M.perceptualRoughness = metallicroughness.g;
+   M.roughness    = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
+   M.metallic     = metallicFactor * metallicroughness.b;
    M.f0           = mix( vec3(0.04), M.albedo, M.metallic );
    M.f90          = vec3(1.0);
 	M.c_diff       = mix( M.albedo * (vec3(1.0) - M.f0), vec3(0), M.metallic);
@@ -274,6 +278,8 @@ void main (void)
     colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
 
    //colour_out = vec4( M.albedo, 1.0 );
+   //colour_out = vec4( vec3(M.metallic), 1.0 );
+   //colour_out = vec4( vec3(M.perceptualRoughness), 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
    //colour_out = vec4( f_emissive, 1.0 );
 }
