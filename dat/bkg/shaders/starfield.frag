@@ -97,6 +97,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 #endif /* MOTIONBLUR==1 */
 
    /* Darken it all a bit. */
-   colour.rgb *= 0.8;
+   colour.rgb *= 0.6;
    return colour * colour_in;
 }
