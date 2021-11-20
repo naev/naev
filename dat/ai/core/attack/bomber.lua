@@ -22,10 +22,10 @@ local function atk_bomber( target, dokill )
 
    -- TODO bombers need their own specific routines
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      __atk_g_ranged( target, dist )
+      atk.ranged( target, dist )
 
    else
-      __atk_f_flyby( target, dist )
+      atk.flyby( target, dist )
    end
 end
 

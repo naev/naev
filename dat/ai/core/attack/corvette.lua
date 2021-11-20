@@ -25,16 +25,16 @@ local function atk_corvette( target, dokill )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      __atk_g_ranged( target, dist )
+      atk.ranged( target, dist )
 
    -- Close enough to melee
    -- TODO: Corvette-specific attack functions.
    else
       if target:stats().mass < 500 then
-        __atk_f_space_sup( target, dist )
+        atk.space_sup( target, dist )
       else
         mem.aggressive = true
-        __atk_f_flyby( target, dist )
+        atk.flyby( target, dist )
       end
    end
 end

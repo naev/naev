@@ -22,7 +22,7 @@ local function atk_capital( target, dokill )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      __atk_g_ranged( target, dist )
+      atk.ranged( target, dist )
    -- Close enough to melee
    else
      __atk_g_capital(target, dist)
