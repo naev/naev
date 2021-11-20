@@ -36,6 +36,11 @@ int main( int argc, char *argv[] )
    (void) argv;
    GLuint VaoId;
 
+   if (argc < 2) {
+      DEBUG("Usage: %s FILENAME", argv[0]);
+      return -1;
+   }
+
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
@@ -60,7 +65,8 @@ int main( int argc, char *argv[] )
    //Object *obj = object_loadFromFile( "simple.gltf" );
    //Object *obj = object_loadFromFile( "simple_mat.gltf" );
    //Object *obj = object_loadFromFile( "simple_tex.gltf" );
-   Object *obj = object_loadFromFile( "admonisher.gltf" );
+   //Object *obj = object_loadFromFile( "admonisher.gltf" );
+   Object *obj = object_loadFromFile( argv[1] );
    gl_checkErr();
 
    int quit = 0;
