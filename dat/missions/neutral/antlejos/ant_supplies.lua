@@ -65,7 +65,7 @@ function create ()
          {adj=adj, pnt=mem.destpnt, sys=mem.destsys}) )
    misn.setReward( fmt.credits(mem.reward) )
 
-   local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming.\n"),
+   local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming. Note that protestors from the PUAAA are expected to show up.\n"),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt})
    desc = desc .. "\n" .. fmt.f( _("#nCargo:#0 {cargo} ({mass})"), {cargo=cargo_name, mass=fmt.tonnes(mem.amount)} )
    desc = desc .. "\n" .. fmt.f( n_("#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", mem.numjumps ), {jumps=mem.numjumps} )
