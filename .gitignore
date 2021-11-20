@@ -59,3 +59,7 @@ docs/manual/naev_guide.pdf
 docs/manual/naev_guide.synctex.gz
 
 utils/model-view-c/main
+utils/model-view-c/*.glb
+utils/model-view-c/*.gltf
+utils/model-view-c/*.png
+utils/model-view-c/*.bin
