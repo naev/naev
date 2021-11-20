@@ -43,6 +43,7 @@
 #include "save.h"
 #include "space.h"
 #include "start.h"
+#include "safelanes.h"
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "toolkit.h"
 
@@ -102,7 +103,6 @@ static int menu_main_bkg_system (void)
 {
    const nsave_t *ns;
    const char *sys;
-   Planet *pnt;
    double cx, cy;
 
    /* Clean pilots. */
@@ -121,7 +121,7 @@ static int menu_main_bkg_system (void)
 
       /* Get start position. */
       if (planet_exists( ns[0].planet )) {
-         pnt = planet_get( ns[0].planet );
+         Planet *pnt = planet_get( ns[0].planet );
          if (pnt != NULL) {
             sys = planet_getSystem( ns[0].planet );
             if (sys != NULL) {
@@ -131,6 +131,9 @@ static int menu_main_bkg_system (void)
          }
       }
    }
+   /* In case save game has no diff. */
+   if (!safelanes_calculated())
+      safelanes_recalculate();
 
    /* Fallback if necessary. */
    if (sys == NULL) {

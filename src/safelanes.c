@@ -110,6 +110,7 @@ static cholmod_dense *ftilde;   /**< Fluxes (bunch of F columns in the KU=F prob
 static cholmod_dense *utilde;   /**< Potentials (bunch of U columns in the KU=F problem). */
 static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
 static double* cmp_key_ref;     /**< To qsort() a list of indices by table value, point this at your table and use cmp_key. */
+static int safelanes_calculated_once = 0; /**< Whether or not the safe lanes have been computed once. */
 
 /*
  * Prototypes.
@@ -160,7 +161,7 @@ static inline void array_push_back_edge( Edge **a, int v0, int v1 )
 void safelanes_init (void)
 {
    cholmod_start( &C );
-   safelanes_recalculate();
+   //safelanes_recalculate();
 }
 
 /**
@@ -254,6 +255,16 @@ void safelanes_recalculate (void)
    time = SDL_GetTicks() - time;
    if (conf.devmode)
       DEBUG( n_("Charted safe lanes for %d object in %.3f s.", "Charted safe lanes for %d objects in %.3f s.", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
+
+   safelanes_calculated_once = 1;
+}
+
+/**
+ * @brief Whether or not the safe lanes have been calculated at least once.
+ */
+int safelanes_calculated (void)
+{
+   return safelanes_calculated_once;
 }
 
 /**

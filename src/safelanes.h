@@ -32,3 +32,4 @@ void safelanes_init (void);
 void safelanes_destroy (void);
 SafeLane* safelanes_get( int faction, int standing, const StarSystem* system );
 void safelanes_recalculate (void);
+int safelanes_calculated (void);
