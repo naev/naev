@@ -148,6 +148,7 @@ static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 
 /* Useful variables. */
 static int diff_universe_changed = 0; /**< Whether or not the universe changed. */
+static int diff_universe_defer = 0; /**< Defers changes to later. */
 
 /*
  * Prototypes.
@@ -264,7 +265,7 @@ static int diff_applyInternal( const char *name, int oneshot )
       return 0;
 
    /* Reset change variable. */
-   if (oneshot)
+   if (oneshot && !diff_universe_defer)
       diff_universe_changed = 0;
 
    filename = NULL;
@@ -1529,9 +1530,13 @@ int diff_save( xmlTextWriterPtr writer )
 int diff_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   int defer = diff_universe_defer;
 
-   diff_clear();
+   /* Don't update universe here. */
+   diff_universe_defer = 1;
    diff_universe_changed = 0;
+   diff_clear();
+   diff_universe_defer = defer;
 
    node = parent->xmlChildrenNode;
    do {
@@ -1561,10 +1566,23 @@ int diff_load( xmlNodePtr parent )
  */
 static int diff_checkUpdateUniverse (void)
 {
-   if (!diff_universe_changed)
+   if (!diff_universe_changed || diff_universe_defer)
       return 0;
    space_reconstructPresences();
    safelanes_recalculate();
    diff_universe_changed = 0;
    return 1;
+}
+
+/**
+ * @brief Sets whether or not to defer universe change stuff.
+ *
+ *    @param enable Whether or not to enable deferring.
+ */
+void unidiff_universeDefer( int enable )
+{
+   int defer = diff_universe_defer;
+   diff_universe_defer = enable;
+   if (defer && !enable)
+      diff_checkUpdateUniverse();
 }
