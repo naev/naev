@@ -246,6 +246,11 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
 void safelanes_recalculate (void)
 {
    Uint32 time = SDL_GetTicks();
+
+   /* Don't recompute on exit. */
+   if (naev_isQuit())
+      return;
+
    safelanes_initStacks();
    safelanes_initOptimizer();
    for (int iters_done=0; safelanes_buildOneTurn(iters_done) > 0; iters_done++)
