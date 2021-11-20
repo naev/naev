@@ -389,11 +389,14 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
       glBindTexture( GL_TEXTURE_2D, mat->metallic_tex );
       glUniform1i( shd->metallic_tex, 1 );
    glActiveTexture( GL_TEXTURE2 );
-      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
-      glUniform1i( shd->emissive_tex, 2 );
+      glBindTexture( GL_TEXTURE_2D, mat->normal_tex );
+      glUniform1i( shd->normal_tex, 2 );
    glActiveTexture( GL_TEXTURE3 );
+      glBindTexture( GL_TEXTURE_2D, mat->emissive_tex );
+      glUniform1i( shd->emissive_tex, 3 );
+   glActiveTexture( GL_TEXTURE4 );
       glBindTexture( GL_TEXTURE_2D, mat->occlusion_tex );
-      glUniform1i( shd->occlusion_tex, 3 );
+      glUniform1i( shd->occlusion_tex, 4 );
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );

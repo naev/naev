@@ -15,6 +15,7 @@ in vec2 vertex_tex0;
 out vec3 position;
 out vec3 normal;
 out vec2 tex_coord0;
+out mat3 normalH;
 
 /* Not including math.glsl here because a python script reads this also and
 can't handle include preprocessor. */
@@ -33,7 +34,8 @@ void main(void) {
    //vec4 pos    = model * vec4( vertex, 1.0 );
    //tex_coord0  = vec2(vertex_tex0.x, -vertex_tex0.y);
    tex_coord0  = vertex_tex0;
-   normal      = mat3(H) * vertex_normal;
+   normalH     = mat3(H);
+   normal      = normalH * vertex_normal;
    position    = pos.xyz;
    gl_Position = projection * pos;
 }

@@ -22,6 +22,7 @@ uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 in vec2 tex_coord0;
 in vec3 position;
 in vec3 normal;
+in mat3 normalH;
 out vec4 colour_out;
 
 float pow5( float x ) {
@@ -199,11 +200,11 @@ float clampedDot( vec3 x, vec3 y )
 void main (void)
 {
    /* Compute normal taking into account the bump map. */
-   vec3 n = normal;
-   //if (bm > 0.01)
-   //   n += bm * texture(map_Bump, tex_coord0).xyz * 2.0 - 1.0;
-   //norm = mix( norm, normal, 0.999 );
+   vec3 n = normalize(normal);
+   n += normalH * (texture(normal_tex, tex_coord0).rgb * 2.0 - vec3(1.0));
    n = normalize(n);
+   //n *= vec3(u_NormalScale, u_NormalScale, 1.0);
+   //n = mat3(t, b, ng) * normalize(n);
 
    /* Material values. */
    Material M;
@@ -282,4 +283,5 @@ void main (void)
    //colour_out = vec4( vec3(M.perceptualRoughness), 1.0 );
    //colour_out = vec4( vec3(ao), 1.0 );
    //colour_out = vec4( f_emissive, 1.0 );
+   //colour_out = vec4( (n*0.5+0.5), 1.0 );
 }
