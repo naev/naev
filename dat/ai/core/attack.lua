@@ -40,7 +40,7 @@ function attack_think( target, si )
    mem.ranged_ammo = ai.getweapammo(4)
 
    local lib = (mem.atk or atk_generic)
-   local func = (lib.atk_think or atk_generic.atk_think)
+   local func = (lib.think or atk_generic.think)
    func( target, si )
 end
 
