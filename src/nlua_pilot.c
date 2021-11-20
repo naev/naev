@@ -147,6 +147,7 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_ainame( lua_State *L );
 static int pilotL_task( lua_State *L );
 static int pilotL_taskname( lua_State *L );
 static int pilotL_taskstack( lua_State *L );
@@ -275,6 +276,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "ainame", pilotL_ainame },
    { "task", pilotL_task },
    { "taskname", pilotL_taskname },
    { "taskstack", pilotL_taskstack },
@@ -3759,6 +3761,22 @@ static int pilotL_memory( lua_State *L )
    lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
    lua_remove( naevL, -2 );            /* table */
 
+   return 1;
+}
+
+/**
+ * @brief Gets the name of the task the pilot is currently doing.
+ *
+ *    @luatparam Pilot p Pilot to get task name of.
+ *    @luatreturn string Name of the task.
+ * @luafunc ainame
+ */
+static int pilotL_ainame( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->ai == NULL)
+      return 0;
+   lua_pushstring(L, p->ai->name);
    return 1;
 }
 
