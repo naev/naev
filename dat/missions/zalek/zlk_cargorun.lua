@@ -1,19 +1,19 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Shipping Delivery">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
    Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
@@ -24,7 +24,6 @@ local logan -- Non-persistent state
 -- luacheck: globals closehail hail land takeoff (Hook functions passed by name)
 
 local payment = 800e3
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -147,8 +146,5 @@ function closehail()
 end
 
 function abort()
-   hook.rm(mem.landhook)
-   hook.rm(mem.flyhook)
-   if mem.hailhook then hook.rm(mem.hailhook) end
    misn.finish()
 end
