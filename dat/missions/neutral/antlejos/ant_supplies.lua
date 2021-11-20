@@ -39,16 +39,17 @@ local levelup = {
    0,
    -- Up to 5 already done
    1000,
-   2500,
+   1500,
 }
 
 function create ()
-   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(5,15), true )
+   mem.tier = rnd.rnd(1,3)
+
+   mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,6)+mem.tier, true )
    if not mem.destpnt then
       misn.finish(false)
       return
    end
-   mem.tier = rnd.rnd(1,3)
    mem.amount = 50 * math.pow(mem.tier,2)
    mem.reward = (50e3 + mem.tier * 25e3 + mem.numjumps * 10e3 + mem.traveldist * 0.2) * ((mem.tier-1)/5 + 1 + 0.05*rnd.twosigma())
 
