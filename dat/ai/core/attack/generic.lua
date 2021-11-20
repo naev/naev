@@ -27,7 +27,7 @@ end
 --[[
 -- Attacked function.
 --]]
-function atk_generic_attacked( attacker )
+function atk_generic.attacked( attacker )
    local si = _stateinfo( ai.taskname() )
 
    if mem.recharge then

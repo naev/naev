@@ -58,14 +58,16 @@ function attack( target )
       return
    end
 
-   (mem.atk or atk_generic).atk( target )
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target )
 end
 
 --[[
 -- Forced attack function that should focus on the enemy until done
 --]]
 function attack_forced( target )
-   (mem.atk or atk_generic).atk( target )
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target )
 end
 
 --[[
@@ -73,18 +75,17 @@ end
 --]]
 -- luacheck: globals attack_forced_kill (AI Task functions passed by name)
 function attack_forced_kill( target )
-   (mem.atk or atk_generic).atk( target, true )
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target, true )
 end
 
 --[[
 -- Wrapper for the attacked function.
 --]]
 function attack_attacked( attacker )
-   if mem.atk_attacked ~= nil then
-      mem.atk_attacked( attacker )
-   else
-      atk_generic_attacked( attacker )
-   end
+   local lib = (mem.atk or atk_generic)
+   local func = (lib.attacked or atk_generic.attacked)
+   func( attacker )
 end
 
 
