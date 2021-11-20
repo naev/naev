@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>100</chance>
+  <chance>5</chance>
   <location>Bar</location>
   <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
  </avail>
@@ -32,7 +32,6 @@ local reward = ant.rewards.ant01
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for them.") )
 end
 
