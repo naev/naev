@@ -90,16 +90,19 @@ struct Object_ {
 static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
    GLuint tex;
-   SDL_Surface *surface;
+   SDL_Surface *surface = NULL;
 
    /* Must haev texture to load it. */
    if ((ctex==NULL) || (ctex->texture==NULL))
       return def;
 
-   surface = IMG_Load( ctex->texture->image->uri );
-   if (surface==NULL) {
-      WARN("Unable to load surface '%s'!", ctex->texture->image->uri);
-      return def;
+   /* Load from path. */
+   if (ctex->texture->image->uri != NULL) {
+      surface = IMG_Load( ctex->texture->image->uri );
+      if (surface==NULL) {
+         WARN("Unable to load surface '%s'!", ctex->texture->image->uri);
+         return def;
+      }
    }
 
    glGenTextures( 1, &tex );
@@ -119,13 +122,24 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    }
 
-   SDL_LockSurface( surface );
-   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
-         surface->w, surface->h, 0,
-         surface->format->Amask ? GL_RGBA : GL_RGB,
-         GL_UNSIGNED_BYTE, surface->pixels );
-   SDL_UnlockSurface( surface );
+   if (surface != NULL) {
+      SDL_LockSurface( surface );
+      glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+            surface->w, surface->h, 0,
+            surface->format->Amask ? GL_RGBA : GL_RGB,
+            GL_UNSIGNED_BYTE, surface->pixels );
+      SDL_UnlockSurface( surface );
+   }
+   else {
+      DEBUG("Buffer textures not supported yet!");
+      /*
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+            surface->w, surface->h, 0,
+            surface->format->Amask ? GL_RGBA : GL_RGB,
+            GL_UNSIGNED_BYTE, surface->pixels );
+      */
+   }
 
    /* Set up mipmaps. */
    /* TODO only generate if necessary. */
