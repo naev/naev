@@ -9,6 +9,9 @@
  <chance>50</chance>
 </event>
 --]]
+--[[
+   Pirate offers to sell the player a fake transponder. Might be better to have it be a small mission or campaign to be a bit more interesting given that it should be fairly strong.
+--]]
 local pir = require "common.pirate"
 local portrait = require 'portrait'
 local vn = require 'vn'
