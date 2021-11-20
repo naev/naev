@@ -50,4 +50,7 @@
   <energy_mod>10</energy_mod>
   <ew_hide>10</ew_hide>
  </stats>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
 </ship>
