@@ -46,13 +46,15 @@ typedef struct Shader_ {
    GLuint occlusion_tex;
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
+   GLuint blend;
 } Shader;
 static Shader object_shader;
 static GLuint tex_zero = -1;
 static GLuint tex_ones = -1;
 
 typedef struct Material_ {
-   char *name;       /**< Name of the material if applicable. */
+   char *name; /**< Name of the material if applicable. */
+   int blend;  /**< Whether or not to blend it. */
    /* pbr_metallic_roughness */
    GLuint baseColour_tex;
    GLuint metallic_tex;
@@ -215,12 +217,14 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->occlusion_tex= object_loadTexture( &cmat->occlusion_texture, tex_ones );
       mat->emissive_tex = object_loadTexture( &cmat->emissive_texture, tex_ones );
       mat->normal_tex   = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture, tex_zero );
+      mat->blend        = (cmat->alpha_mode == cgltf_alpha_mode_blend);
    }
    else {
       memset( mat->emissiveFactor, 0, sizeof(GLfloat)*3 );
       mat->emissive_tex    = tex_ones;
       mat->occlusion_tex   = tex_ones;
       mat->normal_tex      = tex_ones;
+      mat->blend           = 0;
    }
 
    return 0;
@@ -371,6 +375,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
+   glUniform1i( shd->blend, mat->blend );
    gl_checkErr();
 
    /* Lighting. */
@@ -591,6 +596,7 @@ int object_init (void)
    shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
    shd->Hmodel          = glGetUniformLocation( shd->program, "model");
    /* Fragment uniforms. */
+   shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
    shd->baseColour_tex  = glGetUniformLocation( shd->program, "baseColour_tex" );
    shd->metallic_tex    = glGetUniformLocation( shd->program, "metallic_tex" );
    shd->normal_tex      = glGetUniformLocation( shd->program, "normal_tex" );

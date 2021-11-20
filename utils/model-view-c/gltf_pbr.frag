@@ -18,6 +18,7 @@ uniform vec3 emissive;
 uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
+uniform int u_blend = 0;
 
 in vec2 tex_coord0;
 in vec3 position;
@@ -120,18 +121,18 @@ vec3 BRDF_specularGGX( vec3 f0, vec3 f90, float roughness, float VoH, float NoL,
 }
 
 struct Material {
-   vec3 albedo;         /**< Surface albedo. */
+   vec4 albedo;         /**< Surface albedo. */
    float perceptualRoughness;
    float roughness;     /**< Surface roughness. */
    float metallic;      /**< Metallicness of the object. */
    vec3 f0;             /**< Fresnel value at 0 degrees. */
-	vec3 f90;				/**< Fresnel value at 90 degrees. */
-	vec3 c_diff;
+   vec3 f90;            /**< Fresnel value at 90 degrees. */
+   vec3 c_diff;
    float clearcoat;     /**< Clear coat colour. */
    float clearcoat_roughness;/**< Clear coat roughness. */
 
-	/* KHR_materials_specular */
-	//float specularWeight; /**< product of specularFactor and specularTexture.a */
+   /* KHR_materials_specular */
+   //float specularWeight; /**< product of specularFactor and specularTexture.a */
 };
 
 struct Light {
@@ -224,17 +225,17 @@ void main (void)
    /* Material values. */
    Material M;
    //M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   M.albedo       = baseColour * texture(baseColour_tex, tex_coord0);
    vec4 metallicroughness = texture(metallic_tex, tex_coord0);
    M.perceptualRoughness = metallicroughness.g;
    M.roughness    = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
    M.metallic     = metallicFactor * metallicroughness.b;
-   M.f0           = mix( vec3(0.04), M.albedo, M.metallic );
+   M.f0           = mix( vec3(0.04), M.albedo.rgb, M.metallic );
    M.f90          = vec3(1.0);
-	M.c_diff       = mix( M.albedo * (vec3(1.0) - M.f0), vec3(0), M.metallic);
+   M.c_diff       = mix( M.albedo.rgb * (vec3(1.0) - M.f0), vec3(0), M.metallic);
    M.clearcoat    = clearcoat;
    M.clearcoat_roughness = clearcoat_roughness * clearcoat_roughness;
-	//M.specularWeight = 1.0;
+   //M.specularWeight = 1.0;
 
    vec3 f_specular = vec3(0.0);
    vec3 f_diffuse  = vec3(0.0);
@@ -285,13 +286,13 @@ void main (void)
    f_emissive = emissive * texture(emissive_tex, tex_coord0).rgb;
 
    /* Combine diffuse, emissive, and specular.. */
-   colour_out = vec4( f_emissive + f_diffuse + f_specular, 1.0 );
+   float alpha = (u_blend==1) ? M.albedo.a : 1.0;
+   colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));
    f_clearcoat *= M.clearcoat;
-
-    colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
+   colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
 
    //colour_out = vec4( M.albedo, 1.0 );
    //colour_out = vec4( vec3(M.metallic), 1.0 );
