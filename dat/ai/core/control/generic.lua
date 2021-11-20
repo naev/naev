@@ -308,7 +308,7 @@ function control_attack( si )
    choose_weapset()
 
    -- Runaway if needed
-   if (pshield < mem.shield_run
+   if not mem.norun and (pshield < mem.shield_run
             and pshield < target_pshield ) or
          (parmour < mem.armour_run
             and parmour < target_parmour ) then
@@ -685,7 +685,9 @@ function attacked( attacker )
       else
 
          -- Runaway
-         ai.pushtask("runaway", attacker)
+         if not mem.norun then
+            ai.pushtask("runaway", attacker)
+         end
       end
 
    -- Let attacker profile handle it.
@@ -693,7 +695,7 @@ function attacked( attacker )
       attack_attacked( attacker )
 
    elseif task == "runaway" then
-      if ai.taskdata() ~= attacker then
+      if ai.taskdata() ~= attacker and not mem.norun then
          ai.poptask()
          ai.pushtask("runaway", attacker)
       end
@@ -800,7 +802,7 @@ function distress( pilot, attacker )
             ai.pushtask( "attack", badguy )
          end
       else
-         if p:inrange(badguy) and ai.dist(badguy) < mem.safe_distance then
+         if p:inrange(badguy) and ai.dist(badguy) < mem.safe_distance and not mem.norun then
             ai.pushtask( "runaway", badguy )
          end
       end
