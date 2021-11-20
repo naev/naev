@@ -124,6 +124,10 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
    }
 
    if (surface != NULL) {
+      SDL_Surface *temp = surface;
+      surface = SDL_ConvertSurfaceFormat( temp, SDL_PIXELFORMAT_RGBA32, 0 );
+      SDL_FreeSurface( temp );
+
       SDL_LockSurface( surface );
       glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch & -surface->pitch, 8 ) );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
