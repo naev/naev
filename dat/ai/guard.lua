@@ -23,9 +23,6 @@ function create ()
    local p = ai.pilot()
    local ps = p:ship()
 
-   -- Choose attack format
-   attack_choose()
-
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position
    mem.guarddodist   = 4000 + 1000 * ps:size()

@@ -4,7 +4,7 @@ mem.carrier = true -- Is a carried fighter
 
 -- Simple create function
 function create ()
-   attack_choose()
+   create_post()
 
    -- Inherit some properties from the parent (leader)
    local p = ai.pilot()
