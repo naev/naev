@@ -43938,8 +43938,8 @@ msgstr "#n海賊行為の危険性 :#0 高い"
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/empire/es_cargo.lua:86
-msgid "ES: Cargo transport to {pnt} in {sys} ({tonnes})"
-msgstr "ES: {sys}星系の{pnt}への貨物輸送 ({tonnes})"
+msgid "#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"
+msgstr "#gES:#0 {sys}星系の{pnt}への貨物輸送 ({tonnes})"
 
 #: dat/missions/empire/es_cargo.lua:88
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
@@ -44632,8 +44632,8 @@ msgstr ""
 #. Determine risk of piracy
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:86
-msgid "ES: Long distance cargo transport ({tonnes} of {cargo})"
-msgstr "ES: 長距離貨物輸送 ({tonnes}の{cargo})"
+msgid "#gES:#0 Long distance cargo transport ({tonnes} of {cargo})"
+msgstr "#gES:#0 長距離貨物輸送 ({tonnes}の{cargo})"
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:89
 msgid ""
