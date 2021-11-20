@@ -358,6 +358,7 @@
   <item>Pirate Rhino</item>
   <item>Mule</item>
   <item>Empire Rainmaker</item>
+  <item>Dvaered Arsenal</item>
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
@@ -847,6 +848,7 @@
   <item>Dvaered Phalanx</item>
   <item>Dvaered Vendetta</item>
   <item>Dvaered Vigilance</item>
+  <item>Dvaered Arsenal</item>
  </tech>
  <tech name="Pirate Ships">
   <item>Pirate Admonisher</item>
