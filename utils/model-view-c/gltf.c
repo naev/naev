@@ -11,6 +11,15 @@
 
 #include "shader_min.h"
 
+#define MAX_LIGHTS 4
+
+typedef struct ShaderLight_ {
+   GLuint position;  /* vec3 */
+   GLuint range;     /* float */
+   GLuint colour;    /* vec3 */
+   GLuint intensity; /* float */
+} ShaderLight;
+
 typedef struct Shader_ {
    GLuint program;
    /* Attriutes. */
@@ -31,6 +40,8 @@ typedef struct Shader_ {
    GLuint emissive;
    GLuint emissive_tex;
    GLuint occlusion_tex;
+   ShaderLight lights[MAX_LIGHTS];
+   GLuint nlights;
 } Shader;
 static Shader object_shader;
 static GLuint tex_zero = -1;
@@ -355,6 +366,14 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1], mat->emissiveFactor[2] );
    gl_checkErr();
 
+   /* Lighting. */
+   glUniform1i( shd->nlights, 1 );
+   const ShaderLight *sl = &shd->lights[0];
+   glUniform3f( sl->position, 4., 2., -20. );
+   glUniform1f( sl->range, -1. );
+   glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
+   glUniform1f( sl->intensity, 500. );
+
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
       glBindTexture( GL_TEXTURE_2D, mat->baseColour_tex );
@@ -568,7 +587,20 @@ int object_init (void)
    shd->clearcoat_roughness = glGetUniformLocation( shd->program, "clearcoat_roughness" );
    shd->emissive        = glGetUniformLocation( shd->program, "emissive" );
    shd->occlusion_tex   = glGetUniformLocation( shd->program, "occlusion_tex" );
-   shd->emissive_tex   = glGetUniformLocation( shd->program, "emissive_tex" );
+   shd->emissive_tex    = glGetUniformLocation( shd->program, "emissive_tex" );
+   for (int i=0; i<MAX_LIGHTS; i++) {
+      ShaderLight *sl = &shd->lights[i];
+      char buf[128];
+      snprintf( buf, sizeof(buf), "u_lights[%d].position", i );
+      sl->position      = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "u_lights[%d].range", i );
+      sl->range         = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "u_lights[%d].colour", i );
+      sl->colour        = glGetUniformLocation( shd->program, buf );
+      snprintf( buf, sizeof(buf), "u_lights[%d].intensity", i );
+      sl->intensity     = glGetUniformLocation( shd->program, buf );
+   }
+   shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
    glUseProgram(0);
    gl_checkErr();
 

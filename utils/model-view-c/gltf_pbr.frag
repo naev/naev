@@ -3,6 +3,7 @@
  */
 
 const float M_PI        = 3.14159265358979323846;  /* pi */
+#define MAX_LIGHTS      4
 
 /* pbr_metallic_roughness */
 uniform sampler2D baseColour_tex; /**< Base colour. */
@@ -138,6 +139,9 @@ struct Light {
    float intensity;
 };
 
+uniform Light u_lights[ MAX_LIGHTS ];
+uniform int u_nlights = 1;
+
 vec3 light_intensity( Light L, float dist )
 {
    float attenuation;
@@ -230,12 +234,8 @@ void main (void)
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
-   //for (int i=0; i<1; i++) {
-      Light L;
-      L.position  = 2.0*vec3(2.0, 1.0, -10.0);
-      L.range     = -1.0;
-      L.colour    = vec3(1.0);
-      L.intensity = 500.0;
+   for (int i=0; i<u_nlights; i++) {
+      Light L = u_lights[i];
 
       vec3 pointToLight = L.position - position;
       vec3 l = normalize(pointToLight);
@@ -257,7 +257,7 @@ void main (void)
          f_specular += intensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
       //}
 
-   //}
+   }
 
    //vec4 em = texture(emissive_tex, tex_coord0);
    //f_emissive = emissive * em.rgb * em.a;
