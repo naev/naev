@@ -13,9 +13,6 @@ function create ()
       local lmem = l:memory()
       mem.atk_kill = lmem.atk_kill
    end
-
-   -- Disable thinking
-   --mem.atk_think = nil
 end
 
 -- Just tries to guard mem.escort

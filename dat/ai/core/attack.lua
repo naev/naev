@@ -39,11 +39,9 @@ function attack_think( target, si )
    -- Update some high level stats
    mem.ranged_ammo = ai.getweapammo(4)
 
-   if mem.atk_think ~= nil then
-      mem.atk_think( target, si )
-   else
-      atk_generic.think( target, si )
-   end
+   local lib = (mem.atk or atk_generic)
+   local func = (lib.atk_think or atk_generic.atk_think)
+   func( target, si )
 end
 
 
