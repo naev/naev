@@ -7,6 +7,7 @@ local atk = require "ai.core.attack.util"
 
 local __atk_d_flyby, __atk_d_space_sup, __atk_drone_ranged -- Forward-declared functions
 
+local atk_drone = {}
 
 --[[
 -- Mainly targets small drones.
@@ -68,7 +69,7 @@ end
 --[[
 -- Main control function for drone behavior.
 --]]
-local function atk_drone( target, dokill )
+function atk_drone.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -253,7 +254,9 @@ end
 
 
 -- Initializes the drone
-function atk_drone_init ()
+function atk_drone.init ()
    mem.atk_think  = atk_drone_think
-   mem.atk        = atk_drone
+   mem.atk        = atk_drone.atk
 end
+
+return atk_drone

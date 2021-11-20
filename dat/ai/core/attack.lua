@@ -9,14 +9,14 @@
 --]]
 
 -- Attack profiles
-require 'ai.core.attack.generic'
-require 'ai.core.attack.fighter'
-require 'ai.core.attack.bomber'
-require 'ai.core.attack.corvette'
-require 'ai.core.attack.capital'
---require 'ai.core.attack.cruiser'
---require 'ai.core.attack.carrier'
-require 'ai.core.attack.drone'
+local atk_generic = require "ai.core.attack.generic"
+local atk_fighter = require "ai.core.attack.fighter"
+local atk_bomber = require "ai.core.attack.bomber"
+local atk_corvette = require "ai.core.attack.corvette"
+local atk_capital = require "ai.core.attack.capital"
+--local atk_cruiser = require "ai.core.attack.cruiser"
+--local atk_carrier = require "ai.core.attack.carrier"
+local atk_drone = require "ai.core.attack.drone"
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes
@@ -42,7 +42,7 @@ function attack_think( target, si )
    if mem.atk_think ~= nil then
       mem.atk_think( target, si )
    else
-      atk_generic_think( target, si )
+      atk_generic.think( target, si )
    end
 end
 
@@ -61,7 +61,7 @@ function attack( target )
    if mem.atk ~= nil then
       mem.atk( target )
    else
-      atk_generic( target )
+      atk_generic.atk( target )
    end
 end
 
@@ -72,7 +72,7 @@ function attack_forced( target )
    if mem.atk ~= nil then
       mem.atk( target )
    else
-      atk_generic( target )
+      atk_generic.atk( target )
    end
 end
 
@@ -84,7 +84,7 @@ function attack_forced_kill( target )
    if mem.atk ~= nil then
       mem.atk( target, true )
    else
-      atk_generic( target, true )
+      atk_generic.atk( target, true )
    end
 end
 
@@ -111,34 +111,34 @@ function attack_choose ()
 
    -- Lighter ships
    if class == "Bomber" then
-      atk_bomber_init()
+      atk_bomber.init()
 
    elseif class == "Interceptor" then
-      atk_drone_init()
+      atk_drone.init()
 
    elseif class == "Fighter" then
-      atk_fighter_init()
+      atk_fighter.init()
 
    -- Medium ships
    elseif class == "Corvette" then
-      atk_corvette_init()
+      atk_corvette.init()
 
    -- Capital ships
    elseif class == "Destroyer" then
-      atk_capital_init()
+      atk_capital.init()
 
    elseif class == "Cruiser" then
-      atk_capital_init()
+      atk_capital.init()
 
    elseif class == "Battleship" then
-      atk_capital_init()
+      atk_capital.init()
 
    elseif class == "Carrier" then
-      atk_capital_init()
+      atk_capital.init()
 
     -- Generic AI
    else
-      atk_generic_init()
+      atk_generic.init()
    end
 end
 

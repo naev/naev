@@ -1,9 +1,11 @@
 local atk = require "ai.core.attack.util"
 
+local atk_corvette = {}
+
 --[[
 -- Main control function for corvette behavior.
 --]]
-local function atk_corvette( target, dokill )
+function atk_corvette.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -40,7 +42,9 @@ local function atk_corvette( target, dokill )
 end
 
 
-function atk_corvette_init ()
+function atk_corvette.init ()
    mem.atk_think  = atk.heuristic_big_game_think
-   mem.atk        = atk_corvette
+   mem.atk        = atk_corvette.atk
 end
+
+return atk_corvette

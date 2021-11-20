@@ -35,6 +35,7 @@
    7) Mace Pankration performed
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local fw = require "common.frontier_war"
 require "proximity"
@@ -573,7 +574,7 @@ function startPankration()
       competitors[i]:setFaction("Warlords")
       competitors[i]:taskClear()
       compHitHook[i] = hook.pilot( competitors[i], "attacked", "compHit" )
-      competitors[i]:memory().atk = atk_generic -- A very agressive AI
+      competitors[i]:memory().atk = atk_generic.atk -- A very agressive AI
    end
    for i = 1, 4 do
       competitors[i]:attack(competitors[i+5])

@@ -5,6 +5,7 @@
 
 local atk = require "ai.core.attack.util"
 
+local atk_fighter = {}
 
 --[[
 -- Mainly targets small fighters.
@@ -35,7 +36,7 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-local function atk_fighter( target, dokill )
+function atk_fighter.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -66,7 +67,9 @@ end
 
 
 -- Initializes the fighter
-function atk_fighter_init ()
+function atk_fighter.init ()
    mem.atk_think  = atk_fighter_think
-   mem.atk        = atk_fighter
+   mem.atk        = atk_fighter.atk
 end
+
+return atk_fighter

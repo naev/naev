@@ -33,6 +33,7 @@
    7) Final landing
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local lmisn = require "lmisn"
 require "proximity"
 local fw = require "common.frontier_war"
@@ -470,7 +471,7 @@ function fighterDuel()
    -- Prevent both Goddards from colliding with Vendetta's ammo. Set the AI so that they don't get stuck.
    for k,v in ipairs{battleaddict, klank} do
       v:setFaction("Dvaered")
-      v:memory().atk = atk_generic --atk_drone
+      v:memory().atk = atk_generic.atk --atk_drone.atk
    end
 
    klank2:setNoDeath() -- Actually it should not be necessary, but...

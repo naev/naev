@@ -4,21 +4,12 @@
 
 local atk = require "ai.core.attack.util"
 
-local __atk_g_approach, __atk_g_melee -- Forward-declared functions
-
---[[
--- Required initialization function
---]]
-function atk_generic_init ()
-   mem.atk_think  = atk_generic_think
-   mem.atk        = atk_generic
-end
-
+local atk_generic = {}
 
 --[[
 -- Mainly manages targeting nearest enemy.
 --]]
-function atk_generic_think( target, _si )
+function atk_generic.think( target, _si )
    -- Get new target if it's closer
    local enemy  = ai.getenemy()
    if enemy ~= target and enemy ~= nil then
@@ -66,9 +57,49 @@ end
 
 
 --[[
+-- Approaches the target
+--]]
+local function __atk_g_approach( target, _dist )
+   local dir = ai.idir(target)
+   if dir < math.rad(10) and dir > -math.rad(10) then
+      atk.keep_distance()
+   else
+      dir = ai.iface(target)
+   end
+   if dir < math.rad(10) then
+      ai.accel()
+   end
+end
+
+
+--[[
+-- Melees the target
+--]]
+local function __atk_g_melee( target, dist )
+   local dir   = ai.aim(target) -- We aim instead of face
+   local range = ai.getweaprange( 3 )
+   ai.weapset( 3 ) -- Set turret/forward weaponset.
+
+   -- Drifting away we'll want to get closer
+   if dir < math.rad(10) and dist > 0.5*range and ai.relvel(target) > -10 then
+      ai.accel()
+   end
+
+   -- Shoot if should be shooting.
+   if dir < math.rad(10) then
+      ai.shoot()
+   end
+   ai.shoot(true)
+
+   -- Also try to shoot missiles
+   atk.dogfight_seekers( dist, dir )
+end
+
+
+--[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_generic( target, dokill )
+function atk_generic.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -100,40 +131,11 @@ end
 
 
 --[[
--- Approaches the target
+-- Required initialization function
 --]]
-function __atk_g_approach( target, _dist )
-   local dir = ai.idir(target)
-   if dir < math.rad(10) and dir > -math.rad(10) then
-      atk.keep_distance()
-   else
-      dir = ai.iface(target)
-   end
-   if dir < math.rad(10) then
-      ai.accel()
-   end
+function atk_generic.init ()
+   mem.atk_think  = atk_generic.think
+   mem.atk        = atk_generic.atk
 end
 
-
---[[
--- Melees the target
---]]
-function __atk_g_melee( target, dist )
-   local dir   = ai.aim(target) -- We aim instead of face
-   local range = ai.getweaprange( 3 )
-   ai.weapset( 3 ) -- Set turret/forward weaponset.
-
-   -- Drifting away we'll want to get closer
-   if dir < math.rad(10) and dist > 0.5*range and ai.relvel(target) > -10 then
-      ai.accel()
-   end
-
-   -- Shoot if should be shooting.
-   if dir < math.rad(10) then
-      ai.shoot()
-   end
-   ai.shoot(true)
-
-   -- Also try to shoot missiles
-   atk.dogfight_seekers( dist, dir )
-end
+return atk_generic
