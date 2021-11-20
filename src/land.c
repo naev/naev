@@ -1397,7 +1397,7 @@ void takeoff( int delay )
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
-   space_init(NULL);
+   space_init( NULL, 1 );
    player.p->nav_hyperspace = h;
 
    /* cleanup */

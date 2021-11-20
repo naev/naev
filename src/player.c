@@ -204,7 +204,7 @@ static void player_newSetup()
 
    /* For pretty background. */
    pilots_cleanAll();
-   space_init( start_system() );
+   space_init( start_system(), 1 );
    start_position( &x, &y );
 
    cam_setTargetPos( x, y, 0 );
@@ -349,7 +349,7 @@ static int player_newMake (void)
    vect_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
-   space_init( start_system() );
+   space_init( start_system(), 1 );
 
    /* Set player speed to default 1 */
    player.speed = 1.;
@@ -1887,7 +1887,7 @@ void player_brokeHyperspace (void)
 
    /* enter the new system */
    jp = &cur_system->jumps[player.p->nav_hyperspace];
-   space_init( jp->target->name );
+   space_init( jp->target->name, 1 );
 
    /* Set up the overlay. */
    ovr_initAlpha();
@@ -3563,7 +3563,7 @@ static Planet* player_parse( xmlNodePtr parent )
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
 
    /* initialize the system */
-   space_init( sys->name );
+   space_init( sys->name, 0 );
    map_clear(); /* sets the map up */
    ovr_setOpen(map_overlay_enabled);
 

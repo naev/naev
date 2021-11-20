@@ -146,7 +146,7 @@ static int menu_main_bkg_system (void)
    cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
-   space_init( sys );
+   space_init( sys, 1 ); /* Simulation makes it look more lively. */
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
    pause_setSpeed( 1. );
