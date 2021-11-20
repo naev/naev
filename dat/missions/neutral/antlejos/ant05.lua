@@ -112,7 +112,7 @@ function land ()
       ant.unidiff( ant.unidiff_list[5] )
 
       -- Give supplies based on how many ships were able to land
-      ant.supplied( supplylanded * 500 )
+      ant.supplied( supplylanded * 125 ) -- Should get just 1000 if all make it
 
       player.pay( reward )
       ant.log(fmt.f(_("You guarded supply ships from the PUAAA delivering cargo to {pnt}."),{pnt=mainpnt}))
