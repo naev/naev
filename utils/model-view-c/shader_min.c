@@ -252,13 +252,15 @@ static int gl_program_link( GLuint program )
  *    @param[in] fragfile Fragment shader filename.
  *    @return The shader compiled program or 0 on failure.
  */
-GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
+GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const char *prependtext )
 {
    char *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;
 
    strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
+   if (prepend != NULL)
+      strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
    //if (gl_has( OPENGL_SUBROUTINES ))
    //   strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
 

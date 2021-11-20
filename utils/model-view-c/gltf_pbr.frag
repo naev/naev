@@ -3,7 +3,6 @@
  */
 
 const float M_PI        = 3.14159265358979323846;  /* pi */
-#define MAX_LIGHTS      4
 
 /* pbr_metallic_roughness */
 uniform sampler2D baseColour_tex; /**< Base colour. */

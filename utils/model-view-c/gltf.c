@@ -11,6 +11,9 @@
 
 #include "shader_min.h"
 
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+
 #define MAX_LIGHTS 4
 
 typedef struct ShaderLight_ {
@@ -565,7 +568,7 @@ int object_init (void)
    object_loadMaterial( &material_default, NULL );
 
    /* Compile the shader. */
-   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
+   shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n" );
    if (shd->program==0)
       return -1;
 
