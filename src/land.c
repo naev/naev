@@ -1025,8 +1025,11 @@ void land_genWindows( int load, int changetab )
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* Make sure services didn't change or we have to do the tab window. */
-      if (land_planet->services != pntservices)
+      if (land_planet->services != pntservices) {
          land_setupTabs();
+         land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
+         land_updateMainTab();
+      }
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
@@ -1086,8 +1089,7 @@ void land_genWindows( int load, int changetab )
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Refresh the map button in case the player couldn't afford it prior to
-    * mission payment.
-    */
+    * mission payment. */
    land_updateMainTab();
 
    /* Refuel if necessary. */
