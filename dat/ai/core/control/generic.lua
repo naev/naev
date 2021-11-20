@@ -107,7 +107,7 @@ local stateinfo = {
       noattack = true,
    },
 }
-function _stateinfo( task )
+local function _stateinfo( task )
    if task == nil then
       return {}
    end
