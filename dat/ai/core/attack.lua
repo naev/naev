@@ -78,7 +78,7 @@ function attack_forced_kill( target )
 end
 
 --[[
--- Wrapper for the attacked function.
+-- Wrapper for the attacked function. Only called from "attack" tasks (i.e., under "if si.attack").
 --]]
 function attack_attacked( attacker )
    local lib = (mem.atk or atk_generic)
