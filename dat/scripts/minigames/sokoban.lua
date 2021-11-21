@@ -9,17 +9,23 @@ local sokoban = {}
 --[[
    Runs the Sokoban minigame as a standalone
 --]]
-function sokoban.love ()
+function sokoban.love( params )
+   params = params or {}
+   local c = naev.cache()
+   c.sokoban_params = params
    love.exec( 'scripts/minigames/sokoban' )
 end
 
 --[[
    Runs the Sokoban minigame from the VN
 --]]
-function sokoban.vn ()
-   local s = vn.custom()
+function sokoban.vn( params )
+   params = params or {}
 
+   local s = vn.custom()
    s._init = function ()
+      local c = naev.cache()
+      c.sokoban_params = params
       return score.load()
    end
    s._draw = function ()

@@ -42,7 +42,7 @@ local coloursText = {
 }
 local cellSize = 30
 local headersize = 80
-local levels = require "minigames.sokoban.levels"
+local levels
 local level, currentLevel
 local lx, ly
 local bgshader
@@ -111,17 +111,31 @@ local function loadLevel()
    ly = (lh - cellSize * h)/2 - 100
 end
 
-local alpha, done, headerfont, headertext
+local alpha, done, headerfont, headertext, completed
 function sokoban.load()
+   local params = naev.cache().sokoban_params
+   params.header = params.header or _("Sokoban")
+   params.levels = params.levels or {1,2,3}
+   if type(params.levels)=='number' then
+      params.levels = {params.levels}
+   end
+
+   local levels_all = require "minigames.sokoban.levels"
+   levels = {}
+   for _k,l in ipairs(params.levels) do
+      table.insert( levels, levels_all[l] )
+   end
+
    -- Defaults
    lg.setBackgroundColor(0, 0, 0, 0)
    lg.setNewFont( 16 )
    headerfont = lg.newFont(24)
-   headertext = "Hacking the Gibson!"
+   headertext = params.header
    bgshader = love_shaders.circuit()
 
    alpha = 0
    currentLevel = 1
+   completed = false
 
    loadLevel()
 end
@@ -205,9 +219,12 @@ function sokoban.keypressed( key )
       if complete then
          currentLevel = currentLevel + 1
          if currentLevel > #levels then
-            currentLevel = 1
+            done = true
+            completed = true
+            currentLevel = currentLevel-1
+         else
+            loadLevel()
          end
-         loadLevel()
       end
 
    elseif key == 'r' then
@@ -231,7 +248,13 @@ function sokoban.draw()
 
    setcol{ 1, 1, 1 }
    lg.print( headertext, headerfont, lx, ly )
-   lg.print( fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} ), lx, ly+40 )
+   local subheader
+   if completed then
+      subheader = _("Completed!")
+   else
+      subheader = fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} )
+   end
+   lg.print( subheader, lx, ly+40 )
 
    local cx, cy = lx, ly+headersize
    for y, row in ipairs(level) do
