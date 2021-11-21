@@ -111,10 +111,11 @@ local function loadLevel()
    ly = (lh - cellSize * h)/2 - 100
 end
 
-local alpha, done, headerfont, headertext, completed
+local alpha, done, headerfont, headertext, completed, standalone
 function sokoban.load()
    local c = naev.cache()
    c.sokoban.completed = false
+   standalone = c.sokoban.standalone
    local params = c.sokoban.params
    params.header = params.header or _("Sokoban")
    params.levels = params.levels or {1,2,3}
@@ -223,7 +224,7 @@ function sokoban.keypressed( key )
          if currentLevel > #levels then
             done = true
             completed = true
-            naev.cache().sokoban.completed = false
+            naev.cache().sokoban.completed = true
             currentLevel = currentLevel-1
          else
             loadLevel()
@@ -287,11 +288,15 @@ function sokoban.update( dt )
    if done then
       alpha = alpha - dt * 2
       if alpha < 0 then
-         love.event.quit()
+         if standalone then
+            love.event.quit()
+         end
+         return true
       end
-      return
+      return false
    end
    alpha = math.min( alpha + dt * 2, 1 )
+   return false
 end
 
 return sokoban
