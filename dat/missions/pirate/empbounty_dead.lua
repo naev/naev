@@ -182,6 +182,11 @@ end
 
 
 function takeoff ()
+   -- Nothing to do.
+   if system.cur() ~= mem.missys then
+      return
+   end
+
    spawn_pirate()
 end
 
