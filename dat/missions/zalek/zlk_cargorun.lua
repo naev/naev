@@ -23,7 +23,7 @@ local zlk = require "common.zalek"
 local logan -- Non-persistent state
 -- luacheck: globals closehail hail land takeoff (Hook functions passed by name)
 
-local payment = 800e3
+local payment = 400e3
 
 function create ()
    -- Note: this mission does not make any system claims.
