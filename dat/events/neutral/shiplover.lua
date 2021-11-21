@@ -377,7 +377,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       local opts = {}
       local qopts = rnd.permutation( question_data.options )
       for k,v in ipairs(qopts) do
-         table.insert( opts, { v, v } )
+         table.insert( opts, { _(v), v } )
       end
       return opts
    end, function( key )
@@ -409,7 +409,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    -- TODO wrong sound
    sl(fmt.f(_([[They look smug as they exclaim "Wrong!".
 "The correct answer was #g{answer}#0! Better luck next time."
-They take their leave.]]), question_data))
+They take their leave.]]), {answer=_(question_data.answer)}))
 
    vn.label("remove_npc")
    vn.func( function () remove_npc = true end )
