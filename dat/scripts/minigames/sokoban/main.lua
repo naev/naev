@@ -1,5 +1,6 @@
 local love = require 'love'
 local lg = require 'love.graphics'
+local love_shaders = require "love_shaders"
 
 local player            = '@'
 local playerOnStorage   = '+'
@@ -40,6 +41,7 @@ local cellSize = 30
 local levels = require "levels"
 local level, currentLevel
 local lx, ly
+local bgshader
 
 local function loadLevel()
    local w = 0
@@ -107,6 +109,7 @@ function love.load()
    -- Defaults
    lg.setBackgroundColor(0, 0, 0, 0)
    lg.setNewFont( 16 )
+   bgshader = love_shaders.circuit()
 
    alpha = 0
    currentLevel = 1
@@ -205,11 +208,18 @@ function love.keypressed( key )
 end
 
 local function setcol( col )
-   local r, g, b= table.unpack( col )
-   lg.setColor( r, g, b, alpha )
+   local r, g, b, a = table.unpack( col )
+   a = a or 1
+   lg.setColor( r, g, b, a*alpha )
 end
 
 function love.draw()
+   local nw, nh = naev.gfx.dim()
+   setcol( {0.2,0.2,0.2,0.5} )
+   lg.setShader( bgshader )
+   love_shaders.img:draw( 0, 0, 0, nw, nh )
+   lg.setShader()
+
    for y, row in ipairs(level) do
       for x, cell in ipairs(row) do
          if cell ~= emptyOut then
@@ -233,6 +243,7 @@ function love.draw()
 end
 
 function love.update( dt )
+   bgshader:update(dt)
    if done then
       alpha = alpha - dt * 2
       if alpha < 0 then
