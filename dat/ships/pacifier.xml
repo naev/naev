@@ -49,6 +49,7 @@
   <heat_dissipation>10</heat_dissipation>
  </stats>
  <tags>
+  <tag>frontier</tag>
   <tag>standard</tag>
  </tags>
 </ship>

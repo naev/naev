@@ -46,6 +46,8 @@
   <heat_dissipation>10</heat_dissipation>
  </stats>
  <tags>
+  <tag>frontier</tag>
+  <tag>goddard</tag><!--Used by the faction.-->
   <tag>standard</tag>
  </tags>
 </ship>
