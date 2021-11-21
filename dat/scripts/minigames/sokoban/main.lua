@@ -1,6 +1,7 @@
 local love = require 'love'
 local lg = require 'love.graphics'
 local love_shaders = require "love_shaders"
+local fmt = require 'format'
 
 local player            = '@'
 local playerOnStorage   = '+'
@@ -38,6 +39,7 @@ local coloursText = {
    [wall]            = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
 }
 local cellSize = 30
+local headersize = 80
 local levels = require "levels"
 local level, currentLevel
 local lx, ly
@@ -100,15 +102,20 @@ local function loadLevel()
       end
    end
 
+   -- header
+   lh = lh + headersize
+
    lx = (lw - cellSize * w)/2
-   ly = (lh - cellSize * h)/2
+   ly = (lh - cellSize * h)/2 - 100
 end
 
-local alpha, done
+local alpha, done, headerfont, headertext
 function love.load()
    -- Defaults
    lg.setBackgroundColor(0, 0, 0, 0)
    lg.setNewFont( 16 )
+   headerfont = lg.newFont(24)
+   headertext = "Hacking the Gibson!"
    bgshader = love_shaders.circuit()
 
    alpha = 0
@@ -215,27 +222,32 @@ end
 
 function love.draw()
    local nw, nh = naev.gfx.dim()
-   setcol( {0.2,0.2,0.2,0.5} )
+   setcol( {0.15,0.15,0.15,0.8} )
    lg.setShader( bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
 
+   setcol{ 1, 1, 1 }
+   lg.print( headertext, headerfont, lx, ly )
+   lg.print( fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} ), lx, ly+40 )
+
+   local cx, cy = lx, ly+headersize
    for y, row in ipairs(level) do
       for x, cell in ipairs(row) do
          if cell ~= emptyOut then
             setcol( colours[cell] )
             lg.rectangle(
                'fill',
-               lx + (x - 1) * cellSize,
-               ly + (y - 1) * cellSize,
+               cx + (x - 1) * cellSize,
+               cy + (y - 1) * cellSize,
                cellSize,
                cellSize
             )
             setcol( coloursText[cell] )
             lg.print(
                level[y][x],
-               lx + (x - 1) * cellSize,
-               ly + (y - 1) * cellSize
+               cx + (x - 1) * cellSize,
+               cy + (y - 1) * cellSize
             )
          end
       end
