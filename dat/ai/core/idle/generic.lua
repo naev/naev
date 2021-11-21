@@ -5,13 +5,11 @@ local scans = require 'ai.core.misc.scans'
 -- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local p = ai.pilot()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
       local enemy  = ai.getenemy()
-      if should_attack( enemy,  si ) then
+      if should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return
       end

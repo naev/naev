@@ -15,9 +15,6 @@ mem.guardreturndist = math.huge
 function create ()
    local p = ai.pilot()
 
-   -- Choose attack format
-   attack_choose()
-
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position
    mem.enemyclose    = mem.guarddodist

@@ -2193,7 +2193,6 @@ dat/ai/baddiepos.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
-dat/ai/core/attack.lua
 dat/ai/core/attack/bomber.lua
 dat/ai/core/attack/capital.lua
 dat/ai/core/attack/corvette.lua

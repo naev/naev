@@ -573,7 +573,7 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   local scavA = vn.newCharacter( minerva.scavengera.name,
+   --[[local scavA =]] vn.newCharacter( minerva.scavengera.name,
          { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
    local scavB = vn.newCharacter( minerva.scavengerb.name,
          { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )

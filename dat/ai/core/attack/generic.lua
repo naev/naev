@@ -25,19 +25,11 @@ end
 
 
 --[[
--- Attacked function.
+-- Attacked function.  Only called from "attack" tasks (i.e., under "if si.attack").
 --]]
 function atk_generic.attacked( attacker )
-   local si = _stateinfo( ai.taskname() )
-
    if mem.recharge then
       mem.recharge = false
-   end
-
-   -- If no target automatically choose it
-   if not si.attack then
-      ai.pushtask("attack", attacker)
-      return
    end
 
    local target = ai.taskdata()

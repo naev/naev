@@ -212,9 +212,9 @@ function idle ()
       return idle_generic() -- TODO something custom
    end
 
-   if not mem.aggressive then
-      -- TODO non-aggressive behaviours
-   end
+   -- TODO non-aggressive behaviours
+   --if not mem.aggressive then
+   --end
 
    -- See if there is a nearby target to kill
    if __tryengage(p) then return end
@@ -309,9 +309,7 @@ control_funcs.attack = function ()
       return true
    end
 
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return false
 end
 control_funcs.inspect_moveto = function ()

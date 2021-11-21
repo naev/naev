@@ -1,14 +1,25 @@
-local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
+local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
+
+local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fleet, should_cooldown -- Forward-declared functions
 
 --[[
 -- Variables to adjust AI
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
+mem.atk_changetarget  = 2 -- Distance at which target changes
+mem.atk_approach      = 1.4 -- Distance that marks approach
+mem.atk_aim           = 1.0 -- Distance that marks aim
+mem.atk_board         = false -- Whether or not to board the target
+mem.atk_kill          = true -- Whether or not to finish off the target
+mem.atk_minammo       = 0.1 -- Percent of ammo necessary to do ranged attacks
+mem.ranged_ammo       = 0 -- How much ammo is left, we initialize to 0 here just in case
+mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
+mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
 mem.enemyclose     = nil -- Distance at which an enemy is considered close
 mem.armour_run     = -1 -- At which damage to run at
 mem.armour_return  = 0 -- At which armour to return to combat
@@ -107,11 +118,107 @@ local stateinfo = {
       noattack = true,
    },
 }
-function _stateinfo( task )
+local function _stateinfo( task )
    if task == nil then
       return {}
    end
    return stateinfo[ task ] or {}
+end
+
+--[[
+   Attack wrappers for calling the correct attack functions.
+--]]
+
+
+--[[
+-- Wrapper for the think functions.
+--]]
+local function attack_think( target, si )
+   -- Ignore other enemies
+   if si.noattack then return end
+
+   -- Update some high level stats
+   mem.ranged_ammo = ai.getweapammo(4)
+
+   local lib = (mem.atk or atk_generic)
+   local func = (lib.think or atk_generic.think)
+   func( target, si )
+end
+
+
+--[[
+-- Wrapper for the attack functions.
+--]]
+-- luacheck: globals attack (AI Task functions passed by name)
+function attack( target )
+   -- Don't go on the offensive when in the middle of cooling.
+   if mem.cooldown then
+      ai.poptask()
+      return
+   end
+
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target )
+end
+
+--[[
+-- Forced attack function that should focus on the enemy until done
+--]]
+function attack_forced( target )
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target )
+end
+
+--[[
+-- Forced attack function that should focus on the enemy until enemy is killed
+--]]
+-- luacheck: globals attack_forced_kill (AI Task functions passed by name)
+function attack_forced_kill( target )
+   local lib = (mem.atk or atk_generic)
+   lib.atk( target, true )
+end
+
+--[[
+-- Wrapper for the attacked function. Only called from "attack" tasks (i.e., under "if si.attack").
+--]]
+local function attack_attacked( attacker )
+   local lib = (mem.atk or atk_generic)
+   local func = (lib.attacked or atk_generic.attacked)
+   func( attacker )
+end
+
+
+-- [[
+-- Generic function to choose what attack functions match the ship best.
+-- ]]
+local function attack_choose ()
+   local class = ai.pilot():ship():class()
+
+   -- Set initial variables
+   mem.ranged_ammo = ai.getweapammo(4)
+
+   -- Lighter ships
+   if class == "Bomber" then
+      mem.atk = require "ai.core.attack.bomber"
+
+   elseif class == "Interceptor" then
+      mem.atk = require "ai.core.attack.drone"
+
+   elseif class == "Fighter" then
+      mem.atk = require "ai.core.attack.fighter"
+
+   -- Medium ships
+   elseif class == "Corvette" then
+      mem.atk = require "ai.core.attack.corvette"
+
+   -- Capital ships
+   elseif class == "Destroyer" or class == "Cruiser" or class == "Battleship" or class == "Carrier" then
+      mem.atk = require "ai.core.attack.capital"
+
+    -- Generic AI
+   else
+      mem.atk = atk_generic
+   end
 end
 
 function lead_fleet( p )
@@ -307,6 +414,7 @@ function should_attack( enemy, si )
 end
 
 function control_attack( si )
+   si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
    -- Needs to have a target
    if not target or not target:exists() then
@@ -575,16 +683,12 @@ function control_funcs.board ()
    return true
 end
 function control_funcs.attack ()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return false
 end
 function control_funcs.attack_forced ()
    -- Independent of control_funcs.attack
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
+   control_attack()
    return true
 end
 function control_funcs.flyback () return true end
@@ -727,8 +831,8 @@ function create_post ()
    mem.scanned    = {} -- must create for each pilot
    attack_choose()
 
-   -- Give a small delay
-   if mem.jumpedin then
+   -- Give a small delay... except for escorts?
+   if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("idle_wait")
    end
