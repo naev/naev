@@ -51,4 +51,7 @@
   <heat_dissipation>15</heat_dissipation>
   <engine_limit_rel>20</engine_limit_rel>
  </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
 </ship>

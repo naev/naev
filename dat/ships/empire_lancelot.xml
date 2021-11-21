@@ -46,4 +46,7 @@
   <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
  </stats>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </ship>

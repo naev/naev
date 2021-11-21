@@ -47,4 +47,7 @@
   <launch_range>10</launch_range>
   <ammo_capacity>50</ammo_capacity>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

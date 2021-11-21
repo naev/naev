@@ -46,4 +46,7 @@
   <cargo_inertia>-20</cargo_inertia>
   <ew_hide>-10</ew_hide>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

@@ -53,4 +53,7 @@
   <fwd_damage>20</fwd_damage>
   <fwd_energy>10</fwd_energy>
  </stats>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
 </ship>
