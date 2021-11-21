@@ -572,7 +572,7 @@ function succeed ()
    local bounty_done = var.peek( "pir_bounty_done" )
    var.push( "pir_bounty_done", true )
    if bounty_done ~= true then
-      var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
+      pir.modReputation( 5 )
    end
 
    if mem.level >= 5 then

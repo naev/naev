@@ -231,7 +231,7 @@ function land()
       -- Stealing a ship for the first time increases your maximum faction
       -- standing.
       if stolen_ships == 0 then
-         var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
+         pir.modReputation( 5 )
       end
 
       -- If you stole a ship of some value, the faction will have something
