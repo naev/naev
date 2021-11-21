@@ -55,10 +55,12 @@ local faction_tags = {
 local ships = {}
 for i, ship in ipairs(ship.getAll()) do
    local tags = ship:tags()
-   for fctname, tag in pairs(faction_tags) do
-      if tags[tag] then
-         ships[fctname] = ships[fctname] or {}
-         table.insert( ships[fctname], ship )
+   if not tags["noplayer"] then
+      for fctname, tag in pairs(faction_tags) do
+         if tags[tag] then
+            ships[fctname] = ships[fctname] or {}
+            table.insert( ships[fctname], ship )
+         end
       end
    end
 end
