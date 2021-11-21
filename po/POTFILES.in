@@ -2705,6 +2705,7 @@ src/debris.c
 src/debris.h
 src/debug.c
 src/debug.h
+src/debug_fpu.c
 src/dev_mapedit.c
 src/dev_mapedit.h
 src/dev_planet.c
