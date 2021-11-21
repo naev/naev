@@ -44,73 +44,64 @@ local base_price = 100e3
 
 local ships = {
    Dvaered = {
-      fighter   = { "Dvaered Vendetta" },
-      bomber    = { "Dvaered Ancestor" },
-      corvette  = { "Dvaered Phalanx" },
-      destroyer = { "Dvaered Vigilance" },
-      carrier   = { "Dvaered Arsenal" },
-      battleship= { "Dvaered Goddard" },
+      "Dvaered Vendetta",
+      "Dvaered Ancestor",
+      "Dvaered Phalanx",
+      "Dvaered Vigilance",
+      "Dvaered Arsenal",
+      "Dvaered Goddard",
    },
    Empire = {
-      interceptor={ "Empire Shark" },
-      fighter   = { "Empire Lancelot" },
-      corvette  = { "Empire Admonisher" },
-      destroyer = { "Empire Pacifier" },
-      cruiser   = { "Empire Hawking" },
-      carrier   = { "Empire Peacemaker", "Empire Rainmaker" },
+      "Empire Shark",
+      "Empire Lancelot",
+      "Empire Admonisher",
+      "Empire Pacifier",
+      "Empire Hawking",
+      "Empire Peacemaker", "Empire Rainmaker",
    },
    Frontier = {
-      interceptor={ "Hyena" },
-      fighter   = { "Lancelot", "Vendetta" },
-      bomber    = { "Ancestor" },
-      corvette  = { "Phalanx" },
-      destroyer = { "Pacifier" },
+      "Hyena",
+      "Lancelot", "Vendetta",
+      "Ancestor",
+      "Phalanx",
+      "Pacifier",
    },
    Goddard = {
-      fighter   = { "Lancelot" },
-      battleship= { "Goddard" },
+      "Lancelot",
+      "Goddard",
    },
    Independent = {
-      interceptor={ "Hyena", "Shark" },
-      fighter   = { "Lancelot", "Vendetta" },
-      bomber    = { "Ancestor" },
-      corvette  = { "Phalanx", "Admonisher" },
-      destroyer = { "Vigilance", "Pacifier" },
-      cruiser   = { "Kestrel", "Hawking" },
+      "Hyena", "Shark",
+      "Lancelot", "Vendetta",
+      "Ancestor",
+      "Phalanx", "Admonisher",
+      "Vigilance", "Pacifier",
+      "Kestrel", "Hawking",
    },
    Sirius = {
-      interceptor={ "Sirius Fidelity" },
-      bomber    = { "Sirius Shaman" },
-      corvette  = { "Sirius Preacher" },
-      battleship= { "Sirius Dogma" },
-      carrier   = { "Sirius Divinity" },
+      "Sirius Fidelity",
+      "Sirius Shaman",
+      "Sirius Preacher",
+      "Sirius Dogma",
+      "Sirius Divinity",
    },
    Soromid = {
-      interceptor={ "Soromid Brigand" },
-      fighter   = { "Soromid Reaver" },
-      bomber    = { "Soromid Marauder" },
-      corvette  = { "Soromid Odium" },
-      destroyer = { "Soromid Nyx" },
-      cruiser   = { "Soromid Ira" },
-      battleship= { "Soromid Vox" },
-      carrier   = { "Soromid Arx" },
+      "Soromid Brigand",
+      "Soromid Reaver",
+      "Soromid Marauder",
+      "Soromid Odium",
+      "Soromid Nyx",
+      "Soromid Ira",
+      "Soromid Vox",
+      "Soromid Arx",
    },
    ["Za'lek"] = {
-      corvette  = { "Za'lek Sting" },
-      destroyer = { "Za'lek Demon" },
-      cruiser   = { "Za'lek Mephisto" },
-      carrier   = { "Za'lek Diablo" },
+      "Za'lek Sting",
+      "Za'lek Demon",
+      "Za'lek Mephisto",
+      "Za'lek Diablo",
    },
 }
-
-local classes = {}
-for k,v in pairs(ships) do
-   classes[k] = {}
-
-   for k2,v2 in pairs(v) do
-      classes[k][#classes[k]+1] = k2
-   end
-end
 
 local function price(size)
    local modifier = 1.5^(size-3)
@@ -118,8 +109,8 @@ local function price(size)
    return modifier * base_price
 end
 
-local function random_class(faction)
-   local m = #classes[faction]
+local function random_ship(faction)
+   local m = #ships[faction]
 
    if m == 0 then
       return
@@ -127,19 +118,7 @@ local function random_class(faction)
 
    local r = rnd.rnd(1, m)
 
-   return classes[faction][r]
-end
-
-local function random_ship(faction, class)
-   local m = #ships[faction][class]
-
-   if m == 0 then
-      return
-   end
-
-   local r = rnd.rnd(1, m)
-
-   return ship.get(ships[faction][class][r])
+   return ship.get(ships[faction][r])
 end
 
 local function random_planet()
@@ -212,16 +191,13 @@ function create ()
    end
 
    mem.theship.faction = mem.theship.planet:faction():nameRaw()
-   mem.theship.class   = random_class(mem.theship.faction)
+   mem.theship.ship = random_ship(mem.theship.faction)
 
-   if not mem.theship.class then
-      -- If we’re here, it means we couldn’t get a ship of the right faction
-      -- and of the right class.
+   if not mem.theship.ship then
+      -- If we’re here, it means we couldn’t get a ship of the right faction.
       misn.finish(false)
    end
 
-   -- We’re assuming ships[faction][class] is not empty, here…
-   mem.theship.ship = random_ship(mem.theship.faction, mem.theship.class)
    mem.theship.size = mem.theship.ship:size()
    mem.theship.price   = price(mem.theship.size)
 
@@ -234,7 +210,7 @@ function accept()
    if tk.yesno( _("Ship to steal"), fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
     "However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
     Do you want to pay to know where that ship is?]]), {
-         fct=_(mem.theship.faction), class=_(mem.theship.class), credits=fmt.credits(mem.theship.price)} ) ) then
+         fct=_(mem.theship.faction), class=_(mem.theship.ship:class()), credits=fmt.credits(mem.theship.price)} ) ) then
       if player.credits() >= mem.theship.price then
          tk.msg( _("Of course"), fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
     The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]), {
@@ -243,11 +219,11 @@ function accept()
          player.pay( -mem.theship.price )
          misn.accept()
 
-	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.theship.class)} )
+	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.theship.ship:class())} )
 	 local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
-                                    {pnt=mem.theship.planet, sys=mem.theship.system, class=_(mem.theship.class)} )
+                                    {pnt=mem.theship.planet, sys=mem.theship.system, class=_(mem.theship.ship:class())} )
          misn.setTitle( title )
-         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.theship.class)} ) )
+         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.theship.ship:class())} ) )
          misn.setDesc( description )
 
          -- Mission marker
