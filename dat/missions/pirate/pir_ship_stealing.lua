@@ -69,8 +69,8 @@ local function price(size)
    return modifier * base_price
 end
 
-local function random_ship(faction)
-   local l = ships[faction]
+local function random_ship(fct)
+   local l = ships[fct:nameRaw()]
    if not l then
       return
    end
@@ -104,8 +104,8 @@ local function random_planet()
 end
 
 --[[
-local function improve_standing(size, faction_name)
-   local enemies = faction.get(faction_name):enemies()
+local function improve_standing(size, fct)
+   local enemies = fct:enemies()
    local standing = math.max( size - 2, 0 )
 
    for i = 1,#enemies do
@@ -120,44 +120,41 @@ local function improve_standing(size, faction_name)
 end
 ]]
 
-local function damage_standing(size, faction_name)
+local function damage_standing( size, fct )
    local base = 2^(size-2)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
-   if faction_name == "Pirate" then
+   if pir.factionIsPirate( fct ) then
       return
    end
 
-   if faction_name == "Independent" or faction_name == "Frontier" then
+   if fct == faction.get("Independent") or fct == faction.get("Frontier") then
       modifier = 0.5
    end
 
-   faction.modPlayerSingle(faction_name, -base * modifier)
+   fct:modPlayerSingle( -base * modifier )
 end
 
 function create ()
-   mem.theship = {}
    mem.reward_faction = pir.systemClanP( system.cur() )
-   mem.theship.planet  = random_planet()
+   mem.planet  = random_planet()
+   mem.system = mem.planet:system()
 
-   if not mem.theship.planet or mem.theship.planet:faction() == nil then
+   if not mem.planet or mem.planet:faction() == nil then
       -- If we’re here, it means we couldn’t get a planet close enough.
       misn.finish(false)
    end
 
-   mem.theship.faction = mem.theship.planet:faction():nameRaw()
-   mem.theship.ship = random_ship(mem.theship.faction)
+   mem.faction = mem.planet:faction()
+   mem.ship = random_ship(mem.faction)
 
-   if not mem.theship.ship then
+   if not mem.ship then
       -- If we’re here, it means we couldn’t get a ship of the right faction.
       misn.finish(false)
    end
 
-   mem.theship.size = mem.theship.ship:size()
-   mem.theship.price   = price(mem.theship.size)
-
-   mem.theship.system = mem.theship.planet:system()
+   mem.price = price(mem.ship:size())
 
    misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
 end
@@ -166,24 +163,24 @@ function accept()
    if tk.yesno( _("Ship to steal"), fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
     "However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
     Do you want to pay to know where that ship is?]]), {
-         fct=_(mem.theship.faction), class=_(mem.theship.ship:class()), credits=fmt.credits(mem.theship.price)} ) ) then
-      if player.credits() >= mem.theship.price then
+         fct=mem.faction, class=_(mem.ship:class()), credits=fmt.credits(mem.price)} ) ) then
+      if player.credits() >= mem.price then
          tk.msg( _("Of course"), fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
     The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]), {
-            pnt=mem.theship.planet, sys=mem.theship.system} ) )
+            pnt=mem.planet, sys=mem.system} ) )
 
-         player.pay( -mem.theship.price )
+         player.pay( -mem.price )
          misn.accept()
 
-	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.theship.ship:class())} )
+	 local title = fmt.f(_("Stealing a {class}"), {class=_(mem.ship:class())} )
 	 local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
-                                    {pnt=mem.theship.planet, sys=mem.theship.system, class=_(mem.theship.ship:class())} )
+                                    {pnt=mem.planet, sys=mem.system, class=_(mem.ship:class())} )
          misn.setTitle( title )
-         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.theship.ship:class())} ) )
+         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(mem.ship:class())} ) )
          misn.setDesc( description )
 
          -- Mission marker
-         misn.markerAdd( mem.theship.system, "low" )
+         misn.markerAdd( mem.system, "low" )
 
          -- OSD
          misn.osdCreate( title, {description})
@@ -202,9 +199,9 @@ end
 
 function land()
    local landed = planet.cur()
-   if landed == mem.theship.planet then
+   if landed == mem.planet then
       -- Try to swap ships
-      local tmp = pilot.add( mem.theship.ship, "Independent" )
+      local tmp = pilot.add( mem.ship, "Independent" )
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!
@@ -219,7 +216,7 @@ function land()
          fmt.f(
             _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this {ship}, or maybe even to use it.
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
-            {ship=mem.theship.ship}
+            {ship=mem.ship}
          )
       )
 
@@ -239,7 +236,7 @@ function land()
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
-      damage_standing(mem.theship.size, mem.theship.faction)
+      damage_standing(mem.ship:size(), mem.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
       -- happy with it. Getting out of the system alive is the player’s
@@ -250,9 +247,9 @@ end
 
 function enter()
    -- A few faction ships guard the target planet.
-   if system.cur() == mem.theship.system then
+   if system.cur() == mem.system then
       -- We want the player to be able to land on the destination planet…
-      mem.theship.planet:landOverride(true)
+      mem.planet:landOverride(true)
    end
 end
 
