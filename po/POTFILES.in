@@ -2640,6 +2640,11 @@ dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/diceio.lua
+dat/scripts/minigames/sokoban.lua
+dat/scripts/minigames/sokoban/conf.lua
+dat/scripts/minigames/sokoban/core.lua
+dat/scripts/minigames/sokoban/levels.lua
+dat/scripts/minigames/sokoban/main.lua
 dat/scripts/outfits/shaders.lua
 dat/scripts/pilotname.lua
 dat/scripts/pilotname/core.lua
