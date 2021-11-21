@@ -146,8 +146,7 @@ end
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
       done = 1
-   end
-   if key == 'up' or key == 'down' or key == 'left' or key == 'right' then
+   elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' then
       local playerX
       local playerY
 
@@ -251,14 +250,14 @@ function sokoban.draw()
    lg.setShader()
 
    setcol{ 1, 1, 1 }
-   lg.print( headertext, headerfont, lx, ly )
+   lg.printf( headertext, headerfont, 0, ly, nw, "center" )
    local subheader
    if completed then
       subheader = _("Completed!")
    else
       subheader = fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} )
    end
-   lg.print( subheader, lx, ly+40 )
+   lg.printf( subheader, 0, ly+40, nw, "center" )
 
    local cx, cy = lx, ly+headersize
    for y, row in ipairs(level) do
@@ -281,6 +280,10 @@ function sokoban.draw()
          end
       end
    end
+
+   setcol{ 1, 1, 1 }
+   cy = cy + #level*cellSize + 20
+   lg.printf( _("#barrow keys#0: move, #br#0: restart, #bq#0: abort"), 0, cy, nw, "center" )
 end
 
 function sokoban.update( dt )
