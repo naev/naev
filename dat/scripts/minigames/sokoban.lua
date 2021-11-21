@@ -19,10 +19,18 @@ end
 function sokoban.vn ()
    local s = vn.custom()
 
-   s._init = score.load
-   s._draw = score.draw
-   s._keypressed = score.keypressed
-   s._update = score.update
+   s._init = function ()
+      return score.load()
+   end
+   s._draw = function ()
+      return score.draw()
+   end
+   s._keypressed = function( _self, key )
+      return score.keypressed( key )
+   end
+   s._update = function( _self, dt )
+      return score.update( dt )
+   end
 
    return s
 end

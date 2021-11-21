@@ -42,7 +42,7 @@ local coloursText = {
 }
 local cellSize = 30
 local headersize = 80
-local levels = require "levels"
+local levels = require "minigames.sokoban.levels"
 local level, currentLevel
 local lx, ly
 local bgshader
