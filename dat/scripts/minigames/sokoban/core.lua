@@ -112,6 +112,7 @@ local function loadLevel()
 end
 
 local alpha, done, headerfont, headertext, completed, standalone
+local movekeys
 function sokoban.load()
    local c = naev.cache()
    c.sokoban.completed = false
@@ -122,6 +123,14 @@ function sokoban.load()
    if type(params.levels)=='number' then
       params.levels = {params.levels}
    end
+
+   -- Allow the default keybindings too!
+   movekeys = {
+      string.lower( naev.keyGet("left") ),
+      string.lower( naev.keyGet("right") ),
+      string.lower( naev.keyGet("accel") ),
+      string.lower( naev.keyGet("reverse") ),
+   }
 
    local levels_all = require "minigames.sokoban.levels"
    levels = {}
@@ -146,7 +155,9 @@ end
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
       done = 1
-   elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' then
+   elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
+         key == movekeys[1] or key == movekeys[2] or
+         key == movekeys[3] or key == movekeys[4] then
       local playerX
       local playerY
 
@@ -161,13 +172,13 @@ function sokoban.keypressed( key )
 
       local dx = 0
       local dy = 0
-      if key == 'left' then
+      if key == 'left' or key == movekeys[1] then
          dx = -1
-      elseif key == 'right' then
+      elseif key == 'right' or key == movekeys[2] then
          dx = 1
-      elseif key == 'up' then
+      elseif key == 'up' or key == movekeys[3] then
          dy = -1
-      elseif key == 'down' then
+      elseif key == 'down' or key == movekeys[4] then
          dy = 1
       end
 
