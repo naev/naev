@@ -82,7 +82,7 @@ function create ()
       if not misn.claim( sys, true ) then
          return false
       end
-      -- Must have two jumps
+      -- Must have two jumps that are fair away-ish
       local j1, j2, d = get_route( sys )
       if j1 == nil or j2 == nil or d < 10e3*10e3 then
          return false
