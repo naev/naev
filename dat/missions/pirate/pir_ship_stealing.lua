@@ -112,22 +112,9 @@ for k,v in pairs(ships) do
    end
 end
 
-local function price(class)
-   local modifier = 1
-   if class == "interceptor" then
-   modifier = 0.3
-   elseif class == "fighter" then
-   modifier = 0.5
-   elseif class == "bomber" then
-   modifier = 0.75
-   elseif class == "destroyer" then
-   modifier = 1.5
-   elseif class == "cruiser" then
-      modifier = 2
-   elseif class == "carrier" or class == "battleship" then
-      modifier = 3
-   end
-
+local function price(size)
+   local modifier = 1.5^(size-3)
+   modifier = math.floor(4*modifier) / 4 -- rounder numbers
    return modifier * base_price
 end
 
@@ -152,7 +139,7 @@ local function random_ship(faction, class)
 
    local r = rnd.rnd(1, m)
 
-   return ships[faction][class][r]
+   return ship.get(ships[faction][class][r])
 end
 
 local function random_planet()
@@ -182,19 +169,9 @@ local function random_planet()
 end
 
 --[[
-local function improve_standing(class, faction_name)
+local function improve_standing(size, faction_name)
    local enemies = faction.get(faction_name):enemies()
-   local standing = 0
-
-   if class == "corvette" then
-      standing = 1
-   elseif class == "destroyer" then
-      standing = 2
-   elseif class =="cruiser" then
-      standing = 3
-   elseif class == "carrier" or class == "battleship" then
-      standing = 4
-   end
+   local standing = math.max( size - 2, 0 )
 
    for i = 1,#enemies do
       local enemy = enemies[i]
@@ -208,7 +185,8 @@ local function improve_standing(class, faction_name)
 end
 ]]
 
-local function damage_standing(class, faction_name)
+local function damage_standing(size, faction_name)
+   local base = 2^(size-2)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
@@ -220,16 +198,7 @@ local function damage_standing(class, faction_name)
       modifier = 0.5
    end
 
-   if class == "corvette" then
-      faction.modPlayerSingle(faction_name, -2 * modifier)
-   elseif class == "destroyer" then
-      faction.modPlayerSingle(faction_name, -4 * modifier)
-   elseif class == "cruiser" then
-      faction.modPlayerSingle(faction_name, -8 * modifier)
-   elseif class == "carrier" or class == "battleship" then
-      -- Hey, who do you think you are to steal a carrier?
-      faction.modPlayerSingle(faction_name, -16 * modifier)
-   end
+   faction.modPlayerSingle(faction_name, -base * modifier)
 end
 
 function create ()
@@ -252,8 +221,9 @@ function create ()
    end
 
    -- We’re assuming ships[faction][class] is not empty, here…
-   mem.theship.exact_class = random_ship(mem.theship.faction, mem.theship.class)
-   mem.theship.price   = price(mem.theship.class)
+   mem.theship.ship = random_ship(mem.theship.faction, mem.theship.class)
+   mem.theship.size = mem.theship.ship:size()
+   mem.theship.price   = price(mem.theship.size)
 
    mem.theship.system = mem.theship.planet:system()
 
@@ -302,7 +272,7 @@ function land()
    local landed = planet.cur()
    if landed == mem.theship.planet then
       -- Try to swap ships
-      local tmp = pilot.add( mem.theship.exact_class, "Independent" )
+      local tmp = pilot.add( mem.theship.ship, "Independent" )
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!
@@ -317,7 +287,7 @@ function land()
          fmt.f(
             _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this {ship}, or maybe even to use it.
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
-            {ship=_(mem.theship.exact_class)}
+            {ship=mem.theship.ship}
          )
       )
 
@@ -337,7 +307,7 @@ function land()
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
-      damage_standing(mem.theship.class, mem.theship.faction)
+      damage_standing(mem.theship.size, mem.theship.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
       -- happy with it. Getting out of the system alive is the player’s
