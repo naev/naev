@@ -113,7 +113,9 @@ end
 
 local alpha, done, headerfont, headertext, completed
 function sokoban.load()
-   local params = naev.cache().sokoban_params
+   local c = naev.cache()
+   c.sokoban.completed = false
+   local params = c.sokoban.params
    params.header = params.header or _("Sokoban")
    params.levels = params.levels or {1,2,3}
    if type(params.levels)=='number' then
@@ -221,6 +223,7 @@ function sokoban.keypressed( key )
          if currentLevel > #levels then
             done = true
             completed = true
+            naev.cache().sokoban.completed = false
             currentLevel = currentLevel-1
          else
             loadLevel()
