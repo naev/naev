@@ -173,7 +173,7 @@ if buildExec.disabled() == false
    endif
 
    if get_option('steamruntime')
-      blas = cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+      blas = cc.find_library('openblas', required: true, static: true)
    elif get_option('blas') == 'Accelerate'
       blas = dependency('Accelerate', required: true)
    else
