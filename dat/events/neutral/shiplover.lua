@@ -65,87 +65,24 @@ local function increment_var( varname )
    var.push( varname, n )
 end
 
-local standard_ships = {
-   "Llama",
-   "Schroedinger",
-   "Gawain",
-   "Koala",
-   "Quicksilver",
-   "Rhino",
-   "Mule",
-   "Shark",
-   "Hyena",
-   "Lancelot",
-   "Vendetta",
-   "Ancestor",
-   "Phalanx",
-   "Admonisher",
-   "Vigilance",
-   "Pacifier",
-   "Starbridge",
-   "Kestrel",
-   "Hawking",
-   "Goddard",
-}
-local sirius_ships = {
-  "Sirius Fidelity",
-  "Sirius Shaman",
-  "Sirius Preacher",
-  "Sirius Divinity",
-  "Sirius Dogma",
-}
-local soromid_ships = {
-  "Soromid Brigand",
-  "Soromid Reaver",
-  "Soromid Marauder",
-  "Soromid Odium",
-  "Soromid Nyx",
-  "Soromid Ira",
-  "Soromid Arx",
-  "Soromid Vox",
-}
-local dvaered_ships = {
-  "Dvaered Vendetta",
-  "Dvaered Ancestor",
-  "Dvaered Phalanx",
-  "Dvaered Vigilance",
-  "Dvaered Goddard",
-  "Dvaered Arsenal",
-}
-local empire_ships = {
-  "Empire Shark",
-  "Empire Lancelot",
-  "Empire Admonisher",
-  "Empire Pacifier",
-  "Empire Hawking",
-  "Empire Peacemaker",
-  "Empire Rainmaker",
-}
-local zalek_ships = {
-  "Za'lek Sting",
-  "Za'lek Demon",
-  "Za'lek Mephisto",
-  "Za'lek Diablo",
-  "Za'lek Hephaestus",
-}
-local pirate_ships = {
-  "Pirate Shark",
-  "Pirate Vendetta",
-  "Pirate Ancestor",
-  "Pirate Phalanx",
-  "Pirate Admonisher",
-  "Pirate Starbridge",
-  "Pirate Rhino",
-  "Pirate Kestrel",
-}
-local faction_list = {
-   sirius_ships,
-   soromid_ships,
-   dvaered_ships,
-   empire_ships,
-   zalek_ships,
-   pirate_ships,
-}
+local faction_tags = { "sirius", "soromid", "dvaered", "empire", "zalek", "pirate" }
+local all_tags = merge_tables{ faction_tags, {"standard"} }
+local tagged_ships = {}
+for i, ship in ipairs(ship.getAll()) do
+   local tags = ship:tags()
+   for j, tag in ipairs(all_tags) do
+      if tags[tag] then
+         tagged_ships[tag] = tagged_ships[tag] or {}
+         table.insert( tagged_ships[tag], ship:nameRaw() )
+      end
+   end
+end
+
+local standard_ships = tagged_ships.standard
+local faction_list = {}
+for i, tag in ipairs(faction_tags) do
+   table.insert( faction_list, tagged_ships[tag] )
+end
 local faction_ships = merge_tables( faction_list )
 
 local function gen_question_ship_class( hard )
