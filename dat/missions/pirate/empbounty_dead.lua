@@ -37,7 +37,7 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
-local bounty_setup, fail, level_setup, spawn_pirate, succeed -- Forward-declared functions
+local bounty_setup, fail, level_setup, spawn_target, succeed -- Forward-declared functions
 -- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
@@ -168,7 +168,7 @@ function jumpin ()
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
    local yrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
    pos = pos + vec2.new( rnd.rnd( xrange[1], xrange[2] ), rnd.rnd( yrange[1], yrange[2] ) )
-   spawn_pirate( pos )
+   spawn_target( pos )
 end
 
 
@@ -187,7 +187,7 @@ function takeoff ()
       return
    end
 
-   spawn_pirate()
+   spawn_target()
 end
 
 
@@ -540,14 +540,20 @@ end
 
 
 -- Spawn the ship at the location param.
-function spawn_pirate( param )
+local _target_faction
+function spawn_target( param )
    if mem.jumps_permitted < 0 then
       fail( _("MISSION FAILURE! Target got away.") )
       return
    end
 
+   -- Use a dynamic faction so they don't get killed
+   if not _target_faction then
+      _target_faction = faction.dynAdd( mem.target_faction, "wanted_"..mem.target_faction, mem.target_faction, {clear_enemies=true, clear_allies=true} )
+   end
+
    misn.osdActive( 2 )
-   local target_ship = pilot.add( mem.pship, mem.target_faction, param, mem.name )
+   local target_ship = pilot.add( mem.pship, _target_faction, param, mem.name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "attacked", "pilot_attacked" )
    hook.pilot( target_ship, "death", "pilot_death" )
