@@ -9,7 +9,7 @@ local storage           = '.'
 local wall              = '#'
 local empty             = ' '
 local emptyOut          = 'x'
-local colors = {
+local colours = {
 --[[ original colours
    [player]          = {0.64, 0.53, 1.00},
    [playerOnStorage] = {0.62, 0.47, 1.00},
@@ -19,13 +19,22 @@ local colors = {
    [wall]            = {1.00, 0.58, 0.82},
    [empty]           = {1.00, 1.00, 0.75},
 --]]
-   [player]          = {0.40, 0.40, 0.40},
-   [playerOnStorage] = {0.32, 0.27, 0.70},
-   [box]             = {0.70, 0.49, 0.29},
-   [boxOnStorage]    = {0.39, 0.70, 0.30},
-   [storage]         = {0.21, 0.60, 0.70},
-   [wall]            = {0.90, 0.90, 0.90},
-   [empty]           = {0.00, 0.00, 0.00},
+   [empty]           = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF}, -- darkest
+   [player]          = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
+   [playerOnStorage] = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF}, -- same as player
+   [storage]         = {0x04/0xFF, 0x6B/0xFF, 0x99/0xFF},
+   [box]             = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
+   [boxOnStorage]    = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
+   [wall]            = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF}, -- lightest
+}
+local coloursText = {
+   [empty]           = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   [player]          = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   [playerOnStorage] = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   [storage]         = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   [box]             = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
+   [boxOnStorage]    = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
+   [wall]            = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
 }
 local cellSize = 30
 local levels = require "levels"
@@ -196,7 +205,7 @@ function love.draw()
    for y, row in ipairs(level) do
       for x, cell in ipairs(row) do
          if cell ~= emptyOut then
-            lg.setColor(colors[cell])
+            lg.setColor( colours[cell] )
             lg.rectangle(
                'fill',
                lx + (x - 1) * cellSize,
@@ -204,7 +213,7 @@ function love.draw()
                cellSize,
                cellSize
             )
-            lg.setColor(1, 1, 1)
+            lg.setColor( coloursText[cell] )
             lg.print(
                level[y][x],
                lx + (x - 1) * cellSize,
