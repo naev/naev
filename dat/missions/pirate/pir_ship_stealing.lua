@@ -42,66 +42,26 @@ require "factions.equip.generic"
 
 local base_price = 100e3
 
-local ships = {
-   Dvaered = {
-      "Dvaered Vendetta",
-      "Dvaered Ancestor",
-      "Dvaered Phalanx",
-      "Dvaered Vigilance",
-      "Dvaered Arsenal",
-      "Dvaered Goddard",
-   },
-   Empire = {
-      "Empire Shark",
-      "Empire Lancelot",
-      "Empire Admonisher",
-      "Empire Pacifier",
-      "Empire Hawking",
-      "Empire Peacemaker", "Empire Rainmaker",
-   },
-   Frontier = {
-      "Hyena",
-      "Lancelot", "Vendetta",
-      "Ancestor",
-      "Phalanx",
-      "Pacifier",
-   },
-   Goddard = {
-      "Lancelot",
-      "Goddard",
-   },
-   Independent = {
-      "Hyena", "Shark",
-      "Lancelot", "Vendetta",
-      "Ancestor",
-      "Phalanx", "Admonisher",
-      "Vigilance", "Pacifier",
-      "Kestrel", "Hawking",
-   },
-   Sirius = {
-      "Sirius Fidelity",
-      "Sirius Shaman",
-      "Sirius Preacher",
-      "Sirius Dogma",
-      "Sirius Divinity",
-   },
-   Soromid = {
-      "Soromid Brigand",
-      "Soromid Reaver",
-      "Soromid Marauder",
-      "Soromid Odium",
-      "Soromid Nyx",
-      "Soromid Ira",
-      "Soromid Vox",
-      "Soromid Arx",
-   },
-   ["Za'lek"] = {
-      "Za'lek Sting",
-      "Za'lek Demon",
-      "Za'lek Mephisto",
-      "Za'lek Diablo",
-   },
+local faction_tags = {
+   Dvaered = "dvaered",
+   Empire = "empire",
+   Frontier = "frontier",
+   Goddard = "goddard",
+   Independent = "standard",
+   Sirius = "sirius",
+   Soromid = "soromid",
+   ["Za'lek"] = "zalek",
 }
+local ships = {}
+for i, ship in ipairs(ship.getAll()) do
+   local tags = ship:tags()
+   for fctname, tag in pairs(faction_tags) do
+      if tags[tag] then
+         ships[fctname] = ships[fctname] or {}
+         table.insert( ships[fctname], ship )
+      end
+   end
+end
 
 local function price(size)
    local modifier = 1.5^(size-3)
@@ -110,15 +70,11 @@ local function price(size)
 end
 
 local function random_ship(faction)
-   local m = #ships[faction]
-
-   if m == 0 then
+   local l = ships[faction]
+   if not l then
       return
    end
-
-   local r = rnd.rnd(1, m)
-
-   return ship.get(ships[faction][r])
+   return l[ rnd.rnd(1,#l) ]
 end
 
 local function random_planet()
