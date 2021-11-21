@@ -633,7 +633,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
       track_peak     = atof(tag);
       rg             = 1;
    }
-   music_vorbis.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20);
+   music_vorbis.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20.0);
    music_vorbis.rg_max_scale = 1.0 / track_peak;
    if (!rg)
       DEBUG(_("Song '%s' has no replaygain information."), name );
@@ -683,7 +683,7 @@ int music_al_volume( double vol )
 
    music_vol_lin = vol;
    if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
-      music_vol = 1 / pow(2, (1 - vol) * 8 );
+      music_vol = 1. / pow(2., (1. - vol) * 8. );
    else
       music_vol = 0.;
 

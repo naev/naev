@@ -777,7 +777,7 @@ int sound_al_volume( double vol )
    /* Calculate volume level. */
    svolume_lin = vol;
    if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
-      svolume = (ALfloat) 1 / pow(2, (1 - vol) * 8);
+      svolume = (ALfloat) 1. / pow(2., (1. - vol) * 8.);
    else
       svolume  = 0.;
 
