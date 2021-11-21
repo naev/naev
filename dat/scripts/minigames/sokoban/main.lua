@@ -102,10 +102,13 @@ local function loadLevel()
    ly = (lh - cellSize * h)/2
 end
 
+local alpha, done
 function love.load()
-   lg.setBackgroundColor(0, 0, 0, 0.5)
+   -- Defaults
+   lg.setBackgroundColor(0, 0, 0, 0)
    lg.setNewFont( 16 )
 
+   alpha = 0
    currentLevel = 1
 
    loadLevel()
@@ -113,7 +116,7 @@ end
 
 function love.keypressed( key )
    if key=="q" or key=="escape" then
-      love.event.quit()
+      done = 1
    end
    if key == 'up' or key == 'down' or key == 'left' or key == 'right' then
       local playerX
@@ -201,11 +204,16 @@ function love.keypressed( key )
    end
 end
 
+local function setcol( col )
+   local r, g, b= table.unpack( col )
+   lg.setColor( r, g, b, alpha )
+end
+
 function love.draw()
    for y, row in ipairs(level) do
       for x, cell in ipairs(row) do
          if cell ~= emptyOut then
-            lg.setColor( colours[cell] )
+            setcol( colours[cell] )
             lg.rectangle(
                'fill',
                lx + (x - 1) * cellSize,
@@ -213,7 +221,7 @@ function love.draw()
                cellSize,
                cellSize
             )
-            lg.setColor( coloursText[cell] )
+            setcol( coloursText[cell] )
             lg.print(
                level[y][x],
                lx + (x - 1) * cellSize,
@@ -222,4 +230,15 @@ function love.draw()
          end
       end
    end
+end
+
+function love.update( dt )
+   if done then
+      alpha = alpha - dt * 2
+      if alpha < 0 then
+         love.event.quit()
+      end
+      return
+   end
+   alpha = math.min( alpha + dt * 2, 1 )
 end
