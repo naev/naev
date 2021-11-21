@@ -663,7 +663,7 @@ static int shipL_getShipStatDesc( lua_State *L )
 /**
  * @brief Gets the ship tags.
  *
- * @usage if s:tags["fancy"] then -- Has "fancy" tag
+ * @usage if s:tags()["fancy"] then -- Has "fancy" tag
  *
  *    @luatparam Ship s Ship to get tags of.
  *    @luatreturn table Table of tags where the name is the key and true is the value.
