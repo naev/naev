@@ -413,13 +413,13 @@ function should_attack( enemy, si )
    return false
 end
 
-function control_attack( si )
+function control_funcs.generic_attack( si )
    si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
    -- Needs to have a target
    if not target or not target:exists() then
       ai.poptask()
-      return
+      return false
    end
 
    local target_parmour, target_pshield = target:health()
@@ -445,6 +445,7 @@ function control_attack( si )
 
    -- Handle distress
    gen_distress()
+   return false
 end
 
 -- Required "control" function
@@ -487,7 +488,7 @@ function control ()
    -- If command is forced we basically override everything
    if si.forced then
       if si.attack then
-         control_attack( si )
+         control_funcs.generic_attack( si )
       end
       return
    end
@@ -683,12 +684,11 @@ function control_funcs.board ()
    return true
 end
 function control_funcs.attack ()
-   control_attack()
-   return false
+   return control_funcs.generic_attack()
 end
 function control_funcs.attack_forced ()
    -- Independent of control_funcs.attack
-   control_attack()
+   control_funcs.generic_attack()
    return true
 end
 function control_funcs.flyback () return true end

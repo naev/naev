@@ -309,8 +309,7 @@ control_funcs.attack = function ()
       return true
    end
 
-   control_attack()
-   return false
+   return control_funcs.generic_attack()
 end
 control_funcs.inspect_moveto = function ()
    local p = ai.pilot()

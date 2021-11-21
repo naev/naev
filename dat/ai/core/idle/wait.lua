@@ -21,6 +21,5 @@ end
 
 -- Overwrite the attack function with the generic in case we are overloading idle/pirate
 function control_funcs.attack ()
-   control_attack()
-   return false
+   return control_funcs.generic_attack()
 end
