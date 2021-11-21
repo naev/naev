@@ -413,6 +413,7 @@ function should_attack( enemy, si )
    return false
 end
 
+control_funcs = {}
 function control_funcs.generic_attack( si )
    si = si or _stateinfo( ai.taskname() )
    local target = ai.taskdata()
@@ -609,7 +610,6 @@ function control ()
    end
 end
 
-control_funcs = {}
 function control_funcs.loiter ()
    if mem.doscans and rnd.rnd() < 0.1 then
       local target = scans.get_target()
