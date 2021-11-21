@@ -236,6 +236,6 @@ void debug_sigClose (void)
 void debug_enableFPUExcept (void)
 {
 #if HAVE_FEENABLEEXCEPT && DEBUGGING
-      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
+   feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
 #endif /* HAVE_FEENABLEEXCEPT && DEBUGGING */
 }
