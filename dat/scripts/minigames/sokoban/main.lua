@@ -1,3 +1,6 @@
+local love = require 'love'
+local lg = require 'love.graphics'
+
 local player            = '@'
 local playerOnStorage   = '+'
 local box               = '$'
@@ -7,6 +10,7 @@ local wall              = '#'
 local empty             = ' '
 local emptyOut          = 'x'
 local colors = {
+--[[ original colours
    [player]          = {0.64, 0.53, 1.00},
    [playerOnStorage] = {0.62, 0.47, 1.00},
    [box]             = {1.00, 0.79, 0.49},
@@ -14,6 +18,14 @@ local colors = {
    [storage]         = {0.61, 0.90, 1.00},
    [wall]            = {1.00, 0.58, 0.82},
    [empty]           = {1.00, 1.00, 0.75},
+--]]
+   [player]          = {0.40, 0.40, 0.40},
+   [playerOnStorage] = {0.32, 0.27, 0.70},
+   [box]             = {0.70, 0.49, 0.29},
+   [boxOnStorage]    = {0.39, 0.70, 0.30},
+   [storage]         = {0.21, 0.60, 0.70},
+   [wall]            = {0.90, 0.90, 0.90},
+   [empty]           = {0.00, 0.00, 0.00},
 }
 local cellSize = 30
 local levels = require "levels"
@@ -21,7 +33,8 @@ local level, currentLevel
 local lx, ly
 
 local function loadLevel()
-   local w, h = 0, 0
+   local w = 0
+   local h
    local lw, lh = love.window.getDesktopDimensions()
 
    local loadlev = levels[ currentLevel ]
@@ -81,14 +94,15 @@ local function loadLevel()
 end
 
 function love.load()
-   love.graphics.setBackgroundColor(1, 1, 0.75, 0.5)
+   lg.setBackgroundColor(0, 0, 0, 0.5)
+   lg.setNewFont( 16 )
 
    currentLevel = 1
 
    loadLevel()
 end
 
-function love.keypressed(key)
+function love.keypressed( key )
    if key=="q" or key=="escape" then
       love.event.quit()
    end
@@ -174,7 +188,7 @@ function love.keypressed(key)
 
    elseif key == 'r' then
       loadLevel()
-   
+
    end
 end
 
@@ -182,16 +196,16 @@ function love.draw()
    for y, row in ipairs(level) do
       for x, cell in ipairs(row) do
          if cell ~= emptyOut then
-            love.graphics.setColor(colors[cell])
-            love.graphics.rectangle(
+            lg.setColor(colors[cell])
+            lg.rectangle(
                'fill',
                lx + (x - 1) * cellSize,
                ly + (y - 1) * cellSize,
                cellSize,
                cellSize
             )
-            love.graphics.setColor(1, 1, 1)
-            love.graphics.print(
+            lg.setColor(1, 1, 1)
+            lg.print(
                level[y][x],
                lx + (x - 1) * cellSize,
                ly + (y - 1) * cellSize
