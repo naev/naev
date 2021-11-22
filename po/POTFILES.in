@@ -326,6 +326,7 @@ dat/assets/fuzka.xml
 dat/assets/fyruse_station.xml
 dat/assets/galileo.xml
 dat/assets/gamma.xml
+dat/assets/gamma_station.xml
 dat/assets/gammacron_iv.xml
 dat/assets/gammacron_v.xml
 dat/assets/gammacron_va.xml
@@ -478,8 +479,10 @@ dat/assets/kaso.xml
 dat/assets/kataka.xml
 dat/assets/katami_i.xml
 dat/assets/katar.xml
+dat/assets/katar_i.xml
 dat/assets/kaulas.xml
 dat/assets/kayel.xml
+dat/assets/khaas_i.xml
 dat/assets/khelim.xml
 dat/assets/khorin.xml
 dat/assets/killerog.xml
@@ -1986,6 +1989,7 @@ dat/ssys/neexi.xml
 dat/ssys/neon.xml
 dat/ssys/new_haven.xml
 dat/ssys/newmarch.xml
+dat/ssys/ngc11718.xml
 dat/ssys/ngc1292.xml
 dat/ssys/ngc3219.xml
 dat/ssys/ngc4746.xml
@@ -2263,10 +2267,10 @@ dat/bkg/nebu_crab.lua
 dat/bkg/nebu_dobayashi.lua
 dat/bkg/nebu_ic.lua
 dat/bkg/nebu_messier.lua
-dat/bkg/nebu_ncg_2392.lua
-dat/bkg/nebu_ncg_2440.lua
-dat/bkg/nebu_ncg_2440_2.lua
-dat/bkg/nebu_ncg_5189.lua
+dat/bkg/nebu_ngc_2392.lua
+dat/bkg/nebu_ngc_2440.lua
+dat/bkg/nebu_ngc_2440_2.lua
+dat/bkg/nebu_ngc_5189.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
@@ -2535,6 +2539,7 @@ dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
 dat/missions/zalek/neburesearch/neburesearch_03.lua
 dat/missions/zalek/neburesearch/neburesearch_04.lua
+dat/missions/zalek/particlephysics/zpp01.lua
 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/01_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
@@ -2584,6 +2589,7 @@ dat/scripts/common/taiomi.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/zalek.lua
+dat/scripts/common/zalek_physics.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
