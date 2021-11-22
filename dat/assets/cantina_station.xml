@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>6000</population>
+  <population>16000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -29,4 +29,8 @@
   <description>This station is primarily a trade center for western Za'lek space. Many deals are made here, and given the frequent and transitory foot traffic, it makes for a good place to meet someone.</description>
   <bar>This bar lives up to the name of the station itself. Indeed, it seems to be the main attraction, being a massive ring-shaped casino-esque room with many bartenders treating the patrons, music in the background, and good food. The only sign of being Za'lek in origin is the casual use of bafflingly advanced technology and the fact that at least half of the populace look like scientists, researchers, or engineers.</bar>
  </general>
+ <tags>
+  <tag>rich</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>

@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>1</class>
-  <population>50000</population>
+  <population>50e3</population>
   <hide>2.000000</hide>
   <services>
    <land>zlk_ruadan</land>
@@ -25,7 +25,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Ruadan Bastion houses the Za'lek military concentrated around Ruadan Prime. Like Ruadan Prime, very few people are allowed to land here.</description>
+  <description>Ruadan Bastion houses the Za'lek military concentrated around Ruadan Prime. Like Ruadan Prime, very few people are allowed to land here, and those that are allowed face intense security scrutiny.</description>
  </general>
  <tech>
   <item>Laser 1</item>
@@ -52,5 +52,6 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </asset>

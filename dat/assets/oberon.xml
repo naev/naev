@@ -22,8 +22,14 @@
    <land/>
    <refuel/>
    <missions/>
+   <bar/>
   </services>
   <commodities/>
-  <description>Oberon is primarily a remote research post for various purposes deemed too minor to justify placing in more prestigious stations. Most interns and new researchers get their start here before moving on to better things.</description>
+  <description>Oberon is primarily a remote research post for various purposes deemed too minor to justify placing in more prestigious stations. Most interns and new researchers get their start here before moving on to better things, leading to a constant renewal of personnel.</description>
+  <bar>Given the large presence of young people, you would hope the bar would be an energetic and fun place. However, the overworked interns and young researchers are too stressed out and engrossed in their research leading to a fairly depressive and quiet atmosphere.</bar>
  </general>
+ <tags>
+  <tag>research</tag>
+  <tag>rural</tag>
+ </tags>
 </asset>

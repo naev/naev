@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>D</class>
-  <population>12500</population>
+  <population>12.5e3</population>
   <hide>1.500000</hide>
   <services>
    <land/>
@@ -26,4 +26,9 @@
   <commodities/>
   <description>Trinel is a cold, empty mining world with a single colony upon it. Only the bare minimum of Za'lek forces are here to maintain order. Most of the people working the mines are criminals who are kept here for life. The main spaceport is separated from the prison complex.</description>
  </general>
+ <tags>
+  <tag>prison</tag>
+  <tag>mining</tag>
+  <tag>rural</tag>
+ </tags>
 </asset>

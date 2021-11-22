@@ -28,8 +28,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Naga is a purely aquatic planet. The land closest to the surface is under more than a mile of water. The planet is teeming with life of mind-boggling variety and type. The planets scientific and aesthetic value makes it one of the most favored Za'lek worlds.</description>
-  <bar>This bar is built on one of the upper decks of the underwater cities, with the entire ceiling being a window out into Naga's oceans. The sight is nothing short of breathtaking.</bar>
+  <description>Naga is a purely aquatic planet. The land closest to the surface is under more than a mile of water, which can make landing quite tricky for inexperienced pilots. The planet is teeming with life of mind-boggling variety and type. The planets scientific and aesthetic value makes it one of the most favored Za'lek worlds.</description>
+  <bar>This bar is built on one of the upper decks of the underwater cities, with the entire ceiling being a window out into Naga's oceans. With intense lighting attracting all sorts of subaquatic life, the sight is nothing short of breathtaking.</bar>
  </general>
  <tech>
   <item>Laser 1</item>
@@ -41,4 +41,8 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>research</tag>
+  <tag>tourism</tag>
+ </tags>
 </asset>

@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>100000</population>
+  <population>650e3</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -51,4 +51,9 @@
   <item>Systems Medium</item>
   <item>Za'lek Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rural</tag>
+  <tag>tourism</tag>
+  <tag>research</tag>
+ </tags>
 </asset>

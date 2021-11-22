@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>750</population>
+  <population>1250</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -27,4 +27,8 @@
   <commodities/>
   <description>This small moon is a mining world run by House Za'lek; it is regarded as so insignificant that it does not even have a formal name yet, and likely never will.</description>
  </general>
+ <tags>
+  <tag>mining</tag>
+  <tag>rural</tag>
+ </tags>
 </asset>

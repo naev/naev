@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>12000</population>
+  <population>12e3</population>
   <hide>3.000000</hide>
   <services>
    <land>zlk_mil_restricted</land>
@@ -31,5 +31,7 @@
  </general>
  <tags>
   <tag>restricted</tag>
+  <tag>research</tag>
+  <tag>military</tag>
  </tags>
 </asset>

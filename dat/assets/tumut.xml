@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>50000</population>
+  <population>50e3</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -26,4 +26,8 @@
   <commodities/>
   <description>Tumut is a young volcanic world that the Za'lek have taken some interest in as a massive geological study. Moreover, it is the primary location of several rare mineral mines that are hard to find in other parts of the inhabited galaxy. However, these mines are strictly small-scale, and the geological study takes large precedent.</description>
  </general>
+ <tags>
+  <tag>research</tag>
+  <tag>rural</tag>
+ </tags>
 </asset>

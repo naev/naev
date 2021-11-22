@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>25000</population>
+  <population>25e3</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -26,7 +26,10 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>One of four stations devoted to houses much of the research and knowledge that House Za'lek has accumulated and continues to accumulate. Many of the the most prestigious scientific organizations make its main headquarters on these stations.</description>
-  <bar>A rather eclectic bar with various 'enhancements' and upgrades that make it into a mad scientist's dream and a neat freak's nightmare.</bar>
+  <description>One of four stations devoted to houses much of the research and knowledge that House Za'lek has accumulated and continues to accumulate. Many of the most prestigious scientific organizations make its main headquarters on these stations. The walls are covered in old publication posters and research symposium fliers.</description>
+  <bar>A rather eclectic bar with various 'enhancements' and upgrades that make it into a mad scientist's dream and a neat freak's nightmare. The constant flux of scientists in and out of the bar further accentuates the chaotic behaviour.</bar>
  </general>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </asset>

@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>X</class>
-  <population>24500</population>
+  <population>24.5e3</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -26,4 +26,8 @@
   <commodities/>
   <description>This world is the location of several harsh environment testing facilities, used by the military and civilian interests alike. Aside from that, there is little else of interest here.</description>
  </general>
+ <tags>
+  <tag>military</tag>
+  <tag>research</tag>
+ </tags>
 </asset>

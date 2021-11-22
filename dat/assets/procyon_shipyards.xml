@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>7500</population>
+  <population>7.5e3</population>
   <hide>0.400000</hide>
   <services>
    <land/>
@@ -35,4 +35,7 @@
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </asset>

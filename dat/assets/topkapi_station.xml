@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>1200</population>
+  <population>3200</population>
   <hide>3.000000</hide>
   <services>
    <land/>
@@ -27,4 +27,8 @@
   <commodities/>
   <description>Topkapi is a trade hub and research post for the radiation-bombarded planet of Anker. The Za'lek use the data gleaned from this research to create more hostile-environment resistant habitats and shielding for vessels.</description>
  </general>
+ <tags>
+  <tag>research</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>
