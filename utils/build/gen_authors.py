@@ -12,8 +12,8 @@ def main():
     ap.add_argument('yamls', nargs='*')
     args = ap.parse_args()
     people = deduplicate(authors(args.yamls))
-    with open(args.output, 'w') as out:
-        out.write(open(args.preamble).read())
+    with open(args.output, 'w', encoding='utf-8') as out:
+        out.write(open(args.preamble, encoding='utf-8').read())
         out.writelines(map('{}\n'.format, people))
     # Also go behind Meson's back and save a zipfile that we can definitely use as a physfs overlay for naev.sh.
     with zipfile.ZipFile(args.output + '.zip', 'w') as zout:
@@ -22,7 +22,7 @@ def main():
 def authors(yaml_paths):
     ''' Yield all authors/contributors named in the **_LICENSE.yaml files. '''
     for path in yaml_paths:
-        for small_dict in yaml.safe_load(open(path)):
+        for small_dict in yaml.safe_load(open(path, encoding='utf-8')):
             for credited_name in small_dict:
                 # The credited name is basically a free-form field. Naively attempt to break it down.
                 for component in re.split(r' *[(),] *| and | \+ ', credited_name):
