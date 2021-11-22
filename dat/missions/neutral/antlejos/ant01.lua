@@ -76,10 +76,11 @@ function accept ()
       return
    end
 
+   misn.accept()
+
    local c = misn.cargoNew( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
    misn.cargoAdd(c, cargo_amount)
 
-   misn.accept()
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take them to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward( fmt.credits(reward) )
