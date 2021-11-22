@@ -44,4 +44,8 @@
   <item>Laser 2</item>
   <item>Laser 1</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+ </tags>
 </asset>
