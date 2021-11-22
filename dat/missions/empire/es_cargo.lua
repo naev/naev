@@ -83,6 +83,7 @@ function create()
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(
+      -- TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
       _("#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
    misn.markerAdd(mem.destsys, "computer")
    car.setDesc( fmt.f(_("Official Empire cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )

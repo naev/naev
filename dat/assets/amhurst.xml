@@ -43,4 +43,9 @@
   <item>Engines Low</item>
   <item>Hulls Low</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+  <tag>mining</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>

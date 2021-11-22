@@ -1,11 +1,13 @@
 local atk = require "ai.core.attack.util"
 
+local atk_bomber = {}
+
 --[[
 -- Main control function for bomber behavior.
 -- Bombers are expected to have heavy weapons and target
 --ships bigger than they are
 --]]
-local function atk_bomber( target, dokill )
+function atk_bomber.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
@@ -22,15 +24,13 @@ local function atk_bomber( target, dokill )
 
    -- TODO bombers need their own specific routines
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      __atk_g_ranged( target, dist )
+      atk.ranged( target, dist )
 
    else
-      __atk_f_flyby( target, dist )
+      atk.flyby( target, dist )
    end
 end
 
+atk_bomber.atk_think = atk.heuristic_big_game_think
 
-function atk_bomber_init ()
-   mem.atk_think  = atk.heuristic_big_game_think
-   mem.atk        = atk_bomber
-end
+return atk_bomber

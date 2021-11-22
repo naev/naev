@@ -60,4 +60,7 @@
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
  </stats>
+ <tags>
+  <tag>zalek</tag>
+ </tags>
 </ship>

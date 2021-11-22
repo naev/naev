@@ -52,4 +52,7 @@
   <fwd_damage>10</fwd_damage>
   <fwd_energy>5</fwd_energy>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

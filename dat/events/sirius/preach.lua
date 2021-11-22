@@ -142,7 +142,13 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher = pilot.add("Sirius Reverence", "Sirius", curr, nil, {ai="sirius_norun"})
+   preacher = pilot.add("Sirius Preacher", "Sirius", curr, _("Sirius Reverence"), {ai="sirius_norun"})
+   preacher:intrinsicSet( "armour_mod", 400 )
+   preacher:intrinsicSet( "shield_mod", 400 )
+   preacher:intrinsicSet( "shield_regen_mod", 100 )
+   preacher:intrinsicSet( "speed", 100 )
+   preacher:intrinsicSet( "thrust", 100 )
+   preacher:intrinsicSet( "turn", 100 )
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()

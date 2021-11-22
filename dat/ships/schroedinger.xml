@@ -46,4 +46,7 @@
   <ew_jump_detect>25</ew_jump_detect>
   <misc_instant_jump>1</misc_instant_jump>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

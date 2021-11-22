@@ -12,18 +12,20 @@
 --[[
    Pirate offers to sell the player a fake transponder. Might be better to have it be a small mission or campaign to be a bit more interesting given that it should be fairly strong.
 --]]
-local pir = require "common.pirate"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local fmt = require "format"
 
-local pir_name = _("Shifty-Eye Pirate")
+local pir_name = _("Shifty-Eyed Pirate")
 local pir_portrait = portrait.get()
 local pir_image = portrait.getFullPath(pir_portrait)
-local pir_description = _("You see a seedy pirate that is flashing you looks as if they had something interesting to show you.")
+local pir_description = _("You see a seedy pirate flashing looks at you, as if they had something interesting to show you.")
 
 local transponder = outfit.get("Fake Transponder")
 local cost = 1e6
+
+-- luacheck: globals enter (Hook functions passed by name)
+-- luacheck: globals approach_pirate (NPC functions passed by name)
 
 function create ()
    -- Player already has it somehow, so this event makes no sense
@@ -69,7 +71,7 @@ Having sold his wares, the pirate disappears into the shadows.]]))
    vn.label("leave")
    vn.na(_([[You leave the pirate and their fake transponder behind.]]))
    vn.run()
-  
+
    -- Player bought it, we're done!
    if player.numOutfit(transponder) > 0 then
       evt.finish(true)

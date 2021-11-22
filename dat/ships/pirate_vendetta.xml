@@ -47,4 +47,7 @@
   <ew_hide>10</ew_hide>
   <fwd_heat>-10</fwd_heat>
  </stats>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
 </ship>

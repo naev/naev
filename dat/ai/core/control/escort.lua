@@ -4,7 +4,7 @@ mem.carrier = true -- Is a carried fighter
 
 -- Simple create function
 function create ()
-   attack_choose()
+   create_post()
 
    -- Inherit some properties from the parent (leader)
    local p = ai.pilot()
@@ -13,9 +13,6 @@ function create ()
       local lmem = l:memory()
       mem.atk_kill = lmem.atk_kill
    end
-
-   -- Disable thinking
-   --mem.atk_think = nil
 end
 
 -- Just tries to guard mem.escort

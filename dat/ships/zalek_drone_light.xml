@@ -38,4 +38,8 @@
   <utility size="small" />
   <structure size="small" />
  </slots>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>zalek</tag>
+ </tags>
 </ship>

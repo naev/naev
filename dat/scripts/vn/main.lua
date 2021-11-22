@@ -1,4 +1,4 @@
-local vn    = require 'vn.core'
+local vn = require 'vn.core'
 
 -- luacheck: globals love (vn overrides parts of love2d.)
 

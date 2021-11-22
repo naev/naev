@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="HS - 5">
+<asset name="Khaas I">
  <pos>
-  <x>-5120.260099</x>
-  <y>-6869.074387</y>
+  <x>4273.825103</x>
+  <y>1065.689184</y>
  </pos>
  <GFX>
-  <space>J01.webp</space>
-  <exterior>station04.webp</exterior>
+  <space>000.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <general>
-  <class>J</class>
+  <class>A</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

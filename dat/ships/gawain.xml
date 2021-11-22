@@ -44,4 +44,7 @@
   <armour_mod>-10</armour_mod>
   <land_delay>-20</land_delay>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

@@ -49,4 +49,8 @@
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
  </stats>
+ <tags>
+  <tag>frontier</tag>
+  <tag>standard</tag>
+ </tags>
 </ship>

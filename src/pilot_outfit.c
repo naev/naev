@@ -1042,7 +1042,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot_cargoCalc(pilot);
 
    /* Calculate mass. */
-   pilot->solid->mass = s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );

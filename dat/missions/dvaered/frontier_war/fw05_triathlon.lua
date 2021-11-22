@@ -35,6 +35,7 @@
    7) Mace Pankration performed
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local fw = require "common.frontier_war"
 require "proximity"

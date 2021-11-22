@@ -29,6 +29,7 @@
 ]]--
 local fleet = require "fleet"
 local fmt = require "format"
+local pir = require "common.pirate"
 local portrait = require "portrait"
 
 -- luacheck: globals enter invoke_enemies land (Hook functions passed by name)
@@ -102,7 +103,7 @@ function land()
          -- The first time this mission is done, the player’s max standing is
          -- increased by 5.
          if n == 0 then
-             var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
+             pir.modReputation( 5 )
          end
 
          misn.finish(true)

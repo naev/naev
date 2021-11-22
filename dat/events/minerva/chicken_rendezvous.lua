@@ -80,8 +80,7 @@ function create()
 
    if player.misnActive( "Minerva Pirates 3" ) then
       vn.na(_("Is there really a mole at the station? What could have happened to Maikki's father? What is the shady character's objective? It seems like there are many loose ends at Minerva station."))
-   else
-      -- TODO case other missions when implemented
+   --else -- TODO case other missions when implemented
    end
 
    vn.na(_("Eventually you get out of your thinking stupor and remember that you are in a spa with a chicken, that happens to be a cyborg. This doesn't seem like is something that happens very often."))

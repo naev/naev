@@ -47,4 +47,7 @@
   <structure size="large" prop="engines" exclusive="1" required="1">Dummy Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Dummy Plating</structure>
  </slots>
+ <tags>
+  <tag>noplayer</tag>
+ </tags>
 </ship>

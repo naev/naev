@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>1000000</population>
+  <population>1e+06</population>
   <hide>1.000000</hide>
   <services>
    <land>zlk_ruadan</land>
@@ -28,7 +28,7 @@
   </services>
   <commodities/>
   <description>Ruadan has recently become the nerve center of the Za'lek. Most of the Za'lek's strength is concentrated here, and they don't allow anyone but the highest level captains to land here. Even being allowed to be here is considered a great honor.</description>
-  <bar>Given the the exclusive nature of Ruadan Prime, the atmosphere of the bar is very to-the-point and focused. Everyone here has a reason to be here.</bar>
+  <bar>Given the exclusive nature of Ruadan Prime, the atmosphere of the bar is very to-the-point and focused. Everyone here has a reason to be here, and not much time to spare.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
@@ -60,5 +60,6 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>urban</tag>
  </tags>
 </asset>

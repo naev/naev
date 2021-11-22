@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>1000000000</population>
+  <population>1.5e+06</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -28,4 +28,7 @@
   <description>The colony on Takeru was founded as part of an Imperial colonization program. However, the government at the time deemed the colony to be a failure, and refused to grant it Imperial status. Since then, the colonists have governed themselves.</description>
   <bar>What is a spaceport bar? A miserable pile of drink, noise, data terminals, and of course the occasional fight. Takeru's bar has all of these components, which makes it a comfortable place to be for anyone with more than a few light years under their belt.</bar>
  </general>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </asset>

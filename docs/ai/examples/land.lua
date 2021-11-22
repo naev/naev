@@ -4,9 +4,9 @@
 --    planet = ai.rndplanet()
 --    -- planet must exist
 --    if planet == nil then
---       ai.pushtask(0, "hyperspace")
+--       ai.pushtask("hyperspace")
 --    else
---       ai.pushtask(0, "moveto", planet)
+--       ai.pushtask("moveto", planet)
 --    end
 --]]
 

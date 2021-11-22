@@ -165,23 +165,11 @@ function pir.reputationNormalMission( amount )
    end
 end
 
-pir.ships = {
-   ship.get("Hyena"), -- TODO pirate hyena
-   ship.get("Pirate Admonisher"),
-   ship.get("Pirate Ancestor"),
-   ship.get("Pirate Kestrel"),
-   ship.get("Pirate Phalanx"),
-   ship.get("Pirate Rhino"),
-   ship.get("Pirate Shark"),
-   ship.get("Pirate Starbridge"),
-   ship.get("Pirate Vendetta"),
-}
-
 --[[
    @brief Gets whether or not the pilot is in a pirate ship
 --]]
 function pir.isPirateShip( p )
-   return _intable( pir.ships, p:ship() )
+   return p:ship():tags().pirate
 end
 
 --[[

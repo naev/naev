@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>5000</population>
+  <population>7000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -35,4 +35,7 @@
   <item>Ore</item>
   <item>Industrial Goods</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </asset>

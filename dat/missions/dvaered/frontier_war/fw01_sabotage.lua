@@ -33,6 +33,7 @@
    7) Final landing
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local lmisn = require "lmisn"
 require "proximity"
 local fw = require "common.frontier_war"

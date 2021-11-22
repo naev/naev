@@ -52,4 +52,10 @@
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>research</tag>
+  <tag>military</tag>
+  <tag>industrial</tag>
+ </tags>
 </asset>

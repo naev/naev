@@ -46,4 +46,7 @@
   <launch_range>10</launch_range>
   <ammo_capacity>25</ammo_capacity>
  </stats>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
 </ship>

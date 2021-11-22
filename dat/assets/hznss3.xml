@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>70000</population>
+  <population>7000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -27,4 +27,7 @@
   <commodities/>
   <description>One of House Za'leks nutrition stations, this simple agristation services the local sector, augmenting what worlds are unable to feed themselves.</description>
  </general>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
 </asset>

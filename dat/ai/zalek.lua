@@ -40,6 +40,14 @@ local taunt_list_defensive = {
    _("Our technology will fix your attitude!"),
    _("You wanna do this? Have it your way.")
 }
+local taunt_list_offensive_drone = {
+   _("ENGAGING OFFENSIVE PROTOCOLS."),
+   _("EXTERMINATING HOSTILES."),
+   _("COMBAT PROTOCOLS INITIATED."),
+}
+local taunt_list_defensive_drone = {
+   _("ENGAGING DEFENSIVE PROTOCOLS."),
+}
 
 function create()
    local p = ai.pilot()
@@ -48,7 +56,7 @@ function create()
    -- See if a drone
    mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
    if mem.isdrone then
-      local msg = _([["Access denied"]])
+      local msg = _([["ACCESS DENIED.]])
       mem.refuel_no = msg
       mem.bribe_no = msg
       mem.armour_run = 0 -- Drones don't run
@@ -120,9 +128,9 @@ function taunt ( target, offense )
 
    local taunts
    if offense then
-      taunts = taunt_list_offensive
+      taunts = (mem.isdrone and taunt_list_offensive_drone) or taunt_list_offensive
    else
-      taunts = taunt_list_defensive
+      taunts = (mem.isdrone and taunt_list_defensive_drone) or taunt_list_defensive
    end
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])

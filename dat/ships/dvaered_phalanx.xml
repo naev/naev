@@ -51,4 +51,7 @@
   <energy_regen_mod>-10</energy_regen_mod>
   <fwd_heat>-10</fwd_heat>
  </stats>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
 </ship>

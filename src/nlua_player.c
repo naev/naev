@@ -1319,7 +1319,7 @@ static int playerL_teleport( lua_State *L )
    }
    else
       NLUA_INVALID_PARAMETER(L);
-   
+
    no_simulate = lua_toboolean(L,2);
 
    /* Check if system exists. */

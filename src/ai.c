@@ -450,6 +450,10 @@ int ai_pinit( Pilot *p, const char *ai )
       snprintf(buf, sizeof(buf), "dummy" );
       prof = ai_getProfile(buf);
    }
+   if (prof == NULL) {
+      WARN( _("Dummy AI Profile not valid! Things are going to break.") );
+      return -1;
+   }
    p->ai = prof;
 
    /* Adds a new pilot memory in the memory table. */

@@ -98,14 +98,20 @@ stds.AI.globals = {
    "hyperspace_shoot",          -- pilotL_hyperspace
    "land",                      -- pilotL_land
    "land_shoot",                -- pilotL_land
+   "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
-   "moveto_precise",            -- pilotL_moveto
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway
    "runaway_nojump",            -- pilotL_runaway
    "stealth",                   -- pilotL_stealth
+   -- FIXME: Internal APIs formed by dat/ai code that are very difficult to untangle...
+   "control_funcs",             -- a shared dispatch table...
+   "create_post",               -- the standardized final step of every create()
+   "idle",                      -- a task, commonly called and overridden
+   "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.
+   "taunt",                     -- everyone has their own!
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()

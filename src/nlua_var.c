@@ -141,7 +141,7 @@ int var_save( xmlTextWriterPtr writer )
             break;
          case MISN_VAR_TIME:
             xmlw_attr(writer,"type","time");
-            xmlw_str(writer,TIME_PRI,var_stack[i].d.time);
+            xmlw_str(writer,"%"TIME_PRI,var_stack[i].d.time);
             break;
       }
       xmlw_endElem(writer); /* "var" */

@@ -38,10 +38,8 @@ local returnpnt, returnsys = planet.getS("Antlejos V")
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( _p )
-      -- TODO only look for industrial Za'lek planets
-      --return p.tags().industrial
-      return true
+   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
+      return p.tags().industrial
    end )
    if not mem.destpnt then
       misn.finish()

@@ -44,4 +44,8 @@
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
  </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>zalek</tag>
+ </tags>
 </ship>

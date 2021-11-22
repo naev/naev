@@ -47,4 +47,8 @@
   <tur_damage>-20</tur_damage>
   <launch_damage>-20</launch_damage>
  </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>zalek</tag>
+ </tags>
 </ship>

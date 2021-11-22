@@ -1,4 +1,5 @@
 require 'ai.core.core'
+local scans = require 'ai.core.misc.scans'
 
 --[[
 
@@ -21,9 +22,6 @@ mem.enemyclose    = mem.guarddodist
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
-
-   -- Choose attack format
-   attack_choose()
 
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position
@@ -70,9 +68,9 @@ function idle ()
 
    -- Scan if possible
    if mem.doscans then
-      local target = __getscantarget()
+      local target = scans.get_target()
       if target and gdist(target) < mem.guarddodist then
-         __push_scan( target )
+         scans.push( target )
          return
       end
    end

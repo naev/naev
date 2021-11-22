@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>1000</population>
+  <population>13000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -26,7 +26,12 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>This agri-station is the first in a series of stations built by House Za'lek to mimic the successful INSS system in the Empire. Because there are so many Za'lek worlds that are incapable of supporting themselves without outside assistance, the stations become mandatory to feed the people there.</description>
+  <description>This agristation is the first in a series of stations built by House Za'lek to mimic the successful INSS system in the Empire. Because there are so many Za'lek worlds that are incapable of supporting themselves without outside assistance, the stations become mandatory to feed the people there. Unlike its successors, HZNSS-1 has a research center with a large conservatory containing a diversity of modified and rare plants which attracts many curious civilians from the area around.</description>
   <bar>This bar has a series of botanists and scientists arguing over some degree of minutia while several of the laymen around the edges of the bar ignore them, occasionally rolling their eyes at the louder declarations. Even so, none of it seems to make sense to you.</bar>
  </general>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>research</tag>
+  <tag>tourism</tag>
+ </tags>
 </asset>
