@@ -437,13 +437,11 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   Select_t *sel;
    char *file, *filtered;
-   int i;
 
    if (dialogue_YesNo( _("Remove selected planets?"), _("This can not be undone.") )) {
-      for (i=0; i<sysedit_nselect; i++) {
-         sel = &sysedit_select[i];
+      for (int i=0; i<sysedit_nselect; i++) {
+         Select_t *sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
             asprintf(&file, "dat/assets/%s.xml", filtered);
@@ -487,7 +485,6 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
    (void) unused;
    char *str;
    double s;
-   int i;
    StarSystem *sys;
 
    /* Prompt scale amount. */
@@ -501,7 +498,7 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
 
    /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
-      i = dialogue_YesNo( _("Scale Star System"), _("Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"),
+      int i = dialogue_YesNo( _("Scale Star System"), _("Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"),
             s, sys->radius, sys->radius*s );
       if (i==0)
          return;
@@ -516,9 +513,6 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
 void sysedit_sysScale( StarSystem *sys, double factor )
 {
    char buf[STRMAX];
-   Planet *p;
-   JumpPoint *jp;
-   int i;
 
    /* Scale radius. */
    sys->radius *= factor;
@@ -527,14 +521,14 @@ void sysedit_sysScale( StarSystem *sys, double factor )
       window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
-   for (i=0; i<array_size(sys->planets); i++) {
-      p     = sys->planets[i];
+   for (int i=0; i<array_size(sys->planets); i++) {
+      Planet *p = sys->planets[i];
       vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
    /* Scale jumps. */
-   for (i=0; i<array_size(sys->jumps); i++) {
-      jp    = &sys->jumps[i];
+   for (int i=0; i<array_size(sys->jumps); i++) {
+      JumpPoint *jp = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
 
@@ -741,9 +735,8 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    const double s = 1000.;
 
    /* Vars */
-   double startx, starty, spacing, d;
-   int    nx, ny;
-   int    i;
+   double startx, starty, spacing;
+   int nx, ny;
 
    /* Render blackness. */
    gl_renderRect( bx, by, w, h, &cBlack );
@@ -765,13 +758,13 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    ny = lround( h / spacing );
 
    /* Vertical. */
-   for ( i = 0; i < nx; i += 1 ) {
-      d = startx + ( i * spacing );
+   for (int i=0; i<nx; i++) {
+      double d = startx + (i * spacing);
       gl_renderLine( d, by, d, by + h, &cBlue );
    }
    /* Horizontal. */
-   for ( i = 0; i < ny; i += 1 ) {
-      d = starty + ( i * spacing );
+   for (int i=0; i<ny; i++) {
+      double d = starty + (i * spacing);
       gl_renderLine( bx, d, bx + w, d, &cBlue );
    }
 
@@ -1135,14 +1128,13 @@ static void sysedit_deselect (void)
  */
 static void sysedit_checkButtons (void)
 {
-   int i, sel_planet, sel_jump;
-   Select_t *sel;
+   int sel_planet, sel_jump;
 
    /* See if a planet or jump is selected. */
    sel_planet  = 0;
    sel_jump    = 0;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
+   for (int i=0; i<sysedit_nselect; i++) {
+      Select_t *sel = &sysedit_select[i];
       if (sel->type == SELECT_PLANET)
          sel_planet++;
       else if (sel->type == SELECT_JUMPPOINT)
@@ -1399,9 +1391,7 @@ static void sysedit_editJump( void )
    int x, y, w, l, bw;
    char buf[STRMAX_SHORT];
    const char *s;
-   JumpPoint *j;
-
-   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   JumpPoint *j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
 
    /* Create the window. */
    wid = window_create( "wdwJumpPointEditor", _("Jump Point Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
@@ -1462,9 +1452,7 @@ static void sysedit_editJump( void )
 static void sysedit_editJumpClose( unsigned int wid, const char *unused )
 {
    (void) unused;
-   JumpPoint *j;
-
-   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   JumpPoint *j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
    if (jp_hidden == 1) {
       jp_setFlag( j, JP_HIDDEN );
       jp_rmFlag(  j, JP_EXITONLY );
