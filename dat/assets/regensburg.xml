@@ -24,7 +24,10 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Regensburg is a classical den of iniquity. Basically a floating casino, many people come here to earn their fortunes, inevitably losing them, of course.</description>
-  <bar>None</bar>
+  <description>Regensburg is a classical den of iniquity. Basically a floating casino, many people come here to earn their fortunes, inevitably losing them, of course. Although never too large, many periods of continuous operation have taken its toll on the station, with any trace of glamour it had long lost.</description>
+  <bar>The bar serves as a sort of allegory of better times with some decorations from the grand opening a long time ago still up. However, despite this worn down appearance, the drink repertoire and quality is still top-notch.</bar>
  </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
 </asset>
