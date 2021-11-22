@@ -1938,7 +1938,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
-   size_t nfiles, i, j;
+   size_t nfiles, j;
    char *path, buf[STRMAX_SHORT];
    char **files;
    glTexture *t;
@@ -1946,7 +1946,6 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    int w, h, land;
    Planet *p;
    glColour c;
-   PHYSFS_Stat path_stat;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
@@ -1974,7 +1973,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
 
    j              = 0;
-   for (i=0; i<nfiles; i++) {
+   for (size_t i=0; i<nfiles; i++) {
+      PHYSFS_Stat path_stat;
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       /* Ignore directories. */
       if (!PHYSFS_stat( buf, &path_stat )) {
@@ -2038,9 +2038,11 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       p->gfx_exterior = strdup( buf );
    }
    else { /* Free old texture, load new. */
+      free( p->gfx_spaceName );
       free( p->gfx_spacePath );
-      gl_freeTexture( p->gfx_space );
+      p->gfx_spaceName = strdup( buf );
       p->gfx_spacePath = strdup( str );
+      gl_freeTexture( p->gfx_space );
       p->gfx_space = NULL;
       planet_gfxLoad( p );
    }
