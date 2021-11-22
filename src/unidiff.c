@@ -96,7 +96,6 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_BAR_REVERT, /* For internal usage. */
    HUNK_TYPE_ASSET_SERVICE_ADD,
    HUNK_TYPE_ASSET_SERVICE_REMOVE,
-   HUNK_TYPE_ASSET_SERVICE_REVERT, /* For internal usage. */
    HUNK_TYPE_ASSET_TECH_ADD,
    HUNK_TYPE_ASSET_TECH_REMOVE,
    HUNK_TYPE_ASSET_EXTERIOR,
@@ -1102,7 +1101,8 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         hunk->o.data = p->services;
+         if (planet_hasService( p, hunk->u.data ))
+            return -1;
          planet_addService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
@@ -1110,15 +1110,9 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         hunk->o.data = p->services;
-         planet_rmService( p, hunk->u.data );
-         diff_universe_changed = 1;
-         return 0;
-      case HUNK_TYPE_ASSET_SERVICE_REVERT:
-         p = planet_get( hunk->target.u.name );
-         if (p==NULL)
+         if (!planet_hasService( p, hunk->u.data ))
             return -1;
-         p->services = hunk->o.data;
+         planet_rmService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
 
@@ -1388,8 +1382,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
 
          case HUNK_TYPE_ASSET_SERVICE_ADD:
+            hunk.type = HUNK_TYPE_ASSET_SERVICE_REMOVE;
+            break;
          case HUNK_TYPE_ASSET_SERVICE_REMOVE:
-            hunk.type = HUNK_TYPE_ASSET_SERVICE_REVERT;
+            hunk.type = HUNK_TYPE_ASSET_SERVICE_ADD;
             break;
 
          case HUNK_TYPE_ASSET_TECH_ADD:

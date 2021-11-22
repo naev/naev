@@ -1305,7 +1305,7 @@ static void sysedit_editPnt( void )
    window_setInputFilter( wid, "inpPresenceRange", INPUT_FILTER_NUMBER );
    //x += 30 + 10;
 
-   x = 300;
+   x = 250;
    y -= gl_defFont.h + 15;
    s = _("hide");
    l = gl_printWidthRaw( NULL, s );
@@ -1314,6 +1314,14 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
+
+   /* Tags. */
+   x = 250;
+   y -= gl_defFont.h + 20;
+   l = scnprintf( buf, sizeof(buf), "#nTags:#0 " );
+   for (int i=0; i<array_size(p->tags); i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), p->tags[i] );
+   window_addText( wid, x, y, 300, 20, 0, "txtTags", NULL, NULL, buf );
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
@@ -1566,7 +1574,7 @@ static void sysedit_planetDescClose( unsigned int wid, const char *unused )
  */
 static void sysedit_genServicesList( unsigned int wid )
 {
-   int i, j, n, nservices;
+   int j, n, nservices;
    Planet *p;
    char **have, **lack;
    int x, y, w, h, hpos, lpos;
@@ -1590,7 +1598,7 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Get all missing services. */
    n = nservices = 0;
-   for (i=1; i<PLANET_SERVICES_MAX; i<<=1) {
+   for (int i=1; i<PLANET_SERVICES_MAX; i<<=1) {
       if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
          n++;
       nservices++; /* Cheaply track all service types. */
@@ -1602,7 +1610,7 @@ static void sysedit_genServicesList( unsigned int wid )
    if (nservices == n)
       have[j++] = strdup(_("None"));
    else
-      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+      for (int i=1; i<PLANET_SERVICES_MAX; i<<=1)
          if (planet_hasService(p, i)  && (i != PLANET_SERVICE_INHABITED))
             have[j++] = strdup( planet_getServiceName( i ) );
 
@@ -1616,7 +1624,7 @@ static void sysedit_genServicesList( unsigned int wid )
    if (!n)
       lack[j++] = strdup( _("None") );
    else
-      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+      for (int i=1; i<PLANET_SERVICES_MAX; i<<=1)
          if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
             lack[j++] = strdup( planet_getServiceName(i) );
 
@@ -1938,7 +1946,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
-   size_t nfiles, i, j;
+   size_t nfiles, j;
    char *path, buf[STRMAX_SHORT];
    char **files;
    glTexture *t;
@@ -1946,7 +1954,6 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    int w, h, land;
    Planet *p;
    glColour c;
-   PHYSFS_Stat path_stat;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
@@ -1974,7 +1981,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
 
    j              = 0;
-   for (i=0; i<nfiles; i++) {
+   for (size_t i=0; i<nfiles; i++) {
+      PHYSFS_Stat path_stat;
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       /* Ignore directories. */
       if (!PHYSFS_stat( buf, &path_stat )) {
@@ -2038,9 +2046,11 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       p->gfx_exterior = strdup( buf );
    }
    else { /* Free old texture, load new. */
+      free( p->gfx_spaceName );
       free( p->gfx_spacePath );
-      gl_freeTexture( p->gfx_space );
+      p->gfx_spaceName = strdup( buf );
       p->gfx_spacePath = strdup( str );
+      gl_freeTexture( p->gfx_space );
       p->gfx_space = NULL;
       planet_gfxLoad( p );
    }
