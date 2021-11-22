@@ -28,4 +28,4 @@ wrapper() {
    fi
 }
 
-wrapper "@naev_bin@" -d "@source_root@/dat" -d "@source_root@/artwork" -d "@build_root@/dat" -d "@source_root@" "$@"
+wrapper "@naev_bin@" -d "@authors@.zip" -d "@source_root@/dat" -d "@source_root@/artwork" -d "@build_root@/dat" -d "@source_root@" "$@"

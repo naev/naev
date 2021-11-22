@@ -314,13 +314,29 @@ if buildExec.disabled() == false
       export_dynamic: bfd.found(),
       install: true)
 
+   gen_authors = find_program('utils/build/gen_authors.py')
+   authors = custom_target(
+      'authors',
+      command: [
+         gen_authors,
+         '--output', '@OUTPUT0@',
+         '--preamble', '@INPUT0@',
+         '@INPUT1@', '@INPUT2@',
+      ],
+      input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
+      output: 'AUTHORS',
+      install: true,
+      install_dir: ndata_path,
+   )
+
    naev_sh = configure_file(
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
          'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
-         'naev_bin' : naev_bin.full_path()
+         'naev_bin' : naev_bin.full_path(),
+         'authors' : authors.full_path(),
       }
    )
 
@@ -337,6 +353,7 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
+      exclude_files: 'AUTHORS',  # In favor of the above "authors" target.
    )
 
    install_subdir(
