@@ -290,7 +290,7 @@ jobs:
   "Lua_Documentation":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
+      image: "ghcr.io/projectsynchro/naev-docs:latest"
     needs:
       [
         Package_Source,
