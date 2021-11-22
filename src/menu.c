@@ -44,7 +44,6 @@
 #include "space.h"
 #include "start.h"
 #include "safelanes.h"
-#include "unidiff.h"
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "toolkit.h"
 
@@ -636,7 +635,6 @@ static void menu_editors_open( unsigned int wid, const char *unused )
 
    /* Clear known flags - specifically for the SYSTEM_HIDDEN flag. */
    space_clearKnown();
-   diff_clear();
 
    /* Set dimensions */
    y  = 20 + (BUTTON_HEIGHT+20)*2;
