@@ -7,6 +7,13 @@ local lazy = setmetatable( {}, {
          self.__index = vn
       end
       return vn[key]
+   end,
+   __newindex = function( self, key, value )
+      if not vn then
+         vn = require "vn.core"
+         self.__index = vn
+      end
+      vn[key] = value
    end
 } )
 return lazy
