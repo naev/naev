@@ -15,6 +15,7 @@ zpp.noona = {
    name = _("Noona"),
    color = nil,
    transition = nil, -- Use default
+   description = _("You see Noona who looks like she might have a job for you."),
 }
 
 function zpp.vn_noona( params )
