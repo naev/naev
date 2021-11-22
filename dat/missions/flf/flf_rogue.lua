@@ -217,4 +217,3 @@ function rogue_spawnFLF( n, param )
       j:setVisible( true )
    end
 end
-

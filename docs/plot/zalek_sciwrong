@@ -10,7 +10,7 @@
  The one with the Shopping:
  Player is asked to fetch a chip from a trader, who asks him to fetch toxic materials.
  Type: Collect and flee
- 
+
  01:
  The one with the Visit:
  Player is asked to board a Soromid ship to retrieve another piece of technology.
@@ -20,12 +20,12 @@
  The one with the Runaway:
  The player is asked to retrieve the drone that escaped when the protoype flight should have started.
  Type: Chase and retrieve
- 
+
  03:
  The one with the Call:
  The player is contacted by the AI that asks him in Dr. Geller's name to collect certain materials and bring them to a system to assemble it.
  Type: Collect
- 
+
  04
  The one with the Delivery:
  The AI asks the player to collect the builded object and deliver it into Thorium space. Revealing that it actually is derived from a Thorium and was part of an ship that malfunctioned and who's parts got salvaged.

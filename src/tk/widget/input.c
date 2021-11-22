@@ -737,5 +737,3 @@ static void inp_focusLose( Widget* inp )
    SDL_StopTextInput();
    SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE);
 }
-
-

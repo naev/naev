@@ -8,4 +8,3 @@ void main(void) {
    VaryingTexCoord.y = 1.0 - VaryingTexCoord.y;
    gl_Position       = ClipSpaceFromLocal * VertexPosition;
 }
-

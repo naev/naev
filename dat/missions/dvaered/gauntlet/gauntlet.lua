@@ -480,5 +480,3 @@ function wave_end ()
    --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    hook.timer( 5.0, "leave_the_ring")
 end
-
-

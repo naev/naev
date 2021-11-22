@@ -330,4 +330,3 @@ function abort ()
       misn.finish( false )
    end
 end
-

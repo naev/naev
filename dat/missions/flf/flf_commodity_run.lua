@@ -35,4 +35,3 @@ mem.osd_title = _("FLF Supply Run")
 
 
 commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Water" }
-

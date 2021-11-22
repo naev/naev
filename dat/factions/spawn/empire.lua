@@ -96,5 +96,3 @@ function create( max )
    -- Initialize spawn stuff
    return scom.init( fempire, weights, max, {patrol=true} )
 end
-
-

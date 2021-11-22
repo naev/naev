@@ -40,5 +40,3 @@ zpp.rewards = {
 }
 
 return zpp
-
-

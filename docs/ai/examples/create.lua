@@ -6,4 +6,3 @@ function create ()
 
    -- What about the other goodies? Well, nowadays the mission or factions.spawn script tends to handle equipment and cargo.
 end
-

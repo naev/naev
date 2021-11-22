@@ -176,4 +176,3 @@ function board ()
    tk.merchantOutfit( store_name, outfits )
    player.unboard()
 end
-

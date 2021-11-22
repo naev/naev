@@ -390,5 +390,3 @@ int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    return pilot_cargoRmRaw( pilot, cargo, quantity, 0 );
 }
-
-

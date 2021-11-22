@@ -475,4 +475,3 @@ function comm( plt )
    vn.label("close")
    vn.run()
 end
-

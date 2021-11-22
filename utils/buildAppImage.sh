@@ -24,7 +24,7 @@ while getopts dcnms:b:o: OPTION "$@"; do
         ;;
     c)
         BUILDTYPE="debug"
-        ;;        
+        ;;
     n)
         NIGHTLY="true"
         BUILDTYPE="debug"

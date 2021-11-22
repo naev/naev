@@ -33,7 +33,7 @@ def printLanes( problem, activated, Lfaction, systems ):
     # Symmetrize, at least for now. (A faction might have a dead-end on the far side of a jump, making it one-way in a sense.)
     for i,j in [(i, j) for (i, j) in sys_edge_factions if i>j]:
         sys_edge_factions.setdefault((j, i), set()).update(sys_edge_factions.pop((i, j)))
-    
+
     fig, (glob_ax, loc_ax) = plt.subplots(1, 2, figsize=(18, 10))
     globmap = glob_ax.scatter(systems.xlist ,systems.ylist, color='b')
     for (i, j), factions in sys_edge_factions.items():
@@ -71,25 +71,25 @@ def printLanes( problem, activated, Lfaction, systems ):
         nodes = systems.nodess[i]
         names = systems.sysass[i] + [f'\u2192{jn}' for jn in systems.jpnames[i]]
         lanesLoc2glob = lanesLoc2globs[i]
-        
+
         loc_ax.clear()
         loc_ax.title.set_text(systems.sysnames[i])
         xlist, ylist = zip(*nodes)
         loc_ax.scatter(xlist, ylist, color='b')
         for xy, name in zip(nodes, names):
             loc_ax.annotate(name, xy=xy, xytext=(10, 10), textcoords='offset points', bbox={'fc': 'w'})
-        
+
         for jj in lanesLoc2glob:
             if activated[jj]:
                 no1 = sil[jj]
                 no2 = sjl[jj]
-            
+
                 x1, y1 = nodes[no1]
                 x2, y2 = nodes[no2]
-            
+
                 col = COLORMAP(Lfaction[jj]/nfac)
                 loc_ax.plot([x1,x2], [y1,y2], color=col)
-                
-                
+
+
     plt.gca().set_aspect('equal')
     plt.show()

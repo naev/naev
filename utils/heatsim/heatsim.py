@@ -54,7 +54,7 @@ class heatsim:
       elif shipname == "lancelot":
          return 180., 4
       elif shipname == "pacifier":
-         return 730., 5 
+         return 730., 5
       elif shipname == "hawking":
          return 3750., 7
       elif shipname == "peacemaker":
@@ -176,7 +176,7 @@ class heatsim:
       # Plot 1 Data
       plt.subplot(211)
       plt.plot( self.time_data, self.ship_data, '-' )
-      
+
       # Plot 1 Info
       plt.axis( [0, self.sim_total, 0, 1100] )
       plt.title( 'NAEV Heat Simulation ('+self.shipname+' with '+self.weapname+')' )
@@ -211,7 +211,7 @@ if __name__ == "__main__":
                'pacifier' : 'laser turret',
                'hawking' : 'ion turret',
                'peacemaker' : 'railgun turret' }
-   
+
    for shp,wpn in shp_lst.items():
       hs = heatsim( shp, wpn, (60., 120.) )
       #hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )

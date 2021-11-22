@@ -130,5 +130,3 @@ if __name__ == '__main__':
     else:
         print( 'Reading from XML files to %s!' % args.filename )
         balancer.xml2csv( args.filename )
-
-

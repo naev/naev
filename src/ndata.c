@@ -404,5 +404,3 @@ int ndata_getPathDefault( char *path, int len, const char *default_path, const c
       return 1;
    return 0;
 }
-
-

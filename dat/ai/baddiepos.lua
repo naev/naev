@@ -22,4 +22,3 @@ function create ()
    -- Finish up creation
    create_post()
 end
-

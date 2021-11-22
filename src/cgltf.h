@@ -74,7 +74,7 @@
  *
  * `cgltf_accessor_read_uint` is similar to its floating-point counterpart, but limited to reading
  * vector types and does not support matrix types. The passed-in element size is the number of uints
- * in the output buffer, which should be in the range [1, 4]. Returns false if the passed-in 
+ * in the output buffer, which should be in the range [1, 4]. Returns false if the passed-in
  * element_size is too small, or if the accessor is sparse.
  *
  * `cgltf_accessor_read_index` is similar to its floating-point counterpart, but it returns size_t
@@ -968,7 +968,7 @@ static cgltf_result cgltf_default_file_read(const struct cgltf_memory_options* m
 		fclose(file);
 		return cgltf_result_out_of_memory;
 	}
-	
+
 	cgltf_size read_size = fread(file_data, 1, file_size, file);
 
 	fclose(file);
@@ -1796,7 +1796,7 @@ void cgltf_free(cgltf_data* data)
 
 	data->memory.free(data->memory.user_data, data->materials);
 
-	for (cgltf_size i = 0; i < data->images_count; ++i) 
+	for (cgltf_size i = 0; i < data->images_count; ++i)
 	{
 		data->memory.free(data->memory.user_data, data->images[i].name);
 		data->memory.free(data->memory.user_data, data->images[i].uri);
@@ -3350,7 +3350,7 @@ static int cgltf_parse_json_texture_view(cgltf_options* options, jsmntok_t const
 			out_texture_view->texcoord = cgltf_json_to_int(tokens + i, json_chunk);
 			++i;
 		}
-		else if (cgltf_json_strcmp(tokens + i, json_chunk, "scale") == 0) 
+		else if (cgltf_json_strcmp(tokens + i, json_chunk, "scale") == 0)
 		{
 			++i;
 			out_texture_view->scale = cgltf_json_to_float(tokens + i, json_chunk);
@@ -3435,11 +3435,11 @@ static int cgltf_parse_json_pbr_metallic_roughness(cgltf_options* options, jsmnt
 		if (cgltf_json_strcmp(tokens+i, json_chunk, "metallicFactor") == 0)
 		{
 			++i;
-			out_pbr->metallic_factor = 
+			out_pbr->metallic_factor =
 				cgltf_json_to_float(tokens + i, json_chunk);
 			++i;
 		}
-		else if (cgltf_json_strcmp(tokens+i, json_chunk, "roughnessFactor") == 0) 
+		else if (cgltf_json_strcmp(tokens+i, json_chunk, "roughnessFactor") == 0)
 		{
 			++i;
 			out_pbr->roughness_factor =
@@ -3778,11 +3778,11 @@ static int cgltf_parse_json_image(cgltf_options* options, jsmntok_t const* token
 	int size = tokens[i].size;
 	++i;
 
-	for (int j = 0; j < size; ++j) 
+	for (int j = 0; j < size; ++j)
 	{
 		CGLTF_CHECK_KEY(tokens[i]);
 
-		if (cgltf_json_strcmp(tokens + i, json_chunk, "uri") == 0) 
+		if (cgltf_json_strcmp(tokens + i, json_chunk, "uri") == 0)
 		{
 			i = cgltf_parse_json_string(options, tokens, i + 1, json_chunk, &out_image->uri);
 		}
@@ -3862,7 +3862,7 @@ static int cgltf_parse_json_sampler(cgltf_options* options, jsmntok_t const* tok
 				= cgltf_json_to_int(tokens + i, json_chunk);
 			++i;
 		}
-		else if (cgltf_json_strcmp(tokens + i, json_chunk, "wrapT") == 0) 
+		else if (cgltf_json_strcmp(tokens + i, json_chunk, "wrapT") == 0)
 		{
 			++i;
 			out_sampler->wrap_t
@@ -3912,7 +3912,7 @@ static int cgltf_parse_json_texture(cgltf_options* options, jsmntok_t const* tok
 			out_texture->sampler = CGLTF_PTRINDEX(cgltf_sampler, cgltf_json_to_int(tokens + i, json_chunk));
 			++i;
 		}
-		else if (cgltf_json_strcmp(tokens + i, json_chunk, "source") == 0) 
+		else if (cgltf_json_strcmp(tokens + i, json_chunk, "source") == 0)
 		{
 			++i;
 			out_texture->image = CGLTF_PTRINDEX(cgltf_image, cgltf_json_to_int(tokens + i, json_chunk));

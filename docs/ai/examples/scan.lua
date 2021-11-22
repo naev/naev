@@ -17,4 +17,3 @@ function scan( target )
       ai.poptask()
    end
 end
-

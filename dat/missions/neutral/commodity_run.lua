@@ -150,4 +150,3 @@ end
 function abort ()
    update_active_runs(-1)
 end
-

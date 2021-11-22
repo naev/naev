@@ -182,5 +182,3 @@ function enemies( enter_vect )
       p:setHostile()
    end
 end
-
-

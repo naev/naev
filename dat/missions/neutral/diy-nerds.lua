@@ -328,4 +328,3 @@ function rmNerdCargo()
    misn.cargoRm(mem.cargo1)
    misn.cargoRm(mem.cargo2)
 end
-

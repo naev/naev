@@ -24,4 +24,3 @@ function equip( p )
    end
    return ret
 end
-

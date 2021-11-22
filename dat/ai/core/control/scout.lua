@@ -112,5 +112,3 @@ function approach ()
       ai.pushtask("idle")
    end
 end
-
-

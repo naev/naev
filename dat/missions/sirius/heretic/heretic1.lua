@@ -81,4 +81,3 @@ function landing()
       misn.finish(true)
    end
 end
-

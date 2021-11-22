@@ -21,4 +21,3 @@ Commodity* luaL_checkcommodity( lua_State *L, int ind );
 Commodity* luaL_validcommodity( lua_State *L, int ind );
 Commodity** lua_pushcommodity( lua_State *L, Commodity* commodity );
 int lua_iscommodity( lua_State *L, int ind );
-

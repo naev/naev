@@ -17,4 +17,3 @@ void main(void) {
 
    color_out = color * vec4( 0.8*tex.rgb, tex.a*a );
 }
-

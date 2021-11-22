@@ -213,4 +213,3 @@ function tick()
         misn.osdCreate(_("The Substitute Speaker"), osd_msg)
     end
 end
-

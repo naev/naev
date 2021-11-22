@@ -235,4 +235,3 @@ static void img_cleanup( Widget* img )
    gl_freeTexture( img->dat.img.image );
    img_freeLayers( img );
 }
-

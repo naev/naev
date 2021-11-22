@@ -196,5 +196,3 @@ void* window_custGetData( unsigned int wid, const char *name )
 
    return wgt->dat.cst.userdata;
 }
-
-

@@ -598,4 +598,3 @@ function spotter_spot ()
 
    hook.timer( 1, "spotter_spot" )
 end
-

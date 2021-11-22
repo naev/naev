@@ -133,4 +133,3 @@ function love.update( dt )
       shader:send( "dt", global_dt )
    end
 end
-

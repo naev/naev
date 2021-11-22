@@ -238,5 +238,3 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
    -- Update state
    evt_state = 2
 end
-
-

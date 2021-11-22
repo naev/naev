@@ -6,4 +6,3 @@
 #include "nlua.h"
 
 int nlua_loadNaev( nlua_env env );
-

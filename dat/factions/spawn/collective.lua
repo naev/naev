@@ -77,4 +77,3 @@ function create ( max )
 
    return scom.init( fcollective, weights, max )
 end
-

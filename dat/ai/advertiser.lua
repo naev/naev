@@ -168,4 +168,3 @@ function create ()
    mem.loiter = rnd.rnd(5,20) -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()
 end
-

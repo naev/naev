@@ -103,4 +103,3 @@ local function equip_soromid( p, opt_params  )
 end
 
 return equip_soromid
-

@@ -305,4 +305,3 @@ function gotaway ()
    spawn_enemies = function () end
    mem.misn_state = 2
 end
-

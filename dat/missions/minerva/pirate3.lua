@@ -590,5 +590,3 @@ He cuts the transmission.]]))
 
    player.commClose()
 end
-
-

@@ -7,4 +7,3 @@ from .unidiff import unidiff
 from .ship import ship
 
 __all__ = []
-

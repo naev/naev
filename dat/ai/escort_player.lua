@@ -11,4 +11,3 @@ function idle ()
    local pp = player.pilot()
    ai.pushtask( "follow", pp )
 end
-

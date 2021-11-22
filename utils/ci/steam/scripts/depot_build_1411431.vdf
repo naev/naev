@@ -8,10 +8,10 @@
   {
   	// This can be a full path, or a path relative to ContentRoot
     "LocalPath" "./soundtrack/*"
-    
+
     // This is a path relative to the install folder of your game
     "DepotPath" "."
-    
+
     // If LocalPath contains wildcards, setting this means that all
     // matching files within subdirectories of LocalPath will also
     // be included.

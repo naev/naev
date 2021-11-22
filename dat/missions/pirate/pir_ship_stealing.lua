@@ -254,4 +254,3 @@ function enter()
       mem.planet:landOverride(true)
    end
 end
-

@@ -878,5 +878,3 @@ His voice gets softer and softer as he keeps on mumbling.]]))
    vn.done( "electric" )
    vn.run()
 end
-
-

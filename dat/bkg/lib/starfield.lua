@@ -163,4 +163,3 @@ function starfield.render( dt )
 end
 
 return starfield
-

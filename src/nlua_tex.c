@@ -564,4 +564,3 @@ static int texL_setWrap( lua_State *L )
 
    return 0;
 }
-

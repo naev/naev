@@ -705,4 +705,3 @@ function optimize.optimize( p, cores, outfit_list, params )
 end
 
 return optimize
-

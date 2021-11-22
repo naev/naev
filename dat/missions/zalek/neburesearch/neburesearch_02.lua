@@ -90,4 +90,3 @@ function land()
         misn.finish(true)
     end
 end
-

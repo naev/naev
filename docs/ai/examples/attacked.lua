@@ -50,5 +50,3 @@ function attack( target )
       ai.shoot()
    end
 end
-
-

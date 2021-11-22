@@ -271,4 +271,3 @@ function joanneDead()
    tk.msg(_("Joanne's ship has been destroyed!"), _("Joanne's assailants have succeeded in destroying her ship. Your mission is a failure!"))
    misn.finish(false)
 end
-

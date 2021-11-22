@@ -22,4 +22,3 @@ void main(void) {
    color_out = color;
    color_out.a *= 0.6*smoothstep( -m, 0.0, -d );
 }
-
