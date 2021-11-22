@@ -7,6 +7,9 @@ local lazy = setmetatable( {}, {
          self.__index = luaspfx
       end
       return luaspfx[key]
+   end,
+   __newindex = function( _self, _key, _value )
+      warn("setting value is unsupported")
    end
 } )
 return lazy
