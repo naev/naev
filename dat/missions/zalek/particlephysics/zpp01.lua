@@ -24,7 +24,6 @@
 ]]--
 local vn = require "vn"
 local fmt = require "format"
-local zlk = require "common.zalek"
 local zpp = require "common.zalek_physics"
 
 -- luacheck: globals land (Hook functions passed by name)
