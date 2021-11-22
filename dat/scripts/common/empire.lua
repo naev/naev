@@ -29,7 +29,7 @@ emp.rewards = {
    -- Empire Shipping
    es00 = 500e3,
    es01 = 500e3, -- + "Heavy Weapons Combat License" permission
-   es02 = 750e3, -- + "Heavy Combat vessel License" permission
+   es02 = 750e3, -- + "Heavy Combat Vessel License" permission
    -- Long Distance Cargo
    ldc1 = 500e3,
    ldc2 = 500e3,
