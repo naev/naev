@@ -8,6 +8,8 @@
   <priority>4</priority>
   <chance>100</chance>
   <faction>Za'lek</faction>
+  <location>Bar</location>
+  <cond>planet.cur() ~= planet.get("Katar I")</cond>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
@@ -28,11 +30,11 @@ local zpp = require "common.zalek_physics"
 -- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp01
-local destpnt, destsys = planet.getP("Katar I")
+local destpnt, destsys = planet.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   if not var.peek("testing") then misn.finish() end
+   if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist that seems to be looking or someone to do something for them.") )
 end
 
@@ -100,6 +102,8 @@ That doesn't sound very reassuring.
    misn.osdCreate( _("Particle Physics"), {
       fmt.f(_("Drop off Noona and the equipment at {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),
    } )
+
+   hook.land( "land" )
 end
 
 function land ()
