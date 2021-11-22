@@ -10,7 +10,10 @@
   <x>223.666667</x>
   <y>463.066667</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Khaas I</asset>
+  <asset>The Crucible</asset>
+ </assets>
  <jumps>
   <jump target="Diadem">
    <autopos/>
