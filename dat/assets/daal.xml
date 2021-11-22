@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>20000000</population>
+  <population>2e+07</population>
   <hide>2.000000</hide>
   <services>
    <land>land_hiclass</land>

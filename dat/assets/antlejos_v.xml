@@ -14,7 +14,11 @@
   <hide>1.000000</hide>
   <services>
    <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
   </services>
   <description>A cold and barren inhospitable moon devoid of all life.</description>
+  <bar>(null)</bar>
  </general>
 </asset>
