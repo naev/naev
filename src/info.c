@@ -512,51 +512,44 @@ static void info_openShip( unsigned int wid )
 static void ship_update( unsigned int wid )
 {
    char buf[STRMAX_SHORT], *hyp_delay;
-   int cargo, len;
+   size_t l = 0;
+   int cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
 
-   cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = scnprintf( buf, sizeof(buf),
-         _("%s\n"
-         "%s\n"
-         "%s\n"
-         "%d\n"
-         "\n"
-         "%.0f %s\n"
-         "%s average\n"
-         "%.0f kN/tonne\n"
-         "%.0f m/s (max %.0f m/s)\n"
-         "%.0f deg/s\n"
-         "%.0f%%\n" /* Time Constant (dt_default) */
-         "\n"
-         "%.0f%%\n" /* Absorbption */
-         "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
-         "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
-         "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d %s\n"
-         "%.0f / %.0f %s (%d %s)\n"
-         "\n"),
-         /* Generic */
-         player.p->name,
-         _(player.p->ship->name),
-         _(ship_class(player.p->ship)),
-         (int)floor(player.p->crew),
-         /* Movement. */
-         player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ),
-         hyp_delay,
-         player.p->thrust / player.p->solid->mass,
-         player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
-         player.p->turn*180./M_PI,
-         player.p->stats.time_mod * player.p->ship->dt_default * 100.,
-         /* Health. */
-         player.p->dmg_absorb * 100.,
-         player.p->shield, player.p->shield_max, player.p->shield_regen,
-         player.p->armour, player.p->armour_max, player.p->armour_regen,
-         player.p->energy, player.p->energy_max, player.p->energy_regen,
-         pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ),
+   /* Generic */
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", player.p->name );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(player.p->ship->name) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_class(player.p->ship)) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", (int)floor(player.p->crew) );
+   /* Movement. */
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), hyp_delay );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), player.p->thrust / player.p->solid->mass );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s (max %.0f m/s)"),
+         player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), player.p->turn*180./M_PI );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default * 100. );
+   /* Health. */
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->dmg_absorb * 100. );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->shield, player.p->shield_max, player.p->shield_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->armour, player.p->armour_max, player.p->armour_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->energy, player.p->energy_max, player.p->energy_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d / %d %s", pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f / %.0f %s (%d %s)", 
          player.p->fuel, player.p->fuel_max, n_( "unit", "units", player.p->fuel_max ),
-         pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ));
-   equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
+         pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n" );
+
+   equipment_shipStats( &buf[l], sizeof(buf)-l, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
 }
