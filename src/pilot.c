@@ -1119,7 +1119,7 @@ char pilot_getFactionColourChar( const Pilot *p )
    if (pilot_isDisabled(p))
       return 'I';
    else if (pilot_isFriendly(p))
-      return 'N';
+      return 'F';
    else if (pilot_isHostile(p))
       return 'H';
    return faction_getColourChar(p->faction);
