@@ -2742,9 +2742,16 @@ int player_rmOutfit( const Outfit *o, int quantity )
    return 0;
 }
 
+static int cmp_int( const void *p1, const void *p2 )
+{
+   const int *i1 = (const int*) p1;
+   const int *i2 = (const int*) p2;
+   return (*i1) - (*i2);
+}
+
 /**
  * @brief Marks a mission as completed.
- *
+
  *    @param id ID of the mission to mark as completed.
  */
 void player_missionFinished( int id )
@@ -2757,6 +2764,8 @@ void player_missionFinished( int id )
    if (missions_done == NULL)
       missions_done = array_create( int );
    array_push_back( &missions_done, id );
+
+   qsort( missions_done, array_size(missions_done), sizeof(int), cmp_int );
 }
 
 /**
@@ -2767,10 +2776,10 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
-   for (int i=0; i<array_size(missions_done); i++)
-      if (missions_done[i] == id)
-         return 1;
-   return 0;
+   const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
+   if (i==NULL)
+      return 0;
+   return 1;
 }
 
 /**
@@ -2788,6 +2797,8 @@ void player_eventFinished( int id )
    if (events_done == NULL)
       events_done = array_create( int );
    array_push_back( &events_done, id );
+
+   qsort( events_done, array_size(events_done), sizeof(int), cmp_int );
 }
 
 /**
@@ -2798,10 +2809,10 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
-   for (int i=0; i<array_size(events_done); i++)
-      if (events_done[i] == id)
-         return 1;
-   return 0;
+   const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
+   if (i==NULL)
+      return 0;
+   return 1;
 }
 
 /**
