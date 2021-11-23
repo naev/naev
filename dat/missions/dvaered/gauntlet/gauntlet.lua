@@ -20,6 +20,8 @@ local equipopt = require 'equipopt'
 local logidstr = "log_gauntlet"
 local enemies, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
+-- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
+-- luacheck: globals approach_gauntlet (NPC functions passed by name)
 
 -- TODO replace portraits/images
 local npc_portrait   = "minerva_terminal.png"
@@ -478,5 +480,3 @@ function wave_end ()
    --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    hook.timer( 5.0, "leave_the_ring")
 end
-
-

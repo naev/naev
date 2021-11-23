@@ -21,6 +21,8 @@
 
 local neu = require "common.neutral"
 
+-- luacheck: globals buck continueProblems startProblems (Hook functions passed by name)
+
 function create ()
     -- Allow some time before the problems start
     hook.timer(45.0, "startProblems")

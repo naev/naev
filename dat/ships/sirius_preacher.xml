@@ -46,4 +46,7 @@
   <armour_mod>15</armour_mod>
   <stress_dissipation>20</stress_dissipation>
  </stats>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
 </ship>

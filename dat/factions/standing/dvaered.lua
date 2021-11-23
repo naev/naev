@@ -1,14 +1,11 @@
-require "factions.standing.lib.base"
+-- Dvaered faction standing script
+local sbase = require "factions.standing.lib.base"
 
-
-_fcap_kill     = 25 -- Kill cap
-_fdelta_distress = {-0.5, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1.5} -- Maximum change constraints
-_fcap_misn     = 40 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_dvaered"
-_fthis         = faction.get("Dvaered")
-
-
-function faction_hit( current, amount, source, secondary )
-    return default_hit(current, amount, source, secondary)
-end
+standing = sbase.newStanding{
+   fct            = faction.get("Dvaered"),
+   cap_kill       = 25,
+   delta_distress = {-0.5, 0},  -- Maximum change constraints
+   delta_kill     = {-5, 1.5},  -- Maximum change constraints
+   cap_misn_init  = 40,
+   cap_misn_var   = "_fcap_dvaered",
+}

@@ -43,6 +43,7 @@ local emp = require "common.empire"
 local destsys     = system.get( "Slaccid" )
 local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
 
+-- luacheck: globals board death delay_flf enter jumpout land (Hook functions passed by name)
 
 function create ()
    -- Target destination

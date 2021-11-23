@@ -13,4 +13,3 @@ function object.Object:type() return self._type end
 function object.Object:typeOf( name ) return self._type==name end
 
 return object
-

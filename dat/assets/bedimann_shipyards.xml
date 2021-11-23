@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>60.000000</base>
+  <bonus>40.000000</bonus>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
-  <population>2500</population>
+  <population>12500</population>
   <hide>2.000000</hide>
   <services>
    <land>zlk_mil_restricted</land>
@@ -39,5 +39,7 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>industrial</tag>
+  <tag>military</tag>
  </tags>
 </asset>

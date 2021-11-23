@@ -5,6 +5,7 @@ require 'ai.empire'
 --]]
 
 -- Just stays still
+-- luacheck: globals stay_still (AI Task functions passed by name)
 function stay_still ()
    if ai.isstopped() then
       return
@@ -14,6 +15,7 @@ end
 
 
 -- By default stay still
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    ai.pushtask( "stay_still" )
 end

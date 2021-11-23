@@ -29,6 +29,8 @@ local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Zhiru")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end
@@ -52,7 +54,7 @@ function accept ()
 
    misn.accept()
 
-   misn.osdCreate(_("The Runaway"), _("Deliver Cynthia to Zhiru in the Goddard system"))
+   misn.osdCreate(_("The Runaway"), {_("Deliver Cynthia to Zhiru in the Goddard system")})
    misn.osdActive(1)
 
    local c = misn.cargoNew( cargoname, cargodesc )
@@ -84,4 +86,3 @@ function land ()
       misn.finish(true)
    end
 end
-

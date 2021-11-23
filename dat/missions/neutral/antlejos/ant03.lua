@@ -13,6 +13,7 @@
  </avail>
  <notes>
   <tier>1</tier>
+  <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
 --]]
@@ -33,13 +34,13 @@ local reward = ant.rewards.ant03
 
 local returnpnt, returnsys = planet.getS("Antlejos V")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( _p )
-      -- TODO only look for industrial Za'lek planets
-      --return p.tags().industrial
-      return true
+   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
+      return p.tags().industrial
    end )
    if not mem.destpnt then
       misn.finish()
@@ -132,4 +133,3 @@ You can see glee in his eyes.
       misn.finish(true)
    end
 end
-

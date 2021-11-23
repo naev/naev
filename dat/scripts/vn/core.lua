@@ -189,7 +189,7 @@ end
 --[[
 -- Main drawing function.
 --]]
-local function _draw( tocanvas )
+local function _draw()
    local prevcanvas
    if vn._postshader then
       prevcanvas = graphics.getCanvas()
@@ -298,7 +298,7 @@ function vn.draw()
    if s and s.drawoverride then
       s:drawoverride()
    else
-      _draw( false )
+      _draw()
    end
 
    -- Draw on top
@@ -314,7 +314,7 @@ local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
    graphics.clear( 0, 0, 0, 0 )
-   _draw( true )
+   _draw()
    graphics.setCanvas( oldcanvas )
 end
 
@@ -541,7 +541,7 @@ function vn.State:isDone() return self.done end
 -- Scene
 --]]
 vn.StateScene ={}
-function vn.StateScene.new( background )
+function vn.StateScene.new()
    local s = vn.State.new()
    s._init = vn.StateScene._init
    s._type = "Scene"
@@ -1221,7 +1221,7 @@ Makes a character appear in the VN.
 --]]
 function vn.appear( c, name, seconds, transition )
    local shader
-   shader, seconds, transition = transitions.get( name, seconds, transition )
+   shader, seconds = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
@@ -1257,7 +1257,7 @@ The way it works is that the transition is played backwards, so if you want the 
 --]]
 function vn.disappear( c, name, seconds, transition )
    local shader
-   shader, seconds, transition = transitions.get( name, seconds, transition )
+   shader, seconds = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
@@ -1276,11 +1276,10 @@ end
 
 --[[--
 Starts a new scene.
-   @param background Background image to set or none if nil.
 --]]
-function vn.scene( background )
+function vn.scene()
    vn._checkstarted()
-   table.insert( vn._states, vn.StateScene.new( background ) )
+   table.insert( vn._states, vn.StateScene.new() )
 end
 
 --[[--

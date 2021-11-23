@@ -26,4 +26,8 @@
   <commodities/>
   <description>Wa'kan is a mining world where the mines are solely worked by prisoners. There is a guard detail posted and a small degree of Za'lek researchers here working on criminal justice programs.</description>
  </general>
+ <tags>
+  <tag>prison</tag>
+  <tag>mining</tag>
+ </tags>
 </asset>

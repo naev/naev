@@ -347,7 +347,6 @@ static int gl_getGLInfo (void)
 static int gl_defState (void)
 {
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
-/* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture renders */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
    glEnable(  GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased. */
 

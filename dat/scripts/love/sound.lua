@@ -10,4 +10,3 @@ function sound.newSoundData( _filename )
 end
 
 return sound
-

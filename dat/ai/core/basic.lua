@@ -1,4 +1,3 @@
-local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret, moveto_raw -- Forward-declared functions
 --[[
 -- Basic tasks for a pilot, no need to reinvent the wheel with these.
 --
@@ -17,31 +16,11 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
 
+local atk = require "ai.core.attack.util"
 local fmt = require "format"
+local scans = require "ai.core.misc.scans"
 
---[[
--- Helper function that checks to see if a value is in a table
---]]
-local function __intable( t, val )
-   for k,v in ipairs(t) do
-      if v==val then
-         return true
-      end
-   end
-   return false
-end
-
---[[
--- Helper function to see if two pilots belong to the same fleet or not
---]]
-function __sameFleet( pa, pb )
-   local la = pa:leader()
-   local lb = pa:leader()
-   if not la or not la:exists() then la = pa end
-   if not lb or not lb:exists() then lb = pb end
-   return la == lb
-end
-
+local __choose_land_target, __hyp_approach, __landgo, __moveto_generic, __run_target, __shoot_turret -- Forward-declared functions
 
 --[[
 -- Faces the target.
@@ -73,6 +52,7 @@ end
 --[[
 -- Brakes the ship
 --]]
+-- luacheck: globals _subbrake (AI Task functions passed by name)
 function _subbrake ()
    ai.brake()
    if ai.isstopped() then
@@ -86,7 +66,7 @@ end
 --[[
 -- Move in zigzag around a direction
 --]]
-function __zigzag ( dir, angle )
+local function __zigzag ( dir, angle )
    if mem.pm == nil then
       mem.pm = 1
    end
@@ -125,11 +105,47 @@ end
 
 
 --[[
+-- Zig zags towards the target
+--]]
+-- luacheck: globals _attack_zigzag (AI Task functions passed by name)
+function _attack_zigzag( target )
+   target = atk.com_think( target )
+   if target == nil then return end
+   if target:flags("disabled") then
+      ai.popsubtask()
+      return
+   end
+
+   -- See if the enemy is still seeable
+   if not atk.check_seeable( target ) then return end
+
+   ai.settarget(target)
+
+   -- Is there something to dodge?
+   if not ai.hasprojectile() then
+      ai.popsubtask()
+      return
+   end
+
+   -- Are we ready to shoot?
+   local dist = ai.dist( target )
+   local range = ai.getweaprange(3)
+   if dist < range then
+      ai.popsubtask()
+      return
+   end
+
+   local dir = ai.dir( target )
+   __zigzag(dir, math.pi/6)
+end
+
+
+--[[
 -- Goes to a target position without braking
 --]]
 function moveto_nobrake( target )
    local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, false )
+   __moveto_generic( target, dir )
 end
 
 
@@ -138,14 +154,14 @@ end
 --]]
 function moveto_nobrake_raw( target )
    local dir      = ai.face( target )
-   __moveto_generic( target, dir, false )
+   __moveto_generic( target, dir )
 end
 
 
 --[[
--- Goes to a precise position.
+-- Goes to a target position
 --]]
-function moveto_precise( target )
+function moveto( target )
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
 
@@ -169,43 +185,21 @@ end
 
 
 --[[
--- Goes to a target position roughly
---]]
-function moveto( target )
-   local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, true )
-end
-
-
---[[
 -- Goes to a point in order to inspect (same as moveto_nobrake, but pops when attacking)
 --]]
+-- luacheck: globals inspect_moveto (AI Task functions passed by name)
 function inspect_moveto( target )
    local dir      = ai.face( target, nil, true )
-   __moveto_generic( target, dir, false )
-end
-
-
---[[
--- moveto without velocity compensation.
---]]
-function moveto_raw( target )
-   local dir      = ai.face( target )
-   __moveto_generic( target, dir, true )
+   __moveto_generic( target, dir )
 end
 
 
 --[[
 -- Generic moveto function.
 --]]
-function __moveto_generic( target, dir, brake )
+function __moveto_generic( target, dir )
    local dist     = ai.dist( target )
-   local bdist
-   if brake then
-      bdist    = ai.minbrakedist()
-   else
-      bdist    = 50
-   end
+   local bdist    = 50
 
    -- Need to get closer
    if dir < math.rad(10) and dist > bdist then
@@ -214,9 +208,6 @@ function __moveto_generic( target, dir, brake )
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      if brake then
-         ai.pushtask("brake")
-      end
    end
 end
 
@@ -261,6 +252,7 @@ function follow_accurate( target )
 end
 
 -- Default action for non-leader pilot in fleet
+-- luacheck: globals follow_fleet (AI Task functions passed by name)
 function follow_fleet ()
    local plt    = ai.pilot()
    local leader = plt:leader()
@@ -343,6 +335,8 @@ function hyperspace_shoot( target )
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach_shoot", target )
 end
+
+-- luacheck: globals _hyp_approach_shoot (AI Task functions passed by name)
 function _hyp_approach_shoot( target )
    -- Shoot and approach
    local enemy = ai.getenemy()
@@ -355,6 +349,7 @@ function land_shoot ( target )
    ai.pushsubtask( "_landgo_shoot", planet )
 end
 
+-- luacheck: globals _landgo_shoot (AI Task functions passed by name)
 function _landgo_shoot ( planet )
    local enemy = ai.getenemy()
    __shoot_turret( enemy )
@@ -396,9 +391,12 @@ function land ( target )
    local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end
+
+-- luacheck: globals _landgo (AI Task functions passed by name)
 function _landgo( planet )
    __landgo(planet)
 end
+
 function __landgo ( planet )
    local pl_pos = planet:pos() + mem.target_bias
 
@@ -424,6 +422,8 @@ function __landgo ( planet )
    end
 
 end
+
+-- luacheck: globals _landland (AI Task functions passed by name)
 function _landland ( planet )
    if not ai.land( planet ) then
       ai.popsubtask()
@@ -486,6 +486,7 @@ function runaway_land( data )
    ai.pushsubtask( "_run_landgo", data )
 end
 
+-- luacheck: globals _run_target (AI Task functions passed by name)
 function _run_target( target )
    __run_target( target )
 end
@@ -538,6 +539,8 @@ function __shoot_turret( target )
       end
    end
 end
+
+-- luacheck: globals _run_hyp (AI Task functions passed by name)
 function _run_hyp( data )
    local enemy  = data[1]
    local jump   = data[2]
@@ -594,6 +597,7 @@ function _run_hyp( data )
    end
 end
 
+-- luacheck: globals _run_landgo (AI Task functions passed by name)
 function _run_landgo( data )
    local enemy  = data[1]
    local planet = data[2]
@@ -653,6 +657,7 @@ end
 --[[
 -- Tries to return to the lane, shooting at nearby enemies if necessary
 --]]
+-- luacheck: globals return_lane (AI Task functions passed by name)
 function return_lane( data )
    local enemy = data[1]
    local target = data[2]
@@ -680,6 +685,8 @@ function hyperspace( target )
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
 end
+
+-- luacheck: globals _hyp_approach (AI Task functions passed by name)
 function _hyp_approach( target )
    __hyp_approach( target )
 end
@@ -709,6 +716,8 @@ function __hyp_approach( target )
       end
    end
 end
+
+-- luacheck: globals _hyp_jump (AI Task functions passed by name)
 function _hyp_jump ( jump )
    if ai.hyperspace( jump ) == nil then
       local p = ai.pilot()
@@ -721,6 +730,7 @@ end
 --[[
 -- Boards the target
 --]]
+-- luacheck: globals board (AI Task functions passed by name)
 function board( target )
    -- Make sure pilot exists
    if not target:exists() then
@@ -752,6 +762,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
+-- luacheck: globals _boardstop (AI Task functions passed by name)
 function _boardstop( target )
    -- make sure pilot exists
    if not target:exists() then
@@ -823,6 +834,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
+-- luacheck: globals _refuelstop (AI Task functions passed by name)
 function _refuelstop( target )
    -- make sure pilot exists
    if not target:exists() then
@@ -861,6 +873,7 @@ end
 --[[
 -- Mines an asteroid
 --]]
+-- luacheck: globals mine (AI Task functions passed by name)
 function mine( fieldNast )
    ai.weapset( 1 )
    local field     = fieldNast[1]
@@ -902,6 +915,8 @@ function mine( fieldNast )
       ai.pushsubtask("_killasteroid", fieldNast )
    end
 end
+
+-- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( fieldNast )
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
@@ -971,12 +986,14 @@ end
 
 
 -- Holds position
+-- luacheck: globals hold (AI Task functions passed by name)
 function hold ()
    follow_fleet ()
 end
 
 
 -- Flies back and tries to either dock or stops when back at leader
+-- luacheck: globals flyback (AI Task functions passed by name)
 function flyback( dock )
    local target = ai.pilot():leader()
    if not target or not target:exists() then
@@ -1003,52 +1020,9 @@ end
 
 
 --[[
--- Checks to see if a pilot is visible
--- Assumes the pilot exists!
---]]
-function __check_seeable( target )
-   local self   = ai.pilot()
-   if not target:flags("invisible") then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
-
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags("manualcontrol") then
-         return true
-      end
-   end
-   return false
-end
-
-
---[[
--- Aborts current task and tries to see what happened to the target.
---]]
-function __investigate_target( target )
-   local p = ai.pilot()
-   ai.settarget(p) -- Un-target
-   ai.poptask()
-
-   -- No need to investigate: target has jumped out.
-   if target:flags("jumpingout") then
-      return
-   end
-
-   -- Guess the pilot will be randomly between the current position and the
-   -- future position if they go in the same direction with the same velocity
-   local ttl = ai.dist(target) / p:stats().speed_max
-   local fpos = target:pos() + vec2.newP( target:vel()*ttl, target:dir() ) * rnd.rnd()
-   ai.pushtask("inspect_moveto", fpos )
-end
-
-
---[[
 -- Just loitering around.
 --]]
+-- luacheck: globals loiter (AI Task functions passed by name)
 function loiter( target )
    local dir   = ai.face( target, nil, true )
    local dist  = ai.dist( target )
@@ -1061,6 +1035,7 @@ function loiter( target )
    end
 end
 -- Last vertex, so poptask when at brakedistance
+-- luacheck: globals loiter_last (AI Task functions passed by name)
 function loiter_last( target )
    local dir   = ai.face( target, nil, true )
    local dist  = ai.dist( target )
@@ -1075,176 +1050,12 @@ function loiter_last( target )
 end
 
 
-function __push_scan( target )
-   -- Send a message if applicable
-   local msg = mem.scan_msg or _("Prepare to be scanned.")
-   ai.pilot():comm( target, msg )
-   ai.pushtask( "scan", target )
-end
-
-
 --[[
 -- Tries to get close to scan the enemy
 --]]
+-- luacheck: globals scan (AI Task functions passed by name)
 function scan( target )
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
-   -- Try to investigate if target lost
-   if not __check_seeable( target ) then
-      __investigate_target( target )
-      return
-   end
-
-   -- Set target
-   ai.settarget( target )
-   local p = ai.pilot()
-
-   -- Done scanning
-   if ai.scandone() then -- Note this check MUST be done after settarget
-      table.insert( mem.scanned, target )
-      ai.poptask()
-      if target:hasIllegal( p:faction() ) then
-         ai.hostile( target )
-         ai.pushtask( "attack", target )
-         local msg = mem.scan_msg_bad or _("Illegal objects detected! Do not resist!")
-         p:comm( target, msg )
-
-         -- Player gets faction hit and more hostiles on them
-         if target == player.pilot() then
-            for k,v in ipairs(p:getAllies(5000, nil, true, false, true)) do
-               v:setHostile(true)
-            end
-            -- Small faction hit
-            p:faction():modPlayer( -1 )
-         end
-      else
-         local msg = mem.scan_msg_ok or _("Thank you for your cooperation.")
-         p:comm( target, msg )
-
-         -- Tell friends about the scanning
-         local f = p:faction()
-         for k,v in ipairs(pilot.get(f)) do
-            p:msg( v, "scanned", target )
-         end
-         for kf,vf in ipairs(f:allies()) do
-            for k,v in ipairs(pilot.get(vf)) do
-               p:msg( v, "scanned", target )
-            end
-         end
-      end
-      return
-   end
-
-   -- Get stats about the enemy
-   local dist = ai.dist(target)
-
-   -- Get closer and scan
-   ai.iface( target )
-   if dist > 1000 then
-      ai.accel()
-   end
-end
-
-
---[[
--- Check to see if a ship needs to be scanned.
---]]
-local function __needs_scan( target )
-   if not mem.scanned then
-      return false
-   end
-   for k,v in ipairs(mem.scanned) do
-      if target==v then
-         return false
-      end
-   end
-   return true
-end
-
-
---[[
--- Whether or not we want to scan, ignore players for now
---]]
-local function __wanttoscan( _p, target )
-   -- Don't care about stuff that doesn't need scan
-   if not __needs_scan( target ) then
-      return false
-   end
-
-   -- We always want to scan the player (no abusing allies)
-   --[[
-   if target == player.pilot() then
-      return true
-   end
-   --]]
-
-   -- Don't care about allies nor enemies (should attack instead)
-   if ai.isally(target) or ai.isenemy(target) then
-      return false
-   end
-
-   return true
-end
-
-
---[[
--- Tries to get find a good target to scan with some heuristics based on mass
--- and distance
---]]
-function __getscantarget ()
-   -- See if we should scan a pilot
-   local p = ai.pilot()
-   local pv = {}
-   do
-      local inserted = {}
-      for k,v in ipairs(p:getVisible()) do
-         -- Only care about leaders
-         local l = v:leader()
-         if l and l:exists() then
-            v = l
-         end
-
-         if not __intable( inserted, v ) then
-            if __wanttoscan( p, v ) then
-               local d = ai.dist2( v )
-               local m = v:mass()
-               table.insert( pv, {p=v, d=d, m=m} )
-            end
-            table.insert( inserted, v )
-         end
-      end
-   end
-   -- We do a sort by distance and mass categories so that the AI will prefer
-   -- larger ships before trying smaller ships. This is to avoid having large
-   -- ships chasing after tiny ships
-   local pm = p:mass()
-   local pmh = pm * 1.5
-   local pml = pm * 0.75
-   table.sort( pv, function(a,b)
-      if a.m > pmh and b.m > pmh then
-         return a.d < b.d
-      elseif a.m > pmh then
-         return true
-      elseif b.m > pmh then
-         return false
-      elseif a.m > pml and b.m > pml then
-         return a.d < b.d
-      elseif a.m > pml then
-         return true
-      elseif b.m > pml then
-         return false
-      else
-         return a.d < b.d
-      end
-   end )
-
-   if #pv==0 then
-      return nil
-   end
-   return pv[1].p
+   scans.scan( target )
 end
 
 
@@ -1258,6 +1069,7 @@ function stealth( _target )
 end
 
 
+-- luacheck: globals ambush_moveto (AI Task functions passed by name)
 function ambush_moveto( target )
    -- Make sure stealthed
    if not ai.stealth(true) then
@@ -1275,6 +1087,7 @@ function ambush_moveto( target )
 end
 
 
+-- luacheck: globals ambush_stalk (AI Task functions passed by name)
 function ambush_stalk( target )
    -- Make sure stealthed or attack
    if not ai.stealth(true) then
@@ -1304,12 +1117,14 @@ end
 
 
 -- Delays the ship when entering systems so that it doesn't leave right away
+-- luacheck: globals enterdelay (AI Task functions passed by name)
 function enterdelay ()
    if ai.timeup(0) then
       ai.pushtask("hyperspace")
    end
 end
 
+-- luacheck: globals idle_wait (AI Task functions passed by name)
 function idle_wait ()
    if ai.timeup(0) then
       ai.poptask()

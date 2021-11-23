@@ -25,6 +25,8 @@ require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
 local spawnGenbu, spawnSquads -- Forward-declared functions
+-- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis startAmbush zoomTo (Hook functions passed by name)
+-- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
 local seirplanet, seirsys = planet.getS("Edergast")
@@ -134,12 +136,8 @@ end
 -- Jump-out hook
 function jumpout()
    mem.playerlastsys = system.cur() -- Keep track of which system the player came from
-   if not (patroller == nil) then
-      hook.rm(patroller)
-   end
-   if not (mem.spinter == nil) then
-      hook.rm(mem.spinter)
-   end
+   hook.rm(mem.poller)
+   hook.rm(mem.spinter)
 end
 
 -- Enter hook

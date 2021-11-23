@@ -59,4 +59,7 @@
   <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
  </stats>
+ <tags>
+  <tag>proteron</tag>
+ </tags>
 </ship>

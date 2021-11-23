@@ -24,6 +24,7 @@ local neu = require "common.neutral"
 
 local reward = 500e3
 local getlandable, getlandablesystems -- Forward-declared functions
+-- luacheck: globals enter harrassme land takeoff (Hook functions passed by name)
 
 local directions = {}
 directions[1] = _([["I know just the place," Harrus tells you. "Take us to planet {pnt} in the {sys} system. I'm sure a man of my calibre can find everything he needs there. Captain, please notify me when we arrive." With that, Harrus turns and rejoins his family. The kids seem in the process of redecorating (if not wrecking) your quarters, and despite the apologetic glance the woman gives you you can't help but wonder if you did the right thing responding to that SOS.]])

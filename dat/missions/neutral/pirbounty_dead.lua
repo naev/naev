@@ -33,6 +33,9 @@ local pilotname = require "pilotname"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
+-- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
+-- luacheck: globals hunter_hail hunter_leave jumpin jumpout land pilot_attacked pilot_board pilot_disable pilot_jump takeoff timer_hail (Hook functions passed by name)
+
 subdue_text = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
    _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues {plt}."),
@@ -98,9 +101,12 @@ mem.osd_msg = {
    _("Land in {fct} territory to collect your bounty"),
 }
 
+-- Non-persistent state
+local hunters = {}
+local hunter_hits = {}
+local target_ship
 
-hunters = {}
-hunter_hits = {}
+local spawn_pirate -- Forward-declared functions
 
 
 function create ()
@@ -317,7 +323,6 @@ end
 
 function hunter_hail( _arg )
    hook.rm( mem.hailer )
-   hook.rm( rehailer )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]

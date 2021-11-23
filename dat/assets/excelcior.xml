@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>2500000</population>
+  <population>2.5e+06</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -55,4 +55,11 @@
   <item>Missiles 1</item>
   <item>Za'lek Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rich</tag>
+  <tag>tourism</tag>
+  <tag>agriculture</tag>
+  <tag>research</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>

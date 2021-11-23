@@ -1,46 +1,56 @@
+local class = require "class"
 local pir = require 'common.pirate'
-require "factions.standing.lib.base"
+local sbase = require "factions.standing.lib.base"
 
-_fcap_kill     = 30 -- Kill cap
-_fdelta_distress = {-2, 0.25} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_pirate"
---_fthis         = faction.get("Pirate") -- Should be set seperately
+local spir = {}
 
--- Secondary hit modifiers.
-_fmod_distress_enemy  = 1 -- Distress of the faction's enemies
-_fmod_distress_friend = 0 -- Distress of the faction's allies
-_fmod_kill_enemy      = 1 -- Kills of the faction's enemies
-_fmod_kill_friend     = 0 -- Kills of the faction's allies
-_fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
-_fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
+spir.PirateStanding = class.inheritsFrom( sbase.Standing )
+function spir.newPirateStanding( args )
+   return spir.PirateStanding.new():init( args )
+end
 
-_fstanding_friendly = 40
-_fstanding_neutral = 0
+function spir.PirateStanding:init(args)
+   args.cap_kill           = args.cap_kill            or 30          -- Kill cap
+   args.delta_distress     = args.delta_distress      or {-2, 0.25}  -- Maximum change constraints
+   self.cap_misn_var       = args.cap_misn_var        or "_fcap_pirate"
 
-_ftext_standing = {
-   [95] = _("Clan Legend"),
-   [80] = _("Clan Lord"),
-   [60] = _("Clan Warrior"),
-   [40] = _("Clan Plunderer"),
-   [20] = _("Clan Thug"),
-   [0]  = _("Common Thief"),
-   [-1] = _("Normie"),
-}
+   -- Secondary hit modifiers.
+   args.mod_distress_enemy = args.mod_distress_enemy  or 1           -- Distress of the faction's enemies
+   args.mod_distress_friend= args.mod_distress_friend or 0           -- Distress of the faction's allies
+   args.mod_kill_enemy     = args.mod_kill_enemy      or 1           -- Kills of the faction's enemies
+   args.mod_kill_friend    = args.mod_kill_friend     or 0           -- Kills of the faction's allies
 
-_ftext_friendly = _("Friendly")
-_ftext_neutral  = _("Neutral")
-_ftext_hostile  = _("Hostile")
-_ftext_bribed   = _("Paid Off")
+   args.friendly_at       = args.friendly_at          or 40          -- Standing value threshold between neutral and friendly.
 
-function faction_hit( current, amount, source, secondary )
-   local standing = math.max( -50, default_hit( current, amount, source, secondary ) )
+   args.text = args.text or {
+      [95] = _("Clan Legend"),
+      [80] = _("Clan Lord"),
+      [60] = _("Clan Warrior"),
+      [40] = _("Clan Plunderer"),
+      [20] = _("Clan Thug"),
+      [0]  = _("Common Thief"),
+      [-1] = _("Normie"),
+   }
+   return sbase.Standing.init( self, args )
+end
 
-   -- Get the maximum player standing with any pirate clan
-   local maxval = standing
+local text_bribed = _("Paid Off")
+
+function spir.PirateStanding:text_broad( value, bribed, override )
+   if bribed then
+      return text_bribed
+   else
+      return sbase.Standing.text_broad( self, value, bribed, override )
+   end
+end
+
+function spir.PirateStanding:hit( current, amount, source, secondary )
+   local value = math.max( -50, sbase.Standing.hit( self, current, amount, source, secondary ) )
+
+   -- Get the maximum player value with any pirate clan
+   local maxval = value
    for k,v in ipairs(pir.factions_clans) do
-      if v ~= _fthis then
+      if v ~= self.fct then
          local vs = v:playerStanding() -- Only get first parameter
          maxval = math.max( maxval, vs )
       end
@@ -50,5 +60,7 @@ function faction_hit( current, amount, source, secondary )
    pir.updateStandings( maxval )
 
    -- Set current faction standing
-   return standing
+   return value
 end
+
+return spir

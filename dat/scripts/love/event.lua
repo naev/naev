@@ -8,4 +8,3 @@ function event.quit( _exitstatus )
 end
 
 return event
-

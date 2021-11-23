@@ -3,46 +3,58 @@
    standard behaviour can be, but from here you can let your imagination go
    wild.
 --]]
+local class = require "class"
 
--- Faction caps.
-_fcap_kill       = 20 -- Kill cap
-_fdelta_distress = {-1, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn       = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var   = nil -- Mission variable to use for limits
+local sbase = {}
 
--- Secondary hit modifiers.
-_fmod_distress_enemy  = 0 -- Distress of the faction's enemies
-_fmod_distress_friend = 0.3 -- Distress of the faction's allies
-_fmod_kill_enemy      = 0.3 -- Kills of the faction's enemies
-_fmod_kill_friend     = 0.3 -- Kills of the faction's allies
-_fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
-_fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
+sbase.Standing = class.inheritsFrom()
+function sbase.newStanding( args )
+   return sbase.Standing.new():init( args )
+end
 
-_fstanding_friendly = 70
-_fstanding_neutral = 0
+function sbase.Standing:init( args )
+   self.fct               = args.fct                                 -- The faction
 
-_ftext_standing = {
-   [100] = _("Legend"),
-   [90]  = _("Hero"),
-   [70]  = _("Comrade"),
-   [50]  = _("Ally"),
-   [30]  = _("Partner"),
-   [10]  = _("Associate"),
-   [0]   = _("Neutral"),
-   [-1]  = _("Outlaw"),
-   [-30] = _("Criminal"),
-   [-50] = _("Enemy"),
-}
+   -- Faction caps.
+   self.cap_kill           = args.cap_kill            or 20          -- Kill cap
+   self.delta_distress     = args.delta_distress      or {-1, 0}     -- Maximum change constraints
+   self.delta_kill         = args.delta_kill          or {-5, 1}     -- Maximum change constraints
+   self.cap_misn_init      = args.cap_misn_init       or 30          -- Starting mission cap, gets overwritten
+   self.cap_misn_var       = args.cap_misn_var        or nil         -- Mission variable to use for limits
 
-_ftext_friendly = _("Friendly")
-_ftext_neutral  = _("Neutral")
-_ftext_hostile  = _("Hostile")
-_ftext_bribed   = _("Bribed")
+   -- Secondary hit modifiers.
+   self.mod_distress_enemy = args.mod_distress_enemy  or 0           -- Distress of the faction's enemies
+   self.mod_distress_friend= args.mod_distress_friend or 0.3         -- Distress of the faction's allies
+   self.mod_kill_enemy     = args.mod_kill_enemy      or 0.3         -- Kills of the faction's enemies
+   self.mod_kill_friend    = args.mod_kill_friend     or 0.3         -- Kills of the faction's allies
+   self.mod_misn_enemy     = args.mod_misn_enemy      or 0.3         -- Missions done for the faction's enemies
+   self.mod_misn_friend    = args.mod_misn_friend     or 0.3         -- Missions done for the faction's allies
+
+   self.friendly_at       = args.friendly_at          or 70          -- Standing value threshold between neutral and friendly.
+
+   self.text = args.text or {
+      [100] = _("Legend"),
+      [90]  = _("Hero"),
+      [70]  = _("Comrade"),
+      [50]  = _("Ally"),
+      [30]  = _("Partner"),
+      [10]  = _("Associate"),
+      [0]   = _("Neutral"),
+      [-1]  = _("Outlaw"),
+      [-30] = _("Criminal"),
+      [-50] = _("Enemy"),
+   }
+   return self
+end
+
+local text_friendly = _("Friendly")
+local text_neutral  = _("Neutral")
+local text_hostile  = _("Hostile")
+local text_bribed   = _("Bribed")
 
 
 --[[
-   @brief Clamps a value x between low and high.
+   Clamps a value x between low and high.
 --]]
 local function clamp( low, high, x )
    return math.max( low, math.min( high, x ) )
@@ -50,7 +62,7 @@ end
 
 
 --[[
-   @brief Linearly interpolates x between x1,y1 and x2,y2
+   Linearly interpolates x between x1,y1 and x2,y2
 --]]
 local function lerp( x, x1, y1, x2, y2 )
    local m = (y1-y2)/(x1-x2)
@@ -60,7 +72,7 @@ end
 
 
 --[[
-   @brief Same as lerp but clamps to [0,1].
+   Same as lerp but clamps to [0,1].
 --]]
 local function clerp( x, x1, y1, x2, y2 )
    return clamp( 0, 1, lerp( x, x1, y1, x2, y2 ) )
@@ -68,7 +80,7 @@ end
 
 
 --[[
-   @brief Duplicates a table to avoid clobbering.
+   Duplicates a table to avoid clobbering.
 --]]
 local function clone(t)
    local new = {}
@@ -80,7 +92,7 @@ end
 
 
 --[[
-   @brief Handles a faction hit for a faction.
+   Handles a faction hit for a faction.
 
    Possible sources:
     - "kill" : Pilot death.
@@ -93,7 +105,7 @@ end
       @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
       @return The faction amount to set to.
 --]]
-function default_hit( current, amount, source, secondary )
+function sbase.Standing:hit( current, amount, source, secondary )
    -- Comfort macro
    local f = current
    local delta = {-200, 200}
@@ -102,46 +114,46 @@ function default_hit( current, amount, source, secondary )
    local cap
    local mod = 1
    if source == "distress" then
-      cap   = _fcap_kill
-      delta = clone(_fdelta_distress)
+      cap   = self.cap_kill
+      delta = clone(self.delta_distress)
 
       -- Adjust for secondary hit
       if secondary then
          if amount > 0 then
-            mod = mod * _fmod_distress_enemy
+            mod = mod * self.mod_distress_enemy
          else
-            mod = mod * _fmod_distress_friend
+            mod = mod * self.mod_distress_friend
          end
       end
    elseif source == "kill" then
-      cap   = _fcap_kill
-      delta = clone(_fdelta_kill)
+      cap   = self.cap_kill
+      delta = clone(self.delta_kill)
 
       -- Adjust for secondary hit
       if secondary then
          if amount > 0 then
-            mod = mod * _fmod_kill_enemy
+            mod = mod * self.mod_kill_enemy
          else
-            mod = mod * _fmod_kill_friend
+            mod = mod * self.mod_kill_friend
          end
       end
    else
-      if _fcap_misn_var == nil then
-         cap   = _fcap_misn
+      if self.cap_misn_var == nil then
+         cap   = self.cap_misn_init
       else
-         cap   = var.peek( _fcap_misn_var )
+         cap   = var.peek( self.cap_misn_var )
          if cap == nil then
-            cap = _fcap_misn
-            var.push( _fcap_misn_var, cap )
+            cap = self.cap_misn_init
+            var.push( self.cap_misn_var, cap )
          end
       end
 
       -- Adjust for secondary hit
       if secondary then
          if amount > 0 then
-            mod = mod * _fmod_misn_friend
+            mod = mod * self.mod_misn_friend
          else
-            mod = mod * _fmod_misn_enemy
+            mod = mod * self.mod_misn_enemy
          end
       end
    end
@@ -160,14 +172,14 @@ function default_hit( current, amount, source, secondary )
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
             -- NOTE: virtual assets are NOT counted when determining territory!
             for _k, planet in ipairs(system.cur():planets()) do
-                if planet:faction() == _fthis then
+                if planet:faction() == self.fct then
                    -- Planet belonging to this faction found. Modify reputation.
                    f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
                    has_planet = true
                    break
                 end
             end
-            local witness = pilot.get( { _fthis } )
+            local witness = pilot.get( { self.fct } )
             if not has_planet and witness then
                for _k, pilot in ipairs(witness) do
                   if player.pos():dist( pilot:pos() ) < 5000 then
@@ -192,61 +204,41 @@ end
 
 
 --[[
-   @brief Returns a text representation of the player's standing.
+   Returns a text representation of the player's standing.
 
-      @param standing Current standing of the player.
+      @param value Current standing value of the player.
       @return The text representation of the current standing.
 --]]
-function faction_standing_text( standing )
-   for i = math.floor( standing ), 0, ( standing < 0 and 1 or -1 ) do
-      if _ftext_standing[i] ~= nil then
-         return _ftext_standing[i]
+function sbase.Standing:text_rank( value )
+   for i = math.floor( value ), 0, ( value < 0 and 1 or -1 ) do
+      if self.text[i] ~= nil then
+         return self.text[i]
       end
    end
-   return _ftext_standing[0]
+   return self.text[0]
 end
 
 
 --[[
-   @brief Returns whether or not the player is a friend of the faction.
+   Returns a text representation of the player's broad standing.
 
-      @param standing Current standing of the player.
-      @return true if the player is a friend, false otherwise.
---]]
-function faction_player_friend( standing )
-   return standing >= _fstanding_friendly
-end
-
-
---[[
-   @brief Returns whether or not the player is an enemy of the faction.
-
-      @param standing Current standing of the player.
-      @return true if the player is an enemy, false otherwise.
---]]
-function faction_player_enemy( standing )
-   return standing < _fstanding_neutral
-end
-
-
---[[
-   @brief Returns a text representation of the player's broad standing.
-
-      @param standing Current standing of the player.
+      @param value Current standing value of the player.
       @param bribed Whether or not the respective pilot is bribed.
       @param override If positive it should be set to ally, if negative it should be set to hostile.
       @return The text representation of the current broad standing.
 --]]
-function faction_standing_broad( standing, bribed, override )
+function sbase.Standing.text_broad( _self, value, bribed, override )
    if override == nil then override = 0 end
 
    if bribed then
-      return _ftext_bribed
-   elseif override > 0 or faction_player_friend( standing ) then
-      return _ftext_friendly
-   elseif override < 0 or faction_player_enemy( standing ) then
-      return _ftext_hostile
+      return text_bribed
+   elseif override > 0 or value >= standing.friendly_at then
+      return text_friendly
+   elseif override < 0 or value < 0 then
+      return text_hostile
    else
-      return _ftext_neutral
+      return text_neutral
    end
 end
+
+return sbase

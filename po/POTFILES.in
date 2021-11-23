@@ -326,6 +326,7 @@ dat/assets/fuzka.xml
 dat/assets/fyruse_station.xml
 dat/assets/galileo.xml
 dat/assets/gamma.xml
+dat/assets/gamma_station.xml
 dat/assets/gammacron_iv.xml
 dat/assets/gammacron_v.xml
 dat/assets/gammacron_va.xml
@@ -403,9 +404,9 @@ dat/assets/hs224.xml
 dat/assets/hs232.xml
 dat/assets/hs24.xml
 dat/assets/hs37.xml
+dat/assets/hs5.xml
+dat/assets/hs51.xml
 dat/assets/hs54.xml
-dat/assets/hs__5.xml
-dat/assets/hs__5_1.xml
 dat/assets/huanxi.xml
 dat/assets/humdrum_i.xml
 dat/assets/humdrum_ii.xml
@@ -478,8 +479,10 @@ dat/assets/kaso.xml
 dat/assets/kataka.xml
 dat/assets/katami_i.xml
 dat/assets/katar.xml
+dat/assets/katar_i.xml
 dat/assets/kaulas.xml
 dat/assets/kayel.xml
+dat/assets/khaas_i.xml
 dat/assets/khelim.xml
 dat/assets/khorin.xml
 dat/assets/killerog.xml
@@ -1675,6 +1678,7 @@ dat/ships/drone.xml
 dat/ships/drone_heavy.xml
 dat/ships/drone_hyena.xml
 dat/ships/dvaered_ancestor.xml
+dat/ships/dvaered_arsenal.xml
 dat/ships/dvaered_goddard.xml
 dat/ships/dvaered_phalanx.xml
 dat/ships/dvaered_vendetta.xml
@@ -1720,7 +1724,6 @@ dat/ships/sirius_divinity.xml
 dat/ships/sirius_dogma.xml
 dat/ships/sirius_fidelity.xml
 dat/ships/sirius_preacher.xml
-dat/ships/sirius_reverence.xml
 dat/ships/sirius_shaman.xml
 dat/ships/soromid_arx.xml
 dat/ships/soromid_brigand.xml
@@ -1986,6 +1989,7 @@ dat/ssys/neexi.xml
 dat/ssys/neon.xml
 dat/ssys/new_haven.xml
 dat/ssys/newmarch.xml
+dat/ssys/ngc11718.xml
 dat/ssys/ngc1292.xml
 dat/ssys/ngc3219.xml
 dat/ssys/ngc4746.xml
@@ -2172,6 +2176,10 @@ dat/unidiff/antlejosv_2.xml
 dat/unidiff/antlejosv_3.xml
 dat/unidiff/antlejosv_4.xml
 dat/unidiff/antlejosv_5.xml
+dat/unidiff/antlejosv_6.xml
+dat/unidiff/antlejosv_7.xml
+dat/unidiff/antlejosv_8.xml
+dat/unidiff/antlejosv_9.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2185,18 +2193,15 @@ dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
 dat/ai/baddiepos.lua
-dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
-dat/ai/core/attack.lua
 dat/ai/core/attack/bomber.lua
 dat/ai/core/attack/capital.lua
 dat/ai/core/attack/corvette.lua
 dat/ai/core/attack/drone.lua
 dat/ai/core/attack/fighter.lua
 dat/ai/core/attack/generic.lua
-dat/ai/core/attack/target.lua
 dat/ai/core/attack/util.lua
 dat/ai/core/basic.lua
 dat/ai/core/control/escort.lua
@@ -2212,6 +2217,7 @@ dat/ai/core/idle/trader.lua
 dat/ai/core/idle/wait.lua
 dat/ai/core/misc/distress.lua
 dat/ai/core/misc/lanes.lua
+dat/ai/core/misc/scans.lua
 dat/ai/drone_miner.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua
@@ -2248,9 +2254,23 @@ dat/ai/thurion.lua
 dat/ai/trader.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
-dat/bkg/bgshaders.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
+dat/bkg/lib/bgshaders.lua
+dat/bkg/lib/nebula.lua
+dat/bkg/lib/nebula_image.lua
+dat/bkg/lib/starfield.lua
+dat/bkg/nebu_butterfly.lua
+dat/bkg/nebu_cats_eye.lua
+dat/bkg/nebu_cats_paw.lua
+dat/bkg/nebu_crab.lua
+dat/bkg/nebu_dobayashi.lua
+dat/bkg/nebu_ic.lua
+dat/bkg/nebu_messier.lua
+dat/bkg/nebu_ngc_2392.lua
+dat/bkg/nebu_ngc_2440.lua
+dat/bkg/nebu_ngc_2440_2.lua
+dat/bkg/nebu_ngc_5189.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
@@ -2287,6 +2307,7 @@ dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
 dat/events/neutral/travelling_merchant.lua
+dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
@@ -2320,6 +2341,7 @@ dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
 dat/factions/spawn/lib/common.lua
+dat/factions/spawn/lib/pirate.lua
 dat/factions/spawn/marauder.lua
 dat/factions/spawn/miner.lua
 dat/factions/spawn/pirate.lua
@@ -2433,6 +2455,7 @@ dat/missions/neutral/antlejos/ant02.lua
 dat/missions/neutral/antlejos/ant03.lua
 dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
+dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
@@ -2465,7 +2488,6 @@ dat/missions/neutral/teenager.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/pirate/blackcat.lua
 dat/missions/pirate/empbounty_dead.lua
-dat/missions/pirate/fake_id.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
 dat/missions/pirate/patrol.lua
@@ -2517,6 +2539,8 @@ dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
 dat/missions/zalek/neburesearch/neburesearch_03.lua
 dat/missions/zalek/neburesearch/neburesearch_04.lua
+dat/missions/zalek/particlephysics/zpp01.lua
+dat/missions/zalek/particlephysics/zpp02.lua
 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/01_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
@@ -2566,6 +2590,7 @@ dat/scripts/common/taiomi.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/zalek.lua
+dat/scripts/common/zalek_physics.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
@@ -2621,6 +2646,11 @@ dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/diceio.lua
+dat/scripts/minigames/sokoban.lua
+dat/scripts/minigames/sokoban/conf.lua
+dat/scripts/minigames/sokoban/core.lua
+dat/scripts/minigames/sokoban/levels.lua
+dat/scripts/minigames/sokoban/main.lua
 dat/scripts/outfits/shaders.lua
 dat/scripts/pilotname.lua
 dat/scripts/pilotname/core.lua
@@ -2681,6 +2711,7 @@ src/debris.c
 src/debris.h
 src/debug.c
 src/debug.h
+src/debug_fpu.c
 src/dev_mapedit.c
 src/dev_mapedit.h
 src/dev_planet.c

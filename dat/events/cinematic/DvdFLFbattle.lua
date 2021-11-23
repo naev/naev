@@ -23,6 +23,7 @@
 local fleet = require "fleet"
 
 local flfwave, dvaeredwave -- Non-persistent state
+-- luacheck: globals DvaeredSpawn FLFSpawn leave (Hook functions passed by name)
 
 local articles = {
 {

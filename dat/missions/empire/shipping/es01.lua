@@ -25,11 +25,11 @@
       minor edits by Infiltrator
 
 ]]--
+local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
--- Mission details
--- Errors
+-- luacheck: globals enemies enter land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -163,7 +163,7 @@ function enter ()
          enemies( enter_vect )
       -- Enter after player
       else
-         hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
+         hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies", enter_vect)
       end
    end
 end
@@ -177,13 +177,8 @@ function enemies( enter_vect )
    if rnd.rnd() < 0.9 then table.insert( merc, "Vendetta" ) end
 
    -- Add mercenaries
-   for k,v in ipairs(merc) do
-      -- Move position a bit
-      enter_vect:add( vec2.newP( rnd.rnd(50, 75), rnd.angle() ) )
-      -- Add pilots
-      local p = pilot.add( v, "Mercenary", enter_vect )
+   local flt = fleet.add( 1, merc, "Mercenary", enter_vect )
+   for k,p in ipairs(flt) do
       p:setHostile()
    end
 end
-
-

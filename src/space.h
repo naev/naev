@@ -340,7 +340,7 @@ extern int space_spawn; /**< 1 if spawning is enabled. */
 /*
  * loading/exiting
  */
-void space_init( const char* sysname );
+void space_init( const char* sysname, int do_simulate );
 int space_load (void);
 void space_exit (void);
 

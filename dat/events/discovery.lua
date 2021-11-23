@@ -17,6 +17,8 @@ local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
+-- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
+
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
 local nw, nh = naev.gfx.dim()

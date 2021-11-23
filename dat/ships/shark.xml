@@ -44,4 +44,7 @@
   <shield_regen_mod>15</shield_regen_mod>
   <heat_dissipation>10</heat_dissipation>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

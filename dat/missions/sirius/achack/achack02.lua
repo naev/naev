@@ -30,6 +30,7 @@ local pir = require "common.pirate"
 
 local ambush, joanne -- Non-persistent state
 local ambushSet -- Forward-declared functions
+-- luacheck: globals ambushActivate ambusherDead enter joanneDead joanneJump joanneLand land on_load (Hook functions passed by name)
 
 -- Mission constants
 local reward = 750e3
@@ -270,4 +271,3 @@ function joanneDead()
    tk.msg(_("Joanne's ship has been destroyed!"), _("Joanne's assailants have succeeded in destroying her ship. Your mission is a failure!"))
    misn.finish(false)
 end
-

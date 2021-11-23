@@ -33,14 +33,12 @@
    7) Final landing
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local lmisn = require "lmisn"
 require "proximity"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
-
--- common hooks
-message = fw.message
 
 -- Mission constants
 local bombMass = 100
@@ -55,6 +53,11 @@ local battleaddict, battleaddict2, hamelsen, klank, klank2, leblanc, randguy, ta
 local mypos, step -- location and spacing of the duel, initialized with the above pilots
 
 local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
+-- luacheck: globals battleaddict_killed beginDuel disableDuel enter enter1_message enter2_message everyoneLands fighterDuel killing land meeting message moreSound1 moreSound2 phalanx_attacked phalanx_boarded phalanx_died phalanx_safe spawn_phalanx (Hook functions passed by name)
+-- luacheck: globals endMisn hamfresser majorTam (NPC functions passed by name)
+
+-- common hooks
+message = fw.message
 
 function create()
    if planet.cur() == hampla then
@@ -274,7 +277,7 @@ function meeting()
    else
       tk.msg(_("We told you not to use a combat ship!"), _([[As you approach, the Lieutenant Strafer looks at your radar screen. "We are in a combat ship. We told you not to use a combat ship. Now, they are going to attack us! Why did you have to use a combat ship? We'll have to abort the mission now. All because of your bloody combat ship!"]]))
       release_baddies()
-      mission.finish(false)
+      misn.finish(false)
    end
 end
 
@@ -465,15 +468,14 @@ function fighterDuel()
    hook.timer( 2.5, "message", {pilot = hamelsen, msg = _("You're the best, boss!")} )
    hook.timer( 3.0, "message", {pilot = randguy, msg = _("Yeah!")} )
 
-   -- Prevent both Goddards from colliding with Vendetta's ammo.
-   battleaddict:setFaction("Dvaered")
-   klank:setFaction("Dvaered")
+   -- Prevent both Goddards from colliding with Vendetta's ammo. Set the AI so that they don't get stuck.
+   for k,v in ipairs{battleaddict, klank} do
+      v:setFaction("Dvaered")
+      v:memory().atk = atk_generic --atk_drone
+   end
 
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
-
-   klank2:memory().atk = atk_generic --atk_drone  -- Set the AI so that they don't get stuck
-   battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
    battleaddict2:moveto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships

@@ -55,4 +55,3 @@ for n, trial in ipairs(trials) do
 end
 print("====== BENCHMARK END ======")
 csvfile:close()
-

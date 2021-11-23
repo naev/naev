@@ -30,6 +30,8 @@ local emp = require "common.empire"
 -- Mission constants
 local targetworld, targetworld_sys = planet.getS("Halir")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
    -- Note: this mission does not make any system claims.
 

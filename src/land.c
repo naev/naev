@@ -17,6 +17,7 @@
 
 #include "land.h"
 
+#include "array.h"
 #include "camera.h"
 #include "conf.h"
 #include "dialogue.h"
@@ -800,8 +801,18 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
  */
 void land_updateMainTab (void)
 {
-   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT], tags[STRMAX_SHORT];
    const Outfit *o;
+
+   /* Show tags. */
+   if (conf.devmode) {
+      size_t l = 1;
+      tags[0] = '\n';
+      for (int i=0; i<array_size(land_planet->tags); i++)
+         l += scnprintf( &tags[l], sizeof(tags), "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
+   }
+   else
+      tags[0] = '\0';
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
@@ -813,12 +824,13 @@ void land_updateMainTab (void)
          "roughly %s\n"
          "\n"
          "%s\n"
+         "%s"
          "%s"),
          _(land_planet->name), _(cur_system->name),
          planet_getClassName(land_planet->class), _(land_planet->class),
          land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None"),
          space_populationStr( land_planet->population ),
-         tons, cred );
+         tons, cred, tags );
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
@@ -1025,8 +1037,11 @@ void land_genWindows( int load, int changetab )
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* Make sure services didn't change or we have to do the tab window. */
-      if (land_planet->services != pntservices)
+      if (land_planet->services != pntservices) {
          land_setupTabs();
+         land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
+         land_updateMainTab();
+      }
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
@@ -1086,8 +1101,7 @@ void land_genWindows( int load, int changetab )
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Refresh the map button in case the player couldn't afford it prior to
-    * mission payment.
-    */
+    * mission payment. */
    land_updateMainTab();
 
    /* Refuel if necessary. */
@@ -1146,6 +1160,9 @@ void land( Planet* p, int load )
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
 
+   /* Run outfits as necessary. */
+   pilot_outfitLOnland( player.p );
+
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
@@ -1182,6 +1199,7 @@ static void land_createMainTab( unsigned int wid )
    int offset;
    int w, h, logow, logoh, th;
    const char *bufSInfo;
+   char buf[STRMAX_SHORT];
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1218,9 +1236,13 @@ static void land_createMainTab( unsigned int wid )
          "\n"
          "Free Space:\n"
          "Money:" );
-   th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
+   if (conf.devmode)
+      snprintf( buf, sizeof(buf), "%s\n%s", bufSInfo, _("Tags:") );
+   else
+      strncpy( buf, bufSInfo, sizeof(buf)-1 );
+   th = gl_printHeightRaw( &gl_defFont, 200, buf );
    window_addText( wid, 20, 20, 200, th,
-         0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
+         0, "txtSInfo", &gl_defFont, NULL, buf );
    window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
          th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
@@ -1394,7 +1416,7 @@ void takeoff( int delay )
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
-   space_init(NULL);
+   space_init( NULL, 1 );
    player.p->nav_hyperspace = h;
 
    /* cleanup */
@@ -1433,6 +1455,7 @@ void takeoff( int delay )
 
    /* Update lua stuff. */
    pilot_outfitLInitAll( player.p );
+   pilot_outfitLOntakeoff( player.p );
 
    /* Reset speed */
    player_autonavResetSpeed();

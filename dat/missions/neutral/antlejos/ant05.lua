@@ -13,6 +13,7 @@
  </avail>
  <notes>
   <tier>1</tier>
+  <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
 --]]
@@ -22,11 +23,8 @@
    Defend ships bringing volunteers from the PUAAA
 --]]
 local vn = require "vn"
-local vntk = require "vntk"
 local fmt = require "format"
 local ant = require "common.antlejos"
-local lmisn = require "lmisn"
-local fleet = require "fleet"
 
 local reward = ant.rewards.ant05
 
@@ -38,6 +36,8 @@ local rearpoint  = jump.get( mainsys, rearsys )
 
 local supplylanded, supplydied
 local sysmrk
+
+-- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyland (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
@@ -93,8 +93,6 @@ end
 -- Land hook.
 function land ()
    if mem.state==2 and planet.cur() == mainpnt then
-      local rewardmod = 1
-
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
@@ -106,7 +104,7 @@ function land ()
       else
          v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take more than I was hoping for."]]))
       end
-      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there. I have to organize some things, but meet me up back here in a bit."]]))
+      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up ad working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
@@ -115,7 +113,7 @@ function land ()
       ant.unidiff( ant.unidiff_list[5] )
 
       -- Give supplies based on how many ships were able to land
-      ant.supplied( supplylanded * 500 )
+      ant.supplied( supplylanded * 125 ) -- Should get just 1000 if all make it
 
       player.pay( reward )
       ant.log(fmt.f(_("You guarded supply ships from the PUAAA delivering cargo to {pnt}."),{pnt=mainpnt}))
@@ -140,7 +138,7 @@ local function add_protestor( shipname, fromrear )
 end
 
 local function add_supplyship( shipname )
-   local ent = (fromrear and rearpoint) or entrypoint
+   local ent = entrypoint
    local p = pilot.add( shipname, fsup, ent, _("Supply Ship"), {ai="independent"} )
    p:setFriendly()
    p:setVisplayer(true)
@@ -255,7 +253,7 @@ function protestor4 ()
 end
 
 local protest_lines = ant.protest_lines
-local protest_id, attacked
+local protest_id
 function protest ()
    if protest_id == nil then
       protest_id = rnd.rnd(1,#protest_lines)

@@ -61,4 +61,7 @@
   <heat_dissipation>15</heat_dissipation>
   <misc_instant_jump>1</misc_instant_jump>
  </stats>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </ship>

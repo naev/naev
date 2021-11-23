@@ -1,3 +1,4 @@
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    if mem.aggressive then
       local enemy = ai.getenemy()
@@ -20,8 +21,5 @@ end
 
 -- Overwrite the attack function with the generic in case we are overloading idle/pirate
 function control_funcs.attack ()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
-   return false
+   return control_funcs.generic_attack()
 end

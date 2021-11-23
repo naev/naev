@@ -22,8 +22,8 @@
   <its:translateRule selector="/Slots/slot/description" translate="yes"/>
 
   <!-- Commodities -->
-  <its:translateRule selector="/Commodities/commodity/name" translate="yes"/>
-  <its:translateRule selector="/Commodities/commodity/description" translate="yes"/>
+  <its:translateRule selector="/commodity/name" translate="yes"/>
+  <its:translateRule selector="/commodity/description" translate="yes"/>
 
   <!-- Assets -->
   <its:translateRule selector="/asset/@name" translate="yes"/>

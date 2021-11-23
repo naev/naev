@@ -8,4 +8,3 @@ function system.getOS()
 end
 
 return system
-

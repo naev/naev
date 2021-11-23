@@ -139,4 +139,3 @@ float snoise(vec3 v)
 }
 
 #endif /* _SIMPLEX_GLSL */
-

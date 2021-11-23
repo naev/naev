@@ -27,10 +27,12 @@
       major edits by Lukc
 
 ]]--
+local fleet = require "fleet"
 local fmt = require "format"
+local pir = require "common.pirate"
 local portrait = require "portrait"
 
-local invoke_enemies -- Forward-declared functions
+-- luacheck: globals enter invoke_enemies land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -38,7 +40,7 @@ function create ()
 
    -- target destination
    local planets = {}
-   for _, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
+   for k, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
       if p ~= landed then
          planets[#planets+1] = { planet.getS(p) }
       end
@@ -80,6 +82,8 @@ Will you accept the mission?]]) ) then
    -- Set up the goal
    local c = misn.cargoNew(N_("Pirate Packages"), N_("A bunch of pirate packages. You don't want to know what's inside."))
    mem.packages = misn.cargoAdd(c, 5)
+   mem.misn_stage = 1
+   mem.jumped = 0
    hook.land("land")
    hook.enter("enter")
 end
@@ -99,7 +103,7 @@ function land()
          -- The first time this mission is done, the player’s max standing is
          -- increased by 5.
          if n == 0 then
-             var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
+             pir.modReputation( 5 )
          end
 
          misn.finish(true)
@@ -110,8 +114,7 @@ end
 function enter ()
    mem.sys = system.cur()
 
-   if misn_stage == 1 then
-
+   if mem.misn_stage == 1 then
       -- Mercenaries appear after a couple of jumps
       mem.jumped = mem.jumped + 1
       if mem.jumped <= 5 then
@@ -135,7 +138,7 @@ function enter ()
          invoke_enemies( enter_vect )
       -- Enter after player
       else
-         hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
+         hook.timer(rnd.uniform( 2.0, 5.0 ), "invoke_enemies", enter_vect)
       end
    end
 end
@@ -161,14 +164,8 @@ function invoke_enemies( enter_vect )
    if rnd.rnd() < 0.9 then table.insert( merc, "Hyena" ) end
 
    -- Add mercenaries
-   for k,v in ipairs(merc) do
-      -- Move position a bit
-      enter_vect:add( vec2.newP( rnd.rnd(50, 75), rnd.angle() ) )
-      -- Add pilots
-      local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
-      -- Set hostile
-      for k2,v2 in ipairs(p) do
-         v:setHostile()
-      end
+   local flt = fleet.add( 1, merc, "Pirate", enter_vect, nil, {ai="mercenary"} )
+   for k,p in ipairs(flt) do
+      p:setHostile()
    end
 end

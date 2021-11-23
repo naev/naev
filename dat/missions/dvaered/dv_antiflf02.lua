@@ -34,6 +34,7 @@ local dv = require "common.dvaered"
 
 local fleetDV, fleetFLF -- Non-persistent state
 local spawnFLF -- Forward-declared functions
+-- luacheck: globals boardFLF deathFLF disableDV disableFLF enter jumpout land pollHealth spawnDV (Hook functions passed by name)
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}

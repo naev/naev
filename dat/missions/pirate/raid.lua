@@ -30,15 +30,16 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 
 local sconvoy, sescorts -- Non-persistent state
+-- luacheck: globals convoy_attacked convoy_board convoy_boarded convoy_done enter enter_delay land spawn_convoy (Hook functions passed by name)
 
 local function get_route( sys )
    local adj = sys:jumps()
    if #adj < 2 then return end
    local jumpenter, jumpexit
    local dist = 0
-   for _i,j1 in ipairs(adj) do
-      for _j,j2 in ipairs(adj) do
-         if j1 ~= j2 then
+   for i,j1 in ipairs(adj) do
+      for j,j2 in ipairs(adj) do
+         if i ~= j then
             local d = j1:pos():dist2(j2:pos())
             if d > dist then
                dist = d
@@ -77,13 +78,13 @@ function create ()
       if total < 300 or pirates > total then
          return false
       end
-      -- Must not be cliamed
+      -- Must not be claimed
       if not misn.claim( sys, true ) then
          return false
       end
-      -- Must have two jumps
-      local j1, _j2, d = get_route( sys )
-      if j1 ~= nil and d < 10e3*10e3 then
+      -- Must have two jumps that are fair away-ish
+      local j1, j2, d = get_route( sys )
+      if j1 == nil or j2 == nil or d < 10e3*10e3 then
          return false
       end
 

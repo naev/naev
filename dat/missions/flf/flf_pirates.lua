@@ -21,7 +21,8 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
+-- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
+-- luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
 
 misn_title = {
    _("FLF: Lone Pirate Disturbance in {sys}"),
@@ -39,12 +40,14 @@ pay_text = {
    _("The official takes an inordinate amount of time to do so, but eventually hands you your pay as promised."),
 }
 
-
 mem.osd_desc = {
    _("Fly to the {sys} system"),
    _("Eliminate the pirates"),
    _("Return to FLF base"),
 }
+
+local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
+local patrol_spawnFLF, patrol_spawnPirates -- Forward-declared functions
 
 
 function setDescription ()
@@ -160,7 +163,7 @@ function enter ()
             if not mem.late_arrival then
                patrol_spawnFLF( mem.flfships, mem.last_system, _("Alright, let's have at them!") )
             else
-               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
+               mem.spawner = hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -171,7 +174,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.pirate_ships_left = 0
    mem.last_system = system.cur()
 end
@@ -266,4 +269,3 @@ function patrol_spawnFLF( n, param, comm )
 
    fleetFLF[1]:comm( player.pilot(), comm )
 end
-

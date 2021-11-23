@@ -88,7 +88,7 @@ local credits = 250e3
 -- displaying a number of credits.
 local reward_text = fmt.credits( credits )
 
---[[ 
+--[[
 First you need to *create* the mission.  This is *obligatory*.
 
 You have to set the NPC and the description. These will show up at the
@@ -99,7 +99,7 @@ function create ()
    -- Naev will keep the contents of "mem" across games if the player saves and quits.
    -- Track mission state there. Warning: pilot variables cannot be saved.
    mem.talked = false
-   
+
    -- If we needed to claim a system, we would do that here with
    -- something like the following commented out statement. However,
    -- this mission won't be doing anything fancy with the system, so we
@@ -140,7 +140,7 @@ function accept ()
    end
 
    -- This will create the typical "Yes/No" dialogue. It returns true if
-   -- yes was selected. 
+   -- yes was selected.
    if vntk.yesno( _("My Suit Collection"),
          fmt.f(ask_text, {reward=reward_text}) ) then
       -- Followup text.
@@ -179,6 +179,9 @@ function accept ()
    end
 end
 
+-- luacheck: globals land (Hook functions passed by name)
+-- ^^ That is a directive to Luacheck, telling it we're about to use a global variable for a legitimate reason.
+-- (More info here: https://github.com/naev/naev/issues/1566) Typically we put these at the top of the file.
 
 -- This is our land hook function. Once `hook.land( "land" )` is called,
 -- this function will be called any time the player lands.
@@ -197,7 +200,7 @@ function land ()
 
       -- Add a log entry. This should only be done for unique missions.
       neu.addMiscLog( fmt.f(_([[You helped transport a well-dressed man to {pnt} so that he could buy some kind of special suit to complete his collection.]]), {pnt=misplanet} ) )
-      
+
       -- Finish the mission. Passing the `true` argument marks the
       -- mission as complete.
       misn.finish( true )

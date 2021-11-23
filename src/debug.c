@@ -23,13 +23,6 @@
 
 #include "log.h"
 
-#if HAVE_FENV_H && DEBUGGING
-/* This module uses GNU extensions to enable FPU exceptions. */
-#define _GNU_SOURCE
-#include <fenv.h>
-#endif /* HAVE_FENV_H && DEBUGGING */
-
-
 #if LINUX && HAS_BFD && DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
@@ -227,15 +220,4 @@ void debug_sigClose (void)
 #if LINUX && HAS_BFD && DEBUGGING
    bfd_close( abfd );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
-}
-
-
-/**
- * @brief Enables FPU exceptions. Artificially limited to Linux until link issues are figured out.
- */
-void debug_enableFPUExcept (void)
-{
-#if HAVE_FEENABLEEXCEPT && DEBUGGING
-      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* HAVE_FEENABLEEXCEPT && DEBUGGING */
 }

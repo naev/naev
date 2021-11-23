@@ -36,6 +36,10 @@ antlejos.unidiff_list = {
    "antlejosv_3",
    "antlejosv_4",
    "antlejosv_5",
+   "antlejosv_6",
+   "antlejosv_7",
+   "antlejosv_8",
+   "antlejosv_9",
 }
 
 function antlejos.unidiff( diffname )
@@ -45,6 +49,15 @@ function antlejos.unidiff( diffname )
       end
    end
    diff.apply( diffname )
+end
+
+function antlejos.unidiffLevel ()
+   for k,d in ipairs(antlejos.unidiff_list) do
+      if diff.isApplied(d) then
+         return k
+      end
+   end
+   return 0
 end
 
 function antlejos.dateupdate ()
@@ -90,8 +103,6 @@ antlejos.rewards = {
    ant03 = 500e3,
    ant04 = 600e3,
    ant05 = 700e3,
-   ant06 = 300e3, -- Repeatable
 }
 
 return antlejos
-

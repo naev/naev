@@ -117,4 +117,3 @@ char** player_guiList (void)
 {
    return gui_list;
 }
-

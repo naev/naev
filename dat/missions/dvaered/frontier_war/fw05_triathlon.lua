@@ -35,17 +35,20 @@
    7) Mace Pankration performed
 --]]
 
+local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
 
--- common hooks
-message = fw.message
-
 -- Non-persistent state
 local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
 local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
+-- luacheck: globals compDie compHit compHitS competitorIdle dehostilify endPankrationT endStadion endThrow endTimer enter introduction land message playerHit playerHitS spawnNpcs startPankration startStadion startThrow takeoff targetHit targetIdle testEscape timerIncrement timerIncrementT (Hook functions passed by name)
+-- luacheck: globals approach discussDad discussHam discussKlk discussLbl discussNkv discussPvt discussSst discussWdw tamCommon (NPC functions passed by name)
+
+-- common hooks
+message = fw.message
 
 -- Mission constants
 local destpla, destsys = planet.getS("Dvaer Prime")
@@ -567,21 +570,17 @@ end
 function startPankration()
    player.pilot():control(false)
    -- Make people attack each other.
-   competitors[5]:memory().atk = atk_generic -- A very agressive AI
-   competitors[5]:taskClear()
-   competitors[5]:attack(player.pilot())
-   compHitHook[5] = hook.pilot( competitors[5], "attacked", "compHit" )
-   for i = 1, 4 do
+   for i = 1, 9 do
       competitors[i]:setFaction("Warlords")
       competitors[i]:taskClear()
-      competitors[i]:attack(competitors[i+5])
-      competitors[i+5]:taskClear()
-      competitors[i+5]:attack(competitors[i])
-      compHitHook[i]   = hook.pilot( competitors[i], "attacked", "compHit" )
-      compHitHook[i+5] = hook.pilot( competitors[i+5], "attacked", "compHit" )
-      competitors[i]:memory().atk = atk_generic
-      competitors[i+5]:memory().atk = atk_generic
+      compHitHook[i] = hook.pilot( competitors[i], "attacked", "compHit" )
+      competitors[i]:memory().atk = atk_generic -- A very agressive AI
    end
+   for i = 1, 4 do
+      competitors[i]:attack(competitors[i+5])
+      competitors[i+5]:attack(competitors[i])
+   end
+   competitors[5]:attack(player.pilot())
    misn.osdActive(2)
 end
 

@@ -98,45 +98,29 @@ stds.AI.globals = {
    "hyperspace_shoot",          -- pilotL_hyperspace
    "land",                      -- pilotL_land
    "land_shoot",                -- pilotL_land
+   "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
-   "moveto_precise",            -- pilotL_moveto
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway
    "runaway_nojump",            -- pilotL_runaway
    "stealth",                   -- pilotL_stealth
+   -- FIXME: Internal APIs formed by dat/ai code that are very difficult to untangle...
+   "control_funcs",             -- a shared dispatch table...
+   "create_post",               -- the standardized final step of every create()
+   "idle",                      -- a task, commonly called and overridden
+   "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.
+   "taunt",                     -- everyone has their own!
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
-   "faction_hit",                       -- C function: faction_modPlayerLua()
-   "faction_player_enemy",              -- C function: faction_isPlayerEnemy()
-   "faction_player_friend",             -- C function: faction_isPlayerFriend()
-   "faction_standing_broad",            -- C function: faction_getStandingBroad()
-   "faction_standing_text",             -- C function: faction_getStandingText()
+   "standing",                          -- C functions: faction_{modPlayerLua,isPlayerFriend,getStandingBroad,getStandingText}()
 }}
-stds.API_land = {globals={
-   "land",                              -- C function: planet_updateLand() -- and the rest come from XML files!
-   "dv_mil_command",
-   "dv_mil_restricted",
-   "emp_mil_omega",
-   "emp_mil_restricted",
-   "emp_mil_wrath",
-   "land_hiclass",
-   "land_lowclass",
-   "pir_clanworld",
-   "ptn_mil_restricted",
-   "srm_mil_kataka",
-   "srm_mil_restricted",
-   "srs_mil_mutris",
-   "srs_mil_restricted",
-   "thr_mil_restricted",
-   "zlk_mil_restricted",
-   "zlk_ruadan",
-}}
+stds.API_land = {globals={"land"}}      -- C function: planet_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_save_updater = {globals={"outfit"}}    -- C function: player_tryGetOutfit
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
@@ -167,6 +151,7 @@ stds.PilotOutfit.globals={
    "cleanup",
    "cooldown",
    "init",
+   "land",
    "onadd",
    "onhit",
    "onload",
@@ -177,16 +162,14 @@ stds.PilotOutfit.globals={
    "onstealth",
    "ontoggle",
    "outofenergy",
+   "takeoff",
    "update",
-   "mem",
+   "mem", -- Automatically created using nlua_setenv().
 }
-
--- Finally, we use nlua_setenv() to make global variables part of the AI Profile and Pilot Outfit APIs.
-table.insert(stds.PilotOutfit.globals, "mem")
 
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
 files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
+files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
 files["board.lua"].std = STANDARD .. "+API_board"
 files["comm.lua"].std = STANDARD .. "+API_comm"
 files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
@@ -199,43 +182,8 @@ files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+M
 files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["save_updater.lua"].std = "API_save_updater"
-files["scripts/love.lua"].std = STANDARD .. "+__love_impl"
-files["scripts/luatk/core.lua"].std = STANDARD .. "+__love_impl"
-files["scripts/vn/main.lua"].std = STANDARD .. "+__love_impl"
 files["shipai.lua"].std = STANDARD .. "+API_shipai"
 files["snd/music.lua"].std = STANDARD .. "+Music"
 
 -- No way to be sure what type of environment will load these.
 files["scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
-
--- We actually implement the love2d API.
-stds.__love_impl = {
-   globals = {
-      love = {
-         fields = {
-            "_basepath",                                                            
-            "_codename",
-            "_focus",                                                                                    
-            "_path",                                                                   
-            "_started",                                                                    
-            "_unimplemented",                                                            
-            "_version_major",
-            "_version_minor",
-            "_version_patch",
-            "_vn",                                                                            
-            "exec",                                                                             
-            "fullscreen",                                                                           
-            "h",                                                                               
-            "title",                                                                                    
-            "w",                                                                     
-            "x",                                                                              
-            "y",
-            _default = {fields={"fullscreen", "h", "title", "w"}},
-            keyboard = {fields={"_keystate", "_repeat"}},
-            mouse = {fields={"down", "lx", "ly", "x", "y"}},
-            timer = {fields={"_adt", "_dt", "_edt"}},
-            window = {fields={"getDesktopDimensions"}},
-         },
-      }
-   }
-}

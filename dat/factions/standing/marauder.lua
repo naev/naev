@@ -1,14 +1,15 @@
-require "factions.standing.lib.pirate"
+-- Marauder faction standing script
+local spir = require "factions.standing.lib.pirate"
 
-_fthis         = faction.get("Marauder")
-
-_fstanding_friendly = 101 -- Can't get friendly
-
-_ftext_standing = {
-   [0]  = _("Ignored"),
-   [-1] = _("Potential Victim"),
+standing = spir.newPirateStanding{
+   fct            = faction.get("Marauder"),
+   friendly_at    = 101, -- Can't get friendly
+   text = {
+      [0]  = _("Ignored"),
+      [-1] = _("Potential Victim"),
+   },
 }
 
-function faction_hit( current, _amount, _source, _secondary )
+function standing.hit( _self, current, _amount, _source, _secondary )
    return current -- Doesn't change through hits
 end

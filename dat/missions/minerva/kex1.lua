@@ -34,6 +34,8 @@ local fmt = require "format"
 --  2: return to kex
 mem.misn_state = nil
 local escorts, mainguy -- Non-persistent state
+-- luacheck: globals enter generate_npc mainguy_attacked mainguy_board mainguy_dead mainguy_dead_scanned mainguy_left (Hook functions passed by name)
+-- luacheck: globals approach_ceo approach_kex (NPC functions passed by name)
 
 local targetsys = system.get("Provectus Nova")
 local jumpinsys = system.get("Waterhole")
@@ -349,4 +351,3 @@ function mainguy_dead_scanned ()
    mem.misn_state = 2
    misn.osdActive(2)
 end
-

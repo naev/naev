@@ -251,4 +251,3 @@ SDL_RWops *PHYSFSRWOPS_openAppend(const char *fname)
 
 
 /* end of physfsrwops.c ... */
-

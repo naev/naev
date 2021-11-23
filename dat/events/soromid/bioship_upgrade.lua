@@ -24,6 +24,7 @@
 
 --]]
 
+-- luacheck: globals pay (Hook functions passed by name)
 
 -- A table of all part types. Each entry is another table with
 -- two entries. The first entry in each inner table is the base name of

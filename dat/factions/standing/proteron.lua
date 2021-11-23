@@ -1,16 +1,11 @@
+-- Proteron faction standing script
+local sbase = require "factions.standing.lib.base"
 
-
-require "factions.standing.lib.base"
-
-
-_fcap_kill     = 5 -- Kill cap
-_fdelta_distress = {-0.5, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_proteron"
-_fthis         = faction.get("Proteron")
-
-
-function faction_hit( current, amount, source, secondary )
-    return default_hit(current, amount, source, secondary)
-end
+standing = sbase.newStanding{
+   fct            = faction.get("Proteron"),
+   cap_kill       = 5,
+   delta_distress = {-0.5, 0},  -- Maximum change constraints
+   delta_kill     = {-5, 1},    -- Maximum change constraints
+   cap_misn_init  = 30,
+   cap_misn_var = "_fcap_proteron",
+}

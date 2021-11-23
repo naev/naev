@@ -22,8 +22,9 @@ local portrait = require "portrait"
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
--- Unsaved global tables
-local npcs
+local npcs -- Non-persistent state
+-- luacheck: globals enter jumpout land pay pilot_attacked pilot_death pilot_hail standing (Hook functions passed by name)
+-- luacheck: globals approachEscort approachPilot (NPC functions passed by name)
 
 local logidstr = "log_hiredescort"
 
@@ -450,4 +451,3 @@ function approachPilot( npc_id )
    shiplog.create( logidstr, _("Hired Escorts"), _("Hired Escorts") )
    shiplog.append( logidstr, fmt.f(_("You hired a {ship} ship named '{name}' for {deposit_text} and {royalty_percent:.1f}% of mission earnings."), edata ) )
 end
-

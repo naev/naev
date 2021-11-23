@@ -35,6 +35,10 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
+local fail -- Forward-declared functions
+-- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
+-- luacheck: globals enter jumpout land pilot_leave timer (Hook functions passed by name)
+
 pay_text    = {
    _("After going through some paperwork, an officer hands you your pay and sends you off."),
    _("A tired-looking officer verifies your mission log and hands you your pay."),
@@ -72,7 +76,7 @@ mem.use_hidden_jumps = false
 
 
 -- Get the number of enemies in a particular system
-function get_enemies( sys )
+local function get_enemies( sys )
    local enemies = 0
    for i, j in ipairs( mem.paying_faction:enemies() ) do
       local p = sys:presences()[j:nameRaw()]

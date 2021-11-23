@@ -2,7 +2,7 @@
 
 # ITCHIO DEPLOYMENT SCRIPT FOR NAEV
 #
-# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/) 
+# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # This script should be run after downloading all build artefacts
 # If -n is passed to the script, a nightly build will be generated
@@ -101,7 +101,7 @@ VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
 if [ "$NIGHTLY" == "true" ]; then
     SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-elif [ "$PRERELEASE" == "true" ]; then 
+elif [ "$PRERELEASE" == "true" ]; then
     SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
 else
     SUFFIX="$VERSION"
@@ -130,7 +130,7 @@ tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$OUTDIR/win64"
 cp "$TEMPPATH"/naev-itch-deployment/.itch.toml "$OUTDIR"/lin64
 sed -i "s/%EXECNAME%/naev-$SUFFIX-linux-x86-64.AppImage/" "$OUTDIR"/lin64/.itch.toml
 sed -i 's/%PLATFORM%/linux/' "$OUTDIR"/lin64/.itch.toml
-          
+
 # Prepare itch.toml for macOS
 
 cp "$TEMPPATH"/naev-itch-deployment/.itch.toml "$OUTDIR"/macos
@@ -153,12 +153,12 @@ if [ "$DRYRUN" == "false" ]; then
         run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
     else
-        if [ "$PRERELEASE" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-beta
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
 
-        elif [ "$PRERELEASE" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64
             run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64
@@ -175,11 +175,11 @@ elif [ "$DRYRUN" == "true" ]; then
         echo "butler nightly upload"
         ls -l -R "$OUTDIR"
     else
-        if [ "$PRERELEASE" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then
             # Run butler beta upload
             echo "butler beta upload"
             ls -l -R "$OUTDIR"
-        elif [ "$PRERELEASE" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then
             # Run butler release upload
             echo "butler release upload"
             echo "butler soundtrack upload"

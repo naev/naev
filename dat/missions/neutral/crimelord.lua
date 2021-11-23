@@ -27,6 +27,7 @@ local fleet = require "fleet"
 local reward = 600e3
 
 local capship, defenders, thugs -- Non-persistent state
+-- luacheck: globals capHailed enter jumpout land pilotKilled spawnBaddies (Hook functions passed by name)
 
 function create ()
    mem.targetsystem = system.get("Ogat")

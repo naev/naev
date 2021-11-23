@@ -19,6 +19,7 @@ local vn = require 'vn'
 local taiomi = require 'common.taiomi'
 
 local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
+-- luacheck: globals hail_philosopher hail_scavenger hail_wornout hail_youngling (Hook functions passed by name)
 
 function create ()
    --[[

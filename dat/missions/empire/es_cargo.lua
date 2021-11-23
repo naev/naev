@@ -20,6 +20,8 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 
+-- luacheck: globals land tick (Hook functions passed by name)
+
 local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
@@ -81,7 +83,8 @@ function create()
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(
-      _("ES: Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
+      -- TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
+      _("#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
    misn.markerAdd(mem.destsys, "computer")
    car.setDesc( fmt.f(_("Official Empire cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )

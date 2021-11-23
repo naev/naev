@@ -1,20 +1,20 @@
-require "factions.standing.lib.base"
+-- Empire faction standing script
+local sbase = require "factions.standing.lib.base"
 
+standing = sbase.newStanding{
+   fct            = faction.get("Empire"),
+   cap_kill       = 15,
+   delta_distress = {-1, 0},    -- Maximum change constraints
+   delta_kill     = {-5, 1},    -- Maximum change constraints
+   cap_misn_init  = 30,
+   cap_misn_var = "_fcap_empire",
+}
 
-_fcap_kill     = 15 -- Kill cap
-_fdelta_distress = {-1, 0} -- Maximum change constraints
-_fdelta_kill     = {-5, 1} -- Maximum change constraints
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = "_fcap_empire"
+local sec_hit_min = 10
 
-_fthis         = faction.get("Empire")
-
-sec_hit_min = 10
-
-
-function faction_hit( current, amount, source, secondary )
-   local start_standing = _fthis:playerStanding()
-   local f = default_hit( current, amount, source, secondary )
+function standing:hit( current, amount, source, secondary )
+   local start_standing = self.fct:playerStanding()
+   local f = sbase.Standing.hit( self, current, amount, source, secondary )
    if ( secondary and amount < 0 and f < sec_hit_min ) then
       f = math.min( start_standing, sec_hit_min )
    end

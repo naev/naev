@@ -2,7 +2,7 @@
 # RELEASE SCRIPT FOR NAEV Soon (tm)
 #
 # This script attempts to compile and build different parts of Naev
-# automatically in order to prepare for a new release. 
+# automatically in order to prepare for a new release.
 #
 # Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)
 

@@ -39,6 +39,7 @@ local misn_target, misn_target_sys = planet.getS("Eiroik")
 
 local swarm1, swarm2, swarm3 -- Non-persistent state
 local moveSwarm -- Forward-declared functions
+-- luacheck: globals cameraZoom endCutscene land takeoff (Hook functions passed by name)
 
 function create ()
     local missys = {misn_target}

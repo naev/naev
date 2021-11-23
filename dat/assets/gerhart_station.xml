@@ -43,4 +43,9 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>military</tag>
+  <tag>research</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>

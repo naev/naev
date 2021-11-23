@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="HS - 5 1">
+<asset name="HS-51">
  <pos>
   <x>-4533.758622</x>
   <y>-7183.066534</y>
@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>3</range>
  </presence>
  <general>
@@ -28,7 +28,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>This airless, low-gravity moon serves as a modest civilian spaceborne shipyard. It was dubbed cheaper and less effort to get ships to and from the surface of Jurai. There is little of interest to experienced captains, but younger pilots, primarily from Jurai, flock here.</description>
+  <description>This airless, low-gravity moon serves as a modest civilian space borne shipyard. It was dubbed cheaper and less effort to get ships to and from the surface of Jurai. There is little of interest to experienced captains, but younger pilots, primarily from Jurai, flock here.</description>
   <bar>This bar is even more of a mess than usual for a Za'lek world. The clientele are young, and congregate around the randomly-placed tables and chairs enthusiastically arguing over a myriad of subjects. Unlike most Za'lek worlds, there are few scientists here.</bar>
  </general>
  <tech>
@@ -48,4 +48,7 @@
   <item>Engines Low</item>
   <item>Engines Cargo</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </asset>

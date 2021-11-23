@@ -26,6 +26,8 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_rogue"
 
+-- luacheck: globals enter land_flf leave (from base mission flf_rogue)
+
 function create ()
    mem.missys = system.get( "Sigur" )
    if not misn.claim( mem.missys ) then misn.finish( false ) end
@@ -82,4 +84,3 @@ function land_flf ()
       misn.finish( true )
    end
 end
-

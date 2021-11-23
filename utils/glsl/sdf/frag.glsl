@@ -477,7 +477,7 @@ vec4 sdf_missilelockon( vec4 colour, vec2 uv )
       d = min( d, sdSegment( auv,
             CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.8,
             CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*1.0 )-m );
-   
+
    float r = fract(dt*0.1);
    float a = r * M_PI;
    float c = cos(a);
@@ -597,4 +597,3 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 
    return mix( bg(uv), col_out, col_out.a );
 }
-

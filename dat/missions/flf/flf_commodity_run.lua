@@ -20,6 +20,8 @@
 --]]
 require "missions.neutral.commodity_run"
 
+-- luacheck: globals cargo_land commchoices (from base mission neutral.commodity_run)
+
 mem.misn_title = _("FLF: {cargo} Supply Run")
 mem.misn_desc = _("There is a need to supply {pnt} with more {cargo}. Find a planet where you can buy this commodity and bring as much of it back as possible.")
 
@@ -33,4 +35,3 @@ mem.osd_title = _("FLF Supply Run")
 
 
 commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Water" }
-

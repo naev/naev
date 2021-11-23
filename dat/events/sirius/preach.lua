@@ -19,6 +19,7 @@ local fmt = require "format"
 
 local restoreControl -- Forward-declared function
 local attackers, curr, follower, followers, hailHook, playerP, praiser, preacher, rep, target -- Event state, never saved.
+-- luacheck: globals anotherdead badCleanup cleanup funStartsSoon hail jumpCleanup landCleanup pirateSpawn praise preacherSpeak reHail release theFunBegins violence (Hook functions passed by name)
 
 local althoughEnemy={
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
@@ -141,7 +142,13 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher = pilot.add("Sirius Reverence", "Sirius", curr, nil, {ai="sirius_norun"})
+   preacher = pilot.add("Sirius Preacher", "Sirius", curr, _("Sirius Reverence"), {ai="sirius_norun"})
+   preacher:intrinsicSet( "armour_mod", 400 )
+   preacher:intrinsicSet( "shield_mod", 400 )
+   preacher:intrinsicSet( "shield_regen_mod", 100 )
+   preacher:intrinsicSet( "speed", 100 )
+   preacher:intrinsicSet( "thrust", 100 )
+   preacher:intrinsicSet( "turn", 100 )
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()

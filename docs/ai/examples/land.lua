@@ -4,23 +4,23 @@
 --    planet = ai.rndplanet()
 --    -- planet must exist
 --    if planet == nil then
---       ai.pushtask(0, "hyperspace")
+--       ai.pushtask("hyperspace")
 --    else
---       ai.pushtask(0, "goto", planet)
+--       ai.pushtask("moveto", planet)
 --    end
 --]]
 
 -- flies to the target planet
-function goto ()
+function moveto ()
    target = ai.target()
    dir = ai.face(target)
    dist = ai.dist( target )
    bdist = ai.minbrakedist()
-   if dir < 10 and dist > bdist then
+   if math.abs(dir) < math.rad(10) and dist > bdist then
       ai.accel()
-   elseif dir < 10 and dist < bdist then
+   elseif math.abs(dir) < math.rad(10) and dist < bdist then
       ai.poptask()
-      ai.pushtask(0,"stop")
+      ai.pushtask("stop")
    end
 end
 
@@ -29,8 +29,8 @@ function land ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
-      ai.settimer(0, ai.rnd(8.0, 15.0))
-      ai.pushtask(0,"landed")
+      ai.settimer(0, rnd.uniform(8.0, 15.0))
+      ai.pushtask("landed")
    else
       ai.brake()
    end
@@ -40,6 +40,6 @@ end
 function landed ()
    if ai.timeup(0) then
       -- Run X task (usually hyperspace
-      ai.pushtask(0,"hyperspace")
+      ai.pushtask("hyperspace")
    end
 end

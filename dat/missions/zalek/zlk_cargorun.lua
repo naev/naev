@@ -1,38 +1,44 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Shipping Delivery">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <faction>Za'lek</faction>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
    Za'lek Cargo Run. adapted from Drunkard Mission
+
+   Normal cargo delivery except for no payment after delivery and the player has to hail logan to get paid
 ]]--
 local fmt = require "format"
 local zlk = require "common.zalek"
 
 local logan -- Non-persistent state
+-- luacheck: globals closehail hail land takeoff (Hook functions passed by name)
 
-local payment = 800e3
-
+local payment = 400e3
 
 function create ()
-   -- Note: this mission does not make any system claims.
-
    misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.webp", _("This Za'lek scientist seems to be looking for someone.") )  -- creates the scientist at the bar
 
    -- Planets
    mem.pickupWorld, mem.pickupSys  = planet.getLandable("Vilati Vilata")
    mem.delivWorld, mem.delivSys    = planet.getLandable("Oberon")
+   -- Have to claim so Logan doesn't get cleared upon takeoff at destination
+   if not misn.claim( mem.delivSys ) then
+      misn.finish(false)
+   end
+
    if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
       misn.finish(false)
    end
@@ -119,6 +125,8 @@ function takeoff()
       logan:moveto(player.pos() + vec2.new( 150, 75), true)
       tk.msg( _("Takeoff"), _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late, especially given the lack of organization you've seen on the planet. Suddenly, you hear a ping on your console, signifying that someone's hailing you.]]) )
       mem.hailhook = hook.pilot(logan, "hail", "hail")
+
+      -- TODO probably handle the case the player ignores Logan
    end
 end
 
@@ -146,8 +154,5 @@ function closehail()
 end
 
 function abort()
-   hook.rm(mem.landhook)
-   hook.rm(mem.flyhook)
-   if mem.hailhook then hook.rm(mem.hailhook) end
    misn.finish()
 end

@@ -1,14 +1,14 @@
 --[[
    Some sort of stellar wind type background.
 --]]
-
+local bgshaders = require "bkg.lib.bgshaders"
+local love_shaders = require 'love_shaders'
 -- We use the default background too!
 require "bkg.default"
-local bgshaders = require "bkg.bgshaders"
-local love_shaders = require 'love_shaders'
 
-local shader, sf
+local shader, sf, swind
 
+local background_default = background
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
@@ -16,13 +16,10 @@ function background ()
 
    -- Initialize shader
    shader = love_shaders.windy{ strength=sf, density=0.7 }
-   bgshaders.init( shader, sf )
+   swind = bgshaders.init( shader, sf )
 
    -- Default nebula background
-   cur_sys = system.cur()
-   prng:setSeed( cur_sys:name() )
-   background_nebula()
-   background_stars()
+   background_default()
 end
 
 function renderfg( dt )
@@ -31,5 +28,5 @@ function renderfg( dt )
    local z = camera.getZoom()
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, z )
 
-   bgshaders.render( dt, {0.2, 0.6, 0.9, 0.8} )
+   swind:render( dt, {0.2, 0.6, 0.9, 0.8} )
 end

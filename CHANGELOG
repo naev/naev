@@ -10,6 +10,7 @@
       * Some simple minigames have been added
       * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
       * Restricted systems where dominant faction will attack on sight
+      * Some bulk freighter-class ships added
    * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
@@ -19,6 +20,7 @@
       * Most special effects implemented as shaders
       * Most small visuals redone to be more visible and clean
       * Similar presences are now merged in map
+      * Overhauled all the backgrounds
    * Gameplay changes
       * Pirates split into multiple clans and marauders
       * Added discovery messages as you explore the universe
@@ -48,6 +50,8 @@
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
+      * Revamped and improved some existing locations
+      * Several new planets and systems
    * New missions
       * Challenge adversaries in the Crimson Gauntlet
       * Follow happenings on "Minerva Station"
@@ -58,6 +62,8 @@
       * Rescue derelict crew
       * Small early game tutorial-ish campaign
       * Neutral campaign to transform the universe
+      * Help the Za'lek do particle physics
+      * Meow
    * New translation(s) in progress: Czech, French, Korean, Portuguese, and Japanese
    * Engine Changes
       * Added an optimizer to improve automatic outfitting choices

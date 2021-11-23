@@ -41,4 +41,7 @@
   <item>Laser 1</item>
   <item>Ion 1</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </asset>

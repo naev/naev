@@ -47,4 +47,7 @@
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-10</cargo_inertia>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

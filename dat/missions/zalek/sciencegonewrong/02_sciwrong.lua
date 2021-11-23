@@ -28,6 +28,7 @@ local sciwrong = require "common.sciencegonewrong"
 local fmt = require "format"
 
 local badguys, bghook, t_drone -- Non-persistent state
+-- luacheck: globals chase_of_drones dead_drone drone_attacked drone_disableable drone_jumped drone_selfdestruct drones_flee failed game_of_drones got_hailed land_home sp_baddies sys_enter targetBoard targetIdle (Hook functions passed by name)
 
 -- system with the drone and the return to start
 mem.t_sys = {}

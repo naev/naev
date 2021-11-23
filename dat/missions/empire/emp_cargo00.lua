@@ -6,9 +6,10 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>40</chance>
+  <chance>30</chance>
   <location>Bar</location>
   <faction>Empire</faction>
+  <cond>player.credits() &gt;= 200e3</cond>
  </avail>
  <notes>
   <tier>1</tier>
@@ -27,6 +28,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
+
+-- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.

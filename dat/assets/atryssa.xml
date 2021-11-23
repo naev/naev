@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>30000000</population>
+  <population>3e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -53,4 +53,8 @@
   <item>Bulk Trade Ships</item>
   <item>Za'lek Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rich</tag>
+  <tag>urban</tag>
+ </tags>
 </asset>

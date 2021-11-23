@@ -85,4 +85,3 @@ print( string.format( "% 10s: %.3f (%.3f)", "Defaults", def_mean, def_stddev ) )
 --]]
 print("====== BENCHMARK END ======")
 csvfile:close()
-

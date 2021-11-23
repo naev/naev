@@ -755,7 +755,7 @@ static int playerL_land( lua_State *L )
 
       player_targetClearAll();
 
-      space_init( sysname );
+      space_init( sysname, 0 );
 
       ovr_initAlpha();
 
@@ -1258,6 +1258,7 @@ static int playerL_evtDone( lua_State *L )
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  *
  *    @luatparam System|Planet|string dest System or name of a system or planet or name of a planet to teleport the player to.
+ *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
  * @luafunc teleport
  */
 static int playerL_teleport( lua_State *L )
@@ -1265,6 +1266,7 @@ static int playerL_teleport( lua_State *L )
    Planet *pnt;
    StarSystem *sys;
    const char *name, *pntname, *sysname;
+   int no_simulate;
 
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
@@ -1318,6 +1320,8 @@ static int playerL_teleport( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
 
+   no_simulate = lua_toboolean(L,2);
+
    /* Check if system exists. */
    if (system_get( name ) == NULL) {
       NLUA_ERROR( L, _("System '%s' does not exist."), name );
@@ -1348,7 +1352,7 @@ static int playerL_teleport( lua_State *L )
    player_targetClearAll();
 
    /* Go to the new system. */
-   space_init( name );
+   space_init( name, !no_simulate );
 
    /* Map gets deformed when jumping this way. */
    map_clear();

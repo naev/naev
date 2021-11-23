@@ -26,6 +26,8 @@
 local pir = require "common.pirate"
 require "missions.neutral.patrol"
 
+-- luacheck: globals abandon_text msg pay_text (from base mission neutral.patrol)
+
 pay_text = {
    _("The crime boss grins and hands you your pay."),
    _("The local crime boss pays what you were promised, though not before trying (and failing) to pick your pocket."),

@@ -88,5 +88,3 @@ class readers:
             print(msg)
         else:
             pass
-
-

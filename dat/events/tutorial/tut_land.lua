@@ -14,6 +14,8 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require 'vn'
 
+-- luacheck: globals outfit_buy ship_buy takeoff (Hook functions passed by name)
+
 function create ()
    if tut.isDisabled() then evt.finish() end
 
@@ -64,23 +66,21 @@ function outfit_buy( outfitname )
 
       local text
       if o == outfit.get("Large Civilian Vessel License") and not var.peek( "tut_lic_largeciv" ) then
-         --[=[
          text = {
-            _([[""]])
+            _([["If you want to rake in the credits doing larger missions or commodities trades, the #oLarge Civilian Vessel License#0 is your first step! Plan your routes carefully, though, because these ships' defensive capabilities are very limited."]])
          }
          var.push("tut_lic_largeciv", true )
-         --]=]
 
       elseif o == outfit.get("Medium Weapon License") and not var.peek( "tut_lic_medweap" )  then
          text = {
-            _([["Oh, is that a Medium Weapon License? This will open the possibility of equipping larger weapons like turrets or launchers. Turrets can rotate any direction and take the burden of aiming off your ship. Launchers use ammunition and can lock on to enemy ships to make sure the payload hits the target. By mixing and matching weapons with complementary strengths you can greatly increase your combat ability."]]),
+            _([["Oh, is that a #oMedium Weapon License#0? This will open the possibility of equipping larger weapons like turrets or launchers. Turrets can rotate any direction and take the burden of aiming off your ship. Launchers use ammunition and can lock on to enemy ships to make sure the payload hits the target. By mixing and matching weapons with complementary strengths you can greatly increase your combat ability."]]),
             _([["Many of the newer weapons you'll now have access to have higher CPU requirements. To increase your CPU, you have to equip better #oCore Systems#0. How powerful of a core system you can equip is limited by the slot sizes of your ship. Larger slots give you more power, but come at the cost of more mass. If you want to stay nimble and stealthy, you should be careful about increasing your mass."]]),
          }
          var.push( "tut_lic_medweap", true )
 
       elseif o == outfit.get("Heavy Weapon License") and not var.peek( "tut_lic_hvyweap" ) then
          text = {
-            _([["Looks like you're finally ready to take on the big guns. Heavy Weapons License will allow you to buy the largest and most powerful of weaponry. These weapons are generally similar to their medium counterparts, but are on a different scale. They use much more energy, weigh much more, but also have much longer range and higher firepower."]]),
+            _([["Looks like you're finally ready to take on the big guns. #oHeavy Weapons License#0 will allow you to buy the largest and most powerful of weaponry. These weapons are generally similar to their medium counterparts, but are on a different scale. They use much more energy, weigh much more, but also have much longer range and higher firepower."]]),
             _([["One thing you will have to watch out is that heavy weapons tend to have large minimum tracking values and optimal tracking values. Ships with #oEvasion#0 lower than your weapons minimum tracking value will be able to easily dodge most of your shots. On the other hand, large ships with evasion above your optimal tracking value will be devastated by your shots. If you intend to deal with smaller ships too, make sure to equip fighter bays or lighter weapons!"]]),
          }
          var.push( "tut_lic_hvyweap", true )
@@ -95,7 +95,7 @@ function outfit_buy( outfitname )
 
       elseif o == outfit.get("Medium Combat Vessel License") and not var.peek( "tut_lic_medcom" ) then
          text = {
-            _([["Looks like you've outgrown the Light Combat Vessel License. With the #oMedium Combat Vessel License#0 you'll get access to #oCorvette#0- and #oDestroyer#0-class ships, which can start to pack a real punch. Corvettes are the more agile of the two and can skirmish with smaller craft, while destroyers tend to be slower with much more firepower."]]),
+            _([["Looks like you've outgrown the #oLight Combat Vessel License#0. With the #oMedium Combat Vessel License#0 you'll get access to #oCorvette#0- and #oDestroyer#0-class ships, which can start to pack a real punch. Corvettes are the more agile of the two and can skirmish with smaller craft, while destroyers tend to be slower with much more firepower."]]),
             _([["Medium combat vessels tend to have a good balance between firepower and utility, being able to both perform stealth operations and frontal assaults. As they also have more slots, they can be configured more extensively to play different roles. You should experiment and see what what works well for you."]]),
          }
          var.push( "tut_lic_medcom", true )

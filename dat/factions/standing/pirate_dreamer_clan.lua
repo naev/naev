@@ -1,3 +1,6 @@
-require "factions.standing.lib.pirate"
-_fthis         = faction.get("Dreamer Clan")
+-- Dreamer Clan faction standing script
+local spir = require "factions.standing.lib.pirate"
 
+standing = spir.newPirateStanding{
+   fct            = faction.get("Dreamer Clan"),
+}

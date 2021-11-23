@@ -35,14 +35,16 @@ local function reset( _p, po )
    mem.isactive = true
 end
 
-local function disable( _p, po )
+local function disable( _p, po, domsg )
    if not mem.isactive then return end
    for k,f in ipairs(factions) do
       f:setPlayerStanding( fget( f ) )
       fclear( f )
    end
    po:state("off")
-   player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems, land, or cooldown!#0"))
+   if domsg then
+      player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems, land, or cooldown!#0"))
+   end
    mem.isactive = false
 end
 
@@ -59,7 +61,7 @@ function init( p, po )
 end
 
 function onscanned( p, po, _scanner )
-   disable( p, po )
+   disable( p, po, true )
 end
 
 function cooldown( p, po, done, _opt )

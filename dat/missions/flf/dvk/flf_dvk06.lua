@@ -28,6 +28,7 @@ local flf = require "missions.flf.flf_common"
 
 local civ_fleet, dv_base, dv_fleet, flf_fleet, pir_boss, pir_fleet -- Non-persistent state
 local finish -- Forward-declared functions
+-- luacheck: globals enter hail land pilot_attacked pilot_attacked_civilian pilot_attacked_station pilot_death_civilian pilot_death_kestrel pilot_death_station timer_pirates timer_start (Hook functions passed by name)
 
 mem.osd_desc    = {}
 mem.osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
@@ -329,4 +330,3 @@ function abort ()
       misn.finish( false )
    end
 end
-

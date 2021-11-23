@@ -73,7 +73,7 @@ function hail ()
       mem.bribe_prompt = fmt.f(_([["For {credits} I'll let your grievances slide."]]), {credits=fmt.credits(mem.bribe)} )
       mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
    else
-      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no) ]
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
 end
 
@@ -88,4 +88,3 @@ function taunt ( target, _offense )
    local taunts = taunt_list
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
 end
-

@@ -32,7 +32,7 @@ local luatk = {
 --]]
 function luatk.run ()
    luatk._love = true
-   love.exec( 'scripts/luatk' )
+   love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
 end
 function luatk.setDefaultFont( font )

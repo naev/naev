@@ -191,4 +191,3 @@ int sp_exclusive( unsigned int spid )
       return 0;
    return sp_array[ spid-1 ].exclusive;
 }
-

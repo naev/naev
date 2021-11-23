@@ -1,4 +1,5 @@
 require 'ai.core.core'
+local scans = require 'ai.core.misc.scans'
 
 --[[
 
@@ -21,9 +22,6 @@ mem.enemyclose    = mem.guarddodist
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
-
-   -- Choose attack format
-   attack_choose()
 
    -- Default range stuff
    mem.guardpos      = p:pos() -- Just guard current position
@@ -48,6 +46,7 @@ function should_attack( enemy, si )
 end
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
@@ -69,9 +68,9 @@ function idle ()
 
    -- Scan if possible
    if mem.doscans then
-      local target = __getscantarget()
+      local target = scans.get_target()
       if target and gdist(target) < mem.guarddodist then
-         __push_scan( target )
+         scans.push( target )
          return
       end
    end
@@ -85,7 +84,7 @@ function idle ()
 end
 
 -- Override the control function
-control_generic = control
+local control_generic = control
 function control ()
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return
@@ -96,4 +95,3 @@ function control ()
    -- Then do normal control
    control_generic()
 end
-

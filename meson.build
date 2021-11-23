@@ -173,7 +173,7 @@ if buildExec.disabled() == false
    endif
 
    if get_option('steamruntime')
-      blas = cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+      blas = cc.find_library('openblas', required: true, static: true)
    elif get_option('blas') == 'Accelerate'
       blas = dependency('Accelerate', required: true)
    else
@@ -217,7 +217,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
-   config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
+   config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
@@ -314,13 +314,29 @@ if buildExec.disabled() == false
       export_dynamic: bfd.found(),
       install: true)
 
+   gen_authors = find_program('utils/build/gen_authors.py')
+   authors = custom_target(
+      'authors',
+      command: [
+         gen_authors,
+         '--output', '@OUTPUT0@',
+         '--preamble', '@INPUT0@',
+         '@INPUT1@', '@INPUT2@',
+      ],
+      input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
+      output: 'AUTHORS',
+      install: true,
+      install_dir: ndata_path,
+   )
+
    naev_sh = configure_file(
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
          'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
-         'naev_bin' : naev_bin.full_path()
+         'naev_bin' : naev_bin.full_path(),
+         'authors' : authors.full_path(),
       }
    )
 
@@ -337,6 +353,7 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
+      exclude_files: 'AUTHORS',  # In favor of the above "authors" target.
    )
 
    install_subdir(

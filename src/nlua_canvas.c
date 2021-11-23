@@ -22,6 +22,7 @@
 static int nlua_canvas_counter = 0;
 static GLuint previous_fbo = 0;
 static int previous_fbo_set = 0;
+static int was_scissored    = 0;
 
 /* Canvas metatable methods. */
 static int canvasL_gc( lua_State *L );
@@ -93,8 +94,7 @@ LuaCanvas_t* luaL_checkcanvas( lua_State *L, int ind )
  */
 LuaCanvas_t* lua_pushcanvas( lua_State *L, LuaCanvas_t canvas )
 {
-   LuaCanvas_t *c;
-   c = (LuaCanvas_t*) lua_newuserdata(L, sizeof(LuaCanvas_t));
+   LuaCanvas_t *c = (LuaCanvas_t*) lua_newuserdata(L, sizeof(LuaCanvas_t));
    *c = canvas;
    luaL_getmetatable(L, CANVAS_METATABLE);
    lua_setmetatable(L, -2);
@@ -225,6 +225,7 @@ static int canvasL_set( lua_State *L )
       if (!previous_fbo_set) {
          previous_fbo = gl_screen.current_fbo;
          previous_fbo_set = 1;
+	 was_scissored = glIsEnabled(GL_SCISSOR_TEST);
       }
       gl_screen.current_fbo = lc->fbo;
       glDisable(GL_SCISSOR_TEST);
@@ -234,7 +235,8 @@ static int canvasL_set( lua_State *L )
    else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
       gl_screen.current_fbo = previous_fbo;
       previous_fbo_set = 0;
-      glEnable(GL_SCISSOR_TEST);
+      if (was_scissored)
+         glEnable(GL_SCISSOR_TEST);
       glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }

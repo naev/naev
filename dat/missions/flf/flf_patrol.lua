@@ -22,6 +22,8 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+-- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (shared with derived missions flf_empatrol, flf_pre02)
+
 misn_title = {
    _("FLF: Single Dvaered patrol in {sys}"),
    _("FLF: Small Dvaered patrol in {sys}"),
@@ -110,7 +112,7 @@ function create ()
    end
 
    mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
-   if has_vigilence then mem.credits = mem.credits + 120e3 end
+   if mem.has_vigilence then mem.credits = mem.credits + 120e3 end
    if mem.has_goddard then mem.credits = mem.credits + 270e3 end
    mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
    mem.credits = mem.credits + rnd.sigma() * 80e3
@@ -171,7 +173,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.dv_ships_left = 0
    mem.last_system = system.cur()
 end
@@ -259,4 +261,3 @@ function patrol_spawnFLF( n, param, comm )
 
    fleetFLF[1]:comm( player.pilot(), comm )
 end
-

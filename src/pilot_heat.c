@@ -79,7 +79,7 @@ double pilot_heatCalcOutfitC( const Outfit *o )
  */
 double pilot_heatCalcOutfitArea( const Outfit *o )
 {
-   double mass_kg = 1000. * o->mass;
+   double mass_kg = MAX( 1000. * o->mass, 1. ); /* Avoid it being 0. */
    /* We consider the effective area of outfits to be half of a sphere. */
    return 2.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
 }
@@ -321,4 +321,3 @@ double pilot_heatFirePercent( double T )
 {
    return 2.*pilot_heatAccuracyMod(T);
 }
-

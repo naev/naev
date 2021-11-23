@@ -16,6 +16,8 @@
 -- This is a helper event for the fourth mission in the Academy Hack minor campaign.
 --]]
 
+-- luacheck: globals cleanup startMission (Hook functions passed by name)
+
 function create()
    local delay = rnd.uniform(10.0, 40.0)
    hook.timer(delay, "startMission")

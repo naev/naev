@@ -12,4 +12,3 @@ lua_source = files(
    'vn.lua',
    'vntk.lua',
 )
-

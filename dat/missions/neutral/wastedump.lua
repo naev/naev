@@ -28,6 +28,8 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local vntk = require "vntk"
 
+-- luacheck: globals land takeoff (Hook functions passed by name)
+
 local text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea.")
 text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")

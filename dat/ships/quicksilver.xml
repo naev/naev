@@ -44,4 +44,7 @@
   <jump_delay>-25</jump_delay>
   <cargo_inertia>-20</cargo_inertia>
  </stats>
+ <tags>
+  <tag>standard</tag>
+ </tags>
 </ship>

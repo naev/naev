@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="The Crucible">
  <pos>
-  <x>8127.441104</x>
-  <y>6172.702430</y>
+  <x>5212.946189</x>
+  <y>780.244879</y>
  </pos>
  <GFX>
   <space>003.webp</space>
@@ -21,8 +21,29 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
   </services>
   <commodities/>
-  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online so they make sure the local Imperial forces have more important things to worry about than shutting it down.</description>
+  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here including gambling, drug dealing and money laundering. Though the station is within Soromid controlled territory, the Pirates have an interest in keeping the station online so they make sure the local Soromid forces have more important things to worry about than shutting it down. The Soromid also seem to play into this game, as they are interested in concentrating the villainy, least it spread to nearby Soromid planets.</description>
+  <bar>As you would expect, the bar is the heart of organizing all the illegal deals going on. The constant movement of individuals and the constant ambient noise makes it hard to keep an eye out on your surroundings, which you feel is fairly important to getting out of here in one piece. Every so often a deal goes wrong, ending in yelling, brawls, and sometimes worse outcomes. However, no matter the commotion, the veterans and bartenders do not seem to flinch, seems like this happens all the time.</bar>
  </general>
+ <tech>
+  <item>Engines Medium</item>
+  <item>Hulls Medium</item>
+  <item>Systems Medium</item>
+  <item>Missiles 1</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
 </asset>

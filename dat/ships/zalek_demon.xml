@@ -51,4 +51,7 @@
   <stress_dissipation>10</stress_dissipation>
   <fbay_reload>15</fbay_reload>
  </stats>
+ <tags>
+  <tag>zalek</tag>
+ </tags>
 </ship>

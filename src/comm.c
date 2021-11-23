@@ -213,12 +213,12 @@ int comm_openPlanet( Planet *planet )
 
    /* Create the generic comm window. */
    wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
-         comm_planet->presence.faction, 0, 0, _(comm_planet->name) );
+         comm_planet->presence.faction, 0, planet->bribed, _(comm_planet->name) );
 
    /* Add special buttons. */
    if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
-      window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePlanet );
+      window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePlanet, SDLK_b );
 
    return 0;
 }

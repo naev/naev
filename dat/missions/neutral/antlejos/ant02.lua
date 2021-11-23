@@ -13,6 +13,7 @@
  </avail>
  <notes>
   <tier>1</tier>
+  <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
 --]]
@@ -32,6 +33,8 @@ local cargo_amount = 50 -- Amount in mass
 local reward = ant.rewards.ant02
 
 local returnpnt, returnsys = planet.getS("Antlejos V")
+
+-- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
@@ -131,4 +134,3 @@ He slaps the hull of a heavy machine.
       misn.finish(true)
    end
 end
-

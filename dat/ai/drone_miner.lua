@@ -11,10 +11,10 @@ function create ()
 end
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local field, ast = system.asteroid() -- Get a random asteroid in the system
    if field then
       ai.pushtask( "mine", {field, ast} )
    end
 end
-

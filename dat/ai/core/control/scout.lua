@@ -89,6 +89,7 @@ end
 
 
 -- Effectively does nothing
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    if ai.isstopped() == false then
       ai.brake()
@@ -97,6 +98,7 @@ end
 
 
 -- Approaches the target
+-- luacheck: globals approach (AI Task functions passed by name)
 function approach ()
    local target = mem.approach
    local dist = ai.dist(target)
@@ -110,5 +112,3 @@ function approach ()
       ai.pushtask("idle")
    end
 end
-
-

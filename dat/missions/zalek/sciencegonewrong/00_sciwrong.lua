@@ -32,6 +32,8 @@ local sciwrong = require "common.sciencegonewrong"
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
+-- luacheck: globals call_the_police fine_vanish fnl_ld go_board land1 land2 sys_enter (Hook functions passed by name)
+-- luacheck: globals first_trd second_trd third_trd (NPC functions passed by name)
 
 -- set mission variables
 mem.t_sys = {}
@@ -72,7 +74,7 @@ end
 
 function land1()
    local trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
-   if planet.cur() == mem.t_pla[1] and not mem.talked and not traded then
+   if planet.cur() == mem.t_pla[1] and not mem.traded1 then
       mem.bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)
    elseif planet.cur() == mem.t_pla[1] and mem.talked and mem.traded1 then
       mem.bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)

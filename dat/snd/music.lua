@@ -400,4 +400,3 @@ function choose_table.combat ()
    music.play()
    return true
 end
-

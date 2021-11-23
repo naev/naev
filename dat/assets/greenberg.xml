@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -27,6 +27,10 @@
   </services>
   <commodities/>
   <description>This world has suffered from the centralization of Za'lek space particularly hard. With the effective abandonment by the Za'lek authorities beyond a skeleton government, this world has fallen into hard times and struggles to remain afloat.</description>
-  <bar>This bar seems very shabby and run-down. It has mismatching furniture and the walls have been visibly repaired more than once. THere are few people, and most of them seem to be the types too old and stubborn to leave.</bar>
+  <bar>This bar seems very shabby and run-down. It has mismatching furniture and the walls have been visibly repaired more than once. There are few people, and most of them seem to be the types too old and stubborn to leave.</bar>
  </general>
+ <tags>
+  <tag>poor</tag>
+  <tag>rural</tag>
+ </tags>
 </asset>

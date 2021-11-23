@@ -40,6 +40,8 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
+-- luacheck: globals land tick (Hook functions passed by name)
+
 local dest_planet, dest_sys = planet.getS("Mutris")
 
 -- passenger rank

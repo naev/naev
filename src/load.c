@@ -637,6 +637,7 @@ static int load_gameInternal( const char* file, const char* version )
       goto err_doc;
 
    /* Clean up possible stuff that should be cleaned. */
+   unidiff_universeDefer( 1 );
    player_cleanup();
 
    /* Welcome message - must be before space_init. */
@@ -645,6 +646,7 @@ static int load_gameInternal( const char* file, const char* version )
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
+   unidiff_universeDefer( 0 );
    missions_loadCommodity(node); /* Must be loaded before player. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);

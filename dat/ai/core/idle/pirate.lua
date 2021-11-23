@@ -121,7 +121,7 @@ local function __loiter( p, taskname )
 end
 
 
-function idle_leave ()
+local function idle_leave ()
    -- Get a goal
    if not mem.goal then
       if mem.land_planet and not mem.tookoff then
@@ -155,7 +155,7 @@ function idle_leave ()
    return false
 end
 
-function idle_nostealth ()
+local function idle_nostealth ()
    local p = ai.pilot()
 
    if mem.aggressive then
@@ -179,6 +179,7 @@ function idle_nostealth ()
 end
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    -- Not doing stealth stuff
    if not mem.stealth then
@@ -211,9 +212,9 @@ function idle ()
       return idle_generic() -- TODO something custom
    end
 
-   if not mem.aggressive then
-      -- TODO non-aggressive behaviours
-   end
+   -- TODO non-aggressive behaviours
+   --if not mem.aggressive then
+   --end
 
    -- See if there is a nearby target to kill
    if __tryengage(p) then return end
@@ -226,6 +227,7 @@ function idle ()
 end
 
 -- Try to back off from the target
+-- luacheck: globals backoff (AI Task functions passed by name)
 function backoff( target )
    if not target or not target:exists() then
       ai.poptask()
@@ -307,10 +309,7 @@ control_funcs.attack = function ()
       return true
    end
 
-   local task = ai.taskname()
-   local si = _stateinfo( task )
-   control_attack( si )
-   return false
+   return control_funcs.generic_attack()
 end
 control_funcs.inspect_moveto = function ()
    local p = ai.pilot()

@@ -1,15 +1,15 @@
 local lanes = require 'ai.core.misc.lanes'
+local scans = require 'ai.core.misc.scans'
 
 -- Default task to run when idle
+-- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local p = ai.pilot()
-   local task = ai.taskname()
-   local si = _stateinfo( task )
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
       local enemy  = ai.getenemy()
-      if should_attack( enemy,  si ) then
+      if should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -66,14 +66,14 @@ function idle ()
 
    else -- Stay. Have a beer.
       if mem.doscans then
-         local target = __getscantarget()
+         local target = scans.get_target()
          if target then
             -- Don't scan if they're going to be attacked anyway
             if ai.isenemy(target) then
                -- TODO probably use should_attack here
                ai.pushtask( "attack", target )
             else
-               __push_scan( target )
+               scans.push( target )
             end
             return
          end

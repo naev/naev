@@ -19,7 +19,7 @@ for i=1,6 do
 end
 
 function bj.init( x, y, w, h, donefunc )
-   bj.deck = cardio.newDeckWestern( false )
+   bj.deck = cardio.newDeckWestern()
    bj.font = lg.newFont(16)
 
    -- Compute position stuff

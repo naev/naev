@@ -31,6 +31,8 @@ local emp = require "common.empire"
 local targetworld, targetworld_sys = planet.getS("Gerhart Station")
 local misn_desc = _("Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
  -- Note: this mission does not make any system claims.
 

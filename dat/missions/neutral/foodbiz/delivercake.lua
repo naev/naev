@@ -27,6 +27,8 @@ local targetworld, targetworld_sys = planet.getS( "Zeo" )
 
 mem.reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create () --No system shall be claimed by mission
    misn.setNPC( _("Familiar Face"), "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end

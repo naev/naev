@@ -75,7 +75,7 @@ int dpl_savePlanet( const Planet *p )
    /* General. */
    xmlw_startElem( writer, "general" );
    xmlw_elem( writer, "class", "%s", p->class );
-   xmlw_elem( writer, "population", "%"PRIu64, p->population );
+   xmlw_elem( writer, "population", "%g", (double)p->population );
    xmlw_elem( writer, "hide", "%f", p->hide );
    xmlw_startElem( writer, "services" );
    if (planet_hasService( p, PLANET_SERVICE_LAND )) {

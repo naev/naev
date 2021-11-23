@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Dvaered Arsenal">
+ <points>120</points>
+ <base_type>Arsenal</base_type>
+ <GFX size="128" sx="12" sy="12">arsenal_dvaered</GFX>
+ <rarity>2</rarity>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Bulk Freighter</class>
+ <price>5400000</price>
+ <time_mod>1.375</time_mod>
+ <trail_generator x="-53" y="7" h="-1" >fire</trail_generator>
+ <trail_generator x="-53" y="-7" h="-1" >fire</trail_generator>
+ <trail_generator x="-37" y="12" h="0">nebula</trail_generator>
+ <trail_generator x="-37" y="-12" h="0">nebula</trail_generator>
+ <trail_generator x="-42" y="13" h="6">nebula</trail_generator>
+ <trail_generator x="-42" y="-13" h="6">nebula</trail_generator>
+ <fabricator>House Dvaered</fabricator>
+ <license>Large Civilian Vessel License</license>
+ <description>The Arsenal is a heavily armed bulk freighter used by House Dvaered to transport large amount of supplies and troops whenever such a task would be too dangerous for lighter armoured freighters. The name derives from the fact that House Dvaered transport ships are usually focused on distributing and deploying weapons and troops in preference over raw materials, goods, or even basic necessities. Colloquially they have been also been known to be called Dvaered Gunboxes.</description>
+ <health>
+  <armour>1100</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>32</crew>
+  <mass>1650</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>320</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" prop="fighter_bay" x="44" y="9" h="3" />
+  <weapon size="large" prop="fighter_bay" x="44" y="-9" h="3" />
+  <weapon size="medium" x="30" y="11" h="2" />
+  <weapon size="medium" x="30" y="-11" h="2" />
+  <weapon size="medium" x="-32" y="12" h="4" />
+  <weapon size="medium" x="-32" y="-12" h="4" />
+  <weapon size="medium" x="-44" y="-12" h="6" />
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="large" prop="engines" exclusive="1" required="1">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>-10</speed_mod>
+  <armour_mod>20</armour_mod>
+  <energy_mod>20</energy_mod>
+  <energy_regen_mod>-10</energy_regen_mod>
+  <fwd_heat>10</fwd_heat>
+  <fwd_damage>20</fwd_damage>
+  <fwd_energy>10</fwd_energy>
+  <cargo_mod>40</cargo_mod>
+  <cargo_inertia>-30</cargo_inertia>
+  <ew_hide>-10</ew_hide>
+ </stats>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
+</ship>

@@ -6,12 +6,13 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>100</chance>
+  <chance>5</chance>
   <location>Bar</location>
   <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
  </avail>
  <notes>
   <tier>1</tier>
+  <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
 --]]
@@ -29,8 +30,9 @@ local destpnt, destsys = planet.getS("Antlejos V")
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for them.") )
 end
 
@@ -74,10 +76,11 @@ function accept ()
       return
    end
 
+   misn.accept()
+
    local c = misn.cargoNew( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
    misn.cargoAdd(c, cargo_amount)
 
-   misn.accept()
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take them to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward( fmt.credits(reward) )

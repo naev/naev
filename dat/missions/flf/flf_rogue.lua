@@ -22,7 +22,11 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+-- luacheck: globals enter land_flf leave (shared with derived mission flf_dvk07)
+-- luacheck: globals pilot_death_rogue timer_lateFLF (Hook functions passed by name)
+
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
+local rogue_spawnFLF, rogue_spawnRogue -- Forward-declared functions
 
 local misn_title  = {}
 misn_title[1] = _("FLF: Rogue Pilot in {sys}")
@@ -119,7 +123,7 @@ function enter ()
             if not mem.late_arrival then
                rogue_spawnFLF( mem.flfships, mem.last_system )
             else
-               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
+               mem.spawner = hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -130,7 +134,7 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
+   hook.rm( mem.spawner )
    mem.rogue_ships_left = 0
    mem.last_system = system.cur()
 end
@@ -213,4 +217,3 @@ function rogue_spawnFLF( n, param )
       j:setVisible( true )
    end
 end
-

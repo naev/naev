@@ -533,6 +533,3 @@ int toolkit_setListOffset( unsigned int wid, const char* name, int off )
    wgt->dat.lst.pos = off;
    return 0;
 }
-
-
-

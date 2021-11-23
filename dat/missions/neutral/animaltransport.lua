@@ -30,6 +30,8 @@ local fmt = require "format"
 
 local money_reward = 200e3
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
    local planets = {}

@@ -38,6 +38,7 @@ local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates a
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
+-- luacheck: globals attacked attackedObstinate broadcast control deathBase deathDVbomber deathFLF deathObstinate destroyBase engageBase enter idle land operationStart spawnDVbomber spawnFLFbombers spawnFLFdestroyers spawnFLFfighters timer_plcontrol (Hook functions passed by name)
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
@@ -49,6 +50,7 @@ function create()
 end
 
 function accept()
+    local first = not var.peek("flfbase_liaised")
     mem.destsys = system.get(var.peek("flfbase_sysname"))
 
     local briefing, txt
@@ -63,6 +65,7 @@ function accept()
         txt = fmt.f(_([[The Dvaered liaison greets you.
     "I knew you'd be back, citizen {player}. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
     ]]), {player=player.name()}) .. briefing
+        var.push("flfbase_liaised", true)
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
@@ -174,6 +177,7 @@ function land()
         player.pay(1e6)
         player.outfitAdd("Star of Valor")
         var.pop("flfbase_intro")
+        var.pop("flfbase_liaised")
         var.pop("flfbase_sysname")
         diff.apply("flf_dead")
         dv.addAntiFLFLog( _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]]) )

@@ -34,6 +34,8 @@ local fmt = require "format"
 --  2: got away
 mem.misn_state = nil
 local blockade -- Non-persistent state
+-- luacheck: globals blockade_attacked enter generate_npc gotaway heartbeat loadfunc spawn_enemies (Hook functions passed by name)
+-- luacheck: globals approach_kex approach_terminal (NPC functions passed by name)
 
 local targetplanet, targetsys = planet.getS("Niflheim")
 
@@ -303,4 +305,3 @@ function gotaway ()
    spawn_enemies = function () end
    mem.misn_state = 2
 end
-

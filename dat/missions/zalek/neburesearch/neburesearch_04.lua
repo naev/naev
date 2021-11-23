@@ -29,6 +29,8 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+-- luacheck: globals cannotLand jumpin land secondWarningMessage startAmbush takeoff warningMessage (Hook functions passed by name)
+
 -- Mission constants
 local credits = 500e3
 local homeworld, homeworld_sys = planet.getS("Jorla")
@@ -56,7 +58,7 @@ function accept()
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
         fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
-        fmt.f(_("Return to {pnt} in the {pnt} system."), {pnt=homeworld, hsys=omeworld_sys}),
+        fmt.f(_("Return to {pnt} in the {pnt} system."), {pnt=homeworld, sys=homeworld_sys}),
     })
 
     hook.land("land")

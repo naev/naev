@@ -31,7 +31,9 @@ local fmt = require "format"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
-kill_instead_text = {
+-- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+
+local kill_instead_text = {
    _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {plt}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]]),
    _([[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture {plt} is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill the pirate now, you will be paid the lesser sum of {credits}."]]),
    _([[When you return to your cockpit, you are contacted by an officer. "Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off a couple low-life pirates?!" He sighs. "But lucky for you, I'm not in charge, and my higher-ups would rather {plt} be dead than free. So if you finish that scum off, you'll get {credits}. Just be snappy about it!" Having finished delivering the message, the officer then ceases communication.]]),

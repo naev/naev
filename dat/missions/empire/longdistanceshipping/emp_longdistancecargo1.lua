@@ -31,6 +31,8 @@ local emp = require "common.empire"
 local targetworld, targetworld_sys = planet.getS("Soromid Customs Central")
 local misn_desc = _("Deliver a shipping diplomat for the Empire to Soromid Customs Central in the Oberon system")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 function create ()
  -- Note: this mission does not make any system claims.
 

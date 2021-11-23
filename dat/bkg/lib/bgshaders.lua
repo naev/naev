@@ -17,55 +17,74 @@ love.w = nw
 love.h = nh
 lg.origin()
 
-local bgshader, bgscale, bgcanvas
-local cw, ch
+local bgshader = {}
+local bgshader_mt = { __index = bgshader }
 
-function bgshaders.init( shader, scale )
-   bgshader = shader
-   bgscale  = scale or 1
+function bgshaders.init( shader, scale, params )
+   local shd = {
+      bgshader = shader,
+      bgscale  = scale or 1,
+      params   = params or {},
+   }
+   setmetatable( shd, bgshader_mt )
 
-   if bgscale ~= 1 then
-      cw, ch = nw/bgscale, nh/bgscale
-      bgcanvas = lg.newCanvas( cw, ch )
+   if shd.bgscale ~= 1 or shd.params.usetex then
+      shd.cw, shd.ch = nw/shd.bgscale, nh/shd.bgscale
+      shd.bgcanvas = lg.newCanvas( shd.cw, shd.ch )
    end
+
+   if shd.params.usetex then
+      shd.prevcanvas = lg.newCanvas( shd.cw, shd.ch )
+   end
+
+   return shd
 end
 
-function bgshaders.render( dt, col )
+function bgshader:render( dt, col )
    dt = dt or 0
    col = col or {1, 1, 1, 1}
 
    -- Update shader if necessary
-   if bgshader.update then
-      bgshader:update( dt )
+   if self.bgshader.update then
+      self.bgshader:update( dt )
    end
 
    -- We have to draw to a canvas
-   if bgcanvas then
+   if self.bgcanvas then
       -- Save state
       local oldcanvas = lg.getCanvas()
       local oldshader = lg.getShader()
 
+      if self.prevcanvas then
+         self.bgshader:send( "u_prevtex", self.prevcanvas )
+      end
+
       -- Render to canvas
-      lg.setCanvas( bgcanvas )
+      lg.setCanvas( self.bgcanvas )
       lg.clear( 0, 0, 0, 0 )
-      lg.setShader( bgshader )
+      lg.setShader( self.bgshader )
       lg.setColor( col )
       lg.setBlendMode( "alpha", "premultiplied" )
-      love_shaders.img:draw( 0, 0, 0, cw, ch )
+      love_shaders.img:draw( 0, 0, 0, self.cw, self.ch )
       lg.setBlendMode( "alpha" )
       lg.setShader( oldshader )
       lg.setCanvas( oldcanvas )
 
       -- Render to screen
       lg.setColor( 1, 1, 1, 1 )
-      bgcanvas:draw( 0, 0, 0, bgscale, bgscale )
+      self.bgcanvas:draw( 0, 0, 0, self.bgscale, self.bgscale )
+
+      -- Swap buffers
+      if self.prevcanvas then
+         self.prevcanvas, self.bgcanvas = self.bgcanvas, self.prevcanvas
+      end
       return
    end
 
    -- Native resolution
    lg.setColor( col )
    local oldshader = lg.getShader()
-   lg.setShader( bgshader )
+   lg.setShader( self.bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader( oldshader )
 end

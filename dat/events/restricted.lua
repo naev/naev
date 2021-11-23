@@ -12,6 +12,8 @@
 local fmt = require "format"
 
 local sysfct
+-- luacheck: globals endevent make_hostile msg_buoy (Hook functions passed by name)
+
 function create ()
    local csys = system.cur()
 
@@ -26,7 +28,8 @@ end
 
 local msg_list = {
    ["Za'lek"] = _("#rWARNING: Entering militarized zone. Unauthorized access will be met with force.#0"),
-   ["Dvaered"] = _("#rWARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES.#0")
+   ["Dvaered"] = _("#rWARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES.#0"),
+   ["Empire"] = _("#rWARNING: This is a restricted military system. Unauthorized ships will be shot on sight.#0"),
 }
 local msg_delay
 function msg_buoy ()
@@ -66,4 +69,3 @@ end
 function endevent ()
    evt.finish()
 end
-

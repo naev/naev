@@ -13,6 +13,7 @@
  </avail>
  <notes>
   <tier>1</tier>
+  <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
 --]]
@@ -34,6 +35,8 @@ local cargo_amount = 100 -- Amount in mass
 local reward = ant.rewards.ant04
 
 local returnpnt, returnsys = planet.getS("Antlejos V")
+
+-- luacheck: globals enter land protest (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end

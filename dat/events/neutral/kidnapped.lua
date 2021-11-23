@@ -15,6 +15,7 @@
 --]]
 
 local panma, yohail -- Non-persistent state
+-- luacheck: globals finish hail hailme (Hook functions passed by name)
 
 --Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
 function create ()

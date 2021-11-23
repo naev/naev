@@ -21,6 +21,9 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
+-- luacheck: globals enter land leave pay_text success_text (shared with derived missions flf_dvk01, flf_dvk04)
+-- luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
+
 success_text = {
    _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base."),
 }
@@ -104,7 +107,7 @@ function update_dv ()
 end
 
 
-function add_attention( p )
+local function add_attention( p )
    p:setHilight( true )
 
    if not mem.job_done then

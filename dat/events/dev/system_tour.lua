@@ -13,24 +13,25 @@
 -- naev.eventStart("System Tour")
 --]]
 local systems, idx
+-- luacheck: globals screenshot teleport (Hook functions passed by name)
 
 function create()
    player.pilot():setInvincible()
    systems = system.getAll()
    idx = 1
-   hook.takeoff('teleport')
+   hook.takeoff("teleport")
 end
 
 function teleport()
    player.teleport(systems[idx])
    pilot.clear()
-   hook.safe('screenshot')
+   hook.safe("screenshot")
 end
 
 function screenshot()
    player.screenshot()
    idx = idx + 1
    if systems[idx] ~= nil then
-      hook.safe('teleport')
+      hook.safe("teleport")
    end
 end

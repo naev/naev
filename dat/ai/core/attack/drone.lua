@@ -3,17 +3,16 @@
 --Think functions for determining who to attack are found in another file
 --]]
 
--- Initializes the drone
-function atk_drone_init ()
-   mem.atk_think  = atk_drone_think
-   mem.atk        = atk_drone
-end
+local atk = require "ai.core.attack.util"
 
+local __atk_d_flyby, __atk_d_space_sup, __atk_drone_ranged -- Forward-declared functions
+
+local atk_drone = {}
 
 --[[
 -- Mainly targets small drones.
 --]]
-function atk_drone_think( target, _si )
+function atk_drone.think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -53,8 +52,8 @@ function __atk_drone_ranged( target, dist )
       end
    else
       -- First test if we should zz
-      if __atk_decide_zz( target, dist ) then
-         ai.pushsubtask("_atk_zigzag", target)
+      if atk.decide_zz( target, dist ) then
+         ai.pushsubtask("_attack_zigzag", target)
       end
    end
 
@@ -70,8 +69,8 @@ end
 --[[
 -- Main control function for drone behavior.
 --]]
-function atk_drone( target, dokill )
-   target = __atk_com_think( target, dokill )
+function atk_drone.atk( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -79,7 +78,7 @@ function atk_drone( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -101,6 +100,34 @@ end
 
 
 --[[
+-- Approaches the target evasively, never heading in a straight line
+-- This will tend to approach a target along a loose spiral, good for evading capship guns
+-- HISTORICAL NOTE: was removed in commit 5b3d7e12f "suppress useless stuff", which may or may not have been fair.
+--]]
+local function atk_spiral_approach( target, _dist )
+   local dir  = ai.idir(target)
+   local adir = math.abs(dir)
+
+   --these two detect in-cone approach vectors
+   if adir > math.rad(10) and adir < math.rad(30) then
+      ai.accel()
+   end
+
+   --facing away from the target, turn to face
+   if adir > math.rad(30) then
+      ai.iface(target)
+   end
+
+   --aiming right at the target; turn away
+   if dir > 0 and dir < math.rad(10) then
+      ai.turn(1)
+   elseif dir < 0 and dir > -math.rad(10) then
+      ai.turn(-1)
+   end
+end -- end spiral approach
+
+
+--[[
 -- Execute a sequence of close-in flyby attacks
 -- Uses a combination of facing and distance to determine what action to take
 -- This version is slightly less aggressive and cruises by the target
@@ -111,15 +138,15 @@ function __atk_d_flyby( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         --__atk_keep_distance()
+         --atk.keep_distance()
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
       else
@@ -173,15 +200,15 @@ function __atk_d_space_sup( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz( target, dist ) then
-      ai.pushsubtask("_atk_zigzag", target)
+   if atk.decide_zz( target, dist ) then
+      ai.pushsubtask("_attack_zigzag", target)
    end
 
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then
       dir = ai.idir(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
-         __atk_keep_distance()
+         atk.keep_distance()
          ai.accel()
       else
          ai.iface(target)
@@ -225,4 +252,4 @@ function __atk_d_space_sup( target, dist )
    end
 end
 
-
+return atk_drone

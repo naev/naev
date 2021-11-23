@@ -1,14 +1,12 @@
-function atk_corvette_init ()
-   mem.atk_think  = atk_heuristic_big_game_think
-   mem.atk        = atk_corvette
-end
+local atk = require "ai.core.attack.util"
 
+local atk_corvette = {}
 
 --[[
 -- Main control function for corvette behavior.
 --]]
-function atk_corvette( target, dokill )
-   target = __atk_com_think( target, dokill )
+function atk_corvette.atk( target, dokill )
+   target = atk.com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff
@@ -16,7 +14,7 @@ function atk_corvette( target, dokill )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not __atk_check_seeable( target ) then return end
+   if not atk.check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -29,16 +27,20 @@ function atk_corvette( target, dokill )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      __atk_g_ranged( target, dist )
+      atk.ranged( target, dist )
 
    -- Close enough to melee
    -- TODO: Corvette-specific attack functions.
    else
       if target:stats().mass < 500 then
-        __atk_f_space_sup( target, dist )
+        atk.space_sup( target, dist )
       else
         mem.aggressive = true
-        __atk_f_flyby( target, dist )
+        atk.flyby( target, dist )
       end
    end
 end
+
+atk_corvette.atk_think = atk.heuristic_big_game_think
+
+return atk_corvette

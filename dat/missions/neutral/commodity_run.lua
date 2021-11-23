@@ -30,6 +30,9 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
 
+-- luacheck: globals cargo_land commchoices (shared with derived missions flf.commodity_run, pirate.pirate_commodity_run)
+-- luacheck: globals enter land (Hook functions passed by name)
+
 --Mission Details
 mem.misn_title = _("{cargo} Delivery")
 mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
@@ -50,7 +53,7 @@ mem.paying_faction = faction.get("Independent")
 commchoices = nil
 
 
-function update_active_runs( change )
+local function update_active_runs( change )
    local current_runs = var.peek( "commodity_runs_active" )
    if current_runs == nil then current_runs = 0 end
    var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )
@@ -147,4 +150,3 @@ end
 function abort ()
    update_active_runs(-1)
 end
-

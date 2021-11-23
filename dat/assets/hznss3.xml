@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>A</class>
-  <population>70000</population>
+  <population>7000</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -27,4 +27,7 @@
   <commodities/>
   <description>One of House Za'leks nutrition stations, this simple agristation services the local sector, augmenting what worlds are unable to feed themselves.</description>
  </general>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
 </asset>

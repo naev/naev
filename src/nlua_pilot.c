@@ -147,6 +147,7 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_ainame( lua_State *L );
 static int pilotL_task( lua_State *L );
 static int pilotL_taskname( lua_State *L );
 static int pilotL_taskstack( lua_State *L );
@@ -275,6 +276,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "ainame", pilotL_ainame },
    { "task", pilotL_task },
    { "taskname", pilotL_taskname },
    { "taskstack", pilotL_taskstack },
@@ -442,8 +444,8 @@ int lua_ispilot( lua_State *L, int ind )
  * @usage point = pilot.choosePoint( f, i, g )
  *
  *    @luatparam Faction f Faction the pilot will belong to.
- *    @luatparam[opt=false] boolean i Wether to ignore rules.
- *    @luatparam[opt=false] boolean g Wether to behave as guerilla (spawn in deep space)
+ *    @luatparam[opt=false] boolean i Whether to ignore rules.
+ *    @luatparam[opt=false] boolean g Whether to behave as guerilla (spawn in deep space)
  *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint
  */
@@ -3763,6 +3765,22 @@ static int pilotL_memory( lua_State *L )
 }
 
 /**
+ * @brief Gets the name of the task the pilot is currently doing.
+ *
+ *    @luatparam Pilot p Pilot to get task name of.
+ *    @luatreturn string Name of the task.
+ * @luafunc ainame
+ */
+static int pilotL_ainame( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->ai == NULL)
+      return 0;
+   lua_pushstring(L, p->ai->name);
+   return 1;
+}
+
+/**
  * @brief Gets the name and data of a pilot's current task.
  *
  *    @luatparam Pilot p Pilot to get task data of.
@@ -3984,7 +4002,7 @@ static int pilotL_moveto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      tsk = "moveto_precise";
+      tsk = "moveto";
    }
    else {
       if (compensate)

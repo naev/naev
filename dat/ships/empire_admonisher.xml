@@ -52,4 +52,7 @@
   <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
  </stats>
+ <tags>
+  <tag>empire</tag>
+ </tags>
 </ship>

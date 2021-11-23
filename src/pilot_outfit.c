@@ -1042,7 +1042,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot_cargoCalc(pilot);
 
    /* Calculate mass. */
-   pilot->solid->mass = s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = MAX( s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit, 0.);
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
@@ -1572,6 +1572,76 @@ void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner )
       lua_pushpilot(naevL, scanner->id); /* f, p, po, scanner */
       if (nlua_pcall( env, 3, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> 'onscanned':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
+/**
+ * @brief Runs Lua outfits when pilot lands on a planet.
+ *
+ *    @param pilot Pilot being handled.
+ */
+void pilot_outfitLOnland( Pilot *pilot )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_land == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: land( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_land); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      if (nlua_pcall( env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'land':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
+/**
+ * @brief Runs Lua outfits when pilot takes off from a planet.
+ *
+ *    @param pilot Pilot being handled.
+ */
+void pilot_outfitLOntakeoff( Pilot *pilot )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_takeoff == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: takeoff( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_takeoff); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      if (nlua_pcall( env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'takeoff':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }
    }

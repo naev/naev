@@ -5,8 +5,7 @@
 --]]
 
 -- We use the default background too!
-require "bkg.default"
-
+local starfield = require "bkg.lib.starfield"
 local love = require 'love'
 local lg = require 'love.graphics'
 
@@ -148,6 +147,7 @@ function background ()
       local w = 2048
       local h = 2048
       local cvs = lg.newCanvas( w, h, {dpiscale=1} )
+      local oldcanvas = lg.getCanvas()
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
       lg.setColor( g, g, g, 1 )
@@ -161,7 +161,7 @@ function background ()
          p.y = h*(y+3) / 6
          lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
       end
-      lg.setCanvas()
+      lg.setCanvas(oldcanvas)
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
 
       -- Store in cache
@@ -174,11 +174,9 @@ function background ()
    add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
 
    -- Default nebula background (no star)
-   cur_sys = system.cur()
-   prng:setSeed( cur_sys:name() )
-   background_nebula()
+   starfield.init{ nolocalstars = true }
 end
-function update ()
+local function update ()
    -- Calculate player motion
    local npos = camera.get()
    local diff = npos - pos
@@ -213,6 +211,9 @@ function update ()
       update_part( p )
    end
 end
+
+renderbg = starfield.render
+
 local function draw_part( p, s, z )
    local x = (p.x - znw2) / z + nw2
    local y = (p.y - znh2) / z + nh2

@@ -254,6 +254,8 @@ typedef struct OutfitModificationData_ {
    int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
    int lua_onscan;   /**< Run when the pilot scans another pilot. */
    int lua_cooldown; /**< Run when cooldown is started or stopped. */
+   int lua_land;     /**< Run when the player lands. */
+   int lua_takeoff;  /**< Run when the player takes off. */
 } OutfitModificationData;
 
 /**

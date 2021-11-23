@@ -37,6 +37,7 @@ static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
 static int systemL_nameRaw( lua_State *L );
+static int systemL_position( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_interference( lua_State *L );
@@ -69,6 +70,7 @@ static const luaL_Reg system_methods[] = {
    { "__tostring", systemL_name },
    { "name", systemL_name },
    { "nameRaw", systemL_nameRaw },
+   { "pos", systemL_position },
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
    { "interference", systemL_interference },
@@ -327,6 +329,20 @@ static int systemL_name( lua_State *L )
 {
    StarSystem *sys = luaL_validsystem(L,1);
    lua_pushstring(L, _(sys->name));
+   return 1;
+}
+
+/**
+ * @brief Returns the position of the system.
+ *
+ *    @luatparam System s System to get position of.
+ *    @luatreturn vec2 Position of the system.
+ * @luafunc pos
+ */
+static int systemL_position( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L,1);
+   lua_pushvector(L, sys->pos);
    return 1;
 }
 

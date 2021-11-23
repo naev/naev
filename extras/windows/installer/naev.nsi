@@ -1,7 +1,7 @@
 ;For testing the script
 ;SetCompress Off
 
-;Enables Unicode installer to clear ANSI deprecation message 
+;Enables Unicode installer to clear ANSI deprecation message
 ;Unicode true
 ;Version, Icon and URL
 ;!define SUFFIX "0.8.0-win64"
@@ -93,9 +93,9 @@ Section "Naev Engine and Data" BinarySection
    SetOutPath "$INSTDIR"
    File /r bin\*
    File logo.ico
-   
+
    IntOp $PortID $PortID & ${SF_SELECTED}
-   
+
    ${If} $PortID = 0 ;this means that the section 'portable' was not selected
    ;Store installation folder
    WriteRegStr SHCTX "Software\Naev" "" $INSTDIR
@@ -138,7 +138,7 @@ Function .onInit
 
    !insertmacro MULTIUSER_INIT
    !insertmacro MUI_LANGDLL_DISPLAY
-   
+
    ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
    ${Unless} ${Errors}
       ;If we get here we're already installed

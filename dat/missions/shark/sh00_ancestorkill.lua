@@ -40,6 +40,9 @@ local pilotname = require "pilotname"
 local fmt = require "format"
 local shark = require "common.shark"
 
+-- luacheck: globals enter jumpout land pirate_dead pirate_jump (Hook functions passed by name)
+-- luacheck: globals beginbattle (NPC functions passed by name)
+
 --Change here to change the planet and the system
 local missys = system.get("Ingot")
 local mispla = planet.get("Ulios")

@@ -32,6 +32,8 @@ local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworld = planet.get("Niflheim")
 
+-- luacheck: globals land (Hook functions passed by name)
+
 -- Here are stored the fake texts for the OSD
 mem.osd_text = {}
 mem.osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
@@ -137,4 +139,3 @@ function land ()
       misn.finish(true)
    end
 end
-

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Katar I">
+ <pos>
+  <x>-4678.865189</x>
+  <y>-6280.187291</y>
+ </pos>
+ <GFX>
+  <space>moon-X00.webp</space>
+  <exterior>rocky_small.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>10.000000</base>
+  <bonus>10.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>1000</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Katar is a planet with a very active core that creates a very particular electromagnetic field that is very useful for high energy physics experiments. However, the same electromagnetic fields make it nearly impossible to use standard electronics nearby. When it was decided to build a geostationary particle physics testing site, Katar was quickly ruled out for setting up a nearby base, and eventually it was decided that the base would be established on Katar I, a small nearby moon. Other than a research center, nothing else has been really constructed, and Katar I ended up a small staff of Za'lek scientists focused on researching with the testing site.</description>
+  <bar>The bar is fairly unremarkable except for the fact it has live streams of the testing being done at the nearby geostationary particle physics testing site. They have a special drink called the "Atom Smasher", which tastes weirdly like engine fuel, and is commonly used in a not entirely healthy bonding ritual in which interns tend to end up passed out after smashing atoms.</bar>
+ </general>
+ <tags>
+  <tag>research</tag>
+  <tag>nonpc</tag>
+ </tags>
+</asset>

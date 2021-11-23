@@ -29,6 +29,8 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+-- luacheck: globals beginFirstScan beginSecondScan drainShields endSecondScan jumpin land noticeProblems startProblems stopProblems takeoff (Hook functions passed by name)
+
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
 local homeworld, homeworld_sys = planet.getS("Jorla")
@@ -190,4 +192,3 @@ function endSecondScan()
     misn.markerMove(mem.misn_marker, homeworld_sys)
     misn.osdActive(3)
 end
-

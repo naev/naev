@@ -1460,8 +1460,9 @@ int space_isSimulationEffects (void)
  * @brief Initializes the system.
  *
  *    @param sysname Name of the system to initialize.
+ *    @param do_simulate Whether or not perform the initial simulation.
  */
-void space_init( const char* sysname )
+void space_init( const char* sysname, int do_simulate )
 {
    char *nt;
    int n, s;
@@ -1580,18 +1581,20 @@ void space_init( const char* sysname )
    if (player.p != NULL)
       pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
-   s = sound_disabled;
-   sound_disabled = 1;
-   ntime_allowUpdate( 0 );
-   n = SYSTEM_SIMULATE_TIME_PRE / fps_min_simulation;
-   for (int i=0; i<n; i++)
-      update_routine( fps_min_simulation, 1 );
-   space_simulating_effects = 1;
-   n = SYSTEM_SIMULATE_TIME_POST / fps_min_simulation;
-   for (int i=0; i<n; i++)
-      update_routine( fps_min_simulation, 1 );
-   ntime_allowUpdate( 1 );
-   sound_disabled = s;
+   if (do_simulate) {
+      s = sound_disabled;
+      sound_disabled = 1;
+      ntime_allowUpdate( 0 );
+      n = SYSTEM_SIMULATE_TIME_PRE / fps_min_simulation;
+      for (int i=0; i<n; i++)
+         update_routine( fps_min_simulation, 1 );
+      space_simulating_effects = 1;
+      n = SYSTEM_SIMULATE_TIME_POST / fps_min_simulation;
+      for (int i=0; i<n; i++)
+         update_routine( fps_min_simulation, 1 );
+      ntime_allowUpdate( 1 );
+      sound_disabled = s;
+   }
    player_messageToggle( 1 );
    if (player.p != NULL)
       pilot_rmFlag( player.p, PILOT_HIDE );
@@ -2138,7 +2141,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             xmlr_strd(cur, "class", planet->class);
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
-            xmlr_ulong(cur, "population", planet->population );
+            xmlr_float(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
             if (xml_isNode(cur, "services")) {

@@ -320,20 +320,17 @@ void nebu_renderOverlay( const double dt )
  */
 static void nebu_renderPuffs( int below_player )
 {
-   int i;
-   NebulaPuff *puff;
-   glColour col;
-
    /* Main menu shouldn't have puffs */
    if (menu_isOpen(MENU_MAIN))
       return;
 
-   for (i=0; i<nebu_npuffs; i++) {
-      puff = &nebu_puffs[i];
+   for (int i=0; i<nebu_npuffs; i++) {
+      NebulaPuff *puff = &nebu_puffs[i];
 
       /* Separate by layers */
       if ((below_player && (puff->height < 1.)) ||
             (!below_player && (puff->height > 1.))) {
+         glColour col;
 
          /* calculate new position */
          puff->x += puff_x * puff->height;
@@ -377,8 +374,7 @@ void nebu_movePuffs( double x, double y )
  */
 void nebu_prep( double density, double volatility, double hue )
 {
-   (void)volatility;
-   int i;
+   (void) volatility;
    float puffhue;
    glColour col;
 
@@ -405,7 +401,7 @@ void nebu_prep( double density, double volatility, double hue )
 
    nebu_npuffs = density/2.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
-   for (i=0; i<nebu_npuffs; i++) {
+   for (int i=0; i<nebu_npuffs; i++) {
       /* Position */
       nebu_puffs[i].x = (double)RNG(-NEBULA_PUFF_BUFFER,
             SCREEN_W + NEBULA_PUFF_BUFFER);
@@ -429,17 +425,13 @@ void nebu_prep( double density, double volatility, double hue )
  */
 static void nebu_generatePuffs (void)
 {
-   int i;
-   int w,h;
-   SDL_Surface *sur;
-   float *nebu;
-
    /* Generate the nebula puffs */
-   for (i=0; i<NEBULA_PUFFS; i++) {
+   for (int i=0; i<NEBULA_PUFFS; i++) {
       /* Generate the nebula */
+      int w, h;
       w = h = RNG(20,64);
-      nebu = noise_genNebulaPuffMap( w, h, 1. );
-      sur = nebu_surfaceFromNebulaMap( nebu, w, h );
+      float *nebu = noise_genNebulaPuffMap( w, h, 1. );
+      SDL_Surface *sur = nebu_surfaceFromNebulaMap( nebu, w, h );
       free(nebu);
 
       /* Load the texture */
@@ -458,10 +450,8 @@ static void nebu_generatePuffs (void)
  */
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h )
 {
-   int i;
    SDL_Surface *sur;
    uint32_t *pix;
-   double c;
 
    /* the good surface */
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
@@ -469,8 +459,8 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
 
    /* convert from mapping to actual colours */
    SDL_LockSurface( sur );
-   for (i=0; i<h*w; i++) {
-      c = map[i];
+   for (int i=0; i<h*w; i++) {
+      double c = map[i];
       pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
    }
    SDL_UnlockSurface( sur );

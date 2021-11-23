@@ -30,6 +30,8 @@ local lmisn = require "lmisn"
 
 local reward = 500e3
 
+-- luacheck: globals date land (Hook functions passed by name)
+
 local complaints = {}
 complaints[1] = _([["You youngsters and your newfangled triple redundancy plasma feedback shunts. In my day, we had to use simple monopole instaconductors to keep our hyperdrives running!"]])
 complaints[2] = _([["Tell me, youngster, why is everyone so preoccupied with Soromid enhancements these days? Cybernetic implants were good enough for us, why can't they be for you?"]])

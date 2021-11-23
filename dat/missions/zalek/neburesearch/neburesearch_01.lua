@@ -32,6 +32,7 @@ local zlk = require "common.zalek"
 
 local ships, transporter -- Non-persistent state
 local fail, spawnTransporter, updateGoalDisplay -- Forward-declared functions
+-- luacheck: globals ambushHail jumpin jumpout land startAmbush takeoff timer_transporterSafe transporterAttacked transporterDeath transporterJump transporterLand transporterShutup (Hook functions passed by name)
 
 -- Mission info stuff
 local osd_msg   = {}

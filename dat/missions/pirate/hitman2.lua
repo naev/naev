@@ -29,6 +29,7 @@ local pir = require "common.pirate"
 local targetsystem = system.get("Delta Pavonis")
 
 local attack_finished -- Forward-declared functions
+-- luacheck: globals landed sys_enter trader_death (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.
