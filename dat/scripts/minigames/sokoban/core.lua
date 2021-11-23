@@ -148,13 +148,14 @@ function sokoban.load()
    alpha = 0
    currentLevel = 1
    completed = false
+   done = false
 
    loadLevel()
 end
 
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
-      done = 1
+      done = true
    elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
          key == movekeys[1] or key == movekeys[2] or
          key == movekeys[3] or key == movekeys[4] then

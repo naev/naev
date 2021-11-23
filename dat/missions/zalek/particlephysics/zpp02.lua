@@ -174,7 +174,7 @@ They scratch their head.]]))
 
    local fs = player.pilot():cargoFree()
    if fs < cargo_amount then
-      vn.na(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
+      vn.na(fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
          {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
       vn.done()
    else
