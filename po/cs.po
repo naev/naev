@@ -3,11 +3,14 @@
 # This file is distributed under the same license as the naev package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: dat/missions/zalek/particlephysics/zpp03.lua:49
+#: dat/missions/zalek/particlephysics/zpp03.lua:99
+#: dat/missions/zalek/particlephysics/zpp03.lua:107
 msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-23 00:02-0500\n"
+"POT-Creation-Date: 2021-11-23 08:23-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -14007,8 +14010,10 @@ msgstr ""
 #. Main positions
 #. Define the routes
 #. We'll use a dynamic faction for some ships to lower faction standing damage
+#. Temp faction
 #: dat/faction.xml:494 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:184 dat/missions/minerva/pirate5.lua:248
+#: dat/missions/zalek/particlephysics/zpp03.lua:117
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:9
 #: dat/scripts/common/zalek.lua:15 dat/scripts/common/zalek_physics.lua:31
 msgid "Za'lek"
@@ -24667,8 +24672,8 @@ msgstr ""
 #: src/dev_sysedit.c:1450 src/dev_sysedit.c:1511 src/dev_sysedit.c:1703
 #: src/dev_sysedit.c:1890 src/dev_sysedit.c:1971 src/dev_uniedit.c:402
 #: src/dev_uniedit.c:1393 src/dev_uniedit.c:1592 src/dev_uniedit.c:1832
-#: src/info.c:275 src/info.c:354 src/info.c:471 src/info.c:616 src/info.c:808
-#: src/info.c:1027 src/info.c:1122 src/info.c:1466 src/land_outfits.c:157
+#: src/info.c:275 src/info.c:354 src/info.c:471 src/info.c:609 src/info.c:801
+#: src/info.c:1020 src/info.c:1115 src/info.c:1459 src/land_outfits.c:157
 #: src/map.c:336 src/map_find.c:1031 src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -26149,8 +26154,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:256 src/options.c:775 src/options.c:879
-#: src/options.c:1130 src/options.c:1182
+#: src/map_find.c:240 src/options.c:258 src/options.c:777 src/options.c:881
+#: src/options.c:1132 src/options.c:1184
 msgid "Cancel"
 msgstr ""
 
@@ -33619,7 +33624,7 @@ msgstr ""
 #. Missions done for the faction's enemies
 #. Missions done for the faction's allies
 #. Standing value threshold between neutral and friendly.
-#: dat/factions/standing/lib/base.lua:36 src/info.c:779
+#: dat/factions/standing/lib/base.lua:36 src/info.c:772
 msgid "Legend"
 msgstr ""
 
@@ -33909,8 +33914,8 @@ msgstr ""
 #: src/dev_sysedit.c:1749 src/dev_sysedit.c:1766 src/dev_sysedit.c:1805
 #: src/dev_sysedit.c:1828 src/dev_sysedit.c:1865 src/dev_sysedit.c:1923
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
-#: src/dev_uniedit.c:1783 src/info.c:288 src/info.c:417 src/info.c:842
-#: src/info.c:1188 src/input.c:516 src/land.c:831 src/land_outfits.c:363
+#: src/dev_uniedit.c:1783 src/info.c:288 src/info.c:417 src/info.c:835
+#: src/info.c:1181 src/input.c:516 src/land.c:832 src/land_outfits.c:363
 #: src/land_outfits.c:396 src/land_outfits.c:580 src/land_shipyard.c:169
 #: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:81
 #: src/land_trade.c:83 src/land_trade.c:117 src/load.c:355 src/load.c:402
@@ -42499,7 +42504,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:72
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:939
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:940
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -46611,6 +46616,7 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband_cake.lua:86
 #: dat/missions/zalek/particlephysics/zpp01.lua:52
 #: dat/missions/zalek/particlephysics/zpp02.lua:63
+#: dat/missions/zalek/particlephysics/zpp03.lua:52
 msgid "Accept"
 msgstr ""
 
@@ -46624,6 +46630,7 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband_cake.lua:87
 #: dat/missions/zalek/particlephysics/zpp01.lua:53
 #: dat/missions/zalek/particlephysics/zpp02.lua:64
+#: dat/missions/zalek/particlephysics/zpp03.lua:53
 msgid "Decline"
 msgstr ""
 
@@ -52705,9 +52712,9 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant01.lua:46
 msgid ""
 "\"You look like a pilot in need of a job. I'm looking for someone to take me "
-"and {amount} of my equipment to {pnt} in the {sys}. Do you think you could "
-"transport me there? I'll make it worth your time with {creds}. What do you "
-"say?\""
+"and {amount} of my equipment to {pnt} in the {sys} system. Do you think you "
+"could transport me there? I'll make it worth your time with {creds}. What do "
+"you say?\""
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:54
@@ -52730,7 +52737,7 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:960
+#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:961
 msgid "Equipment"
 msgstr ""
 
@@ -53187,7 +53194,7 @@ msgstr ""
 #.
 #. Defend ships bringing volunteers from the PUAAA
 #. --
-#. luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyland (Hook functions passed by name)
+#. luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
 #: dat/missions/neutral/antlejos/ant05.lua:53
 msgid "Verner is waiting for you as your ship touches ground."
 msgstr ""
@@ -53263,29 +53270,35 @@ msgstr ""
 msgid "Supply Ship"
 msgstr ""
 
+#: dat/missions/neutral/antlejos/ant05.lua:168
+#, fuzzy
+#| msgid "Vessel under attack! Requesting help!"
+msgid "Supply ship under attack! Help requested!"
+msgstr "Plavidlo pod útokem! Žádám o pomoc!"
+
 #. Nothing to do here
 #. Wrong system
-#: dat/missions/neutral/antlejos/ant05.lua:169
+#: dat/missions/neutral/antlejos/ant05.lua:180
 msgid "#rMISSION FAILED: You were not supposed to leave {sys}!"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant05.lua:177
+#: dat/missions/neutral/antlejos/ant05.lua:188
 msgid "Supply Ship Entry Point"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant05.lua:189
+#: dat/missions/neutral/antlejos/ant05.lua:200
 msgid "The supply ships will be incoming shortly!"
 msgstr ""
 
 #. Initialize ship stuff
-#: dat/missions/neutral/antlejos/ant05.lua:195
+#: dat/missions/neutral/antlejos/ant05.lua:206
 msgid "Supplier"
 msgstr ""
 
 #. See surviving pilots
 #. Say some protest slogan
 #. Protest again
-#: dat/missions/neutral/antlejos/ant05.lua:294
+#: dat/missions/neutral/antlejos/ant05.lua:305
 msgid "#rMISSION FAILED: No supply ships made it through!"
 msgstr ""
 
@@ -70381,6 +70394,8 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp01.lua:101
 #: dat/missions/zalek/particlephysics/zpp02.lua:84
 #: dat/missions/zalek/particlephysics/zpp02.lua:91
+#: dat/missions/zalek/particlephysics/zpp03.lua:72
+#: dat/missions/zalek/particlephysics/zpp03.lua:79
 #: dat/scripts/common/zalek_physics.lua:31
 msgid "Particle Physics"
 msgstr ""
@@ -70461,6 +70476,34 @@ msgid "drone interface controllers"
 msgstr ""
 
 #. Amount of cargo to take
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Za'lek Particle Physics 3">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <chance>100</chance>
+#. <planet>Katar I</planet>
+#. <location>Bar</location>
+#. <done>Za'lek Particle Physics 2</done>
+#. </avail>
+#. <notes>
+#. <campaign>Za'lek Particle Physics</campaign>
+#. <tier>1</tier>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Za'lek Particle Physics 03
+#.
+#. Player has to go check a droid malfunction. There will be two drones one
+#. disable and one hostile. Player must destroy hostile and "hack" the disabled
+#. one to get the black box.
+#.
+#.
+#. luacheck: globals land enter drone_board (Hook functions passed by name)
 #. Checks to see if the player has a Za'lek ship.
 #.
 #.
@@ -70469,6 +70512,7 @@ msgstr ""
 #. --
 #. Noona Sanderaite
 #: dat/missions/zalek/particlephysics/zpp02.lua:48
+#: dat/missions/zalek/particlephysics/zpp03.lua:39
 #: dat/scripts/common/zalek_physics.lua:15
 msgid "Noona"
 msgstr ""
@@ -70623,6 +70667,62 @@ msgstr ""
 msgid ""
 "Special adapters that are able to connect modern drone controllers with "
 "older drone connectors."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:50
+#: dat/missions/zalek/particlephysics/zpp03.lua:57
+#: dat/missions/zalek/particlephysics/zpp03.lua:61
+#: dat/missions/zalek/particlephysics/zpp03.lua:100
+msgid "\"\""
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:74
+msgid ""
+"Investigate the issue with the drones near the particle physics testing site "
+"at {sys}."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:80
+msgid "Investigate the drones"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:81
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Return to Katar I"
+msgstr "Stanice Cantina"
+
+#. Spawn the drones
+#. TODO better location once testing center object is created
+#: dat/missions/zalek/particlephysics/zpp03.lua:124
+#: dat/missions/zalek/particlephysics/zpp03.lua:133
+msgid "Haywire Drone"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:140
+msgid "The drone's black box has already been extracted."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:148
+msgid "You access the drone control panel and jack into the black box."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:162
+msgid ""
+"You manage recover the entire black box intact and load the information on "
+"your ship."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:165
+msgid "You failed to access the black box."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:170
+msgid "Drone Black Box"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp03.lua:170
+msgid "The recovered black box of a Za'lek drone."
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:54
@@ -73602,8 +73702,8 @@ msgstr ""
 #. --
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
-#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:253 src/options.c:573
-#: src/options.c:876 src/options.c:1179
+#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:255 src/options.c:575
+#: src/options.c:878 src/options.c:1181
 msgid "OK"
 msgstr ""
 
@@ -76931,7 +77031,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/ai.c:588 src/board.c:153 src/comm.c:168 src/info.c:385 src/land.c:1487
+#: src/ai.c:588 src/board.c:153 src/comm.c:168 src/info.c:385 src/land.c:1488
 #: src/player.c:3315
 #, c-format
 msgid ""
@@ -77318,409 +77418,413 @@ msgstr ""
 msgid "Lua Conditional didn't return a boolean"
 msgstr ""
 
-#: src/conf.c:89
+#: src/conf.c:90
 #, c-format
 msgid "Usage: %s [OPTIONS] [DATA]"
 msgstr ""
 
-#: src/conf.c:90
+#: src/conf.c:91
 msgid "Options are:"
 msgstr ""
 
-#: src/conf.c:91
+#: src/conf.c:92
 msgid "   -f, --fullscreen      activate fullscreen"
 msgstr ""
 
-#: src/conf.c:92
+#: src/conf.c:93
 msgid "   -F n, --fps n         limit frames per second to n"
 msgstr ""
 
-#: src/conf.c:93
+#: src/conf.c:94
 msgid "   -V, --vsync           enable vsync"
 msgstr ""
 
-#: src/conf.c:94
+#: src/conf.c:95
 msgid "   -W n                  set width to n"
 msgstr ""
 
-#: src/conf.c:95
+#: src/conf.c:96
 msgid "   -H n                  set height to n"
 msgstr ""
 
-#: src/conf.c:96
+#: src/conf.c:97
 msgid "   -j n, --joystick n    use joystick n"
 msgstr ""
 
-#: src/conf.c:97
+#: src/conf.c:98
 msgid "   -J s, --Joystick s    use joystick whose name contains s"
 msgstr ""
 
-#: src/conf.c:98
+#: src/conf.c:99
 msgid "   -M, --mute            disables sound"
 msgstr ""
 
-#: src/conf.c:99
+#: src/conf.c:100
 msgid "   -S, --sound           forces sound"
 msgstr ""
 
-#: src/conf.c:100
+#: src/conf.c:101
 msgid "   -m f, --mvol f        sets the music volume to f"
 msgstr ""
 
-#: src/conf.c:101
+#: src/conf.c:102
 msgid "   -s f, --svol f        sets the sound volume to f"
 msgstr ""
 
-#: src/conf.c:102
+#: src/conf.c:103
 msgid ""
 "   -d, --datapath        adds a new datapath to be mounted (i.e., appends it "
 "to the search path for game assets)"
 msgstr ""
 
-#: src/conf.c:103
+#: src/conf.c:104
 msgid "   -X, --scale           defines the scale factor"
 msgstr ""
 
-#: src/conf.c:105
+#: src/conf.c:106
 msgid "   --devmode             enables dev mode perks like the editors"
 msgstr ""
 
-#: src/conf.c:107
+#: src/conf.c:108
 msgid "   -h, --help            display this message and exit"
 msgstr ""
 
-#: src/conf.c:108
+#: src/conf.c:109
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:420
+#: src/conf.c:427
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:424
+#: src/conf.c:431
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:438
+#: src/conf.c:445
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:442
+#: src/conf.c:449
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:468
+#: src/conf.c:475
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:474
+#: src/conf.c:481
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:487
+#: src/conf.c:494
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:498
+#: src/conf.c:505
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:505
+#: src/conf.c:512
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:600
+#: src/conf.c:607
 msgid "Enabling developer mode."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:777
+#: src/conf.c:784
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:783
+#: src/conf.c:790
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:789
+#: src/conf.c:796
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:793
+#: src/conf.c:800
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:798
+#: src/conf.c:805
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:803
+#: src/conf.c:810
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:804
+#: src/conf.c:811
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:808
+#: src/conf.c:815
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
 #. Window.
-#: src/conf.c:813
+#: src/conf.c:820
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:814
+#: src/conf.c:821
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:824
+#: src/conf.c:831
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:825
+#: src/conf.c:832
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:829
+#: src/conf.c:836
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr ""
 
-#: src/conf.c:830
+#: src/conf.c:837
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
 
-#: src/conf.c:834
+#: src/conf.c:841
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:838
+#: src/conf.c:845
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:842
+#: src/conf.c:849
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:846 src/options.c:1289
+#: src/conf.c:853 src/options.c:1291
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:850 src/options.c:1292
+#: src/conf.c:857 src/options.c:1294
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/conf.c:854
+#: src/conf.c:861
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
 
-#: src/conf.c:858
+#: src/conf.c:865
 msgid ""
 "Nebula brightness. 1 is normal brightness while setting it to 0 would make "
 "the nebula pitch black."
 msgstr ""
 
-#: src/conf.c:862
+#: src/conf.c:869
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
 
+#: src/conf.c:873
+msgid "Expensive high quality shaders for the background. Defaults to false."
+msgstr ""
+
 #. FPS
-#: src/conf.c:867
+#: src/conf.c:878
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:871
+#: src/conf.c:882
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:876
+#: src/conf.c:887
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:881
+#: src/conf.c:892
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:885
+#: src/conf.c:896
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:889
+#: src/conf.c:900
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:895
+#: src/conf.c:906
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:896
+#: src/conf.c:907
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:909
+#: src/conf.c:920
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:911
+#: src/conf.c:922
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:917
+#: src/conf.c:928
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:919
+#: src/conf.c:930
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:924
+#: src/conf.c:935
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:925
+#: src/conf.c:936
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:926
+#: src/conf.c:937
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:932
+#: src/conf.c:943
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: src/conf.c:936
+#: src/conf.c:947
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:941
+#: src/conf.c:952
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:942
+#: src/conf.c:953
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: src/conf.c:943
+#: src/conf.c:954
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr ""
 
-#: src/conf.c:945
+#: src/conf.c:956
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr ""
 
-#: src/conf.c:947
+#: src/conf.c:958
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr ""
 
-#: src/conf.c:949
+#: src/conf.c:960
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
 #. Misc.
-#: src/conf.c:953
+#: src/conf.c:964
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:957
+#: src/conf.c:968
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:961
+#: src/conf.c:972
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:965
+#: src/conf.c:976
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:969
+#: src/conf.c:980
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
 msgstr ""
 
-#: src/conf.c:973
+#: src/conf.c:984
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
 
-#: src/conf.c:977
+#: src/conf.c:988
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: src/conf.c:981
+#: src/conf.c:992
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:985
+#: src/conf.c:996
 msgid "Enemy distance at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:989
+#: src/conf.c:1000
 msgid "Shield value at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:993
+#: src/conf.c:1004
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:997
+#: src/conf.c:1008
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:1001
+#: src/conf.c:1012
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1005
+#: src/conf.c:1016
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1010
+#: src/conf.c:1021
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1015
+#: src/conf.c:1026
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: src/conf.c:1025
+#: src/conf.c:1036
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1094
+#: src/conf.c:1105
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -78337,7 +78441,7 @@ msgid "Name: %s"
 msgstr ""
 
 #. create the window
-#: src/dialogue.c:147 src/options.c:160
+#: src/dialogue.c:147 src/options.c:162
 msgid "Warning"
 msgstr ""
 
@@ -78404,7 +78508,7 @@ msgstr ""
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1255
+#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1256
 #: src/land_outfits.c:152 src/land_shipyard.c:104 src/land_trade.c:70
 msgid "Take Off"
 msgstr ""
@@ -78594,7 +78698,7 @@ msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:545 src/info.c:556
+#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:526 src/info.c:546
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
@@ -78651,7 +78755,7 @@ msgstr ""
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1732 src/info.c:557 src/land_shipyard.c:314
+#: src/equipment.c:1732 src/info.c:548 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
@@ -78659,7 +78763,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/equipment.c:1732 src/info.c:263 src/info.c:558
+#: src/equipment.c:1732 src/info.c:263 src/info.c:549
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
@@ -78709,7 +78813,7 @@ msgstr ""
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2033 src/land.c:1483
+#: src/equipment.c:2033 src/land.c:1484
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "File '%s' not found!"
@@ -79267,7 +79371,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:60 src/land.c:944 src/space.c:170
+#: src/info.c:60 src/land.c:945 src/space.c:170
 msgid "Missions"
 msgstr ""
 
@@ -79390,202 +79494,203 @@ msgid ""
 "Stats:\n"
 msgstr ""
 
-#: src/info.c:520
+#: src/info.c:528
 #, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s\n"
-"%d\n"
-"\n"
-"%.0f %s\n"
-"%s average\n"
-"%.0f kN/tonne\n"
-"%.0f m/s (max %.0f m/s)\n"
-"%.0f deg/s\n"
-"%.0f%%\n"
-"\n"
-"%.0f%%\n"
-"%.0f / %.0f MJ (%.1f MW)\n"
-"%.0f / %.0f MJ (%.1f MW)\n"
-"%.0f / %.0f MJ (%.1f MW)\n"
-"%d / %d %s\n"
-"%.0f / %.0f %s (%d %s)\n"
-"\n"
+msgid "%s average"
 msgstr ""
 
-#: src/info.c:590
+#: src/info.c:530 src/land_shipyard.c:300 src/map_system.c:665
+#, c-format
+msgid "%.0f kN/tonne"
+msgstr ""
+
+#: src/info.c:532
+#, c-format
+msgid "%.0f m/s (max %.0f m/s)"
+msgstr ""
+
+#: src/info.c:535 src/map_system.c:669
+#, c-format
+msgid "%.0f deg/s"
+msgstr ""
+
+#: src/info.c:541 src/info.c:543 src/info.c:545
+#, c-format
+msgid "%.0f / %.0f MJ (%.1f MW)"
+msgstr ""
+
+#: src/info.c:583
 msgid "Current Weapon Set Settings"
 msgstr ""
 
-#: src/info.c:593
+#: src/info.c:586
 msgid "Enable instant Mode"
 msgstr ""
 
-#: src/info.c:596
+#: src/info.c:589
 msgid "(Weapons fire when this weapon set key is pressed)"
 msgstr ""
 
-#: src/info.c:599
+#: src/info.c:592
 msgid "Only shoot weapons that are in range"
 msgstr ""
 
-#: src/info.c:603
+#: src/info.c:596
 msgid "Global Settings"
 msgstr ""
 
-#: src/info.c:606
+#: src/info.c:599
 msgid "Automatically handle weapons"
 msgstr ""
 
-#: src/info.c:609
+#: src/info.c:602
 msgid "Dogfight aiming helper"
 msgstr ""
 
-#: src/info.c:695
+#: src/info.c:688
 msgid "Enable autoweapons?"
 msgstr ""
 
-#: src/info.c:696
+#: src/info.c:689
 msgid ""
 "Are you sure you want to enable automatic weapon groups for the ship?\n"
 "\n"
 "This will overwrite all manually-tweaked weapons groups."
 msgstr ""
 
-#: src/info.c:738
+#: src/info.c:731
 msgid "You can not set all your weapon sets to fire groups!"
 msgstr ""
 
-#: src/info.c:783
+#: src/info.c:776
 msgid "Outfit that can be activated"
 msgstr ""
 
-#: src/info.c:787
+#: src/info.c:780
 msgid "Secondary Weapon (Right click toggles)"
 msgstr ""
 
-#: src/info.c:791
+#: src/info.c:784
 msgid "Primary Weapon (Left click toggles)"
 msgstr ""
 
-#: src/info.c:810
+#: src/info.c:803
 msgid "Jettison"
 msgstr ""
 
-#: src/info.c:853
+#: src/info.c:846
 msgid " (#rillegal#0)"
 msgstr ""
 
-#: src/info.c:892
+#: src/info.c:885
 msgid "Illegalized by the following factions:\n"
 msgstr ""
 
-#: src/info.c:898
+#: src/info.c:891
 #, c-format
 msgid ""
 "\n"
 "   - %s"
 msgstr ""
 
-#: src/info.c:922 src/info.c:1217
+#: src/info.c:915 src/info.c:1210
 msgid "Abort Mission"
 msgstr ""
 
-#: src/info.c:923 src/info.c:1218
+#: src/info.c:916 src/info.c:1211
 msgid "Are you sure you want to abort this mission?"
 msgstr ""
 
-#: src/info.c:939
+#: src/info.c:932
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
 msgstr ""
 
-#: src/info.c:1124
+#: src/info.c:1117
 msgid "Abort"
 msgstr ""
 
-#: src/info.c:1130
+#: src/info.c:1123
 msgid "#nReward:#0"
 msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1168 src/info.c:1187 src/land.c:620 src/land.c:687 src/land.c:724
+#: src/info.c:1161 src/info.c:1180 src/land.c:620 src/land.c:687 src/land.c:724
 msgid "No Missions"
 msgstr ""
 
-#: src/info.c:1190
+#: src/info.c:1183
 msgid "You currently have no active missions."
 msgstr ""
 
-#: src/info.c:1370
+#: src/info.c:1363
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
 "log title to delete."
 msgstr ""
 
-#: src/info.c:1375
+#: src/info.c:1368
 #, c-format
 msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
 
-#: src/info.c:1405
+#: src/info.c:1398
 msgid "Log message"
 msgstr ""
 
-#: src/info.c:1428 src/info.c:1436
+#: src/info.c:1421 src/info.c:1429
 msgid "Add a log entry"
 msgstr ""
 
-#: src/info.c:1428
+#: src/info.c:1421
 msgid "Add an entry to your diary:"
 msgstr ""
 
-#: src/info.c:1431
+#: src/info.c:1424
 msgid "Your Diary"
 msgstr ""
 
-#: src/info.c:1436
+#: src/info.c:1429
 #, c-format
 msgid "Add an entry to the log titled '%s':"
 msgstr ""
 
-#: src/info.c:1442
+#: src/info.c:1435
 msgid "Cannot add log"
 msgstr ""
 
-#: src/info.c:1442
+#: src/info.c:1435
 msgid "Cannot find this log!  Something went wrong here!"
 msgstr ""
 
-#: src/info.c:1468 src/load.c:373
+#: src/info.c:1461 src/load.c:373
 msgid "Delete"
 msgstr ""
 
-#: src/info.c:1471
+#: src/info.c:1464
 msgid "View Entry"
 msgstr ""
 
-#: src/info.c:1474
+#: src/info.c:1467
 msgid "Add Entry"
 msgstr ""
 
-#: src/info.c:1480
+#: src/info.c:1473
 msgid "Select log type:"
 msgstr ""
 
-#: src/info.c:1484
+#: src/info.c:1477
 msgid "Select log title:"
 msgstr ""
 
-#: src/info.c:1488
+#: src/info.c:1481
 msgid "Log entries:"
 msgstr ""
 
-#: src/info.c:1512
+#: src/info.c:1505
 #, c-format
 msgid "Invalid info tab ID: %d"
 msgstr ""
@@ -80119,7 +80224,7 @@ msgstr ""
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:460 src/options.c:719
+#: src/input.c:460 src/options.c:721
 #, c-format
 msgid "Not bound"
 msgstr ""
@@ -80308,16 +80413,16 @@ msgstr ""
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:780 src/land.c:842
+#: src/land.c:780 src/land.c:843
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:812 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
+#: src/land.c:813 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
 msgid ", "
 msgstr ""
 
-#: src/land.c:821
+#: src/land.c:822
 #, c-format
 msgid ""
 "%s (%s system)\n"
@@ -80329,28 +80434,28 @@ msgid ""
 "%s%s"
 msgstr ""
 
-#: src/land.c:853
+#: src/land.c:854
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:935
+#: src/land.c:936
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:949 src/map_find.c:1042 src/space.c:172
+#: src/land.c:950 src/map_find.c:1042 src/space.c:172
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:954 src/space.c:173
+#: src/land.c:955 src/space.c:173
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:965 src/space.c:171
+#: src/land.c:966 src/space.c:171
 msgid "Commodity"
 msgstr ""
 
-#: src/land.c:1232
+#: src/land.c:1233
 msgid ""
 "#nStationed at:\n"
 "Class:\n"
@@ -80361,33 +80466,33 @@ msgid ""
 "Money:"
 msgstr ""
 
-#: src/land.c:1240
+#: src/land.c:1241
 msgid "Tags:"
 msgstr ""
 
-#: src/land.c:1261
+#: src/land.c:1262
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1371
+#: src/land.c:1372
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. cleanup
 #. must be before cleaning up planet
-#: src/land.c:1424
+#: src/land.c:1425
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1433
+#: src/land.c:1434
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1500
+#: src/land.c:1501
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -80552,11 +80657,6 @@ msgid_plural "teraflops"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
-
-#: src/land_shipyard.c:300 src/map_system.c:665
-#, c-format
-msgid "%.0f kN/tonne"
-msgstr ""
 
 #: src/land_shipyard.c:306 src/map_system.c:673
 #, c-format
@@ -81268,11 +81368,6 @@ msgstr ""
 msgid "%.0f m/s"
 msgstr ""
 
-#: src/map_system.c:669
-#, c-format
-msgid "%.0f deg/s"
-msgstr ""
-
 #: src/map_system.c:712
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
@@ -81358,7 +81453,7 @@ msgid "Editors"
 msgstr ""
 
 #. Create window and tabs.
-#: src/menu.c:234 src/menu.c:428 src/options.c:124
+#: src/menu.c:234 src/menu.c:428 src/options.c:126
 msgid "Options"
 msgstr ""
 
@@ -82897,336 +82992,340 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/options.c:45
+#: src/options.c:46
 msgid "Gameplay"
 msgstr ""
 
-#: src/options.c:46
+#: src/options.c:47
 msgid "Video"
 msgstr ""
 
-#: src/options.c:47
+#: src/options.c:48
 msgid "Audio"
 msgstr ""
 
-#: src/options.c:48
+#: src/options.c:49
 msgid "Input"
 msgstr ""
 
-#: src/options.c:160
+#: src/options.c:162
 msgid "Restart Naev for changes to take effect."
 msgstr ""
 
-#: src/options.c:221
+#: src/options.c:223
 msgid "system"
 msgstr ""
 
-#: src/options.c:259 src/options.c:576 src/options.c:882 src/options.c:1185
+#: src/options.c:261 src/options.c:578 src/options.c:884 src/options.c:1187
 msgid "Defaults"
 msgstr ""
 
-#: src/options.c:273
+#: src/options.c:275
 #, c-format
 msgid "ndata: %s"
 msgstr ""
 
-#: src/options.c:288
+#: src/options.c:290
 msgid "Language:"
 msgstr ""
 
-#: src/options.c:304
+#: src/options.c:306
 msgid "Compilation Flags:"
 msgstr ""
 
-#: src/options.c:342
+#: src/options.c:344
 msgid "Stop Speedup At:"
 msgstr ""
 
-#: src/options.c:354
+#: src/options.c:356
 msgid "Settings:"
 msgstr ""
 
-#: src/options.c:358
+#: src/options.c:360
 msgid "Enable manual zoom control"
 msgstr ""
 
-#: src/options.c:361
+#: src/options.c:363
 msgid "Enable double-tap afterburn/cooldown"
 msgstr ""
 
-#: src/options.c:364
+#: src/options.c:366
 msgid "Enable mouse-flying (toggle with middle click)"
 msgstr ""
 
-#: src/options.c:367
+#: src/options.c:369
 msgid "Enable mouse-flying thrust control"
 msgstr ""
 
-#: src/options.c:370
+#: src/options.c:372
 msgid "Enable saved game compression"
 msgstr ""
 
-#: src/options.c:372
+#: src/options.c:374
 msgid "Visible Messages"
 msgstr ""
 
-#: src/options.c:378
+#: src/options.c:380
 msgid "Max Time Compression Factor"
-msgstr ""
-
-#: src/options.c:528
-#, c-format
-msgid "Enemy Presence"
 msgstr ""
 
 #: src/options.c:530
 #, c-format
-msgid "Enemy within %s distance"
+msgid "Enemy Presence"
 msgstr ""
 
 #: src/options.c:532
 #, c-format
-msgid "%.0f%% Shield"
+msgid "Enemy within %s distance"
 msgstr ""
 
 #: src/options.c:534
 #, c-format
+msgid "%.0f%% Shield"
+msgstr ""
+
+#: src/options.c:536
+#, c-format
 msgid "Armour Damage"
 msgstr ""
 
-#: src/options.c:579
+#: src/options.c:581
 msgid "Set Key"
 msgstr ""
 
-#: src/options.c:724
+#: src/options.c:726
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr ""
 
-#: src/options.c:729
+#: src/options.c:731
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr ""
 
-#: src/options.c:735
+#: src/options.c:737
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr ""
 
-#: src/options.c:738
+#: src/options.c:740
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr ""
 
-#: src/options.c:741
+#: src/options.c:743
 #, c-format
 msgid "joy button:   <%d>"
 msgstr ""
 
-#: src/options.c:744
+#: src/options.c:746
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr ""
 
-#: src/options.c:747
+#: src/options.c:749
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr ""
 
-#: src/options.c:750
+#: src/options.c:752
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr ""
 
-#: src/options.c:753
+#: src/options.c:755
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr ""
 
-#: src/options.c:773
+#: src/options.c:775
 msgid "WASD"
 msgstr ""
 
-#: src/options.c:774
+#: src/options.c:776
 msgid "Arrow Keys"
 msgstr ""
 
-#: src/options.c:778
+#: src/options.c:780
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/options.c:779
+#: src/options.c:781
 msgid "Which layout do you want to use?"
 msgstr ""
 
 #. Alert user it worked.
-#: src/options.c:808
+#: src/options.c:810
 msgid "Defaults Restored"
 msgstr ""
 
-#: src/options.c:808
+#: src/options.c:810
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:850
+#: src/options.c:852
 msgid "Music Volume"
 msgstr ""
 
-#: src/options.c:850
+#: src/options.c:852
 msgid "Sound Volume"
 msgstr ""
 
-#: src/options.c:854
+#: src/options.c:856
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:857
+#: src/options.c:859
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:888
+#: src/options.c:890
 msgid "Disable all sound/music"
 msgstr ""
 
-#: src/options.c:892
+#: src/options.c:894
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:898
+#: src/options.c:900
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1085
+#: src/options.c:1087
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1118
+#: src/options.c:1120
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1125
+#: src/options.c:1127
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1134
+#: src/options.c:1136
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1138
+#: src/options.c:1140
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1192
+#: src/options.c:1194
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1197
+#: src/options.c:1199
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1257
+#: src/options.c:1259
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1259
+#: src/options.c:1261
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1269
+#: src/options.c:1271
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1278
+#: src/options.c:1280
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1281
+#: src/options.c:1283
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1286
+#: src/options.c:1288
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1319
+#: src/options.c:1298
+msgid "Fancy and expensive background shaders"
+msgstr ""
+
+#: src/options.c:1325
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1322
+#: src/options.c:1328
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1338
+#: src/options.c:1344
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
-#: src/options.c:1368
+#: src/options.c:1374
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1451
+#: src/options.c:1467
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1455
+#: src/options.c:1471
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1456
+#: src/options.c:1472
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1457 src/options.c:1463
+#: src/options.c:1473 src/options.c:1479
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1457 src/options.c:1463
+#: src/options.c:1473 src/options.c:1479
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1461
+#: src/options.c:1477
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1462
+#: src/options.c:1478
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1539
+#: src/options.c:1555
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1557
+#: src/options.c:1573
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1579
+#: src/options.c:1595
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1600
+#: src/options.c:1616
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1615
+#: src/options.c:1631
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1630
+#: src/options.c:1646
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
