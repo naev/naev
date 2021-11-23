@@ -156,6 +156,10 @@ end
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
       done = true
+
+   elseif key == 'r' then
+      loadLevel()
+
    elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
          key == movekeys[1] or key == movekeys[2] or
          key == movekeys[3] or key == movekeys[4] then
@@ -173,13 +177,21 @@ function sokoban.keypressed( key )
 
       local dx = 0
       local dy = 0
-      if key == 'left' or key == movekeys[1] then
+      if key == 'left' then
          dx = -1
-      elseif key == 'right' or key == movekeys[2] then
+      elseif key == 'right' then
          dx = 1
-      elseif key == 'up' or key == movekeys[3] then
+      elseif key == 'up' then
          dy = -1
-      elseif key == 'down' or key == movekeys[4] then
+      elseif key == 'down' then
+         dy = 1
+      elseif key == movekeys[1] then
+         dx = -1
+      elseif key == movekeys[2] then
+         dx = 1
+      elseif key == movekeys[3] then
+         dy = -1
+      elseif key == movekeys[4] then
          dy = 1
       end
 
@@ -241,9 +253,6 @@ function sokoban.keypressed( key )
             loadLevel()
          end
       end
-
-   elseif key == 'r' then
-      loadLevel()
 
    end
 end
