@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-22 23:00-0500\n"
+"POT-Creation-Date: 2021-11-23 00:02-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -4142,9 +4142,9 @@ msgid ""
 "Due to the ever changing staff rosters on the station, the bar has a very "
 "casual atmosphere making it very easy to meet new people. There's a wall of "
 "shame and wall of glory where visualizations of horrible mishaps by rookie "
-"cadets and also glorious feats are highlight for everyone to see. The drinks "
-"flow generously fueled by military paychecks and it is not uncommon to see "
-"novices passed out."
+"cadets and also glorious feats are highlighted for everyone to see. The "
+"drinks flow generously fueled by military paychecks and it is not uncommon "
+"to see novices passed out."
 msgstr ""
 
 #: dat/assets/gammacron_iv.xml:2
@@ -19557,8 +19557,8 @@ msgstr ""
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:243 src/dev_uniedit.c:249
-#: src/dev_uniedit.c:1260 src/dev_uniedit.c:1261 src/map.c:564 src/map.c:565
-#: src/outfit.c:286 src/outfit.c:305
+#: src/dev_uniedit.c:1260 src/dev_uniedit.c:1261 src/land_shipyard.c:249
+#: src/map.c:564 src/map.c:565 src/outfit.c:286 src/outfit.c:305
 msgid "N/A"
 msgstr ""
 
@@ -34306,10 +34306,10 @@ msgstr ""
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:288 src/info.c:417 src/info.c:842
 #: src/info.c:1188 src/input.c:516 src/land.c:831 src/land_outfits.c:363
-#: src/land_outfits.c:396 src/land_outfits.c:580 src/land_shipyard.c:168
-#: src/land_shipyard.c:280 src/land_trade.c:81 src/land_trade.c:83
-#: src/land_trade.c:117 src/load.c:355 src/load.c:402 src/load.c:447
-#: src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
+#: src/land_outfits.c:396 src/land_outfits.c:580 src/land_shipyard.c:169
+#: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:81
+#: src/land_trade.c:83 src/land_trade.c:117 src/load.c:355 src/load.c:402
+#: src/load.c:447 src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -79090,7 +79090,7 @@ msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1255
-#: src/land_outfits.c:152 src/land_shipyard.c:103 src/land_trade.c:70
+#: src/land_outfits.c:152 src/land_shipyard.c:104 src/land_trade.c:70
 msgid "Take Off"
 msgstr ""
 
@@ -79116,17 +79116,18 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: src/equipment.c:364 src/map_system.c:656
+#. text
+#: src/equipment.c:364 src/land_shipyard.c:128 src/map_system.c:656
 #, fuzzy
 #| msgid "Mode"
 msgid "Model:"
 msgstr "모드"
 
-#: src/equipment.c:365 src/map_system.c:657
+#: src/equipment.c:365 src/land_shipyard.c:129 src/map_system.c:657
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:366 src/map_system.c:660
+#: src/equipment.c:366 src/land_shipyard.c:131 src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
@@ -79134,7 +79135,7 @@ msgstr ""
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:369 src/map_system.c:663
+#: src/equipment.c:369 src/land_shipyard.c:135 src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
@@ -79143,19 +79144,19 @@ msgstr ""
 msgid "Jump Time:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:371 src/map_system.c:664
+#: src/equipment.c:371 src/land_shipyard.c:136 src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:372 src/map_system.c:666
+#: src/equipment.c:372 src/land_shipyard.c:137 src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:373 src/map_system.c:668
+#: src/equipment.c:373 src/land_shipyard.c:138 src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:374 src/map_system.c:670
+#: src/equipment.c:374 src/land_shipyard.c:139 src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
 
@@ -79174,27 +79175,27 @@ msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:379 src/map_system.c:672
+#: src/equipment.c:379 src/land_shipyard.c:140 src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:380 src/map_system.c:674
+#: src/equipment.c:380 src/land_shipyard.c:141 src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:381 src/map_system.c:676
+#: src/equipment.c:381 src/land_shipyard.c:142 src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:382 src/map_system.c:678
+#: src/equipment.c:382 src/land_shipyard.c:143 src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:383 src/map_system.c:680
+#: src/equipment.c:383 src/land_shipyard.c:144 src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:384 src/map_system.c:681
+#: src/equipment.c:384 src/land_shipyard.c:145 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
 
@@ -79284,7 +79285,7 @@ msgstr ""
 
 #. Movement.
 #: src/equipment.c:1706 src/equipment.c:1730 src/info.c:545 src/info.c:556
-#: src/land_shipyard.c:317 src/land_shipyard.c:327
+#: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
@@ -79338,8 +79339,8 @@ msgstr ""
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1732 src/info.c:557 src/land_shipyard.c:328
-#: src/land_shipyard.c:329 src/map_system.c:681 src/map_system.c:683
+#: src/equipment.c:1732 src/info.c:557 src/land_shipyard.c:314
+#: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
@@ -81077,7 +81078,7 @@ msgstr ""
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:164 src/land_shipyard.c:109 src/land_trade.c:66
+#: src/land_outfits.c:164 src/land_shipyard.c:110 src/land_trade.c:66
 msgid "Buy"
 msgstr ""
 
@@ -81157,7 +81158,7 @@ msgstr ""
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:669 src/land_shipyard.c:453 src/land_shipyard.c:523
+#: src/land_outfits.c:669 src/land_shipyard.c:440 src/land_shipyard.c:510
 #: src/land_trade.c:234
 #, c-format
 msgid "You need %s more."
@@ -81188,137 +81189,101 @@ msgstr ""
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_shipyard.c:106
+#: src/land_shipyard.c:107
 msgid "Trade-In"
 msgstr ""
 
-#: src/land_shipyard.c:112
+#: src/land_shipyard.c:113
 msgid "Find Ships"
 msgstr ""
 
-#. text
-#: src/land_shipyard.c:127
-msgid ""
-"Model:\n"
-"Class:\n"
-"Fabricator:\n"
-"Crew:\n"
-"\n"
-"Base Properties\n"
-"CPU:\n"
-"Mass:\n"
-"Thrust:\n"
-"Speed:\n"
-"Turn:\n"
-"Time Constant:\n"
-"Absorption:\n"
-"Shield:\n"
-"Armour:\n"
-"Energy:\n"
-"Cargo Space:\n"
-"Fuel:\n"
-"Fuel Use:\n"
-"\n"
-"Price:\n"
-"Money:\n"
-"License:\n"
-msgstr ""
+#: src/land_shipyard.c:130 src/map_system.c:659
+#, fuzzy
+#| msgid "Za'lek Fabricators"
+msgid "Fabricator:"
+msgstr "잘렉의 제작사"
 
-#: src/land_shipyard.c:225
-#, c-format
-msgid ""
-"None\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-msgstr ""
-
-#: src/land_shipyard.c:288
-#, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s\n"
-"%d\n"
-"\n"
-"\n"
-"%.0f %s\n"
-"%s %s\n"
-"%.0f kN/tonne\n"
-"%.0f m/s\n"
-"%.0f deg/s\n"
-"%.0f%%\n"
-"%.0f%% damage\n"
-"%.0f MJ (%.1f MW)\n"
-"%.0f MJ (%.1f MW)\n"
-"%.0f MJ (%.1f MW)\n"
-"%.0f %s\n"
-"%d %s\n"
-"%d %s\n"
-"\n"
-"%s\n"
-"%s\n"
-"%s\n"
+#: src/land_shipyard.c:133
+msgid "Base Properties"
 msgstr ""
 
 #. Weapons & Manoeuvrability
-#: src/land_shipyard.c:316 src/map_system.c:662
+#: src/land_shipyard.c:134 src/map_system.c:662
+msgid "CPU:"
+msgstr ""
+
+#: src/land_shipyard.c:146 src/map_system.c:682
+msgid "Fuel Use:"
+msgstr ""
+
+#: src/land_shipyard.c:148 src/map_system.c:684
+msgid "Price:"
+msgstr ""
+
+#: src/land_shipyard.c:149
+msgid "Money:"
+msgstr ""
+
+#: src/land_shipyard.c:150 src/map_system.c:685
+#, fuzzy
+#| msgid "License"
+msgid "License:"
+msgstr "라이센스"
+
+#: src/land_shipyard.c:297 src/map_system.c:662
 msgid "teraflop"
 msgid_plural "teraflops"
 msgstr[0] ""
 
-#: src/land_shipyard.c:408 src/land_shipyard.c:564 src/land_shipyard.c:570
-#: src/land_shipyard.c:576
+#: src/land_shipyard.c:300 src/map_system.c:665
+#, c-format
+msgid "%.0f kN/tonne"
+msgstr ""
+
+#: src/land_shipyard.c:306 src/map_system.c:673
+#, fuzzy, c-format
+msgid "%.0f%% damage"
+msgstr "%s (%d 점프, %.0fk 거리)"
+
+#: src/land_shipyard.c:308 src/land_shipyard.c:310 src/land_shipyard.c:312
+#, c-format
+msgid "%.0f MJ (%.1f MW)"
+msgstr ""
+
+#: src/land_shipyard.c:395 src/land_shipyard.c:551 src/land_shipyard.c:557
+#: src/land_shipyard.c:563
 msgid "Are you sure?"
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:409
+#: src/land_shipyard.c:396
 #, c-format
 msgid "Do you really want to spend %s on a new ship?"
 msgstr ""
 
-#: src/land_shipyard.c:447 src/land_shipyard.c:516
+#: src/land_shipyard.c:434 src/land_shipyard.c:503
 #, c-format
 msgid "You lack the %s."
 msgstr ""
 
 #. Already on-board.
-#: src/land_shipyard.c:467
+#: src/land_shipyard.c:454
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
 
-#: src/land_shipyard.c:487
+#: src/land_shipyard.c:474
 #, c-format
 msgid "You have %g tonne more cargo than the new ship can hold."
 msgid_plural "You have %g tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 
 #. Escorts are in space.
-#: src/land_shipyard.c:494
+#: src/land_shipyard.c:481
 msgid "You can't strand your fighters in space."
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:565
+#: src/land_shipyard.c:552
 #, c-format
 msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
@@ -81326,7 +81291,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:571
+#: src/land_shipyard.c:558
 #, c-format
 msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
@@ -81334,14 +81299,14 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:577
+#: src/land_shipyard.c:564
 #, c-format
 msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
 "trade your ship in?"
 msgstr ""
 
-#: src/land_shipyard.c:617
+#: src/land_shipyard.c:604
 msgid "Slots:"
 msgstr ""
 
@@ -82004,22 +81969,6 @@ msgstr ""
 msgid "This system does not sell ships"
 msgstr ""
 
-#: src/map_system.c:659
-#, fuzzy
-#| msgid "Za'lek Fabricators"
-msgid "Fabricator:"
-msgstr "잘렉의 제작사"
-
-#. Weapons & Manoeuvrability
-#: src/map_system.c:662
-msgid "CPU:"
-msgstr ""
-
-#: src/map_system.c:665
-#, c-format
-msgid "%.0f kN/tonne"
-msgstr ""
-
 #: src/map_system.c:667
 #, c-format
 msgid "%.0f m/s"
@@ -82029,25 +81978,6 @@ msgstr ""
 #, c-format
 msgid "%.0f deg/s"
 msgstr ""
-
-#: src/map_system.c:673
-#, fuzzy, c-format
-msgid "%.0f%% damage"
-msgstr "%s (%d 점프, %.0fk 거리)"
-
-#: src/map_system.c:682
-msgid "Fuel Use:"
-msgstr ""
-
-#: src/map_system.c:684
-msgid "Price:"
-msgstr ""
-
-#: src/map_system.c:685
-#, fuzzy
-#| msgid "License"
-msgid "License:"
-msgstr "라이센스"
 
 #: src/map_system.c:712
 #, c-format
