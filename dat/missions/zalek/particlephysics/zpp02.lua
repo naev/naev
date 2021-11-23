@@ -103,7 +103,7 @@ local npcguy
 function land ()
    local pcur = planet.cur()
    if mem.state==1 or mem.state==2 and pcur==mem.destpnt then
-      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("TODO") )
+      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("You see a Za'lek scientist who seems to fit the description of Noona's colleague.") )
 
    elseif mem.state==3 and pcur==retpnt then
       vn.clear()
