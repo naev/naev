@@ -2127,7 +2127,7 @@ static int pilotL_setDir( lua_State *L )
  * @usage p:broadcast( "Help!", true ) -- Will ignore interference
  * @usage pilot.broadcast( "Message Buoy", _("Important annauncement") ) -- Messages player ignoring interference
  *
- *    @luatparam Pilot|string p Pilot to broadcast the message, or string to use as a fictional pilot name. In the case of a string, interference is always ignored.
+ *    @luatparam Pilot|string p Pilot to broadcast the message, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of the ignore_int parameter, a colour character such as 'F' or 'H' can be optionally passed.
  *    @luatparam string msg Message to broadcast.
  *    @luatparam[opt=false] boolean ignore_int Whether or not it should ignore interference.
  * @luafunc broadcast
@@ -2140,8 +2140,9 @@ static int pilotL_broadcast( lua_State *L )
    if (lua_isstring(L,1)) {
       const char *s   = luaL_checkstring(L,1);
       const char *msg = luaL_checkstring(L,2);
+      const char *col = luaL_optstring(L,3,NULL);
 
-      player_message( _("#%cComm %s>#0 \"%s\""), 'N', s, msg );
+      player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
       if (player.p)
          pilot_setCommMsg( player.p, msg );
    }
@@ -2166,7 +2167,7 @@ static int pilotL_broadcast( lua_State *L )
  * @usage p:comm( target, _("Got this?"), true ) -- Messages target ignoring interference
  * @usage pilot.comm( "Message Buoy", _("Important information just for you!") ) -- Messages player ignoring interference
  *
- *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored.
+ *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of ignore_int, a colour character such as 'F' or 'H' can be passed.
  *    @luatparam Pilot target Target to send message to.
  *    @luatparam string msg Message to send.
  *    @luatparam[opt=false] boolean ignore_int Whether or not it should ignore interference.
@@ -2180,7 +2181,7 @@ static int pilotL_comm( lua_State *L )
    if (lua_isstring(L,1)) {
       const char *s;
       LuaPilot target;
-      const char *msg;
+      const char *msg, *col;
 
       if (player.p==NULL)
          return 0;
@@ -2189,16 +2190,18 @@ static int pilotL_comm( lua_State *L )
       s = luaL_checkstring(L,1);
       if (lua_isstring(L,2)) {
          msg   = luaL_checkstring(L,2);
+         col   = luaL_optstring(L,3,NULL);
       }
       else {
          target = luaL_checkpilot(L,2);
          if (target != player.p->id)
             return 0;
          msg   = luaL_checkstring(L,3);
+         col   = luaL_optstring(L,4,NULL);
       }
 
       /* Broadcast message. */
-      player_message( _("#%cBroadcast %s>#0 \"%s\""), 'N', s, msg );
+      player_message( _("#%cBroadcast %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
       if (player.p)
          pilot_setCommMsg( player.p, msg );
    }
