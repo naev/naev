@@ -126,7 +126,7 @@ function enter ()
    -- TODO better location once testing center object is created
    local pkatar = planet.get("Katar"):pos()
    local pkatari = mainpnt:pos()
-   local pos = (pkatar - pkatari)*3 + pkatar
+   local pos = (pkatar - pkatari)*1.5 + pkatar
    -- Disabled drone
    pdis = pilot.add( "Za'lek Light Drone", fdrone, pos, _("Malfunctioned Drone") )
    pdis:setFriendly(true)
@@ -135,9 +135,9 @@ function enter ()
    pdis:setVisplayer(true)
    pdis:control(true)
    pdis:brake()
-   hook.pilot( pdis, "disable", "drone_board" )
+   hook.pilot( pdis, "board", "drone_board" )
    -- Hostile drone
-   pos = pos + vec2.newP( 100*rnd.rnd(), rnd.angle() )
+   pos = pos + vec2.newP( 100, rnd.angle() )
    phost = pilot.add( "Za'lek Heavy Drone", fdrone, pos, _("Malfunctioned Drone") )
    phost:control(true)
    phost:brake()
@@ -153,25 +153,26 @@ function heartbeat ()
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
-   elseif stage==1 and  pdis:dist( player.pilot() ) < 500 then
+   elseif stage==1 and  pdis:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"))
       stage = 2
-   elseif stage==3 then
+   elseif stage==2 then
       stage = 3
-   elseif stage==4 then
+   elseif stage==3 then
       pilot.comm(_("Noona"), _("Watch out!"))
       phost:control(false)
       phost:setInvincible(false)
       phost:setNoDisable(true)
+      phost:setHostile(true)
       phost:rename(_("Haywire Drone"))
-      stage = 5
-   elseif stage==5 and not phost:exists() then
+      stage = 4
+   elseif stage==4 and not phost:exists() then
       pilot.comm(_("Noona"), _("That was close. Can you try boarding the other drone?") )
       pdis:setActiveBoard(true)
-      stage = 6
+      stage = 5
    end
 
-   if stage < 6 then
+   if stage < 5 then
       hook.timer( 3, "heartbeat" )
    end
 end
@@ -180,6 +181,7 @@ local hacked = false
 function drone_board ()
    if hacked then
       player.msg(_("The drone's black box has already been extracted."))
+      player.unboard()
       return
    end
 
@@ -202,6 +204,7 @@ function drone_board ()
 
    vn.label([[sokoban_done]])
    vn.na(_([[You manage recover the entire black box intact and load the information on your ship.]]))
+   vn.done()
 
    vn.label("sokoban_fail")
    vn.na(_([[You failed to access the black box.]]))
