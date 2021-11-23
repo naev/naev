@@ -17,6 +17,7 @@
 #include "options.h"
 
 #include "conf.h"
+#include "background.h"
 #include "colour.h"
 #include "dialogue.h"
 #include "input.h"
@@ -85,6 +86,7 @@ static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuBrightness( unsigned int wid, const char *str );
 static void opt_checkColorblind( unsigned int wid, const char *str );
+static void opt_checkBGFancy( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, const char *str );
@@ -1287,10 +1289,14 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
-   y -= 20;
+   y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkBGFancy", _("Fancy and expensive background shaders"), opt_checkBGFancy,
+         conf.background_fancy );
    y -= 30;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
@@ -1411,6 +1417,16 @@ static void opt_checkColorblind( unsigned int wid, const char *str )
    int f = window_checkboxState( wid, str );
    conf.colorblind = f;
    gl_colorblind( f );
+}
+
+/**
+ * @brief Handles the fancy background checkbox.
+ */
+static void opt_checkBGFancy( unsigned int wid, const char *str )
+{
+   int f = window_checkboxState( wid, str );
+   conf.background_fancy = f;
+   background_load( cur_system->background );
 }
 
 /**
