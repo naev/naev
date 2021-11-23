@@ -590,15 +590,14 @@ static void map_system_array_update( unsigned int wid, const char* str )
    int i;
    Ship *ship;
    char buf_price[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT], buf_mass[ECON_MASS_STRLEN];
+   size_t l = 0;
 
+   infobuf[0] = '\0';
    i = toolkit_getImageArrayPos( wid, str );
-   if (i < 0) {
-      infobuf[0]='\0';
+   if (i < 0)
       return;
-   }
    if ((strcmp( str, MAPSYS_OUTFITS ) == 0)) {
       Outfit *outfit = cur_planet_sel_outfits[i];
-      size_t l = 0;
       double mass = outfit->mass;
 
       /* new text */
@@ -639,10 +638,13 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s", buf_license );
    }
    else if ((strcmp( str, MAPSYS_SHIPS ) == 0)) {
+      char buf_cargo[ECON_MASS_STRLEN];
       ship = cur_planet_sel_ships[i];
 
    /* update text */
       price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
+      tonnes2str( buf_mass, ship->mass );
+      tonnes2str( buf_cargo, ship->cap_cargo );
       if (ship->license == NULL)
          strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
       else if (player_hasLicense( ship->license )
@@ -651,51 +653,37 @@ static void map_system_array_update( unsigned int wid, const char* str )
       else
          snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
 
-      snprintf( infobuf, sizeof(infobuf),
-         _("#nModel:#0 %s    "
-            "#nClass:#0 %s\n"
-            "\n%s\n\n"
-            "#nFabricator:#0 %s    "
-            "#nCrew:#0 %d\n"
-            "#nCPU:#0 %.0f %s    "
-            "#nMass:#0 %.0f %s\n"
-            "#nThrust:#0 %.0f kN/tonne    "
-            "#nSpeed:#0 %.0f m/s\n"
-            "#nTurn:#0 %.0f deg/s    "
-            "#nTime Constant:#0 %.0f%%\n"
-            "#nAbsorption:#0 %.0f%% damage\n"
-            "#nShield:#0 %.0f MJ (%.1f MW)    "
-            "#nArmour:#0 %.0f MJ (%.1f MW)\n"
-            "#nEnergy:#0 %.0f MJ (%.1f MW)\n"
-            "#nCargo Space:#0 %.0f %s\n"
-            "#nFuel:#0 %d %s  "
-            "#nFuel Use:#0 %d %s\n"
-            "#nPrice:#0 %s  "
-            "#nLicense:#0 %s\n"
-            "%s"),
-         _(ship->name),
-         _(ship_classDisplay(ship)),
-         _(ship->description),
-         _(ship->fabricator),
-         ship->crew,
-         /* Weapons & Manoeuvrability */
-         ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
-         ship->mass, n_( "tonne", "tonnes", ship->mass ),
-         ship->thrust,
-         ship->speed,
-         ship->turn*180./M_PI,
-         ship->dt_default*100.,
-         /* Misc */
-         ship->dmg_absorb*100.,
-         ship->shield, ship->shield_regen,
-         ship->armour, ship->armour_regen,
-         ship->energy, ship->energy_regen,
-         ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
-         ship->fuel, n_( "unit", "units", ship->fuel ),
-         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
-         buf_price,
-         buf_license,
-         ship->desc_stats );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "#n%s#0 %s", _("Model:"), _(ship->name) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %s", _("Class:"), _(ship_classDisplay(ship)) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n\n%s\n", _(ship->description) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Fabricator:"), _(ship->fabricator) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %d", _("Crew:"), ship->crew );
+      /* Weapons & Manoeuvrability */
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %.0f %s", _("CPU:"), ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %s", _("Mass:"), buf_mass );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Thrust:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f kN/tonne"), ship->thrust );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Speed:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f m/s"), ship->speed );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Turn:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f deg/s"), ship->turn*180./M_PI );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 %.0f%%", _("Time Constant:"), ship->dt_default*100. );
+      /* Misc */
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Absorption:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Shield:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->shield, ship->shield_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Armour:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->armour, ship->armour_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Energy:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->energy, ship->energy_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Cargo Space:"), buf_cargo );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, n_( "unit", "units", ship->fuel ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %d %s", _("Fuel Use:"),
+         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Price:"), buf_price );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %s", _("License:"), buf_license );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s", ship->desc_stats );
    }
    else if ((strcmp( str, MAPSYS_TRADE ) == 0)) {
       Commodity *com;
@@ -716,23 +704,22 @@ static void map_system_array_update( unsigned int wid, const char* str )
       snprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       owned=pilot_cargoOwned( player.p, com );
 
-      infobuf[0] = '\0';
-      i = scnprintf( infobuf, sizeof(infobuf)-i, "%s\n\n%s\n\n", _(com->name), _(com->description) );
+      l = scnprintf( infobuf, sizeof(infobuf)-l, "%s\n\n%s\n\n", _(com->name), _(com->description) );
 
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
-         i += scnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
+         l += scnprintf( &infobuf[l], sizeof(infobuf)-l, n_(
                   "#nYou have:#0 %d tonne, purchased at %s/t\n",
                   "#nYou have:#0 %d tonnes, purchased at %s/t\n",
                   owned), owned, buf_buy_price );
       }
       else
-         i += scnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
+         l += scnprintf( &infobuf[l], sizeof(infobuf)-l, n_(
                   "#nYou have:#0 %d tonne\n",
                   "#nYou have:#0 %d tonnes\n",
                   owned), owned );
 
-      i += scnprintf( &infobuf[i], sizeof(infobuf)-i,
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l,
             _("#nAverage price seen here:#0 %s/t ± %s/t\n"
                "#nAverage price seen everywhere:#0 %s/t ± %s/t\n"),
             buf_mean, buf_std, buf_globalmean, buf_globalstd );

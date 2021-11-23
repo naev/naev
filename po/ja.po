@@ -81804,58 +81804,89 @@ msgstr "撤去"
 msgid "Autoequip"
 msgstr "自動装備"
 
-#. text
 #: src/equipment.c:362
-msgid ""
-"Name:\n"
-"Model:\n"
-"Class:\n"
-"Crew:\n"
-"Value:\n"
-"\n"
-"Mass:\n"
-"Jump Time:\n"
-"Thrust:\n"
-"Speed:\n"
-"Turn:\n"
-"Time Constant:\n"
-"Detected at:\n"
-"Evasion:\n"
-"Stealth:\n"
-"\n"
-"Absorption:\n"
-"Shield:\n"
-"Armour:\n"
-"Energy:\n"
-"Cargo Space:\n"
-"Fuel:\n"
-"\n"
-"Ship Status:"
-msgstr ""
-"名前 :\n"
-"船種 :\n"
-"種別 :\n"
-"乗員数 :\n"
-"価値 :\n"
-"\n"
-"質量 :\n"
-"ジャンプ時間 :\n"
-"推力 :\n"
-"速度 :\n"
-"旋回力 :\n"
-"時間定数 :\n"
-"探知 :\n"
-"回避 :\n"
-"ステルス :\n"
-"\n"
-"吸収 :\n"
-"シールド :\n"
-"装甲 :\n"
-"エネルギー :\n"
-"船倉容量 :\n"
-"燃料 :\n"
-"\n"
-"船の状態 :"
+msgid "Name:"
+msgstr "名前 :"
+
+#: src/equipment.c:363
+msgid "Model:"
+msgstr "船種 :"
+
+#: src/equipment.c:364
+msgid "Class:"
+msgstr "種別 :"
+
+#: src/equipment.c:365
+msgid "Crew:"
+msgstr "乗員数 :"
+
+#: src/equipment.c:366
+msgid "Value:"
+msgstr "価値 :"
+
+#: src/equipment.c:367
+msgid "Mass:"
+msgstr "質量 :"
+
+#: src/equipment.c:368
+msgid "Jump Time:"
+msgstr "ジャンプ時間 :"
+
+#: src/equipment.c:369
+msgid "Thrust:"
+msgstr "推力 :"
+
+#: src/equipment.c:370
+msgid "Speed:"
+msgstr "速度 :"
+
+#: src/equipment.c:371
+msgid "Turn:"
+msgstr "旋回力 :"
+
+#: src/equipment.c:372
+msgid "Time Constant:"
+msgstr "時間定数 :"
+
+#: src/equipment.c:373
+msgid "Detected at:"
+msgstr "探知 :"
+
+#: src/equipment.c:374
+msgid "Evasion:"
+msgstr "回避 :"
+
+#: src/equipment.c:375
+msgid "Stealth:"
+msgstr "ステルス :"
+
+#: src/equipment.c:376
+msgid "Absorption:"
+msgstr "吸収 :"
+
+#: src/equipment.c:377
+msgid "Shield:"
+msgstr "シールド :"
+
+#: src/equipment.c:378
+msgid "Armour:"
+msgstr "装甲 :"
+
+#: src/equipment.c:379
+msgid "Energy:"
+msgstr "エネルギー :"
+
+#: src/equipment.c:380
+msgid "Cargo Space:"
+msgstr "船倉容量 :"
+
+#: src/equipment.c:381
+msgid "Fuel:"
+msgstr "燃料 :"
+
+#: src/equipment.c:382
+msgid "Ship Status:"
+msgstr "船の状態 :"
 
 #: src/equipment.c:396
 msgid "Available Ships"
@@ -81941,56 +81972,43 @@ msgstr "しぼりこみ..."
 
 #: src/equipment.c:1697
 #, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s\n"
-"#%c%s%.0f#0\n"
-"%s\n"
-"\n"
-"%s#0 %s\n"
-"%s average\n"
-"#%c%s%.0f#0 kN/tonne\n"
-"#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
-"#%c%s%.0f#0 deg/s\n"
-"%.0f%%\n"
-"%s\n"
-"%s (%.1f secs for scan)\n"
-"%s\n"
-"\n"
-"#%c%s%.0f%%\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"%d / #%c%s%d#0 %s\n"
-"%s %s (%d %s)\n"
-"\n"
-"#%c%s#0"
-msgstr ""
-"%s\n"
-"%s\n"
-"%s\n"
-"#%c%s%.0f#0\n"
-"%s\n"
-"\n"
-"%s#0 %s\n"
-"平均 %s\n"
-"#%c%s%.0f#0 kN/トン\n"
-"#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)\n"
-"#%c%s%.0f#0 度/秒\n"
-"%.0f%%\n"
-"%s\n"
-"%s (スキャンあたり %.1f 秒)\n"
-"%s\n"
-"\n"
-"#%c%s%.0f%%\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-"%d / #%c%s%d#0 %s\n"
-"%s %s (%d %s)\n"
-"\n"
-"#%c%s#0"
+msgid "\n%s average"
+msgstr "\n平均 %s"
+
+#: src/equipment.c:1698
+#, c-format
+msgid "\n#%c%s%.0f#0 kN/tonne"
+msgstr "\n#%c%s%.0f#0 kN/トン"
+
+#: src/equipment.c:1699
+#, c-format
+msgid "\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
+msgstr "\n#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
+
+#: src/equipment.c:1700
+#, c-format
+msgid "\n#%c%s%.0f#0 deg/s"
+msgstr "\n#%c%s%.0f#0 度/秒"
+
+#: src/equipment.c:1701
+#, c-format
+msgid "\n%s (%.1f secs for scan)"
+msgstr "\n%s (スキャンあたり %.1f 秒)"
+
+#: src/equipment.c:1702
+#, c-format
+msgid "\n#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
+msgstr "\n#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
+
+#: src/equipment.c:1704
+#, c-format
+msgid "\n%d / #%c%s%d#0 %s"
+msgstr "\n%d / #%c%s%d#0 %s"
+
+#: src/equipment.c:1705
+#, c-format
+msgid "\n%s %s (%d %s)"
+msgstr "\n%s %s (%d %s)"
 
 #. Movement.
 #: src/equipment.c:1728 src/equipment.c:1747 src/info.c:545 src/info.c:556
@@ -84885,40 +84903,55 @@ msgstr "船の販売 : あり"
 msgid "This system does not sell ships"
 msgstr "船の販売 : なし"
 
-#: src/map_system.c:655
+#: src/map_system.c:660
 #, c-format
-msgid ""
-"#nModel:#0 %s    #nClass:#0 %s\n"
-"\n"
-"%s\n"
-"\n"
-"#nFabricator:#0 %s    #nCrew:#0 %d\n"
-"#nCPU:#0 %.0f %s    #nMass:#0 %.0f %s\n"
-"#nThrust:#0 %.0f kN/tonne    #nSpeed:#0 %.0f m/s\n"
-"#nTurn:#0 %.0f deg/s    #nTime Constant:#0 %.0f%%\n"
-"#nAbsorption:#0 %.0f%% damage\n"
-"#nShield:#0 %.0f MJ (%.1f MW)    #nArmour:#0 %.0f MJ (%.1f MW)\n"
-"#nEnergy:#0 %.0f MJ (%.1f MW)\n"
-"#nCargo Space:#0 %.0f %s\n"
-"#nFuel:#0 %d %s  #nFuel Use:#0 %d %s\n"
-"#nPrice:#0 %s  #nLicense:#0 %s\n"
-"%s"
-msgstr ""
-"#n船種 :#0 %s    #n種別 :#0 %s\n"
-"\n"
-"%s\n"
-"\n"
-"#n製造者 :#0 %s    #n乗員 :#0 %d\n"
-"#nCPU:#0 %.0f %s    #n質量 :#0 %.0f %s\n"
-"#n推力 :#0 %.0f kN/トン    #n速度 :#0 %.0f m/s\n"
-"#n旋回力 :#0 %.0f 度/秒    #n時間定数 :#0 %.0f%%\n"
-"#n吸収 :#0 %.0f%% のダメージ\n"
-"#nシールド :#0 %.0f MJ (%.1f MW)    #n装甲 :#0 %.0f MJ (%.1f MW)\n"
-"#nエネルギー :#0 %.0f MJ (%.1f MW)\n"
-"#n船倉容量 :#0 %.0f %s\n"
-"#n燃料 :#0 %d %s  #n使用燃料 :#0 %d %s\n"
-"#n価格 :#0 %s  #n免許 :#0 %s\n"
-"%s"
+msgid "Fabricator:"
+msgstr "製造者 :"
+
+#: src/map_system.c:663
+#, c-format
+msgid "CPU:"
+msgstr "CPU:"
+
+#: src/map_system.c:666
+#, c-format
+msgid "%.0f kN/tonne"
+msgstr "%.0f kN/トン"
+
+#: src/map_system.c:668
+#, c-format
+msgid "%.0f m/s"
+msgstr "%.0f m/s"
+
+#: src/map_system.c:670
+#, c-format
+msgid "%.0f deg/s"
+msgstr "%.0f 度/秒"
+
+#: src/map_system.c:674
+#, c-format
+msgid "%.0f%% damage"
+msgstr "%.0f%% のダメージ"
+
+#: src/map_system.c:676
+#, c-format
+msgid "%.0f MJ (%.1f MW)"
+msgstr "%.0f MJ (%.1f MW)"
+
+#: src/map_system.c:683
+#, c-format
+msgid "Fuel Use:"
+msgstr "使用燃料 :"
+
+#: src/map_system.c:685
+#, c-format
+msgid "Price:"
+msgstr "価格 :"
+
+#: src/map_system.c:686
+#, c-format
+msgid "License:"
+msgstr "免許 :"
 
 #: src/map_system.c:725
 #, c-format
