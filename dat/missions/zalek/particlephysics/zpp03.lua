@@ -95,6 +95,7 @@ function land ()
    if mem.state==1 or planet.cur() ~= mainpnt then
       return
    end
+   local getlicense = not diff.isApplied( "heavy_weapons_license" )
 
    vn.clear()
    vn.scene()
@@ -103,13 +104,26 @@ function land ()
    vn.na(_([[You land and find Noona waiting outside your ship expectantly.]]))
    n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece right? Great! Let me look into it and see what happened. I have no idea how this happened."
 She tosses you a credstick and runs to her room with the black box.]]))
+   if getlicense then
+      n(_([[Just before she disappears around the corner she turns back to you and yells.
+"Oh, and by the way, I was able to pull some strings with my friend and you should be cleared for the Heavy Weapon License now. Seeing the dangers you face, it would be good for you to have bigger guns."
+Without giving you time to process what she yelled, she vanishes.]]))
+   end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zpp.noona.transition )
    vn.run()
 
+   if getlicense then
+      diff.apply("heavy_weapons_license")
+   end
+
    player.pay( reward )
-   zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned."))
+   if getlicense then
+      zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned. You're not exactly sure how, but she also managed to get you cleared for the Heavy Weapon License."))
+   else
+      zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned."))
+   end
    misn.finish(true)
 end
 
