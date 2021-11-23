@@ -35,7 +35,6 @@ local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = planet.getS("Katar I")
 
 function create ()
-   misn.finish(false)
    misn.setNPC( _("Noona"), zpp.noona.portrait, zpp.noona.description )
 end
 
@@ -102,7 +101,8 @@ function land ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You land and find Noona waiting outside your ship expectantly.]]))
-   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you."]]))
+   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece right? Great! Let me look into it and see what happened. I have no idea how this happened."
+She tosses you a credstick and runs to her room with the black box.]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zpp.noona.transition )
@@ -211,6 +211,7 @@ function drone_board ()
    if hacked then
       local c = misn.cargoNew( N_("Drone Black Box"), N_("The recovered black box of a Za'lek drone.") )
       misn.cargoAdd(c, 0)
+      misn.osdActive(2)
       mem.state = 2
    end
 
