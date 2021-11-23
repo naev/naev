@@ -810,7 +810,7 @@ void land_updateMainTab (void)
       tags[0] = '\n';
       tags[1] = '\0';
       for (int i=0; i<array_size(land_planet->tags); i++)
-         l += scnprintf( &tags[l], sizeof(tags), "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
+         l += scnprintf( &tags[l], sizeof(tags)-l, "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
    }
    else
       tags[0] = '\0';
