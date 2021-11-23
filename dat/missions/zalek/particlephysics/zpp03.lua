@@ -114,12 +114,9 @@ Without giving you time to process what she yelled, she vanishes.]]))
    vn.done( zpp.noona.transition )
    vn.run()
 
-   if getlicense then
-      diff.apply("heavy_weapons_license")
-   end
-
    player.pay( reward )
    if getlicense then
+      diff.apply("heavy_weapons_license")
       zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned. You're not exactly sure how, but she also managed to get you cleared for the Heavy Weapon License."))
    else
       zpp.log(_("You helped Noona retrieve the black box from one of her drones that malfunctioned."))
