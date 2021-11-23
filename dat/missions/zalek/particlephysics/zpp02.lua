@@ -38,7 +38,7 @@ local retpnt, retsys = planet.getS( "Katar I" )
 
 function create ()
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
-      return p.tags().research
+      return p:tags().research
    end )
    if not mem.destpnt then
       misn.finish()
@@ -96,6 +96,7 @@ She furrows her brow.]]),{pnt=mem.destpnt}))
    mem.state = 1
 
    hook.land( "land" )
+   hook.load( "land" )
 end
 
 local npcguy
@@ -109,8 +110,14 @@ function land ()
       vn.scene()
       local n = vn.newCharacter( zpp.vn_noona() )
       vn.transition( zpp.noona.transition )
-      vn.na(_([[]]))
-      n(_([[""]]))
+      vn.na(_([[You land and the lone loading drone starts to slowly remove the cargo from your ship. While waiting, you decide to go find Noona, who you quickly find staring at the testing site at the observation deck of the base.]]))
+      n(_([["Look at it, isn't it breathtaking?"
+She motions towards the testing site.
+"To think of all of the brains that went into designing and preparing for this. All the famous experiments run on that platform. The advancement of humanity as a whole! What new technological wonders are awaiting for us on the other side of the particle physics conundrums?"]]))
+      n(_([[She breathes deeply and turns to you.
+"Did you get the interface controllers? That's great! Let me try to get it hooked up and I'll finally be able to start my tests. I'm so excited!"
+She starts to prance off, when she suddenly turns to you and tosses you a credstick.
+"Almost forgot. See you around!"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zpp.noona.transition )
@@ -122,19 +129,26 @@ function land ()
    end
 end
 
+local talked_once = false
 function approach_guy ()
    vn.clear()
    vn.scene()
-   local c = vn.newCharacter( "" )
+   local c = vn.newCharacter( _("Noona's Colleague"), {image="zalek2.png"} )
    vn.transition()
 
    if mem.state==1 then
-      vn.na(_([[You approach an individual that matches the contact information that Noona gave you.]]))
-      c(_([[They raise an eyebrow as you approach.
-"You must be Noona's acquaintance. I have the drone interface controllers ready, but "]]))
+      if talked_once then
+         c(_([["Ready to try again? Let me activate the memory interface for you."]]))
+      else
+         vn.na(_([[You approach an individual that matches the contact information that Noona gave you.]]))
+         c(_([[They raise an eyebrow as you approach.
+"You must be Noona's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
+They scratch their head.]]))
+         c(_([["I tried too look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped Rulkar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot."]]))
+      end
 
       sokoban.vn{ levels={1,2,3}, header="Drone Memory Banks"}
-      vn.na( function ()
+      vn.func( function ()
          if sokoban.completed() then
             mem.state = 2
             vn.jump("sokoban_done")
@@ -144,11 +158,12 @@ function approach_guy ()
       end )
 
       vn.label("sokoban_fail")
-      c(_([[""]]))
+      c(_([["It seems like the interface hasn't been unlocked. Talk to me if you want to try again."]]))
       vn.done()
 
       vn.label("sokoban_done")
-      c(_([[""]]))
+      c(_([[After you unlock the memory, they are able to quickly release the interface controller which falls to the ground with a resounding clunk.
+"OK, that's perfect! Let me get the loading drones to get this on your ship and you can be on your way."]]))
 
    elseif mem.state==2 then
       c(_([["Are you ready to take the cargo now?"]]))
@@ -161,6 +176,7 @@ function approach_guy ()
          {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
       vn.done()
    end
+
    vn.na(fmt.f(_("The automated dock drones load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
    vn.run()
 

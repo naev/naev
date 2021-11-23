@@ -10,8 +10,8 @@ local zpp = {}
 
 -- Noona Sanderaite
 zpp.noona = {
-   portrait = "nelly.webp",
-   image = "nelly.webp",
+   portrait = "zalek3.png",
+   image = "zalek3.png",
    name = _("Noona"),
    color = nil,
    transition = nil, -- Use default
