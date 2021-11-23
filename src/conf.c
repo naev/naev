@@ -243,6 +243,7 @@ void conf_setVideoDefaults (void)
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCE_DEFAULT;
 
+   gl_colorblind( conf.colorblind );
    if (cur_system)
       background_load( cur_system->background );
 
