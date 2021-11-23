@@ -35,7 +35,7 @@ local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = planet.getS("Katar I")
 
 function create ()
-   misn.finish(true)
+   misn.finish(false)
    misn.setNPC( _("Noona"), zpp.noona.portrait, zpp.noona.description )
 end
 
