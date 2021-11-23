@@ -19,6 +19,7 @@
       * Most special effects implemented as shaders
       * Most small visuals redone to be more visible and clean
       * Similar presences are now merged in map
+      * Overhauled all the backgrounds
    * Gameplay changes
       * Pirates split into multiple clans and marauders
       * Added discovery messages as you explore the universe
