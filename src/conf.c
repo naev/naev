@@ -14,6 +14,7 @@
 #include "conf.h"
 
 #include "env.h"
+#include "background.h"
 #include "input.h"
 #include "log.h"
 #include "music.h"
@@ -241,6 +242,9 @@ void conf_setVideoDefaults (void)
    conf.nebu_brightness = NEBU_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCE_DEFAULT;
+
+   if (cur_system)
+      background_load( cur_system->background );
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
