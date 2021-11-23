@@ -7,9 +7,6 @@ local lazy = setmetatable( {}, {
          self.__index = luatk
       end
       return luatk[key]
-   end,
-   __newindex = function( _self, _key, _value )
-      warn("setting value is unsupported")
    end
 } )
 return lazy
