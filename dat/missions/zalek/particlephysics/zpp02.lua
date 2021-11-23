@@ -103,7 +103,7 @@ local npcguy
 function land ()
    local pcur = planet.cur()
    if mem.state==1 or mem.state==2 and pcur==mem.destpnt then
-      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "none.webp", _("TODO") )
+      npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("TODO") )
 
    elseif mem.state==3 and pcur==retpnt then
       vn.clear()
@@ -131,6 +131,7 @@ end
 
 local talked_once = false
 function approach_guy ()
+   local cargo_space = false
    vn.clear()
    vn.scene()
    local c = vn.newCharacter( _("Noona's Colleague"), {image="zalek2.png"} )
@@ -145,6 +146,7 @@ function approach_guy ()
 "You must be Noona's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
 They scratch their head.]]))
          c(_([["I tried too look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped Rulkar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot."]]))
+         talked_once = true
       end
 
       sokoban.vn{ levels={1,2,3}, header="Drone Memory Banks"}
@@ -175,13 +177,15 @@ They scratch their head.]]))
       vn.na(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
          {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
       vn.done()
+   else
+      cargo_space = true
    end
 
    vn.na(fmt.f(_("The automated dock drones load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
    vn.run()
 
    -- Failed to do the Sokoban
-   if not mem.state==2 then
+   if not mem.state==2 or not cargo_space then
       return
    end
 
