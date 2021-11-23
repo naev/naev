@@ -164,7 +164,7 @@ local last_spammed
 function supplyattacked( p )
    last_spammed = last_spammed or 0
    local t = naev.ticks()
-   if (last_spammed - t) > 10 then
+   if (t-last_spammed) > 10 then
       p:broadcast(_("Supply ship under attack! Help requested!"))
       last_spammed = t
    end
