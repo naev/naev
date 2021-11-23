@@ -256,7 +256,7 @@ end
 
 function sokoban.draw()
    local nw, nh = naev.gfx.dim()
-   setcol( {0.15,0.15,0.15,0.8} )
+   setcol( {0.2,0.2,0.2,0.85} )
    lg.setShader( bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
