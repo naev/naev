@@ -143,7 +143,7 @@ function approach_guy ()
       else
          vn.na(_([[You approach an individual that matches the contact information that Noona gave you.]]))
          c(_([[They raise an eyebrow as you approach.
-"You must be Noona's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
+"You must be Dr. Sanderaite's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
 They scratch their head.]]))
          c(_([["I tried to take a look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped to Rulkar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot at it."]]))
          talked_once = true
