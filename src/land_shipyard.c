@@ -69,7 +69,8 @@ void shipyard_open( unsigned int wid )
    int bw, bh, padding, off;
    int tw, th;
    int y;
-   const char *buf;
+   char buf[STRMAX];
+   size_t l = 0;
    glTexture *t;
    int iconsize;
 
@@ -124,29 +125,29 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("Model:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "Crew:\n"
-         "\n"
-         "Base Properties\n"
-         "CPU:\n"
-         "Mass:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Constant:\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "Fuel Use:\n"
-         "\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n");
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fabricator:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Base Properties") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("CPU:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel Use:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", _("License:") );
    tw = gl_printWidthRaw( &gl_defFont, buf );
    th = gl_printHeightRaw( &gl_defFont, tw, buf );
    y  = -35;
@@ -208,9 +209,10 @@ void shipyard_update( unsigned int wid, const char* str )
    (void)str;
    int i;
    Ship* ship;
-   char buf[STRMAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
+   char buf[STRMAX], buf_cargo[ECON_MASS_STRLEN], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
    char smass[NUM2STRLEN];
    double aspect, gw, gh;
+   size_t l = 0;
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -222,28 +224,29 @@ void shipyard_update( unsigned int wid, const char* str )
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
       snprintf( buf, sizeof(buf),
-            _("None\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
+            "%1$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n\n"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s"
             "\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n") );
+            "\n%2$s"
+            "\n%2$s"
+            "\n%2$s\n",
+         _("None"), _("N/A") );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
       window_modifyText( wid, "txtDescription", NULL );
@@ -272,8 +275,9 @@ void shipyard_update( unsigned int wid, const char* str )
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", _(ship->description) );
-   price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
-   credits2str( buf3, player.p->credits, 2 );
+   tonnes2str( buf_cargo, ship->cap_cargo );
+   price2str( buf_price, ship_buyPrice(ship), player.p->credits, 2 );
+   credits2str( buf_credits, player.p->credits, 2 );
    num2str( smass, ship->mass, 0 );
 
    if (ship->license == NULL)
@@ -284,52 +288,35 @@ void shipyard_update( unsigned int wid, const char* str )
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
 
-   snprintf( buf, sizeof(buf),
-         _("%s\n"
-         "%s\n"
-         "%s\n"
-         "%d\n"
-         "\n"
-         "\n"
-         "%.0f %s\n"
-         "%s %s\n"
-         "%.0f kN/tonne\n"
-         "%.0f m/s\n"
-         "%.0f deg/s\n"
-         "%.0f%%\n"
-         "%.0f%% damage\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f %s\n"
-         "%d %s\n"
-         "%d %s\n"
-         "\n"
-         "%s\n"
-         "%s\n"
-         "%s\n"),
-         _(ship->name),
-         _(ship_classDisplay(ship)),
-         _(ship->fabricator),
-         ship->crew,
-         /* Weapons & Manoeuvrability */
-         ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
-         smass, n_( "tonne", "tonnes", ship->mass ),
-         ship->thrust,
-         ship->speed,
-         ship->turn*180/M_PI,
-         ship->dt_default*100.,
-         /* Misc */
-         ship->dmg_absorb*100.,
-         ship->shield, ship->shield_regen,
-         ship->armour, ship->armour_regen,
-         ship->energy, ship->energy_regen,
-         ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
-         ship->fuel, n_( "unit", "units", ship->fuel ),
-         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
-         buf2,
-         buf3,
-         buf_license );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _(ship->name) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_classDisplay(ship)) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->fabricator) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->crew );
+   /* Weapons & Manoeuvrability */
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n");
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s %s", smass, n_( "tonne", "tonnes", ship->mass ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n");
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), ship->thrust );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f m/s", ship->speed );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f deg/s", ship->turn*180/M_PI );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->dt_default*100. );
+   /* Misc */
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_cargo );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, n_( "unit", "units", ship->fuel ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", buf_license );
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!shipyard_canBuy( ship->name, land_planet ))

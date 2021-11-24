@@ -37,7 +37,7 @@ local rearpoint  = jump.get( mainsys, rearsys )
 local supplylanded, supplydied
 local sysmrk
 
--- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyland (Hook functions passed by name)
+-- luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
@@ -148,6 +148,7 @@ local function add_supplyship( shipname )
    p:land( mainpnt, true )
    hook.pilot( p, "land", "supplyland" )
    hook.pilot( p, "death", "supplydeath" )
+   hook.pilot( p, "attacked", "supplyattacked" )
    table.insert( supplyships, p )
 end
 
@@ -157,6 +158,16 @@ end
 
 function supplydeath ()
    supplydied = supplydied + 1
+end
+
+local last_spammed
+function supplyattacked( p )
+   last_spammed = last_spammed or 0
+   local t = naev.ticks()
+   if (t-last_spammed) > 10 then
+      p:broadcast(_("Supply ship under attack! Help requested!"))
+      last_spammed = t
+   end
 end
 
 function enter ()

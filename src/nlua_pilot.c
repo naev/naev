@@ -2125,27 +2125,36 @@ static int pilotL_setDir( lua_State *L )
  *
  * @usage p:broadcast( "Mayday! Requesting assistance!" )
  * @usage p:broadcast( "Help!", true ) -- Will ignore interference
+ * @usage pilot.broadcast( "Message Buoy", _("Important annauncement") ) -- Messages player ignoring interference
  *
- *    @luatparam Pilot p Pilot to broadcast the message.
+ *    @luatparam Pilot|string p Pilot to broadcast the message, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of the ignore_int parameter, a colour character such as 'F' or 'H' can be optionally passed.
  *    @luatparam string msg Message to broadcast.
  *    @luatparam[opt=false] boolean ignore_int Whether or not it should ignore interference.
  * @luafunc broadcast
  */
 static int pilotL_broadcast( lua_State *L )
 {
-   Pilot *p;
-   const char *msg;
-   int ignore_int;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   p           = luaL_validpilot(L,1);
-   msg         = luaL_checkstring(L,2);
-   ignore_int  = lua_toboolean(L,3);
+   if (lua_isstring(L,1)) {
+      const char *s   = luaL_checkstring(L,1);
+      const char *msg = luaL_checkstring(L,2);
+      const char *col = luaL_optstring(L,3,NULL);
 
-   /* Broadcast message. */
-   pilot_broadcast( p, msg, ignore_int );
+      player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
+      if (player.p)
+         pilot_setCommMsg( player.p, msg );
+   }
+   else {
+      Pilot *p        = luaL_validpilot(L,1);
+      const char *msg = luaL_checkstring(L,2);
+      int ignore_int  = lua_toboolean(L,3);
+
+      /* Broadcast message. */
+      pilot_broadcast( p, msg, ignore_int );
+   }
+
    return 0;
 }
 
@@ -2156,8 +2165,9 @@ static int pilotL_broadcast( lua_State *L )
  * @usage p:comm( _("You got this?"), true ) -- Messages the player ignoring interference
  * @usage p:comm( target, _("Heya!") ) -- Messages target
  * @usage p:comm( target, _("Got this?"), true ) -- Messages target ignoring interference
+ * @usage pilot.comm( "Message Buoy", _("Important information just for you!") ) -- Messages player ignoring interference
  *
- *    @luatparam Pilot p Pilot to message the player.
+ *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of ignore_int, a colour character such as 'F' or 'H' can be passed.
  *    @luatparam Pilot target Target to send message to.
  *    @luatparam string msg Message to send.
  *    @luatparam[opt=false] boolean ignore_int Whether or not it should ignore interference.
@@ -2165,39 +2175,69 @@ static int pilotL_broadcast( lua_State *L )
  */
 static int pilotL_comm( lua_State *L )
 {
-   Pilot *p, *t;
-   LuaPilot target;
-   const char *msg;
-   int ignore_int;
 
    NLUA_CHECKRW(L);
 
-   /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-   if (lua_isstring(L,2)) {
-      target = 0;
-      msg   = luaL_checkstring(L,2);
-      ignore_int = lua_toboolean(L,3);
-   }
-   else {
-      target = luaL_checkpilot(L,2);
-      msg   = luaL_checkstring(L,3);
-      ignore_int = lua_toboolean(L,4);
-   }
+   if (lua_isstring(L,1)) {
+      const char *s;
+      LuaPilot target;
+      const char *msg, *col;
 
-   /* Check to see if pilot is valid. */
-   if (target == 0)
-      t = player.p;
-   else {
-      t = pilot_get(target);
-      if (t == NULL) {
-         NLUA_ERROR(L,"Pilot param 2 not found in pilot stack!");
+      if (player.p==NULL)
          return 0;
-      }
-   }
 
-   /* Broadcast message. */
-   pilot_message( p, t->id, msg, ignore_int );
+      /* Parse parameters. */
+      s = luaL_checkstring(L,1);
+      if (lua_isstring(L,2)) {
+         msg   = luaL_checkstring(L,2);
+         col   = luaL_optstring(L,3,NULL);
+      }
+      else {
+         target = luaL_checkpilot(L,2);
+         if (target != player.p->id)
+            return 0;
+         msg   = luaL_checkstring(L,3);
+         col   = luaL_optstring(L,4,NULL);
+      }
+
+      /* Broadcast message. */
+      player_message( _("#%cBroadcast %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
+      if (player.p)
+         pilot_setCommMsg( player.p, msg );
+   }
+   else {
+      Pilot *p, *t;
+      LuaPilot target;
+      const char *msg;
+      int ignore_int;
+
+      /* Parse parameters. */
+      p = luaL_validpilot(L,1);
+      if (lua_isstring(L,2)) {
+         target = 0;
+         msg   = luaL_checkstring(L,2);
+         ignore_int = lua_toboolean(L,3);
+      }
+      else {
+         target = luaL_checkpilot(L,2);
+         msg   = luaL_checkstring(L,3);
+         ignore_int = lua_toboolean(L,4);
+      }
+
+      /* Check to see if pilot is valid. */
+      if (target == 0)
+         t = player.p;
+      else {
+         t = pilot_get(target);
+         if (t == NULL) {
+            NLUA_ERROR(L,"Pilot param 2 not found in pilot stack!");
+            return 0;
+         }
+      }
+
+      /* Broadcast message. */
+      pilot_message( p, t->id, msg, ignore_int );
+   }
    return 0;
 }
 

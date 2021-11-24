@@ -51,7 +51,7 @@ function msg_buoy ()
    else
       col = "N"
    end
-   player.msg(fmt.f(_([[#{col}{fct} Message Buoy>#0 "{msg}"]]), {col=col, fct=sysfct, msg=msg} ))
+   pilot.broadcast( fmt.f(_("{faction} Message Buoy"),{faction=sysfct}), msg, col )
    msg_delay = (msg_delay or 8) * 2
    hook.timer( msg_delay, "msg_buoy" )
 end
