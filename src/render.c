@@ -182,11 +182,11 @@ void render_all( double game_dt, double real_dt )
    if (pp_game || pp_gui || pp_final) {
       /* Clear main screen. */
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT);
 
       /* Clear back buffer. */
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo[1]);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT);
 
       /* Set to front buffer. */
       gl_screen.current_fbo = gl_screen.fbo[cur];
@@ -196,7 +196,7 @@ void render_all( double game_dt, double real_dt )
 
    /* Bind and clear new drawing area. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT);
 
    dt = (paused) ? 0. : game_dt;
 
