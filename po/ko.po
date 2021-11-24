@@ -79326,12 +79326,6 @@ msgid "Autoequip"
 msgstr ""
 
 #. text
-#. Text.
-#: src/equipment.c:363 src/info.c:465
-msgid "Name:"
-msgstr ""
-
-#. text
 #: src/equipment.c:364 src/info.c:466 src/land_shipyard.c:128
 #: src/map_system.c:656
 #, fuzzy
@@ -80199,19 +80193,9 @@ msgstr "선박"
 msgid "Info"
 msgstr ""
 
-#: src/info.c:221
-msgid "Date:"
-msgstr ""
-
 #: src/info.c:222 src/land_shipyard.c:149
 msgid "Money:"
 msgstr ""
-
-#: src/info.c:223
-#, fuzzy
-#| msgid "Ship"
-msgid "Ship:"
-msgstr "선박"
 
 #: src/info.c:225
 msgid "Time played:"
@@ -81601,49 +81585,32 @@ msgid "%s #r(Backup)#0"
 msgstr ""
 
 #: src/load.c:413
-#, fuzzy, c-format
-msgid ""
-"#nName:\n"
-"#0   %s\n"
-"\n"
-"#nVersion:\n"
-"#0   %s\n"
-"\n"
-"#nDate:\n"
-"#0   %s\n"
-"\n"
-"#nPlanet:\n"
-"#0   %s\n"
-"\n"
-"#nCredits:\n"
-"#0   %s\n"
-"\n"
-"#nShip Name:\n"
-"#0   %s\n"
-"\n"
-"#nShip Model:\n"
-"#0   %s"
-msgstr ""
-"#n이름:\n"
-"#0   %s\n"
-"\n"
-"#n버전:\n"
-"#0   %s\n"
-"\n"
-"#n날짜:\n"
-"#0   %s\n"
-"\n"
-"#n행성:\n"
-"#0   %s\n"
-"\n"
-"#n크레딧:\n"
-"#0   %s\n"
-"\n"
-"#n배 이름:\n"
-"#0   %s\n"
-"\n"
-"#n배 종류:\n"
-"#0   %s"
+msgid "Name:"
+msgstr "이름:"
+
+#: src/load.c:416
+msgid "Version:"
+msgstr "버전:"
+
+#: src/load.c:419
+msgid "Date:"
+msgstr "날짜:"
+
+#: src/load.c:422
+msgid "Planet:"
+msgstr "행성:"
+
+#: src/load.c:425
+msgid "Credits:"
+msgstr "크레딧:"
+
+#: src/load.c:428
+msgid "Ship Name:"
+msgstr "배 이름:"
+
+#: src/load.c:431
+msgid "Ship Model:"
+msgstr "배 종류:"
 
 #: src/load.c:455
 msgid "Save game version mismatch"

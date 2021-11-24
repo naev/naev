@@ -84517,31 +84517,14 @@ msgid ", "
 msgstr ", "
 
 #: src/land.c:822
-#, fuzzy, c-format
-#| msgid ""
-#| "%s (%s system)\n"
-#| "%s (%s-class)\n"
-#| "%s\n"
-#| "roughly %s\n"
-#| "\n"
-#| "%s\n"
-#| "%s"
-msgid ""
-"%s (%s system)\n"
-"%s (%s-class)\n"
-"%s\n"
-"roughly %s\n"
-"\n"
-"%s\n"
-"%s%s"
-msgstr ""
-"%s (%s星系)\n"
-"%s (%s クラス)\n"
-"%s\n"
-"約 %s\n"
-"\n"
-"%s\n"
-"%s"
+#, c-format
+msgid "%s (%s-class)"
+msgstr "%s (%s クラス)"
+
+#: src/land.c:823
+#, c-format
+msgid "roughly %s"
+msgstr "約 %s"
 
 #: src/land.c:854
 #, c-format
@@ -84565,22 +84548,16 @@ msgid "Commodity"
 msgstr "商品"
 
 #: src/land.c:1233
-msgid ""
-"#nStationed at:\n"
-"Class:\n"
-"Faction:\n"
-"Population:\n"
-"\n"
-"Free Space:\n"
-"Money:"
-msgstr ""
-"#n位置 :\n"
-"種別 :\n"
-"党派 :\n"
-"人口 :\n"
-"\n"
-"空き容量 :\n"
-"所持金 :"
+msgid "Stationed at:"
+msgstr "位置 :"
+
+#: src/land.c:1236
+msgid "Population:"
+msgstr "人口 :"
+
+#: src/land.c:1237
+msgid "Free Space:"
+msgstr "空き容量 :"
 
 #: src/land.c:1241
 msgid "Tags:"
@@ -84862,22 +84839,24 @@ msgid "Slots:"
 msgstr "スロット :"
 
 #: src/land_trade.c:86
-msgid ""
-"#nYou have:#0\n"
-"#nPurchased for:#0\n"
-"#nMarket Price:#0\n"
-"#nFree Space:#0\n"
-"#nMoney:#0\n"
-"#nAverage price here:#0\n"
-"#nAverage price all:#0"
-msgstr ""
-"#n現在の所有量 :#0\n"
-"#n購入情報 :#0\n"
-"#n市場価格 :#0\n"
-"#n空き容量 :#0\n"
-"#n所持金 :#0\n"
-"#nここでの平均価格 :#0\n"
-"#n全体での平均価格 :#0"
+msgid "You have:"
+msgstr "現在の所有量 :"
+
+#: src/land_trade.c:87
+msgid "Purchased for:"
+msgstr "購入情報 :"
+
+#: src/land_trade.c:88
+msgid "Market Price:"
+msgstr "市場価格 :"
+
+#: src/land_trade.c:91
+msgid "Average price here:"
+msgstr "ここでの平均価格 :"
+
+#: src/land_trade.c:92
+msgid "Average price all:"
+msgstr "全体での平均価格 :"
 
 #: src/land_trade.c:160
 #, c-format
@@ -84909,22 +84888,13 @@ msgstr "%.1f ¤"
 
 #: src/land_trade.c:196
 #, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s/t\n"
-"%s\n"
-"%s\n"
-"%s/t ± %s/t\n"
-"%s/t ± %s/t\n"
-msgstr ""
-"%s\n"
-"%s\n"
-"%s/t\n"
-"%s\n"
-"%s\n"
-"%s/t ± %s/t\n"
-"%s/t ± %s/t\n"
+msgid "%s/t"
+msgstr "%s/t"
+
+#: src/land_trade.c:197
+#, c-format
+msgid "%s/t ± %s/t"
+msgstr "%s/t ± %s/t"
 
 #: src/land_trade.c:238
 msgid "No cargo space available!"
@@ -84955,50 +84925,25 @@ msgstr "ゲームのロード"
 msgid "%s #r(Backup)#0"
 msgstr "%s #r(バックアップ)#0"
 
-#: src/load.c:413
-#, c-format
-msgid ""
-"#nName:\n"
-"#0   %s\n"
-"\n"
-"#nVersion:\n"
-"#0   %s\n"
-"\n"
-"#nDate:\n"
-"#0   %s\n"
-"\n"
-"#nPlanet:\n"
-"#0   %s\n"
-"\n"
-"#nCredits:\n"
-"#0   %s\n"
-"\n"
-"#nShip Name:\n"
-"#0   %s\n"
-"\n"
-"#nShip Model:\n"
-"#0   %s"
-msgstr ""
-"#n名前 :\n"
-"#0   %s\n"
-"\n"
-"#n版数 :\n"
-"#0   %s\n"
-"\n"
-"#n日付 :\n"
-"#0   %s\n"
-"\n"
-"#n惑星 :\n"
-"#0   %s\n"
-"\n"
-"#nクレジット :\n"
-"#0   %s\n"
-"\n"
-"#n船の名前 :\n"
-"#0   %s\n"
-"\n"
-"#n船の種類 :\n"
-"#0   %s"
+#: src/load.c:416
+msgid "Version:"
+msgstr "版数 :"
+
+#: src/load.c:422
+msgid "Planet:"
+msgstr "惑星 :"
+
+#: src/load.c:425
+msgid "Credits:"
+msgstr "クレジット :"
+
+#: src/load.c:428
+msgid "Ship Name:"
+msgstr "船の名前 :"
+
+#: src/load.c:431
+msgid "Ship Model:"
+msgstr "船の種類 :"
 
 #: src/load.c:455
 msgid "Save game version mismatch"
@@ -85263,24 +85208,8 @@ msgid "#%c%s%s (%s, %s)"
 msgstr "#%c%s%s (%s, %s)"
 
 #: src/map_find.c:661 src/map_system.c:635
-msgid "#nOwned:#0"
-msgstr "#n所有数 :#0"
-
-#: src/map_find.c:662 src/map_system.c:636
-msgid "#nMass:#0"
-msgstr "#n質量 :#0"
-
-#: src/map_find.c:663 src/map_system.c:637
-msgid "#nPrice:#0"
-msgstr "#n価格 :#0"
-
-#: src/map_find.c:664
-msgid "#nMoney:#0"
-msgstr "#n所持金 :#0"
-
-#: src/map_find.c:665
-msgid "#nLicense:#0"
-msgstr "#n免許 :#0"
+msgid "Owned:"
+msgstr "所有数 :"
 
 #: src/map_find.c:768
 #, c-format

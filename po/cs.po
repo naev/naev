@@ -80876,22 +80876,13 @@ msgstr ""
 
 #: src/land_trade.c:196
 #, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s/t\n"
-"%s\n"
-"%s\n"
-"%s/t ± %s/t\n"
-"%s/t ± %s/t\n"
-msgstr ""
-"%s\n"
-"%s\n"
-"%s/t\n"
-"%s\n"
-"%s\n"
-"%s/t ± %s/t\n"
-"%s/t ± %s/t\n"
+msgid "%s/t"
+msgstr "%s/t"
+
+#: src/land_trade.c:197
+#, c-format
+msgid "%s/t ± %s/t"
+msgstr "%s/t ± %s/t"
 
 #: src/land_trade.c:238
 msgid "No cargo space available!"

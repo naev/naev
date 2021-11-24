@@ -632,9 +632,9 @@ static void map_system_array_update( unsigned int wid, const char* str )
          desc_start++;
       }
 
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %d   ", _("#nOwned:#0"), player_outfitOwned( outfit ) );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s   ", _("#nMass:#0"), buf_mass );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s   ", _("#nPrice:#0"), buf_price );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "#n%s#0 %d   ", _("Owned:"), player_outfitOwned( outfit ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "#n%s#0 %s   ", _("Mass:"), buf_mass );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "#n%s#0 %s   ", _("Price:"), buf_price );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s", buf_license );
    }
    else if ((strcmp( str, MAPSYS_SHIPS ) == 0)) {
@@ -719,10 +719,11 @@ static void map_system_array_update( unsigned int wid, const char* str )
                   "#nYou have:#0 %d tonnes\n",
                   owned), owned );
 
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l,
-            _("#nAverage price seen here:#0 %s/t ± %s/t\n"
-               "#nAverage price seen everywhere:#0 %s/t ± %s/t\n"),
-            buf_mean, buf_std, buf_globalmean, buf_globalstd );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l,"#n%s#0 ", _("Average price seen here:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%s/t ± %s/t"), buf_mean, buf_std );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l,"\n#n%s#0 ", _("Average price seen everywhere:") );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%s/t ± %s/t\n"), buf_globalmean, buf_globalstd );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s", "\n" );
    }
    else
       WARN( _("Unexpected call to map_system_array_update\n") );
