@@ -26,8 +26,9 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local portrait = require "portrait"
+local fleet = require "fleet"
 
--- luacheck: globals land approach_guy enter (Hook functions passed by name)
+-- luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp04
 local cargo_name = _("nebula artefact")
@@ -41,6 +42,9 @@ mem.shady_dealer = portrait.get("Pirate")
 
 function create ()
    misn.finish(false)
+   if not misn.claim( destsys ) then
+      misn.finish(false)
+   end
    misn.setNPC( _("Noona"), zpp.noona.portrait, zpp.noona.description )
 end
 
@@ -161,5 +165,37 @@ function approach_guy ()
    misn.npcRm( npcguy )
 end
 
+local badguys
 function enter ()
+   -- Time for !!FUN!!
+   if mem.state==2 and system.cur()==destsys then
+      mem.state = 3
+
+      local pos = jump.get( destsys, "Tomas" ):pos()
+      local fbad = faction.dynAdd( "Pirate", "physics_badguys", _("Thugs"), {clear_allies=true, clear_enemies=true} )
+
+      local badships = { "Pirate Admonisher", "Hyena", "Hyena" }
+      badguys = fleet.add( 1, badships, fbad, pos, _("Thugs"), {ai="baddiepos"} )
+      for k,p in ipairs(badguys) do
+         p:setHostile()
+      end
+
+      hook.timer( 2, "heartbeat" )
+   end
+end
+
+function heartbeat ()
+   local bg = badguys[1]
+   if not bg:exists() then
+      return
+   end
+   local pp = player.pilot ()
+   local det, scan = bg:inrange( pp )
+   if det and scan then
+      bg:broadcast( _("That's the one! Get 'em!") )
+      player.autonavReset( 5 )
+      return
+   end
+
+   hook.time( 2, "heartbeat" )
 end
