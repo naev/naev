@@ -41,7 +41,6 @@ local retpnt, retsys = planet.getS( "Katar I" )
 mem.shady_dealer = portrait.get("Pirate")
 
 function create ()
-   misn.finish(false)
    if not misn.claim( destsys ) then
       misn.finish(false)
    end
@@ -55,8 +54,8 @@ function accept ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_([[]]))
-   n(fmt.f(_([[]]),
+   vn.na(_([[You once again meet up with Noona.]]))
+   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're pretty hard to get usually, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? They should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -69,7 +68,7 @@ She furrows her brow.]]),{pnt=destpnt}))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([[""]]))
+   n(fmt.f(_([["Thanks again! I know {pnt} is not really a place you want to go, but there really was no option this time around. By the time you get back I should have finished all the other preparations and this time I'll finally be able to complete the experiment!… I hope."]]),{pnt=destpnt}))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -110,15 +109,17 @@ function land ()
       vn.scene()
       local n = vn.newCharacter( zpp.vn_noona() )
       vn.transition( zpp.noona.transition )
-      vn.na(_([[]]))
-      n(_([[""]]))
+      vn.na(_([[You land and the lone cargo drone begins to unload the container. It seems to have trouble balancing it and you amuse yourself by looking at its antics until you are startled by Noona.]]))
+      n(_([["The drones sure are cute. I like to call that one Laboriosi."
+She points at the lone cargo drone.
+"Thanks a lot for bringing me my materials. I don't know what I would do without them. I was able to go over the drones, and I think it might be best to not rely on them for the final experiment. I think the electromagnetic radiation from Katar doesn't work too well with them. If you could help me do the experiments, I would be very grateful. Meet me up at the bar, I have to do some small preparations."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zpp.noona.transition )
       vn.run()
 
       player.pay( reward )
-      zpp.log(_(""))
+      zpp.log(_("You helped Noona get some materials from a shady dealer in order for her to pursue her research and perform experiments."))
       misn.finish(true)
    end
 end
@@ -130,12 +131,19 @@ function approach_guy ()
    vn.scene()
    local d = vn.newCharacter( _("Shady Dealer"), {image=portrait.getFullPath(mem.shady_dealer)} )
    vn.transition()
-   vn.na(_([[]]))
    if talked_once then
-      d(_([[""]]))
+      vn(_([[You once again approach the shady dealer.]]))
+      d(_([["Have you made preparations for the cargo?"
+Their grin makes your feel uneasy.]]))
 
    else
-      d(_([[""]]))
+      vn.na(_([[As you approach the shady dealer, you can barely make out some movement in the background.]]))
+      d(_([[They start to grin and begin to speak with an almost serpent-like accent.
+"Ah, pleasure to meet you. Your must be the one in charge of the delivery. Your friend has quite a refined taste too. It's not often we get a sample as good as this one."
+They lick their lips.]]))
+      d(_([["The arrangements have all been made, and you'll soon have it aboard your ship. If I were you, I would put it as far away from the any personnel as possible."
+They then lean it to whisper to you.
+"You might want to watch your back, your friend is not the only one that wants it."]]))
       talked_once = true
 
    end
@@ -149,14 +157,14 @@ function approach_guy ()
       cargo_space = true
    end
 
-   vn.na(fmt.f(_(""),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+   vn.na(fmt.f(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
    vn.run()
 
    if not cargo_space then
       return
    end
 
-   local crg = misn.cargoNew( N_(""), N_("") )
+   local crg = misn.cargoNew( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird signs coming from inside it, almost like some sort of running river.") )
    misn.cargoAdd( crg, cargo_amount )
 
    misn.osdActive(2)
