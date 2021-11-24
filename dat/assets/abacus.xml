@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>25</population>
+  <population>100</population>
   <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
@@ -28,5 +28,6 @@
  </general>
  <tags>
   <tag>research</tag>
+  <tag>rural</tag>
  </tags>
 </asset>
