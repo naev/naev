@@ -55,7 +55,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You once again meet up with Noona.]]))
-   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're pretty hard to get usually, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? They should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
+   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're pretty hard to get usually, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -184,9 +184,6 @@ function enter ()
 
       local badships = { "Pirate Admonisher", "Hyena", "Hyena" }
       badguys = fleet.add( 1, badships, fbad, pos, _("Thugs"), {ai="baddiepos"} )
-      for k,p in ipairs(badguys) do
-         p:setHostile()
-      end
 
       hook.timer( 2, "heartbeat" )
    end
@@ -199,11 +196,14 @@ function heartbeat ()
    end
    local pp = player.pilot ()
    local det, scan = bg:inrange( pp )
-   if det and scan then
+   if det and scan and bg:pos():dist( pp:pos() ) < 5000 then
+      for k,p in ipairs(badguys) do
+         p:setHostile()
+      end
       bg:broadcast( _("That's the one! Get 'em!") )
       player.autonavReset( 5 )
       return
    end
 
-   hook.time( 2, "heartbeat" )
+   hook.timer( 2, "heartbeat" )
 end
