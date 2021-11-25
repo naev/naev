@@ -15,6 +15,10 @@
   <asset>Poller I-1</asset>
  </assets>
  <jumps>
+  <jump target="NGC-11231">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Newmarch">
    <autopos/>
    <hide>1.000000</hide>

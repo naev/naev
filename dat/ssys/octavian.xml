@@ -23,6 +23,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-7533">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Procyon">
    <autopos/>
    <hide>0.000000</hide>

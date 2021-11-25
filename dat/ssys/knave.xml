@@ -22,6 +22,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NCG-12654">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Paradox">
    <autopos/>
    <hide>1.000000</hide>

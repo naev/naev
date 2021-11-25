@@ -20,6 +20,10 @@
   <asset>Warden's End</asset>
  </assets>
  <jumps>
+  <jump target="NGC-1098">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Unicorn">
    <autopos/>
    <hide>1.000000</hide>

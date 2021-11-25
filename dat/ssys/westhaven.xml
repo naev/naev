@@ -15,6 +15,10 @@
   <asset>WSTHVN P-1</asset>
  </assets>
  <jumps>
+  <jump target="NGC-9415">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Straight Row">
    <autopos/>
    <hide>1.000000</hide>

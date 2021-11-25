@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="NGC-902">
+<ssys name="NCG-1872">
  <general>
   <radius>15000.000000</radius>
   <stars>400</stars>
@@ -7,20 +7,12 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-588.540792</x>
-  <y>26.541924</y>
+  <x>-726.000000</x>
+  <y>-240.000000</y>
  </pos>
  <assets/>
  <jumps>
-  <jump target="Brumerebus">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-3219">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-3858">
+  <jump target="Senara">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

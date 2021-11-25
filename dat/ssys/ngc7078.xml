@@ -14,13 +14,17 @@
  <jumps>
   <jump target="NGC-1292">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.500000</hide>
   </jump>
   <jump target="NGC-4746">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-5483">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-7533">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

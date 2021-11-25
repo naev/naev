@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="NGC-5483">
+<ssys name="NGC-1001">
  <general>
   <radius>15000.000000</radius>
   <stars>400</stars>
@@ -7,23 +7,20 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-683.293879</x>
-  <y>-329.515175</y>
+  <x>-860.374378</x>
+  <y>-711.426108</y>
  </pos>
- <assets>
-  <asset_virtual>Empire Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="NGC-11935">
+  <jump target="Bedimann">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="NGC-1292">
+  <jump target="NGC-23">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="NGC-7078">
+  <jump target="NGC-2954">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

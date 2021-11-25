@@ -18,7 +18,7 @@
   </jump>
   <jump target="NGC-7078">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.500000</hide>
   </jump>
   <jump target="Senara">
    <autopos/>
