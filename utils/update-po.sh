@@ -26,3 +26,9 @@ else
    find dat -name "*.xml" | egrep -v "$XML_SKIP_PATTERN" | LC_ALL=C sort
    (find dat -name "*.lua"; find src -name "*.[ch]") | LC_ALL=C sort
 fi >> "$ROOT/po/POTFILES.in"
+
+if [ "$2" = "--pre-commit" ]; then
+   # Operate as required by this product -- https://pre-commit.com/ -- and return a failure status if we achieved anything.
+   git diff --exit-code po/POTFILES.in && exit 0
+   echo Fixing po/POTFILES.in
+fi

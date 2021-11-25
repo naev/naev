@@ -16,3 +16,9 @@ repos:
       name: luacheck for all data files
       entry: utils/luacheck_git.sh
       language: script
+    - id: potfiles
+      name: commit POTFILES.in if necessary
+      entry: utils/update-po.sh . --pre-commit
+      language: script
+      always_run: true
+      pass_filenames: false
