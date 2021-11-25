@@ -21,7 +21,7 @@ function background ()
 
 const int ITERATIONS = 5;
 const float SCALAR = 2.0;
-const float SCALE = 200.0;
+const float SCALE = 300.0;
 const float TIME_SCALE = 50.0;
 
 uniform float u_time = 0.0;
@@ -65,8 +65,8 @@ function renderov( dt )
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()
-   print(string.format("%f x %f", x*0.5/sf, y*0.5/sf))
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, z )
 
-   shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
+   --shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
+   shaze:render( dt, {0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 1.0} )
 end
