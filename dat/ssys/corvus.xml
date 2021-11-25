@@ -19,6 +19,10 @@
   <asset>Crow</asset>
  </assets>
  <jumps>
+  <jump target="NGC-3371">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Octantis">
    <autopos/>
    <hide>1.000000</hide>

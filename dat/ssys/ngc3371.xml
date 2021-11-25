@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Antlejos">
+<ssys name="NGC-3371">
  <general>
   <radius>15000.000000</radius>
   <stars>400</stars>
@@ -7,31 +7,21 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-518.527315</x>
-  <y>-104.214660</y>
+  <x>-204.273769</x>
+  <y>482.782901</y>
  </pos>
- <assets>
-  <asset>Antlejos III</asset>
-  <asset>Antlejos IV</asset>
-  <asset>Antlejos Prime</asset>
-  <asset>Antlejos V</asset>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Delta Polaris">
+  <jump target="Corvus">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Klintus">
+  <jump target="NGC-10452">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Knave">
+  <jump target="NGC-13798">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NCG-12654">
-   <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

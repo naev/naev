@@ -16,7 +16,6 @@
   <asset>Warnecke</asset>
   <asset>Warnecke I</asset>
   <asset>Warnecke II</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Copernicus">
@@ -30,7 +29,7 @@
   </jump>
   <jump target="Procyon">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

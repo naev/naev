@@ -24,5 +24,9 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Klunzar">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

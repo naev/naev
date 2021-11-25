@@ -7,20 +7,20 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-588.540792</x>
-  <y>26.541924</y>
+  <x>-582.985236</x>
+  <y>36.264146</y>
  </pos>
  <assets/>
  <jumps>
-  <jump target="Brumerebus">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="NGC-3219">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-3858">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-7786">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

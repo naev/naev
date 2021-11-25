@@ -17,6 +17,11 @@
   <asset>Tumut</asset>
  </assets>
  <jumps>
+  <jump target="NGC-13674">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Octavian">
    <autopos/>
    <hide>1.000000</hide>

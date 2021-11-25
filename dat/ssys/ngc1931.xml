@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Brumerebus">
+<ssys name="NGC-1931">
  <general>
   <radius>15000.000000</radius>
   <stars>400</stars>
@@ -7,12 +7,17 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-428.330530</x>
-  <y>1.626157</y>
+  <x>-0.495370</x>
+  <y>868.995370</y>
  </pos>
  <assets/>
  <jumps>
-  <jump target="Knave">
+  <jump target="Malebolge">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-4771">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

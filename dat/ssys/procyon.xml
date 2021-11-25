@@ -30,7 +30,7 @@
   </jump>
   <jump target="Octavian">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Vost">
    <autopos/>
