@@ -22,11 +22,11 @@
    <autopos/>
    <hide>0.500000</hide>
   </jump>
-  <jump target="NCG-1872">
+  <jump target="NGC-1292">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="NGC-1292">
+  <jump target="NGC-1872">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

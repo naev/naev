@@ -1972,8 +1972,6 @@ dat/ssys/narousse.xml
 dat/ssys/nartur.xml
 dat/ssys/nasona.xml
 dat/ssys/nava.xml
-dat/ssys/ncg12654.xml
-dat/ssys/ncg1872.xml
 dat/ssys/neexi.xml
 dat/ssys/neon.xml
 dat/ssys/new_haven.xml
@@ -1998,6 +1996,7 @@ dat/ssys/ngc13674.xml
 dat/ssys/ngc13798.xml
 dat/ssys/ngc14479.xml
 dat/ssys/ngc1562.xml
+dat/ssys/ngc1872.xml
 dat/ssys/ngc1931.xml
 dat/ssys/ngc2175.xml
 dat/ssys/ngc2232.xml
@@ -2009,6 +2008,7 @@ dat/ssys/ngc2954.xml
 dat/ssys/ngc3219.xml
 dat/ssys/ngc3371.xml
 dat/ssys/ngc3858.xml
+dat/ssys/ngc4087.xml
 dat/ssys/ngc4131.xml
 dat/ssys/ngc4637.xml
 dat/ssys/ngc4746.xml
