@@ -334,7 +334,7 @@ static void mapedit_btnOpen( unsigned int wid_unused, const char *unused )
 static void mapedit_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   double x,y,r;
+   double x, y, r;
 
    /* Parameters. */
    map_renderParams( bx, by, mapedit_xpos, mapedit_ypos, w, h, mapedit_zoom, &x, &y, &r );
@@ -370,11 +370,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 {
    (void) wid;
    (void) data;
-   int found;
-   double x,y, t;
-   StarSystem *sys;
-
-   t = 15.*15.; /* threshold */
+   const double t = 15.*15.; /* threshold */
 
    switch (event->type) {
    case SDL_MOUSEWHEEL:
@@ -408,18 +404,20 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             my -= h/2 - mapedit_ypos;
 
             for (int i=0; i<array_size(systems_stack); i++) {
-               sys = system_getIndex( i );
+               double x,y;
+               StarSystem *sys = system_getIndex( i );
 
                /* get position */
                x = sys->pos.x * mapedit_zoom;
                y = sys->pos.y * mapedit_zoom;
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
+                  int found = 0;
+
                   /* Set last clicked system */
                   mapedit_iLastClickedSystem = i;
 
                   /* Try to find in selected systems. */
-                  found = 0;
                   for (int j=0; j<mapedit_nsys; j++) {
                      /* Must match. */
                      if (mapedit_sys[j] == sys) {
@@ -533,13 +531,12 @@ static void mapedit_selectRm( StarSystem *sys )
  */
 void mapedit_selectText (void)
 {
-   int i, l;
-   char buf[1024];
-   StarSystem *sys;
+   int l;
+   char buf[STRMAX_SHORT];
 
    /* Built list of all selected systems names */
    l = 0;
-   for (i=0; i<mapedit_nsys; i++) {
+   for (int i=0; i<mapedit_nsys; i++) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", mapedit_sys[i]->name,
             (i == mapedit_nsys-1) ? "" : ", " );
    }
@@ -557,7 +554,7 @@ void mapedit_selectText (void)
 
       /* Compute and display presence text. */
       if (mapedit_iLastClickedSystem != 0) {
-         sys = system_getIndex( mapedit_iLastClickedSystem );
+         StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
          map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
          snprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
          window_modifyText( mapedit_wid, "txtSPresence", buf );
@@ -608,7 +605,7 @@ void mapedit_loadMapMenu_open (void)
    unsigned int wid;
    char **names;
    mapOutfitsList_t *ns;
-   int i, n;
+   int n;
 
    /* window */
    wid = window_create( "wdwOpenMapOutfit", _("Open Map Outfit"), -1, -1, MAPEDIT_OPEN_WIDTH, MAPEDIT_OPEN_HEIGHT );
@@ -625,7 +622,7 @@ void mapedit_loadMapMenu_open (void)
    n = array_size( mapList );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          ns       = &mapList[i];
          names[i] = strdup(ns->mapName);
       }
