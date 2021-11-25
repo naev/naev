@@ -1360,6 +1360,9 @@ void window_render( Window *w )
    x = w->x;
    y = w->y;
 
+   /* We're on top of anything previously drawn. */
+   glClear( GL_DEPTH_BUFFER_BIT );
+
    /* See if needs border. */
    if (!window_isFlag( w, WINDOW_NOBORDER ))
       window_renderBorder(w);

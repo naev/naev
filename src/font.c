@@ -1201,8 +1201,7 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, c
    glEnableVertexAttribArray( shaders.font.tex_coord );
    gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
 
-   /* Set up depth stuff. */
-   glClear( GL_DEPTH_BUFFER_BIT );
+   /* Depth testing is used to draw the outline under the glyph. */
    glEnable( GL_DEPTH_TEST );
 }
 
