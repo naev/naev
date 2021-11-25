@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 20:07-0500\n"
+"POT-Creation-Date: 2021-11-24 20:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77420,7 +77420,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2098
+#: src/equipment.c:327 src/equipment.c:2100
 msgid "Sell Ship"
 msgstr ""
 
@@ -77609,167 +77609,163 @@ msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1707
+#: src/equipment.c:1708 src/info.c:517
 #, c-format
-msgid ""
-"\n"
-"%s average"
-msgstr ""
-
-#: src/equipment.c:1708
-#, c-format
-msgid ""
-"\n"
-"#%c%s%.0f#0 kN/tonne"
+msgid "%s average"
 msgstr ""
 
 #: src/equipment.c:1710
+#, c-format
+msgid "#%c%s%.0f#0 kN/tonne"
+msgstr ""
+
+#: src/equipment.c:1712
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1713
+#: src/equipment.c:1715
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s\n"
 msgstr ""
 
-#: src/equipment.c:1717
+#: src/equipment.c:1719
 #, c-format
 msgid "%s (%.1f secs for scan)\n"
 msgstr ""
 
-#: src/equipment.c:1722 src/equipment.c:1724 src/equipment.c:1726
+#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1729
+#: src/equipment.c:1731
 #, c-format
 msgid "%d / #%c%s%d#0 %s\n"
 msgstr ""
 
-#: src/equipment.c:1731
+#: src/equipment.c:1733
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1732 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1732 src/info.c:246 src/info.c:538
+#: src/equipment.c:1734 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1811
+#: src/equipment.c:1813
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1812
+#: src/equipment.c:1814
 msgid "Show only equipable outfits"
 msgstr ""
 
-#: src/equipment.c:1813
+#: src/equipment.c:1815
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1814
+#: src/equipment.c:1816
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1815
+#: src/equipment.c:1817
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:1952
+#: src/equipment.c:1954
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:1955
+#: src/equipment.c:1957
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:1956
+#: src/equipment.c:1958
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2033 src/land.c:1472
+#: src/equipment.c:2035 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2041
+#: src/equipment.c:2043
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2053
+#: src/equipment.c:2055
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2059
+#: src/equipment.c:2061
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2099
+#: src/equipment.c:2101
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr ""
 
 #. Display widget.
-#: src/equipment.c:2116
+#: src/equipment.c:2118
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2117
+#: src/equipment.c:2119
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2142 src/player.c:400
+#: src/equipment.c:2144 src/player.c:400
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2143
+#: src/equipment.c:2145
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2151
+#: src/equipment.c:2153
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2152 src/player.c:427
+#: src/equipment.c:2154 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -78390,11 +78386,6 @@ msgstr ""
 
 #: src/info.c:484
 msgid "Stats:"
-msgstr ""
-
-#: src/info.c:517
-#, c-format
-msgid "%s average"
 msgstr ""
 
 #: src/info.c:519 src/land_shipyard.c:300 src/map_system.c:665
