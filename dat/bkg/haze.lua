@@ -43,7 +43,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    }
 
    /* Give more transparency around the player. */
-   float d = min( 1.0, length( (texture_coords-0.5)*love_ScreenSize.xy )/200.0 );
+   float d = min( 1.0, length( (texture_coords-0.5)*love_ScreenSize.xy )*u_camera.z/200.0 );
    //d = 1.0;
 
    return mix( vec4(0.0), color, f*d );
