@@ -82920,57 +82920,30 @@ msgstr ""
 "#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
 
 #: src/equipment.c:1715
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "#%c%s%.0f#0 deg/s"
-msgid ""
-"\n"
-"#%c%s%.0f#0 deg/s\n"
-msgstr ""
-"\n"
-"#%c%s%.0f#0 度/秒"
+#, c-format
+msgid "#%c%s%.0f#0 deg/s"
+msgstr "#%c%s%.0f#0 度/秒"
 
 #: src/equipment.c:1719
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%s (%.1f secs for scan)"
-msgid "%s (%.1f secs for scan)\n"
-msgstr ""
-"\n"
-"%s (スキャンあたり %.1f 秒)"
+#, c-format
+msgid "%s (%.1f secs for scan)"
+msgstr "%s (スキャンあたり %.1f 秒)"
 
 #: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
-msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-msgstr ""
-"\n"
-"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
+#, c-format
+msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
+msgstr "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 
 #. Misc.
 #: src/equipment.c:1731
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%d / #%c%s%d#0 %s"
-msgid "%d / #%c%s%d#0 %s\n"
-msgstr ""
-"\n"
-"%d / #%c%s%d#0 %s"
+#, c-format
+msgid "%d / #%c%s%d#0 %s"
+msgstr "%d / #%c%s%d#0 %s"
 
 #: src/equipment.c:1733
 #, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%s %s (%d %s)"
 msgid "%s %s (%d %s)"
-msgstr ""
-"\n"
-"%s %s (%d %s)"
+msgstr "%s %s (%d %s)"
 
 #: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
@@ -83736,12 +83709,6 @@ msgstr "%.0f m/s (最大 %.0f m/s)"
 #, c-format
 msgid "%.0f deg/s"
 msgstr "%.0f 度/秒"
-
-#: src/info.c:530 src/info.c:532 src/info.c:534
-#, fuzzy, c-format
-#| msgid "%.0f MJ (%.1f MW)"
-msgid "%.0f / %.0f MJ (%.1f MW)"
-msgstr "%.0f MJ (%.1f MW)"
 
 #: src/info.c:572
 msgid "Current Weapon Set Settings"

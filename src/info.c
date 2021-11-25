@@ -250,7 +250,7 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sjumped );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", slanded );
    l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgdone );
-   l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n" );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", "" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgtaken );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sdestroyed );
    window_addText( wid, 180, 20,
@@ -466,22 +466,22 @@ static void info_openShip( unsigned int wid )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", _("Stats:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
    window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
@@ -511,26 +511,26 @@ static void ship_update( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_class(player.p->ship)) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", (int)floor(player.p->crew) );
    /* Movement. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), hyp_delay );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), player.p->thrust / player.p->solid->mass );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s (max %.0f m/s)"),
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), player.p->turn*180./M_PI );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->stats.time_mod * player.p->ship->dt_default * 100. );
    /* Health. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", player.p->dmg_absorb * 100. );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->shield, player.p->shield_max, player.p->shield_regen );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->armour, player.p->armour_max, player.p->armour_regen );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->energy, player.p->energy_max, player.p->energy_regen );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d / %d %s", pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f / %.0f %s (%d %s)",

@@ -186,7 +186,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Price:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", _("License:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("License:") );
    window_addText( wid, 20 + iw + 20, 0,
          90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
    window_addText( wid, 20 + iw + 20 + 90, 0,
@@ -360,7 +360,7 @@ void outfits_update( unsigned int wid, const char *str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", _("N/A") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
       window_modifyText( wid, "txtDescShort", NULL );
@@ -417,7 +417,7 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", buf_license );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
@@ -425,7 +425,7 @@ void outfits_update( unsigned int wid, const char *str )
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-32 );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-32 );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
-   th = MAX( th, 256-32+8+10 );
+   th = MAX( th + gl_defFont.h, 256-32+8+10 );
    window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-32 );
 }
 
@@ -558,10 +558,11 @@ int outfit_altText( char *buf, int n, const Outfit *o )
       p += scnprintf( &buf[p], n-p, _("#o%s#0\n"),
             _( sp_display( o->slot.spid ) ) );
    p += scnprintf( &buf[p], n-p, "%s", o->desc_short );
-   if ((o->mass > 0.) && (p < n))
-      scnprintf( &buf[p], n-p,
-            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
-            mass );
+   if ((o->mass > 0.) && (p < n)) {
+      char buf_mass[ECON_MASS_STRLEN];
+      tonnes2str( buf_mass, (int)round( mass ) );
+      scnprintf( &buf[p], n-p, "\n%s", buf_mass );
+   }
    return 0;
 }
 

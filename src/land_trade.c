@@ -197,7 +197,7 @@ void commodity_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_mean, buf_std );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t\n"), buf_globalmean, buf_globalstd );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtName", _(com->name) );

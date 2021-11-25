@@ -809,17 +809,17 @@ void land_updateMainTab (void)
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), _(land_planet->name), _(cur_system->name) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), planet_getClassName(land_planet->class), _(land_planet->class) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
          land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_planet->population ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tons );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", cred );
    /* Show tags. */
    if (conf.devmode) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       for (int i=0; i<array_size(land_planet->tags); i++)
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
    }

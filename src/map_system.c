@@ -722,8 +722,8 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l,"#n%s#0 ", _("Average price seen here:") );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%s/t ± %s/t"), buf_mean, buf_std );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l,"\n#n%s#0 ", _("Average price seen everywhere:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%s/t ± %s/t\n"), buf_globalmean, buf_globalstd );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s", "\n" );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%s/t ± %s/t"), buf_globalmean, buf_globalstd );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n%s", "" );
    }
    else
       WARN( _("Unexpected call to map_system_array_update\n") );
