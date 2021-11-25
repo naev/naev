@@ -88,7 +88,7 @@
    <jump>Elza</jump>
    <jump>Symm</jump>
    <jump>Dust</jump>
-   <jump>Tandar</jump>
+   <jump>Corvus</jump>
   </sys>
   <sys name="Muran">
    <jump>Forlat</jump>
@@ -123,6 +123,8 @@
   <sys name="Tandar">
    <jump>Corvus</jump>
    <jump>Symm</jump>
+  </sys>
+  <sys name="Corvus">
    <jump>Moordra</jump>
   </sys>
   <sys name="Titus">

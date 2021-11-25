@@ -17,6 +17,11 @@
   <asset>Percola</asset>
  </assets>
  <jumps>
+  <jump target="Corvus">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Dust">
    <autopos/>
    <hidden/>
@@ -28,11 +33,6 @@
   </jump>
   <jump target="Symm">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Tandar">
-   <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
