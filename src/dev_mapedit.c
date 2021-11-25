@@ -15,6 +15,7 @@
 
 #include "dev_mapedit.h"
 
+#include "conf.h"
 #include "array.h"
 #include "commodity.h"
 #include "dev_planet.h"
@@ -1070,7 +1071,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlFreeTextWriter(writer);
 
    /* Actually write data */
-   asprintf( &file, "dat/outfits/maps/%s", ns->fileName );
+   asprintf( &file, "%s/%s", conf.dev_save_map, ns->fileName );
    if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
       WARN("Failed writing '%s'!", file);
    free( file );

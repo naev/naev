@@ -92,9 +92,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const VirtualAsset **sorted_assets;
-   const JumpPoint **sorted_jumps, *jp;
-   const AsteroidAnchor *ast;
-   const AsteroidExclusion *aexcl;
+   const JumpPoint **sorted_jumps;
    char *file, *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -167,7 +165,7 @@ int dsys_saveSystem( StarSystem *sys )
    qsort( sorted_jumps, array_size(sys->jumps), sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
    for (int i=0; i<array_size(sys->jumps); i++) {
-      jp = sorted_jumps[i];
+      const JumpPoint *jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
       /* Position. */
@@ -197,7 +195,7 @@ int dsys_saveSystem( StarSystem *sys )
    if (array_size(sys->asteroids) > 0 || array_size(sys->astexclude) > 0) {
       xmlw_startElem( writer, "asteroids" );
       for (int i=0; i<array_size(sys->asteroids); i++) {
-         ast = &sys->asteroids[i];
+         const AsteroidAnchor *ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
          /* Types */
@@ -222,7 +220,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_endElem( writer ); /* "asteroid" */
       }
       for (int i=0; i<array_size(sys->astexclude); i++) {
-         aexcl = &sys->astexclude[i];
+         const AsteroidExclusion *aexcl = &sys->astexclude[i];
          xmlw_startElem( writer, "exclusion" );
 
          /* Radius */
