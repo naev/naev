@@ -533,7 +533,7 @@ static void ship_update( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f / %.0f MJ (%.1f MW)"), player.p->energy, player.p->energy_max, player.p->energy_regen );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d / %d %s", pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f / %.0f %s (%d %s)", 
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f / %.0f %s (%d %s)",
          player.p->fuel, player.p->fuel_max, n_( "unit", "units", player.p->fuel_max ),
          pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n" );
