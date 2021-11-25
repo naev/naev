@@ -2292,6 +2292,7 @@ dat/ai/zalek.lua
 dat/autoequip.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
+dat/bkg/haze.lua
 dat/bkg/lib/bgshaders.lua
 dat/bkg/lib/nebula.lua
 dat/bkg/lib/nebula_image.lua
