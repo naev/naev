@@ -1,9 +1,10 @@
 local sokoban = {}
 
-local love = require 'love'
-local lg = require 'love.graphics'
-local love_shaders = require "love_shaders"
-local fmt = require 'format'
+local love           = require 'love'
+local audio          = require 'love.audio'
+local lg             = require 'love.graphics'
+local love_shaders   = require "love_shaders"
+local fmt            = require 'format'
 
 local player            = '@'
 local playerOnStorage   = '+'
@@ -128,6 +129,15 @@ function sokoban.load()
       params.levels = {params.levels}
    end
 
+   -- Load audio
+   if not sokoban.sfx then
+      sokoban.sfx = {
+         goal     = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
+         invalid  = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
+         level    = audio.newSource( 'snd/sounds/sokoban/level.ogg' ),
+      }
+   end
+
    -- Allow the default keybindings too!
    movekeys = {
       string.lower( naev.keyGet("left") ),
@@ -199,7 +209,7 @@ function sokoban.keypressed( key )
          dy = 1
       end
 
-      local current = level[playerY][playerX]
+      local current  = level[playerY][playerX]
       local adjacent = level[playerY + dy][playerX + dx]
       local beyond
       if level[playerY + dy + dy] then
@@ -207,37 +217,46 @@ function sokoban.keypressed( key )
       end
 
       local nextAdjacent = {
-         [empty] = player,
+         [empty]   = player,
          [storage] = playerOnStorage,
       }
 
       local nextCurrent = {
-         [player] = empty,
+         [player]          = empty,
          [playerOnStorage] = storage,
       }
 
       local nextBeyond = {
-         [empty] = box,
+         [empty]   = box,
          [storage] = boxOnStorage,
       }
 
       local nextAdjacentPush = {
-         [box] = player,
+         [box]          = player,
          [boxOnStorage] = playerOnStorage,
       }
 
+      -- Player just moved
       if nextAdjacent[adjacent] then
-         level[playerY][playerX] = nextCurrent[current]
+         level[playerY][playerX]           = nextCurrent[current]
          level[playerY + dy][playerX + dx] = nextAdjacent[adjacent]
+         -- TODO play mmotion sound
 
+      -- Player pushed something
       elseif nextBeyond[beyond] and nextAdjacentPush[adjacent] then
-         level[playerY][playerX] = nextCurrent[current]
+         level[playerY][playerX]           = nextCurrent[current]
          level[playerY + dy][playerX + dx] = nextAdjacentPush[adjacent]
          level[playerY + dy + dy][playerX + dx + dx] = nextBeyond[beyond]
+         if nextBeyond[beyond] == boxOnStorage then
+            sokoban.sfx.goal:play()
+         end
+
+      else
+         sokoban.sfx.invalid:play()
+
       end
 
       local complete = true
-
       for y, row in ipairs(level) do
          for x, cell in ipairs(row) do
             if cell == box then
@@ -247,6 +266,7 @@ function sokoban.keypressed( key )
       end
 
       if complete then
+         sokoban.sfx.level:play()
          currentLevel = currentLevel + 1
          if currentLevel > #levels then
             done = true
