@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 20:24-0500\n"
+"POT-Creation-Date: 2021-11-25 12:53-0500\n"
 "PO-Revision-Date: 2021-11-21 16:26+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -1099,10 +1099,6 @@ msgid ""
 "either."
 msgstr ""
 
-#: dat/assets/alexian.xml:2
-msgid "Alexian"
-msgstr "アレクシアン"
-
 #: dat/assets/allan.xml:2
 msgid "Allan"
 msgstr "アラン"
@@ -1798,10 +1794,6 @@ msgid ""
 "everyone goes quiet when they approach."
 msgstr ""
 
-#: dat/assets/atryssa_iv.xml:2
-msgid "Atryssa IV"
-msgstr "アトリッサ IV "
-
 #. Finish event (removes npc)
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2040,10 +2032,6 @@ msgstr "ベス"
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
 msgstr " BGG-1356 "
-
-#: dat/assets/big_fred.xml:2
-msgid "Big Fred"
-msgstr "ビッグ・フレッド"
 
 #: dat/assets/blackwell_i.xml:2
 msgid "Blackwell I"
@@ -6190,10 +6178,6 @@ msgstr "クシャー II "
 msgid "Ksher III"
 msgstr "クシャー III "
 
-#: dat/assets/kunzler.xml:2
-msgid "Kunzler"
-msgstr "クンツラー"
-
 #: dat/assets/kyo_iii.xml:2
 msgid "Kyo III"
 msgstr "キョー III "
@@ -6898,10 +6882,6 @@ msgstr " MGG-007 "
 #: dat/assets/mgg1294.xml:2
 msgid "MGG-1294"
 msgstr " MGG-1294 "
-
-#: dat/assets/mida_proxima.xml:2
-msgid "Mida Proxima"
-msgstr "ミダ・プロクシマ"
 
 #. Discover will not work if the planet is found through maps
 #. type = "discover",
@@ -8700,38 +8680,6 @@ msgid ""
 "refueling depot for travelling ships in an effort to raise funding."
 msgstr ""
 
-#: dat/assets/pt237_iii.xml:2
-msgid "PT237 III"
-msgstr " PT237 III "
-
-#: dat/assets/pt237_iv.xml:2
-msgid "PT237 IV"
-msgstr " PT237 IV "
-
-#: dat/assets/pt413_vi.xml:2
-msgid "PT413 VI"
-msgstr " PT413 VI "
-
-#: dat/assets/pt413_viii.xml:2
-msgid "PT413 VIII"
-msgstr " PT413 VIII "
-
-#: dat/assets/pt612_i.xml:2
-msgid "PT612 I"
-msgstr " PT612 I "
-
-#: dat/assets/pt612_ii.xml:2
-msgid "PT612 II"
-msgstr " PT612 II "
-
-#: dat/assets/pt612_iii.xml:2
-msgid "PT612 III"
-msgstr " PT612 III "
-
-#: dat/assets/pt612_iv.xml:2
-msgid "PT612 IV"
-msgstr " PT612 IV "
-
 #: dat/assets/ptolemy.xml:2
 msgid "Ptolemy"
 msgstr "プトレマイオス"
@@ -9108,10 +9056,6 @@ msgstr ""
 #: dat/assets/riun.xml:2
 msgid "Riun"
 msgstr "リウン"
-
-#: dat/assets/rocker.xml:2
-msgid "Rocker"
-msgstr "ロッカー"
 
 #: dat/assets/rockhardt.xml:2
 msgid "Rockhardt"
@@ -9857,10 +9801,6 @@ msgstr "シックホー IV "
 msgid "Shikima II"
 msgstr "シキマ II "
 
-#: dat/assets/shikima_iii.xml:2
-msgid "Shikima III"
-msgstr "シキマ III "
-
 #: dat/assets/shion.xml:2
 msgid "Shion"
 msgstr "シオン"
@@ -10514,10 +10454,6 @@ msgstr ""
 msgid "Stint III"
 msgstr "スティント III "
 
-#: dat/assets/stoma.xml:2
-msgid "Stoma"
-msgstr "ストーマ"
-
 #: dat/assets/stormgard.xml:2
 msgid "Stormgard"
 msgstr "ストームガード"
@@ -10950,6 +10886,33 @@ msgid ""
 "always manages to get in anyway."
 msgstr ""
 
+#: dat/assets/tesla_station.xml:2
+#, fuzzy
+#| msgid "Telika Station"
+msgid "Tesla Station"
+msgstr "テリカ・ステーション"
+
+#: dat/assets/tesla_station.xml:29
+msgid ""
+"Tesla Station is the center of operations for the Xeric experimental weapons "
+"testing site. Many high energy physics researchers flock over for the easier "
+"chances of funding, and more importantly, the ability to perform high energy "
+"physics experiments with little or no ethics committee oversight. The result "
+"is that the base feels no real different from any large Za'lek research "
+"center or university."
+msgstr ""
+
+#: dat/assets/tesla_station.xml:30
+msgid ""
+"The bar is very lively, filled with physics researchers discussing the "
+"results of the latest experiments and research directions. From how crowded "
+"the bar is, you get the impression that most of the researchers rather "
+"converse here than the cramped research rooms. The walls all being "
+"whiteboards helps keep the atmosphere tense, more so than than holopanels. "
+"There is a prominent sign behind the counter that says \"7 periods since the "
+"last accident\" with a sticky note underneath that says \"thanks fred\"."
+msgstr ""
+
 #: dat/assets/thaddius_station.xml:2
 msgid "Thaddius Station"
 msgstr "サッディアス・ステーション"
@@ -11162,10 +11125,6 @@ msgid ""
 "efficient. Some pilots like it that way though, as the modest but content "
 "clientele testifies."
 msgstr ""
-
-#: dat/assets/tiger.xml:2 dat/scripts/pilotname/generic.lua:83
-msgid "Tiger"
-msgstr "タイガー"
 
 #: dat/assets/timu.xml:2
 msgid "Timu"
@@ -13145,6 +13104,12 @@ msgstr "シリウス 非存在"
 msgid "Soromid Unpresence"
 msgstr "ソロミド 非存在"
 
+#: dat/assets_virtual/soromid_unpresence_range1.xml:2
+#, fuzzy
+#| msgid "Proteron Unpresence (Range 1)"
+msgid "Soromid Unpresence (Range 1)"
+msgstr "プロテロン すべて 非存在 (距離 1)"
+
 #: dat/assets_virtual/thurion_local.xml:2
 msgid "Thurion Local"
 msgstr "ザーリオン 局所"
@@ -13200,6 +13165,12 @@ msgstr "ザレク 小"
 #: dat/assets_virtual/zalek_unpresence.xml:2
 msgid "Za'lek Unpresence"
 msgstr "ザレク 非存在"
+
+#: dat/assets_virtual/zalek_unpresence_range1.xml:2
+#, fuzzy
+#| msgid "Dvaered Unpresence (Range 1)"
+msgid "Za'lek Unpresence (Range 1)"
+msgstr "ドベーレッド 非存在 (距離 1)"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -18822,9 +18793,13 @@ msgstr ""
 "る。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
+#, fuzzy
+#| msgid ""
+#| "10% additional damage for each fighting ship of same class or higher "
+#| "within 2000 units."
 msgid ""
-"10% additional damage for each fighting ship of same class or higher within "
-"2000 units."
+"10% additional damage for each hostile ship of same class or higher within "
+"2000 distance."
 msgstr ""
 "2,000 ユニット以内にいる自分と同種かさらに大きな種別の船のそれぞれについて、"
 "戦闘中は 10% 追加の損害を与えられる。"
@@ -20903,6 +20878,18 @@ msgstr "アマロク"
 msgid "Amatiri"
 msgstr "アマティリ"
 
+#: dat/ssys/amatiri.xml:5 dat/ssys/ariadus.xml:5 dat/ssys/bonanza.xml:5
+#: dat/ssys/hasselt.xml:5 dat/ssys/kansas.xml:5 dat/ssys/klunzar.xml:5
+#: dat/ssys/malebolge.xml:5 dat/ssys/neexi.xml:5 dat/ssys/ngc10452.xml:5
+#: dat/ssys/ngc12882.xml:5 dat/ssys/ngc13322.xml:5 dat/ssys/ngc13798.xml:5
+#: dat/ssys/ngc14479.xml:5 dat/ssys/ngc1931.xml:5 dat/ssys/ngc2175.xml:5
+#: dat/ssys/ngc3371.xml:5 dat/ssys/ngc4131.xml:5 dat/ssys/ngc4637.xml:5
+#: dat/ssys/ngc4771.xml:5 dat/ssys/ngc5240.xml:5 dat/ssys/ngc7061.xml:5
+#: dat/ssys/ngc8468.xml:5 dat/ssys/ngc9654.xml:5 dat/ssys/sleuth.xml:5
+#: dat/ssys/sylph.xml:5 dat/ssys/zintar.xml:5
+msgid "#rHaze (-50% Shield and Shield Regen)#0"
+msgstr ""
+
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
 msgstr "アナーバリス"
@@ -21135,9 +21122,12 @@ msgstr "ダレド"
 
 #: dat/ssys/daled.xml:5 dat/ssys/defa.xml:5 dat/ssys/fried.xml:5
 #: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
-#: dat/ssys/new_haven.xml:5 dat/ssys/sheffield.xml:5 dat/ssys/titus.xml:5
-#: dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5 dat/ssys/volus.xml:5
-msgid "#bStellar Wind#0"
+#: dat/ssys/new_haven.xml:5 dat/ssys/pilatis.xml:5 dat/ssys/sheffield.xml:5
+#: dat/ssys/titus.xml:5 dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5
+#: dat/ssys/volus.xml:5
+#, fuzzy
+#| msgid "#bStellar Wind#0"
+msgid "#bStellar Wind (1 fuel regen)#0"
 msgstr "#b恒星風#0"
 
 #: dat/ssys/damien.xml:2
@@ -21516,6 +21506,10 @@ msgstr "クランター"
 msgid "Klintus"
 msgstr "クリンタス"
 
+#: dat/ssys/klunzar.xml:2
+msgid "Klunzar"
+msgstr ""
+
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
 msgstr "ネイブ"
@@ -21688,27 +21682,255 @@ msgstr "ネオン"
 msgid "Newmarch"
 msgstr "ニューマーチ"
 
+#: dat/ssys/ngc1001.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-1001"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc10180.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-10180"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc10452.xml:2
+#, fuzzy
+#| msgid "NGC-902"
+msgid "NGC-10452"
+msgstr " NGC-902 "
+
+#: dat/ssys/ngc10789.xml:2
+#, fuzzy
+#| msgid "NGC-7078"
+msgid "NGC-10789"
+msgstr " NGC-7078 "
+
+#: dat/ssys/ngc10907.xml:2
+#, fuzzy
+#| msgid "NGC-902"
+msgid "NGC-10907"
+msgstr " NGC-902 "
+
+#: dat/ssys/ngc1098.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-1098"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc11231.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-11231"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc11444.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-11444"
+msgstr " NGC-4746 "
+
 #: dat/ssys/ngc11718.xml:2
 #, fuzzy
 #| msgid "NGC-728"
 msgid "NGC-11718"
 msgstr " NGC-728 "
 
+#: dat/ssys/ngc11935.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-11935"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc12056.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-12056"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc12654.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-12654"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc12882.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-12882"
+msgstr " NGC-1292 "
+
 #: dat/ssys/ngc1292.xml:2
 msgid "NGC-1292"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc1317.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-1317"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc13322.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-13322"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc13674.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-13674"
+msgstr " NGC-4746 "
+
+#: dat/ssys/ngc13798.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-13798"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc14479.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-14479"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc1562.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-1562"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc1872.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-1872"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc1931.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-1931"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc2175.xml:2
+#, fuzzy
+#| msgid "NGC-3219"
+msgid "NGC-2175"
+msgstr " NGC-3219 "
+
+#: dat/ssys/ngc2232.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-2232"
+msgstr " NGC-1292 "
+
+#: dat/ssys/ngc23.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-23"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc2601.xml:2
+#, fuzzy
+#| msgid "NGC-3219"
+msgid "NGC-2601"
+msgstr " NGC-3219 "
+
+#: dat/ssys/ngc2836.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-2836"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc2948.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-2948"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc2954.xml:2
+#, fuzzy
+#| msgid "NGC-1292"
+msgid "NGC-2954"
 msgstr " NGC-1292 "
 
 #: dat/ssys/ngc3219.xml:2
 msgid "NGC-3219"
 msgstr " NGC-3219 "
 
+#: dat/ssys/ngc3371.xml:2
+#, fuzzy
+#| msgid "NGC-3219"
+msgid "NGC-3371"
+msgstr " NGC-3219 "
+
+#: dat/ssys/ngc3858.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-3858"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc4087.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-4087"
+msgstr " NGC-4746 "
+
+#: dat/ssys/ngc4131.xml:2
+#, fuzzy
+#| msgid "NGC-3219"
+msgid "NGC-4131"
+msgstr " NGC-3219 "
+
+#: dat/ssys/ngc4637.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-4637"
+msgstr " NGC-4746 "
+
 #: dat/ssys/ngc4746.xml:2
 msgid "NGC-4746"
 msgstr " NGC-4746 "
 
+#: dat/ssys/ngc4771.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-4771"
+msgstr " NGC-4746 "
+
+#: dat/ssys/ngc5240.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-5240"
+msgstr " NGC-5483 "
+
 #: dat/ssys/ngc5483.xml:2
 msgid "NGC-5483"
 msgstr " NGC-5483 "
+
+#: dat/ssys/ngc5631.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-5631"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc5838.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-5838"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc6057.xml:2
+#, fuzzy
+#| msgid "NGC-7078"
+msgid "NGC-6057"
+msgstr " NGC-7078 "
+
+#: dat/ssys/ngc7061.xml:2
+#, fuzzy
+#| msgid "NGC-7078"
+msgid "NGC-7061"
+msgstr " NGC-7078 "
 
 #: dat/ssys/ngc7078.xml:2
 msgid "NGC-7078"
@@ -21718,9 +21940,73 @@ msgstr " NGC-7078 "
 msgid "NGC-728"
 msgstr " NGC-728 "
 
+#: dat/ssys/ngc7402.xml:2
+#, fuzzy
+#| msgid "NGC-728"
+msgid "NGC-7402"
+msgstr " NGC-728 "
+
+#: dat/ssys/ngc7533.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-7533"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc7784.xml:2
+#, fuzzy
+#| msgid "NGC-7078"
+msgid "NGC-7784"
+msgstr " NGC-7078 "
+
+#: dat/ssys/ngc7786.xml:2
+#, fuzzy
+#| msgid "NGC-7078"
+msgid "NGC-7786"
+msgstr " NGC-7078 "
+
+#: dat/ssys/ngc8338.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-8338"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc8468.xml:2
+#, fuzzy
+#| msgid "NGC-4746"
+msgid "NGC-8468"
+msgstr " NGC-4746 "
+
+#: dat/ssys/ngc9017.xml:2
+#, fuzzy
+#| msgid "NGC-902"
+msgid "NGC-9017"
+msgstr " NGC-902 "
+
 #: dat/ssys/ngc902.xml:2
 msgid "NGC-902"
 msgstr " NGC-902 "
+
+#: dat/ssys/ngc9415.xml:2
+#, fuzzy
+#| msgid "NGC-902"
+msgid "NGC-9415"
+msgstr " NGC-902 "
+
+#: dat/ssys/ngc9654.xml:2
+#, fuzzy
+#| msgid "NGC-5483"
+msgid "NGC-9654"
+msgstr " NGC-5483 "
+
+#: dat/ssys/ngc9897.xml:2
+#, fuzzy
+#| msgid "NGC-902"
+msgid "NGC-9897"
+msgstr " NGC-902 "
+
+#: dat/ssys/ngcg5882.xml:2
+msgid "NGCG-5882"
+msgstr ""
 
 #: dat/ssys/niger.xml:2
 msgid "Niger"
@@ -25285,6 +25571,16 @@ msgstr ""
 #. Mizar
 #. PSO
 #.
+#. Some sort of stellar wind type background.
+#. --
+#. We use the default background too!
+#. Scale factor that controls computation cost. As this shader is really
+#. really expensive, we can't compute it at full resolution
+#. Initialize shader
+#. Default nebula background
+#. Get camera properties
+#. shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
+#.
 #. Small library to handle rendering a fullscreen background shader.
 #. Automatically handles scaling as necesary.
 #. --
@@ -25924,45 +26220,45 @@ msgstr "星雲"
 msgid "Grim Reminder of Our Fragility"
 msgstr "われわれのもろさにたいする残忍な注意"
 
-#: dat/events/discovery.lua:234
+#: dat/events/discovery.lua:235
 msgid "Northern Stellar Winds"
 msgstr "北の恒星風"
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:251
+#: dat/events/discovery.lua:252
 msgid "Southern Stellar Winds"
 msgstr "南の恒星風"
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:261
+#: dat/events/discovery.lua:262
 msgid "#HWild Ones Territory#0"
 msgstr "#H荒くれの領域#0"
 
-#: dat/events/discovery.lua:262
+#: dat/events/discovery.lua:263
 msgid "#HUncontrolled and Raging Pirate Fury#0"
 msgstr "#H野放しで荒れ狂う海賊の激怒#0"
 
-#: dat/events/discovery.lua:272
+#: dat/events/discovery.lua:273
 msgid "#HRaven Clan Territory#0"
 msgstr "#Hレイブン一味の領域#0"
 
-#: dat/events/discovery.lua:273
+#: dat/events/discovery.lua:274
 msgid "#HDark Hand of the Black Market#0"
 msgstr "#Hやみ市場の黒ずんだ手#0"
 
-#: dat/events/discovery.lua:283
+#: dat/events/discovery.lua:284
 msgid "#HBlack Lotus Territory#0"
 msgstr "#Hブラックロータスの領域#0"
 
-#: dat/events/discovery.lua:284
+#: dat/events/discovery.lua:285
 msgid "#HPiracy has never been Snazzier#0"
 msgstr "#H海賊行為はけっしてしゃれてなんかいない#0"
 
-#: dat/events/discovery.lua:294
+#: dat/events/discovery.lua:295
 msgid "#HDreamer Clan Territory#0"
 msgstr "#Hドリーマー一味の領域#0"
 
-#: dat/events/discovery.lua:295
+#: dat/events/discovery.lua:296
 msgid "#HPiracy to Rebel against Reality#0"
 msgstr "#H現実に反逆するための海賊行為#0"
 
@@ -25973,22 +26269,22 @@ msgstr "#H現実に反逆するための海賊行為#0"
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:371
+#: dat/events/discovery.lua:372
 msgid "You found #o{title} - {subtitle}!"
 msgstr "あなたは#o{title}#0を見つけた⸺#o{subtitle}！"
 
-#: dat/events/discovery.lua:371
+#: dat/events/discovery.lua:372
 msgid "You found #o{title}!"
 msgstr "あなたは#o{title}#0を見つけた！"
 
 #. Log and message
-#: dat/events/discovery.lua:375 src/map.c:1880
+#: dat/events/discovery.lua:376 src/map.c:1880
 msgid "Discovery"
 msgstr "発見物"
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
-#: dat/events/discovery.lua:375 dat/events/shiplog.lua:26
+#: dat/events/discovery.lua:376 dat/events/shiplog.lua:26
 #: dat/missions/shark/sh04_meeting.lua:55
 msgid "Travel"
 msgstr "旅"
@@ -26848,8 +27144,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:258 src/options.c:777 src/options.c:881
-#: src/options.c:1132 src/options.c:1184
+#: src/map_find.c:240 src/options.c:258 src/options.c:785 src/options.c:889
+#: src/options.c:1140 src/options.c:1192
 msgid "Cancel"
 msgstr "取り消し"
 
@@ -35469,7 +35765,7 @@ msgstr "宇宙港"
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:277 src/info.c:406 src/info.c:824
 #: src/info.c:1170 src/input.c:516 src/land.c:815 src/land_outfits.c:365
-#: src/land_outfits.c:398 src/land_outfits.c:578 src/land_shipyard.c:169
+#: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:169
 #: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:82
 #: src/land_trade.c:84 src/land_trade.c:117 src/load.c:355 src/load.c:403
 #: src/load.c:445 src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
@@ -77810,8 +78106,8 @@ msgstr "failed to set fallback font"
 #. --
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
-#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:255 src/options.c:575
-#: src/options.c:878 src/options.c:1181
+#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:255 src/options.c:583
+#: src/options.c:886 src/options.c:1189
 msgid "OK"
 msgstr "了解"
 
@@ -78085,23 +78381,27 @@ msgstr[0] ""
 #. Load level data
 #. Remove edges
 #. header
-#: dat/scripts/minigames/sokoban/core.lua:121
+#: dat/scripts/minigames/sokoban/core.lua:126
 msgid "Sokoban"
 msgstr ""
 
+#. Load audio
 #. Allow the default keybindings too!
 #. Defaults
-#: dat/scripts/minigames/sokoban/core.lua:277
+#. Player just moved
+#. TODO play mmotion sound
+#. Player pushed something
+#: dat/scripts/minigames/sokoban/core.lua:329
 #, fuzzy
 #| msgid "Loading Completed!"
 msgid "Completed!"
 msgstr "ロードを完了しました！"
 
-#: dat/scripts/minigames/sokoban/core.lua:279
+#: dat/scripts/minigames/sokoban/core.lua:331
 msgid "Layer {cur} / {total}"
 msgstr ""
 
-#: dat/scripts/minigames/sokoban/core.lua:307
+#: dat/scripts/minigames/sokoban/core.lua:343
 msgid "#barrow keys#0: move, #br#0: restart, #bq#0: abort"
 msgstr ""
 
@@ -78391,6 +78691,10 @@ msgstr "タロン"
 #: dat/scripts/pilotname/generic.lua:82 dat/scripts/pilotname/pirate.lua:470
 msgid "Thunder"
 msgstr "サンダー"
+
+#: dat/scripts/pilotname/generic.lua:83
+msgid "Tiger"
+msgstr "タイガー"
 
 #: dat/scripts/pilotname/generic.lua:84
 msgid "Torch"
@@ -81800,11 +82104,11 @@ msgstr ""
 "ウィンドウの装飾をなしにする。注意して使ってください。それから終了とフルスク"
 "リーン切り替えのキーボード制御を覚えておいてください。"
 
-#: src/conf.c:853 src/options.c:1291
+#: src/conf.c:853 src/options.c:1299
 msgid "Minimize on focus loss"
 msgstr "フォーカスのロスを最小化"
 
-#: src/conf.c:857 src/options.c:1294
+#: src/conf.c:857 src/options.c:1302
 msgid "Colorblind mode"
 msgstr "色覚不要モード"
 
@@ -82148,16 +82452,16 @@ msgid "BFD backtrace catching enabled."
 msgstr "BFD backtrace catching enabled."
 
 #. Create the window.
-#: src/dev_mapedit.c:159
+#: src/dev_mapedit.c:160
 msgid "Map Outfit Editor"
 msgstr "マップ艤装品エディター"
 
 #. window
-#: src/dev_mapedit.c:613
+#: src/dev_mapedit.c:611
 msgid "Open Map Outfit"
 msgstr "マップ艤装品を開く"
 
-#: src/dev_mapedit.c:1010 src/dev_planet.c:39 src/dev_system.c:106
+#: src/dev_mapedit.c:1008 src/dev_planet.c:39 src/dev_system.c:104
 #: src/save.c:105
 msgid "testXmlwriterDoc: Error creating the xml writer"
 msgstr "testXmlwriterDoc: Error creating the xml writer"
@@ -82703,7 +83007,7 @@ msgid "Take Off"
 msgstr "離陸"
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2100
+#: src/equipment.c:327 src/equipment.c:2104
 msgid "Sell Ship"
 msgstr "船を売る"
 
@@ -82894,7 +83198,7 @@ msgid "Filter…"
 msgstr "しぼりこみ..."
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1735 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
@@ -82920,8 +83224,11 @@ msgstr ""
 "#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
 
 #: src/equipment.c:1715
-#, c-format
-msgid "#%c%s%.0f#0 deg/s"
+#, fuzzy, c-format
+#| msgid "#%c%s%.0f#0 deg/s"
+msgid ""
+"\n"
+"#%c%s%.0f#0 deg/s"
 msgstr "#%c%s%.0f#0 度/秒"
 
 #: src/equipment.c:1719
@@ -82929,126 +83236,126 @@ msgstr "#%c%s%.0f#0 度/秒"
 msgid "%s (%.1f secs for scan)"
 msgstr "%s (スキャンあたり %.1f 秒)"
 
-#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
+#: src/equipment.c:1724 src/equipment.c:1727 src/equipment.c:1730
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 
 #. Misc.
-#: src/equipment.c:1731
+#: src/equipment.c:1734
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr "%d / #%c%s%d#0 %s"
 
-#: src/equipment.c:1733
+#: src/equipment.c:1737
 #, fuzzy, c-format
 msgid "%s %s (%d %s)"
 msgstr "%s %s (%d %s)"
 
-#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1738 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] "ユニット"
 
-#: src/equipment.c:1734 src/info.c:246 src/info.c:538
+#: src/equipment.c:1738 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] "ジャンプ"
 
-#: src/equipment.c:1813
+#: src/equipment.c:1817
 msgid "Show all outfits"
 msgstr "すべての艤装品を見る"
 
-#: src/equipment.c:1814
+#: src/equipment.c:1818
 msgid "Show only equipable outfits"
 msgstr "装備可能な艤装品だけを見る"
 
-#: src/equipment.c:1815
+#: src/equipment.c:1819
 msgid "Show only light outfits"
 msgstr "軽量艤装品だけを見る"
 
-#: src/equipment.c:1816
+#: src/equipment.c:1820
 msgid "Show only medium outfits"
 msgstr "中級艤装品だけを見る"
 
-#: src/equipment.c:1817
+#: src/equipment.c:1821
 msgid "Show only heavy outfits"
 msgstr "重量艤装品だけを見る"
 
-#: src/equipment.c:1954
+#: src/equipment.c:1958
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 "改造なしで保管できる量をこえる積み荷があるときには、船から撤去はできません！"
 
-#: src/equipment.c:1957
+#: src/equipment.c:1961
 msgid "Unequip Ship"
 msgstr "船から撤去"
 
 #. confirm
-#: src/equipment.c:1958
+#: src/equipment.c:1962
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr "ほんとうにすべての装備を船から撤去したいですか？"
 
-#: src/equipment.c:1961 src/land.c:175
+#: src/equipment.c:1965 src/land.c:175
 msgid "Recall Fighters"
 msgstr "戦闘機の回収"
 
-#: src/equipment.c:1961 src/land.c:175
+#: src/equipment.c:1965 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr "これは展開した戦闘機を呼びもどすことになります。それでいいですか？"
 
-#: src/equipment.c:2035 src/land.c:1472
+#: src/equipment.c:2039 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr "File '%s' not found!"
 
-#: src/equipment.c:2043
+#: src/equipment.c:2047
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr "Failed to run '%s': %s"
 
-#: src/equipment.c:2055
+#: src/equipment.c:2059
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr "'%s' doesn't have valid required 'autoequip' function!"
 
-#: src/equipment.c:2061
+#: src/equipment.c:2065
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr "'%s' failed to run required 'autoequip' function: %s"
 
-#: src/equipment.c:2101
+#: src/equipment.c:2105
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "ほんとうに船 ｢%s｣ を %sで売りたいですか？"
 
 #. Display widget.
-#: src/equipment.c:2118
+#: src/equipment.c:2122
 msgid "Ship Sold"
 msgstr "船の売却"
 
-#: src/equipment.c:2119
+#: src/equipment.c:2123
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr "あなたは船 ｢%s｣ を %sで売りました。"
 
-#: src/equipment.c:2144 src/player.c:400
+#: src/equipment.c:2148 src/player.c:400
 msgid "Ship Name"
 msgstr "船の名前"
 
-#: src/equipment.c:2145
+#: src/equipment.c:2149
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr "｢%s｣ の新しい名前を入力してください:"
 
-#: src/equipment.c:2153
+#: src/equipment.c:2157
 msgid "Name Collision"
 msgstr "名前の重複"
 
-#: src/equipment.c:2154 src/player.c:427
+#: src/equipment.c:2158 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr "あなたのほかの船と同じ名前をつけないでください。"
 
@@ -83436,7 +83743,7 @@ msgstr "Font isn't resizable!"
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr "FT_Select_Charmap failed to change character mapping."
 
-#: src/gettext.c:137
+#: src/gettext.c:126
 #, c-format
 msgid "Adding translations from %s"
 msgstr "Adding translations from %s"
@@ -83709,6 +84016,12 @@ msgstr "%.0f m/s (最大 %.0f m/s)"
 #, c-format
 msgid "%.0f deg/s"
 msgstr "%.0f 度/秒"
+
+#: src/info.c:530 src/info.c:532 src/info.c:534
+#, fuzzy, c-format
+#| msgid "%.0f MJ (%.1f MW)"
+msgid "%.0f / %.0f MJ (%.1f MW)"
+msgstr "%.0f MJ (%.1f MW)"
 
 #: src/info.c:572
 msgid "Current Weapon Set Settings"
@@ -84428,7 +84741,7 @@ msgstr "Unable to set keybinding '%s', that command doesn't exist"
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr "Unable to get keybinding '%s', that command doesn't exist"
 
-#: src/input.c:460 src/options.c:721
+#: src/input.c:460 src/options.c:729
 #, c-format
 msgid "Not bound"
 msgstr "未割り当て"
@@ -84744,62 +85057,50 @@ msgstr "#r船にひとつのみ#0\n"
 msgid "#o%s#0\n"
 msgstr "#o%s#0\n"
 
-#: src/land_outfits.c:563
-#, c-format
-msgid ""
-"\n"
-"%.0f Tonne"
-msgid_plural ""
-"\n"
-"%.0f Tonnes"
-msgstr[0] ""
-"\n"
-"%.0fトン"
-
-#: src/land_outfits.c:644
+#: src/land_outfits.c:645
 msgid "You can only own one of this outfit."
 msgstr "この艤装品はひとつだけ所有できます。"
 
-#: src/land_outfits.c:651
+#: src/land_outfits.c:652
 msgid "You already know of everything this map contains."
 msgstr "すでにこの地図の中身はすべて知っています。"
 
-#: src/land_outfits.c:656
+#: src/land_outfits.c:657
 msgid "You already own this GUI."
 msgstr "この GUI はすでに所有しています。"
 
-#: src/land_outfits.c:661
+#: src/land_outfits.c:662
 msgid "You already have this license."
 msgstr "すでにこの免許はもっています。"
 
-#: src/land_outfits.c:667 src/land_shipyard.c:440 src/land_shipyard.c:510
+#: src/land_outfits.c:668 src/land_shipyard.c:440 src/land_shipyard.c:510
 #: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
 msgstr "%s たりません。"
 
-#: src/land_outfits.c:673
+#: src/land_outfits.c:674
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr "この艤装品を買うには ｢%s｣ 免許が必要です。"
 
-#: src/land_outfits.c:747
+#: src/land_outfits.c:748
 msgid "You can't sell a unique outfit."
 msgstr "唯一性のある艤装品は売れません。"
 
-#: src/land_outfits.c:753
+#: src/land_outfits.c:754
 msgid "You can't sell a map."
 msgstr "地図は売れません。"
 
-#: src/land_outfits.c:759
+#: src/land_outfits.c:760
 msgid "You can't sell a GUI."
 msgstr "GUI は売れません。"
 
-#: src/land_outfits.c:765
+#: src/land_outfits.c:766
 msgid "You can't sell a license."
 msgstr "免許は売れません。"
 
-#: src/land_outfits.c:771 src/land_trade.c:245
+#: src/land_outfits.c:772 src/land_trade.c:245
 msgid "You can't sell something you don't have!"
 msgstr "もっていないものは売れません！"
 
@@ -84943,15 +85244,10 @@ msgstr "%.1f ¤"
 msgid "%s/t"
 msgstr "%s/t"
 
-#: src/land_trade.c:198 src/map_system.c:723
+#: src/land_trade.c:198 src/land_trade.c:200 src/map_system.c:723
+#: src/map_system.c:725
 #, c-format
 msgid "%s/t ± %s/t"
-msgstr "%s/t ± %s/t"
-
-#: src/land_trade.c:200 src/map_system.c:725
-#, fuzzy, c-format
-#| msgid "%s/t ± %s/t"
-msgid "%s/t ± %s/t\n"
 msgstr "%s/t ± %s/t"
 
 #: src/land_trade.c:234
@@ -87221,7 +87517,7 @@ msgstr "オーディオ"
 msgid "Input"
 msgstr "入力"
 
-#: src/options.c:162 src/options.c:1344
+#: src/options.c:162 src/options.c:1352
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr "#rNaev を再起動すると効果が反映されます。#0"
 
@@ -87229,7 +87525,7 @@ msgstr "#rNaev を再起動すると効果が反映されます。#0"
 msgid "system"
 msgstr "システム"
 
-#: src/options.c:261 src/options.c:578 src/options.c:884 src/options.c:1187
+#: src/options.c:261 src/options.c:586 src/options.c:892 src/options.c:1195
 msgid "Defaults"
 msgstr "デフォルト"
 
@@ -87282,131 +87578,131 @@ msgstr "表示するメッセージ数"
 msgid "Max Time Compression Factor"
 msgstr "最大時間圧縮係数"
 
-#: src/options.c:530
+#: src/options.c:538
 #, c-format
 msgid "Enemy Presence"
 msgstr "敵の出現"
 
-#: src/options.c:532
+#: src/options.c:540
 #, c-format
 msgid "Enemy within %s distance"
 msgstr "敵の距離が %s 以内"
 
-#: src/options.c:534
+#: src/options.c:542
 #, c-format
 msgid "%.0f%% Shield"
 msgstr "シールド %.0f%%"
 
-#: src/options.c:536
+#: src/options.c:544
 #, c-format
 msgid "Armour Damage"
 msgstr "装甲に損害"
 
-#: src/options.c:581
+#: src/options.c:589
 msgid "Set Key"
 msgstr "キーの設定"
 
-#: src/options.c:726
+#: src/options.c:734
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr "キーボード : %s%s%c"
 
-#: src/options.c:731
+#: src/options.c:739
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr "キーボード :  %s%s%s"
 
-#: src/options.c:737
+#: src/options.c:745
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr "ジョイ軸＋ :     <%d>"
 
-#: src/options.c:740
+#: src/options.c:748
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr "ジョイ軸－ :     <%d>"
 
-#: src/options.c:743
+#: src/options.c:751
 #, c-format
 msgid "joy button:   <%d>"
 msgstr "ジョイボタン : <%d>"
 
-#: src/options.c:746
+#: src/options.c:754
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr "ジョイハット上 : <%d>"
 
-#: src/options.c:749
+#: src/options.c:757
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr "ジョイハット下 : <%d>"
 
-#: src/options.c:752
+#: src/options.c:760
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr "ジョイハット左 : <%d>"
 
-#: src/options.c:755
+#: src/options.c:763
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr "ジョイハット右 : <%d>"
 
-#: src/options.c:775
+#: src/options.c:783
 msgid "WASD"
 msgstr "WASD"
 
-#: src/options.c:776
+#: src/options.c:784
 msgid "Arrow Keys"
 msgstr "矢印キー"
 
-#: src/options.c:780
+#: src/options.c:788
 msgid "Restore Defaults"
 msgstr "デフォルトに戻す"
 
-#: src/options.c:781
+#: src/options.c:789
 msgid "Which layout do you want to use?"
 msgstr "どのレイアウトを使いたいですか？"
 
 #. Alert user it worked.
-#: src/options.c:810
+#: src/options.c:818
 msgid "Defaults Restored"
 msgstr "デフォルトに戻す"
 
-#: src/options.c:810
+#: src/options.c:818
 msgid "Keybindings restored to defaults."
 msgstr "キー割り当てをデフォルトに戻しました。"
 
-#: src/options.c:852
+#: src/options.c:860
 msgid "Music Volume"
 msgstr "音楽の音量"
 
-#: src/options.c:852
+#: src/options.c:860
 msgid "Sound Volume"
 msgstr "音声の音量"
 
-#: src/options.c:856
+#: src/options.c:864
 msgid "Muted"
 msgstr "無音"
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:859
+#: src/options.c:867
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr "%s: %.2f (%.0f dB)"
 
-#: src/options.c:890
+#: src/options.c:898
 msgid "Disable all sound/music"
 msgstr "すべての音/音楽を無効"
 
-#: src/options.c:894
+#: src/options.c:902
 msgid "EFX (More CPU)"
 msgstr "EFX (要 CPU パワー)"
 
-#: src/options.c:900
+#: src/options.c:908
 msgid "Volume Levels:"
 msgstr "音量 :"
 
-#: src/options.c:1087
+#: src/options.c:1095
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
@@ -87415,12 +87711,12 @@ msgstr ""
 "キー ｢%s｣ は、今設定した ｢%s｣ と重なっています。たぶん修正したほうがいいで"
 "しょう。"
 
-#: src/options.c:1120
+#: src/options.c:1128
 msgid "Set Keybinding"
 msgstr "キー割り当ての設定"
 
 # 長さ注意
-#: src/options.c:1127
+#: src/options.c:1135
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
@@ -87429,118 +87725,118 @@ msgstr ""
 "ファイアーとして登録されます。任意のモディファイアーにしたい場合は、ボックス"
 "をクリックしてください。"
 
-#: src/options.c:1136
+#: src/options.c:1144
 msgid "Unset"
 msgstr "割り当て解除"
 
-#: src/options.c:1140
+#: src/options.c:1148
 msgid "Set any modifier"
 msgstr "任意のモディファイアー"
 
-#: src/options.c:1194
+#: src/options.c:1202
 msgid "Resolution:"
 msgstr "解像度 :"
 
-#: src/options.c:1199
+#: src/options.c:1207
 msgid "Fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1259
+#: src/options.c:1267
 msgid "FPS Control:"
 msgstr "FPS の制御 :"
 
-#: src/options.c:1261
+#: src/options.c:1269
 msgid "FPS Limit"
 msgstr "FPS の制限"
 
-#: src/options.c:1271
+#: src/options.c:1279
 msgid "Show FPS"
 msgstr "FPS の表示"
 
-#: src/options.c:1280
+#: src/options.c:1288
 msgid "OpenGL:"
 msgstr "OpenGL:"
 
-#: src/options.c:1283
+#: src/options.c:1291
 msgid "Vertical Sync"
 msgstr "垂直同期"
 
-#: src/options.c:1288
+#: src/options.c:1296
 msgid "Features:"
 msgstr "機能 :"
 
-#: src/options.c:1298
+#: src/options.c:1306
 msgid "Fancy and expensive background shaders"
 msgstr ""
 
-#: src/options.c:1325
+#: src/options.c:1333
 msgid "GUI:"
 msgstr "GUI:"
 
-#: src/options.c:1328
+#: src/options.c:1336
 msgid "Bigger icons"
 msgstr "大きめのアイコン"
 
-#: src/options.c:1374
+#: src/options.c:1382
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr "高さ/幅が無効です。1024x768 のような書きかたをしてください。"
 
-#: src/options.c:1467
+#: src/options.c:1475
 msgid "Resolution can't be changed while maximized."
 msgstr "最大化しているときは解像度は変更できません。"
 
-#: src/options.c:1471
+#: src/options.c:1479
 msgid "Keep Video Settings"
 msgstr "ビデオ設定の保持"
 
-#: src/options.c:1472
+#: src/options.c:1480
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr "動作中の %dx%d の%sを保持したいですか？"
 
-#: src/options.c:1473 src/options.c:1479
+#: src/options.c:1481 src/options.c:1487
 msgid "fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1473 src/options.c:1479
+#: src/options.c:1481 src/options.c:1487
 msgid "windowed"
 msgstr "ウィンドウ"
 
-#: src/options.c:1477
+#: src/options.c:1485
 msgid "Video Settings Restored"
 msgstr "ビデオ設定の復元"
 
-#: src/options.c:1478
+#: src/options.c:1486
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr "解像度を %dx%d の%sに戻しました。"
 
-#: src/options.c:1555
+#: src/options.c:1563
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr "スケーリング : %.1fx"
 
-#: src/options.c:1573
+#: src/options.c:1581
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr "遠くのズーム : %.1fx"
 
-#: src/options.c:1595
+#: src/options.c:1603
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr "近くのズーム : %.1fx"
 
-#: src/options.c:1616
+#: src/options.c:1624
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr "背景 (星々など) の輝度 : %.0f%%"
 
-#: src/options.c:1631
+#: src/options.c:1639
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr "星雲の輝度 : %.0f%%"
 
-#: src/options.c:1646
+#: src/options.c:1654
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr "オーバーレイマップの濃さ : %.0f%%"
@@ -91080,6 +91376,70 @@ msgstr "Invalid WEAPON_LAYER specified"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
+
+#~ msgid "Alexian"
+#~ msgstr "アレクシアン"
+
+#~ msgid "Atryssa IV"
+#~ msgstr "アトリッサ IV "
+
+#~ msgid "Big Fred"
+#~ msgstr "ビッグ・フレッド"
+
+#~ msgid "Kunzler"
+#~ msgstr "クンツラー"
+
+#~ msgid "Mida Proxima"
+#~ msgstr "ミダ・プロクシマ"
+
+#~ msgid "PT237 III"
+#~ msgstr " PT237 III "
+
+#~ msgid "PT237 IV"
+#~ msgstr " PT237 IV "
+
+#~ msgid "PT413 VI"
+#~ msgstr " PT413 VI "
+
+#~ msgid "PT413 VIII"
+#~ msgstr " PT413 VIII "
+
+#~ msgid "PT612 I"
+#~ msgstr " PT612 I "
+
+#~ msgid "PT612 II"
+#~ msgstr " PT612 II "
+
+#~ msgid "PT612 III"
+#~ msgstr " PT612 III "
+
+#~ msgid "PT612 IV"
+#~ msgstr " PT612 IV "
+
+#~ msgid "Rocker"
+#~ msgstr "ロッカー"
+
+#~ msgid "Shikima III"
+#~ msgstr "シキマ III "
+
+#~ msgid "Stoma"
+#~ msgstr "ストーマ"
+
+#, c-format
+#~ msgid ""
+#~ "\n"
+#~ "%.0f Tonne"
+#~ msgid_plural ""
+#~ "\n"
+#~ "%.0f Tonnes"
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%.0fトン"
+
+#, fuzzy, c-format
+#~| msgid "%s/t ± %s/t"
+#~ msgid "%s/t ± %s/t\n"
+#~ msgstr "%s/t ± %s/t"
 
 #~ msgid "Pilot: "
 #~ msgstr "パイロット : "

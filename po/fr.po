@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 20:24-0500\n"
+"POT-Creation-Date: 2021-11-25 12:53-0500\n"
 "PO-Revision-Date: 2021-08-31 04:33+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -1247,10 +1247,6 @@ msgstr ""
 "débarrasser complètement de son odeur de renfermé. Les boissons ne font pas "
 "non plus disparaître la congestion."
 
-#: dat/assets/alexian.xml:2
-msgid "Alexian"
-msgstr "Alexian"
-
 #: dat/assets/allan.xml:2
 msgid "Allan"
 msgstr "Allan"
@@ -2008,10 +2004,6 @@ msgid ""
 "everyone goes quiet when they approach."
 msgstr ""
 
-#: dat/assets/atryssa_iv.xml:2
-msgid "Atryssa IV"
-msgstr ""
-
 #. Finish event (removes npc)
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2252,10 +2244,6 @@ msgstr ""
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
-
-#: dat/assets/big_fred.xml:2
-msgid "Big Fred"
 msgstr ""
 
 #: dat/assets/blackwell_i.xml:2
@@ -6412,10 +6400,6 @@ msgstr ""
 msgid "Ksher III"
 msgstr ""
 
-#: dat/assets/kunzler.xml:2
-msgid "Kunzler"
-msgstr ""
-
 #: dat/assets/kyo_iii.xml:2
 msgid "Kyo III"
 msgstr ""
@@ -7135,10 +7119,6 @@ msgstr ""
 
 #: dat/assets/mgg1294.xml:2
 msgid "MGG-1294"
-msgstr ""
-
-#: dat/assets/mida_proxima.xml:2
-msgid "Mida Proxima"
 msgstr ""
 
 #. Discover will not work if the planet is found through maps
@@ -8940,38 +8920,6 @@ msgid ""
 "refueling depot for travelling ships in an effort to raise funding."
 msgstr ""
 
-#: dat/assets/pt237_iii.xml:2
-msgid "PT237 III"
-msgstr ""
-
-#: dat/assets/pt237_iv.xml:2
-msgid "PT237 IV"
-msgstr ""
-
-#: dat/assets/pt413_vi.xml:2
-msgid "PT413 VI"
-msgstr ""
-
-#: dat/assets/pt413_viii.xml:2
-msgid "PT413 VIII"
-msgstr ""
-
-#: dat/assets/pt612_i.xml:2
-msgid "PT612 I"
-msgstr ""
-
-#: dat/assets/pt612_ii.xml:2
-msgid "PT612 II"
-msgstr ""
-
-#: dat/assets/pt612_iii.xml:2
-msgid "PT612 III"
-msgstr ""
-
-#: dat/assets/pt612_iv.xml:2
-msgid "PT612 IV"
-msgstr ""
-
 #: dat/assets/ptolemy.xml:2
 msgid "Ptolemy"
 msgstr ""
@@ -9351,10 +9299,6 @@ msgstr ""
 
 #: dat/assets/riun.xml:2
 msgid "Riun"
-msgstr ""
-
-#: dat/assets/rocker.xml:2
-msgid "Rocker"
 msgstr ""
 
 #: dat/assets/rockhardt.xml:2
@@ -10110,10 +10054,6 @@ msgstr ""
 msgid "Shikima II"
 msgstr ""
 
-#: dat/assets/shikima_iii.xml:2
-msgid "Shikima III"
-msgstr ""
-
 #: dat/assets/shion.xml:2
 msgid "Shion"
 msgstr ""
@@ -10767,10 +10707,6 @@ msgstr ""
 msgid "Stint III"
 msgstr ""
 
-#: dat/assets/stoma.xml:2
-msgid "Stoma"
-msgstr ""
-
 #: dat/assets/stormgard.xml:2
 msgid "Stormgard"
 msgstr ""
@@ -11203,6 +11139,33 @@ msgid ""
 "always manages to get in anyway."
 msgstr ""
 
+#: dat/assets/tesla_station.xml:2
+#, fuzzy
+#| msgid "Manuel Station"
+msgid "Tesla Station"
+msgstr "Station Manuel"
+
+#: dat/assets/tesla_station.xml:29
+msgid ""
+"Tesla Station is the center of operations for the Xeric experimental weapons "
+"testing site. Many high energy physics researchers flock over for the easier "
+"chances of funding, and more importantly, the ability to perform high energy "
+"physics experiments with little or no ethics committee oversight. The result "
+"is that the base feels no real different from any large Za'lek research "
+"center or university."
+msgstr ""
+
+#: dat/assets/tesla_station.xml:30
+msgid ""
+"The bar is very lively, filled with physics researchers discussing the "
+"results of the latest experiments and research directions. From how crowded "
+"the bar is, you get the impression that most of the researchers rather "
+"converse here than the cramped research rooms. The walls all being "
+"whiteboards helps keep the atmosphere tense, more so than than holopanels. "
+"There is a prominent sign behind the counter that says \"7 periods since the "
+"last accident\" with a sticky note underneath that says \"thanks fred\"."
+msgstr ""
+
 #: dat/assets/thaddius_station.xml:2
 msgid "Thaddius Station"
 msgstr ""
@@ -11414,10 +11377,6 @@ msgid ""
 "Like everything on Thymo, the spaceport bar is sober, utilitarian, "
 "efficient. Some pilots like it that way though, as the modest but content "
 "clientele testifies."
-msgstr ""
-
-#: dat/assets/tiger.xml:2 dat/scripts/pilotname/generic.lua:83
-msgid "Tiger"
 msgstr ""
 
 #: dat/assets/timu.xml:2
@@ -13432,6 +13391,10 @@ msgstr ""
 msgid "Soromid Unpresence"
 msgstr ""
 
+#: dat/assets_virtual/soromid_unpresence_range1.xml:2
+msgid "Soromid Unpresence (Range 1)"
+msgstr ""
+
 #: dat/assets_virtual/thurion_local.xml:2
 #, fuzzy
 #| msgid "Thurion"
@@ -13502,6 +13465,12 @@ msgstr "Za'lek"
 #, fuzzy
 #| msgid "Za'lek Test"
 msgid "Za'lek Unpresence"
+msgstr "Le test Za'lek"
+
+#: dat/assets_virtual/zalek_unpresence_range1.xml:2
+#, fuzzy
+#| msgid "Za'lek Test"
+msgid "Za'lek Unpresence (Range 1)"
 msgstr "Le test Za'lek"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
@@ -18330,8 +18299,8 @@ msgstr ""
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
 msgid ""
-"10% additional damage for each fighting ship of same class or higher within "
-"2000 units."
+"10% additional damage for each hostile ship of same class or higher within "
+"2000 distance."
 msgstr ""
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
@@ -20000,6 +19969,18 @@ msgstr ""
 msgid "Amatiri"
 msgstr ""
 
+#: dat/ssys/amatiri.xml:5 dat/ssys/ariadus.xml:5 dat/ssys/bonanza.xml:5
+#: dat/ssys/hasselt.xml:5 dat/ssys/kansas.xml:5 dat/ssys/klunzar.xml:5
+#: dat/ssys/malebolge.xml:5 dat/ssys/neexi.xml:5 dat/ssys/ngc10452.xml:5
+#: dat/ssys/ngc12882.xml:5 dat/ssys/ngc13322.xml:5 dat/ssys/ngc13798.xml:5
+#: dat/ssys/ngc14479.xml:5 dat/ssys/ngc1931.xml:5 dat/ssys/ngc2175.xml:5
+#: dat/ssys/ngc3371.xml:5 dat/ssys/ngc4131.xml:5 dat/ssys/ngc4637.xml:5
+#: dat/ssys/ngc4771.xml:5 dat/ssys/ngc5240.xml:5 dat/ssys/ngc7061.xml:5
+#: dat/ssys/ngc8468.xml:5 dat/ssys/ngc9654.xml:5 dat/ssys/sleuth.xml:5
+#: dat/ssys/sylph.xml:5 dat/ssys/zintar.xml:5
+msgid "#rHaze (-50% Shield and Shield Regen)#0"
+msgstr ""
+
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
 msgstr ""
@@ -20232,11 +20213,12 @@ msgstr ""
 
 #: dat/ssys/daled.xml:5 dat/ssys/defa.xml:5 dat/ssys/fried.xml:5
 #: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
-#: dat/ssys/new_haven.xml:5 dat/ssys/sheffield.xml:5 dat/ssys/titus.xml:5
-#: dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5 dat/ssys/volus.xml:5
+#: dat/ssys/new_haven.xml:5 dat/ssys/pilatis.xml:5 dat/ssys/sheffield.xml:5
+#: dat/ssys/titus.xml:5 dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5
+#: dat/ssys/volus.xml:5
 #, fuzzy
 #| msgid "Four Winds"
-msgid "#bStellar Wind#0"
+msgid "#bStellar Wind (1 fuel regen)#0"
 msgstr "Quatre Vents"
 
 #: dat/ssys/damien.xml:2
@@ -20615,6 +20597,10 @@ msgstr ""
 msgid "Klintus"
 msgstr ""
 
+#: dat/ssys/klunzar.xml:2
+msgid "Klunzar"
+msgstr ""
+
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
 msgstr ""
@@ -20787,24 +20773,176 @@ msgstr ""
 msgid "Newmarch"
 msgstr ""
 
+#: dat/ssys/ngc1001.xml:2
+msgid "NGC-1001"
+msgstr ""
+
+#: dat/ssys/ngc10180.xml:2
+msgid "NGC-10180"
+msgstr ""
+
+#: dat/ssys/ngc10452.xml:2
+msgid "NGC-10452"
+msgstr ""
+
+#: dat/ssys/ngc10789.xml:2
+msgid "NGC-10789"
+msgstr ""
+
+#: dat/ssys/ngc10907.xml:2
+msgid "NGC-10907"
+msgstr ""
+
+#: dat/ssys/ngc1098.xml:2
+msgid "NGC-1098"
+msgstr ""
+
+#: dat/ssys/ngc11231.xml:2
+msgid "NGC-11231"
+msgstr ""
+
+#: dat/ssys/ngc11444.xml:2
+msgid "NGC-11444"
+msgstr ""
+
 #: dat/ssys/ngc11718.xml:2
 msgid "NGC-11718"
+msgstr ""
+
+#: dat/ssys/ngc11935.xml:2
+msgid "NGC-11935"
+msgstr ""
+
+#: dat/ssys/ngc12056.xml:2
+msgid "NGC-12056"
+msgstr ""
+
+#: dat/ssys/ngc12654.xml:2
+msgid "NGC-12654"
+msgstr ""
+
+#: dat/ssys/ngc12882.xml:2
+msgid "NGC-12882"
 msgstr ""
 
 #: dat/ssys/ngc1292.xml:2
 msgid "NGC-1292"
 msgstr ""
 
+#: dat/ssys/ngc1317.xml:2
+msgid "NGC-1317"
+msgstr ""
+
+#: dat/ssys/ngc13322.xml:2
+msgid "NGC-13322"
+msgstr ""
+
+#: dat/ssys/ngc13674.xml:2
+msgid "NGC-13674"
+msgstr ""
+
+#: dat/ssys/ngc13798.xml:2
+msgid "NGC-13798"
+msgstr ""
+
+#: dat/ssys/ngc14479.xml:2
+msgid "NGC-14479"
+msgstr ""
+
+#: dat/ssys/ngc1562.xml:2
+msgid "NGC-1562"
+msgstr ""
+
+#: dat/ssys/ngc1872.xml:2
+msgid "NGC-1872"
+msgstr ""
+
+#: dat/ssys/ngc1931.xml:2
+msgid "NGC-1931"
+msgstr ""
+
+#: dat/ssys/ngc2175.xml:2
+msgid "NGC-2175"
+msgstr ""
+
+#: dat/ssys/ngc2232.xml:2
+msgid "NGC-2232"
+msgstr ""
+
+#: dat/ssys/ngc23.xml:2
+msgid "NGC-23"
+msgstr ""
+
+#: dat/ssys/ngc2601.xml:2
+msgid "NGC-2601"
+msgstr ""
+
+#: dat/ssys/ngc2836.xml:2
+msgid "NGC-2836"
+msgstr ""
+
+#: dat/ssys/ngc2948.xml:2
+msgid "NGC-2948"
+msgstr ""
+
+#: dat/ssys/ngc2954.xml:2
+msgid "NGC-2954"
+msgstr ""
+
 #: dat/ssys/ngc3219.xml:2
 msgid "NGC-3219"
+msgstr ""
+
+#: dat/ssys/ngc3371.xml:2
+msgid "NGC-3371"
+msgstr ""
+
+#: dat/ssys/ngc3858.xml:2
+msgid "NGC-3858"
+msgstr ""
+
+#: dat/ssys/ngc4087.xml:2
+msgid "NGC-4087"
+msgstr ""
+
+#: dat/ssys/ngc4131.xml:2
+msgid "NGC-4131"
+msgstr ""
+
+#: dat/ssys/ngc4637.xml:2
+msgid "NGC-4637"
 msgstr ""
 
 #: dat/ssys/ngc4746.xml:2
 msgid "NGC-4746"
 msgstr ""
 
+#: dat/ssys/ngc4771.xml:2
+msgid "NGC-4771"
+msgstr ""
+
+#: dat/ssys/ngc5240.xml:2
+msgid "NGC-5240"
+msgstr ""
+
 #: dat/ssys/ngc5483.xml:2
 msgid "NGC-5483"
+msgstr ""
+
+#: dat/ssys/ngc5631.xml:2
+msgid "NGC-5631"
+msgstr ""
+
+#: dat/ssys/ngc5838.xml:2
+msgid "NGC-5838"
+msgstr ""
+
+#: dat/ssys/ngc6057.xml:2
+msgid "NGC-6057"
+msgstr ""
+
+#: dat/ssys/ngc7061.xml:2
+msgid "NGC-7061"
 msgstr ""
 
 #: dat/ssys/ngc7078.xml:2
@@ -20815,8 +20953,52 @@ msgstr ""
 msgid "NGC-728"
 msgstr ""
 
+#: dat/ssys/ngc7402.xml:2
+msgid "NGC-7402"
+msgstr ""
+
+#: dat/ssys/ngc7533.xml:2
+msgid "NGC-7533"
+msgstr ""
+
+#: dat/ssys/ngc7784.xml:2
+msgid "NGC-7784"
+msgstr ""
+
+#: dat/ssys/ngc7786.xml:2
+msgid "NGC-7786"
+msgstr ""
+
+#: dat/ssys/ngc8338.xml:2
+msgid "NGC-8338"
+msgstr ""
+
+#: dat/ssys/ngc8468.xml:2
+msgid "NGC-8468"
+msgstr ""
+
+#: dat/ssys/ngc9017.xml:2
+msgid "NGC-9017"
+msgstr ""
+
 #: dat/ssys/ngc902.xml:2
 msgid "NGC-902"
+msgstr ""
+
+#: dat/ssys/ngc9415.xml:2
+msgid "NGC-9415"
+msgstr ""
+
+#: dat/ssys/ngc9654.xml:2
+msgid "NGC-9654"
+msgstr ""
+
+#: dat/ssys/ngc9897.xml:2
+msgid "NGC-9897"
+msgstr ""
+
+#: dat/ssys/ngcg5882.xml:2
+msgid "NGCG-5882"
 msgstr ""
 
 #: dat/ssys/niger.xml:2
@@ -24351,6 +24533,16 @@ msgstr ""
 #. Mizar
 #. PSO
 #.
+#. Some sort of stellar wind type background.
+#. --
+#. We use the default background too!
+#. Scale factor that controls computation cost. As this shader is really
+#. really expensive, we can't compute it at full resolution
+#. Initialize shader
+#. Default nebula background
+#. Get camera properties
+#. shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
+#.
 #. Small library to handle rendering a fullscreen background shader.
 #. Automatically handles scaling as necesary.
 #. --
@@ -24970,49 +25162,49 @@ msgstr ""
 msgid "Grim Reminder of Our Fragility"
 msgstr ""
 
-#: dat/events/discovery.lua:234
+#: dat/events/discovery.lua:235
 #, fuzzy
 #| msgid "Rogue Four Winds"
 msgid "Northern Stellar Winds"
 msgstr "Voleur de Quatre Vents"
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:251
+#: dat/events/discovery.lua:252
 #, fuzzy
 #| msgid "Rogue Four Winds"
 msgid "Southern Stellar Winds"
 msgstr "Voleur de Quatre Vents"
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:261
+#: dat/events/discovery.lua:262
 msgid "#HWild Ones Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:262
+#: dat/events/discovery.lua:263
 msgid "#HUncontrolled and Raging Pirate Fury#0"
 msgstr ""
 
-#: dat/events/discovery.lua:272
+#: dat/events/discovery.lua:273
 msgid "#HRaven Clan Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:273
+#: dat/events/discovery.lua:274
 msgid "#HDark Hand of the Black Market#0"
 msgstr ""
 
-#: dat/events/discovery.lua:283
+#: dat/events/discovery.lua:284
 msgid "#HBlack Lotus Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:284
+#: dat/events/discovery.lua:285
 msgid "#HPiracy has never been Snazzier#0"
 msgstr ""
 
-#: dat/events/discovery.lua:294
+#: dat/events/discovery.lua:295
 msgid "#HDreamer Clan Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:295
+#: dat/events/discovery.lua:296
 msgid "#HPiracy to Rebel against Reality#0"
 msgstr ""
 
@@ -25023,26 +25215,26 @@ msgstr ""
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:371
+#: dat/events/discovery.lua:372
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You found #o{title} - {subtitle}!"
 msgstr "Vous avez viré '%s' (%s)."
 
-#: dat/events/discovery.lua:371
+#: dat/events/discovery.lua:372
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You found #o{title}!"
 msgstr "Vous avez viré '%s' (%s)."
 
 #. Log and message
-#: dat/events/discovery.lua:375 src/map.c:1880
+#: dat/events/discovery.lua:376 src/map.c:1880
 msgid "Discovery"
 msgstr ""
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
-#: dat/events/discovery.lua:375 dat/events/shiplog.lua:26
+#: dat/events/discovery.lua:376 dat/events/shiplog.lua:26
 #: dat/missions/shark/sh04_meeting.lua:55
 msgid "Travel"
 msgstr ""
@@ -25904,8 +26096,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:258 src/options.c:777 src/options.c:881
-#: src/options.c:1132 src/options.c:1184
+#: src/map_find.c:240 src/options.c:258 src/options.c:785 src/options.c:889
+#: src/options.c:1140 src/options.c:1192
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -33684,7 +33876,7 @@ msgstr ""
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:277 src/info.c:406 src/info.c:824
 #: src/info.c:1170 src/input.c:516 src/land.c:815 src/land_outfits.c:365
-#: src/land_outfits.c:398 src/land_outfits.c:578 src/land_shipyard.c:169
+#: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:169
 #: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:82
 #: src/land_trade.c:84 src/land_trade.c:117 src/load.c:355 src/load.c:403
 #: src/load.c:445 src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
@@ -73933,8 +74125,8 @@ msgstr ""
 #. --
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
-#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:255 src/options.c:575
-#: src/options.c:878 src/options.c:1181
+#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:255 src/options.c:583
+#: src/options.c:886 src/options.c:1189
 msgid "OK"
 msgstr ""
 
@@ -74213,23 +74405,27 @@ msgstr[1] ""
 #. Load level data
 #. Remove edges
 #. header
-#: dat/scripts/minigames/sokoban/core.lua:121
+#: dat/scripts/minigames/sokoban/core.lua:126
 msgid "Sokoban"
 msgstr ""
 
+#. Load audio
 #. Allow the default keybindings too!
 #. Defaults
-#: dat/scripts/minigames/sokoban/core.lua:277
+#. Player just moved
+#. TODO play mmotion sound
+#. Player pushed something
+#: dat/scripts/minigames/sokoban/core.lua:329
 #, fuzzy
 #| msgid "Loading Completed!"
 msgid "Completed!"
 msgstr "Chargement terminé !"
 
-#: dat/scripts/minigames/sokoban/core.lua:279
+#: dat/scripts/minigames/sokoban/core.lua:331
 msgid "Layer {cur} / {total}"
 msgstr ""
 
-#: dat/scripts/minigames/sokoban/core.lua:307
+#: dat/scripts/minigames/sokoban/core.lua:343
 msgid "#barrow keys#0: move, #br#0: restart, #bq#0: abort"
 msgstr ""
 
@@ -74528,6 +74724,10 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:82 dat/scripts/pilotname/pirate.lua:470
 msgid "Thunder"
+msgstr ""
+
+#: dat/scripts/pilotname/generic.lua:83
+msgid "Tiger"
 msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:84
@@ -77864,11 +78064,11 @@ msgid ""
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:853 src/options.c:1291
+#: src/conf.c:853 src/options.c:1299
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:857 src/options.c:1294
+#: src/conf.c:857 src/options.c:1302
 msgid "Colorblind mode"
 msgstr ""
 
@@ -78205,16 +78405,16 @@ msgid "BFD backtrace catching enabled."
 msgstr ""
 
 #. Create the window.
-#: src/dev_mapedit.c:159
+#: src/dev_mapedit.c:160
 msgid "Map Outfit Editor"
 msgstr ""
 
 #. window
-#: src/dev_mapedit.c:613
+#: src/dev_mapedit.c:611
 msgid "Open Map Outfit"
 msgstr ""
 
-#: src/dev_mapedit.c:1010 src/dev_planet.c:39 src/dev_system.c:106
+#: src/dev_mapedit.c:1008 src/dev_planet.c:39 src/dev_system.c:104
 #: src/save.c:105
 msgid "testXmlwriterDoc: Error creating the xml writer"
 msgstr ""
@@ -78764,7 +78964,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2100
+#: src/equipment.c:327 src/equipment.c:2104
 msgid "Sell Ship"
 msgstr "Vendre le vaisseau"
 
@@ -78961,7 +79161,7 @@ msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1735 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
@@ -78994,69 +79194,77 @@ msgid ""
 msgstr ""
 
 #: src/equipment.c:1715
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "\n"
+#| "%.0f Tonne"
+#| msgid_plural ""
+#| "\n"
+#| "%.0f Tonnes"
 msgid ""
 "\n"
-"#%c%s%.0f#0 deg/s\n"
+"#%c%s%.0f#0 deg/s"
 msgstr ""
+"\n"
+"%.0f Tonne"
 
 #: src/equipment.c:1719
 #, c-format
-msgid "%s (%.1f secs for scan)\n"
+msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
+#: src/equipment.c:1724 src/equipment.c:1727 src/equipment.c:1730
 #, c-format
-msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1731
+#: src/equipment.c:1734
 #, c-format
-msgid "%d / #%c%s%d#0 %s\n"
+msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1733
+#: src/equipment.c:1737
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1738 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1734 src/info.c:246 src/info.c:538
+#: src/equipment.c:1738 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1813
+#: src/equipment.c:1817
 #, fuzzy
 #| msgid "Available Outfits"
 msgid "Show all outfits"
 msgstr "Tenues disponibles"
 
-#: src/equipment.c:1814
+#: src/equipment.c:1818
 msgid "Show only equipable outfits"
 msgstr ""
 
-#: src/equipment.c:1815
+#: src/equipment.c:1819
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1816
+#: src/equipment.c:1820
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1817
+#: src/equipment.c:1821
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:1954
+#: src/equipment.c:1958
 #, fuzzy
 #| msgid ""
 #| "You can not unequip your ship when you have more cargo than it can hold "
@@ -79068,72 +79276,72 @@ msgstr ""
 "Vous ne pouvez pas déséquiper votre vaisseau lorsque vous avez plus de "
 "cargaison qu'il ne peut en contenir sans subir de modifications !"
 
-#: src/equipment.c:1957
+#: src/equipment.c:1961
 msgid "Unequip Ship"
 msgstr "Déséquiper le vaisseau"
 
 #. confirm
-#: src/equipment.c:1958
+#: src/equipment.c:1962
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1961 src/land.c:175
+#: src/equipment.c:1965 src/land.c:175
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1961 src/land.c:175
+#: src/equipment.c:1965 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2035 src/land.c:1472
+#: src/equipment.c:2039 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2043
+#: src/equipment.c:2047
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2055
+#: src/equipment.c:2059
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2061
+#: src/equipment.c:2065
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2101
+#: src/equipment.c:2105
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
 
 #. Display widget.
-#: src/equipment.c:2118
+#: src/equipment.c:2122
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2119
+#: src/equipment.c:2123
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2144 src/player.c:400
+#: src/equipment.c:2148 src/player.c:400
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2145
+#: src/equipment.c:2149
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2153
+#: src/equipment.c:2157
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2154 src/player.c:427
+#: src/equipment.c:2158 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -79502,7 +79710,7 @@ msgstr ""
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr ""
 
-#: src/gettext.c:137
+#: src/gettext.c:126
 #, c-format
 msgid "Adding translations from %s"
 msgstr ""
@@ -80498,7 +80706,7 @@ msgstr ""
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:460 src/options.c:721
+#: src/input.c:460 src/options.c:729
 #, c-format
 msgid "Not bound"
 msgstr ""
@@ -80821,65 +81029,50 @@ msgstr ""
 msgid "#o%s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:563
-#, c-format
-msgid ""
-"\n"
-"%.0f Tonne"
-msgid_plural ""
-"\n"
-"%.0f Tonnes"
-msgstr[0] ""
-"\n"
-"%.0f Tonne"
-msgstr[1] ""
-"\n"
-"%.0f Tonnes"
-
-#: src/land_outfits.c:644
+#: src/land_outfits.c:645
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:651
+#: src/land_outfits.c:652
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:656
+#: src/land_outfits.c:657
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:661
+#: src/land_outfits.c:662
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:667 src/land_shipyard.c:440 src/land_shipyard.c:510
+#: src/land_outfits.c:668 src/land_shipyard.c:440 src/land_shipyard.c:510
 #: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:673
+#: src/land_outfits.c:674
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:747
+#: src/land_outfits.c:748
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:753
+#: src/land_outfits.c:754
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:759
+#: src/land_outfits.c:760
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:765
+#: src/land_outfits.c:766
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:771 src/land_trade.c:245
+#: src/land_outfits.c:772 src/land_trade.c:245
 msgid "You can't sell something you don't have!"
 msgstr ""
 
@@ -81025,14 +81218,10 @@ msgstr ""
 msgid "%s/t"
 msgstr ""
 
-#: src/land_trade.c:198 src/map_system.c:723
+#: src/land_trade.c:198 src/land_trade.c:200 src/map_system.c:723
+#: src/map_system.c:725
 #, c-format
 msgid "%s/t ± %s/t"
-msgstr ""
-
-#: src/land_trade.c:200 src/map_system.c:725
-#, c-format
-msgid "%s/t ± %s/t\n"
 msgstr ""
 
 #: src/land_trade.c:234
@@ -83241,7 +83430,7 @@ msgstr "Audio"
 msgid "Input"
 msgstr "Contrôles"
 
-#: src/options.c:162 src/options.c:1344
+#: src/options.c:162 src/options.c:1352
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
@@ -83249,7 +83438,7 @@ msgstr ""
 msgid "system"
 msgstr ""
 
-#: src/options.c:261 src/options.c:578 src/options.c:884 src/options.c:1187
+#: src/options.c:261 src/options.c:586 src/options.c:892 src/options.c:1195
 msgid "Defaults"
 msgstr ""
 
@@ -83302,259 +83491,259 @@ msgstr ""
 msgid "Max Time Compression Factor"
 msgstr ""
 
-#: src/options.c:530
+#: src/options.c:538
 #, c-format
 msgid "Enemy Presence"
 msgstr ""
 
-#: src/options.c:532
+#: src/options.c:540
 #, c-format
 msgid "Enemy within %s distance"
 msgstr ""
 
-#: src/options.c:534
+#: src/options.c:542
 #, c-format
 msgid "%.0f%% Shield"
 msgstr ""
 
-#: src/options.c:536
+#: src/options.c:544
 #, c-format
 msgid "Armour Damage"
 msgstr ""
 
-#: src/options.c:581
+#: src/options.c:589
 msgid "Set Key"
 msgstr ""
 
-#: src/options.c:726
+#: src/options.c:734
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr ""
 
-#: src/options.c:731
+#: src/options.c:739
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr ""
 
-#: src/options.c:737
+#: src/options.c:745
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr ""
 
-#: src/options.c:740
+#: src/options.c:748
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr ""
 
-#: src/options.c:743
+#: src/options.c:751
 #, c-format
 msgid "joy button:   <%d>"
 msgstr ""
 
-#: src/options.c:746
+#: src/options.c:754
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr ""
 
-#: src/options.c:749
+#: src/options.c:757
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr ""
 
-#: src/options.c:752
+#: src/options.c:760
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr ""
 
-#: src/options.c:755
+#: src/options.c:763
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr ""
 
-#: src/options.c:775
+#: src/options.c:783
 msgid "WASD"
 msgstr ""
 
-#: src/options.c:776
+#: src/options.c:784
 msgid "Arrow Keys"
 msgstr ""
 
-#: src/options.c:780
+#: src/options.c:788
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/options.c:781
+#: src/options.c:789
 msgid "Which layout do you want to use?"
 msgstr ""
 
 #. Alert user it worked.
-#: src/options.c:810
+#: src/options.c:818
 msgid "Defaults Restored"
 msgstr ""
 
-#: src/options.c:810
+#: src/options.c:818
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:852
+#: src/options.c:860
 msgid "Music Volume"
 msgstr ""
 
-#: src/options.c:852
+#: src/options.c:860
 msgid "Sound Volume"
 msgstr ""
 
-#: src/options.c:856
+#: src/options.c:864
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:859
+#: src/options.c:867
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:890
+#: src/options.c:898
 msgid "Disable all sound/music"
 msgstr ""
 
-#: src/options.c:894
+#: src/options.c:902
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:900
+#: src/options.c:908
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1087
+#: src/options.c:1095
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1120
+#: src/options.c:1128
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1127
+#: src/options.c:1135
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1136
+#: src/options.c:1144
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1140
+#: src/options.c:1148
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1194
+#: src/options.c:1202
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1199
+#: src/options.c:1207
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1259
+#: src/options.c:1267
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1261
+#: src/options.c:1269
 msgid "FPS Limit"
 msgstr "Limite des IPS"
 
-#: src/options.c:1271
+#: src/options.c:1279
 msgid "Show FPS"
 msgstr "Afficher les IPS"
 
-#: src/options.c:1280
+#: src/options.c:1288
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1283
+#: src/options.c:1291
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1288
+#: src/options.c:1296
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1298
+#: src/options.c:1306
 msgid "Fancy and expensive background shaders"
 msgstr ""
 
-#: src/options.c:1325
+#: src/options.c:1333
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1328
+#: src/options.c:1336
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1374
+#: src/options.c:1382
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1467
+#: src/options.c:1475
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1471
+#: src/options.c:1479
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1472
+#: src/options.c:1480
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1473 src/options.c:1479
+#: src/options.c:1481 src/options.c:1487
 msgid "fullscreen"
 msgstr "plein écran"
 
-#: src/options.c:1473 src/options.c:1479
+#: src/options.c:1481 src/options.c:1487
 msgid "windowed"
 msgstr "fenêtré"
 
-#: src/options.c:1477
+#: src/options.c:1485
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1478
+#: src/options.c:1486
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1555
+#: src/options.c:1563
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1573
+#: src/options.c:1581
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1595
+#: src/options.c:1603
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1616
+#: src/options.c:1624
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1631
+#: src/options.c:1639
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1646
+#: src/options.c:1654
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
@@ -86955,6 +87144,23 @@ msgstr "WEAPON_LAYER non valide spécifié"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
+
+#~ msgid "Alexian"
+#~ msgstr "Alexian"
+
+#, c-format
+#~ msgid ""
+#~ "\n"
+#~ "%.0f Tonne"
+#~ msgid_plural ""
+#~ "\n"
+#~ "%.0f Tonnes"
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%.0f Tonne"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "%.0f Tonnes"
 
 #~ msgid "Credits: "
 #~ msgstr "Crédits : "
