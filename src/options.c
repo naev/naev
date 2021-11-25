@@ -413,6 +413,14 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
       /* Apply setting going forward; advise restart to regen other text. */
       gettext_setLanguage( conf.language );
       opt_needRestart();
+
+      /* Probably have to reload some fonts or it'll hate us. */
+      gl_freeFont(NULL);
+      gl_freeFont(&gl_smallFont);
+      gl_freeFont(&gl_defFontMono);
+      gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
+      gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX, 0 ); /* small font */
+      gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 );
    }
 
    /* Checkboxes. */
