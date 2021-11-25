@@ -12,12 +12,13 @@ repos:
     - id: check-merge-conflict
 - repo: local
   hooks:
-    - id: luacheck-git
-      name: luacheck for all data files
-      entry: utils/luacheck_git.sh
+    - id: luacheck
+      name: Luacheck (if installed)
+      entry: utils/luacheckIfInstalled.sh
+      files: dat/.*\.lua
       language: script
     - id: potfiles
-      name: commit POTFILES.in if necessary
+      name: Check for stale POTFILES.in
       entry: utils/update-po.sh . --pre-commit
       language: script
       always_run: true

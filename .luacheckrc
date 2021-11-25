@@ -167,23 +167,23 @@ stds.PilotOutfit.globals={
    "mem", -- Automatically created using nlua_setenv().
 }
 
-files["ai/**/*.lua"].std = STANDARD .. "+AI"
-files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
-files["board.lua"].std = STANDARD .. "+API_board"
-files["comm.lua"].std = STANDARD .. "+API_comm"
-files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
-files["factions/equip/*.lua"].std = STANDARD .. "+API_equip"
-files["factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
-files["factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
-files["gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
-files["landing.lua"].std = STANDARD .. "+API_land"
-files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
-files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
-files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
-files["save_updater.lua"].std = "API_save_updater"
-files["shipai.lua"].std = STANDARD .. "+API_shipai"
-files["snd/music.lua"].std = STANDARD .. "+Music"
+files["dat/ai/**/*.lua"].std = STANDARD .. "+AI"
+files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
+files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
+files["dat/board.lua"].std = STANDARD .. "+API_board"
+files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
+files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
+files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
+files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
+files["dat/landing.lua"].std = STANDARD .. "+API_land"
+files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
+files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["dat/save_updater.lua"].std = "API_save_updater"
+files["dat/shipai.lua"].std = STANDARD .. "+API_shipai"
+files["dat/snd/music.lua"].std = STANDARD .. "+Music"
 
 -- No way to be sure what type of environment will load these.
-files["scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
