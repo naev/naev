@@ -43,14 +43,18 @@ local coloursText = {
 local cellSize = 30
 local headersize = 80
 local levels
-local level, currentLevel
-local lx, ly
+local prevlevel, level, currentLevel
+local lx, ly, lxo, lyo
 local bgshader
+local transition
 
 local function loadLevel()
    local w = 0
    local h
    local lw, lh = love.window.getDesktopDimensions()
+   prevlevel = level
+   transition = 0
+   lxo, lyo = lx, ly
 
    local loadlev = levels[ currentLevel ]
    h = #loadlev
@@ -263,6 +267,24 @@ local function setcol( col )
    lg.setColor( r, g, b, a*alpha )
 end
 
+local function drawLevel( cx, cy, lvl, t )
+   for y, row in ipairs(lvl) do
+      for x, cell in ipairs(row) do
+         if cell ~= emptyOut then
+            local off = cellSize * (1-t) / 2
+            lg.push()
+            lg.translate( cx + (x-1)*cellSize + off, cy + (y-1)*cellSize + off )
+            lg.scale( t, t )
+            setcol( colours[cell] )
+            lg.rectangle( 'fill', 0, 0, cellSize, cellSize )
+            setcol( coloursText[cell] )
+            lg.print( lvl[y][x], 0, 0 )
+            lg.pop()
+         end
+      end
+   end
+end
+
 function sokoban.draw()
    local nw, nh = naev.gfx.dim()
    setcol( {0.2,0.2,0.2,0.85} )
@@ -270,44 +292,42 @@ function sokoban.draw()
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
 
+   local x, y, h
+   if transition < 1 and prevlevel then
+      local t = transition
+      x = t*lx + (1-t)*lxo
+      y = t*ly + (1-t)*lyo
+      h = (t*#level + (1-t)*#prevlevel) * cellSize
+   else
+      x = lx
+      y = ly
+      h = #level*cellSize
+   end
+
    setcol{ 1, 1, 1 }
-   lg.printf( headertext, headerfont, 0, ly, nw, "center" )
+   lg.printf( headertext, headerfont, 0, y, nw, "center" )
    local subheader
    if completed then
       subheader = _("Completed!")
    else
       subheader = fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} )
    end
-   lg.printf( subheader, 0, ly+40, nw, "center" )
+   lg.printf( subheader, 0, y+40, nw, "center" )
+   y = y + headersize
 
-   local cx, cy = lx, ly+headersize
-   for y, row in ipairs(level) do
-      for x, cell in ipairs(row) do
-         if cell ~= emptyOut then
-            setcol( colours[cell] )
-            lg.rectangle(
-               'fill',
-               cx + (x - 1) * cellSize,
-               cy + (y - 1) * cellSize,
-               cellSize,
-               cellSize
-            )
-            setcol( coloursText[cell] )
-            lg.print(
-               level[y][x],
-               cx + (x - 1) * cellSize,
-               cy + (y - 1) * cellSize
-            )
-         end
-      end
+   drawLevel( x, y, level, transition )
+   if transition < 1 and prevlevel then
+      drawLevel( x, y, prevlevel, 1-transition )
    end
 
    setcol{ 1, 1, 1 }
-   cy = cy + #level*cellSize + 20
+   local cy = y + h + 20
    lg.printf( _("#barrow keys#0: move, #br#0: restart, #bq#0: abort"), 0, cy, nw, "center" )
 end
 
 function sokoban.update( dt )
+   transition = math.min( 1, transition + dt * 2 )
+
    bgshader:update(dt)
    if done then
       alpha = alpha - dt * 2
