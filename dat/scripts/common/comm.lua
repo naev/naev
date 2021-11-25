@@ -21,11 +21,11 @@ function comm.nameboxUpdate( plt )
    local namebox_font = vn.namebox_font
    local faction_str
    if plt:flags("bribed") then
-      faction_str = _("#gBribed#0")
+      faction_str = string.format( "#g%s#0", _("Bribed") )
    else
       local _std, str = fac:playerStanding()
       if plt:hostile() then
-         faction_str = _("#rHostile#0")
+         faction_str = string.format( "#r%s#0", _("Hostile") )
       else
          faction_str = str
       end

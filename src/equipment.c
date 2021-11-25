@@ -1704,8 +1704,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
    /* Movement. */
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("\n%s average"), nt );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 kN/tonne"),
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 kN/tonne"),
          EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"),
          EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),

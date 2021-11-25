@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 01:29-0500\n"
+"POT-Creation-Date: 2021-11-24 20:24-0500\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -13126,7 +13126,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr ""
 
-#: dat/assets_virtual/tradelane.xml:2
+#: dat/assets_virtual/tradelane.xml:2 src/map.c:694
 msgid "Trade Lane"
 msgstr ""
 
@@ -13527,7 +13527,7 @@ msgstr ""
 #. Temp faction
 #: dat/faction.xml:494 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:184 dat/missions/minerva/pirate5.lua:248
-#: dat/missions/zalek/particlephysics/zpp03.lua:134
+#: dat/missions/zalek/particlephysics/zpp03.lua:137
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:9
 #: dat/scripts/common/zalek.lua:15 dat/scripts/common/zalek_physics.lua:31
 msgid "Za'lek"
@@ -13773,9 +13773,12 @@ msgstr ""
 msgid "Associates"
 msgstr ""
 
+#. Time for !!FUN!!
 #: dat/faction.xml:668 dat/faction.xml:697
 #: dat/missions/soromid/comingout/srm_comingout3.lua:124
 #: dat/missions/soromid/comingout/srm_comingout5.lua:127
+#: dat/missions/zalek/particlephysics/zpp04.lua:183
+#: dat/missions/zalek/particlephysics/zpp04.lua:186
 msgid "Thugs"
 msgstr ""
 
@@ -19053,8 +19056,11 @@ msgstr ""
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:243 src/dev_uniedit.c:249
-#: src/dev_uniedit.c:1260 src/dev_uniedit.c:1261 src/land_shipyard.c:249
-#: src/map.c:564 src/map.c:565 src/outfit.c:286 src/outfit.c:305
+#: src/dev_uniedit.c:1260 src/dev_uniedit.c:1261 src/land_outfits.c:359
+#: src/land_outfits.c:360 src/land_outfits.c:361 src/land_outfits.c:362
+#: src/land_outfits.c:363 src/land_shipyard.c:249 src/land_trade.c:160
+#: src/land_trade.c:162 src/land_trade.c:165 src/land_trade.c:166 src/map.c:564
+#: src/map.c:565 src/outfit.c:286 src/outfit.c:305
 msgid "N/A"
 msgstr ""
 
@@ -24096,12 +24102,12 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:27 dat/shipai.lua:40
-#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1340
-#: src/dev_sysedit.c:1450 src/dev_sysedit.c:1511 src/dev_sysedit.c:1703
-#: src/dev_sysedit.c:1890 src/dev_sysedit.c:1971 src/dev_uniedit.c:402
+#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1342
+#: src/dev_sysedit.c:1452 src/dev_sysedit.c:1513 src/dev_sysedit.c:1705
+#: src/dev_sysedit.c:1892 src/dev_sysedit.c:1973 src/dev_uniedit.c:402
 #: src/dev_uniedit.c:1393 src/dev_uniedit.c:1592 src/dev_uniedit.c:1832
 #: src/info.c:264 src/info.c:343 src/info.c:462 src/info.c:598 src/info.c:790
-#: src/info.c:1009 src/info.c:1104 src/info.c:1448 src/land_outfits.c:157
+#: src/info.c:1009 src/info.c:1104 src/info.c:1448 src/land_outfits.c:159
 #: src/map.c:336 src/map_find.c:1031 src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -24152,7 +24158,7 @@ msgid ""
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
 
-#: dat/board.lua:437 src/map_system.c:1036
+#: dat/board.lua:437 src/map_system.c:1037
 msgid "Insufficient Credits"
 msgstr ""
 
@@ -32763,11 +32769,12 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:52
+#: dat/factions/standing/lib/base.lua:52 dat/scripts/common/comm.lua:28
 msgid "Hostile"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:53
+#. stolen from scripts/vn.lua
+#: dat/factions/standing/lib/base.lua:53 dat/scripts/common/comm.lua:24
 msgid "Bribed"
 msgstr ""
 
@@ -33007,18 +33014,18 @@ msgstr ""
 #. text
 #: dat/gui/brushed.lua:852 dat/gui/brushed.lua:861
 #: dat/missions/rehab_common.lua:37
-#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1254
-#: src/dev_sysedit.c:1503 src/dev_sysedit.c:1504 src/dev_sysedit.c:1611
-#: src/dev_sysedit.c:1625 src/dev_sysedit.c:1651 src/dev_sysedit.c:1672
-#: src/dev_sysedit.c:1749 src/dev_sysedit.c:1766 src/dev_sysedit.c:1805
-#: src/dev_sysedit.c:1828 src/dev_sysedit.c:1865 src/dev_sysedit.c:1923
+#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1256
+#: src/dev_sysedit.c:1505 src/dev_sysedit.c:1506 src/dev_sysedit.c:1613
+#: src/dev_sysedit.c:1627 src/dev_sysedit.c:1653 src/dev_sysedit.c:1674
+#: src/dev_sysedit.c:1751 src/dev_sysedit.c:1768 src/dev_sysedit.c:1807
+#: src/dev_sysedit.c:1830 src/dev_sysedit.c:1867 src/dev_sysedit.c:1925
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:277 src/info.c:406 src/info.c:824
-#: src/info.c:1170 src/input.c:516 src/land.c:832 src/land_outfits.c:363
-#: src/land_outfits.c:396 src/land_outfits.c:580 src/land_shipyard.c:169
-#: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:81
-#: src/land_trade.c:83 src/land_trade.c:117 src/load.c:355 src/load.c:402
-#: src/load.c:447 src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
+#: src/info.c:1170 src/input.c:516 src/land.c:815 src/land_outfits.c:365
+#: src/land_outfits.c:398 src/land_outfits.c:578 src/land_shipyard.c:169
+#: src/land_shipyard.c:249 src/land_shipyard.c:284 src/land_trade.c:82
+#: src/land_trade.c:84 src/land_trade.c:117 src/load.c:355 src/load.c:403
+#: src/load.c:445 src/map.c:628 src/map.c:668 src/map.c:1718 src/map_find.c:721
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -33354,35 +33361,36 @@ msgid "CLASS:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "Pilot: "
+msgid "Pilot:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "System: "
+msgid "System:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "Time: "
+msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1069
-msgid "Credits: "
+#: dat/gui/slim.lua:1069 src/load.c:421
+msgid "Credits:"
 msgstr ""
 
 #: dat/gui/slim.lua:1070
-msgid "Nav: "
+msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1070
-msgid "Fuel: "
-msgstr ""
-
-#: dat/gui/slim.lua:1071
-msgid "WSet: "
+#: dat/gui/slim.lua:1070 src/equipment.c:384 src/info.c:224 src/info.c:482
+#: src/land_shipyard.c:145 src/map_system.c:681
+msgid "Fuel:"
 msgstr ""
 
 #: dat/gui/slim.lua:1071
-msgid "Cargo: "
+msgid "WSet:"
+msgstr ""
+
+#: dat/gui/slim.lua:1071
+msgid "Cargo:"
 msgstr ""
 
 #. stress is only used for armour
@@ -41548,7 +41556,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:72
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:940
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:932
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -41839,6 +41847,7 @@ msgstr ""
 
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:152
+#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
 msgid ""
 "#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 "#0"
@@ -42290,12 +42299,6 @@ msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:148
 msgid "Long Distance Empire Shipping"
-msgstr ""
-
-#. Case missed deadline
-#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
-msgid ""
-"MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 msgstr ""
 
 #.
@@ -45640,7 +45643,8 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband_cake.lua:86
 #: dat/missions/zalek/particlephysics/zpp01.lua:52
 #: dat/missions/zalek/particlephysics/zpp02.lua:63
-#: dat/missions/zalek/particlephysics/zpp03.lua:55
+#: dat/missions/zalek/particlephysics/zpp03.lua:58
+#: dat/missions/zalek/particlephysics/zpp04.lua:61
 msgid "Accept"
 msgstr ""
 
@@ -45654,7 +45658,8 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband_cake.lua:87
 #: dat/missions/zalek/particlephysics/zpp01.lua:53
 #: dat/missions/zalek/particlephysics/zpp02.lua:64
-#: dat/missions/zalek/particlephysics/zpp03.lua:56
+#: dat/missions/zalek/particlephysics/zpp03.lua:59
+#: dat/missions/zalek/particlephysics/zpp04.lua:62
 msgid "Decline"
 msgstr ""
 
@@ -51713,7 +51718,7 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:961
+#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:953
 msgid "Equipment"
 msgstr ""
 
@@ -51880,6 +51885,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant04.lua:109
 #: dat/missions/neutral/antlejos/ant_supplies.lua:106
 #: dat/missions/zalek/particlephysics/zpp02.lua:177
+#: dat/missions/zalek/particlephysics/zpp04.lua:153
 msgid ""
 "You have insufficient free cargo space for the {cargo}. You only have "
 "{freespace} of free space, but you need at least {neededspace}."
@@ -69191,8 +69197,10 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp01.lua:101
 #: dat/missions/zalek/particlephysics/zpp02.lua:84
 #: dat/missions/zalek/particlephysics/zpp02.lua:91
-#: dat/missions/zalek/particlephysics/zpp03.lua:76
-#: dat/missions/zalek/particlephysics/zpp03.lua:83
+#: dat/missions/zalek/particlephysics/zpp03.lua:79
+#: dat/missions/zalek/particlephysics/zpp03.lua:86
+#: dat/missions/zalek/particlephysics/zpp04.lua:82
+#: dat/missions/zalek/particlephysics/zpp04.lua:89
 #: dat/scripts/common/zalek_physics.lua:31
 msgid "Particle Physics"
 msgstr ""
@@ -69297,6 +69305,8 @@ msgstr ""
 #.
 #.
 #. luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
+#. Amount of cargo to take
+#. TODO redo the portrait
 #. Checks to see if the player has a Za'lek ship.
 #.
 #.
@@ -69305,11 +69315,12 @@ msgstr ""
 #. --
 #. Noona Sanderaite
 #: dat/missions/zalek/particlephysics/zpp02.lua:48
-#: dat/missions/zalek/particlephysics/zpp03.lua:38
-#: dat/missions/zalek/particlephysics/zpp03.lua:165
+#: dat/missions/zalek/particlephysics/zpp03.lua:41
 #: dat/missions/zalek/particlephysics/zpp03.lua:168
-#: dat/missions/zalek/particlephysics/zpp03.lua:173
-#: dat/missions/zalek/particlephysics/zpp03.lua:181
+#: dat/missions/zalek/particlephysics/zpp03.lua:171
+#: dat/missions/zalek/particlephysics/zpp03.lua:176
+#: dat/missions/zalek/particlephysics/zpp03.lua:184
+#: dat/missions/zalek/particlephysics/zpp04.lua:47
 #: dat/scripts/common/zalek_physics.lua:15
 msgid "Noona"
 msgstr ""
@@ -69343,16 +69354,19 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:86
+#: dat/missions/zalek/particlephysics/zpp04.lua:84
 msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
+#: dat/missions/zalek/particlephysics/zpp04.lua:90
 msgid "Pick up cargo at {pnt} ({sys} system)"
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:93
+#: dat/missions/zalek/particlephysics/zpp04.lua:91
 msgid "Deliver to {pnt} ({sys} system)"
 msgstr ""
 
@@ -69413,8 +69427,8 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp02.lua:145
 msgid ""
 "They raise an eyebrow as you approach.\n"
-"\"You must be Noona's acquaintance. I have the drone interface controllers "
-"ready, but there was kind of a mishap and they're stuck now.\"\n"
+"\"You must be Dr. Sanderaite's acquaintance. I have the drone interface "
+"controllers ready, but there was kind of a mishap and they're stuck now.\"\n"
 "They scratch their head."
 msgstr ""
 
@@ -69461,11 +69475,11 @@ msgid ""
 "older drone connectors."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:48
+#: dat/missions/zalek/particlephysics/zpp03.lua:51
 msgid "You approach Noona who doesn't seem too happy."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:49
+#: dat/missions/zalek/particlephysics/zpp03.lua:52
 msgid ""
 "\"I have no idea what went wrong.\"\n"
 "She has trouble keeping her composure.\n"
@@ -69473,7 +69487,7 @@ msgid ""
 "perform the procedure. It should have been a walk in the park!\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:52
+#: dat/missions/zalek/particlephysics/zpp03.lua:55
 msgid ""
 "She looks at you with hope gleaming in her eyes.\n"
 "\"Say, could you fly out and see what happened? The drones shouldn't be far "
@@ -69481,13 +69495,13 @@ msgid ""
 "black box by opening the hull component. Could you look into this for me?\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:60
+#: dat/missions/zalek/particlephysics/zpp03.lua:63
 msgid ""
 "\"I see. You must be busy with other things.\"\n"
 "She goes back to ruminating on what to do."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:65
+#: dat/missions/zalek/particlephysics/zpp03.lua:68
 msgid ""
 "\"Thanks again. I'll give you the password to the hull so you can access the "
 "black box control panel. Depending on the damage, you may have to realign "
@@ -69496,25 +69510,25 @@ msgid ""
 "should be able to find them easy. Best of luck!\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:78
+#: dat/missions/zalek/particlephysics/zpp03.lua:81
 msgid ""
 "Investigate the issue with the drones near the particle physics testing site "
 "at {sys}."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:84
+#: dat/missions/zalek/particlephysics/zpp03.lua:87
 msgid "Investigate the drones"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:85
+#: dat/missions/zalek/particlephysics/zpp03.lua:88
 msgid "Return to Katar I"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:104
+#: dat/missions/zalek/particlephysics/zpp03.lua:107
 msgid "You land and find Noona waiting outside your ship expectantly."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:105
+#: dat/missions/zalek/particlephysics/zpp03.lua:108
 msgid ""
 "\"That was scary! I have no idea what happened with the drone powering up "
 "and attacking you. I'm glad I sent you, I would have been fried with my "
@@ -69524,7 +69538,7 @@ msgid ""
 "She tosses you a credstick and runs to her room with the black box."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:108
+#: dat/missions/zalek/particlephysics/zpp03.lua:111
 msgid ""
 "Just before she disappears around the corner she turns back to you and "
 "yells.\n"
@@ -69534,14 +69548,14 @@ msgid ""
 "Without giving you time to process what she yelled, she vanishes."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:120
+#: dat/missions/zalek/particlephysics/zpp03.lua:123
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned. You're not exactly sure how, but she also managed to get you "
 "cleared for the Heavy Weapon License."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:122
+#: dat/missions/zalek/particlephysics/zpp03.lua:125
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned."
@@ -69551,56 +69565,209 @@ msgstr ""
 #. TODO better location once testing center object is created
 #. Disabled drone
 #. Hostile drone
-#: dat/missions/zalek/particlephysics/zpp03.lua:142
-#: dat/missions/zalek/particlephysics/zpp03.lua:152
+#: dat/missions/zalek/particlephysics/zpp03.lua:145
+#: dat/missions/zalek/particlephysics/zpp03.lua:155
 msgid "Malfunctioned Drone"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:165
+#: dat/missions/zalek/particlephysics/zpp03.lua:168
 msgid "I've sent you the drone positions, please get close to investigate."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:168
+#: dat/missions/zalek/particlephysics/zpp03.lua:171
 msgid ""
 "That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:173
+#: dat/missions/zalek/particlephysics/zpp03.lua:176
 msgid "Watch out!"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:178
+#: dat/missions/zalek/particlephysics/zpp03.lua:181
 msgid "Haywire Drone"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:181
+#: dat/missions/zalek/particlephysics/zpp03.lua:184
 msgid "That was close. Can you try boarding the other drone?"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:194
+#: dat/missions/zalek/particlephysics/zpp03.lua:197
 msgid "The drone's black box has already been extracted."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:203
+#: dat/missions/zalek/particlephysics/zpp03.lua:206
 msgid "You access the drone control panel and jack into the black box."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:217
+#: dat/missions/zalek/particlephysics/zpp03.lua:220
 msgid ""
 "You manage recover the entire black box intact and load the information on "
 "your ship."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:221
+#: dat/missions/zalek/particlephysics/zpp03.lua:224
 msgid "You failed to access the black box."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:226
+#: dat/missions/zalek/particlephysics/zpp03.lua:229
 msgid "Drone Black Box"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:226
+#: dat/missions/zalek/particlephysics/zpp03.lua:229
 msgid "The recovered black box of a Za'lek drone."
+msgstr ""
+
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Za'lek Particle Physics 4">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <chance>100</chance>
+#. <planet>Katar I</planet>
+#. <location>Bar</location>
+#. <done>Za'lek Particle Physics 3</done>
+#. </avail>
+#. <notes>
+#. <campaign>Za'lek Particle Physics</campaign>
+#. <tier>1</tier>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Za'lek Particle Physics 04
+#.
+#. Player has to go get some stuff from artefact hunters and gets attacked on way back
+#.
+#.
+#. luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
+#: dat/missions/zalek/particlephysics/zpp04.lua:34
+msgid "nebula artefact"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:57
+msgid "You once again meet up with Noona."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:58
+msgid ""
+"\"It's a worse setback than expected. I'm going to have to get new materials "
+"to be able to do the experiments. Since they're pretty hard to get usually, "
+"and I don't have time to fill in all the usual academic bureaucracy, I "
+"decided to go the black route. Would you be willing to go pick up the "
+"materials at {pnt} in the {sys} system? The materials should only be "
+"{amount}, so you should not have a trouble fitting them on your ship. I "
+"would be able to pay you {credits} for your troubles this time.\""
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:66
+msgid ""
+"\"OK. I'll try to figure something out…\"\n"
+"She furrows her brow."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:71
+msgid ""
+"\"Thanks again! I know {pnt} is not really a place you want to go, but there "
+"really was no option this time around. By the time you get back I should "
+"have finished all the other preparations and this time I'll finally be able "
+"to complete the experiment!… I hope.\""
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:105
+#: dat/missions/zalek/particlephysics/zpp04.lua:132
+msgid "Shady Dealer"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:105
+msgid ""
+"A fairly shady dealer seems to be staring at you and beckoning for you to "
+"come over. Could this be the individual Noona told you to meet…?"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:112
+msgid ""
+"You land and the lone cargo drone begins to unload the container. It seems "
+"to have trouble balancing it and you amuse yourself by looking at its antics "
+"until you are startled by Noona."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:113
+msgid ""
+"\"The drones sure are cute. I like to call that one Laboriosi.\"\n"
+"She points at the lone cargo drone.\n"
+"\"Thanks a lot for bringing me my materials. I don't know what I would do "
+"without them. I was able to go over the drones, and I think it might be best "
+"to not rely on them for the final experiment. I think the electromagnetic "
+"radiation from Katar doesn't work too well with them. If you could help me "
+"do the experiments, I would be very grateful. Meet me up at the bar, I have "
+"to do some small preparations.\""
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:122
+msgid ""
+"You helped Noona get some materials from a shady dealer in order for her to "
+"pursue her research and perform experiments."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:135
+msgid "You once again approach the shady dealer."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:136
+msgid ""
+"\"Have you made preparations for the cargo?\"\n"
+"Their grin makes your feel uneasy."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:140
+msgid ""
+"As you approach the shady dealer, you can barely make out some movement in "
+"the background."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:141
+msgid ""
+"They start to grin and begin to speak with an almost serpent-like accent.\n"
+"\"Ah, pleasure to meet you. Your must be the one in charge of the delivery. "
+"Your friend has quite a refined taste too. It's not often we get a sample as "
+"good as this one.\"\n"
+"They lick their lips."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:144
+msgid ""
+"\"The arrangements have all been made, and you'll soon have it aboard your "
+"ship. If I were you, I would put it as far away from the any personnel as "
+"possible.\"\n"
+"They then lean it to whisper to you.\n"
+"\"You might want to watch your back, your friend is not the only one that "
+"wants it.\""
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:160
+msgid ""
+"When you get back to your ship, the cargo has already been taken care of and "
+"is properly secured on your ship. As you get close to it, you hear a weird "
+"running river sound that seems to come from the cargo container. What have "
+"you gotten into?"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:167
+msgid "Strange Container"
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:167
+msgid ""
+"A large strange container that seems oddly warm to the touch. You can swear "
+"you hear weird signs coming from inside it, almost like some sort of running "
+"river."
+msgstr ""
+
+#: dat/missions/zalek/particlephysics/zpp04.lua:203
+msgid "That's the one! Get 'em!"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:54
@@ -70998,15 +71165,6 @@ msgstr ""
 
 #: dat/scripts/common/cargo.lua:243
 msgid "#nTime limit:#0 {deadline}"
-msgstr ""
-
-#. stolen from scripts/vn.lua
-#: dat/scripts/common/comm.lua:24
-msgid "#gBribed#0"
-msgstr ""
-
-#: dat/scripts/common/comm.lua:28
-msgid "#rHostile#0"
 msgstr ""
 
 #.
@@ -75860,7 +76018,7 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ai.c:588 src/board.c:153 src/comm.c:168 src/info.c:374 src/land.c:1488
+#: src/ai.c:588 src/board.c:153 src/comm.c:168 src/info.c:374 src/land.c:1476
 #: src/player.c:3324
 #, c-format
 msgid ""
@@ -76899,144 +77057,147 @@ msgstr ""
 msgid "Planet Property Editor - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1241
-#, c-format
-msgid "Name: "
+#. Update text.
+#. text
+#. Text.
+#: src/dev_sysedit.c:1241 src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
+#: src/equipment.c:363 src/info.c:465 src/load.c:413
+msgid "Name:"
 msgstr ""
 
 #: src/dev_sysedit.c:1249
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1253
-msgid "Faction: "
+#: src/dev_sysedit.c:1253 src/land.c:1226 src/map.c:302
+msgid "Faction:"
 msgstr ""
 
-#: src/dev_sysedit.c:1260
+#: src/dev_sysedit.c:1262
 msgid "Population"
 msgstr ""
 
-#: src/dev_sysedit.c:1268
+#: src/dev_sysedit.c:1270
 msgid "Class"
 msgstr ""
 
-#: src/dev_sysedit.c:1275 src/input.c:92 src/space.c:166
+#: src/dev_sysedit.c:1277 src/input.c:92 src/space.c:166
 msgid "Land"
 msgstr ""
 
-#: src/dev_sysedit.c:1284
+#: src/dev_sysedit.c:1286
 msgid "Base Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1292
+#: src/dev_sysedit.c:1294
 msgid "Bonus Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1300
+#: src/dev_sysedit.c:1302
 msgid "Range"
 msgstr ""
 
-#: src/dev_sysedit.c:1310
+#: src/dev_sysedit.c:1312
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1328
+#: src/dev_sysedit.c:1330
 msgid "Rm Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1330
+#: src/dev_sysedit.c:1332
 msgid "Add Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1332
+#: src/dev_sysedit.c:1334
 msgid "Edit Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1334
+#: src/dev_sysedit.c:1336
 msgid "Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1336
+#: src/dev_sysedit.c:1338
 msgid "Land GFX"
 msgstr ""
 
-#: src/dev_sysedit.c:1338
+#: src/dev_sysedit.c:1340
 msgid "Space GFX"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1405
+#: src/dev_sysedit.c:1407
 msgid "Jump Point Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1412
+#: src/dev_sysedit.c:1414
 #, c-format
 msgid "Target: "
 msgstr ""
 
-#: src/dev_sysedit.c:1432
+#: src/dev_sysedit.c:1434
 msgid "Hidden"
 msgstr ""
 
-#: src/dev_sysedit.c:1435
+#: src/dev_sysedit.c:1437
 msgid "Exit only"
 msgstr ""
 
-#: src/dev_sysedit.c:1438
+#: src/dev_sysedit.c:1440
 msgid "Hide"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1495
+#: src/dev_sysedit.c:1497
 #, c-format
 msgid "Planet Information - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1508
+#: src/dev_sysedit.c:1510
 msgid "Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1515
+#: src/dev_sysedit.c:1517
 msgid "Landing Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1527
+#: src/dev_sysedit.c:1529
 msgid "Bar Description"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1695
+#: src/dev_sysedit.c:1697
 msgid "Planet Tech Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1708
+#: src/dev_sysedit.c:1710
 msgid "Rm Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1712
+#: src/dev_sysedit.c:1714
 msgid "Add Tech"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1859
+#: src/dev_sysedit.c:1861
 msgid "Modify Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1894 src/dev_uniedit.c:406
+#: src/dev_sysedit.c:1896 src/dev_uniedit.c:406
 msgid "Set"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1962
+#: src/dev_sysedit.c:1964
 #, c-format
 msgid "%s - Planet Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1975
+#: src/dev_sysedit.c:1977
 msgid "Apply"
 msgstr ""
 
-#: src/dev_sysedit.c:1989
+#: src/dev_sysedit.c:1991
 #, c-format
 msgid "Unable to check file type for '%s'!"
 msgstr ""
@@ -77185,7 +77346,7 @@ msgstr ""
 msgid "Find Systems and Assets"
 msgstr ""
 
-#: src/dev_uniedit.c:1456
+#: src/dev_uniedit.c:1456 src/land.c:811
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -77193,11 +77354,6 @@ msgstr ""
 #. Create the window.
 #: src/dev_uniedit.c:1584
 msgid "Star System Property Editor"
-msgstr ""
-
-#: src/dev_uniedit.c:1596
-#, c-format
-msgid "Name: #n%s"
 msgstr ""
 
 #: src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
@@ -77256,12 +77412,6 @@ msgstr ""
 #: src/dev_uniedit.c:1855
 #, c-format
 msgid "Failed to add virtual asset '%s'!"
-msgstr ""
-
-#. Update text.
-#: src/dev_uniedit.c:1884
-#, c-format
-msgid "Name: %s"
 msgstr ""
 
 #. create the window
@@ -77331,13 +77481,13 @@ msgstr ""
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1256
-#: src/land_outfits.c:152 src/land_shipyard.c:104 src/land_trade.c:70
+#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1244
+#: src/land_outfits.c:154 src/land_shipyard.c:104 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2098
+#: src/equipment.c:327 src/equipment.c:2100
 msgid "Sell Ship"
 msgstr ""
 
@@ -77354,18 +77504,12 @@ msgid "Autoequip"
 msgstr ""
 
 #. text
-#. Text.
-#: src/equipment.c:363 src/info.c:465
-msgid "Name:"
-msgstr ""
-
-#. text
 #: src/equipment.c:364 src/info.c:466 src/land_shipyard.c:128
 #: src/map_system.c:656
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:365 src/info.c:467 src/land_shipyard.c:129
+#: src/equipment.c:365 src/info.c:467 src/land.c:1225 src/land_shipyard.c:129
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -77379,7 +77523,8 @@ msgstr ""
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:369 src/info.c:470 src/land_shipyard.c:135
+#: src/equipment.c:369 src/info.c:470 src/land_outfits.c:186
+#: src/land_shipyard.c:135 src/map_find.c:662 src/map_system.c:636
 #: src/map_system.c:663
 msgid "Mass:"
 msgstr ""
@@ -77444,11 +77589,6 @@ msgstr ""
 #: src/equipment.c:383 src/info.c:481 src/land_shipyard.c:144
 #: src/map_system.c:680
 msgid "Cargo Space:"
-msgstr ""
-
-#: src/equipment.c:384 src/info.c:224 src/info.c:482 src/land_shipyard.c:145
-#: src/map_system.c:681
-msgid "Fuel:"
 msgstr ""
 
 #: src/equipment.c:386
@@ -77522,7 +77662,7 @@ msgstr ""
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1522 src/land_outfits.c:259 src/shiplog.c:489
+#: src/equipment.c:1522 src/land_outfits.c:261 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
@@ -77531,172 +77671,168 @@ msgstr ""
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1565 src/land_outfits.c:289
+#: src/equipment.c:1565 src/land_outfits.c:291
 msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1707
+#: src/equipment.c:1708 src/info.c:517
 #, c-format
-msgid ""
-"\n"
-"%s average"
-msgstr ""
-
-#: src/equipment.c:1708
-#, c-format
-msgid ""
-"\n"
-"#%c%s%.0f#0 kN/tonne"
+msgid "%s average"
 msgstr ""
 
 #: src/equipment.c:1710
+#, c-format
+msgid "#%c%s%.0f#0 kN/tonne"
+msgstr ""
+
+#: src/equipment.c:1712
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1713
+#: src/equipment.c:1715
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s\n"
 msgstr ""
 
-#: src/equipment.c:1717
+#: src/equipment.c:1719
 #, c-format
 msgid "%s (%.1f secs for scan)\n"
 msgstr ""
 
-#: src/equipment.c:1722 src/equipment.c:1724 src/equipment.c:1726
+#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1729
+#: src/equipment.c:1731
 #, c-format
 msgid "%d / #%c%s%d#0 %s\n"
 msgstr ""
 
-#: src/equipment.c:1731
+#: src/equipment.c:1733
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1732 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1732 src/info.c:246 src/info.c:538
+#: src/equipment.c:1734 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1811
+#: src/equipment.c:1813
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1812
+#: src/equipment.c:1814
 msgid "Show only equipable outfits"
 msgstr ""
 
-#: src/equipment.c:1813
+#: src/equipment.c:1815
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1814
+#: src/equipment.c:1816
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1815
+#: src/equipment.c:1817
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:1952
+#: src/equipment.c:1954
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:1955
+#: src/equipment.c:1957
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:1956
+#: src/equipment.c:1958
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2033 src/land.c:1484
+#: src/equipment.c:2035 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2041
+#: src/equipment.c:2043
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2053
+#: src/equipment.c:2055
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2059
+#: src/equipment.c:2061
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2099
+#: src/equipment.c:2101
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr ""
 
 #. Display widget.
-#: src/equipment.c:2116
+#: src/equipment.c:2118
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2117
+#: src/equipment.c:2119
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2142 src/player.c:400
+#: src/equipment.c:2144 src/player.c:400
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2143
+#: src/equipment.c:2145
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2151
+#: src/equipment.c:2153
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2152 src/player.c:427
+#: src/equipment.c:2154 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -78202,7 +78338,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:60 src/land.c:945 src/space.c:170
+#: src/info.c:60 src/land.c:937 src/space.c:170
 msgid "Missions"
 msgstr ""
 
@@ -78219,11 +78355,12 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: src/info.c:221
+#: src/info.c:221 src/load.c:417
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:222 src/land_shipyard.c:149
+#: src/info.c:222 src/land.c:1229 src/land_outfits.c:188
+#: src/land_shipyard.c:149 src/land_trade.c:90 src/map_find.c:664
 msgid "Money:"
 msgstr ""
 
@@ -78316,11 +78453,6 @@ msgstr ""
 
 #: src/info.c:484
 msgid "Stats:"
-msgstr ""
-
-#: src/info.c:517
-#, c-format
-msgid "%s average"
 msgstr ""
 
 #: src/info.c:519 src/land_shipyard.c:300 src/map_system.c:665
@@ -79234,149 +79366,134 @@ msgstr ""
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:780 src/land.c:843
+#: src/land.c:780 src/land.c:835
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:813 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
+#: src/land.c:813
+#, c-format
+msgid "%s (%s-class)"
+msgstr ""
+
+#: src/land.c:817
+#, c-format
+msgid "roughly %s"
+msgstr ""
+
+#: src/land.c:824 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
 msgid ", "
 msgstr ""
 
-#: src/land.c:822
-#, c-format
-msgid ""
-"%s (%s system)\n"
-"%s (%s-class)\n"
-"%s\n"
-"roughly %s\n"
-"\n"
-"%s\n"
-"%s%s"
-msgstr ""
-
-#: src/land.c:854
+#: src/land.c:846
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:936
+#: src/land.c:928
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:950 src/map_find.c:1042 src/space.c:172
+#: src/land.c:942 src/map_find.c:1042 src/space.c:172
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:955 src/space.c:173
+#: src/land.c:947 src/space.c:173
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:966 src/space.c:171
+#: src/land.c:958 src/space.c:171
 msgid "Commodity"
 msgstr ""
 
-#: src/land.c:1233
-msgid ""
-"#nStationed at:\n"
-"Class:\n"
-"Faction:\n"
-"Population:\n"
-"\n"
-"Free Space:\n"
-"Money:"
+#. Player stats.
+#: src/land.c:1224
+msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1241
+#: src/land.c:1227
+msgid "Population:"
+msgstr ""
+
+#: src/land.c:1228 src/land_trade.c:89
+msgid "Free Space:"
+msgstr ""
+
+#: src/land.c:1231
 msgid "Tags:"
 msgstr ""
 
-#: src/land.c:1262
+#: src/land.c:1250
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1372
+#: src/land.c:1360
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. cleanup
 #. must be before cleaning up planet
-#: src/land.c:1425
+#: src/land.c:1413
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1434
+#: src/land.c:1422
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1501
+#: src/land.c:1489
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:161 src/land_trade.c:68
+#: src/land_outfits.c:163 src/land_trade.c:69
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:164 src/land_shipyard.c:110 src/land_trade.c:66
+#: src/land_outfits.c:166 src/land_shipyard.c:110 src/land_trade.c:67
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:167
+#: src/land_outfits.c:169
 msgid "Find Outfits"
 msgstr ""
 
-#: src/land_outfits.c:185
-msgid ""
-"Owned:\n"
-"Mass:\n"
-"Price:\n"
-"Money:\n"
-"License:\n"
+#: src/land_outfits.c:185 src/map_find.c:661 src/map_system.c:635
+msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:259
+#: src/land_outfits.c:187 src/land_shipyard.c:148 src/map_find.c:663
+#: src/map_system.c:637 src/map_system.c:684
+msgid "Price:"
+msgstr ""
+
+#: src/land_outfits.c:189 src/land_shipyard.c:150 src/map_find.c:665
+#: src/map_system.c:685
+msgid "License:"
+msgstr ""
+
+#: src/land_outfits.c:261
 msgid "Other"
 msgstr ""
 
-#: src/land_outfits.c:357
-#, c-format
-msgid ""
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-"N/A\n"
-msgstr ""
-
-#: src/land_outfits.c:413
-#, c-format
-msgid ""
-"%d\n"
-"%.0f tonnes\n"
-"%s\n"
-"%s\n"
-"%s\n"
-msgstr ""
-
-#: src/land_outfits.c:556
+#: src/land_outfits.c:554
 msgid "#oUnique#0\n"
 msgstr ""
 
-#: src/land_outfits.c:558
+#: src/land_outfits.c:556
 msgid "#rOnly 1 of type per ship#0\n"
 msgstr ""
 
-#: src/land_outfits.c:560
+#: src/land_outfits.c:558
 #, c-format
 msgid "#o%s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:565
+#: src/land_outfits.c:563
 #, c-format
 msgid ""
 "\n"
@@ -79387,50 +79504,50 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/land_outfits.c:646
+#: src/land_outfits.c:644
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:653
+#: src/land_outfits.c:651
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:658
+#: src/land_outfits.c:656
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:663
+#: src/land_outfits.c:661
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:669 src/land_shipyard.c:440 src/land_shipyard.c:510
-#: src/land_trade.c:234
+#: src/land_outfits.c:667 src/land_shipyard.c:440 src/land_shipyard.c:510
+#: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:675
+#: src/land_outfits.c:673
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:749
+#: src/land_outfits.c:747
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:755
+#: src/land_outfits.c:753
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:761
+#: src/land_outfits.c:759
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:767
+#: src/land_outfits.c:765
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:773 src/land_trade.c:249
+#: src/land_outfits.c:771 src/land_trade.c:245
 msgid "You can't sell something you don't have!"
 msgstr ""
 
@@ -79457,14 +79574,6 @@ msgstr ""
 
 #: src/land_shipyard.c:146 src/map_system.c:682
 msgid "Fuel Use:"
-msgstr ""
-
-#: src/land_shipyard.c:148 src/map_system.c:684
-msgid "Price:"
-msgstr ""
-
-#: src/land_shipyard.c:150 src/map_system.c:685
-msgid "License:"
 msgstr ""
 
 #: src/land_shipyard.c:297 src/map_system.c:662
@@ -79545,50 +79654,50 @@ msgid "Slots:"
 msgstr ""
 
 #: src/land_trade.c:86
-msgid ""
-"#nYou have:#0\n"
-"#nPurchased for:#0\n"
-"#nMarket Price:#0\n"
-"#nFree Space:#0\n"
-"#nMoney:#0\n"
-"#nAverage price here:#0\n"
-"#nAverage price all:#0"
+msgid "You have:"
 msgstr ""
 
-#: src/land_trade.c:160
-#, c-format
-msgid ""
-"N/A tonnes\n"
-"\n"
-"N/A ¤\n"
-"%s\n"
-"%s\n"
-"N/A ¤\n"
-"N/A ¤"
+#: src/land_trade.c:87
+msgid "Purchased for:"
 msgstr ""
 
-#: src/land_trade.c:170
+#: src/land_trade.c:88
+msgid "Market Price:"
+msgstr ""
+
+#: src/land_trade.c:91
+msgid "Average price here:"
+msgstr ""
+
+#: src/land_trade.c:92
+msgid "Average price all:"
+msgstr ""
+
+#: src/land_trade.c:168
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:182 src/land_trade.c:185
+#: src/land_trade.c:180 src/land_trade.c:183
 #, c-format
 msgid "%.1f ¤"
 msgstr ""
 
-#: src/land_trade.c:196
+#: src/land_trade.c:194
 #, c-format
-msgid ""
-"%s\n"
-"%s\n"
-"%s/t\n"
-"%s\n"
-"%s\n"
-"%s/t ± %s/t\n"
-"%s/t ± %s/t\n"
+msgid "%s/t"
 msgstr ""
 
-#: src/land_trade.c:238
+#: src/land_trade.c:198 src/map_system.c:723
+#, c-format
+msgid "%s/t ± %s/t"
+msgstr ""
+
+#: src/land_trade.c:200 src/map_system.c:725
+#, c-format
+msgid "%s/t ± %s/t\n"
+msgstr ""
+
+#: src/land_trade.c:234
 msgid "No cargo space available!"
 msgstr ""
 
@@ -79617,36 +79726,29 @@ msgstr ""
 msgid "%s #r(Backup)#0"
 msgstr ""
 
-#: src/load.c:413
-#, c-format
-msgid ""
-"#nName:\n"
-"#0   %s\n"
-"\n"
-"#nVersion:\n"
-"#0   %s\n"
-"\n"
-"#nDate:\n"
-"#0   %s\n"
-"\n"
-"#nPlanet:\n"
-"#0   %s\n"
-"\n"
-"#nCredits:\n"
-"#0   %s\n"
-"\n"
-"#nShip Name:\n"
-"#0   %s\n"
-"\n"
-"#nShip Model:\n"
-"#0   %s"
+#: src/load.c:415
+msgid "Version:"
 msgstr ""
 
-#: src/load.c:455
+#: src/load.c:419
+msgid "Planet:"
+msgstr ""
+
+#: src/load.c:423
+msgid "Ship Name:"
+msgstr ""
+
+#: src/load.c:425
+#, fuzzy
+#| msgid "   * Ship Models"
+msgid "Ship Model:"
+msgstr "   * Modelos das naves"
+
+#: src/load.c:453
 msgid "Save game version mismatch"
 msgstr ""
 
-#: src/load.c:456
+#: src/load.c:454
 #, c-format
 msgid ""
 "Save game '%s' version does not match Naev version:\n"
@@ -79655,31 +79757,31 @@ msgid ""
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
 
-#: src/load.c:495
+#: src/load.c:493
 msgid "Permanently Delete?"
 msgstr ""
 
-#: src/load.c:496
+#: src/load.c:494
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
 msgstr ""
 
-#: src/load.c:562 src/load.c:627
+#: src/load.c:560 src/load.c:625
 msgid "Saved game file seems to have been deleted."
 msgstr ""
 
-#: src/load.c:585 src/load.c:709
+#: src/load.c:583 src/load.c:707
 #, c-format
 msgid "Saved game '%s' invalid!"
 msgstr ""
 
 #. Welcome message - must be before space_init.
-#: src/load.c:644 src/player.c:333
+#: src/load.c:642 src/player.c:333
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr ""
 
-#: src/load.c:657
+#: src/load.c:655
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr ""
 
@@ -79709,10 +79811,6 @@ msgstr ""
 #: src/log.h:21
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr ""
-
-#: src/map.c:302
-msgid "Faction:"
 msgstr ""
 
 #: src/map.c:309
@@ -79752,10 +79850,6 @@ msgstr ""
 #: src/map.c:557
 #, c-format
 msgid "Multiple"
-msgstr ""
-
-#: src/map.c:694
-msgid "#gTrade Lane#0"
 msgstr ""
 
 #: src/map.c:704
@@ -79896,26 +79990,6 @@ msgstr[1] ""
 #: src/map_find.c:430
 #, c-format
 msgid "#%c%s%s (%s, %s)"
-msgstr ""
-
-#: src/map_find.c:661 src/map_system.c:635
-msgid "#nOwned:#0"
-msgstr ""
-
-#: src/map_find.c:662 src/map_system.c:636
-msgid "#nMass:#0"
-msgstr ""
-
-#: src/map_find.c:663 src/map_system.c:637
-msgid "#nPrice:#0"
-msgstr ""
-
-#: src/map_find.c:664
-msgid "#nMoney:#0"
-msgstr ""
-
-#: src/map_find.c:665
-msgid "#nLicense:#0"
 msgstr ""
 
 #: src/map_find.c:768
@@ -80186,53 +80260,54 @@ msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:723
-#, c-format
-msgid ""
-"#nAverage price seen here:#0 %s/t ± %s/t\n"
-"#nAverage price seen everywhere:#0 %s/t ± %s/t\n"
+#: src/map_system.c:722
+msgid "Average price seen here:"
 msgstr ""
 
-#: src/map_system.c:728
+#: src/map_system.c:724
+msgid "Average price seen everywhere:"
+msgstr ""
+
+#: src/map_system.c:729
 msgid "Unexpected call to map_system_array_update\n"
 msgstr ""
 
 #. no route
-#: src/map_system.c:1024
+#: src/map_system.c:1025
 msgid "Unavailable"
 msgstr ""
 
-#: src/map_system.c:1024
+#: src/map_system.c:1025
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
 
-#: src/map_system.c:1036
+#: src/map_system.c:1037
 #, c-format
 msgid "You need %s to purchase this information."
 msgstr ""
 
-#: src/map_system.c:1038
+#: src/map_system.c:1039
 msgid "No commodities sold here"
 msgstr ""
 
-#: src/map_system.c:1038
+#: src/map_system.c:1039
 msgid "There are no commodities sold here."
 msgstr ""
 
-#: src/map_system.c:1040
+#: src/map_system.c:1041
 msgid "Already Up-to-date"
 msgstr ""
 
-#: src/map_system.c:1040
+#: src/map_system.c:1041
 msgid "You have newer information that what is available."
 msgstr ""
 
-#: src/map_system.c:1042
+#: src/map_system.c:1043
 msgid "Purchase commodity prices?"
 msgstr ""
 
-#: src/map_system.c:1042
+#: src/map_system.c:1043
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
 msgstr ""
@@ -81816,8 +81891,8 @@ msgstr ""
 msgid "Input"
 msgstr ""
 
-#: src/options.c:162
-msgid "Restart Naev for changes to take effect."
+#: src/options.c:162 src/options.c:1344
+msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
 #: src/options.c:223
@@ -82068,10 +82143,6 @@ msgstr ""
 
 #: src/options.c:1328
 msgid "Bigger icons"
-msgstr ""
-
-#: src/options.c:1344
-msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
 #: src/options.c:1374

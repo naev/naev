@@ -396,6 +396,7 @@ static void load_menu_update( unsigned int wid, const char *str )
    nsave_t *ns;
    const char *save;
    char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
+   size_t l = 0;
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
@@ -409,23 +410,20 @@ static void load_menu_update( unsigned int wid, const char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   snprintf( buf, sizeof(buf),
-         _("#nName:\n"
-         "#0   %s\n\n"
-         "#nVersion:\n"
-         "#0   %s\n\n"
-         "#nDate:\n"
-         "#0   %s\n\n"
-         "#nPlanet:\n"
-         "#0   %s\n\n"
-         "#nCredits:\n"
-         "#0   %s\n\n"
-         "#nShip Name:\n"
-         "#0   %s\n\n"
-         "#nShip Model:\n"
-         "#0   %s"),
-         ns->name, ns->version, date, ns->planet,
-         credits, ns->shipname, ns->shipmodel );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->name );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Planet:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->shipname );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
 }
 

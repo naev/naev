@@ -1593,7 +1593,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   snprintf( buf, sizeof(buf), _("Name: #n%s"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), "%s #n%s", _("Name:"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1881,7 +1881,7 @@ static void uniedit_btnEditRename( unsigned int wid, const char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   snprintf( buf, sizeof(buf), _("Name: %s"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), "%s #n%s", _("Name:"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

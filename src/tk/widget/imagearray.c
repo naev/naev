@@ -131,8 +131,8 @@ static void iar_getDim( Widget* iar, double* w, double* h, double* xspace, doubl
    _space /= (iar->dat.iar.xelem + 1);
    if (w != NULL) *w = _w;
    if (h != NULL) *h = _h;
-   if (xspace != NULL) *xspace = _space;
-   if (yspace != NULL) *yspace = _space;
+   if (xspace != NULL) *xspace = _space; /* Justify columns with ~equal spacing */
+   if (yspace != NULL) *yspace = round( _space ); /* Make row spacing precisely equal. */
 }
 
 
@@ -150,7 +150,7 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    const glColour *dc, *lc;
-   const glColour *fontcolour;
+   const glColour *fontcolour, *bgcolour;
    int is_selected;
    double hmax;
 
@@ -185,18 +185,14 @@ static void iar_render( Widget* iar, double bx, double by )
     * Main drawing loop.
     */
    gl_clipRect( x, y, iar->w, iar->h );
-   ycurs = y + iar->h - h + iar->dat.iar.pos - yspace;
    for (j=0; j<yelem; j++) {
-      xcurs = x + floor(xspace / 2);
-
+      ycurs = floor(y + iar->h - (j+1)*(h+yspace) + iar->dat.iar.pos);
       /*  Skip rows that are wholly outside of the viewport. */
-      if ((ycurs > y + iar->h) || (ycurs + h < y)) {
-         ycurs -= h + yspace;
+      if ((ycurs > y + iar->h) || (ycurs + h < y))
          continue;
-      }
 
       for (i=0; i<xelem; i++) {
-         xcurs += (xspace / 2);
+         xcurs = floor(x + i * w + (i+.5) * xspace);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -207,26 +203,17 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
-         if (is_selected)
+         if (is_selected) {
             fontcolour = &cWhite;
-         else
+            bgcolour = toolkit_col;
+         } else {
             fontcolour = &cFontWhite;
-         /* Draw background. */
-         if (iar->dat.iar.images[pos].bg.a > 0.) {
-            if (is_selected) {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., toolkit_col, NULL );
-            } else {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., &iar->dat.iar.images[pos].bg, NULL );
-            }
-         } else if (is_selected) {
-            toolkit_drawRect( xcurs + 2.,
-                  ycurs + 2.,
-                  w - 5., h - 5., toolkit_col, NULL );
+            bgcolour = &iar->dat.iar.images[pos].bg;
+            if (bgcolour->a <= 0.)
+               bgcolour = toolkit_col;
          }
+         /* Draw background. */
+         toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
 
          /* image */
          if (iar->dat.iar.images[pos].image != NULL)
@@ -277,9 +264,7 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
-         xcurs += w + (xspace / 2);
       }
-      ycurs -= h + yspace;
    }
    gl_unclipRect();
 }
