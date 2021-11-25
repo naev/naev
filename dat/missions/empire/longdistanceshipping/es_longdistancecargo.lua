@@ -148,7 +148,7 @@ function tick()
       misn.osdCreate(_("Long Distance Empire Shipping"), osd_msg)
    elseif mem.timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(_("MISSION FAILED: You have failed to deliver the goods to the Empire on time!"))
+      player.msg(_("#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!#0"))
       misn.finish(false)
    end
 end

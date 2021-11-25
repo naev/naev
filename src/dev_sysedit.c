@@ -1238,7 +1238,7 @@ static void sysedit_editPnt( void )
 
    /* Rename button. */
    y = -40;
-   snprintf( buf, sizeof(buf), _("Name: ") );
+   snprintf( buf, sizeof(buf), "%s ", _("Name:") );
    w = gl_printWidthRaw( NULL, buf );
    window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, NULL, buf );
    snprintf( buf, sizeof(buf), "%s", p->name );
@@ -1250,7 +1250,9 @@ static void sysedit_editPnt( void )
 
    y -= gl_defFont.h + 5;
 
-   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, _("Faction: ") );
+   snprintf( buf, sizeof(buf), "%s ", _("Faction:") );
+   w = gl_printWidthRaw( NULL, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, buf );
    snprintf( buf, sizeof(buf), "%s", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;

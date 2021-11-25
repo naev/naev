@@ -82923,21 +82923,13 @@ msgstr[0] "トン"
 
 #: src/equipment.c:1707
 #, c-format
-msgid ""
-"\n"
-"%s average"
-msgstr ""
-"\n"
-"平均 %s"
+msgid "%s average"
+msgstr "平均 %s"
 
 #: src/equipment.c:1708
 #, c-format
-msgid ""
-"\n"
-"#%c%s%.0f#0 kN/tonne"
-msgstr ""
-"\n"
-"#%c%s%.0f#0 kN/トン"
+msgid "#%c%s%.0f#0 kN/tonne"
+msgstr "#%c%s%.0f#0 kN/トン"
 
 #: src/equipment.c:1710
 #, c-format
@@ -83750,16 +83742,6 @@ msgstr "GUIの優先設定を友好にして、GUIを ｢%s｣ に変更しま�
 #: src/info.c:484
 msgid "Stats:"
 msgstr "船の状態 :"
-
-#: src/info.c:517
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%s average"
-msgid "%s average"
-msgstr ""
-"\n"
-"平均 %s"
 
 #: src/info.c:519 src/land_shipyard.c:300 src/map_system.c:665
 #, c-format
