@@ -241,7 +241,7 @@ void conf_setVideoDefaults (void)
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_brightness = NEBU_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
-   conf.background_fancy = BACKGROUND_FANCE_DEFAULT;
+   conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
    gl_colorblind( conf.colorblind );
    if (cur_system)
