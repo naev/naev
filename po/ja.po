@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 12:35-0500\n"
+"POT-Creation-Date: 2021-11-24 20:24-0500\n"
 "PO-Revision-Date: 2021-11-21 16:26+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -13149,7 +13149,7 @@ msgstr "ソロミド 非存在"
 msgid "Thurion Local"
 msgstr "ザーリオン 局所"
 
-#: dat/assets_virtual/tradelane.xml:2
+#: dat/assets_virtual/tradelane.xml:2 src/map.c:694
 msgid "Trade Lane"
 msgstr "貿易用航路"
 
@@ -25469,9 +25469,9 @@ msgstr "あなたの船は{plt}の部品を再利用して装甲 {armour:.0f}�
 
 #. Destroy if exists
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:27 dat/shipai.lua:40
-#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1340
-#: src/dev_sysedit.c:1450 src/dev_sysedit.c:1511 src/dev_sysedit.c:1703
-#: src/dev_sysedit.c:1890 src/dev_sysedit.c:1971 src/dev_uniedit.c:402
+#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1342
+#: src/dev_sysedit.c:1452 src/dev_sysedit.c:1513 src/dev_sysedit.c:1705
+#: src/dev_sysedit.c:1892 src/dev_sysedit.c:1973 src/dev_uniedit.c:402
 #: src/dev_uniedit.c:1393 src/dev_uniedit.c:1592 src/dev_uniedit.c:1832
 #: src/info.c:264 src/info.c:343 src/info.c:462 src/info.c:598 src/info.c:790
 #: src/info.c:1009 src/info.c:1104 src/info.c:1448 src/land_outfits.c:159
@@ -35216,11 +35216,12 @@ msgstr "敵"
 msgid "Friendly"
 msgstr "友好的"
 
-#: dat/factions/standing/lib/base.lua:52
+#: dat/factions/standing/lib/base.lua:52 dat/scripts/common/comm.lua:28
 msgid "Hostile"
 msgstr "敵対的"
 
-#: dat/factions/standing/lib/base.lua:53
+#. stolen from scripts/vn.lua
+#: dat/factions/standing/lib/base.lua:53 dat/scripts/common/comm.lua:24
 msgid "Bribed"
 msgstr "買収ずみ"
 
@@ -35460,11 +35461,11 @@ msgstr "宇宙港"
 #. text
 #: dat/gui/brushed.lua:852 dat/gui/brushed.lua:861
 #: dat/missions/rehab_common.lua:37
-#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1254
-#: src/dev_sysedit.c:1503 src/dev_sysedit.c:1504 src/dev_sysedit.c:1611
-#: src/dev_sysedit.c:1625 src/dev_sysedit.c:1651 src/dev_sysedit.c:1672
-#: src/dev_sysedit.c:1749 src/dev_sysedit.c:1766 src/dev_sysedit.c:1805
-#: src/dev_sysedit.c:1828 src/dev_sysedit.c:1865 src/dev_sysedit.c:1923
+#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1256
+#: src/dev_sysedit.c:1505 src/dev_sysedit.c:1506 src/dev_sysedit.c:1613
+#: src/dev_sysedit.c:1627 src/dev_sysedit.c:1653 src/dev_sysedit.c:1674
+#: src/dev_sysedit.c:1751 src/dev_sysedit.c:1768 src/dev_sysedit.c:1807
+#: src/dev_sysedit.c:1830 src/dev_sysedit.c:1867 src/dev_sysedit.c:1925
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:277 src/info.c:406 src/info.c:824
 #: src/info.c:1170 src/input.c:516 src/land.c:815 src/land_outfits.c:365
@@ -35809,35 +35810,46 @@ msgid "CLASS:"
 msgstr "種別 :"
 
 #: dat/gui/slim.lua:1069
-msgid "Pilot: "
-msgstr "パイロット : "
+msgid "Pilot:"
+msgstr "パイロット :"
 
 #: dat/gui/slim.lua:1069
-msgid "System: "
+#, fuzzy
+#| msgid "System: "
+msgid "System:"
 msgstr "星系 : "
 
 #: dat/gui/slim.lua:1069
-msgid "Time: "
+#, fuzzy
+#| msgid "Time: "
+msgid "Time:"
 msgstr "時刻 : "
 
-#: dat/gui/slim.lua:1069
-msgid "Credits: "
-msgstr "クレジット : "
+#: dat/gui/slim.lua:1069 src/load.c:421
+msgid "Credits:"
+msgstr "クレジット :"
 
 #: dat/gui/slim.lua:1070
-msgid "Nav: "
+#, fuzzy
+#| msgid "Nav: "
+msgid "Nav:"
 msgstr "航路 : "
 
-#: dat/gui/slim.lua:1070
-msgid "Fuel: "
-msgstr "燃料 : "
+#: dat/gui/slim.lua:1070 src/equipment.c:384 src/info.c:224 src/info.c:482
+#: src/land_shipyard.c:145 src/map_system.c:681
+msgid "Fuel:"
+msgstr "燃料 :"
 
 #: dat/gui/slim.lua:1071
-msgid "WSet: "
+#, fuzzy
+#| msgid "WSet: "
+msgid "WSet:"
 msgstr "武器セット : "
 
 #: dat/gui/slim.lua:1071
-msgid "Cargo: "
+#, fuzzy
+#| msgid "Cargo: "
+msgid "Cargo:"
 msgstr "積み荷 : "
 
 #. stress is only used for armour
@@ -44447,6 +44459,7 @@ msgstr "帝国の輸送任務"
 
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:152
+#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
 msgid ""
 "#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 "#0"
@@ -45022,12 +45035,6 @@ msgstr "{sys}星系の{pnt}への、帝国の公式な長距離貨物輸送。"
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:148
 msgid "Long Distance Empire Shipping"
 msgstr "帝国の長距離輸送任務"
-
-#. Case missed deadline
-#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
-msgid ""
-"MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
-msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -76247,15 +76254,6 @@ msgstr "#n積み荷 :#0 {cargo}"
 msgid "#nTime limit:#0 {deadline}"
 msgstr "#n時間制限 :#0 {deadline}"
 
-#. stolen from scripts/vn.lua
-#: dat/scripts/common/comm.lua:24
-msgid "#gBribed#0"
-msgstr "#g買収ずみ#0"
-
-#: dat/scripts/common/comm.lua:28
-msgid "#rHostile#0"
-msgstr "#r敵対的#0"
-
 #.
 #. @brief Increases the reputation limit of the player.
 #. --
@@ -82269,144 +82267,147 @@ msgstr "Trying to deselect item that is not in selection!"
 msgid "Planet Property Editor - %s"
 msgstr "惑星の特性エディター - %s"
 
-#: src/dev_sysedit.c:1241
-#, c-format
-msgid "Name: "
-msgstr "名前 : "
+#. Update text.
+#. text
+#. Text.
+#: src/dev_sysedit.c:1241 src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
+#: src/equipment.c:363 src/info.c:465 src/load.c:413
+msgid "Name:"
+msgstr "名前 :"
 
 #: src/dev_sysedit.c:1249
 msgid "Faction"
 msgstr "党派"
 
-#: src/dev_sysedit.c:1253
-msgid "Faction: "
-msgstr "党派 : "
+#: src/dev_sysedit.c:1253 src/land.c:1226 src/map.c:302
+msgid "Faction:"
+msgstr "党派 :"
 
-#: src/dev_sysedit.c:1260
+#: src/dev_sysedit.c:1262
 msgid "Population"
 msgstr "人口"
 
-#: src/dev_sysedit.c:1268
+#: src/dev_sysedit.c:1270
 msgid "Class"
 msgstr "種別"
 
-#: src/dev_sysedit.c:1275 src/input.c:92 src/space.c:166
+#: src/dev_sysedit.c:1277 src/input.c:92 src/space.c:166
 msgid "Land"
 msgstr "着陸"
 
-#: src/dev_sysedit.c:1284
+#: src/dev_sysedit.c:1286
 msgid "Base Presence"
 msgstr "基本的配備状況"
 
-#: src/dev_sysedit.c:1292
+#: src/dev_sysedit.c:1294
 msgid "Bonus Presence"
 msgstr "追加の配備状況"
 
-#: src/dev_sysedit.c:1300
+#: src/dev_sysedit.c:1302
 msgid "Range"
 msgstr "範囲"
 
-#: src/dev_sysedit.c:1310
+#: src/dev_sysedit.c:1312
 msgid "hide"
 msgstr "隠す"
 
-#: src/dev_sysedit.c:1328
+#: src/dev_sysedit.c:1330
 msgid "Rm Service"
 msgstr "施設削除"
 
-#: src/dev_sysedit.c:1330
+#: src/dev_sysedit.c:1332
 msgid "Add Service"
 msgstr "施設追加"
 
-#: src/dev_sysedit.c:1332
+#: src/dev_sysedit.c:1334
 msgid "Edit Tech"
 msgstr "技術編集"
 
-#: src/dev_sysedit.c:1334
+#: src/dev_sysedit.c:1336
 msgid "Description"
 msgstr "説明"
 
-#: src/dev_sysedit.c:1336
+#: src/dev_sysedit.c:1338
 msgid "Land GFX"
 msgstr "着陸画像"
 
-#: src/dev_sysedit.c:1338
+#: src/dev_sysedit.c:1340
 msgid "Space GFX"
 msgstr "宇宙画像"
 
 #. Create the window.
-#: src/dev_sysedit.c:1405
+#: src/dev_sysedit.c:1407
 msgid "Jump Point Editor"
 msgstr "ジャンプポイントエディター"
 
-#: src/dev_sysedit.c:1412
+#: src/dev_sysedit.c:1414
 #, c-format
 msgid "Target: "
 msgstr "目標 : "
 
-#: src/dev_sysedit.c:1432
+#: src/dev_sysedit.c:1434
 msgid "Hidden"
 msgstr "隠す"
 
-#: src/dev_sysedit.c:1435
+#: src/dev_sysedit.c:1437
 msgid "Exit only"
 msgstr "出口専用"
 
-#: src/dev_sysedit.c:1438
+#: src/dev_sysedit.c:1440
 msgid "Hide"
 msgstr "隠す"
 
 #. Create the window.
-#: src/dev_sysedit.c:1495
+#: src/dev_sysedit.c:1497
 #, c-format
 msgid "Planet Information - %s"
 msgstr "惑星情報 - %s"
 
-#: src/dev_sysedit.c:1508
+#: src/dev_sysedit.c:1510
 msgid "Properties"
 msgstr "特性"
 
-#: src/dev_sysedit.c:1515
+#: src/dev_sysedit.c:1517
 msgid "Landing Description"
 msgstr "着陸の説明"
 
-#: src/dev_sysedit.c:1527
+#: src/dev_sysedit.c:1529
 msgid "Bar Description"
 msgstr "バーの説明"
 
 #. Create the window.
-#: src/dev_sysedit.c:1695
+#: src/dev_sysedit.c:1697
 msgid "Planet Tech Editor"
 msgstr "惑星の技術エディター"
 
-#: src/dev_sysedit.c:1708
+#: src/dev_sysedit.c:1710
 msgid "Rm Tech"
 msgstr "技術削除"
 
-#: src/dev_sysedit.c:1712
+#: src/dev_sysedit.c:1714
 msgid "Add Tech"
 msgstr "技術追加"
 
 #. Create the window.
-#: src/dev_sysedit.c:1859
+#: src/dev_sysedit.c:1861
 msgid "Modify Faction"
 msgstr "党派変更"
 
-#: src/dev_sysedit.c:1894 src/dev_uniedit.c:406
+#: src/dev_sysedit.c:1896 src/dev_uniedit.c:406
 msgid "Set"
 msgstr "設定"
 
 #. Create the window.
-#: src/dev_sysedit.c:1962
+#: src/dev_sysedit.c:1964
 #, c-format
 msgid "%s - Planet Properties"
 msgstr "%s - 惑星の属性"
 
-#: src/dev_sysedit.c:1975
+#: src/dev_sysedit.c:1977
 msgid "Apply"
 msgstr "適用"
 
-#: src/dev_sysedit.c:1989
+#: src/dev_sysedit.c:1991
 #, c-format
 msgid "Unable to check file type for '%s'!"
 msgstr "Unable to check file type for '%s'!"
@@ -82569,11 +82570,6 @@ msgstr "%s (%s星系)"
 msgid "Star System Property Editor"
 msgstr "星系特性エディター"
 
-#: src/dev_uniedit.c:1596
-#, c-format
-msgid "Name: #n%s"
-msgstr "名前 : #n%s"
-
 #: src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
 msgid "#rvarious"
 msgstr "#rいろいろ"
@@ -82634,12 +82630,6 @@ msgstr "バーチャルアセットの追加"
 #, c-format
 msgid "Failed to add virtual asset '%s'!"
 msgstr "バーチャルアセット ｢%s｣ を追加できませんでした！"
-
-#. Update text.
-#: src/dev_uniedit.c:1884
-#, c-format
-msgid "Name: %s"
-msgstr "名前 : %s"
 
 #. create the window
 #: src/dialogue.c:147 src/options.c:162
@@ -82713,7 +82703,7 @@ msgid "Take Off"
 msgstr "離陸"
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2098
+#: src/equipment.c:327 src/equipment.c:2100
 msgid "Sell Ship"
 msgstr "船を売る"
 
@@ -82728,12 +82718,6 @@ msgstr "撤去"
 #: src/equipment.c:339
 msgid "Autoequip"
 msgstr "自動装備"
-
-#. text
-#. Text.
-#: src/equipment.c:363 src/info.c:465 src/load.c:413
-msgid "Name:"
-msgstr "名前 :"
 
 #. text
 #: src/equipment.c:364 src/info.c:466 src/land_shipyard.c:128
@@ -82823,11 +82807,6 @@ msgstr "エネルギー :"
 msgid "Cargo Space:"
 msgstr "船倉容量 :"
 
-#: src/equipment.c:384 src/info.c:224 src/info.c:482 src/land_shipyard.c:145
-#: src/map_system.c:681
-msgid "Fuel:"
-msgstr "燃料 :"
-
 #: src/equipment.c:386
 msgid "Ship Status:"
 msgstr "船の状態 :"
@@ -82915,23 +82894,23 @@ msgid "Filter…"
 msgstr "しぼりこみ..."
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] "トン"
 
-#: src/equipment.c:1707
+#: src/equipment.c:1708 src/info.c:517
 #, c-format
 msgid "%s average"
 msgstr "平均 %s"
 
-#: src/equipment.c:1708
+#: src/equipment.c:1710
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr "#%c%s%.0f#0 kN/トン"
 
-#: src/equipment.c:1710
+#: src/equipment.c:1712
 #, c-format
 msgid ""
 "\n"
@@ -82940,7 +82919,7 @@ msgstr ""
 "\n"
 "#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
 
-#: src/equipment.c:1713
+#: src/equipment.c:1715
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -82952,7 +82931,7 @@ msgstr ""
 "\n"
 "#%c%s%.0f#0 度/秒"
 
-#: src/equipment.c:1717
+#: src/equipment.c:1719
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -82962,7 +82941,7 @@ msgstr ""
 "\n"
 "%s (スキャンあたり %.1f 秒)"
 
-#: src/equipment.c:1722 src/equipment.c:1724 src/equipment.c:1726
+#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -82973,7 +82952,7 @@ msgstr ""
 "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 
 #. Misc.
-#: src/equipment.c:1729
+#: src/equipment.c:1731
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -82983,7 +82962,7 @@ msgstr ""
 "\n"
 "%d / #%c%s%d#0 %s"
 
-#: src/equipment.c:1731
+#: src/equipment.c:1733
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -82993,110 +82972,110 @@ msgstr ""
 "\n"
 "%s %s (%d %s)"
 
-#: src/equipment.c:1732 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] "ユニット"
 
-#: src/equipment.c:1732 src/info.c:246 src/info.c:538
+#: src/equipment.c:1734 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] "ジャンプ"
 
-#: src/equipment.c:1811
+#: src/equipment.c:1813
 msgid "Show all outfits"
 msgstr "すべての艤装品を見る"
 
-#: src/equipment.c:1812
+#: src/equipment.c:1814
 msgid "Show only equipable outfits"
 msgstr "装備可能な艤装品だけを見る"
 
-#: src/equipment.c:1813
+#: src/equipment.c:1815
 msgid "Show only light outfits"
 msgstr "軽量艤装品だけを見る"
 
-#: src/equipment.c:1814
+#: src/equipment.c:1816
 msgid "Show only medium outfits"
 msgstr "中級艤装品だけを見る"
 
-#: src/equipment.c:1815
+#: src/equipment.c:1817
 msgid "Show only heavy outfits"
 msgstr "重量艤装品だけを見る"
 
-#: src/equipment.c:1952
+#: src/equipment.c:1954
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 "改造なしで保管できる量をこえる積み荷があるときには、船から撤去はできません！"
 
-#: src/equipment.c:1955
+#: src/equipment.c:1957
 msgid "Unequip Ship"
 msgstr "船から撤去"
 
 #. confirm
-#: src/equipment.c:1956
+#: src/equipment.c:1958
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr "ほんとうにすべての装備を船から撤去したいですか？"
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "Recall Fighters"
 msgstr "戦闘機の回収"
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr "これは展開した戦闘機を呼びもどすことになります。それでいいですか？"
 
-#: src/equipment.c:2033 src/land.c:1472
+#: src/equipment.c:2035 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr "File '%s' not found!"
 
-#: src/equipment.c:2041
+#: src/equipment.c:2043
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr "Failed to run '%s': %s"
 
-#: src/equipment.c:2053
+#: src/equipment.c:2055
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr "'%s' doesn't have valid required 'autoequip' function!"
 
-#: src/equipment.c:2059
+#: src/equipment.c:2061
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr "'%s' failed to run required 'autoequip' function: %s"
 
-#: src/equipment.c:2099
+#: src/equipment.c:2101
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "ほんとうに船 ｢%s｣ を %sで売りたいですか？"
 
 #. Display widget.
-#: src/equipment.c:2116
+#: src/equipment.c:2118
 msgid "Ship Sold"
 msgstr "船の売却"
 
-#: src/equipment.c:2117
+#: src/equipment.c:2119
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr "あなたは船 ｢%s｣ を %sで売りました。"
 
-#: src/equipment.c:2142 src/player.c:400
+#: src/equipment.c:2144 src/player.c:400
 msgid "Ship Name"
 msgstr "船の名前"
 
-#: src/equipment.c:2143
+#: src/equipment.c:2145
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr "｢%s｣ の新しい名前を入力してください:"
 
-#: src/equipment.c:2151
+#: src/equipment.c:2153
 msgid "Name Collision"
 msgstr "名前の重複"
 
-#: src/equipment.c:2152 src/player.c:427
+#: src/equipment.c:2154 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr "あなたのほかの船と同じ名前をつけないでください。"
 
@@ -84714,10 +84693,6 @@ msgstr "商品"
 msgid "Stationed at:"
 msgstr "位置 :"
 
-#: src/land.c:1226 src/map.c:302
-msgid "Faction:"
-msgstr "党派 :"
-
 #: src/land.c:1227
 msgid "Population:"
 msgstr "人口 :"
@@ -85049,10 +85024,6 @@ msgstr "版数 :"
 msgid "Planet:"
 msgstr "惑星 :"
 
-#: src/load.c:421
-msgid "Credits:"
-msgstr "クレジット :"
-
 #: src/load.c:423
 msgid "Ship Name:"
 msgstr "船の名前 :"
@@ -85174,10 +85145,6 @@ msgstr "既知の%sの価格を表示します。銀河全体の平均は : %.
 #, c-format
 msgid "Multiple"
 msgstr "複数"
-
-#: src/map.c:694
-msgid "#gTrade Lane#0"
-msgstr "#g貿易用航路#0"
 
 #: src/map.c:704
 msgid "Dense "
@@ -87287,9 +87254,9 @@ msgstr "オーディオ"
 msgid "Input"
 msgstr "入力"
 
-#: src/options.c:162
-msgid "Restart Naev for changes to take effect."
-msgstr "Naev を再起動すると効果が反映されます。"
+#: src/options.c:162 src/options.c:1344
+msgid "#rRestart Naev for changes to take effect.#0"
+msgstr "#rNaev を再起動すると効果が反映されます。#0"
 
 #: src/options.c:223
 msgid "system"
@@ -87546,10 +87513,6 @@ msgstr "GUI:"
 #: src/options.c:1328
 msgid "Bigger icons"
 msgstr "大きめのアイコン"
-
-#: src/options.c:1344
-msgid "#rRestart Naev for changes to take effect.#0"
-msgstr "#rNaev を再起動すると効果が反映されます。#0"
 
 #: src/options.c:1374
 msgid "Height/Width invalid. Should be formatted like 1024x768."
@@ -91151,6 +91114,47 @@ msgstr "Invalid WEAPON_LAYER specified"
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
 
+#~ msgid "Pilot: "
+#~ msgstr "パイロット : "
+
+#~ msgid "Credits: "
+#~ msgstr "クレジット : "
+
+#~ msgid "Fuel: "
+#~ msgstr "燃料 : "
+
+#~ msgid ""
+#~ "MISSION FAILED: You have failed to deliver the goods to the Empire on "
+#~ "time!"
+#~ msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！"
+
+#~ msgid "#gBribed#0"
+#~ msgstr "#g買収ずみ#0"
+
+#~ msgid "#rHostile#0"
+#~ msgstr "#r敵対的#0"
+
+#, c-format
+#~ msgid "Name: "
+#~ msgstr "名前 : "
+
+#~ msgid "Faction: "
+#~ msgstr "党派 : "
+
+#, c-format
+#~ msgid "Name: #n%s"
+#~ msgstr "名前 : #n%s"
+
+#, c-format
+#~ msgid "Name: %s"
+#~ msgstr "名前 : %s"
+
+#~ msgid "#gTrade Lane#0"
+#~ msgstr "#g貿易用航路#0"
+
+#~ msgid "Restart Naev for changes to take effect."
+#~ msgstr "Naev を再起動すると効果が反映されます。"
+
 #~ msgid ""
 #~ "Owned:\n"
 #~ "Mass:\n"
@@ -91222,9 +91226,6 @@ msgstr "Trying to remove beam with ID 0!"
 #~| msgid "\"No\""
 #~ msgid "\"\""
 #~ msgstr "｢いいえ｣"
-
-#~ msgid "Pilot:"
-#~ msgstr "パイロット :"
 
 #, c-format
 #~ msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-24 12:35-0500\n"
+"POT-Creation-Date: 2021-11-24 20:24-0500\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -13126,7 +13126,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr ""
 
-#: dat/assets_virtual/tradelane.xml:2
+#: dat/assets_virtual/tradelane.xml:2 src/map.c:694
 msgid "Trade Lane"
 msgstr ""
 
@@ -24102,9 +24102,9 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:27 dat/shipai.lua:40
-#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1340
-#: src/dev_sysedit.c:1450 src/dev_sysedit.c:1511 src/dev_sysedit.c:1703
-#: src/dev_sysedit.c:1890 src/dev_sysedit.c:1971 src/dev_uniedit.c:402
+#: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1342
+#: src/dev_sysedit.c:1452 src/dev_sysedit.c:1513 src/dev_sysedit.c:1705
+#: src/dev_sysedit.c:1892 src/dev_sysedit.c:1973 src/dev_uniedit.c:402
 #: src/dev_uniedit.c:1393 src/dev_uniedit.c:1592 src/dev_uniedit.c:1832
 #: src/info.c:264 src/info.c:343 src/info.c:462 src/info.c:598 src/info.c:790
 #: src/info.c:1009 src/info.c:1104 src/info.c:1448 src/land_outfits.c:159
@@ -32769,11 +32769,12 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:52
+#: dat/factions/standing/lib/base.lua:52 dat/scripts/common/comm.lua:28
 msgid "Hostile"
 msgstr ""
 
-#: dat/factions/standing/lib/base.lua:53
+#. stolen from scripts/vn.lua
+#: dat/factions/standing/lib/base.lua:53 dat/scripts/common/comm.lua:24
 msgid "Bribed"
 msgstr ""
 
@@ -33013,11 +33014,11 @@ msgstr ""
 #. text
 #: dat/gui/brushed.lua:852 dat/gui/brushed.lua:861
 #: dat/missions/rehab_common.lua:37
-#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1254
-#: src/dev_sysedit.c:1503 src/dev_sysedit.c:1504 src/dev_sysedit.c:1611
-#: src/dev_sysedit.c:1625 src/dev_sysedit.c:1651 src/dev_sysedit.c:1672
-#: src/dev_sysedit.c:1749 src/dev_sysedit.c:1766 src/dev_sysedit.c:1805
-#: src/dev_sysedit.c:1828 src/dev_sysedit.c:1865 src/dev_sysedit.c:1923
+#: dat/missions/soromid/comingout/srm_comingout4.lua:59 src/dev_sysedit.c:1256
+#: src/dev_sysedit.c:1505 src/dev_sysedit.c:1506 src/dev_sysedit.c:1613
+#: src/dev_sysedit.c:1627 src/dev_sysedit.c:1653 src/dev_sysedit.c:1674
+#: src/dev_sysedit.c:1751 src/dev_sysedit.c:1768 src/dev_sysedit.c:1807
+#: src/dev_sysedit.c:1830 src/dev_sysedit.c:1867 src/dev_sysedit.c:1925
 #: src/dev_uniedit.c:1331 src/dev_uniedit.c:1498 src/dev_uniedit.c:1718
 #: src/dev_uniedit.c:1783 src/info.c:277 src/info.c:406 src/info.c:824
 #: src/info.c:1170 src/input.c:516 src/land.c:815 src/land_outfits.c:365
@@ -33360,35 +33361,36 @@ msgid "CLASS:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "Pilot: "
+msgid "Pilot:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "System: "
+msgid "System:"
 msgstr ""
 
 #: dat/gui/slim.lua:1069
-msgid "Time: "
+msgid "Time:"
 msgstr ""
 
-#: dat/gui/slim.lua:1069
-msgid "Credits: "
+#: dat/gui/slim.lua:1069 src/load.c:421
+msgid "Credits:"
 msgstr ""
 
 #: dat/gui/slim.lua:1070
-msgid "Nav: "
+msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1070
-msgid "Fuel: "
-msgstr ""
-
-#: dat/gui/slim.lua:1071
-msgid "WSet: "
+#: dat/gui/slim.lua:1070 src/equipment.c:384 src/info.c:224 src/info.c:482
+#: src/land_shipyard.c:145 src/map_system.c:681
+msgid "Fuel:"
 msgstr ""
 
 #: dat/gui/slim.lua:1071
-msgid "Cargo: "
+msgid "WSet:"
+msgstr ""
+
+#: dat/gui/slim.lua:1071
+msgid "Cargo:"
 msgstr ""
 
 #. stress is only used for armour
@@ -41845,6 +41847,7 @@ msgstr ""
 
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:152
+#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
 msgid ""
 "#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 "#0"
@@ -42296,12 +42299,6 @@ msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:148
 msgid "Long Distance Empire Shipping"
-msgstr ""
-
-#. Case missed deadline
-#: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
-msgid ""
-"MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 msgstr ""
 
 #.
@@ -71170,15 +71167,6 @@ msgstr ""
 msgid "#nTime limit:#0 {deadline}"
 msgstr ""
 
-#. stolen from scripts/vn.lua
-#: dat/scripts/common/comm.lua:24
-msgid "#gBribed#0"
-msgstr ""
-
-#: dat/scripts/common/comm.lua:28
-msgid "#rHostile#0"
-msgstr ""
-
 #.
 #. @brief Increases the reputation limit of the player.
 #. --
@@ -77069,144 +77057,147 @@ msgstr ""
 msgid "Planet Property Editor - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1241
-#, c-format
-msgid "Name: "
+#. Update text.
+#. text
+#. Text.
+#: src/dev_sysedit.c:1241 src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
+#: src/equipment.c:363 src/info.c:465 src/load.c:413
+msgid "Name:"
 msgstr ""
 
 #: src/dev_sysedit.c:1249
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1253
-msgid "Faction: "
+#: src/dev_sysedit.c:1253 src/land.c:1226 src/map.c:302
+msgid "Faction:"
 msgstr ""
 
-#: src/dev_sysedit.c:1260
+#: src/dev_sysedit.c:1262
 msgid "Population"
 msgstr ""
 
-#: src/dev_sysedit.c:1268
+#: src/dev_sysedit.c:1270
 msgid "Class"
 msgstr ""
 
-#: src/dev_sysedit.c:1275 src/input.c:92 src/space.c:166
+#: src/dev_sysedit.c:1277 src/input.c:92 src/space.c:166
 msgid "Land"
 msgstr ""
 
-#: src/dev_sysedit.c:1284
+#: src/dev_sysedit.c:1286
 msgid "Base Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1292
+#: src/dev_sysedit.c:1294
 msgid "Bonus Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1300
+#: src/dev_sysedit.c:1302
 msgid "Range"
 msgstr ""
 
-#: src/dev_sysedit.c:1310
+#: src/dev_sysedit.c:1312
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1328
+#: src/dev_sysedit.c:1330
 msgid "Rm Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1330
+#: src/dev_sysedit.c:1332
 msgid "Add Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1332
+#: src/dev_sysedit.c:1334
 msgid "Edit Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1334
+#: src/dev_sysedit.c:1336
 msgid "Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1336
+#: src/dev_sysedit.c:1338
 msgid "Land GFX"
 msgstr ""
 
-#: src/dev_sysedit.c:1338
+#: src/dev_sysedit.c:1340
 msgid "Space GFX"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1405
+#: src/dev_sysedit.c:1407
 msgid "Jump Point Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1412
+#: src/dev_sysedit.c:1414
 #, c-format
 msgid "Target: "
 msgstr ""
 
-#: src/dev_sysedit.c:1432
+#: src/dev_sysedit.c:1434
 msgid "Hidden"
 msgstr ""
 
-#: src/dev_sysedit.c:1435
+#: src/dev_sysedit.c:1437
 msgid "Exit only"
 msgstr ""
 
-#: src/dev_sysedit.c:1438
+#: src/dev_sysedit.c:1440
 msgid "Hide"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1495
+#: src/dev_sysedit.c:1497
 #, c-format
 msgid "Planet Information - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1508
+#: src/dev_sysedit.c:1510
 msgid "Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1515
+#: src/dev_sysedit.c:1517
 msgid "Landing Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1527
+#: src/dev_sysedit.c:1529
 msgid "Bar Description"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1695
+#: src/dev_sysedit.c:1697
 msgid "Planet Tech Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1708
+#: src/dev_sysedit.c:1710
 msgid "Rm Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1712
+#: src/dev_sysedit.c:1714
 msgid "Add Tech"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1859
+#: src/dev_sysedit.c:1861
 msgid "Modify Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1894 src/dev_uniedit.c:406
+#: src/dev_sysedit.c:1896 src/dev_uniedit.c:406
 msgid "Set"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1962
+#: src/dev_sysedit.c:1964
 #, c-format
 msgid "%s - Planet Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1975
+#: src/dev_sysedit.c:1977
 msgid "Apply"
 msgstr ""
 
-#: src/dev_sysedit.c:1989
+#: src/dev_sysedit.c:1991
 #, c-format
 msgid "Unable to check file type for '%s'!"
 msgstr ""
@@ -77365,11 +77356,6 @@ msgstr ""
 msgid "Star System Property Editor"
 msgstr ""
 
-#: src/dev_uniedit.c:1596
-#, c-format
-msgid "Name: #n%s"
-msgstr ""
-
 #: src/dev_uniedit.c:1596 src/dev_uniedit.c:1884
 msgid "#rvarious"
 msgstr ""
@@ -77426,12 +77412,6 @@ msgstr ""
 #: src/dev_uniedit.c:1855
 #, c-format
 msgid "Failed to add virtual asset '%s'!"
-msgstr ""
-
-#. Update text.
-#: src/dev_uniedit.c:1884
-#, c-format
-msgid "Name: %s"
 msgstr ""
 
 #. create the window
@@ -77507,7 +77487,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2098
+#: src/equipment.c:327 src/equipment.c:2100
 msgid "Sell Ship"
 msgstr ""
 
@@ -77521,12 +77501,6 @@ msgstr ""
 
 #: src/equipment.c:339
 msgid "Autoequip"
-msgstr ""
-
-#. text
-#. Text.
-#: src/equipment.c:363 src/info.c:465 src/load.c:413
-msgid "Name:"
 msgstr ""
 
 #. text
@@ -77617,11 +77591,6 @@ msgstr ""
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:384 src/info.c:224 src/info.c:482 src/land_shipyard.c:145
-#: src/map_system.c:681
-msgid "Fuel:"
-msgstr ""
-
 #: src/equipment.c:386
 msgid "Ship Status:"
 msgstr ""
@@ -77707,167 +77676,163 @@ msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1730 src/info.c:515 src/info.c:535
+#: src/equipment.c:1706 src/equipment.c:1732 src/info.c:515 src/info.c:535
 #: src/land_shipyard.c:298
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1707
+#: src/equipment.c:1708 src/info.c:517
 #, c-format
-msgid ""
-"\n"
-"%s average"
-msgstr ""
-
-#: src/equipment.c:1708
-#, c-format
-msgid ""
-"\n"
-"#%c%s%.0f#0 kN/tonne"
+msgid "%s average"
 msgstr ""
 
 #: src/equipment.c:1710
+#, c-format
+msgid "#%c%s%.0f#0 kN/tonne"
+msgstr ""
+
+#: src/equipment.c:1712
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1713
+#: src/equipment.c:1715
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s\n"
 msgstr ""
 
-#: src/equipment.c:1717
+#: src/equipment.c:1719
 #, c-format
 msgid "%s (%.1f secs for scan)\n"
 msgstr ""
 
-#: src/equipment.c:1722 src/equipment.c:1724 src/equipment.c:1726
+#: src/equipment.c:1724 src/equipment.c:1726 src/equipment.c:1728
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1729
+#: src/equipment.c:1731
 #, c-format
 msgid "%d / #%c%s%d#0 %s\n"
 msgstr ""
 
-#: src/equipment.c:1731
+#: src/equipment.c:1733
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1732 src/info.c:537 src/land_shipyard.c:314
+#: src/equipment.c:1734 src/info.c:537 src/land_shipyard.c:314
 #: src/land_shipyard.c:315 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1732 src/info.c:246 src/info.c:538
+#: src/equipment.c:1734 src/info.c:246 src/info.c:538
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1811
+#: src/equipment.c:1813
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1812
+#: src/equipment.c:1814
 msgid "Show only equipable outfits"
 msgstr ""
 
-#: src/equipment.c:1813
+#: src/equipment.c:1815
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1814
+#: src/equipment.c:1816
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1815
+#: src/equipment.c:1817
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:1952
+#: src/equipment.c:1954
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:1955
+#: src/equipment.c:1957
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:1956
+#: src/equipment.c:1958
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1959 src/land.c:175
+#: src/equipment.c:1961 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2033 src/land.c:1472
+#: src/equipment.c:2035 src/land.c:1472
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2041
+#: src/equipment.c:2043
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2053
+#: src/equipment.c:2055
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2059
+#: src/equipment.c:2061
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2099
+#: src/equipment.c:2101
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr ""
 
 #. Display widget.
-#: src/equipment.c:2116
+#: src/equipment.c:2118
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2117
+#: src/equipment.c:2119
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2142 src/player.c:400
+#: src/equipment.c:2144 src/player.c:400
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2143
+#: src/equipment.c:2145
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2151
+#: src/equipment.c:2153
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2152 src/player.c:427
+#: src/equipment.c:2154 src/player.c:427
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -78488,11 +78453,6 @@ msgstr ""
 
 #: src/info.c:484
 msgid "Stats:"
-msgstr ""
-
-#: src/info.c:517
-#, c-format
-msgid "%s average"
 msgstr ""
 
 #: src/info.c:519 src/land_shipyard.c:300 src/map_system.c:665
@@ -79451,10 +79411,6 @@ msgstr ""
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1226 src/map.c:302
-msgid "Faction:"
-msgstr ""
-
 #: src/land.c:1227
 msgid "Population:"
 msgstr ""
@@ -79778,10 +79734,6 @@ msgstr ""
 msgid "Planet:"
 msgstr ""
 
-#: src/load.c:421
-msgid "Credits:"
-msgstr ""
-
 #: src/load.c:423
 msgid "Ship Name:"
 msgstr ""
@@ -79898,10 +79850,6 @@ msgstr ""
 #: src/map.c:557
 #, c-format
 msgid "Multiple"
-msgstr ""
-
-#: src/map.c:694
-msgid "#gTrade Lane#0"
 msgstr ""
 
 #: src/map.c:704
@@ -81943,8 +81891,8 @@ msgstr ""
 msgid "Input"
 msgstr ""
 
-#: src/options.c:162
-msgid "Restart Naev for changes to take effect."
+#: src/options.c:162 src/options.c:1344
+msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
 #: src/options.c:223
@@ -82195,10 +82143,6 @@ msgstr ""
 
 #: src/options.c:1328
 msgid "Bigger icons"
-msgstr ""
-
-#: src/options.c:1344
-msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
 #: src/options.c:1374
