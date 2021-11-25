@@ -2,7 +2,7 @@
 <ssys name="New Haven">
  <general>
   <background>stellarwind</background>
-  <features>#bStellar Wind#0</features>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>28000.000000</radius>
   <stars>100</stars>
   <interference>33.333300</interference>
@@ -51,4 +51,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <stats>
+  <fuel_regen>1</fuel_regen>
+ </stats>
 </ssys>
