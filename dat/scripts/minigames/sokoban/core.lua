@@ -292,14 +292,12 @@ function sokoban.draw()
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
 
-   local x, y, h
+   local y, h
    if transition < 1 and prevlevel then
       local t = transition
-      x = t*lx + (1-t)*lxo
       y = t*ly + (1-t)*lyo
       h = (t*#level + (1-t)*#prevlevel) * cellSize
    else
-      x = lx
       y = ly
       h = #level*cellSize
    end
@@ -315,9 +313,9 @@ function sokoban.draw()
    lg.printf( subheader, 0, y+40, nw, "center" )
    y = y + headersize
 
-   drawLevel( x, y, level, transition )
+   drawLevel( lx, ly+headersize, level, transition )
    if transition < 1 and prevlevel then
-      drawLevel( x, y, prevlevel, 1-transition )
+      drawLevel( lxo, lyo+headersize, prevlevel, 1-transition )
    end
 
    setcol{ 1, 1, 1 }
