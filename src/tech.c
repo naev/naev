@@ -88,7 +88,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech
  */
 int tech_load (void)
 {
-   int i, ret, s;
+   int ret, s;
    char *buf;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
@@ -145,7 +145,7 @@ int tech_load (void)
          continue;
 
       /* Load next tech. */
-      for (i=0; i<s; i++) {
+      for (int i=0; i<s; i++) {
          tech  = &tech_groups[i];
          if (strcmp(tech->name, buf)==0)
             tech_parseNodeData( tech, node );

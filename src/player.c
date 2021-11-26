@@ -2193,7 +2193,7 @@ void player_screenshot (void)
 
    /* now proceed to take the screenshot */
    DEBUG( _("Taking screenshot [%03d]..."), screenshot_cur );
-   gl_screenshot(filename);
+   gl_screenshot( filename );
 }
 
 /**
@@ -2986,8 +2986,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 int player_save( xmlTextWriterPtr writer )
 {
    char **guis;
-   MissionData *m;
-   const char *ev;
    int cycles, periods, seconds;
    double rem;
 
@@ -3053,7 +3051,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (int i=0; i<array_size(missions_done); i++) {
-      m = mission_get(missions_done[i]);
+      MissionData *m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
    }
@@ -3062,7 +3060,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Events the player has done. */
    xmlw_startElem(writer, "events_done");
    for (int i=0; i<array_size(events_done); i++) {
-      ev = event_dataName(events_done[i]);
+      const char *ev = event_dataName(events_done[i]);
       if (ev != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", ev);
    }

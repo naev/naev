@@ -737,6 +737,7 @@ static int playerL_land( lua_State *L )
 {
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
+
    Planet *pnt = luaL_validplanet(L,1);
    const char *sysname = planet_getSystem( pnt->name );
    if (sysname == NULL)
@@ -781,12 +782,11 @@ static int playerL_land( lua_State *L )
  */
 static int playerL_allowLand( lua_State *L )
 {
-   int b;
-   const char *str;
-
    NLUA_CHECKRW(L);
 
-   str = NULL;
+   int b;
+   const char *str = NULL;
+
    if (lua_gettop(L) > 0) {
       b  = lua_toboolean(L,1);
       if (lua_isstring(L,2))
@@ -1043,14 +1043,11 @@ static int playerL_addOutfit( lua_State *L  )
  */
 static int playerL_rmOutfit( lua_State *L )
 {
-   const Outfit *o;
-   int q;
-
    NLUA_CHECKRW(L);
    NLUA_MIN_ARGS(1);
 
-   /* Get quantity. */
-   q = luaL_optinteger(L, 2, 1);
+   const Outfit *o;
+   int q = luaL_optinteger(L, 2, 1);
 
    /* Handle special case it's "all". */
    if (lua_isstring(L, 1)) {
@@ -1256,6 +1253,7 @@ static int playerL_evtDone( lua_State *L )
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
+ * @usage player.teleport( "Sol", true ) -- Teleports the player to SOL, but doesn't run any initial simulation
  *
  *    @luatparam System|Planet|string dest System or name of a system or planet or name of a planet to teleport the player to.
  *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
@@ -1265,7 +1263,7 @@ static int playerL_teleport( lua_State *L )
 {
    Planet *pnt;
    StarSystem *sys;
-   const char *name, *pntname, *sysname;
+   const char *name, *pntname;
    int no_simulate;
 
    NLUA_CHECKRW(L);
@@ -1278,7 +1276,6 @@ static int playerL_teleport( lua_State *L )
       NLUA_ERROR(L,_("Can not teleport the player while the comm is open!"));
    if (player_isBoarded())
       NLUA_ERROR(L,_("Can not teleport the player while they are boarded!"));
-
    pnt = NULL;
 
    /* Get a system. */
@@ -1297,6 +1294,7 @@ static int playerL_teleport( lua_State *L )
    }
    /* Get destination from string. */
    else if (lua_isstring(L,1)) {
+      const char *sysname;
       name = lua_tostring(L,1);
       sysname = system_existsCase( name );
       if (sysname == NULL) {
