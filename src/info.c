@@ -24,6 +24,7 @@
 #include "mission.h"
 #include "ndata.h"
 #include "nlua.h"
+#include "nlua_tk.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "pilot.h"
@@ -369,6 +370,7 @@ static void info_shipAI( unsigned int wid, const char *str )
 
    nlua_env shipai_env = nlua_newEnv( 1 );
    nlua_loadStandard( shipai_env );
+   nlua_loadTk( shipai_env );
 
    if (nlua_dobufenv(shipai_env, buf, bufsize, SHIPAI_PATH) != 0) {
       WARN( _("Error loading file: %s\n"

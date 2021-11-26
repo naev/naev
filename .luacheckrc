@@ -182,7 +182,7 @@ files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Backgrou
 files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/save_updater.lua"].std = "API_save_updater"
-files["dat/shipai.lua"].std = STANDARD .. "+API_shipai"
+files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
 
 -- No way to be sure what type of environment will load these.
