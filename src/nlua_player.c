@@ -478,13 +478,11 @@ static int playerL_fuel( lua_State *L )
  */
 static int playerL_refuel( lua_State *L )
 {
-   double f;
-
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    if (lua_gettop(L) > 0) {
-      f = luaL_checknumber(L,1);
+      double f = luaL_checknumber(L,1);
       player.p->fuel += f;
    }
    else

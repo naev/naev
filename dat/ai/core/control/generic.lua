@@ -819,6 +819,7 @@ function attacked( attacker )
    end
 end
 
+-- Default create function just runs create_post
 function create ()
    create_post()
 end
@@ -835,6 +836,14 @@ function create_post ()
    if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("idle_wait")
+   end
+
+   -- Just give some random fuel
+   if p ~= player.pilot() then
+      local ps = p:stats()
+      local f = (rnd.twosigma()/4 + 0.5)*(ps.fuel_max-ps.fuel_consumption)
+      f = f + ps.fuel_consumption
+      p:setFuel( f )
    end
 end
 
