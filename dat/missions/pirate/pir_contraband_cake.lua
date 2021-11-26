@@ -158,6 +158,8 @@ They chuckle.
 "Anyway, you did good work bringing it here. I'll get you your reward wired and if you're interested in doing new jobs look into the mission computers. I've white-listed you to act as a courier."]]))
    b(_([["Take care."
 As they lumber away, you suddenly notice that quite a few suspicious figures in the background disappear and follow them away. What have you gotten into?]]))
+   vn.sfxVictory()
+   vn.na( fmt.reward(mem.reward) )
    vn.run()
 
    player.pay(mem.reward)
