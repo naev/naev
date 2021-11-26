@@ -43,6 +43,7 @@
 #include "news.h"
 #include "nfile.h"
 #include "nlua_misn.h"
+#include "nlua_outfit.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -3338,10 +3339,12 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-   if (lua_isnumber(naevL,-1))
+   if (lua_type(naevL,-1) == LUA_TNUMBER)
       price = round( lua_tonumber(naevL,-1) );
-   else if (lua_isstring(naevL,-1))
+   else if (lua_type(naevL,-1) == LUA_TSTRING)
       o = outfit_get( lua_tostring(naevL,-1) );
+   else if (lua_isoutfit(naevL,-1))
+      o = lua_tooutfit(naevL,-1);
    lua_pop(naevL,1);
 
    /* No equivalent. */

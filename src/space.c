@@ -1970,7 +1970,7 @@ void planet_updateLand( Planet *p )
       p->land_msg = strdup( _("Invalid land message") );
    }
    /* Parse bribing. */
-   if (!p->can_land && lua_isnumber(naevL,-3)) {
+   if (!p->can_land && lua_type(naevL,-3) == LUA_TNUMBER) {
       p->bribe_price = lua_tonumber(naevL,-3);
       /* We need the bribe message. */
       if (lua_isstring(naevL,-2))
@@ -1987,7 +1987,7 @@ void planet_updateLand( Planet *p )
          p->bribe_ack_msg = strdup( _("Invalid bribe ack message") );
       }
    }
-   else if (lua_isstring(naevL,-3))
+   else if (lua_type(naevL,-3) == LUA_TSTRING)
       p->bribe_msg = strdup( lua_tostring(naevL,-3) );
    else if (!lua_isnil(naevL,-3))
       WARN( _("%s: %s (%s) -> return parameter 3 is not a number or string or nil!"), LANDING_DATA_PATH, str, p->name );

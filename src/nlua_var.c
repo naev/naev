@@ -347,7 +347,7 @@ static int varL_push( lua_State *L )
       var.type = MISN_VAR_TIME;
       var.d.time = luaL_validtime(L,2);
    }
-   else if (lua_isnumber(L,2)) {
+   else if (lua_type(L,2) == LUA_TNUMBER) {
       var.type = MISN_VAR_NUM;
       var.d.num = (double) lua_tonumber(L,2);
    }
@@ -355,7 +355,7 @@ static int varL_push( lua_State *L )
       var.type = MISN_VAR_BOOL;
       var.d.b = lua_toboolean(L,2);
    }
-   else if (lua_isstring(L,2)) {
+   else if (lua_type(L,2) == LUA_TSTRING) {
       var.type = MISN_VAR_STR;
       var.d.str = strdup( lua_tostring(L,2) );
    }
