@@ -327,6 +327,8 @@ jobs:
         if: ${{ matrix.releasetype == 'github' }}
         with:
           artifacts: "${{ github.workspace }}/build/dist/*.*"
+          artifactErrorsFailBuild: true
+          replacesArtifacts: false
           name: "Nightly Build"
           body: ${{ steps.changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
