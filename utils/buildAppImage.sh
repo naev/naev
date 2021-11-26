@@ -102,8 +102,7 @@ export OUTPUT="$BUILDPATH/dist/naev-$SUFFIX.AppImage"
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
 if [ ! -f "$linuxdeploy" ]; then
-    wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage \
-        -O "$linuxdeploy"
+    curl -L -o "$linuxdeploy" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
     chmod +x "$linuxdeploy"
 fi
 
