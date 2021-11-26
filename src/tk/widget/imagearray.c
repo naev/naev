@@ -138,7 +138,7 @@ static void iar_getDim( Widget* iar, double* w, double* h, double* xspace, doubl
  */
 static void iar_render( Widget* iar, double bx, double by )
 {
-   int i, j, k, pos;
+   int pos;
    double x,y, w,h, xcurs,ycurs, xspace,yspace;
    double scroll_pos;
    int xelem, yelem;
@@ -178,13 +178,13 @@ static void iar_render( Widget* iar, double bx, double by )
     * Main drawing loop.
     */
    gl_clipRect( x, y, iar->w, iar->h );
-   for (j=0; j<yelem; j++) {
+   for (int j=0; j<yelem; j++) {
       ycurs = floor(y + iar->h - (j+1)*(h+yspace) + iar->dat.iar.pos);
       /*  Skip rows that are wholly outside of the viewport. */
       if ((ycurs > y + iar->h) || (ycurs + h < y))
          continue;
 
-      for (i=0; i<xelem; i++) {
+      for (int i=0; i<xelem; i++) {
          xcurs = floor(x + i * w + (i+.5) * xspace);
 
          /* Get position. */
@@ -215,7 +215,7 @@ static void iar_render( Widget* iar, double bx, double by )
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* layers */
-         for (k=0; k<iar->dat.iar.images[pos].nlayers; k++)
+         for (int k=0; k<iar->dat.iar.images[pos].nlayers; k++)
             if (iar->dat.iar.images[pos].layers[k] != NULL)
                gl_renderScaleAspect( iar->dat.iar.images[pos].layers[k],
                      xcurs + 5., ycurs + gl_smallFont.h + 7.,
