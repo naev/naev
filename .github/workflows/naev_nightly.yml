@@ -303,7 +303,7 @@ jobs:
           title: "Nightly Build"
 
       - name: Build and Upload Github Release
-        if: ${{ matrix.releasetype == 'itch' }}
+        if: ${{ matrix.releasetype == 'github' }}
         run: |
           chmod -R +x build/staging/naev-github-deployment
           cp -r build/staging/naev-github-deployment/* "$(pwd)"
