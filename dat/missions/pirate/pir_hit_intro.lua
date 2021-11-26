@@ -8,7 +8,7 @@
   <priority>3</priority>
   <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket() or planet.cur():tags().criminal</cond>
   <chance>100</chance>
-  <location>Computer</location>
+  <location>Bar</location>
   <faction>Wild Ones</faction>
   <faction>Black Lotus</faction>
   <faction>Raven Clan</faction>
@@ -42,7 +42,6 @@ local hunter_hits = {}
 
 local target_faction = "Independent"
 local reward = 450e3
-mem.retpnt, mem.retsys = planet.cur()
 
 local givername = _("Shady Individual")
 mem.giverportrait = portrait.get()
@@ -66,7 +65,9 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys ) then misn.finish( false ) end
+   if not misn.claim( mem.missys ) then
+      misn.finish( false )
+   end
 
    mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 10 )
    if rnd.rnd() < 0.05 then
@@ -74,6 +75,7 @@ function create ()
    end
 
    mem.name = pilotname.generic()
+   mem.retpnt, mem.retsys = planet.cur()
 
    misn.setNPC( givername, mem.giverportrait, _("You see a shady individual who seems to be looking for pilots to do a mission for them. You're not entirely sure you want to associate with them though.") )
 end
@@ -91,7 +93,7 @@ function accept ()
       g(fmt.f(_([["You look like a decent pilot. I represent some clients, who value pilots who can get the job done with a bit of secrecy. You know what I mean? Getting the job done means making sure nothing gets in the way. My clients want a certain pilot by the name of {name} to be responsible for their actions. It's not very fair to ask for favours and not doing anything in return right?"]]),
          {name=mem.name}))
       g(fmt.f(_([["My clients want a pilot to go find {name} and get compensation for the damages caused. However, it is past the time that the problem can be solved by paying back the favour. {name} has to punished for their excesses in more drastic measures. Would you be willing to meet up with {name} and express my clients discontent with, say, the full brunt of hot plasma? You will well compensated."
-   They grin.]]),
+They grin.]]),
          {name=mem.name}))
       talked = true
    else
@@ -203,6 +205,7 @@ function pilot_death( _p, _attacker )
    mem.state = 2
    player.msg(fmt.f(_("Target eliminated! Return to {pnt} ({sys} system)."), {pnt=mem.retpnt,sys=mem.retsys}))
    misn.osdActive( 3 )
+   mem.marker = misn.markerMove( mem.marker, mem.retpnt )
 end
 
 function pilot_jump ()
@@ -227,7 +230,7 @@ function spawn_target( param )
    end
 
    misn.osdActive( 2 )
-   local target_ship = pilot.add( mem.pship, _target_faction, param, mem.name )
+   local target_ship = pilot.add( "Koala", _target_faction, param, mem.name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "attacked", "pilot_attacked" )
    hook.pilot( target_ship, "death", "pilot_death" )
@@ -265,10 +268,10 @@ function land ()
    g(_([["Good job out there. My clients are most pleased with the result. They would like to give you more job offers, here, I'll give you a secret key that will let you access more missions from the mission terminal computer when possible. It was a pleasure working with you."
 They grin and then fade into the shadows.]]))
    vn.sfxVictory()
-   vn.na( fmt.reward(mem.reward) )
+   vn.na( fmt.reward(reward) )
    vn.run()
 
-   player.pay( mem.credits )
+   player.pay( reward )
 
    pir.addMiscLog(_("You performed a 'hit' on a debt-ridden pilot for some unknown clients. They were satisfied with your job and this opened up more similar missions at the mission computer."))
 
