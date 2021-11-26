@@ -127,24 +127,24 @@ fi
 if [ "$DRYRUN" == "false" ]; then
     run_gh --version
     if [ "$NIGHTLY" == "true" ]; then
-        run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* -R "$REPONAME" --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* -R "$REPONAME" --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* -R "$REPONAME" --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* -R "$REPONAME" --clobber
+        run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
+        run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
+        run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
+        run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
 
     else
         if [ "$PRERELEASE" == "true" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* -R "$REPONAME" --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
 
         elif [ "$PRERELEASE" == "false" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* -R "$REPONAME" --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* -R "$REPONAME" --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* --clobber
+            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
 
         else
             echo "Something went wrong determining if this is a PRERELEASE or not."
