@@ -290,30 +290,22 @@ jobs:
         with:
           path: ${{ github.workspace }}/build/staging
 
-      - name: Build Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        run: |
-          BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"build/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-
-          mv build/staging/naev-linux-x86-64/*.AppImage build/dist/naev-$SUFFIX-linux-x86-64.AppImage
-          mv build/staging/naev-macos/*.zip build/dist/naev-$SUFFIX-macos.zip
-          mv build/staging/naev-win64/naev*.exe build/dist/naev-$SUFFIX-win64.exe
-          mv build/staging/naev-dist/source.tar.xz build/dist/naev-$SUFFIX-source.tar.xz
-
-          chmod +x build/dist/naev-$SUFFIX-linux-x86-64.AppImage
-
-      - name: Upload Github Release
+      - name: Create Github Release
         uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
         with:
-          artifacts: "build/dist/*.*"
-          artifactErrorsFailBuild: true
-          replacesArtifacts: false
           bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
+
+      - name: Build and Upload Github Release
+        if: ${{ matrix.releasetype == 'github' }}
+        run: |
+          chmod -R +x build/staging/naev-github-deployment
+          cp -r build/staging/naev-github-deployment/* "$(pwd)"
+          ./GHDeploy.sh -p -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "${{github.ref_name}}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
