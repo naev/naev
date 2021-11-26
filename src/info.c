@@ -70,6 +70,7 @@ static CstSlotWidget info_eq;
 static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
+static int selectedMission = 0;  /**< Current index in the missions list-box. */
 static int selectedLog = 0;
 static int selectedLogType = 0;
 static char **logTypes=NULL;
@@ -1142,6 +1143,7 @@ static void mission_menu_genList( unsigned int wid, int first )
 
    /* list */
    misn_names = malloc(sizeof(char*) * MISSION_MAX);
+   selectedMission = -1;
    j = 0;
    for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->id != 0)
@@ -1149,12 +1151,15 @@ static void mission_menu_genList( unsigned int wid, int first )
                strdup(player_missions[i]->title) : NULL;
 
    if (j==0) { /* no missions */
-      misn_names[0] = strdup(_("No Missions"));
-      j = 1;
+      misn_names[j++] = strdup(_("No Missions"));
+      window_modifyText( wid, "txtReward", _("None") );
+      window_modifyText( wid, "txtDesc", _("You currently have no active missions.") );
+      window_disableButton( wid, "btnAbortMission" );
+      selectedMission = 0; /* misn_menu_update should do nothing. */
    }
    window_addList( wid, 20, -40,
          300, h-340,
-         "lstMission", misn_names, j, 0, mission_menu_update, NULL );
+         "lstMission", misn_names, j, selectedMission, mission_menu_update, NULL );
 }
 /**
  * @brief Updates the mission menu mission information based on what's selected.
@@ -1163,21 +1168,16 @@ static void mission_menu_genList( unsigned int wid, int first )
 static void mission_menu_update( unsigned int wid, const char *str )
 {
    (void)str;
-   const char *active_misn;
    Mission* misn;
    const StarSystem *sys;
+   int pos = toolkit_getListPos(wid, "lstMission" );
 
-   active_misn = toolkit_getList( wid, "lstMission" );
-   if ((active_misn==NULL) || (strcmp(active_misn,_("No Missions"))==0)) {
-      window_modifyText( wid, "txtReward", _("None") );
-      window_modifyText( wid, "txtDesc",
-            _("You currently have no active missions.") );
-      window_disableButton( wid, "btnAbortMission" );
+   if (pos < 0 || pos == selectedMission)
       return;
-   }
 
    /* Modify the text. */
-   misn = player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
+   selectedMission = pos;
+   misn = player_missions[selectedMission];
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAbortMission" );
