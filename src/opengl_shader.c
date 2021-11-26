@@ -170,14 +170,14 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
    /* Check for compile error */
    glGetShaderiv(shader, GL_COMPILE_STATUS, &compile_status);
    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-   //if (GL_COMPILE_STATUS == GL_FALSE) {
    if (log_length > 0) {
       char *log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
       print_with_line_numbers( buf );
-      WARN("%s\n%s\n", filename, log);
+      WARN("compile_status=%d: %s\n%s\n", compile_status, filename, log);
       free(log);
-      shader = 0;
+      if (compile_status == GL_FALSE)
+         shader = 0;
    }
    gl_checkErr();
    return shader;
@@ -198,15 +198,15 @@ static int gl_program_link( GLuint program )
    /* Check for linking error */
    glGetProgramiv(program, GL_LINK_STATUS, &link_status);
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
-   //if (link_status == GL_FALSE) {
    if (log_length > 0) {
       char *log;
       glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
-      WARN("%s\n", log);
+      WARN("link_status==%d: %s\n", link_status, log);
       free(log);
-      return -1;
+      if (link_status == GL_FALSE)
+         return -1;
    }
 
    return 0;
