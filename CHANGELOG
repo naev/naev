@@ -84,7 +84,7 @@
       * Added card games
       * Added dynamic factions
       * Added dynamic commodities
-      * Lua support for advanced sound effectss
+      * Lua support for advanced sound effects
       * Most markers and indicators use signed distance functions now
       * Internally using linear colourspace
       * Lots of optimization
