@@ -40,6 +40,7 @@
   <its:translateRule selector="/outfit/general/typename" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
   <its:translateRule selector="/outfit/general/desc_extra" translate="yes"/>
+  <its:translateRule selector="/outfit/specific/provides" translate="yes"/>
 
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>

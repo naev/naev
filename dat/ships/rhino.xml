@@ -14,7 +14,7 @@
  <trail_generator x="-35" y="-4" h="0" always_under="1" />
  <trail_generator x="-35" y="0" h="5">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
- <license>Large Civilian Vessel License</license>
+ <license>Large Civilian Vessel</license>
  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
  <health>
   <armour>450</armour>

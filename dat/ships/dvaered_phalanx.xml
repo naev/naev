@@ -14,7 +14,7 @@
  <trail_generator x="-12" y="40" h="0">nebula</trail_generator>
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>This military grade version of the Phalanx has slightly stronger armour compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>
  <health>
   <armour>220</armour>

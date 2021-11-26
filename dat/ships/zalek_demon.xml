@@ -14,7 +14,7 @@
  <trail_generator x="-30" y="8" h="0">zalek</trail_generator>
  <trail_generator x="-30" y="-8" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
  <health>
   <armour>400</armour>

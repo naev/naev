@@ -16,7 +16,7 @@
  <trail_generator x="-21" y="10" h="-10" always_under="1">nebula</trail_generator>
  <trail_generator x="-21" y="-10" h="-10" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
- <license>Heavy Combat Vessel License</license>
+ <license>Heavy Combat Vessel</license>
  <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
  <health>
   <armour>1400</armour>

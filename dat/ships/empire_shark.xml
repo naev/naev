@@ -15,7 +15,7 @@
  <trail_generator x="-15" y="-7" h="7" />
  <trail_generator x="-15" y="0" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
- <license>Light Combat Vessel License</license>
+ <license>Light Combat Vessel</license>
  <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, shields, and heat dissipation. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>
  <health>
   <armour>40</armour>

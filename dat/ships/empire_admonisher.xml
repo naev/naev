@@ -16,7 +16,7 @@
  <trail_generator x="-20" y="5" h="-5" always_under="1" />
  <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <armour>240</armour>

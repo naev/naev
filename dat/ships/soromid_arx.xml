@@ -18,7 +18,7 @@
  <trail_generator x="0" y="15" h="-15">nebula</trail_generator>
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
- <license>Heavy Combat Vessel License</license>
+ <license>Heavy Combat Vessel</license>
  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it to carry more ships per slot, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>
   <armour>1300</armour>

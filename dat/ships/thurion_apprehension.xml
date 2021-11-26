@@ -15,7 +15,7 @@
  <trail_generator x="-20" y="-20" h="10">nebula</trail_generator>
  <trail_generator x="-20" y="20" h="10">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>...</description>
  <health>
   <armour>550</armour>

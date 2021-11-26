@@ -15,7 +15,7 @@
  <trail_generator x="-20" y="5" h="-5" always_under="1" />
  <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
  <health>
   <armour>220</armour>

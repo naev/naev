@@ -16,7 +16,7 @@
  <trail_generator x="-13" y="25" h="-5">nebula</trail_generator>
  <trail_generator x="-11" y="11" h="8">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
  <health>
   <armour>300</armour>

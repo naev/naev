@@ -18,7 +18,7 @@
  <trail_generator x="-44" y="19" h="-2" always_under="1">nebula</trail_generator>
  <trail_generator x="-44" y="-19" h="-2" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
- <license>Large Civilian Vessel License</license>
+ <license>Large Civilian Vessel</license>
  <description>The Rainmaker is the largest freighter used by the Empire. It is capable of transporting extensive amounts of material through dangerous territory as small groups of pirates are no threat due to its heavy armour. The name is derived from a series of events when, shortly after the incident, they were used to deliver supplies to starving cut-of worlds by doing low atmospheric flybys while opening the cargo holds, resulting in a literal rain of supplies. After the events an EE-1891-392 official ship rename form was approved and Rainmaker became the official ship name.</description>
  <health>
   <armour>900</armour>
