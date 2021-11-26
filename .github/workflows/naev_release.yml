@@ -371,6 +371,8 @@ jobs:
         if: ${{ matrix.releasetype == 'github' }}
         with:
           artifacts: "build/dist/*.*"
+          artifactErrorsFailBuild: true
+          replacesArtifacts: false
           bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
