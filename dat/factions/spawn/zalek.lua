@@ -8,6 +8,7 @@ local ssting      = ship.get("Za'lek Sting")
 local sdemon      = ship.get("Za'lek Demon")
 local smephisto   = ship.get("Za'lek Mephisto")
 local sdiablo     = ship.get("Za'lek Diablo")
+local smammon     = ship.get("Za'lek Mammon")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol( pilots )
@@ -68,7 +69,9 @@ local function spawn_capship ()
    local r = rnd.rnd()
 
    -- Generate the capship
-   if r < 0.5 then
+   if r < 0.1 then
+      scom.addPilot( pilots, smammon )
+   elseif r < 0.55 then
       scom.addPilot( pilots, smephisto )
    else
       scom.addPilot( pilots, sdiablo )
