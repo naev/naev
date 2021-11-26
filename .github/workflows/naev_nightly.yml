@@ -276,28 +276,6 @@ jobs:
         uses: actions/checkout@v2
         if: ${{ matrix.releasetype == 'github' }}
 
-      - name: Generate commit changelog
-        uses: Bullrich/generate-release-changelog@2.0.1
-        if: ${{ matrix.releasetype == 'github' }}
-        id: changelog
-        env:
-          REPO: ${{ github.repository }}
-
-      - name: Delete old nightly tag and release.
-        uses: dev-drprasad/delete-tag-and-release@v0.1.2
-        if: ${{ matrix.releasetype == 'github' }}
-        with:
-          delete_release: true
-          tag_name: nightly
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create 'nightly' tag
-        uses: EndBug/latest-tag@latest
-        if: ${{ matrix.releasetype == 'github' }}
-        with:
-          tag-name: nightly
-
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
@@ -322,16 +300,16 @@ jobs:
 
           chmod +x build/dist/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.8.6
+      - name: "Upload 'nightly' Release"
         if: ${{ matrix.releasetype == 'github' }}
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          artifacts: "${{ github.workspace }}/build/dist/*.*"
-          name: "Nightly Build"
-          body: ${{ steps.changelog.outputs.changelog }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "nightly"
           prerelease: true
-          tag: "nightly"
+          title: "Nightly build"
+          files: |
+            ${{ github.workspace }}/build/dist/*.*
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
