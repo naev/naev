@@ -3,8 +3,6 @@
 # STEAM DEPLOYMENT SCRIPT FOR NAEV
 # Requires SteamCMD to be installed within a Github Actions ubuntu-latest runner.
 #
-# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
-#
 # This script should be run after downloading all build artefacts
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam

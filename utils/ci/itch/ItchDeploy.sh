@@ -2,8 +2,6 @@
 
 # ITCHIO DEPLOYMENT SCRIPT FOR NAEV
 #
-# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
-#
 # This script should be run after downloading all build artefacts
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Itch.io
