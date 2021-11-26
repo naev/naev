@@ -617,7 +617,6 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    return d;
 }
 
-
 /**
  * @brief Gets the feature nearest to directly ahead of a position in the system.
  *
@@ -1684,7 +1683,6 @@ void debris_init( Debris *deb )
    deb->height = 0.8 + RNGF()*0.4;
 }
 
-
 /**
  * @brief Creates a new planet.
  */
@@ -2484,7 +2482,6 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
    return 1;
 }
 
-
 /**
  * @brief Removes a jump point from a star system.
  *
@@ -2527,7 +2524,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    return 0;
 }
 
-
 /**
  * @brief Initializes a new star system with null memory.
  */
@@ -2542,7 +2538,6 @@ static void system_init( StarSystem *sys )
    sys->astexclude= array_create( AsteroidExclusion );
    sys->faction   = -1;
 }
-
 
 /**
  * @brief Creates a new star system.
@@ -2626,7 +2621,6 @@ void systems_reconstructJumps (void)
    }
 }
 
-
 /**
  * @brief Updates the system planet pointers.
  */
@@ -2639,7 +2633,6 @@ void systems_reconstructPlanets (void)
    }
 }
 
-
 /**
  * @brief Creates a system from an XML node.
  *
@@ -2649,8 +2642,7 @@ void systems_reconstructPlanets (void)
  */
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
-   xmlNodePtr cur, node;
-   char *tmp;
+   xmlNodePtr node;
    uint32_t flags;
 
    /* Clear memory for safe defaults. */
@@ -2667,7 +2659,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"pos")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
@@ -2681,7 +2673,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"general")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             xmlr_strd( cur, "background", sys->background );
@@ -2709,7 +2701,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       }
       /* Loads all the assets. */
       else if (xml_isNode(node,"assets")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"asset")) {
@@ -2726,7 +2718,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "stats")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             ShipStatList *ll = ss_listFromXML( cur );
@@ -2741,12 +2733,12 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "tags")) {
+         xmlNodePtr cur = node->children;
          sys->tags = array_create( char* );
-         cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               tmp = xml_get(cur);
+               char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &sys->tags, strdup(tmp) );
             }
@@ -2779,7 +2771,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Compares two system presences.
  */
@@ -2804,7 +2795,6 @@ static int sys_cmpSysFaction( const void *a, const void *b )
 
    return 0;
 }
-
 
 /**
  * @brief Sets the system faction based on the planets it has.
@@ -2831,7 +2821,6 @@ void system_setFaction( StarSystem *sys )
       }
    }
 }
-
 
 /**
  * @brief Parses a single jump point for a system, from unidiff.
@@ -2904,7 +2893,6 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
 
    return 0;
 }
-
 
 /**
  * @brief Parses a single jump point for a system.
@@ -2991,7 +2979,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    return 0;
 }
 
-
 /**
  * @brief Loads the jumps into a system.
  *
@@ -3031,7 +3018,6 @@ static void system_parseJumps( const xmlNodePtr parent )
 
    array_shrink( &sys->jumps );
 }
-
 
 /**
  * @brief Parses a single asteroid field for a system.
@@ -3122,7 +3108,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    return 0;
 }
 
-
 /**
  * @brief Parses a single asteroid exclusion zone for a system.
  *
@@ -3172,7 +3157,6 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    return 0;
 }
 
-
 /**
  * @brief Loads the asteroid anchor into a system.
  *
@@ -3200,7 +3184,6 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
    array_shrink( &sys->asteroids );
    array_shrink( &sys->astexclude );
 }
-
 
 /**
  * @brief Loads the entire universe into ram - pretty big feat eh?
@@ -3285,7 +3268,6 @@ int space_load (void)
 
    return 0;
 }
-
 
 /**
  * @brief Loads the asteroids types.
@@ -3376,7 +3358,6 @@ static int asteroidTypes_load (void)
    return 0;
 }
 
-
 /**
  * @brief Loads the entire systems, needs to be called after planets_load.
  *
@@ -3465,7 +3446,6 @@ static int systems_load (void)
    return 0;
 }
 
-
 /**
  * @brief Renders the system.
  *
@@ -3481,7 +3461,6 @@ void space_render( const double dt )
    else
       background_render(dt);
 }
-
 
 /**
  * @brief Renders the system overlay.
@@ -3519,7 +3498,6 @@ void space_renderOverlay( const double dt )
          !menu_isOpen( MENU_MAIN ))
       nebu_renderOverlay(dt);
 }
-
 
 /**
  * @brief Renders the current systemsplanets.
@@ -3567,7 +3545,6 @@ void planets_render (void)
 
 }
 
-
 /**
  * @brief Renders a jump point.
  */
@@ -3595,7 +3572,6 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
    }
 }
 
-
 /**
  * @brief Renders a planet.
  */
@@ -3603,7 +3579,6 @@ static void space_renderPlanet( const Planet *p )
 {
    gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
-
 
 /**
  * @brief Renders an asteroid.
@@ -3642,7 +3617,6 @@ static void space_renderAsteroid( const Asteroid *a )
    }
 }
 
-
 /**
  * @brief Renders a debris.
  */
@@ -3662,7 +3636,6 @@ static void space_renderDebris( const Debris *d, double x, double y )
                                      testVect->x, testVect->y, scale, scale, 0, 0, &cInert );
    free(testVect);
 }
-
 
 /**
  * @brief Cleans up the system.
@@ -3784,7 +3757,6 @@ void space_exit (void)
    landing_env = LUA_NOREF;
 }
 
-
 /**
  * @brief Clears all system knowledge.
  */
@@ -3800,7 +3772,6 @@ void space_clearKnown (void)
    for (int j=0; j<array_size(planet_stack); j++)
       planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
 }
-
 
 /**
  * @brief Clears all system markers.
@@ -3821,7 +3792,6 @@ void space_clearMarkers (void)
       pnt->markers = 0;
    }
 }
-
 
 /**
  * @brief Clears all the system computer markers.
@@ -3917,7 +3887,6 @@ int space_addMarker( int objid, MissionMarkerType type )
    return 0;
 }
 
-
 static int space_rmMarkerSystem( int sys, MissionMarkerType type )
 {
    StarSystem *ssys;
@@ -4003,7 +3972,6 @@ int space_rmMarker( int objid, MissionMarkerType type )
    }
 }
 
-
 /**
  * @brief Saves what is needed to be saved for space.
  *
@@ -4045,7 +4013,6 @@ int space_sysSave( xmlTextWriterPtr writer )
 
    return 0;
 }
-
 
 /**
  * @brief Loads player's space properties from an XML node.
@@ -4143,7 +4110,6 @@ static int getPresenceIndex( StarSystem *sys, int faction )
 
    return n;
 }
-
 
 /**
  * @brief Adds (or removes) some presence to a system.
@@ -4271,7 +4237,6 @@ sys_cleanup:
    return;
 }
 
-
 /**
  * @brief Get the presence of a faction in a system.
  *
@@ -4298,7 +4263,6 @@ double system_getPresence( const StarSystem *sys, int faction )
    /* If it's not in there, it's zero. */
    return 0.;
 }
-
 
 /**
  * @brief Get the presence of a faction in a system.
@@ -4334,7 +4298,6 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
    return 0.;
 }
 
-
 /**
  * @brief Go through all the assets and call system_addPresence().
  *
@@ -4359,7 +4322,6 @@ void system_addAllPlanetsPresence( StarSystem *sys )
       for (int j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
          system_presenceAddAsset(sys, &sys->assets_virtual[i]->presences[j] );
 }
-
 
 /**
  * @brief Reset the presence of all systems.
@@ -4389,7 +4351,6 @@ void space_reconstructPresences( void )
       system_scheduler( 0., 1 );
 }
 
-
 /**
  * @brief See if the position is in an asteroid field.
  *
@@ -4415,7 +4376,6 @@ int space_isInField( const Vector2d *p )
    return -1;
 }
 
-
 /**
  * @brief Returns the asteroid type corresponding to an ID
  *
@@ -4426,7 +4386,6 @@ const AsteroidType *space_getType ( int ID )
 {
    return &asteroid_types[ ID ];
 }
-
 
 /**
  * @brief Hits an asteroid.
@@ -4445,7 +4404,6 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
       a->timer = 0.;
    }
 }
-
 
 /**
  * @brief Makes an asteroid explode.
@@ -4498,7 +4456,6 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
    asteroid_init( a, field );
 }
 
-
 /**
  * @brief See if the system has a planet or station.
  *
@@ -4519,7 +4476,6 @@ int system_hasPlanet( const StarSystem *sys )
 
    return 0;
 }
-
 
 /**
  * @brief Removes active presence.
@@ -4570,7 +4526,6 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    lua_pop(naevL,1);
 }
 
-
 /**
  * @brief Cues a planet to be landed on. This is not done immediately, but when
  * the engine thinks it is ok to do.
@@ -4581,7 +4536,6 @@ void space_queueLand( Planet *pnt )
 {
    space_landQueuePlanet = pnt;
 }
-
 
 /**
  * @brief Gets the population in an approximated string. Note this function changes the string value each call, so be careful!
