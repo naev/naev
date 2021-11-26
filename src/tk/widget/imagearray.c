@@ -203,7 +203,7 @@ static void iar_render( Widget* iar, double bx, double by )
             fontcolour = &cFontWhite;
             bgcolour = &iar->dat.iar.images[pos].bg;
             if (bgcolour->a <= 0.)
-               bgcolour = toolkit_col;
+               bgcolour = toolkit_colDark;
          }
          /* Draw background. */
          toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
