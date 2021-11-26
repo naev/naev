@@ -20,9 +20,10 @@ foreach arg: ['-Wextra', '-Wshadow']
 endforeach
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
-python = import('python')
-pyyaml = python.find_installation('python3', modules: ['yaml'], required: true) 
-mutagen = python.find_installation('python3', modules: ['mutagen'], required: false) 
+python_module = import('python')
+python = python_module.find_installation('python3', required: true)
+pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true) 
+mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false) 
 
 cc = meson.get_compiler('c')
 subdir('utils')
@@ -296,17 +297,17 @@ if buildExec.disabled() == false
       naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
-   gen_shaders = find_program('src/shaders_c_gen.py')
    shaders_source = custom_target(
       'generate_shaders',
-      command: gen_shaders,
+      command: [python, '@INPUT@'],
+      input: 'src/shaders_c_gen.py',
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
    naev_source += shaders_source
-   gen_colours = find_program('src/shaders_c_gen.py')
    colours_source = custom_target(
       'generate_colours',
-      command: gen_colours,
+      command: [python, '@INPUT@'],
+      input: 'src/colours_c_gen.py',
       output: ['colours.gen.c', 'colours.gen.h']
    )
    naev_source += colours_source
