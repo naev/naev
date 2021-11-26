@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Pirate Empire Patrol Bounty">
+<mission name="Pirate Hit">
  <avail>
   <priority>3</priority>
   <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket()</cond>
@@ -21,11 +21,7 @@
 --]]
 --[[
 
-   Pirate Empire bounty
-
-   Based on the pirate bounty mission (hence the weird terminology in
-   many variable names). Replacement for the old "Pirate Empire bounty"
-   mission.
+   Pirate Hit
 
    Unlike Pirate bounties, this mission is kill-only. A nice side-effect
    of that is that you can plunder your target before killing them if
@@ -130,8 +126,8 @@ function create ()
 
    local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
    if not pir.factionIsPirate( planet.cur():faction() ) then
-      -- We're not on a pirate stronghold, so include a warning that the
-      -- mission is in fact illegal (for new players).
+      -- We're not on a pirate stronghold, so include a clear warning that the
+      -- mission is in fact illegal.
       mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
    end
    misn.setDesc( mdesc )

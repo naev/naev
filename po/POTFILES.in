@@ -2524,13 +2524,13 @@ dat/missions/neutral/spacefamily.lua
 dat/missions/neutral/teenager.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/pirate/blackcat.lua
-dat/missions/pirate/empbounty_dead.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
 dat/missions/pirate/patrol.lua
 dat/missions/pirate/pir_clan_cargo.lua
 dat/missions/pirate/pir_contraband.lua
 dat/missions/pirate/pir_contraband_cake.lua
+dat/missions/pirate/pir_hit.lua
 dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
 dat/missions/pirate/raid.lua
