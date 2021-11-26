@@ -359,6 +359,7 @@
   <item>Mule</item>
   <item>Empire Rainmaker</item>
   <item>Dvaered Arsenal</item>
+  <item>Za'lek Mammon</item>
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
@@ -900,6 +901,7 @@
   <item>Za'lek Demon</item>
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
+  <item>Za'lek Mammon</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
