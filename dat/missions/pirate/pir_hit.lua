@@ -3,7 +3,6 @@
 <mission name="Pirate Hit">
  <avail>
   <priority>3</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket()</cond>
   <chance>1260</chance>
   <location>Computer</location>
   <faction>Wild Ones</faction>
@@ -13,6 +12,7 @@
   <faction>Pirate</faction>
   <faction>Independent</faction>
   <faction>FLF</faction>
+  <done>Pirate Hit Intro</done>
  </avail>
  <notes>
   <tier>3</tier>
@@ -20,13 +20,11 @@
 </mission>
 --]]
 --[[
-
    Pirate Hit
 
    Unlike Pirate bounties, this mission is kill-only. A nice side-effect
    of that is that you can plunder your target before killing them if
    you manage to board them. >:)
-
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
