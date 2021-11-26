@@ -54,7 +54,7 @@ function create ()
    tk.msg(_("Shipwrecked space family"), fmt.f(_([[Harrus is about to launch into another anecdote about his existence as a trader, but you manage to forestall him. You soon learn that his family's lifestyle has come to an abrupt change at the hands of a minor gang of pirates. Though the {plt} had some weaponry and shielding systems, the attackers were too much for a single cargo ship.
     "I never thought it would end like this," Harrus sighs. "I mean, I knew space was dangerous, but I stayed clear of the unsafe areas. Stuck to the patrolled lanes. Didn't take any risks. I've got a family, you know."
     Then Harrus brightens up, apparently putting his recent misfortune behind him in the blink of an eye. "Everything's going to be fine now," he says cheerfully. "We've been rescued, and all we need now is for you to take us to a suitable world where we can build a new life."
-    Without further ado, and without so much as formally asking for the favour, Harrus and his family proceed onto your ship and install themselves into your living quarters. They do not seem about to leave.]]), _("August")))
+    Without further ado, and without so much as formally asking for the favour, Harrus and his family proceed onto your ship and install themselves into your living quarters. They do not seem about to leave.]]), {plt=_("August")}))
 
    local c = misn.cargoNew( N_("Space Family"), N_("A family who you rescued in space.") )
    mem.carg_id = misn.cargoAdd( c, 0 )
