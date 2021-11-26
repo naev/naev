@@ -1879,6 +1879,10 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
       }
    }
 
+   /* Look for default actions (press button, confirm, exit). These should not be repeats. */
+   if (input_key == 0 || event->key.repeat)
+      return ret;
+
    /* Handle button hotkeys. */
    for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
       if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
