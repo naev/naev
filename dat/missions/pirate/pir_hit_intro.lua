@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket() or planet.cur():tags().criminal</cond>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket() or planet.cur():tags().criminal ~= nil</cond>
   <chance>100</chance>
   <location>Bar</location>
   <faction>Wild Ones</faction>
