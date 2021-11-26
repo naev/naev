@@ -19,6 +19,11 @@ foreach arg: ['-Wextra', '-Wshadow']
    endif
 endforeach
 
+# Python module checks (For AUTHORS generation and soundtrack generation)
+python = import('python')
+pyyaml = python.find_installation('python3', modules: ['yaml'], required: true) 
+mutagen = python.find_installation('python3', modules: ['mutagen'], required: false) 
+
 cc = meson.get_compiler('c')
 subdir('utils')
 
@@ -291,17 +296,17 @@ if buildExec.disabled() == false
       naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
+   gen_shaders = find_program('src/shaders_c_gen.py')
    shaders_source = custom_target(
       'generate_shaders',
-      command: ['python3', '@INPUT@'],
-      input: 'src/shaders_c_gen.py',
+      command: gen_shaders,
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
    naev_source += shaders_source
+   gen_colours = find_program('src/shaders_c_gen.py')
    colours_source = custom_target(
       'generate_colours',
-      command: ['python3', '@INPUT@'],
-      input: 'src/colours_c_gen.py',
+      command: gen_colours,
       output: ['colours.gen.c', 'colours.gen.h']
    )
    naev_source += colours_source
@@ -400,17 +405,19 @@ endif
 ####
 # Soundtrack
 ####
-soundtrackpy = find_program('utils/soundtrack.py')
-custom_target(
-   'soundtrack',
-   command: [
-      soundtrackpy,
-      '--csv', 'yes',
-      '--source-dir', meson.source_root(),
-      '--output', '@OUTPUT0@'
-   ],
-   output: [
-      'naev-' + meson.project_version() + '-soundtrack.zip',
-      'naev-' + meson.project_version() + '-soundtrack.csv'
-   ]
-)
+if (mutagen.found())
+   soundtrackpy = find_program('utils/soundtrack.py')
+   custom_target(
+      'soundtrack',
+      command: [
+         soundtrackpy,
+         '--csv', 'yes',
+         '--source-dir', meson.source_root(),
+         '--output', '@OUTPUT0@'
+      ],
+      output: [
+         'naev-' + meson.project_version() + '-soundtrack.zip',
+         'naev-' + meson.project_version() + '-soundtrack.csv'
+      ]
+   )
+endif
