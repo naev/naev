@@ -1,10 +1,9 @@
 --[[
-   Handles the Ship AI (tutorial-ish?) being triggered from the ifo menu
+   Handles the Ship AI (tutorial-ish?) being triggered from the info menu
 --]]
 local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
-local tk  = require "tk"
 
 -- Functions:
 local advice
