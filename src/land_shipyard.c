@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file land_shipyard.c
  *
  * @brief Handles the shipyard at land.
  */
-
-
 /** @cond */
 #include <assert.h>
 #include <math.h>
@@ -32,10 +29,8 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256
-
 
 /*
  * Vars.
@@ -43,7 +38,6 @@
 static Ship **shipyard_list = NULL; /**< Array (array.h): Available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 static glTexture *shipyard_comm = NULL; /**< Current comm image. */
-
 
 /*
  * Helper functions.
@@ -55,13 +49,11 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
 static void shipyard_find( unsigned int wid, const char* str );
 
-
 /**
  * @brief Opens the shipyard window.
  */
 void shipyard_open( unsigned int wid )
 {
-   int i;
    ImageArrayCell *cships;
    int nships;
    int w, h, sw, sh;
@@ -135,7 +127,7 @@ void shipyard_open( unsigned int wid )
       nships    = 1;
    }
    else {
-      for (i=0; i<nships; i++) {
+      for (int i=0; i<nships; i++) {
          cships[i].caption = strdup( _(shipyard_list[i]->name) );
          cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
          cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, &cships[i].nlayers );
@@ -226,7 +218,6 @@ void shipyard_update( unsigned int wid, const char* str )
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
-
 
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _(ship->name) );
@@ -339,7 +330,6 @@ void shipyard_update( unsigned int wid, const char* str )
       window_enableButton( wid, "btnTradeShip");
 }
 
-
 /**
  * @brief Cleans up shipyard data.
  */
@@ -352,7 +342,6 @@ void shipyard_cleanup (void)
    shipyard_comm = NULL;
 }
 
-
 /**
  * @brief Starts the map find with ship search selected.
  *    @param wid Window buying outfit from.
@@ -364,7 +353,6 @@ static void shipyard_find( unsigned int wid, const char* str )
    map_inputFindType(wid, "ship");
 }
 
-
 /**
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
@@ -374,7 +362,6 @@ static void shipyard_rmouse( unsigned int wid, const char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
-
 
 /**
  * @brief Player attempts to buy a ship.
@@ -433,9 +420,7 @@ int shipyard_canBuy( const char *shipname, Planet *planet )
 {
    const Ship* ship = ship_get( shipname );
    int failure = 0;
-   credits_t price;
-
-   price = ship_buyPrice(ship);
+   credits_t price = ship_buyPrice(ship);
 
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
@@ -475,10 +460,9 @@ int can_swap( const char *shipname )
 {
    int failure = 0;
    const Ship* ship = ship_get( shipname );
-   double diff;
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
+      double diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
       land_errDialogueBuild( n_(
                "You have %g tonne more cargo than the new ship can hold.",
                "You have %g tonnes more cargo than the new ship can hold.",
@@ -492,7 +476,6 @@ int can_swap( const char *shipname )
    }
    return !failure;
 }
-
 
 /**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
@@ -523,7 +506,6 @@ int shipyard_canTrade( const char *shipname )
       failure = 1;
    return !failure;
 }
-
 
 /**
  * @brief Player attempts to buy a ship, trading the current ship in.
@@ -591,7 +573,6 @@ static void shipyard_trade( unsigned int wid, const char* str )
    shipyard_update(wid, NULL);
 }
 
-
 /**
  * @brief Custom widget render function for the slot widget.
  */
@@ -628,16 +609,13 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
-
 /**
  * @brief Renders a row of ship slots.
  */
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s )
 {
    (void) bw;
-   int i;
    double x;
-   const glColour *c;
 
    x = bx;
 
@@ -645,8 +623,8 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
-   for (i=0; i<array_size(s); i++) {
-      c = outfit_slotSizeColour( &s[i].slot );
+   for (int i=0; i<array_size(s); i++) {
+      const glColour *c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;
 
