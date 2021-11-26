@@ -11,34 +11,34 @@ local choose_weapset, clean_task, gen_distress, gen_distress_attacked, handle_me
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
-mem.atk_changetarget  = 2 -- Distance at which target changes
-mem.atk_approach      = 1.4 -- Distance that marks approach
-mem.atk_aim           = 1.0 -- Distance that marks aim
-mem.atk_board         = false -- Whether or not to board the target
-mem.atk_kill          = true -- Whether or not to finish off the target
-mem.atk_minammo       = 0.1 -- Percent of ammo necessary to do ranged attacks
-mem.ranged_ammo       = 0 -- How much ammo is left, we initialize to 0 here just in case
-mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
-mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
-mem.enemyclose     = nil -- Distance at which an enemy is considered close
-mem.armour_run     = -1 -- At which damage to run at
-mem.armour_return  = 0 -- At which armour to return to combat
-mem.shield_run     = -1 -- At which shield to run
-mem.shield_return  = 0 -- At which shield to return to combat
-mem.aggressive     = false -- Should pilot actively attack enemies?
-mem.defensive      = true -- Should pilot defend itself
-mem.whiteknight    = false -- Should the AI help out independent ships duking it out?
-mem.cooldown       = false -- Whether the pilot is currently cooling down.
-mem.heatthreshold  = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
-mem.safe_distance  = 8000 -- Safe distance from enemies to stop running away
+mem.atk_changetarget = 2 -- Distance at which target changes
+mem.atk_approach  = 1.4 -- Distance that marks approach
+mem.atk_aim       = 1.0 -- Distance that marks aim
+mem.atk_board     = false -- Whether or not to board the target
+mem.atk_kill      = true -- Whether or not to finish off the target
+mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
+mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
+mem.aggressive    = true --whether to take the more aggressive or more evasive option when given
+mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
+mem.enemyclose    = nil -- Distance at which an enemy is considered close
+mem.armour_run    = -1 -- At which damage to run at
+mem.armour_return = 0 -- At which armour to return to combat
+mem.shield_run    = -1 -- At which shield to run
+mem.shield_return = 0 -- At which shield to return to combat
+mem.aggressive    = false -- Should pilot actively attack enemies?
+mem.defensive     = true -- Should pilot defend itself
+mem.whiteknight   = false -- Should the AI help out independent ships duking it out?
+mem.cooldown      = false -- Whether the pilot is currently cooling down.
+mem.heatthreshold = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
+mem.safe_distance = 8000 -- Safe distance from enemies to stop running away
 mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
-mem.land_planet    = true -- Should land on planets?
-mem.land_friendly  = false -- Only land on friendly planets?
-mem.distress       = true -- AI distresses
-mem.distressrate   = 3 -- Number of ticks before calling for help
-mem.distressmsg    = nil -- Message when calling for help
+mem.land_planet   = true -- Should land on planets?
+mem.land_friendly = false -- Only land on friendly planets?
+mem.distress      = true -- AI distresses
+mem.distressrate  = 3 -- Number of ticks before calling for help
+mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
-mem.weapset        = 3 -- Weapon set that should be used (tweaked based on heat).
+mem.weapset       = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
@@ -72,6 +72,7 @@ control_rate   = 2
 
 --[[
    Binary flags for the different states that default to nil (false).
+   - forced: the task is forced and shouldn't be changed
    - attack: the pilot is attacked their target
    - fighting: the pilot is engaged in combat (including running away )
    - noattack: do not try to find new targets to attack
@@ -841,9 +842,13 @@ function create_post ()
    -- Just give some random fuel
    if p ~= player.pilot() then
       local ps = p:stats()
-      local f = (rnd.twosigma()/4 + 0.5)*(ps.fuel_max-ps.fuel_consumption)
-      f = f + ps.fuel_consumption
-      p:setFuel( f )
+      if mem.tookoff then
+         p:setFuel( true ) -- Full fuel
+      else
+         local f = (rnd.twosigma()/4 + 0.5)*(ps.fuel_max-ps.fuel_consumption)
+         f = f + ps.fuel_consumption
+         p:setFuel( f )
+      end
    end
 end
 
