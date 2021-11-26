@@ -307,7 +307,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "nightly"
           prerelease: true
-          title: "Nightly build"
+          title: "Nightly Build"
           files: |
             ${{ github.workspace }}/build/dist/*.*
 
