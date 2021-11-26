@@ -59,7 +59,6 @@ void shipyard_open( unsigned int wid )
    int w, h, sw, sh;
    int iw, ih;
    int bw, bh, padding, off;
-   glTexture *t;
    int iconsize;
 
    /* Mark as generated. */
@@ -132,7 +131,7 @@ void shipyard_open( unsigned int wid )
          cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
          cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, &cships[i].nlayers );
          if (shipyard_list[i]->rarity > 0) {
-            t = rarity_texture( shipyard_list[i]->rarity );
+            glTexture *t = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
          }
       }
@@ -314,7 +313,7 @@ void shipyard_update( unsigned int wid, const char* str )
    window_modifyText( wid,  "txtDDesc", buf );
    window_resizeWidget( wid, "txtDDesc", w-sw-40-(20+iw+20+128), th );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+tw+20, y );
-   y -= th;
+   y = MIN( y-th, -40-SHIP_GFX_H-20 );
    window_modifyText( wid, "txtDescription", _(ship->description) );
    window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
    window_moveWidget( wid, "txtDescription", 20+iw+20, y );
