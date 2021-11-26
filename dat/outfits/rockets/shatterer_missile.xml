@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Shatterer Missile">
  <general>
-  <license>Heavy Weapon License</license>
+  <license>Heavy Weapon</license>
   <mass>0.5</mass>
   <price>0</price>
   <description>This modified rocket was used by the Collective heavy drones as a means to puncture heavy warships and leave them vulnerable. It has very poor tracking, but has excellent speed and armor piercing.</description>

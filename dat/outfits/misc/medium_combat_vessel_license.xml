@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Medium Combat Vessel License">
  <general>
-  <license>Light Combat Vessel License</license>
+  <license>Light Combat Vessel</license>
   <mass>0</mass>
   <price>350000</price>
   <gfx_store>license.webp</gfx_store>
   <description>This license will authorize you to buy destroyer and corvette-class ships.</description>
  </general>
- <specific type="license" />
+ <specific type="license">
+  <provides>Medium Combat Vessel</provides>
+ </specific>
 </outfit>

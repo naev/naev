@@ -2,11 +2,13 @@
 <outfit name="Heavy Combat Vessel License">
  <general>
   <rarity>1</rarity>
-  <license>Medium Combat Vessel License</license>
+  <license>Medium Combat Vessel</license>
   <mass>0</mass>
   <price>900000</price>
   <gfx_store>license.webp</gfx_store>
   <description>This license will authorize you to buy cruiser and carrier-class ships.</description>
  </general>
- <specific type="license" />
+ <specific type="license">
+  <provides>Medium Combat Vessel</provides>
+ </specific>
 </outfit>

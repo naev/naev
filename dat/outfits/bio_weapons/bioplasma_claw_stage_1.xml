@@ -3,7 +3,7 @@
  <general>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
-  <license>Medium Weapon License</license>
+  <license>Medium Weapon</license>
   <mass>18</mass>
   <price>8500</price>
   <description>A more powerful cousin of the BioPlasma Stinger, the BioPlasma Claw uses more precious brain capacity, but features markedly increased damage output in return. As with all organs, it starts out weak, but over time it grows and improves.</description>

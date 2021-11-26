@@ -6,5 +6,7 @@
   <gfx_store>license.webp</gfx_store>
   <description>This license will authorize you to do mercenary missions and collect bounties.</description>
  </general>
- <specific type="license" />
+ <specific type="license">
+  <provides>Mercenary</provides>
+ </specific>
 </outfit>

@@ -3,7 +3,7 @@
  <general>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
-  <license>Medium Weapon License</license>
+  <license>Medium Weapon</license>
   <mass>30</mass>
   <price>42000</price>
   <description>The BioPlasma Fang takes the enhancement of the BioPlasma Claw even further. While its cognitive requirements are relatively high, they're still low enough for medium-sized organisms to handle. They are commonly found on Soromid Odiums. This organ has reached Stage X, its full potential.</description>

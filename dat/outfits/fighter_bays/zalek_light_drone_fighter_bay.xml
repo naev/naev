@@ -3,7 +3,7 @@
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
-  <license>Light Combat Vessel License</license>
+  <license>Light Combat Vessel</license>
   <rarity>2</rarity>
   <mass>120</mass>
   <price>800000</price>

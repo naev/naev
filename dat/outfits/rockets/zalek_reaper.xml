@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Reaper Drone">
  <general>
-  <license>Heavy Weapon License</license>
+  <license>Heavy Weapon</license>
   <mass>5</mass>
   <price>0</price>
   <description>Reaper drones are the Za'lek version of other nations' torpedoes. They are reasonably fast, and hit with shattering force.</description>

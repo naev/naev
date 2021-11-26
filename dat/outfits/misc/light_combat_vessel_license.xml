@@ -6,5 +6,7 @@
   <gfx_store>license.webp</gfx_store>
   <description>This license will authorize you to buy fighter and bomber class ships.</description>
  </general>
- <specific type="license" />
+ <specific type="license">
+  <provides>Light Combat Vessel</provides>
+ </specific>
 </outfit>

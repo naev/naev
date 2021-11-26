@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Huntsman Torpedo">
  <general>
-  <license>Heavy Weapon License</license>
+  <license>Heavy Weapon</license>
   <mass>4</mass>
   <price>0</price>
   <description>Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to disable large warships, where smaller weapons would fail.</description>

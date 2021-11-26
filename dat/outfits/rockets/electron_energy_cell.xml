@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Electron Energy Cell">
  <general>
-  <license>Medium Weapon License</license>
+  <license>Medium Weapon</license>
   <mass>0.1</mass>
   <price>0</price>
   <description>These Energy Cells are used as a form of 'ammo' for a long-range discharge cannon used by the Za'lek. They have a decent range and good damage, making them ideal for softening up a target for shorter-ranged beams to finish the target off.</description>
