@@ -11,6 +11,7 @@
       * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
       * Restricted systems where dominant faction will attack on sight
       * Some bulk freighter-class ships added
+      * Systems can have different effects on all ships in them
    * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
@@ -47,6 +48,7 @@
       * More in-game tutorial-ish explanations for new mechanics as you encounter them
       * You can now favourite your ships to help with sorting
       * Redid boarding window to be more intuitive and easier to loot what you want
+      * Paste support for input stuff
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
