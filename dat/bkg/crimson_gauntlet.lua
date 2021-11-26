@@ -25,7 +25,7 @@ function background ()
    starfield.init{ nolocalstars = true }
 
    -- Let's add big nebula because we can
-   nebula.init{ size=3000, movemod=0.2 }
+   nebula.init{ size=3000, movemod=0.2, opacity=50 }
 end
 
 renderbg = starfield.render
