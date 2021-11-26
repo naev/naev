@@ -146,11 +146,11 @@ static void print_with_line_numbers( const char *str )
    int counter = 0;
    for (int i=0; str[i] != '\0'; i++) {
       if ((i==0) || (str[i]=='\n'))
-         logprintf( stdout, 0, "\n%03d: ", ++counter );
+         logprintf( stderr, 0, "\n%03d: ", ++counter );
       if (str[i]!='\n')
          logprintf( stdout, 0, "%c", str[i] );
    }
-   logprintf( stdout, 0, "\n" );
+   logprintf( stderr, 0, "\n" );
 }
 
 /**
