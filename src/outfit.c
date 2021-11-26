@@ -2152,7 +2152,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xml_onlyNodes(node);
-      xmlr_strd(node,"gui",temp->u.lic.provides);
+      xmlr_strd(node,"provides",temp->u.lic.provides);
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
