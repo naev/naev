@@ -41,7 +41,7 @@ void window_addButtonKey( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, const char* wdwname),
+                       void (*call) (unsigned int wid, const char* wgtname),
                        SDL_Keycode key )
 {
    Window *wdw = window_wget(wid);
@@ -100,7 +100,7 @@ void window_addButton( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, const char* wdwname) )
+                       void (*call) (unsigned int wid, const char* wgtname) )
 {
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
