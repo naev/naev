@@ -19,7 +19,7 @@ OUTDIR="$(pwd)/dist"
 DRYRUN="false"
 REPONAME="naev/naev"
 
-while getopts dnpcb:o:r:g: OPTION "$@"; do
+while getopts dnpct:o:r:g: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
