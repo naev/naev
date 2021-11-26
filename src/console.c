@@ -651,5 +651,5 @@ void cli_open (void)
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
-         "cstConsole", 0, cli_render, NULL, NULL );
+         "cstConsole", 0, cli_render, NULL, NULL, NULL, NULL );
 }

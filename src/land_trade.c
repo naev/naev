@@ -72,7 +72,7 @@ void commodity_exchange_open( unsigned int wid )
 
       /* cust draws the modifier : # of tons one click buys or sells */
    window_addCust( wid, 40 + iw, 40 + LAND_BUTTON_HEIGHT, 2*bw + 20,
-         gl_smallFont.h + 6, "cstMod", 0, commodity_renderMod, NULL, NULL );
+         gl_smallFont.h + 6, "cstMod", 0, commodity_renderMod, NULL, NULL, NULL, NULL );
 
    /* store gfx */
    window_addRect( wid, -20, -40, 192, 192, "rctStore", &cBlack, 0 );

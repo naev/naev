@@ -15,6 +15,8 @@
 
 static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
+static void cst_focusGain( Widget* cst );
+static void cst_focusLose( Widget* cst );
 static Widget *cst_getWidget( unsigned int wid, const char *name );
 
 
@@ -47,6 +49,8 @@ void window_addCust( unsigned int wid,
                      int (*mouse) (unsigned int wid, SDL_Event* event,
                                     double x, double y, double w, double h,
                                     double rx, double ry, void *data),
+                     void (*focusGain) (unsigned int wid, const char* wgtname),
+                     void (*focusLose) (unsigned int wid, const char* wgtname),
                      void *data )
 {
    Window *wdw = window_wget(wid);
@@ -58,18 +62,43 @@ void window_addCust( unsigned int wid,
    wgt->type   = WIDGET_CUST;
 
    /* specific */
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->focusGain       = cst_focusGain;
+   wgt->focusLose       = cst_focusLose;
    wgt->render          = cst_render;
    wgt->renderOverlay   = cst_renderOverlay;
    wgt->dat.cst.border  = border;
    wgt->dat.cst.render  = render;
    wgt->dat.cst.mouse   = mouse;
    wgt->dat.cst.clip    = 1;
-   wgt->dat.cst.userdata = data;
+   wgt->dat.cst.focusGain  = focusGain;
+   wgt->dat.cst.focusLose  = focusLose;
+   wgt->dat.cst.userdata   = data;
 
    /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
+}
+
+
+/**
+ * @brief Custom widget gains focus.
+ */
+static void cst_focusGain( Widget* cst )
+{
+   if (cst->dat.cst.focusGain)
+      cst->dat.cst.focusGain( cst->wdw, cst->name );
+}
+
+
+/**
+ * @brief Custom widget loses focus.
+ */
+static void cst_focusLose( Widget* cst )
+{
+   if (cst->dat.cst.focusLose)
+      cst->dat.cst.focusLose( cst->wdw, cst->name );
 }
 
 

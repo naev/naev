@@ -105,7 +105,7 @@ void shipyard_open( unsigned int wid )
 
    /* slot types */
    window_addCust( wid, -20, -sh-50, sw-10, 80, "cstSlots", 0.,
-         shipyard_renderSlots, NULL, NULL );
+         shipyard_renderSlots, NULL, NULL, NULL, NULL );
 
    /* stat text */
    window_addText( wid, -4, -sw-50-70-20, sw, -sh-60-70-20+h-bh, 0, "txtStats",

@@ -68,6 +68,7 @@ static int largestID;
  * Prototypes
  */
 static void news_render( double bx, double by, double w, double h, void *data );
+static void news_focusLose( unsigned int wid, const char* wgtname );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
@@ -347,7 +348,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    }
 
    /* Create the custom widget. */
-   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL );
+   window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
 }
 
 
@@ -361,6 +362,17 @@ void clear_newslines (void)
 
    array_resize(&news_lines, 0);
    array_resize(&news_restores, 0);
+}
+
+
+/**
+ * @brief Called when it's de-focused.
+ */
+static void news_focusLose( unsigned int wid, const char* wgtname )
+{
+   (void) wid;
+   (void) wgtname;
+   news_drag = 0;
 }
 
 
@@ -380,7 +392,6 @@ void clear_newslines (void)
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
-   (void) wid;
    (void) data;
    (void) rx;
 
@@ -400,14 +411,13 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
+	 window_setFocus( wid, "cstNews" );
 
-         if (!news_drag)
-            news_drag = 1;
+	 news_drag = 1;
          return 1;
 
       case SDL_MOUSEBUTTONUP:
-         if (news_drag)
-            news_drag = 0;
+	 news_drag = 0;
          break;
 
       case SDL_MOUSEMOTION:

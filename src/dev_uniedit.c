@@ -129,6 +129,7 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
 static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
+static void uniedit_focusLose( unsigned int wid, const char* wgtname );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static void uniedit_renderFactionDisks( double x, double y, double r );
@@ -254,7 +255,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
-         "cstSysEdit", 1, uniedit_render, uniedit_mouse, NULL );
+         "cstSysEdit", 1, uniedit_render, uniedit_mouse, NULL, uniedit_focusLose, NULL );
    window_custSetOverlay( wid, "cstSysEdit", uniedit_renderOverlay );
 
    /* Deselect everything. */
@@ -857,12 +858,22 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 }
 
 /**
+ * @brief Called when it's de-focused.
+ */
+static void uniedit_focusLose( unsigned int wid, const char* wgtname )
+{
+   (void) wid;
+   (void) wgtname;
+   uniedit_drag = uniedit_dragSys = 0;
+   uniedit_deselect();
+}
+
+/**
  * @brief System editor custom widget mouse handling.
  */
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
-   (void) wid;
    (void) data;
    int i;
    unsigned int lastClick;
@@ -891,6 +902,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
+	 window_setFocus( wid, "cstSysEdit" );
          lastClick = uniedit_lastClick;
          uniedit_lastClick = SDL_GetTicks();
 

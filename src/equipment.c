@@ -416,12 +416,12 @@ void equipment_open( unsigned int wid )
 
    /* Custom widget (ship information). */
    window_addCust( wid, -20-(128-cw)/2, -20-150, cw, ch, "cstMisc", 0,
-         equipment_renderMisc, NULL, NULL );
+         equipment_renderMisc, NULL, NULL, NULL, NULL );
 
    /* Spinning ship. */
    window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
    window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
-         equipment_renderShip, NULL, NULL );
+         equipment_renderShip, NULL, NULL, NULL, NULL );
 
    /* Focus the ships image array. */
    window_setFocus( wid , EQUIPMENT_SHIPS );
@@ -449,7 +449,7 @@ void equipment_slotWidget( unsigned int wid,
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
-         equipment_renderSlots, equipment_mouseSlots, data );
+         equipment_renderSlots, equipment_mouseSlots, NULL, NULL, data );
    window_custSetClipping( wid, "cstEquipment", 0 );
    window_custSetOverlay( wid, "cstEquipment", equipment_renderOverlaySlots );
 }

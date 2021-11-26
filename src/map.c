@@ -110,6 +110,7 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
+static void map_focusLose( unsigned int wid, const char* wgtname );
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
@@ -1724,6 +1725,16 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 }
 
 /**
+ * @brief Called when it's de-focused.
+ */
+static void map_focusLose( unsigned int wid, const char* wgtname )
+{
+   (void) wid;
+   (void) wgtname;
+   map_drag = 0;
+}
+
+/**
  * @brief Map custom widget mouse handling.
  *
  *    @param wid Window sending events.
@@ -1736,7 +1747,6 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
-   (void) wid;
    (void) data;
    (void) rx;
    (void) ry;
@@ -1757,46 +1767,44 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       /* Must be in bounds. */
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
          return 0;
+      window_setFocus( wid, "cstMap" );
 
       /* selecting star system */
-      else {
-         mx -= w/2 - map_xpos;
-         my -= h/2 - map_ypos;
-         map_drag = 1;
+      mx -= w/2 - map_xpos;
+      my -= h/2 - map_ypos;
+      map_drag = 1;
 
-         for (int i=0; i<array_size(systems_stack); i++) {
-            double x, y;
-            StarSystem *sys = system_getIndex( i );
+      for (int i=0; i<array_size(systems_stack); i++) {
+         double x, y;
+         StarSystem *sys = system_getIndex( i );
 
-            if (sys_isFlag(sys, SYSTEM_HIDDEN))
-               continue;
+         if (sys_isFlag(sys, SYSTEM_HIDDEN))
+            continue;
 
-            /* must be reachable */
-            if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-                && !space_sysReachable(sys))
-               continue;
+         /* must be reachable */
+         if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+             && !space_sysReachable(sys))
+            continue;
 
-            /* get position */
-            x = sys->pos.x * map_zoom;
-            y = sys->pos.y * map_zoom;
+         /* get position */
+         x = sys->pos.x * map_zoom;
+         y = sys->pos.y * map_zoom;
 
-            if ((pow2(mx-x)+pow2(my-y)) < t) {
-               if (map_selected != -1) {
-                  if (sys == system_getIndex( map_selected ) && sys_isKnown(sys)) {
-                     map_system_open( map_selected );
-                     map_drag = 0;
-                  }
+         if ((pow2(mx-x)+pow2(my-y)) < t) {
+            if (map_selected != -1) {
+               if (sys == system_getIndex( map_selected ) && sys_isKnown(sys)) {
+                  map_system_open( map_selected );
+                  map_drag = 0;
                }
-               map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
-               break;
             }
+            map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
+            break;
          }
       }
       return 1;
 
    case SDL_MOUSEBUTTONUP:
-      if (map_drag)
-         map_drag = 0;
+      map_drag = 0;
       break;
 
    case SDL_MOUSEMOTION:
@@ -2630,7 +2638,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
       map_selectCur();
 
    window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse, NULL );
+         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, NULL );
 }
 
 /**

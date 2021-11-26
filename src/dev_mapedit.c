@@ -102,6 +102,7 @@ static void mapedit_selectRm( StarSystem *sys );
 /* Custom system editor widget. */
 static void mapedit_buttonZoom( unsigned int wid, const char* str );
 static void mapedit_render( double bx, double by, double w, double h, void *data );
+static void mapedit_focusLose( unsigned int wid, const char* wgtname );
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
@@ -163,7 +164,7 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 350, SCREEN_H - 100,
-         "cstSysEdit", 1, mapedit_render, mapedit_mouse, NULL );
+         "cstSysEdit", 1, mapedit_render, mapedit_mouse, NULL, mapedit_focusLose, NULL );
 
    /* Button : reset the current map. */
    buttonHPos = 2;
@@ -363,12 +364,21 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
 }
 
 /**
+ * @brief Called when it's de-focused.
+ */
+static void mapedit_focusLose( unsigned int wid, const char* wgtname )
+{
+   (void) wid;
+   (void) wgtname;
+   mapedit_drag = 0;
+}
+
+/**
  * @brief System editor custom widget mouse handling.
  */
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data )
 {
-   (void) wid;
    (void) data;
    const double t = 15.*15.; /* threshold */
 
@@ -387,6 +397,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
+	 window_setFocus( wid, "cstSysEdit" );
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_X1) {
@@ -445,9 +456,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEBUTTONUP:
          /* Handles dragging viewport around. */
-         if (mapedit_drag) {
-            mapedit_drag      = 0;
-         }
+         mapedit_drag      = 0;
          break;
 
       case SDL_MOUSEMOTION:

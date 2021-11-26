@@ -441,7 +441,6 @@ function info_mission ()
 end
 
 function target_hyperspace ()
-   -- TODO map mouse gets "stuck" here because the toolkit eats the mouse click up event
    local tsys = player.autonavDest()
    if tsys ~= mem.destsys then
       return

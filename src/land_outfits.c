@@ -174,7 +174,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
-         bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
+         bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL, NULL, NULL );
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,

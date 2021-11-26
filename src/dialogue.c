@@ -885,7 +885,7 @@ void dialogue_custom( const char* caption, int width, int height,
    else {
       wgtx = wgty = 20;
    }
-   window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, data );
+   window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, NULL, NULL, data );
    window_custSetClipping( wid, "cstCustom", 1 );
 
    /* set up event stuff. */

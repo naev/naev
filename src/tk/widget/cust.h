@@ -15,6 +15,8 @@ typedef struct WidgetCustData_ {
    void (*render) (double bx, double by, double bw, double bh, void* data); /**< Function to run when rendering. */
    void (*renderOverlay) (double bx, double by, double bw, double bh, void* data); /**< Function to run when rendering overlay. */
    int (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by, double bw, double bh, double rx, double ry, void* data); /**< Function to run when receiving mouse events. */
+   void (*focusGain) (unsigned int wid, const char* wgtname); /**< Get focus. */
+   void (*focusLose) (unsigned int wid, const char* wgtname); /**< Lose focus. */
    int clip; /**< 1 if should clip with glScissors or the like, 0 otherwise. */
    void *userdata;
 } WidgetCustData;
@@ -26,6 +28,8 @@ void window_addCust( unsigned int wid,
       char* name, const int border,
       void (*render) (double x, double y, double w, double h, void* data),
       int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
+      void (*focusGain) (unsigned int wid, const char* wgtname),
+      void (*focusLose) (unsigned int wid, const char* wgtname),
       void *data );
 
 void window_custSetClipping( unsigned int wid, const char *name, int clip );

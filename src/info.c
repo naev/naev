@@ -564,7 +564,7 @@ static void info_openWeapons( unsigned int wid )
    /* Custom widget for legend. */
    y = -220;
    window_addCust( wid, 220, y, w-200-60, 100, "cstLegend", 0,
-         weapons_renderLegend, NULL, NULL );
+         weapons_renderLegend, NULL, NULL, NULL, NULL );
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
