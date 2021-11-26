@@ -12,6 +12,7 @@
       * Restricted systems where dominant faction will attack on sight
       * Some bulk freighter-class ships added
       * Systems can have different effects on all ships in them
+      * Fake transponder replaces fake id
    * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
