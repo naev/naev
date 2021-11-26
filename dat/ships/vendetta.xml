@@ -13,7 +13,7 @@
  <trail_generator x="-5" y="4" h="0" always_under="1">fire</trail_generator>
  <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
- <license>Light Combat Vessel License</license>
+ <license>Light Combat Vessel</license>
  <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
  <health>
   <armour>100</armour>

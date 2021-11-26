@@ -51,4 +51,3 @@ function attacked ( attacker )
       ai.pushtask("runaway", attacker)
    end
 end
-

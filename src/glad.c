@@ -995,4 +995,3 @@ int gladLoadGLLoader(GLADloadproc load) {
 	load_GL_ARB_shader_subroutine(load);
 	return GLVersion.major != 0 || GLVersion.minor != 0;
 }
-

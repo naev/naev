@@ -95,6 +95,7 @@ local static = true
 function starfield.init( params )
    params = params or {}
    local nconf = naev.conf()
+   static = not nconf.background_fancy
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
@@ -163,4 +164,3 @@ function starfield.render( dt )
 end
 
 return starfield
-

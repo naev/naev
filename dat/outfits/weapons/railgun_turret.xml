@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <mass>65</mass>
-  <license>Heavy Weapon License</license>
+  <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <price>720000</price>
   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns at a slight velocity cost.</description>

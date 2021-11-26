@@ -14,7 +14,7 @@
  <trail_generator x="-50" y="15" h="0">zalek</trail_generator>
  <trail_generator x="-60" y="-10" h="-10" always_under="1">zalekL</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Heavy Combat Vessel License</license>
+ <license>Heavy Combat Vessel</license>
  <description>This carrier is the archetypical Za'lek warship. Virtually unarmored and equipped with heavy shields, they are meant to serve as a platform for devastating drone swarms, not frontline combat.</description>
  <health>
   <armour>1000</armour>

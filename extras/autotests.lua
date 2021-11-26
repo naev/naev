@@ -1,5 +1,5 @@
 --[[
-   Some small autotests meant to be used 
+   Some small autotests meant to be used
 --]]
 
 function test_vec2()
@@ -59,5 +59,3 @@ fail = fail+run_test( test_vec2(), 'vec2' )
 if fail==0 then
    print( 'All tests completed successfully!' )
 end
-
-

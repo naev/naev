@@ -58,4 +58,3 @@ else
     echo "-r must be either nightly, prerelease or release"
     exit 1
 fi
-

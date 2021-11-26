@@ -26,13 +26,11 @@ if (ascli_exe.found())
     )
 endif
 
-if (luacheck_exe.found())
-    test('lua_lint',
-    luacheck_exe,
-    args: ['.', '--no-color'],
-    workdir: meson.source_root() / 'dat',
+test('lua_lint',
+    luacheckIfInstalled,
+    args: ['dat', '--no-color'],
+    workdir: meson.source_root(),
     )
-endif
 
 # If this test fails, someone put a standard constant like PRIu64 in a translatable string.
 # We can't support that (and you don't want to know how GNU gettext does it), but %.0f is typically good enough.

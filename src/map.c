@@ -691,7 +691,7 @@ static void map_update( unsigned int wid )
       if (found) {
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
-         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _("#gTrade Lane#0") );
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#g%s#0", _("Trade Lane") );
       }
 
       /* Nebula. */

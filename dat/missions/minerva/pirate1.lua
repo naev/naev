@@ -255,6 +255,3 @@ function harassed ()
    end
    hook.timer( 1.0, "harassed" )
 end
-
-
-

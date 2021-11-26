@@ -259,4 +259,3 @@ function land ()
       misn.finish(true) -- Run last
    end
 end
-

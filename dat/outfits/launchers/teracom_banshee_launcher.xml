@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <license>Medium Weapon License</license>
+  <license>Medium Weapon</license>
   <mass>20</mass>
   <price>45000</price>
   <gfx_store>bansheelauncher.webp</gfx_store>

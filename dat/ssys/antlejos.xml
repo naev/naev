@@ -17,10 +17,6 @@
   <asset>Antlejos V</asset>
  </assets>
  <jumps>
-  <jump target="Brumerebus">
-   <autopos/>
-   <hide>0.500000</hide>
-  </jump>
   <jump target="Delta Polaris">
    <autopos/>
    <hide>1.000000</hide>
@@ -31,6 +27,11 @@
   </jump>
   <jump target="Knave">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-4087">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

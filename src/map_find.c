@@ -658,11 +658,11 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
 
    window_addText( wid, iw + 128 + 20, -50,
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nOwned:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nMass:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nPrice:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nMoney:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nLicense:#0") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", _("Owned:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", _("Mass:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", _("Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", _("License:") );
    window_addText( wid, iw+20, -50-128-10,
          90, 160, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    window_addText( wid, iw+20, -50-128-10,
@@ -1044,4 +1044,3 @@ void map_inputFind( unsigned int parent, const char* str )
    window_addCheckbox( wid, x, y, 160, 20,
          "chkShip", _("Ships"), map_find_check_update, map_find_ships );
 }
-

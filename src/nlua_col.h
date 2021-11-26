@@ -23,4 +23,3 @@ glColour* lua_tocolour( lua_State *L, int ind );
 glColour* luaL_checkcolour( lua_State *L, int ind );
 glColour* lua_pushcolour( lua_State *L, glColour col );
 int lua_iscolour( lua_State *L, int ind );
-

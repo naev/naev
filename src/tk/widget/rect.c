@@ -86,4 +86,3 @@ static void rct_render( Widget* rct, double bx, double by )
             toolkit_colDark, NULL );
    }
 }
-

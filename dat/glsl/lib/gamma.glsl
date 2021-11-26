@@ -16,7 +16,7 @@ float linearToGammaFast( float c ) { return max(1.055 * pow(max(c, 0.0), 0.41666
 vec3 linearToGammaFast( vec3 c )   { return max(1.055 * pow(max(c, vec3(0.0)), vec3(0.41666666)) - 0.055, vec3(0.0)); }
 vec4 linearToGammaFast( vec4 c )   { return vec4(linearToGammaFast(c.rgb), c.a); }
 
-/* 
+/*
  * Gamma-corrected sRGB to linear sRGB.
  */
 float gammaToLinearPrecise( float c ) {
@@ -31,7 +31,7 @@ vec4 gammaToLinearPrecise( vec4 c ) {
    return vec4( gammaToLinearPrecise(c.rgb), c.a );
 }
 
-/* 
+/*
  * Linear sRGB to gamma-corrected sRGB
  */
 float linearToGammaPrecise( float c ) {

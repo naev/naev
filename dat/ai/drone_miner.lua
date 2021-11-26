@@ -18,4 +18,3 @@ function idle ()
       ai.pushtask( "mine", {field, ast} )
    end
 end
-

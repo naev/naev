@@ -80,7 +80,7 @@ if __name__ == "__main__":
                graph.add_edge( edge )
             # Visited planet
             planets_added.append(p)
-      
+
       ssys_added.append( ssysName )
       i += 1
 

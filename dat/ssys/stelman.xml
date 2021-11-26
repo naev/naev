@@ -16,6 +16,10 @@
   <asset>Stelman I-3</asset>
  </assets>
  <jumps>
+  <jump target="NGC-1317">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Somard">
    <autopos/>
    <hide>1.000000</hide>

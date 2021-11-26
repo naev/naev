@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file land_shipyard.c
  *
  * @brief Handles the shipyard at land.
  */
-
-
 /** @cond */
 #include <assert.h>
 #include <math.h>
@@ -32,10 +29,8 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-
 #define  SHIP_GFX_W     256
 #define  SHIP_GFX_H     256
-
 
 /*
  * Vars.
@@ -43,7 +38,6 @@
 static Ship **shipyard_list = NULL; /**< Array (array.h): Available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 static glTexture *shipyard_comm = NULL; /**< Current comm image. */
-
 
 /*
  * Helper functions.
@@ -55,22 +49,16 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
 static void shipyard_find( unsigned int wid, const char* str );
 
-
 /**
  * @brief Opens the shipyard window.
  */
 void shipyard_open( unsigned int wid )
 {
-   int i;
    ImageArrayCell *cships;
    int nships;
    int w, h, sw, sh;
    int iw, ih;
    int bw, bh, padding, off;
-   int tw, th;
-   int y;
-   const char *buf;
-   glTexture *t;
    int iconsize;
 
    /* Mark as generated. */
@@ -123,41 +111,10 @@ void shipyard_open( unsigned int wid )
    window_addText( wid, -4, -sw-50-70-20, sw, -sh-60-70-20+h-bh, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
-   /* text */
-   buf = _("Model:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "Crew:\n"
-         "\n"
-         "Base Properties\n"
-         "CPU:\n"
-         "Mass:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Constant:\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "Fuel Use:\n"
-         "\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n");
-   tw = gl_printWidthRaw( &gl_defFont, buf );
-   th = gl_printHeightRaw( &gl_defFont, tw, buf );
-   y  = -35;
-   window_addText( wid, 20+iw+20, y,
-         tw+20, th, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
-   window_addText( wid, 20+iw+20+tw+20, y,
-         w-sw-40-(20+iw+20+128), th, 0, "txtDDesc", &gl_defFont, NULL, NULL );
-   y -= th;
-   window_addText( wid, 20+iw+20, y,
-         w-(20+iw+20) - (sw+40), y-20+h-bh, 0, "txtDescription",
-         &gl_defFont, NULL, NULL );
+   /* Placeholder text-boxes, calculated properly in shipyard_update(). */
+   window_addText( wid, iw+40, -35, 133, 427, 0, "txtSDesc", &gl_defFont, &cFontGrey, NULL );
+   window_addText( wid, iw+173, -35, w-sw-iw-208, 427, 0, "txtDDesc", &gl_defFont, NULL, NULL );
+   window_addText( wid, 20+iw+20, -462, w-(iw+40) - (sw+40), -482+h-bh, 0, "txtDescription", &gl_defFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
    shipyard_list = tech_getShip( land_planet->tech );
@@ -169,12 +126,12 @@ void shipyard_open( unsigned int wid )
       nships    = 1;
    }
    else {
-      for (i=0; i<nships; i++) {
+      for (int i=0; i<nships; i++) {
          cships[i].caption = strdup( _(shipyard_list[i]->name) );
          cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
          cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, &cships[i].nlayers );
          if (shipyard_list[i]->rarity > 0) {
-            t = rarity_texture( shipyard_list[i]->rarity );
+            glTexture *t = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
          }
       }
@@ -206,11 +163,12 @@ void shipyard_open( unsigned int wid )
 void shipyard_update( unsigned int wid, const char* str )
 {
    (void)str;
-   int i;
+   int i, tw, th, y, w, h, sw, iw, bh;
    Ship* ship;
-   char buf[STRMAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
-   char smass[NUM2STRLEN];
+   char lbl[STRMAX], buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
+   char buf_license[STRMAX_SHORT];
    double aspect, gw, gh;
+   size_t k = 0, l = 0;
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -221,33 +179,11 @@ void shipyard_update( unsigned int wid, const char* str )
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      snprintf( buf, sizeof(buf),
-            _("None\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "N/A\n") );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
       window_modifyText( wid, "txtDescription", NULL );
-      window_modifyText( wid, "txtDDesc", buf );
+      window_modifyText( wid, "txtSDesc", NULL );
+      window_modifyText( wid, "txtDDesc", NULL );
       return;
    }
 
@@ -271,10 +207,8 @@ void shipyard_update( unsigned int wid, const char* str )
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
-   window_modifyText( wid, "txtDescription", _(ship->description) );
-   price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
-   credits2str( buf3, player.p->credits, 2 );
-   num2str( smass, ship->mass, 0 );
+   price2str( buf_price, ship_buyPrice(ship), player.p->credits, 2 );
+   credits2str( buf_credits, player.p->credits, 2 );
 
    if (ship->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
@@ -284,53 +218,105 @@ void shipyard_update( unsigned int wid, const char* str )
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
 
-   snprintf( buf, sizeof(buf),
-         _("%s\n"
-         "%s\n"
-         "%s\n"
-         "%d\n"
-         "\n"
-         "\n"
-         "%.0f %s\n"
-         "%s %s\n"
-         "%.0f kN/tonne\n"
-         "%.0f m/s\n"
-         "%.0f deg/s\n"
-         "%.0f%%\n"
-         "%.0f%% damage\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f %s\n"
-         "%d %s\n"
-         "%d %s\n"
-         "\n"
-         "%s\n"
-         "%s\n"
-         "%s\n"),
-         _(ship->name),
-         _(ship_classDisplay(ship)),
-         _(ship->fabricator),
-         ship->crew,
-         /* Weapons & Manoeuvrability */
-         ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
-         smass, n_( "tonne", "tonnes", ship->mass ),
-         ship->thrust,
-         ship->speed,
-         ship->turn*180/M_PI,
-         ship->dt_default*100.,
-         /* Misc */
-         ship->dmg_absorb*100.,
-         ship->shield, ship->shield_regen,
-         ship->armour, ship->armour_regen,
-         ship->energy, ship->energy_regen,
-         ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
-         ship->fuel, n_( "unit", "units", ship->fuel ),
-         ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
-         buf2,
-         buf3,
-         buf_license );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _(ship->name) );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_classDisplay(ship)) );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fabricator:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->fabricator) );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Crew:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->crew );
+   /* Weapons & Manoeuvrability */
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Base Properties") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "");
+   if (ship->cpu > 0) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("CPU:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f %s", ship->cpu, n_( "teraflop", "teraflops", ship->cpu ) );
+   }
+   if (ship->mass) {
+      char buf_mass[ECON_MASS_STRLEN];
+      tonnes2str( buf_mass, ship->mass );
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Mass:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
+   }
+   if (ship->thrust) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Thrust:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "");
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f kN/tonne"), ship->thrust );
+   }
+   if (ship->speed) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f m/s", ship->speed );
+   }
+   if (ship->turn) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Turn:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f deg/s", ship->turn*180/M_PI );
+   }
+   if (ship->dt_default != 1.) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Time Constant:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->dt_default*100. );
+   }
+   /* Misc */
+   if (ship->dmg_absorb) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Absorption:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
+   }
+   if (ship->shield || ship->shield_regen) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Shield:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
+   }
+   if (ship->armour || ship->armour_regen) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Armour:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
+   }
+   if (ship->energy || ship->energy_regen) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Energy:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
+   }
+   if (ship->cap_cargo) {
+      char buf_cargo[ECON_MASS_STRLEN];
+      tonnes2str( buf_cargo, ship->cap_cargo );
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Cargo Space:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_cargo );
+   }
+   if (ship->fuel) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel, n_( "unit", "units", ship->fuel ) );
+   }
+   if (ship->fuel_consumption != 100.) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Fuel Use:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d %s", ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ) );
+   }
+
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n\n%s", _("Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", buf_price );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
+
+   /* Calculate layout. */
+   window_dimWindow( wid, &w, &h );
+   iw = 440 + (w - LAND_WIDTH);
+   sw = SHIP_GFX_W;
+   bh = LAND_BUTTON_HEIGHT;
+   tw = gl_printWidthRaw( &gl_defFont, lbl );
+   th = gl_printHeightRaw( &gl_defFont, tw, lbl ) + gl_defFont.h;
+   y  = -35;
+   window_modifyText( wid,  "txtSDesc", lbl );
+   window_resizeWidget( wid, "txtSDesc", tw+20, th );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, y );
    window_modifyText( wid,  "txtDDesc", buf );
+   window_resizeWidget( wid, "txtDDesc", w-sw-40-(20+iw+20+128), th );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+tw+20, y );
+   y = MIN( y-th, -40-SHIP_GFX_H-20 );
+   window_modifyText( wid, "txtDescription", _(ship->description) );
+   window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, y );
 
    if (!shipyard_canBuy( ship->name, land_planet ))
       window_disableButtonSoft( wid, "btnBuyShip");
@@ -342,7 +328,6 @@ void shipyard_update( unsigned int wid, const char* str )
    else
       window_enableButton( wid, "btnTradeShip");
 }
-
 
 /**
  * @brief Cleans up shipyard data.
@@ -356,7 +341,6 @@ void shipyard_cleanup (void)
    shipyard_comm = NULL;
 }
 
-
 /**
  * @brief Starts the map find with ship search selected.
  *    @param wid Window buying outfit from.
@@ -368,7 +352,6 @@ static void shipyard_find( unsigned int wid, const char* str )
    map_inputFindType(wid, "ship");
 }
 
-
 /**
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
@@ -378,7 +361,6 @@ static void shipyard_rmouse( unsigned int wid, const char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
-
 
 /**
  * @brief Player attempts to buy a ship.
@@ -437,9 +419,7 @@ int shipyard_canBuy( const char *shipname, Planet *planet )
 {
    const Ship* ship = ship_get( shipname );
    int failure = 0;
-   credits_t price;
-
-   price = ship_buyPrice(ship);
+   credits_t price = ship_buyPrice(ship);
 
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
@@ -479,10 +459,9 @@ int can_swap( const char *shipname )
 {
    int failure = 0;
    const Ship* ship = ship_get( shipname );
-   double diff;
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
+      double diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
       land_errDialogueBuild( n_(
                "You have %g tonne more cargo than the new ship can hold.",
                "You have %g tonnes more cargo than the new ship can hold.",
@@ -496,7 +475,6 @@ int can_swap( const char *shipname )
    }
    return !failure;
 }
-
 
 /**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
@@ -527,7 +505,6 @@ int shipyard_canTrade( const char *shipname )
       failure = 1;
    return !failure;
 }
-
 
 /**
  * @brief Player attempts to buy a ship, trading the current ship in.
@@ -595,7 +572,6 @@ static void shipyard_trade( unsigned int wid, const char* str )
    shipyard_update(wid, NULL);
 }
 
-
 /**
  * @brief Custom widget render function for the slot widget.
  */
@@ -632,16 +608,13 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
-
 /**
  * @brief Renders a row of ship slots.
  */
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s )
 {
    (void) bw;
-   int i;
    double x;
-   const glColour *c;
 
    x = bx;
 
@@ -649,8 +622,8 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
-   for (i=0; i<array_size(s); i++) {
-      c = outfit_slotSizeColour( &s[i].slot );
+   for (int i=0; i<array_size(s); i++) {
+      const glColour *c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;
 

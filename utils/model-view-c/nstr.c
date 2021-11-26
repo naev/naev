@@ -178,4 +178,3 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
    va_end( ap );
    return MIN( maxlen-1, (size_t)n );
 }
-

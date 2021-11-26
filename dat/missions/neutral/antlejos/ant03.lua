@@ -133,4 +133,3 @@ You can see glee in his eyes.
       misn.finish(true)
    end
 end
-

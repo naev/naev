@@ -69,4 +69,3 @@ function love.load()
    s:init()
    vn._checkDone()
 end
-

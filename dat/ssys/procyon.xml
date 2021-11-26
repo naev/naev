@@ -12,6 +12,7 @@
  </pos>
  <assets>
   <asset>Excelcior</asset>
+  <asset>Procyon Shipyards</asset>
   <asset>UHP-1001</asset>
   <asset>UHP-1002</asset>
   <asset>Vigilance Station</asset>
@@ -29,7 +30,7 @@
   </jump>
   <jump target="Octavian">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Vost">
    <autopos/>

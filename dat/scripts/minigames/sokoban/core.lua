@@ -1,9 +1,10 @@
 local sokoban = {}
 
-local love = require 'love'
-local lg = require 'love.graphics'
-local love_shaders = require "love_shaders"
-local fmt = require 'format'
+local love           = require 'love'
+local audio          = require 'love.audio'
+local lg             = require 'love.graphics'
+local love_shaders   = require "love_shaders"
+local fmt            = require 'format'
 
 local player            = '@'
 local playerOnStorage   = '+'
@@ -43,14 +44,18 @@ local coloursText = {
 local cellSize = 30
 local headersize = 80
 local levels
-local level, currentLevel
-local lx, ly
+local prevlevel, level, currentLevel
+local lx, ly, lxo, lyo
 local bgshader
+local transition
 
 local function loadLevel()
    local w = 0
    local h
    local lw, lh = love.window.getDesktopDimensions()
+   prevlevel = level
+   transition = 0
+   lxo, lyo = lx, ly
 
    local loadlev = levels[ currentLevel ]
    h = #loadlev
@@ -124,6 +129,15 @@ function sokoban.load()
       params.levels = {params.levels}
    end
 
+   -- Load audio
+   if not sokoban.sfx then
+      sokoban.sfx = {
+         goal     = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
+         invalid  = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
+         level    = audio.newSource( 'snd/sounds/sokoban/level.ogg' ),
+      }
+   end
+
    -- Allow the default keybindings too!
    movekeys = {
       string.lower( naev.keyGet("left") ),
@@ -148,13 +162,18 @@ function sokoban.load()
    alpha = 0
    currentLevel = 1
    completed = false
+   done = false
 
    loadLevel()
 end
 
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
-      done = 1
+      done = true
+
+   elseif key == 'r' then
+      loadLevel()
+
    elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
          key == movekeys[1] or key == movekeys[2] or
          key == movekeys[3] or key == movekeys[4] then
@@ -172,17 +191,25 @@ function sokoban.keypressed( key )
 
       local dx = 0
       local dy = 0
-      if key == 'left' or key == movekeys[1] then
+      if key == 'left' then
          dx = -1
-      elseif key == 'right' or key == movekeys[2] then
+      elseif key == 'right' then
          dx = 1
-      elseif key == 'up' or key == movekeys[3] then
+      elseif key == 'up' then
          dy = -1
-      elseif key == 'down' or key == movekeys[4] then
+      elseif key == 'down' then
+         dy = 1
+      elseif key == movekeys[1] then
+         dx = -1
+      elseif key == movekeys[2] then
+         dx = 1
+      elseif key == movekeys[3] then
+         dy = -1
+      elseif key == movekeys[4] then
          dy = 1
       end
 
-      local current = level[playerY][playerX]
+      local current  = level[playerY][playerX]
       local adjacent = level[playerY + dy][playerX + dx]
       local beyond
       if level[playerY + dy + dy] then
@@ -190,37 +217,46 @@ function sokoban.keypressed( key )
       end
 
       local nextAdjacent = {
-         [empty] = player,
+         [empty]   = player,
          [storage] = playerOnStorage,
       }
 
       local nextCurrent = {
-         [player] = empty,
+         [player]          = empty,
          [playerOnStorage] = storage,
       }
 
       local nextBeyond = {
-         [empty] = box,
+         [empty]   = box,
          [storage] = boxOnStorage,
       }
 
       local nextAdjacentPush = {
-         [box] = player,
+         [box]          = player,
          [boxOnStorage] = playerOnStorage,
       }
 
+      -- Player just moved
       if nextAdjacent[adjacent] then
-         level[playerY][playerX] = nextCurrent[current]
+         level[playerY][playerX]           = nextCurrent[current]
          level[playerY + dy][playerX + dx] = nextAdjacent[adjacent]
+         -- TODO play mmotion sound
 
+      -- Player pushed something
       elseif nextBeyond[beyond] and nextAdjacentPush[adjacent] then
-         level[playerY][playerX] = nextCurrent[current]
+         level[playerY][playerX]           = nextCurrent[current]
          level[playerY + dy][playerX + dx] = nextAdjacentPush[adjacent]
          level[playerY + dy + dy][playerX + dx + dx] = nextBeyond[beyond]
+         if nextBeyond[beyond] == boxOnStorage then
+            sokoban.sfx.goal:play()
+         end
+
+      else
+         sokoban.sfx.invalid:play()
+
       end
 
       local complete = true
-
       for y, row in ipairs(level) do
          for x, cell in ipairs(row) do
             if cell == box then
@@ -230,6 +266,7 @@ function sokoban.keypressed( key )
       end
 
       if complete then
+         sokoban.sfx.level:play()
          currentLevel = currentLevel + 1
          if currentLevel > #levels then
             done = true
@@ -241,9 +278,6 @@ function sokoban.keypressed( key )
          end
       end
 
-   elseif key == 'r' then
-      loadLevel()
-
    end
 end
 
@@ -253,51 +287,65 @@ local function setcol( col )
    lg.setColor( r, g, b, a*alpha )
 end
 
+local function drawLevel( cx, cy, lvl, t )
+   for y, row in ipairs(lvl) do
+      for x, cell in ipairs(row) do
+         if cell ~= emptyOut then
+            local off = cellSize * (1-t) / 2
+            lg.push()
+            lg.translate( cx + (x-1)*cellSize + off, cy + (y-1)*cellSize + off )
+            lg.scale( t, t )
+            setcol( colours[cell] )
+            lg.rectangle( 'fill', 0, 0, cellSize, cellSize )
+            setcol( coloursText[cell] )
+            lg.print( lvl[y][x], 0, 0 )
+            lg.pop()
+         end
+      end
+   end
+end
+
 function sokoban.draw()
    local nw, nh = naev.gfx.dim()
-   setcol( {0.15,0.15,0.15,0.8} )
+   setcol( {0.2,0.2,0.2,0.85} )
    lg.setShader( bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
 
+   local y, h
+   if transition < 1 and prevlevel then
+      local t = transition
+      y = t*ly + (1-t)*lyo
+      h = (t*#level + (1-t)*#prevlevel) * cellSize
+   else
+      y = ly
+      h = #level*cellSize
+   end
+
    setcol{ 1, 1, 1 }
-   lg.printf( headertext, headerfont, 0, ly, nw, "center" )
+   lg.printf( headertext, headerfont, 0, y, nw, "center" )
    local subheader
    if completed then
       subheader = _("Completed!")
    else
       subheader = fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} )
    end
-   lg.printf( subheader, 0, ly+40, nw, "center" )
+   lg.printf( subheader, 0, y+40, nw, "center" )
+   y = y + headersize
 
-   local cx, cy = lx, ly+headersize
-   for y, row in ipairs(level) do
-      for x, cell in ipairs(row) do
-         if cell ~= emptyOut then
-            setcol( colours[cell] )
-            lg.rectangle(
-               'fill',
-               cx + (x - 1) * cellSize,
-               cy + (y - 1) * cellSize,
-               cellSize,
-               cellSize
-            )
-            setcol( coloursText[cell] )
-            lg.print(
-               level[y][x],
-               cx + (x - 1) * cellSize,
-               cy + (y - 1) * cellSize
-            )
-         end
-      end
+   drawLevel( lx, ly+headersize, level, transition )
+   if transition < 1 and prevlevel then
+      drawLevel( lxo, lyo+headersize, prevlevel, 1-transition )
    end
 
    setcol{ 1, 1, 1 }
-   cy = cy + #level*cellSize + 20
+   local cy = y + h + 20
    lg.printf( _("#barrow keys#0: move, #br#0: restart, #bq#0: abort"), 0, cy, nw, "center" )
 end
 
 function sokoban.update( dt )
+   transition = math.min( 1, transition + dt * 2 )
+
    bgshader:update(dt)
    if done then
       alpha = alpha - dt * 2

@@ -351,4 +351,3 @@ function mainguy_dead_scanned ()
    mem.misn_state = 2
    misn.osdActive(2)
 end
-

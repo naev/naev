@@ -12,7 +12,7 @@
  <trail_generator x="-25" y="8" h="0">soromid</trail_generator>
  <trail_generator x="-25" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>
  <health>
   <armour>550</armour>

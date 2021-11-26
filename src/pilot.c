@@ -1119,7 +1119,7 @@ char pilot_getFactionColourChar( const Pilot *p )
    if (pilot_isDisabled(p))
       return 'I';
    else if (pilot_isFriendly(p))
-      return 'N';
+      return 'F';
    else if (pilot_isHostile(p))
       return 'H';
    return faction_getColourChar(p->faction);
@@ -2197,7 +2197,7 @@ void pilot_update( Pilot* pilot, double dt )
       }
 
       /* Regen fuel. */
-      pilot->fuel += pilot->stats.fuel_regen;
+      pilot->fuel = MIN( pilot->fuel_max, pilot->fuel + pilot->stats.fuel_regen * dt );
 
       /*
       * Using RC circuit energy loading.

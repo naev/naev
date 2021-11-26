@@ -128,4 +128,3 @@ static int shiplog_appendLog( lua_State *L )
    lua_pushboolean(L, !ret);
    return 1;
 }
-

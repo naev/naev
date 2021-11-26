@@ -18,6 +18,14 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-5631">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-7402">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Urdads">
    <autopos/>
    <hide>1.000000</hide>

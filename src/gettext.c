@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file gettext.c
  *
  * @brief PhysicsFS-aware gettext implementation.
  */
-
-
 /** @cond */
 #include <ctype.h>
 #include <locale.h>
@@ -26,7 +23,6 @@
 #include "msgcat.h"
 #include "ndata.h"
 
-
 typedef struct translation {
    char *language;              /**< Language code (allocated string). */
    msgcat_t *chain;             /**< Array of message catalogs to try in order. */
@@ -37,7 +33,6 @@ static char gettext_systemLanguage[64] = "";            /**< Language, or :-deli
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
 
-
 /**
  * @brief Initialize the translation system.
  * There's no presumption that PhysicsFS is available, so this doesn't actually load translations.
@@ -47,18 +42,16 @@ static translation_t *gettext_activeTranslation = NULL; /**< Active language's c
 void gettext_init()
 {
    const char *env_vars[] = {"LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"};
-   const char *language;
-   size_t i, j;
 
    setlocale( LC_ALL, "" );
    /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
-   for (i = 0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
-      language = getenv( env_vars[i] );
+   for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
+      const char *language = getenv( env_vars[i] );
       /* Extract languages codes, e.g. "en_US:de_DE" -> "en:de" */
-      j = 0;
+      size_t j = 0;
       while (language != NULL && *language != 0 && j < sizeof(gettext_systemLanguage)-1) {
          if (isalpha(*language) || *language == ':')
             gettext_systemLanguage[j++] = *language++;
@@ -71,7 +64,6 @@ void gettext_init()
    }
 }
 
-
 /**
  * @brief Gets the active translation language.
  */
@@ -80,7 +72,6 @@ const char* gettext_getLanguage (void)
    return gettext_activeTranslation->language;
 }
 
-
 /**
  * @brief Set the translation language.
  *
@@ -88,10 +79,8 @@ const char* gettext_getLanguage (void)
  */
 void gettext_setLanguage( const char* lang )
 {
-   translation_t *newtrans, *ptrans;
+   translation_t *newtrans;
    char root[256], **paths;
-   int i;
-   const char *map, *lang_part;
    size_t map_size, lang_part_len;
 
    if (lang == NULL)
@@ -100,7 +89,7 @@ void gettext_setLanguage( const char* lang )
       return;
 
    /* Search for the selected language in the loaded translations. */
-   for (ptrans = gettext_translations; ptrans != NULL; ptrans = ptrans->next)
+   for (translation_t *ptrans = gettext_translations; ptrans != NULL; ptrans = ptrans->next)
       if (!strcmp( lang, ptrans->language )) {
          gettext_activeTranslation = ptrans;
          return;
@@ -117,7 +106,7 @@ void gettext_setLanguage( const char* lang )
     * That doesn't make sense, but this is a new use case and it's unclear
     * how we should determine precedence in case multiple .mo files exist. */
    while (lang != NULL && *lang != 0) {
-      lang_part = lang;
+      const char *lang_part = lang;
       lang = strchr(lang, ':');
       if (lang == NULL)
          lang_part_len = strlen(lang_part);
@@ -130,8 +119,8 @@ void gettext_setLanguage( const char* lang )
       strncpy( root, GETTEXT_PATH, sizeof(root)-1 );
       strncat( root, lang_part, MIN( sizeof(root)-sizeof(GETTEXT_PATH), lang_part_len) );
       paths = ndata_listRecursive( root );
-      for (i=0; i<array_size(paths); i++) {
-         map = ndata_read( paths[i], &map_size );
+      for (int i=0; i<array_size(paths); i++) {
+         const char *map = ndata_read( paths[i], &map_size );
          if (map != NULL) {
             msgcat_init( &array_grow( &newtrans->chain ), map, map_size );
             DEBUG( _("Adding translations from %s"), paths[i] );
@@ -154,14 +143,10 @@ void gettext_setLanguage( const char* lang )
  */
 const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n )
 {
-   msgcat_t *chain;
-   const char* trans;
-   int i;
-
    if (gettext_activeTranslation != NULL) {
-      chain = gettext_activeTranslation->chain;
-      for (i=0; i<array_size(chain); i++) {
-         trans = msgcat_ngettext( &chain[i], msgid, msgid_plural, n );
+      msgcat_t *chain = gettext_activeTranslation->chain;
+      for (int i=0; i<array_size(chain); i++) {
+         const char *trans = msgcat_ngettext( &chain[i], msgid, msgid_plural, n );
          if (trans != NULL)
             return (char*)trans;
       }
@@ -175,7 +160,6 @@ const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint6
  */
 const char* gettext_pgettext( const char* lookup, const char* msgid )
 {
-   const char *trans;
-   trans = _( lookup );
+   const char *trans = _( lookup );
    return trans==lookup ? msgid : trans;
 }

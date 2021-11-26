@@ -269,7 +269,7 @@ jobs:
 
     container:
       image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
-      
+
     needs:
       [
         Package_Source,
@@ -305,10 +305,12 @@ jobs:
           chmod +x build/dist/naev-$SUFFIX-linux-x86-64.AppImage
 
       - name: Upload Github Release
-        uses: ncipollo/release-action@v1.8.6
+        uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
         with:
           artifacts: "build/dist/*.*"
+          artifactErrorsFailBuild: true
+          replacesArtifacts: false
           bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true

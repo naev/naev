@@ -8,6 +8,7 @@
 local starfield = require "bkg.lib.starfield"
 local bgshaders = require "bkg.lib.bgshaders"
 local love_shaders = require 'love_shaders'
+local nebula = require "bkg.lib.nebula"
 
 local shader, scircuit
 
@@ -22,6 +23,9 @@ function background ()
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
+
+   -- Let's add big nebula because we can
+   nebula.init{ size=3000, movemod=0.2, opacity=50 }
 end
 
 renderbg = starfield.render

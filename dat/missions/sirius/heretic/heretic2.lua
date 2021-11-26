@@ -131,4 +131,3 @@ function out_sys_failure() --jumping pre-emptively is a bad thing.
       misn.finish(false)
    end
 end
-

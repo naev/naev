@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Hunter-Killer">
  <general>
-  <license>Heavy Weapon License</license>
+  <license>Heavy Weapon</license>
   <mass>1.5</mass>
   <price>0</price>
   <description>This little drone is little more than a guidance computer with bare-bones AI, a propulsion system, and a bomb wrapped in an armored shell.</description>

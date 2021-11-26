@@ -20,4 +20,3 @@ void main(void) {
    float beta  = smoothstep(-2.0*m, -m, -d);
    color_out   = color * vec4( vec3(alpha), beta );
 }
-

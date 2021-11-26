@@ -14,7 +14,7 @@
  <trail_generator x="-40" y="-5" h="0">nebula</trail_generator>
  <trail_generator x="-40" y="5" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and expanded structural space.</description>
  <health>
   <armour>500</armour>

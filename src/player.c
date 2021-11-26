@@ -43,6 +43,7 @@
 #include "news.h"
 #include "nfile.h"
 #include "nlua_misn.h"
+#include "nlua_outfit.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -2192,7 +2193,7 @@ void player_screenshot (void)
 
    /* now proceed to take the screenshot */
    DEBUG( _("Taking screenshot [%03d]..."), screenshot_cur );
-   gl_screenshot(filename);
+   gl_screenshot( filename );
 }
 
 /**
@@ -2724,27 +2725,37 @@ int player_rmOutfit( const Outfit *o, int quantity )
 {
    /* Try to find it. */
    for (int i=0; i<array_size(player_outfits); i++) {
-      if (player_outfits[i].o == o) {
-         /* See how many to remove. */
-         int q = MIN( player_outfits[i].q, quantity );
-         player_outfits[i].q -= q;
+      if (player_outfits[i].o != o)
+         continue;
+      /* See how many to remove. */
+      int q = MIN( player_outfits[i].q, quantity );
+      player_outfits[i].q -= q;
 
-         /* See if must remove element. */
-         if (player_outfits[i].q <= 0)
-            array_erase( &player_outfits, &player_outfits[i], &player_outfits[i+1] );
+      /* See if must remove element. */
+      if (player_outfits[i].q <= 0)
+         array_erase( &player_outfits, &player_outfits[i], &player_outfits[i+1] );
 
-         /* Return removed outfits. */
-         return q;
-      }
+      /* Return removed outfits. */
+      return q;
    }
 
    /* Nothing removed. */
    return 0;
 }
 
+/*
+ * Trivial sorting function for arrays of integers.
+ */
+static int cmp_int( const void *p1, const void *p2 )
+{
+   const int *i1 = (const int*) p1;
+   const int *i2 = (const int*) p2;
+   return (*i1) - (*i2);
+}
+
 /**
  * @brief Marks a mission as completed.
- *
+
  *    @param id ID of the mission to mark as completed.
  */
 void player_missionFinished( int id )
@@ -2757,6 +2768,8 @@ void player_missionFinished( int id )
    if (missions_done == NULL)
       missions_done = array_create( int );
    array_push_back( &missions_done, id );
+
+   qsort( missions_done, array_size(missions_done), sizeof(int), cmp_int );
 }
 
 /**
@@ -2767,10 +2780,8 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
-   for (int i=0; i<array_size(missions_done); i++)
-      if (missions_done[i] == id)
-         return 1;
-   return 0;
+   const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
+   return i!=NULL;
 }
 
 /**
@@ -2788,6 +2799,8 @@ void player_eventFinished( int id )
    if (events_done == NULL)
       events_done = array_create( int );
    array_push_back( &events_done, id );
+
+   qsort( events_done, array_size(events_done), sizeof(int), cmp_int );
 }
 
 /**
@@ -2798,10 +2811,8 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
-   for (int i=0; i<array_size(events_done); i++)
-      if (events_done[i] == id)
-         return 1;
-   return 0;
+   const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
+   return i!=NULL;
 }
 
 /**
@@ -2815,11 +2826,8 @@ int player_hasLicense( const char *license )
    if (license == NULL)
       return 1;
 
-   for (int i=0; i<array_size(player_licenses); i++)
-      if (strcmp(license, player_licenses[i])==0)
-         return 1;
-
-   return 0;
+   const char *s = bsearch( &license, player_licenses, array_size(player_licenses), sizeof(char*), strsort );
+   return s!=NULL;
 }
 
 /**
@@ -2834,6 +2842,8 @@ void player_addLicense( const char *license )
    if (player_licenses == NULL)
       player_licenses = array_create( char* );
    array_push_back( &player_licenses, strdup(license) );
+
+   qsort( player_licenses, array_size(player_licenses), sizeof(char*), strsort );
 }
 
 /**
@@ -2976,8 +2986,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 int player_save( xmlTextWriterPtr writer )
 {
    char **guis;
-   MissionData *m;
-   const char *ev;
    int cycles, periods, seconds;
    double rem;
 
@@ -3043,7 +3051,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (int i=0; i<array_size(missions_done); i++) {
-      m = mission_get(missions_done[i]);
+      MissionData *m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
    }
@@ -3052,7 +3060,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Events the player has done. */
    xmlw_startElem(writer, "events_done");
    for (int i=0; i<array_size(events_done); i++) {
-      ev = event_dataName(events_done[i]);
+      const char *ev = event_dataName(events_done[i]);
       if (ev != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", ev);
    }
@@ -3329,10 +3337,12 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-   if (lua_isnumber(naevL,-1))
+   if (lua_type(naevL,-1) == LUA_TNUMBER)
       price = round( lua_tonumber(naevL,-1) );
-   else if (lua_isstring(naevL,-1))
+   else if (lua_type(naevL,-1) == LUA_TSTRING)
       o = outfit_get( lua_tostring(naevL,-1) );
+   else if (lua_isoutfit(naevL,-1))
+      o = lua_tooutfit(naevL,-1);
    lua_pop(naevL,1);
 
    /* No equivalent. */

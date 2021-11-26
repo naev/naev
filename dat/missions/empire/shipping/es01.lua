@@ -124,17 +124,26 @@ function land ()
    elseif mem.landed == mem.ret and mem.misn_stage == 2 then
 
       -- Rewards
+      local getlicense = not diff.isApplied( "heavy_weapons_license" )
       player.pay( emp.rewards.es01 )
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
+      if getlicense then
+         tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
     "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), {pnt=mem.ret}) )
+      else
+         tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package."
+    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), {pnt=mem.ret}) )
+      end
 
       -- The goods
-      diff.apply("heavy_weapons_license")
-
-      emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
+      if getlicense then
+         diff.apply("heavy_weapons_license")
+         emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
+      else
+         emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
+      end
 
       misn.finish(true)
    end
@@ -182,5 +191,3 @@ function enemies( enter_vect )
       p:setHostile()
    end
 end
-
-

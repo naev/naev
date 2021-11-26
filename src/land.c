@@ -17,6 +17,7 @@
 
 #include "land.h"
 
+#include "array.h"
 #include "camera.h"
 #include "conf.h"
 #include "dialogue.h"
@@ -801,24 +802,28 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
 void land_updateMainTab (void)
 {
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
+   size_t l = 0;
    const Outfit *o;
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
-   snprintf( buf, sizeof(buf),
-         _("%s (%s system)\n"
-         "%s (%s-class)\n"
-         "%s\n"
-         "roughly %s\n"
-         "\n"
-         "%s\n"
-         "%s"),
-         _(land_planet->name), _(cur_system->name),
-         planet_getClassName(land_planet->class), _(land_planet->class),
-         land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None"),
-         space_populationStr( land_planet->population ),
-         tons, cred );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), _(land_planet->name), _(cur_system->name) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), planet_getClassName(land_planet->class), _(land_planet->class) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
+         land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_planet->population ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tons );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", cred );
+   /* Show tags. */
+   if (conf.devmode) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      for (int i=0; i<array_size(land_planet->tags); i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
+   }
+
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
@@ -1186,7 +1191,8 @@ static void land_createMainTab( unsigned int wid )
    const glTexture *logo;
    int offset;
    int w, h, logow, logoh, th;
-   const char *bufSInfo;
+   char buf[STRMAX_SHORT];
+   size_t l = 0;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1215,17 +1221,17 @@ static void land_createMainTab( unsigned int wid )
          "txtPlanetDesc", &gl_defFont, NULL, _(land_planet->description) );
 
    /* Player stats. */
-   bufSInfo = _(
-         "#nStationed at:\n"
-         "Class:\n"
-         "Faction:\n"
-         "Population:\n"
-         "\n"
-         "Free Space:\n"
-         "Money:" );
-   th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Stationed at:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Faction:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Population:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Free Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
+   if (conf.devmode)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Tags:") );
+   th = gl_printHeightRaw( &gl_defFont, 200, buf );
    window_addText( wid, 20, 20, 200, th,
-         0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
+         0, "txtSInfo", &gl_defFont, NULL, buf );
    window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
          th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 

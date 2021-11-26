@@ -15,6 +15,10 @@
   <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
  </assets>
  <jumps>
+  <jump target="NGC-11935">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-1292">
    <autopos/>
    <hide>1.000000</hide>

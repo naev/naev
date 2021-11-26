@@ -7,7 +7,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Summary: 2D space trading and combat game
-Group: Games/Arcade 
+Group: Games/Arcade
 License: GPLv3+
 URL: http://code.google.com/p/naev/
 
@@ -15,14 +15,14 @@ Source0: http://naev.googlecode.com/files/%{name}-%{version}.tar.bz2
 Source1: naev.png
 Source2: http://naev.googlecode.com/files/ndata-%{version}
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: SDL 
+Requires: SDL
 Requires: openal
 BuildRequires: SDL-devel
 BuildRequires: libxml2-devel
 BuildRequires: freetype2-devel
 BuildRequires: libpng-devel
 BuildRequires: libopenal-devel
-BuildRequires: libvorbis-devel 
+BuildRequires: libvorbis-devel
 BuildRequires: binutils-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libSDL_image-devel
@@ -93,4 +93,3 @@ rm -rf %{buildroot}
 %files -n %{dataname}
 %defattr(-,root,root)
 %{_datadir}/naev/ndata-%{version}
-

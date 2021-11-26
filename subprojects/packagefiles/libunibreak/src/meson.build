@@ -1,11 +1,11 @@
 libunibreak_sources = [
-   'unibreakbase.c',    
-   'unibreakdef.c',    
-   'linebreak.c',    
-   'linebreakdata.c',    
-   'linebreakdef.c',    
-   'emojidef.c',    
-   'graphemebreak.c',    
+   'unibreakbase.c',
+   'unibreakdef.c',
+   'linebreak.c',
+   'linebreakdata.c',
+   'linebreakdef.c',
+   'emojidef.c',
+   'graphemebreak.c',
    'wordbreak.c',
 ]
 

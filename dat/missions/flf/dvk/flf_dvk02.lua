@@ -262,4 +262,3 @@ function abort ()
    hj2:setKnown( false )
    misn.finish( false )
 end
-

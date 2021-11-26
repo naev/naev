@@ -12,7 +12,7 @@
  <trail_generator x="-40" y="8" h="0">zalek</trail_generator>
  <trail_generator x="-40" y="-8" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Heavy Combat Vessel License</license>
+ <license>Heavy Combat Vessel</license>
  <description>A mighty ship, the Mephisto has grand energy and shielding management, and its shields allow it to shrug off a lot of abuse. A core of these ships can reduce even powerful fleets to slag in short order.</description>
  <health>
   <armour>1200</armour>

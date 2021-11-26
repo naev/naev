@@ -82,4 +82,3 @@ function taunt ( target, _offense )
    local taunts = taunt_list
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
 end
-

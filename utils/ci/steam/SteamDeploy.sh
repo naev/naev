@@ -3,7 +3,7 @@
 # STEAM DEPLOYMENT SCRIPT FOR NAEV
 # Requires SteamCMD to be installed within a Github Actions ubuntu-latest runner.
 #
-# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/) 
+# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # This script should be run after downloading all build artefacts
 # If -n is passed to the script, a nightly build will be generated
@@ -74,7 +74,7 @@ cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 # Move Linux binary and set as executable
 cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
-          
+
 # Move macOS bundle to deployment location
 unzip "$TEMPPATH/naev-macos/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
@@ -101,11 +101,11 @@ if [ "$DRYRUN" == "false" ]; then
         # Run steam upload with 2fa key
         retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_nightly.vdf +quit
     else
-        if [ "$PRERELEASE" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then
             # Run steam upload with 2fa key
             retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_prerelease.vdf +quit
 
-        elif [ "$PRERELEASE" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then
             mkdir -p "$STEAMPATH"/content/soundtrack
             # Move soundtrack stuff to deployment area
             cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
@@ -130,11 +130,11 @@ elif [ "$DRYRUN" == "true" ]; then
         echo "steamcmd nightly build"
         ls -l -R "$STEAMPATH"
     else
-        if [ "$PRERELEASE" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then
             # Run steam upload with 2fa key
             echo "steamcmd PRERELEASE build"
             ls -l -R "$STEAMPATH"
-        elif [ "$PRERELEASE" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then
             # Move soundtrack stuff to deployment area
             echo "copy soundtrack files"
 

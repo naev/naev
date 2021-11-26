@@ -69,8 +69,6 @@ You may notice curly-bracketed {words} sprinkled throughout the text. These
 are portions that will be filled in later by the mission via the
 `fmt.f()` function.
 --]]
-ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
-    "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]])
 
 -- Set some mission parameters.
 -- For credit values in the thousands or millions, we use scientific notation (less error-prone than counting zeros).
@@ -88,7 +86,7 @@ local credits = 250e3
 -- displaying a number of credits.
 local reward_text = fmt.credits( credits )
 
---[[ 
+--[[
 First you need to *create* the mission.  This is *obligatory*.
 
 You have to set the NPC and the description. These will show up at the
@@ -99,7 +97,7 @@ function create ()
    -- Naev will keep the contents of "mem" across games if the player saves and quits.
    -- Track mission state there. Warning: pilot variables cannot be saved.
    mem.talked = false
-   
+
    -- If we needed to claim a system, we would do that here with
    -- something like the following commented out statement. However,
    -- this mission won't be doing anything fancy with the system, so we
@@ -135,12 +133,17 @@ function accept ()
       -- (via the `tostring` built-in) know to write its name in the player's native language.
       text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, reward=reward_text})
    else
-      text = ask_text
+      text = fmt.f(_([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
+    "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]]),
+         {pnt=misplanet, sys=missys, reward=reward_text}))
       mem.talked = true
    end
 
    -- This will create the typical "Yes/No" dialogue. It returns true if
-   -- yes was selected. 
+   -- yes was selected.
+   -- For more full-fledged visual novel API please see the vn module. The
+   -- vntk module wraps around that and provides a more simple and easy to use
+   -- interface, although it is much more limited.
    if vntk.yesno( _("My Suit Collection"),
          fmt.f(ask_text, {reward=reward_text}) ) then
       -- Followup text.
@@ -200,7 +203,7 @@ function land ()
 
       -- Add a log entry. This should only be done for unique missions.
       neu.addMiscLog( fmt.f(_([[You helped transport a well-dressed man to {pnt} so that he could buy some kind of special suit to complete his collection.]]), {pnt=misplanet} ) )
-      
+
       -- Finish the mission. Passing the `true` argument marks the
       -- mission as complete.
       misn.finish( true )

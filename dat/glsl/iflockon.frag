@@ -28,7 +28,7 @@ void main(void) {
    float d = sdSegment( auv,
          CS(0.5*0.5*M_PI*0.5)*0.8,
          CS(0.5*0.5*M_PI*0.5)*1.0 )-m;
-   
+
    float a = paramf * M_PI;
    float c = cos(a);
    float s = sin(a);
@@ -44,5 +44,3 @@ void main(void) {
    color_out   = color;
    color_out.a*= alpha;
 }
-
-

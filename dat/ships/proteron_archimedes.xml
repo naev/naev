@@ -18,7 +18,7 @@
  <trail_generator x="-45" y="-22" h="0">nebula</trail_generator>
  <trail_generator x="-45" y="22" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
- <license>Heavy Combat Vessel License</license>
+ <license>Heavy Combat Vessel</license>
  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>
  <health>
   <armour>1700</armour>

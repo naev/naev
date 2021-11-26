@@ -15,4 +15,3 @@ void main(void) {
    color_out   = color * vec4( vec3(alpha), beta );
    //color_out = vec4(vec3(d),1.0);
 }
-

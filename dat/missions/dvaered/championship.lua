@@ -455,4 +455,3 @@ function player_wanted()  --For some reason, the security wants to take the play
       k:land(mispla)
    end
 end
-

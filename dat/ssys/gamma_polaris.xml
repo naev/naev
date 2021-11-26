@@ -2,6 +2,7 @@
 <ssys name="Gamma Polaris">
  <general>
   <features>#pEmpire Homeworld#0</features>
+  <background>nebu_ngc_2440_2</background>
   <radius>30000.000000</radius>
   <stars>500</stars>
   <interference>0.000000</interference>

@@ -23,6 +23,14 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-7402">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-7784">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Stained Soul">
    <autopos/>
    <hide>1.000000</hide>

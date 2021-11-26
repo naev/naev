@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Egress">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>The Assault</done>
-   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>The Wringer</planet>
-  </avail>
-  <notes>
-   <campaign>Heretic</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>The Assault</done>
+  <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>The Wringer</planet>
+ </avail>
+ <notes>
+  <campaign>Heretic</campaign>
+ </notes>
+</mission>
+--]]
 --[[misn title - the egress]]
 --[[this mission begins with the frenetic Nasin wanting to escape
    The Wringer due to being overwhelmed by House Sirius. The player

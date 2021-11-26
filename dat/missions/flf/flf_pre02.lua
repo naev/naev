@@ -336,4 +336,3 @@ function land_dv ()
       misn.finish( true )
    end
 end
-

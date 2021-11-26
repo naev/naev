@@ -189,10 +189,10 @@ float cnoise(vec2 P)
   vec2 g11 = vec2(gx.w,gy.w);
 
   vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
-  g00 *= norm.x;  
-  g01 *= norm.y;  
-  g10 *= norm.z;  
-  g11 *= norm.w;  
+  g00 *= norm.x;
+  g01 *= norm.y;
+  g10 *= norm.z;
+  g11 *= norm.w;
 
   float n00 = dot(g00, vec2(fx.x, fy.x));
   float n10 = dot(g10, vec2(fx.y, fy.y));
@@ -521,4 +521,3 @@ function love.update( dt )
       shader:send( "dt", global_dt )
    end
 end
-

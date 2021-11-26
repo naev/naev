@@ -43,7 +43,7 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   v(fmt.f(_([["You look like a pilot in need of a job. I'm looking for someone to take me and {amount} of my equipment to {pnt} in the {sys}. Do you think you could transport me there? I'll make it worth your time with {creds}. What do you say?"]]),
+   v(fmt.f(_([["You look like a pilot in need of a job. I'm looking for someone to take me and {amount} of my equipment to {pnt} in the {sys} system. Do you think you could transport me there? I'll make it worth your time with {creds}. What do you say?"]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -76,10 +76,11 @@ function accept ()
       return
    end
 
+   misn.accept()
+
    local c = misn.cargoNew( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
    misn.cargoAdd(c, cargo_amount)
 
-   misn.accept()
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take them to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward( fmt.credits(reward) )

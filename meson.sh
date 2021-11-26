@@ -2,8 +2,8 @@
 #
 # This script will download and wrap meson if the current installed version
 # is not at least version 0.55.0 (which meson.build currently requires)
-# if you have a newer version of meson in PATH, this wrapper isn't needed, 
-# but it will pass commands through all the same. 
+# if you have a newer version of meson in PATH, this wrapper isn't needed,
+# but it will pass commands through all the same.
 #
 # Keep in mind that this script does not account for ninja-build being installed (yet)
 #
@@ -35,7 +35,7 @@ if ! [ -x "$(command -v meson)" ]; then
 else
     currentver="$(meson --version)"
     requiredver="0.55.0"
-    if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then 
+    if [ "$(printf '%s\n' "$requiredver" "$currentver" | sort -V | head -n1)" = "$requiredver" ]; then
             echo "Meson version is greater than or equal to ${requiredver}"
             MESON="meson"
     else

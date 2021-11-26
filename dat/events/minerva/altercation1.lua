@@ -265,4 +265,3 @@ function leave () --event ends on player leaving the system or landing
    var.push( "minerva_altercation_probability", prob/1.5 )
    evt.finish(true)
 end
-

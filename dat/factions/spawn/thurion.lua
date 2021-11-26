@@ -111,4 +111,3 @@ function spawn ( presence, max )
 
    return scom.calcNextSpawn( presence ), pilots
 end
-

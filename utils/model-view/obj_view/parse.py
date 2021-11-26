@@ -36,7 +36,7 @@ def mtl_getopt(args, arg_spec):
     while i < len(args):
         matched = False
         if args[i].startswith('-'):
-            for name, count in arg_spec.items(): 
+            for name, count in arg_spec.items():
                 if args[i][1:] == name:
                     results[name] = tuple(args[i+1:i+count+1])
                     i += count

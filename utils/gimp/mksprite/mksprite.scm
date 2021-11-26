@@ -3,7 +3,7 @@
 ; (C) 2008 Edgar Simo <bobbens@gmail.com>
 ;
 ; This program is free software; you can redistribute it and/or modify
-; it under the terms of the GNU General Public License version 3 as 
+; it under the terms of the GNU General Public License version 3 as
 ; published by the Free Software Foundation.
 ;
 ; This program is distributed in the hope that it will be useful,
@@ -66,7 +66,7 @@
 
                    ; Rotate Sprite
                    (gimp-rect-select timg (* numX sprite_width) (* numY sprite_height) sprite_width sprite_height 2 0 0)
-                   (gimp-rotate tdrawable 1 (* (* angle -1) 
+                   (gimp-rotate tdrawable 1 (* (* angle -1)
                                                (+ (+ (+ numX 1) (* numY inX)) -1)))
                    (gimp-floating-sel-anchor (car (gimp-image-floating-selection timg)))
 
@@ -100,4 +100,3 @@
                     SF-VALUE "Number Y:" "6" )
 (script-fu-menu-register "script-fu-naev-mksprite"
                          _"<Toolbox>/Xtns/naev")
-

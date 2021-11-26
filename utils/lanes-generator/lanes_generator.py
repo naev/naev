@@ -34,7 +34,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     sr  = [] # Lanes reserved for a faction
     loc2globs = []
     system = [] # Tells which system the lane is in
-    
+
     crit = math.cos(MIN_ANGLE)
     i  = 0
     ii = 0
@@ -44,13 +44,13 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
         loc2globN = loc2globNs[k]
         for n in range(len(nodes)):
             xn, yn = nodes[n]
-            
+
             na = g2ass[loc2globN[n]]  # Find global asset numerotation of local node
             if na>=0:
                 fn = factass[na]
             else: # It's not an asset
                 fn = -1
-            
+
             for m in range(n): # Only m<n, because symmetry
                 xm, ym = nodes[m]
                 ma = g2ass[loc2globN[m]]
@@ -58,16 +58,16 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                     fm = factass[ma]
                 else: # It's not an asset
                     fm = -1
-                
+
                 lmn = math.hypot( xn-xm, yn-ym )
-                
+
                 # Check if very close path exist already.
                 forbidden = False
                 for p in range(len(nodes)):
                     if n==p or m==p:
                         continue
                     xi, yi = nodes[p]
-                    
+
                     # The scalar product should not be too close to 1
                     # That would mean we've got a flat triangle
                     lni = math.hypot(xn-xi, yn-yi)
@@ -77,10 +77,10 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                     if (dpn > crit and lni < lmn) or (dpm > crit and lmi < lmn):
                         forbidden = True
                         break
-                    
+
                 if forbidden:
                     continue
-                
+
                 si.append( i+n )
                 sj.append( i+m )
                 sv.append( 1/lmn )
@@ -88,10 +88,10 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                 sjl.append( m )
                 sr.append((fn,fm)) # This tells who is allowed to build along the lane
                 system.append(k)
-                
+
                 loc2glob.append(ii)
                 ii += 1
-                
+
         i += len(nodes)
         loc2globs.append(loc2glob)
 
@@ -120,7 +120,7 @@ class SafeLaneProblem:
                 m = jpnamek[namei] # Index of system i in system k numerotation
 
                 si0.append(loc2globi[jp2loci[j]]) # Assets connectivity (jp only)
-                sj0.append(loc2globk[jp2lock[m]]) # 
+                sj0.append(loc2globk[jp2lock[m]]) #
                 sv0.append(JUMP_CONDUCTIVITY)
                 biconnect.union(i, k)
 
@@ -148,12 +148,12 @@ def buildStiffness( problem, activated, systems ):
     for i in range(len(int_sv0)):
         if activated[i]:
             int_sv[i] = (ALPHA+1)*int_sv0[i]
-    
+
     # Assemble both lists
     si = def_si + int_si
     sj = def_sj + int_sj
     sv = def_sv + int_sv
-    
+
     # Build the sparse matrix
     sii = si + sj + si + sj
     sjj = si + sj + sj + si
@@ -176,15 +176,15 @@ def compute_PPts_QtQ( problem, utilde, systems ):
       By chance, this does not depend on the presence of lane.'''
     nfact = len(systems.presences[0])
     nass = len(systems.ass2g)
-    
+
     # First : compute the (sparse) matrix that transforms utilde into u
     pi = []
     pj = []
     pv = []
-    
+
     di = [[] for i in range(nfact)]
     dv = [[] for i in range(nfact)]
-    
+
     for i, ai in enumerate(systems.ass2g):
         facti = systems.factass[i]
         presi = systems.presass[i]
@@ -192,7 +192,7 @@ def compute_PPts_QtQ( problem, utilde, systems ):
             if utilde[ai,j] <= DISCONNECTED_THRESHOLD:
                 continue
             ij = (i*(i-1))//2 + j # Multiindex
-            
+
             # Just a substraction
             pi.append(i)
             pj.append(ij)
@@ -200,10 +200,10 @@ def compute_PPts_QtQ( problem, utilde, systems ):
             pi.append(j)
             pj.append(ij)
             pv.append(-1)
-            
+
             factj = systems.factass[j]
             presj = systems.presass[j]
-            
+
             # Build the diagonal weights
             if facti >= 0:
                 di[facti].append(ij)
@@ -211,15 +211,15 @@ def compute_PPts_QtQ( problem, utilde, systems ):
             if factj >= 0:
                 di[factj].append(ij)
                 dv[factj].append(presj)
-            
+
     P = sp.csr_matrix( ( pv, (pi, pj) ) )
     # P*utilde^T = u^T
-    
+
     Pp = ( P @ sp.csr_matrix( (dv[k], (di[k], di[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) )
     PPl = [ (Ppk @ Ppk.transpose()).todense() for Ppk in Pp ]
-    
+
     si, sj = problem.internal_lanes[:2]
-    
+
     # Then : the matrix that gives penibility on each internal lane from u
     qi = []
     qj = []
@@ -232,10 +232,10 @@ def compute_PPts_QtQ( problem, utilde, systems ):
         qi.append(i)
         qj.append(sj[i])
         qv.append(-1)
-            
+
     Q = sp.csr_matrix( (qv, (qi, qj)), (len(si), len(systems.g2ass)) )
     # Q*u = p
-    
+
     return PPl, Q.transpose() @ Q
 
 
@@ -247,7 +247,7 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems, iters_done )
     sr = problem.internal_lanes[6] # Tells who has right to build on each lane
     sy = problem.internal_lanes[7] # Tells the system
     vf = problem.vertex_factions
-    
+
     sz = len(si)
 
     nfact = len(PPl)
@@ -258,10 +258,10 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems, iters_done )
         for i in range(len(systems.loc2globs)):
             if pres_0[i][k] <= 0: # Does this faction have presence here ?
                 continue
-            
+
             loc2glob = systems.loc2globs[i] # Idices of the assets in the global numerotation
             myDofs = myDofs + loc2glob
-            
+
 
         lal = np.zeros(lamt.shape)
         lal[myDofs,:] = lamt[myDofs,:] @ PPl[k]
@@ -269,26 +269,26 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems, iters_done )
         glk = np.zeros((sz,1))
 
         for i in range(sz):
-            
+
             if activated[i]: # The lane has already been activated: no need to re-compute its gradient
                 continue
-            
+
             if pres_0[sy[i]][k] <= 0: # Does this faction have presence here ?
                 continue
-            
+
             sis = si[i]
             sjs = sj[i]
 
             faction_may_build = ((k in sr[i]) or (sr[i] == (-1, -1))) and ((k in vf[sis] or k in vf[sjs]) or not iters_done)
             if not faction_may_build:
                 continue
-            
+
             LUTll = np.dot( lal[[sis,sjs],:] , u[[sis,sjs],:].T )
             glk[i] = ALPHA*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
-            
+
         gl.append(glk)
     return gl
-        
+
 
 def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_done ):
     '''Activates the best lane in each system for each faction. Returns the number activated. '''
@@ -299,12 +299,12 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_do
     nsys = len(lanesLoc2globs)
     nactivated = 0
     nfact = len(pres_c[0])
-    
+
     g1l = [gl[k] * np.c_[sv] for k in range(nfact)]
-    
+
     for i in range(nsys):
         lanesLoc2glob = lanesLoc2globs[i]
-        
+
         if all(activated[k] for k in lanesLoc2glob):
             continue
 
@@ -312,18 +312,18 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_do
         ploc = pres_0[i]
         sind = np.argsort(ploc)
         sind = np.flip(sind)
-        
+
         for ff in range(nfact):
             f = sind[ff]
 
             for lane in range(FACTIONS_LANES_BUILT_PER_ITERATION):
                 if pres_c[i][f] <= 0.: # This faction has no presence
                     continue
-                
+
                 gloc = g1l[f][lanesLoc2glob]
                 ind1 = np.argsort(gloc.transpose()) # For some reason, it does not work without transpose :/
                 ind = [lanesLoc2glob[k] for k in ind1[0]]
-        
+
                 # Find a lane to activate
                 prev_nactivated = nactivated
                 for k in ind:
@@ -339,7 +339,7 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_do
                         Lfaction[k] = f
                         nactivated += 1
                         break
-                    
+
                 # The faction did not activate anything:
                 # There is no hope in activating anything anymore.
                 if nactivated == prev_nactivated:
@@ -355,11 +355,11 @@ def optimizeLanes( systems, problem ):
     Lfaction = [-1] * sz;
     pres_c = copy.deepcopy(systems.presences)
     nfact = len(systems.presences[0])
-    
+
     # TODO : It could be interesting to use sparse format for the RHS as well (see)
     ftilde = np.eye( len(systems.g2ass) )
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
-    
+
     for i in range(MAX_ITERATIONS):
         stiff = buildStiffness( problem, activated, systems ) # ~0.008 s
         stiff_c = cholesky(stiff) #.001s
@@ -374,7 +374,7 @@ def optimizeLanes( systems, problem ):
 
         rhs = - QQ @ utilde
         lamt = stiff_c.solve_A( rhs ) #.010 s
-        
+
         # Compute the gradient and activate. Runtime depends on how many degrees of freedom remain.
         gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems, i )
 
@@ -387,6 +387,6 @@ def optimizeLanes( systems, problem ):
 if __name__ == "__main__":
     systems = Systems()
     problem = SafeLaneProblem( systems )
-    
+
     activated, Lfaction = optimizeLanes( systems, problem )
     printLanes( problem, activated, Lfaction, systems )

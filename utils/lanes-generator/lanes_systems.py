@@ -60,13 +60,13 @@ def parse_pos(pos):
 def readAssets(path):
     '''Returns a dictionary of Asset values by name. '''
     assets = {}
-    
+
     for fileName in os.listdir(path):
         tree = ET.parse((path+fileName))
         root = tree.getroot()
         name = root.attrib['name']
         x, y = parse_pos(root.find('pos'))
-        
+
         assets[name] = Asset(x, y, presences=[
             FactionPresence(
                 presence.findtext('faction'),
@@ -78,7 +78,7 @@ def readAssets(path):
             )
             for presence in root.findall('presence')
         ])
-    
+
     return assets
 
 

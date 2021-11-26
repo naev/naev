@@ -134,4 +134,3 @@ He slaps the hull of a heavy machine.
       misn.finish(true)
    end
 end
-

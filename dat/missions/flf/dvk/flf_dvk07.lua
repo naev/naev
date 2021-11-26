@@ -84,4 +84,3 @@ function land_flf ()
       misn.finish( true )
    end
 end
-

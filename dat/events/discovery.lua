@@ -220,6 +220,7 @@ local custom_events = {
    NorthWinds = {
       test = function ()
          local nsys = {
+            "Pilatis",
             "Defa",
             "Vedalus",
             "Titus",

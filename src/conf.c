@@ -14,6 +14,7 @@
 #include "conf.h"
 
 #include "env.h"
+#include "background.h"
 #include "input.h"
 #include "log.h"
 #include "music.h"
@@ -240,6 +241,11 @@ void conf_setVideoDefaults (void)
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_brightness = NEBU_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
+   conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
+
+   gl_colorblind( conf.colorblind );
+   if (cur_system)
+      background_load( cur_system->background );
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
@@ -326,6 +332,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
       conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
+      conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -861,6 +868,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
    conf_saveFloat("gamma_correction",conf.gamma_correction);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Expensive high quality shaders for the background. Defaults to false."))
+   conf_saveBool("background_fancy",conf.background_fancy);
    conf_saveEmptyLine();
 
    /* FPS */

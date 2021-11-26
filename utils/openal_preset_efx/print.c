@@ -35,5 +35,3 @@ void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
    printf( "   }\n"
            "end\n" );
 }
-
-

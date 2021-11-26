@@ -75,5 +75,3 @@ int nsetenv( const char *name, const char *value, int overwrite )
 #endif /* HAVE_DECL__PUTENV_S */
 #endif /* HAVE_DECL_SETENV */
 }
-
-

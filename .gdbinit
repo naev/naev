@@ -15,4 +15,3 @@ define hook-stop
 end
 echo .gdbinit: running naev with gdb wrapper\n
 run
-

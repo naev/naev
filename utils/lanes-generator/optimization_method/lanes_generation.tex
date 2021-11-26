@@ -97,7 +97,7 @@ Let us suppose one wants to solve such a problem on the mesh presented in figure
 	\end{tabular}
 	\caption{Potential and Flux in different domains}
 	\label{tab:potNflux}
-\end{table} 
+\end{table}
 
 One can impose three types of boundary conditions:
 
@@ -178,7 +178,7 @@ The kernel of the operator has a great importance as it makes the matrix singula
 
 Once one Robin BC has been added on each connected part of the graph, the system has an unique solution. This solution is also one of the solutions of the problem without the Robin BCs if there is only one Robin BC per connected part of the mesh, and if the right hand side is orthogonal to the kernel.
 
-There are a few interesting properties that will be useful to determine automatically during computation if two nodes are connected by the graph: 
+There are a few interesting properties that will be useful to determine automatically during computation if two nodes are connected by the graph:
 
 \begin{itemize}
 	\item If the right hand side is non-zero only in one connected sub-graph, the solution of the system vanishes in all the other sub-graphs.
@@ -259,7 +259,7 @@ The sketch of the optimization process is as follows :
 	\item At each iteration, compute $U$ by solving the multiple right hand side linear system $K(\theta_i)U=F$
 	\item Find the next iterate $\theta_{i+1}$
 \end{itemize}
-	
+
 
 \section{Cost-function and gradients}
 
@@ -409,7 +409,7 @@ Two different cases may happend:
 \forall s \text{ (system)}, \forall p \text{ (faction)}, \delta_{end}^p = - \dfrac{1}{\xi_{end}} \sum_j \delta_j^p \xi_j
 \end{equation}
 
-This second point leads to a variable change that can be formally written as follows, where $c$ is a vector for each system and faction: 
+This second point leads to a variable change that can be formally written as follows, where $c$ is a vector for each system and faction:
 
 \begin{equation}
 \theta_{end} = c^T \theta_0
@@ -440,7 +440,7 @@ The second constraint is the positivity of the lane density. This reads $\theta\
 
 \textcolor{red}{Check the second inequality}
 
-From any tentative iterate $\tilde{\theta_0}$, the vector $\theta_0$ will be constructed by projection: 
+From any tentative iterate $\tilde{\theta_0}$, the vector $\theta_0$ will be constructed by projection:
 
 \begin{equation}
 \theta_0 = \argmin_{\substack{\theta \geqslant 0\\c^T\theta \geqslant \Xi}} \dfrac{1}{2}\|\theta-\tilde{\theta_0}\|^2

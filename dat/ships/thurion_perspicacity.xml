@@ -16,7 +16,7 @@
  <trail_generator x="-5" y="8" h="3">nebula</trail_generator>
  <trail_generator x="-5" y="0" h="-15">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
- <license>Light Combat Vessel License</license>
+ <license>Light Combat Vessel</license>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
  <health>
   <armour>50</armour>

@@ -415,7 +415,7 @@ int intro_display( const char *text, const char *mus )
       }
 
       /* Clear stuff. */
-      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Only thing we actually care about updating is music. */
       music_update( 0. );

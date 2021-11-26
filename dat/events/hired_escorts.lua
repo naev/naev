@@ -451,4 +451,3 @@ function approachPilot( npc_id )
    shiplog.create( logidstr, _("Hired Escorts"), _("Hired Escorts") )
    shiplog.append( logidstr, fmt.f(_("You hired a {ship} ship named '{name}' for {deposit_text} and {royalty_percent:.1f}% of mission earnings."), edata ) )
 end
-

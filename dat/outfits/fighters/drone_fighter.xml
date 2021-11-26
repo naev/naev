@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Drone Fighter">
  <general>
-  <license>Light Combat Vessel License</license>
+  <license>Light Combat Vessel</license>
   <mass>15</mass>
   <price>0</price>
   <gfx_store>drone_fighter.webp</gfx_store>

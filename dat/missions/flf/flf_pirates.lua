@@ -269,4 +269,3 @@ function patrol_spawnFLF( n, param, comm )
 
    fleetFLF[1]:comm( player.pilot(), comm )
 end
-

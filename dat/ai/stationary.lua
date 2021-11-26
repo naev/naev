@@ -101,5 +101,3 @@ function attack ()
    end
    ai.weapset( 9 ) -- Turreted Missiles
 end
-
-

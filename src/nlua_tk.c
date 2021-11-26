@@ -662,4 +662,3 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
    lua_pop(L,1);
    return b;
 }
-

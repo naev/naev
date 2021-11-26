@@ -45,7 +45,8 @@ void commodity_exchange_open( unsigned int wid )
    int i, ngoods;
    ImageArrayCell *cgoods;
    int w, h, iw, ih, dw, bw, titleHeight, infoHeight;
-   const char *bufSInfo;
+   char buf[STRMAX_SHORT];
+   size_t l = 0;
    int iconsize;
 
    /* Mark as generated. */
@@ -82,17 +83,16 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, 40 + iw, -40, dw, titleHeight, 0,
          "txtName", &gl_defFont, NULL, _("None") );
 
-   bufSInfo = _(
-           "#nYou have:#0\n"
-           "#nPurchased for:#0\n"
-           "#nMarket Price:#0\n"
-           "#nFree Space:#0\n"
-           "#nMoney:#0\n"
-           "#nAverage price here:#0\n"
-           "#nAverage price all:#0");
-   infoHeight = gl_printHeightRaw(&gl_smallFont, LAND_BUTTON_WIDTH+80, bufSInfo);
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0", _("You have:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Purchased for:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Market Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Free Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price here:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price all:") );
+   infoHeight = gl_printHeightRaw( &gl_smallFont, LAND_BUTTON_WIDTH+80, buf );
    window_addText( wid, 40 + iw, -60 - titleHeight, 200, infoHeight, 0,
-         "txtSInfo", &gl_smallFont, NULL, bufSInfo );
+         "txtSInfo", &gl_smallFont, NULL, buf );
    window_addText( wid, 40 + iw + 224, -60 - titleHeight,
          dw - (200 + 20+192), infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
@@ -143,7 +143,7 @@ void commodity_update( unsigned int wid, const char *str )
    (void)str;
    char buf[STRMAX];
    char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
-   int i;
+   size_t l = 0;
    Commodity *com;
    credits_t mean,globalmean;
    double std, globalstd;
@@ -152,20 +152,18 @@ void commodity_update( unsigned int wid, const char *str )
    char buf_local_price[ECON_CRED_STRLEN];
    char buf_tonnes_owned[ECON_MASS_STRLEN], buf_tonnes_free[ECON_MASS_STRLEN];
    int owned;
-   i = toolkit_getImageArrayPos( wid, "iarTrade" );
+   int i = toolkit_getImageArrayPos( wid, "iarTrade" );
+   credits2str( buf_credits, player.p->credits, 2 );
+   tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
+
    if (i < 0 || array_size(land_planet->commodities) == 0) {
-      credits2str( buf_credits, player.p->credits, 2 );
-      tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-      snprintf( buf, sizeof(buf),
-         _("N/A tonnes\n"
-           "\n"
-           "N/A ¤\n"
-           "%s\n"
-           "%s\n"
-           "N/A ¤\n"
-           "N/A ¤"),
-         buf_tonnes_free,
-         buf_credits );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("N/A") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_tonnes_free );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits  );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", _("No commodities available.") );
       window_disableButton( wid, "btnCommodityBuy" );
@@ -188,20 +186,18 @@ void commodity_update( unsigned int wid, const char *str )
    owned=pilot_cargoOwned( player.p, com );
    if ( owned > 0 )
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
-   credits2str( buf_credits, player.p->credits, 2 );
    credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
-   tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-   snprintf( buf, sizeof(buf),
-              _( "%s\n"
-                 "%s\n"
-                 "%s/t\n"
-                 "%s\n"
-                 "%s\n"
-                 "%s/t ± %s/t\n"
-                 "%s/t ± %s/t\n" ),
-              buf_tonnes_owned, buf_purchase_price, buf_local_price, buf_tonnes_free, buf_credits, buf_mean, buf_std,
-              buf_globalmean, buf_globalstd );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", buf_tonnes_owned );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_purchase_price );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t"), buf_local_price );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_tonnes_free );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_mean, buf_std );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtName", _(com->name) );

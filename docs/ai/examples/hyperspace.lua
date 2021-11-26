@@ -18,4 +18,3 @@ function hyperspace ()
       ai.accel()
    end
 end
-

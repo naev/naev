@@ -12,6 +12,10 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="NGC-10789">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Poller">
    <autopos/>
    <hide>1.000000</hide>

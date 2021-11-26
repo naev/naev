@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file imagearray.c
  *
  * @brief Image array widget.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 /** @endcond */
@@ -16,7 +13,6 @@
 #include "nstring.h"
 #include "opengl.h"
 #include "tk/toolkit_priv.h"
-
 
 /* Render. */
 static void iar_render( Widget* iar, double bx, double by );
@@ -40,7 +36,6 @@ static Widget *iar_getWidget( unsigned int wid, const char *name );
 static const char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
 static void iar_cleanup( Widget* iar );
-
 
 /**
  * @brief Adds an Image Array widget.
@@ -118,7 +113,6 @@ void window_addImageArray( unsigned int wid,
       toolkit_nextFocus( wdw );
 }
 
-
 /**
  * @brief Gets image array effective dimensions.
  */
@@ -131,10 +125,9 @@ static void iar_getDim( Widget* iar, double* w, double* h, double* xspace, doubl
    _space /= (iar->dat.iar.xelem + 1);
    if (w != NULL) *w = _w;
    if (h != NULL) *h = _h;
-   if (xspace != NULL) *xspace = _space;
-   if (yspace != NULL) *yspace = _space;
+   if (xspace != NULL) *xspace = _space; /* Justify columns with ~equal spacing */
+   if (yspace != NULL) *yspace = round( _space ); /* Make row spacing precisely equal. */
 }
-
 
 /**
  * @brief Renders an image array.
@@ -145,12 +138,12 @@ static void iar_getDim( Widget* iar, double* w, double* h, double* xspace, doubl
  */
 static void iar_render( Widget* iar, double bx, double by )
 {
-   int i, j, k, pos;
+   int pos;
    double x,y, w,h, xcurs,ycurs, xspace,yspace;
    double scroll_pos;
    int xelem, yelem;
    const glColour *dc, *lc;
-   const glColour *fontcolour;
+   const glColour *fontcolour, *bgcolour;
    int is_selected;
    double hmax;
 
@@ -185,18 +178,14 @@ static void iar_render( Widget* iar, double bx, double by )
     * Main drawing loop.
     */
    gl_clipRect( x, y, iar->w, iar->h );
-   ycurs = y + iar->h - h + iar->dat.iar.pos - yspace;
-   for (j=0; j<yelem; j++) {
-      xcurs = x + floor(xspace / 2);
-
+   for (int j=0; j<yelem; j++) {
+      ycurs = floor(y + iar->h - (j+1)*(h+yspace) + iar->dat.iar.pos);
       /*  Skip rows that are wholly outside of the viewport. */
-      if ((ycurs > y + iar->h) || (ycurs + h < y)) {
-         ycurs -= h + yspace;
+      if ((ycurs > y + iar->h) || (ycurs + h < y))
          continue;
-      }
 
-      for (i=0; i<xelem; i++) {
-         xcurs += (xspace / 2);
+      for (int i=0; i<xelem; i++) {
+         xcurs = floor(x + i * w + (i+.5) * xspace);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -207,26 +196,17 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
-         if (is_selected)
+         if (is_selected) {
             fontcolour = &cWhite;
-         else
+            bgcolour = toolkit_col;
+         } else {
             fontcolour = &cFontWhite;
-         /* Draw background. */
-         if (iar->dat.iar.images[pos].bg.a > 0.) {
-            if (is_selected) {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., toolkit_col, NULL );
-            } else {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., &iar->dat.iar.images[pos].bg, NULL );
-            }
-         } else if (is_selected) {
-            toolkit_drawRect( xcurs + 2.,
-                  ycurs + 2.,
-                  w - 5., h - 5., toolkit_col, NULL );
+            bgcolour = &iar->dat.iar.images[pos].bg;
+            if (bgcolour->a <= 0.)
+               bgcolour = toolkit_colDark;
          }
+         /* Draw background. */
+         toolkit_drawRect( xcurs, ycurs, w, h, bgcolour, NULL );
 
          /* image */
          if (iar->dat.iar.images[pos].image != NULL)
@@ -235,7 +215,7 @@ static void iar_render( Widget* iar, double bx, double by )
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* layers */
-         for (k=0; k<iar->dat.iar.images[pos].nlayers; k++)
+         for (int k=0; k<iar->dat.iar.images[pos].nlayers; k++)
             if (iar->dat.iar.images[pos].layers[k] != NULL)
                gl_renderScaleAspect( iar->dat.iar.images[pos].layers[k],
                      xcurs + 5., ycurs + gl_smallFont.h + 7.,
@@ -277,13 +257,10 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
-         xcurs += w + (xspace / 2);
       }
-      ycurs -= h + yspace;
    }
    gl_unclipRect();
 }
-
 
 /**
  * @brief Renders the overlay.
@@ -309,7 +286,6 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
          toolkit_drawAltText( x, y, alt );
    }
 }
-
 
 /**
  * @brief Handles input for an image array widget.
@@ -360,7 +336,6 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
    return 1;
 }
 
-
 /**
  * @brief Centers on the selection if needed.
  *
@@ -385,7 +360,6 @@ static void iar_centerSelected( Widget *iar )
 
    iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
 }
-
 
 /**
  * @brief Image array widget mouse click handler.
@@ -421,7 +395,6 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
    return 0;
 }
 
-
 /**
  * @brief Image array widget mouse double click handler.
  *
@@ -454,7 +427,6 @@ static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
    return iar_mclick( iar, button, x, y );
 }
 
-
 /**
  * @brief Handler for mouse wheel events for an image array.
  *
@@ -471,7 +443,6 @@ static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
 
    return 1;
 }
-
 
 /**
  * @brief Handles mouse movement for an image array.
@@ -512,7 +483,6 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    return 0;
 }
 
-
 /**
  * @brief Clean up function for the image array widget.
  *
@@ -520,16 +490,14 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
  */
 static void iar_cleanup( Widget* iar )
 {
-   int i, j;
-
    if (iar->dat.iar.nelements > 0) { /* Free each text individually */
-      for (i=0; i<iar->dat.iar.nelements; i++) {
+      for (int i=0; i<iar->dat.iar.nelements; i++) {
          gl_freeTexture( iar->dat.iar.images[i].image );
          free( iar->dat.iar.images[i].caption );
          free( iar->dat.iar.images[i].alt );
          free( iar->dat.iar.images[i].slottype );
 
-         for (j=0; j<iar->dat.iar.images[i].nlayers; j++)
+         for (int j=0; j<iar->dat.iar.images[i].nlayers; j++)
             gl_freeTexture( iar->dat.iar.images[i].layers[j] );
          free( iar->dat.iar.images[i].layers );
       }
@@ -537,7 +505,6 @@ static void iar_cleanup( Widget* iar )
 
    free( iar->dat.iar.images );
 }
-
 
 /**
  * @brief Tries to scroll a widget up/down by direction.
@@ -574,7 +541,6 @@ static void iar_scroll( Widget* iar, int direction )
       iar_mmove( iar, iar->dat.iar.mx, iar->dat.iar.my, 0, 0 );
 }
 
-
 /**
  * @brief Return the widget's maximum y position (.pos); this is 0 if all content fits.
  */
@@ -585,7 +551,6 @@ static double iar_maxPos( Widget *iar )
    hmax = (h+yspace) * iar->dat.iar.yelem + yspace - iar->h;
    return hmax < 1e-05 ? 0. : hmax;
 }
-
 
 /**
  * @brief See what widget is being focused.
@@ -620,7 +585,6 @@ static int iar_focusImage( Widget* iar, double bx, double by )
 
    return iy * xelem + ix;
 }
-
 
 /**
  * @brief Mouse event focus on image array.
@@ -664,7 +628,6 @@ static void iar_focus( Widget* iar, double bx, double by )
    }
 }
 
-
 /**
  * @brief Chooses correct alt text for the given coordinates
  *
@@ -675,7 +638,6 @@ static void iar_setAltTextPos( Widget *iar, double bx, double by )
    iar->dat.iar.altx = bx;
    iar->dat.iar.alty = by;
 }
-
 
 /**
  * @brief Gets an image array.
@@ -699,7 +661,6 @@ static Widget *iar_getWidget( unsigned int wid, const char *name )
    return wgt;
 }
 
-
 /**
  * @brief Gets the name of the element.
  *
@@ -719,7 +680,6 @@ static const char* toolkit_getNameById( Widget *wgt, int elem )
 
    return wgt->dat.iar.images[ elem ].caption;
 }
-
 
 /**
  * @brief Gets what is selected currently in an Image Array.
@@ -744,7 +704,6 @@ const char* toolkit_getImageArray( unsigned int wid, const char* name )
    return toolkit_getNameById( wgt, wgt->dat.iar.selected );
 }
 
-
 /*
  * @brief Sets an image array based on value.
  *
@@ -755,7 +714,6 @@ const char* toolkit_getImageArray( unsigned int wid, const char* name )
  */
 int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem )
 {
-   int i;
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
       return -1;
@@ -767,7 +725,7 @@ int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem 
    }
 
    /* Try to find the element. */
-   for (i=0; i<wgt->dat.iar.nelements; i++) {
+   for (int i=0; i<wgt->dat.iar.nelements; i++) {
       if (strcmp(elem,wgt->dat.iar.images[i].caption)==0) {
          wgt->dat.iar.selected = i;
          iar_centerSelected( wgt );
@@ -778,7 +736,6 @@ int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem 
    /* Element not found. */
    return -1;
 }
-
 
 /**
  * @brief Gets what is selected currently in an Image Array.
@@ -796,7 +753,6 @@ int toolkit_getImageArrayPos( unsigned int wid, const char* name )
    return wgt->dat.iar.selected;
 }
 
-
 /**
  * @brief Gets the Image Array offset.
  */
@@ -808,7 +764,6 @@ double toolkit_getImageArrayOffset( unsigned int wid, const char* name )
 
    return wgt->dat.iar.pos;
 }
-
 
 /**
  * @brief Sets the Image Array offset.
@@ -838,7 +793,6 @@ int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off 
    return 0;
 }
 
-
 /**
  * @brief Sets the active element in the Image Array.
  *
@@ -864,7 +818,6 @@ int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos )
 
    return 0;
 }
-
 
 /**
  * @brief Stores several image array attributes.
@@ -904,7 +857,6 @@ int toolkit_unsetSelection( unsigned int wid, const char *name )
   return 0;
 }
 
-
 /**
  * @brief Sets the accept function of an Image Array.
  *
@@ -919,7 +871,6 @@ void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fpt
       return;
    wgt->dat.iar.accept = fptr;
 }
-
 
 /**
  * @brief Gets the number of visible elements in an image array.
@@ -946,10 +897,7 @@ int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name )
  */
 int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih )
 {
-    int xelem, yelem;
-
-    xelem = floor((w - 10) / (iw+10));
-    yelem = floor( (h - 10) / (ih + 10 + 2 + gl_smallFont.h) );
-
+    int xelem = floor((w - 10) / (iw+10));
+    int yelem = floor( (h - 10) / (ih + 10 + 2 + gl_smallFont.h) );
     return xelem * yelem;
 }

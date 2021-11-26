@@ -32,5 +32,3 @@ function runaway( target )
       end
    end
 end
-
-

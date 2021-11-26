@@ -2,7 +2,7 @@
 <ssys name="Kretogg">
  <general>
   <background>stellarwind</background>
-  <features>#bStellar Wind#0</features>
+  <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>17500.000000</radius>
   <stars>400</stars>
   <interference>27.272727</interference>
@@ -20,9 +20,16 @@
   <asset>Warden's End</asset>
  </assets>
  <jumps>
+  <jump target="NGC-1098">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Unicorn">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <stats>
+  <fuel_regen>1</fuel_regen>
+ </stats>
 </ssys>

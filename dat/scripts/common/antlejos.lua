@@ -106,4 +106,3 @@ antlejos.rewards = {
 }
 
 return antlejos
-

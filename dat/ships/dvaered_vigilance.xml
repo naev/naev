@@ -13,7 +13,7 @@
  <trail_generator x="-30" y="15" h="-3">nebula</trail_generator>
  <trail_generator x="-30" y="-15" h="-3">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
- <license>Medium Combat Vessel License</license>
+ <license>Medium Combat Vessel</license>
  <description>This military grade version of the Vigilance has stronger armour and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>
  <health>
   <armour>650</armour>

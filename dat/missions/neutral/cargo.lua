@@ -125,4 +125,3 @@ end
 function abort ()
    misn.finish(false)
 end
-

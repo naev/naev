@@ -8,6 +8,7 @@
   <priority>4</priority>
   <chance>10</chance>
   <faction>Za'lek</faction>
+  <location>Bar</location>
  </avail>
  <notes>
   <tier>1</tier>

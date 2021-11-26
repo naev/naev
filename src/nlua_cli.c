@@ -38,4 +38,3 @@ int nlua_loadCLI( nlua_env env )
    nlua_register(env, "cli", cli_methods, 0);
    return 0;
 }
-

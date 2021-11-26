@@ -23,4 +23,3 @@ void main(void) {
    color_out.a *= smoothstep(-2.0, 0.0, -d); /* no outline, more blur */
    color_out.a *= smoothstep(dimensions.x, dimensions.x-MARGIN, length(uv));
 }
-

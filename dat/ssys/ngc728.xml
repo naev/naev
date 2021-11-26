@@ -7,18 +7,14 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-677.175051</x>
-  <y>-128.450360</y>
+  <x>-704.675051</x>
+  <y>-91.783693</y>
  </pos>
  <assets/>
  <jumps>
   <jump target="NGC-3219">
    <autopos/>
    <hide>1.000000</hide>
-  </jump>
-  <jump target="Senara">
-   <autopos/>
-   <hide>0.500000</hide>
   </jump>
  </jumps>
 </ssys>

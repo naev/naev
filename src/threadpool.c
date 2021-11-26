@@ -612,5 +612,3 @@ void vpool_wait( ThreadQueue *queue )
    tq_destroy( queue );
    free( arg );
 }
-
-

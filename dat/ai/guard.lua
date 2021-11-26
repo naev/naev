@@ -95,4 +95,3 @@ function control ()
    -- Then do normal control
    control_generic()
 end
-

@@ -5,7 +5,7 @@
   <slot>utility</slot>
   <size>medium</size>
   <rarity>1</rarity>
-  <license>Medium Weapon License</license>
+  <license>Medium Weapon</license>
   <mass>3</mass>
   <price>650000</price>
   <gfx_store>placeholder.webp</gfx_store>

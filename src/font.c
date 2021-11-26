@@ -1200,6 +1200,9 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, c
    gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex, 0, 2, GL_SHORT, 0 );
    glEnableVertexAttribArray( shaders.font.tex_coord );
    gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
+
+   /* Depth testing is used to draw the outline under the glyph. */
+   glEnable( GL_DEPTH_TEST );
 }
 
 /**
@@ -1412,6 +1415,8 @@ static void gl_fontRenderEnd (void)
    glDisableVertexAttribArray( shaders.font.vertex );
    glDisableVertexAttribArray( shaders.font.tex_coord );
    glUseProgram(0);
+
+   glDisable( GL_DEPTH_TEST );
 
    /* Check for errors. */
    gl_checkErr();

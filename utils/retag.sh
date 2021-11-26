@@ -24,7 +24,7 @@ replace_tag () {
         if [[ -n $(echo $tag | grep $wildcard ) ]]; then
             echo $tag
             if [[ -n $(echo $tag | grep "-beta" ) ]]; then
-                betanum=${tag#*-beta} 
+                betanum=${tag#*-beta}
                 newtag="v"${tag#*-}
                 newtag=${newtag%[0-9]}.$betanum
             else

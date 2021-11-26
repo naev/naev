@@ -1066,13 +1066,13 @@ function render( dt, dt_mod )
       fuelstring = _("none")
    end
 
-   local bartext = { _("Pilot: "), pname, _("System: "), sysname, _("Time: "), time.str(), _("Credits: "),
-         largeNumber( credits, 2 ), _("Nav: "), navstring, _("Fuel: "), fuelstring,
-         _("WSet: "), wset_name, _("Cargo: ") }
+   local bartext = { _("Pilot:"), pname, _("System:"), sysname, _("Time:"), time.str(), _("Credits:"),
+         largeNumber( credits, 2 ), _("Nav:"), navstring, _("Fuel:"), fuelstring,
+         _("WSet:"), wset_name, _("Cargo:") }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( true, v, length, 5, cols.txt_top )
-         length = length + gfx.printDim( true, v )
+         length = length + gfx.printDim( true, v .. " " )
       else
          if v == "none" then
             col = cols.txt_una

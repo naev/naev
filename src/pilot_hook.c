@@ -244,5 +244,3 @@ void pilot_freeGlobalHooks (void)
       pilot_globalHooks = NULL;
    }
 }
-
-

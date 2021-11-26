@@ -251,4 +251,3 @@ function reinforcements_jumpin ()
    end
    player.msg(_("#oZa'lek reinforcements have arrived!"))
 end
-

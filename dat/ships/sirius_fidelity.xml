@@ -10,7 +10,7 @@
  <price>320000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-13" y="0" h="0">sirius</trail_generator>
- <license>Light Combat Vessel License</license>
+ <license>Light Combat Vessel</license>
  <fabricator>Sirius Systems</fabricator>
  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
  <health>

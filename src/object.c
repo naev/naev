@@ -469,6 +469,7 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    /* Actually need depth testing now. */
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);
+   glClear( GL_DEPTH_BUFFER_BIT );
 
    for (int i=0; i < array_size(object->meshes); ++i)
       if (strcmp(part_name, object->meshes[i].name) == 0)

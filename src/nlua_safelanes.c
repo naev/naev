@@ -177,6 +177,3 @@ static int safelanesL_intersect( lua_State *L )
 
    return cnt;
 }
-
-
-

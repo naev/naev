@@ -392,4 +392,3 @@ static int colL_gammaToLinear( lua_State *L )
    lua_pushcolour(L,out);
    return 1;
 }
-

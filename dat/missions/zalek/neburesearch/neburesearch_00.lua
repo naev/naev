@@ -192,4 +192,3 @@ function endSecondScan()
     misn.markerMove(mem.misn_marker, homeworld_sys)
     misn.osdActive(3)
 end
-

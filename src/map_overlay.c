@@ -747,7 +747,7 @@ void ovr_render( double dt )
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
-      glClear( GL_COLOR_BUFFER_BIT );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glBlendEquation( GL_FUNC_ADD );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
