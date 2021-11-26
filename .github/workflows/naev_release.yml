@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/projectsynchro/naev-release:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -329,7 +329,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/projectsynchro/naev-release:latest"
 
     needs:
       [
