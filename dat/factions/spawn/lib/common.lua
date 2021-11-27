@@ -156,11 +156,6 @@ function scom.spawn( pilots )
    end
    for _k,v in ipairs(pilots) do
       local params = v.params or {}
-      if not leader then
-         if pilots.__formation ~= nil then
-            leader:memory().formation = pilots.__formation
-         end
-      end
       if params.stealth==nil and pilots.__stealth then
          params.stealth= true
       end
@@ -175,6 +170,9 @@ function scom.spawn( pilots )
       if not pilots.__nofleet then
          if leader == nil then
             leader = p
+            if pilots.__formation ~= nil then
+               leader:memory().formation = pilots.__formation
+            end
          else
             p:setLeader(leader)
          end
