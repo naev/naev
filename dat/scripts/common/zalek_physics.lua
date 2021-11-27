@@ -103,7 +103,7 @@ uniform float u_mode    = 0;
 vec4 nebula_bg( vec2 screen_coords )
 {
    vec2 rel_pos = screen_coords + u_camera.xy;
-   rel_pos /= view * u_camera.z;
+   rel_pos *= u_camera.z / view;
    return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
 }
 
@@ -121,7 +121,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color.a *= 1.0-smoothstep( -800.0, 0.0,  -d );
 
    if (color.a > 0) {
-      vec4 nebucol = nebula_bg( screen_coords );
+      vec4 nebucol = nebula_bg( uv );
       nebucol.a *= color.a;
       return nebucol;
    }

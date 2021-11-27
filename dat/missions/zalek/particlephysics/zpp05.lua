@@ -26,6 +26,7 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
+local audio = require 'love.audio'
 
 -- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
@@ -116,6 +117,7 @@ She starts to hum and skips off towards her laboratory space.]]))
 end
 
 local pexp, pbeam, shader, shader_nebu, cutscene
+local heartbeat_single, heartbeat_long
 function enter ()
    if mem.state~=1 then
       return
@@ -149,6 +151,9 @@ function enter ()
    shader = zpp.shader_focal()
    shader_nebu = zpp.shader_nebula()
    cutscene = false
+
+   heartbeat_single = audio.newSource( 'snd/sounds/heartbeat_single.ogg' )
+   heartbeat_long   = audio.newSource( 'snd/sounds/heartbeat_long.ogg' )
 end
 
 function update( dt )
@@ -233,54 +238,65 @@ function heartbeat ()
       -- CUTSCENE START
       player.cinematics( true )
       player.allowLand( false )
+      music.pause()
       stage = 6
    elseif stage==6 then
       -- pulse
       cutscene = true
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 7
    elseif stage==7 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 8
    elseif stage==8 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 9
       delay = 2.5
    elseif stage==9 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 10
       delay = 2
    elseif stage==10 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 11
       delay = 1.5
    elseif stage==11 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 12
       delay = 1.25
    elseif stage==12 then
       -- pulse
       shader_nebu:reset()
+      heartbeat_single:play()
       stage = 13
       delay = 1
    elseif stage==13 then
       stage = 14
       shader_nebu:send("u_mode", 1)
       shader_nebu:reset()
+      heartbeat_long:play()
       delay = 10
    elseif stage==14 then
       shader_nebu:send("u_mode", 2)
       shader_nebu:reset()
+      heartbeat_long:stop()
       stage = 15
    elseif stage==15 then
       -- CUTSCENE END
       player.cinematics( false )
       player.allowLand( true )
+      music.resume()
       cutscene = false
       mem.state = 2
       stage = 16
