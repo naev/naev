@@ -2095,7 +2095,7 @@ static int pilotL_setVelocity( lua_State *L )
  *
  * @note Right is 0, top is math.pi/2, left is math.pi, bottom is 3*math.pi/2.
  *
- * @usage p:setDir( 180. )
+ * @usage p:setDir( math.pi/2 )
  *
  *    @luatparam Pilot p Pilot to set the direction of.
  *    @luatparam number dir Direction to set, in radians.
