@@ -128,7 +128,7 @@ jobs:
       matrix:
         include:
           - image: naev-windows
-            config: windows_cross_mxe.ini
+            config: windows_cross_mingw.ini
 
     runs-on: ubuntu-latest
     container:

@@ -120,7 +120,7 @@ jobs:
               --prefix="$(pwd)"/source/extras/windows/installer \
               --bindir=bin \
               -Dndata_path=bin \
-              --cross-file='source/utils/build/windows_cross_mxe.ini' \
+              --cross-file='source/utils/build/windows_cross_mingw.ini' \
               --buildtype=debug \
               --force-fallback-for=glpk,SuiteSparse \
               -Dnightly=true \
