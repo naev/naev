@@ -16,6 +16,7 @@
 
 #include "options.h"
 
+#include "array.h"
 #include "conf.h"
 #include "background.h"
 #include "colour.h"
@@ -216,7 +217,7 @@ void opt_resize (void)
 static char** lang_list( int *n )
 {
    char **ls;
-   char **subdirs;
+   LanguageOption *opts = gettext_languageOptions();
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -225,10 +226,9 @@ static char** lang_list( int *n )
    *n = 2;
 
    /* Try to open the available languages. */
-   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
-   for (size_t i=0; subdirs[i]!=NULL; i++)
-      ls[(*n)++] = strdup( subdirs[i] );
-   PHYSFS_freeList( subdirs );
+   for (int i=0; i<array_size(opts); i++)
+      ls[(*n)++] = opts[i].language;
+   array_free( opts );
 
    return ls;
 }

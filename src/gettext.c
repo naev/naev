@@ -86,8 +86,6 @@ void gettext_setLanguage( const char* lang )
    char root[256], **paths;
    size_t map_size, lang_part_len;
 
-   if (gettext_nstrings == 0)
-      gettext_readStats(); /* Initialize it. TODO: Move this to the function for listing translations, once it exists. */
    if (lang == NULL)
       lang = gettext_systemLanguage;
    if (gettext_activeTranslation != NULL && !strcmp( lang, gettext_activeTranslation->language ))
@@ -186,4 +184,28 @@ static void gettext_readStats (void)
       free( paths[i] );
    }
    array_free( paths );
+}
+
+
+/**
+ * @brief List the available languages, with completeness statistics.
+ * @return Array (array.h) of LanguageOptions.
+ */
+LanguageOption* gettext_languageOptions (void)
+{
+   LanguageOption *opts = array_create( LanguageOption );
+   char **subdirs;
+
+   /* Initialize gettext_nstrings, if needed. */
+   if (gettext_nstrings == 0)
+      gettext_readStats();
+   /* Analyze the available languages. */
+   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (size_t i=0; subdirs[i]!=NULL; i++) {
+      LanguageOption *opt = &array_grow( &opts );
+      opt->language = strdup( subdirs[i] );
+      opt->coverage = 0.;
+   }
+   PHYSFS_freeList( subdirs );
+   return opts;
 }
