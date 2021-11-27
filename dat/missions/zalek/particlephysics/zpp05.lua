@@ -27,13 +27,12 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
+-- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
 --local reward = zpp.rewards.zpp05 -- No reward
 local mainpnt, mainsys = planet.getS("Katar I")
 
 function create ()
-   misn.finish(false)
    if not misn.claim( mainsys ) then
       misn.finish(false)
    end
@@ -116,7 +115,7 @@ She starts to hum and skips off towards her laboratory space.]]))
    misn.finish(true)
 end
 
-local pexp, pbeam
+local pexp, pbeam, shader
 function enter ()
    if mem.state~=1 then
       return
@@ -143,6 +142,23 @@ function enter ()
    system.mrkAdd( pos, _("Experiment Site") )
 
    hook.timer( 5, "heartbeat" )
+   hook.update( "update" )
+   hook.renderbg( "renderbg" )
+
+   shader = zpp.shader_focal()
+end
+
+function update( dt )
+   shader:update( dt )
+end
+
+function renderbg ()
+   local z = camera.getZoom()
+   local x, y = camera.get():get()
+   local sx, sy = pbeam:get()
+   x = (sx-x) / z
+   y = (sy+y) / z
+   shader:render( x, y, 50 / z )
 end
 
 local fixed = false
