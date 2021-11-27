@@ -307,6 +307,8 @@ function heartbeat ()
    elseif stage==17 then
       pilot.comm(_("Noona"), _("Come back to Katar I."))
       misn.osdActive(2)
+      system.mrkClear()
+      misn.markerAdd( mainpnt )
       return
    end
 
