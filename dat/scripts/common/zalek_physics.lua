@@ -89,4 +89,75 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return shader
 end
 
+function zpp.shader_nebula ()
+   local pixelcode = [[
+#include "lib/nebula.glsl"
+
+const float hue         = 300.0;
+const float view        = 200.0;
+uniform float u_time    = 0.0;
+uniform vec3 u_camera   = vec3(0.0);
+uniform float u_progress= 0.0;
+uniform float u_mode    = 0;
+
+vec4 nebula_bg( vec2 screen_coords )
+{
+   vec2 rel_pos = screen_coords + u_camera.xy;
+   rel_pos /= view * u_camera.z;
+   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = (texture_coords*2.0-1.0) * love_ScreenSize.xy;
+   float r = (u_progress*2.0-0.5) * max( love_ScreenSize.x, love_ScreenSize.y ) * M_SQRT2;
+   float d = length(uv)-r;
+
+   if (u_mode==0)
+      color.a *= smoothstep( -800.0, 0.0, -abs(d) );
+   else if (u_mode==1)
+      color.a *= smoothstep( -800.0, 0.0, -d );
+   else if (u_mode==2)
+      color.a *= 1.0-smoothstep( -800.0, 0.0,  -d );
+
+   if (color.a > 0) {
+      vec4 nebucol = nebula_bg( screen_coords );
+      nebucol.a *= color.a;
+      return nebucol;
+   }
+   return color;
+}
+]]
+   local shader = lg.newShader( pixelcode, love_shaders.vertexcode )
+   shader._dt = -1000 * rnd.rnd()
+   shader.progress = 0
+   shader.speed = 1
+   shader.update = function( self, dt )
+      self._dt = self._dt + dt
+      self.progress = self.progress + dt * self.speed
+      self:send( "u_time", self._dt )
+      self:send( "u_progress", self.progress )
+   end
+   local nw, nh = gfx.dim()
+   shader.render = function( self )
+      local cx, cy = camera.get():get()
+      local cz = camera.getZoom()
+      self:send( "u_camera", {cx, cy, cz} )
+
+      local oldshader = lg.getShader()
+      lg.setColor( 1, 1, 1, 1 )
+      lg.setShader( self )
+      love_shaders.img:draw( 0, 0, 0, nw, nh )
+      lg.setShader( oldshader )
+   end
+   shader.reset = function( self, speed )
+      speed = speed or 1
+      self.progress = 0
+      self.speed = speed
+      self:update( 0 )
+   end
+   love.origin()
+   return shader
+end
+
 return zpp

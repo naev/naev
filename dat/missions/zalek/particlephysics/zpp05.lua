@@ -115,7 +115,7 @@ She starts to hum and skips off towards her laboratory space.]]))
    misn.finish(true)
 end
 
-local pexp, pbeam, shader
+local pexp, pbeam, shader, shader_nebu, cutscene
 function enter ()
    if mem.state~=1 then
       return
@@ -147,10 +147,15 @@ function enter ()
    hook.renderbg( "renderbg" )
 
    shader = zpp.shader_focal()
+   shader_nebu = zpp.shader_nebula()
+   cutscene = false
 end
 
 function update( dt )
    shader:update( dt )
+   if cutscene then
+      shader_nebu:update( dt )
+   end
 end
 
 function renderbg ()
@@ -158,6 +163,9 @@ function renderbg ()
    local x, y = gfx.screencoords( pbeam, true ):get()
 
    shader:render( x, y, 75 / z )
+   if cutscene then
+      shader_nebu:render()
+   end
 end
 
 local fixed = false
@@ -227,43 +235,62 @@ function heartbeat ()
       stage = 6
    elseif stage==6 then
       -- pulse
+      cutscene = true
+      shader_nebu:reset(3)
       stage = 7
    elseif stage==7 then
       -- pulse
+      shader_nebu:reset(3)
       stage = 8
    elseif stage==8 then
       -- pulse
+      shader_nebu:reset(2.5)
       stage = 9
-      delay = 2
+      delay = 2.5
    elseif stage==9 then
       -- pulse
+      shader_nebu:reset(2)
       stage = 10
       delay = 2
    elseif stage==10 then
       -- pulse
+      shader_nebu:reset(1.5)
       stage = 11
-      delay = 1
+      delay = 1.5
    elseif stage==11 then
+      -- pulse
+      shader_nebu:reset(1.25)
       stage = 12
-      delay = 10
+      delay = 1.25
    elseif stage==12 then
+      -- pulse
+      shader_nebu:reset(1)
       stage = 13
+      delay = 1
    elseif stage==13 then
+      stage = 14
+      shader_nebu:send("u_mode", 1)
+      shader_nebu:reset(1)
+      delay = 10
+   elseif stage==14 then
+      shader_nebu:send("u_mode", 2)
+      shader_nebu:reset(1)
+      stage = 15
+   elseif stage==15 then
       -- CUTSCENE END
       player.cinematics( false )
-      stage = 14
-   elseif stage==14 then
+      cutscene = false
+      stage = 16
+   elseif stage==16 then
       pilot.comm(_("Noona"), _("Are you alright? Communication cut off for a bit."))
-      stage = 15
+      stage = 17
       delay = 7
-   elseif stage==15 then
+   elseif stage==17 then
       pilot.comm(_("Noona"), _("Come back to Katar I."))
       misn.osdActive(2)
       mem.state = 2
       return
    end
 
-   if stage < 5 then
-      hook.timer( delay, "heartbeat" )
-   end
+   hook.timer( delay, "heartbeat" )
 end
