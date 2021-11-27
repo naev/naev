@@ -94,7 +94,7 @@ function zpp.shader_nebula ()
 #include "lib/nebula.glsl"
 
 const float hue         = 300.0;
-const float view        = 200.0;
+const float view        = 300.0;
 uniform float u_time    = 0.0;
 uniform vec3 u_camera   = vec3(0.0);
 uniform float u_progress= 0.0;
@@ -102,8 +102,8 @@ uniform float u_mode    = 0;
 
 vec4 nebula_bg( vec2 screen_coords )
 {
-   vec2 rel_pos = screen_coords + u_camera.xy;
-   rel_pos *= u_camera.z / view;
+   vec2 rel_pos = screen_coords * u_camera.z+ u_camera.xy;
+   rel_pos /= view;
    return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
 }
 
@@ -140,9 +140,10 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    local nw, nh = gfx.dim()
    shader.render = function( self )
+      -- TODO we should actually downscale this...
       local cx, cy = camera.get():get()
       local cz = camera.getZoom()
-      self:send( "u_camera", {cx, cy, cz} )
+      self:send( "u_camera", {cx, -cy, cz} )
 
       local oldshader = lg.getShader()
       lg.setColor( 1, 1, 1, 1 )
