@@ -95,6 +95,7 @@ function zpp.shader_nebula ()
 
 const float hue         = 300.0;
 const float view        = 300.0;
+const float sf          = %f;
 uniform float u_time    = 0.0;
 uniform vec3 u_camera   = vec3(0.0);
 uniform float u_progress= 0.0;
@@ -102,7 +103,7 @@ uniform float u_mode    = 0;
 
 vec4 nebula_bg( vec2 screen_coords )
 {
-   vec2 rel_pos = screen_coords * u_camera.z+ u_camera.xy;
+   vec2 rel_pos = screen_coords * u_camera.z + u_camera.xy;
    rel_pos /= view;
    return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
 }
@@ -114,11 +115,11 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    float d = length(uv)-r;
 
    if (u_mode==0)
-      color.a *= smoothstep( -800.0, 0.0, -abs(d) );
+      color.a *= smoothstep( -800.0 / sf, 0.0, -abs(d) );
    else if (u_mode==1)
-      color.a *= smoothstep( -800.0, 0.0, -d );
+      color.a *= smoothstep( -800.0 / sf, 0.0, -d );
    else if (u_mode==2)
-      color.a *= 1.0-smoothstep( -800.0, 0.0,  -d );
+      color.a *= 1.0-smoothstep( -800.0 / sf, 0.0,  -d );
 
    if (color.a > 0) {
       vec4 nebucol = nebula_bg( uv );
@@ -128,28 +129,43 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return color;
 }
 ]]
+   local sf = naev.conf().nebu_scale
+   pixelcode = string.format( pixelcode, sf )
    local shader = lg.newShader( pixelcode, love_shaders.vertexcode )
+   shader.sf = sf
    shader._dt = -1000 * rnd.rnd()
    shader.progress = 0
    shader.speed = 1
+   local nw, nh = gfx.dim()
+   shader.cw, shader.ch = nw/shader.sf, nh/shader.sf
+   shader.canvas = lg.newCanvas( shader.cw, shader.ch )
+
    shader.update = function( self, dt )
       self._dt = self._dt + dt
       self.progress = self.progress + dt * self.speed
       self:send( "u_time", self._dt )
       self:send( "u_progress", self.progress )
    end
-   local nw, nh = gfx.dim()
    shader.render = function( self )
       -- TODO we should actually downscale this...
       local cx, cy = camera.get():get()
       local cz = camera.getZoom()
-      self:send( "u_camera", {cx, -cy, cz} )
+      self:send( "u_camera", {cx, -cy, cz*self.sf} )
 
+      local oldcanvas = lg.getCanvas()
       local oldshader = lg.getShader()
       lg.setColor( 1, 1, 1, 1 )
+      lg.setCanvas( self.canvas )
+      lg.clear( 0, 0, 0, 0 )
       lg.setShader( self )
-      love_shaders.img:draw( 0, 0, 0, nw, nh )
+      lg.setBlendMode( "alpha", "premultiplied" )
+      love_shaders.img:draw( 0, 0, 0, self.cw, self.ch )
+      lg.setBlendMode( "alpha" )
       lg.setShader( oldshader )
+      lg.setCanvas( oldcanvas )
+
+      -- Render to screen
+      self.canvas:draw( 0, 0, 0, self.sf, self.sf )
    end
    shader.reset = function( self, speed )
       speed = speed or 1
