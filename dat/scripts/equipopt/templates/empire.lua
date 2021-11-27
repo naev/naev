@@ -86,11 +86,6 @@ local empire_cores = {
          "Melendez Mammoth XL Engine",
          "S&K Superheavy Combat Plating",
       } end,
-   ["Empire Rainmaker"] = function () return {
-         "Milspec Orion 8601 Core System",
-         "Melendez Mammoth XL Engine",
-         "S&K Large Cargo Hull",
-      } end,
 }
 
 local empire_params_overwrite = {

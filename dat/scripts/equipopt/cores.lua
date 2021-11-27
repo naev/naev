@@ -56,7 +56,7 @@ ssys["Freighter"] = function ()
 end
 ssys["Armoured Transport"] = ssys["Freighter"]
 ssys["Bulk Freighter"] = function ()
-   return "Unicorp PT-500 Core System"
+   return "Unicorp PT-2200 Core System"
 end
 
 -- STANDARD HULLS
@@ -99,6 +99,9 @@ shul["Freighter"] = function ()
    return choose_one{ "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull" }
 end
 shul["Armoured Transport"] = shul["Freighter"]
+shul["Bulk Freighter"] = function ()
+   return "Unicorp D-48 Heavy Plating"
+end
 
 -- STANDARD ENGINES
 local seng = {}
@@ -139,6 +142,9 @@ seng["Freighter"] = function ()
    return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
 end
 seng["Armoured Transport"] = seng["Freighter"]
+seng["Bulk Freighter"] = function ()
+   return "Nexus Bolt 3500 Engine"
+end
 
 -- STANDARD SETS
 cores.standard = {
@@ -187,7 +193,9 @@ esys["Freighter"] = ssys["Freighter"]
 esys["Armoured Transport"] = function ()
    return "Milspec Orion 5501 Core System"
 end
-esys["Bulk Freighter"] = ssys["Bulk Freighter"]
+esys["Bulk Freighter"] = function ()
+   return "Milspec Orion 8601 Core System"
+end
 
 -- ELITE HULLS
 local ehul = {}
@@ -225,7 +233,9 @@ ehul["Freighter"] = shul["Freighter"]
 ehul["Armoured Transport"] = function ()
    return choose_one{ "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating" }
 end
-ehul["Bulk Freighter"] = shul["Bulk Freighter"]
+ehul["Bulk Freighter"] = function ()
+   return "S&K Large Cargo Hull"
+end
 
 -- ELITE ENGINES
 local eeng = {}
@@ -260,7 +270,9 @@ eeng["Yacht"] = seng["Yacht"]
 eeng["Courier"] = seng["Courier"]
 eeng["Freighter"] = seng["Freighter"]
 eeng["Armoured Transport"] = seng["Armoured Transport"]
-eeng["Bulk Freighter"] = seng["Bulk Freighter"]
+eeng["Bulk Freighter"] = function ()
+   return "Melendez Mammoth XL Engine"
+end
 
 -- ELITE SETS
 cores.elite = {
