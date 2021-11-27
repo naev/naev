@@ -536,7 +536,9 @@ function control ()
       -- Recall fighters if applicable
       if ai.hasfighterbays() then
          for k,v in ipairs(p:followers()) do
-            p:msg( v, "e_return" )
+            if v:flags("carried") then
+               p:msg( v, "e_return" )
+            end
          end
       end
    end
