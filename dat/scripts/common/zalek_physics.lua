@@ -84,6 +84,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       love_shaders.img:draw( x-s2, y-s2, 0, size, size )
       lg.setShader( oldshader )
    end
+   return shader
 end
 
 return zpp

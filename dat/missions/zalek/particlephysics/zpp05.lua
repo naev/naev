@@ -143,7 +143,7 @@ function enter ()
 
    hook.timer( 5, "heartbeat" )
    hook.update( "update" )
-   hook.renderbg( "renderbg" )
+   hook.renderfg( "renderbg" )
 
    shader = zpp.shader_focal()
 end
@@ -154,11 +154,10 @@ end
 
 function renderbg ()
    local z = camera.getZoom()
-   local x, y = camera.get():get()
-   local sx, sy = pbeam:get()
-   x = (sx-x) / z
-   y = (sy+y) / z
-   shader:render( x, y, 50 / z )
+   local pos = planet.get("Katar I"):pos()
+   local x, y = gfx.screencoords( pos, true ):get()
+
+   shader:render( x, y, 75 / z )
 end
 
 local fixed = false
