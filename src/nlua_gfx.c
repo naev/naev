@@ -23,12 +23,14 @@
 #include "nlua_tex.h"
 #include "nlua_transform.h"
 #include "nlua_canvas.h"
+#include "nlua_vec2.h"
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
 
 /* GFX methods. */
 static int gfxL_dim( lua_State *L );
+static int gfxL_screencoords( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
 static int gfxL_renderTexScale( lua_State *L );
@@ -54,6 +56,7 @@ static int gfxL_screenshot( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
+   { "screencoords", gfxL_screencoords },
    /* Render stuff. */
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
@@ -131,6 +134,26 @@ static int gfxL_dim( lua_State *L )
    lua_pushnumber( L, SCREEN_H );
    lua_pushnumber( L, gl_screen.scale );
    return 3;
+}
+
+/**
+ * @brief Gets the screen coordinates from game coordinates.
+ *
+ *    @luatparam Vec2 Vector of coordinates to transnform.
+ *    @luatparam[opt=false] boolean Whether or not to invert y axis.
+ *    @luatreturn Vec2 Transformed vector.
+ * @luafunc screencoords
+ */
+static int gfxL_screencoords( lua_State *L )
+{
+   Vector2d screen;
+   Vector2d *game = luaL_checkvector( L, 1 );
+   int invert = lua_toboolean( L, 2 );
+   gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
+   if (invert)
+      screen.y = SCREEN_H-screen.y;
+   lua_pushvector( L, screen );
+   return 1;
 }
 
 /**
