@@ -62,7 +62,7 @@ angle = 0 means that the pilot tries to be in front of the target.]]
 mem.radius         = 100 --  Requested distance between follower and target
 mem.angle          = math.pi --  Requested angle between follower and target's velocity
 mem.Kp             = 10 --  First control coefficient
-mem.Kd             = 20 -- Second control coefficient
+mem.Kd             = 20 -- Second control coefficient (this value is overwritten in create_post)
 
 mem.target_bias    = vec2.new(0,0) -- Initialize land bias, just in case
 
@@ -839,9 +839,12 @@ function create_post ()
       ai.pushtask("idle_wait")
    end
 
+   -- Tune PD parameter (with a nice heuristic formula)
+   local ps = p:stats()
+   mem.Kd = 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82;
+
    -- Just give some random fuel
    if p ~= player.pilot() then
-      local ps = p:stats()
       if mem.tookoff then
          p:setFuel( true ) -- Full fuel
       else

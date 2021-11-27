@@ -544,13 +544,16 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  */
 static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
 {
-   double angle, radius, d;
+   double angle, radius, d, timeFactor;
    Vector2d dir, point;
 
-   /* Define the control coefficients. If needed, they could be adapted.
+   /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
+   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
+
+   /* Define the control coefficients.
       Maybe radius could be adjustable by the player. */
    const double Kp = 10.;
-   const double Kd = 20.;
+   const double Kd = 10.84*timeFactor-10.82;
    radius = 100.;
 
    /* Find a point behind the target at a distance of radius unless stationary, or not following. */
@@ -579,13 +582,15 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 
 static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2 )
 {
-   double d, t, velv, dist;
+   double d, t, velv, dist, timeFactor;
    Vector2d dir;
 
-   /* Define the control coefficients. If needed, they could be adapted.
-      Maybe radius could be adjustable by the player. */
+   /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
+   timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
+
+   /* Define the control coefficients. */
    const double Kp = 10.;
-   const double Kd = 20.;
+   const double Kd = 10.84*timeFactor-10.82;
 
    vect_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
          (vel->x - player.p->solid->vel.x) *Kd,
