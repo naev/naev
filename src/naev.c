@@ -100,7 +100,6 @@ static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
 static semver_t version_binary; /**< Naev binary version. */
-//static semver_t version_data; /**< Naev data version. */
 static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 
 /*
@@ -376,6 +375,22 @@ int main( int argc, char** argv )
    /* flushes the event loop since I noticed that when the joystick is loaded it
     * creates button events that results in the player starting out acceling */
    while (SDL_PollEvent(&event));
+
+   /* Incomplete translation note (shows once if we pick an incomplete translation based on user's locale). */
+   if ( !conf.translation_warning_seen && conf.language == NULL ) {
+      const char* language = gettext_getLanguage();
+      double coverage = gettext_languageCoverage(language);
+
+      if (coverage < 0.8) {
+         conf.translation_warning_seen = 1;
+         dialogue_msg(
+               _("Incomplete Translation"),
+               _("%s is partially translated (%.0f%%) into your language (%s),"
+                  " but the remaining text will be English. Language settings"
+                  " are available in the \"%s\" screen."),
+               APPNAME, 100.*coverage, language, _("Options") );
+      }
+   }
 
    /* Incomplete game note (shows every time version number changes). */
    if ( conf.lastversion == NULL || naev_versionCompare(conf.lastversion) != 0 ) {

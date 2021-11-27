@@ -145,6 +145,7 @@ typedef struct PlayerConf_s {
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
    char *lastversion; /**< The last version the game was ran in. */
+   int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */

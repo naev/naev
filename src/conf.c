@@ -147,6 +147,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.lastversion = strdup( "" );
+   conf.translation_warning_seen = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -395,6 +396,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
+      conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
 
       /* Debugging. */
       conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
@@ -1015,6 +1017,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Indicates the last version the game has run in before"));
    conf_saveString("lastversion", conf.lastversion);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Indicates whether we've already warned about incomplete game translations."));
+   conf_saveBool("translation_warning_seen",conf.translation_warning_seen);
    conf_saveEmptyLine();
 
    /* Debugging. */
