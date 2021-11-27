@@ -142,6 +142,18 @@ function enter ()
 
    pbeam = pos + vec2.newP( 100, math.pi/4 )
 
+   local n = 7
+   for i=1,n do
+      local a = math.pi*2/7*i
+      local p = pbeam + vec2.newP( 200, math.pi*2/7*i )
+      local pextra = pilot.add( "Za'lek Scout Drone", "Za'lek", p )
+      pextra:control(true)
+      pextra:brake()
+      pextra:setInvincible(true)
+      pextra:setInvisible(true)
+      pextra:setDir( a+math.pi )
+   end
+
    system.mrkAdd( pos, _("Experiment Site") )
 
    hook.timer( 5, "heartbeat" )
