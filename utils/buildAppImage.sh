@@ -103,6 +103,12 @@ export OUTPUT="$BUILDPATH/dist/naev-$SUFFIX.AppImage"
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
 if [ ! -f "$linuxdeploy" ]; then
     curl -L -o "$linuxdeploy" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+    #
+    # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
+    # For the layman: makes appimages run in docker containers properly again.
+    # https://github.com/AppImage/AppImageKit/issues/828
+    #
+    sed '0,/AI\x02/{s|AI\x02|\x00\x00\x00|}' -i "$linuxdeploy"
     chmod +x "$linuxdeploy"
 fi
 
