@@ -2043,14 +2043,11 @@ static int pilotL_spaceworthy( lua_State *L )
  */
 static int pilotL_setPosition( lua_State *L )
 {
-   Pilot *p;
-   Vector2d *vec;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-   vec   = luaL_checkvector(L,2);
+   Pilot *p       = luaL_validpilot(L,1);
+   Vector2d *vec  = luaL_checkvector(L,2);
 
    /* Insert skip in trail. */
    pilot_sample_trails( p, 1 );
@@ -2103,14 +2100,11 @@ static int pilotL_setVelocity( lua_State *L )
  */
 static int pilotL_setDir( lua_State *L )
 {
-   Pilot *p;
-   double d;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-   d     = luaL_checknumber(L,2);
+   Pilot *p  = luaL_validpilot(L,1);
+   double d  = luaL_checknumber(L,2);
 
    /* Set direction. */
    p->solid->dir = fmodf( d, 2*M_PI );
@@ -2175,7 +2169,6 @@ static int pilotL_broadcast( lua_State *L )
  */
 static int pilotL_comm( lua_State *L )
 {
-
    NLUA_CHECKRW(L);
 
    if (lua_isstring(L,1)) {
