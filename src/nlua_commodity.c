@@ -405,7 +405,7 @@ static int commodityL_description( lua_State *L )
 /**
  * @brief Creates a new temporary commodity. If a temporary commodity with the same name exists, that gets returned instead.
  *        "Temporary" is a relative term. The returned commodity object may be saved to a mission's/event's "mem" table,
- *        or used as a mission cargo (\see misn.cargoAdd), and in those cases it will persist in saved games.
+ *        or used as a mission cargo (see misn.cargoAdd), and in those cases it will persist in saved games.
  *        Caution: Usage as a regular commodity in the player's cargo holds is not yet supported.
  *
  *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
