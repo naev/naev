@@ -110,7 +110,7 @@ function land ()
          tk.msg(_("The Search for Cynthia"), _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
       else
          tk.msg(_("The Search for Cynthia"), _([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless.]]))
-         local c = misn.cargoNew( cargoname, cargodesc )
+         local c = commodity.new( cargoname, cargodesc )
          mem.cargoID = misn.cargoAdd( c, 0 )
       end
 

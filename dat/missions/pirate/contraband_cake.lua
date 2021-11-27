@@ -125,7 +125,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
 
    misn.accept()
 
-   local c = misn.cargoNew( N_("Cake"), N_("A cake that is supposedly sensitive to scanning radiation. Don't let anyone scan it.") )
+   local c = commodity.new( N_("Cake"), N_("A cake that is supposedly sensitive to scanning radiation. Don't let anyone scan it.") )
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    mem.carg_id = misn.cargoAdd( c, 0 )
 

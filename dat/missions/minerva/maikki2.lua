@@ -694,7 +694,7 @@ function ecc_feral_boss_dead ()
    vn.done( "hexagon" )
    vn.run()
 
-   local c = misn.cargoNew( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
+   local c = commodity.new( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
    mem.nebula_artifacts = misn.cargoAdd( c, 0 )
    mem.misn_state = 5
    misn.osdCreate( _("Finding Maikki's Father"), {_("Go back to Dr. Strangelove")} )

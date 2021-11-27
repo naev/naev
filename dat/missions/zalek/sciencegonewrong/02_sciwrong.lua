@@ -198,7 +198,7 @@ function targetBoard()
    t_drone:setVisplayer(false)
    mem.captured = true
    t_drone:rm()
-   local c = misn.cargoNew(N_("Prototype"), N_("A disabled prototype drone."))
+   local c = commodity.new(N_("Prototype"), N_("A disabled prototype drone."))
    mem.cargoID = misn.cargoAdd(c, 10)
    misn.osdActive(3)
    misn.markerRm(mem.mmarker)

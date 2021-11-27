@@ -66,7 +66,7 @@ She hands you the report package, which seems a bit heavier than you expected, a
 
    misn.accept()
 
-   local c = misn.cargoNew( N_("Za'lek Report"), N_("A in-depth report filled with jargon and technical details you can't comprehend.") )
+   local c = commodity.new( N_("Za'lek Report"), N_("A in-depth report filled with jargon and technical details you can't comprehend.") )
    misn.cargoAdd( c, 0 )
 
    -- mission details

@@ -137,7 +137,7 @@ function accept ()
       _("Go to all indicated points"),
       fmt.f(_("Return to {pnt} in the {sys} system and collect your pay"), {pnt=mem.startingplanet, sys=mem.startingsystem} ),
    } )
-   local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
+   local c = commodity.new( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
    mem.civs = misn.cargoAdd( c, 0 )
    mem.job_done = false
 

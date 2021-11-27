@@ -89,7 +89,7 @@ function land ()
       else
 
          tk.msg( _("Deliver the Goods"), _([[You land on the planet and hand the manager of the docks the crumpled claim slip that the drunkard gave you, realizing now that you don't think he even told you his name. The man looks at the slip, and then gives you an odd look before motioning for the dockworkers to load up the cargo that's brought out after he punches in a code on his electronic pad.]]) )
-         local c = misn.cargoNew( N_("Goods"), N_("A package of unknown goods for delivery to a countess.") )
+         local c = commodity.new( N_("Goods"), N_("A package of unknown goods for delivery to a countess.") )
          mem.cargoID = misn.cargoAdd( c, 45 )  -- adds cargo
          mem.pickedup = true
 

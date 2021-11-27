@@ -318,8 +318,8 @@ end
 
 -- helper functions, used repeatedly
 function addNerdCargo()
-   local c1 = misn.cargoNew(misn_cargo1, misn_cargodesc1)
-   local c2 = misn.cargoNew(misn_cargo2, misn_cargodesc2)
+   local c1 = commodity.new(misn_cargo1, misn_cargodesc1)
+   local c2 = commodity.new(misn_cargo2, misn_cargodesc2)
    mem.cargo1 = misn.cargoAdd(c1, misn_cargoamount1)
    mem.cargo2 = misn.cargoAdd(c2, misn_cargoamount2)
 end

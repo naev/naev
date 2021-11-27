@@ -105,7 +105,7 @@ function spawnChelseaShip( param )
    chelsea:setTemp( 0 )
    chelsea:setFuel( true )
 
-   local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
+   local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
    chelsea:cargoAdd( c, chelsea:cargoFree() )
 
    chelsea:setFriendly()

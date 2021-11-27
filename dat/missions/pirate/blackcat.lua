@@ -97,7 +97,7 @@ It seems like it wants to come back with you. What do you do?]]))
    misn.setDesc(_("You found a black cat on a derelict ship. It seems to want to go back somewhere, but you aren't sure where. Maybe if you could find their owner?"))
    misn.setReward(_("Unknown"))
 
-   local c = misn.cargoNew( N_("Black Cat"), N_([[A cute four-legged mammal "Felis catus" that seems to enjoy chasing random things around the ship.]]) )
+   local c = commodity.new( N_("Black Cat"), N_([[A cute four-legged mammal "Felis catus" that seems to enjoy chasing random things around the ship.]]) )
    misn.cargoAdd( c, 0 )
 
    misn.osdCreate( _("Black Cat"), {

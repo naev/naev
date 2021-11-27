@@ -68,7 +68,7 @@ function accept()
    misn.osdCreate(_("The Egress"), {
       fmt.f(_("Fly the refugees to {pnt} in the {sys} system."), {pnt=targetasset, sys=targetsys}),
    })
-   local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
+   local c = commodity.new( N_("Refugees"), N_("Nasin refugees.") )
    mem.refugees = misn.cargoAdd(c,free_cargo)
    player.takeoff()
    --get the hooks.

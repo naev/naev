@@ -56,7 +56,7 @@ function create ()
     Then Harrus brightens up, apparently putting his recent misfortune behind him in the blink of an eye. "Everything's going to be fine now," he says cheerfully. "We've been rescued, and all we need now is for you to take us to a suitable world where we can build a new life."
     Without further ado, and without so much as formally asking for the favour, Harrus and his family proceed onto your ship and install themselves into your living quarters. They do not seem about to leave.]]), {plt=_("August")}))
 
-   local c = misn.cargoNew( N_("Space Family"), N_("A family who you rescued in space.") )
+   local c = commodity.new( N_("Space Family"), N_("A family who you rescued in space.") )
    mem.carg_id = misn.cargoAdd( c, 0 )
 
    -- First stop; subsequent stops will be handled in the land function

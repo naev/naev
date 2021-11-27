@@ -63,7 +63,7 @@ function accept()
       tk.msg(_("The Gauntlet"),_([["You say you want this job, but you don't have enough cargo space! Stop wasting my time!"]])) --and if they don't, the mission finishes.
       misn.finish(false)
    end
-   local c = misn.cargoNew( N_("Small Arms"), N_("An assortment of weapons that are not legal in Sirius space.") )
+   local c = commodity.new( N_("Small Arms"), N_("An assortment of weapons that are not legal in Sirius space.") )
    c:illegalto( {"Sirius"} )
    mem.small_arms = misn.cargoAdd(c,5) --I'd like this to be contraband when this actually gets implemented in-game.
    hook.land("land")

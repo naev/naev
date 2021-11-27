@@ -155,7 +155,7 @@ function talkthieves()
    misn.npcRm(mem.thief3)
 
    mem.talked = true
-   local c = misn.cargoNew( N_("The Baron's holopainting"), N_("A rectangular chest containing a holopainting.") )
+   local c = commodity.new( N_("The Baron's holopainting"), N_("A rectangular chest containing a holopainting.") )
    mem.carg_id = misn.cargoAdd(c, 0)
    c:illegalto( "Dvaered" )
 

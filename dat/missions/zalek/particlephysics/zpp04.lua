@@ -164,7 +164,7 @@ They then lean it to whisper to you.
       return
    end
 
-   local crg = misn.cargoNew( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird signs coming from inside it, almost like some sort of running river.") )
+   local crg = commodity.new( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird signs coming from inside it, almost like some sort of running river.") )
    misn.cargoAdd( crg, cargo_amount )
 
    misn.osdActive(2)

@@ -78,7 +78,7 @@ function accept ()
 
    misn.accept()
 
-   local c = misn.cargoNew( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
+   local c = commodity.new( N_("Equipment"), N_("Some fancy equipment. You are not sure what it is for.") )
    misn.cargoAdd(c, cargo_amount)
 
    misn.setTitle( _("Verner's Request") )

@@ -82,7 +82,7 @@ function accept()
         mem.logsfound = false
         mem.flfdead = 0
 
-        local c = misn.cargoNew( N_("FLF IFF Transponder"), N_("A transponder that will make your ship appear as FLF in the nebula.") )
+        local c = commodity.new( N_("FLF IFF Transponder"), N_("A transponder that will make your ship appear as FLF in the nebula.") )
         misn.cargoAdd(c, 0)
 
         hook.jumpout("jumpout")

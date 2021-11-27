@@ -88,7 +88,7 @@ That doesn't sound very reassuring.
 
    misn.accept()
 
-   local c = misn.cargoNew( N_("Noona and Equipment"), N_("Za'lek scientist Noona and some particle physics-related equipment.") )
+   local c = commodity.new( N_("Noona and Equipment"), N_("Za'lek scientist Noona and some particle physics-related equipment.") )
    misn.cargoAdd(c, cargo_amount)
 
    -- mission details

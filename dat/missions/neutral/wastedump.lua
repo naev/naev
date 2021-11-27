@@ -86,7 +86,7 @@ function accept ()
    local txt = text[ rnd.rnd( 1, #text ) ]
    vntk.msg( "", fmt.f( txt, {credits = fmt.credits( mem.credits ) } ) )
 
-   local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
+   local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
    mem.cid = misn.cargoAdd( c, q )
    player.pay( mem.credits )
 

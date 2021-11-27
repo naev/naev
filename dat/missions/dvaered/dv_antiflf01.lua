@@ -43,7 +43,7 @@ function create()
    misn.setTitle(_("Take the Dvaered crew home"))
    misn.setReward(_("A chance to aid in the effort against the FLF"))
 
-   local c = misn.cargoNew( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
+   local c = commodity.new( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
    mem.DVcrew = misn.cargoAdd(c, 0)
 
    hook.land("land")

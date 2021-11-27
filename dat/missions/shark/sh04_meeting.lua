@@ -67,7 +67,7 @@ function accept()
 
       mem.marker = misn.markerAdd(missys, "low")
 
-      local c = misn.cargoNew( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
+      local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
       mem.smith = misn.cargoAdd( c, 0 )
 
       mem.landhook = hook.land("land")

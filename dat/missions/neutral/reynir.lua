@@ -76,7 +76,7 @@ function accept ()
 
       tk.msg( _("Reynir"), fmt.f(_([["Thank you so much! Just fly me around in the system, preferably near {pnt}."]]), {pnt=mem.misn_base}) )
       misn.osdCreate(_("Rich reward from space!"), {fmt.f(_("Fly around in the system, preferably near {pnt}"), {pnt=mem.misn_base})})
-      local c = misn.cargoNew( N_("Reynir"), N_("A old man who wants to see space.") )
+      local c = commodity.new( N_("Reynir"), N_("A old man who wants to see space.") )
       mem.cargoID = misn.cargoAdd( c, 0 )
    end
 

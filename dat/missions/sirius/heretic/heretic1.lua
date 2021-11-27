@@ -64,7 +64,7 @@ function accept()
       fmt.f(_("Fly to {pnt} in the {sys} system and deliver the message"), {pnt=mem.targetasset, sys=mem.targetsystem}),
    })
    misn.osdActive(1)
-   local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
+   local c = commodity.new( N_("Message"), N_("A message of seemingly high importance.") )
    mem.message = misn.cargoAdd(c,0)
    hook.land("landing")
 end

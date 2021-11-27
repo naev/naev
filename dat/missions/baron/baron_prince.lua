@@ -198,7 +198,7 @@ function flintley()
       misn.osdActive(3)
       mem.stage = 3
 
-      local c = misn.cargoNew( N_("Ancient Artifact"), N_("A seemingly ancient artifact.") )
+      local c = commodity.new( N_("Ancient Artifact"), N_("A seemingly ancient artifact.") )
       mem.artifactReal = misn.cargoAdd(c, 0)
 
       misn.markerRm(mem.markerA)
@@ -217,7 +217,7 @@ function seller()
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
-            local c = misn.cargoNew( N_("Artifact? A"), N_("An ancient artifact?") )
+            local c = commodity.new( N_("Artifact? A"), N_("An ancient artifact?") )
             mem.artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerA)
          else
@@ -229,7 +229,7 @@ function seller()
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
-            local c = misn.cargoNew( N_("Artifact? B"), N_("An ancient artifact?") )
+            local c = commodity.new( N_("Artifact? B"), N_("An ancient artifact?") )
             mem.artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerB)
          else
@@ -241,7 +241,7 @@ function seller()
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
-            local c = misn.cargoNew( N_("Artifact? C"), N_("An ancient artifact?") )
+            local c = commodity.new( N_("Artifact? C"), N_("An ancient artifact?") )
             mem.artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerC)
          else

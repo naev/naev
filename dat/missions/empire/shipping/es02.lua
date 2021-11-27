@@ -221,7 +221,7 @@ end
 
 function board ()
    -- VIP boards
-   local c = misn.cargoNew( N_("VIP"), N_("A Very Important Person.") )
+   local c = commodity.new( N_("VIP"), N_("A Very Important Person.") )
    mem.vip = misn.cargoAdd( c, 0 )
    tk.msg( _("Disabled Ship"), _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
 

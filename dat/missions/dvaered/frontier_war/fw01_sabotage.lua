@@ -124,7 +124,7 @@ function hamfresser()
    "As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in {sys}".]]), {pnt=sabotpla, sys=sabotsys}) )
       mem.stage = 1
       hook.enter("enter")
-      local c = misn.cargoNew( N_("Bomb"), N_("A gift from the High Command to Lord Battleaddict.") )
+      local c = commodity.new( N_("Bomb"), N_("A gift from the High Command to Lord Battleaddict.") )
       mem.bomblet = misn.cargoAdd( c, bombMass )
 
       misn.markerRm(mem.mark)

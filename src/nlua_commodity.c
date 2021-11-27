@@ -16,6 +16,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "ndata.h"
 #include "nlua_faction.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
@@ -34,6 +35,7 @@ static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
 static int commodityL_icon( lua_State *L );
 static int commodityL_description( lua_State *L );
+static int commodityL_new( lua_State *L );
 static int commodityL_illegalto( lua_State *L );
 static int commodityL_illegality( lua_State *L );
 static const luaL_Reg commodityL_methods[] = {
@@ -48,6 +50,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "priceAtTime", commodityL_priceAtTime },
    { "icon", commodityL_icon },
    { "description", commodityL_description },
+   { "new", commodityL_new },
    { "illegalto", commodityL_illegalto },
    { "illegality", commodityL_illegality },
    {0,0}
@@ -396,6 +399,49 @@ static int commodityL_description( lua_State *L )
    if (c->description==NULL)
       return 0;
    lua_pushstring(L,c->description);
+   return 1;
+}
+
+/**
+ * @brief Creates a new temporary commodity. If a temporary commodity with the same name exists, that gets returned instead.
+ *        "Temporary" is a relative term. The returned commodity object may be saved to a mission's/event's "mem" table,
+ *        or used as a mission cargo (\see misn.cargoAdd), and in those cases it will persist in saved games.
+ *        Caution: Usage as a regular commodity in the player's cargo holds is not yet supported.
+ *
+ *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
+ *    @luatparam string decription Description of the cargo to add.
+ *    @luatparam[opt=nil] table params Table of named parameters. Currently supported is "gfx_space".
+ *    @luatreturn Commodity The newly created commodity or an existing temporary commodity with the same name.
+ * @luafunc new
+ */
+static int commodityL_new( lua_State *L )
+{
+   const char *cname, *cdesc, *buf;
+   char str[STRMAX_SHORT];
+   Commodity *cargo;
+
+   /* Parameters. */
+   cname    = luaL_checkstring(L,1);
+   cdesc    = luaL_checkstring(L,2);
+
+   cargo    = commodity_getW(cname);
+   if ((cargo != NULL) && !cargo->istemp)
+      NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
+
+   if (cargo==NULL)
+      cargo = commodity_newTemp( cname, cdesc );
+
+   if (!lua_isnoneornil(L,3)) {
+      lua_getfield(L,3,"gfx_space");
+      buf = luaL_optstring(L,-1,NULL);
+      if (buf) {
+         gl_freeTexture(cargo->gfx_space);
+         snprintf( str, sizeof(str), COMMODITY_GFX_PATH"space/%s", buf );
+         cargo->gfx_space = gl_newImage( str, 0 );
+      }
+   }
+
+   lua_pushcommodity(L, cargo);
    return 1;
 }
 

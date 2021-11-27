@@ -120,7 +120,7 @@ function create()
    end
    -- Choose a random cargo and create it
    mem.cargo = cargoes[rnd.rnd(1, #cargoes)]
-   local c = misn.cargoNew( mem.cargo[1], mem.cargo[2] )
+   local c = commodity.new( mem.cargo[1], mem.cargo[2] )
    -- TODO make this more nuanced
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    mem.cargo = mem.cargo[1] -- set it to name only

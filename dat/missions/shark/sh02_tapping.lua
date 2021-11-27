@@ -119,7 +119,7 @@ end
 
 function beginrun()
    tk.msg(_("Time to go back to Alteris"), _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]]))
-   local c = misn.cargoNew(N_("Recorder"), N_("A holophone recorder."))
+   local c = commodity.new(N_("Recorder"), N_("A holophone recorder."))
    mem.records = misn.cargoAdd(c, 0)  --Adding the cargo
    mem.stage = 1
    misn.osdActive(2)

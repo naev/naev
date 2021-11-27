@@ -77,7 +77,7 @@ function accept ()
    misn.osdCreate(_("Empire Recruitment"), {fmt.f(_("Deliver some parcels for the Empire to {pnt} in {sys}."), {pnt=mem.dest, sys=mem.sys})})
 
    -- Set up the goal
-   local c = misn.cargoNew( N_("Parcels"), N_("A bunch of boring Empire parcels.") )
+   local c = commodity.new( N_("Parcels"), N_("A bunch of boring Empire parcels.") )
    mem.parcels = misn.cargoAdd(c, 0)
    hook.land("land")
 end

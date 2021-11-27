@@ -287,7 +287,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
     misn.accept()
     mem.intime = true
     mem.overtime = false
-    local c = misn.cargoNew( N_("Pilgrims"), N_("A bunch of giddy Sirian pilgrims.") )
+    local c = commodity.new( N_("Pilgrims"), N_("A bunch of giddy Sirian pilgrims.") )
     misn.cargoAdd(c, 0)  -- We'll assume you can hold as many pilgrims as you want?
     tick()
     hook.land("land")

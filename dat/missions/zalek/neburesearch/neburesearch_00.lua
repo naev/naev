@@ -71,7 +71,7 @@ function accept()
     end
 
     -- Add cargo
-    local c = misn.cargoNew( N_("Nebula Sensor Suit"), N_("A heavy suit with lots of fancy looking sensors.") )
+    local c = commodity.new( N_("Nebula Sensor Suit"), N_("A heavy suit with lots of fancy looking sensors.") )
     mem.cargo = misn.cargoAdd(c, 5)
 
     -- Set up mission information

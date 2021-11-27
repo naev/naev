@@ -120,7 +120,7 @@ function second_trd()
      return
   end
   player.pay(-pho_mny)
-  local c = misn.cargoNew(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
+  local c = commodity.new(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
   mem.carg_id = misn.cargoAdd(c, 3)
   tk.msg(_([[In the bar]]), _([["Pleasure to do business with you."]]))
   misn.osdCreate(_("The one with the Shopping"), {

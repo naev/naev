@@ -66,7 +66,7 @@ function accept ()
    -- Add Mission Cargo and set up the computer
 
    misn.accept()
-   local c = misn.cargoNew( cargoname, cargodesc )
+   local c = commodity.new( cargoname, cargodesc )
    misn.cargoAdd( c, 1 )
 
    misn.setTitle( _([[Deliver Love]]) )

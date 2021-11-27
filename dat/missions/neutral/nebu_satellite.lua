@@ -72,7 +72,7 @@ function accept ()
    end
 
    -- Add cargo
-   local c = misn.cargoNew( N_("Satellite"), N_("A small satellite loaded with sensors for exploring the depths of the nebula.") )
+   local c = commodity.new( N_("Satellite"), N_("A small satellite loaded with sensors for exploring the depths of the nebula.") )
    mem.cargo = misn.cargoAdd( c, 3 )
 
    -- Set up mission information

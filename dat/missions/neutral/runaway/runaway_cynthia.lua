@@ -57,7 +57,7 @@ function accept ()
    misn.osdCreate(_("The Runaway"), {_("Deliver Cynthia to Zhiru in the Goddard system")})
    misn.osdActive(1)
 
-   local c = misn.cargoNew( cargoname, cargodesc )
+   local c = commodity.new( cargoname, cargodesc )
    mem.cargoID = misn.cargoAdd( c, 0 )
 
    misn.setTitle( _("The Runaway") )

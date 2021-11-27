@@ -120,7 +120,7 @@ function landBar()
       misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
       misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
 
-      local c = misn.cargoNew( N_("Commando"), N_("A commando unit.") )
+      local c = commodity.new( N_("Commando"), N_("A commando unit.") )
       mem.commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
 
       tk.msg(_("Hello again"), _([[When you enter the bar, you feel an unusual atmosphere in the air. Most customers seem to be annoyed to be there, not lifting their eyes from their drinks. Even the mercenary pilots, normally easily distinguishable by their arrogant posture and their loud voices, do not manifest. Moving forward in the room, you soon discover the reason for that: Captain Hamfresser, from the space infantry commandos. And this time, he is not alone.
@@ -608,7 +608,7 @@ function straferDiscuss()
    strafer:control(false)  -- Strafer stops following the player
 
    -- Add some fuel, far away so that no npc gathers it
-   local cfuel = misn.cargoNew( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
+   local cfuel = commodity.new( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
    local pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
    mem.Imark = system.mrkAdd( pos, _("FUEL") )

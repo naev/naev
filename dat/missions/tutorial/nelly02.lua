@@ -344,7 +344,7 @@ function land ()
       vn.done( tutnel.nelly.transition )
       vn.run()
 
-      local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
+      local c = commodity.new( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
       misn.markerMove( mem.misn_marker, mem.retpnt )
       misn.osdActive(2)

@@ -71,7 +71,7 @@ function accept ()
       fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}),
    })
    -- Set up the goal
-   local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
+   local c = commodity.new( N_("Prisoners"), N_("FLF prisoners.") )
    mem.prisoners = misn.cargoAdd( c, 0 )
    tk.msg( _("Prisoner Exchange"), _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
 

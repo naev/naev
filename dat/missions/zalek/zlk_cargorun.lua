@@ -90,7 +90,7 @@ function land ()
       else
 
          tk.msg( _("Deliver the Equipment"), _([[Once planetside, you find the acceptance area and type in the code Dr. Logan gave you to pick up the equipment. Swiftly, a group of droids backed by a human overseer loads the heavy reinforced crates on your ship and you are ready to go.]]) )
-         local c = misn.cargoNew( N_("Equipment"), N_("Some heavy reinforced crates of equipment.") )
+         local c = commodity.new( N_("Equipment"), N_("Some heavy reinforced crates of equipment.") )
          mem.cargoID = misn.cargoAdd( c, 20 )
          mem.pickedup = true
 

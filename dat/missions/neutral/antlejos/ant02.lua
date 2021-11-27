@@ -105,7 +105,7 @@ function land ()
       end
       vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
 
-      local c = misn.cargoNew( N_("Heavy Machinery"), N_("Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful for terraforming.") )
+      local c = commodity.new( N_("Heavy Machinery"), N_("Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful for terraforming.") )
       misn.cargoAdd( c, cargo_amount )
       misn.osdActive(2)
       mem.state = 2

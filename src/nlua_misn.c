@@ -70,7 +70,6 @@ static int misn_finish( lua_State *L );
 static int misn_markerAdd( lua_State *L );
 static int misn_markerMove( lua_State *L );
 static int misn_markerRm( lua_State *L );
-static int misn_cargoNew( lua_State *L );
 static int misn_cargoAdd( lua_State *L );
 static int misn_cargoRm( lua_State *L );
 static int misn_cargoJet( lua_State *L );
@@ -93,7 +92,6 @@ static const luaL_Reg misn_methods[] = {
    { "markerAdd", misn_markerAdd },
    { "markerMove", misn_markerMove },
    { "markerRm", misn_markerRm },
-   { "cargoNew", misn_cargoNew },
    { "cargoAdd", misn_cargoAdd },
    { "cargoRm", misn_cargoRm },
    { "cargoJet", misn_cargoJet },
@@ -650,45 +648,6 @@ static int misn_finish( lua_State *L )
    return 0;
 }
 
-/**
- * @brief Creates a new temporary commodity meant for missions. If a temporary commodity with the same name exists, that gets returned instead.
- *
- *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
- *    @luatparam string decription Description of the cargo to add.
- *    @luatparam[opt=nil] table params Table of named parameters. Currently supported is "gfx_space".
- *    @luatreturn Commodity The newly created commodity or an existing temporary commodity with the same name.
- * @luafunc cargoNew
- */
-static int misn_cargoNew( lua_State *L )
-{
-   const char *cname, *cdesc, *buf;
-   char str[STRMAX_SHORT];
-   Commodity *cargo;
-
-   /* Parameters. */
-   cname    = luaL_checkstring(L,1);
-   cdesc    = luaL_checkstring(L,2);
-
-   cargo    = commodity_getW(cname);
-   if ((cargo != NULL) && !cargo->istemp)
-      NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
-
-   if (cargo==NULL)
-      cargo = commodity_newTemp( cname, cdesc );
-
-   if (!lua_isnoneornil(L,3)) {
-      lua_getfield(L,3,"gfx_space");
-      buf = luaL_optstring(L,-1,NULL);
-      if (buf) {
-         gl_freeTexture(cargo->gfx_space);
-         snprintf( str, sizeof(str), COMMODITY_GFX_PATH"space/%s", buf );
-         cargo->gfx_space = gl_newImage( str, 0 );
-      }
-   }
-
-   lua_pushcommodity(L, cargo);
-   return 1;
-}
 /**
  * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
  *  unless they abandons the mission in which case it'll get eliminated.

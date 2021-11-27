@@ -226,7 +226,7 @@ function drone_board ()
    vn.run()
 
    if hacked then
-      local c = misn.cargoNew( N_("Drone Black Box"), N_("The recovered black box of a Za'lek drone.") )
+      local c = commodity.new( N_("Drone Black Box"), N_("The recovered black box of a Za'lek drone.") )
       misn.cargoAdd(c, 0)
       misn.osdActive(2)
       mem.state = 2

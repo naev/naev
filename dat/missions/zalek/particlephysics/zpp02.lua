@@ -189,7 +189,7 @@ They scratch their head.]]))
       return
    end
 
-   local crg = misn.cargoNew( N_("Drone Interface Controllers"), N_("Special adapters that are able to connect modern drone controllers with older drone connectors.") )
+   local crg = commodity.new( N_("Drone Interface Controllers"), N_("Special adapters that are able to connect modern drone controllers with older drone connectors.") )
    misn.cargoAdd( crg, cargo_amount )
 
    misn.osdActive(2)

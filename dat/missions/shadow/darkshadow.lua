@@ -125,7 +125,7 @@ end
 function joeBoard()
    tk.msg(_("An extra passenger"), fmt.f(_([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
     "Come on, {player}," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]), {player=player.name()}))
-   local c = misn.cargoNew(N_("Four Winds Informant"), N_("Jorek's informant."))
+   local c = commodity.new(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
    player.unboard()
    misn.markerMove(mem.marker, seirsys)
@@ -423,7 +423,7 @@ function jorek()
     "It ain't that simple," Jorek sighs. "See, I got an inside man. A guy in their ranks who wants out. I need to get him back to the old girl so he can tell her what he knows firsthand. He's out there now, with the pack, so we need to pick him up on our way out. Now, there's two ways we can do this. We can either go in fast, grab the guy, get out fast before the wolves get us. Or we can try to fight our way through. Let me warn you though, these guys mean business, and they're not your average pirates. Unless you got a really tough ship, I recommend you run."
     Jorek sits back in his chair. "Well, there you have it. I'll fill you in on the details once we're spaceborne. Show me to your ship, buddy, and let's get rollin'. I've had enough of this damn place."]]))
    misn.npcRm(mem.joreknpc)
-   local c = misn.cargoNew(N_("Jorek"), N_("An unpleasant man."))
+   local c = commodity.new(N_("Jorek"), N_("An unpleasant man."))
    misn.cargoAdd(c, 0)
 
    misn.osdCreate(_("Dark Shadow"), {

@@ -58,7 +58,7 @@ function create()
     misn.setReward(_("A chance to learn more about the FLF"))
     misn.markerAdd(mem.destsys, "low")
 
-    local c = misn.cargoNew( N_("Gregar"), N_("A rescued FLF pilot.") )
+    local c = commodity.new( N_("Gregar"), N_("A rescued FLF pilot.") )
     mem.gregar = misn.cargoAdd( c, 0 )
 
     hook.enter("enter")

@@ -239,7 +239,7 @@ function land ()
    You've got one, right?]]) )
 
       -- Add goods
-      local c = misn.cargoNew( N_("Datapad"), N_("A dead soldier's datapad.") )
+      local c = commodity.new( N_("Datapad"), N_("A dead soldier's datapad.") )
       mem.misn_cargo = misn.cargoAdd( c, 0 )
       mem.misn_stage = 2
 

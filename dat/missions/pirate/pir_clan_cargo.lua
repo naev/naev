@@ -80,7 +80,7 @@ Will you accept the mission?]]) ) then
    })
 
    -- Set up the goal
-   local c = misn.cargoNew(N_("Pirate Packages"), N_("A bunch of pirate packages. You don't want to know what's inside."))
+   local c = commodity.new(N_("Pirate Packages"), N_("A bunch of pirate packages. You don't want to know what's inside."))
    mem.packages = misn.cargoAdd(c, 5)
    mem.misn_stage = 1
    mem.jumped = 0

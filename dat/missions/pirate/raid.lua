@@ -133,7 +133,7 @@ function create ()
    -- Finish mission details
    mem.returnpnt, mem.returnsys = planet.cur()
    mem.cargo = cargoes[ rnd.rnd(1,#cargoes) ]
-   mem.misn_cargo = misn.cargoNew( mem.cargo[1], mem.cargo[2] )
+   mem.misn_cargo = commodity.new( mem.cargo[1], mem.cargo[2] )
    mem.enemyfaction = faction.get("Trader")
    mem.convoy_enter, mem.convoy_exit = get_route( mem.targetsys )
    -- TODO make tiers based on how many times the player does them or something
