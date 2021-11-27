@@ -12,7 +12,6 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 --]]
 
 -- luacheck: globals love (We are *implementing* the love2d API.)
-
 love = {
    _basepath = "",
    _version_major = 11,
@@ -89,6 +88,15 @@ end
 --]]
 function love.getVersion()
    return love._version_major, love._version_minor, love._version_patch, love._codename
+end
+function love.origin()
+   local nw, nh = naev.gfx.dim()
+   love.x = 0
+   love.y = 0
+   love.w = nw
+   love.h = nh
+   local lg = require "love.graphics"
+   lg.origin()
 end
 
 

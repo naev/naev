@@ -136,6 +136,7 @@ function enter ()
    pexp:brake()
    pexp:setInvincible(true)
    pexp:setDir( math.pi/4 )
+   hook.pilot( pexp, "board", "drone_board" )
 
    pbeam = pos + vec2.newP( 100, math.pi/4 )
 
@@ -143,7 +144,7 @@ function enter ()
 
    hook.timer( 5, "heartbeat" )
    hook.update( "update" )
-   hook.renderfg( "renderbg" )
+   hook.renderbg( "renderbg" )
 
    shader = zpp.shader_focal()
 end
@@ -154,8 +155,7 @@ end
 
 function renderbg ()
    local z = camera.getZoom()
-   local pos = planet.get("Katar I"):pos()
-   local x, y = gfx.screencoords( pos, true ):get()
+   local x, y = gfx.screencoords( pbeam, true ):get()
 
    shader:render( x, y, 75 / z )
 end
@@ -196,6 +196,7 @@ end
 
 local stage = 0
 function heartbeat ()
+   local threshold = 76
    local delay = 3
    if stage==0 then
       pilot.comm(_("Noona"), _("Get close to the experiment site!"))
@@ -203,7 +204,7 @@ function heartbeat ()
    elseif stage==1 and pexp:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("Carefully push the crystals into the beam."))
       stage = 2
-   elseif stage==2 and pbeam:dist( player.pilot():pos() ) < 30 then
+   elseif stage==2 and pbeam:dist( player.pilot():pos() ) < threshold then
       pilot.comm(_("Noona"), _("Hmmm. It looks like the amplifier needs some adjustments. Could you try to fix it?"))
       -- Turn off power beam here
       pexp:setActiveBoard()
@@ -217,7 +218,7 @@ function heartbeat ()
    elseif stage==4 then
       pilot.comm(_("Noona"), _("Push the crystals into the beam."))
       stage = 5
-   elseif stage==5 and pbeam:dist( player.pilot():pos() ) < 30 then
+   elseif stage==5 and pbeam:dist( player.pilot():pos() ) < threshold then
       -- CUTSCENE START
       player.cinematics( true )
       stage = 6
