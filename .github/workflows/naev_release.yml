@@ -262,7 +262,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
 
     steps:
       - name: Get Source
