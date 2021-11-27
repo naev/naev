@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_transform.c
  *
  * @brief Handles transforms.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -19,7 +17,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nluadef.h"
-
 
 /* Transform metatable methods. */
 static int transformL_eq( lua_State *L );
@@ -46,7 +43,6 @@ static const luaL_Reg transformL_methods[] = {
    {0,0}
 }; /**< Transform metatable methods. */
 
-
 /**
  * @brief Loads the transform library.
  *
@@ -58,7 +54,6 @@ int nlua_loadTransform( nlua_env env )
    nlua_register(env, TRANSFORM_METATABLE, transformL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with transforms.
@@ -129,7 +124,6 @@ int lua_istransform( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Compares two transforms to see if they are the same.
  *
@@ -146,7 +140,6 @@ static int transformL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( t1, t2, sizeof(gl_Matrix4) )==0) );
    return 1;
 }
-
 
 /**
  * @brief Creates a new identity transform.Gets a transform.
@@ -166,7 +159,6 @@ static int transformL_new( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Multiplies two transforms (A*B).
  *
@@ -184,7 +176,6 @@ static int transformL_mul( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets all the values of the transform.
  *
@@ -195,11 +186,10 @@ static int transformL_mul( lua_State *L )
 static int transformL_get( lua_State *L )
 {
    gl_Matrix4 *M = luaL_checktransform(L, 1);
-   int i,j;
    lua_newtable(L);              /* t */
-   for (i=0; i<4; i++) {
+   for (int i=0; i<4; i++) {
       lua_newtable(L);           /* t, t */
-      for (j=0; j<4; j++) {
+      for (int j=0; j<4; j++) {
          lua_pushnumber(L,M->m[i][j]); /* t, t, n */
          lua_rawseti(L,-2,j+1);       /* t, t */
       }
@@ -207,7 +197,6 @@ static int transformL_get( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Applies scaling to a transform.
@@ -229,7 +218,6 @@ static int transformL_scale( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Applies translation to a transform.
  *
@@ -250,7 +238,6 @@ static int transformL_translate( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Applies a 2D rotation (along Z-axis) to a transform.
  *
@@ -265,7 +252,6 @@ static int transformL_rotate2d( lua_State *L )
    lua_pushtransform(L, gl_Matrix4_Rotate2d( *M, a ) );
    return 1;
 }
-
 
 /**
  * @brief Creates an orthogonal matrix.
@@ -291,7 +277,6 @@ static int transformL_ortho( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Applies a transformation to a point.
  *
@@ -306,15 +291,13 @@ static int transformL_ortho( lua_State *L )
  */
 static int transformL_applyPoint( lua_State *L )
 {
-   gl_Matrix4 *M;
    double gp[3], p[3];
-   int i;
-   M = luaL_checktransform(L, 1);
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
    gp[0] = luaL_checknumber(L,2);
    gp[1] = luaL_checknumber(L,3);
    gp[2] = luaL_checknumber(L,4);
 
-   for (i=0; i<3; i++)
+   for (int i=0; i<3; i++)
       p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2] + M->m[3][i];
 
    lua_pushnumber(L, p[0]);
@@ -322,7 +305,6 @@ static int transformL_applyPoint( lua_State *L )
    lua_pushnumber(L, p[2]);
    return 3;
 }
-
 
 /**
  * @brief Applies a transformation to a dimension.
@@ -340,15 +322,13 @@ static int transformL_applyPoint( lua_State *L )
  */
 static int transformL_applyDim( lua_State *L )
 {
-   gl_Matrix4 *M;
    double gp[3], p[3];
-   int i;
-   M = luaL_checktransform(L, 1);
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
    gp[0] = luaL_checknumber(L,2);
    gp[1] = luaL_checknumber(L,3);
    gp[2] = luaL_checknumber(L,4);
 
-   for (i=0; i<3; i++)
+   for (int i=0; i<3; i++)
       p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2];
 
    lua_pushnumber(L, p[0]);
