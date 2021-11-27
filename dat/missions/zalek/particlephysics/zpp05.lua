@@ -9,7 +9,7 @@
   <chance>100</chance>
   <planet>Katar I</planet>
   <location>Bar</location>
-  <done>Za'lek Particle Physics 5</done>
+  <done>Za'lek Particle Physics 4</done>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
