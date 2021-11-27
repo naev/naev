@@ -312,13 +312,11 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Meson Test
-        if: ${{ matrix.image == 'naev-linux-lts' }}
         run: |
           meson test lua_lint -C build
 
       - name: Upload Test Log
         uses: actions/upload-artifact@v1
-        if: ${{ matrix.image == 'naev-linux-lts' }}
         with:
           name: ${{ github.sha }}-lualint-testlog
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
