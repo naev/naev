@@ -22,7 +22,7 @@ done
 BUILD_DATE="$(date +%Y%m%d)"
 
 # MinGW DLL search paths
-MINGW_BUNDLEDLLS_SEARCH_PATH="/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin"
+MINGW_BUNDLEDLLS_SEARCH_PATH="/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/x86_64-w64-mingw32/sys-root/mingw/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin"
 # Include all subdirs (mingw-bundledlls can't search recursively) of in-tree and out-of-tree subproject dirs.
 # Normally, Meson builds everything out-of-tree, but some subprojects have their own build systems which do as they please.
 for MESON_SUBPROJ_DIR in "${MESON_SOURCE_ROOT}/subprojects" "${MESON_BUILD_ROOT}/subprojects"; do
