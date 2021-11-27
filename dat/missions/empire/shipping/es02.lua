@@ -18,7 +18,6 @@
 </mission>
 --]]
 --[[
-
    Empire VIP Rescue
 
    Author: bobbens
@@ -100,10 +99,10 @@ end
 
 function land ()
    mem.landed = planet.cur()
-
    if mem.landed == mem.ret then
       -- Successfully rescued the VIP
       if mem.misn_stage == 2 then
+         local getlicense = not diff.isApplied( "heavy_combat_vessel_license" )
 
          -- VIP gets off
          misn.cargoRm(mem.vip)
@@ -113,13 +112,18 @@ function land ()
          emp.modReputation( 5 ) -- Bump cap a bit
          faction.modPlayerSingle("Empire",5)
          faction.modPlayerSingle("Dvaered",5)
-         diff.apply("heavy_combat_vessel_license")
 
          -- Flavour text
-         tk.msg( _("Mission Success"), _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
+         if getlicense then
+            tk.msg( _("Mission Success"), _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
     "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for the Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]) )
-
-         emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
+            emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
+            diff.apply("heavy_combat_vessel_license")
+         else
+            tk.msg( _("Mission Success"), _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
+    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. We have nothing more for you now, but check in periodically in case something comes up for you."]]) )
+            emp.addShippingLog( _([[You successfully rescued a VIP for the Empire.]]) )
+         end
 
          misn.finish(true)
       end
