@@ -194,34 +194,42 @@ static void gettext_readStats (void)
 LanguageOption* gettext_languageOptions (void)
 {
    LanguageOption *opts = array_create( LanguageOption );
-   char **dirs, **paths, dirpath[PATH_MAX], buf[12];
+   char **dirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (size_t i=0; dirs[i]!=NULL; i++) {
+      LanguageOption *opt = &array_grow( &opts );
+      opt->language = strdup( dirs[i] );
+      opt->coverage = gettext_languageCoverage( dirs[i] );
+   }
+   PHYSFS_freeList( dirs );
+   return opts;
+}
+
+
+/**
+ * @brief Return the fraction of strings which have a translation into the given language.
+ */
+double gettext_languageCoverage( const char* lang )
+{
+   uint32_t translated = 0;
+   char **paths, dirpath[PATH_MAX], buf[12];
 
    /* Initialize gettext_nstrings, if needed. */
    if (gettext_nstrings == 0)
       gettext_readStats();
-   /* Analyze the available languages. */
-   dirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
-   for (size_t i=0; dirs[i]!=NULL; i++) {
-      LanguageOption *opt = &array_grow( &opts );
-      uint32_t translated = 0;
-      snprintf( dirpath, sizeof(dirpath), GETTEXT_PATH"%s", dirs[i] );
-      paths = ndata_listRecursive( dirpath );
-      for (int j=0; j<array_size(paths); j++) {
-         PHYSFS_file *file;
-         PHYSFS_sint64 size;
-         file = PHYSFS_openRead( paths[j] );
-         free( paths[j] );
-         if (file == NULL)
-            continue;
-         size = PHYSFS_readBytes( file, buf, 12 );
-         if (size < 12)
-            continue;
-         translated += msgcat_nstringsFromHeader( buf );
-      }
-      array_free( paths );
-      opt->language = strdup( dirs[i] );
-      opt->coverage = (double)translated / gettext_nstrings;
+   snprintf( dirpath, sizeof(dirpath), GETTEXT_PATH"%s", lang );
+   paths = ndata_listRecursive( dirpath );
+   for (int j=0; j<array_size(paths); j++) {
+      PHYSFS_file *file;
+      PHYSFS_sint64 size;
+      file = PHYSFS_openRead( paths[j] );
+      free( paths[j] );
+      if (file == NULL)
+         continue;
+      size = PHYSFS_readBytes( file, buf, 12 );
+      if (size < 12)
+         continue;
+      translated += msgcat_nstringsFromHeader( buf );
    }
-   PHYSFS_freeList( dirs );
-   return opts;
+   array_free( paths );
+   return (double)translated / gettext_nstrings;
 }

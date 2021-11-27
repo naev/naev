@@ -18,6 +18,7 @@ void gettext_init();
 const char* gettext_getLanguage (void);
 void gettext_setLanguage( const char* lang );
 LanguageOption* gettext_languageOptions (void);
+double gettext_languageCoverage( const char* lang );
 
 const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n );
 FORMAT_ARG( 2 ) const char* gettext_pgettext( const char* lookup, const char* msgid );
