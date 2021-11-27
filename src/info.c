@@ -1065,8 +1065,8 @@ static void standings_update( unsigned int wid, const char *str )
       int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       window_modifyImage( wid, "imgLogo", t, tw, th );
       y  = -40;
-      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y );
-      y -= th;
+      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y - (FACTION_LOGO_SM-th)/2 );
+      y -= FACTION_LOGO_SM;
    }
    else {
       window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
