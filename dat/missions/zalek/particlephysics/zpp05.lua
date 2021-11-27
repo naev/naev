@@ -194,9 +194,12 @@ function drone_board ()
    player.unboard()
 end
 
+local function inrange ()
+   return pbeam:dist( player.pilot():pos() ) < 75
+end
+
 local stage = 0
 function heartbeat ()
-   local threshold = 76
    local delay = 3
    if stage==0 then
       pilot.comm(_("Noona"), _("Get close to the experiment site!"))
@@ -204,7 +207,7 @@ function heartbeat ()
    elseif stage==1 and pexp:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("Carefully push the crystals into the beam."))
       stage = 2
-   elseif stage==2 and pbeam:dist( player.pilot():pos() ) < threshold then
+   elseif stage==2 and inrange() then
       pilot.comm(_("Noona"), _("Hmmm. It looks like the amplifier needs some adjustments. Could you try to fix it?"))
       -- Turn off power beam here
       pexp:setActiveBoard()
@@ -216,9 +219,9 @@ function heartbeat ()
       stage = 4
       delay = 6
    elseif stage==4 then
-      pilot.comm(_("Noona"), _("Push the crystals into the beam."))
+      pilot.comm(_("Noona"), _("Now push the crystals into the beam."))
       stage = 5
-   elseif stage==5 and pbeam:dist( player.pilot():pos() ) < threshold then
+   elseif stage==5 and inrange() then
       -- CUTSCENE START
       player.cinematics( true )
       stage = 6
