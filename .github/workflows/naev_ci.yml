@@ -88,18 +88,6 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-      - name: Meson Test
-        if: ${{ matrix.image == 'naev-linux-lts' }}
-        run: |
-          meson test lua_lint -C build
-
-      - name: Upload Test Log
-        uses: actions/upload-artifact@v1
-        if: ${{ matrix.image == 'naev-linux-lts' }}
-        with:
-          name: ${{ github.sha }}-testlog
-          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -287,10 +275,10 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-  "Lua_Documentation":
+  "Lua_Lint":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-docs:latest"
+      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
     needs:
       [
         Package_Source,
@@ -298,6 +286,48 @@ jobs:
         Windows_Compile_Naev,
         Darwin_Compile_Naev,
       ]
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        id: setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/${{ matrix.config }}' \
+              --buildtype=debug \
+              --wrap-mode=forcefallback \
+              -Dnightly=false \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Test
+        if: ${{ matrix.image == 'naev-linux-lts' }}
+        run: |
+          meson test lua_lint -C build
+
+      - name: Upload Test Log
+        uses: actions/upload-artifact@v1
+        if: ${{ matrix.image == 'naev-linux-lts' }}
+        with:
+          name: ${{ github.sha }}-lualint-testlog
+          path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+
+  "Lua_Documentation":
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-docs:latest"
+    needs: Lua_Lint
 
     steps:
       - name: Get Source
