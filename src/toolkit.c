@@ -1277,6 +1277,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    glColour c;
    glColour c2;
 
+   /* We're on top of anything previously drawn. */
+   glClear( GL_DEPTH_BUFFER_BIT );
+
    /* Get dimensions. */
    w = 250;
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
