@@ -1880,39 +1880,37 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
       }
    }
 
-   /* Look for default actions (press button, confirm, exit). These should not be repeats. */
-   if (input_key == 0 || event->key.repeat)
-      return ret;
-
-   /* Handle button hotkeys. */
-   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
-      if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
-           && wgt->keyevent != NULL ) {
-         ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
-         if (ret!=0)
-            return ret;
+   if (input_key != 0 && !event->key.repeat) {
+      /* Handle button hotkeys. We don't want a held-down key to keep activating buttons, so forbid "repeat". */
+      for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
+         if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key == input_key )
+               && wgt->keyevent != NULL ) {
+            ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
+            if (ret!=0)
+               return ret;
+         }
       }
-   }
 
-   /* Handle other cases where event might be used by the window. */
-   switch (key) {
-      case SDLK_RETURN:
-      case SDLK_KP_ENTER:
-         if (wdw->accept_fptr != NULL) {
-            wdw->accept_fptr( wdw->id, wdw->name );
-            return 1;
-         }
-         break;
+      /* Handle other cases where event might be used by the window... and we don't want key-repeat. */
+      switch (key) {
+         case SDLK_RETURN:
+         case SDLK_KP_ENTER:
+            if (wdw->accept_fptr != NULL) {
+               wdw->accept_fptr( wdw->id, wdw->name );
+               return 1;
+            }
+            break;
 
-      case SDLK_ESCAPE:
-         if (wdw->cancel_fptr != NULL) {
-            wdw->cancel_fptr( wdw->id, wdw->name );
-            return 1;
-         }
-         break;
+         case SDLK_ESCAPE:
+            if (wdw->cancel_fptr != NULL) {
+               wdw->cancel_fptr( wdw->id, wdw->name );
+               return 1;
+            }
+            break;
 
-      default:
-         break;
+         default:
+            break;
+      }
    }
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
