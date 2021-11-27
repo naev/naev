@@ -68,6 +68,7 @@
 #define GUI_PATH                 "gui/"
 #define FACTIONS_PATH            "factions/"
 #define GETTEXT_PATH             "gettext/" /* Doesn't use ndata functions. */
+#define GETTEXT_STATS_PATH       "gettext_stats/"
 #define BACKGROUND_PATH          "bkg/"
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"

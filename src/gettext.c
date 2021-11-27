@@ -32,6 +32,9 @@ typedef struct translation {
 static char gettext_systemLanguage[64] = "";            /**< Language, or :-delimited list of them, from the system at startup. */
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
+static uint32_t gettext_nstrings = 0;                   /**< Number of translatable strings in the game. */
+
+static void gettext_readStats (void);
 
 /**
  * @brief Initialize the translation system.
@@ -83,6 +86,8 @@ void gettext_setLanguage( const char* lang )
    char root[256], **paths;
    size_t map_size, lang_part_len;
 
+   if (gettext_nstrings == 0)
+      gettext_readStats(); /* Initialize it. TODO: Move this to the function for listing translations, once it exists. */
    if (lang == NULL)
       lang = gettext_systemLanguage;
    if (gettext_activeTranslation != NULL && !strcmp( lang, gettext_activeTranslation->language ))
@@ -162,4 +167,23 @@ const char* gettext_pgettext( const char* lookup, const char* msgid )
 {
    const char *trans = _( lookup );
    return trans==lookup ? msgid : trans;
+}
+
+
+/**
+ * @brief Read the GETTEXT_STATS_PATH data and compute gettext_nstrings.
+ * (Common case: just a "naev.txt" file with one number. But mods pulled in via PhysicsFS can have their own string counts.)
+ */
+static void gettext_readStats (void)
+{
+   char **paths = ndata_listRecursive( GETTEXT_STATS_PATH );
+
+   for (int i=0; i<array_size(paths); i++) {
+      size_t size;
+      char *text = ndata_read( paths[i], &size );
+      if (text != NULL)
+         gettext_nstrings += strtoul( text, NULL, 10 );
+      free( paths[i] );
+   }
+   array_free( paths );
 }
