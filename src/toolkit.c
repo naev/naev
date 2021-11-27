@@ -1025,9 +1025,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
       return;
    }
 
-   /* Defocus. */
-   if (wdw->focus == wgt->id)
-      toolkit_defocusWidget( wdw, wgt );
+   toolkit_defocusWidget( wdw, wgt );
 
    /* There's dead stuff now. */
    window_dead = 1;
@@ -2082,12 +2080,8 @@ void toolkit_focusClear( Window *wdw )
    if (wdw->focus == -1)
       return;
 
-   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wdw->focus == wgt->id)
-         toolkit_defocusWidget( wdw, wgt );
-
-      wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
-   }
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      toolkit_defocusWidget( wdw, wgt );
 }
 
 /**
@@ -2097,21 +2091,21 @@ void toolkit_focusClear( Window *wdw )
  */
 void toolkit_focusSanitize( Window *wdw )
 {
+   int focus = wdw->focus;
+
    /* Clear focus. */
    toolkit_focusClear( wdw );
 
    /* No focus is always safe. */
-   if (wdw->focus == -1)
+   if (focus == -1)
       return;
 
    /* Check focused widget. */
    for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wdw->focus == wgt->id) {
+      if (focus == wgt->id) {
          /* Not focusable. */
-         if (!toolkit_isFocusable(wgt)) {
-            wdw->focus = -1;
+         if (!toolkit_isFocusable(wgt))
             toolkit_nextFocus( wdw ); /* Get first focus. */
-         }
          else
             toolkit_focusWidget( wdw, wgt );
 
@@ -2156,6 +2150,7 @@ void toolkit_nextFocus( Window *wdw )
 void toolkit_prevFocus( Window *wdw )
 {
    Widget *prev;
+   int focus = wdw->focus;
 
    /* Clear focus. */
    toolkit_focusClear( wdw );
@@ -2167,12 +2162,9 @@ void toolkit_prevFocus( Window *wdw )
          continue;
 
       /* See if we found the current one. */
-      if (wdw->focus == wgt->id) {
-         if (prev == NULL)
-            wdw->focus = -1;
-         else
+      if (focus == wgt->id) {
+         if (prev != NULL)
             toolkit_focusWidget( wdw, prev );
-
          return;
       }
 
@@ -2181,20 +2173,18 @@ void toolkit_prevFocus( Window *wdw )
    }
 
    /* Focus nothing. */
-   if (prev == NULL)
-      wdw->focus = -1;
-   else
+   if (prev != NULL)
       toolkit_focusWidget( wdw, prev );
 
    return;
 }
 
 /**
- * @brief Focuses a widget in a window.
+ * @brief Focuses a widget in a window. No-op if it's not focusable or already focused.
  */
 void toolkit_focusWidget( Window *wdw, Widget *wgt )
 {
-   if (!toolkit_isFocusable(wgt))
+   if (!toolkit_isFocusable(wgt) || wgt_isFlag( wgt, WGT_FLAG_FOCUSED ))
       return;
 
    wdw->focus = wgt->id;
@@ -2204,13 +2194,15 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
 }
 
 /**
- * @brief Defocuses the focused widget in a window.
+ * @brief Defocuses the focused widget in a window. No-op if it's not (de)focusable or already defocused,
+ * else voids the window's focus.
  */
 void toolkit_defocusWidget( Window *wdw, Widget *wgt )
 {
-   if (wdw->focus != wgt->id)
+   if (wdw->focus != wgt->id || !wgt_isFlag( wgt, WGT_FLAG_FOCUSED ))
       return;
 
+   wdw->focus = -1;
    wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    if (wgt->focusLose != NULL)
       wgt->focusLose( wgt );
