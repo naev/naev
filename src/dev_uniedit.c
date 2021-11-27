@@ -865,7 +865,6 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname )
    (void) wid;
    (void) wgtname;
    uniedit_drag = uniedit_dragSys = 0;
-   uniedit_deselect();
 }
 
 /**

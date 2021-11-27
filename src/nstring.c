@@ -111,6 +111,14 @@ int strsort( const void *p1, const void *p2 )
 }
 
 /**
+ * @brief Order-reversed version of strsort().
+ */
+int strsort_reverse( const void *p1, const void *p2 )
+{
+   return strsort( p2, p1 );
+}
+
+/**
  * @brief Like vsprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
  *        Conforms to GNU and BSD libc semantics.
  *

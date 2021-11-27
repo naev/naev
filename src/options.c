@@ -16,6 +16,7 @@
 
 #include "options.h"
 
+#include "array.h"
 #include "conf.h"
 #include "background.h"
 #include "colour.h"
@@ -39,6 +40,7 @@
 #define OPT_WINDOWS        4
 
 #define AUTONAV_RESET_DIST_MAX  10e3
+#define LANG_CODE_START 7 /**< Length of a language-list item's prefix, like the "[ 81%] " in "[ 81%] de". */
 
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
@@ -211,25 +213,28 @@ void opt_resize (void)
 }
 
 /*
- * Gets the list of languages available.
+ * Gets the list of languages available. Options look like "[ 81%] de".
  */
 static char** lang_list( int *n )
 {
    char **ls;
-   char **subdirs;
+   LanguageOption *opts = gettext_languageOptions();
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
    ls[0] = strdup(_("system"));
-   ls[1] = strdup("en");
+   ls[1] = strdup("[100%] en");
    *n = 2;
 
    /* Try to open the available languages. */
-   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
-   for (size_t i=0; subdirs[i]!=NULL; i++)
-      ls[(*n)++] = strdup( subdirs[i] );
-   PHYSFS_freeList( subdirs );
+   for (int i=0; i<array_size(opts); i++) {
+      char **item = &ls[(*n)++];
+      asprintf( item, "[%3.0f%%] %s", 100.*opts[i].coverage, opts[i].language );
+      free( opts[i].language );
+   }
+   array_free( opts );
 
+   qsort( &ls[1], *n-1, sizeof(char*), strsort_reverse );
    return ls;
 }
 
@@ -294,8 +299,8 @@ static void opt_gameplay( unsigned int wid )
    ls = lang_list( &n );
    i = 0;
    if (conf.language != NULL) {
-      for (i=0; i<n; i++)
-         if (strcmp(conf.language,ls[i])==0)
+      for (i=1; i<n; i++)
+         if (strcmp(conf.language, &ls[i][LANG_CODE_START])==0)
             break;
       if (i>=n)
          i = 0;
@@ -406,10 +411,11 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    p = toolkit_getListPos( wid, "lstLanguage" );
    s = (p==0) ? NULL : toolkit_getList( wid, "lstLanguage" );
    newlang = ((s != NULL) != (conf.language != NULL))
-          || ((s != NULL) && (strcmp( s, conf.language) != 0));
+          || ((s != NULL) && (strcmp( &s[LANG_CODE_START], conf.language) != 0));
    if (newlang) {
       free( conf.language );
-      conf.language = (s==NULL) ? NULL : strdup( s );
+      conf.language = (s==NULL) ? NULL : strdup( &s[LANG_CODE_START] );
+      LOG("conf.language set to %s", conf.language);
       /* Apply setting going forward; advise restart to regen other text. */
       gettext_setLanguage( conf.language );
       opt_needRestart();

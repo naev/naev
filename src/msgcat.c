@@ -121,7 +121,6 @@ const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* 
 }
 
 
-
 /* ===================== https://git.musl-libc.org/cgit/musl/tree/src/locale/__mo_lookup.c =================== */
 static inline uint32_t swapc(uint32_t x, int c)
 {
@@ -161,6 +160,17 @@ const char *msgcat_mo_lookup(const void *p, size_t size, const char *s)
 		}
 	}
 	return 0;
+}
+
+
+/**
+ * @brief Return the number of strings in a message catalog, given its first 12 bytes.
+ */
+uint32_t msgcat_nstringsFromHeader( const char buf[12] )
+{
+   const uint32_t *mo = (uint32_t*) buf;
+   int sw = *mo - 0x950412de;
+   return swapc(mo[2], sw);
 }
 
 

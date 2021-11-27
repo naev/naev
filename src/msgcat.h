@@ -16,3 +16,4 @@ typedef struct msgcat {
 
 void msgcat_init( msgcat_t* p, const void* map, size_t map_size );
 const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* msgid2, uint64_t n );
+uint32_t msgcat_nstringsFromHeader( const char buf[12] );

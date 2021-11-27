@@ -1025,9 +1025,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
       return;
    }
 
-   /* Defocus. */
-   if (wdw->focus == wgt->id)
-      toolkit_defocusWidget( wdw, wgt );
+   toolkit_defocusWidget( wdw, wgt );
 
    /* There's dead stuff now. */
    window_dead = 1;
@@ -1278,6 +1276,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    double x, y;
    glColour c;
    glColour c2;
+
+   /* We're on top of anything previously drawn. */
+   glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Get dimensions. */
    w = 250;
@@ -1879,39 +1880,37 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
       }
    }
 
-   /* Look for default actions (press button, confirm, exit). These should not be repeats. */
-   if (input_key == 0 || event->key.repeat)
-      return ret;
-
-   /* Handle button hotkeys. */
-   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
-      if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
-           && wgt->keyevent != NULL ) {
-         ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
-         if (ret!=0)
-            return ret;
+   if (input_key != 0 && !event->key.repeat) {
+      /* Handle button hotkeys. We don't want a held-down key to keep activating buttons, so forbid "repeat". */
+      for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
+         if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key == input_key )
+               && wgt->keyevent != NULL ) {
+            ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
+            if (ret!=0)
+               return ret;
+         }
       }
-   }
 
-   /* Handle other cases where event might be used by the window. */
-   switch (key) {
-      case SDLK_RETURN:
-      case SDLK_KP_ENTER:
-         if (wdw->accept_fptr != NULL) {
-            wdw->accept_fptr( wdw->id, wdw->name );
-            return 1;
-         }
-         break;
+      /* Handle other cases where event might be used by the window... and we don't want key-repeat. */
+      switch (key) {
+         case SDLK_RETURN:
+         case SDLK_KP_ENTER:
+            if (wdw->accept_fptr != NULL) {
+               wdw->accept_fptr( wdw->id, wdw->name );
+               return 1;
+            }
+            break;
 
-      case SDLK_ESCAPE:
-         if (wdw->cancel_fptr != NULL) {
-            wdw->cancel_fptr( wdw->id, wdw->name );
-            return 1;
-         }
-         break;
+         case SDLK_ESCAPE:
+            if (wdw->cancel_fptr != NULL) {
+               wdw->cancel_fptr( wdw->id, wdw->name );
+               return 1;
+            }
+            break;
 
-      default:
-         break;
+         default:
+            break;
+      }
    }
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
@@ -2082,12 +2081,8 @@ void toolkit_focusClear( Window *wdw )
    if (wdw->focus == -1)
       return;
 
-   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wdw->focus == wgt->id)
-         toolkit_defocusWidget( wdw, wgt );
-
-      wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
-   }
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      toolkit_defocusWidget( wdw, wgt );
 }
 
 /**
@@ -2097,21 +2092,21 @@ void toolkit_focusClear( Window *wdw )
  */
 void toolkit_focusSanitize( Window *wdw )
 {
+   int focus = wdw->focus;
+
    /* Clear focus. */
    toolkit_focusClear( wdw );
 
    /* No focus is always safe. */
-   if (wdw->focus == -1)
+   if (focus == -1)
       return;
 
    /* Check focused widget. */
    for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wdw->focus == wgt->id) {
+      if (focus == wgt->id) {
          /* Not focusable. */
-         if (!toolkit_isFocusable(wgt)) {
-            wdw->focus = -1;
+         if (!toolkit_isFocusable(wgt))
             toolkit_nextFocus( wdw ); /* Get first focus. */
-         }
          else
             toolkit_focusWidget( wdw, wgt );
 
@@ -2156,6 +2151,7 @@ void toolkit_nextFocus( Window *wdw )
 void toolkit_prevFocus( Window *wdw )
 {
    Widget *prev;
+   int focus = wdw->focus;
 
    /* Clear focus. */
    toolkit_focusClear( wdw );
@@ -2167,12 +2163,9 @@ void toolkit_prevFocus( Window *wdw )
          continue;
 
       /* See if we found the current one. */
-      if (wdw->focus == wgt->id) {
-         if (prev == NULL)
-            wdw->focus = -1;
-         else
+      if (focus == wgt->id) {
+         if (prev != NULL)
             toolkit_focusWidget( wdw, prev );
-
          return;
       }
 
@@ -2181,20 +2174,18 @@ void toolkit_prevFocus( Window *wdw )
    }
 
    /* Focus nothing. */
-   if (prev == NULL)
-      wdw->focus = -1;
-   else
+   if (prev != NULL)
       toolkit_focusWidget( wdw, prev );
 
    return;
 }
 
 /**
- * @brief Focuses a widget in a window.
+ * @brief Focuses a widget in a window. No-op if it's not focusable or already focused.
  */
 void toolkit_focusWidget( Window *wdw, Widget *wgt )
 {
-   if (!toolkit_isFocusable(wgt))
+   if (!toolkit_isFocusable(wgt) || wgt_isFlag( wgt, WGT_FLAG_FOCUSED ))
       return;
 
    wdw->focus = wgt->id;
@@ -2204,13 +2195,15 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
 }
 
 /**
- * @brief Defocuses the focused widget in a window.
+ * @brief Defocuses the focused widget in a window. No-op if it's not (de)focusable or already defocused,
+ * else voids the window's focus.
  */
 void toolkit_defocusWidget( Window *wdw, Widget *wgt )
 {
-   if (wdw->focus != wgt->id)
+   if (wdw->focus != wgt->id || !wgt_isFlag( wgt, WGT_FLAG_FOCUSED ))
       return;
 
+   wdw->focus = -1;
    wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    if (wgt->focusLose != NULL)
       wgt->focusLose( wgt );

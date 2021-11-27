@@ -424,7 +424,7 @@ int shipyard_canBuy( const char *shipname, Planet *planet )
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
          ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
-      land_errDialogueBuild( _("You lack the %s."), _(ship->license) );
+      land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }
    if (!player_hasCredits( price )) {
@@ -491,7 +491,7 @@ int shipyard_canTrade( const char *shipname )
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if ((!player_hasLicense(ship->license)) &&
          ((land_planet == NULL) || (!planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))) {
-      land_errDialogueBuild( _("You lack the %s."), _(ship->license) );
+      land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }
    if (!player_hasCredits( price - player_shipPrice(player.p->name))) {

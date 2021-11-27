@@ -832,7 +832,6 @@ static void sysedit_focusLose( unsigned int wid, const char* wgtname )
    (void) wid;
    (void) wgtname;
    sysedit_drag = sysedit_dragSel = 0;
-   sysedit_deselect();
 }
 
 /**

@@ -22,8 +22,8 @@ endforeach
 # Python module checks (For AUTHORS generation and soundtrack generation)
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
-pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true) 
-mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false) 
+pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true)
+mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false)
 
 cc = meson.get_compiler('c')
 subdir('utils')
@@ -335,6 +335,16 @@ if buildExec.disabled() == false
       install_dir: ndata_path,
    )
 
+   gen_gettext_stats = find_program('utils/build/gen_gettext_stats.py')
+   gettext_stats = custom_target(
+      'gettext_stats',
+      command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
+      input: files('po/' + meson.project_name() + '.pot'),
+      output: meson.project_name() + '.txt',
+      install: true,
+      install_dir: ndata_path / 'gettext_stats',
+   )
+
    naev_sh = configure_file(
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
@@ -343,6 +353,7 @@ if buildExec.disabled() == false
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path(),
          'authors' : authors.full_path(),
+         'gettext_stats' : gettext_stats.full_path(),
       }
    )
 

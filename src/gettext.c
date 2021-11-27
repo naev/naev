@@ -32,6 +32,9 @@ typedef struct translation {
 static char gettext_systemLanguage[64] = "";            /**< Language, or :-delimited list of them, from the system at startup. */
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
+static uint32_t gettext_nstrings = 0;                   /**< Number of translatable strings in the game. */
+
+static void gettext_readStats (void);
 
 /**
  * @brief Initialize the translation system.
@@ -162,4 +165,71 @@ const char* gettext_pgettext( const char* lookup, const char* msgid )
 {
    const char *trans = _( lookup );
    return trans==lookup ? msgid : trans;
+}
+
+
+/**
+ * @brief Read the GETTEXT_STATS_PATH data and compute gettext_nstrings.
+ * (Common case: just a "naev.txt" file with one number. But mods pulled in via PhysicsFS can have their own string counts.)
+ */
+static void gettext_readStats (void)
+{
+   char **paths = ndata_listRecursive( GETTEXT_STATS_PATH );
+
+   for (int i=0; i<array_size(paths); i++) {
+      size_t size;
+      char *text = ndata_read( paths[i], &size );
+      if (text != NULL)
+         gettext_nstrings += strtoul( text, NULL, 10 );
+      free( paths[i] );
+   }
+   array_free( paths );
+}
+
+
+/**
+ * @brief List the available languages, with completeness statistics.
+ * @return Array (array.h) of LanguageOptions.
+ */
+LanguageOption* gettext_languageOptions (void)
+{
+   LanguageOption *opts = array_create( LanguageOption );
+   char **dirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (size_t i=0; dirs[i]!=NULL; i++) {
+      LanguageOption *opt = &array_grow( &opts );
+      opt->language = strdup( dirs[i] );
+      opt->coverage = gettext_languageCoverage( dirs[i] );
+   }
+   PHYSFS_freeList( dirs );
+   return opts;
+}
+
+
+/**
+ * @brief Return the fraction of strings which have a translation into the given language.
+ */
+double gettext_languageCoverage( const char* lang )
+{
+   uint32_t translated = 0;
+   char **paths, dirpath[PATH_MAX], buf[12];
+
+   /* Initialize gettext_nstrings, if needed. */
+   if (gettext_nstrings == 0)
+      gettext_readStats();
+   snprintf( dirpath, sizeof(dirpath), GETTEXT_PATH"%s", lang );
+   paths = ndata_listRecursive( dirpath );
+   for (int j=0; j<array_size(paths); j++) {
+      PHYSFS_file *file;
+      PHYSFS_sint64 size;
+      file = PHYSFS_openRead( paths[j] );
+      free( paths[j] );
+      if (file == NULL)
+         continue;
+      size = PHYSFS_readBytes( file, buf, 12 );
+      if (size < 12)
+         continue;
+      translated += msgcat_nstringsFromHeader( buf );
+   }
+   array_free( paths );
+   return (double)translated / gettext_nstrings;
 }
