@@ -232,54 +232,57 @@ function heartbeat ()
    elseif stage==5 and inrange() then
       -- CUTSCENE START
       player.cinematics( true )
+      player.allowLand( false )
       stage = 6
    elseif stage==6 then
       -- pulse
       cutscene = true
-      shader_nebu:reset(3)
+      shader_nebu:reset()
       stage = 7
    elseif stage==7 then
       -- pulse
-      shader_nebu:reset(3)
+      shader_nebu:reset()
       stage = 8
    elseif stage==8 then
       -- pulse
-      shader_nebu:reset(2.5)
+      shader_nebu:reset()
       stage = 9
       delay = 2.5
    elseif stage==9 then
       -- pulse
-      shader_nebu:reset(2)
+      shader_nebu:reset()
       stage = 10
       delay = 2
    elseif stage==10 then
       -- pulse
-      shader_nebu:reset(1.5)
+      shader_nebu:reset()
       stage = 11
       delay = 1.5
    elseif stage==11 then
       -- pulse
-      shader_nebu:reset(1.25)
+      shader_nebu:reset()
       stage = 12
       delay = 1.25
    elseif stage==12 then
       -- pulse
-      shader_nebu:reset(1)
+      shader_nebu:reset()
       stage = 13
       delay = 1
    elseif stage==13 then
       stage = 14
       shader_nebu:send("u_mode", 1)
-      shader_nebu:reset(1)
+      shader_nebu:reset()
       delay = 10
    elseif stage==14 then
       shader_nebu:send("u_mode", 2)
-      shader_nebu:reset(1)
+      shader_nebu:reset()
       stage = 15
    elseif stage==15 then
       -- CUTSCENE END
       player.cinematics( false )
+      player.allowLand( true )
       cutscene = false
+      mem.state = 2
       stage = 16
    elseif stage==16 then
       pilot.comm(_("Noona"), _("Are you alright? Communication cut off for a bit."))
@@ -288,7 +291,6 @@ function heartbeat ()
    elseif stage==17 then
       pilot.comm(_("Noona"), _("Come back to Katar I."))
       misn.osdActive(2)
-      mem.state = 2
       return
    end
 

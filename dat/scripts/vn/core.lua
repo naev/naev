@@ -594,20 +594,20 @@ function vn.StateCharacter:_init()
       table.insert( vn._characters, c )
       c.alpha = 1
       c.displayname = c.who -- reset name
-   end
-   local pos = self.character.pos or "center"
-   if type(pos)=="number" then
-      self.character.offset = pos
-   elseif pos == "center" then
-      self.character.offset = 0.5
-   elseif pos == "left" then
-      self.character.offset = 0.25
-   elseif pos == "right" then
-      self.character.offset = 0.75
-   elseif pos == "farleft" then
-      self.character.offset = 0.15
-   elseif pos == "farright" then
-      self.character.offset = 0.85
+      local pos = self.character.pos or "center"
+      if type(pos)=="number" then
+         self.character.offset = pos
+      elseif pos == "center" then
+         self.character.offset = 0.5
+      elseif pos == "left" then
+         self.character.offset = 0.25
+      elseif pos == "right" then
+         self.character.offset = 0.75
+      elseif pos == "farleft" then
+         self.character.offset = 0.15
+      elseif pos == "farright" then
+         self.character.offset = 0.85
+      end
    end
    _finish(self)
 end

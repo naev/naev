@@ -92,22 +92,22 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local n = vn.newCharacter( zpp.vn_noona{image=nil} ) -- Just for the letter
+   local n = vn.newCharacter( zpp.noona.name, {color=zpp.noona.colour} ) -- Just for the letter
    vn.transition()
    vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerously looking experiments, and Za'lek scientists engaged in steamed arguments that don't detect your presence.]]))
    vn.na(_([[Eventually you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a non-enthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you back an envelope that was with the report mentioning that it is not part of the report.]]))
    vn.na(_([[As you wonder about what is in the envelope, suddenly two Za'lek Military officers bust in to the room.]]))
    -- TODO proper graphics
-   local z1 = vn.newCharacter( _("Za'lek Officer A"), {image="zalek_thug1.png"} )
-   local z2 = vn.newCharacter( _("Za'lek Officer B"), {image="zalek_thug1.png"} )
-   vn.appear( { z1, z2 }, "slide-left" )
+   local z1 = vn.newCharacter( _("Za'lek Officer A"), {image="zalek_thug1.png", pos="left"} )
+   local z2 = vn.newCharacter( _("Za'lek Officer B"), {image="zalek_thug1.png", pos="right"} )
+   vn.appear( { z1, z2 }, "slideleft" )
    z1(_([["Where is Chairman Sanderaite!? We just got the signal that she submitted a report here!"]]))
    vn.na(_([[The secretary lazily points at you.]]))
    z1(_([["Damnit, she got someone else to bring the report for her again…"]]))
    z2(_([["The council should have never passed the law permitting third parties to hand-in official reports."]]))
    z1(_([["They're trying to revoke it, but last time the meeting ended in fist cuffs."]]))
    z2(_([["Oh well, at least we have a hint to where she is now. On to Katar I!"]]))
-   vn.disappear( { z1, z2 }, "slide-left" ) -- Played in reverse
+   vn.disappear( { z1, z2 }, "slideleft" ) -- Played in reverse
    vn.na(_([[The Za'lek officers leave as fast as they got here, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
    if getlicense then
       n(_([[You read the letter:
