@@ -264,12 +264,12 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", _("Close"), info_close );
-   window_addButton( wid, -20 - (20+BUTTON_WIDTH), 20,
+   window_addButtonKey( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSetGUI", _("Set GUI"), info_setGui );
-   window_addButton( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
+         "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
+   window_addButtonKey( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnShipAI", _("Ship AI"), info_shipAI );
+         "btnShipAI", _("Ship AI"), info_shipAI, SDLK_a );
 
    buf = player_getLicenses();
    nlicenses = array_size( buf );
@@ -287,6 +287,7 @@ static void info_openMain( unsigned int wid )
          NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
+   window_setFocus( wid, "lstLicenses" );
 }
 
 /**
@@ -635,6 +636,7 @@ static void weapons_genList( unsigned int wid )
          w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update, NULL );
+   window_setFocus( wid, "lstWeapSets" );
 
    /* Restore position. */
    if (n >= 0)
@@ -842,6 +844,7 @@ static void cargo_genList( unsigned int wid )
    window_addList( wid, 20, -40,
          w - 40, 200,
          "lstCargo", buf, nbuf, 0, cargo_update, NULL );
+   window_setFocus( wid, "lstCargo" );
 }
 /**
  * @brief Updates the player's cargo in the cargo menu.
@@ -1038,6 +1041,7 @@ static void info_openStandings( unsigned int wid )
    /* Display list. */
    window_addList( wid, 20, -40, lw, h-60, "lstStandings",
          str, array_size(info_factions), 0, standings_update, NULL );
+   window_setFocus( wid, "lstStandings" );
 }
 
 /**
@@ -1065,8 +1069,8 @@ static void standings_update( unsigned int wid, const char *str )
       int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       window_modifyImage( wid, "imgLogo", t, tw, th );
       y  = -40;
-      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y );
-      y -= th;
+      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y - (FACTION_LOGO_SM-th)/2 );
+      y -= FACTION_LOGO_SM;
    }
    else {
       window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
@@ -1160,6 +1164,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          300, h-340,
          "lstMission", misn_names, j, selectedMission, mission_menu_update, NULL );
+   window_setFocus( wid, "lstMission" );
 }
 /**
  * @brief Updates the mission menu mission information based on what's selected.
@@ -1281,7 +1286,7 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
-
+	 window_setFocus( wid, "lstLogEntries" );
       }
       logWidgetsReady=1;
    }
@@ -1341,6 +1346,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                    w-40, LOGSPACING / 2-20,
                    "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
+   window_setFocus( wid, "lstLogEntries" );
    logWidgetsReady=1;
 }
 
