@@ -182,7 +182,7 @@ function enter ()
       local pos = jump.get( destsys, "Tomas" ):pos()
       local fbad = faction.dynAdd( "Pirate", "physics_badguys", _("Thugs"), {clear_allies=true, clear_enemies=true} )
 
-      local badships = { "Pirate Admonisher", "Hyena", "Hyena" }
+      local badships = { "Pirate Admonisher", "Pirate Hyena", "Pirate Hyena" }
       badguys = fleet.add( 1, badships, fbad, pos, _("Thugs"), {ai="baddiepos"} )
 
       hook.timer( 2, "heartbeat" )

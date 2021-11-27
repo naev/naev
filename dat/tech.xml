@@ -304,6 +304,7 @@
  <tech name="All Ships">
   <item>Llama</item>
   <item>Hyena</item>
+  <item>Pirate Hyena</item>
   <item>Schroedinger</item>
   <item>Gawain</item>
   <item>Drone</item>
@@ -855,6 +856,7 @@
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
   <item>Pirate Starbridge</item>
+  <item>Pirate Hyena</item>
   <item>Pirate Kestrel</item>
   <item>Pirate Phalanx</item>
   <item>Pirate Rhino</item>

@@ -145,7 +145,7 @@ function create ()
 
    -- Pirate details
    mem.name = pilotname.pirate()
-   mem.pship = "Hyena"
+   mem.pship = "Pirate Hyena"
    mem.credits = 50e3
    mem.reputation = 0
    mem.board_failed = false
@@ -343,7 +343,7 @@ function bounty_setup ()
    local pship, credits, reputation
    if mem.level == 1 then
       if rnd.rnd() < 0.5 then
-         pship = "Hyena"
+         pship = "Pirate Hyena"
          credits = 80e3 + rnd.sigma() * 15e3
       else
          pship = "Pirate Shark"

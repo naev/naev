@@ -68,7 +68,7 @@ local function createPilotNPCs ()
    local pf = planet.cur():faction()
    if pir.factionIsPirate( pf ) then
       ship_choices = {
-         { ship = "Hyena",             royalty = 0.1 },
+         { ship = "Pirate Hyena",      royalty = 0.1 },
          { ship = "Pirate Shark",      royalty = 0.15 },
          { ship = "Pirate Vendetta",   royalty = 0.2 },
          { ship = "Pirate Ancestor",   royalty = 0.25 },

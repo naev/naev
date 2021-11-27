@@ -237,9 +237,9 @@ function badevent()
 
          local s = player.pilot():ship():size()
          local enemies_tiny = {
-            "Hyena",
-            "Hyena",
-            "Hyena",
+            "Pirate Hyena",
+            "Pirate Hyena",
+            "Pirate Hyena",
          }
          local enemies_sml = {
             "Pirate Vendetta",
@@ -309,9 +309,6 @@ function badevent()
          for _k,v in ipairs(enemies) do
             local dist = 800 + 200 * ship.get(v):size()
             local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, rnd.angle() ) )
-            if v == "Hyena" then
-               p:rename(_("Pirate Hyena"))
-            end
             p:setHostile( true ) -- Should naturally attack the player
             table.insert( pirates, p )
             if not leader then

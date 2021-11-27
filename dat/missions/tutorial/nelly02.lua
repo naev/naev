@@ -403,7 +403,7 @@ function timer_pirate ()
       -- Spawn pirates
       enemies = {}
       for i=1,3 do
-         local p = pilot.add( "Hyena", mem.fpir, mem.jump_dest, _("Pirate Hyena") )
+         local p = pilot.add( "Pirate Hyena", mem.fpir, mem.jump_dest )
          if i>1 then
             p:setLeader( enemies[1] )
          end

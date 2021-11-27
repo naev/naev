@@ -27,8 +27,8 @@ Wrapper for pilot.add() that can operate on tables of ships.
 
 The first pilot is set to be the fleet leader.
 
-   @usage pilots = fleet.add( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
-   @usage pilots = fleet.add( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
+   @usage pilots = fleet.add( 1, "Pirate Hyena", "Pirate" ) -- Creates a single Pirate Hyena.
+   @usage pilots = fleet.add( 1, "Pirate Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
    @usage pilots = fleet.add( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 
       @param[opt=1] count Number of times to repeat the pattern.

@@ -1,6 +1,6 @@
 local scom = require "factions.spawn.lib.common"
 
-local shyena      = ship.get("Hyena")
+local shyena      = ship.get("Pirate Hyena")
 local sshark      = ship.get("Pirate Shark")
 local svendetta   = ship.get("Pirate Vendetta")
 local sancestor   = ship.get("Pirate Ancestor")
@@ -10,10 +10,6 @@ local srhino      = ship.get("Pirate Rhino")
 local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = ship.get("Pirate Kestrel")
 
-local function add_hyena( pilots )
-   scom.addPilot( pilots, shyena, {name=_("Pirate Hyena")})
-end
-
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
    local pilots = {}
@@ -21,16 +17,16 @@ local function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.3 then
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.5 then
       scom.addPilot( pilots, sshark )
    elseif r < 0.8 then
       scom.addPilot( pilots, sshark )
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    else
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sshark )
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    end
 
    return pilots
@@ -42,7 +38,7 @@ local function spawn_loner ()
 
    local r = rnd.rnd()
    if r < 0.2 then
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.3 then
       scom.addPilot( pilots, sshark )
    elseif r < 0.4 then
@@ -72,12 +68,12 @@ local function spawn_squad ()
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sancestor )
       scom.addPilot( pilots, sancestor )
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.5 then
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sancestor )
       scom.addPilot( pilots, sshark )
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.7 then
       scom.addPilot( pilots, srhino )
       scom.addPilot( pilots, sphalanx )
@@ -86,7 +82,7 @@ local function spawn_squad ()
       scom.addPilot( pilots, sadmonsher )
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sshark )
-      add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    else
       scom.addPilot( pilots, sstarbridge )
       scom.addPilot( pilots, sshark )

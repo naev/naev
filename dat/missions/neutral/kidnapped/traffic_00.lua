@@ -168,9 +168,9 @@ function attackedkidnappers()
   end
 
   if mem.needpirates then
-    bodyguard1 = pilot.add( "Hyena", "Pirate", vec2.new(800, 700), _("Pirate Hyena") )
-    bodyguard2 = pilot.add( "Hyena", "Pirate", vec2.new(-900, 600), _("Pirate Hyena") )
-    bodyguard3 = pilot.add( "Hyena", "Pirate", vec2.new(700, -500), _("Pirate Hyena") )
+    bodyguard1 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(800, 700) )
+    bodyguard2 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(-900, 600) )
+    bodyguard3 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(700, -500) )
     bodyguard1:control()
     bodyguard2:control()
     bodyguard3:control()

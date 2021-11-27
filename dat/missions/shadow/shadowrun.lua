@@ -184,11 +184,11 @@ function enter()
    if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and mem.shadowrun == 2 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+      fleet.add( 4, "Pirate Hyena", "Pirate", vec2.new(0,0) )
    elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and mem.shadowrun == 3 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+      fleet.add( 4, "Pirate Hyena", "Pirate", vec2.new(0,0) )
       pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,20) )
       pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
       pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )

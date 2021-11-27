@@ -172,8 +172,6 @@ function create ()
       misn.finish(false)
    end
 
-   mem.aname = nil
-   mem.bname = nil
    local ships
    if mem.target_faction == faction.get("FLF") then
       mem.name = pilotname.generic()
@@ -184,8 +182,7 @@ function create ()
       mem.name = pilotname.pirate()
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
       mem.aship = "Pirate Phalanx"
-      mem.bship = "Hyena"
-      mem.bname = _("Pirate Hyena")
+      mem.bship = "Pirate Hyena"
    end
 
    mem.tgtship = ships[rnd.rnd(1,#ships)]
@@ -300,15 +297,15 @@ function trigger_ambush()
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    local pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.add( mem.aship, mem.target_faction, pos, mem.aname )
+   ambush[1] = pilot.add( mem.aship, mem.target_faction, pos )
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.add( mem.bship, mem.target_faction, pos, mem.bname )
+   ambush[2] = pilot.add( mem.bship, mem.target_faction, pos )
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.add( mem.bship, mem.target_faction, pos, mem.bname )
+   ambush[3] = pilot.add( mem.bship, mem.target_faction, pos )
 
    ambush[1]:setHostile()
    ambush[2]:setHostile()

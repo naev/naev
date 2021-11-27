@@ -231,18 +231,14 @@ function patrol_spawnPirates( n, boss )
    --fleetPirate = {}
    for i = 1, n do
       local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
-      local pilotname = nil
       local shipname
       if i == 1 and boss ~= nil then
          shipname = boss
       else
-         local shipnames = { "Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor" }
+         local shipnames = { "Pirate Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
-      if shipname == "Hyena" then
-         pilotname = _("Pirate Hyena")
-      end
-      local p = pilot.add( shipname, frogue, pos, pilotname, {ai="pirate_norun"} )
+      local p = pilot.add( shipname, frogue, pos, nil, {ai="pirate_norun"} )
       hook.pilot( p, "death", "pilot_death_pirate" )
       p:setHostile()
       p:setVisible( true )

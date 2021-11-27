@@ -1,6 +1,6 @@
 local scom = require "factions.spawn.lib.common"
 
-local shyena      = ship.get("Hyena")
+local shyena      = ship.get("Pirate Hyena")
 local sshark      = ship.get("Pirate Shark")
 local svendetta   = ship.get("Pirate Vendetta")
 local sancestor   = ship.get("Pirate Ancestor")
@@ -11,9 +11,6 @@ local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = ship.get("Pirate Kestrel")
 
 local spir = {}
-function spir.add_hyena( pilots )
-   scom.addPilot( pilots, shyena, {name=_("Pirate Hyena")})
-end
 
 -- @brief Spawns a small patrol fleet.
 function spir.spawn_patrol ()
@@ -23,16 +20,16 @@ function spir.spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.3 then
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.5 then
       scom.addPilot( pilots, sshark )
    elseif r < 0.8 then
       scom.addPilot( pilots, sshark )
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    else
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sshark )
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    end
 
    return pilots
@@ -46,7 +43,7 @@ function spir.spawn_loner ()
 
    local r = rnd.rnd()
    if r < 0.2 then
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.3 then
       scom.addPilot( pilots, sshark )
    elseif r < 0.4 then
@@ -78,12 +75,12 @@ function spir.spawn_squad ()
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sancestor )
       scom.addPilot( pilots, sancestor )
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.5 then
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sancestor )
       scom.addPilot( pilots, sshark )
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.7 then
       scom.addPilot( pilots, srhino )
       scom.addPilot( pilots, sphalanx )
@@ -92,7 +89,7 @@ function spir.spawn_squad ()
       scom.addPilot( pilots, sadmonsher )
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, sshark )
-      spir.add_hyena( pilots )
+      scom.addPilot( pilots, shyena )
    else
       scom.addPilot( pilots, sstarbridge )
       scom.addPilot( pilots, sshark )

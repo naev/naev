@@ -172,7 +172,7 @@ function enter ()
       baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
-         pilot.add( "Hyena", fenemy, vec2.new(0,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Hyena", fenemy, vec2.new(0,100) ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )
@@ -193,7 +193,7 @@ function enter ()
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
          pilot.add( "Pirate Shark", fenemy, vec2.new(0,100) ),
-         pilot.add( "Hyena", fenemy, vec2.new(100,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Hyena", fenemy, vec2.new(100,100) ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )
@@ -215,7 +215,7 @@ function enter ()
 
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
-         pilot.add( "Hyena", fenemy, vec2.new(0,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Hyena", fenemy, vec2.new(0,100) ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )

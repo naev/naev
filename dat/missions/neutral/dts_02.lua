@@ -139,7 +139,7 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = fleet.add( 18, "Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
+      raider_fleet = fleet.add( 18, "Pirate Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
@@ -209,7 +209,7 @@ end
 
 function second_wave_attacks()
       mem.casualties = 0
-      second_wave = fleet.add( 4, "Hyena", fraider, player.pos(), _("Pirate Hyena"), {ai="def"} )
+      second_wave = fleet.add( 4, "Pirate Hyena", fraider, player.pos(), nil, {ai="def"} )
       for k, v in ipairs( second_wave) do
          v:setHostile()
       end

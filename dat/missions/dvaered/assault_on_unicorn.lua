@@ -82,7 +82,7 @@ function death(pilot,killer)
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
       local reward_table = {
-         ["Hyena"]             =  10e3,
+         ["Pirate Hyena"]      =  10e3,
          ["Pirate Shark"]      =  30e3,
          ["Pirate Vendetta"]   =  80e3,
          ["Pirate Ancestor"]   = 100e3,

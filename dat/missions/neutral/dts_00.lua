@@ -135,7 +135,7 @@ function defend_system()
    end
 
    -- Create a fleet of raiding pirates
-   raider_fleet = fleet.add( 18, "Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
+   raider_fleet = fleet.add( 18, "Pirate Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
    for k,v in ipairs( raider_fleet) do
    v:setHostile()
    end

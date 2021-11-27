@@ -161,7 +161,7 @@ function invoke_enemies( enter_vect )
    if rnd.rnd() < 0.6 then table.insert( merc, "Pirate Ancestor" ) end
    if rnd.rnd() < 0.7 then table.insert( merc, "Pirate Vendetta" ) end
    if rnd.rnd() < 0.8 then table.insert( merc, "Pirate Shark" ) end
-   if rnd.rnd() < 0.9 then table.insert( merc, "Hyena" ) end
+   if rnd.rnd() < 0.9 then table.insert( merc, "Pirate Hyena" ) end
 
    -- Add mercenaries
    local flt = fleet.add( 1, merc, "Pirate", enter_vect, nil, {ai="mercenary"} )

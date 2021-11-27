@@ -316,7 +316,10 @@ function jumpin()
             end
             mem.jp2go = system.cur():jumpDist(misssys[4])
             if mem.jp2go <= 2 and mem.jp2go > 0 then -- Encounter
-                local ambush_ships = {{"Pirate Ancestor", "Hyena", "Hyena"}, {"Pirate Ancestor", "Pirate Vendetta", "Hyena", "Hyena"}}
+                local ambush_ships = {
+                    {"Pirate Ancestor", "Pirate Hyena", "Pirate Hyena"},
+                    {"Pirate Ancestor", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}
+                }
                 ambush = fleet.add( 1,  ambush_ships[3 - mem.jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
                 mem.kills = 0
                 for i, j in ipairs(ambush) do

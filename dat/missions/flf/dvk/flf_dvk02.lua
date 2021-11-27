@@ -209,7 +209,7 @@ function enter ()
          boss:setHilight()
 
          mem.pirates_left = 4
-         pirates = fleet.add( mem.pirates_left, "Hyena", "Dreamer Clan", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
+         pirates = fleet.add( mem.pirates_left, "Pirate Hyena", "Dreamer Clan", vec, nil, {ai="pirate_norun"} )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )

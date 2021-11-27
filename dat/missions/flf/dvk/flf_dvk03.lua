@@ -205,14 +205,11 @@ function timer_pirates ()
 
    local src = system.get( "Zacron" )
    local ships = {
-      "Hyena", "Pirate Shark", "Pirate Admonisher",
+      "Pirate Hyena", "Pirate Shark", "Pirate Admonisher",
       "Pirate Vendetta", "Pirate Ancestor" }
-   local pilotnames = {
-      _("Pirate Hyena"), _("Pirate Shark"), _("Pirate Admonisher"),
-      _("Pirate Vendetta"), _("Pirate Ancestor") }
 
    pir_boss = pilot.add( "Pirate Kestrel", "Dreamer Clan", src )
-   pir_fleet = fleet.add( 9, ships, "Dreamer Clan", src, pilotnames )
+   pir_fleet = fleet.add( 9, ships, "Dreamer Clan", src )
    pir_fleet[ #pir_fleet + 1 ] = pir_boss
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 

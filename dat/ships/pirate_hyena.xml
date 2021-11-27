@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Hyena">
+<ship name="Pirate Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
+ <!--FIXME gfx/price/stats/description need updates.-->
  <GFX size="44">hyena</GFX>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
@@ -10,9 +12,9 @@
  <time_mod>0.75</time_mod>
  <trail_generator x="-3" y="13" h="0">nebula</trail_generator>
  <trail_generator x="-3" y="-13" h="0">nebula</trail_generator>
- <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
- <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
- <fabricator>Aerosys</fabricator>
+ <trail_generator x="-15" y="-6" h="0">pirateS</trail_generator>
+ <trail_generator x="-15" y="6" h="0">pirateS</trail_generator>
+ <fabricator>Skull and Bones</fabricator>
  <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
  <health>
   <armour>25</armour>
@@ -42,6 +44,7 @@
   <armour_mod>-50</armour_mod>
  </stats>
  <tags>
-  <tag>frontier</tag>
+  <tag>noplayer</tag><!--FIXME tactically lying to shiplover.lua to avoid its use-->
+  <tag>pirate</tag>
  </tags>
 </ship>
