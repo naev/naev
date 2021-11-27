@@ -173,7 +173,7 @@ function scom.spawn( pilots )
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
       local presence = v.presence
       if not pilots.__nofleet then
-         if leader ~= nil then
+         if leader == nil then
             leader = p
          else
             p:setLeader(leader)

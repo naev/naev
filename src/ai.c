@@ -2548,10 +2548,10 @@ static int aiL_follow_accurate( lua_State *L )
 
    p = cur_pilot;
    target = luaL_validpilot(L,1);
-   radius = luaL_checklong(L,2);
-   angle = luaL_checklong(L,3);
-   Kp = luaL_checklong(L,4);
-   Kd = luaL_checklong(L,5);
+   radius = luaL_checknumber(L,2);
+   angle = luaL_checknumber(L,3);
+   Kp = luaL_checknumber(L,4);
+   Kd = luaL_checknumber(L,5);
 
    if (lua_isnoneornil(L, 6))
       method = "velocity";
@@ -2605,10 +2605,10 @@ static int aiL_face_accurate( lua_State *L )
    Pilot *p = cur_pilot;
    pos = lua_tovector(L,1);
    vel = lua_tovector(L,2);
-   radius = luaL_checklong(L,3);
-   angle = luaL_checklong(L,4);
-   Kp = luaL_checklong(L,5);
-   Kd = luaL_checklong(L,6);
+   radius = luaL_checknumber(L,3);
+   angle = luaL_checknumber(L,4);
+   Kp = luaL_checknumber(L,5);
+   Kd = luaL_checknumber(L,6);
 
    vect_cset( &point, pos->x + radius * cos(angle),
          pos->y + radius * sin(angle) );

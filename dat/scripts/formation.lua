@@ -15,11 +15,11 @@ local formations = {}
 function formations.cross(leader)
    local pilots = leader:followers()
    -- Cross logic. Forms an X.
-   local angle = 45 -- Spokes start rotated at a 45 degree angle.
+   local angle = math.pi/4 -- Spokes start rotated at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
       leader:msg(p, "form-pos", {angle, radius})
-      angle = math.fmod(angle + math.pi/4, math.pi/2) -- Rotate spokes by 90 degrees.
+      angle = math.fmod(angle + math.pi/2, 2*math.pi) -- Rotate spokes by 90 degrees.
       radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
 end
