@@ -175,17 +175,18 @@ function update( dt )
    end
 end
 
+local fixed = true
 function renderbg ()
-   local z = camera.getZoom()
-   local x, y = gfx.screencoords( pbeam, true ):get()
-
-   shader:render( x, y, 75 / z )
+   if fixed then
+      local z = camera.getZoom()
+      local x, y = gfx.screencoords( pbeam, true ):get()
+      shader:render( x, y, 75 / z )
+   end
    if cutscene then
       shader_nebu:render()
    end
 end
 
-local fixed = false
 function drone_board ()
    vn.clear()
    vn.scene()
@@ -234,13 +235,13 @@ function heartbeat ()
       stage = 2
    elseif stage==2 and inrange() then
       pilot.comm(_("Noona"), _("Hmmm. It looks like the amplifier needs some adjustments. Could you try to fix it?"))
-      -- Turn off power beam here
+      fixed = false
       pexp:setActiveBoard()
       pexp:setHilight()
+      player.pilot():setTarget( pexp )
       stage = 3
    elseif stage==3 and fixed then
       pilot.comm(_("Noona"), _("It looks everything is OK now."))
-      -- Turn on beam power
       stage = 4
       delay = 6
    elseif stage==4 then
