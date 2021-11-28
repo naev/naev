@@ -926,6 +926,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    temp->dmg_absorb   /= 100.;
    temp->turn         *= M_PI / 180.; /* Convert to rad. */
 
+   /* Check license. */
+   if (temp->license && !outfit_licenseExists(temp->license))
+      WARN(_("Ship '%s' has inexistent license requirement '%s'!"), temp->name, temp->license);
+
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN( _("Ship '%s' missing '%s' element"), temp->name, s)
    MELEMENT(temp->name==NULL,"name");

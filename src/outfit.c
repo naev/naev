@@ -50,6 +50,7 @@
  * the stack
  */
 static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
+static char **license_stack = NULL; /**< Stack of available licenses. */
 
 /*
  * Helper stuff for setting up short descriptions for outfits.
@@ -2159,6 +2160,10 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    if (temp->u.lic.provides==NULL)
       temp->u.lic.provides = strdup( temp->name );
 
+   if (license_stack == NULL)
+      license_stack = array_create( char* );
+   array_push_back( &license_stack, temp->u.lic.provides );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -2568,6 +2573,10 @@ int outfit_load (void)
  */
 int outfit_loadPost (void)
 {
+   /* Sort licenses. */
+   if (license_stack != NULL)
+      qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
+
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
@@ -2600,7 +2609,12 @@ int outfit_loadPost (void)
             }
          }
       }
+
+      /* Make sure licenses are valid. */
+      if ((o->license!=NULL) && !outfit_licenseExists( o->license ))
+         WARN(_("Outfit '%s' has inexistent license requirement '%s'!"), o->name, o->license);
    }
+
    return 0;
 }
 
@@ -2745,6 +2759,22 @@ int outfit_checkIllegal( const Outfit* o, int fct )
          return 1;
    }
    return 0;
+}
+
+/**
+ * @brief Checks to see if a license exists.
+ */
+int outfit_licenseExists( const char *name )
+{
+   if (license_stack==NULL)
+      return 0;
+   for (int i=0; i<array_size(license_stack); i++)
+      if (strcmp(license_stack[i],name)==0)
+         return 1;
+   return 0;
+   /* TODO probably the sleep deprivation but not sure why the code below is segfaulting. */
+   char *lic = bsearch( name, license_stack, array_size(license_stack), sizeof(char*), strsort );
+   return (lic!=NULL);
 }
 
 /**
