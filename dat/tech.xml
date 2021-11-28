@@ -144,6 +144,8 @@
   <item>Lancelot Fighter Bay</item>
   <item>Hyena Fighter Bay</item>
   <item>Hyena Fighter Dock</item>
+  <item>Pirate Hyena Fighter Bay</item>
+  <item>Pirate Hyena Fighter Dock</item>
   <item>Empire Lancelot Fighter Bay</item>
   <item>Fidelity Fighter Bay</item>
   <item>Drone Fighter Bay</item>
@@ -756,6 +758,8 @@
  <tech name="Pirate Elite Outfits">
   <item>Low Radiation Sensor Modulator</item>
   <item>Scanning Combat AI</item>
+  <item>Pirate Hyena Fighter Bay</item>
+  <item>Pirate Hyena Fighter Dock</item>
  </tech>
 
  <!-- outfits -->
