@@ -175,18 +175,10 @@ function enter ()
    hook.timer( 10, "protest" )
 end
 
-local protest_lines = {
-   _("No to terraforming!"),
-   _("Leave the planets alone!"),
-   _("The Universe is beautiful as it is!"),
-   _("No modifying atmospheres!"),
-   _("Keep our planets safe!"),
-   _("No to destroying planets!"),
-}
 local protest_id, attacked
 function protest ()
    if protest_id == nil then
-      protest_id = rnd.rnd(1,#protest_lines)
+      protest_id = rnd.rnd(1,#ant.protest_lines)
    end
 
    -- See surviving pilots
@@ -211,8 +203,8 @@ function protest ()
       player.autonavReset(5)
    else
       -- Say some protest slogan
-      p:broadcast( protest_lines[ protest_id ] )
-      protest_id = math.fmod(protest_id, #protest_lines)+1
+      p:broadcast( ant.protest_lines[ protest_id ] )
+      protest_id = math.fmod(protest_id, #ant.protest_lines)+1
    end
 
    -- Protest again
