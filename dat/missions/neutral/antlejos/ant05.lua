@@ -63,8 +63,8 @@ function create ()
    vn.done()
 
    vn.label("accept")
-   v(_([["Great! The supply ships will be jumping in from {jumpsys}. Make sure to guard them and try to ensure they all make it safe and sound here. Best of luck, we are counting on you!"]]),
-      {jumpsys=nextsys})
+   v(fmt.f(_([["Great! The supply ships will be jumping in from {jumpsys}. Make sure to guard them and try to ensure they all make it safe and sound here. Best of luck, we are counting on you!"]]),
+      {jumpsys=nextsys}))
    vn.func( function () accepted = true end )
 
    vn.run()
