@@ -15,6 +15,6 @@
   <delay>5</delay>
   <reload_time>180</reload_time>
   <amount>4</amount>
-  <loot_mod>20</loot_mod>
+  <loot_mod>15</loot_mod>
  </specific>
 </outfit>
