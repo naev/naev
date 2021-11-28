@@ -59,9 +59,6 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Hyena"] = function (p) return ecores.get( p, { all=pirate_class, heavy=false } ) end,  -- in case of fighters
-   ["Pirate Hyena"] = function (p) return ecores.get( p, { all=pirate_class, heavy=false } ) end,
-   ["Pirate Shark"] = function (p) return ecores.get( p, { all=pirate_class, heavy=false } ) end,
    ["Pirate Kestrel"] = function (p)
          local heavy = rnd.rnd() < 0.3
          if heavy then
