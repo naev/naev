@@ -251,7 +251,7 @@ function heartbeat ()
       -- CUTSCENE START
       player.cinematics( true )
       player.allowLand( false )
-      music.pause()
+      music.stop(true)
       stage = 6
    elseif stage==6 then
       -- pulse
@@ -309,7 +309,8 @@ function heartbeat ()
       -- CUTSCENE END
       player.cinematics( false )
       player.allowLand( true )
-      music.resume()
+      music.load("ambient1")
+      music.play()
       cutscene = false
       mem.state = 2
       stage = 16
