@@ -2,8 +2,7 @@
 <ship name="Pirate Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
- <!--FIXME gfx/price/stats/description need updates.-->
- <GFX size="44">hyena</GFX>
+ <GFX size="44">hyena_pirate</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
