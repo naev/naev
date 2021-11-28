@@ -2464,6 +2464,8 @@ int outfit_load (void)
    array_shrink( &outfit_stack );
    noutfits = array_size(outfit_stack);
    qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
+   if (license_stack != NULL)
+      qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
 
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
@@ -2573,10 +2575,6 @@ int outfit_load (void)
  */
 int outfit_loadPost (void)
 {
-   /* Sort licenses. */
-   if (license_stack != NULL)
-      qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
-
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
@@ -2768,12 +2766,7 @@ int outfit_licenseExists( const char *name )
 {
    if (license_stack==NULL)
       return 0;
-   for (int i=0; i<array_size(license_stack); i++)
-      if (strcmp(license_stack[i],name)==0)
-         return 1;
-   return 0;
-   /* TODO probably the sleep deprivation but not sure why the code below is segfaulting. */
-   char *lic = bsearch( name, license_stack, array_size(license_stack), sizeof(char*), strsort );
+   char *lic = bsearch( &name, license_stack, array_size(license_stack), sizeof(char*), strsort );
    return (lic!=NULL);
 }
 
