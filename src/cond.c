@@ -6,7 +6,6 @@
  *
  * @brief Handles lua conditionals.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -54,7 +53,7 @@ void cond_exit (void)
  *    @param cond Condition to check.
  *    @return 0 if is false, 1 if is true, -1 on error.
  */
-int cond_check( const char* cond )
+int cond_check( const char *cond )
 {
    int ret;
 
@@ -83,12 +82,8 @@ int cond_check( const char* cond )
 
    /* Check the result. */
    if (lua_isboolean(naevL, -1)) {
-      int b = lua_toboolean(naevL, -1);
+      ret = !!lua_toboolean(naevL, -1);
       lua_pop(naevL, 1);
-      if (b)
-         ret = 1;
-      else
-         ret = 0;
 
       /* Clear the stack. */
       lua_settop(naevL, 0);
