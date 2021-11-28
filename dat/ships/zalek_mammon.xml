@@ -18,7 +18,7 @@
  <trail_generator x="18" y="25" h="-6" always_under="1">nebula</trail_generator>
  <trail_generator x="18" y="-25" h="-6" always_under="1">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Large Civilian Vessel License</license>
+ <license>Large Civilian Vessel</license>
  <description>The Mammon is House Za'lek's bulk freighter. While being poorly armoured, it has powerful shields.</description>
  <health>
   <armour>400</armour>
