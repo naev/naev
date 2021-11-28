@@ -45,7 +45,6 @@
   <loot_mod>20</loot_mod>
  </stats>
  <tags>
-  <tag>noplayer</tag><!--FIXME tactically lying to shiplover.lua to avoid its use-->
   <tag>pirate</tag>
  </tags>
 </ship>
