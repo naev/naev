@@ -1159,7 +1159,10 @@ static int pilotL_setTarget( lua_State *L )
       t = p->id;
    else
       t = luaL_validpilot(L,2)->id;
-   p->target = t;
+   if (pilot_isPlayer(p))
+      player_targetSet( t );
+   else
+      pilot_setTarget( p, t );
    return 0;
 }
 
