@@ -18,8 +18,8 @@
  <trail_generator x="18" y="25" h="-6" always_under="1">nebula</trail_generator>
  <trail_generator x="18" y="-25" h="-6" always_under="1">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Large Civilian Vessel License</license>
- <description>The Mammon is House Za'lek's bulk freighter. While being poorly armoured, it has powerful shields.</description>
+ <license>Large Civilian Vessel</license>
+ <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centers inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
  <health>
   <armour>400</armour>
   <armour_regen>0</armour_regen>
@@ -33,7 +33,7 @@
  <slots>
   <weapon size="large" prop="fighter_bay" x="18" y="14" h="4" />
   <weapon size="large" prop="fighter_bay" x="18" y="-14" h="4" />
-  <weapon size="medium" x="51" y="-14" h="0" />
+  <weapon size="medium" prop="fighter_bay" x="51" y="-14" h="0" />
   <weapon size="medium" x="56" y="8" h="0" />
   <weapon size="medium" x="56" y="20" h="0" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>

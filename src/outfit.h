@@ -468,3 +468,4 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
 glTexture* rarity_texture( int rarity );
 int outfit_checkIllegal( const Outfit* o, int fct );
+int outfit_licenseExists( const char *name );
