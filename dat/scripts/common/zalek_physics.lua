@@ -41,7 +41,7 @@ zpp.rewards = {
    zpp03 = 200e3, -- + "Heavy Weapons Combat License" permission
    zpp04 = 400e3,
    --zpp05 = 0, -- No payment, reall small flashback really
-   zpp06 = 200e3, -- + "Heavy Combat Vessel License" permission
+   zpp06 = 500e3, -- + "Heavy Combat Vessel License" permission
 }
 
 function zpp.shader_focal ()
