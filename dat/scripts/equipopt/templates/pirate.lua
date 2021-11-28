@@ -89,13 +89,12 @@ local pirate_params_overwrite = {
 local function equip_pirate( p, opt_params )
    opt_params = opt_params or {}
    local ps = p:ship()
-   local pc = ps:class()
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Pirateish
    local params = eparams.choose( p, pirate_params_overwrite )
    params.rnd = params.rnd * 1.5
-   if pc == "Fighter" or pc == "Bomber" then
+   if ps:size() < 3 then
       params.max_same_weap = 1
    else
       params.max_same_weap = 2
