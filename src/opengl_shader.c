@@ -205,7 +205,6 @@ static int gl_program_link( GLuint program )
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
    if (log_length > 0) {
       char *log;
-      glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
       if (gl_log_says_anything( log ))
