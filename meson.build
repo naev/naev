@@ -332,7 +332,7 @@ if buildExec.disabled() == false
       input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
       output: 'AUTHORS',
       install: true,
-      install_dir: ndata_path,
+      install_dir: ndata_path / 'dat',
    )
 
    gen_gettext_stats = find_program('utils/build/gen_gettext_stats.py')
@@ -342,7 +342,7 @@ if buildExec.disabled() == false
       input: files('po/' + meson.project_name() + '.pot'),
       output: meson.project_name() + '.txt',
       install: true,
-      install_dir: ndata_path / 'gettext_stats',
+      install_dir: ndata_path / 'dat/gettext_stats',
    )
 
    naev_sh = configure_file(
