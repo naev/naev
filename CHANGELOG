@@ -28,7 +28,7 @@
       * Added discovery messages as you explore the universe
       * Overhauled NPC AI
       * Overhaul and rebalance of most outfits
-      * Wanted pirates no longer aggro defense forces (pirate bounties)
+      * Wanted ships no longer aggro defense forces (bounties)
       * Bribed pilots don't become hostile again unless attacked
       * Stress now decreases based on ship mass
       * Merged the Independent and Civilian factions
@@ -50,11 +50,12 @@
       * You can now favourite your ships to help with sorting
       * Redid boarding window to be more intuitive and easier to loot what you want
       * Paste support for input stuff
+      * Translation completion status is shown in the options
    * New locations
       * Added gambling resort "Minerva Station"
       * Revamped and improved some existing locations
       * Several new planets and systems
-   * New missions
+   * 40 New missions
       * Challenge adversaries in the Crimson Gauntlet
       * Follow happenings on "Minerva Station"
       * Invade the frontier with the Dvaered
@@ -94,6 +95,8 @@
       * Support for shipstats at a system level
       * Initial support for 3D models
       * Proper support for line breaks in most languages
+      * Most objects (ships, planets, etc.) have tags that can be used from Lua
+      * Lots of optimization
 
 * 0.8.2
    * Gameplay
