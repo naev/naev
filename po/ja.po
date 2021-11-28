@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-11-27 10:07-0500\n"
-"PO-Revision-Date: 2021-11-21 16:26+0000\n"
+"PO-Revision-Date: 2021-11-28 15:38+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -137,8 +137,6 @@ msgstr ""
 "がほかの勢力の手に落ちた。今では大荘園が宇宙の航路を管理していた。"
 
 #: dat/intro:23
-#, fuzzy
-#| msgid "Rise and fall, the rhythm of history. "
 msgid "Rise and fall, the rhythm of history."
 msgstr "繁栄と衰亡。歴史の律動だ。"
 
@@ -231,10 +229,8 @@ msgid "   * Misc. Development and Dvaered aficionado"
 msgstr "   * 種々の開発と、ドベーレッドの大ファン"
 
 #: dat/AUTHORS:19
-#, fuzzy
-#| msgid "Jack Greiner <jack@emoss.org>"
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr "Jack Greiner <jack@emoss.org>"
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
@@ -701,10 +697,8 @@ msgid "EvanR"
 msgstr "EvanR"
 
 #: dat/AUTHORS:180
-#, fuzzy
-#| msgid "Major Contributors"
 msgid "Artwork Contributors"
-msgstr "主要な貢献者"
+msgstr "アートワークへの貢献者"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
@@ -4182,10 +4176,8 @@ msgid "Gamma"
 msgstr "ガンマ"
 
 #: dat/assets/gamma_station.xml:2
-#, fuzzy
-#| msgid "Gath Station"
 msgid "Gamma Station"
-msgstr "ガス・ステーション"
+msgstr "ガンマ・ステーション"
 
 #: dat/assets/gamma_station.xml:30
 msgid ""
@@ -5060,16 +5052,12 @@ msgid "HS-37"
 msgstr " HS-37 "
 
 #: dat/assets/hs5.xml:2
-#, fuzzy
-#| msgid "HS-54"
 msgid "HS-5"
-msgstr " HS-54 "
+msgstr " HS-5 "
 
 #: dat/assets/hs51.xml:2
-#, fuzzy
-#| msgid "HS-54"
 msgid "HS-51"
-msgstr " HS-54 "
+msgstr " HS-51 "
 
 #: dat/assets/hs51.xml:31
 msgid ""
@@ -5945,10 +5933,8 @@ msgid "Katar"
 msgstr "カタール"
 
 #: dat/assets/katar_i.xml:2
-#, fuzzy
-#| msgid "Klantar I"
 msgid "Katar I"
-msgstr "クランター I "
+msgstr "カタール I "
 
 #: dat/assets/katar_i.xml:27
 msgid ""
@@ -6017,10 +6003,8 @@ msgid ""
 msgstr ""
 
 #: dat/assets/khaas_i.xml:2
-#, fuzzy
-#| msgid "Khaas"
 msgid "Khaas I"
-msgstr "カース"
+msgstr "カース I "
 
 #: dat/assets/khelim.xml:2
 msgid "Khelim"
@@ -10889,10 +10873,8 @@ msgid ""
 msgstr ""
 
 #: dat/assets/tesla_station.xml:2
-#, fuzzy
-#| msgid "Telika Station"
 msgid "Tesla Station"
-msgstr "テリカ・ステーション"
+msgstr "テスラ・ステーション"
 
 #: dat/assets/tesla_station.xml:29
 msgid ""
@@ -13092,7 +13074,7 @@ msgstr "プロテロン 非存在"
 
 #: dat/assets_virtual/proteron_unpresence_range1.xml:2
 msgid "Proteron Unpresence (Range 1)"
-msgstr "プロテロン すべて 非存在 (距離 1)"
+msgstr "プロテロン 非存在 (距離 1)"
 
 #: dat/assets_virtual/sirius_small.xml:2
 msgid "Sirius Small"
@@ -13107,10 +13089,8 @@ msgid "Soromid Unpresence"
 msgstr "ソロミド 非存在"
 
 #: dat/assets_virtual/soromid_unpresence_range1.xml:2
-#, fuzzy
-#| msgid "Proteron Unpresence (Range 1)"
 msgid "Soromid Unpresence (Range 1)"
-msgstr "プロテロン すべて 非存在 (距離 1)"
+msgstr "ソロミド 非存在 (距離 1)"
 
 #: dat/assets_virtual/thurion_local.xml:2
 msgid "Thurion Local"
@@ -13169,10 +13149,8 @@ msgid "Za'lek Unpresence"
 msgstr "ザレク 非存在"
 
 #: dat/assets_virtual/zalek_unpresence_range1.xml:2
-#, fuzzy
-#| msgid "Dvaered Unpresence (Range 1)"
 msgid "Za'lek Unpresence (Range 1)"
-msgstr "ドベーレッド 非存在 (距離 1)"
+msgstr "ザレク 非存在 (距離 1)"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -17033,14 +17011,11 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
-"ザレクは、伝統的なミサイルや魚雷が自分たちのドローン小型化技術と比べて嘆かわ"
-"しいほど原始的なことを理解しはじめた。それゆえ、ザレクはそれらを置き換えるべ"
-"く神風ドローン製造機に取り組みはじめたのだ。その結果、ハンターキラードローン"
-"という死の成果が生みだされた。これは目標に向けて加速していくと、強磁性流体弾"
-"頭を解放して致命的な効果をもたらすことになる。\n"
+"ザレクは、伝統的なミサイルや魚雷が自分たちのドローン小型化技術と比べて嘆かわしいほど原始的なことを理解しはじめた。それゆえ、ザレクはそれらを置きかえるべく"
+"神風ドローン製造機に取り組みはじめたのだ。その結果、ハンターキラードローンという死の成果が生みだされた。これは目標に向けて加速していくと、強磁性流体弾頭を"
+"解放して致命的な効果をもたらすことになる。\n"
 "\n"
-"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。"
-"ザレクに信頼される味方だけが、この武器を任せられる。"
+"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。ザレクに信頼される味方だけが、この武器を任せられる。"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
@@ -17057,13 +17032,10 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
-"この武器は ｢小型化ドローン｣ という用語を限界近くまで拡大解釈したものだ。これ"
-"はじっさいのところ、減量した標準的なドローン基盤に、ほぼすべてを巨大な強磁性"
-"流体爆弾に置き換えて載せたものである。これがあまり進んでいない国々にたいする"
-"ザレクの回答だ。そしてそれはたしかに雄弁な回答である。\n"
+"この武器は ｢小型化ドローン｣ という用語を限界近くまで拡大解釈したものだ。これはじっさいのところ、減量した標準的なドローン基盤に、ほぼすべてを巨大な強磁"
+"性流体爆弾に置きかえて載せたものである。これがあまり進んでいない国々にたいするザレクの回答だ。そしてそれはたしかに雄弁な回答である。\n"
 "\n"
-"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。"
-"ザレクに信頼される味方だけが、この武器を任せられる。"
+"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。ザレクに信頼される味方だけが、この武器を任せられる。"
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
@@ -17342,10 +17314,8 @@ msgstr "この免許は、巡洋艦と母艦に分類される船の購入を認
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
-#, fuzzy
-#| msgid "Medium Combat Vessel License"
 msgid "Medium Combat Vessel"
-msgstr "中型戦闘艦免許"
+msgstr "中型戦闘艦"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
@@ -17358,10 +17328,8 @@ msgid ""
 msgstr "この免許は、重イオン砲塔のような強力な兵器の購入を認めるものだ。"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:12
-#, fuzzy
-#| msgid "Beam Weapon"
 msgid "Heavy Weapon"
-msgstr "ビーム兵器"
+msgstr "大型武器"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
@@ -17372,10 +17340,8 @@ msgid "This license will authorize you to buy freighter-class ships."
 msgstr "この免許は、貨物船に分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
-#, fuzzy
-#| msgid "Large Civilian Vessel License"
 msgid "Large Civilian Vessel"
-msgstr "大型民間船免許"
+msgstr "大型民間船"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
@@ -17386,10 +17352,8 @@ msgid "This license will authorize you to buy fighter and bomber class ships."
 msgstr "この免許は、戦闘機と爆撃機に分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
-#, fuzzy
-#| msgid "Light Combat Vessel License"
 msgid "Light Combat Vessel"
-msgstr "小型戦闘艦免許"
+msgstr "小型戦闘艦"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
@@ -17411,10 +17375,8 @@ msgid ""
 msgstr "この免許は、イオンキャノンのような中程度の兵器の購入を認めるものだ。"
 
 #: dat/outfits/misc/medium_weapon_license.xml:10
-#, fuzzy
-#| msgid "Medium Weapon License"
 msgid "Medium Weapon"
-msgstr "中型武器免許"
+msgstr "中型武器"
 
 #: dat/outfits/misc/mercenary_license.xml:2
 msgid "Mercenary License"
@@ -17875,9 +17837,8 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
-"補助的な反応炉を船に追加するのは、必要とされる余分なエネルギーを増加させる優"
-"れた方法だ。これが既存の反応炉を置き換えることはなく、並列に作動させてエネル"
-"ギー系統に直結させることになる。"
+"補助的な反応炉を船に追加するのは、必要とされる余分なエネルギーを増加させる優れた方法だ。これが既存の反応炉を置きかえることはなく、並列に作動させてエネルギ"
+"ー系統に直結させることになる。"
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
@@ -18827,16 +18788,10 @@ msgstr ""
 "る。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
-#, fuzzy
-#| msgid ""
-#| "10% additional damage for each fighting ship of same class or higher "
-#| "within 2000 units."
 msgid ""
 "10% additional damage for each hostile ship of same class or higher within "
 "2000 distance."
-msgstr ""
-"2,000 ユニット以内にいる自分と同種かさらに大きな種別の船のそれぞれについて、"
-"戦闘中は 10% 追加の損害を与えられる。"
+msgstr "距離 2,000 以内にいる自分と同種かさらに大きな種別の敵船に、10% 追加の損害を与えられる。"
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
@@ -19614,10 +19569,8 @@ msgstr ""
 "る。これで船殻の保全性は改善されたが、代償として機体質量がわずかに増加した。"
 
 #: dat/ships/dvaered_arsenal.xml:2
-#, fuzzy
-#| msgid "Dvaered Unpresence"
 msgid "Dvaered Arsenal"
-msgstr "ドベーレッド 非存在"
+msgstr "ドベーレッド・アーセナル"
 
 #: dat/ships/dvaered_arsenal.xml:20
 msgid ""
@@ -19629,6 +19582,9 @@ msgid ""
 "even basic necessities. Colloquially they have been also been known to be "
 "called Dvaered Gunboxes."
 msgstr ""
+"アーセナルは重武装したばら積み貨物船で、ドベーレッド荘が大量の補給品や部隊を運ぶのに使っている。そのような仕事が軽装甲の貨物船では危険すぎると思われるとき"
+"はいつでもだ。この名前の由来するところは、ドベーレッド荘の輸送船がふつうは武器や部隊の配送や展開に焦点をあてているという事実である。原材料や物資、あるいは"
+"基本的な必需品さえもが、二の次なのだ。これは俗にドベーレッド・ガンボックスと呼ばれることでも知られている。"
 
 #: dat/ships/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
@@ -19784,6 +19740,10 @@ msgid ""
 "supplies. After the events an EE-1891-392 official ship rename form was "
 "approved and Rainmaker became the official ship name."
 msgstr ""
+"レインメイカーは帝国が使用している最大の貨物船だ。これには危険な領域を抜けてぼうだいな量の原料を運ぶ能力がある。これがもつ重装甲のおかげで、小さな海賊団な"
+"ら脅威にならないからだ。この名前は一連の出来事に由来している。事象のすぐあとに、これは分断されて飢えた世界に配給品を運ぶのに使われたのだが、そのとき大気中"
+"を低く飛びながら船倉を開いて届けたのだ。これは文字どおり配給品の雨となった。この出来事のあと、EE-1891-392 "
+"船の公式名変更申請書が承認され、レインメイカーが公式に船の名前となった。"
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
@@ -20331,9 +20291,8 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
-"プリーチャーは、説教者を意味するその名前が暗示するとおり、シリウス荘がそれに"
-"よって意図と意思を伝えようとした最初の船だ。多数の砲列を並べたプリーチャー"
-"は、不信心者を改宗者にするのが得意である。"
+"プリーチャーは、伝道者を意味するその名前が暗示するとおり、シリウス荘がそれによって意図と意思を伝えようとした最初の船だ。多数の砲列を並べたプリーチャーは、"
+"不信心者を改宗者にするのが得意である。"
 
 #: dat/ships/sirius_shaman.xml:2
 msgid "Sirius Shaman"
@@ -20717,16 +20676,14 @@ msgstr ""
 "集めている。"
 
 #: dat/ships/zalek_mammon.xml:2
-#, fuzzy
-#| msgid "Za'lek Demon"
 msgid "Za'lek Mammon"
-msgstr "ザレク・ディーモン"
+msgstr "ザレク・マモン"
 
 #: dat/ships/zalek_mammon.xml:22
 msgid ""
 "The Mammon is House Za'lek's bulk freighter. While being poorly armoured, it "
 "has powerful shields."
-msgstr ""
+msgstr "マモンはザレク荘のばら積み貨物船だ。装甲は貧弱だが、強力なシールドを持っている。"
 
 #: dat/ships/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
@@ -20934,7 +20891,7 @@ msgstr "アマティリ"
 #: dat/ssys/ngc8468.xml:5 dat/ssys/ngc9654.xml:5 dat/ssys/sleuth.xml:5
 #: dat/ssys/sylph.xml:5 dat/ssys/zintar.xml:5
 msgid "#rHaze (-50% Shield and Shield Regen)#0"
-msgstr ""
+msgstr "#rかすみ (-50% シールドとシールド再生)#0"
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
@@ -21171,10 +21128,8 @@ msgstr "ダレド"
 #: dat/ssys/new_haven.xml:5 dat/ssys/pilatis.xml:5 dat/ssys/sheffield.xml:5
 #: dat/ssys/titus.xml:5 dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5
 #: dat/ssys/volus.xml:5
-#, fuzzy
-#| msgid "#bStellar Wind#0"
 msgid "#bStellar Wind (1 fuel regen)#0"
-msgstr "#b恒星風#0"
+msgstr "#b恒星風 (燃料再生 1)#0"
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
@@ -21554,7 +21509,7 @@ msgstr "クリンタス"
 
 #: dat/ssys/klunzar.xml:2
 msgid "Klunzar"
-msgstr ""
+msgstr "クランザー"
 
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
@@ -21729,254 +21684,176 @@ msgid "Newmarch"
 msgstr "ニューマーチ"
 
 #: dat/ssys/ngc1001.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-1001"
-msgstr " NGC-728 "
+msgstr " NGC-1001 "
 
 #: dat/ssys/ngc10180.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-10180"
-msgstr " NGC-728 "
+msgstr " NGC-10180 "
 
 #: dat/ssys/ngc10452.xml:2
-#, fuzzy
-#| msgid "NGC-902"
 msgid "NGC-10452"
-msgstr " NGC-902 "
+msgstr " NGC-10452 "
 
 #: dat/ssys/ngc10789.xml:2
-#, fuzzy
-#| msgid "NGC-7078"
 msgid "NGC-10789"
-msgstr " NGC-7078 "
+msgstr " NGC-10789 "
 
 #: dat/ssys/ngc10907.xml:2
-#, fuzzy
-#| msgid "NGC-902"
 msgid "NGC-10907"
-msgstr " NGC-902 "
+msgstr " NGC-10907 "
 
 #: dat/ssys/ngc1098.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-1098"
-msgstr " NGC-1292 "
+msgstr " NGC-1098 "
 
 #: dat/ssys/ngc11231.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-11231"
-msgstr " NGC-728 "
+msgstr " NGC-11231 "
 
 #: dat/ssys/ngc11444.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-11444"
-msgstr " NGC-4746 "
+msgstr " NGC-11444 "
 
 #: dat/ssys/ngc11718.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-11718"
-msgstr " NGC-728 "
+msgstr " NGC-11718 "
 
 #: dat/ssys/ngc11935.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-11935"
-msgstr " NGC-1292 "
+msgstr " NGC-11935 "
 
 #: dat/ssys/ngc12056.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-12056"
-msgstr " NGC-1292 "
+msgstr " NGC-12056 "
 
 #: dat/ssys/ngc12654.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-12654"
-msgstr " NGC-1292 "
+msgstr " NGC-12654 "
 
 #: dat/ssys/ngc12882.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-12882"
-msgstr " NGC-1292 "
+msgstr " NGC-12882 "
 
 #: dat/ssys/ngc1292.xml:2
 msgid "NGC-1292"
 msgstr " NGC-1292 "
 
 #: dat/ssys/ngc1317.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-1317"
-msgstr " NGC-728 "
+msgstr " NGC-1317 "
 
 #: dat/ssys/ngc13322.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-13322"
-msgstr " NGC-1292 "
+msgstr " NGC-13322 "
 
 #: dat/ssys/ngc13674.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-13674"
-msgstr " NGC-4746 "
+msgstr " NGC-13674 "
 
 #: dat/ssys/ngc13798.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-13798"
-msgstr " NGC-728 "
+msgstr " NGC-13798 "
 
 #: dat/ssys/ngc14479.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-14479"
-msgstr " NGC-1292 "
+msgstr " NGC-14479 "
 
 #: dat/ssys/ngc1562.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-1562"
-msgstr " NGC-1292 "
+msgstr " NGC-1562 "
 
 #: dat/ssys/ngc1872.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-1872"
-msgstr " NGC-728 "
+msgstr " NGC-1872 "
 
 #: dat/ssys/ngc1931.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-1931"
-msgstr " NGC-1292 "
+msgstr " NGC-1931 "
 
 #: dat/ssys/ngc2175.xml:2
-#, fuzzy
-#| msgid "NGC-3219"
 msgid "NGC-2175"
-msgstr " NGC-3219 "
+msgstr " NGC-2175 "
 
 #: dat/ssys/ngc2232.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-2232"
-msgstr " NGC-1292 "
+msgstr " NGC-2232 "
 
 #: dat/ssys/ngc23.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-23"
-msgstr " NGC-728 "
+msgstr " NGC-23 "
 
 #: dat/ssys/ngc2601.xml:2
-#, fuzzy
-#| msgid "NGC-3219"
 msgid "NGC-2601"
-msgstr " NGC-3219 "
+msgstr " NGC-2601 "
 
 #: dat/ssys/ngc2836.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-2836"
-msgstr " NGC-728 "
+msgstr " NGC-2836 "
 
 #: dat/ssys/ngc2948.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-2948"
-msgstr " NGC-728 "
+msgstr " NGC-2948 "
 
 #: dat/ssys/ngc2954.xml:2
-#, fuzzy
-#| msgid "NGC-1292"
 msgid "NGC-2954"
-msgstr " NGC-1292 "
+msgstr " NGC-2954 "
 
 #: dat/ssys/ngc3219.xml:2
 msgid "NGC-3219"
 msgstr " NGC-3219 "
 
 #: dat/ssys/ngc3371.xml:2
-#, fuzzy
-#| msgid "NGC-3219"
 msgid "NGC-3371"
-msgstr " NGC-3219 "
+msgstr " NGC-3371 "
 
 #: dat/ssys/ngc3858.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-3858"
-msgstr " NGC-5483 "
+msgstr " NGC-3858 "
 
 #: dat/ssys/ngc4087.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-4087"
-msgstr " NGC-4746 "
+msgstr " NGC-4087 "
 
 #: dat/ssys/ngc4131.xml:2
-#, fuzzy
-#| msgid "NGC-3219"
 msgid "NGC-4131"
-msgstr " NGC-3219 "
+msgstr " NGC-4131 "
 
 #: dat/ssys/ngc4637.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-4637"
-msgstr " NGC-4746 "
+msgstr " NGC-4637 "
 
 #: dat/ssys/ngc4746.xml:2
 msgid "NGC-4746"
 msgstr " NGC-4746 "
 
 #: dat/ssys/ngc4771.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-4771"
-msgstr " NGC-4746 "
+msgstr " NGC-4771 "
 
 #: dat/ssys/ngc5240.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-5240"
-msgstr " NGC-5483 "
+msgstr " NGC-5240 "
 
 #: dat/ssys/ngc5483.xml:2
 msgid "NGC-5483"
 msgstr " NGC-5483 "
 
 #: dat/ssys/ngc5631.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-5631"
-msgstr " NGC-5483 "
+msgstr " NGC-5631 "
 
 #: dat/ssys/ngc5838.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-5838"
-msgstr " NGC-5483 "
+msgstr " NGC-5838 "
 
 #: dat/ssys/ngc6057.xml:2
-#, fuzzy
-#| msgid "NGC-7078"
 msgid "NGC-6057"
-msgstr " NGC-7078 "
+msgstr " NGC-6057 "
 
 #: dat/ssys/ngc7061.xml:2
-#, fuzzy
-#| msgid "NGC-7078"
 msgid "NGC-7061"
-msgstr " NGC-7078 "
+msgstr " NGC-7061 "
 
 #: dat/ssys/ngc7078.xml:2
 msgid "NGC-7078"
@@ -21987,72 +21864,52 @@ msgid "NGC-728"
 msgstr " NGC-728 "
 
 #: dat/ssys/ngc7402.xml:2
-#, fuzzy
-#| msgid "NGC-728"
 msgid "NGC-7402"
-msgstr " NGC-728 "
+msgstr " NGC-7402 "
 
 #: dat/ssys/ngc7533.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-7533"
-msgstr " NGC-5483 "
+msgstr " NGC-7533 "
 
 #: dat/ssys/ngc7784.xml:2
-#, fuzzy
-#| msgid "NGC-7078"
 msgid "NGC-7784"
-msgstr " NGC-7078 "
+msgstr " NGC-7784 "
 
 #: dat/ssys/ngc7786.xml:2
-#, fuzzy
-#| msgid "NGC-7078"
 msgid "NGC-7786"
-msgstr " NGC-7078 "
+msgstr " NGC-7786 "
 
 #: dat/ssys/ngc8338.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-8338"
-msgstr " NGC-5483 "
+msgstr " NGC-8338 "
 
 #: dat/ssys/ngc8468.xml:2
-#, fuzzy
-#| msgid "NGC-4746"
 msgid "NGC-8468"
-msgstr " NGC-4746 "
+msgstr " NGC-8468 "
 
 #: dat/ssys/ngc9017.xml:2
-#, fuzzy
-#| msgid "NGC-902"
 msgid "NGC-9017"
-msgstr " NGC-902 "
+msgstr " NGC-9017 "
 
 #: dat/ssys/ngc902.xml:2
 msgid "NGC-902"
 msgstr " NGC-902 "
 
 #: dat/ssys/ngc9415.xml:2
-#, fuzzy
-#| msgid "NGC-902"
 msgid "NGC-9415"
-msgstr " NGC-902 "
+msgstr " NGC-9415 "
 
 #: dat/ssys/ngc9654.xml:2
-#, fuzzy
-#| msgid "NGC-5483"
 msgid "NGC-9654"
-msgstr " NGC-5483 "
+msgstr " NGC-9654 "
 
 #: dat/ssys/ngc9897.xml:2
-#, fuzzy
-#| msgid "NGC-902"
 msgid "NGC-9897"
-msgstr " NGC-902 "
+msgstr " NGC-9897 "
 
 #: dat/ssys/ngcg5882.xml:2
 msgid "NGCG-5882"
-msgstr ""
+msgstr " NGCG-5882 "
 
 #: dat/ssys/niger.xml:2
 msgid "Niger"
@@ -25522,24 +25379,24 @@ msgstr "やりたいのか？　好きにしろ"
 
 #: dat/ai/zalek.lua:44
 msgid "ENGAGING OFFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "攻撃プロトコルを起動中"
 
 #: dat/ai/zalek.lua:45
 msgid "EXTERMINATING HOSTILES."
-msgstr ""
+msgstr "敵を根絶中"
 
 #: dat/ai/zalek.lua:46
 msgid "COMBAT PROTOCOLS INITIATED."
-msgstr ""
+msgstr "戦闘プロトコルを起動"
 
 #: dat/ai/zalek.lua:49
 msgid "ENGAGING DEFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "防衛プロトコルを起動中"
 
 #. See if a drone
 #: dat/ai/zalek.lua:59
 msgid "\"ACCESS DENIED."
-msgstr ""
+msgstr "｢アクセス拒絶｣"
 
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:108
@@ -29968,7 +29825,7 @@ msgstr "すべての出来事。簡単な言葉。だから理解できる。"
 
 #: dat/events/neutral/news.lua:60
 msgid "Simple news for busy people."
-msgstr "いそがしい人びとのための簡素なニュース。"
+msgstr "忙しい人びとのための簡素なニュース。"
 
 #: dat/events/neutral/news.lua:63
 msgid "We bring you the news from around the Empire."
@@ -33079,9 +32936,7 @@ msgstr "マキャベリアン・ミシの ｢みごとな｣ 製品"
 msgid ""
 "Machiavellian Misi's the name and selling fine shit is my game! Come get "
 "your outfits here!"
-msgstr ""
-"マキャベリアン・ミシの名前とみごとでくだらないものを売ってるのはわたしの娯楽"
-"です！　ここへ来て艤装品を手に入れよう！"
+msgstr "マキャベリアン・ミシの名前とみごとでくだらないものを売ってるのはわたしのゲームです！　ここへ来て艤装品を手に入れよう！"
 
 #: dat/events/neutral/travelling_merchant.lua:27
 msgid ""
@@ -33320,14 +33175,10 @@ msgstr ""
 "うことになる#0"
 
 #: dat/events/restricted.lua:32
-#, fuzzy
-#| msgid ""
-#| "#rWARNING: Entering militarized zone. Unauthorized access will be met "
-#| "with force.#0"
 msgid ""
 "#rWARNING: This is a restricted military system. Unauthorized ships will be "
 "shot on sight.#0"
-msgstr "#r警告 : 軍事区域に進入している。無許可の進入は実力での対応となる#0"
+msgstr "#r警告 : ここは立入禁止の軍事星系だ。無許可の船は見つけしだい攻撃する#0"
 
 #. Gneeric message
 #: dat/events/restricted.lua:39
@@ -33339,10 +33190,8 @@ msgstr ""
 
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:54
-#, fuzzy
-#| msgid "#{col}{fct} Message Buoy>#0 \"{msg}\""
 msgid "{faction} Message Buoy"
-msgstr "#{col}{fct} メッセージブイ >#0 ｢{msg}｣"
+msgstr "{faction}・メッセージブイ"
 
 #. Keep on repeating as the spawn
 #.
@@ -33422,207 +33271,207 @@ msgstr "{sys}星系の{pnt}に着陸した。"
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I abhor violence!"
-msgstr ""
+msgstr "{player}、あなたはシリウス荘の敵だが、挑発しないかぎり攻撃はしない。わたしは暴力が大嫌いだからだ！"
 
 #: dat/events/sirius/preach.lua:26
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I believe mercy is a great Truth!"
-msgstr ""
+msgstr "{player}、あなたはシリウス荘の敵だが、挑発しないかぎり攻撃はしない。わたしは慈悲が偉大な真理だと信じているからだ！"
 
 #: dat/events/sirius/preach.lua:27
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for you too are Sirichana's child!"
-msgstr ""
+msgstr "{player}、あなたはシリウス荘の敵だが、挑発しないかぎり攻撃はしない。あなたもシリチャナの子だからだ！"
 
 #: dat/events/sirius/preach.lua:31
 msgid ""
 "{player}, I foresee in you a great Sirian citizen, and I look forward to "
 "your friendship!"
-msgstr ""
+msgstr "{player}、わたしはあなたがすばらしいシリウス市民になると予感しています。だからあなたとの友情を楽しみにしています！"
 
 #: dat/events/sirius/preach.lua:32
 msgid ""
 "{player}, I foresee a bright future for you, illuminated by Sirichana's "
 "light!"
-msgstr ""
+msgstr "{player}、わたしはあなたには輝く将来あると予感しています。シリチャナの光に照らされるのです！"
 
 #: dat/events/sirius/preach.lua:33
 msgid "{player}, may Sirichana's light illuminate your path!"
-msgstr ""
+msgstr "{player}、シリチャナの光があなたの行く道を照らしますように！"
 
 #: dat/events/sirius/preach.lua:37
 msgid "You shall all follow Sirichana henceforth!"
-msgstr ""
+msgstr "今後はずっとシリチャナにつづくことになるでしょう！"
 
 #: dat/events/sirius/preach.lua:38
 msgid "Sirichana shall lead you to peace and wisdom!"
-msgstr ""
+msgstr "シリチャナがあなたを平和と知恵に導くでしょう！"
 
 #: dat/events/sirius/preach.lua:39
 msgid "Sirichana is the Father of you all!"
-msgstr ""
+msgstr "シリチャナはあなたたち全員の父親です！"
 
 #: dat/events/sirius/preach.lua:40
 msgid "Sirichana's grace shall liberate you!"
-msgstr ""
+msgstr "シリチャナの思いやりがあなたを自由にすることでしょう！"
 
 #: dat/events/sirius/preach.lua:41
 msgid "May Sirichana's light shine on you henceforth!"
-msgstr ""
+msgstr "シリチャナの光があなたの今後を輝かせますように！"
 
 #: dat/events/sirius/preach.lua:45
 msgid "We shall all follow Sirichana now!"
-msgstr ""
+msgstr "われわれはもう、シリチャナにずっとつづくつもりです！"
 
 #: dat/events/sirius/preach.lua:46
 msgid "We have been liberated from our evil ways!"
-msgstr ""
+msgstr "われわれは邪悪な道から解放されました！"
 
 #: dat/events/sirius/preach.lua:47
 msgid "No more shall we tread the path of evil!"
-msgstr ""
+msgstr "もうわれわれは邪悪な道に踏みいれることがありません！"
 
 #: dat/events/sirius/preach.lua:48
 msgid "We see the True path now!"
-msgstr ""
+msgstr "われわれはもう、真実の道を知っています！"
 
 #: dat/events/sirius/preach.lua:49
 msgid "No more shall we commit sins!"
-msgstr ""
+msgstr "もうわれわれは罪にかかわることがありません！"
 
 #: dat/events/sirius/preach.lua:53
 msgid "Serves you right for attacking a Touched!"
-msgstr ""
+msgstr "被触者を攻撃すればそうなるのだ！"
 
 #: dat/events/sirius/preach.lua:54
 msgid "Fry in hell, demon!"
-msgstr ""
+msgstr "地獄で焼かれろ、悪魔め！"
 
 #: dat/events/sirius/preach.lua:55
 msgid "May you suffer eternal torment!"
-msgstr ""
+msgstr "おまえが永遠の苦痛に苦しみますように！"
 
 #: dat/events/sirius/preach.lua:56
 msgid "Your doom is Sirichana's curse!"
-msgstr ""
+msgstr "おまえの運命はシリチャナの呪いだ！"
 
 #: dat/events/sirius/preach.lua:60
 msgid "All the attackers are dead!"
-msgstr ""
+msgstr "攻撃者はみな死ぬのだ！"
 
 #: dat/events/sirius/preach.lua:61
 msgid "We can resume our Quest now!"
-msgstr ""
+msgstr "もう探求を再開できる！"
 
 #: dat/events/sirius/preach.lua:62
 msgid "The glory of Sirichana remains unblemished!"
-msgstr ""
+msgstr "シリチャナの栄光は傷もなく残る！"
 
 #: dat/events/sirius/preach.lua:63
 msgid "All heretics have been destroyed!"
-msgstr ""
+msgstr "異端者はみな滅びるのだ！"
 
 #: dat/events/sirius/preach.lua:67
 msgid "Do you think everyone can be brainwashed?"
-msgstr ""
+msgstr "全員洗脳できると思っているのか？"
 
 #: dat/events/sirius/preach.lua:68
 msgid "You shall convert no more of us!"
-msgstr ""
+msgstr "もうおまえがわれわれのひとりを改宗させることはない！"
 
 #: dat/events/sirius/preach.lua:69
 msgid "Some of us shall not be converted, fool!"
-msgstr ""
+msgstr "われわれはだれも改宗したりしない、ばかめ！"
 
 #: dat/events/sirius/preach.lua:70
 msgid "You'll never convert me!"
-msgstr ""
+msgstr "おまえがおれを改宗させることはぜったいにない！"
 
 #: dat/events/sirius/preach.lua:71
 msgid "I shall never be converted!"
-msgstr ""
+msgstr "おれは改宗させられたりしない！"
 
 #: dat/events/sirius/preach.lua:75
 msgid "You feel an overwhelming presence nearby!"
-msgstr ""
+msgstr "あなたは近くで圧倒的な存在を感じる！"
 
 #: dat/events/sirius/preach.lua:76
 msgid "Something compels you to stop"
-msgstr ""
+msgstr "なにかが無理やりあなたを止めた。"
 
 #: dat/events/sirius/preach.lua:77
 msgid "You are jerked awake by a mysterious but compelling urge"
-msgstr ""
+msgstr "あなたは謎めいているが抑えきれない衝動によって突き動かされたことに気づいた。"
 
 #: dat/events/sirius/preach.lua:78
 msgid "You feel... Touched... by a magical power"
-msgstr ""
+msgstr "あなたは……被触者を感じた……魔法のような力で。"
 
 #: dat/events/sirius/preach.lua:82
 msgid "Die, heretics!"
-msgstr ""
+msgstr "死ね、異端者！"
 
 #: dat/events/sirius/preach.lua:83
 msgid "Those who insult the Sirichana shall die!"
-msgstr ""
+msgstr "シリチャナを侮辱する者は死ぬ！"
 
 #: dat/events/sirius/preach.lua:84
 msgid "You've committed an unpardonable sin!"
-msgstr ""
+msgstr "おまえは容赦できない罪にかかわった！"
 
 #: dat/events/sirius/preach.lua:85
 msgid "Hell awaits, fools!"
-msgstr ""
+msgstr "地獄が待っているぞ、ばかめ！"
 
 #: dat/events/sirius/preach.lua:89
 msgid "Oh no! The Touched One is dead!"
-msgstr ""
+msgstr "なんということだ！　被触者が死んだ！"
 
 #: dat/events/sirius/preach.lua:90
 msgid "Sirichana save our souls!"
-msgstr ""
+msgstr "シリチャナがわれわれの魂を救う！"
 
 #: dat/events/sirius/preach.lua:91
 msgid "We shall never forget You, O Touched One!"
-msgstr ""
+msgstr "われわれがあなたを忘れることはありません。ああ、被触者よ！"
 
 #: dat/events/sirius/preach.lua:92
 msgid "We swear eternal revenge!"
-msgstr ""
+msgstr "われわれは永遠の復讐を誓う！"
 
 #: dat/events/sirius/preach.lua:96
 msgid "You feel an overwhelming urge to hear him out!"
-msgstr ""
+msgstr "あなたは話を最後まで聞こうという圧倒的な衝動を感じた！"
 
 #: dat/events/sirius/preach.lua:97
 msgid "A mysterious force forces you to listen!"
-msgstr ""
+msgstr "謎めいた力であなたは聞くように強制された！"
 
 #: dat/events/sirius/preach.lua:98
 msgid "You feel compelled to listen!"
-msgstr ""
+msgstr "あなたは無理やり聞かされていると感じた！"
 
 #: dat/events/sirius/preach.lua:102
 msgid "With my dying breath, I curse you!"
-msgstr ""
+msgstr "わたしの死にゆく息で、おまえを呪う！"
 
 #: dat/events/sirius/preach.lua:103
 msgid "Sirichana speed you to hell!"
-msgstr ""
+msgstr "シリチャナがすみやかにおまえを地獄へ送るだろう！"
 
 #: dat/events/sirius/preach.lua:104
 msgid "Sirichana, I did my best!"
-msgstr ""
+msgstr "シリチャナ、わたしは最善をつくしました！"
 
 #: dat/events/sirius/preach.lua:108
 msgid "The Reverence is dead!"
-msgstr ""
+msgstr "尊師が死んだ！"
 
 #: dat/events/sirius/preach.lua:109
 msgid "Someone killed the preacher!"
-msgstr ""
+msgstr "何者かが伝道者を殺した！"
 
 #. initialize the event
 #. save the current system
@@ -33650,7 +33499,7 @@ msgstr "シリウス・レベレンス"
 #. The table now contains pilots, not ship names.
 #: dat/events/sirius/preach.lua:184
 msgid "Converted {plt}"
-msgstr ""
+msgstr "改宗した{plt}"
 
 #. pick a random converted pirate and have him praise the Sirichana
 #. add some sirian escorts too
@@ -33690,7 +33539,7 @@ msgstr ""
 #. when hailed back, show the message
 #: dat/events/sirius/preach.lua:375
 msgid "The preaching begins..."
-msgstr ""
+msgstr "伝道の開始……"
 
 #: dat/events/sirius/preach.lua:375
 msgid ""
@@ -33704,6 +33553,13 @@ msgid ""
 "your head clears. The Sirian ship makes no further attempt to communicate "
 "with you."
 msgstr ""
+"シリウス人があなたのビュースクリーンに現れた。この男はあなたが会ったことのあるたいていのシリウス人とはちがっている。感情は感じさせないとはいえ、強烈にあな"
+"たを見つめていた。\n"
+"    ｢人は残酷で当てにならないものです｣ と、男はいった。｢あなたにはあなたが人類からいままで得た以上の価値があります。あなたの唯一の希望は、聖なるお"
+"かた、シリチャナにつづくことです。シリチャナはあなたを平和と知恵に導くでしょう。シリチャナはあなたやわたしのような人間たちの、たったひとつの避難所です。あ"
+"なたはシリチャナにつづかなければならない！｣\n"
+"    あなたは短時間だったがシリチャナにつづくという圧倒的な衝動を感じた。しかしそれは過ぎ去り、あなたは頭がはっきりとする。シリウスの船はあなたとの通信"
+"をそれ以上試みようとはしなかった。"
 
 #. no more hailing
 #. everything is done
@@ -36164,26 +36020,20 @@ msgid "Pilot:"
 msgstr "パイロット :"
 
 #: dat/gui/slim.lua:1069
-#, fuzzy
-#| msgid "System: "
 msgid "System:"
-msgstr "星系 : "
+msgstr "星系 :"
 
 #: dat/gui/slim.lua:1069
-#, fuzzy
-#| msgid "Time: "
 msgid "Time:"
-msgstr "時刻 : "
+msgstr "時刻 :"
 
 #: dat/gui/slim.lua:1069 src/load.c:421
 msgid "Credits:"
 msgstr "クレジット :"
 
 #: dat/gui/slim.lua:1070
-#, fuzzy
-#| msgid "Nav: "
 msgid "Nav:"
-msgstr "航路 : "
+msgstr "航路 :"
 
 #: dat/gui/slim.lua:1070 src/equipment.c:384 src/info.c:226 src/info.c:486
 #: src/land_shipyard.c:287 src/map_system.c:681
@@ -36191,16 +36041,12 @@ msgid "Fuel:"
 msgstr "燃料 :"
 
 #: dat/gui/slim.lua:1071
-#, fuzzy
-#| msgid "WSet: "
 msgid "WSet:"
-msgstr "武器セット : "
+msgstr "武器セット :"
 
 #: dat/gui/slim.lua:1071
-#, fuzzy
-#| msgid "Cargo: "
 msgid "Cargo:"
-msgstr "積み荷 : "
+msgstr "積み荷 :"
 
 #. stress is only used for armour
 #. Get values
@@ -45290,11 +45136,9 @@ msgid ""
 "authorize you to help out with the long-distance shipping missions. Can I "
 "count on you?\""
 msgstr ""
-"あなたがバーにいたチェシチ大尉の隣の席をとると、大尉はあなたの背中をたたい"
-"た。｢われわれはやりました！　帝国艦隊輸送拠点を銀河じゅうにたくさん立ちあげた"
-"んです。わたしはもうひとつだけご好意をお願いします。わたしはガンマ・ポラリス"
-"星系のハリルへ戻る便を必要としています。そこへ着けば、長距離輸送任務への協力"
-"をあなたに許可できます。あなたを頼っていいですか？｣"
+"あなたがバーにいたチェシチ大尉の隣の席をとると、大尉はあなたの背中をたたいた。｢われわれはやりました！　帝国艦隊輸送拠点を銀河じゅうにたくさん立ちあげたん"
+"です。わたしにはもうひとつだけご好意をお願いしたいことがあります。わたしはガンマ・ポラリス星系のハリルへ戻る便を必要としています。そこへ着けば、長距離輸送"
+"任務への協力をあなたに許可できます。あなたを頼っていいですか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -45784,15 +45628,6 @@ msgstr ""
 "て、ソルドナー中佐に報告にいかなければならないようだ。"
 
 #: dat/missions/empire/shipping/es01.lua:133
-#, fuzzy
-#| msgid ""
-#| "You arrive at {pnt} and report to Commander Soldner. He greets you and "
-#| "starts talking. \"I heard you encountered resistance. At least you "
-#| "managed to deliver the package. Great work there. I've managed to get you "
-#| "cleared for the Heavy Weapon License. You'll still have to pay the fee "
-#| "for getting it, though.\n"
-#| "    \"If you're interested in more work, meet me in the bar in a bit. "
-#| "I've got some paperwork I need to finish first.\""
 msgid ""
 "You arrive at {pnt} and report to Commander Soldner. He greets you and "
 "starts talking. \"I heard you encountered resistance. At least you were able "
@@ -45802,23 +45637,11 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
-"あなたは{pnt}に到着し、ソルドナー中佐に報告をした。中佐があなたを出迎えて、話"
-"を始めた。｢抵抗に出会ったことは聞いています。とにかく、あなたはうまく小包を配"
-"達できました。すばらしい仕事ぶりです。あなたには大型武器免許が許可されるよう"
-"にしておきました。それでも免許を得るには手数料を支払う必要がありますが。\n"
-"    ｢さらなる仕事に興味があるなら、もうちょっとしたらバーで会ってください。さ"
-"きに終わらせる必要がある書類仕事がすこしあるんです｣"
+"あなたは{pnt}に到着し、ソルドナー中佐に報告をした。中佐があなたを出迎えて、話を始めた。｢抵抗に出会ったことは聞いています。すくなくともあなたは小包を"
+"配達できました。すばらしい仕事ぶりです。あなたには大型武器免許が許可されるようにしておきました。それでも免許を得るには手数料を支払う必要がありますが。\n"
+"    ｢さらなる仕事に興味があるなら、もうちょっとしたらバーで会ってください。さきに終わらせる必要がある書類仕事がすこしあるんです｣"
 
 #: dat/missions/empire/shipping/es01.lua:136
-#, fuzzy
-#| msgid ""
-#| "You arrive at {pnt} and report to Commander Soldner. He greets you and "
-#| "starts talking. \"I heard you encountered resistance. At least you "
-#| "managed to deliver the package. Great work there. I've managed to get you "
-#| "cleared for the Heavy Weapon License. You'll still have to pay the fee "
-#| "for getting it, though.\n"
-#| "    \"If you're interested in more work, meet me in the bar in a bit. "
-#| "I've got some paperwork I need to finish first.\""
 msgid ""
 "You arrive at {pnt} and report to Commander Soldner. He greets you and "
 "starts talking. \"I heard you encountered resistance. At least you managed "
@@ -45826,12 +45649,9 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
-"あなたは{pnt}に到着し、ソルドナー中佐に報告をした。中佐があなたを出迎えて、話"
-"を始めた。｢抵抗に出会ったことは聞いています。とにかく、あなたはうまく小包を配"
-"達できました。すばらしい仕事ぶりです。あなたには大型武器免許が許可されるよう"
-"にしておきました。それでも免許を得るには手数料を支払う必要がありますが。\n"
-"    ｢さらなる仕事に興味があるなら、もうちょっとしたらバーで会ってください。さ"
-"きに終わらせる必要がある書類仕事がすこしあるんです｣"
+"あなたは{pnt}に到着し、ソルドナー中佐に報告をした。中佐があなたを出迎えて、話を始めた。｢抵抗に出会ったことは聞いています。とにかく、あなたはうまく小"
+"包を配達できました。\n"
+"    ｢さらなる仕事に興味があるなら、もうちょっとしたらバーで会ってください。さきに終わらせる必要がある書類仕事がすこしあるんです｣"
 
 #. The goods
 #: dat/missions/empire/shipping/es01.lua:143
@@ -45846,20 +45666,11 @@ msgstr ""
 "は、もしさらなる仕事に興味があるなら、ハリルのバーで会えるといった。"
 
 #: dat/missions/empire/shipping/es01.lua:145
-#, fuzzy
-#| msgid ""
-#| "You successfully completed a package delivery for the Empire. As a "
-#| "result, you have been cleared for the Heavy Weapon License and can now "
-#| "buy it at an outfitter. Commander Soldner said that you can meet him in "
-#| "the bar at Halir if you're interested in more work."
 msgid ""
 "You successfully completed a package delivery for the Empire. Commander "
 "Soldner said that you can meet him in the bar at Halir if you're interested "
 "in more work."
-msgstr ""
-"あなたは帝国のために小包の配達を首尾よく完了させた。その結果、あなたには大型"
-"武器免許が許可されて、もう艤装所からそれを買うことができる。ソルドナー中佐"
-"は、もしさらなる仕事に興味があるなら、ハリルのバーで会えるといった。"
+msgstr "あなたは帝国のために小包の配達を首尾よく完了させた。ソルドナー中佐は、もしさらなる仕事に興味があるなら、ハリルのバーで会えるといった。"
 
 #. Mercenaries appear after a couple of jumps
 #. Get player position
@@ -46008,16 +45819,6 @@ msgstr ""
 "た。あなたはもう艤装所で免許を買えるようになった。"
 
 #: dat/missions/empire/shipping/es02.lua:123
-#, fuzzy
-#| msgid ""
-#| "You land at the starport. It looks like the VIP has already recovered. He "
-#| "thanks you profusely before heading off. You proceed to pay Commander "
-#| "Soldner a visit. He seems to be happy, for once.\n"
-#| "    \"It seems like you managed to pull it off. I had my doubts at first, "
-#| "but you've proven to be a very skilled pilot. Oh, and I've cleared you "
-#| "for the Heavy Combat Vessel License; congratulations! We have nothing "
-#| "more for you now, but check in periodically in case something comes up "
-#| "for you.\""
 msgid ""
 "You land at the starport. It looks like the VIP has already recovered. He "
 "thanks you profusely before heading off. You proceed to pay Commander "
@@ -46026,18 +45827,14 @@ msgid ""
 "but you've proven to be a very skilled pilot. We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
-"あなたは宇宙港に着陸した。VIP はすでに回復しているらしい。あなたにたっぷり礼"
-"をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んで"
-"いるようだ。こんどだけは。\n"
-"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなた"
-"はとても腕がたつパイロットだと証明してみせました。ああ、それであなたには大型"
-"戦闘艦免許の許可を与えました。おめでとう！　いまはあなたにしてもらうことはこ"
-"れ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認"
-"してください｣"
+"あなたは宇宙港に着陸した。VIP "
+"はすでに回復しているらしい。あなたにたっぷり礼をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んでいるようだ。こんどだけは。\n"
+"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなたはとても腕がたつパイロットだと証明してみせました。いまはあなたにしてもら"
+"うことはこれ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認してください｣"
 
 #: dat/missions/empire/shipping/es02.lua:125
 msgid "You successfully rescued a VIP for the Empire."
-msgstr ""
+msgstr "あなたは帝国のために VIP を救出するのに成功した。"
 
 #. Clear velocity
 #. VIP boards
@@ -49420,7 +49217,7 @@ msgstr ""
 #. Set up Player
 #: dat/missions/minerva/kex3.lua:382 dat/scripts/pilotname/pirate.lua:353
 msgid "Ketchup"
-msgstr ""
+msgstr "ケチャップ"
 
 #: dat/missions/minerva/kex3.lua:449
 msgid "Back in my day we used to fly uphill both ways to go to work!"
@@ -55142,7 +54939,7 @@ msgstr ""
 msgid ""
 "You have insufficient free cargo space for the {cargo}. You only have "
 "{freespace} of free space, but you need at least {neededspace}."
-msgstr ""
+msgstr "あなたには{cargo}を積むための空いた船倉がない。{freespace}の空きしかないが、すくなくとも {neededspace}必要だ。"
 
 #: dat/missions/neutral/antlejos/ant02.lua:106
 #: dat/missions/neutral/antlejos/ant03.lua:104
@@ -55494,10 +55291,8 @@ msgid "Supply Ship"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant05.lua:168
-#, fuzzy
-#| msgid "Vessel under attack! Requesting help!"
 msgid "Supply ship under attack! Help requested!"
-msgstr "船が攻撃をうけている！　助力を求める！"
+msgstr ""
 
 #. Nothing to do here
 #. Wrong system
@@ -59567,9 +59362,8 @@ msgid ""
 "authorities want this pirate alive. {pirname} is believed to be flying a "
 "{shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの海賊"
-"を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛んで"
-"いると信じられている。"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの海賊を生け捕りにしてほしがっている。{pirname}は{sh"
+"ipclass}級の船で飛んでいると信じられている。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:72
 msgid "Capture {plt}"
@@ -62090,12 +61884,12 @@ msgstr ""
 #: dat/missions/neutral/wastedump.lua:89
 #: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "Waste Containers"
-msgstr ""
+msgstr "廃棄物のコンテナ"
 
 #: dat/missions/neutral/wastedump.lua:89
 #: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
-msgstr ""
+msgstr "なんともいいようのないあらゆる種類の液体が漏れている廃棄物のコンテナの集まり。"
 
 #: dat/missions/neutral/wastedump.lua:93
 msgid ""
@@ -63790,10 +63584,8 @@ msgstr ""
 #. Forward-declared functions
 #. luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 #: dat/missions/pirate/pir_hit_intro.lua:46
-#, fuzzy
-#| msgid "Sweaty Individual"
 msgid "Shady Individual"
-msgstr "汗くさい人"
+msgstr "うさんくさい人"
 
 #. Lower probability on non-pirate places
 #. No enemy presence nearby
@@ -63851,10 +63643,8 @@ msgstr ""
 #. Set mission details
 #: dat/missions/pirate/pir_hit_intro.lua:126
 #: dat/missions/pirate/pir_hit_intro.lua:133
-#, fuzzy
-#| msgid "Unfair Competition"
 msgid "Dark Compensation"
-msgstr "不正な競争"
+msgstr ""
 
 #: dat/missions/pirate/pir_hit_intro.lua:128
 msgid ""
@@ -63863,17 +63653,13 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_hit_intro.lua:136
-#, fuzzy
-#| msgid "Return to {pnt} in the {sys} system"
 msgid "Return to {pnt} ({sys} system)"
-msgstr "{sys}星系の{pnt}に戻れ。"
+msgstr "{pnt}に戻れ。({sys}星系)"
 
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit_intro.lua:206
-#, fuzzy
-#| msgid "Deliver the package to {pnt} in the {sys} system"
 msgid "Target eliminated! Return to {pnt} ({sys} system)."
-msgstr "{sys}星系の{pnt}に小包を配達せよ。"
+msgstr ""
 
 #. Use a dynamic faction so they don't get killed
 #. Fail the mission, showing message to the player.
@@ -67053,11 +66839,9 @@ msgid ""
 "wanted by the authorities, you are hereby granted authorization to destroy "
 "it.\""
 msgstr ""
-"とつぜん、ザレクのドローンがあなたを攻撃しはじめた！　どうなっているのか不思"
-"議に思っていると、遠くのザレク船からの一斉送信が聞こえてきた。｢みなさまにお知"
-"らせいたします。われわれのドローンの一部が故障したようです。もしドローンに攻"
-"撃されて、あなたが当局から指名手配もされていないなら、ここにそのドローンを破"
-"壊する許可を与えます｣"
+"とつぜん、ザレクのドローンがあなたを攻撃しはじめた！　どうなっているのか不思議に思っていると、遠くのザレク船からの一斉送信が聞こえてきた。｢みなさまにお知"
+"らせいたします。われわれのドローンの一部が狂ったようです。もしドローンに攻撃されて、あなたが当局から指名手配もされていないなら、ここにそのドローンを破壊す"
+"る許可を与えます｣"
 
 #: dat/missions/shark/sh05_flf.lua:47
 msgid "It looks like he has yet another job for you."
@@ -69280,16 +69064,16 @@ msgstr "セラ"
 
 #: dat/missions/sirius/srs_ferry.lua:54
 msgid "Economy"
-msgstr ""
+msgstr "割安"
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/sirius/srs_ferry.lua:55
 msgid "Priority"
-msgstr ""
+msgstr "優先"
 
 #: dat/missions/sirius/srs_ferry.lua:56
 msgid "Express"
-msgstr ""
+msgstr "急行"
 
 #. Outcomes for each of the 4 options above:
 #. We pick random number (1-4), then use this as our index into nc_probs[rank]
@@ -69638,6 +69422,11 @@ msgid ""
 "regarding how they wish to be referred to. This leads to a conversation "
 "about common decency and people who do rude things for no good reason."
 msgstr ""
+"｢ちょっとまたいわせてください。助けてくれてほんとうにありがとう｣ と、C はいった。｢ちょっと神経にさわるんですよね、両親に告白しようとするのは。それに"
+"たくさんの人たちに会ってきて……ともかく、わたしの希望を理解して尊重してくれて、皮肉を返さない人に会えてよかったです。わたしの両親も理解してくれればいいん"
+"だけど……｣\n"
+"    それが C のことをいうときの代名詞の話だと確認してから、人がこう呼ばれたいという希望を尊重するのは一般的な礼儀だと、あなたは簡単にいった。これは"
+"一般的な礼儀と、まともな理由もないのに無作法になる人たちについての話につながった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:36
 msgid ""
@@ -69652,6 +69441,13 @@ msgid ""
 "ridiculous; everyone is different and no one can know C better than they "
 "can. C seems relieved to hear this."
 msgstr ""
+"C が元気を取りもどした。｢いってもいいですか？｣。あなたはいいとこたえた。｢ありがとう｣ と、C "
+"はいった。｢わたしは最初は両親に告白しようとしたんですが、とても怖くなって……。あなたに告白するのは安心なんです。わかりますよね？　"
+"今回はずっとよくしてもらってるから。\n"
+"    ｢生まれたときは男に割り当てられました。それに社会はわたしを男とみなしがちなんです。でもわたしの結論は……わたしがトランスジェンダーだってことです"
+"。わたしがそうだと感じるのは……女性、かな？　たしかじゃありません。それは……理解できることなんでしょうか？　"
+"わたしはばかげたことをしてないですよね？｣。あなたはこたえた。していない。ばかげてはいない。だれもが異なるし、C 以上に C のことがわかる人はいない。"
+"C はこれを聞いて安心したようだ。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:39
 msgid ""
@@ -69662,6 +69458,9 @@ msgid ""
 "about the place of pronouns in society. You can tell that she's a lot "
 "happier and more comfortable than she was before."
 msgstr ""
+"｢ええと……してもらえるかな。うーん、わたしには中性の代名詞を使ってと頼んだのはわかってるけど、かわりに女性の代名詞を使うようにお願いできますか？　あまり"
+"たいへんじゃないといいんだけど……｣。あなたはまったく問題ないと請けあった。それからあなたたち二人は、社会のなかでの代名詞の位置づけについて、そこそこ長く"
+"て興味深い会話をかわした。あなたに言えるのは、C はまえよりずっと幸福で落ちついているということだった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:41
 msgid ""
@@ -69669,6 +69468,8 @@ msgid ""
 "sound of 'Chelsea'.\" You respond that it sounds like a nice name, "
 "plastering a smile on Chelsea's face."
 msgstr ""
+"｢考えていたんだけど｣ と、C "
+"がいう。｢考えていたのは……新しい名前｡『チェルシー』という響きが好き｣。あなたはよい名前に聞こえるとこたえた。チェルシーの顔にほほえみが広がった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:43
 msgid ""
@@ -69677,75 +69478,80 @@ msgid ""
 "a mercenary some day. You talk about your adventures with passion and share "
 "some tips on how to get started with being a freelance pilot."
 msgstr ""
+"あなたとチェルシーは船と操縦について長い会話をかわした。チェルシーはその話題にかなり興味があって、いつか傭兵になるという野望があるのだとわかった。あなたは"
+"自分の冒険について熱中して語り、自営のパイロットを始める方法について、いくつかこつを伝授した。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:46
 msgid "You idly talk some more with Chelsea about the joys of being a pilot."
-msgstr ""
+msgstr "あなたはチェルシーとパイロットであることの喜びについて、ぼんやりともうちょっと話をした。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:47
 msgid ""
 "You hear a small noise and nearly jump in your seat, but you look over your "
 "shoulder and see it's just Chelsea reading something."
-msgstr ""
+msgstr "小さな雑音が聞こえたので、あなたは操縦席に飛びこみかけた。しかし肩ごしに見ると、チェルシーがただなにかを読んでいるだけだとわかった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:48
 msgid ""
 "Chelsea watches in awe as you work the ship. You can't help but smile a "
 "little."
-msgstr ""
+msgstr "あなたが船の作業をするのをチェルシーが畏敬の念をもって見守っている。あなたはちょっとほほえむ以外にしようがなかった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:49
 msgid ""
 "Chelsea remarks that she likes a song you're listening to, which gets you "
 "into a conversation about music you and Chelsea like to listen to."
-msgstr ""
+msgstr "チェルシーは、あなたが聞いているのが自分の好きな歌だと認めた。それであなたとチェルシーが好きな音楽についての話になった。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:50
 msgid ""
 "Somehow, you and Chelsea get into a discussion about drinks that each of you "
 "likes and dislikes, and stories of bars you've been to throughout the galaxy."
 msgstr ""
+"どういうわけか、あなたとチェルシーはおたがいが好きな飲み物と嫌いな飲み物についての議論をしていた。それにあなたが行った銀河じゅうのバーの話もだ。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:51
 msgid ""
 "Chelsea dozes off in a chair for a few hectoseconds before waking up with a "
 "yawn, prompting you to yawn as well."
-msgstr ""
+msgstr "チェルシーが二、三百秒ほどいすでうたた寝をしていた。それから起きてあくびをしたが、あなたもつられてあくびをした。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:52
 msgid ""
 "You start to forget for a while that you have a passenger until Chelsea asks "
 "you a question about something you're doing."
-msgstr ""
+msgstr "あなたはしばらく乗客がいることを忘れかけていた。チェルシーがあなたのしていることをたずねたので思いだした。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:53
 msgid ""
 "You talk to Chelsea a little about some interesting experiences you've had "
 "as a pilot."
-msgstr ""
+msgstr "あなたはチェルシーに、あなたがパイロットとして経験した興味深い体験についてちょっと話した。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:54
 msgid ""
 "You have a brief conversation with Chelsea about interesting sights you both "
 "have seen in your travels."
-msgstr ""
+msgstr "あなたはチェルシーと、二人が旅のなかで見た興味深い景色について短い会話をした。"
 
 #. Note: This mission does not make system claims
 #: dat/missions/soromid/comingout/srm_comingout.lua:65
 msgid "Quiet stranger"
-msgstr ""
+msgstr "静かにしている見知らぬ人"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:65
 msgid ""
 "A stranger is sitting quietly at a table, alone, glancing around the bar. In "
 "need of a suitable pilot, perhaps?"
-msgstr ""
+msgstr "見知らぬ人が静かにテーブルについていた。ひとりでいて、バーの中をちらちら見まわしている。もしかすると、ふさわしいパイロットが必要なのかも？"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:70
 msgid ""
 "\"Oh, hi again. I'm still having trouble finding someone. Can you help me? "
 "It would mean so much if you could.\""
 msgstr ""
+"｢ああ、また会いましたね。まだだれかをさがすという問題をかかえているんです。助けてもらえませんか？　"
+"助けてもらえれば、とても大きな意味をもつことになります｣"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:70
 msgid ""
@@ -69764,12 +69570,19 @@ msgid ""
 "I need to tell them. I'm not picky about how long it takes, and I promise I "
 "won't cause any trouble.... Could you do this for me?\""
 msgstr ""
+"あなたが近づくと、見知らぬ人はむしろ神経質になったようだが、話を始めた。見知らぬ人の声は外見から予想したよりは深かったが、あなたは気にしなかった。\n"
+"    ｢こ、こんにちは！　は、はじめまして。わたしは……えーと……あれですよ、今のところはわたしのことを『C』と呼ぶだけにしてください。名前についてはま"
+"だいえないんです。それで問題ないなら代名詞は中性で｣。あなたはその要請に同意して、自己紹介をしてからちょっとおしゃべりをした。よい人のようだ。\n"
+"    しばらくすると、C は腕を組んで考えこんだ。｢それで……えーと、あなたはパイロットだっていいましたよね？　じつは、わたしは輸送機関を必要としている"
+"んですが、ほんとうのところあまりお金は持っていなくて、だれも運んでくれたがらないんです。ちょっと遠くて海賊がたくさんいる領域なので、だれもしたがらないのは"
+"理解しています。でもちょっと……わたしはとにかく……両親と会う必要があるんです。ちょっと伝えなければならないことがあって。時間がかかっても気にしませんし、"
+"問題はおこさないと約束します……。やってもらえないでしょうか？｣"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:75
 #: dat/missions/soromid/comingout/srm_comingout.lua:76
 #: dat/missions/soromid/comingout/srm_comingout.lua:96
 msgid "Just Some Transportation"
-msgstr ""
+msgstr "ただの輸送"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:76
 msgid ""
@@ -69778,6 +69591,8 @@ msgid ""
 "the {sys} system. Like I said, no rush. Just as long as I get there, that's "
 "what matters.\""
 msgstr ""
+"C はあなたの答えにほっとしたようだ。｢ほんとうにありがとう｣ と、C はいった。｢とても感謝しています。どうにかして埋めあわせはするつもりです。両親は{"
+"sys}星系の{pnt}に住んでいます。話したとおり、いそいでいません。そこへ着きさえすればいいんです。困っていたのはそれですから｣"
 
 #.
 #.
@@ -69788,24 +69603,24 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout.lua:85
 #: dat/scripts/common/soromid.lua:9
 msgid "Coming Out"
-msgstr ""
+msgstr "告白"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:81
 msgid "Your new friend needs you to take them to their parents in {sys}."
-msgstr ""
+msgstr "あなたの新しい友人は{sys}星系の両親のところへ行く必要がある。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:82
 msgid "The satisfaction of helping out a new friend"
-msgstr ""
+msgstr "新しい友人を助けたという満足感"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:86
 #: dat/missions/soromid/comingout/srm_comingout2.lua:62
 msgid "Go to the {sys} system and land on the planet {pnt}."
-msgstr ""
+msgstr "{sys}星系へ行って、惑星{pnt}へ着陸せよ。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:96
 msgid "\"Okay. I understand. Thanks anyway.\""
-msgstr ""
+msgstr "｢わかりました。理解しています。とにかくありがとう｣"
 
 #. Using a timer to make sure the messages don't show up immediately
 #. as you jump in (at least, not most of the time; it's technically
@@ -69824,6 +69639,11 @@ msgid ""
 "notice. Chelsea greets her parents, introduces you as her friend, then sits "
 "down. You sit down next to her."
 msgstr ""
+"チェルシーをうしろにしたがえて船から踏みだすと、チェルシーはあらゆることに神経質になっているとあなたは気がついた。チェルシーがあなたにもうひとつ頼みごとを"
+"する。｢わたしと来てくれませんか、友人として？｣。あなたはほほえみ、行くといった。\n"
+"    けっきょくわかったのは、チェルシーが両親とバーで会う用意をしていたことだった。あなたたちが到着すると、チェルシーの両親はすぐに気づいてチェルシーを"
+"出迎えた。チェルシーのことをちがう名前で呼んでいる。これを聞いて、悲しみの表情がチェルシーの顔に現れた。しかしすぐにそれを隠したので、両親は気づかなかった"
+"ようだ。チェルシーは両親にあいさつをして、あなたのことを友人と紹介してから座る。あなたは隣に座った。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:140
 msgid ""
@@ -69841,6 +69661,14 @@ msgid ""
 "to sob. \"I'm proud of you, Chelsea,\" her mother says. Out of Chelsea's "
 "view, her father shrugs and finishes his drink."
 msgstr ""
+"｢久しぶりね！｣ と、チェルシーの母親がいった。｢髪を長くしたのね！　そんなふうにできたなんて、ほんとうにうれしいわ｣\n"
+"    チェルシーは神経質に笑った。｢伝えなきゃならないことがあるんです｣ と、チェルシーはいった。｢わたしは……えー……わたしはトランスジェンダーなんで"
+"す。わたしのことはチェルシーと呼んでほしいし、代名詞は女性のものを使ってほしい。これからは……。もし問題なければ｣\n"
+"    チェルシーの父親はすぐに短く答えた。｢わかった｣ と、父はいう。｢なんの問題もない。どんなものを着ようが、どんな名前を使おうが、それはかまわない｣"
+"\n"
+"   母親はすこし黙っていたが、それからいすから立ちあがった。チェルシーも立ちあがる。目には恐怖が見えた。それから母から抱きしめられたので、驚きの表情にな"
+"った。チェルシーも母を抱きしめ、泣きはじめた。｢誇りに思うわ、チェルシー｣ "
+"と、チェルシーの母がいった。チェルシーの視界の外で、父親は肩をすくめてグラスをあけた。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:144
 msgid ""
@@ -69854,6 +69682,12 @@ msgid ""
 "table, and make your way back to your ship. As you enter your cockpit you "
 "find a credit chip worth {credits}! It's not much, but it's something."
 msgstr ""
+"母がチェルシーを離すと、チェルシーは目から涙をぬぐうとあなたを優しく抱きしめた。｢ありがとう｣ と、チェルシーはいう。｢あなたはよい友だちになってくれまし"
+"たし、ここにいっしょにいてくれたことはとても助けになりました｣。チェルシーがあなたを離した。｢忙しいにちがいないのは知っています！　"
+"でもほら、ちょっとしたら、またかならず戻ってきてください。いいですか？　"
+"当分のあいだはこの惑星でじっとしているつもりです。また会うのを楽しみにしています！｣\n"
+"    きっかけを得て、あなたはさしあたりの別れを告げた。あなたは席をはずして、船に戻る。操縦室に入って、あなたは {credits} "
+"の価値があるクレジットチップを見つけた！　多くはないが、ちょっとしたものだ。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:151
 msgid ""
@@ -69861,6 +69695,8 @@ msgid ""
 "and helped her feel secure coming out as transgender to her parents. Chelsea "
 "has asked you to return to Durea to visit once in a while."
 msgstr ""
+"あなたはチェルシーという新しい友人を作った。あなたはチェルシーを助けて両親のところへ連れていき、両親にトランスジェンダーだと安心して告げられるように助けた"
+"。チェルシーはすこししたらまたデュレーに戻って会ってくれとあなたに頼んだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -69954,17 +69790,17 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout6.lua:54
 #: dat/missions/soromid/comingout/srm_comingout6.lua:112
 msgid "Chelsea"
-msgstr ""
+msgstr "チェルシー"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:37
 msgid ""
 "She seems to just be sitting by idly. It's been a while; maybe you should "
 "say hi?"
-msgstr ""
+msgstr "チェルシーはぼんやりと座っているだけのように見える。しばらくぶりだ。もしかしたら声をかけるべきか？"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:44
 msgid "\"Oh, {player}! Are you able to help me out now?\""
-msgstr ""
+msgstr "｢ああ、{player}！　もうわたしを助けられますか？｣"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:46
 msgid ""
@@ -69979,33 +69815,41 @@ msgid ""
 "need someone to take me there. Again, no rush. Would you be able to do that "
 "for me?\""
 msgstr ""
+"あなたが近づくのに気づくと、チェルシーはほほえんで手を振って合図してきた。｢こんにちは、{player}！　おひさしぶり！｣。あなたは座って、チェルシーと"
+"親しい会話を始めた。チェルシーは両親が変えるという自分の決断を支持しているようだという。そしてとくに母親はあきらかにとても助けてくれているということも。"
+"\n"
+"    チェルシーがちょっと元気づいた。｢それで、わたしがパイロットになるという野望をもっているといったのを覚えていますか？　もうパイロット免許もとったん"
+"です。でもちょっと貧乏なんで、最初の船を買う余裕はありません。だからたずねまわって、どうにか買得な中古船を{sys}星系の{pnt}で見つけたんです！　"
+"ただそこへ連れていってくれる人が必要で。こんどもいそぎません。やってもらえるでしょうか？｣"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:51
 #: dat/missions/soromid/comingout/srm_comingout2.lua:52
 #: dat/missions/soromid/comingout/srm_comingout2.lua:67
 msgid "Getting My Feet Wet"
-msgstr ""
+msgstr "踏みだす"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:52
 msgid ""
 "\"Thank you so much! I really appreciate it, {player}. I can't pay you much, "
 "but I can give you {credits} when we get there. I can't wait to start!\""
 msgstr ""
+"｢ほんとうにありがとう！　とても感謝しています、{player}。あまり払えませんが、そこへ着いたら {credits} "
+"払えます。始めるのが待ちきれませんよ！｣"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:56
 #: dat/missions/soromid/comingout/srm_comingout2.lua:61
 msgid "Coming of Age"
-msgstr ""
+msgstr "一人前になる"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:57
 msgid ""
 "Chelsea needs you to take her to {pnt} so she can buy her first ship and "
 "kick off her piloting career."
-msgstr ""
+msgstr "チェルシーはあなたに{pnt}へ連れていってもらう必要がある。そうすればチェルシーは最初の船を買って、パイロットとしての仕事を始められるのだ。"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:67
 msgid "\"Oh, okay. Let me know later on if you're able to.\""
-msgstr ""
+msgstr "｢ああ、わかりました。あとでできるようになったら知らせてください｣"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:75
 msgid ""
@@ -70020,6 +69864,12 @@ msgid ""
 "missions as a pilot!\" As you walk away, you see her getting her first close-"
 "up look at the mission computer with a look of excitement in her eyes."
 msgstr ""
+"着岸したとき、あなたはチェルシーが船から飛びおりてけがするのをなんとか止めることができた。チェルシーは行くべき場所を正確にわかっているようだった。そしてな"
+"にをするつもりなのかあなたが知りもしないうちに、チェルシーは古いラマを購入した。ことによると、あなたがこれまで見てきたなかでも、もっともさびついていて、す"
+"りへったラマかもしれない。しかしそれでも、正常に動く状態ではあった。あなたは船の状態について懸念を表明したが、チェルシーは修理できるだけのお金が手に入るの"
+"で修理すると請けあった。チェルシーは親しげにあなたを抱きしめて、礼をいう。それからあなたにクレジットチップを手渡した。｢そのうちまたわたしに追いついてくだ"
+"さい、いいですね？　わたしはソロミド宙域をうろうろして、パイロットとしての最初に任務をしようと思ってます！｣。歩き去るときに、あなたは見てとった。チェルシ"
+"ーがミッションコンピューターに近づいて見る目には興奮の色があった。"
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:81
 msgid ""
@@ -70029,6 +69879,9 @@ msgid ""
 "again sometime. She expects that she'll be sticking to Soromid space for the "
 "time being."
 msgstr ""
+"あなたはチェルシーを助けてクロウまで輸送した。そこでチェルシーは最初の船を買うことができた。そのラマはとても悪い状態だったが、動いている。チェルシーは自営"
+"のパイロットとして職歴を開始する予定なので、そのうちどこかでまた追いついてくれとあなたはチェルシーから頼まれた。さしあたり、チェルシーはソロミド宙域に貼り"
+"ついているつもりだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -70774,7 +70627,7 @@ msgstr "任務に失敗！　護衛している船団よりまえにジャンプ
 #: dat/missions/trader/trader_escort.lua:155
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:168
 msgid "You abandoned your mission!"
-msgstr "任務を放棄！"
+msgstr "あなたは任務を放棄した！"
 
 #: dat/missions/trader/trader_escort.lua:155
 msgid "You have landed, abandoning your mission to escort the trading convoy."
@@ -71477,10 +71330,8 @@ msgid ""
 "me disable my ship and get it back?\""
 msgstr ""
 "あなたが近づくと、ネリーが顔を輝かせた。\n"
-"｢ねえ、船を受けとって飛ばせると思ってたんです。でも乗って試験運転ができるよう"
-"になるまえに、なにかが故障して今は円を描いてぐるぐる回ってるんです！　あなた"
-"はイオンキャノンを持ってますよね？　わたしの船を無力化して取りもどすのを手"
-"伝ってもらえませんか？｣"
+"｢ねえ、船を受けとって飛ばせると思ってたんです。でも乗って試験運転ができるようになるまえに、なにかが狂って今は円を描いてぐるぐる回ってるんです！　"
+"あなたはイオンキャノンを持ってますよね？　わたしの船を無力化して取りもどすのを手伝ってもらえませんか？｣"
 
 #: dat/missions/tutorial/nelly02.lua:124
 msgid "Help them with their ship"
@@ -73035,13 +72886,10 @@ msgid ""
 "payment for this mission will be only {credits}. But rest assured, you will "
 "be mentioned in the acknowledgment section of my next paper!\""
 msgstr ""
-"｢こんにちは！　あなたはパイロットだ、そうですよね？　計画のためにわたしは星雲"
-"まで行ける船を必要としています。まちがいなくあなたは人類の遺産をわれわれから"
-"奪い去った現象を調査しようという提案に興味があるはずです。\n"
-"    ｢このことで頼んだほかのパイロットが約束を破ったので、初めに説明すべきだと"
-"思いますが、ある不幸な事情により、この任務の支払いはたった {credits} になりま"
-"す。しかし安心してください。わたしの次の論文の謝辞の欄にあなたの名前が載るん"
-"です！｣"
+"｢こんにちは！　あなたはパイロットだ、そうですよね？　計画のためにわたしは星雲まで行ける船を必要としています。もちろん、あなたは人類の遺産をわれわれから奪"
+"い去った現象を調査しようという提案に興味があるにちがいありません。\n"
+"    ｢このことで頼んだほかのパイロットが約束を破ったので、初めに説明すべきだと思いますが、ある不幸な事情により、この任務の支払いはたった "
+"{credits} になります。しかし安心してください。わたしの次の論文の謝辞の欄にあなたの名前が載るんです！｣"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:59
 msgid ""
@@ -73053,14 +72901,10 @@ msgid ""
 "to use it. You must know how this feels. I mean, your ship obviously could "
 "use some work. So why don't you just help me out here?\""
 msgstr ""
-"｢待った！　ほら、問題は助成金がわたしの求めた額まで許可されなかったことなんで"
-"す。あのばかたちが資金を削減したのは、たんに自分たちがわたしの研究の妥当性を"
-"理解できなかったからです。まだわたしが学生だということだけで、わたしの能力を"
-"完全に過小評価しているんです！\n"
-"    ｢もうわたしはこのセンサー一式にクレジットをすべて使ってしまいましたが、こ"
-"れを使うことができません。あなたはこれでどうやって検知するのかまちがいなく"
-"知っているにはずです。つまり、あなたの船はあきらかになんらかの作業に使えるは"
-"ずです。だったらどうしてちょっと助けてくれないんです？｣"
+"｢待った！　ほら、問題は助成金がわたしの求めた額まで許可されなかったことなんです。あのばかたちが資金を削減したのは、たんにあの人たちがわたしの研究の妥当性"
+"を理解できなかったからってだけです。まだわたしが学生だということだけで、わたしの能力を完全に過小評価しているんです！\n"
+"    ｢もうわたしはこのセンサー一式にクレジットをすべて使ってしまいましたが、これを使うことができません。あなたはこれでどうやって検知するのかまちがいな"
+"く知っているにはずです。つまり、あなたの船はあきらかになんらかの作業に使えるはずです。だったらどうしてちょっと助けてくれないんです？｣"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:64
 msgid ""
@@ -73157,19 +73001,13 @@ msgid ""
 "but instead you start to think that accepting this mission was not the best "
 "idea."
 msgstr ""
-"あなたが船に入ると、さまざまな色の配線があなたの船の廊下を何十も横切っている"
-"のに気がついた。完全にめちゃくちゃである。あなたは大部分のケーブルが向かって"
-"いるように見える方向を追っていき、犯人を発見した。\n"
-"    ｢ああ、さきほどはどうも、船長！　ここの仕事は終わりです。だからあなたの用"
-"意ができたらいつでも離陸できますよ。飛行のあいだにセンサーの校正をしなければ"
-"なりません。だからいそぐ必要はありませんよ。われわれの最初の目的地は{sys}星系"
-"です｣。あなたは冷静であろうと努力しながら、この学生があなたの船になにをしたの"
-"かたずねた。｢ああ、ただセンサーを設置しただけです。あなたの船に迷惑な副作用は"
-"ないはずです。\n"
-"    ｢めちゃくちゃ、といいました？　色わけされているのに気がつかなかったんです"
-"か？　心配しないでください。していることは完全にわかっていますから！｣。最後の"
-"言葉は安心させようとしたつもりだろうが、そのかわりにあなたはこの任務を引き受"
-"けたのは、あまりよい考えではなかったのではないかと考えはじめていた。"
+"あなたが船に入ると、さまざまな色の配線があなたの船の廊下を何十も横切っているのに気がついた。完全にめちゃくちゃである。あなたは大部分のケーブルが向かってい"
+"るように見える方向を追っていき、犯人を発見した。\n"
+"    ｢ああ、さきほどはどうも、船長！　ここの仕事は終わりです。だからあなたの用意ができたらいつでも離陸できますよ。飛行のあいだにセンサーの校正をしなけ"
+"ればなりません。だからいそぐ必要はありません。われわれの最初の目的地は{sys}星系です｣。あなたは冷静であろうと努力しながら、あなたの船になにをしたのか"
+"たずねた。｢ああ、ただセンサーを設置しただけです。あなたの船に迷惑な副作用はないはずです。\n"
+"    ｢めちゃくちゃ、といいました？　色わけされているのに気がつかなかったんですか？　心配しないでください。していることは完全にわかっていますから！｣。"
+"最後の言葉は安心させようとしたつもりだろうが、そのかわりにあなたはこの任務を引き受けたのは、あまりよい考えではなかったのではないかと考えはじめていた。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:133
 msgid ""
@@ -73501,7 +73339,7 @@ msgstr "星雲学術調査シャトル"
 #. Hack to make ambushes more reliable.
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:254
 msgid "Research Shuttle"
-msgstr "学術調査シャトル"
+msgstr "学術調査往復便"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:278
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:283
@@ -73619,15 +73457,11 @@ msgid ""
 "for your answer. It appears you should head to the bar to meet up with the "
 "student."
 msgstr ""
-"｢忘れかけていたことがもうひとつありました。そのうえわたしはボージス教授の代理"
-"として、今すぐ別の会議に出席しなければならないんです。教授がわたしに教えるつ"
-"もりのない計画でとても忙しくしているのは明白ですから。でもわたしはそこへは行"
-"きたくない⸺わたしの研究ははるかに重要なので！　だからかわりにロバートを連れて"
-"いってもらえませんか？　最近あなたが助けたあの学生を覚えてますよね？　ロバー"
-"トなら発表をふつうにうまくやるのに決まってます！　できるだけ早くあなたとバー"
-"で会うようにいっておきますね！｣\n"
-"    そういうと、メンシング博士はあなたの返事も待たずにさっさと離れていった。"
-"バーに向かってあの学生と会ったほうがよさそうだ。"
+"｢忘れかけていたことがもうひとつありました。おまけにわたしはボージス教授の代理として、今すぐ別の会議に出席しなければならないんです。教授がわたしに教えるつ"
+"もりのない計画でとても忙しくしているのは明白ですから。でもわたしはそこへは行きたくない⸺わたしの研究ははるかに重要なので！　"
+"だからかわりにロバートを連れていってもらえませんか？　最近あなたが助けたあの学生を覚えてますよね？　ロバートなら発表をふつうにうまくやるのに決まってます！"
+"　できるだけ早くあなたとバーで会うようにいっておきますね！｣\n"
+"    そういうと、メンシング博士はあなたの返事も待たずにさっさと離れていった。バーに向かってあの学生と会ったほうがよさそうだ。"
 
 #. mission variables
 #. Spaceport bar stuff
@@ -73869,16 +73703,12 @@ msgid ""
 "be related to the question. I'm sure you'll do it just fine. Good luck!\" "
 "This message is followed by what you assume is the text you have to recite."
 msgstr ""
-"あなたは{pnt}へ時間どおりに到着した。講演の準備に使う時間もいくらか残されてい"
-"る。飛行中に、あなたはデータチップにあった発表資料をちらっと見たが、その意味"
-"を理解することはできなかった。どうやったらうまくこなせると思ってるんだ ??\n"
-"    あなたの思索はあの学生からのメッセージがやってきて中断された。｢約束どお"
-"り、朗読する必要がある文章を送りました。わたしがそれを打ちこんで時間を無駄に"
-"したのを感謝してくれればいいんですが。そうはいっても、講演のあとで質問に答え"
-"なければならないことを考慮してませんでした。優秀な科学者ならみんなすることを"
-"してください。質問に関係ありそうに聞こえることを手あたりしだいにいくつか話す"
-"だけですよ。とにかくうまくやってくれると信じてますから。幸運を！｣。このメッ"
-"セージには、あなたが朗読しなければならない文章と思われるものがついてきた。"
+"あなたは{pnt}へ間にあうように到着した。講演の準備に使う時間もいくらか残されている。飛行中に、あなたはデータチップにあった発表資料をちらっと見たが、そ"
+"の意味を理解することはできなかった。どうやったらうまくこなせると思ってるんだ ??\n"
+"    あなたの思索はあの学生からのメッセージがやってきて中断された。｢約束どおり、朗読する必要がある文章を送りました。わたしがそれを打ちこんで時間を無駄"
+"にしたのを感謝してくれればいいんですが。そうはいっても、講演のあとで質問に答えなければならないことを考慮してませんでした。優秀な科学者ならみんなすることを"
+"してください。質問に関係ありそうに聞こえることを手あたりしだいにいくつか話すだけですよ。とにかくうまくやってくれると信じてますから。幸運を！｣。このメッセ"
+"ージには、あなたが朗読しなければならない文章と思われるものがついてきた。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:95
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:124
@@ -74162,10 +73992,8 @@ msgid ""
 "people hurry off. You manage to leave without gaining much attention and "
 "return to your ship. Enough science for today!"
 msgstr ""
-"あなたは質問を回避しようと努力した。あの科学者はろうばいしているようだ。もう"
-"これ以上質問する者はいなかった。どうも別の講演がまもなく始まるらしい。それで"
-"みんないそいで立ち去っていく。あなたはどうにか大きな注意をひかずに立ち去っ"
-"て、船に戻ることができた。今日のところは科学はたくさんだ！"
+"あなたは質問を回避しようと努力した。あの科学者はろうばいしているようだ。もうこれ以上質問する者はいなかった。どうも別の講演がまもなく始まるらしい。それでみ"
+"んないそいで立ち去っていく。あなたはどうにか大きな注意をひかずに立ち去って、船に戻ることができた。今日のところは科学はもうたくさんだ！"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
 msgid ""
@@ -74356,27 +74184,17 @@ msgid ""
 "but he notices you and gestures to be silent as he hobbles off. Those Za'lek "
 "are indeed trying to escape the party."
 msgstr ""
-"どれひとつとっても本気なんだろうかとあなたは思った。たずねる間もなくメンシン"
-"グ博士は走り去って、年上に見える男を捕まえていた。おそらくボージス教授だろ"
-"う。博士は時間をまったく無駄にせず、問題を直接切りだしている。教授は目に見え"
-"て落ちつきを失っている。パーティーを探検するころあいだ。\n"
-"    あなたは、ザレクのパーティーが正規のパーティーとはずいぶんちがうものであ"
-"るのを期待する。じっさいのところ、あなたが最初に気がついたのは、古典音楽が流"
-"れていることと、アルコール飲料がなにもないことの二つだった。とはいえ、軽食は"
-"あった。取りたてていえるのは、アイスクリームが入った小さな冷蔵庫があること"
-"だ。あなたはアイスクリームを食べている人がかなり多いと見てとった。あれがザレ"
-"クにおけるビールの同等品なのか？\n"
-"    いつのまにか、あなたは科学者のひとりとの会話を始めていた。その科学者の男"
-"はあなたがメンシング博士と入ってくるのを見ていたので、現在の問題についてたず"
-"ねる気になったのだ。……あなたと博士はデートしているのか？　あの状況から生じた"
-"疑いをはらそうと試みて、あなたは自分が雇われているのだと伝えた。うまくいけ"
-"ば、この男は信じるだろう……\n"
-"    あなたは周遊をつづけた。窓のひとつに近づいたときに、あなたの目の隅に外で"
-"なにか落ちるのがうつった。それにドンンという鈍い音がつづく。窓の外を見ると、"
-"白衣を着た人影がゆっくりと立ちあがろうとしているのが見えた。あなたはすぐに窓"
-"を開けて助けが必要かとたずねたが、その男はあなたに気がつくと黙っているように"
-"合図して、よろよろ歩き去っていった。あのザレクはほんとうにパーティーから逃げ"
-"ようとしたのだ。"
+"どれひとつとっても本気なんだろうかとあなたは思った。たずねる間もなくメンシング博士は走り去って、年上に見える男を捕まえていた。おそらくボージス教授だろう。"
+"博士は時間をまったく無駄にせず、問題を直接切りだしている。教授は目に見えて落ちつきを失っていた。パーティーを探検するころあいだ。\n"
+"    あなたは、ザレクのパーティーが正規のパーティーとはずいぶんちがうものであるのを期待した。じっさいのところ、あなたが最初に気がついたのは、古典音楽が"
+"流れていることと、アルコール飲料がなにもないことの二つだった。とはいえ、軽食はあった。取りたてていえるのは、アイスクリームが入った小さな冷蔵庫があることだ"
+"。あなたはアイスクリームを食べている人がかなり多いと見てとった。あれがザレクにおけるビールの同等品なのか？\n"
+"    いつのまにか、あなたは科学者のひとりとの会話を始めていた。その科学者の男はあなたがメンシング博士と入ってくるのを見ていたので、現在の問題についてた"
+"ずねる気になったのだ。……あなたと博士はデートしているのか？　"
+"あの状況から生じた疑いをはらそうと試みて、あなたは雇われているのだと伝えた。うまくいけば、この男は信じるだろう……\n"
+"    あなたは周遊をつづけた。窓のひとつに近づいたときに、あなたの目の隅に外でなにか落ちるのがうつった。それにドンンという鈍い音がつづく。窓の外を見ると"
+"、白衣を着た人影がゆっくりと立ちあがろうとしているのが見えた。あなたはすぐに窓を開けて助けが必要かとたずねたが、その男はあなたに気がつくと黙っているように"
+"合図して、よろよろ歩き去っていった。あのザレクはほんとうにパーティーから逃げようとしたのだ。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:107
 msgid ""
@@ -74408,15 +74226,11 @@ msgid ""
 "anything! I have much work to do!\"\n"
 "    She gives you a credit chip worth {credits} and leaves."
 msgstr ""
-"｢もういいってくらい時間がかかった！　うれしいことに、ボージス教授は資金の面倒"
-"をみると約束してくれました。問題は、わたしの最近の研究がルアダン・プライムの"
-"秘密計画と関連していることだったんです。それでわたしへの資金援助は停止された"
-"んです⸺なにかの陰謀みたいにね。そんなの信じられないでしょう！　じつは、あなた"
-"にはなにもいっていないことになっています。もしかすると、多くの問題に巻きこま"
-"れかねないともかぎらないので……。わたしのいったことはみんな忘れてください！　"
+"｢もういいってくらい時間がかかった！　うれしいことに、ボージス教授は資金の面倒をみると約束してくれました。問題は、わたしの最近の研究がルアダン・プライムの"
+"秘密計画と関連していることだったんです。それでわたしへの資金援助は停止されました⸺なにかの陰謀みたいにね。そんなの信じられないでしょう！　じつは、あなたに"
+"はなにもいっていないことになっています。もしかすると、多くの問題に巻きこまれかねないともかぎらないので……。わたしのいったことはみんな忘れてください！　"
 "しなければならない仕事はたくさんありますから！｣\n"
-"     博士は {credits} の価値があるクレジットチップをあなたに渡して去っていっ"
-"た。"
+"     博士は {credits} の価値があるクレジットチップをあなたに渡して去っていった。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:115
 msgid ""
@@ -74439,10 +74253,8 @@ msgid ""
 "you see on your radar that a drone squadron is flying right towards your "
 "ship."
 msgstr ""
-"あなたは星系全体への一斉送信を受信した。警告のようだ。｢注意！　{sys}星系のド"
-"ローン飛行隊が故障しました！　気をつけておいてください｣\n"
-"    どうしてザレク宙域ではこんなことがとてもよくおこるのか？　ちらっと見る"
-"と、ドローン飛行隊があなたの方へまっすぐ飛んでくるのがレーダーに見えた。"
+"あなたは星系全体への一斉送信を受信した。警告のようだ。｢注意！　{sys}星系のドローン飛行隊が狂ってしまいました！　気をつけておいてください｣\n"
+"    どうしてザレク宙域ではこんなことがとてもよくおこるのか？　ちらっと見ると、ドローン飛行隊があなたの方へまっすぐ飛んでくるのがレーダーに見えた。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:153
 msgid ""
@@ -74451,8 +74263,7 @@ msgid ""
 "care.\"\n"
 "    Just how often is this going to happen?"
 msgstr ""
-"もう見なれた警告が、またあなたの船のスクリーンに現れた。｢注意！　{sys}星系の"
-"ドローン飛行隊が故障しました！　気をつけておいてください｣\n"
+"もう見なれた警告が、またあなたの船のスクリーンに現れた。｢注意！　{sys}星系のドローン飛行隊が狂ってしまいました！　気をつけておいてください｣\n"
 "    とにかくこんなことがこれほどよくおきるものなのか？"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:178
@@ -74534,20 +74345,16 @@ msgid "Za'lek Scientist"
 msgstr "ザレクの科学者"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:37
-#, fuzzy
-#| msgid "This Za'lek scientist seems to be looking for someone."
 msgid ""
 "You see a Za'lek scientist that seems to be looking or someone to do "
 "something for them."
-msgstr "このザレクの科学者はだれかをさがしているようだ。"
+msgstr "ザレクの科学者が自分のためになにかしてくれる人をさがしているらしいのに気がついた。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:47
-#, fuzzy
-#| msgid "This Za'lek scientist seems to be looking for someone."
 msgid ""
 "You approach the Za'lek scientist who seems to be a bit relieved with your "
 "presence."
-msgstr "このザレクの科学者はだれかをさがしているようだ。"
+msgstr "あなたはザレクの科学者に近づいた。科学者はあなたが来てちょっとほっとしたようだ。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:48
 msgid ""
@@ -74557,20 +74364,23 @@ msgid ""
 "\"Would you be able to take me and {amount} of equipment to {pnt} in the "
 "{sys} system? I will pay you {credits}.\""
 msgstr ""
+"｢あなたはたまたまパイロットだったりしないでしょうね？　"
+"{pnt}へ行く往復便を捕まえようと思っていたんですが、いっしょに装置を持っていくのを拒否されたんです。あんなにあつかましいだなんて信じられますか！\n"
+"｢わたしと {amount}の装置を{sys}星系の{pnt}まで運んでくれませんか？　{credits} 支払うつもりです｣"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:57
 msgid ""
 "\"You too? How am I going to make it to {pnt}…\"\n"
 "She furrows her brow."
 msgstr ""
+"｢あなたも？　どうやって{pnt}へ行けばいいんだろう……｣\n"
+"科学者は顔をしかめた。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:62
-#, fuzzy
-#| msgid "You have {freespace} of free space."
 msgid ""
 "\"You only have {freespace} of free cargo space. My equipment is "
 "{neededspace}!\""
-msgstr "あなたの船倉には {freespace}の空きがある。"
+msgstr "｢あなたには空いた船倉が {freespace}しかない。わたしの装置は {neededspace}あるんです！｣"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:73
 msgid ""
@@ -74581,6 +74391,10 @@ msgid ""
 "\"I forgot to introduce myself didn't I. I am Dr. Sanderaite, but everyone "
 "calls me Noona.\""
 msgstr ""
+"｢やった！　すぐに{pnt}へ住みこみはじめて、粒子物理学の試験をすることになっているんですよ。そこには最先端の試験施設があって、びっくりするような実験が"
+"いろいろとできるんです。もう興奮してますよ｣\n"
+"科学者がちょっと間を空けた。\n"
+"｢自己紹介を忘れてましたね。わたしは博士のサンダーレイトです。でもみんなからはヌーナと呼ばれてます｣"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:77
 msgid ""
@@ -74590,23 +74404,25 @@ msgid ""
 "That doesn't sound very reassuring.\n"
 "\"Anyway, onwards to {pnt}!\""
 msgstr ""
+"｢わたしの装置？　それは心配しないでください。危険なことはありません。放射線遮蔽体の中に適切に保管されています。ただオーバーヒートさせないようにしなければ"
+"なりません。それで問題ないはずです｣\n"
+"あまり安心できるようには聞こえなかった。\n"
+"｢とにかく、いざ{pnt}へ！｣"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:81
 msgid ""
 "Automated drones at the space docks load up the particle physics equipment "
 "and Noona gets on your ship."
-msgstr ""
+msgstr "宇宙港着岸所の自動化ドローンが粒子物理学の装置を積みこみ、それからヌーナがあなたの船に乗りこんだ。"
 
 #. Must be accepted beyond this point
 #: dat/missions/zalek/particlephysics/zpp01.lua:91
-#, fuzzy
-#| msgid "Equipment"
 msgid "Noona and Equipment"
-msgstr "装備"
+msgstr "ヌーナと装置"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:91
 msgid "Za'lek scientist Noona and some particle physics-related equipment."
-msgstr ""
+msgstr "ザレクの科学者であるヌーナと、粒子物理学関係の装置。"
 
 #. mission details
 #. Must be accepted beyond this point
@@ -74625,22 +74441,16 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:73
 #: dat/missions/zalek/particlephysics/zpp06.lua:79
 #: dat/scripts/common/zalek_physics.lua:34
-#, fuzzy
-#| msgid "Particle Lance"
 msgid "Particle Physics"
-msgstr "粒子ランス"
+msgstr "粒子物理学"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:97
-#, fuzzy
-#| msgid "Go pick up some equipment at {pnt} in the {sys} system"
 msgid "Take Noona and some equipment to {pnt} in the {sys} system."
-msgstr "ある機材を{sys}星系の{pnt}まで受けとりに行け。"
+msgstr "ヌーナと装置を{sys}星系の{pnt}へ運べ。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:102
-#, fuzzy
-#| msgid "Drop off the equipment at {pnt} in the {sys} system"
 msgid "Drop off Noona and the equipment at {pnt} ({sys} system)"
-msgstr "機材を{sys}星系の{pnt}で降ろせ。"
+msgstr "ヌーナと装置を{pnt}に降ろせ。({sys}星系)"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:117
 msgid ""
@@ -74648,6 +74458,8 @@ msgid ""
 "single loading drone begins to slowly unload your ship. Talk about "
 "understaffed."
 msgstr ""
+"あなたは予想した研究総合施設より小さな場所に着地した。そしてたったひとつの船積みドローンが、ゆっくりとあなたの船から荷降ろしを開始する。まさに人員不足って"
+"ことだね。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:118
 msgid ""
@@ -74658,6 +74470,10 @@ msgid ""
 "As she keeps on babbling she sort of wanders off into the base, and you make "
 "no attempt to follow her."
 msgstr ""
+"ヌーナの目はきらめいて見える。\n"
+"｢これは……すごく……いい！　船から試験場を見ましたか？　"
+"わたしは閃光を見たように思います。たぶんディラック—ボーズマン超対称性反応の閃光ですよ。あれを自分で見たことはまだなかったんです！｣\n"
+"ヌーナはおしゃべりをつづけながら、施設の中にさまよいこむように行ってしまった。あなたはついていこうともしなかった。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:121
 msgid ""
@@ -74668,12 +74484,15 @@ msgid ""
 "She must have anticipated her overexcitement. You wonder if this happens a "
 "lot."
 msgstr ""
+"船に戻ると、支払いのことではヌーナにどうやって連絡を取ったらいいのかとあなたは思った。そのときあなたは気がついた。ヌーナが船に残していった小さな手紙に、ク"
+"レジットスティックがついていたのだ。それにはこう書いてあった。｢添付した支払いの確認をお願いします。あなたの協力がまた必要になるかもしれません。あとでわた"
+"しをさがしてください。⸺n｣。ヌーナは自分が興奮しすぎなのを予想していたにちがいない。よくあることなのだろうかとあなたは疑問に思った。"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:128
 msgid ""
 "You helped deliver Noona and her equipment to {pnt}. It seems like she may "
 "still have more work for you."
-msgstr ""
+msgstr "あなたはヌーナと装置を{pnt}に運ぶのを手伝った。ヌーナには、まだあなたに働いてもらうことがあるようだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -74703,7 +74522,7 @@ msgstr ""
 #. luacheck: globals land approach_guy (Hook functions passed by name)
 #: dat/missions/zalek/particlephysics/zpp02.lua:34
 msgid "drone interface controllers"
-msgstr ""
+msgstr "ドローンのインターフェース制御器"
 
 #. Amount of cargo to take
 #.
@@ -74825,11 +74644,11 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:35
 #: dat/scripts/common/zalek_physics.lua:18
 msgid "Noona"
-msgstr ""
+msgstr "ヌーナ"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:58
 msgid "You approach Noona who seems to have a slight frown on her face."
-msgstr ""
+msgstr "あなたはヌーナに近づいた。わずかに顔をしかめているようだ。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:59
 msgid ""
@@ -74841,12 +74660,18 @@ msgid ""
 "of drone interface controllers? I should be able to make it worth your time "
 "with {credits}.\""
 msgstr ""
+"｢ここの施設を過大評価していたみたいです。XR-578 ドローン制御インターフェースを持ってるだろうと期待したんですが、まだ XR-321 "
+"のようです。それを提供できる同僚は見つけたんですが、取ってくる人が必要なんです。\n"
+"｢{sys}星系の{pnt}まで行って、{amount}のドローンインターフェース制御器を持ってきてもらえないでしょうか？　"
+"お時間をとっていただくのに、{credits} 払えると思います｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:68
 msgid ""
 "\"I see. I'll have to figure out some way to get it over here…\"\n"
 "She furrows her brow."
 msgstr ""
+"｢わかりました。ここへ持ってくるのになにか方法を考えなきゃなりませんね……｣\n"
+"ヌーナは顔をしかめた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:73
 msgid ""
@@ -74854,40 +74679,36 @@ msgid ""
 "my particle physics experiments. I'm so excited. I guess I'll double check "
 "all my code while you are gone to calm down. It's going to be great!\""
 msgstr ""
+"｢ありがとう！　インターフェースが手に入って動いたら、粒子物理学の実験を始められるはずです。とても興奮してますよ。あなたが事態をおさめに行っているあいだに"
+"、わたしはコードを全部二度確認しようと思います。すばらしいことになりますよ！｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:86
 #: dat/missions/zalek/particlephysics/zpp04.lua:84
-#, fuzzy
-#| msgid "Go pick up some goods at {pnt} in the {sys} system"
 msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
-msgstr "ある品物を引き取りに{sys}星系の{pnt}へ行け。"
+msgstr "{cargo}を{sys}星系の{pnt}で引き取ってから、{retpnt}に届けろ。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
 #: dat/missions/zalek/particlephysics/zpp04.lua:90
-#, fuzzy
-#| msgid "Pick up a package at {pnt} in the {sys} system"
 msgid "Pick up cargo at {pnt} ({sys} system)"
-msgstr "{sys}星系の{pnt}で小包を受けとれ。"
+msgstr "{pnt}で貨物を引き取れ。({sys}星系)"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:93
 #: dat/missions/zalek/particlephysics/zpp04.lua:91
-#, fuzzy
-#| msgid "Deliver the package to {pnt} in the {sys} system"
 msgid "Deliver to {pnt} ({sys} system)"
-msgstr "{sys}星系の{pnt}に小包を配達せよ。"
+msgstr "{pnt}に届けろ。({sys}星系)"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:106
 #: dat/missions/zalek/particlephysics/zpp02.lua:137
 msgid "Noona's Colleague"
-msgstr ""
+msgstr "ヌーナの同僚"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:106
 msgid ""
 "You see a Za'lek scientist who seems to fit the description of Noona's "
 "colleague."
-msgstr ""
+msgstr "ヌーナの同僚についての描写にあうザレクの科学者が見えた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:113
 msgid ""
@@ -74895,6 +74716,8 @@ msgid ""
 "your ship. While waiting, you decide to go find Noona, who you quickly find "
 "staring at the testing site at the observation deck of the base."
 msgstr ""
+"着陸すると、孤独な船積みドローンがゆっくりと船から積み荷を取り除きはじめた。待つあいだ、あなたはヌーナを見つけに行った。あなたはすぐに施設の展望台から試験"
+"場を見つめているヌーナを見つけた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:114
 msgid ""
@@ -74905,6 +74728,10 @@ msgid ""
 "humanity as a whole! What new technological wonders are awaiting for us on "
 "the other side of the particle physics conundrums?\""
 msgstr ""
+"｢見て。息をのむようでしょう？｣\n"
+"ヌーナは試験場の方を身ぶりで示した。\n"
+"｢これを設計して用意したすべての頭脳のことを考えてみてください。有名な実験はすべてあの台の上でおこなわれました。まとめていえば、人類の進歩がです！　"
+"どんな新しい技術的驚異が、粒子物理学の難問のむこうで待っているんでしょう？｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:117
 msgid ""
@@ -74915,22 +74742,27 @@ msgid ""
 "credstick.\n"
 "\"Almost forgot. See you around!\""
 msgstr ""
+"ヌーナは深く息をして、あなたの方を向いた。\n"
+"｢インターフェース制御器は手に入れましたか？　それはよかった！　"
+"ちょっとつなげさせてください。これでやっと自分の試験ができるようになります。とても興奮しますね！｣\n"
+"ヌーナは意気揚々と歩き去りはじめたが、そのときとつぜんあなたの方を向いて、クレジットスティックを放った。\n"
+"｢忘れるところだった。また会いましょう！｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:127
 msgid ""
 "You brought some drone interface controllers to Noona so that she can begin "
 "her particle physics experiments."
-msgstr ""
+msgstr "あなたがドローンインターフェース制御器をヌーナのところへ持っていったので、ヌーナは自分の粒子物理学の実験を始められるようになった。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:142
 msgid "\"Ready to try again? Let me activate the memory interface for you.\""
-msgstr ""
+msgstr "｢また試す用意はできましたか？　メモリーインターフェースを起動させます｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:144
 msgid ""
 "You approach an individual that matches the contact information that Noona "
 "gave you."
-msgstr ""
+msgstr "ヌーナがあなたに教えた、連絡相手の情報にあう人に近づいた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:145
 msgid ""
@@ -74939,6 +74771,10 @@ msgid ""
 "controllers ready, but there was kind of a mishap and they're stuck now.\"\n"
 "They scratch their head."
 msgstr ""
+"その人はあなたが近づくと眉を上げた。\n"
+"｢あなたがサンダーレイト博士の知りあいにちがいないですね。ドローンインターフェース制御器は手元にあります。ただ事故のようなことがあって、もうはずれないんで"
+"す｣\n"
+"相手はあたまをかいた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:148
 msgid ""
@@ -74949,12 +74785,15 @@ msgid ""
 "do is align the memory by pushing the data boxes into data sockets. Please "
 "take a shot at it.\""
 msgstr ""
+"｢ちょっと見てみようとしたんですが、あのくそったれは理解できませんでした。それにわたしのポスドクがラルクアーに逃げたんで、この手の不便に対処する人間はいな"
+"いんです。もしあなたが見てばらばらにできるんなら、制御器は持っていけるはずですよ。する必要があるのは、データボックスにデータソケットを押しこんで、メモリー"
+"を一直線にすることだけです。やってみてください｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:163
 msgid ""
 "\"It seems like the interface hasn't been unlocked. Talk to me if you want "
 "to try again.\""
-msgstr ""
+msgstr "｢インターフェースははずれなかったみたいですね。また試したければ、声をかけてください｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:167
 msgid ""
@@ -74963,31 +74802,31 @@ msgid ""
 "\"OK, that's perfect! Let me get the loading drones to get this on your ship "
 "and you can be on your way.\""
 msgstr ""
+"メモリーをはずすと、インターフェース制御器はすぐにはずれた。制御器が床に落ちてがちゃんと鳴りひびく。\n"
+"｢やった、完璧だ！　船積みドローンを用意させてください。これを船に乗せれば、あなたは出発できますよ。｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:171
 msgid "\"Are you ready to take the cargo now?\""
-msgstr ""
+msgstr "｢貨物を持っていく用意はもうできましたか？｣"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:184
-#, fuzzy
-#| msgid "The Empire workers load the {tonnes} of {cargo} onto your ship."
 msgid "The automated dock drones load the {amount} of {cargo} onto your ship."
-msgstr "帝国の労働者たちがあなたの船に {tonnes}の{cargo}を積みこんだ。"
+msgstr "自動化された着岸所のドローンが {amount}の{cargo}をあなたの船に積みこんだ。"
 
 #. Failed to do the Sokoban
 #: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid "Drone Interface Controllers"
-msgstr ""
+msgstr "ドローンインターフェース制御器"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid ""
 "Special adapters that are able to connect modern drone controllers with "
 "older drone connectors."
-msgstr ""
+msgstr "最新のドローン制御器をもっと古いドローンのコネクターにつなげられるようにするとくべつなアダプター。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:51
 msgid "You approach Noona who doesn't seem too happy."
-msgstr ""
+msgstr "あなたはヌーナに近づいた。あまりうれしそうではない。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:52
 msgid ""
@@ -74996,6 +74835,9 @@ msgid ""
 "\"I double checked everything and still it seems like the drones failed to "
 "perform the procedure. It should have been a walk in the park!\""
 msgstr ""
+"｢なにが悪いのかわからない｣\n"
+"ヌーナは落ちつきを保とうとして苦労していた。\n"
+"｢全部二重に確認したのに、まだドローンは手順を実行できないみたい。公園を歩いているはずなのに！｣"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:55
 msgid ""
@@ -75004,12 +74846,17 @@ msgid ""
 "from here and they don't seem to be moving. If you can, try to access the "
 "black box by opening the hull component. Could you look into this for me?\""
 msgstr ""
+"ヌーナが目に期待の気持ちをきらめかせながら、あなたを見る。\n"
+"｢いいですか。あなたが飛んでいって、なにがおきているのか確認できませんか？　ドローンはここから遠くへ行っていないはずですし、動いてもいないみたいです。もし"
+"できるなら、外殻部品を開けてブラックボックスにアクセスしてみてください。調べてもらえますか？｣"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:63
 msgid ""
 "\"I see. You must be busy with other things.\"\n"
 "She goes back to ruminating on what to do."
 msgstr ""
+"｢わかりました。ほかのことで忙しいにちがいないですよね｣\n"
+"ヌーナはすべきことを熟考するのに戻った。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:68
 msgid ""
@@ -75019,27 +74866,27 @@ msgid ""
 "that from my colleague. I've sent you the coordinates for the drones so you "
 "should be able to find them easy. Best of luck!\""
 msgstr ""
+"｢こんどもありがとう。外殻のパスワードを渡すので、ブラックボックスの制御盤に近づけますよ。損害によっては、メモリーを再調整してデータを回収できるようにしな"
+"ければならないかもしれません。でもあなたはそれに熟達しているって同僚から聞きました。ドローンの座標を送るので、簡単に見つかるはずです。幸運を！｣"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:81
 msgid ""
 "Investigate the issue with the drones near the particle physics testing site "
 "at {sys}."
-msgstr ""
+msgstr "{sys}星系にある粒子物理学試験場近くのドローンの問題を調査せよ。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:87
 msgid "Investigate the drones"
-msgstr ""
+msgstr "ドローンを調査せよ。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:88
 #: dat/missions/zalek/particlephysics/zpp05.lua:84
-#, fuzzy
-#| msgid "Return to {pnt}"
 msgid "Return to Katar I"
-msgstr "{pnt}に戻れ。"
+msgstr "カタール I へ戻れ。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:107
 msgid "You land and find Noona waiting outside your ship expectantly."
-msgstr ""
+msgstr "あなたは着陸して、期待して船の外で待っていたヌーナを見つけた。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:108
 msgid ""
@@ -75050,6 +74897,10 @@ msgid ""
 "no idea how this happened.\"\n"
 "She tosses you a credstick and runs to her room with the black box."
 msgstr ""
+"｢怖かったです！　どうしてドローンの電源が入ってあなたを攻撃したのかわかりません。あなたを送ってよかった。わたしの飛行の腕だと焼かれていましたよ。まだ飛行"
+"免許があったとしても。ブラックボックスは無事に持ってきましたよね？　よかった！　"
+"見せてください。そうすればなにがおきたのかわかります。どうしてああなったのかわからないんですよ｣\n"
+"ヌーナはあなたにクレジットスティックを放ってから、ブラックボックスを持って部屋にかけこんでいった。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:111
 msgid ""
@@ -75060,6 +74911,10 @@ msgid ""
 "face, it would be good for you to have bigger guns.\"\n"
 "Without giving you time to process what she yelled, she vanishes."
 msgstr ""
+"角のむこうに消え去る直前に、ヌーナがふりかえって叫ぶ。\n"
+"｢ああ、ついでですけど、友人をつついて動いてもらうことができました。もうあなたには大型武器免許の許可がでているはずです。あなたは危険と向きあっているわけで"
+"すから、もっと大きな大砲があれば役に立ちますよね｣\n"
+"なにを叫んでいるのかあなたが飲みこむ間もなく、ヌーナは消え去った。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:123
 msgid ""
@@ -75067,12 +74922,14 @@ msgid ""
 "malfunctioned. You're not exactly sure how, but she also managed to get you "
 "cleared for the Heavy Weapon License."
 msgstr ""
+"ヌーナを助けて故障したドローンからブラックボックスを回収した。あなたはどうやったのか正確にはわからなかったが、ヌーナはあなたに大型武器免許が許可されるよう"
+"に手はずを整えてもいた。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:125
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned."
-msgstr ""
+msgstr "ヌーナを助けて故障したドローンからブラックボックスを回収した。"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
@@ -75080,63 +74937,55 @@ msgstr ""
 #. Hostile drone
 #: dat/missions/zalek/particlephysics/zpp03.lua:145
 #: dat/missions/zalek/particlephysics/zpp03.lua:155
-#, fuzzy
-#| msgid "Practice Drone"
 msgid "Malfunctioned Drone"
-msgstr "訓練用ドローン"
+msgstr "故障したドローン"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:168
 msgid "I've sent you the drone positions, please get close to investigate."
-msgstr ""
+msgstr "ドローンの位置を送りました。近づいて調べてみてください。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:171
 msgid ""
 "That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"
-msgstr ""
+msgstr "妙ですね。たぶんファームウェアのバグ？　待って……電力変動を検知しました！"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:176
 msgid "Watch out!"
-msgstr ""
+msgstr "注意して！"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:181
-#, fuzzy
-#| msgid "Heavy Drone"
 msgid "Haywire Drone"
-msgstr "重ドローン"
+msgstr "狂ったドローン"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:184
 msgid "That was close. Can you try boarding the other drone?"
-msgstr ""
+msgstr "危なかった。ほかのドローンに接舷を試みられますか？"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:197
-#, fuzzy
-#| msgid "Threadpool has already been initialized!"
 msgid "The drone's black box has already been extracted."
-msgstr "Threadpool has already been initialized!"
+msgstr "ドローンのブラックボックスはすでに取りだされている。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:206
 msgid "You access the drone control panel and jack into the black box."
-msgstr ""
+msgstr "あなたはドローンの制御盤に近づいて、ブラックボックスに配線をつないだ。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:220
 msgid ""
 "You manage recover the entire black box intact and load the information on "
 "your ship."
-msgstr ""
+msgstr "あなたはどうにか無傷のブラックボックスをまるごと回収して、あなたの船で情報をロードできた。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:224
-#, fuzzy
-#| msgid "You failed to win the race."
 msgid "You failed to access the black box."
-msgstr "レースに勝てなかった。"
+msgstr "ブラックボックスへのアクセスに失敗した。"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:229
 msgid "Drone Black Box"
-msgstr ""
+msgstr "ドローンのブラックボックス"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:229
 msgid "The recovered black box of a Za'lek drone."
-msgstr ""
+msgstr "ザレクのドローンから回収したブラックボックス。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -75165,14 +75014,12 @@ msgstr ""
 #.
 #. luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 #: dat/missions/zalek/particlephysics/zpp04.lua:34
-#, fuzzy
-#| msgid "Nebula Satellite"
 msgid "nebula artefact"
-msgstr "星雲の人工衛星"
+msgstr "星雲の人工物"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:57
 msgid "You once again meet up with Noona."
-msgstr ""
+msgstr "あなたはまたヌーナに会った。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:58
 msgid ""
@@ -75184,12 +75031,18 @@ msgid ""
 "{amount}, so you should not have a trouble fitting them on your ship. I "
 "would be able to pay you {credits} for your troubles this time.\""
 msgstr ""
+"｢予想したより悪い手戻りがあったんです。新しい材料を手に入れて、実験できるようにする必要がでてきました。ふつうは手に入れるのがとても難しいし、いつもの大学"
+"の官僚的手つづきを全部やっている時間はないので、裏道を使うことに決めました。{sys}星系の{pnt}まで材料を引き取りに行く気はないでしょうか？　"
+"材料はたった {amount}しかないはずなので、あなたの船に乗せるのに問題はないはずです。今回のやっかいごとには {credits} "
+"支払えると思ってます｣"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:66
 msgid ""
 "\"OK. I'll try to figure something out…\"\n"
 "She furrows her brow."
 msgstr ""
+"｢わかりました。解決してみるつもりです……｣\n"
+"ヌーナは顔をしかめた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:71
 msgid ""
@@ -75198,19 +75051,20 @@ msgid ""
 "have finished all the other preparations and this time I'll finally be able "
 "to complete the experiment!… I hope.\""
 msgstr ""
+"｢こんどもありがとう！　{pnt}がほんとうに行きたい場所でないのは知っています。でもこんどはほんとうに選択肢がありません。あなたが戻ってくるときまでに、"
+"ほかの準備は全部終わっているはずです。これでこんどこそやっと実験を終わらせられますよ！　……だといいんだけど｣"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:105
 #: dat/missions/zalek/particlephysics/zpp04.lua:132
-#, fuzzy
-#| msgid "Lady Dewinter"
 msgid "Shady Dealer"
-msgstr "レディーデウィンター"
+msgstr "いかがわしい販売業者"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:105
 msgid ""
 "A fairly shady dealer seems to be staring at you and beckoning for you to "
 "come over. Could this be the individual Noona told you to meet…?"
 msgstr ""
+"かなりいかがわしく見える販売業者は、あなたをじっと見て近くへ来るように手で合図しているようだ。ヌーナが会うようにいった人があの人だなんてありえるのか……？"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:112
 msgid ""
@@ -75218,6 +75072,8 @@ msgid ""
 "to have trouble balancing it and you amuse yourself by looking at its antics "
 "until you are startled by Noona."
 msgstr ""
+"あなたが着陸すると、孤独な貨物ドローンがコンテナの荷降ろしを始めた。ドローンには釣りあいに問題があるらしく、そのこっけいなしぐさを見てあなたは楽しんだ。そ"
+"のとき、あなたはヌーナに気づいて驚いた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:113
 msgid ""
@@ -75230,30 +75086,35 @@ msgid ""
 "do the experiments, I would be very grateful. Meet me up at the bar, I have "
 "to do some small preparations.\""
 msgstr ""
+"｢ドローンはたしかにかわいいですよね。わたしはあれをラボリオージと呼ぶのが好きなんです｣\n"
+"ヌーナがあの孤独な貨物ドローンを指差した。\n"
+"｢材料を持ってきてくれてほんとうにありがとう。あれがなかったらどうしていたのかわからないです。ドローンは調べることができました。最後の実験はあれに頼らない"
+"のがいちばんらしいと考えています。カタールからの電磁放射のせいであまりうまく動かないのだと思ってます。もしあなたに実験を手伝ってもらえたら、とてもありがた"
+"いんですが。バーで待っていてください。わたしのほうはちょっと準備することがあります｣"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:122
 msgid ""
 "You helped Noona get some materials from a shady dealer in order for her to "
 "pursue her research and perform experiments."
-msgstr ""
+msgstr "あなたはヌーナを助けて、いかがわしい販売業者から材料をいくらか手に入れた。これでヌーナは研究をつづけて実験ができるようになる。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:135
-#, fuzzy
-#| msgid "You once again approach the ship enthusiast."
 msgid "You once again approach the shady dealer."
-msgstr "あなたはまた、あの宇宙船マニアに近づいた。"
+msgstr "またあなたはあのいかがわしい販売業者に近づいた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:136
 msgid ""
 "\"Have you made preparations for the cargo?\"\n"
 "Their grin makes your feel uneasy."
 msgstr ""
+"｢船積みの用意はできたか？｣\n"
+"商人はにやっと笑い、あなたは不安を感じた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:140
 msgid ""
 "As you approach the shady dealer, you can barely make out some movement in "
 "the background."
-msgstr ""
+msgstr "あなたがあのいかがわしい販売業者に近づいたときに、背後に動きがあるのをかろうじて見わけられた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:141
 msgid ""
@@ -75263,6 +75124,10 @@ msgid ""
 "good as this one.\"\n"
 "They lick their lips."
 msgstr ""
+"業者はにやっとした笑顔を見せはじめ、ヘビのような思える話しかたで話を始めた。\n"
+"｢ああ、会えてうれしいよ。配達を担当する人にちがいないね。あなたの友人もかなり上品な好みをしているな。これほどよい試料を手に入れるなんてなかなかあるもんじ"
+"ゃない｣\n"
+"業者がくちびるをなめた。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:144
 msgid ""
@@ -75273,6 +75138,9 @@ msgid ""
 "\"You might want to watch your back, your friend is not the only one that "
 "wants it.\""
 msgstr ""
+"｢手はずはすべて整えてあるから、すぐに船に乗せられる。自分だったら、できるかぎりどんな人たちからも離れたところに置いておくね｣\n"
+"それからその業者は身を寄せてささやいた。\n"
+"｢背中に気をつけたほうがいいかもしれないね。あなたの友人だけがあれを欲しがってるわけじゃないんだ｣"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:160
 msgid ""
@@ -75281,12 +75149,12 @@ msgid ""
 "running river sound that seems to come from the cargo container. What have "
 "you gotten into?"
 msgstr ""
+"あなたが船に戻ると、貨物はすでに処理されていて、船の中にしっかりと適切に保管されていた。近づいてみると、貨物コンテナと思われる場所から異様な川の流れる音が"
+"聞こえた。どんなことにかかわりあったんだろう？"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:167
-#, fuzzy
-#| msgid "Strangelove"
 msgid "Strange Container"
-msgstr "ストレンジラブ"
+msgstr "奇妙なコンテナ"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:167
 msgid ""
@@ -75294,16 +75162,15 @@ msgid ""
 "you hear weird signs coming from inside it, almost like some sort of running "
 "river."
 msgstr ""
+"大きくて奇妙なコンテナで、触ると妙に温かい気がする。あなたは誓っていえたが、その中から異様な音が聞こえる。川が流れるような音でまずまちがいはない。"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:203
 msgid "That's the one! Get 'em!"
-msgstr ""
+msgstr "あれだ！　いただいてしまえ！"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:50
-#, fuzzy
-#| msgid "You approach the giddy looking character."
 msgid "You approach Noona who seems giddy with excitement."
-msgstr "あなたは目まいがしているように見える人物に近づいた。"
+msgstr "あなたはヌーナに近づいた。興奮してうわついているように見える。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:51
 msgid ""
@@ -75314,11 +75181,14 @@ msgid ""
 "willing to perform the experiment for me? Your ship should be sturdy enough; "
 "I don't think there's any possibility of harm.\""
 msgstr ""
+"｢ほぼ準備できました！　あなたのおかげで、やっと試験の用意がすべてできたんです。とはいえ、ドローンのファームウェアの再確認をして、この実験は手動でやるのが"
+"いちばんだろうと考えました。ときどきは派手な技術に全部頼ったりしないで、古風なやりかたでしたほうがよかったりします。実験をしてくれるつもりはあるでしょうか"
+"？　あなたの船はじゅうぶん頑丈なはずです。傷つく可能性はなにもないと思っています｣"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:58
 #: dat/missions/zalek/particlephysics/zpp06.lua:54
 msgid "\"I see. You must be busy with other things.\""
-msgstr ""
+msgstr "｢わかりました。ほかのことで忙しいにちがいないですよね｣"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:62
 msgid ""
@@ -75330,6 +75200,10 @@ msgid ""
 "anything experimental, I am rather the opposite. It is much easier to figure "
 "out the theory after you have seen how things work.\""
 msgstr ""
+"｢ありがとう！　で、このまえあなたが持ってかえってくれたものは、星雲の結晶です。それについてはじっさいのところなにも知られていませんが、ときどき星雲の中の"
+"古い難破船や小惑星で見つかるものです。その結晶にはある奇妙な特性があるらしいというのはわかっています。でも決定的なことはなにも見つかっていません。ほとんど"
+"のザレクは理論面から入って、そのあとで実験にとりかかるほうを好みます。わたしはどちらかというと逆なんです。物事がどう作用しているか確認してしまえば、理論を"
+"理解するのはずっと簡単です｣"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:63
 msgid ""
@@ -75340,6 +75214,9 @@ msgid ""
 "up some recording drones that should capture anything and everything that "
 "happens out there.\""
 msgstr ""
+"｢実験計画はかなり単純で、粒子物理学試験場にエネルギーの焦点を作る増幅器を用意してあります。もくろみはとても率直なものです。あなたは星雲結晶を焦点に持って"
+"いくだけです。そしてわれわれが粒子物理学の残りの部分を引き受けます。記録用のドローンも用意します。それがそこでおきたことを、なにからなにまでとらえるんです"
+"｣"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:64
 msgid ""
@@ -75347,31 +75224,33 @@ msgid ""
 "getting, you decide to bet on her word that your ship will shield you from "
 "any potential particle physics mishaps."
 msgstr ""
+"あなたは安全性について聞こうとしたが、ヌーナがとても興奮しているのを見て、ヌーナの言葉に賭けることに決めた。あなたの船なら、可能性があるどんな粒子物理学上"
+"の事故でも防御できるだろうという言葉に。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:76
 msgid "Science!"
-msgstr ""
+msgstr "科学！"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:77
 msgid "Perform the particle physics experiment at {sys}."
-msgstr ""
+msgstr "{sys}星系で粒子物理学の実験をせよ。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:83
 msgid "Perform the experiment"
-msgstr ""
+msgstr "実験をせよ。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:102
 msgid "You land after the dizzying event. What was that about?"
-msgstr ""
+msgstr "目がくらむような出来事のあと、あなたは着陸した。あれはなんだったんだ？"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:103
 msgid "\"You don't look so good. Did something happen?\""
-msgstr ""
+msgstr "｢あまりよさそうに見えないですね。なにがおきたんです？｣"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:104
 msgid ""
 "You don't know how to start explaining and give up on mentioning anything."
-msgstr ""
+msgstr "あなたはどのように説明を始めたらいいのかわからなかったので、なにかいうのをあきらめた。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:105
 msgid ""
@@ -75381,6 +75260,9 @@ msgid ""
 "physics.\"\n"
 "She gives you a not too reassuring smile."
 msgstr ""
+"｢実験ではたくさんの情報が集まったようなので、その処理と分析が必要です。わたしはもっと激しい反応をいくらか予想していました。でもあなたにとっては幸運なこと"
+"に、なにもおきなかった。あなたは物事が粒子物理学ではどう進むのかぜんぜん知らないですよね｣\n"
+"ヌーナはあなたがあまり安心できないようなほほえみをうかべた。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:107
 msgid ""
@@ -75388,6 +75270,8 @@ msgid ""
 "bar in a bit. I should have another task for you.\"\n"
 "She starts to hum and skips off towards her laboratory space."
 msgstr ""
+"｢いくつかの情報をほんとうに早く処理しないといけないんです。でもちょっとしたら、宇宙港のバーで会ってください。別の仕事があるはずです｣\n"
+"ヌーナは鼻歌を歌いはじめ、実験室の区画にむかってスキップしながら去っていった。"
 
 #. vn.na( fmt.reward(reward) )
 #. player.pay( reward )
@@ -75395,77 +75279,69 @@ msgstr ""
 msgid ""
 "You helped Noona conduct her particle physics experiment. However, you saw "
 "something you couldn't really make out during the experiments."
-msgstr ""
+msgstr "あなたはヌーナを助けて、粒子物理学実験をおこなった。とはいえ、あなたは実験のあいだにまったく理解できないなにかを見ることになった。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:126
-#, fuzzy
-#| msgid "MISSION FAILED: You were supposed to use a Shark."
 msgid "#rMISSION FAILED: You were supposed to perform the experiment!"
-msgstr "任務に失敗 : あなたはシャークを使うことになっていた。"
+msgstr "#r任務に失敗 : あなたは実験を行なうことになっていた！"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
 #. Hostile drone
 #: dat/missions/zalek/particlephysics/zpp05.lua:136
 msgid "Amplifier"
-msgstr ""
+msgstr "増幅器"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:145
 msgid "Experiment Site"
-msgstr ""
+msgstr "実験場"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:182
 msgid "You access the amplifiers control panel and jack in."
-msgstr ""
+msgstr "あなたは増幅器制御盤に手を伸ばし、配線をつないだ。"
 
 #. TODO maybe do another minigame?
 #: dat/missions/zalek/particlephysics/zpp05.lua:199
 msgid "You manage to adjust the settings and the amplifier turns on agian."
-msgstr ""
+msgstr "あなたはどうにか設定値を修正して、増幅器をまた起動することができた。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:203
-#, fuzzy
-#| msgid "You failed to win the race."
 msgid "You failed to turn the amplifier on."
-msgstr "レースに勝てなかった。"
+msgstr "あなたは増幅器を起動できなかった。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:218
-#, fuzzy
-#| msgid "Go to the institute"
 msgid "Get close to the experiment site!"
-msgstr "学会に行く"
+msgstr "実験場に近づいて！"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:221
 msgid "Carefully push the crystals into the beam."
-msgstr ""
+msgstr "注意しながら結晶をビームに押しこんでください"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:224
 msgid ""
 "Hmmm. It looks like the amplifier needs some adjustments. Could you try to "
 "fix it?"
-msgstr ""
+msgstr "うーん。増幅器は調整が必要なようです。修正してもらえますか？"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:230
 msgid "It looks everything is OK now."
-msgstr ""
+msgstr "もうすべて問題ないようです"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:235
 msgid "Now push the crystals into the beam."
-msgstr ""
+msgstr "もう結晶をビームに押しこんでいいですよ"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:304
 msgid "Are you alright? Communication cut off for a bit."
-msgstr ""
+msgstr "だいじょうぶですか？　通信がちょっと切れました"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:308
-#, fuzzy
-#| msgid "Return to {pnt}"
 msgid "Come back to Katar I."
-msgstr "{pnt}に戻れ。"
+msgstr "カタール I に戻ってください"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:45
 msgid "You meet Noona who seems to be a bit more calm than usually."
-msgstr ""
+msgstr "あなたはヌーナと会った。いつもよりちょっと落ちついているように見える。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:46
 msgid ""
@@ -75475,6 +75351,9 @@ msgid ""
 "{sys} system. I would go myself, except, I'm… a bit busy. Would you be "
 "willing to me this favour and deliver my report to {pnt}?\""
 msgstr ""
+"｢あなたがしてくれたことすべてに感謝しています。実験からは山ほど情報が得られました。処理には長い時間がかかると思います。ところで、予備報告をまとめたんです"
+"が、予備報告を{sys}星系の{pnt}に持っていく必要があるんです。自分で行こうと思っていたんですが、ただわたしは……ちょっと忙しいんです。この頼みごと"
+"を聞いていただき、報告を{pnt}まで配達してもらえないでしょうか？｣"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:58
 msgid ""
@@ -75482,31 +75361,27 @@ msgid ""
 "She hands you the report package, which seems a bit heavier than you "
 "expected, and waves you off."
 msgstr ""
+"｢よかった！　あなたがずっとしてくれた援助には、いくら感謝してもたりないです｣\n"
+"ヌーナはあなたに報告書の入った小包を手渡した。その小包はあなたが予想したよりちょっと重いようだった。そしてあなたは手を振って送りだされた。"
 
 #. Must be accepted beyond this point
 #: dat/missions/zalek/particlephysics/zpp06.lua:69
-#, fuzzy
-#| msgid "Za'lek Demon"
 msgid "Za'lek Report"
-msgstr "ザレク・ディーモン"
+msgstr "ザレクの報告書"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:69
 msgid ""
 "A in-depth report filled with jargon and technical details you can't "
 "comprehend."
-msgstr ""
+msgstr "詳細な報告書で、あなたには理解できない専門用語や技術的詳細でいっぱいだ。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:75
-#, fuzzy
-#| msgid "Deliver the package to {pnt} in the {sys} system"
 msgid "Deliver Noona's preliminary report to {pnt} in the {sys} system."
-msgstr "{sys}星系の{pnt}に小包を配達せよ。"
+msgstr "ヌーナの予備報告を{sys}星系の{pnt}に届けろ。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:80
-#, fuzzy
-#| msgid "Deliver the package to {pnt} in the {sys} system"
 msgid "Deliver a report to {pnt} ({sys} system)"
-msgstr "{sys}星系の{pnt}に小包を配達せよ。"
+msgstr "報告書を{pnt}に届けろ。({sys}星系)"
 
 #. Just for the letter
 #: dat/missions/zalek/particlephysics/zpp06.lua:97
@@ -75516,6 +75391,8 @@ msgid ""
 "dangerous looking experiments, and Za'lek scientists engaged in heated "
 "arguments who don't detect your presence."
 msgstr ""
+"あなたは着陸すると、ヌーナから小包を渡す場所だといわれていたところへ向かった。途中であなたは研究所の迷路で迷ってしまう。コーヒー販売機、危険そうに見える実"
+"験、それからあなたがいることに気づかず熱く議論をかわすザレクの科学者たち。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:98
 msgid ""
@@ -75526,52 +75403,55 @@ msgid ""
 "being at it again, and hand you back an envelope that was with the report "
 "mentioning that it is not part of the report."
 msgstr ""
+"けっきょくあなたは隠れた場所にある部屋に ｢粒子物理学実験登録部｣ と書かれているのを見つけた。あなたは入って、熱心ではない大学の秘書と会った。あなたは小"
+"包を手渡す。するとため息のあとに、秘書は中身の点検にうつった。秘書はサンダーレイト博士がまたなにかやっているといったことをいい、あなたに封筒を返した。それ"
+"は報告書についていたが、その一部ではないとのことだった。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:99
 msgid ""
 "As you wonder about what is in the envelope, suddenly two Za'lek Military "
 "officers bust in to the room."
-msgstr ""
+msgstr "あなたは封筒にはなにが入っているんだろうと思ったが、そのときとつぜん二人のザレク軍士官が部屋に押しいってきた。"
 
 #. TODO proper graphics
 #: dat/missions/zalek/particlephysics/zpp06.lua:101
 msgid "Za'lek Officer A"
-msgstr ""
+msgstr "ザレク士官 A"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:102
 msgid "Za'lek Officer B"
-msgstr ""
+msgstr "ザレク士官 B"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:104
 msgid ""
 "\"Where is Chairman Sanderaite!? We just got the signal that she submitted a "
 "report here!\""
-msgstr ""
+msgstr "｢サンダーレイト議長はどこだ !?　ちょうど議長の報告書がここに提出されたという知らせをうけたところなんだ！｣"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:105
 msgid "The secretary lazily points at you."
-msgstr ""
+msgstr "秘書がめんどくさそうにあなたを指差す。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:106
 msgid "\"Damnit, she got someone else to bring the report for her again…\""
-msgstr ""
+msgstr "｢くそっ、またほかの者に報告書を持ってこさせた……｣"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:107
 msgid ""
 "\"The council should have never passed the law permitting third parties to "
 "hand-in official reports.\""
-msgstr ""
+msgstr "｢評議会は公式報告書の提出を第三者に許可するなんて法律を、ぜったいに通すべきじゃなかったんだ｣"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:108
 msgid ""
 "\"They're trying to revoke it, but last time the meeting ended in fisticuffs."
 "\""
-msgstr ""
+msgstr "｢廃止しようとはしているが、前回の会合は殴りあいになって終わった｣"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:109
 msgid ""
 "\"Oh well, at least we have a hint to where she is now. On to Katar I!\""
-msgstr ""
+msgstr "｢しかたがないな。すくなくとも今どこにいるのか糸口はつかめた。カタール I だ！｣"
 
 #. Played in reverse
 #: dat/missions/zalek/particlephysics/zpp06.lua:111
@@ -75581,6 +75461,8 @@ msgid ""
 "take your leave and open up the envelope that you got handed back. It has a "
 "letter from Noona."
 msgstr ""
+"ザレクの士官たちは、ここへ来たときと同じくらいすばやく出ていったが、あなたがいることはほぼ無視されていた。ザレク荘がなにかをどうにか成しとげられるのはどう"
+"してだろうと思案しながら、あなたは外へ出て返された封筒を開ける。これにはヌーナからの手紙が入っていた。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:113
 msgid ""
@@ -75592,6 +75474,10 @@ msgid ""
 "clearance for the Heavy Combat Vessel License. Your help was invaluable and "
 "I hope we meet again."
 msgstr ""
+"あなたは手紙を読む。\n"
+"    カタール I での助力すべてに感謝します。もう今では、おそらくあなたは気づいていますね。わたしがただの研究者ではなく、ザレクの議長という呪いを授け"
+"られているということに。あまりよくすることではないですが、わたしはすべてから逃げだして研究に集中することがあるんです。報酬のクレジットスティックをつけてお"
+"きます。それから大型戦闘艦免許の許可を与えます。あなたの手助けはとても貴重でした。また会うのを楽しみにしています。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:116
 msgid ""
@@ -75602,6 +75488,10 @@ msgid ""
 "research. I have attached a credstick as a reward. Your help was invaluable "
 "and I hope we meet again."
 msgstr ""
+"あなたは手紙を読む。\n"
+"    カタール I での助力すべてに感謝します。もう今では、おそらくあなたは気づいていますね。わたしがただの研究者ではなく、ザレクの議長という呪いを授け"
+"られているということに。あまりよくすることではないですが、わたしはすべてから逃げだして研究に集中することがあるんです。報酬のクレジットスティックをつけてお"
+"きます。あなたの手助けはとても貴重でした。また会うのを楽しみにしています。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:126
 msgid ""
@@ -75609,12 +75499,14 @@ msgid ""
 "chairman. You also got access to the Heavy Combat Vessel license for your "
 "help."
 msgstr ""
+"あなたはヌーナの報告書を{pnt}に届け、ヌーナがザレクの議長であることを知った。あなたはそのうえ、助力への礼として大型戦闘艦免許を手に入れられるようにな"
+"った。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:129
 msgid ""
 "You delivered Noona's report to {pnt} and found out that she is the Za'lek "
 "chairman."
-msgstr ""
+msgstr "あなたはヌーナの報告書を{pnt}に届け、ヌーナがザレクの議長であることを知った。"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:54
 msgid ""
@@ -76551,77 +76443,77 @@ msgstr ""
 #. luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
 #: dat/missions/zalek/zlk_test.lua:33
 msgid "engine with phase-change material cooling"
-msgstr ""
+msgstr "相転移材料によって冷却するエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:34
 msgid "engine controlled with Zermatt-Henry theory"
-msgstr ""
+msgstr "ツェルマット—ヘンリー理論で制御されるエンジン"
 
 #. Some random scientists names
 #: dat/missions/zalek/zlk_test.lua:35
 msgid "engine using a new electron propelling system"
-msgstr ""
+msgstr "新しい電子推進システムを使用するエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:36
 msgid "engine using the fifth law of thermodynamics"
-msgstr ""
+msgstr "熱力学の第 5 法則を使ったエンジン"
 
 #. In these times, there will maybe exist more thermo laws...
 #: dat/missions/zalek/zlk_test.lua:37
 msgid "engine for system identification using the fe-method"
-msgstr ""
+msgstr "有限要素法を使ったシステム同定をするためのエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:38
 msgid "engine with uncontrolled geometrical singularities"
-msgstr ""
+msgstr "自由な幾何学的特異点をもつエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:39
 msgid "5-cycle-old child's engine invention"
-msgstr ""
+msgstr "5 周期歳の子どもが発明したエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:40
 msgid "engine using ancestral propellant technology"
-msgstr ""
+msgstr "先祖からの推進技術を使用したエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:41
 msgid "UHP-nanobond engine"
-msgstr ""
+msgstr "UHP ナノボンドエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:42
 msgid "ancient engine discovered at an old crash site"
-msgstr ""
+msgstr "古い事故現場で発見された古代のエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:43
 msgid "engine controlled by the MegaSys Wondigs operating system"
-msgstr ""
+msgstr "メガシス・ウオンディグズ・オペレーティングシステムで制御されるエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:44
 msgid "engine controlled by XF Cell-Ethyrial particles"
-msgstr ""
+msgstr "XF セル゠イーシリアル粒子で制御されるエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:45
 msgid "engine with ancient Beeline Technology axis"
-msgstr ""
+msgstr "古代の最短経路技術の中軸をもつエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:46
 msgid "unnamed engine prototype"
-msgstr ""
+msgstr "無名の試作エンジン"
 
 #: dat/missions/zalek/zlk_test.lua:47
 msgid "engine constructed with experimental Bob-Bens technology"
-msgstr ""
+msgstr "実験的なボブ゠ベンズ技術で作られたエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:48
 msgid "new IDS-1024 experimental engine design"
-msgstr ""
+msgstr "IDS-1024 の新しい実験的な設計のエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:49
 msgid "engine with new Dili-Gent Circle conduction"
-msgstr ""
+msgstr "新しいディリジェントサークル誘導作用をもつエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:50
 msgid "engine with experimental DEI-Z controller"
-msgstr ""
+msgstr "実験的な DEI-Z 制御器をもったエンジン"
 
 #: dat/missions/zalek/zlk_test.lua:54
 msgid ""
@@ -76629,12 +76521,14 @@ msgid ""
 "will validate our aerospace course! The last engine exploded during the "
 "flight, but this one is much more reliable... Hopefully.\""
 msgstr ""
+"大学生の一団があなたにあいさつしてきた。｢もしあなたの飛行がうまくいったら、われわれの航空宇宙学科も認められるでしょう！　"
+"このまえのエンジンは飛行中に爆発しましたが、これはずっと信頼できますよ……うまくいけば｣"
 
 #: dat/missions/zalek/zlk_test.lua:55
 msgid ""
 "A very old Za'lek researcher needs you to fly with an instrumented device in "
 "order to take measurements."
-msgstr ""
+msgstr "とても歳をとったザレクの科学者が、測定用の計器とともに飛ばすためにあなたを必要としている。"
 
 #: dat/missions/zalek/zlk_test.lua:56
 msgid ""
@@ -76642,12 +76536,14 @@ msgid ""
 "I need to make precise measurements on this engine in order to validate a "
 "stochastic failure model I developed.\""
 msgstr ""
+"ザレクの学生がいった。｢こんにちは。わたしはシステム信頼性の博士号の準備をしているんです。わたしが開発した統計的故障モデルの確認のために、このエンジンの精"
+"密な測定を必要としています｣"
 
 #: dat/missions/zalek/zlk_test.lua:57
 msgid ""
 "A Za'lek researcher needs you to test the new propelling system they have "
 "implemented in this engine."
-msgstr ""
+msgstr "ザレクの科学者が、このエンジンに備えつけた新しい推進システムの試験のためにあなたを必要としている。"
 
 #. target destination
 #. All the mission must go to Za'lek planets with a place to change outfits
@@ -76658,21 +76554,21 @@ msgstr ""
 #. Choose mission reward. This depends on the mission tier.
 #: dat/missions/zalek/zlk_test.lua:86
 msgid "#rZLK:#0 Test of {engine}"
-msgstr ""
+msgstr "#rZLK:#0 {engine}の試験"
 
 #: dat/missions/zalek/zlk_test.lua:88
 msgid ""
 "A Za'lek research team needs you to travel to {pnt} in {sys} using an engine "
 "in order to test it."
-msgstr ""
+msgstr "ザレクの研究チームが、あるエンジンの試験のために、それを使って{sys}星系の{pnt}へ行ってもらうのにあなたを必要としている。"
 
 #: dat/missions/zalek/zlk_test.lua:95
 msgid "You cannot accept this mission"
-msgstr ""
+msgstr "あなたはこの任務をうけられない"
 
 #: dat/missions/zalek/zlk_test.lua:95
 msgid "You are already testing another engine."
-msgstr ""
+msgstr "あなたはすでにほかのエンジンを試験している。"
 
 #: dat/missions/zalek/zlk_test.lua:103
 msgid ""
@@ -76680,14 +76576,16 @@ msgid ""
 "{sys} with this engine. The system will automatically take measures during "
 "the flight. Don't forget to equip the engine."
 msgstr ""
+"ザレクの技師があなたにエンジンを渡した。あなたはこのエンジンで{sys}星系の{pnt}へ行かなければならない。システムが自動的に飛行中の計測をおこなう。"
+"エンジンを装備するのを忘れないこと。"
 
 #: dat/missions/zalek/zlk_test.lua:105
 msgid "Za'lek Test"
-msgstr ""
+msgstr "ザレクの試験"
 
 #: dat/missions/zalek/zlk_test.lua:109
 msgid "Too many missions"
-msgstr ""
+msgstr "任務が多すぎる"
 
 #. Flag to know if the pilot has limited speed
 #. must trigger at every takeoff to check if the player forgot the engine
@@ -76695,13 +76593,13 @@ msgstr ""
 #. Player has forgotten the engine
 #: dat/missions/zalek/zlk_test.lua:128
 msgid "Didn't you forget something?"
-msgstr ""
+msgstr "なにか忘れてないか？"
 
 #: dat/missions/zalek/zlk_test.lua:128
 msgid ""
 "It seems you forgot the engine you are supposed to test. Land again and put "
 "it on your ship."
-msgstr ""
+msgstr "試験することになっているエンジンを忘れてきたようだ。もういちど着陸して船に装備すること。"
 
 #. Generates a random breakdown
 #. If the player doesn't have the experimental engine, there can't be any bug
@@ -76712,24 +76610,24 @@ msgstr ""
 #. The player is still slow and will recover normal velocity
 #: dat/missions/zalek/zlk_test.lua:161
 msgid "Successful Landing"
-msgstr ""
+msgstr "着陸に成功"
 
 #: dat/missions/zalek/zlk_test.lua:161
 msgid ""
 "Happy to be still alive, you land and give back the engine to a group of "
 "Za'lek scientists who were expecting you, collecting your fee along the way."
-msgstr ""
+msgstr "まだ生きているのに喜びつつ、あなたは着陸する。そしてあなたを待っていたザレクの科学者たちにエンジンを返し、その途中で謝礼を受けとった。"
 
 #: dat/missions/zalek/zlk_test.lua:172
 msgid "You traveled without the engine."
-msgstr ""
+msgstr "あなたはあのエンジンなしで行ってしまった。"
 
 #. Breakdowns
 #. Player is teleported in another system
 #. It's enough problem for one travel
 #: dat/missions/zalek/zlk_test.lua:191
 msgid "What the hell is happening?"
-msgstr ""
+msgstr "いったいなにがおきてるんだ？"
 
 #: dat/missions/zalek/zlk_test.lua:191
 msgid ""
@@ -76738,6 +76636,8 @@ msgid ""
 "find that your ship is damaged and you have ended up somewhere in the {sys} "
 "system!"
 msgstr ""
+"あなたはとつぜんぼうだいな加速を感じた。まるで船が超空間に入ったかのようだった。それからとつぜんの衝撃であなたは気絶した。気づいてみると、船に損傷があり、"
+"{sys}星系のどこかに着いていたことがわかった！"
 
 #. player is slowed
 #. Cancel autonav.
@@ -76751,49 +76651,49 @@ msgstr ""
 #. Displays texts
 #: dat/missions/zalek/zlk_test.lua:265
 msgid "Where has the power gone?"
-msgstr ""
+msgstr "推力はどこへ行った？"
 
 #: dat/missions/zalek/zlk_test.lua:265
 msgid ""
 "The engine makes a loud noise, and you notice that the engine has lost its "
 "ability to thrust at the rate that it's supposed to."
-msgstr ""
+msgstr "エンジンが大きな騒音を発し、あなたはエンジンからあるはずの推進能力が失われたのに気づいた。"
 
 #: dat/missions/zalek/zlk_test.lua:269
 msgid "Power is back."
-msgstr ""
+msgstr "推進力が戻った。"
 
 #: dat/missions/zalek/zlk_test.lua:269
 msgid "It seems the engine decided to work properly again."
-msgstr ""
+msgstr "エンジンはまたきちんと作動しようと決めたようだ。"
 
 #: dat/missions/zalek/zlk_test.lua:273
 msgid "This wasn't supposed to happen"
-msgstr ""
+msgstr "こんなことがおきるとは思わなかった"
 
 #: dat/missions/zalek/zlk_test.lua:273
 msgid ""
 "Your ship is totally out of control. You curse under your breath at the "
 "defective engine."
-msgstr ""
+msgstr "あなたの船はまったく制御できなくなった。あなたは小声で欠陥エンジンを呪う。"
 
 #: dat/missions/zalek/zlk_test.lua:277
 msgid "Engine is dead"
-msgstr ""
+msgstr "エンジンが死んだ"
 
 #: dat/missions/zalek/zlk_test.lua:277
 msgid ""
 "The engine has stopped working. It had better start working again soon; you "
 "don't want to die out here!"
-msgstr ""
+msgstr "エンジンが作動をやめた。またすぐ作動を始めたほうがいいぞ。こんなところで死にたくはない！"
 
 #: dat/missions/zalek/zlk_test.lua:281
 msgid "Back to normal"
-msgstr ""
+msgstr "通常に戻る"
 
 #: dat/missions/zalek/zlk_test.lua:281
 msgid "The engine is working again. You breathe a sigh of relief."
-msgstr ""
+msgstr "エンジンがまた作動している。あなたはほっとしてため息をついた。"
 
 #. Give them a bad engine just in case they are landed or on a planet
 #. where they can't equip. The bad engine is free so it shouldn't matter.
@@ -76863,7 +76763,7 @@ msgstr ""
 msgid ""
 "#rYour fake transponder has been discovered and is useless until you change "
 "systems, land, or cooldown!#0"
-msgstr ""
+msgstr "#rあなたの偽装応答器は見破られた。星系を変えたり、着陸したり、冷却器を作動させたりするまでは、役に立たなくなった！#0"
 
 #. armour shield damage to turn off at
 #. cooldown time in seconds
@@ -77067,7 +76967,7 @@ msgstr ""
 #: dat/rescue.lua:263 dat/rescue.lua:354 dat/rescue.lua:367 dat/rescue.lua:371
 #: dat/rescue.lua:400 dat/rescue.lua:406 dat/rescue.lua:414
 msgid "Stranded"
-msgstr ""
+msgstr "立ち往生"
 
 #: dat/rescue.lua:263
 msgid ""
@@ -77077,6 +76977,10 @@ msgid ""
 "attempt to take off again to trigger this dialogue, or try loading your "
 "backup save."
 msgstr ""
+"けっこうだ。しかしあなたは離陸できそうもない。\n"
+"\n"
+"もし船を宇宙飛行可能にできる方法が見つからなかったら、いつでもまた離陸を試みてこのダイアログを開始できる。さもなければ、バックアップの保存ファイルをロード"
+"してみること。"
 
 #. Equipped cores are the same as defaults.
 #. Ship has weapons.
@@ -77086,36 +76990,36 @@ msgstr ""
 #. { { desc, callback }, ... }
 #: dat/rescue.lua:301
 msgid "Remove outfits and use default cores"
-msgstr ""
+msgstr "艤装品をはずしてデフォルトの中核システムを使う"
 
 #: dat/rescue.lua:302
 msgid "Add missing default cores"
-msgstr ""
+msgstr "紛失したデフォルトの中核システムを追加する"
 
 #: dat/rescue.lua:303 dat/rescue.lua:310
 msgid "Replace all cores with defaults"
-msgstr ""
+msgstr "すべての中核システムをデフォルトに置きかえる"
 
 #. TODO: Possibly add a "Select from inventory" option
 #: dat/rescue.lua:309
 msgid "Remove all outfits and set cores to defaults"
-msgstr ""
+msgstr "すべての艤装品をはずして中核システムをデフォルトにする"
 
 #: dat/rescue.lua:311
 msgid "Remove all non-core outfits"
-msgstr ""
+msgstr "中核システム以外の艤装品をすべてはずす"
 
 #: dat/rescue.lua:312
 msgid "Remove weapons"
-msgstr ""
+msgstr "武器をはずす"
 
 #: dat/rescue.lua:313
 msgid "Remove utility outfits"
-msgstr ""
+msgstr "実用品の艤装品をはずす"
 
 #: dat/rescue.lua:314
 msgid "Remove structure outfits"
-msgstr ""
+msgstr "構造系の艤装品をはずす"
 
 #. Do nothing if already spaceworthy.
 #. Bail out if the player has a reasonable chance of fixing their ship.
@@ -77126,8 +77030,7 @@ msgstr ""
 msgid "Your ship is missing %d core outfit. How do you want to resolve this?"
 msgid_plural ""
 "Your ship is missing %d core outfits. How do you want to resolve this?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "あなたの船には紛失した中核システム艤装品が %d 個ある。解決したいか？"
 
 #. Run callback.
 #. If ship is now spaceworthy, bail out.
@@ -77141,13 +77044,14 @@ msgid_plural ""
 "may have somewhat lower performance than usual. You should get to a planet "
 "with a proper shipyard and outfitter."
 msgstr[0] ""
-msgstr[1] ""
+"紛失した艤装品を追加すると、あなたの船はまた宇宙飛行可能になった。それでもふつうよりやや性能が低下している可能性がある。まともな造船所や艤装所がある惑星に"
+"いくべきだ。"
 
 #: dat/rescue.lua:371
 msgid ""
 "Unfortunately, your ship still isn't spaceworthy. However, there are still "
 "other options for getting your ship airborne."
-msgstr ""
+msgstr "残念ながら、あなたの船はまだ宇宙飛行可能ではない。とはいえ、船を離陸できるようにするための選択肢はまだほかにもある。"
 
 #: dat/rescue.lua:400
 msgid ""
@@ -77156,23 +77060,26 @@ msgid ""
 "\n"
 "Please report this to the developers along with a copy of your save file."
 msgstr ""
+"えーと……これはおかしい。あなたの船はデフォルトの構成に戻された。でもまだ宇宙飛行可能ではない。\n"
+"\n"
+"セーブファイルとともに、これを開発者へ報告するようにお願いします。"
 
 #: dat/rescue.lua:406
 msgid "The following actions are available to make your ship spaceworthy:"
-msgstr ""
+msgstr "あなたの船を宇宙飛行可能にするためには、次の選択肢がある。"
 
 #: dat/rescue.lua:414
 msgid ""
 "Your ship is now spaceworthy, though you should get to an outfitter as soon "
 "as possible."
-msgstr ""
+msgstr "あなたの船はもう宇宙飛行可能だ。それでも、できるかぎり早く艤装所に行ったほうがいい。"
 
 #.
 #. Gets the Pilots United Against Atmosphere Anthropocentrism (PUAAA) faction or creates it if necessary
 #. --
 #: dat/scripts/common/antlejos.lua:79
 msgid "PUAAA"
-msgstr ""
+msgstr "PUAAA"
 
 #: dat/scripts/common/cargo.lua:228
 msgid "#nCargo:#0 {cargo}"
@@ -77565,10 +77472,8 @@ msgstr "星雲の研究"
 
 #. Use default
 #: dat/scripts/common/zalek_physics.lua:21
-#, fuzzy
-#| msgid "It looks like he has yet another job for you."
 msgid "You see Noona who looks like she might have a job for you."
-msgstr "また別の仕事があるようだ。"
+msgstr "ヌーナを見つけた。あなたにしてもらいたい仕事がありそうに見える。"
 
 #. + "Heavy Weapons Combat License" permission
 #. zpp05 = 0, -- No payment, reall small flashback really
@@ -79017,7 +78922,7 @@ msgstr[0] ""
 #. header
 #: dat/scripts/minigames/sokoban/core.lua:126
 msgid "Sokoban"
-msgstr ""
+msgstr "倉庫番"
 
 #. Load audio
 #. Allow the default keybindings too!
@@ -79026,18 +78931,16 @@ msgstr ""
 #. TODO play mmotion sound
 #. Player pushed something
 #: dat/scripts/minigames/sokoban/core.lua:329
-#, fuzzy
-#| msgid "Loading Completed!"
 msgid "Completed!"
-msgstr "ロードを完了しました！"
+msgstr "完了！"
 
 #: dat/scripts/minigames/sokoban/core.lua:331
 msgid "Layer {cur} / {total}"
-msgstr ""
+msgstr "面 {cur} / {total}"
 
 #: dat/scripts/minigames/sokoban/core.lua:343
 msgid "#barrow keys#0: move, #br#0: restart, #bq#0: abort"
-msgstr ""
+msgstr "#b矢印キー#0 : 移動、#br#0: リセット、#bq#0: 中止"
 
 #. Lazy loader for pilotname
 #. For translation, please keep in mind that these are names. It is
@@ -82116,7 +82019,7 @@ msgstr "AI Profile '%s' not found, using dummy fallback."
 
 #: src/ai.c:454
 msgid "Dummy AI Profile not valid! Things are going to break."
-msgstr ""
+msgstr "Dummy AI Profile not valid! Things are going to break."
 
 #: src/ai.c:470
 #, c-format
@@ -82765,7 +82668,7 @@ msgstr "ガンマ補正のパラメーター。1なら無効化(直線になる)
 
 #: src/conf.c:873
 msgid "Expensive high quality shaders for the background. Defaults to false."
-msgstr ""
+msgstr "処理の重い高品質の背景描画。デフォルトはfalse。"
 
 #. FPS
 #: src/conf.c:878
@@ -83840,7 +83743,7 @@ msgstr[0] "トン"
 #: src/equipment.c:1708 src/info.c:521
 #, c-format
 msgid "%s average"
-msgstr "平均 %s"
+msgstr "平均 %s"
 
 #: src/equipment.c:1710
 #, c-format
@@ -83854,15 +83757,16 @@ msgid ""
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 "\n"
-"#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
+"#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
 
 #: src/equipment.c:1715
-#, fuzzy, c-format
-#| msgid "#%c%s%.0f#0 deg/s"
+#, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
-msgstr "#%c%s%.0f#0 度/秒"
+msgstr ""
+"\n"
+"#%c%s%.0f#0 度/s"
 
 #: src/equipment.c:1719
 #, c-format
@@ -83881,7 +83785,7 @@ msgid "%d / #%c%s%d#0 %s"
 msgstr "%d / #%c%s%d#0 %s"
 
 #: src/equipment.c:1737
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s (%d %s)"
 msgstr "%s %s (%d %s)"
 
@@ -84648,13 +84552,12 @@ msgstr "%.0f m/s (最大 %.0f m/s)"
 #: src/info.c:528 src/map_system.c:669
 #, c-format
 msgid "%.0f deg/s"
-msgstr "%.0f 度/秒"
+msgstr "%.0f 度/s"
 
 #: src/info.c:534 src/info.c:536 src/info.c:538
-#, fuzzy, c-format
-#| msgid "%.0f MJ (%.1f MW)"
+#, c-format
 msgid "%.0f / %.0f MJ (%.1f MW)"
-msgstr "%.0f MJ (%.1f MW)"
+msgstr "%.0f / %.0f MJ (%.1f MW)"
 
 #: src/info.c:576
 msgid "Current Weapon Set Settings"
@@ -85361,7 +85264,7 @@ msgstr "タブ 0 に切り替える。"
 
 #: src/input.c:126
 msgid "Paste from the operating system's clipboard."
-msgstr ""
+msgstr "OS のクリップボードからペーストする。"
 
 #: src/input.c:401
 #, c-format
@@ -85620,7 +85523,7 @@ msgstr "空き容量 :"
 
 #: src/land.c:1231
 msgid "Tags:"
-msgstr ""
+msgstr "タグ :"
 
 #: src/land.c:1250
 msgid "No refueling services."
@@ -85794,10 +85697,9 @@ msgid "Do you really want to spend %s on a new ship?"
 msgstr "ほんとうに新しい船に %s使いたいですか？"
 
 #: src/land_shipyard.c:427 src/land_shipyard.c:494
-#, fuzzy, c-format
-#| msgid "You need the '%s' license to buy this outfit."
+#, c-format
 msgid "You need the '%s' license to buy this ship."
-msgstr "この艤装品を買うには ｢%s｣ 免許が必要です。"
+msgstr "この船を買うには ｢%s｣ 免許が必要です。"
 
 #. Already on-board.
 #: src/land_shipyard.c:447
@@ -85881,13 +85783,13 @@ msgstr "%.1f ¤"
 #: src/land_trade.c:194
 #, c-format
 msgid "%s/t"
-msgstr "%s/t"
+msgstr "%s/トン"
 
 #: src/land_trade.c:198 src/land_trade.c:200 src/map_system.c:723
 #: src/map_system.c:725
 #, c-format
 msgid "%s/t ± %s/t"
-msgstr "%s/t ± %s/t"
+msgstr "%s/トン ± %s/トン"
 
 #: src/land_trade.c:234
 msgid "No cargo space available!"
@@ -86459,16 +86361,12 @@ msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] "#n所有しているのは %dトン\n"
 
 #: src/map_system.c:722
-#, fuzzy
-#| msgid "Average price here:"
 msgid "Average price seen here:"
 msgstr "ここでの平均価格 :"
 
 #: src/map_system.c:724
-#, fuzzy
-#| msgid "Average price here:"
 msgid "Average price seen everywhere:"
-msgstr "ここでの平均価格 :"
+msgstr "よそでの平均価格 :"
 
 #: src/map_system.c:729
 msgid "Unexpected call to map_system_array_update\n"
@@ -88406,7 +88304,7 @@ msgstr "機能 :"
 
 #: src/options.c:1312
 msgid "Fancy and expensive background shaders"
-msgstr ""
+msgstr "派手で処理が重い背景の描画"
 
 #: src/options.c:1339
 msgid "GUI:"
@@ -90705,7 +90603,7 @@ msgstr "熱発散"
 
 #: src/shipstats.c:137
 msgid "Stress Dissipation"
-msgstr "圧力発散"
+msgstr "ストレス発散"
 
 #: src/shipstats.c:138
 msgid "Crew"
