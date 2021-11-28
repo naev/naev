@@ -31,9 +31,8 @@ jobs:
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
-          cp -r source/utils/ci/itch source/utils/ci/steam build/dist/
+          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
-          cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
@@ -50,11 +49,11 @@ jobs:
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
-      - name: Upload Changelog Artifact
+      - name: Upload GitHub Deployment Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: naev-changelog
-          path: ${{ github.workspace }}/build/dist/CHANGELOG
+          name: naev-github-deployment
+          path: ${{ github.workspace }}/build/dist/gh/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
@@ -352,12 +351,13 @@ jobs:
           path: ${{ github.workspace }}/build/staging
 
       - name: Create Github Release
-        uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          bodyFile: "build/staging/naev-changelog/CHANGELOG"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{github.ref_name}}"
           prerelease: false
+          title: "Release Build"
 
       - name: Build and Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}
