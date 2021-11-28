@@ -280,9 +280,14 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        if: ${{ matrix.releasetype == 'github' }}
+
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
+        working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2
