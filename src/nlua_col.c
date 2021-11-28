@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_col.c
  *
  * @brief Handles colours.
  */
-
 
 /** @cond */
 #include <lauxlib.h>
@@ -19,7 +17,6 @@
 
 #include "log.h"
 #include "nluadef.h"
-
 
 /* Colour metatable methods. */
 static int colL_eq( lua_State *L );
@@ -46,7 +43,6 @@ static const luaL_Reg colL_methods[] = {
    {0,0}
 }; /**< Colour metatable methods. */
 
-
 /**
  * @brief Loads the colour library.
  *
@@ -58,7 +54,6 @@ int nlua_loadCol( nlua_env env )
    nlua_register(env, COL_METATABLE, colL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with colours.
@@ -137,7 +132,6 @@ int lua_iscolour( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Compares two colours to see if they are the same.
  *
@@ -154,7 +148,6 @@ static int colL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( c1, c2, sizeof(glColour) )==0) );
    return 1;
 }
-
 
 /**
  * @brief Gets a colour.
@@ -212,7 +205,6 @@ static int colL_new( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the alpha of a colour.
  *
@@ -226,12 +218,10 @@ static int colL_new( lua_State *L )
  */
 static int colL_alpha( lua_State *L )
 {
-   glColour *col;
-   col = luaL_checkcolour(L,1);
+   glColour *col = luaL_checkcolour(L,1);
    lua_pushnumber( L, col->a );
    return 1;
 }
-
 
 /**
  * @brief Gets the RGB values of a colour.
@@ -248,14 +238,12 @@ static int colL_alpha( lua_State *L )
  */
 static int colL_rgb( lua_State *L )
 {
-   glColour *col;
-   col = luaL_checkcolour(L,1);
+   glColour *col = luaL_checkcolour(L,1);
    lua_pushnumber( L, col->r );
    lua_pushnumber( L, col->g );
    lua_pushnumber( L, col->b );
    return 3;
 }
-
 
 /**
  * @brief Gets the HSV values of a colour.
@@ -273,15 +261,13 @@ static int colL_rgb( lua_State *L )
 static int colL_hsv( lua_State *L )
 {
    float h, s, v;
-   glColour *col;
-   col = luaL_checkcolour(L,1);
+   glColour *col = luaL_checkcolour(L,1);
    col_rgb2hsv( &h, &s, &v, col->r, col->g, col->b );
    lua_pushnumber( L, h );
    lua_pushnumber( L, s );
    lua_pushnumber( L, v );
    return 3;
 }
-
 
 /**
  * @brief Sets the colours values from the RGB colourspace.
@@ -299,14 +285,12 @@ static int colL_hsv( lua_State *L )
 static int colL_setrgb( lua_State *L )
 {
    NLUA_CHECKRW(L);
-   glColour *col;
-   col     = luaL_checkcolour(L,1);
+   glColour *col = luaL_checkcolour(L,1);
    col->r  = luaL_checknumber(L,2);
    col->g  = luaL_checknumber(L,3);
    col->b  = luaL_checknumber(L,4);
    return 0;
 }
-
 
 /**
  * @brief Sets the colours values from the HSV colourspace.
@@ -323,17 +307,15 @@ static int colL_setrgb( lua_State *L )
  */
 static int colL_sethsv( lua_State *L )
 {
-   float h, s, v;
-   glColour *col;
    NLUA_CHECKRW(L);
-   col = luaL_checkcolour(L,1);
+   float h, s, v;
+   glColour *col = luaL_checkcolour(L,1);
    h  = luaL_checknumber(L,2);
    s  = luaL_checknumber(L,3);
    v  = luaL_checknumber(L,4);
    col_hsv2rgb( col, h, s, v );
    return 0;
 }
-
 
 /**
  * @brief Sets the alpha of a colour.
@@ -348,13 +330,11 @@ static int colL_sethsv( lua_State *L )
  */
 static int colL_setalpha( lua_State *L )
 {
-   glColour *col;
    NLUA_CHECKRW(L);
-   col = luaL_checkcolour(L,1);
+   glColour *col = luaL_checkcolour(L,1);
    col->a = luaL_checknumber(L,2);
    return 0;
 }
-
 
 /**
  * @brief Converts a colour from linear to gamma corrected.
@@ -373,7 +353,6 @@ static int colL_linearToGamma( lua_State *L )
    lua_pushcolour(L,out);
    return 1;
 }
-
 
 /**
  * @brief Converts a colour from gamma corrected to linear.

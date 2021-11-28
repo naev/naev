@@ -270,7 +270,7 @@ static int canvasL_getTex( lua_State *L )
 static int canvasL_clear( lua_State *L )
 {
    LuaCanvas_t *lc = luaL_checkcanvas(L,1);
-   (void) lc;
+   (void) lc; /* Just to enforce good practice, canvas should be already set. */
    const glColour *c = luaL_optcolour(L,2,&cBlack);
    glClearColor( c->r, c->g, c->b, c->a );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

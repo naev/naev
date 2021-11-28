@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_shiplog.c
  *
  * @brief Handles the shiplog Lua bindings.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -55,7 +52,6 @@ static const luaL_Reg shiplog_methods[] = {
    {0,0}
 }; /**< Shiplog Lua methods. */
 
-
 /*
  * individual library loading
  */
@@ -68,7 +64,6 @@ int nlua_loadShiplog( nlua_env env )
    nlua_register(env, "shiplog", shiplog_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Bindings for adding log entries to the ship log.

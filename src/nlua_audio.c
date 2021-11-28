@@ -6,7 +6,6 @@
  *
  * @brief Bindings for Special effects functionality from Lua.
  */
-
 /** @cond */
 #include <lauxlib.h>
 #include "physfsrwops.h"

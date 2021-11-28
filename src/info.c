@@ -401,12 +401,10 @@ static void info_shipAI( unsigned int wid, const char *str )
  */
 static void setgui_load( unsigned int wdw, const char *str )
 {
-   (void)str;
-   const char *gui;
-   int wid;
+   (void) str;
+   int wid = window_get( "wdwSetGUI" );
+   const char *gui = toolkit_getList( wid, "lstGUI" );
 
-   wid = window_get( "wdwSetGUI" );
-   gui = toolkit_getList( wid, "lstGUI" );
    if (strcmp(gui,_("None")) == 0)
       return;
 
@@ -608,8 +606,7 @@ static void info_openWeapons( unsigned int wid )
 static void weapons_genList( unsigned int wid )
 {
    char **buf, tbuf[STRMAX_SHORT];
-   int n;
-   int w, h;
+   int n, w, h;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
