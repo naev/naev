@@ -6,7 +6,6 @@
  *
  * @brief Handles gigantic explosions.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -49,8 +48,8 @@ void expl_explode( double x, double y, double vx, double vy,
 
    /* Standard stuff - lazy allocation. */
    if (exp_s == -1) {
-      /* This is all horrible and I wish we could either parametrize it or get
-       * rid of the hardcoding. */
+      /* TODO This is all horrible and I wish we could either parametrize it or
+       * get rid of the hardcoding. */
       exp_s = spfx_get("ExpS");
       exp_m = spfx_get("ExpM");
       exp_l = spfx_get("ExpL");

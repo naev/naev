@@ -61,7 +61,7 @@ static void osd_wordwrap( OSD_t* osd );
 static int osd_sortCompare( const void *arg1, const void *arg2 )
 {
    const OSD_t *osd1, *osd2;
-   int ret, i, m;
+   int ret, m;
 
    osd1 = (OSD_t*)arg1;
    osd2 = (OSD_t*)arg2;
@@ -79,7 +79,7 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
 
    /* Compare items. */
    m = MIN(array_size(osd1->items), array_size(osd2->items));
-   for (i=0; i<m; i++) {
+   for (int i=0; i<m; i++) {
       ret = strcmp( osd1->msg[i], osd2->msg[i] );
       if (ret != 0)
          return ret;
@@ -117,7 +117,7 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, id;
+   int id;
    OSD_t *osd;
 
    /* Create. */
@@ -133,7 +133,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    osd->priority = priority;
    osd->msg = array_create_size( char*, nitems );
    osd->items = array_create_size( char**, nitems );
-   for (i=0; i<nitems; i++) {
+   for (int i=0; i<nitems; i++) {
       array_push_back( &osd->msg, strdup( items[i] ) );
       array_push_back( &osd->items, array_create(char*) );
    }
@@ -150,12 +150,11 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
  */
 void osd_wordwrap( OSD_t* osd )
 {
-   int msg_len, w, has_tab, chunk_len;
-   char *chunk;
-   const char *chunk_fmt;
-   glPrintLineIterator iter;
-
    for (int i=0; i<array_size(osd->items); i++) {
+      int msg_len, w, has_tab;
+      const char *chunk_fmt;
+      glPrintLineIterator iter;
+
       for (int l=0; l<array_size(osd->items[i]); l++)
          free(osd->items[i][l]);
       array_resize( &osd->items[i], 0 );
@@ -172,8 +171,8 @@ void osd_wordwrap( OSD_t* osd )
 
       while (gl_printLineIteratorNext( &iter )) {
          /* Copy text over. */
-         chunk_len = iter.l_end - iter.l_begin + strlen( chunk_fmt ) - 1;
-         chunk = malloc( chunk_len );
+         int chunk_len = iter.l_end - iter.l_begin + strlen( chunk_fmt ) - 1;
+         char *chunk = malloc( chunk_len );
          snprintf( chunk, chunk_len, chunk_fmt, &iter.text[iter.l_begin] );
          array_push_back( &osd->items[i], chunk );
          chunk_fmt = has_tab ? "   %s" : "%s";
@@ -336,10 +335,8 @@ void osd_exit (void)
  */
 void osd_render (void)
 {
-   OSD_t *ll;
    double p;
-   int i, j, k, l, m;
-   int w, x;
+   int l;
    const glColour *c;
    int *ignore;
    int nignore;
@@ -359,7 +356,10 @@ void osd_render (void)
    /* Render each thingy. */
    p = osd_y-gl_smallFont.h;
    l = 0;
-   for (k=0; k<array_size(osd_list); k++) {
+   for (int k=0; k<array_size(osd_list); k++) {
+      int x, w;
+      OSD_t *ll;
+
       if (ignore[k])
          continue;
 
@@ -369,14 +369,14 @@ void osd_render (void)
 
       /* Check how many duplicates we have, mark duplicates for ignoring */
       duplicates = 0;
-      for (m=k+1; m<array_size(osd_list); m++) {
+      for (int m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
                (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
+            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
                if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
                      if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
@@ -410,11 +410,11 @@ void osd_render (void)
       }
 
       /* Print items. */
-      for (i=ll->active; i<array_size(ll->items); i++) {
+      for (int i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
          c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
-         for (j=0; j<array_size(ll->items[i]); j++) {
+         for (int j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, -1., ll->items[i][j] );
             if (j==0) {
@@ -439,8 +439,8 @@ void osd_render (void)
  */
 static void osd_calcDimensions (void)
 {
+   /* TODO decrease code duplication with osd_render */
    OSD_t *ll;
-   int i, j, k, m;
    double len;
    int *ignore;
    int nignore;
@@ -455,7 +455,7 @@ static void osd_calcDimensions (void)
 
    /* Render each thingy. */
    len = 0;
-   for (k=0; k<array_size(osd_list); k++) {
+   for (int k=0; k<array_size(osd_list); k++) {
       if (ignore[k])
          continue;
 
@@ -463,14 +463,14 @@ static void osd_calcDimensions (void)
 
       /* Check how many duplicates we have, mark duplicates for ignoring */
       duplicates = 0;
-      for (m=k+1; m<array_size(osd_list); m++) {
+      for (int m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
                (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
+            for (int i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
                if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
-                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                  for (int j=0; j<array_size(osd_list[m].items[i]); j++) {
                      if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
@@ -493,8 +493,8 @@ static void osd_calcDimensions (void)
       len += gl_smallFont.h + 5.;
 
       /* Print items. */
-      for (i=ll->active; i<array_size(ll->items); i++)
-         for (j=0; j<array_size(ll->items[i]); j++)
+      for (int i=ll->active; i<array_size(ll->items); i++)
+         for (int j=0; j<array_size(ll->items[i]); j++)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
