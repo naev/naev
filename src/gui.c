@@ -1095,6 +1095,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 {
    double x, y, scale;
    const glColour *col;
+   int ssize;
 
    /* Make sure is in range. */
    if (!pilot_validTarget( player.p, p ))
@@ -1110,7 +1111,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = ((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   scale = (sqrt((double)ship_size( p->ship )) + 1.)/2. * (1. + RADAR_RES_REF / res );
+   ssize = ship_size( p->ship );
+   scale = (sqrt((double)ssize) + 1.)/2. * (1. + RADAR_RES_REF / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&
@@ -1139,7 +1141,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = gui_getPilotColour(p);
 
-   scale = MAX(scale+2.0, 5.0); /* Compensate for outline. */
+   scale = MAX(scale+2.0, 3.5+0.5*(double)ssize); /* Compensate for outline. */
 
    if (pilot_isFlag(p, PILOT_HILIGHT)) {
       glColour highlighted = cRadar_hilight;
