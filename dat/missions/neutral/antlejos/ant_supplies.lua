@@ -49,6 +49,9 @@ local levelup = {
 function create ()
    mem.tier = rnd.rnd(1,3)
 
+   -- TODO we probably want to claim antlejos but in such a way multiple of
+   -- these missions can be done at once
+
    mem.destpnt, mem.destsys, mem.numjumps, mem.traveldist = car.calculateRoute( rnd.rnd(3,5)+mem.tier, true )
    if not mem.destpnt then
       misn.finish(false)
