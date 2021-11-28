@@ -41,7 +41,7 @@ function create ()
 
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
       -- TODO only look for industrial Dvaered planets
-      --return p.tags().industrial
+      --return p:tags().industrial
       return true
    end )
    if not mem.destpnt then

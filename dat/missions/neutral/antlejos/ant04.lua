@@ -46,7 +46,7 @@ function create ()
 
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Soromid", true, function( _p )
       -- TODO only look for agriculture Soromid planets
-      --return p.tags().agriculture
+      --return p:tags().agriculture
       return true
    end )
    if not mem.destpnt then
