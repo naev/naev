@@ -23,7 +23,7 @@ while getopts dcnms:b:o: OPTION "$@"; do
         set -x
         ;;
     c)
-        BUILDTYPE="debug"
+        BUILDTYPE="debugoptimized"
         ;;
     n)
         NIGHTLY="true"

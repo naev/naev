@@ -87,8 +87,6 @@ VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
 if [ "$NIGHTLY" == "true" ]; then
     SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-elif [ "$PRERELEASE" == "true" ]; then
-    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
 else
     SUFFIX="$VERSION"
 fi
