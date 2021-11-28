@@ -13,7 +13,7 @@
  <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
  <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
  <fabricator>Aerosys</fabricator>
- <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
+ <description>The star product of Aerosys, the Hyena quickly has also become a favorite of guerrilla and paramilitary groups far and wide. Their top-notch thrust combined with fast reaction time allow them exhaust enemy energy supplies while wearing them down. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the ranks of the more notorious and unruly pilots.</description>
  <health>
   <armour>25</armour>
   <armour_regen>0</armour_regen>

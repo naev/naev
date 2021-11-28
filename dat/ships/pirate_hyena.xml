@@ -8,21 +8,21 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
- <price>210000</price>
+ <price>280000</price>
  <time_mod>0.75</time_mod>
  <trail_generator x="-3" y="13" h="0">nebula</trail_generator>
  <trail_generator x="-3" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-15" y="-6" h="0">pirateS</trail_generator>
  <trail_generator x="-15" y="6" h="0">pirateS</trail_generator>
  <fabricator>Skull and Bones</fabricator>
- <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
+ <description>The Pirate Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. Skull and Bones has added modifications to make them even more efficient as scavengers and harder to hit than their Aerosys counterparts.</description>
  <health>
   <armour>25</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>
-  <mass>30</mass>
+  <mass>25</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>5</cargo>
  </characteristics>
@@ -38,10 +38,12 @@
   <structure size="small" />
  </slots>
  <stats>
-  <speed_mod>5</speed_mod>
-  <turn_mod>25</turn_mod>
-  <thrust_mod>75</thrust_mod>
+  <turn_mod>20</turn_mod>
+  <thrust_mod>70</thrust_mod>
   <armour_mod>-50</armour_mod>
+  <fwd_firerate>10</fwd_firerate>
+  <ew_evade>10</ew_evade>
+  <loot_mod>20</loot_mod>
  </stats>
  <tags>
   <tag>noplayer</tag><!--FIXME tactically lying to shiplover.lua to avoid its use-->
