@@ -146,6 +146,7 @@ void mission_cleanup( Mission* misn );
 void mission_shift( int pos );
 void missions_free (void);
 void missions_cleanup (void);
+int mission_reload( const char *name );
 
 /*
  * Actually in nlua_misn.h

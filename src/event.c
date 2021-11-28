@@ -77,7 +77,7 @@ static Event_t *event_active     = NULL; /**< Active events. */
  */
 static unsigned int event_genID (void);
 static int event_cmp( const void* a, const void* b );
-static int event_parseFile( const char* file );
+static int event_parseFile( const char* file, EventData *temp );
 static int event_parseXML( EventData *temp, const xmlNodePtr parent );
 static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
@@ -453,7 +453,7 @@ int events_load (void)
    char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
    event_data = array_create_size( EventData, array_size( event_files ) );
    for (int i=0; i < array_size( event_files ); i++) {
-      event_parseFile( event_files[ i ] );
+      event_parseFile( event_files[i], NULL );
       free( event_files[ i ] );
    }
    array_free( event_files );
@@ -469,15 +469,17 @@ int events_load (void)
 
 /**
  * @brief Parses an event file.
+ *
+ *    @param file Source file path.
+ *    @param temp Data to load into, or NULL for initial load.
  */
-static int event_parseFile( const char* file )
+static int event_parseFile( const char* file, EventData *temp )
 {
    size_t bufsize;
    xmlNodePtr node;
    xmlDocPtr doc;
    char *filebuf;
    const char *pos, *start_pos;
-   EventData *temp;
 
 #ifdef DEBUGGING
    /* To check if event is valid. */
@@ -523,7 +525,8 @@ static int event_parseFile( const char* file )
       return -1;
    }
 
-   temp = &array_grow(&event_data);
+   if (temp == NULL)
+      temp = &array_grow(&event_data);
    event_parseXML( temp, node );
    temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
@@ -778,4 +781,19 @@ static int events_parseActive( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+int event_reload( const char *name )
+{
+   int res, edat = event_dataID( name );
+   EventData save, *temp = edat<0 ? NULL : &event_data[edat];
+   if (temp == NULL)
+      return -1;
+   save = *temp;
+   res = event_parseFile( save.sourcefile, temp );
+   if (res == 0)
+      event_freeData( &save );
+   else
+      *temp = save;
+   return res;
 }

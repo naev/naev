@@ -66,7 +66,7 @@ static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( const char *loc );
 /* Loading. */
 static int missions_cmp( const void *a, const void *b );
-static int mission_parseFile( const char* file );
+static int mission_parseFile( const char* file, MissionData *temp );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 /* Misc. */
@@ -987,7 +987,7 @@ int missions_load (void)
    mission_files = ndata_listRecursive( MISSION_DATA_PATH );
    mission_stack = array_create_size( MissionData, array_size( mission_files ) );
    for (int i=0; i < array_size( mission_files ); i++) {
-      mission_parseFile( mission_files[i] );
+      mission_parseFile( mission_files[i], NULL );
       free( mission_files[i] );
    }
    array_free( mission_files );
@@ -1003,15 +1003,17 @@ int missions_load (void)
 
 /**
  * @brief Parses a single mission.
+ *
+ *    @param file Source file path.
+ *    @param temp Data to load into, or NULL for initial load.
  */
-static int mission_parseFile( const char* file )
+static int mission_parseFile( const char* file, MissionData *temp )
 {
    xmlDocPtr doc;
    xmlNodePtr node;
    size_t bufsize;
    char *filebuf;
    const char *pos, *start_pos;
-   MissionData *temp;
 
    /* Load string. */
    filebuf = ndata_read( file, &bufsize );
@@ -1051,7 +1053,8 @@ static int mission_parseFile( const char* file )
       return -1;
    }
 
-   temp = &array_grow(&mission_stack);
+   if (temp == NULL)
+      temp = &array_grow(&mission_stack);
    mission_parseXML( temp, node );
    temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
@@ -1426,4 +1429,19 @@ static int missions_parseActive( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+int mission_reload( const char *name )
+{
+   int res;
+   MissionData save, *temp = mission_getFromName( name );
+   if (temp == NULL)
+      return -1;
+   save = *temp;
+   res = mission_parseFile( save.sourcefile, temp );
+   if (res == 0)
+      mission_freeData( &save );
+   else
+      *temp = save;
+   return res;
 }

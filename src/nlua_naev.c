@@ -37,7 +37,9 @@ static int naevL_keyEnable( lua_State *L );
 static int naevL_keyEnableAll( lua_State *L );
 static int naevL_keyDisableAll( lua_State *L );
 static int naevL_eventStart( lua_State *L );
+static int naevL_eventReload( lua_State *L );
 static int naevL_missionStart( lua_State *L );
+static int naevL_missionReload( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
 static int naevL_confSet( lua_State *L );
@@ -53,7 +55,9 @@ static const luaL_Reg naev_methods[] = {
    { "keyEnableAll", naevL_keyEnableAll },
    { "keyDisableAll", naevL_keyDisableAll },
    { "eventStart", naevL_eventStart },
+   { "eventReload", naevL_eventReload },
    { "missionStart", naevL_missionStart },
+   { "missionReload", naevL_missionReload },
    { "isSimulation", naevL_isSimulation },
    { "conf", naevL_conf },
    { "confSet", naevL_confSet },
@@ -300,6 +304,52 @@ static int naevL_missionStart( lua_State *L )
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Reloads an event's script, providing a convenient way to test and hopefully not corrupt the game's state.
+ *        Use with caution, and only during development as a way to get quicker feedback.
+ *
+ * @usage naev.eventReload( "Some Event" )
+ *    @luatparam string evtname Name of the event to start.
+ *    @luatreturn boolean true on success.
+ * @luafunc eventReload
+ */
+static int naevL_eventReload( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   NLUA_CHECKRW(L);
+
+   str = luaL_checkstring(L, 1);
+   ret = event_reload( str );
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Reloads a mission's script, providing a convenient way to test and hopefully not corrupt the game's state.
+ *        Use with caution, and only during development as a way to get quicker feedback.
+ *
+ * @usage naev.missionReload( "Some Mission" )
+ *    @luatparam string misnname Name of the mission to start.
+ *    @luatreturn boolean true on success.
+ * @luafunc missionReload
+ */
+static int naevL_missionReload( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   NLUA_CHECKRW(L);
+
+   str = luaL_checkstring(L, 1);
+   ret = mission_reload( str );
 
    lua_pushboolean( L, !ret );
    return 1;

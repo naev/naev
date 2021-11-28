@@ -35,6 +35,7 @@ int events_load (void);
 void events_exit (void);
 void events_cleanup (void);
 void event_checkValidity (void);
+int event_reload( const char *name );
 
 /*
  * Triggering.
