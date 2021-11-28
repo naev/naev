@@ -40,7 +40,7 @@ function create ()
    if ant.datecheck() then misn.finish() end
 
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
-      return p.tags().industrial
+      return p:tags().industrial
    end )
    if not mem.destpnt then
       misn.finish()
