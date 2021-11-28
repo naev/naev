@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nebula.c
  *
  * @brief Handles rendering and generating the nebula.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -25,10 +23,8 @@
 #include "rng.h"
 #include "spfx.h"
 
-
 #define NEBULA_PUFFS         32 /**< Amount of puffs to generate */
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
-
 
 /* Nebula properties */
 static double nebu_hue = 0.; /**< The hue. */
@@ -50,7 +46,6 @@ static gl_Matrix4 nebu_render_P;
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULA_PUFFS]; /**< Nebula puffs. */
 
-
 /**
  * @struct NebulaPuff
  *
@@ -68,7 +63,6 @@ static int nebu_npuffs        = 0; /**< Number of puffs. */
 static double puff_x          = 0.;
 static double puff_y          = 0.;
 
-
 /*
  * prototypes
  */
@@ -79,7 +73,6 @@ static void nebu_renderPuffs( int below_player );
 /* Nebula render methods. */
 static void nebu_renderBackground( const double dt );
 static void nebu_blitFBO (void);
-
 
 /**
  * @brief Initializes the nebula.
@@ -92,7 +85,6 @@ int nebu_init (void)
    nebu_generatePuffs();
    return nebu_resize();
 }
-
 
 /**
  * @brief Handles a screen s
@@ -133,7 +125,6 @@ int nebu_resize (void)
    return 0;
 }
 
-
 /**
  * @brief Gets the nebula view radius.
  *
@@ -144,16 +135,13 @@ double nebu_getSightRadius (void)
    return nebu_view;
 }
 
-
 /**
  * @brief Cleans up the nebu subsystem.
  */
 void nebu_exit (void)
 {
-   int i;
-
    /* Free the puffs. */
-   for (i=0; i<NEBULA_PUFFS; i++)
+   for (int i=0; i<NEBULA_PUFFS; i++)
       gl_freeTexture( nebu_pufftexs[i] );
 
    if (nebu_dofbo) {
@@ -161,7 +149,6 @@ void nebu_exit (void)
       glDeleteTextures( 1, &nebu_tex );
    }
 }
-
 
 /**
  * @brief Renders the nebula.
@@ -173,7 +160,6 @@ void nebu_render( const double dt )
    nebu_renderBackground(dt);
    nebu_renderPuffs( 1 );
 }
-
 
 /**
  * @brief Renders the nebula using the multitexture approach.
@@ -210,7 +196,6 @@ static void nebu_renderBackground( const double dt )
    gl_checkErr();
 }
 
-
 /**
  * @brief If we're drawing the nebula buffered, copy to the screen.
  */
@@ -240,7 +225,6 @@ static void nebu_blitFBO (void)
    }
 }
 
-
 /**
  * @brief Updates visibility and stuff.
  */
@@ -255,7 +239,6 @@ void nebu_update( double dt )
    /* At density 1000 you have zero visibility. */
    nebu_view = (1000. - nebu_density) * mod;
 }
-
 
 /**
  * @brief Renders the nebula overlay (hides what player can't see).
@@ -312,7 +295,6 @@ void nebu_renderOverlay( const double dt )
    puff_y = 0.;
 }
 
-
 /**
  * @brief Renders the puffs.
  *
@@ -354,7 +336,6 @@ static void nebu_renderPuffs( int below_player )
    }
 }
 
-
 /**
  * @brief Moves the nebula puffs.
  */
@@ -363,7 +344,6 @@ void nebu_movePuffs( double x, double y )
    puff_x += x;
    puff_y += y;
 }
-
 
 /**
  * @brief Prepares the nebualae to be rendered.
@@ -403,10 +383,8 @@ void nebu_prep( double density, double volatility, double hue )
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
    for (int i=0; i<nebu_npuffs; i++) {
       /* Position */
-      nebu_puffs[i].x = (double)RNG(-NEBULA_PUFF_BUFFER,
-            SCREEN_W + NEBULA_PUFF_BUFFER);
-      nebu_puffs[i].y = (double)RNG(-NEBULA_PUFF_BUFFER,
-            SCREEN_H + NEBULA_PUFF_BUFFER);
+      nebu_puffs[i].x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF() - NEBULA_PUFF_BUFFER;
+      nebu_puffs[i].y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF() - NEBULA_PUFF_BUFFER;
 
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
@@ -418,7 +396,6 @@ void nebu_prep( double density, double volatility, double hue )
       nebu_puffs[i].col.a = 1.0;
    }
 }
-
 
 /**
  * @brief Generates nebula puffs.
@@ -435,10 +412,9 @@ static void nebu_generatePuffs (void)
       free(nebu);
 
       /* Load the texture */
-      nebu_pufftexs[i] =  gl_loadImage( sur, 0 );
+      nebu_pufftexs[i] = gl_loadImage( sur, 0 );
    }
 }
-
 
 /**
  * @brief Generates a SDL_Surface from a 2d nebula map
