@@ -135,7 +135,7 @@ function accept ()
    else
       text = fmt.f(_([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
     "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]]),
-         {pnt=misplanet, sys=missys, reward=reward_text}))
+         {pnt=misplanet, sys=missys, reward=reward_text})
       mem.talked = true
    end
 
@@ -144,8 +144,7 @@ function accept ()
    -- For more full-fledged visual novel API please see the vn module. The
    -- vntk module wraps around that and provides a more simple and easy to use
    -- interface, although it is much more limited.
-   if vntk.yesno( _("My Suit Collection"),
-         fmt.f(ask_text, {reward=reward_text}) ) then
+   if vntk.yesno( _("My Suit Collection"), text ) then
       -- Followup text.
       vntk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
 
