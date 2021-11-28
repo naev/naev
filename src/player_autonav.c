@@ -42,7 +42,7 @@ static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
 static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2 );
+static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw );
 static int player_autonavBrake (void);
 
 /**
@@ -456,31 +456,17 @@ static void player_autonav (void)
          p = pilot_getTarget( player.p );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         ret = player_autonavApproachBoard( &p->solid->pos, &p->solid->vel, &d );
-         if (ret)
-            player.autonav = AUTONAV_PLT_BOARD_BRAKE;
-         else if (!tc_rampdown)
+         ret = player_autonavApproachBoard( &p->solid->pos, &p->solid->vel, &d, p->ship->gfx_space->sw );
+         if (!tc_rampdown)
             player_autonavRampdown(d);
-         break;
 
-      case AUTONAV_PLT_BOARD_BRAKE:
-         ret = player_autonavBrake();
-
-         /* Try to land. */
+         /* Try to board. */
          if (ret) {
             ret = player_tryBoard(0);
             if (ret == PLAYER_BOARD_OK)
                player_autonavEnd();
-            else if (ret == PLAYER_BOARD_RETRY)
-               player.autonav = AUTONAV_PLT_BOARD_APPROACH;
-            else
-               player_autonavAbort(NULL);
-         }
-
-         /* See if should ramp down. */
-         if (!tc_rampdown) {
-            tc_rampdown = 1;
-            tc_down     = (tc_mod-tc_base) / 3.;
+            else if (!(ret == PLAYER_BOARD_RETRY))
+               player_autonavAbort(NULL); /* Not allowed to board, and it's not because of your position: abort. */
          }
          break;
    }
@@ -580,9 +566,9 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
       *dist2 = vect_dist( pos, &player.p->solid->pos );
 }
 
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2 )
+static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw )
 {
-   double d, t, velv, dist, timeFactor;
+   double d, timeFactor;
    Vector2d dir;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
@@ -604,28 +590,16 @@ static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel
    else
       player_accel( 0. );
 
-   /* Get current time to reach target. */
-   t  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
-      (player.p->thrust / player.p->solid->mass);
+   /* Distance for TC-rampdown. */
+   *dist2 = vect_dist( pos, &player.p->solid->pos );
 
-   /* Get velocity. */
-   velv  = MIN( player.p->speed, VMOD(player.p->solid->vel) );
-
-   /* Get distance. */
-   dist  = velv*(t+1.1*M_PI/player.p->turn) -
-      0.5*(player.p->thrust/player.p->solid->mass)*t*t;
-
-   /* Output distance^2 */
-   d        = vect_dist( pos, &player.p->solid->pos );
-   dist     = d - dist;
-   *dist2   = dist;
-
-   /* See if should start braking. */
-   if (dist < 0.) {
-      player_accelOver();
-      return 1;
-   }
-   return 0;
+   /* Check if velocity and position allow to board. */
+   if (*dist2 > sw * PILOT_SIZE_APPROX)
+      return 0;
+   if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
+            (double)pow2(MAX_HYPERSPACE_VEL))
+      return 0;
+   return 1;
 }
 
 /**
