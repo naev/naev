@@ -114,9 +114,9 @@ cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-$SUFFIX-win64.exe
 cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-$SUFFIX-source.tar.xz
 
 # Move Soundtrack to deployment location if this is a release.
-if [ "$NIGHTLY" == "true" ]; then
+if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
     echo "not preparing soundtrack"
-elif [ "$PRERELEASE" == "false" ]; then
+else
     cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-$SUFFIX-soundtrack.zip
 fi
 
@@ -124,52 +124,24 @@ fi
 
 if [ "$DRYRUN" == "false" ]; then
     run_gh --version
-    if [ "$NIGHTLY" == "true" ]; then
-        run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-        elif [ "$PRERELEASE" == "false" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
+    run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
+    run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
+    run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
+    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+        run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* --clobber
     fi
+    run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
 elif [ "$DRYRUN" == "true" ]; then
     run_gh --version
     if [ "$NIGHTLY" == "true" ]; then
-        # Run github nightly upload
         echo "github nightly upload"
-        ls -l -R "$OUTDIR"
+    elif [ "$PRERELEASE" == "true" ]; then
+        echo "github beta upload"
     else
-        if [ "$PRERELEASE" == "true" ]; then
-            # Run github beta upload
-            echo "github beta upload"
-            ls -l -R "$OUTDIR"
-        elif [ "$PRERELEASE" == "false" ]; then
-            # Run github release upload
-            echo "github release upload"
-            echo "github soundtrack upload"
-            ls -l -R "$OUTDIR"
-
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
+        echo "github release upload"
+        echo "github soundtrack upload"
     fi
-
+    ls -l -R "$OUTDIR"
 else
     echo "Something went wrong determining which mode to run this script in."
     exit 1
