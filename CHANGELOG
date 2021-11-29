@@ -2,6 +2,7 @@
    * Improved phrasing
    * Prevented players from getting stranded without access to fuel
    * Mission script fixes for "Helping Nelly" and "The one with the Visit"
+   * Outfit script fix for "Weapons Ionizer"
    * Fixed issues impacting at least some Windows / Intel graphics combinations
 
 * 0.9.0 (beta)

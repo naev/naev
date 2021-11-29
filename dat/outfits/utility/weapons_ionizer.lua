@@ -20,7 +20,7 @@ function update( p, po, _dt )
       return
    end
    if mem.forced_off then return end
-   if t == nil or t:health() > threshold then
+   if t == nil or not t:exists() or t:health() > threshold then
       po:state( "off" )
       return
    end
