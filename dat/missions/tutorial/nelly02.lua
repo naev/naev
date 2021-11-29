@@ -57,7 +57,8 @@ local lmisn = require "lmisn"
    2: Going to pick up repair pirate
    3. Dealt with pirate
    4: Got part
-   5: Flying back
+   5: Past nosy pacifier
+   6: Flying back
 --]]
 mem.misn_state = nil
 local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
@@ -227,6 +228,16 @@ function equip ()
    end
 end
 
+local function reset_osd ()
+   misn.osdCreate( _("Helping Nelly Out"), {
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
+   } )
+   if mem.misn_state >= 4 then
+      misn.osdActive(2)
+   end
+end
+
 function enter ()
    local scur = system.cur()
    if mem.misn_state <= 0  and scur == mem.retsys then
@@ -272,6 +283,9 @@ function enter ()
 
       mem.hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
+      mem.misn_state = 5
+   elseif mem.misn_state==5 then
+      reset_osd()
    end
 end
 
@@ -482,16 +496,6 @@ function timer_pirate_checkbribe ()
    end
 
    hook.timer( 3, "timer_pirate_checkbribe" )
-end
-
-local function reset_osd ()
-   misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
-      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
-   } )
-   if mem.misn_state >= 4 then
-      misn.osdActive(2)
-   end
 end
 
 function reset_osd_hook ()
