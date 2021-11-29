@@ -114,14 +114,14 @@ function targetExploded()
 end
 
 function targetDeath()
-   mem.sor= faction.get("Soromid")
+   local sor = faction.get("Soromid")
    hook.rm(mem.hexp)
    if mem.boarded then
-      mem.sor.modPlayer(-5)
+      sor:modPlayer(-5)
       return
    end
    tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
-   mem.sor.modPlayer(-5)
+   sor:modPlayer(-5)
    misn.finish(false)
 end
 
