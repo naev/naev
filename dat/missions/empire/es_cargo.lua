@@ -1,16 +1,16 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping">
-  <avail>
-   <priority>3</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
-   <chance>350</chance>
-   <done>Empire Recruitment</done>
-   <location>Computer</location>
-   <faction>Empire</faction>
-  </avail>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+  <chance>350</chance>
+  <done>Empire Recruitment</done>
+  <location>Computer</location>
+  <faction>Empire</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    Handles the randomly generated Empire mem.cargo missions.
@@ -85,7 +85,7 @@ function create()
    misn.setTitle( fmt.f(
       -- TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
       _("#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
-   misn.markerAdd(mem.destsys, "computer")
+   misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("Official Empire cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )
 end
