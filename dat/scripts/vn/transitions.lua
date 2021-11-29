@@ -296,9 +296,9 @@ const float height = 10.0;
 const vec3 bluetint = vec3( 0.2, 0.5, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
 
 /* Similar to smoothbeam, but more k == sharper. */
-float sharpbeam( float x, float k )
+float bump( float x )
 {
-   return pow( min( cos( M_PI_2 * x ), 1.0 - abs(x) ), k );
+   return min( cos( M_PI_2 * x ), 1.0 - abs(x) );
 }
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
@@ -312,14 +312,14 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    // Base arcs
    yoff = (1.0-p)*love_ScreenSize.y;
    ybase = yoff + height*snoise( ncoord );
-   v = max( 0.0, sharpbeam( 0.3*distance(ybase,px.y), m ) );
+   v = max( 0.0, bump( 0.3*distance(ybase,px.y) ) );
 
    // Extra arcs
    ncoord += vec2( 0.0, 5.0*u_time );
    y = yoff + height*snoise( 1.5*ncoord );
-   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+   v += max( 0.0, bump( 0.5*distance(y,px.y) ) );
    y = yoff + height*snoise( 2.0*ncoord );
-   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+   v += max( 0.0, bump( 0.5*distance(y,px.y) ) );
 
    // Create colour
    vec4 arcs = vec4( bluetint, v );
