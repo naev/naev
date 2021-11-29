@@ -136,6 +136,7 @@ local function gen_question( difficulty )
    end
 end
 
+local nplayed
 function create ()
    local pnt = planet.cur()
 
@@ -201,7 +202,7 @@ function create ()
       nwon = nwon + nw
       nlost = nlost + nl
    end
-   local nplayed = nwon + nlost
+   nplayed = nwon + nlost
 
    -- Clear met if didn't play last time
    if nplayed == 0 then
@@ -329,7 +330,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       vn.func( function ()
          var.push("shiplover_met",true)
       end )
-   elseif var.peek( "shiplover_quiz")==nil and var.peek("shiplover_met") then
+   elseif nplayed==0 and var.peek("shiplover_met") then
       -- Met, didn't play quiz and came back
       vn.na(_("You once again approach the ship enthusiast."))
       sl(_([["So you're back. Did you change your mind about playing my ship quiz?"]]))
