@@ -1007,6 +1007,9 @@
   <item>Unicorp D-24 Medium Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
  </tech>
  <tech name="Hulls High">
   <item>S&amp;K Ultralight Combat Plating</item>
@@ -1014,9 +1017,6 @@
   <item>Nexus Light Stealth Plating</item>
   <item>S&amp;K Medium Combat Plating</item>
   <item>S&amp;K Medium-Heavy Combat Plating</item>
-  <item>S&amp;K Small Cargo Hull</item>
-  <item>S&amp;K Medium Cargo Hull</item>
-  <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
  </tech>
  <tech name="Hulls Elite">
