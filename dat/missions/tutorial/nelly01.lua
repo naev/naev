@@ -156,7 +156,7 @@ They cock their head a bit at you.
 
    vn.label("novice_yes")
    nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window."]]), {sys=mem.destsys}))
+"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
    vn.done( tutnel.nelly.transition )
 
    vn.label("novice_no")
