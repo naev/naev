@@ -154,8 +154,9 @@ typedef struct Planet_ {
 #define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
 #define SYSTEM_DISCOVERED  (1<<4) /**< System has been discovered. This is a temporary flag used by the map. */
 #define SYSTEM_HIDDEN      (1<<5) /**< System is temporarily hidden from view. */
-#define SYSTEM_HAS_LANDABLE (1<<6) /**< System has landable assets (temporary use by map!) */
-#define SYSTEM_NOLANES     (1<<7) /**< System should not use safe lanes at all. */
+#define SYSTEM_HAS_KNOWN_LANDABLE (1<<6) /**< System has potentially landable assets that are known (temporary use by map!) */
+#define SYSTEM_HAS_LANDABLE (1<<7) /**< System has landable assets (temporary use by map!) */
+#define SYSTEM_NOLANES     (1<<8) /**< System should not use safe lanes at all. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */

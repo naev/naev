@@ -179,11 +179,10 @@ static void map_setup (void)
             continue;
          if (!planet_hasService(p, PLANET_SERVICE_LAND) || !planet_hasService(p, PLANET_SERVICE_INHABITED))
             continue;
+         sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
          planet_updateLand( p );
-         if (p->can_land) {
+         if (p->can_land)
             sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
-            break;
-         }
       }
 
       int known = 1;
@@ -1009,7 +1008,7 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
 
-      if (!sys_isKnown(sys) && !editor)
+      if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && !editor)
          continue;
 
       tx = x + sys->pos.x*map_zoom;
@@ -1195,7 +1194,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       if (editor || map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE) {
-         if (!system_hasPlanet(sys))
+         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE))
             continue;
          /* Planet colours */
          if (!editor && !sys_isKnown(sys))
