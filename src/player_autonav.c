@@ -539,7 +539,7 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
    /* Define the control coefficients.
       Maybe radius could be adjustable by the player. */
    const double Kp = 10.;
-   const double Kd = 10.84*timeFactor-10.82;
+   const double Kd = MAX( 5., 10.84*timeFactor-10.82 );
    radius = 100.;
 
    /* Find a point behind the target at a distance of radius unless stationary, or not following. */
@@ -576,7 +576,7 @@ static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel
 
    /* Define the control coefficients. */
    const double Kp = 10.;
-   const double Kd = 10.84*timeFactor-10.82;
+   const double Kd = MAX( 5., 10.84*timeFactor-10.82 );
 
    vect_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
          (vel->x - player.p->solid->vel.x) *Kd,
