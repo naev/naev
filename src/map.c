@@ -1008,7 +1008,7 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
 
-      if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && !editor)
+      if ((!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) || !sys_isKnown(sys)) && !editor)
          continue;
 
       tx = x + sys->pos.x*map_zoom;
