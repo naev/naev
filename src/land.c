@@ -1346,7 +1346,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay )
 {
-   int h, stu;
+   int h, stu, should_save;
    char *nt;
    double a, r;
 
@@ -1409,8 +1409,16 @@ void takeoff( int delay )
    player.p->nav_hyperspace = h;
 
    /* Save all. */
-   /* TODO We should probably make this more sophisticated and figure out if the player is stranded (no refuel ports in system). */
-   if (planet_hasService(land_planet,PLANET_SERVICE_REFUEL) && (save_all() < 0)) /* must be before cleaning up planet */
+   should_save = 0; /* Only save when the player shouldn't get stranded. */
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *p = cur_system->planets[i];
+      planet_updateLand( p );
+      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
+         should_save = 1;
+         break;
+      }
+   }
+   if (should_save && (save_all() < 0)) /* must be before cleaning up planet */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
