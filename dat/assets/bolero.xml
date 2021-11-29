@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>4.56745e+07</population>
+  <population>4.56745e+06</population>
   <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
@@ -28,8 +28,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Bolero is one of the empire's most successful planets. The population is prosperous and successful, and the planet's conditions are mild. Although it is still treated as something of a backwater, it is becoming increasingly important in Imperial politics.</description>
-  <bar>The bar here is an old-Earth style pub, with a low ceiling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all.</bar>
+  <description>Bolero is one of the Empire's most successful planets. The population is prosperous and successful, and the planet's conditions are mild. Although it is still treated as something of a backwater due to its location, it is becoming increasingly important in Imperial politics. A lot of Bolero's popularity comes from its Earth-like climate, giving a reassuring sense of nostalgia to all those who were able to visit Earth before the Incident. However, some people avoid it for exactly the same reason…</description>
+  <bar>Making the most of Bolero's similarity with Earth, the bar here is an old-Earth style pub, with a low ceiling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all. There seems to be relatively few locals mixed in with the patrons, with the majority of people looking like temporary visitors, either arriving for vacations or business trips.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
@@ -48,4 +48,7 @@
   <item>Low Tech Upgrades</item>
   <item>Engines High</item>
  </tech>
+ <tags>
+  <tag>tourism</tag>
+ </tags>
 </asset>
