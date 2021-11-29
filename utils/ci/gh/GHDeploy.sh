@@ -53,31 +53,15 @@ if [[ -z "$TAGNAME" ]]; then
     exit -1
 fi
 
-retry() {
-    local -r -i max_attempts="$1"; shift
-    local -i attempt_num=1
-    until "$@"
-    do
-        if ((attempt_num==max_attempts))
-        then
-            echo "Attempt $attempt_num failed and there are no more attempts left!"
-            return 1
-        else
-            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
-            sleep $((attempt_num++))
-        fi
-    done
-}
-
-if ! [ -x "$(command -v gh)" ]; then
-    echo "You don't have gh (github cli client) in PATH"
+if ! [ -x "$(command -v github-assets-uploader)" ]; then
+    echo "You don't have github-assets-uploader in PATH"
     exit -1
 else
-    GH="gh"
+    GH="github-assets-uploader"
 fi
 
-run_gh () {
-    retry 5 $GH $@
+run_gau () {
+    $GH -retry 5 -logtostderr $@
 }
 
 # Collect date and assemble the VERSION suffix
@@ -121,18 +105,21 @@ else
 fi
 
 # Push builds to github via gh
+#
+# Media types taken from: https://www.iana.org/assignments/media-types/media-types.xhtml
+#
 
 if [ "$DRYRUN" == "false" ]; then
-    run_gh --version
-    run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-    run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-    run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
+    run_gau -version
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.zip -mediatype "application/zip" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-        run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* --clobber
+        run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip -mediatype "application/zip" -overwrite
     fi
-    run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz -mediatype "application/x-gtar" -overwrite
 elif [ "$DRYRUN" == "true" ]; then
-    run_gh --version
+    run_gau -version
     if [ "$NIGHTLY" == "true" ]; then
         echo "github nightly upload"
     elif [ "$PRERELEASE" == "true" ]; then
