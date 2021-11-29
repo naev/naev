@@ -398,7 +398,7 @@ function transitions.get( name, seconds, transition )
 
    local prefix = string.format( [[
 uniform Image texprev;
-uniform float progress;
+uniform float progress = 0.0;
 const float u_r = %f;
    ]], love_math.random() )
 
