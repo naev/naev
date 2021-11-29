@@ -1194,7 +1194,9 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       if (editor || map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE) {
-         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE))
+         if (!system_hasPlanet(sys))
+            continue;
+         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && !editor)
             continue;
          /* Planet colours */
          if (!editor && !sys_isKnown(sys))
