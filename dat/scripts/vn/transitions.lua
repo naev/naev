@@ -308,14 +308,14 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    const float m = 1.0;
    float ybase, y, yoff, v;
-   vec2 ncoord = vec2( 0.03 * px.x, 5.0*u_time ) + 1000.0 * u_r;
+   vec2 ncoord = vec2( 0.03 * px.x, 5.0*u_time ) + 100.0 * u_r;
    // Base arcs
    yoff = (1.0-p)*love_ScreenSize.y;
    ybase = yoff + height*snoise( ncoord );
    v = max( 0.0, sharpbeam( 0.3*distance(ybase,px.y), m ) );
 
    // Extra arcs
-   ncoord = vec2( 0.03 * px.x, 10.0*u_time ) + 1000.0 * u_r;
+   ncoord += vec2( 0.0, 5.0*u_time );
    y = yoff + height*snoise( 1.5*ncoord );
    v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
    y = yoff + height*snoise( 2.0*ncoord );
@@ -413,7 +413,7 @@ const float u_r = %f;
       shader:send( "noisetex", shader._noisetex )
    end
    if shader:hasUniform("u_time") then
-      shader._dt = 1000 * love_math.random()
+      shader._dt = -100 * love_math.random()
       shader.update = function( self, dt )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )
