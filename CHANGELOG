@@ -1,4 +1,10 @@
-* 0.9.0 (unreleased)
+* 0.9.0 (since beta.1)
+   * Improved phrasing
+   * Prevented players from getting stranded without access to fuel
+   * Mission script fixes for "Helping Nelly" and "The one with the Visit"
+   * Fixed issues impacting at least some Windows / Intel graphics combinations
+
+* 0.9.0 (beta)
    * New mechanics
       * Added new utility outfits with complex effects
       * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
