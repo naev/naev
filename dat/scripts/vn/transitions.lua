@@ -298,7 +298,7 @@ const vec3 bluetint = vec3( 0.2, 0.5, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
 /* Similar to smoothbeam, but more k == sharper. */
 float sharpbeam( float x, float k )
 {
-   return pow( min( cos( M_PI * x / 2.0 ), 1.0 - abs(x) ), k );
+   return pow( min( cos( M_PI_2 * x ), 1.0 - abs(x) ), k );
 }
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
