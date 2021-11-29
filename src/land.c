@@ -1408,7 +1408,8 @@ void takeoff( int delay )
    space_init( NULL, 1 );
    player.p->nav_hyperspace = h;
 
-   /* cleanup */
+   /* Save all. */
+   /* TODO We should probably make this more sophisticated and figure out if the player is stranded (no refuel ports in system). */
    if (planet_hasService(land_planet,PLANET_SERVICE_REFUEL) && (save_all() < 0)) /* must be before cleaning up planet */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
