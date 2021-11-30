@@ -92,17 +92,19 @@ local function get_nearest_jump(pil)
 end
 --- create enemy ships
 local function spawn_baddies(sp)
+   local fdrone = faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
-   scom[4] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[5] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[6] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
---   scom[7] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+   scom[1] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[2] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[3] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+   scom[4] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+--   scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+--   scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
+--   scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end
