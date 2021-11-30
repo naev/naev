@@ -1,4 +1,4 @@
-local colour = {
+return {
    -- Deiz's Super font Palette
    FontRed        = { 1.0, 0.4, 0.4 },
    FontGreen      = { 0.5, 1.0, 0.4 },
@@ -9,5 +9,3 @@ local colour = {
    FontOrange     = { 1.0, 0.3, 1.0 },
    FontWhite      = { 0.95, 0.95, 0.95 },
 }
-
-return colour
