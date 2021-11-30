@@ -116,7 +116,7 @@ They grin.]]),
    vn.run()
 
    if not accepted then
-      misn.finish(false)
+      return
    end
 
    misn.accept()
