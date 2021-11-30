@@ -11,9 +11,9 @@
   <location>Bar</location>
   <planet>Vilati Vilata</planet>
  </avail>
-  <notes>
-   <campaign>Nebula Research</campaign>
-  </notes>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
 </mission>
 --]]
 --[[
@@ -189,7 +189,7 @@ local function continueToDest(pilot)
         pilot:setNoLand(false)
         if mem.destplanet ~= nil then
             pilot:land(mem.destplanet, true)
-            misn.markerMove(mem.misn_marker, mem.destplanet:system())
+            misn.markerMove(mem.misn_marker, mem.destplanet)
         else
             pilot:hyperspace(mem.nextsys, true)
             misn.markerMove(mem.misn_marker, mem.nextsys)

@@ -10,10 +10,10 @@
   <location>Bar</location>
   <planet>Jorla</planet>
  </avail>
-  <notes>
-   <campaign>Nebula Research</campaign>
-   <tier>2</tier>
-  </notes>
+ <notes>
+  <campaign>Nebula Research</campaign>
+  <tier>2</tier>
+ </notes>
 </mission>
 --]]
 --[[
@@ -102,9 +102,7 @@ function land()
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
     He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]]),
             {pnt=homeworld, credits=fmt.credits(credits)} ) )
-        misn.cargoRm(mem.cargo)
         player.pay(credits)
-        misn.markerRm(mem.misn_marker)
         zlk.addNebuResearchLog(
             _("You helped a Za'lek student to collect sensor data in the Nebula.") )
         misn.finish(true)
@@ -189,6 +187,6 @@ function endSecondScan()
         _([["OK, my measurements are complete! Let's go back to {pnt}."]]),
 	{pnt=homeworld} ) )
     mem.misn_stage = 3
-    misn.markerMove(mem.misn_marker, homeworld_sys)
+    misn.markerMove(mem.misn_marker, homeworld)
     misn.osdActive(3)
 end

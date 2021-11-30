@@ -53,7 +53,7 @@ function accept()
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."))
-    mem.misn_marker = misn.markerAdd(dest_sys, "low")
+    mem.misn_marker = misn.markerAdd(dest_planet, "low")
 
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
@@ -67,7 +67,7 @@ function accept()
 end
 
 local function dest_updated()
-    misn.markerMove(mem.misn_marker, dest_sys)
+    misn.markerMove(mem.misn_marker, dest_planet)
     misn.osdCreate(_("Shielding Prototype Funding"), {
         fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
         fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
@@ -105,13 +105,12 @@ function land()
     Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour.. whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you..
     You continue your tour, as you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. Those Za'lek are indeed trying to escape the party.]]))
             tk.msg(_("Crashing a party"), fmt.f(_([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm. "We're done here. Bring me back to {pnt}!" Dr. Mensing quietly tells you. For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]), {pnt=dest_planet}))
-            misn.markerMove(mem.misn_marker, dest_sys)
+            misn.markerMove(mem.misn_marker, dest_planet)
             misn.osdActive(2)
         elseif mem.stage == 7 then
             tk.msg(_("Finally back home"), fmt.f(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project on Ruadan Prime and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"
     She gives you a credit chip worth {credits} and leaves.]]), {credits=fmt.credits(credits)}))
             player.pay(credits)
-            misn.markerRm(mem.misn_marker)
             zlk.addNebuResearchLog(_([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]]))
             misn.finish(true)
         end

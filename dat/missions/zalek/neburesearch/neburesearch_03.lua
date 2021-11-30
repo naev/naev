@@ -1,17 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="The Substitute Speaker">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>Emergency of Immediate Inspiration</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Jorla</planet>
-  </avail>
- </mission>
+<mission name="The Substitute Speaker">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>Emergency of Immediate Inspiration</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Jorla</planet>
+ </avail>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
+</mission>
 --]]
 --[[
 
@@ -67,7 +70,7 @@ function accept()
     misn.setTitle(_("The Substitute Speaker"))
     misn.setReward(_("a reputation as scientist (?)"))
     misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=mem.timelimit}))
-    mem.misn_marker = misn.markerAdd(dest_sys, "high")
+    mem.misn_marker = misn.markerAdd(dest_planet, "high")
 
     misn.accept()
     hook.land("land")

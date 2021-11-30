@@ -12,6 +12,9 @@
   <faction>Empire</faction>
   <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
  </avail>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
 </mission>
 --]]
 --[[
@@ -23,7 +26,6 @@
    Difficulty: Easy
 
 --]]
-
 local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
@@ -65,7 +67,7 @@ function accept()
     misn.setTitle(_("Emergency of Immediate Inspiration"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
-    mem.misn_marker = misn.markerAdd(homeworld_sys, "low")
+    mem.misn_marker = misn.markerAdd(homeworld, "low")
 
     misn.accept()
     misn.osdCreate(_("Emergency of Immediate Inspiration"), {
@@ -85,7 +87,6 @@ function land()
             tk.msg(_("Mission accomplished"), fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}) .. "\n\n" .. request_text)
             player.pay(credits)
         end
-        misn.markerRm(mem.misn_marker)
         zlk.addNebuResearchLog(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end
