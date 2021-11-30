@@ -157,7 +157,7 @@ function create()
     mem.distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
     mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
-    misn.markerAdd(mem.destsys, "computer")
+    misn.markerAdd(mem.destplanet, "computer")
     misn.setTitle( fmt.f(_("SR: {tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
     car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
     misn.setReward(fmt.credits(mem.reward))
