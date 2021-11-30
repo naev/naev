@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Shopping">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
    Mission: The one with the Shopping
 
@@ -67,7 +67,7 @@ function accept()
    misn.setDesc(_("You've been hired by Dr. Geller to collect some materials he urgently needs for his research."))
    misn.setTitle(_("The one with the Shopping"))
    misn.setReward(_("The gratitude of science and a bit of compensation"))
-   mem.misn_mark = misn.markerAdd( mem.t_sys[1], "high" )
+   mem.misn_mark = misn.markerAdd( mem.t_pla[1], "high" )
    mem.talked = false
    mem.lhook1 =  hook.land("land1", "land")
 end
@@ -102,7 +102,7 @@ function first_trd()
      fmt.f(_("Go to the {sys} system and talk to the contact person on {pnt}"), {sys=mem.t_sys[2], pnt=mem.t_pla[2]}),
   })
 
-  misn.markerMove(mem.misn_mark, mem.t_sys[2])
+  misn.markerMove(mem.misn_mark, mem.t_pla[2])
 
   mem.lhook2 = hook.land("land2", "land")
 
@@ -127,7 +127,7 @@ function second_trd()
      fmt.f(_("Return to the {sys} system to the trader on {pnt}"), {sys=mem.t_sys[1], pnt=mem.t_pla[1]}),
   })
  -- create hook that player will be hailed by authorities bc of toxic materials
-  misn.markerMove(mem.misn_mark, mem.t_sys[1])
+  misn.markerMove(mem.misn_mark, mem.t_pla[1])
   hook.rm(mem.lhook2)
   hook.enter("sys_enter")
   mem.traded1 = true
@@ -144,7 +144,7 @@ function third_trd()
      fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=mem.t_sys[3], pnt=mem.t_pla[3]}),
   })
 
-  misn.markerMove(mem.misn_mark, mem.t_sys[3])
+  misn.markerMove(mem.misn_mark, mem.t_pla[3])
 
   hook.rm(mem.lhook1)
 
