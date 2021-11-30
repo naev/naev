@@ -1,11 +1,13 @@
---[[
-   Mission helper stuff
+--[[--
+   Mission helper utilities.
+   @module lmisn
 --]]
 local lmisn = {}
 
 --[[
    Sound Effects
 --]]
+
 local audio
 local _sfx
 local function _sfx_load ()
@@ -16,6 +18,9 @@ local function _sfx_load ()
    }
 end
 
+--[[--
+   Plays a happy sound.
+--]]
 function lmisn.sfxVictory ()
    if not _sfx then _sfx_load() end
 
@@ -23,6 +28,9 @@ function lmisn.sfxVictory ()
    sfx:play()
 end
 
+--[[--
+   Plays another happy sound.
+--]]
 function lmisn.sfxMoney ()
    if not _sfx then _sfx_load() end
 
@@ -31,6 +39,14 @@ function lmisn.sfxMoney ()
 end
 
 
+--[[--
+   Returns a complete or filtered table of landable planets.
+
+   @tparam[opt] System sys The system to search, defaulting to the current one.
+   @tparam[opt] Faction fct If nil, return all landable planets in the system, otherwise...
+   @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restrict to its enemies.
+   @treturn table All matching planets in a list.
+--]]
 function lmisn.getLandablePlanets( sys, fct, fctmatch )
    sys = sys or system.cur()
    if fct ~= nil then
@@ -54,7 +70,14 @@ function lmisn.getLandablePlanets( sys, fct, fctmatch )
 end
 
 
--- Choose the next system to jump to on the route from system nowsys to system finalsys.
+--[[--
+   Choose the next system to jump to on the route from system nowsys to system finalsys.
+
+   @tparam System nowsys Start point.
+   @tparam System finalsys End point.
+   @tparam boolean hidden Whether the path may include hidden systems.
+   @treturn System The next system to jump to, defaulting to nowsys if there's no path or nothing to do.
+--]]
 function lmisn.getNextSystem( nowsys, finalsys, hidden )
    if nowsys == finalsys or finalsys == nil then
        return nowsys
@@ -103,38 +126,37 @@ function lmisn.sysFilters.factionLandable( fct, samefact )
    end
 end
 
---[[
--- @brief Fetches an array of systems from min to max jumps away from the given
---       system sys.
---
--- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
---
--- @code
--- local planets = {}
--- lmisn.getSysAtDistance( system.cur(), 1, 6,
---     function(s)
---         for i, v in ipairs(s:planets()) do
---             if v:faction() == faction.get("Sirius") and v:class() == "M" then
---                 return true
---             end
---         end
---         return false
---     end )
---
--- if #planets == 0 then abort() end -- In case no suitable planets are in range.
---
--- local index = rnd.rnd(1, #planets)
--- destplanet = planets[index][1]
--- destsys = planets[index][2]
--- @endcode
---
---    @param sys System to calculate distance from or nil to use current system
---    @param min Min distance to check for.
---    @param max Maximum distance to check for.
---    @param filter Optional filter function to use for more details.
---    @param data Data to pass to filter
---    @param hidden Whether or not to consider hidden jumps (off by default)
---    @return The table of systems n jumps away from sys
+--[[--
+   Fetches an array of systems from min to max jumps away from the given
+         system sys.
+
+   The following example gets a random Sirius M class planet between 1 to 6 jumps away.
+
+   @usage
+   local planets = {}
+   lmisn.getSysAtDistance( system.cur(), 1, 6,
+       function(s)
+           for i, v in ipairs(s:planets()) do
+               if v:faction() == faction.get("Sirius") and v:class() == "M" then
+                   return true
+               end
+           end
+           return false
+       end )
+
+   if #planets == 0 then abort() end -- In case no suitable planets are in range.
+
+   local index = rnd.rnd(1, #planets)
+   destplanet = planets[index][1]
+   destsys = planets[index][2]
+
+      @param sys System to calculate distance from or nil to use current system
+      @param min Min distance to check for.
+      @param max Maximum distance to check for.
+      @param filter Optional filter function to use for more details.
+      @param data Data to pass to filter
+      @param hidden Whether or not to consider hidden jumps (off by default)
+      @return The table of systems n jumps away from sys
 --]]
 function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    -- Get default parameters
@@ -178,7 +200,7 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    return finalset
 end
 
---[[
+--[[--
    Works the same as lmisn.getSysAtDistance, but for planets.
 
    Filter is applied on a planet level.
@@ -200,20 +222,20 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, h
    return pnts
 end
 
---[[
-   @brief Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
+--[[--
+   Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
 
    @usage lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
 
-      @luatparam[opt=system.cur()] System sys System to base distance calculations off of.
-      @luatparam number min Minimum jump distance to get planet at.
-      @luatparam number max Maximum jump distance to get planet at.
-      @luatparam[opt=nil] Faction fct What faction to do landing checks with.
-      @luatparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
-      @luatparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
-      @luaparam[opt=nil] data Custom data that will be passed to filter.
-      @luatparam[opt=false] boolean hidden
-      @luatpreturn Planet A single planet matching all the criteria.
+      @tparam[opt=system.cur()] System sys System to base distance calculations off of.
+      @tparam number min Minimum jump distance to get planet at.
+      @tparam number max Maximum jump distance to get planet at.
+      @tparam[opt=nil] Faction fct What faction to do landing checks with.
+      @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
+      @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+      @param[opt=nil] data Custom data that will be passed to filter.
+      @tparam[opt=false] boolean hidden
+      @treturn Planet A single planet matching all the criteria.
 --]]
 function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
@@ -223,15 +245,13 @@ function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, d
    return planet.getS( candidates[ rnd.rnd(1,#candidates) ] )
 end
 
---[[
--- @brief Wrapper for player.misnActive that works on a table of missions.
---
--- @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
---
---    @luaparam names Table of names of missions to check
---    @luareturn true if any of the listed missions are active
---
--- @luafunc anyMissionActive( names )
+--[[--
+   Wrapper for player.misnActive that works on a table of missions.
+
+   @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
+
+      @param names Table of names of missions to check
+      @return true if any of the listed missions are active
 --]]
 function lmisn.anyMissionActive( names )
    for i, j in ipairs( names ) do
