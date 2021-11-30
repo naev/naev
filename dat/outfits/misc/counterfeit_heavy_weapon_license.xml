@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Counterfeit Heavy Weapon License">
  <general>
-  <rarity>1</rarity>
+  <rarity>3</rarity>
   <mass>0</mass>
   <price>625000</price>
   <gfx_store>license.webp</gfx_store>
