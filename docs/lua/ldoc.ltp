@@ -15,6 +15,8 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://naev.org/favicon.ico">
   <link rel="stylesheet" href="$(ldoc.css)"><!-- CSS -->
   <link rel="stylesheet" href=https://naev.org/style.css><!-- CSS -->
+  <!-- EnlighterJS Resources !-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.css" />
   <title>$(ldoc.title)</title><!-- Website information -->
 </head>
 <body class="bg-light">
@@ -129,7 +131,7 @@
     <h3>Usage:</h3>
     <ul>
 #     for usage in iter(module.usage) do
-        $(li)<pre class="example">$(ldoc.escape(usage))</pre>$(il)
+        $(li)<pre data-enlighter-language="lua" class="example">$(ldoc.escape(usage))</pre>$(il)
 #     end -- for
     </ul>
 #   end -- if usage
@@ -174,7 +176,7 @@
         $(M(ldoc.descript(kitem),kitem))
 #       if kitem.usage then
             <h3>Usage:</h3>
-            <pre class="example">$(ldoc.prettify(kitem.usage[1]))</pre>
+            <pre data-enlighter-language="lua" class="example">$(ldoc.escape(kitem.usage[1]))</pre>
 #        end
 #   end
     <dl class="function">
@@ -287,7 +289,7 @@
     <h3>Usage:</h3>
     <ul>
 #     for usage in iter(item.usage) do
-        $(li)<pre class="example">$(ldoc.prettify(usage))</pre>$(il)
+        $(li)<pre data-enlighter-language="lua" class="example">$(ldoc.escape(usage))</pre>$(il)
 #     end -- for
     </ul>
 #   end -- if usage
@@ -338,5 +340,19 @@
         </footer>
     </div>
 </div>
+  <!-- EnlighterJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/enlighterjs@3.4.0/dist/enlighterjs.min.js"></script>
+
+  <!-- Init Code -->
+  <script type="text/javascript">
+      // - highlight all pre + code tags (CSS3 selectors)
+      // - use theme "bootstrap4"
+      // - replace tabs with 3 spaces
+      EnlighterJS.init('pre', 'code', {
+              language : 'lua',
+              theme: 'bootstrap4',
+              indent : 2
+      });
+  </script>
 </body>
 </html>
