@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-28 10:37-0500\n"
+"POT-Creation-Date: 2021-11-30 00:11-0500\n"
 "PO-Revision-Date: 2021-11-28 15:38+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -2051,17 +2051,23 @@ msgstr "ボレロ"
 
 #: dat/assets/bolero.xml:31
 msgid ""
-"Bolero is one of the empire's most successful planets. The population is "
+"Bolero is one of the Empire's most successful planets. The population is "
 "prosperous and successful, and the planet's conditions are mild. Although it "
-"is still treated as something of a backwater, it is becoming increasingly "
-"important in Imperial politics."
+"is still treated as something of a backwater due to its location, it is "
+"becoming increasingly important in Imperial politics. A lot of Bolero's "
+"popularity comes from its Earth-like climate, giving a reassuring sense of "
+"nostalgia to all those who were able to visit Earth before the Incident. "
+"However, some people avoid it for exactly the same reason…"
 msgstr ""
 
 #: dat/assets/bolero.xml:32
 msgid ""
-"The bar here is an old-Earth style pub, with a low ceiling, warm beer and "
-"good food. The atmosphere is warm and welcoming, the clients are all polite "
-"and cheerful and the bouncers barely loom at all."
+"Making the most of Bolero's similarity with Earth, the bar here is an old-"
+"Earth style pub, with a low ceiling, warm beer and good food. The atmosphere "
+"is warm and welcoming, the clients are all polite and cheerful and the "
+"bouncers barely loom at all. There seems to be relatively few locals mixed "
+"in with the patrons, with the majority of people looking like temporary "
+"visitors, either arriving for vacations or business trips."
 msgstr ""
 
 #: dat/assets/bon_sebb.xml:2
@@ -13096,7 +13102,7 @@ msgstr "ソロミド 非存在 (距離 1)"
 msgid "Thurion Local"
 msgstr "ザーリオン 局所"
 
-#: dat/assets_virtual/tradelane.xml:2 src/map.c:695
+#: dat/assets_virtual/tradelane.xml:2 src/map.c:694
 msgid "Trade Lane"
 msgstr "貿易用航路"
 
@@ -13340,7 +13346,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:88
 #: dat/missions/neutral/kidnapped/traffic_00.lua:94
 #: dat/missions/neutral/kidnapped/traffic_00.lua:95
-#: dat/missions/tutorial/nelly02.lua:253 dat/scripts/common/pirate.lua:42
+#: dat/missions/tutorial/nelly02.lua:264 dat/scripts/common/pirate.lua:42
 msgid "Pirate"
 msgstr "海賊"
 
@@ -17136,7 +17142,7 @@ msgstr ""
 msgid "Map: Dvaered-Soromid trade route"
 msgstr "地図 : ドベーレッド—ソロミド貿易路"
 
-#: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:6
+#: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:7
 msgid ""
 "This map contains the main route between Dvaered and Soromid controlled "
 "space."
@@ -17266,7 +17272,7 @@ msgstr "この地図には、シリウスが支配する宙域へつづく星系
 msgid "Map: Sirius Core"
 msgstr "地図 : シリウス中心部"
 
-#: dat/outfits/maps/map_sirius_core.xml:6
+#: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
@@ -20281,7 +20287,7 @@ msgstr ""
 #: src/dev_uniedit.c:1271 src/dev_uniedit.c:1272 src/land_outfits.c:359
 #: src/land_outfits.c:360 src/land_outfits.c:361 src/land_outfits.c:362
 #: src/land_outfits.c:363 src/land_trade.c:160 src/land_trade.c:162
-#: src/land_trade.c:165 src/land_trade.c:166 src/map.c:565 src/map.c:566
+#: src/land_trade.c:165 src/land_trade.c:166 src/map.c:564 src/map.c:565
 #: src/outfit.c:287 src/outfit.c:306
 msgid "N/A"
 msgstr "—"
@@ -23324,7 +23330,7 @@ msgstr "燃料をやるつもりはない！"
 #. Spawn
 #: dat/ai/collective.lua:9 dat/ai/drone_miner.lua:9
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:293
-#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:242
+#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:253
 msgid "No response."
 msgstr "反応なし。"
 
@@ -25798,7 +25804,7 @@ msgstr "あなたの船は{plt}の部品を再利用して装甲 {armour:.0f}�
 #: src/dev_uniedit.c:1404 src/dev_uniedit.c:1603 src/dev_uniedit.c:1843
 #: src/info.c:266 src/info.c:346 src/info.c:464 src/info.c:600 src/info.c:792
 #: src/info.c:1012 src/info.c:1108 src/info.c:1453 src/land_outfits.c:159
-#: src/map.c:337 src/map_find.c:1031 src/map_system.c:202
+#: src/map.c:336 src/map_find.c:1031 src/map_system.c:202
 msgid "Close"
 msgstr "閉じる"
 
@@ -26305,7 +26311,7 @@ msgid "You found #o{title}!"
 msgstr "あなたは#o{title}#0を見つけた！"
 
 #. Log and message
-#: dat/events/discovery.lua:376 src/map.c:1888
+#: dat/events/discovery.lua:376 src/map.c:1889
 msgid "Discovery"
 msgstr "発見物"
 
@@ -27171,8 +27177,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:262 src/options.c:790 src/options.c:894
-#: src/options.c:1145 src/options.c:1197
+#: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:897
+#: src/options.c:1148 src/options.c:1200
 msgid "Cancel"
 msgstr "取り消し"
 
@@ -32708,11 +32714,11 @@ msgstr "｢この船の名前は？｣"
 #. Increase the difficulty as progresses
 #. Generate the question
 #. Create the log if necessary.
-#: dat/events/neutral/shiplover.lua:226
+#: dat/events/neutral/shiplover.lua:227
 msgid "Ship Quiz"
 msgstr "船クイズ"
 
-#: dat/events/neutral/shiplover.lua:226 dat/factions/standing/lib/base.lua:42
+#: dat/events/neutral/shiplover.lua:227 dat/factions/standing/lib/base.lua:42
 #: dat/factions/standing/lib/base.lua:51 dat/scripts/common/antlejos.lua:29
 #: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
@@ -32720,13 +32726,13 @@ msgid "Neutral"
 msgstr "中立"
 
 #. Determine reward
-#: dat/events/neutral/shiplover.lua:233
+#: dat/events/neutral/shiplover.lua:234
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
 "あなたは 5 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:236
+#: dat/events/neutral/shiplover.lua:237
 msgid ""
 "\"Wow. This is the 5th time you got my quiz right. This deserves a special "
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
@@ -32736,14 +32742,14 @@ msgstr ""
 "なトレーディングカードをあげるよ。気にしなくていい。そんなのは 10 枚はもって"
 "るから。これからはクイズをもっと難しくしなくちゃ｣"
 
-#: dat/events/neutral/shiplover.lua:242
+#: dat/events/neutral/shiplover.lua:243
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
 "right."
 msgstr ""
 "あなたは 10 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:245
+#: dat/events/neutral/shiplover.lua:246
 msgid ""
 "\"Wow. This is the 10th time you got my quiz right. You are doing much "
 "better than I anticipated. Here, take one of my favourite trading cards. "
@@ -32754,14 +32760,14 @@ msgstr ""
 "入ってるトレーディングカードを 1 枚あげるよ。なくさないでね。これはかなりとく"
 "べつなやつなんだ！　これからはクイズをもっと難しくしなくちゃ｣"
 
-#: dat/events/neutral/shiplover.lua:251
+#: dat/events/neutral/shiplover.lua:252
 msgid ""
 "You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
 "right."
 msgstr ""
 "あなたは 25 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:254
+#: dat/events/neutral/shiplover.lua:255
 msgid ""
 "\"Damn. This is the 25th time you got my quiz right. Nobody has played my "
 "quiz with me for this long. I guess I have to commemorate this in a special "
@@ -32775,13 +32781,13 @@ msgstr ""
 "しっかり大切にしてほしいね。だめっ！　カードの包みをはがさないで！　そんなこ"
 "としたら傷つくかもしれないでしょ！｣"
 
-#: dat/events/neutral/shiplover.lua:259
+#: dat/events/neutral/shiplover.lua:260
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr "あなたはクイズに正解したので、宇宙船マニアから{credits}を獲得した。"
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:262
+#: dat/events/neutral/shiplover.lua:263
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
@@ -32790,18 +32796,18 @@ msgstr ""
 "解いたね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:267 dat/events/neutral/shiplover.lua:281
+#: dat/events/neutral/shiplover.lua:268 dat/events/neutral/shiplover.lua:282
 msgid "Ship Enthusiast"
 msgstr "宇宙船マニア"
 
-#: dat/events/neutral/shiplover.lua:267
+#: dat/events/neutral/shiplover.lua:268
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr "小さな船の模型で遊んでいる驚くほど若い人物に気づいた。"
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:286
+#: dat/events/neutral/shiplover.lua:287
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
@@ -32809,29 +32815,29 @@ msgstr ""
 "奇妙な音をたてている人物に近づいた。宇宙船の音をまねているようだ。宇宙船のお"
 "もちゃで遊んでいる。"
 
-#: dat/events/neutral/shiplover.lua:287
+#: dat/events/neutral/shiplover.lua:288
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr "｢やあ、こんにちは。新しい限定品のランスロットの模型なんだけど？｣"
 
-#: dat/events/neutral/shiplover.lua:290
+#: dat/events/neutral/shiplover.lua:291
 msgid "\"It looks great!\""
 msgstr "｢すごいね！｣"
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:292
 msgid "\"It's awful.\""
 msgstr "｢ひどいね｣"
 
-#: dat/events/neutral/shiplover.lua:292
+#: dat/events/neutral/shiplover.lua:293
 msgid "\"Aren't you too young to be here?\""
 msgstr "｢こんなところにいるには若すぎない？｣"
 
-#: dat/events/neutral/shiplover.lua:303
+#: dat/events/neutral/shiplover.lua:304
 msgid "\"You know I own a real one.\""
 msgstr "｢ほら、本物をもってるから｣"
 
-#: dat/events/neutral/shiplover.lua:309
+#: dat/events/neutral/shiplover.lua:310
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
@@ -32839,7 +32845,7 @@ msgstr ""
 "｢わかってるね！　見つけるのにたくさんかかったんだよ。ずっと売りきれてて！　で"
 "もけっきょく報われたんだ｣"
 
-#: dat/events/neutral/shiplover.lua:313
+#: dat/events/neutral/shiplover.lua:314
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -32853,7 +32859,7 @@ msgstr ""
 "あなたは近くから見て、たしかにパイロットを見ることができた。この詳細度はかな"
 "りばかげている。"
 
-#: dat/events/neutral/shiplover.lua:318
+#: dat/events/neutral/shiplover.lua:319
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
@@ -32861,7 +32867,7 @@ msgstr ""
 "｢ここにいるには年よりすぎない？　飲むようなことしてないでしょ｣\n"
 "あなたに舌を出してみせてながら、まだ宇宙船で遊びつづけている。"
 
-#: dat/events/neutral/shiplover.lua:323
+#: dat/events/neutral/shiplover.lua:324
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -32875,7 +32881,7 @@ msgstr ""
 "そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートが"
 "あなたにもなんとか見わけられた。"
 
-#: dat/events/neutral/shiplover.lua:328
+#: dat/events/neutral/shiplover.lua:329
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -32885,56 +32891,56 @@ msgstr ""
 "もし正しく答えられたらいい賞品をあげるよ。やりたい？｣"
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:334
+#: dat/events/neutral/shiplover.lua:335
 msgid "You once again approach the ship enthusiast."
 msgstr "あなたはまた、あの宇宙船マニアに近づいた。"
 
-#: dat/events/neutral/shiplover.lua:335
+#: dat/events/neutral/shiplover.lua:336
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr "｢じゃあ戻ってきたんだ。船のクイズをやるのも考えなおした？｣"
 
-#: dat/events/neutral/shiplover.lua:337
+#: dat/events/neutral/shiplover.lua:338
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 "あなたはまた、あの宇宙船マニアに近づいた。どうもかなりあちこちと移動している"
 "らしい。"
 
-#: dat/events/neutral/shiplover.lua:338
+#: dat/events/neutral/shiplover.lua:339
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
 msgstr "｢船のクイズをまたやりたい？　用意した質問には完全にまいると思うな｣"
 
-#: dat/events/neutral/shiplover.lua:341 dat/missions/minerva/maikki2.lua:196
+#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
 msgstr "｢はい！｣"
 
-#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/kex4.lua:149
+#: dat/events/neutral/shiplover.lua:343 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
 msgstr "｢いいえ｣"
 
-#: dat/events/neutral/shiplover.lua:346
+#: dat/events/neutral/shiplover.lua:347
 msgid "\"Oh well, your loss!\""
 msgstr "｢しかたがないな。もったいなかったね！｣"
 
-#: dat/events/neutral/shiplover.lua:351
+#: dat/events/neutral/shiplover.lua:352
 msgid "\"Great! So here it goes. Listen carefully.\""
 msgstr "｢いいね！　じゃあやるよ。よく聞いててね｣"
 
-#: dat/events/neutral/shiplover.lua:368
+#: dat/events/neutral/shiplover.lua:369
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr "｢いいね！　じゃあこの船を見て、よく聞いててね｣"
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:408
+#: dat/events/neutral/shiplover.lua:409
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr "あなたは宇宙船マニアのクイズで不正解になった。"
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:412
+#: dat/events/neutral/shiplover.lua:413
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -35287,8 +35293,8 @@ msgstr "No spawn function found"
 #: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/gui.c:1524 src/map.c:502 src/map.c:508 src/map.c:514 src/map.c:520
-#: src/map.c:526 src/map.c:532 src/map.c:1680 src/map_overlay.c:221
+#: src/gui.c:1524 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
+#: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
 #: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player_autonav.c:91
 #: src/player_autonav.c:212 src/ship.c:205
 msgid "Unknown"
@@ -35765,7 +35771,7 @@ msgstr "宇宙港"
 #: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:125
 #: src/land_shipyard.c:214 src/land_trade.c:82 src/land_trade.c:84
 #: src/land_trade.c:117 src/load.c:355 src/load.c:403 src/load.c:445
-#: src/map.c:629 src/map.c:669 src/map.c:1719 src/map_find.c:721
+#: src/map.c:628 src/map.c:668 src/map.c:1720 src/map_find.c:721
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -43562,7 +43568,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec04.lua:70
 #: dat/missions/neutral/antlejos/ant05.lua:84
 #: dat/missions/sirius/heretic/heretic3.lua:63
-#: dat/missions/tutorial/nelly02.lua:308
+#: dat/missions/tutorial/nelly02.lua:322
 msgid "Return to {pnt}"
 msgstr "{pnt}に戻れ。"
 
@@ -50829,7 +50835,7 @@ msgid "Offer to help her"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:139 dat/missions/minerva/maikki2.lua:179
-#: dat/missions/tutorial/nelly01.lua:128 dat/missions/tutorial/nelly02.lua:125
+#: dat/missions/tutorial/nelly01.lua:128 dat/missions/tutorial/nelly02.lua:126
 msgid "Decline to help"
 msgstr "助力を断る"
 
@@ -70982,8 +70988,8 @@ msgstr "若者がひとりでテーブルについているのが見えた。"
 #. Check to see if truly accepted
 #. Update objectives
 #: dat/missions/tutorial/nelly01.lua:109 dat/missions/tutorial/nelly01.lua:179
-#: dat/missions/tutorial/nelly02.lua:203 dat/missions/tutorial/nelly02.lua:307
-#: dat/missions/tutorial/nelly02.lua:389 dat/missions/tutorial/nelly02.lua:488
+#: dat/missions/tutorial/nelly02.lua:204 dat/missions/tutorial/nelly02.lua:232
+#: dat/missions/tutorial/nelly02.lua:321 dat/missions/tutorial/nelly02.lua:403
 msgid "Helping Nelly Out"
 msgstr "ネリーを助ける"
 
@@ -71047,13 +71053,22 @@ msgid "\"Yes\""
 msgstr "｢はい｣"
 
 #: dat/missions/tutorial/nelly01.lua:158
+#, fuzzy
+#| msgid ""
+#| "\"I knew it! You seem to have a nice fresh aura around you. Reminds me of "
+#| "back in the day when I was starting out. Starting out can be a bit "
+#| "tricky, so I hope you don't mind if I give you some advice on the road."
+#| "\"\n"
+#| "\"For starters, if you haven't already, you should buy a #oLocal Map#0 "
+#| "that will help you get the directions to {sys}. You can buy it at the "
+#| "main landing window or the outfiting window.\""
 msgid ""
 "\"I knew it! You seem to have a nice fresh aura around you. Reminds me of "
 "back in the day when I was starting out. Starting out can be a bit tricky, "
 "so I hope you don't mind if I give you some advice on the road.\"\n"
 "\"For starters, if you haven't already, you should buy a #oLocal Map#0 that "
 "will help you get the directions to {sys}. You can buy it at the main "
-"landing window or the outfiting window.\""
+"landing window or the outfiting window. Anyway, Let's get going!\""
 msgstr ""
 "｢そうだと思った！　あなたにはういういしく楽しそうな雰囲気があるようだったか"
 "ら。始めたころの日々を思いだしましたよ。最初のころはちょっとやりにくいことが"
@@ -71073,8 +71088,8 @@ msgstr ""
 msgid "Deliver cargo to {pnt} in {sys}"
 msgstr "{sys}星系の{pnt}に貨物を運べ。"
 
-#: dat/missions/tutorial/nelly01.lua:181 dat/missions/tutorial/nelly02.lua:391
-#: dat/missions/tutorial/nelly02.lua:490
+#: dat/missions/tutorial/nelly01.lua:181 dat/missions/tutorial/nelly02.lua:234
+#: dat/missions/tutorial/nelly02.lua:405
 msgid "Return to {pnt} in {sys}"
 msgstr "{sys}星系の{pnt}に戻れ。"
 
@@ -71185,7 +71200,7 @@ msgstr ""
 msgid "Hear about the Info window"
 msgstr "情報ウィンドウについて聞く"
 
-#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:533
+#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:537
 msgid "Already know"
 msgstr "すでに知っている"
 
@@ -71466,7 +71481,8 @@ msgstr ""
 #. 2: Going to pick up repair pirate
 #. 3. Dealt with pirate
 #. 4: Got part
-#. 5: Flying back
+#. 5: Past nosy pacifier
+#. 6: Flying back
 #. --
 #. Non-persistent state
 #. luacheck: globals board death disable enter equip idle land reset_osd_hook spotter_spot timer_pirate timer_pirate_checkbribe timer_pirate_nelly timer_spotter timer_spotter_start (Hook functions passed by name)
@@ -71476,19 +71492,19 @@ msgstr ""
 #. Find destination system that sells ion cannons
 #. Must be claimable
 #. Sells Outfits
-#: dat/missions/tutorial/nelly02.lua:107
+#: dat/missions/tutorial/nelly02.lua:108
 msgid "You see a Nelly motioning to you at the table."
 msgstr "ネリーがテーブルから合図してくるのが見えた。"
 
-#: dat/missions/tutorial/nelly02.lua:109
+#: dat/missions/tutorial/nelly02.lua:110
 msgid "Helping Nelly Out… Again"
 msgstr "ネリーを助ける……また"
 
-#: dat/missions/tutorial/nelly02.lua:110
+#: dat/missions/tutorial/nelly02.lua:111
 msgid "Help Nelly fix their ship."
 msgstr "ネリーが船を修理するのを手伝え。"
 
-#: dat/missions/tutorial/nelly02.lua:121
+#: dat/missions/tutorial/nelly02.lua:122
 msgid ""
 "Nelly brightens up when you get near.\n"
 "\"Hey, I thought was able to get my ship up and running, but before I was "
@@ -71502,11 +71518,11 @@ msgstr ""
 "イオンキャノンを持ってますよね？　わたしの船を無力化して取りもどすのを手伝っ"
 "てもらえませんか？｣"
 
-#: dat/missions/tutorial/nelly02.lua:124
+#: dat/missions/tutorial/nelly02.lua:125
 msgid "Help them with their ship"
 msgstr "船の件で手助けする"
 
-#: dat/missions/tutorial/nelly02.lua:129
+#: dat/missions/tutorial/nelly02.lua:130
 msgid ""
 "They look dejected.\n"
 "\"I guess I'll have to see if there is any other way to solve my problem.\""
@@ -71514,7 +71530,7 @@ msgstr ""
 "ネリーは落胆したようだ。\n"
 "｢ほかの方法で問題が解決できるか調べなきゃならないみたいね｣"
 
-#: dat/missions/tutorial/nelly02.lua:135
+#: dat/missions/tutorial/nelly02.lua:136
 msgid ""
 "\"Thanks for the help again. So while I was preparing to take off on my "
 "ship, I heard a weird noise outside, and when I went to check out, the "
@@ -71528,7 +71544,7 @@ msgstr ""
 
 #. Sells Outfits
 #. Sells a particular outfit
-#: dat/missions/tutorial/nelly02.lua:172
+#: dat/missions/tutorial/nelly02.lua:173
 msgid ""
 "\"It looks like you already have some disabling weapons equipped. Make sure "
 "they are set in the info window as either a primary or secondary weapon in "
@@ -71539,7 +71555,7 @@ msgstr ""
 "トか瞬間発砲武器セットの主要兵器か副次兵器として設定してください。できたらわ"
 "たしの船を取りもどしに行きましょう！｣"
 
-#: dat/missions/tutorial/nelly02.lua:174
+#: dat/missions/tutorial/nelly02.lua:175
 msgid ""
 "\"It looks like you own some disabling weapons but don't have them equipped. "
 "Why don't you try to equip #o{outfitname} before we head out? We want to "
@@ -71549,7 +71565,7 @@ msgstr ""
 "#o{outfitname}#0を装備してくれませんか？　わたしの船は無力化してほしいんで"
 "す。破壊じゃありません！｣"
 
-#: dat/missions/tutorial/nelly02.lua:177
+#: dat/missions/tutorial/nelly02.lua:178
 msgid ""
 "\"It looks like this planet doesn't have neither an #ooutfitter#0 nor a "
 "#oshipyard#0 so you won't be able to change your current equipment. Try to "
@@ -71562,7 +71578,7 @@ msgstr ""
 "#o{nearplanet}#0とかですね。どんな施設があるか確認するのは、惑星を選択する"
 "か、地図からできます｣"
 
-#: dat/missions/tutorial/nelly02.lua:180
+#: dat/missions/tutorial/nelly02.lua:181
 msgid ""
 "\"It looks like you don't have any disabling weapons. Remember, you have to "
 "disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 "
@@ -71575,19 +71591,19 @@ msgstr ""
 "の船の無力化を試すべきです！｣"
 
 #. Check to see if truly accepted
-#: dat/missions/tutorial/nelly02.lua:196
+#: dat/missions/tutorial/nelly02.lua:197
 msgid "Equip a weapon with disable damage"
 msgstr "無力化できる武器を装備せよ。"
 
-#: dat/missions/tutorial/nelly02.lua:199
+#: dat/missions/tutorial/nelly02.lua:200
 msgid "Buy and equip a weapon with disable damage"
 msgstr "無力化できる武器を買って装備せよ。"
 
-#: dat/missions/tutorial/nelly02.lua:202
+#: dat/missions/tutorial/nelly02.lua:203
 msgid "Disable and board Nelly's ship in {sys}"
 msgstr "{sys}星系でネリーの船を無力化して移乗せよ。"
 
-#: dat/missions/tutorial/nelly02.lua:220
+#: dat/missions/tutorial/nelly02.lua:221
 msgid ""
 "\"You have equipped a #o{outfitname}#0 with disable damage. Looks like "
 "you'll be able to safely disable my rampant ship!\""
@@ -71595,15 +71611,19 @@ msgstr ""
 "｢無力化できる#o{outfitname}#0を装備しました。見さかいのないわたしの船を無事に"
 "無力化できるようになったようですね！｣"
 
-#: dat/missions/tutorial/nelly02.lua:234
+#: dat/missions/tutorial/nelly02.lua:233 dat/missions/tutorial/nelly02.lua:404
+msgid "Go to {pnt} in {sys}"
+msgstr "{sys}星系の{pnt}へ行け。"
+
+#: dat/missions/tutorial/nelly02.lua:245
 msgid "Llaminator MK2"
 msgstr "ラーミネイター MK2"
 
-#: dat/missions/tutorial/nelly02.lua:266
+#: dat/missions/tutorial/nelly02.lua:277
 msgid "Noisy Pacifier"
 msgstr "騒々しい調停者"
 
-#: dat/missions/tutorial/nelly02.lua:293
+#: dat/missions/tutorial/nelly02.lua:307
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
 "{boardkey}!\""
@@ -71611,7 +71631,7 @@ msgstr ""
 "ネリー : ｢無力化しました！　もう船に上につければ、{boardkey} で移乗できま"
 "す！｣"
 
-#: dat/missions/tutorial/nelly02.lua:301
+#: dat/missions/tutorial/nelly02.lua:315
 msgid ""
 "You board Nelly's ship and quickly go to the control panel to turn off the "
 "autonav."
@@ -71619,7 +71639,7 @@ msgstr ""
 "あなたたちはネリーの船に乗りこんで、いそいで制御卓のところへ行くと、自動操縦"
 "装置を止めた。"
 
-#: dat/missions/tutorial/nelly02.lua:302
+#: dat/missions/tutorial/nelly02.lua:316
 msgid ""
 "\"I hate when this happens. Err, I mean, this is the first time something "
 "like this has happened to me! Let me bring the ship back to {pnt} and meet "
@@ -71631,7 +71651,7 @@ msgstr ""
 
 #. Have the ship go back
 #. Faster again
-#: dat/missions/tutorial/nelly02.lua:327
+#: dat/missions/tutorial/nelly02.lua:341
 msgid ""
 "#rMISSION FAILED: you weren't supposed to destroy Nelly's ship!#0\n"
 "Although the mission has been aborted, you can still repeat it from the "
@@ -71641,11 +71661,11 @@ msgstr ""
 "この任務は失敗しましたが、まだ最初からやりなおすことができます。宇宙港のバー"
 "でネリーを見つけて再挑戦してください。"
 
-#: dat/missions/tutorial/nelly02.lua:335
+#: dat/missions/tutorial/nelly02.lua:349
 msgid "Nelly is motioning you to come join her at the table."
 msgstr "テーブルのところへ来るように、ネリーがあなたに合図した。"
 
-#: dat/missions/tutorial/nelly02.lua:342
+#: dat/missions/tutorial/nelly02.lua:356
 msgid ""
 "You land and quickly Nelly goes over to the outfitter and seems to get into "
 "some sort of argument with the person in charge. After a bit you see they "
@@ -71655,7 +71675,7 @@ msgstr ""
 "まったようだった。しばらくすると、二人がなにかを交換しているのがあなたにもわ"
 "かった。それからネリーはにっこりとした表情で戻ってきた。"
 
-#: dat/missions/tutorial/nelly02.lua:343
+#: dat/missions/tutorial/nelly02.lua:357
 msgid ""
 "\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
@@ -71664,16 +71684,16 @@ msgstr ""
 "でわたしの船の問題はなくなってくれます。#o{sys}#0星系の#o{pnt}#0に戻りましょ"
 "う！｣"
 
-#: dat/missions/tutorial/nelly02.lua:347
+#: dat/missions/tutorial/nelly02.lua:361
 msgid "Jumpdrive Repair Parts"
 msgstr "ジャンプドライブの修理部品"
 
-#: dat/missions/tutorial/nelly02.lua:347
+#: dat/missions/tutorial/nelly02.lua:361
 msgid "Spare parts that can be used to break a ship's broken jumpdrive."
 msgstr "壊れたジャンプドライブを修理するのに使える交換用の部品。"
 
 #. Finished mission
-#: dat/missions/tutorial/nelly02.lua:359
+#: dat/missions/tutorial/nelly02.lua:373
 msgid ""
 "\"We finally made it. Nothing ever comes really easy does it? Ah, before I "
 "forget, let me reward you for your troubles.\""
@@ -71682,7 +71702,7 @@ msgstr ""
 "に、面倒おかけしたことに謝礼を払わせてください｣"
 
 #. Rewards
-#: dat/missions/tutorial/nelly02.lua:365
+#: dat/missions/tutorial/nelly02.lua:379
 msgid ""
 "\"I'm going to get my ship fixed and hopefully next time we meet it'll be in "
 "space. Have fun!\"\n"
@@ -71693,15 +71713,15 @@ msgstr ""
 "ネリーは修理部品を手にして、いま船が保管してある場所へむかって走って出ていっ"
 "た。"
 
-#: dat/missions/tutorial/nelly02.lua:370
+#: dat/missions/tutorial/nelly02.lua:384
 msgid "You helped Nelly repair her ship."
 msgstr "あなたはネリーが船を修理するのを手伝った。"
 
-#: dat/missions/tutorial/nelly02.lua:381
+#: dat/missions/tutorial/nelly02.lua:395
 msgid "As you approach her you can see she is a bit flustered."
 msgstr "近づくと、ネリーがちょっとろうばいしているのがあなたには見てとれた。"
 
-#: dat/missions/tutorial/nelly02.lua:382
+#: dat/missions/tutorial/nelly02.lua:396
 msgid ""
 "\"I got my ship checked up again, and it looks like it wasn't just an "
 "autonav malfunction, but the jumpdrive is toast. I need a spare part, but "
@@ -71715,7 +71735,7 @@ msgstr ""
 "らないだろうって言われました。でも#o{destsys}#0星系の#o{destpnt}#0には交換部"
 "品があるらしいってことはわかってるんです｣"
 
-#: dat/missions/tutorial/nelly02.lua:383
+#: dat/missions/tutorial/nelly02.lua:397
 msgid ""
 "Before you can answer she grabs your arm and pulls you towards where your "
 "ship is docked.\n"
@@ -71727,22 +71747,18 @@ msgstr ""
 "｢ほら、#o{destpnt}#0に行って、交換部品を手に入れましょう。そうすればやっと船"
 "を地上から解放させられます｣"
 
-#: dat/missions/tutorial/nelly02.lua:385
+#: dat/missions/tutorial/nelly02.lua:399
 msgid ""
 "Looks like you'll have to do another round trip if you want to get paid."
 msgstr "支払ってもらいたかったら、また往復しなければならないらしい。"
 
-#: dat/missions/tutorial/nelly02.lua:390 dat/missions/tutorial/nelly02.lua:489
-msgid "Go to {pnt} in {sys}"
-msgstr "{sys}星系の{pnt}へ行け。"
-
 #. Spawn pirates
 #. Ignore vulnerability
-#: dat/missions/tutorial/nelly02.lua:420
+#: dat/missions/tutorial/nelly02.lua:434
 msgid "Nelly: \"Wait, are those pirates coming our way?\""
 msgstr "ネリー : ｢ちょっと、あの海賊たちはこっちへ来るところじゃない？｣"
 
-#: dat/missions/tutorial/nelly02.lua:435
+#: dat/missions/tutorial/nelly02.lua:449
 msgid ""
 "\"It looks like we've been spotted by a trio of Pirate Hyenas. Normally I "
 "would say run, but I don't think we'll be able to outrun them. I think that "
@@ -71752,7 +71768,7 @@ msgstr ""
 "ですが、逃れられるとは思えません。たぶん、わいろを渡すのが唯一の逃げ道だろう"
 "と思います｣"
 
-#: dat/missions/tutorial/nelly02.lua:436
+#: dat/missions/tutorial/nelly02.lua:450
 msgid ""
 "\"If you target a pirate and hail them with {hailkey}, you should have an "
 "option to bribe them and their friends if they are hostile. Although it can "
@@ -71764,7 +71780,7 @@ msgstr ""
 "吹き飛ばされるよりはましですよ。{targetkey} でいちばん近い目標を選んで、"
 "{hailkey} で呼びかけてみてください。そしてわいろを渡すんです！｣"
 
-#: dat/missions/tutorial/nelly02.lua:438
+#: dat/missions/tutorial/nelly02.lua:452
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
 "#g{credits}#0, that should be enough hopefully.\""
@@ -71772,24 +71788,24 @@ msgstr ""
 "｢あなたはわいろを渡せるほどのお金を持ってないみたいですね。はい、#g{credits}"
 "#0 あげますよ。うまくいけば、それでじゅうぶんでしょう｣"
 
-#: dat/missions/tutorial/nelly02.lua:445
+#: dat/missions/tutorial/nelly02.lua:459
 msgid "Hail and bribe the pirates"
 msgstr "海賊に呼びかけてわいろを渡せ。"
 
-#: dat/missions/tutorial/nelly02.lua:467
+#: dat/missions/tutorial/nelly02.lua:481
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
 msgstr "ネリー : ｢もうここから無事に抜けだせるはずです｣"
 
-#: dat/missions/tutorial/nelly02.lua:475
+#: dat/missions/tutorial/nelly02.lua:489
 msgid "Nelly: \"I guess that's another way of doing it.\""
 msgstr "ネリー : ｢そういうやりかたもあるよね｣"
 
-#: dat/missions/tutorial/nelly02.lua:477
+#: dat/missions/tutorial/nelly02.lua:491
 msgid "Nelly: \"You only bribed some pilots, try to bribe them all!\""
 msgstr ""
 "ネリー : ｢一部のパイロットにしかわいろを渡さなかった。全員に渡すようにして！｣"
 
-#: dat/missions/tutorial/nelly02.lua:479
+#: dat/missions/tutorial/nelly02.lua:493
 msgid ""
 "Nelly: \"Quickly! Target the hostile pirates with {targetkey} and bribe them "
 "by hailing them with {hailkey}!\""
@@ -71797,33 +71813,33 @@ msgstr ""
 "ネリー : ｢いそいで！　{targetkey} で敵対している海賊を選択して、{hailkey} で"
 "呼びかけてわいろを渡すんです！｣"
 
-#: dat/missions/tutorial/nelly02.lua:504
+#: dat/missions/tutorial/nelly02.lua:508
 msgid "I know you're out there Nelly. Please come forward voluntarily."
 msgstr "そこにネリーがいるのは知っています。自分から出てきてもらいたい"
 
-#: dat/missions/tutorial/nelly02.lua:505
+#: dat/missions/tutorial/nelly02.lua:509
 msgid "Stop hiding Nelly, you know this is futile."
 msgstr "ネリーをかくまうのはやめなさい。無駄だとわかっているはずです"
 
-#: dat/missions/tutorial/nelly02.lua:506
+#: dat/missions/tutorial/nelly02.lua:510
 msgid "Let us face this like adults, Nelly."
 msgstr "おたがい大人になって対処しましょう、ネリー"
 
-#: dat/missions/tutorial/nelly02.lua:507
+#: dat/missions/tutorial/nelly02.lua:511
 msgid "Nelly, if you come out now I would hold this against you."
 msgstr "ネリー、いま出てこないなら、これをつづけるから"
 
-#: dat/missions/tutorial/nelly02.lua:508
+#: dat/missions/tutorial/nelly02.lua:512
 msgid ""
 "You're seriously going to make me have to scan the entire universe to find "
 "you Nelly?"
 msgstr "ネリー、あなたをさがすために本気で宇宙全体をスキャンさせようとしてる？"
 
-#: dat/missions/tutorial/nelly02.lua:509
+#: dat/missions/tutorial/nelly02.lua:513
 msgid "Just come on out and let's get this over with, Nelly."
 msgstr "とにかく出てきなさい。これを片づけましょう、ネリー"
 
-#: dat/missions/tutorial/nelly02.lua:527
+#: dat/missions/tutorial/nelly02.lua:531
 msgid ""
 "Nelly seems to get a bit nervous when seeing the pacifier appear on-screen.\n"
 "\"Wait, that looks like Robin. Shit, I never paid her back did I?\"\n"
@@ -71839,11 +71855,11 @@ msgstr ""
 "｢さしあたり避けなきゃならないみたいね。電子戦がどうやって作用するのか知ってる"
 "でしょ？｣"
 
-#: dat/missions/tutorial/nelly02.lua:532 dat/missions/tutorial/nelly02.lua:551
+#: dat/missions/tutorial/nelly02.lua:536 dat/missions/tutorial/nelly02.lua:555
 msgid "Learn about Electronic Warfare"
 msgstr "電子戦について学ぶ"
 
-#: dat/missions/tutorial/nelly02.lua:537
+#: dat/missions/tutorial/nelly02.lua:541
 msgid ""
 "\"I'll try to be brief. So ship sensors are based on detecting gravitational "
 "anomalies, and thus the mass of a ship plays a critical role in being "
@@ -71854,7 +71870,7 @@ msgstr ""
 "探知することで機能しています。だから船の質量は探知において決定的な役割を果た"
 "していて、ヨットや要撃機のような小型の船は、母艦や戦艦よりずっと探知が難しい｣"
 
-#: dat/missions/tutorial/nelly02.lua:538 dat/shipai.lua:113
+#: dat/missions/tutorial/nelly02.lua:542 dat/shipai.lua:113
 msgid ""
 "\"Each ship has three important electronic warfare statistics:\n"
 "- #oDetection#0 determines the distance at which a ship appears on the "
@@ -71872,7 +71888,7 @@ msgstr ""
 "ります。\n"
 "- #oステルス#0は、ステルスモードのときに探知されずにいる距離を決定します｣"
 
-#: dat/missions/tutorial/nelly02.lua:542
+#: dat/missions/tutorial/nelly02.lua:546
 msgid ""
 "\"You can activate stealth mode with {stealthkey} when far enough away from "
 "other ships. When stealthed, your ship will be completely invisible to all "
@@ -71884,7 +71900,7 @@ msgstr ""
 "ます。ですが、あなたの船の#oステルス#0距離以内に 1 隻でも船が入ると、ゆっくり"
 "とあなたの存在があきらかになっていきます｣"
 
-#: dat/missions/tutorial/nelly02.lua:543
+#: dat/missions/tutorial/nelly02.lua:547
 msgid ""
 "\"Besides making your ship invisible to other ships, #ostealth#0 slows down "
 "your ship heavily to mask your gravitational presence. This also has the "
@@ -71894,7 +71910,7 @@ msgstr ""
 "ります。これは重力が存在するのを隠すためです。これにはジャンプポイントから"
 "もっと離れたところでジャンプから出るという効果もあります｣"
 
-#: dat/missions/tutorial/nelly02.lua:544
+#: dat/missions/tutorial/nelly02.lua:548
 msgid ""
 "\"When not in stealth, ships can target your ship to perform a scan. This "
 "can uncover unwanted information, such as illegal cargo or outfits. The time "
@@ -71906,7 +71922,7 @@ msgstr ""
 "荷や艤装品とか。スキャンにかかる時間は船の質量に依存します。もしスキャンされ"
 "たくなかったら、できるだけステルスに頼ることを勧めます｣"
 
-#: dat/missions/tutorial/nelly02.lua:545
+#: dat/missions/tutorial/nelly02.lua:549
 msgid ""
 "\"To avoid getting spotted by {shipname}, you should first get away from "
 "nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
@@ -71922,34 +71938,34 @@ msgstr ""
 "ンプポイントに行けるでしょう。難しくないはずですが、近よられないように注意し"
 "てください！｣"
 
-#: dat/missions/tutorial/nelly02.lua:549
+#: dat/missions/tutorial/nelly02.lua:553
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
 msgstr "｢避ける方法を知ってるのは確か？　ちょっと扱いにくいことがあるんだけど｣"
 
-#: dat/missions/tutorial/nelly02.lua:552
+#: dat/missions/tutorial/nelly02.lua:556
 msgid "\"Call me Dr. Electronic Warfare\""
 msgstr "｢電子戦はかせと呼んでください｣"
 
-#: dat/missions/tutorial/nelly02.lua:556
+#: dat/missions/tutorial/nelly02.lua:560
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
 msgstr "｢それはいいね！　スキャンを避けて、{sys}星系の{pnt}へ向かいましょう！｣"
 
-#: dat/missions/tutorial/nelly02.lua:562
+#: dat/missions/tutorial/nelly02.lua:566
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
 msgstr "{stealthkey} でステルスモードを使い、ネリーの昔の仲間を避けろ。"
 
 #. Spotter lost track of them
-#: dat/missions/tutorial/nelly02.lua:580
+#: dat/missions/tutorial/nelly02.lua:584
 msgid "Nelly: \"Phew, it seems like they lost track of us.\""
 msgstr "ネリー : ｢ふーっ。置き去りにできたみたい｣"
 
-#: dat/missions/tutorial/nelly02.lua:585
+#: dat/missions/tutorial/nelly02.lua:589
 msgid "You won't get away this time Nelly!"
 msgstr "ネリー、今回は逃すつもりはない！"
 
-#: dat/missions/tutorial/nelly02.lua:594
+#: dat/missions/tutorial/nelly02.lua:598
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
@@ -72120,13 +72136,22 @@ msgid "Disable all hints"
 msgstr "すべてのヒントを無効にする"
 
 #: dat/missions/tutorial/tutorial.lua:130
+#, fuzzy
+#| msgid ""
+#| "\"Alrght, let's go over how to pilot your new state-of-the-art ship, "
+#| "then! Moving is pretty simple: rotate your ship with {leftkey} and "
+#| "{rightkey}, and thrust to move your ship forward with {accelkey}! You can "
+#| "also use {reversekey} to rotate your ship to the opposite direction you "
+#| "are moving, or to reverse thrust if you purchase and install a reverse "
+#| "thruster onto your starship. Give it a try by flying over to {destpnt}! "
+#| "You see it on your screen, right? It's the planet right next to you.\""
 msgid ""
 "\"Alrght, let's go over how to pilot your new state-of-the-art ship, then! "
 "Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and "
 "thrust to move your ship forward with {accelkey}! You can also use "
 "{reversekey} to rotate your ship to the opposite direction you are moving, "
 "or to reverse thrust if you purchase and install a reverse thruster onto "
-"your starship. Give it a try by flying over to {destpnt}! You see it on your "
+"your starship. Give it a try by flying over to {pnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
 "｢さて、それでは最新式の船の操縦方法を確認してみましょう！　動かすのはかなり簡"
@@ -72527,14 +72552,24 @@ msgstr ""
 "入っています｣"
 
 #: dat/missions/tutorial/tutorial.lua:308
+#, fuzzy
+#| msgid ""
+#| "\"Welcome back to space, {playername}! Let's continue discussing moving "
+#| "around in space. As mentioned before, you can move around space manually, "
+#| "no problem. However, you will often want to travel large distances, and "
+#| "navigating everywhere manually could be a bit tedious. A good option is "
+#| "to delegate the travelling to me, your ship AI, using the Autonav "
+#| "functionality available on all ships. You can trust me as I've only under "
+#| "4 fatal accidents.\""
 msgid ""
-"\"Welcome back to space, {playername}! Let's continue discussing moving "
-"around in space. As mentioned before, you can move around space manually, no "
-"problem. However, you will often want to travel large distances, and "
-"navigating everywhere manually could be a bit tedious. A good option is to "
-"delegate the travelling to me, your ship AI, using the Autonav functionality "
-"available on all ships. You can trust me as I've only under 4 fatal "
-"accidents.\""
+"\"Welcome back to space, {playername}! After landing, the game will be "
+"automatically saved, so you do not need to worry about losing your progress. "
+"Now let's continue discussing moving around in space. As mentioned before, "
+"you can move around space manually, no problem. However, you will often want "
+"to travel large distances, and navigating everywhere manually could be a bit "
+"tedious. A good option is to delegate the travelling to me, your ship AI, "
+"using the Autonav functionality available on all ships. You can trust me as "
+"I've only had under 4 fatal accidents.\""
 msgstr ""
 "｢宇宙へおかえり、{playername}！　宇宙を飛びまわることについての話をつづけま"
 "しょう。まえに説明したとおり、手動で宇宙を飛びまわることができます。問題はあ"
@@ -74504,7 +74539,7 @@ msgstr ""
 #. </flags>
 #. <avail>
 #. <priority>4</priority>
-#. <chance>100</chance>
+#. <chance>20</chance>
 #. <faction>Za'lek</faction>
 #. <location>Bar</location>
 #. <cond>planet.cur() ~= planet.get("Katar I")</cond>
@@ -75017,9 +75052,17 @@ msgstr ""
 "相手はあたまをかいた。"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:148
+#, fuzzy
+#| msgid ""
+#| "\"I tried to take a look at it, but wasn't able to figure out a damn "
+#| "thing, and since my post-doc eloped to Rulkar, I don't have anyone to "
+#| "deal with these sort of inconveniences. If you could take a look at it "
+#| "and get it apart, you should be able to take the controllers with you. "
+#| "All you have to do is align the memory by pushing the data boxes into "
+#| "data sockets. Please take a shot at it.\""
 msgid ""
 "\"I tried to take a look at it, but wasn't able to figure out a damn thing, "
-"and since my post-doc eloped to Rulkar, I don't have anyone to deal with "
+"and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with "
 "these sort of inconveniences. If you could take a look at it and get it "
 "apart, you should be able to take the controllers with you. All you have to "
 "do is align the memory by pushing the data boxes into data sockets. Please "
@@ -78553,45 +78596,66 @@ msgstr "fmt.f: string '%s' has '%s'==nil!"
 #. Custom formation, used only in missions go there
 #. Custom large circle
 #. The angle between each ship, in radians.
-#.
-#. Mission helper stuff
+#. --
+#. Mission helper utilities.
+#. @module lmisn
 #. --
 #.
 #. Sound Effects
 #. --
+#. --
+#. Plays a happy sound.
+#. --
+#. --
+#. Plays another happy sound.
+#. --
+#. --
+#. Returns a complete or filtered table of landable planets.
+#.
+#. @tparam[opt] System sys The system to search, defaulting to the current one.
+#. @tparam[opt] Faction fct If nil, return all landable planets in the system, otherwise...
+#. @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restrict to its enemies.
+#. @treturn table All matching planets in a list.
+#. --
+#. --
 #. Choose the next system to jump to on the route from system nowsys to system finalsys.
 #.
-#. -- @brief Fetches an array of systems from min to max jumps away from the given
-#. --       system sys.
+#. @tparam System nowsys Start point.
+#. @tparam System finalsys End point.
+#. @tparam boolean hidden Whether the path may include hidden systems.
+#. @treturn System The next system to jump to, defaulting to nowsys if there's no path or nothing to do.
 #. --
-#. -- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
 #. --
-#. -- @code
-#. -- local planets = {}
-#. -- lmisn.getSysAtDistance( system.cur(), 1, 6,
-#. --     function(s)
-#. --         for i, v in ipairs(s:planets()) do
-#. --             if v:faction() == faction.get("Sirius") and v:class() == "M" then
-#. --                 return true
-#. --             end
-#. --         end
-#. --         return false
-#. --     end )
-#. --
-#. -- if #planets == 0 then abort() end -- In case no suitable planets are in range.
-#. --
-#. -- local index = rnd.rnd(1, #planets)
-#. -- destplanet = planets[index][1]
-#. -- destsys = planets[index][2]
-#. -- @endcode
-#. --
-#. --    @param sys System to calculate distance from or nil to use current system
-#. --    @param min Min distance to check for.
-#. --    @param max Maximum distance to check for.
-#. --    @param filter Optional filter function to use for more details.
-#. --    @param data Data to pass to filter
-#. --    @param hidden Whether or not to consider hidden jumps (off by default)
-#. --    @return The table of systems n jumps away from sys
+#. Fetches an array of systems from min to max jumps away from the given
+#. system sys.
+#.
+#. The following example gets a random Sirius M class planet between 1 to 6 jumps away.
+#.
+#. @usage
+#. local planets = {}
+#. lmisn.getSysAtDistance( system.cur(), 1, 6,
+#. function(s)
+#. for i, v in ipairs(s:planets()) do
+#. if v:faction() == faction.get("Sirius") and v:class() == "M" then
+#. return true
+#. end
+#. end
+#. return false
+#. end )
+#.
+#. if #planets == 0 then abort() end -- In case no suitable planets are in range.
+#.
+#. local index = rnd.rnd(1, #planets)
+#. destplanet = planets[index][1]
+#. destsys = planets[index][2]
+#.
+#. @param sys System to calculate distance from or nil to use current system
+#. @param min Min distance to check for.
+#. @param max Maximum distance to check for.
+#. @param filter Optional filter function to use for more details.
+#. @param data Data to pass to filter
+#. @param hidden Whether or not to consider hidden jumps (off by default)
+#. @return The table of systems n jumps away from sys
 #. --
 #. Get default parameters
 #. Run max times
@@ -78600,20 +78664,33 @@ msgstr "fmt.f: string '%s' has '%s'==nil!"
 #. Must not have been explored previously
 #. New table becomes the old
 #. Now we filter the solutions
-#.
+#. --
 #. Works the same as lmisn.getSysAtDistance, but for planets.
 #.
 #. Filter is applied on a planet level.
 #. --
+#. --
+#. Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
 #.
-#. -- @brief Wrapper for player.misnActive that works on a table of missions.
+#. @usage lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+#.
+#. @tparam[opt=system.cur()] System sys System to base distance calculations off of.
+#. @tparam number min Minimum jump distance to get planet at.
+#. @tparam number max Maximum jump distance to get planet at.
+#. @tparam[opt=nil] Faction fct What faction to do landing checks with.
+#. @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
+#. @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+#. @param[opt=nil] data Custom data that will be passed to filter.
+#. @tparam[opt=false] boolean hidden
+#. @treturn Planet A single planet matching all the criteria.
 #. --
-#. -- @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
 #. --
-#. --    @luaparam names Table of names of missions to check
-#. --    @luareturn true if any of the listed missions are active
-#. --
-#. -- @luafunc anyMissionActive( names )
+#. Wrapper for player.misnActive that works on a table of missions.
+#.
+#. @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
+#.
+#. @param names Table of names of missions to check
+#. @return true if any of the listed missions are active
 #. --
 #. ---
 #. Small music handling library.
@@ -79022,8 +79099,8 @@ msgstr "failed to set fallback font"
 #. --
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
-#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:259 src/options.c:588
-#: src/options.c:891 src/options.c:1194
+#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:262 src/options.c:591
+#: src/options.c:894 src/options.c:1197
 msgid "OK"
 msgstr "了解"
 
@@ -82415,7 +82492,7 @@ msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "Loaded %d AI Profile(s)"
 
-#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1476
+#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1485
 #: src/player.c:3323
 #, c-format
 msgid ""
@@ -83019,11 +83096,11 @@ msgstr ""
 "ウィンドウの装飾をなしにする。注意して使ってください。それから終了とフルスク"
 "リーン切り替えのキーボード制御を覚えておいてください。"
 
-#: src/conf.c:855 src/options.c:1304
+#: src/conf.c:855 src/options.c:1313
 msgid "Minimize on focus loss"
 msgstr "フォーカスのロスを最小化"
 
-#: src/conf.c:859 src/options.c:1307
+#: src/conf.c:859 src/options.c:1316
 msgid "Colorblind mode"
 msgstr "色覚不要モード"
 
@@ -83477,7 +83554,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr "Invalid vertex type."
 
-#: src/dev_sysedit.c:694 src/map.c:752
+#: src/dev_sysedit.c:694 src/map.c:751
 msgid "Asteroid Field"
 msgstr "小惑星帯"
 
@@ -83503,7 +83580,7 @@ msgstr "名前 :"
 msgid "Faction"
 msgstr "党派"
 
-#: src/dev_sysedit.c:1262 src/land.c:1226 src/map.c:303
+#: src/dev_sysedit.c:1262 src/land.c:1226 src/map.c:302
 msgid "Faction:"
 msgstr "党派 :"
 
@@ -83661,7 +83738,7 @@ msgstr "新しい星系"
 msgid "Open"
 msgstr "開く"
 
-#: src/dev_uniedit.c:233 src/map.c:342 src/map_find.c:1029
+#: src/dev_uniedit.c:233 src/map.c:341 src/map_find.c:1029
 msgid "Find"
 msgstr "検索"
 
@@ -83669,7 +83746,7 @@ msgstr "検索"
 msgid "Nebula:"
 msgstr "星雲 :"
 
-#: src/dev_uniedit.c:248 src/map.c:317
+#: src/dev_uniedit.c:248 src/map.c:316
 msgid "Presence:"
 msgstr "配備状況 :"
 
@@ -83856,7 +83933,7 @@ msgid "Failed to add virtual asset '%s'!"
 msgstr "バーチャルアセット ｢%s｣ を追加できませんでした！"
 
 #. create the window
-#: src/dialogue.c:147 src/options.c:164
+#: src/dialogue.c:147 src/options.c:166
 msgid "Warning"
 msgstr "警告"
 
@@ -84226,7 +84303,7 @@ msgstr "戦闘機の回収"
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr "これは展開した戦闘機を呼びもどすことになります。それでいいですか？"
 
-#: src/equipment.c:2039 src/land.c:1472
+#: src/equipment.c:2039 src/land.c:1481
 #, c-format
 msgid "File '%s' not found!"
 msgstr "File '%s' not found!"
@@ -84386,48 +84463,48 @@ msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] "Loaded %d Event(s)"
 
-#: src/event.c:490 src/faction.c:1282 src/mission.c:1019 src/nxml.c:82
+#: src/event.c:492 src/faction.c:1282 src/mission.c:1021 src/nxml.c:82
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr "Unable to read data from '%s'"
 
-#: src/event.c:499
+#: src/event.c:501
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
 msgstr "Event '%s' has create function but no XML header!"
 
-#: src/event.c:508
+#: src/event.c:510
 #, c-format
 msgid "Event file '%s' has missing XML header!"
 msgstr "Event file '%s' has missing XML header!"
 
-#: src/event.c:515
+#: src/event.c:517
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr "Unable to parse document XML header for Event '%s'"
 
-#: src/event.c:522 src/slots.c:58 src/spfx.c:177 src/start.c:63
+#: src/event.c:524 src/slots.c:58 src/spfx.c:177 src/start.c:63
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr "Malformed '%s' file: missing root element '%s'"
 
-#: src/event.c:535
+#: src/event.c:538
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
 msgstr "Event Lua '%s' syntax error: %s"
 
-#: src/event.c:602
+#: src/event.c:605
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr "No event data found matching name '%s'."
 
-#: src/event.c:635
+#: src/event.c:638
 #, c-format
 msgid "Trying to test claims of unknown event with id '%d'!"
 msgstr "Trying to test claims of unknown event with id '%d'!"
 
 #. Must delete.
-#: src/event.c:655
+#: src/event.c:658
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
@@ -84436,23 +84513,23 @@ msgstr ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 
-#: src/event.c:743
+#: src/event.c:746
 msgid "Event has missing 'name' attribute, skipping."
 msgstr "Event has missing 'name' attribute, skipping."
 
-#: src/event.c:748
+#: src/event.c:751
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 
-#: src/event.c:755
+#: src/event.c:758
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr "Event with data '%s' has invalid 'id' attribute, skipping."
 
-#: src/event.c:763
+#: src/event.c:766
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr "Event with data '%s' was not created, skipping."
@@ -84594,7 +84671,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr "Faction '%s' has no Lua and isn't static!"
 
-#: src/faction.c:1490 src/map.c:2689 src/outfit.c:1151 src/ship.c:525
+#: src/faction.c:1490 src/map.c:2690 src/outfit.c:1151 src/ship.c:525
 #: src/ship.c:1006 src/space.c:1766 src/space.c:1824 src/space.c:3399
 #: src/tech.c:112
 #, c-format
@@ -85422,7 +85499,7 @@ msgid "Cycles through jump points."
 msgstr "ジャンプポイントを順にくり返して選択する。"
 
 #. create the window.
-#: src/input.c:95 src/map.c:260 src/outfit.c:899
+#: src/input.c:95 src/map.c:259 src/outfit.c:899
 msgid "Star Map"
 msgstr "星図"
 
@@ -85663,7 +85740,7 @@ msgstr "Unable to set keybinding '%s', that command doesn't exist"
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr "Unable to get keybinding '%s', that command doesn't exist"
 
-#: src/input.c:468 src/options.c:734
+#: src/input.c:468 src/options.c:737
 #, c-format
 msgid "Not bound"
 msgstr "未割り当て"
@@ -85865,7 +85942,7 @@ msgstr "%s (%s クラス)"
 msgid "roughly %s"
 msgstr "約 %s"
 
-#: src/land.c:824 src/map.c:694 src/map.c:701 src/map.c:725 src/map.c:740
+#: src/land.c:824 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
 msgid ", "
 msgstr ", "
 
@@ -85915,9 +85992,8 @@ msgstr "燃料補給はうけられません。"
 msgid "Ship not fit for flight"
 msgstr "船が飛行に耐えません"
 
-#. cleanup
 #. must be before cleaning up planet
-#: src/land.c:1413
+#: src/land.c:1422
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
@@ -85925,13 +86001,13 @@ msgstr ""
 "ゲームの保存ができません！　終了してから、なにがおきているのかログを確認した"
 "ほうがいいでしょう。それからバグ報告を送ってください！"
 
-#: src/land.c:1422
+#: src/land.c:1431
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr "#o%2$sに、%1$sから離陸しました。"
 
 #. error has occurred
-#: src/land.c:1489
+#: src/land.c:1498
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr "Rescue: 'rescue' : '%s'"
@@ -86291,28 +86367,28 @@ msgstr "Warning: [%s] "
 msgid "ERROR %s:%d [%s]: "
 msgstr "ERROR %s:%d [%s]: "
 
-#: src/map.c:310
+#: src/map.c:309
 msgid "Standing:"
 msgstr "立場 :"
 
-#: src/map.c:324
+#: src/map.c:323
 msgid "Planets:"
 msgstr "惑星 :"
 
-#: src/map.c:331
+#: src/map.c:330
 msgid "Services:"
 msgstr "施設 :"
 
 #. Commodity button
-#: src/map.c:339
+#: src/map.c:338
 msgid "Mode"
 msgstr "モード"
 
-#: src/map.c:345
+#: src/map.c:344
 msgid "Autonav"
 msgstr "自動操縦"
 
-#: src/map.c:476
+#: src/map.c:475
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -86322,68 +86398,68 @@ msgstr ""
 "%sの%s星系との貿易価格を表示します。対応する星系で売った場合、\n"
 "正の数/青の値は利益となり、負の値/オレンジの値は損失になることを意味します。"
 
-#: src/map.c:481
+#: src/map.c:480
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr "既知の%sの価格を表示します。銀河全体の平均は : %.2f"
 
-#: src/map.c:558
+#: src/map.c:557
 #, c-format
 msgid "Multiple"
 msgstr "複数"
 
-#: src/map.c:705
+#: src/map.c:704
 msgid "Dense "
 msgstr "密度が高い"
 
-#: src/map.c:707
+#: src/map.c:706
 msgid "Light "
 msgstr "密度が低い"
 
-#: src/map.c:714
+#: src/map.c:713
 #, c-format
 msgid "#rVolatile %sNebula (%.1f MW)#0"
 msgstr "#r%s激変性星雲 (%.1f MW)#0"
 
-#: src/map.c:716
+#: src/map.c:715
 #, c-format
 msgid "#oDangerous %sNebula (%.1f MW)#0"
 msgstr "#o%s危険な星雲 (%.1f MW)#0"
 
-#: src/map.c:718
+#: src/map.c:717
 #, c-format
 msgid "#yUnstable %sNebula (%.1f MW)#0"
 msgstr "#y%s不安定な星雲 (%.1f MW)#0"
 
-#: src/map.c:720
+#: src/map.c:719
 #, c-format
 msgid "%sNebula"
 msgstr "%s星雲"
 
-#: src/map.c:729
+#: src/map.c:728
 #, c-format
 msgid "#rDense Interference (%.0f%%)#0"
 msgstr "#r重度な干渉 (%.0f%%)#0"
 
-#: src/map.c:731
+#: src/map.c:730
 #, c-format
 msgid "#oLight Interference (%.0f%%)#0"
 msgstr "#r軽度な干渉 (%.0f%%)#0"
 
-#: src/map.c:733
+#: src/map.c:732
 #, c-format
 msgid "#yInterference (%.0f%%)#0"
 msgstr "#y干渉 (%.0f%%)#0"
 
-#: src/map.c:748
+#: src/map.c:747
 msgid "#oDense Asteroid Field#0"
 msgstr "#o密度が高い小惑星帯#0"
 
-#: src/map.c:750
+#: src/map.c:749
 msgid "#yLight Asteroid Field"
 msgstr "#y密度が低い小惑星帯"
 
-#: src/map.c:1632
+#: src/map.c:1633
 #, c-format
 msgid ""
 "No price info for\n"
@@ -86392,50 +86468,50 @@ msgstr ""
 "ここの%sの\n"
 "価格情報はありません。"
 
-#: src/map.c:1887
+#: src/map.c:1888
 msgid "Travel (Default)"
 msgstr "航路 (デフォルト)"
 
-#: src/map.c:1890
+#: src/map.c:1891
 #, c-format
 msgid "%s: Cost"
 msgstr "価格 : %s"
 
-#: src/map.c:1891
+#: src/map.c:1892
 #, c-format
 msgid "%s: Trade"
 msgstr "差額 : %s"
 
-#: src/map.c:1946
+#: src/map.c:1947
 msgid "Normal View"
 msgstr "通常表示"
 
-#: src/map.c:1946
+#: src/map.c:1947
 msgid "Minimal View"
 msgstr "最小限表示"
 
-#: src/map.c:2683
+#: src/map.c:2684
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr "Malformed %s file: missing root element 'map'"
 
-#: src/map.c:2701 src/slots.c:77 src/start.c:121 src/tech.c:126
+#: src/map.c:2702 src/slots.c:77 src/start.c:121 src/tech.c:126
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr "'%s' has unknown node '%s'."
 
-#: src/map.c:2706
+#: src/map.c:2707
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] "Loaded %d map decorator(s)"
 
-#: src/map.c:2733
+#: src/map.c:2734
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr "Could not load map decorator texture '%s'."
 
-#: src/map.c:2738
+#: src/map.c:2739
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr "Map decorator has unknown node '%s'."
@@ -86812,7 +86888,7 @@ msgid "Editors"
 msgstr "エディター"
 
 #. Create window and tabs.
-#: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:128
+#: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:130
 msgid "Options"
 msgstr "オプション"
 
@@ -86963,51 +87039,51 @@ msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
 msgstr[0] "Loaded %d Mission(s)"
 
-#: src/mission.c:1028
+#: src/mission.c:1030
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
 msgstr "Mission '%s' has create function but no XML header!"
 
-#: src/mission.c:1037
+#: src/mission.c:1039
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
 msgstr "Mission file '%s' has missing XML header!"
 
-#: src/mission.c:1044
+#: src/mission.c:1046
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
 msgstr "Unable to parse document XML header for Mission '%s'"
 
-#: src/mission.c:1050
+#: src/mission.c:1052
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
 msgstr "Malformed XML header for '%s' mission: missing root element '%s'"
 
-#: src/mission.c:1063
+#: src/mission.c:1066
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr "Mission Lua '%s' syntax error: %s"
 
-#: src/mission.c:1253
+#: src/mission.c:1256
 msgid "Mission cargo without name!"
 msgstr "Mission cargo without name!"
 
-#: src/mission.c:1265
+#: src/mission.c:1268
 #, c-format
 msgid "Mission temporary cargo '%s' missing description!"
 msgstr "Mission temporary cargo '%s' missing description!"
 
-#: src/mission.c:1341
+#: src/mission.c:1344
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr "Mission '%s' from saved game not found in game - ignoring."
 
-#: src/mission.c:1347
+#: src/mission.c:1350
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr "Mission '%s' from saved game failed to load properly - ignoring."
 
-#: src/mission.c:1394
+#: src/mission.c:1397
 msgid "Inconsistency with 'nitems' in save file."
 msgstr "Inconsistency with 'nitems' in save file."
 
@@ -87084,7 +87160,7 @@ msgstr "Unable to seek Vorbis file."
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr "Music thread did not exit when asked, ignoring..."
 
-#: src/naev.c:188 src/naev.c:1107 src/nlua_naev.c:125 src/nlua_naev.c:127
+#: src/naev.c:188 src/naev.c:1107 src/nlua_naev.c:129 src/nlua_naev.c:131
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr "Failed to parse version string '%s'!"
@@ -88364,17 +88440,17 @@ msgstr "Unable to get requested FSAA level (%d requested, got %d)"
 msgid "Screen size too small, upscaling..."
 msgstr "Screen size too small, upscaling..."
 
-#: src/opengl_shader.c:47
+#: src/opengl_shader.c:50
 #, c-format
 msgid "Shader '%s' not found."
 msgstr "Shader '%s' not found."
 
-#: src/opengl_shader.c:96 src/opengl_shader.c:105
+#: src/opengl_shader.c:99 src/opengl_shader.c:108
 #, c-format
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr "Invalid #include syntax in '%s%s'!"
 
-#: src/opengl_shader.c:243
+#: src/opengl_shader.c:248
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr "Failed to link vertex shader '%s' and fragment shader '%s'!"
@@ -88434,208 +88510,208 @@ msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
 msgstr[0] "   '%s' opened %d time(s)"
 
-#: src/options.c:48
+#: src/options.c:49
 msgid "Gameplay"
 msgstr "ゲームプレイ"
 
-#: src/options.c:49
+#: src/options.c:50
 msgid "Video"
 msgstr "ビデオ"
 
-#: src/options.c:50
+#: src/options.c:51
 msgid "Audio"
 msgstr "オーディオ"
 
-#: src/options.c:51
+#: src/options.c:52
 msgid "Input"
 msgstr "入力"
 
-#: src/options.c:164 src/options.c:1357
+#: src/options.c:166 src/options.c:1366
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr "#rNaev を再起動すると効果が反映されます。#0"
 
-#: src/options.c:225
+#: src/options.c:228
 msgid "system"
 msgstr "システム"
 
-#: src/options.c:265 src/options.c:591 src/options.c:897 src/options.c:1200
+#: src/options.c:268 src/options.c:594 src/options.c:900 src/options.c:1203
 msgid "Defaults"
 msgstr "デフォルト"
 
-#: src/options.c:279
+#: src/options.c:282
 #, c-format
 msgid "ndata: %s"
 msgstr "ndata: %s"
 
-#: src/options.c:294
+#: src/options.c:297
 msgid "Language:"
 msgstr "言語 :"
 
-#: src/options.c:310
+#: src/options.c:313
 msgid "Compilation Flags:"
 msgstr "コンパイル時のフラグ :"
 
-#: src/options.c:348
+#: src/options.c:351
 msgid "Stop Speedup At:"
 msgstr "加速を止める条件 :"
 
-#: src/options.c:360
+#: src/options.c:363
 msgid "Settings:"
 msgstr "設定 :"
 
-#: src/options.c:364
+#: src/options.c:367
 msgid "Enable manual zoom control"
 msgstr "手動ズーム制御"
 
-#: src/options.c:367
+#: src/options.c:370
 msgid "Enable double-tap afterburn/cooldown"
 msgstr "ダブルタップでアフターバーナー/冷却"
 
-#: src/options.c:370
+#: src/options.c:373
 msgid "Enable mouse-flying (toggle with middle click)"
 msgstr "マウスによる飛行 (中クリックでトグル)"
 
-#: src/options.c:373
+#: src/options.c:376
 msgid "Enable mouse-flying thrust control"
 msgstr "マウスによる飛行で推力制御"
 
-#: src/options.c:376
+#: src/options.c:379
 msgid "Enable saved game compression"
 msgstr "ゲームの保存の圧縮"
 
-#: src/options.c:378
+#: src/options.c:381
 msgid "Visible Messages"
 msgstr "表示するメッセージ数"
 
-#: src/options.c:384
+#: src/options.c:387
 msgid "Max Time Compression Factor"
 msgstr "最大時間圧縮係数"
 
-#: src/options.c:543
+#: src/options.c:546
 #, c-format
 msgid "Enemy Presence"
 msgstr "敵の出現"
 
-#: src/options.c:545
+#: src/options.c:548
 #, c-format
 msgid "Enemy within %s distance"
 msgstr "敵の距離が %s 以内"
 
-#: src/options.c:547
+#: src/options.c:550
 #, c-format
 msgid "%.0f%% Shield"
 msgstr "シールド %.0f%%"
 
-#: src/options.c:549
+#: src/options.c:552
 #, c-format
 msgid "Armour Damage"
 msgstr "装甲に損害"
 
-#: src/options.c:594
+#: src/options.c:597
 msgid "Set Key"
 msgstr "キーの設定"
 
-#: src/options.c:739
+#: src/options.c:742
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr "キーボード : %s%s%c"
 
-#: src/options.c:744
+#: src/options.c:747
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr "キーボード :  %s%s%s"
 
-#: src/options.c:750
+#: src/options.c:753
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr "ジョイ軸＋ :     <%d>"
 
-#: src/options.c:753
+#: src/options.c:756
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr "ジョイ軸－ :     <%d>"
 
-#: src/options.c:756
+#: src/options.c:759
 #, c-format
 msgid "joy button:   <%d>"
 msgstr "ジョイボタン : <%d>"
 
-#: src/options.c:759
+#: src/options.c:762
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr "ジョイハット上 : <%d>"
 
-#: src/options.c:762
+#: src/options.c:765
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr "ジョイハット下 : <%d>"
 
-#: src/options.c:765
+#: src/options.c:768
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr "ジョイハット左 : <%d>"
 
-#: src/options.c:768
+#: src/options.c:771
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr "ジョイハット右 : <%d>"
 
-#: src/options.c:788
+#: src/options.c:791
 msgid "WASD"
 msgstr "WASD"
 
-#: src/options.c:789
+#: src/options.c:792
 msgid "Arrow Keys"
 msgstr "矢印キー"
 
-#: src/options.c:793
+#: src/options.c:796
 msgid "Restore Defaults"
 msgstr "デフォルトに戻す"
 
-#: src/options.c:794
+#: src/options.c:797
 msgid "Which layout do you want to use?"
 msgstr "どのレイアウトを使いたいですか？"
 
 #. Alert user it worked.
-#: src/options.c:823
+#: src/options.c:826
 msgid "Defaults Restored"
 msgstr "デフォルトに戻す"
 
-#: src/options.c:823
+#: src/options.c:826
 msgid "Keybindings restored to defaults."
 msgstr "キー割り当てをデフォルトに戻しました。"
 
-#: src/options.c:865
+#: src/options.c:868
 msgid "Music Volume"
 msgstr "音楽の音量"
 
-#: src/options.c:865
+#: src/options.c:868
 msgid "Sound Volume"
 msgstr "音声の音量"
 
-#: src/options.c:869
+#: src/options.c:872
 msgid "Muted"
 msgstr "無音"
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:872
+#: src/options.c:875
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr "%s: %.2f (%.0f dB)"
 
-#: src/options.c:903
+#: src/options.c:906
 msgid "Disable all sound/music"
 msgstr "すべての音/音楽を無効"
 
-#: src/options.c:907
+#: src/options.c:910
 msgid "EFX (More CPU)"
 msgstr "EFX (要 CPU パワー)"
 
-#: src/options.c:913
+#: src/options.c:916
 msgid "Volume Levels:"
 msgstr "音量 :"
 
-#: src/options.c:1100
+#: src/options.c:1103
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
@@ -88644,12 +88720,12 @@ msgstr ""
 "キー ｢%s｣ は、今設定した ｢%s｣ と重なっています。たぶん修正したほうがいいで"
 "しょう。"
 
-#: src/options.c:1133
+#: src/options.c:1136
 msgid "Set Keybinding"
 msgstr "キー割り当ての設定"
 
 # 長さ注意
-#: src/options.c:1140
+#: src/options.c:1143
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
@@ -88658,118 +88734,124 @@ msgstr ""
 "ファイアーとして登録されます。任意のモディファイアーにしたい場合は、ボックス"
 "をクリックしてください。"
 
-#: src/options.c:1149
+#: src/options.c:1152
 msgid "Unset"
 msgstr "割り当て解除"
 
-#: src/options.c:1153
+#: src/options.c:1156
 msgid "Set any modifier"
 msgstr "任意のモディファイアー"
 
-#: src/options.c:1207
+#: src/options.c:1210
 msgid "Resolution:"
 msgstr "解像度 :"
 
-#: src/options.c:1212
+#: src/options.c:1215
 msgid "Fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1272
+#: src/options.c:1281
 msgid "FPS Control:"
 msgstr "FPS の制御 :"
 
-#: src/options.c:1274
+#: src/options.c:1283
 msgid "FPS Limit"
 msgstr "FPS の制限"
 
-#: src/options.c:1284
+#: src/options.c:1293
 msgid "Show FPS"
 msgstr "FPS の表示"
 
-#: src/options.c:1293
+#: src/options.c:1302
 msgid "OpenGL:"
 msgstr "OpenGL:"
 
-#: src/options.c:1296
+#: src/options.c:1305
 msgid "Vertical Sync"
 msgstr "垂直同期"
 
-#: src/options.c:1301
+#: src/options.c:1310
 msgid "Features:"
 msgstr "機能 :"
 
-#: src/options.c:1311
+#: src/options.c:1320
 msgid "Fancy and expensive background shaders"
 msgstr "派手で処理が重い背景の描画"
 
-#: src/options.c:1338
+#: src/options.c:1347
 msgid "GUI:"
 msgstr "GUI:"
 
-#: src/options.c:1341
+#: src/options.c:1350
 msgid "Bigger icons"
 msgstr "大きめのアイコン"
 
-#: src/options.c:1387
+#: src/options.c:1396
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr "高さ/幅が無効です。1024x768 のような書きかたをしてください。"
 
-#: src/options.c:1480
+#: src/options.c:1489
 msgid "Resolution can't be changed while maximized."
 msgstr "最大化しているときは解像度は変更できません。"
 
-#: src/options.c:1484
+#: src/options.c:1493
 msgid "Keep Video Settings"
 msgstr "ビデオ設定の保持"
 
-#: src/options.c:1485
+#: src/options.c:1494
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr "動作中の %dx%d の%sを保持したいですか？"
 
-#: src/options.c:1486 src/options.c:1492
+#: src/options.c:1495 src/options.c:1501
 msgid "fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1486 src/options.c:1492
+#: src/options.c:1495 src/options.c:1501
 msgid "windowed"
 msgstr "ウィンドウ"
 
-#: src/options.c:1490
+#: src/options.c:1499
 msgid "Video Settings Restored"
 msgstr "ビデオ設定の復元"
 
-#: src/options.c:1491
+#: src/options.c:1500
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr "解像度を %dx%d の%sに戻しました。"
 
-#: src/options.c:1568
+#: src/options.c:1578
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr "スケーリング : %.1fx"
 
-#: src/options.c:1586
+#: src/options.c:1596
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr "遠くのズーム : %.1fx"
 
-#: src/options.c:1608
+#: src/options.c:1618
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr "近くのズーム : %.1fx"
 
-#: src/options.c:1629
+#: src/options.c:1639
+#, fuzzy, c-format
+#| msgid "Gamma"
+msgid "Gamma: %.1f"
+msgstr "ガンマ"
+
+#: src/options.c:1655
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr "背景 (星々など) の輝度 : %.0f%%"
 
-#: src/options.c:1644
+#: src/options.c:1670
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr "星雲の輝度 : %.0f%%"
 
-#: src/options.c:1659
+#: src/options.c:1685
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr "オーバーレイマップの濃さ : %.0f%%"

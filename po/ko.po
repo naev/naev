@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-28 10:37-0500\n"
+"POT-Creation-Date: 2021-11-30 00:11-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -1980,17 +1980,23 @@ msgstr ""
 
 #: dat/assets/bolero.xml:31
 msgid ""
-"Bolero is one of the empire's most successful planets. The population is "
+"Bolero is one of the Empire's most successful planets. The population is "
 "prosperous and successful, and the planet's conditions are mild. Although it "
-"is still treated as something of a backwater, it is becoming increasingly "
-"important in Imperial politics."
+"is still treated as something of a backwater due to its location, it is "
+"becoming increasingly important in Imperial politics. A lot of Bolero's "
+"popularity comes from its Earth-like climate, giving a reassuring sense of "
+"nostalgia to all those who were able to visit Earth before the Incident. "
+"However, some people avoid it for exactly the same reason…"
 msgstr ""
 
 #: dat/assets/bolero.xml:32
 msgid ""
-"The bar here is an old-Earth style pub, with a low ceiling, warm beer and "
-"good food. The atmosphere is warm and welcoming, the clients are all polite "
-"and cheerful and the bouncers barely loom at all."
+"Making the most of Bolero's similarity with Earth, the bar here is an old-"
+"Earth style pub, with a low ceiling, warm beer and good food. The atmosphere "
+"is warm and welcoming, the clients are all polite and cheerful and the "
+"bouncers barely loom at all. There seems to be relatively few locals mixed "
+"in with the patrons, with the majority of people looking like temporary "
+"visitors, either arriving for vacations or business trips."
 msgstr ""
 
 #: dat/assets/bon_sebb.xml:2
@@ -13105,7 +13111,7 @@ msgstr "소로미드 강"
 msgid "Thurion Local"
 msgstr "투리온의 통찰력"
 
-#: dat/assets_virtual/tradelane.xml:2 src/map.c:695
+#: dat/assets_virtual/tradelane.xml:2 src/map.c:694
 #, fuzzy
 msgid "Trade Lane"
 msgstr "랜슬롯"
@@ -13347,7 +13353,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:88
 #: dat/missions/neutral/kidnapped/traffic_00.lua:94
 #: dat/missions/neutral/kidnapped/traffic_00.lua:95
-#: dat/missions/tutorial/nelly02.lua:253 dat/scripts/common/pirate.lua:42
+#: dat/missions/tutorial/nelly02.lua:264 dat/scripts/common/pirate.lua:42
 msgid "Pirate"
 msgstr ""
 
@@ -16795,7 +16801,7 @@ msgstr ""
 msgid "Map: Dvaered-Soromid trade route"
 msgstr "드바에레드-소로미드 무역로"
 
-#: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:6
+#: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:7
 msgid ""
 "This map contains the main route between Dvaered and Soromid controlled "
 "space."
@@ -16907,7 +16913,7 @@ msgstr ""
 msgid "Map: Sirius Core"
 msgstr ""
 
-#: dat/outfits/maps/map_sirius_core.xml:6
+#: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
@@ -19638,7 +19644,7 @@ msgstr ""
 #: src/dev_uniedit.c:1271 src/dev_uniedit.c:1272 src/land_outfits.c:359
 #: src/land_outfits.c:360 src/land_outfits.c:361 src/land_outfits.c:362
 #: src/land_outfits.c:363 src/land_trade.c:160 src/land_trade.c:162
-#: src/land_trade.c:165 src/land_trade.c:166 src/map.c:565 src/map.c:566
+#: src/land_trade.c:165 src/land_trade.c:166 src/map.c:564 src/map.c:565
 #: src/outfit.c:287 src/outfit.c:306
 msgid "N/A"
 msgstr ""
@@ -22668,7 +22674,7 @@ msgstr "연료를 주지 않겠어!"
 #. Spawn
 #: dat/ai/collective.lua:9 dat/ai/drone_miner.lua:9
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:293
-#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:242
+#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:253
 msgid "No response."
 msgstr "응답이 없습니다."
 
@@ -25155,7 +25161,7 @@ msgstr ""
 #: src/dev_uniedit.c:1404 src/dev_uniedit.c:1603 src/dev_uniedit.c:1843
 #: src/info.c:266 src/info.c:346 src/info.c:464 src/info.c:600 src/info.c:792
 #: src/info.c:1012 src/info.c:1108 src/info.c:1453 src/land_outfits.c:159
-#: src/map.c:337 src/map_find.c:1031 src/map_system.c:202
+#: src/map.c:336 src/map_find.c:1031 src/map_system.c:202
 msgid "Close"
 msgstr ""
 
@@ -25678,7 +25684,7 @@ msgid "You found #o{title}!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:376 src/map.c:1888
+#: dat/events/discovery.lua:376 src/map.c:1889
 msgid "Discovery"
 msgstr ""
 
@@ -26555,8 +26561,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:262 src/options.c:790 src/options.c:894
-#: src/options.c:1145 src/options.c:1197
+#: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:897
+#: src/options.c:1148 src/options.c:1200
 msgid "Cancel"
 msgstr ""
 
@@ -31816,13 +31822,13 @@ msgstr ""
 #. Increase the difficulty as progresses
 #. Generate the question
 #. Create the log if necessary.
-#: dat/events/neutral/shiplover.lua:226
+#: dat/events/neutral/shiplover.lua:227
 #, fuzzy
 #| msgid "Ship"
 msgid "Ship Quiz"
 msgstr "선박"
 
-#: dat/events/neutral/shiplover.lua:226 dat/factions/standing/lib/base.lua:42
+#: dat/events/neutral/shiplover.lua:227 dat/factions/standing/lib/base.lua:42
 #: dat/factions/standing/lib/base.lua:51 dat/scripts/common/antlejos.lua:29
 #: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
@@ -31830,25 +31836,25 @@ msgid "Neutral"
 msgstr ""
 
 #. Determine reward
-#: dat/events/neutral/shiplover.lua:233
+#: dat/events/neutral/shiplover.lua:234
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:236
+#: dat/events/neutral/shiplover.lua:237
 msgid ""
 "\"Wow. This is the 5th time you got my quiz right. This deserves a special "
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:242
+#: dat/events/neutral/shiplover.lua:243
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
 "right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:245
+#: dat/events/neutral/shiplover.lua:246
 msgid ""
 "\"Wow. This is the 10th time you got my quiz right. You are doing much "
 "better than I anticipated. Here, take one of my favourite trading cards. "
@@ -31856,13 +31862,13 @@ msgid ""
 "better quizzes from now on.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:251
+#: dat/events/neutral/shiplover.lua:252
 msgid ""
 "You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
 "right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:254
+#: dat/events/neutral/shiplover.lua:255
 msgid ""
 "\"Damn. This is the 25th time you got my quiz right. Nobody has played my "
 "quiz with me for this long. I guess I have to commemorate this in a special "
@@ -31871,65 +31877,65 @@ msgid ""
 "of the card foil! It might get damaged that way!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:259
+#: dat/events/neutral/shiplover.lua:260
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr ""
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:262
+#: dat/events/neutral/shiplover.lua:263
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
 msgstr ""
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:267 dat/events/neutral/shiplover.lua:281
+#: dat/events/neutral/shiplover.lua:268 dat/events/neutral/shiplover.lua:282
 msgid "Ship Enthusiast"
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:267
+#: dat/events/neutral/shiplover.lua:268
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr ""
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:286
+#: dat/events/neutral/shiplover.lua:287
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:287
+#: dat/events/neutral/shiplover.lua:288
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:290
+#: dat/events/neutral/shiplover.lua:291
 msgid "\"It looks great!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:292
 msgid "\"It's awful.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:292
+#: dat/events/neutral/shiplover.lua:293
 msgid "\"Aren't you too young to be here?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:303
+#: dat/events/neutral/shiplover.lua:304
 msgid "\"You know I own a real one.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:309
+#: dat/events/neutral/shiplover.lua:310
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:313
+#: dat/events/neutral/shiplover.lua:314
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -31938,13 +31944,13 @@ msgid ""
 "is fairly ridiculous."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:318
+#: dat/events/neutral/shiplover.lua:319
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:323
+#: dat/events/neutral/shiplover.lua:324
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -31953,7 +31959,7 @@ msgid ""
 "etched on the side."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:328
+#: dat/events/neutral/shiplover.lua:329
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -31961,56 +31967,56 @@ msgid ""
 msgstr ""
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:334
+#: dat/events/neutral/shiplover.lua:335
 #, fuzzy
 #| msgid "You are no match for the Empire!"
 msgid "You once again approach the ship enthusiast."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: dat/events/neutral/shiplover.lua:335
+#: dat/events/neutral/shiplover.lua:336
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:337
+#: dat/events/neutral/shiplover.lua:338
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:338
+#: dat/events/neutral/shiplover.lua:339
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:341 dat/missions/minerva/maikki2.lua:196
+#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/kex4.lua:149
+#: dat/events/neutral/shiplover.lua:343 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:346
+#: dat/events/neutral/shiplover.lua:347
 msgid "\"Oh well, your loss!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:351
+#: dat/events/neutral/shiplover.lua:352
 msgid "\"Great! So here it goes. Listen carefully.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:368
+#: dat/events/neutral/shiplover.lua:369
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr ""
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:408
+#: dat/events/neutral/shiplover.lua:409
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr ""
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:412
+#: dat/events/neutral/shiplover.lua:413
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -34113,8 +34119,8 @@ msgstr ""
 #: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/gui.c:1524 src/map.c:502 src/map.c:508 src/map.c:514 src/map.c:520
-#: src/map.c:526 src/map.c:532 src/map.c:1680 src/map_overlay.c:221
+#: src/gui.c:1524 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
+#: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
 #: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player_autonav.c:91
 #: src/player_autonav.c:212 src/ship.c:205
 msgid "Unknown"
@@ -34597,7 +34603,7 @@ msgstr ""
 #: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:125
 #: src/land_shipyard.c:214 src/land_trade.c:82 src/land_trade.c:84
 #: src/land_trade.c:117 src/load.c:355 src/load.c:403 src/load.c:445
-#: src/map.c:629 src/map.c:669 src/map.c:1719 src/map_find.c:721
+#: src/map.c:628 src/map.c:668 src/map.c:1720 src/map_find.c:721
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -42385,7 +42391,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec04.lua:70
 #: dat/missions/neutral/antlejos/ant05.lua:84
 #: dat/missions/sirius/heretic/heretic3.lua:63
-#: dat/missions/tutorial/nelly02.lua:308
+#: dat/missions/tutorial/nelly02.lua:322
 #, fuzzy
 msgid "Return to {pnt}"
 msgstr "투리온의 불꽃"
@@ -49494,7 +49500,7 @@ msgid "Offer to help her"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:139 dat/missions/minerva/maikki2.lua:179
-#: dat/missions/tutorial/nelly01.lua:128 dat/missions/tutorial/nelly02.lua:125
+#: dat/missions/tutorial/nelly01.lua:128 dat/missions/tutorial/nelly02.lua:126
 msgid "Decline to help"
 msgstr ""
 
@@ -68604,8 +68610,8 @@ msgstr ""
 #. Check to see if truly accepted
 #. Update objectives
 #: dat/missions/tutorial/nelly01.lua:109 dat/missions/tutorial/nelly01.lua:179
-#: dat/missions/tutorial/nelly02.lua:203 dat/missions/tutorial/nelly02.lua:307
-#: dat/missions/tutorial/nelly02.lua:389 dat/missions/tutorial/nelly02.lua:488
+#: dat/missions/tutorial/nelly02.lua:204 dat/missions/tutorial/nelly02.lua:232
+#: dat/missions/tutorial/nelly02.lua:321 dat/missions/tutorial/nelly02.lua:403
 msgid "Helping Nelly Out"
 msgstr ""
 
@@ -68658,7 +68664,7 @@ msgid ""
 "so I hope you don't mind if I give you some advice on the road.\"\n"
 "\"For starters, if you haven't already, you should buy a #oLocal Map#0 that "
 "will help you get the directions to {sys}. You can buy it at the main "
-"landing window or the outfiting window.\""
+"landing window or the outfiting window. Anyway, Let's get going!\""
 msgstr ""
 
 #: dat/missions/tutorial/nelly01.lua:163
@@ -68673,8 +68679,8 @@ msgstr ""
 msgid "Deliver cargo to {pnt} in {sys}"
 msgstr "프론티어 시스템"
 
-#: dat/missions/tutorial/nelly01.lua:181 dat/missions/tutorial/nelly02.lua:391
-#: dat/missions/tutorial/nelly02.lua:490
+#: dat/missions/tutorial/nelly01.lua:181 dat/missions/tutorial/nelly02.lua:234
+#: dat/missions/tutorial/nelly02.lua:405
 #, fuzzy
 #| msgid "Frontier systems"
 msgid "Return to {pnt} in {sys}"
@@ -68762,7 +68768,7 @@ msgstr ""
 msgid "Hear about the Info window"
 msgstr ""
 
-#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:533
+#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:537
 msgid "Already know"
 msgstr ""
 
@@ -68975,7 +68981,8 @@ msgstr ""
 #. 2: Going to pick up repair pirate
 #. 3. Dealt with pirate
 #. 4: Got part
-#. 5: Flying back
+#. 5: Past nosy pacifier
+#. 6: Flying back
 #. --
 #. Non-persistent state
 #. luacheck: globals board death disable enter equip idle land reset_osd_hook spotter_spot timer_pirate timer_pirate_checkbribe timer_pirate_nelly timer_spotter timer_spotter_start (Hook functions passed by name)
@@ -68985,21 +68992,21 @@ msgstr ""
 #. Find destination system that sells ion cannons
 #. Must be claimable
 #. Sells Outfits
-#: dat/missions/tutorial/nelly02.lua:107
+#: dat/missions/tutorial/nelly02.lua:108
 #, fuzzy
 #| msgid "The Proteron are watching you."
 msgid "You see a Nelly motioning to you at the table."
 msgstr "프로테론이 당신을 지켜보고 있다."
 
-#: dat/missions/tutorial/nelly02.lua:109
+#: dat/missions/tutorial/nelly02.lua:110
 msgid "Helping Nelly Out… Again"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:110
+#: dat/missions/tutorial/nelly02.lua:111
 msgid "Help Nelly fix their ship."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:121
+#: dat/missions/tutorial/nelly02.lua:122
 msgid ""
 "Nelly brightens up when you get near.\n"
 "\"Hey, I thought was able to get my ship up and running, but before I was "
@@ -69008,17 +69015,17 @@ msgid ""
 "me disable my ship and get it back?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:124
+#: dat/missions/tutorial/nelly02.lua:125
 msgid "Help them with their ship"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:129
+#: dat/missions/tutorial/nelly02.lua:130
 msgid ""
 "They look dejected.\n"
 "\"I guess I'll have to see if there is any other way to solve my problem.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:135
+#: dat/missions/tutorial/nelly02.lua:136
 msgid ""
 "\"Thanks for the help again. So while I was preparing to take off on my "
 "ship, I heard a weird noise outside, and when I went to check out, the "
@@ -69028,7 +69035,7 @@ msgstr ""
 
 #. Sells Outfits
 #. Sells a particular outfit
-#: dat/missions/tutorial/nelly02.lua:172
+#: dat/missions/tutorial/nelly02.lua:173
 msgid ""
 "\"It looks like you already have some disabling weapons equipped. Make sure "
 "they are set in the info window as either a primary or secondary weapon in "
@@ -69036,14 +69043,14 @@ msgid ""
 "ship back!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:174
+#: dat/missions/tutorial/nelly02.lua:175
 msgid ""
 "\"It looks like you own some disabling weapons but don't have them equipped. "
 "Why don't you try to equip #o{outfitname} before we head out? We want to "
 "disable my ship, not destroy it!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:177
+#: dat/missions/tutorial/nelly02.lua:178
 msgid ""
 "\"It looks like this planet doesn't have neither an #ooutfitter#0 nor a "
 "#oshipyard#0 so you won't be able to change your current equipment. Try to "
@@ -69052,7 +69059,7 @@ msgid ""
 "select the planet, or from the map.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:180
+#: dat/missions/tutorial/nelly02.lua:181
 msgid ""
 "\"It looks like you don't have any disabling weapons. Remember, you have to "
 "disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 "
@@ -69061,49 +69068,55 @@ msgid ""
 msgstr ""
 
 #. Check to see if truly accepted
-#: dat/missions/tutorial/nelly02.lua:196
+#: dat/missions/tutorial/nelly02.lua:197
 msgid "Equip a weapon with disable damage"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:199
+#: dat/missions/tutorial/nelly02.lua:200
 msgid "Buy and equip a weapon with disable damage"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:202
+#: dat/missions/tutorial/nelly02.lua:203
 msgid "Disable and board Nelly's ship in {sys}"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:220
+#: dat/missions/tutorial/nelly02.lua:221
 msgid ""
 "\"You have equipped a #o{outfitname}#0 with disable damage. Looks like "
 "you'll be able to safely disable my rampant ship!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:234
+#: dat/missions/tutorial/nelly02.lua:233 dat/missions/tutorial/nelly02.lua:404
+#, fuzzy
+#| msgid "Frontier systems"
+msgid "Go to {pnt} in {sys}"
+msgstr "프론티어 시스템"
+
+#: dat/missions/tutorial/nelly02.lua:245
 #, fuzzy
 #| msgid "Plasma Blaster MK2"
 msgid "Llaminator MK2"
 msgstr "플라즈마 블래스터 MK2"
 
-#: dat/missions/tutorial/nelly02.lua:266
+#: dat/missions/tutorial/nelly02.lua:277
 #, fuzzy
 #| msgid "Pacifier"
 msgid "Noisy Pacifier"
 msgstr "고무 젖꼭지"
 
-#: dat/missions/tutorial/nelly02.lua:293
+#: dat/missions/tutorial/nelly02.lua:307
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
 "{boardkey}!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:301
+#: dat/missions/tutorial/nelly02.lua:315
 msgid ""
 "You board Nelly's ship and quickly go to the control panel to turn off the "
 "autonav."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:302
+#: dat/missions/tutorial/nelly02.lua:316
 msgid ""
 "\"I hate when this happens. Err, I mean, this is the first time something "
 "like this has happened to me! Let me bring the ship back to {pnt} and meet "
@@ -69112,62 +69125,62 @@ msgstr ""
 
 #. Have the ship go back
 #. Faster again
-#: dat/missions/tutorial/nelly02.lua:327
+#: dat/missions/tutorial/nelly02.lua:341
 msgid ""
 "#rMISSION FAILED: you weren't supposed to destroy Nelly's ship!#0\n"
 "Although the mission has been aborted, you can still repeat it from the "
 "beginning by finding Nelly at a spaceport bar to try again."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:335
+#: dat/missions/tutorial/nelly02.lua:349
 msgid "Nelly is motioning you to come join her at the table."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:342
+#: dat/missions/tutorial/nelly02.lua:356
 msgid ""
 "You land and quickly Nelly goes over to the outfitter and seems to get into "
 "some sort of argument with the person in charge. After a bit you see they "
 "exchange something and she comes back with a grin on her face."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:343
+#: dat/missions/tutorial/nelly02.lua:357
 msgid ""
 "\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:347
+#: dat/missions/tutorial/nelly02.lua:361
 msgid "Jumpdrive Repair Parts"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:347
+#: dat/missions/tutorial/nelly02.lua:361
 msgid "Spare parts that can be used to break a ship's broken jumpdrive."
 msgstr ""
 
 #. Finished mission
-#: dat/missions/tutorial/nelly02.lua:359
+#: dat/missions/tutorial/nelly02.lua:373
 msgid ""
 "\"We finally made it. Nothing ever comes really easy does it? Ah, before I "
 "forget, let me reward you for your troubles.\""
 msgstr ""
 
 #. Rewards
-#: dat/missions/tutorial/nelly02.lua:365
+#: dat/missions/tutorial/nelly02.lua:379
 msgid ""
 "\"I'm going to get my ship fixed and hopefully next time we meet it'll be in "
 "space. Have fun!\"\n"
 "She runs off to where here ship is stored with the repair parts in hand."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:370
+#: dat/missions/tutorial/nelly02.lua:384
 msgid "You helped Nelly repair her ship."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:381
+#: dat/missions/tutorial/nelly02.lua:395
 msgid "As you approach her you can see she is a bit flustered."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:382
+#: dat/missions/tutorial/nelly02.lua:396
 msgid ""
 "\"I got my ship checked up again, and it looks like it wasn't just an "
 "autonav malfunction, but the jumpdrive is toast. I need a spare part, but "
@@ -69176,7 +69189,7 @@ msgid ""
 "seem to have replacements on #o{destpnt}#0 in #o{destsys}#0.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:383
+#: dat/missions/tutorial/nelly02.lua:397
 msgid ""
 "Before you can answer she grabs your arm and pulls you towards where your "
 "ship is docked.\n"
@@ -69184,31 +69197,25 @@ msgid ""
 "get my ship off the ground.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:385
+#: dat/missions/tutorial/nelly02.lua:399
 msgid ""
 "Looks like you'll have to do another round trip if you want to get paid."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:390 dat/missions/tutorial/nelly02.lua:489
-#, fuzzy
-#| msgid "Frontier systems"
-msgid "Go to {pnt} in {sys}"
-msgstr "프론티어 시스템"
-
 #. Spawn pirates
 #. Ignore vulnerability
-#: dat/missions/tutorial/nelly02.lua:420
+#: dat/missions/tutorial/nelly02.lua:434
 msgid "Nelly: \"Wait, are those pirates coming our way?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:435
+#: dat/missions/tutorial/nelly02.lua:449
 msgid ""
 "\"It looks like we've been spotted by a trio of Pirate Hyenas. Normally I "
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:436
+#: dat/missions/tutorial/nelly02.lua:450
 msgid ""
 "\"If you target a pirate and hail them with {hailkey}, you should have an "
 "option to bribe them and their friends if they are hostile. Although it can "
@@ -69216,62 +69223,62 @@ msgid ""
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:438
+#: dat/missions/tutorial/nelly02.lua:452
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
 "#g{credits}#0, that should be enough hopefully.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:445
+#: dat/missions/tutorial/nelly02.lua:459
 msgid "Hail and bribe the pirates"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:467
+#: dat/missions/tutorial/nelly02.lua:481
 #, fuzzy
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
 msgstr "\"%d 크레딧에 당신의 우주선에 연료를 주입할 수 있을 것이다.\""
 
-#: dat/missions/tutorial/nelly02.lua:475
+#: dat/missions/tutorial/nelly02.lua:489
 msgid "Nelly: \"I guess that's another way of doing it.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:477
+#: dat/missions/tutorial/nelly02.lua:491
 msgid "Nelly: \"You only bribed some pilots, try to bribe them all!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:479
+#: dat/missions/tutorial/nelly02.lua:493
 msgid ""
 "Nelly: \"Quickly! Target the hostile pirates with {targetkey} and bribe them "
 "by hailing them with {hailkey}!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:504
+#: dat/missions/tutorial/nelly02.lua:508
 msgid "I know you're out there Nelly. Please come forward voluntarily."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:505
+#: dat/missions/tutorial/nelly02.lua:509
 msgid "Stop hiding Nelly, you know this is futile."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:506
+#: dat/missions/tutorial/nelly02.lua:510
 msgid "Let us face this like adults, Nelly."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:507
+#: dat/missions/tutorial/nelly02.lua:511
 msgid "Nelly, if you come out now I would hold this against you."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:508
+#: dat/missions/tutorial/nelly02.lua:512
 msgid ""
 "You're seriously going to make me have to scan the entire universe to find "
 "you Nelly?"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:509
+#: dat/missions/tutorial/nelly02.lua:513
 msgid "Just come on out and let's get this over with, Nelly."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:527
+#: dat/missions/tutorial/nelly02.lua:531
 msgid ""
 "Nelly seems to get a bit nervous when seeing the pacifier appear on-screen.\n"
 "\"Wait, that looks like Robin. Shit, I never paid her back did I?\"\n"
@@ -69280,11 +69287,11 @@ msgid ""
 "electronic warfare works?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:532 dat/missions/tutorial/nelly02.lua:551
+#: dat/missions/tutorial/nelly02.lua:536 dat/missions/tutorial/nelly02.lua:555
 msgid "Learn about Electronic Warfare"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:537
+#: dat/missions/tutorial/nelly02.lua:541
 msgid ""
 "\"I'll try to be brief. So ship sensors are based on detecting gravitational "
 "anomalies, and thus the mass of a ship plays a critical role in being "
@@ -69292,7 +69299,7 @@ msgid ""
 "detect than carriers or battleship.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:538 dat/shipai.lua:113
+#: dat/missions/tutorial/nelly02.lua:542 dat/shipai.lua:113
 msgid ""
 "\"Each ship has three important electronic warfare statistics:\n"
 "- #oDetection#0 determines the distance at which a ship appears on the "
@@ -69304,7 +69311,7 @@ msgid ""
 "in stealth mode\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:542
+#: dat/missions/tutorial/nelly02.lua:546
 msgid ""
 "\"You can activate stealth mode with {stealthkey} when far enough away from "
 "other ships. When stealthed, your ship will be completely invisible to all "
@@ -69312,14 +69319,14 @@ msgid ""
 "it will slowly uncover you.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:543
+#: dat/missions/tutorial/nelly02.lua:547
 msgid ""
 "\"Besides making your ship invisible to other ships, #ostealth#0 slows down "
 "your ship heavily to mask your gravitational presence. This also has the "
 "effect of letting you jump out from jumpoints further away.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:544
+#: dat/missions/tutorial/nelly02.lua:548
 msgid ""
 "\"When not in stealth, ships can target your ship to perform a scan. This "
 "can uncover unwanted information, such as illegal cargo or outfits. The time "
@@ -69327,7 +69334,7 @@ msgid ""
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:545
+#: dat/missions/tutorial/nelly02.lua:549
 msgid ""
 "\"To avoid getting spotted by {shipname}, you should first get away from "
 "nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
@@ -69337,34 +69344,34 @@ msgid ""
 "close to them!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:549
+#: dat/missions/tutorial/nelly02.lua:553
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:552
+#: dat/missions/tutorial/nelly02.lua:556
 msgid "\"Call me Dr. Electronic Warfare\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:556
+#: dat/missions/tutorial/nelly02.lua:560
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:562
+#: dat/missions/tutorial/nelly02.lua:566
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
 msgstr ""
 
 #. Spotter lost track of them
-#: dat/missions/tutorial/nelly02.lua:580
+#: dat/missions/tutorial/nelly02.lua:584
 msgid "Nelly: \"Phew, it seems like they lost track of us.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:585
+#: dat/missions/tutorial/nelly02.lua:589
 msgid "You won't get away this time Nelly!"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:594
+#: dat/missions/tutorial/nelly02.lua:598
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
@@ -69513,7 +69520,7 @@ msgid ""
 "thrust to move your ship forward with {accelkey}! You can also use "
 "{reversekey} to rotate your ship to the opposite direction you are moving, "
 "or to reverse thrust if you purchase and install a reverse thruster onto "
-"your starship. Give it a try by flying over to {destpnt}! You see it on your "
+"your starship. Give it a try by flying over to {pnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
 
@@ -69777,13 +69784,14 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:308
 msgid ""
-"\"Welcome back to space, {playername}! Let's continue discussing moving "
-"around in space. As mentioned before, you can move around space manually, no "
-"problem. However, you will often want to travel large distances, and "
-"navigating everywhere manually could be a bit tedious. A good option is to "
-"delegate the travelling to me, your ship AI, using the Autonav functionality "
-"available on all ships. You can trust me as I've only under 4 fatal "
-"accidents.\""
+"\"Welcome back to space, {playername}! After landing, the game will be "
+"automatically saved, so you do not need to worry about losing your progress. "
+"Now let's continue discussing moving around in space. As mentioned before, "
+"you can move around space manually, no problem. However, you will often want "
+"to travel large distances, and navigating everywhere manually could be a bit "
+"tedious. A good option is to delegate the travelling to me, your ship AI, "
+"using the Autonav functionality available on all ships. You can trust me as "
+"I've only had under 4 fatal accidents.\""
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:309
@@ -71373,7 +71381,7 @@ msgstr ""
 #. </flags>
 #. <avail>
 #. <priority>4</priority>
-#. <chance>100</chance>
+#. <chance>20</chance>
 #. <faction>Za'lek</faction>
 #. <location>Bar</location>
 #. <cond>planet.cur() ~= planet.get("Katar I")</cond>
@@ -71825,7 +71833,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp02.lua:148
 msgid ""
 "\"I tried to take a look at it, but wasn't able to figure out a damn thing, "
-"and since my post-doc eloped to Rulkar, I don't have anyone to deal with "
+"and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with "
 "these sort of inconveniences. If you could take a look at it and get it "
 "apart, you should be able to take the controllers with you. All you have to "
 "do is align the memory by pushing the data boxes into data sockets. Please "
@@ -75011,45 +75019,66 @@ msgstr ""
 #. Custom formation, used only in missions go there
 #. Custom large circle
 #. The angle between each ship, in radians.
-#.
-#. Mission helper stuff
+#. --
+#. Mission helper utilities.
+#. @module lmisn
 #. --
 #.
 #. Sound Effects
 #. --
+#. --
+#. Plays a happy sound.
+#. --
+#. --
+#. Plays another happy sound.
+#. --
+#. --
+#. Returns a complete or filtered table of landable planets.
+#.
+#. @tparam[opt] System sys The system to search, defaulting to the current one.
+#. @tparam[opt] Faction fct If nil, return all landable planets in the system, otherwise...
+#. @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restrict to its enemies.
+#. @treturn table All matching planets in a list.
+#. --
+#. --
 #. Choose the next system to jump to on the route from system nowsys to system finalsys.
 #.
-#. -- @brief Fetches an array of systems from min to max jumps away from the given
-#. --       system sys.
+#. @tparam System nowsys Start point.
+#. @tparam System finalsys End point.
+#. @tparam boolean hidden Whether the path may include hidden systems.
+#. @treturn System The next system to jump to, defaulting to nowsys if there's no path or nothing to do.
 #. --
-#. -- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
 #. --
-#. -- @code
-#. -- local planets = {}
-#. -- lmisn.getSysAtDistance( system.cur(), 1, 6,
-#. --     function(s)
-#. --         for i, v in ipairs(s:planets()) do
-#. --             if v:faction() == faction.get("Sirius") and v:class() == "M" then
-#. --                 return true
-#. --             end
-#. --         end
-#. --         return false
-#. --     end )
-#. --
-#. -- if #planets == 0 then abort() end -- In case no suitable planets are in range.
-#. --
-#. -- local index = rnd.rnd(1, #planets)
-#. -- destplanet = planets[index][1]
-#. -- destsys = planets[index][2]
-#. -- @endcode
-#. --
-#. --    @param sys System to calculate distance from or nil to use current system
-#. --    @param min Min distance to check for.
-#. --    @param max Maximum distance to check for.
-#. --    @param filter Optional filter function to use for more details.
-#. --    @param data Data to pass to filter
-#. --    @param hidden Whether or not to consider hidden jumps (off by default)
-#. --    @return The table of systems n jumps away from sys
+#. Fetches an array of systems from min to max jumps away from the given
+#. system sys.
+#.
+#. The following example gets a random Sirius M class planet between 1 to 6 jumps away.
+#.
+#. @usage
+#. local planets = {}
+#. lmisn.getSysAtDistance( system.cur(), 1, 6,
+#. function(s)
+#. for i, v in ipairs(s:planets()) do
+#. if v:faction() == faction.get("Sirius") and v:class() == "M" then
+#. return true
+#. end
+#. end
+#. return false
+#. end )
+#.
+#. if #planets == 0 then abort() end -- In case no suitable planets are in range.
+#.
+#. local index = rnd.rnd(1, #planets)
+#. destplanet = planets[index][1]
+#. destsys = planets[index][2]
+#.
+#. @param sys System to calculate distance from or nil to use current system
+#. @param min Min distance to check for.
+#. @param max Maximum distance to check for.
+#. @param filter Optional filter function to use for more details.
+#. @param data Data to pass to filter
+#. @param hidden Whether or not to consider hidden jumps (off by default)
+#. @return The table of systems n jumps away from sys
 #. --
 #. Get default parameters
 #. Run max times
@@ -75058,20 +75087,33 @@ msgstr ""
 #. Must not have been explored previously
 #. New table becomes the old
 #. Now we filter the solutions
-#.
+#. --
 #. Works the same as lmisn.getSysAtDistance, but for planets.
 #.
 #. Filter is applied on a planet level.
 #. --
+#. --
+#. Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
 #.
-#. -- @brief Wrapper for player.misnActive that works on a table of missions.
+#. @usage lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+#.
+#. @tparam[opt=system.cur()] System sys System to base distance calculations off of.
+#. @tparam number min Minimum jump distance to get planet at.
+#. @tparam number max Maximum jump distance to get planet at.
+#. @tparam[opt=nil] Faction fct What faction to do landing checks with.
+#. @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
+#. @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+#. @param[opt=nil] data Custom data that will be passed to filter.
+#. @tparam[opt=false] boolean hidden
+#. @treturn Planet A single planet matching all the criteria.
 #. --
-#. -- @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
 #. --
-#. --    @luaparam names Table of names of missions to check
-#. --    @luareturn true if any of the listed missions are active
-#. --
-#. -- @luafunc anyMissionActive( names )
+#. Wrapper for player.misnActive that works on a table of missions.
+#.
+#. @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
+#.
+#. @param names Table of names of missions to check
+#. @return true if any of the listed missions are active
 #. --
 #. ---
 #. Small music handling library.
@@ -75481,8 +75523,8 @@ msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 #. --
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
-#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:259 src/options.c:588
-#: src/options.c:891 src/options.c:1194
+#: src/dialogue.c:329 src/dialogue.c:718 src/options.c:262 src/options.c:591
+#: src/options.c:894 src/options.c:1197
 msgid "OK"
 msgstr ""
 
@@ -78833,7 +78875,7 @@ msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 
-#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1476
+#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1485
 #: src/player.c:3323
 #, c-format
 msgid ""
@@ -79425,11 +79467,11 @@ msgid ""
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:855 src/options.c:1304
+#: src/conf.c:855 src/options.c:1313
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:859 src/options.c:1307
+#: src/conf.c:859 src/options.c:1316
 msgid "Colorblind mode"
 msgstr ""
 
@@ -79878,7 +79920,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:694 src/map.c:752
+#: src/dev_sysedit.c:694 src/map.c:751
 msgid "Asteroid Field"
 msgstr ""
 
@@ -79904,7 +79946,7 @@ msgstr "이름:"
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1226 src/map.c:303
+#: src/dev_sysedit.c:1262 src/land.c:1226 src/map.c:302
 msgid "Faction:"
 msgstr "팩션:"
 
@@ -80066,7 +80108,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:233 src/map.c:342 src/map_find.c:1029
+#: src/dev_uniedit.c:233 src/map.c:341 src/map_find.c:1029
 msgid "Find"
 msgstr ""
 
@@ -80075,7 +80117,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr "%s성운"
 
-#: src/dev_uniedit.c:248 src/map.c:317
+#: src/dev_uniedit.c:248 src/map.c:316
 msgid "Presence:"
 msgstr ""
 
@@ -80258,7 +80300,7 @@ msgid "Failed to add virtual asset '%s'!"
 msgstr ""
 
 #. create the window
-#: src/dialogue.c:147 src/options.c:164
+#: src/dialogue.c:147 src/options.c:166
 msgid "Warning"
 msgstr ""
 
@@ -80627,7 +80669,7 @@ msgstr "랜슬롯"
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2039 src/land.c:1472
+#: src/equipment.c:2039 src/land.c:1481
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
@@ -80786,70 +80828,70 @@ msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] ""
 
-#: src/event.c:490 src/faction.c:1282 src/mission.c:1019 src/nxml.c:82
+#: src/event.c:492 src/faction.c:1282 src/mission.c:1021 src/nxml.c:82
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
 
-#: src/event.c:499
+#: src/event.c:501
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
 msgstr ""
 
-#: src/event.c:508
+#: src/event.c:510
 #, c-format
 msgid "Event file '%s' has missing XML header!"
 msgstr ""
 
-#: src/event.c:515
+#: src/event.c:517
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:522 src/slots.c:58 src/spfx.c:177 src/start.c:63
+#: src/event.c:524 src/slots.c:58 src/spfx.c:177 src/start.c:63
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/event.c:535
+#: src/event.c:538
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/event.c:602
+#: src/event.c:605
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr ""
 
-#: src/event.c:635
+#: src/event.c:638
 #, fuzzy, c-format
 msgid "Trying to test claims of unknown event with id '%d'!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
 #. Must delete.
-#: src/event.c:655
+#: src/event.c:658
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 msgstr ""
 
-#: src/event.c:743
+#: src/event.c:746
 msgid "Event has missing 'name' attribute, skipping."
 msgstr ""
 
-#: src/event.c:748
+#: src/event.c:751
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
 
-#: src/event.c:755
+#: src/event.c:758
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
 
-#: src/event.c:763
+#: src/event.c:766
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
@@ -80978,7 +81020,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1490 src/map.c:2689 src/outfit.c:1151 src/ship.c:525
+#: src/faction.c:1490 src/map.c:2690 src/outfit.c:1151 src/ship.c:525
 #: src/ship.c:1006 src/space.c:1766 src/space.c:1824 src/space.c:3399
 #: src/tech.c:112
 #, c-format
@@ -81795,7 +81837,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:95 src/map.c:260 src/outfit.c:899
+#: src/input.c:95 src/map.c:259 src/outfit.c:899
 msgid "Star Map"
 msgstr ""
 
@@ -82036,7 +82078,7 @@ msgstr ""
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:468 src/options.c:734
+#: src/input.c:468 src/options.c:737
 #, c-format
 msgid "Not bound"
 msgstr ""
@@ -82235,7 +82277,7 @@ msgstr ""
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:824 src/map.c:694 src/map.c:701 src/map.c:725 src/map.c:740
+#: src/land.c:824 src/map.c:693 src/map.c:700 src/map.c:724 src/map.c:739
 msgid ", "
 msgstr ", "
 
@@ -82287,21 +82329,20 @@ msgstr ""
 msgid "Ship not fit for flight"
 msgstr ""
 
-#. cleanup
 #. must be before cleaning up planet
-#: src/land.c:1413
+#: src/land.c:1422
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1422
+#: src/land.c:1431
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1489
+#: src/land.c:1498
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -82659,28 +82700,28 @@ msgstr "경고: [%s] "
 msgid "ERROR %s:%d [%s]: "
 msgstr "오류 %s:%d[ %s]: "
 
-#: src/map.c:310
+#: src/map.c:309
 msgid "Standing:"
 msgstr "조판됨:"
 
-#: src/map.c:324
+#: src/map.c:323
 msgid "Planets:"
 msgstr "행성:"
 
-#: src/map.c:331
+#: src/map.c:330
 msgid "Services:"
 msgstr "제공:"
 
 #. Commodity button
-#: src/map.c:339
+#: src/map.c:338
 msgid "Mode"
 msgstr "모드"
 
-#: src/map.c:345
+#: src/map.c:344
 msgid "Autonav"
 msgstr "자동nav"
 
-#: src/map.c:476
+#: src/map.c:475
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -82688,128 +82729,128 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:481
+#: src/map.c:480
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:558
+#: src/map.c:557
 #, c-format
 msgid "Multiple"
 msgstr "여러개의"
 
-#: src/map.c:705
+#: src/map.c:704
 msgid "Dense "
 msgstr "밀집된 "
 
-#: src/map.c:707
+#: src/map.c:706
 msgid "Light "
 msgstr "빛 "
 
-#: src/map.c:714
+#: src/map.c:713
 #, fuzzy, c-format
 #| msgid "Volatile %sNebula"
 msgid "#rVolatile %sNebula (%.1f MW)#0"
 msgstr "휘발성 %s 성운"
 
-#: src/map.c:716
+#: src/map.c:715
 #, fuzzy, c-format
 #| msgid "Dangerous %sNebula"
 msgid "#oDangerous %sNebula (%.1f MW)#0"
 msgstr "위험한 %s성운"
 
-#: src/map.c:718
+#: src/map.c:717
 #, fuzzy, c-format
 #| msgid "Unstable %sNebula"
 msgid "#yUnstable %sNebula (%.1f MW)#0"
 msgstr "비안정된 %s성운"
 
-#: src/map.c:720
+#: src/map.c:719
 #, c-format
 msgid "%sNebula"
 msgstr "%s성운"
 
-#: src/map.c:729
+#: src/map.c:728
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "#rDense Interference (%.0f%%)#0"
 msgstr "밀집된 간섭"
 
-#: src/map.c:731
+#: src/map.c:730
 #, fuzzy, c-format
 #| msgid "Light Interference"
 msgid "#oLight Interference (%.0f%%)#0"
 msgstr "빛 간섭"
 
-#: src/map.c:733
+#: src/map.c:732
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "#yInterference (%.0f%%)#0"
 msgstr "밀집된 간섭"
 
-#: src/map.c:748
+#: src/map.c:747
 #, fuzzy
 #| msgid "Dense Asteroid Field"
 msgid "#oDense Asteroid Field#0"
 msgstr "밀집된 소행성 필드"
 
-#: src/map.c:750
+#: src/map.c:749
 #, fuzzy
 #| msgid "Light Asteroid Field"
 msgid "#yLight Asteroid Field"
 msgstr "빛 소행성 필드"
 
-#: src/map.c:1632
+#: src/map.c:1633
 #, fuzzy, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr "가격 정보 없음"
 
-#: src/map.c:1887
+#: src/map.c:1888
 msgid "Travel (Default)"
-msgstr ""
-
-#: src/map.c:1890
-#, c-format
-msgid "%s: Cost"
 msgstr ""
 
 #: src/map.c:1891
 #, c-format
+msgid "%s: Cost"
+msgstr ""
+
+#: src/map.c:1892
+#, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:1946
+#: src/map.c:1947
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:1946
+#: src/map.c:1947
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2683
+#: src/map.c:2684
 #, fuzzy, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/map.c:2701 src/slots.c:77 src/start.c:121 src/tech.c:126
+#: src/map.c:2702 src/slots.c:77 src/start.c:121 src/tech.c:126
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:2706
+#: src/map.c:2707
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
-#: src/map.c:2733
+#: src/map.c:2734
 #, fuzzy, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/map.c:2738
+#: src/map.c:2739
 #, fuzzy, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
@@ -83186,7 +83227,7 @@ msgid "Editors"
 msgstr "편집자"
 
 #. Create window and tabs.
-#: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:128
+#: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:130
 msgid "Options"
 msgstr "옵션"
 
@@ -83342,54 +83383,54 @@ msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
 msgstr[0] "%d개의 임무를 불러왔습니다"
 
-#: src/mission.c:1028
+#: src/mission.c:1030
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
 msgstr "임무 '%s'에는 생성 기능이 있지만 XML 헤더가 없습니다!"
 
-#: src/mission.c:1037
+#: src/mission.c:1039
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
 msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
 
-#: src/mission.c:1044
+#: src/mission.c:1046
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
 msgstr "임무 '%s' 에 대한 문서 XML 헤더를 구문 분석 할 수 없습니다."
 
-#: src/mission.c:1050
+#: src/mission.c:1052
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/mission.c:1063
+#: src/mission.c:1066
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/mission.c:1253
+#: src/mission.c:1256
 #, fuzzy
 #| msgid "Mission '%s' has create function but no XML header!"
 msgid "Mission cargo without name!"
 msgstr "임무 '%s'에는 생성 기능이 있지만 XML 헤더가 없습니다!"
 
-#: src/mission.c:1265
+#: src/mission.c:1268
 #, fuzzy, c-format
 #| msgid "Mission file '%s' has missing XML header!"
 msgid "Mission temporary cargo '%s' missing description!"
 msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
 
-#: src/mission.c:1341
+#: src/mission.c:1344
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr "저장된 게임의 '%s'임무를 게임에서 찾을 수 없습니다 -무시합니다."
 
-#: src/mission.c:1347
+#: src/mission.c:1350
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr "저장된 게임의 '%s'임무를 제대로 불러오지 못했습니다 - 무시합니다."
 
-#: src/mission.c:1394
+#: src/mission.c:1397
 msgid "Inconsistency with 'nitems' in save file."
 msgstr "저장 파일의 'nitems'와 일치하지 않습니다."
 
@@ -83470,7 +83511,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:188 src/naev.c:1107 src/nlua_naev.c:125 src/nlua_naev.c:127
+#: src/naev.c:188 src/naev.c:1107 src/nlua_naev.c:129 src/nlua_naev.c:131
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -84727,17 +84768,17 @@ msgstr "요청 된 FSAA 수준을 가져올 수 없습니다 (요청한 %d, %d �
 msgid "Screen size too small, upscaling..."
 msgstr "화면 크기가 너무 작아서 확장 중..."
 
-#: src/opengl_shader.c:47
+#: src/opengl_shader.c:50
 #, c-format
 msgid "Shader '%s' not found."
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/opengl_shader.c:96 src/opengl_shader.c:105
+#: src/opengl_shader.c:99 src/opengl_shader.c:108
 #, fuzzy, c-format
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr "창 정보 이름 '%s'이 (가) 잘못되었습니다."
 
-#: src/opengl_shader.c:243
+#: src/opengl_shader.c:248
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
@@ -84798,338 +84839,343 @@ msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
 msgstr[0] "   '%s'이 (가) %d 번 열렸습니다"
 
-#: src/options.c:48
+#: src/options.c:49
 msgid "Gameplay"
 msgstr ""
 
-#: src/options.c:49
+#: src/options.c:50
 msgid "Video"
 msgstr ""
 
-#: src/options.c:50
+#: src/options.c:51
 msgid "Audio"
 msgstr ""
 
-#: src/options.c:51
+#: src/options.c:52
 msgid "Input"
 msgstr ""
 
-#: src/options.c:164 src/options.c:1357
+#: src/options.c:166 src/options.c:1366
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr ""
 
-#: src/options.c:225
+#: src/options.c:228
 msgid "system"
 msgstr "시스템"
 
-#: src/options.c:265 src/options.c:591 src/options.c:897 src/options.c:1200
+#: src/options.c:268 src/options.c:594 src/options.c:900 src/options.c:1203
 msgid "Defaults"
 msgstr "기본값"
 
-#: src/options.c:279
+#: src/options.c:282
 #, c-format
 msgid "ndata: %s"
 msgstr "ndata: %s"
 
-#: src/options.c:294
+#: src/options.c:297
 #, fuzzy
 msgid "Language:"
 msgstr "언어"
 
-#: src/options.c:310
+#: src/options.c:313
 #, fuzzy
 msgid "Compilation Flags:"
 msgstr "컴파일 플래그"
 
-#: src/options.c:348
+#: src/options.c:351
 msgid "Stop Speedup At:"
 msgstr ""
 
-#: src/options.c:360
+#: src/options.c:363
 msgid "Settings:"
 msgstr ""
 
-#: src/options.c:364
+#: src/options.c:367
 msgid "Enable manual zoom control"
 msgstr ""
 
-#: src/options.c:367
+#: src/options.c:370
 msgid "Enable double-tap afterburn/cooldown"
 msgstr ""
 
-#: src/options.c:370
+#: src/options.c:373
 msgid "Enable mouse-flying (toggle with middle click)"
 msgstr ""
 
-#: src/options.c:373
+#: src/options.c:376
 msgid "Enable mouse-flying thrust control"
 msgstr ""
 
-#: src/options.c:376
+#: src/options.c:379
 msgid "Enable saved game compression"
 msgstr ""
 
-#: src/options.c:378
+#: src/options.c:381
 msgid "Visible Messages"
 msgstr ""
 
-#: src/options.c:384
+#: src/options.c:387
 msgid "Max Time Compression Factor"
 msgstr ""
 
-#: src/options.c:543
+#: src/options.c:546
 #, c-format
 msgid "Enemy Presence"
 msgstr ""
 
-#: src/options.c:545
+#: src/options.c:548
 #, c-format
 msgid "Enemy within %s distance"
 msgstr ""
 
-#: src/options.c:547
+#: src/options.c:550
 #, c-format
 msgid "%.0f%% Shield"
 msgstr ""
 
-#: src/options.c:549
+#: src/options.c:552
 #, c-format
 msgid "Armour Damage"
 msgstr ""
 
-#: src/options.c:594
+#: src/options.c:597
 msgid "Set Key"
 msgstr ""
 
-#: src/options.c:739
+#: src/options.c:742
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr ""
 
-#: src/options.c:744
+#: src/options.c:747
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr ""
 
-#: src/options.c:750
+#: src/options.c:753
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr ""
 
-#: src/options.c:753
+#: src/options.c:756
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr ""
 
-#: src/options.c:756
+#: src/options.c:759
 #, c-format
 msgid "joy button:   <%d>"
 msgstr ""
 
-#: src/options.c:759
+#: src/options.c:762
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr ""
 
-#: src/options.c:762
+#: src/options.c:765
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr ""
 
-#: src/options.c:765
+#: src/options.c:768
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr ""
 
-#: src/options.c:768
+#: src/options.c:771
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr ""
 
-#: src/options.c:788
+#: src/options.c:791
 msgid "WASD"
 msgstr ""
 
-#: src/options.c:789
+#: src/options.c:792
 msgid "Arrow Keys"
 msgstr ""
 
-#: src/options.c:793
+#: src/options.c:796
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/options.c:794
+#: src/options.c:797
 msgid "Which layout do you want to use?"
 msgstr ""
 
 #. Alert user it worked.
-#: src/options.c:823
+#: src/options.c:826
 msgid "Defaults Restored"
 msgstr ""
 
-#: src/options.c:823
+#: src/options.c:826
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:865
+#: src/options.c:868
 msgid "Music Volume"
 msgstr ""
 
-#: src/options.c:865
+#: src/options.c:868
 msgid "Sound Volume"
 msgstr ""
 
-#: src/options.c:869
+#: src/options.c:872
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:872
+#: src/options.c:875
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:903
+#: src/options.c:906
 msgid "Disable all sound/music"
 msgstr ""
 
-#: src/options.c:907
+#: src/options.c:910
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:913
+#: src/options.c:916
 msgid "Volume Levels:"
 msgstr ""
 
-#: src/options.c:1100
+#: src/options.c:1103
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1133
+#: src/options.c:1136
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1140
+#: src/options.c:1143
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1149
+#: src/options.c:1152
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1153
+#: src/options.c:1156
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1207
+#: src/options.c:1210
 msgid "Resolution:"
 msgstr ""
 
-#: src/options.c:1212
+#: src/options.c:1215
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1272
+#: src/options.c:1281
 msgid "FPS Control:"
 msgstr ""
 
-#: src/options.c:1274
+#: src/options.c:1283
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1284
+#: src/options.c:1293
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1293
+#: src/options.c:1302
 msgid "OpenGL:"
 msgstr ""
 
-#: src/options.c:1296
+#: src/options.c:1305
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1301
+#: src/options.c:1310
 msgid "Features:"
 msgstr ""
 
-#: src/options.c:1311
+#: src/options.c:1320
 msgid "Fancy and expensive background shaders"
 msgstr ""
 
-#: src/options.c:1338
+#: src/options.c:1347
 msgid "GUI:"
 msgstr ""
 
-#: src/options.c:1341
+#: src/options.c:1350
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1387
+#: src/options.c:1396
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1480
+#: src/options.c:1489
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1484
+#: src/options.c:1493
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1485
+#: src/options.c:1494
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1486 src/options.c:1492
+#: src/options.c:1495 src/options.c:1501
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1486 src/options.c:1492
+#: src/options.c:1495 src/options.c:1501
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1490
+#: src/options.c:1499
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1491
+#: src/options.c:1500
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1568
+#: src/options.c:1578
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1586
+#: src/options.c:1596
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1608
+#: src/options.c:1618
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr ""
 
-#: src/options.c:1629
+#: src/options.c:1639
+#, c-format
+msgid "Gamma: %.1f"
+msgstr ""
+
+#: src/options.c:1655
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1644
+#: src/options.c:1670
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1659
+#: src/options.c:1685
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
