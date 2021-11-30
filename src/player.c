@@ -1025,7 +1025,7 @@ static void player_renderAimHelper( double dt )
 
    b = pilot_aimAngle( player.p, target );
 
-   theta = 22*M_PI/180;
+   theta = 22.*M_PI/180.;
 
    /* The angular error will give the exact colour that is used. */
    d = ABS( angle_diff(a,b) / (2*theta) );
