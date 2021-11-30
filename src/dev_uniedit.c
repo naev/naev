@@ -817,6 +817,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    else if (uniedit_viewmode == UNIEDIT_VIEW_TECH) {
       char *techlist[256];
       int ntechs = 0;
+      const int len = sizeof(techlist) / sizeof(char*);
       if (array_size(sys->planets)==0)
          return;
 
@@ -829,7 +830,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          if (pnt->tech==NULL)
             continue;
          techs = tech_getItemNames( pnt->tech, &n );
-         for (int k=0; k<n; k++)
+         for (int k=0; (k<n) && (ntechs<len-1) ; k++)
             techlist[ ntechs++ ] = techs[k];
          free( techs );
       }
