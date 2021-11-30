@@ -194,6 +194,21 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, h
    return pnts
 end
 
+--[[
+   @brief Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
+
+   @usage lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+
+      @luatparam[opt=system.cur()] System sys System to base distance calculations off of.
+      @luatparam number min Minimum jump distance to get planet at.
+      @luatparam number max Maximum jump distance to get planet at.
+      @luatparam[opt=nil] Faction fct What faction to do landing checks with.
+      @luatparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
+      @luatparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+      @luaparam[opt=nil] data Custom data that will be passed to filter.
+      @luatparam[opt=false] boolean hidden
+      @luatpreturn Planet A single planet matching all the criteria.
+--]]
 function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    if #candidates == 0 then
