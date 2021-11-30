@@ -3304,7 +3304,7 @@ void pilots_cleanAll (void)
  */
 void pilots_update( double dt )
 {
-   /* Have all the pilots think. */
+   /* Delete loop - this should be atomic or we get hook fuckery! */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3314,6 +3314,11 @@ void pilots_update( double dt )
          i--; /* Must decrement iterator. */
          continue;
       }
+   }
+
+   /* Have all the pilots think. */
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Clear target. */
       p->ptarget = NULL;
