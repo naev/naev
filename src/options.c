@@ -27,6 +27,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "player.h"
+#include "render.h"
 #include "sound.h"
 #include "toolkit.h"
 
@@ -82,6 +83,7 @@ static void opt_videoRes( unsigned int wid, const char *str );
 static int opt_videoSave( unsigned int wid, const char *str );
 static void opt_videoDefaults( unsigned int wid, const char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
+static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
@@ -184,8 +186,9 @@ static void opt_close( unsigned int wid, const char *name )
 
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
-   sound_volume(conf.sound);
-   music_volume(conf.music);
+   sound_volume( conf.sound );
+   music_volume( conf.music );
+   render_setGamma( conf.gamma_correction );
 
    window_destroy( opt_wid );
    opt_wid = 0;
@@ -1265,6 +1268,12 @@ static void opt_video( unsigned int wid )
          log(conf.zoom_near+1.), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
+   y -= 30;
+   window_addText( wid, x, y-3, 130, 20, 0, "txtGammaCorrection",
+         NULL, NULL, NULL );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadGammaCorrection", -log(3.), log(3.),
+         log(conf.gamma_correction), opt_setGammaCorrection );
+   opt_setGammaCorrection( wid, "fadGammaCorrection" );
    y -= 40;
 
    /* FPS stuff. */
@@ -1548,6 +1557,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadScale", log(SCALE_FACTOR_DEFAULT) );
    window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
+   window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
@@ -1613,6 +1623,22 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    }
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
       opt_needRestart();
+}
+
+/**
+ * @brief Callback to set the gamma correction value (reciprocal of exponent).
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setGammaCorrection( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double scale = window_getFaderValue(wid, str);
+   conf.gamma_correction = exp(scale);
+   snprintf( buf, sizeof(buf), _("Gamma: %.1f"), conf.gamma_correction );
+   window_modifyText( wid, "txtGammaCorrection", buf );
+   render_setGamma( conf.gamma_correction );
 }
 
 /**

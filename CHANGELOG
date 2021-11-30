@@ -8,6 +8,7 @@
    * Hulls are more widely available
    * Improved some of the map outfits
    * Do not render systems with unknown assets as restricted
+   * Added gamma correction to Options.
 
 * 0.9.0 (beta)
    * New mechanics
