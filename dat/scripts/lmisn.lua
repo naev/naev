@@ -89,7 +89,7 @@ function lmisn.getNextSystem( nowsys, finalsys, hidden )
 end
 
 lmisn.sysFilters = {}
---[[
+--[[--
    Provides the default system filter. Always true regardless of input.
 
    @treturn function The filter function.
@@ -99,7 +99,7 @@ function lmisn.sysFilters.default ()
       return true
    end
 end
---[[
+--[[--
    Provides the faction system filter. Makes sure each system hasa minimum amount of presence of a certain faction.
 
    @tparam Faction fct Faction to ensure minimum presence.
@@ -115,7 +115,7 @@ function lmisn.sysFilters.faction( fct, threshold )
       return (f >= threshold)
    end
 end
---[[
+--[[--
    Provides the landable system filter. Makes sure each system has at least on landable, inhabited, non-restricted planet and is landable by a certain faction.
 
    @tparam Faction fct Faction to make sure can land.
