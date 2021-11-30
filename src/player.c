@@ -3650,11 +3650,14 @@ static int player_parseLicenses( xmlNodePtr parent )
    do {
       if ( xml_isNode( node, "license" ) ) {
          char *name = xml_get( node );
-         if ( name == NULL ) {
+         if (name == NULL) {
             WARN( _( "License node is missing name attribute." ) );
             continue;
          }
-         player_addLicense( name );
+         if (!outfit_licenseExists(name))
+            WARN(_("Trying to add inexistent license '%s'! Ignoring."), name);
+         else
+            player_addLicense( name );
       }
    } while (xml_nextNode(node));
    return 0;
