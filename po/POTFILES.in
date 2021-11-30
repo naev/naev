@@ -1516,6 +1516,8 @@ dat/outfits/maps/map_the_frontier.xml
 dat/outfits/maps/map_thurion.xml
 dat/outfits/maps/map_zalek_core.xml
 dat/outfits/maps/ultra_map.xml
+dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml
+dat/outfits/misc/counterfeit_heavy_weapon_license.xml
 dat/outfits/misc/gui_brushed.xml
 dat/outfits/misc/gui_legacy.xml
 dat/outfits/misc/gui_slim.xml
