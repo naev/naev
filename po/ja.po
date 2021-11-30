@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-30 00:11-0500\n"
+"POT-Creation-Date: 2021-11-30 19:07+0900\n"
 "PO-Revision-Date: 2021-11-28 15:38+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -700,21 +700,21 @@ msgstr "EvanR"
 msgid "Artwork Contributors"
 msgstr "アートワークへの貢献者"
 
-#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
-msgid "PIRATE ADMONISHER"
-msgstr "海賊アドマニシャー"
-
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
 msgstr "アドマニシャー"
 
-#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
-msgid "PIRATE ANCESTOR"
-msgstr "海賊アンセスター"
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr "海賊アドマニシャー"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
 msgstr "アンセスター"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr "海賊アンセスター"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
@@ -788,13 +788,13 @@ msgstr "シリウス・プリーチャー"
 msgid "QUICKSILVER"
 msgstr "クイックシルバー"
 
-#: artwork/gfx/loading/rhino_pirate.webp.txt:1
-msgid "PIRATE RHINO"
-msgstr "海賊ライノ"
-
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
 msgstr "ライノ"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr "海賊ライノ"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -804,6 +804,10 @@ msgstr "シュレディンガー"
 msgid "SIRIUS SHAMAN"
 msgstr "シリウス・シャーマン"
 
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr "シャーク"
+
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
 msgstr "帝国シャーク"
@@ -812,21 +816,17 @@ msgstr "帝国シャーク"
 msgid "PIRATE SHARK"
 msgstr "海賊シャーク"
 
-#: artwork/gfx/loading/shark.webp.txt:1
-msgid "SHARK"
-msgstr "シャーク"
-
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
 msgstr "ザレク・スティング"
 
-#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
-msgid "PIRATE VENDETTA"
-msgstr "海賊ベンデッタ"
-
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
 msgstr "ベンデッタ"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr "海賊ベンデッタ"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
@@ -13548,9 +13548,14 @@ msgstr ""
 #. Define the routes
 #. We'll use a dynamic faction for some ships to lower faction standing damage
 #. Temp faction
+#. general functions
+#. get nearest jumppoint
+#. basically the distance that the map can have at
+#. - create enemy ships
 #: dat/faction.xml:494 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:184 dat/missions/minerva/pirate5.lua:248
 #: dat/missions/zalek/particlephysics/zpp03.lua:137
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:95
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:9
 #: dat/scripts/common/zalek.lua:15 dat/scripts/common/zalek_physics.lua:34
 msgid "Za'lek"
@@ -17339,6 +17344,48 @@ msgstr "超地図"
 msgid "For cheating."
 msgstr "いかさま用。"
 
+#: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
+#, fuzzy
+#| msgid "Heavy Combat Vessel License"
+msgid "Counterfeit Heavy Combat Vessel License"
+msgstr "大型戦闘艦免許"
+
+#: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
+msgid ""
+"Through marksman craftsmanship, pirate software engineers are able to create "
+"near perfect replicas of the Heavy Weapon License. However, this comes at a "
+"significant mark-up compared to the standard license prices. This license "
+"will authorize you to buy cruiser and carrier-class ships on worlds that "
+"perform background checks."
+msgstr ""
+
+#: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
+#: dat/outfits/misc/heavy_combat_vessel_license.xml:12
+#, fuzzy
+#| msgid "Heavy Combat Vessel License"
+msgid "Heavy Combat Vessel"
+msgstr "大型戦闘艦免許"
+
+#: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:2
+#, fuzzy
+#| msgid "Heavy Weapon License"
+msgid "Counterfeit Heavy Weapon License"
+msgstr "大型武器免許"
+
+#: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
+msgid ""
+"Through marksman craftsmanship, pirate software engineers are able to create "
+"near perfect replicas of the Heavy Weapon License. However, this comes at a "
+"significant mark-up compared to the standard license prices. This license "
+"will authorize you to buy and use heavy weapons like the heavy ion turret on "
+"worlds that perform background checks."
+msgstr ""
+
+#: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
+#: dat/outfits/misc/heavy_weapon_license.xml:12
+msgid "Heavy Weapon"
+msgstr "大型武器"
+
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
 msgstr "GUI - Brushed"
@@ -17379,12 +17426,6 @@ msgstr "大型戦闘艦免許"
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
 msgstr "この免許は、巡洋艦と母艦に分類される船の購入を認めるものだ。"
 
-#: dat/outfits/misc/heavy_combat_vessel_license.xml:12
-#, fuzzy
-#| msgid "Heavy Combat Vessel License"
-msgid "Heavy Combat Vessel"
-msgstr "大型戦闘艦免許"
-
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
 msgstr "大型武器免許"
@@ -17394,10 +17435,6 @@ msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
 msgstr "この免許は、重イオン砲塔のような強力な兵器の購入を認めるものだ。"
-
-#: dat/outfits/misc/heavy_weapon_license.xml:12
-msgid "Heavy Weapon"
-msgstr "大型武器"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
@@ -32908,9 +32945,13 @@ msgstr ""
 "らしい。"
 
 #: dat/events/neutral/shiplover.lua:339
+#, fuzzy
+#| msgid ""
+#| "\"Would you like to play another round of the ship quiz? I think the "
+#| "question I prepared will stump you completely.\""
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
-"question I prepared will stump you completely.\""
+"question I prepared will stump you completely!\""
 msgstr "｢船のクイズをまたやりたい？　用意した質問には完全にまいると思うな｣"
 
 #: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/maikki2.lua:196
@@ -37406,8 +37447,8 @@ msgstr ""
 #: dat/missions/sirius/achack/achack02.lua:118
 #: dat/missions/sirius/achack/achack02.lua:255
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:176
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:82
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:85
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:87
 msgid "Mission accomplished"
 msgstr "任務完了"
 
@@ -43830,8 +43871,8 @@ msgstr ""
 #: dat/missions/neutral/nebu_satellite.lua:70
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:74
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:84
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:57
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:61 src/space.c:169
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:59
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:63 src/space.c:169
 msgid "Bar"
 msgstr "バー"
 
@@ -44734,7 +44775,7 @@ msgstr "帝国の労働者たちが着岸所に{cargo}を降ろした。"
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:146
 #: dat/missions/neutral/cargo_rush.lua:184
 #: dat/missions/pirate/contraband.lua:213
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:211
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:214
 msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
@@ -51488,7 +51529,7 @@ msgid "That's what you said last time too!"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:644
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "Run!"
 msgstr "逃げろ！"
 
@@ -57454,7 +57495,7 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:159
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:54
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:58
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:147
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:146
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:58
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
 msgid "In the bar"
@@ -57957,7 +57998,7 @@ msgstr ""
 #: dat/missions/neutral/foodbiz/deliverlove.lua:77
 #: dat/missions/soromid/comingout/srm_comingout4.lua:63
 #: dat/missions/soromid/comingout/srm_comingout4.lua:64
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:72
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:74
 msgid "Fly to {pnt} in the {sys} system."
 msgstr "{sys}星系の{pnt}へ行け。"
 
@@ -73189,15 +73230,15 @@ msgstr ""
 "た。かねはいいものだが、ザレクと働くのは危険で面倒なことになるとの見識に値す"
 "るほどの価値はなかった。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:109
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:107
 msgid "You helped a Za'lek student to collect sensor data in the Nebula."
 msgstr "あなたはザレクの学生を助けて、星雲でセンサー情報を集めた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:115
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:113
 msgid "A Mess On Your Ship"
 msgstr "船上のごたごた"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:116
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:114
 msgid ""
 "As you enter your ship you notice dozens of cables of various colors "
 "stretched across your ship's corridors. It is a complete mess. You follow "
@@ -73227,7 +73268,7 @@ msgstr ""
 "言葉は安心させようとしたつもりだろうが、そのかわりにあなたはこの任務を引き受"
 "けたのは、あまりよい考えではなかったのではないかと考えはじめていた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:133
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:131
 msgid ""
 "The student enters your cockpit as you arrive in the {sys1} system. "
 "\"Greetings, Captain! I realize I forgot to introduce myself. My name is "
@@ -73250,7 +73291,7 @@ msgstr ""
 "せん。ここが終わったら知らせますから｣"
 
 #. Cancel autonav.
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:157
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:155
 msgid ""
 "Suddenly you lose control of your ship. Apparently most core systems were "
 "shut down. Something drains your ship's energy and there are black outs in "
@@ -73266,7 +73307,7 @@ msgstr ""
 "いだ。あなたはここで死のうとしている！　この任務を引き受けたのは、まず最初か"
 "ら間違いだとわかっていたのだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:167
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:165
 msgid ""
 "You breathe a sigh of relief. It seems you're still alive. You try not to "
 "glare at Robert Hofer, but apparently aren't particularly successful "
@@ -73286,7 +73327,7 @@ msgstr ""
 "系へ行かなければなりません。心配はしないでください。停電は二度とおきませんか"
 "ら！｣"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:170
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:168
 msgid ""
 "You breathe a sigh of relief. It seems you're still alive. You try not to "
 "glare at Robert Hofer, but apparently aren't particularly successful "
@@ -73307,7 +73348,7 @@ msgstr ""
 "系へ行かなければなりません。心配はしないでください。停電は二度とおきませんか"
 "ら！｣"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:182
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:180
 msgid ""
 "You arrive in the {sys} system and Robert Hofer tells you that he will let "
 "you know when his scan is complete. This had better not cause another "
@@ -73316,7 +73357,7 @@ msgstr ""
 "あなたが{sys}星系に到着すると、ロバート・ホーファーはスキャンが完了したらあな"
 "たに教えるといった。また停電をひきおこさなければいいのだが……"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:189
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:187
 msgid "\"OK, my measurements are complete! Let's go back to {pnt}.\""
 msgstr "｢よし、測定は終わりました！　{pnt}に戻りましょう｣"
 
@@ -73649,6 +73690,9 @@ msgstr ""
 #. <faction>Empire</faction>
 #. <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
 #. </avail>
+#. <notes>
+#. <campaign>Nebula Research</campaign>
+#. </notes>
 #. </mission>
 #. --
 #.
@@ -73662,7 +73706,7 @@ msgstr ""
 #. --
 #. luacheck: globals land (Hook functions passed by name)
 #. Mission constants
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:36
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:38
 msgid ""
 "\"There's actually another thing I've almost forgotten. I also have to "
 "attend another conference very soon on behalf of professor Voges who "
@@ -73716,16 +73760,16 @@ msgstr ""
 #. --
 #. luacheck: globals cannotLand jumpin land secondWarningMessage startAmbush takeoff warningMessage (Hook functions passed by name)
 #. Mission constants
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:53
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:55
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:40
 msgid "Dr. Mensing"
 msgstr "メンシング博士"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:53
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:55
 msgid "It appears she wants to talk with you."
 msgstr "どうも博士はあなたと話したがっているようだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:57
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:59
 msgid ""
 "\"Well met, {player}! In fact, it's a lucky coincidence that we meet. You "
 "see, I'm in dire need of your service. I'm here on a... conference of sorts, "
@@ -73751,7 +73795,7 @@ msgstr ""
 "    ｢それはともかく、すぐに研究所のある{sys}星系の{pnt}に連れかえってもらわな"
 "いと！　必要なら {credits} も払えます｣"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:61
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:63
 msgid ""
 "\"Splendid! I'd like to start with my work as soon as possible, so please "
 "hurry! Off to {pnt} we go!\"\n"
@@ -73766,16 +73810,16 @@ msgstr ""
 "するように頼んだ。"
 
 #. Set up mission information
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:65
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:71
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:67
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:73
 msgid "Emergency of Immediate Inspiration"
 msgstr "いま思いついた着想への緊急対応"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:67
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:69
 msgid "Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"
 msgstr "メンシング博士をできるだけ早く{sys}星系の{pnt}へ連れていけ！"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:82
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
 msgid ""
 "\"That took long enough! I can't await getting started. I doubt you deserve "
 "full payment. I'll rather give you a reduced payment of {credits} for "
@@ -73785,7 +73829,7 @@ msgstr ""
 "う値があるとは思いません。むしろ報酬の {credits} は教育的理由により減らしたほ"
 "うがいいですね｣。博士はあなたにクレジットチップを手渡した。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:85
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:87
 msgid ""
 "\"Finally! I can't await getting started. Before I forget -\" She hands you "
 "over a credit chip worth {credits}."
@@ -73793,7 +73837,7 @@ msgstr ""
 "｢ついに！　始めるのが待ちきれません。忘れるまえに⸺｣。博士はあなたに "
 "{credits} の価値があるクレジットチップを手渡した。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:89
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:90
 msgid "You brought Dr. Mensing back from a Empire scientific conference."
 msgstr "あなたはメンシング博士を帝国の科学会議から連れかえった。"
 
@@ -73810,6 +73854,9 @@ msgstr "あなたはメンシング博士を帝国の科学会議から連れか
 #. <location>Bar</location>
 #. <planet>Jorla</planet>
 #. </avail>
+#. <notes>
+#. <campaign>Nebula Research</campaign>
+#. </notes>
 #. </mission>
 #. --
 #.
@@ -73826,15 +73873,15 @@ msgstr "あなたはメンシング博士を帝国の科学会議から連れか
 #. luacheck: globals land tick (Hook functions passed by name)
 #. mission variables
 #. Spaceport bar stuff
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:50
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:53
 msgid "Robert"
 msgstr "ロバート"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:50
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:53
 msgid "The student is already awaiting you."
 msgstr "あの学生はあなたをもう待っていた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:54
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:57
 msgid ""
 "You join the student and explain him that Dr. Mensing actually hasn't told "
 "you what you are supposed to do.\n"
@@ -73874,7 +73921,7 @@ msgstr ""
 "ます。わたしの代理としてとにかくそれを朗読してください。それでうまくいくはず"
 "です！｣"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:59
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:62
 msgid ""
 "\"No time for discussions, sorry. While we're talking Dr. Mensing is trying "
 "to get an advantage! I have no time to lose!\"\n"
@@ -73891,27 +73938,27 @@ msgstr ""
 "ちょっと待ってよ、この仕事を引き受けるなんて承知してないよ！"
 
 #. Set up mission information
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:67
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:213
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:70
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:216
 msgid "The Substitute Speaker"
 msgstr "代理の発表者"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:68
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:71
 msgid "a reputation as scientist (?)"
 msgstr "科学者としての評判 (?)"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:69
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:72
 msgid ""
 "Fly to {pnt} in the {sys} system before {time} and give a scientific talk."
 msgstr "{time}までに{sys}星系の{pnt}に行き、科学的な講演をする。"
 
 #. 100STU per tick
 #. set OSD
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:83
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:86
 msgid "Arriving on {pnt}"
 msgstr "{pnt}に到着"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:84
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:87
 msgid ""
 "You arrived on {pnt} on time. There is even some time left to prepare your "
 "talk. During the flight you threw a glance at the presentation on the data "
@@ -73936,40 +73983,40 @@ msgstr ""
 "だけですよ。とにかくうまくやってくれると信じてますから。幸運を！｣。このメッ"
 "セージには、あなたが朗読しなければならない文章と思われるものがついてきた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:95
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:124
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:127
 msgid "Time to visit the institute"
 msgstr "学会を訪問する時刻"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:95
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:124
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:127
 msgid "It's time to go to the institute."
 msgstr "学会へ行く時間だ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:102
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:133
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "You wonder what to do..."
 msgstr "どうする……"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:102
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Explore the space port"
 msgstr "宇宙港を探検する"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:102
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Take off immediately"
 msgstr "すぐに離陸する"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:102
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Start learning your text"
 msgstr "文章を覚えはじめる"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:108
 msgid ""
 "You decide to explore the spaceport. There are a couple of shops here which "
 "may sell something useful for your mission."
@@ -73977,12 +74024,12 @@ msgstr ""
 "あなたは宇宙港を探検することに決めた。ここには二つ店があって、あなたの任務に"
 "役立つものが売っているかもしれない。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:109
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:112
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:197
 msgid "Tactical Retreat"
 msgstr "戦術的後退"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:109
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:112
 msgid ""
 "This is too much! You better leave before doing anything embarrassing or "
 "humiliating."
@@ -73990,7 +74037,7 @@ msgstr ""
 "これは手におえるものじゃない！　なにかきまり悪くなったり面目を失ったりするま"
 "えに、立ち去ったほうがいい。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:114
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:117
 msgid ""
 "You decide to learn your text rather than simply reciting the text. It "
 "turned out to be the right decision because you haven't ever seen most of "
@@ -73999,35 +74046,35 @@ msgstr ""
 "あなたはただ文章を朗読するのではなく、文章を覚えようと決めた。これは正しい決"
 "定だったことがわかった。言葉のほとんどが見たこともないものだったからだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:133
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Return to your ship"
 msgstr "船に戻る"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:133
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Go to the institute"
 msgstr "学会に行く"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Visit the electronics store"
 msgstr "電子機器の店に行ってみる"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Buy a lab coat"
 msgstr "白衣を買う"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:142
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:145
 msgid "You return to your ship."
 msgstr "あなたは船に戻った。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:152
 msgid ""
 "You enter a shop that sells only lab coats. The assortment of lab coats is "
 "impressive: lab coats of all colors, different materials, and cuts. There "
@@ -74042,12 +74089,12 @@ msgstr ""
 "は把握できなかった。あなたは ｢仕事用｣ 白衣に決めた。おそらくフォーマルなもの"
 "が講演には向いているだろう。値段は {credits} と書いてあった。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:151
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:153
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:154
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 msgid "Lab Coat Shop"
 msgstr "白衣の店"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:151
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:154
 msgid ""
 "Apparently this is too expensive for you. Looks like you have to give your "
 "talk without a lab coat."
@@ -74055,7 +74102,7 @@ msgstr ""
 "どうもこれはあなたには高すぎるようだ。あなたは白衣なしで講演をしなければなら"
 "ないらしい。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:153
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 msgid "Will you buy the lab coat?"
 msgstr "白衣を買いますか？"
 
@@ -74080,19 +74127,19 @@ msgstr "白衣を買いますか？"
 #. @treturn boolean true if yes was pressed or false otherwise.
 #. --
 #. buttons
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:153
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:163
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
 #: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:72 src/dialogue.c:380
 msgid "Yes"
 msgstr "はい"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:153
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:163
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
 #: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:73 src/dialogue.c:382
 msgid "No"
 msgstr "いいえ"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:162
 msgid ""
 "While walking through a store selling electronics you notice a pair of "
 "glasses with integrated displays. You could use them to display the text you "
@@ -74102,19 +74149,19 @@ msgstr ""
 "た。これを使えばあなたが朗読することになっている文章を表示できる。もっともや"
 "や高価だが。{credits} だ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:161
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:164
 msgid "Apparently this is too expensive for you."
 msgstr "どうもこれはあなたには高すぎるようだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:163
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
 msgid "Will you buy the glasses?"
 msgstr "眼鏡を買いますか？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:175
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:178
 msgid "Wearing a lab coat you blend in nicely with your audience."
 msgstr "白衣を着たあなたは聴衆にうまく溶けこんでいた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:178
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:181
 msgid ""
 "It is just now that you realize that you're the only person not wearing a "
 "lab coat. That's a nightmare! Well, maybe it would be for a scientist?"
@@ -74122,17 +74169,17 @@ msgstr ""
 "ちょうど今あなたは気がついた。あなたは白衣を着ていない唯一の人物だ。なんとい"
 "う悪夢！　まあ、科学者ならたぶんそういうものじゃないの？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:180
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:182
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:183
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:185
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:188
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:196
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
 msgid "Scientific Talk"
 msgstr "科学の講演"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:180
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:183
 msgid ""
 "You make your way to the institute where you are supposed to give the talk, "
 "following the signs. On arriving you ask around where you should head to for "
@@ -74150,7 +74197,7 @@ msgstr ""
 "なたが思っていたほどたいしたものではなかったのだ。重要な発表にあなたを送るだ"
 "けってことはないだろうしね？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:182
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:185
 msgid ""
 "You start reciting the text you got from the student. It turned out learning "
 "your text was the right choice. Some of the occurring terms are difficult to "
@@ -74160,7 +74207,7 @@ msgstr ""
 "たことがわかった。出てくる用語のなかには正しく発音するのが難しいものがあった"
 "のだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:185
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:188
 msgid ""
 "You start reciting the text you got from the student. With the text being "
 "displayed on your glasses you don't have to look down on a paper to read the "
@@ -74170,7 +74217,7 @@ msgstr ""
 "ので、あなたは原稿を見おろして文章を読まなくてもよかった。しかし出てくる用語"
 "のなかには正しく発音するのが難しいものがあった。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:188
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
 msgid ""
 "You start reciting the text you got from the student. You realize that you "
 "should have learned the text as some of the occurring terms are difficult to "
@@ -74179,7 +74226,7 @@ msgstr ""
 "あなたは学生から渡された文章を朗読しはじめた。そして文章を覚えておくべきだっ"
 "たと悟った。出てくる用語のなかには正しく発音するのが難しいものがあったのだ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
 msgid ""
 "Finally you are finished with your text and sigh in relief. After a brief "
 "applause someone raises his hand. Apparently he wants to ask a question. "
@@ -74189,19 +74236,19 @@ msgstr ""
 "あとに、だれかが手を上げた。あきらかに質問をしたがっているのだ。どうしたらい"
 "い？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "You haven't understood the question, not even a single word."
 msgstr "あなたは質問が理解できなかった。たったひと言でさえ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "This is a good question."
 msgstr "よい質問です。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:191
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "It's an open question."
 msgstr "それは未解決な問題ですね。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:197
 msgid ""
 "You decide to run towards the closest door and leave the building as fast as "
 "possible. You continue running until you reach the spaceport and enter your "
@@ -74211,7 +74258,7 @@ msgstr ""
 "めた。あなたは宇宙港に着くまで走りつづけ、船に乗った。あなたが講演から逃げた"
 "初めての人物ってことはないはず、でしょ？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:196
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
 msgid ""
 "You try to avoid the question. The scientist seems to be upset. There are no "
 "further questions. Apparently there is another talk that starts very soon so "
@@ -74223,7 +74270,7 @@ msgstr ""
 "みんないそいで立ち去っていく。あなたはどうにか大きな注意をひかずに立ち去っ"
 "て、船に戻ることができた。今日のところは科学はもうたくさんだ！"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:202
 msgid ""
 "You gave a scientific talk on {pnt}. Did anyone notice you're not a "
 "scientist?"
@@ -74233,7 +74280,7 @@ msgstr ""
 
 #. Date hook
 #. Case missed second deadline
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:208
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:211
 msgid "You were too late. You're never going to be a great scientist!"
 msgstr "あなたは遅刻した。あなたが偉大な科学者になることはけっしてない！"
 
@@ -74474,7 +74521,7 @@ msgstr ""
 "     博士は {credits} の価値があるクレジットチップをあなたに渡して去っていっ"
 "た。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:115
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:114
 msgid ""
 "You helped Dr. Mensing to acquire funding for a shielding prototype that "
 "will enable to explore the Sol nebula."
@@ -74482,12 +74529,12 @@ msgstr ""
 "あなたは、ソル星雲を探検できるようにするシールド試作機のための資金をメンシン"
 "グ博士が獲得しようとするのを助けた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:148
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:153
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
 msgid "Caution!"
 msgstr "注意！"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:148
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
 msgid ""
 "You receive a system wide broadcast. It appears to be a warning. \"Caution! "
 "A drone squadron in the {sys} system went haywire! Proceed with care.\"\n"
@@ -74500,7 +74547,7 @@ msgstr ""
 "    どうしてザレク宙域ではこんなことがとてもよくおこるのか？　ちらっと見る"
 "と、ドローン飛行隊があなたの方へまっすぐ飛んでくるのがレーダーに見えた。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:153
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
 msgid ""
 "The now familiar warning appears once again on your ship's screen. "
 "\"Caution! A drone squadron in the {sys} system went haywire! Proceed with "
@@ -74511,11 +74558,11 @@ msgstr ""
 "ドローン飛行隊が狂ってしまいました！　気をつけておいてください｣\n"
 "    とにかくこんなことがこれほどよくおきるものなのか？"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:178
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
 msgid "No clearance to land"
 msgstr "着陸不許可"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:178
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
 msgid ""
 "Apparently you are not allowed to land on {cur_pnt} and explaining the "
 "situation was futile. Dr. Mensing enters the cockpit asking why you aren't "
@@ -76087,16 +76134,12 @@ msgstr ""
 "す！｣"
 
 #. when the player takes off the authorities will want them
-#. general functions
-#. get nearest jumppoint
-#. basically the distance that the map can have at
-#. - create enemy ships
 #. light drones
 #. has eventually to be trimmed
 #. disabling some ships since this way it is really hard to win the mission
-#. scom[5] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
-#. scom[6] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-#. scom[7] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+#. scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+#. scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
+#. scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
 #. Check to see if reaching target system
 #. wait til stars have settled and do stuff
 #. pilot.clear()
@@ -76104,8 +76147,8 @@ msgstr ""
 #. do something else
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:173
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:174
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:130
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:190
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:132
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:192
 msgid "On the intercom"
 msgstr "通信で"
 
@@ -76135,10 +76178,10 @@ msgstr "｢検査のため、警戒態勢を解くように｣"
 #. if it is the last attacking drone, make it run away from the player
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:227
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:228
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:158
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:159
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:196
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:161
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:162
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:197
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:214
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:224
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:229
@@ -76364,7 +76407,7 @@ msgstr "秘密の技術品"
 msgid "A mysterious box of stolen Soromid technology."
 msgstr "盗んだソロミド技術の謎めいた箱。"
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:147
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:146
 msgid ""
 "\"How'd it go?\" asks Dr. Geller. You show him the box. \"Ah, marvelous! Do "
 "you know what this is? This is a quantum sharpener. It's like a quantum "
@@ -76379,7 +76422,7 @@ msgstr ""
 "ね｣。博士はクレジットチップをあなたに放ると、歩き去っていった。ほほえみなが"
 "ら。"
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:151
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:149
 msgid ""
 "You stole something called a \"quantum sharpener\" from a Soromid ship for "
 "Dr. Geller."
@@ -76444,7 +76487,7 @@ msgstr "あなたはゲラー博士に雇われて、逃げた試作機を取り
 msgid "A peek at the new prototype and some compensation for your efforts"
 msgstr "新しい試作機をかいま見ることと、あなたの努力へのいくらかの埋めあわせ"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:130
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:132
 msgid ""
 "\"There! The tracker shows it must be here! It is right next to {pnt}! If "
 "you hail it I might be able to patch the software. That should give me "
@@ -76459,25 +76502,25 @@ msgstr ""
 #. spawn drones
 #. prototype is a scout drone
 #. add something so it is not insta-disabled with one shot?
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:137
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:139
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:244
 msgid "Prototype Drone"
 msgstr "ドローン試作機"
 
 #. just some moving around, stolen from baron missions ;D
 #. wait for the drone to be hailed
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:152
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:154
 msgid "Target out of range"
 msgstr "目標は範囲外"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:158
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
 msgid ""
 "\"Huh, I don't understand. This should not be happening. Hold on. I can't "
 "get access.\""
 msgstr ""
 "｢なに、理解できない。こうなるはずじゃないんだが。まてよ。アクセスできないぞ｣"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:159
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:161
 msgid ""
 "\"Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this "
 "correctly, the drone just hijacked the unused drones on {pnt} and ordered "
@@ -76489,7 +76532,7 @@ msgstr ""
 "を攻撃するように指示したところだな。海賊から買ったあの妙なチップをぜったいに"
 "いじりまわすべきじゃなかったんだ！｣"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:162
 msgid ""
 "\"If you can disable the prototype, do it, but I'd prefer not to die at any "
 "rate!\""
@@ -76497,7 +76540,7 @@ msgstr ""
 "｢試作機を無力化できるなら、そうしてくれ。しかしどんなことがあっても死なないほ"
 "うがいい！｣"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:190
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:192
 msgid ""
 "\"NOOOOOO! What have you done!? My prototype! It's going to take me weeks to "
 "rebuild it! You incompetent nincompoop!\""
@@ -76505,15 +76548,15 @@ msgstr ""
 "｢あーーー！　なんてことをしてくれた !?　わたしの試作機が！　また作るのに何週"
 "間もかかるぞ！　この無能なまぬけ！｣"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:196
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:197
 msgid "\"Excellent work! Now load it up and let's get out of here!\""
 msgstr "｢すばらしい仕事ぶりだ！　さて、あいつを積みこんでここから出よう！｣"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:201
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:199
 msgid "Prototype"
 msgstr "試作機"
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:201
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:199
 msgid "A disabled prototype drone."
 msgstr "無力化されたドローン試作機。"
 
@@ -86976,8 +87019,8 @@ msgid "Conditional for mission '%s' failed to run"
 msgstr "Conditional for mission '%s' failed to run"
 
 #: src/mission.c:350 src/mission.c:372 src/mission.c:394 src/mission.c:434
-#: src/mission.c:530 src/mission.c:578 src/space.c:3830 src/space.c:3884
-#: src/space.c:3915 src/space.c:3970
+#: src/mission.c:530 src/mission.c:578 src/space.c:3831 src/space.c:3885
+#: src/space.c:3916 src/space.c:3971
 msgid "Unknown marker type."
 msgstr "Unknown marker type."
 
@@ -90481,17 +90524,23 @@ msgstr "Event '%s' doesn't seem to exist anymore, removing from save."
 msgid "License node is missing name attribute."
 msgstr "License node is missing name attribute."
 
-#: src/player.c:3681
+#: src/player.c:3658
+#, fuzzy, c-format
+#| msgid "Trying to add item '%s' to non-existent tech '%s'."
+msgid "Trying to add inexistent license '%s'! Ignoring."
+msgstr "Trying to add item '%s' to non-existent tech '%s'."
+
+#: src/player.c:3684
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr "Escort has invalid type '%s'."
 
-#: src/player.c:3742
+#: src/player.c:3745
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 
-#: src/player.c:3761
+#: src/player.c:3764
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
@@ -90500,34 +90549,34 @@ msgstr ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 
-#: src/player.c:3769
+#: src/player.c:3772
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 
-#: src/player.c:3790
+#: src/player.c:3793
 msgid "Empty ship slot node found, skipping."
 msgstr "Empty ship slot node found, skipping."
 
-#: src/player.c:3856
+#: src/player.c:3859
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr "Player ship '%s' not found!"
 
-#: src/player.c:3903
+#: src/player.c:3906
 msgid "Outfit slot out of range, not adding to ship."
 msgstr "Outfit slot out of range, not adding to ship."
 
-#: src/player.c:3916 src/player.c:3929
+#: src/player.c:3919 src/player.c:3932
 msgid "Outfit slot out of range, not adding."
 msgstr "Outfit slot out of range, not adding."
 
-#: src/player.c:3948
+#: src/player.c:3951
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr "Unknown commodity '%s' detected, removing."
 
-#: src/player.c:3972
+#: src/player.c:3975
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
@@ -90536,7 +90585,7 @@ msgstr ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 
-#: src/player.c:4022
+#: src/player.c:4025
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
@@ -90545,51 +90594,51 @@ msgstr ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 
-#: src/player.c:4030
+#: src/player.c:4033
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr "Player ship '%s' missing 'id' tag for weapon set."
 
-#: src/player.c:4034
+#: src/player.c:4037
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 
-#: src/player.c:4050
+#: src/player.c:4053
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr "Player ship '%s' missing 'type' tag for weapon set."
 
-#: src/player.c:4063
+#: src/player.c:4066
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 
-#: src/player.c:4071
+#: src/player.c:4074
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr "Player ship '%s' missing 'level' tag for weapon set weapon."
 
-#: src/player.c:4076
+#: src/player.c:4079
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr "Player ship '%s' has invalid weapon id %d [max %d]."
 
-#: src/player.c:4115
+#: src/player.c:4118
 msgid "You have destealthed."
 msgstr "ステルスを解除しました。"
 
-#: src/player.c:4121
+#: src/player.c:4124
 msgid "#gYou have entered stealth mode."
 msgstr "#gステルスモードに入りました。"
 
-#: src/player.c:4126
+#: src/player.c:4129
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr "#rステルスは不可能です。ミサイルに捕捉されています！"
 
-#: src/player.c:4128
+#: src/player.c:4131
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr "#rステルスは不可能です。ほかのパイロットが近くにいます！"
 
@@ -91581,7 +91630,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr "Lua Spawn script for faction '%s' : %s"
 
-#: src/space.c:1181 src/space.c:4520
+#: src/space.c:1181 src/space.c:4521
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr "Lua spawn script for faction '%s' failed to return timer value."
@@ -91853,7 +91902,7 @@ msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] "       with %d Planet(s)"
 
-#: src/space.c:3856
+#: src/space.c:3857
 #, c-format
 msgid "Marking planet '%s' that is not in any system!"
 msgstr "Marking planet '%s' that is not in any system!"
@@ -91863,7 +91912,7 @@ msgstr "Marking planet '%s' that is not in any system!"
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4512
+#: src/space.c:4513
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr "Lua decrease script for faction '%s' : %s"
