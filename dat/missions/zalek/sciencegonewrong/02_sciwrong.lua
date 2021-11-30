@@ -199,8 +199,7 @@ function targetBoard()
    local c = commodity.new(N_("Prototype"), N_("A disabled prototype drone."))
    mem.cargoID = misn.cargoAdd(c, 10)
    misn.osdActive(3)
-   misn.markerRm(mem.mmarker)
-   mem.mmarker = misn.markerAdd(mem.t_sys[2], "high")
+   mem.mmarker = misn.markerMove( mem.mmarker, mem.t_pla[2], "high" )
    if mem.jumps == 0 then
       hook.timer(2.0, "drones_flee")
    end
