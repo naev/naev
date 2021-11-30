@@ -12,7 +12,7 @@
    * Fixed reproducible crash when boarded pilots get removed
    * Added counterfeit licenses to pirate worlds
    * Remove minor energy malus from sensor array and jump detector
-   * Electron burst cannon is not widely available
+   * Electron burst cannon is no longer widely available
 
 * 0.9.0 (beta)
    * New mechanics
