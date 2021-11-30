@@ -1,5 +1,5 @@
 * 0.9.0 (since beta.1)
-   * Fixed missing credits and translation coverage data.
+   * Fixed missing credits and translation coverage data
    * Improved phrasing
    * Prevented players from getting stranded without access to fuel
    * Mission script fixes for "Helping Nelly" and "The one with the Visit"
@@ -8,7 +8,11 @@
    * Hulls are more widely available
    * Improved some of the map outfits
    * Do not render systems with unknown assets as restricted
-   * Added gamma correction to Options.
+   * Added gamma correction to Options
+   * Fixed reproducible crash when boarded pilots get removed
+   * Added counterfeit licenses to pirate worlds
+   * Remove minor energy malus from sensor array and jump detector
+   * Electron burst cannon is not widely available
 
 * 0.9.0 (beta)
    * New mechanics
