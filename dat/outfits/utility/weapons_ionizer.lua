@@ -40,4 +40,5 @@ function ontoggle( _p, po, on )
       end
       mem.forced_on = false
    end
-   return true end
+   return true
+end

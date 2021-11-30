@@ -192,12 +192,8 @@ function failed ()
 end
 
 function targetBoard()
-   player.unboard()
    tk.msg(_([[On your ship]]), _([["Excellent work! Now load it up and let's get out of here!"]]))
-   t_drone:setHilight(false)
-   t_drone:setVisplayer(false)
    mem.captured = true
-   t_drone:rm()
    local c = commodity.new(N_("Prototype"), N_("A disabled prototype drone."))
    mem.cargoID = misn.cargoAdd(c, 10)
    misn.osdActive(3)
@@ -207,6 +203,9 @@ function targetBoard()
       hook.timer(2.0, "drones_flee")
    end
    hook.land("land_home")
+
+   player.unboard()
+   t_drone:rm()
 end
 
 function drone_jumped ()
