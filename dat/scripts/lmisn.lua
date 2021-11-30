@@ -33,7 +33,9 @@ end
 
 function lmisn.getLandablePlanets( sys, fct, fctmatch )
    sys = sys or system.cur()
-   fct = faction.get(fct)
+   if fct ~= nil then
+      fct = faction.get(fct)
+   end
    local pnt_candidates = {}
    for _k,p in ipairs(sys:planets()) do
       local s = p:services()
@@ -73,7 +75,9 @@ function lmisn.sysFilters.default ()
    end
 end
 function lmisn.sysFilters.faction( fct, threshold )
-   fct = faction.get(fct)
+   if fct ~= nil then
+      fct = faction.get(fct)
+   end
    threshold = threshold or 0
    local fctname = fct:nameRaw()
    return function( sys )
@@ -82,7 +86,9 @@ function lmisn.sysFilters.faction( fct, threshold )
    end
 end
 function lmisn.sysFilters.factionLandable( fct, samefact )
-   fct = faction.get(fct)
+   if fct ~= nil then
+      fct = faction.get(fct)
+   end
    return function( sys )
       for k,p in ipairs(sys:planets()) do
          local s = p:services()
