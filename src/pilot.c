@@ -3305,15 +3305,12 @@ void pilots_cleanAll (void)
 void pilots_update( double dt )
 {
    /* Delete loop - this should be atomic or we get hook fuckery! */
-   for (int i=0; i<array_size(pilot_stack); i++) {
+   for (int i=array_size(pilot_stack)-1; i>=0; i--) {
       Pilot *p = pilot_stack[i];
 
       /* Destroy pilot and go on. */
-      if (pilot_isFlag(p, PILOT_DELETE)) {
+      if (pilot_isFlag(p, PILOT_DELETE))
          pilot_destroy(p);
-         i--; /* Must decrement iterator. */
-         continue;
-      }
    }
 
    /* Have all the pilots think. */
