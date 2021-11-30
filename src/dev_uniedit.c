@@ -64,6 +64,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_VIRTUALASSETS,
    UNIEDIT_VIEW_RADIUS,
    UNIEDIT_VIEW_BACKGROUND,
+   UNIEDIT_VIEW_TECH,
    UNIEDIT_VIEW_PRESENCE_SUM,
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
@@ -386,8 +387,9 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    str[1]= strdup(_("Virtual Assets"));
    str[2]= strdup(_("System Radius"));
    str[3]= strdup(_("Background"));
-   str[4]= strdup(_("Sum of Presences"));
-   n     = 5; /* Number of special cases. */
+   str[4]= strdup(_("Tech"));
+   str[5]= strdup(_("Sum of Presences"));
+   n     = 6; /* Number of special cases. */
    j     = n;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
@@ -573,6 +575,35 @@ static void uniedit_renderBackground( double x, double y, double r )
    }
 }
 
+static void uniedit_renderTech( double x, double y, double r )
+{
+   glColour c = cWhite;
+   c.a = 0.3;
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+      int hastech = 0;
+
+      for (int j=0; j<array_size(sys->planets); j++) {
+         if (sys->planets[j]->tech != NULL) {
+            hastech = 1;
+            break;
+         }
+      }
+      if (!hastech)
+         continue;
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* Draw disk. */
+      sr = 7.*M_PI * uniedit_zoom;
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
 static void uniedit_renderPresenceSum( double x, double y, double r )
 {
    glColour c = cWhite;
@@ -623,6 +654,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_BACKGROUND:
          uniedit_renderBackground( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_TECH:
+         uniedit_renderTech( x, y, r );
          break;
 
       case UNIEDIT_VIEW_PRESENCE_SUM:
@@ -702,13 +737,11 @@ static int getPresenceVal( int f, AssetPresence *ap, double *base, double *bonus
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
 {
    double x,y, mx,my, sx,sy;
-   int i, j, k, p, l, f;
+   int l, f;
    double value, base, bonus;
    char buf[STRMAX] = {'\0'};
    StarSystem *sys, *cur, *mousesys;
    SystemPresence *sp;
-   Planet *pnt;
-   VirtualAsset *va;
    (void) data;
 
    x = bx + uniedit_mx;
@@ -733,7 +766,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Find mouse over system. */
    mousesys = NULL;
-   for (i=0; i<array_size(systems_stack); i++) {
+   for (int i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex(i);
       sx = sys->pos.x;
       sy = sys->pos.y;
@@ -755,8 +788,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
       /* Count assets. */
       l = 0;
-      for (j=0; j<array_size(sys->assets_virtual); j++) {
-         va = sys->assets_virtual[j];
+      for (int j=0; j<array_size(sys->assets_virtual); j++) {
+         VirtualAsset *va = sys->assets_virtual[j];
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
       }
 
@@ -780,18 +813,41 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       return;
    }
 
+   /* Handle tech radius. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_TECH) {
+      if (array_size(sys->planets)==0)
+         return;
+
+      /* Count assets. */
+      l = 0;
+      for (int j=0; j<array_size(sys->planets); j++) {
+         Planet *pnt = sys->planets[j];
+         int n;
+         char **techs;
+         if (pnt->tech==NULL)
+            continue;
+         techs = tech_getItemNames( pnt->tech, &n );
+         for (int k=0; k<n; k++)
+            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", techs[k] );
+         free( techs );
+      }
+
+      toolkit_drawAltText( x, y, buf);
+      return;
+   }
+
    /* Handle presence sum. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE_SUM) {
       if (array_size(sys->presence)==0)
          return;
 
       value = 0.;
-      for (j=0; j<array_size(sys->presence); j++)
+      for (int j=0; j<array_size(sys->presence); j++)
          value += MAX( sys->presence[j].value, 0. );
 
       /* Count assets. */
       l = scnprintf( buf, sizeof(buf), _("Total: %.0f"), value );
-      for (j=0; j<array_size(sys->presence); j++) {
+      for (int j=0; j<array_size(sys->presence); j++) {
          sp = &sys->presence[j];
          if (sp->value<=0.)
             continue;
@@ -814,16 +870,16 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             _(sys->name), faction_name(f) );
 
       /* Local presence sources. */
-      for (j=0; j<array_size(sys->planets); j++) {
-         pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->planets); j++) {
+         Planet *pnt = sys->planets[j];
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
                getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
       }
-      for (j=0; j<array_size(sys->assets_virtual); j++) {
-         va = sys->assets_virtual[j];
-         for (p=0; p<array_size(va->presences); p++) {
+      for (int j=0; j<array_size(sys->assets_virtual); j++) {
+         VirtualAsset *va = sys->assets_virtual[j];
+         for (int p=0; p<array_size(va->presences); p++) {
             if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
@@ -832,18 +888,18 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       }
 
       /* Find neighbours if possible. */
-      for (k=0; k<array_size(sys->jumps); k++) {
+      for (int k=0; k<array_size(sys->jumps); k++) {
          cur = sys->jumps[k].target;
-         for (j=0; j<array_size(cur->planets); j++) {
-            pnt = cur->planets[j];
+         for (int j=0; j<array_size(cur->planets); j++) {
+            Planet *pnt = cur->planets[j];
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                   getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
          }
-         for (j=0; j<array_size(cur->assets_virtual); j++) {
-            va = cur->assets_virtual[j];
-            for (p=0; p<array_size(va->presences); p++) {
+         for (int j=0; j<array_size(cur->assets_virtual); j++) {
+            VirtualAsset *va = cur->assets_virtual[j];
+            for (int p=0; p<array_size(va->presences); p++) {
                if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                   continue;
                l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
@@ -1906,33 +1962,34 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 
    /* Check default. */
    pos = toolkit_getListPos( wid, "lstViewModes" );
+   uniedit_view_faction = -1;
    if (pos==0) {
       uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
-      uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
    }
    else if (pos==1) {
       uniedit_viewmode = UNIEDIT_VIEW_VIRTUALASSETS;
-      uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
    }
    else if (pos==2) {
       uniedit_viewmode = UNIEDIT_VIEW_RADIUS;
-      uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
    }
    else if (pos==3) {
       uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
-      uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
    }
    else if (pos==4) {
+      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==5) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
-      uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
    }
