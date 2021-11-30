@@ -5,6 +5,7 @@ lua_source = files(
    'lmisn.lua',
    'lmusic.lua',
    'love_shaders.lua',
+   'merge_tables.lua',
    'portrait.lua',
    'pp_shaders.lua',
    'prng.lua',
