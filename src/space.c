@@ -3731,6 +3731,7 @@ void space_exit (void)
       array_free(sys->asteroids);
       array_free(sys->astexclude);
 
+      ss_free( sys->stats );
    }
    array_free(systems_stack);
    systems_stack = NULL;
