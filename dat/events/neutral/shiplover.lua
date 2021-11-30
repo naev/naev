@@ -336,7 +336,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       sl(_([["So you're back. Did you change your mind about playing my ship quiz?"]]))
    else
       vn.na(_("You once again approach the ship enthusiast. They seem to move about a lot."))
-      sl(_([["Would you like to play another round of the ship quiz? I think the question I prepared will stump you completely."]]))
+      sl(_([["Would you like to play another round of the ship quiz? I think the question I prepared will stump you completely!"]]))
    end
    vn.menu{
       { _([["Yes!"]]), "play_yes" },
