@@ -815,6 +815,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle tech radius. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_TECH) {
+      char *techlist[256];
+      int ntechs = 0;
       if (array_size(sys->planets)==0)
          return;
 
@@ -828,9 +830,17 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             continue;
          techs = tech_getItemNames( pnt->tech, &n );
          for (int k=0; k<n; k++)
-            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", techs[k] );
+            techlist[ ntechs++ ] = techs[k];
          free( techs );
       }
+      qsort( techlist, ntechs, sizeof(char*), strsort );
+      for (int k=0; k<ntechs; k++) {
+         if ((k>0) && (strcmp(techlist[k-1],techlist[k])==0))
+            continue;
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", techlist[k] );
+      }
+      for (int k=0; k<ntechs; k++)
+         free( techlist[k] );
 
       toolkit_drawAltText( x, y, buf);
       return;
