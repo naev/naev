@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-12-01 13:56-0500\n"
-"PO-Revision-Date: 2021-08-31 04:33+0000\n"
+"PO-Revision-Date: 2021-12-02 00:34+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -119,10 +119,8 @@ msgstr ""
 "Les Grandes Maisons surveillaient maintenant les voies spatiales."
 
 #: dat/intro:23
-#, fuzzy
-#| msgid "Rise and fall, the rhythm of history. "
 msgid "Rise and fall, the rhythm of history."
-msgstr "Montée et chute, le rythme de l’histoire. "
+msgstr "L'ascension et la chute, le rythme de l’histoire."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
@@ -220,7 +218,7 @@ msgstr "   * Développement divers"
 #, fuzzy
 #| msgid "Jack Greiner <jack@emoss.org>"
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr "Jack Greiner <jack@emoss.org>"
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
@@ -228,7 +226,7 @@ msgstr "   * A apporté les versions automatisées"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 #, fuzzy
@@ -561,7 +559,7 @@ msgstr "Cypher3c <cypher3c@gmail.com>"
 #, fuzzy
 #| msgid "   * Spiced up the boring generic cargo missios."
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr "   * Pimenté les missios de fret génériques ennuyeux."
+msgstr "   * A pimenté les missions de fret génériques et ennuyeuses."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -1409,6 +1407,7 @@ msgstr ""
 "préféra alors accorder à la Maison Dvaered son indépendance."
 
 #: dat/assets/ambre.xml:31
+#, fuzzy
 msgid ""
 "Ambre's spaceport bar is never quiet. At regular intervals all other noise "
 "in the bar is drowned out by the sound of cargo pods trundling along the "
@@ -1418,6 +1417,13 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"Le spatioport d'Ambre n'est jamais calme. À intervalles réguliers, le "
+"brouhaha du bar est noyé par le bruit des conteneurs acheminés par le chemin "
+"de fer passant juste dessous. Ce bar a été construit assez tard au cours du "
+"développement de la planète, le gouvernement Impérial ne voyant pas "
+"l'intérêt pour Ambre d'être quoi que ce soit d'autre qu'un camp de travail. "
+"Après l'indépendance, il fût établi dans l'un des rares espaces vacants de "
+"la station, juste au dessus de lignes de fret ferroviaires."
 
 #: dat/assets/amhurst.xml:2
 msgid "Amhurst"
@@ -1437,11 +1443,14 @@ msgstr ""
 "mineurs ou des ouvriers."
 
 #: dat/assets/amhurst.xml:32
+#, fuzzy
 msgid ""
 "If one didn't know better, they would assume this was a Dvaered bar. The "
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"Un observateur non averti pourrait penser se trouver dans un bar Dvaered. On "
+"trouve ici peu des traits qui distinguent les établissement Za'lek."
 
 #: dat/assets/amianta.xml:2
 msgid "Amianta"
@@ -1480,6 +1489,10 @@ msgid ""
 "known for its temperature, that's not to say you can't get a mean Pan-"
 "Galactic Gargle Blaster."
 msgstr ""
+"Le bar du spatioport Ammu est surnommé \"Le frigo\" en raison de la "
+"température glaciale qui y règne, constrastant avec le reste de la station. "
+"Il est principalement connu pour ça mais on peut aussi y déguster un Pan-"
+"Galactic Gargle Blaster du tonnère."
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
@@ -1495,7 +1508,7 @@ msgid ""
 msgstr ""
 "Amphion est une destination prisée pour les officiers de l'Empire à la "
 "retraite. Elle est située suffisamment près du centre de l'Empire pour "
-"rappeler aux militaires leur années de service, mais suffisamment loin pour "
+"rappeler aux militaires leurs années de service, mais suffisamment loin pour "
 "avoir la paix. Les océans qui dominent la surface de la planète sont calmes, "
 "et les nombreuses cités sous-marines sont connues dans tout l'Empire pour "
 "leur faste et leur opulence."
@@ -1507,34 +1520,38 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
+"L'âge moyen de la clientèle semble dépasser la cinquantaine. Le bar "
+"ressemble à une taverne de l'ancien monde avec sa lumière tamisée et son "
+"décor chaleureux. Vous vous faites facilement de nouveaux amis dans cette "
+"ambiance décontractée et amicale."
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/assets/andee_ii.xml:2
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/assets/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/assets/andee_iii.xml:2
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/assets/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/assets/andors.xml:2
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1555,10 +1572,14 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
+"Ce bar offre un abri bienvenu contre le froid polaire et les vents mordants "
+"communs sur cette planète. Le menu consiste principalement de boissons "
+"chaudes et de plats riches, et les clients sont quasiment tous des ouvriers "
+"Za'lek au repos."
 
 #: dat/assets/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr ""
+msgstr "Andors Refining"
 
 #: dat/assets/andors_refining.xml:27
 msgid ""
@@ -1566,12 +1587,16 @@ msgid ""
 "into a more useful form and shipped out to other worlds to be turned into "
 "whatever is needed."
 msgstr ""
+"Une simple usine d'affinage où les minerais collectés sur Andors sont "
+"transformés pour les rendre utilisable. Ils seront envoyés vers d'autres "
+"mondes pour manufacturer des produits à plus forte valeur ajoutée."
 
 #: dat/assets/anecu.xml:2
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/assets/anecu.xml:31
+#, fuzzy
 msgid ""
 "Anecu is a completely aquatic planet. Its surface is covered completely by "
 "water but in the shallow areas great underwater cities are constructed. The "
@@ -1580,6 +1605,12 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
+"Anecu est une planète océan. Elle est entièrement recouverte d'eau mais de "
+"grandes villes sous-marines ont été construites dans les zones peu "
+"profondes. Le climat à la surface peut être  hostile ; des vagues ont été "
+"mesurées à plus de deux kilomètres de hauteur. Les installations de "
+"constructions de vaisseaux, qui utilisent la pression sous-marine pour "
+"évaluer la robustesse de leurs produits, sont la fierté de cette planète. "
 
 #: dat/assets/anecu.xml:32
 msgid ""
@@ -1662,11 +1693,11 @@ msgstr ""
 
 #: dat/assets/antlejos_v.xml:18
 msgid "A cold and barren inhospitable moon devoid of all life."
-msgstr ""
+msgstr "Une lune déserte et froide, inhospitalière et dépourvue de vie."
 
 #: dat/assets/anubis.xml:2
 msgid "Anubis"
-msgstr ""
+msgstr "Anubis"
 
 #: dat/assets/anubis.xml:31
 msgid ""
