@@ -31,6 +31,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>
