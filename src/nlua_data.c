@@ -200,6 +200,9 @@ static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
 /**
  * @brief Gets the value of an element.
  *
+ *    @luatparam Data data Data to index.
+ *    @luatparam number pos Element position.
+ *    @luatreturn number The entry.
  * @luafunc get
  */
 static int dataL_get( lua_State *L )
@@ -218,7 +221,10 @@ static int dataL_get( lua_State *L )
 /**
  * @brief Sets the value of an element.
  *
- * @luafunc get
+ *    @luatparam Data data Data to index.
+ *    @luatparam number pos Element position.
+ *    @luatparam number value Value to set it to.
+ * @luafunc set
  */
 static int dataL_set( lua_State *L )
 {
@@ -236,6 +242,10 @@ static int dataL_set( lua_State *L )
 }
 
 /**
+ * @brief Gets the number of elements.
+ *
+ *    @luatparam Data data ...
+ *    @luatreturn number Data size.
  * @luafunc getSize
  */
 static int dataL_getSize( lua_State *L )
@@ -246,6 +256,10 @@ static int dataL_getSize( lua_State *L )
 }
 
 /**
+ * @brief Returns the data contents as a string.
+ *
+ *    @luatparam Data data ...
+ *    @luatreturn string The bytes inside.
  * @luafunc getString
  */
 static int dataL_getString( lua_State *L )
@@ -256,6 +270,13 @@ static int dataL_getString( lua_State *L )
 }
 
 /**
+ * @brief Writes the contents of "source" into "dest".
+ *
+ *    @luatparam Data dest Destination.
+ *    @luatparam Data source Source.
+ *    @luatparam number dx Offset from start of destination.
+ *    @luatparam number sx Offset from start of source.
+ *    @luatparam number sw Number of data elements to copy.
  * @luafunc paste
  */
 static int dataL_paste( lua_State *L )
@@ -281,6 +302,14 @@ static int dataL_paste( lua_State *L )
 }
 
 /**
+ * @brief Returns alpha*A + beta*B + bias
+ *
+ *    @luatparam Data A as above.
+ *    @luatparam Data B as above.
+ *    @luatparam number alpha as above.
+ *    @luatparam number beta as above.
+ *    @luatparam number bias as above.
+ *    @luatreturn Data alpha*A + beta*B + bias.
  * @luafunc addWeighted
  */
 static int dataL_addWeighted( lua_State *L )
@@ -320,6 +349,15 @@ static int dataL_addWeighted( lua_State *L )
 }
 
 /**
+ * @brief Does a convolution. You'd rather be writing shaders, right?
+ *
+ *    @luatparam Data I left-hand side of the convolution operator.
+ *    @luatparam number iw width of I.
+ *    @luatparam number ih height of I.
+ *    @luatparam Data K right-hand side of the convolution operator.
+ *    @luatparam number kw width of K.
+ *    @luatparam number kh height of K.
+ *    @luareturn (I*K, width, height)
  * @luafunc convolve2d
  */
 static int dataL_convolve2d( lua_State *L )
