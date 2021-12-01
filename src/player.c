@@ -151,6 +151,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
 static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
+static int player_runUpdaterScript( const char* type, const char* name, int q );
+static const Outfit* player_tryGetOutfit( const char* name, int q );
+static void player_tryAddLicense( const char* name );
 /* Render. */
 static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
@@ -3301,17 +3304,17 @@ Planet* player_load( xmlNodePtr parent )
 }
 
 /**
- * @brief Tries to get an outfit for the player or looks for equivalents.
+ * @brief Runs the save updater script, leaving any result on the stack of naevL.
+ *
+ *    @param type Type of item to translate. Currently "outfit" and "license" are supported.
+ *    @param name Name of the inventory item.
+ *    @param q Quantity in possession.
+ *    @return Stack depth: 1 if player got a translated item back, 0 if they got nothing or just money.
  */
-static const Outfit* player_tryGetOutfit( const char *name, int q )
+static int player_runUpdaterScript( const char* type, const char* name, int q )
 {
-   credits_t price = -1;
-   const Outfit *o = outfit_getW( name );
    static nlua_env player_updater_env = LUA_NOREF;
 
-   /* Outfit was found normally. */
-   if (o != NULL)
-      return o;
    player_ran_updater = 1;
 
    /* Load env if necessary. */
@@ -3325,34 +3328,72 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
             "Most likely Lua file has improper syntax, please check"),
                SAVE_UPDATER_PATH, lua_tostring(naevL,-1));
          free(buf);
-         return NULL;
+         return 0;
       }
       free(buf);
    }
 
    /* Try to find out equivalent. */
-   nlua_getenv( player_updater_env, "outfit" );
+   nlua_getenv( player_updater_env, type );
    lua_pushstring( naevL, name );
    if (nlua_pcall(player_updater_env, 1, 1)) { /* error has occurred */
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      return 0;
    }
-   if (lua_type(naevL,-1) == LUA_TNUMBER)
-      price = round( lua_tonumber(naevL,-1) );
+   if (lua_type(naevL,-1) == LUA_TNUMBER) {
+      player_payback += q * round( lua_tonumber(naevL,-1) );
+      lua_pop(naevL,1);
+      return 0;
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Tries to get an outfit for the player or looks for equivalents.
+ */
+static const Outfit* player_tryGetOutfit( const char *name, int q )
+{
+   const Outfit *o = outfit_getW( name );
+
+   /* Outfit was found normally. */
+   if (o != NULL)
+      return o;
+   player_ran_updater = 1;
+
+   /* Try to find out equivalent. */
+   if (player_runUpdaterScript( "outfit", name, q ) == 0)
+      return NULL;
    else if (lua_type(naevL,-1) == LUA_TSTRING)
       o = outfit_get( lua_tostring(naevL,-1) );
    else if (lua_isoutfit(naevL,-1))
       o = lua_tooutfit(naevL,-1);
    lua_pop(naevL,1);
 
-   /* No equivalent. */
-   if (o==NULL && price<0) {
-      WARN(_("Outfit '%s' was saved but does not exist!"), name);
-      return NULL;
-   }
-   if (o==NULL)
-      player_payback += price * q;
    return o;
+}
+
+/**
+ * @brief Tries to get an outfit for the player or looks for equivalents.
+ */
+static void player_tryAddLicense( const char *name )
+{
+   /* Found normally. */
+   if (outfit_licenseExists(name)) {
+      player_addLicense( name );
+      return;
+   }
+   player_ran_updater = 1;
+
+   /* Try to find out equivalent. */
+   if (player_runUpdaterScript( "license", name, 1 ) == 0)
+      return;
+   else if (lua_type(naevL,-1) == LUA_TSTRING)
+      player_addLicense( lua_tostring(naevL,-1) );
+   else
+      WARN(_("Saved license does not exist and could not be found or updated: '%s'!"), name);
+   lua_pop(naevL,1);
 }
 
 /**
@@ -3654,10 +3695,7 @@ static int player_parseLicenses( xmlNodePtr parent )
             WARN( _( "License node is missing name attribute." ) );
             continue;
          }
-         if (!outfit_licenseExists(name))
-            WARN(_("Trying to add inexistent license '%s'! Ignoring."), name);
-         else
-            player_addLicense( name );
+         player_tryAddLicense( name );
       }
    } while (xml_nextNode(node));
    return 0;

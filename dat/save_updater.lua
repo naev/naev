@@ -237,3 +237,20 @@ local outfit_list = {
 function outfit( name )
    return outfit_list[name]
 end
+
+local license_list = {
+   -- Below is a list of changes from 0.9.0-alpha to 0.9.0-beta
+   ["Heavy Combat Vessel License"] = "Heavy Combat Vessel",
+   ["Heavy Weapon License"] = "Heavy Weapon",
+   ["Large Civilian Vessel License"] = "Large Civilian Vessel",
+   ["Light Combat Vessel License"] = "Light Combat Vessel",
+   ["Medium Combat Vessel License"] = "Medium Combat Vessel",
+   ["Medium Weapon License"] = "Medium Weapon",
+   ["Mercenary License"] = "Mercenary",
+}
+--[[--
+   Takes a license name and should return either a new license name or the amount of credits to give back to the player.
+--]]
+function license( name )
+   return license_list[name]
+end
