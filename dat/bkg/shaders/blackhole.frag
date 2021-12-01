@@ -2,7 +2,7 @@
 
 const float SPEED = 1.0; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
-const float SIZE  = 0.3; /**< Size of the black hole relative to texture. */
+const float SIZE  = 0.5; /**< Size of the black hole relative to texture. */
 /* Set up rotation matrix at compile-time for efficiency. */
 const vec3 rotang = vec3( %f, %f, %f );
 const float cx = cos(rotang.x);
