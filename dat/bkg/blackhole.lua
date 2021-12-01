@@ -37,7 +37,7 @@ function renderbg( dt )
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.0003, by+y*0.0003, z )
+   shader:send( "u_camera", bx+x*0.0001, by+y*0.0001, z )
 
    lg.setShader( shader )
    canvas:draw( 0, 0, 0, 1, 1 )
