@@ -97,8 +97,8 @@ vec4 raymarch_disk( vec3 ro, vec3 rd )
 
       /* Sample from noise for the disk. */
       const float f = 70.0;
-      float noise = value( vec2( angle, u * (1.0/SIZE) * 0.05 ), f );
-      noise = noise*0.66 + 0.33*value( vec2( angle, u * (1.0/SIZE) * 0.05), f*2.0 );
+      float noise = value( vec2( angle, u * (1.0/SIZE) * 0.1 ), f );
+      noise = noise*0.66 + 0.33*value( vec2( angle, u * (1.0/SIZE) * 0.1), f*2.0 );
 
       float expand = noise * 1.0 * (1.0 - clamp(i * (1.0/STEPS)*2.0 - 1.0, 0.0, 1.0 ));
       float alpha = clamp(noise*(intensity + expand)*( (1.0/SIZE) * 10.0 + 0.01) * dist * distMult, 0.0, 1.0);
