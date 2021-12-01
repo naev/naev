@@ -134,6 +134,8 @@ end
 
 --the preaching's about to begin!
 function theFunBegins()
+   if system.cur() ~= curr then return end -- Probably system tour event
+
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
