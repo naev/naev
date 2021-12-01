@@ -1,6 +1,7 @@
 --[[
    Default background
 --]]
+local bgshaders = require "bkg.lib.bgshaders"
 local starfield = require "bkg.lib.starfield"
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
@@ -9,18 +10,16 @@ local prng = require("prng").new()
 
 local pixelcode = lf.read( "bkg/shaders/blackhole.frag" )
 
-local canvas, shader, time, bx, by
+local blackhole, shader, time, bx, by, sf
 function background ()
-   prng:setSeed( system.cur():nameRaw() )
+   local nconf = naev.conf()
+   sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
-   --sf = naev.conf().nebu_scale
-   local nw, nh = naev.gfx.dim()
-   local cw, ch = nw, nh
-   canvas = lg.newCanvas( cw, ch )
+   prng:setSeed( system.cur():nameRaw() )
 
    local off = vec2.new( -772, -479 ) - system.cur():pos()
    local _m, a = off:polar()
-   off = vec2.newP( 70, a + math.pi )
+   off = vec2.newP( 70, a )
    bx, by = off:get()
 
    -- Set up the shader
@@ -29,21 +28,16 @@ function background ()
    time = -1000 * rnd.rnd()
 
    starfield.init{ nolocalstars=true }
+   blackhole = bgshaders.init( shader, sf )
 end
 
-function renderbg( dt )
-   lg.setCanvas( canvas )
-   lg.clear( 0, 0, 0, 0 )
-   starfield.render( dt )
-   lg.setCanvas()
-
+function renderfg( dt )
    local x, y = camera.get():get()
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
    shader:send( "u_camera", bx+x*0.0001, by+y*0.0001, z )
 
-   lg.setShader( shader )
-   canvas:draw( 0, 0, 0, 1, 1 )
-   lg.setShader()
+   --starfield.render( dt )
+   blackhole:render( dt, {0,0,0,0} )
 end

@@ -118,7 +118,8 @@ vec4 raymarch_disk( vec3 ro, vec3 rd )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = (screen_coords - 0.5*love_ScreenSize.xy) / love_ScreenSize.y;
+   //vec2 uv = (screen_coords - 0.5*love_ScreenSize.xy) / love_ScreenSize.y;
+   vec2 uv = ((texture_coords - 0.5)*love_ScreenSize.xy) / love_ScreenSize.y;
 
    /* Camera. */
    vec3 ro  = vec3(0.0, 0.0, -100.0 * u_camera.z);

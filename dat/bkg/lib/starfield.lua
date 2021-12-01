@@ -110,7 +110,7 @@ function starfield.init( params )
    local rz = 5+1*prng:random()
    --rx, ry, rz = 5, 7, 11
    sz = 1+1*prng:random()
-   sb = naev.conf().bg_brightness
+   sb = nconf.bg_brightness
 
    local motionblur = 1
    if static then
