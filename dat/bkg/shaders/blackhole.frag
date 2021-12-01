@@ -121,9 +121,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec2 uv = ((texture_coords - 0.5)*love_ScreenSize.xy) / love_ScreenSize.y;
 
    /* Camera. */
-   vec3 ro  = vec3(0.0, 0.0, -10.0 * u_camera.z);
-   vec3 rd  = R*normalize( vec3(uv, 1.0));
-   vec3 pos = R*ro + vec3(u_camera.xy,0.0);
+   vec3 ro  = vec3(u_camera.xy, -100.0 * u_camera.z);
+   vec3 rd  = R*normalize( vec3(0.1*uv, 1.0));
+   vec3 pos = R*ro;
    vec3 rdo = rd;
 
    /* Initialize stuff. */

@@ -19,7 +19,7 @@ function background ()
 
    local off = vec2.new( -772, -479 ) - system.cur():pos()
    local _m, a = off:polar()
-   off = vec2.newP( 7, a )
+   off = vec2.newP( 5, a )
    bx, by = off:get()
 
    -- Set up the shader
@@ -36,7 +36,7 @@ function renderfg( dt )
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.0001, by+y*0.0001, z )
+   shader:send( "u_camera", bx+x*0.0001, by-y*0.0001, z )
 
    --starfield.render( dt )
    blackhole:render( dt, {0,0,0,0} )
