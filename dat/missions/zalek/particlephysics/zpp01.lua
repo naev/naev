@@ -33,7 +33,6 @@ local destpnt, destsys = planet.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist that seems to be looking or someone to do something for them.") )
 end
 
