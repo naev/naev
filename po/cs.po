@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-30 19:07+0900\n"
+"POT-Creation-Date: 2021-12-01 13:56-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -695,20 +695,20 @@ msgstr "EvanR"
 msgid "Artwork Contributors"
 msgstr "Hlavní přispěvatelé"
 
-#: artwork/gfx/loading/admonisher.webp.txt:1
-msgid "ADMONISHER"
-msgstr ""
-
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
 msgstr ""
 
-#: artwork/gfx/loading/ancestor.webp.txt:1
-msgid "ANCESTOR"
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
 msgstr ""
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
+msgstr ""
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+msgid "ANCESTOR"
 msgstr ""
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
@@ -783,12 +783,12 @@ msgstr ""
 msgid "QUICKSILVER"
 msgstr ""
 
-#: artwork/gfx/loading/rhino.webp.txt:1
-msgid "RHINO"
-msgstr ""
-
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
+msgstr ""
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+msgid "RHINO"
 msgstr ""
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
@@ -799,10 +799,6 @@ msgstr ""
 msgid "SIRIUS SHAMAN"
 msgstr ""
 
-#: artwork/gfx/loading/shark.webp.txt:1
-msgid "SHARK"
-msgstr ""
-
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
 msgstr ""
@@ -811,16 +807,20 @@ msgstr ""
 msgid "PIRATE SHARK"
 msgstr ""
 
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr ""
+
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
 msgstr ""
 
-#: artwork/gfx/loading/vendetta.webp.txt:1
-msgid "VENDETTA"
-msgstr ""
-
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
+msgstr ""
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+msgid "VENDETTA"
 msgstr ""
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
@@ -19631,8 +19631,8 @@ msgid ""
 msgstr ""
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
-#: dat/ships/sindbad.xml:12 src/dev_uniedit.c:244 src/dev_uniedit.c:250
-#: src/dev_uniedit.c:1271 src/dev_uniedit.c:1272 src/land_outfits.c:359
+#: dat/ships/sindbad.xml:12 src/dev_uniedit.c:245 src/dev_uniedit.c:251
+#: src/dev_uniedit.c:1341 src/dev_uniedit.c:1342 src/land_outfits.c:359
 #: src/land_outfits.c:360 src/land_outfits.c:361 src/land_outfits.c:362
 #: src/land_outfits.c:363 src/land_trade.c:160 src/land_trade.c:162
 #: src/land_trade.c:165 src/land_trade.c:166 src/map.c:564 src/map.c:565
@@ -20683,7 +20683,7 @@ msgstr ""
 msgid "Gamma Polaris"
 msgstr ""
 
-#: dat/ssys/gamma_polaris.xml:4
+#: dat/ssys/gamma_polaris.xml:5
 msgid "#pEmpire Homeworld#0"
 msgstr ""
 
@@ -25009,8 +25009,8 @@ msgstr ""
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:26 dat/shipai.lua:39
 #: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1351
 #: src/dev_sysedit.c:1461 src/dev_sysedit.c:1522 src/dev_sysedit.c:1714
-#: src/dev_sysedit.c:1901 src/dev_sysedit.c:1982 src/dev_uniedit.c:403
-#: src/dev_uniedit.c:1404 src/dev_uniedit.c:1603 src/dev_uniedit.c:1843
+#: src/dev_sysedit.c:1901 src/dev_sysedit.c:1982 src/dev_uniedit.c:405
+#: src/dev_uniedit.c:1474 src/dev_uniedit.c:1673 src/dev_uniedit.c:1913
 #: src/info.c:266 src/info.c:346 src/info.c:464 src/info.c:600 src/info.c:792
 #: src/info.c:1012 src/info.c:1108 src/info.c:1453 src/land_outfits.c:159
 #: src/map.c:336 src/map_find.c:1031 src/map_system.c:202
@@ -32214,10 +32214,11 @@ msgstr ""
 #. save player's pilot
 #. for effect, so that we can see them jumping in!
 #. the preaching's about to begin!
+#. Probably system tour event
 #. please note the order of system.cur() and curr matters!
 #. wait some more time
 #. summon a preacher from the jump point and highlight him and take control and focus on him
-#: dat/events/sirius/preach.lua:145
+#: dat/events/sirius/preach.lua:147
 msgid "Sirius Reverence"
 msgstr ""
 
@@ -32228,7 +32229,7 @@ msgstr ""
 #. This is the total number of converted follower ships.
 #. Pick a follower ship at random.
 #. The table now contains pilots, not ship names.
-#: dat/events/sirius/preach.lua:184
+#: dat/events/sirius/preach.lua:186
 msgid "Converted {plt}"
 msgstr ""
 
@@ -32268,11 +32269,11 @@ msgstr ""
 #. releases the player after the cutscene
 #. if the attacks have already started, we shouldn't set a target yet
 #. when hailed back, show the message
-#: dat/events/sirius/preach.lua:375
+#: dat/events/sirius/preach.lua:377
 msgid "The preaching begins..."
 msgstr ""
 
-#: dat/events/sirius/preach.lua:375
+#: dat/events/sirius/preach.lua:377
 msgid ""
 "A Sirian appears on your viewscreen. He seems different than most Sirii "
 "you've met. He regards you with a neutral yet intense gaze.\n"
@@ -34213,8 +34214,8 @@ msgstr ""
 #: src/dev_sysedit.c:1636 src/dev_sysedit.c:1662 src/dev_sysedit.c:1683
 #: src/dev_sysedit.c:1760 src/dev_sysedit.c:1777 src/dev_sysedit.c:1816
 #: src/dev_sysedit.c:1839 src/dev_sysedit.c:1876 src/dev_sysedit.c:1934
-#: src/dev_uniedit.c:1342 src/dev_uniedit.c:1509 src/dev_uniedit.c:1729
-#: src/dev_uniedit.c:1794 src/info.c:279 src/info.c:408 src/info.c:826
+#: src/dev_uniedit.c:1412 src/dev_uniedit.c:1579 src/dev_uniedit.c:1799
+#: src/dev_uniedit.c:1864 src/info.c:279 src/info.c:408 src/info.c:826
 #: src/info.c:1156 src/input.c:524 src/land.c:815 src/land_outfits.c:365
 #: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:125
 #: src/land_shipyard.c:214 src/land_trade.c:82 src/land_trade.c:84
@@ -46951,7 +46952,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant05.lua:57
 #: dat/missions/pirate/contraband_cake.lua:86
 #: dat/missions/pirate/pir_hit_intro.lua:104
-#: dat/missions/zalek/particlephysics/zpp01.lua:52
+#: dat/missions/zalek/particlephysics/zpp01.lua:51
 #: dat/missions/zalek/particlephysics/zpp02.lua:63
 #: dat/missions/zalek/particlephysics/zpp03.lua:58
 #: dat/missions/zalek/particlephysics/zpp04.lua:61
@@ -46969,7 +46970,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant05.lua:58
 #: dat/missions/pirate/contraband_cake.lua:87
 #: dat/missions/pirate/pir_hit_intro.lua:105
-#: dat/missions/zalek/particlephysics/zpp01.lua:53
+#: dat/missions/zalek/particlephysics/zpp01.lua:52
 #: dat/missions/zalek/particlephysics/zpp02.lua:64
 #: dat/missions/zalek/particlephysics/zpp03.lua:59
 #: dat/missions/zalek/particlephysics/zpp04.lua:62
@@ -53030,6 +53031,10 @@ msgstr ""
 #. Below is a list of changes from 0.8.2 to 0.9.0
 #. --
 #. Takes an outfit name and should return either a new outfit name or the amount of credits to give back to the player.
+#. --
+#. Below is a list of changes from 0.9.0-alpha to 0.9.0-beta
+#. --
+#. Takes a license name and should return either a new license name or the amount of credits to give back to the player.
 #. --
 #. Taken from http://lua-users.org/wiki/InheritanceTutorial
 #. Implementation of additional OO properties starts here --
@@ -68814,8 +68819,8 @@ msgid "Continue with '{ainame}'"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:82 dat/missions/tutorial/tutorial.lua:91
-#: src/dev_sysedit.c:208 src/dev_sysedit.c:1256 src/dev_uniedit.c:213
-#: src/dev_uniedit.c:1609 src/equipment.c:405
+#: src/dev_sysedit.c:208 src/dev_sysedit.c:1256 src/dev_uniedit.c:214
+#: src/dev_uniedit.c:1679 src/equipment.c:405
 msgid "Rename"
 msgstr ""
 
@@ -70393,14 +70398,16 @@ msgstr ""
 #. @module vntk
 #. --
 #. --
-#. Creates a series of message boxes to be displayed.
+#. Creates a series of message boxes to be displayed. Works similar to tk.msg but is more configurable and can handle chaining messages.
 #.
 #. @tparam[opt] string title Title of the message boxes.
 #. @tparam string|table text String or table of strings for the text of each consecutive text box.
-#. @tparam table params Table of parameters
+#. @tparam table params Table of parameters. Currently supports the transition field which sets up parameters passed to vn.transition.
 #. --
 #. --
 #. Creates a series of message boxes with a yes or no prompt to be displayed.
+#.
+#. Note that due to internally using the vn library inside, this can not be used while the vn library is running.
 #.
 #. @tparam[opt] string title Title of the message boxes.
 #. @tparam string|table text String or table of strings for the text of each consecutive text box.
@@ -70410,13 +70417,13 @@ msgstr ""
 #. buttons
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:72 src/dialogue.c:380
+#: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:74 src/dialogue.c:380
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:73 src/dialogue.c:382
+#: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:75 src/dialogue.c:382
 msgid "No"
 msgstr ""
 
@@ -70791,24 +70798,24 @@ msgstr ""
 #.
 #. Non-persistent state
 #. luacheck: globals closehail hail land takeoff (Hook functions passed by name)
-#: dat/missions/zalek/particlephysics/zpp01.lua:37
+#: dat/missions/zalek/particlephysics/zpp01.lua:36
 #: dat/missions/zalek/zlk_cargorun.lua:32
 msgid "Za'lek Scientist"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:37
+#: dat/missions/zalek/particlephysics/zpp01.lua:36
 msgid ""
 "You see a Za'lek scientist that seems to be looking or someone to do "
 "something for them."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:47
+#: dat/missions/zalek/particlephysics/zpp01.lua:46
 msgid ""
 "You approach the Za'lek scientist who seems to be a bit relieved with your "
 "presence."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:48
+#: dat/missions/zalek/particlephysics/zpp01.lua:47
 msgid ""
 "\"You wouldn't happen to be a pilot? I was supposed to get on a shuttle to "
 "{pnt}, but they refused to take my equipment with me. Can you believe the "
@@ -70817,19 +70824,19 @@ msgid ""
 "{sys} system? I will pay you {credits}.\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:57
+#: dat/missions/zalek/particlephysics/zpp01.lua:56
 msgid ""
 "\"You too? How am I going to make it to {pnt}…\"\n"
 "She furrows her brow."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:62
+#: dat/missions/zalek/particlephysics/zpp01.lua:61
 msgid ""
 "\"You only have {freespace} of free cargo space. My equipment is "
 "{neededspace}!\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:73
+#: dat/missions/zalek/particlephysics/zpp01.lua:72
 msgid ""
 "\"Great! I'm supposed to start my residency at {pnt} soon for some particle "
 "physics testing. They have a state-of-the-art testing facility there that "
@@ -70839,7 +70846,7 @@ msgid ""
 "calls me Noona.\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:77
+#: dat/missions/zalek/particlephysics/zpp01.lua:76
 msgid ""
 "\"Oh my equipment? Don't worry about it. It's nothing dangerous, and it is "
 "properly stored in radiation shielding. We just have to make sure it doesn't "
@@ -70848,18 +70855,18 @@ msgid ""
 "\"Anyway, onwards to {pnt}!\""
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:81
+#: dat/missions/zalek/particlephysics/zpp01.lua:80
 msgid ""
 "Automated drones at the space docks load up the particle physics equipment "
 "and Noona gets on your ship."
 msgstr ""
 
 #. Must be accepted beyond this point
-#: dat/missions/zalek/particlephysics/zpp01.lua:91
+#: dat/missions/zalek/particlephysics/zpp01.lua:90
 msgid "Noona and Equipment"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:91
+#: dat/missions/zalek/particlephysics/zpp01.lua:90
 msgid "Za'lek scientist Noona and some particle physics-related equipment."
 msgstr ""
 
@@ -70867,8 +70874,8 @@ msgstr ""
 #. Must be accepted beyond this point
 #. mission details
 #. Function for adding log entries for miscellaneous one-off missions.
-#: dat/missions/zalek/particlephysics/zpp01.lua:95
-#: dat/missions/zalek/particlephysics/zpp01.lua:101
+#: dat/missions/zalek/particlephysics/zpp01.lua:94
+#: dat/missions/zalek/particlephysics/zpp01.lua:100
 #: dat/missions/zalek/particlephysics/zpp02.lua:84
 #: dat/missions/zalek/particlephysics/zpp02.lua:91
 #: dat/missions/zalek/particlephysics/zpp03.lua:79
@@ -70883,26 +70890,26 @@ msgstr ""
 msgid "Particle Physics"
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:97
+#: dat/missions/zalek/particlephysics/zpp01.lua:96
 #, fuzzy
 #| msgid "Cantina Station"
 msgid "Take Noona and some equipment to {pnt} in the {sys} system."
 msgstr "Stanice Cantina"
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:102
+#: dat/missions/zalek/particlephysics/zpp01.lua:101
 #, fuzzy
 #| msgid "Cantina Station"
 msgid "Drop off Noona and the equipment at {pnt} ({sys} system)"
 msgstr "Stanice Cantina"
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:117
+#: dat/missions/zalek/particlephysics/zpp01.lua:116
 msgid ""
 "Your ship touches down at the smaller than expected research center and a "
 "single loading drone begins to slowly unload your ship. Talk about "
 "understaffed."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:118
+#: dat/missions/zalek/particlephysics/zpp01.lua:117
 msgid ""
 "Her eyes seem to be sparkling.\n"
 "\"This… is… awesome! Did you see the testing site from the ship? I thought I "
@@ -70912,7 +70919,7 @@ msgid ""
 "no attempt to follow her."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:121
+#: dat/missions/zalek/particlephysics/zpp01.lua:120
 msgid ""
 "You head back to your ship and wonder how you should get in touch with her "
 "for your payment, when you notice a small letter with a credstick that she "
@@ -70922,7 +70929,7 @@ msgid ""
 "lot."
 msgstr ""
 
-#: dat/missions/zalek/particlephysics/zpp01.lua:128
+#: dat/missions/zalek/particlephysics/zpp01.lua:127
 msgid ""
 "You helped deliver Noona and her equipment to {pnt}. It seems like she may "
 "still have more work for you."
@@ -74375,17 +74382,17 @@ msgstr ""
 #. Sound Effects
 #. --
 #. --
-#. Plays a happy sound.
+#. Plays a happy victory sound. Should be used for unique mission completion.
 #. --
 #. --
-#. Plays another happy sound.
+#. Plays a money indicating money made. Should be used when the player receives payment for generic repeatable missions.
 #. --
 #. --
-#. Returns a complete or filtered table of landable planets.
+#. Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)
 #.
 #. @tparam[opt] System sys The system to search, defaulting to the current one.
-#. @tparam[opt] Faction fct If nil, return all landable planets in the system, otherwise...
-#. @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restrict to its enemies.
+#. @tparam[opt] Faction fct If nil, return all landable planets in the system meeting the landable criteria, otherwise...
+#. @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restricts it to factions not hostile with fct.
 #. @treturn table All matching planets in a list.
 #. --
 #. --
@@ -74393,8 +74400,27 @@ msgstr ""
 #.
 #. @tparam System nowsys Start point.
 #. @tparam System finalsys End point.
-#. @tparam boolean hidden Whether the path may include hidden systems.
+#. @tparam[opt=false] boolean hidden Whether the path may include hidden systems.
 #. @treturn System The next system to jump to, defaulting to nowsys if there's no path or nothing to do.
+#. --
+#. --
+#. Provides the default system filter. Always true regardless of input.
+#.
+#. @treturn function The filter function.
+#. --
+#. --
+#. Provides the faction system filter. Makes sure each system hasa minimum amount of presence of a certain faction.
+#.
+#. @tparam Faction fct Faction to ensure minimum presence.
+#. @tparam number threshold Minimum amount of presence necessary to return true.
+#. @treturn function The filter function.
+#. --
+#. --
+#. Provides the landable system filter. Makes sure each system has at least on landable, inhabited, non-restricted planet and is landable by a certain faction.
+#.
+#. @tparam Faction fct Faction to make sure can land.
+#. @tparam[opt=false] boolean samefact Whether or not being non-hostile is sufficient, or we enforce exact match (true).
+#. @treturn function The filter function.
 #. --
 #. --
 #. Fetches an array of systems from min to max jumps away from the given
@@ -74439,11 +74465,18 @@ msgstr ""
 #. Works the same as lmisn.getSysAtDistance, but for planets.
 #.
 #. Filter is applied on a planet level.
-#. --
-#. --
-#. Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
 #.
-#. @usage lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+#. @usage
+#. -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+#. local candidates = lmisn.getPlanetAtDistance( system.cur(), 3, 5, "Independent", false )
+#. -- Make sure there are candidates
+#. if #candidates==0 then
+#. error("There are no planets meeting the criteria!")
+#. end
+#. -- Sort candidates by some criteria
+#. table.sort( candidates, my_planet_sort_function )
+#. -- Get best by sorting criteria
+#. local destpnt = candidates[1]
 #.
 #. @tparam[opt=system.cur()] System sys System to base distance calculations off of.
 #. @tparam number min Minimum jump distance to get planet at.
@@ -74452,7 +74485,22 @@ msgstr ""
 #. @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
 #. @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
 #. @param[opt=nil] data Custom data that will be passed to filter.
-#. @tparam[opt=false] boolean hidden
+#. @tparam[opt=false] boolean hidden Whether or not to consider hidden jumps when computing system distance.
+#. @treturn table A table containing all the planets matching the criteria. Can be empty if no matches found.
+#. --
+#. --
+#. Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
+#.
+#. @usage destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+#.
+#. @tparam[opt=system.cur()] System sys System to base distance calculations off of.
+#. @tparam number min Minimum jump distance to get planet at.
+#. @tparam number max Maximum jump distance to get planet at.
+#. @tparam[opt=nil] Faction fct What faction to do landing checks with.
+#. @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
+#. @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+#. @param[opt=nil] data Custom data that will be passed to filter.
+#. @tparam[opt=false] boolean hidden Whether or not to consider hidden jumps when computing system distance.
 #. @treturn Planet A single planet matching all the criteria.
 #. --
 #. --
@@ -74460,7 +74508,7 @@ msgstr ""
 #.
 #. @usage if anyMissionActive( { "Cargo", "Cargo Rush" } ) then -- at least one Cargo or Cargo Rush is active
 #.
-#. @param names Table of names of missions to check
+#. @tparam table names Table of names (strings) of missions to check
 #. @return true if any of the listed missions are active
 #. --
 #. ---
@@ -74876,6 +74924,24 @@ msgid "OK"
 msgstr ""
 
 #. Transparent background in Naev
+#. --
+#. Small helper for merging different tables.
+#. @module merge_tables
+#. --
+#. --
+#. Merges src table into dest. Does not recurse into subtables.
+#.
+#. @tparam table dest Destination table. Must not be nil.
+#. @tparam[opt={}] table src Source table to be merged into dest.
+#. @treturn table Returns dest.
+#. --
+#. --
+#. Merges src table into dest recursively.
+#.
+#. @tparam table dest Destination table. Must not be nil.
+#. @tparam[opt={}] table src Source table to be merged into dest.
+#. @treturn table Returns dest.
+#. --
 #. too lazy to write blackjack over and over
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
@@ -77502,13 +77568,17 @@ msgstr ""
 #. --
 #. --
 #. Tests to see if it is possible to swap ships for the player.
+#.
+#. @tparam Pilot template Template pilot to try to swap ships with the player.
 #. --
 #. See if we can swap over
 #. --
-#. Swaps the player's ship.
+#. Swaps the player's ship. Performs checks to make sure things don't break. Use in place of player.swapShip() unless you really know what you're doing.
 #.
-#. @param template Should be a pilot template.
-#. @return true on success, false otherwise
+#. Can fail if the player can't copy all the mission cargo over.
+#.
+#. @tparam Pilot template Template pilot to swap with the player. Note that the template pilot gets removed on success.
+#. @treturn boolean true on success, false otherwise
 #. --
 #. Add mission cargo separately
 #. Impossible to move over, too much mission cargo
@@ -77518,11 +77588,11 @@ msgstr ""
 #. Simulate removal
 #. Format into a nice string all the removals
 #. Ask if the player is fine with removing the cargo
-#: dat/scripts/swapship.lua:92
+#: dat/scripts/swapship.lua:96
 msgid "Too much cargo for new ship"
 msgstr ""
 
-#: dat/scripts/swapship.lua:93
+#: dat/scripts/swapship.lua:97
 msgid ""
 "You do not have enough space to move your cargo to the new ship. Get rid of "
 "the following to make room?"
@@ -78209,7 +78279,7 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1485
-#: src/player.c:3323
+#: src/player.c:3326
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -78354,7 +78424,7 @@ msgstr ""
 msgid "unknown error"
 msgstr ""
 
-#: src/board.c:72 src/player.c:1662
+#: src/board.c:72 src/player.c:1665
 msgid "#rYou need a target to board first!"
 msgstr ""
 
@@ -78393,7 +78463,7 @@ msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
 #. error has occurred
-#: src/board.c:168 src/player.c:3337
+#: src/board.c:168 src/player.c:3340
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
@@ -79159,11 +79229,11 @@ msgstr ""
 msgid "%s - Star System Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:179 src/dev_uniedit.c:189
+#: src/dev_sysedit.c:179 src/dev_uniedit.c:190
 msgid "Exit"
 msgstr ""
 
-#: src/dev_sysedit.c:184 src/dev_uniedit.c:194
+#: src/dev_sysedit.c:184 src/dev_uniedit.c:195
 msgid "Automatically save changes"
 msgstr ""
 
@@ -79175,11 +79245,11 @@ msgstr ""
 msgid "Reset Jumps"
 msgstr ""
 
-#: src/dev_sysedit.c:198 src/dev_uniedit.c:218
+#: src/dev_sysedit.c:198 src/dev_uniedit.c:219
 msgid "Edit"
 msgstr ""
 
-#: src/dev_sysedit.c:203 src/dev_uniedit.c:1740
+#: src/dev_sysedit.c:203 src/dev_uniedit.c:1810
 msgid "Remove"
 msgstr ""
 
@@ -79260,7 +79330,7 @@ msgstr ""
 #. Update text.
 #. text
 #. Text.
-#: src/dev_sysedit.c:1250 src/dev_uniedit.c:1607 src/dev_uniedit.c:1895
+#: src/dev_sysedit.c:1250 src/dev_uniedit.c:1677 src/dev_uniedit.c:1965
 #: src/equipment.c:363 src/info.c:467 src/load.c:413
 msgid "Name:"
 msgstr ""
@@ -79383,7 +79453,7 @@ msgstr ""
 msgid "Modify Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1905 src/dev_uniedit.c:407
+#: src/dev_sysedit.c:1905 src/dev_uniedit.c:409
 msgid "Set"
 msgstr ""
 
@@ -79403,213 +79473,217 @@ msgid "Unable to check file type for '%s'!"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:183
+#: src/dev_uniedit.c:184
 msgid "Universe Editor"
 msgstr ""
 
-#: src/dev_uniedit.c:198
+#: src/dev_uniedit.c:199
 msgid "Save All"
 msgstr ""
 
-#: src/dev_uniedit.c:203
+#: src/dev_uniedit.c:204
 msgid "View Mode"
 msgstr ""
 
-#: src/dev_uniedit.c:208
+#: src/dev_uniedit.c:209
 msgid "Jump"
 msgstr ""
 
-#: src/dev_uniedit.c:223
+#: src/dev_uniedit.c:224
 msgid "New Sys"
 msgstr ""
 
-#: src/dev_uniedit.c:228
+#: src/dev_uniedit.c:229
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:233 src/map.c:341 src/map_find.c:1029
+#: src/dev_uniedit.c:234 src/map.c:341 src/map_find.c:1029
 msgid "Find"
 msgstr ""
 
-#: src/dev_uniedit.c:242
+#: src/dev_uniedit.c:243
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:248 src/map.c:316
+#: src/dev_uniedit.c:249 src/map.c:316
 msgid "Presence:"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:380
+#: src/dev_uniedit.c:381
 msgid "Select a View Mode"
 msgstr ""
 
-#: src/dev_uniedit.c:385
+#: src/dev_uniedit.c:386
 msgid "Default"
 msgstr ""
 
-#: src/dev_uniedit.c:386
+#: src/dev_uniedit.c:387
 msgid "Virtual Assets"
 msgstr ""
 
-#: src/dev_uniedit.c:387
+#: src/dev_uniedit.c:388
 msgid "System Radius"
 msgstr ""
 
-#: src/dev_uniedit.c:388
+#: src/dev_uniedit.c:389
 msgid "Background"
 msgstr ""
 
-#: src/dev_uniedit.c:389
+#: src/dev_uniedit.c:390
+msgid "Tech"
+msgstr ""
+
+#: src/dev_uniedit.c:391
 msgid "Sum of Presences"
 msgstr ""
 
-#: src/dev_uniedit.c:718
+#: src/dev_uniedit.c:760
 msgid "Click to add a new system"
 msgstr ""
 
-#: src/dev_uniedit.c:722
+#: src/dev_uniedit.c:764
 msgid "Click to toggle jump route"
 msgstr ""
 
-#: src/dev_uniedit.c:769
+#: src/dev_uniedit.c:805
 #, c-format
 msgid "System Radius: %s"
 msgstr ""
 
-#: src/dev_uniedit.c:777
+#: src/dev_uniedit.c:813
 #, c-format
 msgid "Background: %s"
 msgstr ""
 
 #. Count assets.
-#: src/dev_uniedit.c:793
+#: src/dev_uniedit.c:863
 #, c-format
 msgid "Total: %.0f"
 msgstr ""
 
-#: src/dev_uniedit.c:1064
+#: src/dev_uniedit.c:1134
 #, c-format
 msgid "The Star System '%s' already exists!"
 msgstr ""
 
 #. Get name.
-#: src/dev_uniedit.c:1098
+#: src/dev_uniedit.c:1168
 msgid "Rename Star System"
 msgstr ""
 
-#: src/dev_uniedit.c:1098
+#: src/dev_uniedit.c:1168
 #, c-format
 msgid "What do you want to rename #r%s#0?"
 msgstr ""
 
 #. Get name.
-#: src/dev_uniedit.c:1144
+#: src/dev_uniedit.c:1214
 msgid "New Star System Creation"
 msgstr ""
 
-#: src/dev_uniedit.c:1144
+#: src/dev_uniedit.c:1214
 msgid "What do you want to name the new system?"
 msgstr ""
 
-#: src/dev_uniedit.c:1148
+#: src/dev_uniedit.c:1218
 msgid "Star System creation aborted!"
 msgstr ""
 
-#: src/dev_uniedit.c:1249
+#: src/dev_uniedit.c:1319
 #, c-format
 msgid "Jump for system '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/dev_uniedit.c:1270
+#: src/dev_uniedit.c:1340
 msgid "No selection"
 msgstr ""
 
-#: src/dev_uniedit.c:1314
+#: src/dev_uniedit.c:1384
 #, c-format
 msgid "Trying to remove system '%s' from selection when not selected."
 msgstr ""
 
-#: src/dev_uniedit.c:1344
+#: src/dev_uniedit.c:1414
 #, c-format
 msgid ""
 "%.0f Density\n"
 "%.0fVolatility"
 msgstr ""
 
-#: src/dev_uniedit.c:1348 src/dev_uniedit.c:1349
+#: src/dev_uniedit.c:1418 src/dev_uniedit.c:1419
 msgid "Multiple selected"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1397
+#: src/dev_uniedit.c:1467
 msgid "Find Systems and Assets"
 msgstr ""
 
-#: src/dev_uniedit.c:1467 src/land.c:811
+#: src/dev_uniedit.c:1537 src/land.c:811
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1595
+#: src/dev_uniedit.c:1665
 msgid "Star System Property Editor"
 msgstr ""
 
-#: src/dev_uniedit.c:1607 src/dev_uniedit.c:1895
+#: src/dev_uniedit.c:1677 src/dev_uniedit.c:1965
 msgid "#rvarious"
 msgstr ""
 
 #. Add general stats
-#: src/dev_uniedit.c:1615
+#: src/dev_uniedit.c:1685
 msgid "Radius"
 msgstr ""
 
-#: src/dev_uniedit.c:1622
+#: src/dev_uniedit.c:1692
 msgid "(Scales asset positions)"
 msgstr ""
 
-#: src/dev_uniedit.c:1631
+#: src/dev_uniedit.c:1701
 msgid "Stars"
 msgstr ""
 
-#: src/dev_uniedit.c:1639
+#: src/dev_uniedit.c:1709
 msgid "Interference"
 msgstr ""
 
-#: src/dev_uniedit.c:1652
+#: src/dev_uniedit.c:1722
 msgid "Nebula"
 msgstr ""
 
-#: src/dev_uniedit.c:1660
+#: src/dev_uniedit.c:1730
 msgid "Volatility"
 msgstr ""
 
-#: src/dev_uniedit.c:1668
+#: src/dev_uniedit.c:1738
 msgid "Hue"
 msgstr ""
 
-#: src/dev_uniedit.c:1743 src/dev_uniedit.c:1847
+#: src/dev_uniedit.c:1813 src/dev_uniedit.c:1917
 msgid "Add"
 msgstr ""
 
-#: src/dev_uniedit.c:1800
+#: src/dev_uniedit.c:1870
 #, c-format
 msgid "Failed to remove virtual asset '%s'!"
 msgstr ""
 
-#: src/dev_uniedit.c:1825
+#: src/dev_uniedit.c:1895
 msgid ""
 "No virtual assets to add! Please add virtual assets to the 'assets' "
 "directory first."
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1830
+#: src/dev_uniedit.c:1900
 msgid "Add a Virtual Asset"
 msgstr ""
 
-#: src/dev_uniedit.c:1866
+#: src/dev_uniedit.c:1936
 #, c-format
 msgid "Failed to add virtual asset '%s'!"
 msgstr ""
@@ -80022,7 +80096,7 @@ msgstr ""
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2148 src/player.c:401
+#: src/equipment.c:2148 src/player.c:404
 msgid "Ship Name"
 msgstr ""
 
@@ -80035,7 +80109,7 @@ msgstr ""
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2158 src/player.c:428
+#: src/equipment.c:2158 src/player.c:431
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -81978,7 +82052,7 @@ msgid "Saved game '%s' invalid!"
 msgstr ""
 
 #. Welcome message - must be before space_init.
-#: src/load.c:642 src/player.c:334
+#: src/load.c:642 src/player.c:337
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr ""
@@ -83267,27 +83341,27 @@ msgstr ""
 msgid "position argument out of bounds: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:271
+#: src/nlua_data.c:292
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:273
+#: src/nlua_data.c:294
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
 msgstr ""
 
-#: src/nlua_data.c:299
+#: src/nlua_data.c:328
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
 msgstr ""
 
-#: src/nlua_data.c:301 src/nlua_data.c:346
+#: src/nlua_data.c:330 src/nlua_data.c:384
 #, c-format
 msgid "%s is only implemented for number types"
 msgstr ""
 
-#: src/nlua_data.c:342 src/nlua_data.c:344
+#: src/nlua_data.c:380 src/nlua_data.c:382
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
 msgstr ""
@@ -83936,7 +84010,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2178
+#: src/opengl.c:109 src/player.c:2181
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -85617,38 +85691,38 @@ msgstr ""
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/player.c:232
+#: src/player.c:235
 msgid "Normal Speed"
 msgstr ""
 
-#: src/player.c:233
+#: src/player.c:236
 msgid "Slow Speed"
 msgstr ""
 
 #. Get the name.
-#: src/player.c:243
+#: src/player.c:246
 msgid "Player Name"
 msgstr ""
 
-#: src/player.c:244
+#: src/player.c:247
 msgid "Please write your name:"
 msgstr ""
 
-#: src/player.c:254
+#: src/player.c:257
 msgid "Overwrite"
 msgstr ""
 
-#: src/player.c:255
+#: src/player.c:258
 #, c-format
 msgid "You already have a pilot named %s. Overwrite?"
 msgstr ""
 
 #. Set game speed.
-#: src/player.c:263
+#: src/player.c:266
 msgid "Game Speed"
 msgstr ""
 
-#: src/player.c:264
+#: src/player.c:267
 msgid ""
 "Your game can be set to normal speed or slow speed. Slow speed causes time "
 "in space to pass at half the rate it would in normal speed, which may be "
@@ -85657,143 +85731,143 @@ msgid ""
 "speed is probably what you want.)"
 msgstr ""
 
-#: src/player.c:297
+#: src/player.c:300
 #, c-format
 msgid "Failed to run start mission '%s'."
 msgstr ""
 
-#: src/player.c:303
+#: src/player.c:306
 #, c-format
 msgid "Failed to run start event '%s'."
 msgstr ""
 
-#: src/player.c:341
+#: src/player.c:344
 msgid "Ship not properly set by module."
 msgstr ""
 
-#: src/player.c:402
+#: src/player.c:405
 msgid "Please name your new ship:"
 msgstr ""
 
-#: src/player.c:427
+#: src/player.c:430
 msgid "Name collision"
 msgstr ""
 
-#: src/player.c:438
+#: src/player.c:441
 msgid "Player ship isn't valid... This shouldn't happen!"
 msgstr ""
 
-#: src/player.c:507
+#: src/player.c:510
 msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
 msgstr ""
 
-#: src/player.c:597
+#: src/player.c:600
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:624
+#: src/player.c:627
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1365
+#: src/player.c:1368
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1410
+#: src/player.c:1413
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1413
+#: src/player.c:1416
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1418
+#: src/player.c:1421
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1483
+#: src/player.c:1486
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1520
+#: src/player.c:1523
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1527
+#: src/player.c:1530
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1545
+#: src/player.c:1548
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1555
+#: src/player.c:1558
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1561
+#: src/player.c:1564
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1603
+#: src/player.c:1606
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1614
+#: src/player.c:1617
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1639
+#: src/player.c:1642
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1680
+#: src/player.c:1683
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1778
+#: src/player.c:1781
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1831
+#: src/player.c:1834
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1838
+#: src/player.c:1841
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1840 src/player_autonav.c:83
+#: src/player.c:1843 src/player_autonav.c:83
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1842
+#: src/player.c:1845
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1844
+#: src/player.c:1847
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1936
+#: src/player.c:1939
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1942
+#: src/player.c:1945
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -85802,98 +85876,98 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2190
+#: src/player.c:2193
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2195
+#: src/player.c:2198
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2224
+#: src/player.c:2227
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2247 src/player.c:2269
+#: src/player.c:2250 src/player.c:2272
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2302
+#: src/player.c:2305
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2315
+#: src/player.c:2318
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2321
+#: src/player.c:2324
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2537 src/player.c:2556
+#: src/player.c:2540 src/player.c:2559
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2951
+#: src/player.c:2954
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3165
+#: src/player.c:3168
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3166
+#: src/player.c:3169
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3350
+#: src/player.c:3395
 #, c-format
-msgid "Outfit '%s' was saved but does not exist!"
+msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3423
+#: src/player.c:3464
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3460
+#: src/player.c:3501
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3484
+#: src/player.c:3525
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3487
+#: src/player.c:3528
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3498
+#: src/player.c:3539
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3504
+#: src/player.c:3545
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3514
+#: src/player.c:3555
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3520
+#: src/player.c:3561
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3521
+#: src/player.c:3562
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3521
+#: src/player.c:3562
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -85901,143 +85975,138 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3529
+#: src/player.c:3570
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3559
+#: src/player.c:3600
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3563
+#: src/player.c:3604
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3610
+#: src/player.c:3651
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3632
+#: src/player.c:3673
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3654
+#: src/player.c:3695
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3658
-#, c-format
-msgid "Trying to add inexistent license '%s'! Ignoring."
-msgstr ""
-
-#: src/player.c:3684
+#: src/player.c:3722
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3745
+#: src/player.c:3783
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3764
+#: src/player.c:3802
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3772
+#: src/player.c:3810
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3793
+#: src/player.c:3831
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3859
+#: src/player.c:3897
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3906
+#: src/player.c:3944
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3919 src/player.c:3932
+#: src/player.c:3957 src/player.c:3970
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3951
+#: src/player.c:3989
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:3975
+#: src/player.c:4013
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4025
+#: src/player.c:4063
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4033
+#: src/player.c:4071
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4037
+#: src/player.c:4075
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4053
+#: src/player.c:4091
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4066
+#: src/player.c:4104
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4074
+#: src/player.c:4112
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4079
+#: src/player.c:4117
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4118
+#: src/player.c:4156
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4124
+#: src/player.c:4162
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4129
+#: src/player.c:4167
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4131
+#: src/player.c:4169
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
