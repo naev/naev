@@ -17,7 +17,11 @@ function background ()
    local nw, nh = naev.gfx.dim()
    local cw, ch = nw, nh
    canvas = lg.newCanvas( cw, ch )
-   bx, by = 3, 3
+
+   local off = vec2.new( -772, -479 ) - system.cur():pos()
+   local _m, a = off:polar()
+   off = vec2.newP( 70, a + math.pi )
+   bx, by = off:get()
 
    -- Set up the shader
    local ax, ay, az = 0.1*prng:random(), 0.1*prng:random(), 2*prng:random()-1
