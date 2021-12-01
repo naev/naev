@@ -747,6 +747,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    x = bx + uniedit_mx;
    y = by + uniedit_my;
 
+   /* Correct coordinates. */
+   mx = uniedit_mx - bw/2. + uniedit_xpos;
+   my = uniedit_my - bh/2. + uniedit_ypos;
+   mx /= uniedit_zoom;
+   my /= uniedit_zoom;
+
+   /* Display location. */
+   gl_print( &gl_defFontMono, bx+5, by+5, &cWhite, "%.3f x %.3f", mx, my );
+
    if (uniedit_mode == UNIEDIT_NEWSYS) {
       toolkit_drawAltText( x, y, _("Click to add a new system"));
       return;
@@ -757,12 +766,6 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    }
    else if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
       return;
-
-   /* Correct coordinates. */
-   mx = uniedit_mx - bw/2. + uniedit_xpos;
-   my = uniedit_my - bh/2. + uniedit_ypos;
-   mx /= uniedit_zoom;
-   my /= uniedit_zoom;
 
    /* Find mouse over system. */
    mousesys = NULL;
