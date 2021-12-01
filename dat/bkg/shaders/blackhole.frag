@@ -2,7 +2,7 @@
 
 const float SPEED = 1.0; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
-const float SIZE  = 3.0; /**< Size of the black hole relative to texture. */
+const float SIZE  = 0.3; /**< Size of the black hole relative to texture. */
 /* Set up rotation matrix at compile-time for efficiency. */
 const vec3 rotang = vec3( %f, %f, %f );
 const float cx = cos(rotang.x);
@@ -118,11 +118,10 @@ vec4 raymarch_disk( vec3 ro, vec3 rd )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   //vec2 uv = (screen_coords - 0.5*love_ScreenSize.xy) / love_ScreenSize.y;
    vec2 uv = ((texture_coords - 0.5)*love_ScreenSize.xy) / love_ScreenSize.y;
 
    /* Camera. */
-   vec3 ro  = vec3(0.0, 0.0, -100.0 * u_camera.z);
+   vec3 ro  = vec3(0.0, 0.0, -10.0 * u_camera.z);
    vec3 rd  = R*normalize( vec3(uv, 1.0));
    vec3 pos = R*ro + vec3(u_camera.xy,0.0);
    vec3 rdo = rd;
@@ -133,7 +132,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec4 outCol = vec4(100.0);
 
    /* Outter iterations. */
-   for (int iter=0; iter<32; iter++) {
+   for (int iter=0; iter<16; iter++) {
       /* Reduce branching by marching as much as possible without doing checks. */
       for (int inner=0; inner<8; inner++) {
          float dotpos   = dot(pos,pos);

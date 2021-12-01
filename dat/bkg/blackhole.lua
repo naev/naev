@@ -19,7 +19,7 @@ function background ()
 
    local off = vec2.new( -772, -479 ) - system.cur():pos()
    local _m, a = off:polar()
-   off = vec2.newP( 70, a )
+   off = vec2.newP( 7, a )
    bx, by = off:get()
 
    -- Set up the shader
