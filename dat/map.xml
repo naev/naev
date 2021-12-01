@@ -49,7 +49,7 @@
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>blackhole.png</image>
+    <image>blackhole.webp</image>
     <x>-772.000000</x>
     <y>-479.000000</y>
     <detection_radius>200</detection_radius>
