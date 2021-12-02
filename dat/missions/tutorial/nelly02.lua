@@ -172,7 +172,7 @@ function accept ()
    if has_dis then
       nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
    elseif has_dis_owned then
-      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname} before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]:name()}))
+      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]:name()}))
       local s = planet.cur():services()
       if not s.outfits and not s.shipyard then
          nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet:name()}))
