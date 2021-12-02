@@ -39,6 +39,7 @@ static int gfxL_renderRect( lua_State *L );
 static int gfxL_renderRectH( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
 static int gfxL_renderCircleH( lua_State *L );
+static int gfxL_clearDepth( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
@@ -67,6 +68,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderCircle", gfxL_renderCircle },
    { "renderCircleH", gfxL_renderCircleH },
    /* Printing. */
+   { "clearDepth", gfxL_clearDepth },
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
    { "printfWrap", gfxL_printfWrap },
@@ -534,6 +536,16 @@ static int gfxL_renderCircleH( lua_State *L )
    /* Render. */
    gl_renderCircleH( H, col, !empty );
 
+   return 0;
+}
+
+/**
+ * @brief Clears the depth buffer.
+ */
+static int gfxL_clearDepth( lua_State *L )
+{
+   (void) L;
+   glClear( GL_DEPTH_BUFFER_BIT );
    return 0;
 }
 

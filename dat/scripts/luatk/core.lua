@@ -155,6 +155,9 @@ function luatk.Window:draw()
    local scs = lg.getScissor()
    lg.setScissor( x, y, w, h )
 
+   -- Clear depth
+   gfx.clearDepth()
+
    -- Draw widgets ontop
    for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
