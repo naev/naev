@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-01 19:42-0500\n"
+"POT-Creation-Date: 2021-12-02 18:37+0900\n"
 "PO-Revision-Date: 2021-12-02 00:48+0000\n"
 "Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -700,21 +700,21 @@ msgstr "EvanR"
 msgid "Artwork Contributors"
 msgstr "アートワークへの貢献者"
 
-#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
-msgid "PIRATE ADMONISHER"
-msgstr "海賊アドマニシャー"
-
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
 msgstr "アドマニシャー"
 
-#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
-msgid "PIRATE ANCESTOR"
-msgstr "海賊アンセスター"
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr "海賊アドマニシャー"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
 msgstr "アンセスター"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr "海賊アンセスター"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
@@ -788,13 +788,13 @@ msgstr "シリウス・プリーチャー"
 msgid "QUICKSILVER"
 msgstr "クイックシルバー"
 
-#: artwork/gfx/loading/rhino_pirate.webp.txt:1
-msgid "PIRATE RHINO"
-msgstr "海賊ライノ"
-
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
 msgstr "ライノ"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr "海賊ライノ"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -804,6 +804,10 @@ msgstr "シュレディンガー"
 msgid "SIRIUS SHAMAN"
 msgstr "シリウス・シャーマン"
 
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr "シャーク"
+
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
 msgstr "帝国シャーク"
@@ -812,21 +816,17 @@ msgstr "帝国シャーク"
 msgid "PIRATE SHARK"
 msgstr "海賊シャーク"
 
-#: artwork/gfx/loading/shark.webp.txt:1
-msgid "SHARK"
-msgstr "シャーク"
-
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
 msgstr "ザレク・スティング"
 
-#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
-msgid "PIRATE VENDETTA"
-msgstr "海賊ベンデッタ"
-
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
 msgstr "ベンデッタ"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr "海賊ベンデッタ"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
@@ -17353,10 +17353,10 @@ msgstr "大型戦闘艦免許"
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
 "Through marksman craftsmanship, pirate software engineers are able to create "
-"near perfect replicas of the Heavy Weapon License. However, this comes at a "
-"significant mark-up compared to the standard license prices. This license "
-"will authorize you to buy cruiser and carrier-class ships on worlds that "
-"perform background checks."
+"near perfect replicas of the Heavy Combat Vessel License. However, this "
+"comes at a significant mark-up compared to the standard license prices. This "
+"license will authorize you to buy cruiser and carrier-class ships on worlds "
+"that perform background checks."
 msgstr ""
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
@@ -27222,8 +27222,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
-#: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:897
-#: src/options.c:1148 src/options.c:1200
+#: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:896
+#: src/options.c:1147 src/options.c:1198
 msgid "Cancel"
 msgstr "取り消し"
 
@@ -32920,9 +32920,11 @@ msgid ""
 "They lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
-"｢ほんとう？　シグマ 5 飛行隊のゴールデンイフリート型も ?!　なんのことだかわからないでしょ？　"
-"余計なことをいうのはやめて。たぶんただの大量量産型のランスロットでしかなくて、歴史を背負ってたりしないんでしょ。これは名作なんだよ！｣\n"
-"そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートがあなたにもなんとか見わけられた。"
+"｢ほんとう？　シグマ 5 飛行隊のゴールデンイフリート型も ?!　なんのことだかわか"
+"らないでしょ？　余計なことをいうのはやめて。たぶんただの大量量産型のランス"
+"ロットでしかなくて、歴史を背負ってたりしないんでしょ。これは名作なんだよ！｣\n"
+"そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートが"
+"あなたにもなんとか見わけられた。"
 
 #: dat/events/neutral/shiplover.lua:329
 msgid ""
@@ -79201,7 +79203,7 @@ msgstr "failed to set fallback font"
 #. Add the OK button
 #: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
 #: src/dialogue.c:329 src/dialogue.c:718 src/options.c:262 src/options.c:591
-#: src/options.c:894 src/options.c:1197
+#: src/options.c:893 src/options.c:1195
 msgid "OK"
 msgstr "了解"
 
@@ -83219,11 +83221,11 @@ msgstr ""
 "ウィンドウの装飾をなしにする。注意して使ってください。それから終了とフルスク"
 "リーン切り替えのキーボード制御を覚えておいてください。"
 
-#: src/conf.c:855 src/options.c:1313
+#: src/conf.c:855 src/options.c:1311
 msgid "Minimize on focus loss"
 msgstr "フォーカスのロスを最小化"
 
-#: src/conf.c:859 src/options.c:1316
+#: src/conf.c:859 src/options.c:1314
 msgid "Colorblind mode"
 msgstr "色覚不要モード"
 
@@ -84868,7 +84870,7 @@ msgstr "Font isn't resizable!"
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr "FT_Select_Charmap failed to change character mapping."
 
-#: src/gettext.c:129
+#: src/gettext.c:133
 #, c-format
 msgid "Adding translations from %s"
 msgstr "Adding translations from %s"
@@ -88655,7 +88657,7 @@ msgstr "オーディオ"
 msgid "Input"
 msgstr "入力"
 
-#: src/options.c:166 src/options.c:1366
+#: src/options.c:166 src/options.c:1364
 msgid "#rRestart Naev for changes to take effect.#0"
 msgstr "#rNaev を再起動すると効果が反映されます。#0"
 
@@ -88663,7 +88665,7 @@ msgstr "#rNaev を再起動すると効果が反映されます。#0"
 msgid "system"
 msgstr "システム"
 
-#: src/options.c:268 src/options.c:594 src/options.c:900 src/options.c:1203
+#: src/options.c:268 src/options.c:594 src/options.c:899 src/options.c:1201
 msgid "Defaults"
 msgstr "デフォルト"
 
@@ -88828,19 +88830,19 @@ msgstr "無音"
 msgid "%s: %.2f (%.0f dB)"
 msgstr "%s: %.2f (%.0f dB)"
 
-#: src/options.c:906
+#: src/options.c:905
 msgid "Disable all sound/music"
 msgstr "すべての音/音楽を無効"
 
-#: src/options.c:910
+#: src/options.c:909
 msgid "EFX (More CPU)"
 msgstr "EFX (要 CPU パワー)"
 
-#: src/options.c:916
+#: src/options.c:915
 msgid "Volume Levels:"
 msgstr "音量 :"
 
-#: src/options.c:1103
+#: src/options.c:1102
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
@@ -88849,12 +88851,12 @@ msgstr ""
 "キー ｢%s｣ は、今設定した ｢%s｣ と重なっています。たぶん修正したほうがいいで"
 "しょう。"
 
-#: src/options.c:1136
+#: src/options.c:1135
 msgid "Set Keybinding"
 msgstr "キー割り当ての設定"
 
 # 長さ注意
-#: src/options.c:1143
+#: src/options.c:1142
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
@@ -88863,124 +88865,124 @@ msgstr ""
 "ファイアーとして登録されます。任意のモディファイアーにしたい場合は、ボックス"
 "をクリックしてください。"
 
-#: src/options.c:1152
+#: src/options.c:1151
 msgid "Unset"
 msgstr "割り当て解除"
 
-#: src/options.c:1156
+#: src/options.c:1155
 msgid "Set any modifier"
 msgstr "任意のモディファイアー"
 
-#: src/options.c:1210
+#: src/options.c:1208
 msgid "Resolution:"
 msgstr "解像度 :"
 
-#: src/options.c:1215
+#: src/options.c:1213
 msgid "Fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1281
+#: src/options.c:1279
 msgid "FPS Control:"
 msgstr "FPS の制御 :"
 
-#: src/options.c:1283
+#: src/options.c:1281
 msgid "FPS Limit"
 msgstr "FPS の制限"
 
-#: src/options.c:1293
+#: src/options.c:1291
 msgid "Show FPS"
 msgstr "FPS の表示"
 
-#: src/options.c:1302
+#: src/options.c:1300
 msgid "OpenGL:"
 msgstr "OpenGL:"
 
-#: src/options.c:1305
+#: src/options.c:1303
 msgid "Vertical Sync"
 msgstr "垂直同期"
 
-#: src/options.c:1310
+#: src/options.c:1308
 msgid "Features:"
 msgstr "機能 :"
 
-#: src/options.c:1320
+#: src/options.c:1318
 msgid "Fancy and expensive background shaders"
 msgstr "派手で処理が重い背景の描画"
 
-#: src/options.c:1347
+#: src/options.c:1345
 msgid "GUI:"
 msgstr "GUI:"
 
-#: src/options.c:1350
+#: src/options.c:1348
 msgid "Bigger icons"
 msgstr "大きめのアイコン"
 
-#: src/options.c:1396
+#: src/options.c:1394
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr "高さ/幅が無効です。1024x768 のような書きかたをしてください。"
 
-#: src/options.c:1489
+#: src/options.c:1487
 msgid "Resolution can't be changed while maximized."
 msgstr "最大化しているときは解像度は変更できません。"
 
-#: src/options.c:1493
+#: src/options.c:1491
 msgid "Keep Video Settings"
 msgstr "ビデオ設定の保持"
 
-#: src/options.c:1494
+#: src/options.c:1492
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr "動作中の %dx%d の%sを保持したいですか？"
 
-#: src/options.c:1495 src/options.c:1501
+#: src/options.c:1493 src/options.c:1499
 msgid "fullscreen"
 msgstr "全画面"
 
-#: src/options.c:1495 src/options.c:1501
+#: src/options.c:1493 src/options.c:1499
 msgid "windowed"
 msgstr "ウィンドウ"
 
-#: src/options.c:1499
+#: src/options.c:1497
 msgid "Video Settings Restored"
 msgstr "ビデオ設定の復元"
 
-#: src/options.c:1500
+#: src/options.c:1498
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr "解像度を %dx%d の%sに戻しました。"
 
-#: src/options.c:1578
+#: src/options.c:1576
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr "スケーリング : %.1fx"
 
-#: src/options.c:1596
+#: src/options.c:1594
 #, c-format
 msgid "Far Zoom: %.1fx"
 msgstr "遠くのズーム : %.1fx"
 
-#: src/options.c:1618
+#: src/options.c:1616
 #, c-format
 msgid "Near Zoom: %.1fx"
 msgstr "近くのズーム : %.1fx"
 
-#: src/options.c:1639
+#: src/options.c:1637
 #, fuzzy, c-format
 #| msgid "Gamma"
 msgid "Gamma: %.1f"
 msgstr "ガンマ"
 
-#: src/options.c:1655
+#: src/options.c:1653
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr "背景 (星々など) の輝度 : %.0f%%"
 
-#: src/options.c:1670
+#: src/options.c:1668
 #, c-format
 msgid "Nebula brightness: %.0f%%"
 msgstr "星雲の輝度 : %.0f%%"
 
-#: src/options.c:1685
+#: src/options.c:1683
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr "オーバーレイマップの濃さ : %.0f%%"
@@ -90788,11 +90790,11 @@ msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
 msgid "#oAutonav: following target  %s has been lost."
 msgstr "#o自動操縦装置 : 追跡していた%sを見失いました。"
 
-#: src/player_autonav.c:712
+#: src/player_autonav.c:725
 msgid "Target changed to current system"
 msgstr "現在の星系に目標が変わった"
 
-#: src/player_autonav.c:716
+#: src/player_autonav.c:729
 msgid "Not enough fuel for autonav to continue"
 msgstr "自動操縦をつづけるための燃料が不足している"
 
@@ -92474,22 +92476,22 @@ msgstr "   [%s] faction alignment reset: '%s'"
 msgid "   unknown hunk '%d'"
 msgstr "   unknown hunk '%d'"
 
-#: src/unidiff.c:1220
+#: src/unidiff.c:1222
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr "Unknown hunk type '%d'."
 
-#: src/unidiff.c:1420
+#: src/unidiff.c:1422
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr "Unknown Hunk type '%d'."
 
-#: src/unidiff.c:1425
+#: src/unidiff.c:1427
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr "Failed to remove hunk type '%d'."
 
-#: src/unidiff.c:1545
+#: src/unidiff.c:1547
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 
