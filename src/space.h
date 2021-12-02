@@ -46,8 +46,6 @@ enum {
 #define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
 #define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
-#define planet_addService(p,s)      ((p)->services |= (s)) /**< Adds a planet service. */
-#define planet_rmService(p,s)       ((p)->services &= ~(s)) /**< Removes a planet service. */
 
 /*
  * Planet flags.
@@ -369,6 +367,9 @@ int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *m
 void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
+int planet_addCommodity( Planet *p, Commodity *c );
+int planet_addService( Planet *p, int service );
+int planet_rmService( Planet *p, int service );
 /* Land related stuff. */
 char planet_getColourChar( const Planet *p );
 const char *planet_getSymbol( const Planet *p );

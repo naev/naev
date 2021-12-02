@@ -326,6 +326,58 @@ int planet_setFaction( Planet *p, int faction )
 }
 
 /**
+ * @brief Adds a commodity to a planet.
+ *
+ *    @param p Planet to add commodity to.
+ *    @param c Commodity to add.
+ *    @return 0 on success.
+ */
+int planet_addCommodity( Planet *p, Commodity *c )
+{
+   array_grow( &p->commodities ) = c;
+   array_grow( &p->commodityPrice ).price = c->price;
+   return 0;
+}
+
+/**
+ * @brief Removes a service from a planet.
+ *
+ *    @param p Planet to remove service from.
+ *    @param service Service flag to remove.
+ *    @return 0 on success.
+ */
+int planet_addService( Planet *p, int service )
+{
+   p->services |= service;
+
+   if (service & PLANET_SERVICE_COMMODITY) {
+      /* Only try to add standard commodities if there aren't any. */
+      if (p->commodities!=NULL)
+         return 0;
+      Commodity **stdList = standard_commodities();
+      p->commodities = array_create( Commodity* );
+      p->commodityPrice = array_create( CommodityPrice );
+      for (int i=0; i<array_size(stdList); i++)
+         planet_addCommodity( p, stdList[i] );
+   }
+
+   return 0;
+}
+
+/**
+ * @brief Removes a service from a planet.
+ *
+ *    @param p Planet to remove service from.
+ *    @param service Service flag to remove.
+ *    @return 0 on success.
+ */
+int planet_rmService( Planet *p, int service )
+{
+   p->services &= ~service;
+   return 0;
+}
+
+/**
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
  *
  *    @param p Pilot to check if he can hyperspace.
@@ -2263,24 +2315,19 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
    /* Build commodities list */
    if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
+      planet->commodityPrice = array_create( CommodityPrice );
+      planet->commodities = array_create( Commodity* );
+
       /* First, store all the standard commodities and prices. */
-      if (array_size( stdList ) > 0) {
-         planet->commodityPrice = array_create( CommodityPrice );
-         planet->commodities = array_create( Commodity* );
-         for (int i=0; i<array_size(stdList); i++) {
-            array_grow(&planet->commodities) = stdList[i];
-            array_grow(&planet->commodityPrice).price = stdList[i]->price;
-         }
+      if (array_size(stdList) > 0) {
+         for (int i=0; i<array_size(stdList); i++)
+            planet_addCommodity( planet, stdList[i] );
       }
 
       /* Now add extra commodities */
-      for (int i=0; i<array_size(comms); i++) {
-         Commodity *com = comms[i];
+      for (int i=0; i<array_size(comms); i++)
+         planet_addCommodity( planet, comms[i] );
 
-         array_grow(&planet->commodities) = com;
-         /* Set commodity price on this planet to the base price */
-         array_grow(&planet->commodityPrice).price = com->price;
-      }
       /* Shrink to minimum size. */
       array_shrink( &planet->commodities );
       array_shrink( &planet->commodityPrice );
