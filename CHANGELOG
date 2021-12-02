@@ -1,4 +1,5 @@
 * 0.9.0 (since beta.1)
+   * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
    * Fixed missing credits and translation coverage data
    * Improved phrasing
    * Prevented players from getting stranded without access to fuel

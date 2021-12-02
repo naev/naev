@@ -122,7 +122,10 @@ stds.API_faction = {globals={
 }}
 stds.API_land = {globals={"land"}}      -- C function: planet_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
-stds.API_save_updater = {globals={"outfit"}}    -- C function: player_tryGetOutfit
+stds.API_save_updater = {globals={
+   "license",                           -- C function: player_tryAddLicense
+   "outfit",                            -- C function: player_tryGetOutfit
+}}
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={
    "create",                            -- C function: system_scheduler()
