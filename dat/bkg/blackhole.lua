@@ -17,7 +17,7 @@ function background ()
 
    prng:setSeed( system.cur():nameRaw() )
 
-   local off = system.cur():pos() - vec2.new( -772, -479 )
+   local off = system.cur():pos() - vec2.new( -765, -490 )
    local _m, a = off:polar()
    off = vec2.newP( 4, a )
    bx, by = off:get()
