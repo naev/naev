@@ -15,6 +15,7 @@
 
 #include "faction.h"
 
+#include "conf.h"
 #include "array.h"
 #include "colour.h"
 #include "hook.h"
@@ -1473,6 +1474,7 @@ int factions_load (void)
 {
    xmlNodePtr factions, node;
    Faction *f;
+   Uint32 time = SDL_GetTicks();
 
    /* Load the document. */
    xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
@@ -1562,7 +1564,13 @@ int factions_load (void)
    xmlFreeDoc(doc);
 
    faction_computeGrid();
-   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Faction in %.3f s", "Loaded %d Factions in %.3f s", array_size(faction_stack) ), array_size(faction_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+
    return 0;
 }
 

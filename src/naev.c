@@ -162,6 +162,7 @@ int naev_isQuit (void)
 int main( int argc, char** argv )
 {
    char conf_file_path[PATH_MAX], **search_path;
+   Uint32 starttime;
 
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -173,7 +174,7 @@ int main( int argc, char** argv )
    log_init();
 
    /* Set up PhysicsFS. */
-   if( PHYSFS_init( env.argv0 ) == 0 ) {
+   if (PHYSFS_init( env.argv0 ) == 0) {
       ERR( "PhysicsFS initialization failed: %s",
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return -1;
@@ -190,16 +191,17 @@ int main( int argc, char** argv )
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
 
-   if ( env.isAppImage )
+   if (env.isAppImage)
       LOG( "AppImage detected. Running from: %s", env.appdir );
    else
       DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   if ( SDL_Init( 0 ) ) {
+   if (SDL_Init( 0 )) {
       ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
       return -1;
    }
+   starttime = SDL_GetTicks();
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -363,7 +365,10 @@ int main( int argc, char** argv )
    /* Start menu. */
    menu_main();
 
-   LOG( _( "Reached main menu" ) );
+   if (conf.devmode)
+      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+   else
+      LOG( _( "Reached main menu" ) );
 
    fps_init(); /* initializes the time_ms */
 

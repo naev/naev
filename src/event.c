@@ -20,6 +20,7 @@
 
 #include "event.h"
 
+#include "conf.h"
 #include "array.h"
 #include "cond.h"
 #include "hook.h"
@@ -449,8 +450,10 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   /* Run over events. */
    char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   Uint32 time = SDL_GetTicks();
+
+   /* Run over events. */
    event_data = array_create_size( EventData, array_size( event_files ) );
    for (int i=0; i < array_size( event_files ); i++) {
       event_parseFile( event_files[i], NULL );
@@ -462,7 +465,12 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
-   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Event in %.3f s", "Loaded %d Events in %.3f s", array_size(event_data) ), array_size(event_data), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
    return 0;
 }

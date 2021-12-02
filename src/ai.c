@@ -71,6 +71,7 @@
 
 #include "ai.h"
 
+#include "conf.h"
 #include "array.h"
 #include "board.h"
 #include "escort.h"
@@ -529,6 +530,7 @@ int ai_load (void)
 {
    char** files;
    int suflen;
+   Uint32 time = SDL_GetTicks();
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -550,10 +552,15 @@ int ai_load (void)
       }
    }
 
-   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
-
    /* More clean up. */
    PHYSFS_freeList( files );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles) );
+   }
+   else
+      DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* Load equipment thingy. */
    return ai_loadEquip();

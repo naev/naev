@@ -3374,6 +3374,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
+   Uint32 time = SDL_GetTicks();
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3437,11 +3438,18 @@ static int systems_load (void)
       xmlFreeDoc(doc);
    }
 
-   DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-   DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
-
    /* Clean up. */
    PHYSFS_freeList( system_files );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Planet in %.3f s", "       with %d Planets in %.3f s", array_size(planet_stack) ), array_size(planet_stack), time/1000. );
+   }
+   else {
+      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+   }
 
    return 0;
 }

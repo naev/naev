@@ -978,6 +978,7 @@ static int missions_cmp( const void *a, const void *b )
 int missions_load (void)
 {
    char **mission_files;
+   Uint32 time = SDL_GetTicks();
 
    /* Allocate player missions. */
    for (int i=0; i<MISSION_MAX; i++)
@@ -996,7 +997,12 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
-   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Mission in %.3f s", "Loaded %d Missions in %.3f s", array_size(mission_stack) ), array_size(mission_stack), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
    return 0;
 }

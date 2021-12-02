@@ -12,6 +12,7 @@
 
 #include "map.h"
 
+#include "conf.h"
 #include "array.h"
 #include "colour.h"
 #include "dialogue.h"
@@ -2671,6 +2672,7 @@ int map_load (void)
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Uint32 time = SDL_GetTicks();
 
    decorator_stack = array_create( MapDecorator );
 
@@ -2704,7 +2706,12 @@ int map_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d map decorator in %.3f s", "Loaded %d map decorators in %.3f s", array_size(decorator_stack) ), array_size(decorator_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
 
    return 0;
 }

@@ -16,6 +16,7 @@
 
 #include "spfx.h"
 
+#include "conf.h"
 #include "array.h"
 #include "camera.h"
 #include "debris.h"
@@ -348,6 +349,7 @@ int spfx_load (void)
 {
    int n, ret;
    char **spfx_files;
+   Uint32 time = SDL_GetTicks();
 
    spfx_effects = array_create(SPFX_Base);
 
@@ -396,7 +398,12 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
-   DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Special Effect in %.3f s", "Loaded %d Special Effects in %.3f s", array_size(spfx_effects) ), array_size(spfx_effects), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
 
    return 0;
 }

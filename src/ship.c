@@ -970,6 +970,7 @@ int ships_load (void)
 {
    char **ship_files;
    size_t nfiles;
+   Uint32 time = SDL_GetTicks();
 
    /* Validity. */
    ss_check();
@@ -1021,7 +1022,12 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
-   DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Ship in %.3f s", "Loaded %d Ships in %.3f s", array_size(ship_stack) ), array_size(ship_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
    PHYSFS_freeList( ship_files );

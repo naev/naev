@@ -2457,12 +2457,14 @@ static int outfit_loadDir( char *dir )
 int outfit_load (void)
 {
    int noutfits;
+   Uint32 time = SDL_GetTicks();
 
-   /* First pass, loads up ammunition. */
+   /* First pass, Loads up all outfits, without filling ammunition and the likes. */
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink( &outfit_stack );
    noutfits = array_size(outfit_stack);
+   /* Sort up licenses. */
    qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
    if (license_stack != NULL)
       qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
@@ -2563,7 +2565,12 @@ int outfit_load (void)
    free(outfit_names);
 #endif /* DEBUGGING */
 
-   DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Outfit in %.3f s", "Loaded %d Outfits in %.3f s", noutfits ), noutfits, time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }

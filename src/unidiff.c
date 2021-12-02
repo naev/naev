@@ -18,6 +18,7 @@
 
 #include "unidiff.h"
 
+#include "conf.h"
 #include "array.h"
 #include "economy.h"
 #include "log.h"
@@ -177,9 +178,10 @@ int diff_load( xmlNodePtr parent ); /**< Used in save.c */
  */
 int diff_loadAvailable (void)
 {
+   Uint32 time = SDL_GetTicks();
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available    = array_create_size( UniDiffData_t, array_size( diff_files ) );
-   for (int i=0; i < array_size( diff_files ); i++ ) {
+   for (int i=0; i<array_size(diff_files); i++ ) {
       xmlDocPtr doc;
       xmlNodePtr node;
       UniDiffData_t *diff;
@@ -203,7 +205,12 @@ int diff_loadAvailable (void)
    array_free( diff_files );
    array_shrink(&diff_available);
 
-   DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
 
    return 0;
 }
