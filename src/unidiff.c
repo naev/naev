@@ -299,10 +299,6 @@ static int diff_applyInternal( const char *name, int oneshot )
 
    xmlFreeDoc(doc);
 
-   /* Re-compute the economy. */
-   economy_execQueued();
-   economy_initialiseCommodityPrices();
-
    /* Update universe. */
    if (oneshot)
       diff_checkUpdateUniverse();
@@ -1277,7 +1273,6 @@ void diff_remove( const char *name )
 
    diff_removeDiff(diff);
 
-   economy_execQueued();
    diff_checkUpdateUniverse();
 }
 
@@ -1289,7 +1284,6 @@ void diff_clear (void)
    while (array_size(diff_stack) > 0)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
-   economy_execQueued();
    diff_checkUpdateUniverse();
 }
 
@@ -1575,6 +1569,11 @@ static int diff_checkUpdateUniverse (void)
       return 0;
    space_reconstructPresences();
    safelanes_recalculate();
+
+   /* Re-compute the economy. */
+   economy_execQueued();
+   economy_initialiseCommodityPrices();
+
    diff_universe_changed = 0;
    return 1;
 }
