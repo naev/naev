@@ -89,6 +89,7 @@ function land ()
       vn.clear()
       vn.scene()
       vn.transition()
+      vn.na(_(""))
       vn.run()
 
       mem.state = 1
@@ -112,15 +113,20 @@ function land ()
    end
 end
 
+local function spawn_protestors( pos, ships )
+   local puaaa = ant.puaaa()
+   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Protestors"), {ai="baddiepos"} )
+   for k,p in ipairs(f) do
+      p:setHostile(true)
+   end
+end
+
 function enter ()
    if mem.state==0 and system.cur()==mainsys then
-      local puaaa = ant.puaaa()
-      local pos = vec2.new( -4500, 4500 )
-      local f = fleet.add( 1, {"Lancelot", "Shark", "Shark"}, puaaa, pos, _("PUAAA Protestors"), {ai="baddiepos"} )
-      for k,p in ipairs(f) do
-         p:setHostile(true)
-      end
-   --elseif mem.state==1 and system.cur()==mainsys then
-      -- Lots of ships, stealth-ish?
+      spawn_protestors( vec2.new( 3000, 4000 ), {"Lancelot", "Shark", "Shark"} )
+
+   elseif mem.state==1 and system.cur()==mainsys then
+      spawn_protestors( vec2.new( -10000, 8700 ), {"Admonisher", "Hyena", "Hyena"} )
+
    end
 end
