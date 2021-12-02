@@ -50,8 +50,8 @@
   </decorator>
   <decorator>
     <image>blackhole.webp</image>
-    <x>-772.000000</x>
-    <y>-479.000000</y>
+    <x>-765.000000</x>
+    <y>-490.000000</y>
     <detection_radius>200</detection_radius>
   </decorator>
 </map>
