@@ -161,8 +161,8 @@ Kex runs off and disappears into the station.]]))
    kex(_([["The station is lively enough that it is fairly hard to keep track of what is going on, but there are some patterns like mysterious packages and unaccounted amounts of credits disappearing."]]))
    kex(_([["The only thing keeping me from my freedom is the fact that the CEO legally owns me. They don't believe I am fully sentient, but I'm sure if they knew it would just make everything harder for me so I have to lay low."]]))
    vn.na(_("You ask about where you can find the CEO."))
-   kex(_([["He shouldn't be too hard to find most of the time given his drinking habits. You can usually find him around the bar lounge on the 7th floor. You aren't going to go talk to him? There's no way that anything like that could work.
-He lets out a sigh."]]))
+   kex(_([["He shouldn't be too hard to find most of the time given his drinking habits. You can usually find him around the bar lounge on the 7th floor. You aren't going to go talk to him? There's no way that anything like that could work."
+He lets out a sigh.]]))
    vn.func( function ()
       var.push( "kex_talk_ceo", true )
       if not mem.npc_ceo then
@@ -346,7 +346,7 @@ end
 
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
-   minerva.log.kex(_("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
+   minerva.log.kex(_("You destroyed a transport destined to the Minerva CEO, but didn't find anything in the debris."))
    misn.markerMove( mem.misn_marker, system.get("Limbo") )
    mem.misn_state = 2
    misn.osdActive(2)

@@ -139,7 +139,7 @@ function approach_guide ()
    }
 
    vn.label("info_overview")
-   guide(_("The Crimson Gauntlet is allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
+   guide(_("The Crimson Gauntlet allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
    vn.jump("menu_info")
 
    vn.label("info_gauntlet")

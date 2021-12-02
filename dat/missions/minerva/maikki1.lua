@@ -214,7 +214,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn.osdCreate( _("Finding Maikki's Father"),
             { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
          mem.misn_marker = misn.markerAdd( searchsys, "low" )
-         minerva.log.maikki(_("You were told her father colud be near Doeston.") )
+         minerva.log.maikki(_("You were told her father could be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )

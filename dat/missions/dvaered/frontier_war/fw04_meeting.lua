@@ -322,7 +322,7 @@ function scheduleIncoming()
    hook.timer( 200.0, "spawnHam" ) -- Hamelsen comes in
 
    -- Briefing by Leblanc.
-   tk.msg( _("Read your messages"), _("Don't forget to read the messages Captain Leblanc will send to you. It contains valuable information.") )
+   tk.msg( _("Read your messages"), _("Don't forget to read the messages Captain Leblanc will send to you. They contain valuable information.") )
    hook.timer( 4.0, "message", {pilot = alpha[1], msg = _("I hope everyone is listening carefully.")} )
    hook.timer( 8.0, "message", {pilot = alpha[1], msg = _("Every incoming pilot must be visually controlled by one of us.")} )
    hook.timer( 12.0, "message", {pilot = alpha[1], msg = _("I will notify each of you when you have a pilot to control.")} )
