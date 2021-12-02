@@ -557,7 +557,7 @@ int ai_load (void)
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
-      DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles) );
+      DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles), time/1000. );
    }
    else
       DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
