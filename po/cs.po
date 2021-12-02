@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-01 13:56-0500\n"
+"POT-Creation-Date: 2021-12-01 19:42-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -14545,7 +14545,7 @@ msgstr ""
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:11
 msgid ""
-"Found on a Four Wings fighter that was carrying a Ragnarok beam. It seems to "
+"Found on a Four Winds fighter that was carrying a Ragnarok beam. It seems to "
 "increase the performance of your engine when the ship's mass is high. It is "
 "most certainly not an actual vacuum cleaner, but you don't know this "
 "outfit's real name."
@@ -17458,7 +17458,7 @@ msgstr ""
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:7
 msgid ""
-"Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to "
+"Based on the Caesar torpedo platform, Huntsman EMP torpedoes are designed to "
 "disable large warships, where smaller weapons would fail."
 msgstr ""
 
@@ -17925,8 +17925,8 @@ msgstr ""
 
 #: dat/outfits/utility/berserk_chip.xml:9
 msgid ""
-"The Berserk Chip is a dangerous used by only the most reckless of pilots. It "
-"can be fully integrated into a ship to override most of the basic "
+"The Berserk Chip is a dangerous thing, used by only the most reckless of "
+"pilots. It can be fully integrated into a ship to override most of the basic "
 "functionality to reroute it into combat capabilities. This comes at a very "
 "high expense to the hull integrity and systems on the ship and can only be "
 "used for a short time. Newer versions have a safety shutoff which "
@@ -26346,7 +26346,7 @@ msgstr "Nic osobního."
 
 #: dat/events/dvaered/totoran.lua:142
 msgid ""
-"The Crimson Gauntlet is allows you to experience combat with your ships in "
+"The Crimson Gauntlet allows you to experience combat with your ships in "
 "virtual reality, without having to worry about any real damage. All you do "
 "is scan your ship and its outfits, and you will be ready to participate in "
 "all the challenges."
@@ -31586,7 +31586,7 @@ msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
 "Lancelot without any history behind it. This is a masterpiece!\"\n"
-"The lift up their toy Lancelot. You can barely make out a golden Efreeti "
+"They lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
 
@@ -40109,8 +40109,8 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:325
 msgid ""
-"Don't forget to read the messages Captain Leblanc will send to you. It "
-"contains valuable information."
+"Don't forget to read the messages Captain Leblanc will send to you. They "
+"contain valuable information."
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:326
@@ -46559,8 +46559,8 @@ msgid ""
 "\"He shouldn't be too hard to find most of the time given his drinking "
 "habits. You can usually find him around the bar lounge on the 7th floor. You "
 "aren't going to go talk to him? There's no way that anything like that could "
-"work.\n"
-"He lets out a sigh.\""
+"work.\"\n"
+"He lets out a sigh."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:175
@@ -46792,7 +46792,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:349
 msgid ""
-"You destroyed a transport destined to the Minerva Ceo, but didn't find "
+"You destroyed a transport destined to the Minerva CEO, but didn't find "
 "anything in the debris."
 msgstr ""
 
@@ -46884,7 +46884,7 @@ msgid ""
 "blank for a bit.\n"
 "\"I see, looks like you were able to get quite a lot of data. However, their "
 "database had much more than expected. It will probably take me quite a bit "
-"longer to process this all and see what we got."
+"longer to process this all and see what we got.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:134
@@ -47055,7 +47055,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex2.lua:203
 msgid ""
-"\"If you can avoid, don't become a duck kid.\"\n"
+"\"If you can avoid it, don't become a duck, kid.\"\n"
 "He seems to lighten up a bit."
 msgstr ""
 
@@ -47153,7 +47153,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:124
 msgid ""
-"You better head over to Kex to rely the information back at Minerva Station."
+"You better head over to Kex to relay the information back at Minerva Station."
 msgstr ""
 
 #. We're done here, go back to kex:)
@@ -47288,7 +47288,7 @@ msgid ""
 "that great and exciting, but lately I yearn to take to the skies like the "
 "good old times. Did I ever tell you about the story of when I spent a kilo-"
 "period drifting in the Nebula?\"\n"
-"\"No? Great!"
+"\"No? Great!\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:212
@@ -48726,8 +48726,8 @@ msgstr ""
 msgid "Ask why he did it."
 msgstr ""
 
-#: dat/missions/minerva/kex5.lua:646 dat/missions/minerva/kex5.lua:659
-msgid "\"Kex sends you his regards\" (draw weapon)\""
+#: dat/missions/minerva/kex5.lua:646
+msgid "\"Kex sends you his regards.\" (draw weapon)"
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:650
@@ -48758,6 +48758,10 @@ msgid ""
 "LEVEL II test, a sign of a weak mind. An utter failure.\"\n"
 "He coughs violently again, spasms overtaking his body. The medical robot "
 "sees to inject him with something and he calms down again."
+msgstr ""
+
+#: dat/missions/minerva/kex5.lua:659
+msgid "\"Kex sends you his regards\" (draw weapon)\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:660 dat/missions/minerva/kex5.lua:685
@@ -49136,7 +49140,7 @@ msgid "Look around the {sys} system"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:217
-msgid "You were told her father colud be near Doeston."
+msgid "You were told her father could be near Doeston."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:223
