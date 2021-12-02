@@ -650,21 +650,24 @@ int player_autonavShouldResetSpeed (void)
       return 1;
    }
 
+   /* Helper variables. */
    reset_dist     = conf.autonav_reset_dist;
    reset_shield   = conf.autonav_reset_shield;
    hdist2         = INFINITY;
    hostiles       = 0;
    will_reset     = 0;
-
+   /* Current ship health. */
    shield = player.p->shield / player.p->shield_max;
    armour = player.p->armour / player.p->armour_max;
 
+   /* Find if there are nearby enemies. */
    pstk = pilot_getAll();
    for (int i=0; i<array_size(pstk); i++) {
       double d2;
-      if ((pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i], &d2 )==1
-            && !pilot_isDisabled( pstk[i] )) {
+      if ((pstk[i]->id != PLAYER_ID)
+            && !pilot_isDisabled( pstk[i] )
+            && pilot_isHostile( pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], &d2 )==1) {
          hostiles = 1;
          if (d2 < hdist2)
             hdist2 = d2;
@@ -672,6 +675,7 @@ int player_autonavShouldResetSpeed (void)
       }
    }
 
+   /* There are enemies nearby, check for reset. */
    if (hostiles) {
       if ((reset_dist > 0) && (hdist2 < pow2(reset_dist))) {
          will_reset = 1;

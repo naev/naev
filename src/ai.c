@@ -819,10 +819,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    HookParam hparam[2];
 
    /* Custom hook parameters. */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp       = attacker;
-   hparam[1].type       = HOOK_PARAM_NUMBER;
-   hparam[1].u.num      = dmg;
+   hparam[0].type    = HOOK_PARAM_PILOT;
+   hparam[0].u.lp    = attacker;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = dmg;
 
    /* Behaves differently if manually overridden. */
    pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, hparam, 2 );

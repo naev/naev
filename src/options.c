@@ -542,7 +542,7 @@ static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
    autonav_reset = window_getFaderValue(wid, str);
 
    /* Generate message. */
-   if (autonav_reset >= 1.)
+   if (autonav_reset >= 1.0)
       snprintf( buf, sizeof(buf), _("Enemy Presence") );
    else if (autonav_reset > 0.5)
       snprintf( buf, sizeof(buf), _("Enemy within %s distance"), num2strU( (autonav_reset - 0.5) / 0.5 * AUTONAV_RESET_DIST_MAX, 0) );
