@@ -38,7 +38,7 @@ local levelup = {
    0,
    0, -- bar, missions
    -- Up to 5 already done
-   1000, -- +commodity (TODO commodities are bugged)
+   1000, -- +commodity
    1500, -- +bad outfits
    2000, -- +better outfits
    2500, -- +bad spaceships
@@ -138,7 +138,7 @@ function land ()
       local total = ant.supplied_total()
       for l = 1,#levelup do
          if level < l and total > levelup[l] then
-            -- TODO bette messages
+            -- TODO better messages
             vntk.msg(_("Terraforming Progress"),_("Through the new supplies and volunteers, Antlejos V has been able to expand its facilities."))
             ant.unidiff( ant.unidiff_list[6] )
             break
