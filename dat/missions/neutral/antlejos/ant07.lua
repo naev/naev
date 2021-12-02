@@ -5,7 +5,7 @@
   <unique />
  </flags>
  <avail>
-  <priority>4</priority>
+  <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
   <planet>Antlejos V</planet>
@@ -35,7 +35,6 @@ local mainpnt, mainsys = planet.getS("Gordon's Exchange")
 -- luacheck: globals approaching enter land (Hook functions passed by name)
 
 function create ()
-   misn.finish()
    if not misn.claim{mainsys,retsys} then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
 end
@@ -71,10 +70,10 @@ function accept ()
    end
 
    misn.accept()
-   misn.setTitle( _("Independent Alliance") )
+   misn.setTitle( _("Antlejos V Trade Deal") )
    misn.setDesc(fmt.f(_("Go to {pnt} in the {sys} system to try to forge an alliance with the government at {pnt} to support {retpnt}."),{pnt=mainpnt, sys=mainsys, retpnt=retpnt}))
    misn.setReward( fmt.credits(reward) )
-   misn.osdCreate(_("Independent Alliance"), {
+   misn.osdCreate(_("Antlejos V Trade Deal"), {
       fmt.f(_("Go to {pnt} ({sys} system)"),{pnt=mainpnt, sys=mainsys}),
       fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=retpnt, sys=retsys}),
    })
@@ -92,7 +91,9 @@ function land ()
       vn.scene()
       vn.transition()
       vn.na(_("You land and head towards the planet hall to do the signing."))
-      vn.na(_(""))
+      vn.na(_("After confirming your appointment at the reception, you are lead to an extravagant waiting room filled with famous craftsmanship from all over the universe. There are elegant carpets, ceremonial pottery, and lavish holoart displays. You are ogling them when an assistant comes to take you to another room."))
+      vn.na(fmt.f(_("You meet up with a trader who is surprised you aren't Verner, but quickly adjusts to the situation. They discuss trivial topics with you at first before entering in the trade details. They seem to be all in order and you sign as a representative of {pnt}. After shaking hands, you are sent on your way. Dealing with traders is much more efficient than the Empire bureaucracy."),{pnt=retpnt}))
+      vn.na(_("As you leave the planet hall, you notice some figures that seem to be trailing you. It looks like you might have company."))
       vn.run()
 
       -- Advance mission
@@ -106,11 +107,12 @@ function land ()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
       vn.na(_("You land and find Verner waiting for you right outside the space docks."))
-      v(_([["How did it go?"]]))
+      v(_([["How did it go? I see, the PUAAA haven't been discouraged by their supply ship getting taken out… This must mean they have someone or something else supporting them… I'll have to investigate and see what I can do about that. It might also be worth trying to set up our own defense force. As the stakes get higher we can't keep on letting the PUAAA boss us around. I'll have to think of what we can do. In the meantime, we still have lots of things to do."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
 
+      -- Done
       player.pay( reward )
       ant.log(fmt.f(_("You eliminated a PUAAA supply ship bringing more security to {pnt}."),{pnt=retpnt}))
       misn.finish(true)
@@ -123,6 +125,7 @@ local function spawn_protestors( pos, ships )
    for k,p in ipairs(f) do
       p:setHostile(true)
    end
+   return f
 end
 
 function enter ()
@@ -132,5 +135,16 @@ function enter ()
    elseif mem.state==1 and system.cur()==mainsys then
       spawn_protestors( vec2.new( -10000, 8700 ), {"Admonisher", "Hyena", "Hyena"} )
 
+   elseif mem.state==1 and system.cur()==retsys then
+      local f = spawn_protestors( vec2.new( -10000, 8700 ), {"Pacifier", "Lancelot", "Lancelot"} )
+      for k,p in ipairs(f) do
+         p:changeAI( "baddiepatrol" )
+         local m = p:memory()
+         m.waypoints = {
+            vec2.new(    0, -2000 ),
+            vec2.new( -4000, 4000 ),
+            vec2.new( -8000, 2000 ),
+         }
+      end
    end
 end

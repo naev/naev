@@ -5,7 +5,7 @@
   <unique />
  </flags>
  <avail>
-  <priority>4</priority>
+  <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
   <planet>Antlejos V</planet>
