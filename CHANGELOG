@@ -7,6 +7,7 @@
    * Fixed potential spurious warnings about incomplete translations, even when running in English
    * Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
    * Fixed VN log text overlap issues
+   * Fixed commodities not being added through unidiff.
 
 * 0.9.0 (since beta.1)
    * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load

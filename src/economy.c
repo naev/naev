@@ -575,6 +575,10 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    double base, scale, factor;
    const char *factionname;
 
+   /* Ignore planets with no commodity stuff. */
+   if (!planet_hasService( planet, PLANET_SERVICE_COMMODITY ))
+      return 0;
+
    /* Check the faction is not NULL.*/
    if (planet->presence.faction == -1) {
       WARN(_("Planet '%s' appears to have commodity '%s' defined, but no faction."), planet->name, commodity->name);
