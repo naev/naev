@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-02 19:41+0900\n"
+"POT-Creation-Date: 2021-12-02 09:22-0500\n"
 "PO-Revision-Date: 2021-12-02 00:34+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -711,23 +711,23 @@ msgstr "EvanR"
 msgid "Artwork Contributors"
 msgstr "Contributeurs majeurs"
 
-#: artwork/gfx/loading/admonisher.webp.txt:1
-msgid "ADMONISHER"
-msgstr "ADMONITEUR"
-
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
 msgstr "PIRATE ADMONITEUR"
 
-#: artwork/gfx/loading/ancestor.webp.txt:1
-#, fuzzy
-msgid "ANCESTOR"
-msgstr "ANCÊTRE"
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
+msgstr "ADMONITEUR"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 #, fuzzy
 msgid "PIRATE ANCESTOR"
 msgstr "ANCÊTRE PIRATE"
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+#, fuzzy
+msgid "ANCESTOR"
+msgstr "ANCÊTRE"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 #, fuzzy
@@ -818,15 +818,15 @@ msgstr "PRÉDICATEUR SIRIUS"
 msgid "QUICKSILVER"
 msgstr "MERCURE"
 
-#: artwork/gfx/loading/rhino.webp.txt:1
-#, fuzzy
-msgid "RHINO"
-msgstr "RHINOCÉROS"
-
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 #, fuzzy
 msgid "PIRATE RHINO"
 msgstr "RHINOCÉROS PIRATE"
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+#, fuzzy
+msgid "RHINO"
+msgstr "RHINOCÉROS"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 #, fuzzy
@@ -838,11 +838,6 @@ msgstr "SCHROEDINGER"
 msgid "SIRIUS SHAMAN"
 msgstr "CHAMAN SIRIUS"
 
-#: artwork/gfx/loading/shark.webp.txt:1
-#, fuzzy
-msgid "SHARK"
-msgstr "REQUIN"
-
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 #, fuzzy
 msgid "EMPIRE SHARK"
@@ -853,20 +848,25 @@ msgstr "REQUIN DE L’EMPIRE"
 msgid "PIRATE SHARK"
 msgstr "REQUIN PIRATE"
 
+#: artwork/gfx/loading/shark.webp.txt:1
+#, fuzzy
+msgid "SHARK"
+msgstr "REQUIN"
+
 #: artwork/gfx/loading/sting.webp.txt:1
 #, fuzzy
 msgid "ZA'LEK STING"
 msgstr "ZA’LEK PIQÛRE"
 
-#: artwork/gfx/loading/vendetta.webp.txt:1
-#, fuzzy
-msgid "VENDETTA"
-msgstr "VENDETTA"
-
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 #, fuzzy
 msgid "PIRATE VENDETTA"
 msgstr "PIRATE VENDETTA"
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+#, fuzzy
+msgid "VENDETTA"
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 #, fuzzy
@@ -79770,12 +79770,12 @@ msgstr ""
 msgid "Failed to solve the Economy System."
 msgstr ""
 
-#: src/economy.c:580
+#: src/economy.c:584
 #, c-format
 msgid "Planet '%s' appears to have commodity '%s' defined, but no faction."
 msgstr ""
 
-#: src/economy.c:973
+#: src/economy.c:977
 #, c-format
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
@@ -80463,7 +80463,7 @@ msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
 #: src/faction.c:1490 src/map.c:2690 src/outfit.c:1151 src/ship.c:525
-#: src/ship.c:1006 src/space.c:1766 src/space.c:1824 src/space.c:3399
+#: src/ship.c:1006 src/space.c:1818 src/space.c:1876 src/space.c:3446
 #: src/tech.c:112
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -82774,8 +82774,8 @@ msgid "Conditional for mission '%s' failed to run"
 msgstr ""
 
 #: src/mission.c:350 src/mission.c:372 src/mission.c:394 src/mission.c:434
-#: src/mission.c:530 src/mission.c:578 src/space.c:3831 src/space.c:3885
-#: src/space.c:3916 src/space.c:3971
+#: src/mission.c:530 src/mission.c:578 src/space.c:3878 src/space.c:3932
+#: src/space.c:3963 src/space.c:4018
 msgid "Unknown marker type."
 msgstr ""
 
@@ -85010,7 +85010,7 @@ msgstr ""
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3300
+#: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3347
 #: src/spfx.c:1163 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -87108,61 +87108,61 @@ msgstr ""
 msgid "Ultragiants"
 msgstr ""
 
-#: src/space.c:408
+#: src/space.c:460
 #, c-format
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
 
-#: src/space.c:822 src/space.c:832
+#: src/space.c:874 src/space.c:884
 #, c-format
 msgid "System '%s' not found in stack"
 msgstr ""
 
-#: src/space.c:883
+#: src/space.c:935
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/space.c:907
+#: src/space.c:959
 msgid "Trying to find NULL planet…"
 msgstr ""
 
-#: src/space.c:916 src/space.c:926
+#: src/space.c:968 src/space.c:978
 #, c-format
 msgid "Planet '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:940
+#: src/space.c:992
 #, c-format
 msgid "Planet index '%d' out of range (max %d)"
 msgstr ""
 
-#: src/space.c:1060
+#: src/space.c:1112
 #, c-format
 msgid "Virtual Asset '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:1074
+#: src/space.c:1126
 msgid "Trying to find NULL jump point..."
 msgstr ""
 
-#: src/space.c:1084
+#: src/space.c:1136
 #, c-format
 msgid "Jump point '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1102
+#: src/space.c:1154
 #, c-format
 msgid "Jump point to '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1146
+#: src/space.c:1198
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
 msgstr ""
 
-#: src/space.c:1161
+#: src/space.c:1213
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
@@ -87171,66 +87171,66 @@ msgstr ""
 #. f, [arg,], max
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:1173
+#: src/space.c:1225
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1181 src/space.c:4521
+#: src/space.c:1233 src/space.c:4568
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
 
-#: src/space.c:1195
+#: src/space.c:1247
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
 
-#: src/space.c:1203
+#: src/space.c:1255
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
 
-#: src/space.c:1216
+#: src/space.c:1268
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
 
-#: src/space.c:1224
+#: src/space.c:1276
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
 
-#: src/space.c:1311
+#: src/space.c:1363
 #, c-format
 msgid "You discovered #%c%s#0."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/space.c:1338
+#: src/space.c:1390
 msgid "You discovered a Jump Point."
 msgstr ""
 
-#: src/space.c:1487
+#: src/space.c:1539
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
-#: src/space.c:1492
+#: src/space.c:1544
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr ""
 
-#: src/space.c:1494
+#: src/space.c:1546
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"
 msgstr ""
 
-#: src/space.c:1699
+#: src/space.c:1751
 msgid ""
 "Creating new planet in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
 
-#: src/space.c:1733
+#: src/space.c:1785
 #, c-format
 msgid ""
 "Failed to load landing file: %s\n"
@@ -87238,61 +87238,61 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/space.c:1847
+#: src/space.c:1899
 #, fuzzy, c-format
 #| msgid "Unknown weapon status for '%s'"
 msgid "Unknown node '%s' in virtual asset '%s'"
 msgstr "Type de statut de vaisseau inconnu '%s' !"
 
 #. error has occurred
-#: src/space.c:1957
+#: src/space.c:2009
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr ""
 
-#: src/space.c:1967
+#: src/space.c:2019
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr ""
 
-#: src/space.c:1968
+#: src/space.c:2020
 msgid "Invalid land message"
 msgstr ""
 
-#: src/space.c:1977
+#: src/space.c:2029
 #, c-format
 msgid "%s: %s (%s) -> return parameter 4 is not a string!"
 msgstr ""
 
-#: src/space.c:1978
+#: src/space.c:2030
 msgid "Invalid bribe message"
 msgstr ""
 
-#: src/space.c:1984
+#: src/space.c:2036
 #, c-format
 msgid "%s: %s (%s) -> return parameter 5 is not a string!"
 msgstr ""
 
-#: src/space.c:1985
+#: src/space.c:2037
 msgid "Invalid bribe ack message"
 msgstr ""
 
-#: src/space.c:1991
+#: src/space.c:2043
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 
-#: src/space.c:2106 src/space.c:2124 src/space.c:2228
+#: src/space.c:2158 src/space.c:2176 src/space.c:2280
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr ""
 
-#: src/space.c:2161
+#: src/space.c:2213
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 
-#: src/space.c:2187
+#: src/space.c:2239
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr ""
@@ -87300,147 +87300,147 @@ msgstr ""
 #.
 #. * Verification
 #.
-#: src/space.c:2238
+#: src/space.c:2290
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2342
+#: src/space.c:2389
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2354
+#: src/space.c:2401
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2375
+#: src/space.c:2422
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 
-#: src/space.c:2420
+#: src/space.c:2467
 #, c-format
 msgid "Unable to remove virtual asset '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2431
+#: src/space.c:2478
 #, c-format
 msgid "Virtual asset '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2500
+#: src/space.c:2547
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2512
+#: src/space.c:2559
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2555
+#: src/space.c:2602
 msgid ""
 "Creating new system in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
 
-#: src/space.c:2698 src/space.c:2715 src/space.c:2753
+#: src/space.c:2745 src/space.c:2762 src/space.c:2800
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr ""
 
-#: src/space.c:2730
+#: src/space.c:2777
 #, c-format
 msgid "System '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/space.c:2762
+#: src/space.c:2809
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2763
+#: src/space.c:2810
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2842 src/space.c:2916
+#: src/space.c:2889 src/space.c:2963
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2847 src/space.c:2921
+#: src/space.c:2894 src/space.c:2968
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2859 src/space.c:2933
+#: src/space.c:2906 src/space.c:2980
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:2977
+#: src/space.c:3024
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:3002
+#: src/space.c:3049
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:3089
+#: src/space.c:3136
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:3092
+#: src/space.c:3139
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:3152
+#: src/space.c:3199
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:3155
+#: src/space.c:3202
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3293
+#: src/space.c:3340
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3343
+#: src/space.c:3390
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3348
+#: src/space.c:3395
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3440
+#: src/space.c:3487
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] "Loaded %d Star System"
 msgstr[1] "Loaded %d Star Systems"
 
-#: src/space.c:3441
+#: src/space.c:3488
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] "       with %d Planet"
 msgstr[1] "       with %d Planets"
 
-#: src/space.c:3857
+#: src/space.c:3904
 #, c-format
 msgid "Marking planet '%s' that is not in any system!"
 msgstr ""
@@ -87450,7 +87450,7 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4513
+#: src/space.c:4560
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
@@ -87731,225 +87731,225 @@ msgstr ""
 msgid "Malformed unidiff file: missing root element 'unidiff'"
 msgstr ""
 
-#: src/unidiff.c:324
+#: src/unidiff.c:320
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
 
-#: src/unidiff.c:335 src/unidiff.c:367 src/unidiff.c:395 src/unidiff.c:744
+#: src/unidiff.c:331 src/unidiff.c:363 src/unidiff.c:391 src/unidiff.c:740
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
 msgstr ""
 
-#: src/unidiff.c:355
+#: src/unidiff.c:351
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
 msgstr ""
 
-#: src/unidiff.c:383
+#: src/unidiff.c:379
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."
 msgstr ""
 
-#: src/unidiff.c:411
+#: src/unidiff.c:407
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
 msgstr ""
 
-#: src/unidiff.c:448 src/unidiff.c:517 src/unidiff.c:671 src/unidiff.c:771
-#: src/unidiff.c:816
+#: src/unidiff.c:444 src/unidiff.c:513 src/unidiff.c:667 src/unidiff.c:767
+#: src/unidiff.c:812
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/unidiff.c:475 src/unidiff.c:544 src/unidiff.c:699
+#: src/unidiff.c:471 src/unidiff.c:540 src/unidiff.c:695
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
 msgstr ""
 
-#: src/unidiff.c:762
+#: src/unidiff.c:758
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
 msgstr ""
 
-#: src/unidiff.c:822
+#: src/unidiff.c:818
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
 msgstr[0] "Unidiff '%s' failed to apply %d hunk."
 msgstr[1] "Unidiff '%s' failed to apply %d hunks."
 
-#: src/unidiff.c:829
+#: src/unidiff.c:825
 #, c-format
 msgid "   [%s] asset add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:832
+#: src/unidiff.c:828
 #, c-format
 msgid "   [%s] asset remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:835
+#: src/unidiff.c:831
 #, c-format
 msgid "   [%s] asset blackmarket: '%s'"
 msgstr ""
 
-#: src/unidiff.c:838
+#: src/unidiff.c:834
 #, c-format
 msgid "   [%s] asset legalmarket: '%s'"
 msgstr ""
 
-#: src/unidiff.c:841
+#: src/unidiff.c:837
 #, c-format
 msgid "   [%s] virtual asset add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:844
+#: src/unidiff.c:840
 #, c-format
 msgid "   [%s] virtual asset remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:847
+#: src/unidiff.c:843
 #, c-format
 msgid "   [%s] jump add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:850
+#: src/unidiff.c:846
 #, c-format
 msgid "   [%s] jump remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:853
+#: src/unidiff.c:849
 #, c-format
 msgid "   [%s] tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:857
+#: src/unidiff.c:853
 #, c-format
 msgid "   [%s] tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:861
+#: src/unidiff.c:857
 #, c-format
 msgid "   [%s] asset faction: '%s'"
 msgstr ""
 
-#: src/unidiff.c:865
+#: src/unidiff.c:861
 #, c-format
 msgid "   [%s] asset faction removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:869
+#: src/unidiff.c:865
 #, c-format
 msgid "   [%s] asset population: '%s'"
 msgstr ""
 
-#: src/unidiff.c:873
+#: src/unidiff.c:869
 #, c-format
 msgid "   [%s] asset population removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:877
+#: src/unidiff.c:873
 #, c-format
 msgid "   [%s] asset description: '%s'"
 msgstr ""
 
-#: src/unidiff.c:881
+#: src/unidiff.c:877
 #, c-format
 msgid "   [%s] asset description revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:885
+#: src/unidiff.c:881
 #, c-format
 msgid "   [%s] asset bar: '%s'"
 msgstr ""
 
-#: src/unidiff.c:889
+#: src/unidiff.c:885
 #, c-format
 msgid "   [%s] asset bar revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:893
+#: src/unidiff.c:889
 #, c-format
 msgid "   [%s] asset exterior: '%s'"
 msgstr ""
 
-#: src/unidiff.c:897
+#: src/unidiff.c:893
 #, c-format
 msgid "   [%s] asset exterior revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:901
+#: src/unidiff.c:897
 #, c-format
 msgid "   [%s] asset service add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:905
+#: src/unidiff.c:901
 #, c-format
 msgid "   [%s] asset service remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:909
+#: src/unidiff.c:905
 #, c-format
 msgid "   [%s] asset tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:913
+#: src/unidiff.c:909
 #, c-format
 msgid "   [%s] asset tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:917
+#: src/unidiff.c:913
 #, c-format
 msgid "   [%s] faction visible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:921
+#: src/unidiff.c:917
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:925
+#: src/unidiff.c:921
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
 msgstr ""
 
-#: src/unidiff.c:929
+#: src/unidiff.c:925
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
 msgstr ""
 
-#: src/unidiff.c:933
+#: src/unidiff.c:929
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
 msgstr ""
 
-#: src/unidiff.c:937
+#: src/unidiff.c:933
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
 msgstr ""
 
-#: src/unidiff.c:942
+#: src/unidiff.c:938
 #, c-format
 msgid "   unknown hunk '%d'"
 msgstr ""
 
-#: src/unidiff.c:1222
+#: src/unidiff.c:1218
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1422
+#: src/unidiff.c:1416
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1427
+#: src/unidiff.c:1421
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1547
+#: src/unidiff.c:1541
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
