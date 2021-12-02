@@ -664,23 +664,35 @@ int player_autonavShouldResetSpeed (void)
    pstk = pilot_getAll();
    for (int i=0; i<array_size(pstk); i++) {
       double d2;
-      if ((pstk[i]->id != PLAYER_ID)
-            && !pilot_isDisabled( pstk[i] )
-            && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i], &d2 )==1) {
-         hostiles = 1;
-         if (d2 < hdist2)
-            hdist2 = d2;
+      Pilot *p = pstk[i];
+
+      if (p->id == PLAYER_ID)
+         continue;
+
+      if (pilot_isDisabled(p))
+         continue;
+
+      if (!pilot_isHostile( p ))
+         continue;
+
+      if (pilot_inRangePilot( player.p, pstk[i], &d2 )!=1)
+         continue;
+
+      hostiles = 1;
+      if (reset_dist > 0.)
+         hdist2 = MIN( hdist2, d2 );
+      else
          break;
-      }
    }
 
    /* There are enemies nearby, check for reset. */
    if (hostiles) {
+      /* Check distance reset condition. */
       if ((reset_dist > 0) && (hdist2 < pow2(reset_dist))) {
          will_reset = 1;
          player.autonav_timer = MAX( player.autonav_timer, 0. );
       }
+      /* Check damage condition. */
       else if ((shield < last_shield && shield < reset_shield) || armour < last_armour) {
          will_reset = 1;
          player.autonav_timer = MAX( player.autonav_timer, 2. );
