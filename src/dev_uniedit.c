@@ -754,7 +754,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    my /= uniedit_zoom;
 
    /* Display location. */
-   gl_print( &gl_defFontMono, bx+5, by+5, &cWhite, "%.3f x %.3f", mx, my );
+   gl_print( &gl_defFontMono, bx+5, by+5, &cWhite, "% 7.2f x % 7.2f", mx, my );
 
    if (uniedit_mode == UNIEDIT_NEWSYS) {
       toolkit_drawAltText( x, y, _("Click to add a new system"));

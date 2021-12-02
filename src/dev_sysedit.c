@@ -676,7 +676,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render cursor position. */
    gl_print( &gl_defFontMono, bx + 5., by + 5.,
-         &cWhite, "%.2f x %.2f",
+         &cWhite, "% 9.2f x % 9.2f",
          (bx + sysedit_mx - x)/z,
          (by + sysedit_my - y)/z );
 }
