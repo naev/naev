@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-02 18:37+0900\n"
+"POT-Creation-Date: 2021-12-02 19:41+0900\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -69090,7 +69090,7 @@ msgstr ""
 #: dat/missions/tutorial/nelly02.lua:175
 msgid ""
 "\"It looks like you own some disabling weapons but don't have them equipped. "
-"Why don't you try to equip #o{outfitname} before we head out? We want to "
+"Why don't you try to equip #o{outfitname}#0 before we head out? We want to "
 "disable my ship, not destroy it!\""
 msgstr ""
 
@@ -71097,13 +71097,13 @@ msgstr ""
 #. buttons
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:74 src/dialogue.c:380
+#: dat/scripts/luatk/core.lua:463 dat/scripts/vntk.lua:74 src/dialogue.c:380
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:75 src/dialogue.c:382
+#: dat/scripts/luatk/core.lua:469 dat/scripts/vntk.lua:75 src/dialogue.c:382
 msgid "No"
 msgstr ""
 
@@ -75583,6 +75583,7 @@ msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 #. --
 #. Draw background
 #. Set scissors
+#. Clear depth
 #. Draw widgets ontop
 #. Restore scissors
 #. Draw overlay
@@ -75611,7 +75612,7 @@ msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/luatk/core.lua:450 src/dialogue.c:151 src/dialogue.c:273
+#: dat/scripts/luatk/core.lua:453 src/dialogue.c:151 src/dialogue.c:273
 #: src/dialogue.c:329 src/dialogue.c:718 src/options.c:262 src/options.c:591
 #: src/options.c:893 src/options.c:1195
 msgid "OK"
@@ -78699,6 +78700,7 @@ msgstr ""
 #. Build the tables
 #. Determine offset
 #. Compile shaders
+#. Drawn ontop of text so have to clear depth
 #. luacheck: globals love (vn overrides parts of love2d.)
 #. Transparent background in Naev
 #. Check to see if running standalone
@@ -84169,19 +84171,19 @@ msgstr "Mission Lua '%s'구문 오류: %s"
 msgid "failed to load font '%s'"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nlua_gfx.c:207 src/nlua_gfx.c:265 src/nlua_gfx.c:330
+#: src/nlua_gfx.c:209 src/nlua_gfx.c:267 src/nlua_gfx.c:332
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr "경계를 벗어난 (X 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:210 src/nlua_gfx.c:268 src/nlua_gfx.c:333
+#: src/nlua_gfx.c:212 src/nlua_gfx.c:270 src/nlua_gfx.c:335
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr "경계를 벗어난 (Y 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:634
+#: src/nlua_gfx.c:646
 msgid "width has to be a positive value."
 msgstr ""
 
