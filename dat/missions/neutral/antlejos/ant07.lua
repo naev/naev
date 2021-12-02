@@ -47,7 +47,8 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   v(_([[""]]))
+   vn.na(_("You meet up with Verner at the spaceport bar."))
+   v(fmt.f(_([["How's it going? {pnt} is starting to take off, but the PUAAA don't cut us any slack. I tried to see if the Empire would do anything about it and they just send me running around filing paperwork to no avail. Damn useless. However, I've starting getting in contact with other independent worlds, and it seems like we could form a trade alliance, hopefully bringing stability to {pnt}. Would you be willing to go to {destpnt} in the {destsys} system to seal an agreement for me?"]]),{pnt=retpnt, destpnt=mainpnt, destsys=mainsys}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -58,7 +59,8 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   v(_([[""]]))
+   v(fmt.f(_([["Glad to hear that. So, I've been talking with the traders running {destpnt}, and it seems like they would be willing to enter a trade deal where we would provide them with some processed goods for stuff that we can't easily get here. Especially stuff that requires high gravity for processing is our weakness. The deal is almost set, but as a sign of good faith I just need someone to go and do the final signing ceremony. It should be fairly straight-forward."]]),{destpnt=mainpnt}))
+   v(fmt.f(_([["I would want to go do the signing myself, but with the latest incidents and the workload I have here, my hands are all tied. Now, with the last hit you did on the PUAAA supply ship, I'm not expecting any trouble, but you never know. If they knew we were about to strike a trade deal, I'm sure they'd try to stop it. Just in case, make sure to go to {destpnt} armed. Best of luck!"]]), {destpnt=mainpnt}))
    vn.func( function () accepted = true end )
 
    vn.run()
@@ -89,9 +91,11 @@ function land ()
       vn.clear()
       vn.scene()
       vn.transition()
+      vn.na(_("You land and head towards the planet hall to do the signing."))
       vn.na(_(""))
       vn.run()
 
+      -- Advance mission
       mem.state = 1
       misn.markerMove( mem.mrk, retpnt )
       misn.osdActive(2)
@@ -101,8 +105,8 @@ function land ()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
-      vn.na(_(""))
-      v(_([[""]]))
+      vn.na(_("You land and find Verner waiting for you right outside the space docks."))
+      v(_([["How did it go?"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
@@ -115,7 +119,7 @@ end
 
 local function spawn_protestors( pos, ships )
    local puaaa = ant.puaaa()
-   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Protestors"), {ai="baddiepos"} )
+   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Fighters"), {ai="baddiepos"} )
    for k,p in ipairs(f) do
       p:setHostile(true)
    end
