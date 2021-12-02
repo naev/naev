@@ -322,7 +322,7 @@ They stick their tongue out at you as they still play with the space ship.]]))
 
       vn.label("first_showoff")
       sl(_([["Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know what that is? Stop messing with me, it's probably just another mass-produced Lancelot without any history behind it. This is a masterpiece!"
-The lift up their toy Lancelot. You can barely make out a golden Efreeti etched on the side.]]))
+They lift up their toy Lancelot. You can barely make out a golden Efreeti etched on the side.]]))
       vn.jump("first_cont1")
 
       vn.label("first_cont1")

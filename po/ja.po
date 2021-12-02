@@ -17575,7 +17575,7 @@ msgstr "ハンツマン魚雷"
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:7
 msgid ""
-"Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to "
+"Based on the Caesar torpedo platform, Huntsman EMP torpedoes are designed to "
 "disable large warships, where smaller weapons would fail."
 msgstr ""
 "シーザー魚雷共通基盤をもとにしたハンツマン電磁パルス魚雷は、もっと小さな武器"

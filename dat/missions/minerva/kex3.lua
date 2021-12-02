@@ -121,7 +121,7 @@ function generate_npc ()
       vn.sfxBingo()
       vn.na(_([[The directories are really organized and it doesn't take long before you can find what seem to be the correct files, and you copy them over to a holodrive that you pocket with you. This should make Kex satisfied this time.]]))
       vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
-      vn.na(_([[You better head over to Kex to rely the information back at Minerva Station.]]))
+      vn.na(_([[You better head over to Kex to relay the information back at Minerva Station.]]))
       vn.run()
 
       mem.misn_state = 5 -- We're done here, go back to kex:)
@@ -208,7 +208,7 @@ He winks his cyborg eye at you.]]))
 
    vn.label("past")
    kex(_([["You are quite the curious kid. At the time I didn't think my life was all that great and exciting, but lately I yearn to take to the skies like the good old times. Did I ever tell you about the story of when I spent a kilo-period drifting in the Nebula?"
-"No? Great!]]))
+"No? Great!"]]))
    kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you always have to maximize energy to shields. It makes it hard to bring firepower, but not like it's going to do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
    kex(_([["So me and Mireia had picked up a tip of some sort of weird wreck deep past Arandon. Some poor fools had gone to search for it and hadn't come back for a few hecto-periods and one of their husbands was beginning to lose it, so they came to us. Now, we weren't interested in trying to save them, once you enter the Nebula, you forfeit all chance at salvation. Search parties tend to only rack up the body counts."]]))
    kex(_([["However, from the looks of it, it was a very interesting find. Sometimes you find really weird things in the Nebula."

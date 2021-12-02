@@ -643,7 +643,7 @@ SELF-DESTRUCT SEQUENCE ENGAGED
    vn.menu{
       { _([["Failure?"]]), "kex_failure" },
       { _([[Ask why he did it.]]), "kex_why" },
-      { _([["Kex sends you his regards" (draw weapon)"]]), "kex_weapon" },
+      { _([["Kex sends you his regards." (draw weapon)]]), "kex_weapon" },
    }
 
    vn.label("kex_why")

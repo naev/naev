@@ -130,7 +130,7 @@ function approach_kex ()
       kex(_([["Damn, the security was tighter than anticipated. I'm glad to see you made it in one piece despite the opposition. Aristocrats always seem to have cards up their sleeves."]]))
       kex(_([["Let me take a brief look at the data you were able to collect."
 He plugs in the program directly into a port under his wing and his eyes go blank for a bit.
-"I see, looks like you were able to get quite a lot of data. However, their database had much more than expected. It will probably take me quite a bit longer to process this all and see what we got.]]))
+"I see, looks like you were able to get quite a lot of data. However, their database had much more than expected. It will probably take me quite a bit longer to process this all and see what we got."]]))
       kex(_([["In the meantime, it looks like we were also able to take some credits. I'll wire you up with a reward for your efforts."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
@@ -200,7 +200,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    kex(_([[His expression darkens.
 "The only real thing that keeps me ticking is revenge on the bastard who did this to me. Turning me into this is beyond humiliating and I intend to have him suffer as much as I have."]]))
    vn.func( function () kex.shader = nil end )
-   kex(_([["If you can avoid, don't become a duck kid."
+   kex(_([["If you can avoid it, don't become a duck, kid."
 He seems to lighten up a bit.]]))
    vn.jump("menu_msg")
 
