@@ -330,12 +330,12 @@ static void opt_gameplay( unsigned int wid )
          "macOS\n"
 #elif WIN32
          "Windows\n"
-#else
+#else /* LINUX */
          "Unknown OS\n"
-#endif
+#endif /* LINUX */
 #if HAVE_LUAJIT
          "Using LuaJIT\n"
-#endif
+#endif /* HAVE_LUAJIT */
          );
 
    y -= window_getTextHeight(wid, "txtFlags") + 10;
@@ -882,8 +882,7 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
-   int cw;
-   int w, h, y, x;
+   int cw, w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -1183,8 +1182,7 @@ static void opt_video( unsigned int wid )
    (void) wid;
    int i, j, nres, res_def;
    char buf[16];
-   int cw;
-   int w, h, y, x, l;
+   int cw, w, h, y, x, l;
    char **res;
    const char *s;
 
