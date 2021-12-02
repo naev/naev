@@ -1121,6 +1121,8 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
+         if (p->tech == NULL)
+            p->tech = tech_groupCreate();
          tech_addItemTech( p->tech, hunk->u.name );
          return 0;
       case HUNK_TYPE_ASSET_TECH_REMOVE:
