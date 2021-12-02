@@ -638,7 +638,7 @@ int player_autonavShouldResetSpeed (void)
    double shield, armour;
    Pilot *const*pstk;
    int hostiles, will_reset;
-   double hdist2;
+   double rdist2;
    double reset_dist, reset_shield;
 
    if (!player_isFlag(PLAYER_AUTONAV))
@@ -653,7 +653,7 @@ int player_autonavShouldResetSpeed (void)
    /* Helper variables. */
    reset_dist     = conf.autonav_reset_dist;
    reset_shield   = conf.autonav_reset_shield;
-   hdist2         = INFINITY;
+   rdist2         = pow2(reset_dist);
    hostiles       = 0;
    will_reset     = 0;
    /* Current ship health. */
@@ -679,30 +679,30 @@ int player_autonavShouldResetSpeed (void)
          continue;
 
       hostiles = 1;
-      if (reset_dist > 0.)
-         hdist2 = MIN( hdist2, d2 );
+      if (reset_dist > 0.) {
+         if (d2 < rdist2) {
+            will_reset = 1;
+            player.autonav_timer = MAX( player.autonav_timer, 0. );
+            break;
+         }
+      }
       else
          break;
    }
 
    /* There are enemies nearby, check for reset. */
    if (hostiles) {
-      /* Check distance reset condition. */
-      if ((reset_dist > 0) && (hdist2 < pow2(reset_dist))) {
-         will_reset = 1;
-         player.autonav_timer = MAX( player.autonav_timer, 0. );
-      }
-      /* Check damage condition. */
-      else if ((shield < last_shield && shield < reset_shield) || armour < last_armour) {
+      if ((shield < last_shield && shield < reset_shield) || armour < last_armour) {
          will_reset = 1;
          player.autonav_timer = MAX( player.autonav_timer, 2. );
       }
    }
 
+   /* Remember last helath status. */
    last_shield = shield;
    last_armour = armour;
 
-   if (will_reset || (player.autonav_timer > 0)) {
+   if (will_reset || (player.autonav_timer > 0.)) {
       player_autonavResetSpeed();
       return 1;
    }
