@@ -636,16 +636,15 @@ static int player_autonavBrake (void)
 int player_autonavShouldResetSpeed (void)
 {
    double shield, armour;
-   Pilot *const*pstk;
-   int hostiles, will_reset;
-   double rdist2;
+   int will_reset, lowhealth;
    double reset_dist, reset_shield;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
    /* Stop on lockons. */
-   if (player.p->lockons>0) {
+   if (player.p->lockons > 0) {
+      player.autonav_timer = MAX( player.autonav_timer, 0. );
       player_autonavResetSpeed();
       return 1;
    }
@@ -653,48 +652,46 @@ int player_autonavShouldResetSpeed (void)
    /* Helper variables. */
    reset_dist     = conf.autonav_reset_dist;
    reset_shield   = conf.autonav_reset_shield;
-   rdist2         = pow2(reset_dist);
-   hostiles       = 0;
    will_reset     = 0;
    /* Current ship health. */
    shield = player.p->shield / player.p->shield_max;
    armour = player.p->armour / player.p->armour_max;
+   lowhealth = ((shield < last_shield && shield < reset_shield) || armour < last_armour);
 
-   /* Find if there are nearby enemies. */
-   pstk = pilot_getAll();
-   for (int i=0; i<array_size(pstk); i++) {
-      double d2;
-      Pilot *p = pstk[i];
+   /* Only care when low health or stopping on distance. */
+   if ((reset_dist > 0.) || lowhealth) {
+      double rdist2     = pow2(reset_dist);
+      Pilot *const*pstk = pilot_getAll();
+      for (int i=0; i<array_size(pstk); i++) {
+         double d2;
+         Pilot *p = pstk[i];
 
-      if (p->id == PLAYER_ID)
-         continue;
+         if (p->id == PLAYER_ID)
+            continue;
 
-      if (pilot_isDisabled(p))
-         continue;
+         if (pilot_isDisabled(p))
+            continue;
 
-      if (!pilot_isHostile( p ))
-         continue;
+         if (!pilot_isHostile( p ))
+            continue;
 
-      if (pilot_inRangePilot( player.p, pstk[i], &d2 )!=1)
-         continue;
+         if (pilot_inRangePilot( player.p, pstk[i], &d2 )!=1)
+            continue;
 
-      hostiles = 1;
-      if (reset_dist > 0.) {
-         if (d2 < rdist2) {
+         if (lowhealth) {
             will_reset = 1;
-            player.autonav_timer = MAX( player.autonav_timer, 0. );
+            player.autonav_timer = MAX( player.autonav_timer, 2. );
             break;
          }
-      }
-      else
-         break;
-   }
-
-   /* There are enemies nearby, check for reset. */
-   if (hostiles) {
-      if ((shield < last_shield && shield < reset_shield) || armour < last_armour) {
-         will_reset = 1;
-         player.autonav_timer = MAX( player.autonav_timer, 2. );
+         if (reset_dist > 0.) {
+            if (d2 < rdist2) {
+               will_reset = 1;
+               player.autonav_timer = MAX( player.autonav_timer, 0. );
+               break;
+            }
+         }
+         else
+            break;
       }
    }
 
