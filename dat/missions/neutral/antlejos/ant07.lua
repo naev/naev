@@ -9,7 +9,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <planet>Antlejos V</planet>
-  <cond>require('common.antlejos').unidiffLevel() >= 7</cond>
+  <cond>require('common.antlejos').unidiffLevel() &gt;= 7</cond>
   <done>Terraforming Antlejos 6</done>
  </avail>
  <notes>
@@ -30,7 +30,7 @@ local fleet = require "fleet"
 local reward = ant.rewards.ant07
 
 local retpnt, retsys = planet.getS("Antlejos V")
-local mainpnt, mainsys = system.get("Gordon's Exchange")
+local mainpnt, mainsys = planet.getS("Gordon's Exchange")
 
 -- luacheck: globals approaching enter land (Hook functions passed by name)
 

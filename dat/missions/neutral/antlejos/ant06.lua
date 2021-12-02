@@ -9,7 +9,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <planet>Antlejos V</planet>
-  <cond>require('common.antlejos').unidiffLevel() >= 6</cond>
+  <cond>require('common.antlejos').unidiffLevel() &gt;= 6</cond>
   <done>Terraforming Antlejos 5</done>
  </avail>
  <notes>
