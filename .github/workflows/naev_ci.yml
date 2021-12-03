@@ -70,7 +70,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -82,7 +82,7 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
@@ -96,13 +96,15 @@ jobs:
             ${{ github.workspace }}/build
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
         env:
           DESTDIR: "${{ github.workspace }}/staging"
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
@@ -189,11 +191,13 @@ jobs:
           if-no-files-found: error
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
 
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
@@ -239,7 +243,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -266,11 +270,13 @@ jobs:
           if-no-files-found: error
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
 
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
@@ -312,11 +318,13 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Meson Test
+        id: test
         run: |
           meson test lua_lint -C build
 
       - name: Upload Test Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.test.outcome == 'failure' }}
         with:
           name: ${{ github.sha }}-lualint-testlog
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -345,8 +353,16 @@ jobs:
               -Dexecutable=disabled
 
       - name: Meson Compile
+        id: compile
         run: |
           meson compile -C build
+
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-ldoc-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
