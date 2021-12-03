@@ -2992,12 +2992,12 @@ int player_addEscorts (void)
 static int player_saveEscorts( xmlTextWriterPtr writer )
 {
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      if (player.p->escorts[i].persist) {
-         xmlw_startElem(writer, "escort");
-         xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-         xmlw_str(writer, "%s", player.p->escorts[i].ship);
-         xmlw_endElem(writer); /* "escort" */
-      }
+      if (!player.p->escorts[i].persist)
+         continue;
+      xmlw_startElem(writer, "escort");
+      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
+      xmlw_str(writer, "%s", player.p->escorts[i].ship);
+      xmlw_endElem(writer); /* "escort" */
    }
 
    return 0;
@@ -3021,6 +3021,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"dt_mod","%f",player.dt_mod);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
+   xmlw_elem(writer,"chapter","%s",player.chapter);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
