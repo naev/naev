@@ -172,13 +172,13 @@ function accept ()
    if has_dis then
       nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
    elseif has_dis_owned then
-      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]:name()}))
+      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
       local s = planet.cur():services()
       if not s.outfits and not s.shipyard then
-         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet:name()}))
+         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet}))
       end
    else
-      nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet:name(), outfit_tobuy:name()}))
+      nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet, outfitname=outfit_tobuy}))
    end
 
    vn.done( tutnel.nelly.transition )
@@ -218,7 +218,7 @@ function equip ()
    local pp = player.pilot()
    for k,o in ipairs(pp:outfits()) do
       if has_disable(o) then
-         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o:name()}))
+         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
          mem.misn_state = 0
          misn.osdActive(2)
          hook.rm( mem.hk_equip )
@@ -546,7 +546,7 @@ She frowns.
    nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
    nel(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, I recommend you to rely on stealth as much as possible."]]))
-   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),shipname=spotter:name()}))
+   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),shipname=spotter}))
    vn.done( tutnel.nelly.transition )
 
    vn.label("nolearn")
