@@ -1479,13 +1479,13 @@ void space_update( const double dt )
 
             /* Check boundaries */
             if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
-               d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+               d->pos.x -= SCREEN_W + 2.*DEBRIS_BUFFER;
             else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
-               d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+               d->pos.y -= SCREEN_H + 2.*DEBRIS_BUFFER;
             else if (d->pos.x < -DEBRIS_BUFFER)
-               d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+               d->pos.x += SCREEN_W + 2.*DEBRIS_BUFFER;
             else if (d->pos.y < -DEBRIS_BUFFER)
-               d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+               d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
          }
       }
    }
@@ -1690,7 +1690,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->armour = at->armour;
 
    do {
-      double angle = RNGF() * 2 * M_PI;
+      double angle = RNGF() * 2. * M_PI;
       double radius = RNGF() * field->radius;
       ast->pos.x = radius * cos(angle) + field->pos.x;
       ast->pos.y = radius * sin(angle) + field->pos.y;
@@ -1725,8 +1725,8 @@ void debris_init( Debris *deb )
    double theta, mod;
 
    /* Position */
-   deb->pos.x = (double)RNG(-DEBRIS_BUFFER, SCREEN_W + DEBRIS_BUFFER);
-   deb->pos.y = (double)RNG(-DEBRIS_BUFFER, SCREEN_H + DEBRIS_BUFFER);
+   deb->pos.x = -DEBRIS_BUFFER + RNGF()*(SCREEN_W + 2.*DEBRIS_BUFFER);
+   deb->pos.y = -DEBRIS_BUFFER + RNGF()*(SCREEN_H + 2.*DEBRIS_BUFFER);
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
