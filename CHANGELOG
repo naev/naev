@@ -118,7 +118,6 @@
       * Lua support for advanced sound effects
       * Most markers and indicators use signed distance functions now
       * Internally using linear colourspace
-      * Lots of optimization
       * Faction presence computed with base and bonus values
       * Virtual assets have been redone and are more flexible than before
       * Point value system for ships to help with presence and other things
