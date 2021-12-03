@@ -2434,6 +2434,9 @@ static int aiL_nearhyptarget( lua_State *L )
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* TODO should they try to use systems only with their faction? */
+
       /* Get nearest distance. */
       dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
       if (dist < mindist) {
@@ -2477,11 +2480,36 @@ static int aiL_rndhyptarget( lua_State *L )
    id    = array_create_size( int, array_size(cur_system->jumps) );
    for (int i=0; i < array_size(cur_system->jumps); i++) {
       JumpPoint *jiter = &cur_system->jumps[i];
+
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* Only jump if there is presence there. */
+      if (system_getPresence( jiter->target, cur_pilot->faction ) <= 0.)
+         continue;
+
       array_push_back( &id, i );
       array_push_back( &jumps, jiter );
+   }
+
+   /* Try to be more lax. */
+   if (array_size(jumps) <= 0) {
+      for (int i=0; i < array_size(cur_system->jumps); i++) {
+         JumpPoint *jiter = &cur_system->jumps[i];
+
+         /* We want only standard jump points to be used. */
+         if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
+            continue;
+
+         array_push_back( &id, i );
+         array_push_back( &jumps, jiter );
+      }
+   }
+
+   if (array_size(jumps) <= 0) {
+      WARN(_("Pilot '%s' can't find jump to leave system!"), cur_pilot->name);
+      return 0;
    }
 
    /* Choose random jump point. */
