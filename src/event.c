@@ -375,15 +375,16 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
    memset( temp, 0, sizeof(EventData) );
 
+   /* Defaults. */
+   temp->trigger = EVENT_TRIGGER_NULL;
+
    /* get the name */
    xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
       WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
    node = parent->xmlChildrenNode;
-
    do { /* load all the data */
-
       /* Only check nodes. */
       xml_onlyNodes(node);
 

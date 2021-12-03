@@ -29,7 +29,7 @@ typedef enum MissionAvailability_ {
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
 #define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
-#define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
+#define MISSION_UNIQUE     (1<<0) /**< Unique missions can't be repeated */
 
 /**
  * @brief Defines the availability of a mission.
@@ -43,7 +43,7 @@ typedef struct MissionAvail_s {
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
 
-   /* for generic cases */
+   /* For generic cases */
    int *factions; /**< Array (array.h): To certain factions. */
 
    char *cond; /**< Condition that must be met (Lua). */
