@@ -2470,9 +2470,15 @@ static int aiL_rndhyptarget( lua_State *L )
    id    = array_create_size( int, array_size(cur_system->jumps) );
    for (int i=0; i < array_size(cur_system->jumps); i++) {
       JumpPoint *jiter = &cur_system->jumps[i];
+
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* Only jump if there is presence there. */
+      if (system_getPresence( jiter->target, cur_pilot->faction ) <= 0.)
+         continue;
+
       array_push_back( &id, i );
       array_push_back( &jumps, jiter );
    }
