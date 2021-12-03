@@ -1948,7 +1948,8 @@ void player_brokeHyperspace (void)
                   "#oAutonav continuing until %s (%d jump left).",
                   "#oAutonav continuing until %s (%d jumps left).",
                   map_npath),
-               _(destsys->name), map_npath );
+               (sys_isKnown(destsys) ? _(destsys->name) : _("Unknown")),
+               map_npath );
       }
    }
 
