@@ -25,6 +25,7 @@
 #include "cond.h"
 #include "hook.h"
 #include "log.h"
+#include "land.h"
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_audio.h"
@@ -55,6 +56,11 @@ typedef struct EventData_ {
    char *sourcefile; /**< Source file code. */
    char *lua; /**< Lua code. */
    unsigned int flags; /**< Bit flags. */
+
+   /* For specific cases. */
+   char *planet; /**< Planet name. */
+   char *system; /**< System name. */
+   char *chapter; /**< Chapter name. */
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
@@ -306,29 +312,40 @@ int event_alreadyRunning( int data )
  */
 void events_trigger( EventTrigger_t trigger )
 {
-   int i, c;
-   int created;
+   int created = 0;
+   for (int i=0; i<array_size(event_data); i++) {
+      EventData *ed = &event_data[i];
 
-   created = 0;
-   for (i=0; i<array_size(event_data); i++) {
       /* Make sure trigger matches. */
-      if (event_data[i].trigger != trigger)
+      if (ed->trigger != trigger)
+         continue;
+
+      /* Planet. */
+      if ((ed->planet != NULL) && (strcmp(ed->planet,land_planet->name)!=0))
+         continue;
+
+      /* System. */
+      if ((ed->system != NULL) && (strcmp(ed->system,cur_system->name)!=0))
+         continue;
+
+      /* If chapter, must match chapter. TODO make this regex. */
+      if ((ed->chapter != NULL) && (strcmp(ed->chapter,player.chapter)!=0))
          continue;
 
       /* Make sure chance is succeeded. */
-      if (RNGF() > event_data[i].chance)
+      if (RNGF() > ed->chance)
          continue;
 
       /* Test uniqueness. */
-      if ((event_data[i].flags & EVENT_FLAG_UNIQUE) &&
-            (player_eventAlreadyDone( i ) || event_alreadyRunning(i)))
+      if ((ed->flags & EVENT_FLAG_UNIQUE) &&
+            (player_eventAlreadyDone(i) || event_alreadyRunning(i)))
          continue;
 
       /* Test conditional. */
-      if (event_data[i].cond != NULL) {
-         c = cond_check(event_data[i].cond);
+      if (ed->cond != NULL) {
+         int c = cond_check(ed->cond);
          if (c<0) {
-            WARN(_("Conditional for event '%s' failed to run."), event_data[i].name);
+            WARN(_("Conditional for event '%s' failed to run."), ed->name);
             continue;
          }
          else if (!c)
@@ -370,6 +387,14 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Only check nodes. */
       xml_onlyNodes(node);
 
+      xmlr_strd(node,"planet",temp->planet);
+      xmlr_strd(node,"system",temp->system);
+      xmlr_strd(node,"chapter",temp->chapter);
+
+      xmlr_strd(node,"cond",temp->cond);
+      xmlr_float(node,"chance",temp->chance);
+      xmlr_int(node,"priority",temp->priority);
+
       /* Trigger. */
       if (xml_isNode(node,"trigger")) {
          char *buf = xml_get(node);
@@ -406,15 +431,6 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Notes for the python mission mapping script. */
       else if (xml_isNode(node,"notes"))
          continue;
-
-      /* Condition. */
-      xmlr_strd(node,"cond",temp->cond);
-
-      /* Get chance. */
-      xmlr_float(node,"chance",temp->chance);
-
-      /* Get proirity. */
-      xmlr_int(node,"priority",temp->priority);
 
       DEBUG(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
    } while (xml_nextNode(node));
@@ -565,8 +581,13 @@ static int event_parseFile( const char* file, EventData *temp )
 static void event_freeData( EventData *event )
 {
    free( event->name );
-   free( event->lua );
    free( event->sourcefile );
+   free( event->lua );
+
+   free( event->planet );
+   free( event->system );
+   free( event->chapter );
+
    free( event->cond );
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );

@@ -237,6 +237,10 @@ static int mission_meetReq( int mission, int faction,
    if ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)!=0))
       return 0;
 
+   /* If chapter, must match chapter. TODO make this regex. */
+   if ((misn->avail.chapter != NULL) && (strcmp(misn->avail.chapter,player.chapter)!=0))
+      return 0;
+
    /* Match faction. */
    if ((faction >= 0) && !mission_matchFaction(misn,faction))
       return 0;
@@ -712,6 +716,7 @@ static void mission_freeData( MissionData* mission )
    free(mission->sourcefile);
    free(mission->avail.planet);
    free(mission->avail.system);
+   free(mission->avail.chapter);
    array_free(mission->avail.factions);
    free(mission->avail.cond);
    free(mission->avail.done);
@@ -932,6 +937,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             xmlr_int(cur,"chance",temp->avail.chance);
             xmlr_strd(cur,"planet",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
+            xmlr_strd(cur,"chapter",temp->avail.chapter);
             if (xml_isNode(cur,"faction")) {
                if (temp->avail.factions == NULL)
                   temp->avail.factions = array_create( int );

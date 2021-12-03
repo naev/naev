@@ -37,9 +37,10 @@ typedef struct MissionAvail_s {
    int loc; /**< Location of the mission. */
    int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
-   /* for specific cases */
+   /* For specific cases */
    char *planet; /**< Planet name. */
    char *system; /**< System name. */
+   char *chapter; /**< Chapter name. */
 
    /* for generic cases */
    int *factions; /**< Array (array.h): To certain factions. */
