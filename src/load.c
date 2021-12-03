@@ -143,6 +143,7 @@ static int load_load( nsave_t *save, const char *path )
             /* Player info. */
             xmlr_strd(node, "location", save->planet);
             xmlr_ulong(node, "credits", save->credits);
+            xmlr_strd(node, "chapter", save->chapter);
 
             /* Time. */
             if (xml_isNode(node, "time")) {
@@ -301,6 +302,7 @@ void load_free (void)
       free(ns->version);
       free(ns->data);
       free(ns->planet);
+      free(ns->chapter);
       free(ns->shipname);
       free(ns->shipmodel);
    }

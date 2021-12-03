@@ -98,6 +98,8 @@ static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
+static int playerL_chapter( lua_State *L );
+static int playerL_chapterSet( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -144,6 +146,8 @@ static const luaL_Reg playerL_methods[] = {
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
+   { "chapter", playerL_chapter },
+   { "chapterSet", playerL_chapterSet },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1402,9 +1406,38 @@ static int playerL_teleport( lua_State *L )
 
 /**
  * @brief Gets the dt_mod of the player, which multiplies all time stuff.
+ *
+ *    @luatreturn number The dt_mod of the player.
+ * @luafunc dt_mod
  */
 static int playerL_dt_mod( lua_State *L )
 {
    lua_pushnumber(L,dt_mod);
    return 1;
+}
+
+/**
+ * @brief Gets the player's current chapter.
+ *
+ *    @luatreturn string The player's current chapter.
+ * @luafunc chapter
+ */
+static int playerL_chapter( lua_State *L )
+{
+   lua_pushstring( L, player.chapter );
+   return 1;
+}
+
+/**
+ * @brief Sets the player's current chapter.
+ *
+ *    @luatparam string chapter The name of the chapter to set the player to.
+ * @luafunc chapterSet
+ */
+static int playerL_chapterSet( lua_State *L )
+{
+   const char *str = luaL_checkstring(L,1);
+   free( player.chapter );
+   player.chapter = strdup(str);
+   return 0;
 }

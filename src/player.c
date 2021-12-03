@@ -205,6 +205,7 @@ static void player_newSetup()
    player.last_played = time(NULL);
    player.date_created = player.last_played;
    player.time_since_save = player.last_played;
+   player.chapter = strdup( start_chapter() );
 
    /* For pretty background. */
    pilots_cleanAll();
@@ -736,6 +737,8 @@ void player_cleanup (void)
    player_payback = 0;
    free( player.gui );
    player.gui = NULL;
+   free( player.chapter );
+   player.chapter = NULL;
 
    /* Clear omsg. */
    omsg_cleanup();
