@@ -441,8 +441,8 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
+   MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
 #undef MELEMENT
 
    return 0;
@@ -738,12 +738,11 @@ int events_saveActive( xmlTextWriterPtr writer )
  */
 int events_loadActive( xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    /* cleanup old events */
    events_cleanup();
 
-   node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"events"))
          if (events_parseActive( node ) < 0) return -1;
@@ -760,14 +759,14 @@ int events_loadActive( xmlNodePtr parent )
  */
 static int events_parseActive( xmlNodePtr parent )
 {
-   char *buf;
-   unsigned int id;
-   int data;
-   xmlNodePtr node, cur;
-   Event_t *ev;
-
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
+      char *buf;
+      unsigned int id;
+      int data;
+      xmlNodePtr cur;
+      Event_t *ev;
+
       if (!xml_isNode(node,"event"))
          continue;
 
