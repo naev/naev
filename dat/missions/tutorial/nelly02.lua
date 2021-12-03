@@ -200,7 +200,7 @@ function accept ()
       table.insert( osdtxt, _("Buy and equip a weapon with disable damage") )
       mem.misn_state = -2
    end
-   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=mem.destsys}) )
+   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=mem.retsys}) )
    misn.osdCreate( _("Helping Nelly Out"), osdtxt )
 
    if mem.misn_state < 0 then
