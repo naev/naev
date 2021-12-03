@@ -220,19 +220,19 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         ll->d.d     = xml_getFloat(node) / 100.;
+         ll->d.d  = xml_getFloat(node) / 100.;
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         ll->d.d     = xml_getFloat(node);
+         ll->d.d  = xml_getFloat(node);
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
-         ll->d.i     = !!xml_getInt(node);
+         ll->d.i  = !!xml_getInt(node);
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         ll->d.i     = xml_getInt(node);
+         ll->d.i  = xml_getInt(node);
          break;
    }
 
@@ -248,26 +248,71 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
  */
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll )
 {
-   for ( ; ll!=NULL; ll=ll->next) {
-      const ShipStatsLookup *sl = &ss_lookup[ ll->type ];
+   for (const ShipStatList *l=ll; l!=NULL; l=l->next) {
+      const ShipStatsLookup *sl = &ss_lookup[ l->type ];
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-            xmlw_elem( writer, sl->name, "%f", ll->d.d * 100 );
+            xmlw_elem( writer, sl->name, "%f", l->d.d * 100 );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            xmlw_elem( writer, sl->name, "%f", ll->d.d );
+            xmlw_elem( writer, sl->name, "%f", l->d.d );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
          case SS_DATA_TYPE_INTEGER:
-            xmlw_elem( writer, sl->name, "%d", ll->d.i );
+            xmlw_elem( writer, sl->name, "%d", l->d.i );
             break;
       }
    }
    return 0;
 }
+
+static int shipstat_sort( const void *a, const void *b )
+{
+   const ShipStatList **la = (const ShipStatList**) a;
+   const ShipStatList **lb = (const ShipStatList**) b;
+   const ShipStatsLookup *sla = &ss_lookup[ (*la)->type ];
+   const ShipStatsLookup *slb = &ss_lookup[ (*lb)->type ];
+   return strcmp( sla->name, slb->name );
+}
+
+/**
+ * @brief Sorts the ship stats, useful if doing saving stuff.
+ *
+ *    @param ll Ship stat list to sort.
+ *    @return 0 on success.
+ */
+int ss_sort( ShipStatList **ll )
+{
+   int n, i;
+   ShipStatList **arr;
+
+   /* Nothing to do. */
+   if (*ll==NULL)
+      return 0;
+
+   n = 0;
+   for (ShipStatList *l=*ll; l!=NULL; l=l->next)
+      n++;
+
+   arr = malloc( sizeof(ShipStatList*) * n );
+   i = 0;
+   for (ShipStatList *l=*ll; l!=NULL; l=l->next) {
+      arr[i] = l;
+      i++;
+   }
+   qsort( arr, n, sizeof(ShipStatList*), shipstat_sort );
+
+   *ll = arr[0];
+   for (i=1; i<n; i++)
+      arr[i-1]->next = arr[i];
+   arr[n-1]->next = NULL;
+   free( arr );
+   return 0;
+}
+
 
 /**
  * @brief Checks for validity.

@@ -2800,6 +2800,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
 
+   ss_sort( &sys->stats );
    array_shrink( &sys->planets );
    array_shrink( &sys->planetsid );
 

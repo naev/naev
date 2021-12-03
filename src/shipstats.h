@@ -306,6 +306,7 @@ int ss_check (void);
  */
 ShipStatList* ss_listFromXML( xmlNodePtr node );
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll );
+int ss_sort( ShipStatList **ll );
 void ss_free( ShipStatList *ll );
 
 /*
