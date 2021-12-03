@@ -1633,6 +1633,7 @@ void space_init( const char* sysname, int do_simulate )
       pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
    if (do_simulate) {
+      Uint32 time = SDL_GetTicks();
       s = sound_disabled;
       sound_disabled = 1;
       ntime_allowUpdate( 0 );
@@ -1645,6 +1646,8 @@ void space_init( const char* sysname, int do_simulate )
          update_routine( fps_min_simulation, 1 );
       ntime_allowUpdate( 1 );
       sound_disabled = s;
+      if (conf.devmode)
+         DEBUG(_("System simulated in %.3f s"), (SDL_GetTicks()-time)/1000.);
    }
    player_messageToggle( 1 );
    if (player.p != NULL)
@@ -1703,7 +1706,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20;
+   mod = RNGF() * 20.;
    vect_pset( &ast->vel, mod, theta );
 
    /* Grow effect stuff */
