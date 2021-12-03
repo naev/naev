@@ -116,6 +116,7 @@ static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
+static int land_canSave (void);
 /* spaceport bar */
 static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
@@ -137,6 +138,23 @@ static void misn_update( unsigned int wid, const char *str );
 void land_queueTakeoff (void)
 {
    land_takeoff = 1;
+}
+
+/**
+ * @brief Whether or not the player can save.
+ */
+static int land_canSave (void)
+{
+   int should_save = 0;
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *p = cur_system->planets[i];
+      planet_updateLand( p );
+      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
+         should_save = 1;
+         break;
+      }
+   }
+   return should_save;
 }
 
 /**
@@ -1346,7 +1364,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay )
 {
-   int h, stu, should_save;
+   int h, stu;
    char *nt;
    double a, r;
 
@@ -1408,17 +1426,8 @@ void takeoff( int delay )
    space_init( NULL, 1 );
    player.p->nav_hyperspace = h;
 
-   /* Save all. */
-   should_save = 0; /* Only save when the player shouldn't get stranded. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
-      planet_updateLand( p );
-      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
-         should_save = 1;
-         break;
-      }
-   }
-   if (should_save && (save_all() < 0)) /* must be before cleaning up planet */
+   /* Only save when the player shouldn't get stranded. */
+   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up planet */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
