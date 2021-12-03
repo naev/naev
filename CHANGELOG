@@ -8,7 +8,7 @@
    * Fixed potential spurious warnings about incomplete translations, even when running in English
    * Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
    * Fixed VN log text overlap issues
-   * Fixed commodities not being added through unidiff.
+   * Fixed commodities not being added through unidiff
 
 * 0.9.0 (since beta.1)
    * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
@@ -132,26 +132,26 @@
    * Gameplay
       * Fixed duplicate rewards from pirate ship-stealing missions. (Sorry.)
       * Fixed the Advanced Nebula Research mission's failure condition in case you don't stick with the transport ship. (Sorry.)
-      * Fixed the "The one with the Runaway" mission so the captured drone doesn't appear back in space.
+      * Fixed the "The one with the Runaway" mission so the captured drone doesn't appear back in space
    * Engine
-      * Fixed a bug loading games with short (1-character) names.
-      * Tweaked chances of seeing Spaceport Bar missions.
-      * Updated German translation.
-      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse".
+      * Fixed a bug loading games with short (1-character) names
+      * Tweaked chances of seeing Spaceport Bar missions
+      * Updated German translation
+      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse"
       * Fixed source .tar.gz so ./configure is immediately usable again. (Note: 0.9.x will use Meson for builds.)
 
 * 0.8.1
    * Gameplay
-      * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%.
-      * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations.
+      * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%
+      * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations
    * Engine
       * Restored macOS support. (Catalina users will have to bypass Gatekeeper: See https://github.com/naev/naev/wiki/FAQ for details.)
-      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
-      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'".
-      * Fixed rare/potential bugs in font and save-file code.
-      * Fixed crash when navigating landing screens with the tab key.
-      * Updated German translation.
-      * Improved text in minor ways.
+      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files
+      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'"
+      * Fixed rare/potential bugs in font and save-file code
+      * Fixed crash when navigating landing screens with the tab key
+      * Updated German translation
+      * Improved text in minor ways
 
 * 0.8.0
    * Gameplay
