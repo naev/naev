@@ -37,7 +37,7 @@ deterministic_sort() { LC_ALL=C sort; }
 po/credits_pot.py \
    dat/intro \
    dat/AUTHORS \
-   "$(find_files artwork/gfx/loading txt)" \
+   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|') \
    > po/credits.pot
 
 (
