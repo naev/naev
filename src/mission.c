@@ -278,7 +278,7 @@ static int mission_meetReq( int mission, int faction,
  *    @param planet Name of the current planet.
  *    @param sysname Name of the current system.
  */
-void missions_run( int loc, int faction, const char* planet, const char* sysname )
+void missions_run( MissionAvailability loc, int faction, const char* planet, const char* sysname )
 {
    for (int i=0; i<array_size(mission_stack); i++) {
       Mission mission;
@@ -803,7 +803,7 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *    @return The stack of Missions created with n members.
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, int loc )
+      const char* planet, const char* sysname, MissionAvailability loc )
 {
    int m, alloced;
    int rep;
@@ -902,6 +902,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
    /* Defaults. */
    temp->avail.priority = 5;
+   temp->avail.loc = MIS_AVAIL_UNSET;
 
    /* get the name */
    xmlr_attr_strd(parent,"name",temp->name);
@@ -972,7 +973,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT(temp->avail.loc==-1,"location");
+   MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
 #undef MELEMENT
 

@@ -12,8 +12,9 @@
 #include "mission_markers.h"
 
 /* availability by location */
-enum {
-   MIS_AVAIL_NONE,       /**< Mission isn't available. */
+typedef enum MissionAvailability_ {
+   MIS_AVAIL_UNSET=-1,   /**< Mission isn't set. */
+   MIS_AVAIL_NONE=0,     /**< Mission isn't available. */
    MIS_AVAIL_COMPUTER,   /**< Mission is available at mission computer. */
    MIS_AVAIL_BAR,        /**< Mission is available at bar. */
    MIS_AVAIL_OUTFIT,     /**< Mission is available at outfitter. */
@@ -21,7 +22,7 @@ enum {
    MIS_AVAIL_LAND,       /**< Mission is available on landing. */
    MIS_AVAIL_COMMODITY,  /**< Mission is available at commodity exchange. */
    MIS_AVAIL_SPACE       /**< Mission is available in space. */
-};
+} MissionAvailability;
 
 /* flag functions */
 #define mis_isFlag(m,f)    ((m)->flags & (f))
@@ -34,7 +35,7 @@ enum {
  * @brief Defines the availability of a mission.
  */
 typedef struct MissionAvail_s {
-   int loc; /**< Location of the mission. */
+   MissionAvailability loc; /**< Location of the mission. */
    int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
    /* For specific cases */
@@ -112,9 +113,9 @@ extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * creates missions for a planet and such
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, int loc );
+      const char* planet, const char* sysname, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
-void missions_run( int loc, int faction, const char* planet, const char* sysname );
+void missions_run( MissionAvailability loc, int faction, const char* planet, const char* sysname );
 int mission_start( const char *name, unsigned int *id );
 
 /*
