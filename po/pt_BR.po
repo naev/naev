@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-02 09:22-0500\n"
+"POT-Creation-Date: 2021-12-02 23:22-0500\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -697,21 +697,21 @@ msgstr ""
 msgid "Artwork Contributors"
 msgstr "Principais Contribuintes"
 
-#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
-msgid "PIRATE ADMONISHER"
-msgstr ""
-
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
 msgstr ""
 
-#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
-msgid "PIRATE ANCESTOR"
-msgstr "PIRATA ANTIGO"
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr ""
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
 msgstr "ANTIGO"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr "PIRATA ANTIGO"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
@@ -785,13 +785,13 @@ msgstr "SIRIUS PREACHER"
 msgid "QUICKSILVER"
 msgstr "QUICKSILVER"
 
-#: artwork/gfx/loading/rhino_pirate.webp.txt:1
-msgid "PIRATE RHINO"
-msgstr "PIRATA RHINO"
-
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
 msgstr "RHINO"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr "PIRATA RHINO"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -801,6 +801,10 @@ msgstr "SCHROEDINGER"
 msgid "SIRIUS SHAMAN"
 msgstr "SIRIUS SHAMAN"
 
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr "TUBARÃO"
+
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
 msgstr "TUBARÃO DO IMPÉRIO"
@@ -809,21 +813,17 @@ msgstr "TUBARÃO DO IMPÉRIO"
 msgid "PIRATE SHARK"
 msgstr "PIRATA TUBARÃO"
 
-#: artwork/gfx/loading/shark.webp.txt:1
-msgid "SHARK"
-msgstr "TUBARÃO"
-
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
 msgstr "ZA'LEK STING"
 
-#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
-msgid "PIRATE VENDETTA"
-msgstr "PIRATA VENDETTA"
-
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
 msgstr "VENDETTA"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr "PIRATA VENDETTA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
@@ -60100,8 +60100,8 @@ msgid ""
 "damages caused. However, it is past the time that the problem can be solved "
 "by paying back the favour. {name} has to punished for their excesses in more "
 "drastic measures. Would you be willing to meet up with {name} and express my "
-"client's discontent with, say, the full brunt of hot plasma? You will well "
-"compensated.\"\n"
+"clients' discontent with, say, the full brunt of hot plasma? You will be "
+"compensated well.\"\n"
 "They grin."
 msgstr ""
 
