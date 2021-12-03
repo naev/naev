@@ -39,6 +39,7 @@ static int systemL_name( lua_State *L );
 static int systemL_nameRaw( lua_State *L );
 static int systemL_position( lua_State *L );
 static int systemL_faction( lua_State *L );
+static int systemL_background( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_interference( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
@@ -72,6 +73,7 @@ static const luaL_Reg system_methods[] = {
    { "nameRaw", systemL_nameRaw },
    { "pos", systemL_position },
    { "faction", systemL_faction },
+   { "background", systemL_background },
    { "nebula", systemL_nebula },
    { "interference", systemL_interference },
    { "jumpDist", systemL_jumpdistance },
@@ -379,6 +381,23 @@ static int systemL_faction( lua_State *L )
    if (s->faction == -1)
       return 0;
    lua_pushfaction(L,s->faction);
+   return 1;
+
+}
+
+/**
+ * @brief Gets system background.
+ *
+ *    @luatparam System s System to get the background of.
+ *    @luatreturn string|nil The background of the system or nil for default.
+ * @luafunc background
+ */
+static int systemL_background( lua_State *L )
+{
+   StarSystem *s = luaL_validsystem(L,1);
+   if (s->background==NULL)
+      return 0;
+   lua_pushstring(L,s->background);
    return 1;
 
 }
