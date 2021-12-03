@@ -2427,6 +2427,9 @@ static int aiL_nearhyptarget( lua_State *L )
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* TODO should they try to use systems only with their faction? */
+
       /* Get nearest distance. */
       dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
       if (dist < mindist) {
