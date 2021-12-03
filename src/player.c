@@ -2788,6 +2788,16 @@ int player_missionAlreadyDone( int id )
 }
 
 /**
+ * @brief Gets a list of all the missions the player has done.
+ *
+ *    @return Array (array.c) of all the missions the player has done. Do not free!
+ */
+int* player_missionsDoneList (void)
+{
+   return missions_done;
+}
+
+/**
  * @brief Marks a event as completed.
  *
  *    @param id ID of the event to mark as completed.
@@ -2816,6 +2826,16 @@ int player_eventAlreadyDone( int id )
 {
    const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
    return i!=NULL;
+}
+
+/**
+ * @brief Gets a list of all the events the player has done.
+ *
+ *    @return Array (array.c) of all the events the player has done. Do not free!
+ */
+int* player_eventsDoneList (void)
+{
+   return events_done;
 }
 
 /**

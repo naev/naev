@@ -222,12 +222,14 @@ int player_rmOutfit( const Outfit *o, int quantity );
  */
 void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
+int* player_missionsDoneList (void); /* Returns array that should not be freed. */
 
 /*
  * Player events.
  */
 void player_eventFinished( int id );
 int player_eventAlreadyDone( int id );
+int* player_eventsDoneList (void); /* Returns array that should not be freed. */
 
 /*
  * Licenses.

@@ -93,6 +93,7 @@ static int playerL_swapShip( lua_State *L );
 static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
+static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
@@ -138,6 +139,7 @@ static const luaL_Reg playerL_methods[] = {
    { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
+   { "misnDoneList", playerL_misnDoneList },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
@@ -1196,6 +1198,35 @@ static int playerL_misnDone( lua_State *L )
       return 0;
    }
    lua_pushboolean( L, player_missionAlreadyDone( id ) );
+   return 1;
+}
+
+/**
+ * @brief Gets a list of all the missions the player has done.
+ *
+ *    @luatreturn table List of all the missions the player has done.
+ * @luafunc misnDoneList
+ */
+static int playerL_misnDoneList( lua_State *L )
+{
+   int *done = player_missionsDoneList();
+   lua_newtable(L);
+   for (int i=0; i<array_size(done); i++) {
+      MissionData *m = mission_get( done[i] );
+
+      lua_pushstring(L, m->name);
+      lua_setfield(L,-2,"name");
+
+      lua_pushboolean(L,mis_isFlag(m,MISSION_UNIQUE));
+      lua_setfield(L,-2,"unique");
+
+      lua_newtable(L);
+      for (int j=0; j<array_size(m->tags); j++) {
+         lua_pushboolean(L,1);
+         lua_setfield(L,-2,m->tags[j]);
+      }
+      lua_setfield(L,-2,"tags");
+   }
    return 1;
 }
 
