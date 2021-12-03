@@ -30,19 +30,19 @@
 #include "rng.h"
 #include "space.h"
 
-#define XML_FACTION_ID     "Factions"   /**< XML section identifier */
-#define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
+#define XML_FACTION_ID  "Factions"  /**< XML section identifier */
+#define XML_FACTION_TAG "faction"   /**< XML tag identifier. */
 
-#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
-#define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
-#define FACTION_DYNAMIC       (1<<3) /**< Faction was created dynamically. */
+#define FACTION_STATIC     (1<<0) /**< Faction doesn't change standing with player. */
+#define FACTION_INVISIBLE  (1<<1) /**< Faction isn't exposed to the player. */
+#define FACTION_KNOWN      (1<<2) /**< Faction is known to the player. */
+#define FACTION_DYNAMIC    (1<<3) /**< Faction was created dynamically. */
 #define FACTION_USESHIDDENJUMPS (1<<4) /**< Faction will try to use hidden jumps when possible. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
 #define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
-#define faction_isKnown_(fa)   ((fa)->flags & (FACTION_KNOWN))
+#define faction_isKnown_(fa)  ((fa)->flags & (FACTION_KNOWN))
 
 int faction_player; /**< Player faction identifier. */
 
@@ -735,7 +735,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 {
    Faction *faction;
    double old, delta;
-   HookParam hparam[3];
 
    faction = &faction_stack[f];
 
@@ -783,6 +782,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    /* Run hook if necessary. */
    delta = faction->player - old;
    if (FABS(delta) > 1e-10) {
+      HookParam hparam[3];
       hparam[0].type    = HOOK_PARAM_FACTION;
       hparam[0].u.lf    = f;
       hparam[1].type    = HOOK_PARAM_NUMBER;
@@ -973,7 +973,6 @@ double faction_getPlayerDef( int f )
 int faction_isPlayerFriend( int f )
 {
    Faction *faction = &faction_stack[f];
-
    return faction->player >= faction->friendly_at;
 }
 
@@ -986,7 +985,6 @@ int faction_isPlayerFriend( int f )
 int faction_isPlayerEnemy( int f )
 {
    Faction *faction = &faction_stack[f];
-
    return faction->player < 0;
 }
 
