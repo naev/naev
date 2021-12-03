@@ -2483,6 +2483,25 @@ static int aiL_rndhyptarget( lua_State *L )
       array_push_back( &jumps, jiter );
    }
 
+   /* Try to be more lax. */
+   if (array_size(jumps) <= 0) {
+      for (int i=0; i < array_size(cur_system->jumps); i++) {
+         JumpPoint *jiter = &cur_system->jumps[i];
+
+         /* We want only standard jump points to be used. */
+         if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
+            continue;
+
+         array_push_back( &id, i );
+         array_push_back( &jumps, jiter );
+      }
+   }
+
+   if (array_size(jumps) <= 0) {
+      WARN(_("Pilot '%s' can't find jump to leave system!"), cur_pilot->name);
+      return 0;
+   }
+
    /* Choose random jump point. */
    r = RNG( 0, MAX( array_size(jumps)-1, 0) );
 
