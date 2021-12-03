@@ -2273,7 +2273,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &planet->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("Planet '%s' has unknown node in tags '%s'."), planet->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2788,7 +2790,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &sys->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("System '%s' has unknown node in tags '%s'."), sys->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }

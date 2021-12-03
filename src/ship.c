@@ -910,7 +910,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
             }
-            DEBUG(_("Ship '%s' has unknown node '%s'."), temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown node in tags '%s'."), temp->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }

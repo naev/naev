@@ -2324,7 +2324,9 @@ static int outfit_parse( Outfit* temp, const char* file )
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("Outfit '%s' has unknown node in tags '%s'."), temp->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
