@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-02 09:22-0500\n"
+"POT-Creation-Date: 2021-12-02 23:22-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -626,20 +626,20 @@ msgstr ""
 msgid "Artwork Contributors"
 msgstr ""
 
-#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
-msgid "PIRATE ADMONISHER"
-msgstr ""
-
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
 msgstr ""
 
-#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
-msgid "PIRATE ANCESTOR"
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
 msgstr ""
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
+msgstr ""
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
 msgstr ""
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
@@ -714,12 +714,12 @@ msgstr ""
 msgid "QUICKSILVER"
 msgstr ""
 
-#: artwork/gfx/loading/rhino_pirate.webp.txt:1
-msgid "PIRATE RHINO"
-msgstr ""
-
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
+msgstr ""
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
 msgstr ""
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
@@ -730,6 +730,10 @@ msgstr ""
 msgid "SIRIUS SHAMAN"
 msgstr ""
 
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr ""
+
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
 msgstr ""
@@ -738,20 +742,16 @@ msgstr ""
 msgid "PIRATE SHARK"
 msgstr ""
 
-#: artwork/gfx/loading/shark.webp.txt:1
-msgid "SHARK"
-msgstr ""
-
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
 msgstr ""
 
-#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
-msgid "PIRATE VENDETTA"
-msgstr ""
-
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
+msgstr ""
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
 msgstr ""
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
@@ -61662,8 +61662,8 @@ msgid ""
 "damages caused. However, it is past the time that the problem can be solved "
 "by paying back the favour. {name} has to punished for their excesses in more "
 "drastic measures. Would you be willing to meet up with {name} and express my "
-"client's discontent with, say, the full brunt of hot plasma? You will well "
-"compensated.\"\n"
+"clients' discontent with, say, the full brunt of hot plasma? You will be "
+"compensated well.\"\n"
 "They grin."
 msgstr ""
 
