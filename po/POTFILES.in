@@ -149,7 +149,6 @@ dat/assets/cerberus_i.xml
 dat/assets/cerberus_ii.xml
 dat/assets/cerberus_iia.xml
 dat/assets/cerberus_iv.xml
-dat/assets/ceres_station.xml
 dat/assets/cetrat.xml
 dat/assets/charcoal.xml
 dat/assets/charred.xml
@@ -797,6 +796,7 @@ dat/assets/regensburg.xml
 dat/assets/rei_ii.xml
 dat/assets/rei_iii.xml
 dat/assets/reidd.xml
+dat/assets/research_post_sigma13.xml
 dat/assets/rhaana.xml
 dat/assets/rhu_ii.xml
 dat/assets/rhu_iii.xml
@@ -2224,7 +2224,6 @@ dat/unidiff/antlejosv_6.xml
 dat/unidiff/antlejosv_7.xml
 dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
-dat/unidiff/ceres_station.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2233,6 +2232,7 @@ dat/unidiff/heavy_combat_vessel_license.xml
 dat/unidiff/heavy_weapons_license.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
+dat/unidiff/sigma13_fixed.xml
 dat/unidiff/strangelove.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua

@@ -19,7 +19,7 @@
 --[[
    Za'lek Black Hole 01
 
-   Introductory mission that sets the tone where you bring Zack to Ceres Station.
+   Introductory mission that sets the tone where you bring Zack to Research Post Sigma-13
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -28,7 +28,7 @@ local zbh = require "common.zalek_blackhole"
 -- luacheck: globals land enter (Hook functions passed by name)
 
 local reward = zbh.rewards.zpp01
-local destpnt, destsys = planet.getS("Ceres Station")
+local destpnt, destsys = planet.getS("Research Post Sigma-13")
 
 function create ()
    misn.finish(false)
@@ -101,7 +101,7 @@ function land ()
    vn.done( zbh.zack.transition )
    vn.run()
 
-   diff.apply( "ceres_online" )
+   diff.apply("sigma13_fixed")
 
    player.pay( reward )
    zbh.log(fmt.f(_("You took Zach to {pnt} where he found all his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))

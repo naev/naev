@@ -23,7 +23,7 @@ function background ()
    bx, by = off:get()
 
    -- Set up the shader
-   local ax, ay, az = 0.1*prng:random(), 0.1*prng:random(), 2*prng:random()-1
+   local ax, ay, az = 0.2*prng:random(), 0.2*prng:random(), 2*prng:random()-1
    shader = lg.newShader( string.format( pixelcode, ax, ay, az ), love_shaders.vertexcode )
    time = -1000 * rnd.rnd()
 
