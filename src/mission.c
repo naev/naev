@@ -716,6 +716,10 @@ static void mission_freeData( MissionData* mission )
    free(mission->avail.cond);
    free(mission->avail.done);
 
+   for (int i=0; i<array_size(mission->tags); i++)
+      free(mission->tags[i]);
+   array_free(mission->tags);
+
    /* Clear the memory. */
 #ifdef DEBUGGING
    memset( mission, 0, sizeof(MissionData) );
@@ -940,6 +944,20 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             WARN(_("Mission '%s' has unknown avail node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
+      }
+      else if (xml_isNode(node,"tags")) {
+         xmlNodePtr cur = node->children;
+         temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+               continue;
+            }
+            WARN(_("Mission '%s' has unknown node in tags '%s'."), temp->name, cur->name );
+         } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"notes")) continue; /* Notes for the python mission mapping script */
 

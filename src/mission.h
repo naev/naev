@@ -42,10 +42,10 @@ typedef struct MissionAvail_s {
    char *system; /**< System name. */
 
    /* for generic cases */
-   int* factions; /**< Array (array.h): To certain factions. */
+   int *factions; /**< Array (array.h): To certain factions. */
 
-   char* cond; /**< Condition that must be met (Lua). */
-   char* done; /**< Previous mission that must have been done. */
+   char *cond; /**< Condition that must be met (Lua). */
+   char *done; /**< Previous mission that must have been done. */
 
    int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } MissionAvail_t;
@@ -61,8 +61,11 @@ typedef struct MissionData_ {
    MissionAvail_t avail; /**< Mission availability. */
 
    unsigned int flags; /**< Flags to store binary properties */
-   char* lua; /**< Lua data to use. */
-   char* sourcefile; /**< Source file name. */
+   char *lua; /**< Lua data to use. */
+   char *sourcefile; /**< Source file name. */
+
+   /* Tags. */
+   char **tags; /**< Mission tags with more information. */
 } MissionData;
 
 /**
