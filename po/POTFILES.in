@@ -2224,6 +2224,7 @@ dat/unidiff/antlejosv_6.xml
 dat/unidiff/antlejosv_7.xml
 dat/unidiff/antlejosv_8.xml
 dat/unidiff/antlejosv_9.xml
+dat/unidiff/ceres_station.xml
 dat/unidiff/collective_dead.xml
 dat/unidiff/flf_dead.xml
 dat/unidiff/flf_pirate_ally.xml
@@ -2585,6 +2586,7 @@ dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/nelly01.lua
 dat/missions/tutorial/nelly02.lua
 dat/missions/tutorial/tutorial.lua
+dat/missions/zalek/blackhole/zbh01.lua
 dat/missions/zalek/neburesearch/neburesearch_00.lua
 dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
@@ -2645,6 +2647,7 @@ dat/scripts/common/taiomi.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/zalek.lua
+dat/scripts/common/zalek_blackhole.lua
 dat/scripts/common/zalek_physics.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua

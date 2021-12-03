@@ -11,7 +11,7 @@ local lg = require "love.graphics"
 
 local zpp = {}
 
--- Noona Sanderaite
+-- Fullname: Noona Sanderaite
 zpp.noona = {
    portrait = "zalek3.png",
    image = "zalek3.png",
@@ -29,7 +29,6 @@ function zpp.vn_noona( params )
          }, params) )
 end
 
--- Function for adding log entries for miscellaneous one-off missions.
 function zpp.log( text )
    shiplog.create( "zlk_physics", _("Particle Physics"), _("Za'lek") )
    shiplog.append( "zlk_physics", text )
