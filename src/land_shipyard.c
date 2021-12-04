@@ -300,7 +300,7 @@ void shipyard_update( unsigned int wid, const char* str )
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
    if (ship->condstr) {
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requirements:") );
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
       if (cond_check( ship->cond ))
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->condstr) );
       else

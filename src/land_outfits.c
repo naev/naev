@@ -426,7 +426,7 @@ void outfits_update( unsigned int wid, const char *str )
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->license );
    }
    if (outfit->cond) {
-      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requirements:") );
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
       if (cond_check(outfit->cond))
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->condstr );
       else
