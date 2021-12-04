@@ -333,6 +333,8 @@ typedef struct Outfit_ {
    /* General specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
+   char *cond;       /**< Conditional Lua string. */
+   char *condstr;    /**< Human readable description of the conditional. */
    double mass;      /**< How much weapon capacity is needed. */
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
@@ -345,8 +347,8 @@ typedef struct Outfit_ {
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
-   glTexture* gfx_store;      /**< Store graphic. */
-   glTexture** gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
+   glTexture *gfx_store;      /**< Store graphic. */
+   glTexture **gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
 
    unsigned int properties;   /**< Properties stored bitwise. */
    unsigned int group;        /**< Weapon group to use when autoweap is enabled. */

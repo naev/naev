@@ -17,6 +17,7 @@
 #include "land_outfits.h"
 
 #include "array.h"
+#include "cond.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
@@ -340,14 +341,22 @@ void outfits_update( unsigned int wid, const char *str )
    (void) str;
    int i, active;
    Outfit* outfit;
-   char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT], buf_mass[ECON_MASS_STRLEN];
-   size_t l = 0;
+   char buf[STRMAX], lbl[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_mass[ECON_MASS_STRLEN];
+   size_t l = 0, k = 0;
    double th;
-   int iw, ih, w, h;
+   int iw, ih, w, h, blackmarket;
    double mass;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
+
+   blackmarket = ((land_planet!=NULL) && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET ));
+
+   /* Set up keys. */
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Owned:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Mass:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Price:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Money:") );
 
    /* Get and set parameters. */
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
@@ -360,7 +369,7 @@ void outfits_update( unsigned int wid, const char *str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
+      window_modifyText( wid, "txtSDesc", buf );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
       window_modifyText( wid, "txtDescShort", NULL );
@@ -394,14 +403,6 @@ void outfits_update( unsigned int wid, const char *str )
    price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf_credits, player.p->credits, 2 );
 
-   if (outfit->license == NULL)
-      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-   else if (player_hasLicense( outfit->license ) ||
-         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
-      strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
-   else
-      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
-
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
          (outfit_ammo(outfit) != NULL)) {
@@ -417,7 +418,21 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
+   if (outfit->license) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
+      if (blackmarket || player_hasLicense( outfit->license ))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->license );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->license );
+   }
+   if (outfit->cond) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requirements:") );
+      if (cond_check(outfit->cond))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->condstr );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->condstr );
+   }
+   window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );

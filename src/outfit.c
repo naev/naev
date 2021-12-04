@@ -2223,6 +2223,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             xml_onlyNodes(cur);
             xmlr_int(cur,"rarity",temp->rarity);
             xmlr_strd(cur,"license",temp->license);
+            xmlr_strd(cur,"cond",temp->cond);
+            xmlr_strd(cur,"condstr",temp->cond);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_long(cur,"price",temp->price);
@@ -2420,6 +2422,8 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
+   MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
+   MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
 #undef MELEMENT
 
    xmlFreeDoc(doc);
@@ -2846,6 +2850,8 @@ void outfit_free (void)
       free(o->limit);
       free(o->desc_short);
       free(o->license);
+      free(o->cond);
+      free(o->condstr);
       free(o->name);
       gl_freeTexture(o->gfx_store);
       for (int j=0; j<array_size(o->gfx_overlays); j++)
