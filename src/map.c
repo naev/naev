@@ -1907,11 +1907,11 @@ static void map_genModeList(void)
 static void map_modeUpdate( unsigned int wid, const char* str )
 {
    (void) str;
-   int listpos = listpos=toolkit_getListPos( wid, "lstMapMode" );
    if (listMapModeVisible==2) {
       listMapModeVisible=1;
    }
    else if (listMapModeVisible == 1) {
+      int listpos = toolkit_getListPos( wid, "lstMapMode" );
       /* TODO: make this more robust. */
       if (listpos == 0) {
          map_mode = MAPMODE_TRAVEL;
