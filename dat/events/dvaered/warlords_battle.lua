@@ -73,8 +73,8 @@ function begin ()
    hook.timer(3.0, "merchant")
    hook.timer(7.0, "attack")
    hook.timer(12.0, "defense")
-   inForm       = true -- People are in formation
-   batInProcess = true -- Battle is happening
+   inForm       = false -- Are people are in formation?
+   batInProcess = false -- Is battle happening?
 
    hook.rm(jumphook)
    hook.jumpout("leave")
@@ -264,6 +264,7 @@ function defense ()
    dlead:control()
    alead:attack(dlead)
    dlead:attack(alead)
+   inForm = true
    hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
 end
 
@@ -279,6 +280,7 @@ function startBattle()
       end
       getLeader(defenders):control(false)
       inForm = false
+      batInProcess = true
    end
 end
 
