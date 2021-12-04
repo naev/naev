@@ -18,13 +18,13 @@ local fmt = require "format"
 local formation = require "formation"
 
 -- Non-persistent state
-local source_system, source_planet, inForm, batInProcess, side
+local source_system, source_planet, battleEnded, side
 local attackers, attnum, attkilled, attdeath, defenders, defnum, defkilled, defdeath
 local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
 local baserew, reward
 local finvader, flocal
 
--- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattle (Hook functions passed by name)
+-- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattleIfReady (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()
@@ -73,8 +73,7 @@ function begin ()
    hook.timer(3.0, "merchant")
    hook.timer(7.0, "attack")
    hook.timer(12.0, "defense")
-   inForm       = false -- Are people are in formation?
-   batInProcess = false -- Is battle happening?
+   battleEnded = false
 
    hook.rm(jumphook)
    hook.jumpout("leave")
@@ -258,19 +257,31 @@ function defense ()
    defdeath = 0
    defkilled = 0 --mass of the player's victims
 
-   local alead = getLeader(attackers)
    local dlead = getLeader(defenders)
-   alead:taskClear()
    dlead:control()
-   alead:attack(dlead)
-   dlead:attack(alead)
-   inForm = true
-   hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
+
+   if attdeath >= attnum then  -- Special case: first fleet slaughtered before second fleet spawned!
+      dlead:land(source_planet)
+      battleEnded = true
+
+      --Time to get rewarded
+      if side == "defender" then
+         warrior = chooseInList(defenders)
+         computeReward(true, attkilled)
+         hook.timer(1.0, "hailmeagain")
+      end
+   else
+      local alead = getLeader(attackers)
+      alead:taskClear()
+      alead:attack(dlead)
+      dlead:attack(alead)
+      hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattleIfReady", focus = dlead})
+   end
 end
 
 -- Both fleets are close enough: start the epic battle
-function startBattle()
-   if inForm then
+function startBattleIfReady()
+   if attackers ~= nil and defenders ~= nil then
       for i, p in ipairs(attackers) do
          p:memory().aggressive = true
       end
@@ -279,8 +290,6 @@ function startBattle()
          p:memory().aggressive = true
       end
       getLeader(defenders):control(false)
-      inForm = false
-      batInProcess = true
    end
 end
 
@@ -299,9 +308,7 @@ function defenderAttacked(_victim, attacker)
          side = "attacker"
       end
    end
-   if inForm then
-      startBattle()
-   end
+   startBattleIfReady()
 end
 
 function attackerAttacked(_victim, attacker)
@@ -319,57 +326,51 @@ function attackerAttacked(_victim, attacker)
          side = "defender"
       end
    end
-   if inForm then
-      startBattle()
-   end
+   startBattleIfReady()
 end
 
 function attackerDeath(victim, attacker)
-   if batInProcess then
-      attdeath = attdeath + 1
+   attdeath = attdeath + 1
 
-      local pp = player.pilot()
-      if attacker and (attacker == pp or attacker:leader() == pp) then
-         attkilled = attkilled + victim:stats().mass
-      end
+   local pp = player.pilot()
+   if attacker and (attacker == pp or attacker:leader() == pp) then
+      attkilled = attkilled + victim:stats().mass
+   end
 
-      if attdeath >= attnum then  --all the enemies are dead
-         local lead = getLeader(defenders)
-         lead:control()
-         lead:land(source_planet)
-         batInProcess = false -- Battle ended
+   if not battleEnded and attdeath >= attnum then  --all the enemies are dead
+      local lead = getLeader(defenders)
+      lead:control()
+      lead:land(source_planet)
+      battleEnded = true
 
-         --Time to get rewarded
-         if side == "defender" then
-            warrior = chooseInList(defenders)
-            computeReward(true, attkilled)
-            hook.timer(1.0, "hailmeagain")
-         end
+      --Time to get rewarded
+      if side == "defender" then
+         warrior = chooseInList(defenders)
+         computeReward(true, attkilled)
+         hook.timer(1.0, "hailmeagain")
       end
    end
 end
 
 function defenderDeath(victim, attacker)
-   if batInProcess then
-      defdeath = defdeath + 1
+   defdeath = defdeath + 1
 
-      local pp = player.pilot()
-      if attacker and (attacker == pp or attacker:leader() == pp) then
-         defkilled = defkilled + victim:stats().mass
-      end
+   local pp = player.pilot()
+   if attacker and (attacker == pp or attacker:leader() == pp) then
+      defkilled = defkilled + victim:stats().mass
+   end
 
-      if defdeath >= defnum then  -- all the defenders died : the winner lands on his planet
-         local lead = getLeader(attackers)
-         lead:control()
-         lead:land(source_planet)
-         batInProcess = false -- Battle ended
+   if not battleEnded and defdeath >= defnum then  -- all the defenders died: the winner lands on his planet
+      local lead = getLeader(attackers)
+      lead:control()
+      lead:land(source_planet)
+      battleEnded = true
 
-         --Time to get rewarded
-         if side == "attacker" then
-            warrior = chooseInList(attackers)
-            computeReward(true, defkilled)
-            hook.timer(1.0, "hailmeagain")
-         end
+      --Time to get rewarded
+      if side == "attacker" then
+         warrior = chooseInList(attackers)
+         computeReward(true, defkilled)
+         hook.timer(1.0, "hailmeagain")
       end
    end
 end
