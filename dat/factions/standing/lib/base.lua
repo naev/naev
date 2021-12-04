@@ -30,7 +30,7 @@ function sbase.Standing:init( args )
    self.mod_misn_enemy     = args.mod_misn_enemy      or 0.3      -- Missions done for the faction's enemies
    self.mod_misn_friend    = args.mod_misn_friend     or 0.3      -- Missions done for the faction's allies
 
-   self.friendly_at       = args.friendly_at          or 70       -- Standing value threshold between neutral and friendly.
+   self.friendly_at        = args.friendly_at          or 70       -- Standing value threshold between neutral and friendly.
 
    -- Text stuff
    self.text = args.text or {
@@ -65,7 +65,7 @@ end
    Linearly interpolates x between x1,y1 and x2,y2
 --]]
 local function lerp( x, x1, y1, x2, y2 )
-   local m = (y1-y2)/(x1-x2)
+   local m = (y1-y2) / (x1-x2)
    local b = y1-m*x1
    return m*x + b
 end
@@ -115,7 +115,7 @@ function sbase.Standing:hit( current, amount, source, secondary )
    local mod = 1
    if source == "distress" then
       cap   = self.cap_kill
-      delta = clone(self.delta_distress)
+      delta = clone( self.delta_distress )
 
       -- Adjust for secondary hit
       if secondary then
@@ -170,7 +170,6 @@ function sbase.Standing:hit( current, amount, source, secondary )
             local has_planet
             -- Positive kill, which means an enemy of this faction got killed.
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
-            -- NOTE: virtual assets are NOT counted when determining territory!
             for _k, planet in ipairs(system.cur():planets()) do
                 if planet:faction() == self.fct then
                    -- Planet belonging to this faction found. Modify reputation.
