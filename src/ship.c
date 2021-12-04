@@ -775,8 +775,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
-      xmlr_strd(node,"cond",temp->cond);
-      xmlr_strd(node,"condstr",temp->condstr);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"points",temp->points);
@@ -945,8 +943,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->armour==0.,"armour");
-   MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
-   MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
    /*MELEMENT(temp->thrust==0.,"thrust");
    MELEMENT(temp->turn==0.,"turn");
    MELEMENT(temp->speed==0.,"speed");
@@ -1049,8 +1045,6 @@ void ships_free (void)
       free(s->base_type);
       free(s->fabricator);
       free(s->license);
-      free(s->cond);
-      free(s->condstr);
       free(s->desc_stats);
 
       /* Free outfits. */
