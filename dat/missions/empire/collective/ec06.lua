@@ -12,6 +12,9 @@
   <location>Bar</location>
   <planet>Omega Station</planet>
  </avail>
+ <tags>
+  <tag>emp_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <provides name="The Collective is dead and no one will miss them"/>
   <campaign>Collective</campaign>
@@ -245,7 +248,6 @@ function land ()
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.
-      emp.modReputation( 10 )
       faction.modPlayerSingle("Empire",5)
       player.pay( emp.rewards.ec06 )
 
