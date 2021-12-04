@@ -283,11 +283,15 @@ end
 function startBattleIfReady()
    if attackers ~= nil and defenders ~= nil then
       for i, p in ipairs(attackers) do
-         p:memory().aggressive = true
+         if  p:exists() then
+            p:memory().aggressive = true
+         end
       end
       getLeader(attackers):control(false)
       for i, p in ipairs(defenders) do
-         p:memory().aggressive = true
+         if  p:exists() then
+            p:memory().aggressive = true
+         end
       end
       getLeader(defenders):control(false)
    end
