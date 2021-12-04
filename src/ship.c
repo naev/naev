@@ -119,6 +119,12 @@ int ship_compareTech( const void *arg1, const void *arg2 )
    s1 = * (const Ship**) arg1;
    s2 = * (const Ship**) arg2;
 
+   /* Compare requirements. */
+   if ((s1->condstr!=NULL) && (s2->condstr==NULL))
+      return -1;
+   else if ((s2->condstr!=NULL) && (s1->condstr==NULL))
+      return +1;
+
    /* Compare class. */
    if (s1->class < s2->class)
       return +1;
