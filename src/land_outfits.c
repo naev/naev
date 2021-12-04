@@ -644,9 +644,9 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
  *    @param name Outfit to buy.
  *    @param planet Where the player is shopping.
  */
-int outfit_canBuy( const char *name, Planet *planet )
+int outfit_canBuy( const char *name, const Planet *planet )
 {
-   int failure;
+   int failure, blackmarket;
    credits_t price;
    const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
@@ -654,6 +654,7 @@ int outfit_canBuy( const char *name, Planet *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
+   blackmarket = ((planet!=NULL) && planet_hasService(planet, PLANET_SERVICE_BLACKMARKET));
 
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {
@@ -684,10 +685,14 @@ int outfit_canBuy( const char *name, Planet *planet )
       failure = 1;
    }
    /* Needs license. */
-   if ((!player_hasLicense(outfit->license)) &&
-         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
+   if (!blackmarket && !player_hasLicense(outfit->license)) {
       land_errDialogueBuild( _("You need the '%s' license to buy this outfit."),
                _(outfit->license) );
+      failure = 1;
+   }
+   /* Needs requirements. */
+   if (!blackmarket && (outfit->cond!=NULL) && !cond_check(outfit->cond)) {
+      land_errDialogueBuild( "%s", _(outfit->condstr) );
       failure = 1;
    }
 

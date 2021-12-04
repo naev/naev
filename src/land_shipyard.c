@@ -428,16 +428,16 @@ int shipyard_canBuy( const char *shipname, const Planet *planet )
    const Ship *ship = ship_get( shipname );
    int failure = 0;
    credits_t price = ship_buyPrice(ship);
+   int blackmarket = ((planet != NULL) && planet_hasService(planet, PLANET_SERVICE_BLACKMARKET));
 
    /* Must have the necessary license. */
-   if ((!player_hasLicense(ship->license)) &&
-         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
+   if (!blackmarket && !player_hasLicense(ship->license)) {
       land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }
 
    /* Must meet conditional requirement. */
-   if ((ship->cond) && !cond_check( ship->cond )) {
+   if (!blackmarket && (ship->cond!=NULL) && !cond_check( ship->cond )) {
       land_errDialogueBuild( "%s", _(ship->condstr) );
       failure = 1;
    }
