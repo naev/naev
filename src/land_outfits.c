@@ -437,6 +437,7 @@ void outfits_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
+   th = MAX( th, 200 );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
