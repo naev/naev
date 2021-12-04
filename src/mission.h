@@ -135,8 +135,7 @@ const StarSystem* mission_sysComputerMark( const Mission* misn );
 const StarSystem* mission_getSystemMarker( const Mission* misn );
 MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t );
 MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t );
-void mission_toLuaTable( lua_State *L , const MissionData *m );
-
+void mission_toLuaTable( lua_State *L, const MissionData *m );
 
 /*
  * cargo stuff

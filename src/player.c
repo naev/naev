@@ -2767,6 +2767,9 @@ static int cmp_int( const void *p1, const void *p2 )
  */
 void player_missionFinished( int id )
 {
+   HookParam h[2];
+   const MissionData *m;
+
    /* Make sure not already marked. */
    if (player_missionAlreadyDone(id))
       return;
@@ -2777,6 +2780,14 @@ void player_missionFinished( int id )
    array_push_back( &missions_done, id );
 
    qsort( missions_done, array_size(missions_done), sizeof(int), cmp_int );
+
+   /* Run the completion hook. */
+   m = mission_get( id );
+   mission_toLuaTable( naevL, m ); /* Push to stack. */
+   h[0].type = HOOK_PARAM_REF;
+   h[0].u.ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* Pops from stack. */
+   h[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "mission_done", h );
 }
 
 /**
@@ -3079,7 +3090,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (int i=0; i<array_size(missions_done); i++) {
-      MissionData *m = mission_get(missions_done[i]);
+      const MissionData *m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
    }

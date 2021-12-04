@@ -9,6 +9,8 @@
    Handles the player's faction standing reputation caps
 --]]
 
+-- luacheck: globals mission_done (Hook functions passed by name)
+
 local factions = {
    require("factions.zalek"),
 }
@@ -52,9 +54,19 @@ local function recalculate ()
    end
 end
 
+function mission_done( m )
+   -- Only update if there's a tag we care about
+   for t, b in pairs( m.tags ) do
+      local c = cap_tags_list[t]
+      if c then
+         recalculate()
+         return
+      end
+   end
+end
+
 function create ()
    recalculate()
 
-   -- Done
-   evt.finish()
+   hook.mission_done( "mission_done" )
 end

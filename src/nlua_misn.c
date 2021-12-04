@@ -634,7 +634,7 @@ static int misn_finish( lua_State *L )
    lua_pushboolean( L, 1 );
    nlua_setenv(cur_mission->env, "__misn_delete");
 
-   if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
+   if (b)
       player_missionFinished( mission_getID( cur_mission->data->name ) );
 
    lua_pushstring(L, NLUA_DONE);
