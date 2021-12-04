@@ -154,7 +154,9 @@ end
 -- Returns leader of fleet
 local function getLeader(list)
    local p = chooseInList(list)
-   if p:leader() == nil or not p:leader():exists() then
+   if p == nil or not p:exists() then
+      return nil
+   elseif p:leader() == nil or not p:leader():exists() then
       return p
    else
       return p:leader()
@@ -273,18 +275,20 @@ end
 -- Both fleets are close enough: start the epic battle
 function startBattleIfReady()
    if attackers ~= nil and defenders ~= nil then
+      local alead = getLeader(attackers)
+      local dlead = getLeader(defenders)
       for i, p in ipairs(attackers) do
          if  p:exists() then
             p:memory().aggressive = true
          end
       end
-      getLeader(attackers):control(false)
+      if alead then alead:control(false) end
       for i, p in ipairs(defenders) do
          if  p:exists() then
             p:memory().aggressive = true
          end
       end
-      getLeader(defenders):control(false)
+      if dlead then dlead:control(false) end
    end
 end
 
@@ -334,10 +338,11 @@ function attackerDeath(victim, arg)
    end
 
    if not battleEnded and attdeath >= attnum then  --all the enemies are dead
+      battleEnded = true
       local lead = getLeader(defenders)
+      if lead == nil then return end -- Simultaneous destruction?
       lead:control()
       lead:land(source_planet)
-      battleEnded = true
       if side == "defender" then
          prepareReward(attkilled)
       end
@@ -354,10 +359,11 @@ function defenderDeath(victim, arg)
    end
 
    if not battleEnded and defdeath >= defnum then  -- all the defenders died: the winner lands on his planet
+      battleEnded = true
       local lead = getLeader(attackers)
+      if lead == nil then return end -- Simultaneous destruction?
       lead:control()
       lead:land(source_planet)
-      battleEnded = true
       if side == "attacker" then
          prepareReward(defkilled)
       end
