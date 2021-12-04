@@ -148,6 +148,7 @@ function hailagain()
    hook.rm(hailhook)
    tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
    player.pay(reward)
+   player.commClose()
 end
 
 -- Returns leader of fleet
