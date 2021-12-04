@@ -19,7 +19,7 @@ function sbase.Standing:init( args )
    self.cap_kill           = args.cap_kill            or 20       -- Kill cap
    self.delta_distress     = args.delta_distress      or {-1, 0}  -- Maximum change constraints
    self.delta_kill         = args.delta_kill          or {-5, 1}  -- Maximum change constraints
-   self.cap_misn_init      = args.cap_misn_init       or 30       -- Starting mission cap, gets overwritten
+   self.cap_misn_def       = args.cap_misn_def        or 30       -- Starting mission cap, gets overwritten
    self.cap_misn_var       = args.cap_misn_var        or nil      -- Mission variable to use for limits
 
    -- Secondary hit modifiers.
@@ -139,11 +139,11 @@ function sbase.Standing:hit( current, amount, source, secondary )
       end
    else
       if self.cap_misn_var == nil then
-         cap   = self.cap_misn_init
+         cap   = self.cap_misn_def
       else
          cap   = var.peek( self.cap_misn_var )
          if cap == nil then
-            cap = self.cap_misn_init
+            cap = self.cap_misn_def
             var.push( self.cap_misn_var, cap )
          end
       end

@@ -9,22 +9,8 @@
    Handles the player's faction standing reputation caps
 --]]
 
-local zlk = {
-   fct            = faction.get("Za'lek"),
-   cap_misn_def   = 30,
-   cap_misn_var   = "_fcap_zalek",
-   cap_tags       = {
-      ["zlk_cap_ch01_sml"] = { val=1, max=50 },
-      ["zlk_cap_ch01_med"] = { val=3, max=50 },
-      ["zlk_cap_ch01_lrg"] = { val=5, max=50 },
-      ["zlk_cap_ch2z_sml"] = { val=1, max=70 },
-      ["zlk_cap_ch2z_med"] = { val=3, max=70 },
-      ["zlk_cap_ch2z_lrg"] = { val=5, max=70 },
-   }
-}
-
 local factions = {
-   zlk
+   require("factions.zalek"),
 }
 
 local cap_tags_list = {}
