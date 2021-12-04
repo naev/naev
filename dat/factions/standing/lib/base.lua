@@ -138,15 +138,7 @@ function sbase.Standing:hit( current, amount, source, secondary )
          end
       end
    else
-      if self.cap_misn_var == nil then
-         cap   = self.cap_misn_def
-      else
-         cap   = var.peek( self.cap_misn_var )
-         if cap == nil then
-            cap = self.cap_misn_def
-            var.push( self.cap_misn_var, cap )
-         end
-      end
+      cap = self:reputation_max()
 
       -- Adjust for secondary hit
       if secondary then
@@ -226,7 +218,7 @@ end
       @param override If positive it should be set to ally, if negative it should be set to hostile.
       @return The text representation of the current broad standing.
 --]]
-function sbase.Standing.text_broad( self, value, bribed, override )
+function sbase.Standing:text_broad( value, bribed, override )
    if override == nil then override = 0 end
 
    if bribed then
@@ -238,6 +230,22 @@ function sbase.Standing.text_broad( self, value, bribed, override )
    else
       return self.text_neutral
    end
+end
+
+--[[
+   Returns the maximum reputation limit of the player.
+--]]
+function sbase.Standing:reputation_max()
+   if self.cap_misn_var == nil then
+      return self.cap_misn_def
+   end
+
+   local cap   = var.peek( self.cap_misn_var )
+   if cap == nil then
+      cap = self.cap_misn_def
+      var.push( self.cap_misn_var, cap )
+   end
+   return cap
 end
 
 return sbase
