@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>10</chance>
+  <chance>100</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
   <done>Za'lek Particle Physics 6</done>
@@ -19,7 +19,7 @@
 --[[
    Za'lek Black Hole 01
 
-   Introductory mission that sets the tone where you bring Zack to Research Post Sigma-13
+   Introductory mission that sets the tone where you bring Zach to Research Post Sigma-13
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -27,12 +27,12 @@ local zbh = require "common.zalek_blackhole"
 
 -- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
-local reward = zbh.rewards.zpp01
+local reward = zbh.rewards.zbh01
 local destpnt, destsys = planet.getS("Research Post Sigma-13")
 
 function create ()
    if not var.peek("testing") then misn.finish(false) end
-   misn.setNPC( _("Za'lek Scientist"), zbh.zack.portrait, _("You see a Za'lek scientist nerviously sitting at the bar. It seems like they might have a job for you.") )
+   misn.setNPC( _("Za'lek Scientist"), zbh.zach.portrait, _("You see a Za'lek scientist nerviously sitting at the bar. It seems like they might have a job for you.") )
 end
 
 function accept ()
@@ -45,7 +45,7 @@ function accept ()
    vn.na(_([[You approach the Za'lek scientist who looks at you nervously.]]))
    z(fmt.f(_([[He musters up courage and beigns to speak.
 "Say, yo uwouldn't happen to be a pilot that could take me to the {sys} system? My colleagues at {pnt} have gone silent during their investigations and I'm fearing maybe the worst happened to them. I would be able to pay you {credits} for the trip."]]),
-      {pnt=destpnt, sys=destsys, credits=fmt.credits{reward}}))
+      {pnt=destpnt, sys=destsys, credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -55,7 +55,7 @@ function accept ()
    z(fmt.f(_([["Thanks anyways."
 He lets out a sigh and goes back to nervously looking for a pilot to take him to the {sys} system.]]),
       {sys=destsys}))
-   vn.done( zbh.zack.transition )
+   vn.done( zbh.zach.transition )
 
    vn.label("accept")
    z(_([[iHe lets out a long sigh of relief when you accept his task.
@@ -63,10 +63,10 @@ He lets out a sigh and goes back to nervously looking for a pilot to take him to
    z(_([["Even taking into account the ergosphere this is too much of a delay. Something must have happened! I knew I should have stopped her."
 He seems visibly distraught and you try to soothe him.]]))
    z(fmt.f(_([[He goes on in a smaller shaky voice.
-"Please take me to {pnt}, so we can see it's all fine, and they just got absorbed in their research again…"]])
+"Please take me to {pnt}, so we can see it's all fine, and they just got absorbed in their research again…"]]),
       {pnt=destpnt}))
    vn.func( function () accepted = true end )
-   vn.done( zbh.zack.transition )
+   vn.done( zbh.zach.transition )
    vn.run()
 
    -- Must be accepted beyond this point
@@ -100,9 +100,9 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local z = vn.newCharacter( zbh.vn_zack() )
+   local z = vn.newCharacter( zbh.vn_zach() )
    vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
-   vn.transition( zbh.zack.transition )
+   vn.transition( zbh.zach.transition )
    vn.na(_("As you approach the station you can tell that it's in very bad shape there are clear plasma blast craters on the outside of the shape and you have to avoid debris when trying to dock at the space port. Zach is silent the entire approach and has a dumbfounded look on his face. You don't think this is what he was expecting."))
    z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"
 He looks pale.]]))
@@ -122,7 +122,7 @@ He gives a puzzled look.
    z(_([["Let me pay you for your services. I'll start seeing if I can figure out what happened and what they were researching on. I don't know much about the details. If you want to help, you should be able to find be around the station while I check everything. I might have things for you to do."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
-   vn.done( zbh.zack.transition )
+   vn.done( zbh.zach.transition )
    vn.run()
 
    diff.apply("sigma13_fixed")
@@ -140,7 +140,7 @@ function enter ()
    end
 
    firsttime = false
-   hook.timer( 3, "heartbea" )
+   hook.timer( 3, "heartbeat" )
 end
 
 local msg = 0
