@@ -984,7 +984,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
-   if (temp->avail.chapter != NULL) {
+   if (temp->avail.chapter_re != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
       temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
