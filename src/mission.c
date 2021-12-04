@@ -56,13 +56,13 @@ static MissionData *mission_stack = NULL; /**< Unmutable after creation */
 /* static */
 /* Generation. */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id );
+static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
-static int mission_matchFaction( MissionData* misn, int faction );
+static int mission_matchFaction( const MissionData* misn, int faction );
 static int mission_location( const char *loc );
 /* Loading. */
 static int missions_cmp( const void *a, const void *b );
@@ -110,7 +110,7 @@ int mission_getID( const char* name )
  *    @param id ID to match.
  *    @return MissonData matching ID.
  */
-MissionData* mission_get( int id )
+const MissionData* mission_get( int id )
 {
    if ((id < 0) || (id >= array_size(mission_stack))) return NULL;
    return &mission_stack[id];
@@ -119,7 +119,7 @@ MissionData* mission_get( int id )
 /**
  * @brief Gets mission data from a name.
  */
-MissionData* mission_getFromName( const char* name )
+const MissionData* mission_getFromName( const char* name )
 {
    int id = mission_getID( name );
    if (id < 0)
@@ -138,7 +138,7 @@ MissionData* mission_getFromName( const char* name )
  *    @param[out] id ID of the newly created mission.
  *    @return 0 on success.
  */
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
+static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id )
 {
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
@@ -225,7 +225,7 @@ int mission_alreadyRunning( const MissionData* misn )
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname )
 {
-   MissionData* misn = mission_get( mission );
+   const MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
@@ -328,7 +328,7 @@ void missions_run( MissionAvailability loc, int faction, const char* planet, con
 int mission_start( const char *name, unsigned int *id )
 {
    Mission mission;
-   MissionData *mdat;
+   const MissionData *mdat;
    int ret;
 
    /* Try to get the mission. */
@@ -411,6 +411,24 @@ MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t )
          WARN(_("Unknown marker type."));
          return -1;
    }
+}
+
+void mission_toLuaTable( lua_State *L , const MissionData *m )
+{
+   lua_newtable(L);
+
+   lua_pushstring(L, m->name);
+   lua_setfield(L,-2,"name");
+
+   lua_pushboolean(L,mis_isFlag(m,MISSION_UNIQUE));
+   lua_setfield(L,-2,"unique");
+
+   lua_newtable(L);
+   for (int j=0; j<array_size(m->tags); j++) {
+      lua_pushboolean(L,1);
+      lua_setfield(L,-2,m->tags[j]);
+   }
+   lua_setfield(L,-2,"tags");
 }
 
 /**
@@ -751,7 +769,7 @@ static void mission_freeData( MissionData* mission )
  *    @param faction Faction to check against.
  *    @return 1 if it meets the faction requirement, 0 if it doesn't.
  */
-static int mission_matchFaction( MissionData* misn, int faction )
+static int mission_matchFaction( const MissionData* misn, int faction )
 {
    /* No faction always accepted. */
    if (array_size(misn->avail.factions) == 0)
@@ -1376,8 +1394,6 @@ int missions_loadActive( xmlNodePtr parent )
  */
 static int missions_parseActive( xmlNodePtr parent )
 {
-   Mission *misn;
-   MissionData *data;
    int m, i;
    char *buf;
    char *title;
@@ -1390,7 +1406,8 @@ static int missions_parseActive( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "mission")) {
-         misn = player_missions[m];
+         const MissionData *data;
+         Mission *misn = player_missions[m];
 
          /* process the attributes to create the mission */
          xmlr_attr_strd(node, "data", buf);
@@ -1488,8 +1505,15 @@ static int missions_parseActive( xmlNodePtr parent )
 
 int mission_reload( const char *name )
 {
-   int res;
-   MissionData save, *temp = mission_getFromName( name );
+   int res, id;
+   MissionData save, *temp;
+
+   /* Can't use mission_getFromName here. */
+   id = mission_getID( name );
+   if (id < 0)
+      return -1;
+   temp = &mission_stack[id];
+
    if (temp == NULL)
       return -1;
    save = *temp;

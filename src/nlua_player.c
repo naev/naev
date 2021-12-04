@@ -1174,7 +1174,7 @@ static int playerL_missions( lua_State *L )
 static int playerL_misnActive( lua_State *L )
 {
    const char *str = luaL_checkstring(L,1);
-   MissionData *misn = mission_getFromName( str );
+   const MissionData *misn = mission_getFromName( str );
    if (misn == NULL) {
       NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
@@ -1216,22 +1216,7 @@ static int playerL_misnDoneList( lua_State *L )
    int *done = player_missionsDoneList();
    lua_newtable(L);
    for (int i=0; i<array_size(done); i++) {
-      MissionData *m = mission_get( done[i] );
-      lua_newtable(L);
-
-      lua_pushstring(L, m->name);
-      lua_setfield(L,-2,"name");
-
-      lua_pushboolean(L,mis_isFlag(m,MISSION_UNIQUE));
-      lua_setfield(L,-2,"unique");
-
-      lua_newtable(L);
-      for (int j=0; j<array_size(m->tags); j++) {
-         lua_pushboolean(L,1);
-         lua_setfield(L,-2,m->tags[j]);
-      }
-      lua_setfield(L,-2,"tags");
-
+      mission_toLuaTable( L, mission_get( done[i] ) );
       lua_rawseti(L,-2,i+1);
    }
    return 1;

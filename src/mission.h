@@ -80,7 +80,7 @@ typedef struct MissionData_ {
  * @brief Represents an active mission.
  */
 typedef struct Mission_ {
-   MissionData *data; /**< Data to use. */
+   const MissionData *data; /**< Data to use. */
    unsigned int id; /**< Unique mission identifier, used for keeping track of hooks. */
    int accepted; /**< Mission is a player mission. */
 
@@ -127,14 +127,16 @@ int mission_start( const char *name, unsigned int *id );
  */
 int mission_alreadyRunning( const MissionData* misn );
 int mission_getID( const char* name );
-MissionData* mission_get( int id );
-MissionData* mission_getFromName( const char* name );
+const MissionData* mission_get( int id );
+const MissionData* mission_getFromName( const char* name );
 int mission_addMarker( Mission *misn, int id, int sys, MissionMarkerType type );
 void mission_sysMark (void);
 const StarSystem* mission_sysComputerMark( const Mission* misn );
 const StarSystem* mission_getSystemMarker( const Mission* misn );
 MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t );
 MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t );
+void mission_toLuaTable( lua_State *L , const MissionData *m );
+
 
 /*
  * cargo stuff

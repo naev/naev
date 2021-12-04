@@ -553,18 +553,13 @@ static int misn_setNPC( lua_State *L )
  */
 static int misn_factions( lua_State *L )
 {
-   int i;
-   MissionData *dat;
-   LuaFaction f;
-   Mission *cur_mission;
-
-   cur_mission = misn_getFromLua(L);
-   dat = cur_mission->data;
+   Mission *cur_mission = misn_getFromLua(L);
+   const MissionData *dat = cur_mission->data;
 
    /* we'll push all the factions in table form */
    lua_newtable(L);
-   for (i=0; i<array_size(dat->avail.factions); i++) {
-      f = dat->avail.factions[i];
+   for (int i=0; i<array_size(dat->avail.factions); i++) {
+      LuaFaction f = dat->avail.factions[i];
       lua_pushfaction(L, f); /* value */
       lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
