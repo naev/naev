@@ -28,8 +28,10 @@
   <description>These shipyards are one of the places where Za'lek vessels are built and sent out to the defense forces. It also maintains a small contingent of Za'lek vessels at home to serve as a in-system guard.</description>
  </general>
  <tech>
-  <item>Za'lek Military Outfits</item>
-  <item>Za'lek Military Ships</item>
+  <item>Za'lek Outfits Medium</item>
+  <item>Za'lek Outfits High</item>
+  <item>Za'lek Ships Medium</item>
+  <item>Za'lek Ships Large</item>
   <item>Systems Medium</item>
   <item>Systems High</item>
   <item>Engines Medium</item>

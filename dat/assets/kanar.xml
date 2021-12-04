@@ -32,6 +32,9 @@
   <bar>This bar is a fairly typical underwater bar with built-in overhead aquarium. Plenty of scientists inside of it arguing and talking about what they see, however.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>

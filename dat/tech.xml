@@ -711,16 +711,18 @@
   <item>Heavy Razor Turret</item>
   <item>Fidelity Fighter Bay</item>
  </tech>
- <tech name="Za'lek Elite Outfits">
+ <tech name="Za'lek Outfits Low">
   <item>Faraday Tempest Coating</item>
-  <item>Hive Combat AI</item>
- </tech>
- <tech name="Za'lek Military Outfits">
   <item>Za'lek Hunter Launcher</item>
-  <item>Za'lek Reaper Launcher</item>
+ </tech>
+ <tech name="Za'lek Outfits Medium">
+  <item>Hive Combat AI</item>
   <item>Za'lek Light Drone Fighter Bay</item>
   <item>Za'lek Heavy Drone Fighter Bay</item>
   <item>Za'lek Bomber Drone Fighter Bay</item>
+ </tech>
+ <tech name="Za'lek Outfits High">
+  <item>Za'lek Reaper Launcher</item>
   <item>Za'lek Light Drone Fighter Dock</item>
   <item>Za'lek Heavy Drone Fighter Dock</item>
   <item>Za'lek Bomber Drone Fighter Dock</item>
@@ -904,8 +906,14 @@
   <item>Thurion Certitude</item>
  </tech>
  <tech name="Za'lek Military Ships">
+  <item>Za'lek Ships Medium</item>
+  <item>Za'lek Ships Large</item>
+ </tech>
+ <tech name="Za'lek Ships Medium">
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
+ </tech>
+ <tech name="Za'lek Ships Large">
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
   <item>Za'lek Mammon</item>
