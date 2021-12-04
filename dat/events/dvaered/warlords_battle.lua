@@ -324,11 +324,12 @@ function attackerAttacked(_victim, attacker)
    startBattleIfReady()
 end
 
-function attackerDeath(victim, attacker)
+function attackerDeath(victim, arg)
    attdeath = attdeath + 1
 
+   -- Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
    local pp = player.pilot()
-   if attacker and (attacker == pp or attacker:leader() == pp) then
+   if arg and arg.leader and (arg == pp or arg:leader() == pp) then
       attkilled = attkilled + victim:stats().mass
    end
 
@@ -343,11 +344,12 @@ function attackerDeath(victim, attacker)
    end
 end
 
-function defenderDeath(victim, attacker)
+function defenderDeath(victim, arg)
    defdeath = defdeath + 1
 
+   -- Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
    local pp = player.pilot()
-   if attacker and (attacker == pp or attacker:leader() == pp) then
+   if arg and arg.leader and (arg == pp or arg:leader() == pp) then
       defkilled = defkilled + victim:stats().mass
    end
 
