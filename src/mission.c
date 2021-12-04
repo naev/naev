@@ -996,10 +996,11 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             }
             WARN(_("Mission '%s' has unknown node in tags '%s'."), temp->name, cur->name );
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"notes")) continue; /* Notes for the python mission mapping script */
 
-      DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
+      WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
    if (temp->avail.chapter_re != NULL) {
