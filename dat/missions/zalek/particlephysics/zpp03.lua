@@ -117,6 +117,7 @@ Without giving you time to process what she yelled, she vanishes.]]))
    vn.done( zpp.noona.transition )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp03)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_weapons_license")

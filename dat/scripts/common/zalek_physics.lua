@@ -43,6 +43,15 @@ zpp.rewards = {
    zpp06 = 500e3, -- + "Heavy Combat Vessel License" permission
 }
 
+zpp.fctmod = {
+   zpp01 = 2,
+   zpp02 = 2,
+   zpp03 = 3,
+   zpp04 = 2,
+   zpp05 = 1,
+   zpp06 = 3,
+}
+
 function zpp.shader_focal ()
    local pixelcode = [[
 #include "lib/simplex.glsl"

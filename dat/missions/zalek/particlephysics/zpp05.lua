@@ -111,6 +111,7 @@ She starts to hum and skips off towards her laboratory space.]]))
    vn.done( zpp.noona.transition )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp05)
    --player.pay( reward )
    zpp.log(_("You helped Noona conduct her particle physics experiment. However, you saw something you couldn't really make out during the experiments."))
    misn.finish(true)

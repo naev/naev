@@ -118,6 +118,7 @@ She points at the lone cargo drone.
       vn.done( zpp.noona.transition )
       vn.run()
 
+      faction.modPlayer("Za'lek", zpp.fctmod.zpp04)
       player.pay( reward )
       zpp.log(_("You helped Noona get some materials from a shady dealer in order for her to pursue her research and perform experiments."))
       misn.finish(true)

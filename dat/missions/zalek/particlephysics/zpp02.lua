@@ -123,6 +123,7 @@ She starts to prance off, when she suddenly turns to you and tosses you a credst
       vn.done( zpp.noona.transition )
       vn.run()
 
+      faction.modPlayer("Za'lek", zpp.fctmod.zpp02)
       player.pay( reward )
       zpp.log(_("You brought some drone interface controllers to Noona so that she can begin her particle physics experiments."))
       misn.finish(true)
