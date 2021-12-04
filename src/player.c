@@ -3325,6 +3325,10 @@ Planet* player_load( xmlNodePtr parent )
    /* Set up meta-data. */
    player.time_since_save = time(NULL);
 
+   /* Defaults as necessary. */
+   if (player.chapter==NULL)
+      player.chapter = strdup( start_chapter() );
+
    return pnt;
 }
 
