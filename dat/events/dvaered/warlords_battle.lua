@@ -20,11 +20,11 @@ local formation = require "formation"
 -- Non-persistent state
 local source_system, source_planet, battleEnded, side
 local attackers, attnum, attkilled, attdeath, defenders, defnum, defkilled, defdeath
-local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
-local baserew, reward
+local trader, attAttHook, defAttHook, hailhook, jumphook
+local reward
 local finvader, flocal
 
--- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattleIfReady (Hook functions passed by name)
+-- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme leave merchant startBattleIfReady (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()
@@ -98,17 +98,6 @@ function hail()
    player.commClose()
 end
 
-function hailmeagain()
-    warrior:hailPlayer()
-    hailhook = hook.pilot(warrior, "hail", "hailagain")
-end
-
-function hailagain()
-   hook.rm(hailhook)
-   tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
-   player.pay(reward)
-end
-
 --Arranges a list of pilot with their mass
 local function arrangeList(list)
    local newlist = {}
@@ -145,15 +134,20 @@ local function chooseInList(list)
    end
 end
 
---Computes the reward
---TODO: This looks fishy. Was it supposed to be called with attack=true to init and with attack=false for later kills?
-local function computeReward(attack, massOfVictims)
-   if attack == true then
-      baserew = 20000
-   end
-   baserew = baserew + 60*massOfVictims
+-- Prepares the reward
+local function prepareReward(massOfVictims)
+   local warrior = chooseInList(side == "attacker" and attackers or defenders)
+   if warrior == nil then return end -- Simultaneous destruction?
+   reward = 20e3 + 60*massOfVictims
+   reward = reward * (1 + rnd.sigma() / 3)
+   warrior:hailPlayer()
+   hailhook = hook.pilot(warrior, "hail", "hailagain")
+end
 
-   reward = baserew + rnd.sigma() * (baserew/3)
+function hailagain()
+   hook.rm(hailhook)
+   tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
+   player.pay(reward)
 end
 
 -- Returns leader of fleet
@@ -263,12 +257,8 @@ function defense ()
    if attdeath >= attnum then  -- Special case: first fleet slaughtered before second fleet spawned!
       dlead:land(source_planet)
       battleEnded = true
-
-      --Time to get rewarded
       if side == "defender" then
-         warrior = chooseInList(defenders)
-         computeReward(true, attkilled)
-         hook.timer(1.0, "hailmeagain")
+         prepareReward(attkilled)
       end
    else
       local alead = getLeader(attackers)
@@ -346,12 +336,8 @@ function attackerDeath(victim, attacker)
       lead:control()
       lead:land(source_planet)
       battleEnded = true
-
-      --Time to get rewarded
       if side == "defender" then
-         warrior = chooseInList(defenders)
-         computeReward(true, attkilled)
-         hook.timer(1.0, "hailmeagain")
+         prepareReward(attkilled)
       end
    end
 end
@@ -369,12 +355,8 @@ function defenderDeath(victim, attacker)
       lead:control()
       lead:land(source_planet)
       battleEnded = true
-
-      --Time to get rewarded
       if side == "attacker" then
-         warrior = chooseInList(attackers)
-         computeReward(true, defkilled)
-         hook.timer(1.0, "hailmeagain")
+         prepareReward(defkilled)
       end
    end
 end
