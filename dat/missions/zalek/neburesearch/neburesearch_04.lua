@@ -42,7 +42,7 @@ end
 
 function accept()
     if not tk.yesno("", fmt.f(_([["It appears we keep running into each other {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course I can't provide you a shielding system; we scientists usually don't bother with engineering. However in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting.
-    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying..."]]), {player=player:name()})) then
+    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying…"]]), {player=player:name()})) then
         tk.msg(_("No science for today"), _([["Too bad. Maybe you will change your mind."]]))
         misn.finish()
     end
@@ -87,7 +87,7 @@ function land()
             mem.stage = 3
             dest_planet, dest_sys = planet.getS("Ruadan Prime")
             tk.msg(_("No luck"), fmt.f(_([["Alright, I'm sure it will work out this time!", Dr. Mensing said on arriving on {cur_pnt}. This time you have to wait even longer for her to return. The result is the same as her first try.
-    "I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
+    "I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm… Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 4 then
             mem.stage = 5
@@ -102,13 +102,13 @@ function land()
     "You'll need an escape strategy to leave unnoticed though; It'd be rude when someone sees you leaving early. As you're a beginner I give you a tip: take the window of the bath room in the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
             tk.msg(_("Crashing a party"), _([[You wonder if anything of that was meant serious. Before you can ask, Dr. Mensing runs off engaging an older looking man, probably Professor Voges. She does not waste any time and brings up the issue straight on, visibly discomforting him. It's time to explore the party.
     You expect a Za'lek party to be much different from a regular party. In fact the first two things you notice are the classical music and the absence of any alcoholic drinks. There is however a buffet, in particular there is a small fridge with ice cream. You can spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?
-    Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour.. whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you..
+    Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour… whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you…
     You continue your tour, as you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. Those Za'lek are indeed trying to escape the party.]]))
             tk.msg(_("Crashing a party"), fmt.f(_([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm. "We're done here. Bring me back to {pnt}!" Dr. Mensing quietly tells you. For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]), {pnt=dest_planet}))
             misn.markerMove(mem.misn_marker, dest_planet)
             misn.osdActive(2)
         elseif mem.stage == 7 then
-            tk.msg(_("Finally back home"), fmt.f(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project on Ruadan Prime and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"
+            tk.msg(_("Finally back home"), fmt.f(_([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project on Ruadan Prime and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble… forget I said anything! I have much work to do!"
     She gives you a credit chip worth {credits} and leaves.]]), {credits=fmt.credits(credits)}))
             player.pay(credits)
             zlk.addNebuResearchLog(_([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]]))

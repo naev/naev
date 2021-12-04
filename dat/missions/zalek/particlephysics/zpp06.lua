@@ -11,6 +11,9 @@
   <location>Bar</location>
   <done>Za'lek Particle Physics 5</done>
  </avail>
+ <tags>
+  <tag>zlk_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
   <tier>1</tier>

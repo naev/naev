@@ -2364,6 +2364,7 @@ dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/soromid/bioship_upgrade.lua
+dat/events/standing.lua
 dat/events/start.lua
 dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
