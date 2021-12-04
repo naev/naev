@@ -238,7 +238,7 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* If chapter, must match chapter. TODO make this regex. */
-   if (misn->avail.chapter != NULL) {
+   if (misn->avail.chapter_re != NULL) {
       pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
       int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
       if (rc < 0) {
