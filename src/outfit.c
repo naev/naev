@@ -2224,7 +2224,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_int(cur,"rarity",temp->rarity);
             xmlr_strd(cur,"license",temp->license);
             xmlr_strd(cur,"cond",temp->cond);
-            xmlr_strd(cur,"condstr",temp->cond);
+            xmlr_strd(cur,"condstr",temp->condstr);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_long(cur,"price",temp->price);
