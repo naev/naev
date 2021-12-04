@@ -1049,9 +1049,8 @@ static void standings_update( unsigned int wid, const char *str )
    (void) str;
    int p, y;
    const glTexture *t;
-   int w, h, lw;
-   char buf[STRMAX_SHORT];
-   int m;
+   int w, h, lw, m, l;
+   char buf[STRMAX];
 
    /* Get dimensions. */
    info_getDim( wid, &w, &h, &lw );
@@ -1086,7 +1085,9 @@ static void standings_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
    y -= 30;
-   window_modifyText( wid, "txtDescription", faction_description( info_factions[p] ) );
+   l  = scnprintf( buf, sizeof(buf), "%s\n\n", faction_description( info_factions[p] ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("You can have a maximum reputation of %.0f%% with this faction."), round(faction_reputationMax( info_factions[p] )) );
+   window_modifyText( wid, "txtDescription", buf );
    window_moveWidget( wid, "txtDescription", lw+40, y );
 }
 
