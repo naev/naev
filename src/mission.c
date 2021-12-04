@@ -992,7 +992,6 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          PCRE2_UCHAR buffer[256];
          pcre2_get_error_message( errornumber, buffer, sizeof(buffer) );
          WARN(_("Mission '%s' chapter PCRE2 compilation failed at offset %d: %s"), temp->name, (int)erroroffset, buffer );
-         return 1;
       }
    }
 
