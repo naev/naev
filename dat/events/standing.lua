@@ -8,6 +8,7 @@
 --[[
    Handles the player's faction standing reputation caps
 --]]
+local fmt = require "format"
 
 -- luacheck: globals mission_done (Hook functions passed by name)
 
@@ -22,7 +23,15 @@ for k, f in ipairs( factions ) do
    end
 end
 
-local function recalculate ()
+local function recalculate( domsg )
+   local ocaps = {}
+   if domsg then
+      for k, f in ipairs( factions ) do
+         --ocaps[ f.cap_misn_var ] = var.peek( f.cap_misn_var ) or f.cap_misn_def
+         ocaps[ f.cap_misn_var ] = f.cap_misn_def
+      end
+   end
+
    -- Initialize caps
    local caps = {}
    for k, f in ipairs( factions ) do
@@ -52,6 +61,23 @@ local function recalculate ()
    for k, v in pairs(caps) do
       var.push( k, v )
    end
+
+   -- Do message if increased
+   if domsg then
+      for k, n in pairs(caps) do
+         local o = ocaps[ k ]
+         if o ~= n then
+            local fct
+            for i, f in ipairs(factions) do
+               if f.cap_misn_var==k then
+                  fct = f.fct
+                  break
+               end
+            end
+            player.msg(fmt.f(_("#gReputation limit with {fct} increased to {val}!#0"),{fct=fct, val=n}))
+         end
+      end
+   end
 end
 
 function mission_done( m )
@@ -59,14 +85,14 @@ function mission_done( m )
    for t, b in pairs( m.tags ) do
       local c = cap_tags_list[t]
       if c then
-         recalculate()
+         recalculate( true )
          return
       end
    end
 end
 
 function create ()
-   recalculate()
+   recalculate( false )
 
    hook.mission_done( "mission_done" )
 end
