@@ -29,6 +29,11 @@ local planet_songs = {
    ["Minerva Station"] = { "meeting_mtfox" },
    ["Strangelove Lab"] = { "landing_sinister" },
    ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
+   ["Research Post Sigma-13"] = function ()
+         if not diff.isApplied("sigma13_fixed") then
+            return "landing_sinister"
+         end
+      end,
 }
 
 -- System-specific songs
@@ -144,9 +149,18 @@ function choose_table.land ()
    -- Planet override
    local override = planet_songs[ pnt:nameRaw() ]
    if override then
-      music.load( override[ rnd.rnd(1, #override) ] )
-      music.play()
-      return true
+      if type(override)=="function" then
+         local song = override()
+         if song then
+            music.load( song )
+            music.play()
+            return true
+         end
+      else
+         music.load( override[ rnd.rnd(1, #override) ] )
+         music.play()
+         return true
+      end
    end
 
    -- Standard to do it based on type of planet

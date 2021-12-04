@@ -25,7 +25,7 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zpp01
 local destpnt, destsys = planet.getS("Research Post Sigma-13")
@@ -42,21 +42,29 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[]]))
-   z(_([[""]]))
-   z(fmt.f(_([[""]]),
-      {pnt=destpnt, sys=destsys}))
+   vn.na(_([[You approach the Za'lek scientist who looks at you nervously.]]))
+   z(fmt.f(_([[He musters up courage and beigns to speak.
+"Say, yo uwouldn't happen to be a pilot that could take me to the {sys} system? My colleagues at {pnt} have gone silent during their investigations and I'm fearing maybe the worst happened to them. I would be able to pay you {credits} for the trip."]]),
+      {pnt=destpnt, sys=destsys, credits=fmt.credits{reward}}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
    }
 
    vn.label("decline")
-   z(fmt.f(_([[""]]),{}))
+   z(fmt.f(_([["Thanks anyways."
+He lets out a sigh and goes back to nervously looking for a pilot to take him to the {sys} system.]]),
+      {sys=destsys}))
    vn.done( zbh.zack.transition )
 
    vn.label("accept")
-   z(_([[""]]))
+   z(_([[iHe lets out a long sigh of relief when you accept his task.
+"I've been asking for pilots for ages and nobody seems to want to go near the Anubis Black Hole. Too many bad rumours about the area. I was also worried when my colleague went over there. They were stubborn and decided to go for the research opportunity despite my protests. And now, no response in almost half a cycle!"]]))
+   z(_([["Even taking into account the ergosphere this is too much of a delay. Something must have happened! I knew I should have stopped her."
+He seems visibly distraught and you try to soothe him.]]))
+   z(fmt.f(_([[He goes on in a smaller shaky voice.
+"Please take me to {pnt}, so we can see it's all fine, and they just got absorbed in their research again…"]])
+      {pnt=destpnt}))
    vn.func( function () accepted = true end )
    vn.done( zbh.zack.transition )
    vn.run()
@@ -93,6 +101,7 @@ function land ()
    vn.clear()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zack() )
+   vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
    vn.transition( zbh.zack.transition )
    vn.na(_(""))
    z(_([[""]]))
@@ -115,4 +124,29 @@ function enter ()
    end
 
    firsttime = false
+   hook.timer( 3, "heartbea" )
+end
+
+local msg = 0
+function heartbeat ()
+   local pp = player.pilot()
+   local d = destpnt:dist( pp:pos() )
+   if msg==0 then
+      player.autonavReset(3)
+      pp:comm(fmt.f(_([[Zach: "{pnt} should be towards the black hole."]]),{pnt=destpnt}))
+      msg = 1
+   elseif msg==1 and d < 10e3 then
+      player.autonavReset(3)
+      pp:comm(_([[Zach: "I hope she's all right."]]))
+      msg = 2
+   elseif msg==2 and d < 3e3 then
+      player.autonavReset(3)
+      pp:comm(_([[Zach: "Everything looks too quiet."]]))
+      msg = 3
+   elseif msg==3 and d < 1e3 then
+      player.autonavReset(3)
+      pp:comm(_([[Zach: "Are those blast marks?"]]))
+      return
+   end
+   hook.timer( 3, "heartbeat" )
 end
