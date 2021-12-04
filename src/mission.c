@@ -238,8 +238,21 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* If chapter, must match chapter. TODO make this regex. */
-   if ((misn->avail.chapter != NULL) && (strcmp(misn->avail.chapter,player.chapter)!=0))
+   if (misn->avail.chapter != NULL) {
+      pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
+      int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+      if (rc < 0) {
+         switch (rc) {
+            case PCRE2_ERROR_NOMATCH:
+               return 0;
+            default:
+               WARN(_("Matching error %d"), rc );
+               break;
+         }
+         pcre2_match_data_free( match_data );
+      }
       return 0;
+   }
 
    /* Match faction. */
    if ((faction >= 0) && !mission_matchFaction(misn,faction))
@@ -970,6 +983,18 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
       DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
+
+   if (temp->avail.chapter != NULL) {
+      int errornumber;
+      PCRE2_SIZE erroroffset;
+      temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
+      if (temp->avail.chapter_re == NULL){
+         PCRE2_UCHAR buffer[256];
+         pcre2_get_error_message( errornumber, buffer, sizeof(buffer) );
+         WARN(_("Mission '%s' chapter PCRE2 compilation failed at offset %d: %s"), temp->name, (int)erroroffset, buffer );
+         return 1;
+      }
+   }
 
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)

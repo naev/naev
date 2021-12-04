@@ -3,6 +3,9 @@
  */
 #pragma once
 
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+
 #include "claim.h"
 #include "commodity.h"
 #include "nlua.h"
@@ -42,6 +45,7 @@ typedef struct MissionAvail_s {
    char *planet; /**< Planet name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
+   pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
 
    /* For generic cases */
    int *factions; /**< Array (array.h): To certain factions. */
