@@ -36,4 +36,8 @@ zbh.rewards = {
    zbh01 = 200e3,
 }
 
+zbh.fctmod = {
+   zbh01 = 2,
+}
+
 return zbh

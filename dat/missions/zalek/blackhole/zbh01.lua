@@ -103,8 +103,23 @@ function land ()
    local z = vn.newCharacter( zbh.vn_zack() )
    vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
    vn.transition( zbh.zack.transition )
-   vn.na(_(""))
-   z(_([[""]]))
+   vn.na(_("As you approach the station you can tell that it's in very bad shape there are clear plasma blast craters on the outside of the shape and you have to avoid debris when trying to dock at the space port. Zach is silent the entire approach and has a dumbfounded look on his face. You don't think this is what he was expecting."))
+   z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"
+He looks pale.]]))
+   vn.menu{
+      {_([["She has to be around somewhere"]]), "cont01"},
+      {_([["Let's see what happened"]]), "cont01"},
+      {_([[Begin to search]]), "cont01"},
+   }
+   vn.na(_("You begin to search the eerily quiet station. It seems like it became empty quite recently. The base is quite a mess, but knowing the Za'lek, chances are that was the usual state of affairs at the station. You go through al the rooms, but are unable to find any signs of life."))
+   vn.na(_("You eventually make your way around the entire station and end up back at the docks. Zach seems to be staring at some of the of the damage."))
+   z(_([["Say, doesn't that over there look like bite marks?"]]))
+   vn.na(_("You look over at where Zach is pointing and squint a bit. Indeed it does seem like it could be bite marks, but what on earth would bite a station?"))
+   z(_([["Something isn't right here. Well, besides the obvious, it just doesn't make sense."
+He gives a puzzled look.
+"I think I'm going to stay here and try to continue the research. It shouldn't be too hard to reactivate the station. I have to found out what happened to her!"]]))
+   z(_([[He goes back to your ship and brings his engineering toolkit and personal drones with him, and gets to. He works in a flurry of determination, and after a short while, you hear the buzz and whirs of a station coming back to life. It seems like he was able to activate it all.]]))
+   z(_([["Let me pay you for your services. I'll start seeing if I can figure out what happened and what they were researching on. I don't know much about the details. If you want to help, you should be able to find be around the station while I check everything. I might have things for you to do."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zack.transition )
@@ -112,6 +127,7 @@ function land ()
 
    diff.apply("sigma13_fixed")
 
+   faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )
    zbh.log(fmt.f(_("You took Zach to {pnt} where he found all his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
    misn.finish(true)

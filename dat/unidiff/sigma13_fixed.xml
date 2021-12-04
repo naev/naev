@@ -4,5 +4,6 @@
   <description>The small research station has had minimal services restored to it, although it is far from working at full power. Large plasma scars over the hull give indication of the traumatic happenings in the station's recent past. There also seem to be large bite marks around the shipyard, and especially the fuel tanks.</description>
   <service_add>refuel</service_add>
   <service_add>shipyard</service_add>
+  <service_add>bar</service_add>
  </asset>
 </unidiff>
