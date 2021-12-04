@@ -33,6 +33,7 @@ jobs:
           mkdir -p build/dist
           cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
+          cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
@@ -40,6 +41,13 @@ jobs:
         with:
           name: naev-dist
           path: ${{ github.workspace }}/build/dist/source.tar.xz
+          if-no-files-found: error
+
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Version Artifact
@@ -356,13 +364,12 @@ jobs:
           path: ${{ github.workspace }}/build/staging
 
       - name: Create Github Release
+        uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{github.ref_name}}"
+          bodyFile: "build/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
-          title: "Release Build"
 
       - name: Build and Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}

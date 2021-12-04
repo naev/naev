@@ -726,7 +726,9 @@ void gui_render( double dt )
    if (!menu_isOpen(MENU_MAIN) &&
          (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
             ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
+      gl_viewport( 0., 0., SCREEN_W, SCREEN_H );
       spfx_cinematic();
+      gl_defViewport();
       return;
    }
 
