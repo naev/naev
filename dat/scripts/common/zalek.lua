@@ -18,8 +18,7 @@ end
 
 -- Checks to see if the player has a Za'lek ship.
 function zlk.hasZalekShip()
-   local shipname = player.pilot():ship():nameRaw()
-   return string.find( shipname, "Za'lek" ) ~= nil
+   return player.pilot():ship():tags().zalek
 end
 
 return zlk
