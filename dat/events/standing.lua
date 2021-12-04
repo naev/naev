@@ -13,6 +13,8 @@ local fmt = require "format"
 -- luacheck: globals mission_done (Hook functions passed by name)
 
 local factions = {
+   require("factions.empire"),
+   require("factions.soromid"),
    require("factions.zalek"),
 }
 

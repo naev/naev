@@ -2667,6 +2667,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/factions/empire.lua
+dat/scripts/factions/soromid.lua
 dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
