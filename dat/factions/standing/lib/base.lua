@@ -13,25 +13,26 @@ function sbase.newStanding( args )
 end
 
 function sbase.Standing:init( args )
-   self.fct               = args.fct                                 -- The faction
+   self.fct               = args.fct                              -- The faction
 
    -- Faction caps.
-   self.cap_kill           = args.cap_kill            or 20          -- Kill cap
-   self.delta_distress     = args.delta_distress      or {-1, 0}     -- Maximum change constraints
-   self.delta_kill         = args.delta_kill          or {-5, 1}     -- Maximum change constraints
-   self.cap_misn_init      = args.cap_misn_init       or 30          -- Starting mission cap, gets overwritten
-   self.cap_misn_var       = args.cap_misn_var        or nil         -- Mission variable to use for limits
+   self.cap_kill           = args.cap_kill            or 20       -- Kill cap
+   self.delta_distress     = args.delta_distress      or {-1, 0}  -- Maximum change constraints
+   self.delta_kill         = args.delta_kill          or {-5, 1}  -- Maximum change constraints
+   self.cap_misn_init      = args.cap_misn_init       or 30       -- Starting mission cap, gets overwritten
+   self.cap_misn_var       = args.cap_misn_var        or nil      -- Mission variable to use for limits
 
    -- Secondary hit modifiers.
-   self.mod_distress_enemy = args.mod_distress_enemy  or 0           -- Distress of the faction's enemies
-   self.mod_distress_friend= args.mod_distress_friend or 0.3         -- Distress of the faction's allies
-   self.mod_kill_enemy     = args.mod_kill_enemy      or 0.3         -- Kills of the faction's enemies
-   self.mod_kill_friend    = args.mod_kill_friend     or 0.3         -- Kills of the faction's allies
-   self.mod_misn_enemy     = args.mod_misn_enemy      or 0.3         -- Missions done for the faction's enemies
-   self.mod_misn_friend    = args.mod_misn_friend     or 0.3         -- Missions done for the faction's allies
+   self.mod_distress_enemy = args.mod_distress_enemy  or 0        -- Distress of the faction's enemies
+   self.mod_distress_friend= args.mod_distress_friend or 0.3      -- Distress of the faction's allies
+   self.mod_kill_enemy     = args.mod_kill_enemy      or 0.3      -- Kills of the faction's enemies
+   self.mod_kill_friend    = args.mod_kill_friend     or 0.3      -- Kills of the faction's allies
+   self.mod_misn_enemy     = args.mod_misn_enemy      or 0.3      -- Missions done for the faction's enemies
+   self.mod_misn_friend    = args.mod_misn_friend     or 0.3      -- Missions done for the faction's allies
 
-   self.friendly_at       = args.friendly_at          or 70          -- Standing value threshold between neutral and friendly.
+   self.friendly_at       = args.friendly_at          or 70       -- Standing value threshold between neutral and friendly.
 
+   -- Text stuff
    self.text = args.text or {
       [100] = _("Legend"),
       [90]  = _("Hero"),
@@ -44,13 +45,12 @@ function sbase.Standing:init( args )
       [-30] = _("Criminal"),
       [-50] = _("Enemy"),
    }
+   self.text_friendly = args.text_friendly or _("Friendly")
+   self.text_neutral  = args.text_neutral or _("Neutral")
+   self.text_hostile  = args.text_hostile or _("Hostile")
+   self.text_bribed   = args.text_bribed or _("Bribed")
    return self
 end
-
-local text_friendly = _("Friendly")
-local text_neutral  = _("Neutral")
-local text_hostile  = _("Hostile")
-local text_bribed   = _("Bribed")
 
 
 --[[
@@ -227,17 +227,17 @@ end
       @param override If positive it should be set to ally, if negative it should be set to hostile.
       @return The text representation of the current broad standing.
 --]]
-function sbase.Standing.text_broad( _self, value, bribed, override )
+function sbase.Standing.text_broad( self, value, bribed, override )
    if override == nil then override = 0 end
 
    if bribed then
-      return text_bribed
+      return self.text_bribed
    elseif override > 0 or value >= standing.friendly_at then
-      return text_friendly
+      return self.text_friendly
    elseif override < 0 or value < 0 then
-      return text_hostile
+      return self.text_hostile
    else
-      return text_neutral
+      return self.text_neutral
    end
 end
 

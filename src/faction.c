@@ -942,10 +942,8 @@ double faction_getPlayer( int f )
 {
    if (faction_isFaction(f))
       return faction_stack[f].player;
-   else {
-      WARN(_("Faction id '%d' is invalid."), f);
-      return -1000.;
-   }
+   WARN(_("Faction id '%d' is invalid."), f);
+   return -1000.;
 }
 
 /**
@@ -958,10 +956,8 @@ double faction_getPlayerDef( int f )
 {
    if (faction_isFaction(f))
       return faction_stack[f].player_def;
-   else {
-      WARN(_("Faction id '%d' is invalid."), f);
-      return -1000.;
-   }
+   WARN(_("Faction id '%d' is invalid."), f);
+   return -1000.;
 }
 
 /**
