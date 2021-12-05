@@ -157,17 +157,20 @@ function board ()
       { "The Last Detail",          "Sandwich Holder" },
       { "Prince",                   "Ugly Statue" },
       { "Destroy the FLF base!",    "Star of Valor" },
-      { "Disrupt a Dvaered Patrol", "Pentagram of Valor" },
       { "Nebula Satellite",         "Satellite Mock-up" },
       { "The one with the Runaway", "Toy Drone" },
       { "Deliver Love",             "Love Letter" },
       --{ "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
       { "Operation Cold Metal",     "Left Boot" },
    }
+   -- Special case: this mission has multiple endings, and only one gives the reward.
+   if var.peek( "flfbase_intro" ) == nil then
+      table.insert( mission_rewards, { "Disrupt a Dvaered Patrol", "Pentagram of Valor" } )
+   end
    for _,r in ipairs(mission_rewards) do
       local m = r[1]
       local o = r[2]
-      if player.misnDone(m) and player.numOutfit(o)<1 then
+      if player.misnDone(m) and player.numOutfit(o)<8 then
          table.insert( outfits, o )
       end
    end
