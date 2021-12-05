@@ -4,6 +4,7 @@
    * Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
    * Fixed VN log text overlap issues
    * Fixed commodities not being added through unidiff
+   * Fixed safe lane rendering alpha being wrong
    * Don't give away name of destination system via autonav if unknown
    * AI should only try to jump to systems with their faction presence
    * Wrap OSD titles as necessary
