@@ -111,6 +111,7 @@ He looks pale.]]))
       {_([["Let's see what happened"]]), "cont01"},
       {_([[Begin to search]]), "cont01"},
    }
+   vn.label("cont01")
    vn.na(_("You begin to search the eerily quiet station. It seems like it became empty quite recently. The base is quite a mess, but knowing the Za'lek, chances are that was the usual state of affairs at the station. You go through al the rooms, but are unable to find any signs of life."))
    vn.na(_("You eventually make your way around the entire station and end up back at the docks. Zach seems to be staring at some of the of the damage."))
    z(_([["Say, doesn't that over there look like bite marks?"]]))
@@ -146,7 +147,7 @@ end
 local msg = 0
 function heartbeat ()
    local pp = player.pilot()
-   local d = destpnt:dist( pp:pos() )
+   local d = destpnt:pos():dist( pp:pos() )
    if msg==0 then
       player.autonavReset(3)
       pp:comm(fmt.f(_([[Zach: "{pnt} should be towards the black hole."]]),{pnt=destpnt}))
