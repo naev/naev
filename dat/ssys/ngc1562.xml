@@ -22,7 +22,7 @@
    <hide>0.500000</hide>
   </jump>
   <jump target="NGC-23">
-   <autopos/>
+   <pos x="-12794.177128" y="-7770.184776"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-2601">
