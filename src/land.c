@@ -1171,6 +1171,10 @@ void land( Planet* p, int load )
    free( player.p->comm_msg );
    player.p->comm_msg = NULL;
 
+   /* Clear some target stuff. */
+   player.p->nav_planet = -1;
+   gui_setNav();
+
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
