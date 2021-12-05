@@ -139,7 +139,7 @@ static Pilot* player_newShipMake( const char* name );
 static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
-static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
+static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite );
 static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
@@ -3121,7 +3121,7 @@ int player_save( xmlTextWriterPtr writer )
 /**
  * @brief Saves an outfit slot.
  */
-static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i )
+static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i )
 {
    const Outfit *o = slot->outfit;
    xmlw_startElem(writer,"outfit");
@@ -3156,6 +3156,10 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
    /* save the outfits */
+   xmlw_startElem(writer,"outfits_intrinsic"); /* Want them to be first. */
+   for (int i=0; i<array_size(ship->outfit_intrinsic); i++)
+      player_saveShipSlot( writer, &ship->outfit_intrinsic[i], i );
+   xmlw_endElem(writer); /* "outfits_intrinsic" */
    xmlw_startElem(writer,"outfits_structure");
    for (int i=0; i<array_size(ship->outfit_structure); i++) {
       if (ship->outfit_structure[i].outfit==NULL)
@@ -3971,6 +3975,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Start parsing. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
+
       /* get fuel */
       xmlr_int(node,"fuel",fuel);
 
@@ -3978,41 +3984,67 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       if (xml_isNode(node,"outfits_structure")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_structure))) {
-                  WARN(_("Outfit slot out of range, not adding to ship."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_structure))) {
+               WARN(_("Outfit slot out of range, not adding to ship."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"outfits_utility")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_utility))) {
-                  WARN(_("Outfit slot out of range, not adding."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_utility))) {
+               WARN(_("Outfit slot out of range, not adding."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"outfits_weapon")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
-                  WARN(_("Outfit slot out of range, not adding."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
+               WARN(_("Outfit slot out of range, not adding."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
          } while (xml_nextNode(cur));
+         continue;
+      }
+      else if (xml_isNode(node,"outfits_intrinsic")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do { /* load each outfit */
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
+            }
+            const Outfit *o = player_tryGetOutfit( xml_get(node), 1 );
+            if (o!=NULL)
+               pilot_addOutfitIntrinsic( ship, o );
+         } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node, "commodities")) {
          xmlNodePtr cur = node->xmlChildrenNode;
@@ -4038,7 +4070,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   array_back(ship->commodities).id = cid;
             }
          } while (xml_nextNode(cur));
+         continue;
       }
+      //WARN(_("Save has unknown '%s' tag!"),xml_get(node));
    } while (xml_nextNode(node));
 
    /* Update stats. */

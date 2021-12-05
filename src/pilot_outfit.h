@@ -16,6 +16,10 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 
+/* Intrinsic outfits. */
+int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
+int pilot_rmOutfitIntrinsic( Pilot *pilot, PilotOutfitSlot *s );
+
 /* Ammo. */
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );

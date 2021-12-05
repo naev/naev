@@ -119,6 +119,8 @@ static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
 static int pilotL_outfitAdd( lua_State *L );
 static int pilotL_outfitRm( lua_State *L );
+static int pilotL_outfitAddIntrinsic( lua_State *L );
+static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
 static int pilotL_intrinsicSet( lua_State *L );
@@ -260,6 +262,8 @@ static const luaL_Reg pilotL_methods[] = {
    /* Outfits. */
    { "outfitAdd", pilotL_outfitAdd },
    { "outfitRm", pilotL_outfitRm },
+   { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
+   { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "setFuel", pilotL_setFuel },
    { "intrinsicReset", pilotL_intrinsicReset },
    { "intrinsicSet", pilotL_intrinsicSet },
@@ -2797,6 +2801,46 @@ static int pilotL_outfitRm( lua_State *L )
       outfits_updateEquipmentOutfits();
 
    lua_pushnumber( L, removed );
+   return 1;
+}
+
+/**
+ * @brief Adds an intrinsic outfit to the pilot.
+ *
+ *    @luatparam Pilot p Pilot to add intrinsic outfit to.
+ *    @luatparam Outfit o Outfit to add as intrinsic outfit (must be modifier outfit).
+ * @luafunc outfitAddIntrinsic
+ */
+static int pilotL_outfitAddIntrinsic( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const Outfit *o = luaL_validoutfit(L,2);
+   int ret = pilot_addOutfitIntrinsic( p, o );
+   lua_pushboolean(L,ret);
+   return 1;
+}
+
+/**
+ * @brief Removes an intrinsic outfit from the pilot.
+ *
+ *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
+ *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
+ * @luafunc outfitRmIntrinsic
+ */
+static int pilotL_outfitRmIntrinsic( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const Outfit *o = luaL_validoutfit(L,2);
+   for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+      PilotOutfitSlot *s = &p->outfit_intrinsic[i];
+      int ret;
+      if (s->outfit != o)
+         continue;
+      ret = pilot_rmOutfitIntrinsic( p, s );
+      lua_pushboolean(L,ret);
+      return 1;
+   }
+   lua_pushboolean(L,0);
    return 1;
 }
 
