@@ -3107,6 +3107,7 @@ void pilot_free( Pilot* p )
    array_free(p->outfit_structure);
    array_free(p->outfit_utility);
    array_free(p->outfit_weapon);
+   array_free(p->outfit_intrinsic);
 
    pilot_cargoRmAll( p, 1 );
 

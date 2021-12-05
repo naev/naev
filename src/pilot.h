@@ -292,6 +292,7 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_structure;/**< Array (array.h): The structure slots. */
    PilotOutfitSlot *outfit_utility;  /**< Array (array.h): The utility slots. */
    PilotOutfitSlot *outfit_weapon;   /**< Array (array.h): The weapon slots. */
+   PilotOutfitSlot *outfit_intrinsic;/**< Array (array.h): The intrinsic slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */

@@ -30,6 +30,7 @@
  * Prototypes.
  */
 static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
+static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
 
 /**
  * @brief Updates the lockons on the pilot's launchers
@@ -850,6 +851,67 @@ void pilot_fillAmmo( Pilot* pilot )
 }
 
 /**
+ * @brief Computes the stats for a pilot's slot.
+ */
+static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
+{
+   const Outfit *o = slot->outfit;
+   ShipStats *s = &pilot->stats;
+
+   /* Outfit must exist. */
+   if (o==NULL)
+      return;
+
+   /* Modify CPU. */
+   pilot->cpu           += outfit_cpu(o);
+
+   /* Add mass. */
+   pilot->mass_outfit   += o->mass;
+
+   /* Keep a separate counter for required (core) outfits. */
+   if (sp_required( o->slot.spid ))
+      pilot->base_mass += o->mass;
+
+   /* Add ammo mass. */
+   if (outfit_ammo(o) != NULL)
+      if (slot->u.ammo.outfit != NULL)
+         pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
+   if (outfit_isAfterburner(o)) /* Afterburner */
+      pilot->afterburner = slot; /* Set afterburner */
+
+   /* Lua mods apply their stats. */
+   if (slot->lua_mem != LUA_NOREF)
+      ss_statsMerge( &pilot->stats, &slot->lua_stats );
+
+   /* Apply modifications. */
+   if (outfit_isMod(o)) { /* Modification */
+      /* Has update function. */
+      if (o->u.mod.lua_update != LUA_NOREF)
+         pilot->outfitlupdate = 1;
+      /* Active outfits must be on to affect stuff. */
+      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+         return;
+      /* Add stats. */
+      ss_statsModFromList( s, o->stats );
+
+   }
+   else if (outfit_isAfterburner(o)) { /* Afterburner */
+      /* Active outfits must be on to affect stuff. */
+      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+         return;
+      /* Add stats. */
+      ss_statsModFromList( s, o->stats );
+      pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
+      pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
+   }
+   else {
+      /* Always add stats for non mod/afterburners. */
+      ss_statsModFromList( s, o->stats );
+   }
+}
+
+/**
  * @brief Recalculates the pilot's stats based on his outfits.
  *
  *    @param pilot Pilot to recalculate his stats.
@@ -860,7 +922,7 @@ void pilot_calcStats( Pilot* pilot )
    ShipStats *s;
 
    /*
-    * set up the basic stuff
+    * Set up the basic stuff
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
@@ -899,66 +961,12 @@ void pilot_calcStats( Pilot* pilot )
    tm = s->time_mod;
    *s = pilot->ship->stats_array;
 
-   /*
-    * Now add outfit changes
-    */
+   /* Now add outfit changes */
    pilot->mass_outfit   = 0.;
-   for (int i=0; i<array_size(pilot->outfits); i++) {
-      PilotOutfitSlot *slot = pilot->outfits[i];
-      const Outfit* o       = slot->outfit;
-
-      /* Outfit must exist. */
-      if (o==NULL)
-         continue;
-
-      /* Modify CPU. */
-      pilot->cpu           += outfit_cpu(o);
-
-      /* Add mass. */
-      pilot->mass_outfit   += o->mass;
-
-      /* Keep a separate counter for required (core) outfits. */
-      if (sp_required( o->slot.spid ))
-         pilot->base_mass += o->mass;
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL)
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
-
-      if (outfit_isAfterburner(o)) /* Afterburner */
-         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
-
-      /* Lua mods apply their stats. */
-      if (slot->lua_mem != LUA_NOREF)
-         ss_statsMerge( &pilot->stats, &slot->lua_stats );
-
-      /* Apply modifications. */
-      if (outfit_isMod(o)) { /* Modification */
-         /* Has update function. */
-         if (o->u.mod.lua_update != LUA_NOREF)
-            pilot->outfitlupdate = 1;
-         /* Active outfits must be on to affect stuff. */
-         if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
-            continue;
-         /* Add stats. */
-         ss_statsModFromList( s, o->stats );
-
-      }
-      else if (outfit_isAfterburner(o)) { /* Afterburner */
-         /* Active outfits must be on to affect stuff. */
-         if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
-            continue;
-         /* Add stats. */
-         ss_statsModFromList( s, o->stats );
-         pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
-         pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
-      }
-      else {
-         /* Always add stats for non mod/afterburners. */
-         ss_statsModFromList( s, o->stats );
-      }
-   }
+   for (int i=0; i<array_size(pilot->outfit_intrinsic); i++)
+      pilot_calcStatsSlot( pilot, &pilot->outfit_intrinsic[i] );
+   for (int i=0; i<array_size(pilot->outfits); i++)
+      pilot_calcStatsSlot( pilot, pilot->outfits[i] );
 
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
