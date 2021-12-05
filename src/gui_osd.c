@@ -163,7 +163,7 @@ void osd_wordwrap( OSD_t* osd )
       /* Copy text over. */
       int chunk_len = iter.l_end - iter.l_begin + 1;
       char *chunk = malloc( chunk_len );
-      snprintf( chunk, chunk_len, &iter.text[iter.l_begin] );
+      snprintf( chunk, chunk_len, "%s", &iter.text[iter.l_begin] );
       array_push_back( &osd->titlew, chunk );
    }
 
