@@ -1,7 +1,7 @@
 project('SuiteSparse')
 
 cc = meson.get_compiler('c')
-foreach arg: ['-Wno-implicit-const-int-float-conversion', '-Wno-implicit-fallthrough', '-Wno-sign-compare',
+foreach arg: ['-Wno-implicit-const-int-float-conversion', '-Wno-implicit-fallthrough', '-Wno-maybe-uninitialized', '-Wno-sign-compare',
               '-Wno-unused-but-set-variable', '-Wno-unused-const-variable', '-Wno-unused-variable', '-Wno-unused-parameter']
    if cc.has_argument(arg)
       add_project_arguments(arg, language : 'c')

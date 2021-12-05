@@ -245,10 +245,8 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
    double d;
 
    /* Get distance if needed. */
-   if (dist2 != NULL) {
-      d = vect_dist2( &p->solid->pos, &target->solid->pos );
-      *dist2 = d;
-   }
+   if (dist2 != NULL)
+      *dist2 = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -256,21 +254,16 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
          target->parent == p->id)
       return 1;
 
-   /* Get distance if still needed */
-   if (dist2 == NULL)
-      d = vect_dist2( &p->solid->pos, &target->solid->pos );
-
    /* Stealth detection. */
    if (pilot_isFlag( target, PILOT_STEALTH ))
       return 0;
 
    /* No stealth so normal detection. */
-   else {
-      if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
-         return 1;
-      else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
-         return -1;
-   }
+   d = (dist2!=NULL ? *dist2 : vect_dist2( &p->solid->pos, &target->solid->pos ) );
+   if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
+      return 1;
+   else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
+      return -1;
 
    return 0;
 }
