@@ -37,6 +37,18 @@ zbh.unidiff_list = {
    "sigma13_fixed2",
 }
 
+--[[
+   Evil Principal Investigator (PI) Faction
+--]]
+function zbh.evilpi ()
+   local f = faction.exists("evilpi")
+   if f then
+      return f
+   end
+   return faction.dynAdd( "Za'lek", "evilpi", _("Evil PI"),
+         {clear_enemies=true, clear_allies=true} )
+end
+
 function zbh.unidiff( diffname )
    for _k,d in ipairs(zbh.unidiff_list) do
       if diff.isApplied(d) then

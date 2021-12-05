@@ -19,7 +19,7 @@
 --[[
    Za'lek Black Hole 02
 
-   Player has to bring back supplies to Zach
+   Player has to bring back supplies to Zach, first encounter with Bad PI's lackeys and feral ship
 ]]--
 local vn = require "vn"
 local fmt = require "format"
@@ -30,7 +30,7 @@ local lmisn = require "lmisn"
 
 local reward = zbh.rewards.zbh02
 --local cargo_name = _("Repair Supplies and Assistants")
---local cargo_amount = 50 -- Amount of cargo to take
+--local cargo_amount = 100 -- Amount of cargo to take
 
 local retpnt, retsys = planet.getS("Research Post Sigma-13")
 
@@ -87,7 +87,7 @@ function accept ()
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} in the {sys} system and bring them back to Zach at {retpnt}."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 
-   misn.markerAdd( mem.destpnt )
+   mem.mrk = misn.markerAdd( mem.destpnt )
    mem.state = 1
 
    misn.osdCreate( _("Black Hole Research"), {
@@ -107,6 +107,7 @@ function land ()
       vn.run()
 
       mem.state = 2
+      misn.markerMove( mem.mrk, retpnt )
 
    elseif mem.state==2 and planet.cur() == retpnt then
 
@@ -141,7 +142,11 @@ function enter ()
 end
 
 function heartbeat ()
-   --local pp = player.pilot()
-   --local d = mem.destpnt:pos():dist( pp:pos() )
+   local pp = player.pilot()
+   local d = retpnt:pos():dist( pp:pos() )
+   if mem.state==2 and d < 10e3 then
+      -- TODO cutscene
+      mem.state = 2
+   end
    hook.timer( 3, "heartbeat" )
 end
