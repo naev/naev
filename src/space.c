@@ -1989,7 +1989,7 @@ void planet_updateLand( Planet *p )
    char *str;
 
    /* Must be inhabited. */
-   if (!planet_hasService( p, PLANET_SERVICE_LAND ) ||
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
          (player.p == NULL))
       return;
 
