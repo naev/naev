@@ -413,13 +413,13 @@ void osd_render (void)
       }
 
       /* Print title. */
-      if (duplicates > 0)
-         snprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
-      else
-         strncpy( title, ll->title, sizeof(title)-1 );
-      title[sizeof(title)-1] = '\0';
       for (int i=0; i<array_size(ll->titlew); i++) {
-         gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., ll->titlew[i]);
+         if ((duplicates > 0) && (i==array_size(ll->titlew)-1)) {
+            snprintf( title, sizeof(title), "%s #b(%dx)#0", ll->titlew[i], duplicates+1 );
+            gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
+         }
+         else
+            gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., ll->titlew[i]);
          p -= gl_smallFont.h + 5.;
          l++;
       }
