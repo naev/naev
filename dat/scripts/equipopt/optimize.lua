@@ -106,13 +106,13 @@ end
 special_ships["Drone (Hyena)"] = special_ships["Drone"]
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
-      "Milspec Orion 3701 Core System",
+      "Milspec Thalos 3602 Core System",
       "Unicorp Hawk 350 Engine",
       choose_one{"Nexus Light Stealth Plating", "S&K Light Combat Plating"},
       "Shatterer Launcher",
       "Shatterer Launcher",
-      "Neutron Disruptor",
-      "Neutron Disruptor",
+      "Heavy Neutron Disruptor",
+      "Heavy Neutron Disruptor",
    } do
       p:outfitAdd( o, 1, true )
    end
