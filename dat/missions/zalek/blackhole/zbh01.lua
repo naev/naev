@@ -126,7 +126,7 @@ He gives a puzzled look.
    vn.done( zbh.zach.transition )
    vn.run()
 
-   diff.apply("sigma13_fixed")
+   zbh.unidiff( "sigma13_fixed1" )
 
    faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )

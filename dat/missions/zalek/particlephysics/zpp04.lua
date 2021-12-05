@@ -31,7 +31,7 @@ local fleet = require "fleet"
 -- luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp04
-local cargo_name = _("nebula artefact")
+local cargo_name = _("strange container")
 local cargo_amount = 5 -- Amount of cargo to take
 
 local destpnt, destsys = planet.getS( "Thaddius Station" )
@@ -81,8 +81,8 @@ She furrows her brow.]]),{pnt=destpnt}))
    -- mission details
    misn.setTitle( _("Particle Physics") )
    misn.setReward( fmt.reward(reward) )
-   misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
-      {cargo=cargo_name, pnt=destpnt, sys=destsys, retpnt=retpnt} ))
+   misn.setDesc( fmt.f(_("Pick up some cargo from {pnt} in the {sys} system and deliver them to {retpnt}."),
+      {pnt=destpnt, sys=destsys, retpnt=retpnt} ))
 
    mem.mrk = misn.markerAdd( destpnt )
 
@@ -158,7 +158,7 @@ They then lean it to whisper to you.
       cargo_space = true
    end
 
-   vn.na(fmt.f(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+   vn.na(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"))
    vn.run()
 
    if not cargo_space then
