@@ -113,11 +113,7 @@ if buildExec.disabled() == false
          link_args: '-DNOLOGPRINTFCONSOLE')
    ]
 
-   if get_option('steamruntime') == true
-      # Avoid checking for libwebp since we kind of hacked that away..
-   else
-      naev_deps += dependency('libwebp', required: true)
-   endif
+   naev_deps += dependency('libwebp', required: true, static: get_option('steamruntime'))
 
    # Lua
    useLuaJIT = get_option('luajit')
