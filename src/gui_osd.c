@@ -19,12 +19,13 @@
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
-   unsigned int id; /**< OSD id. */
-   int priority; /**< Priority level. */
-   char *title; /**< Title of the OSD. */
+   unsigned int id;  /**< OSD id. */
+   int priority;     /**< Priority level. */
+   char *title;      /**< Title of the OSD. */
+   char **titlew;    /**< Wrapped version of the title. */
 
-   char **msg; /**< Array (array.h): Stored messages. */
-   char ***items; /**< Array of array (array.h) of allocated strings. */
+   char **msg;       /**< Array (array.h): Stored messages. */
+   char ***items;    /**< Array of array (array.h) of allocated strings. */
 
    unsigned int active; /**< Active item. */
 } OSD_t;
@@ -133,6 +134,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    osd->priority = priority;
    osd->msg = array_create_size( char*, nitems );
    osd->items = array_create_size( char**, nitems );
+   osd->titlew = array_create( char* );
    for (int i=0; i<nitems; i++) {
       array_push_back( &osd->msg, strdup( items[i] ) );
       array_push_back( &osd->items, array_create(char*) );
@@ -150,11 +152,25 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
  */
 void osd_wordwrap( OSD_t* osd )
 {
+   glPrintLineIterator iter;
+
+   /* Do title. */
+   for (int i=0; i<array_size(osd->titlew); i++)
+      free(osd->titlew[i]);
+   array_resize( &osd->titlew, 0 );
+   gl_printLineIteratorInit( &iter, &gl_smallFont, osd->title, osd_w );
+   while (gl_printLineIteratorNext( &iter )) {
+      /* Copy text over. */
+      int chunk_len = iter.l_end - iter.l_begin + 1;
+      char *chunk = malloc( chunk_len );
+      snprintf( chunk, chunk_len, &iter.text[iter.l_begin] );
+      array_push_back( &osd->titlew, chunk );
+   }
+
+   /* Do items. */
    for (int i=0; i<array_size(osd->items); i++) {
       int msg_len, w, has_tab;
       const char *chunk_fmt;
-      glPrintLineIterator iter;
-
       for (int l=0; l<array_size(osd->items[i]); l++)
          free(osd->items[i][l]);
       array_resize( &osd->items[i], 0 );
@@ -211,6 +227,7 @@ static int osd_free( OSD_t *osd )
    }
    array_free(osd->msg);
    array_free(osd->items);
+   array_free(osd->titlew);
 
    return 0;
 }
@@ -401,9 +418,11 @@ void osd_render (void)
       else
          strncpy( title, ll->title, sizeof(title)-1 );
       title[sizeof(title)-1] = '\0';
-      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
-      p -= gl_smallFont.h + 5.;
-      l++;
+      for (int i=0; i<array_size(ll->titlew); i++) {
+         gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., ll->titlew[i]);
+         p -= gl_smallFont.h + 5.;
+         l++;
+      }
       if (l >= osd_lines) {
          free(ignore);
          return;
