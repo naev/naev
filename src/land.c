@@ -277,6 +277,7 @@ static void bar_getDim( int wid,
 static void bar_open( unsigned int wid )
 {
    int w, h, iw, ih, bw, bh, dh, th;
+   const char *desc;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_BAR);
@@ -285,8 +286,9 @@ static void bar_open( unsigned int wid )
    window_onClose( wid, bar_close );
 
    /* Get dimensions. */
+   desc = (land_planet->bar_description!=NULL) ? _(land_planet->bar_description) : "(NULL)";
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, desc );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -300,10 +302,8 @@ static void bar_open( unsigned int wid )
          _("Approach"), bar_approach, SDLK_a );
 
    /* Bar description. */
-   window_addText( wid, iw + 40, -40,
-         w - iw - 60, dh, 0,
-         "txtDescription", &gl_defFont, NULL,
-         _(land_planet->bar_description) );
+   window_addText( wid, iw + 40, -40, w - iw - 60, dh, 0,
+         "txtDescription", &gl_defFont, NULL, desc );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
@@ -334,7 +334,7 @@ static int bar_genList( unsigned int wid )
    glTexture *bg;
    char *focused;
    int w, h, iw, ih, bw, bh;
-   int i, n, pos;
+   int n, pos;
 
    /* Validity check. */
    if (wid == 0)
@@ -374,7 +374,7 @@ static int bar_genList( unsigned int wid )
       portraits    = calloc(n, sizeof(ImageArrayCell));
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
-      for (i=0; i<npc_getArraySize(); i++) {
+      for (int i=0; i<npc_getArraySize(); i++) {
          p = &portraits[i+1];
          bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
