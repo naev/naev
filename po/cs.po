@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-02 23:22-0500\n"
+"POT-Creation-Date: 2021-12-05 10:40-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -13812,7 +13812,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:88
 #: dat/missions/neutral/kidnapped/traffic_00.lua:94
 #: dat/missions/neutral/kidnapped/traffic_00.lua:95
-#: dat/missions/tutorial/nelly02.lua:264 dat/scripts/common/pirate.lua:42
+#: dat/missions/tutorial/nelly02.lua:265 dat/scripts/common/pirate.lua:42
 msgid "Pirate"
 msgstr ""
 
@@ -14293,7 +14293,7 @@ msgstr ""
 #. --
 #. A battle between two Dvaered warlords. The player can join one of them and get a reward
 #. Non-persistent state
-#. luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattle (Hook functions passed by name)
+#. luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme leave merchant startBattleIfReady (Hook functions passed by name)
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. choose 1 particular planet
 #. choose only Dvaered planets (and no stations)
@@ -17375,8 +17375,8 @@ msgstr ""
 
 #: dat/outfits/misc/medium_weapon_license.xml:7
 msgid ""
-"This license will authorize you to buy and use medium weapons like the ion "
-"cannon."
+"This license will authorize you to buy and use medium weapons like the "
+"ripper cannon."
 msgstr ""
 
 #: dat/outfits/misc/medium_weapon_license.xml:10
@@ -22535,7 +22535,7 @@ msgstr "Nedám ti palivo!"
 #. Spawn
 #: dat/ai/collective.lua:9 dat/ai/drone_miner.lua:9
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:293
-#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:253
+#: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:254
 msgid "No response."
 msgstr "Žádná odpověď."
 
@@ -26511,20 +26511,18 @@ msgstr ""
 msgid "You take your leave."
 msgstr ""
 
-#. People are in formation
-#. Battle is happening
 #. Spawns a merchant ship that explains what happens
-#: dat/events/dvaered/warlords_battle.lua:87
+#: dat/events/dvaered/warlords_battle.lua:86
 #, fuzzy
 #| msgid "Thug"
 msgid "Trader {ship}"
 msgstr "Rváč"
 
-#: dat/events/dvaered/warlords_battle.lua:98
+#: dat/events/dvaered/warlords_battle.lua:97
 msgid "A battle is about to begin"
 msgstr "Bitva brzy začne"
 
-#: dat/events/dvaered/warlords_battle.lua:98
+#: dat/events/dvaered/warlords_battle.lua:97
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
 "going to happen here: a mighty warlord from {sys} is going to attack {pnt}. "
@@ -26537,11 +26535,16 @@ msgstr ""
 "Víš, jak to funguje? Pokud zaútočíš na válečníkovu loď a on prohraje bitvu, "
 "druhý válečník tě odmění. Ale pokud vyhraje, budeš pronásledován. “"
 
-#: dat/events/dvaered/warlords_battle.lua:109
+#. Arranges a list of pilot with their mass
+#. Processing of the equality case
+#. chooses the first non nil pilot in a list
+#. Prepares the reward
+#. Simultaneous destruction?
+#: dat/events/dvaered/warlords_battle.lua:149
 msgid "Here comes your reward"
 msgstr "Zde je tvá odměna"
 
-#: dat/events/dvaered/warlords_battle.lua:109
+#: dat/events/dvaered/warlords_battle.lua:149
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you {credits} as a reward.\""
@@ -26549,13 +26552,8 @@ msgstr ""
 "„Ahoj kapitáne,“ říká Dvaeredský důstojník, „pomohl jsi nám v této bitvě. "
 "Jsem oprávněn ti dát {credits} jako odměnu.“"
 
-#. Arranges a list of pilot with their mass
-#. Processing of the equality case
-#. chooses the first non nil pilot in a list
-#. Computes the reward
-#. TODO: This looks fishy. Was it supposed to be called with attack=true to init and with attack=false for later kills?
 #. Returns leader of fleet
-#: dat/events/dvaered/warlords_battle.lua:173
+#: dat/events/dvaered/warlords_battle.lua:169
 msgid "Invader"
 msgstr ""
 
@@ -26564,21 +26562,22 @@ msgstr ""
 #. The transport ships tend to run away
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
-#: dat/events/dvaered/warlords_battle.lua:229
+#: dat/events/dvaered/warlords_battle.lua:225
 msgid "Local Warlord's Force"
 msgstr ""
 
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
+#. Special case: first fleet slaughtered before second fleet spawned!
 #. Both fleets are close enough: start the epic battle
 #. The player chose his side
 #. The player chose his side
+#. Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
 #. all the enemies are dead
-#. Battle ended
-#. Time to get rewarded
-#. all the defenders died : the winner lands on his planet
-#. Battle ended
-#. Time to get rewarded
+#. Simultaneous destruction?
+#. Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
+#. all the defenders died: the winner lands on his planet
+#. Simultaneous destruction?
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="FLF/DV Derelicts">
@@ -31655,16 +31654,18 @@ msgstr ""
 #. Non-persistent state
 #. luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
 #. Make sure system isn't claimed, but we don't claim it
+#. Don't do volatile systems
+#. Don't spawn in restricted space (just in case)
 #. The _("Shipwrecked {plt}") will be a random trader vessel.
 #. Create the derelict.
-#: dat/events/neutral/shipwreck.lua:51
+#: dat/events/neutral/shipwreck.lua:64
 msgid "Shipwrecked {plt}"
 msgstr ""
 
 #. Added extra visibility for big systems (A.)
 #. Set hooks
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-#: dat/events/neutral/shipwreck.lua:70
+#: dat/events/neutral/shipwreck.lua:83
 msgid ""
 "SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning "
 "your ship over ours and then #bdouble-clicking#0 on our ship."
@@ -31776,6 +31777,7 @@ msgstr ""
 #. TODO add randomly chosen outfits, maybe conditioned on the current system or something?
 #. Give mission rewards the player might not have for a reason
 #. { "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
+#. Special case: this mission has multiple endings, and only one gives the reward.
 #. Start the merchant and unboard.
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33743,10 +33745,10 @@ msgstr ""
 #: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/gui.c:1524 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
+#: src/gui.c:1526 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
-#: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player_autonav.c:91
-#: src/player_autonav.c:212 src/ship.c:205
+#: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1948
+#: src/player_autonav.c:91 src/player_autonav.c:212 src/ship.c:205
 msgid "Unknown"
 msgstr ""
 
@@ -34255,27 +34257,27 @@ msgstr ""
 #. Extend the pane depending on the services available.
 #. Render background images.
 #. Render planet image.
-#: dat/gui/brushed.lua:907 dat/gui/slim.lua:889 dat/gui/slim.lua:1019
+#: dat/gui/brushed.lua:905 dat/gui/slim.lua:889 dat/gui/slim.lua:1019
 msgid "TARGETED"
 msgstr ""
 
-#: dat/gui/brushed.lua:910
+#: dat/gui/brushed.lua:908
 #, lua-format
 msgid "DISTANCE: %s"
 msgstr ""
 
-#: dat/gui/brushed.lua:912
+#: dat/gui/brushed.lua:910
 #, lua-format
 msgid "CLASS: %s"
 msgstr ""
 
 #. Space out the text.
 #. Render dir sprite.
-#: dat/gui/brushed.lua:923 dat/gui/slim.lua:1038
+#: dat/gui/brushed.lua:921 dat/gui/slim.lua:1038
 msgid "SERVICES:"
 msgstr ""
 
-#: dat/gui/brushed.lua:928
+#: dat/gui/brushed.lua:926
 msgid "SERVICES: none"
 msgstr ""
 
@@ -34294,11 +34296,11 @@ msgstr ""
 #. Weapon bars
 #. Truncate names for readability.
 #. Formation selection button
-#: dat/gui/brushed.lua:941 dat/gui/slim.lua:779
+#: dat/gui/brushed.lua:939 dat/gui/slim.lua:779
 msgid "Set formation"
 msgstr ""
 
-#: dat/gui/brushed.lua:1069
+#: dat/gui/brushed.lua:1067
 #, lua-format
 msgid ""
 "Cooling down...\n"
@@ -41936,7 +41938,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec04.lua:70
 #: dat/missions/neutral/antlejos/ant05.lua:84
 #: dat/missions/sirius/heretic/heretic3.lua:63
-#: dat/missions/tutorial/nelly02.lua:322
+#: dat/missions/tutorial/nelly02.lua:323
 #, fuzzy
 #| msgid "Cantina Station"
 msgid "Return to {pnt}"
@@ -67995,7 +67997,7 @@ msgstr ""
 #. Update objectives
 #: dat/missions/tutorial/nelly01.lua:109 dat/missions/tutorial/nelly01.lua:179
 #: dat/missions/tutorial/nelly02.lua:204 dat/missions/tutorial/nelly02.lua:232
-#: dat/missions/tutorial/nelly02.lua:321 dat/missions/tutorial/nelly02.lua:403
+#: dat/missions/tutorial/nelly02.lua:322 dat/missions/tutorial/nelly02.lua:404
 msgid "Helping Nelly Out"
 msgstr ""
 
@@ -68062,7 +68064,7 @@ msgid "Deliver cargo to {pnt} in {sys}"
 msgstr ""
 
 #: dat/missions/tutorial/nelly01.lua:181 dat/missions/tutorial/nelly02.lua:234
-#: dat/missions/tutorial/nelly02.lua:405
+#: dat/missions/tutorial/nelly02.lua:406
 msgid "Return to {pnt} in {sys}"
 msgstr ""
 
@@ -68148,7 +68150,7 @@ msgstr ""
 msgid "Hear about the Info window"
 msgstr ""
 
-#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:537
+#: dat/missions/tutorial/nelly01.lua:299 dat/missions/tutorial/nelly02.lua:538
 msgid "Already know"
 msgstr ""
 
@@ -68464,7 +68466,7 @@ msgid ""
 "you'll be able to safely disable my rampant ship!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:233 dat/missions/tutorial/nelly02.lua:404
+#: dat/missions/tutorial/nelly02.lua:233 dat/missions/tutorial/nelly02.lua:405
 msgid "Go to {pnt} in {sys}"
 msgstr ""
 
@@ -68472,23 +68474,23 @@ msgstr ""
 msgid "Llaminator MK2"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:277
+#: dat/missions/tutorial/nelly02.lua:278
 msgid "Noisy Pacifier"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:307
+#: dat/missions/tutorial/nelly02.lua:308
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
 "{boardkey}!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:315
+#: dat/missions/tutorial/nelly02.lua:316
 msgid ""
 "You board Nelly's ship and quickly go to the control panel to turn off the "
 "autonav."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:316
+#: dat/missions/tutorial/nelly02.lua:317
 msgid ""
 "\"I hate when this happens. Err, I mean, this is the first time something "
 "like this has happened to me! Let me bring the ship back to {pnt} and meet "
@@ -68497,62 +68499,62 @@ msgstr ""
 
 #. Have the ship go back
 #. Faster again
-#: dat/missions/tutorial/nelly02.lua:341
+#: dat/missions/tutorial/nelly02.lua:342
 msgid ""
 "#rMISSION FAILED: you weren't supposed to destroy Nelly's ship!#0\n"
 "Although the mission has been aborted, you can still repeat it from the "
 "beginning by finding Nelly at a spaceport bar to try again."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:349
+#: dat/missions/tutorial/nelly02.lua:350
 msgid "Nelly is motioning you to come join her at the table."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:356
+#: dat/missions/tutorial/nelly02.lua:357
 msgid ""
 "You land and quickly Nelly goes over to the outfitter and seems to get into "
 "some sort of argument with the person in charge. After a bit you see they "
 "exchange something and she comes back with a grin on her face."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:357
+#: dat/missions/tutorial/nelly02.lua:358
 msgid ""
 "\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:361
+#: dat/missions/tutorial/nelly02.lua:362
 msgid "Jumpdrive Repair Parts"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:361
+#: dat/missions/tutorial/nelly02.lua:362
 msgid "Spare parts that can be used to break a ship's broken jumpdrive."
 msgstr ""
 
 #. Finished mission
-#: dat/missions/tutorial/nelly02.lua:373
+#: dat/missions/tutorial/nelly02.lua:374
 msgid ""
 "\"We finally made it. Nothing ever comes really easy does it? Ah, before I "
 "forget, let me reward you for your troubles.\""
 msgstr ""
 
 #. Rewards
-#: dat/missions/tutorial/nelly02.lua:379
+#: dat/missions/tutorial/nelly02.lua:380
 msgid ""
 "\"I'm going to get my ship fixed and hopefully next time we meet it'll be in "
 "space. Have fun!\"\n"
 "She runs off to where here ship is stored with the repair parts in hand."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:384
+#: dat/missions/tutorial/nelly02.lua:385
 msgid "You helped Nelly repair her ship."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:395
+#: dat/missions/tutorial/nelly02.lua:396
 msgid "As you approach her you can see she is a bit flustered."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:396
+#: dat/missions/tutorial/nelly02.lua:397
 msgid ""
 "\"I got my ship checked up again, and it looks like it wasn't just an "
 "autonav malfunction, but the jumpdrive is toast. I need a spare part, but "
@@ -68561,7 +68563,7 @@ msgid ""
 "seem to have replacements on #o{destpnt}#0 in #o{destsys}#0.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:397
+#: dat/missions/tutorial/nelly02.lua:398
 msgid ""
 "Before you can answer she grabs your arm and pulls you towards where your "
 "ship is docked.\n"
@@ -68569,25 +68571,25 @@ msgid ""
 "get my ship off the ground.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:399
+#: dat/missions/tutorial/nelly02.lua:400
 msgid ""
 "Looks like you'll have to do another round trip if you want to get paid."
 msgstr ""
 
 #. Spawn pirates
 #. Ignore vulnerability
-#: dat/missions/tutorial/nelly02.lua:434
+#: dat/missions/tutorial/nelly02.lua:435
 msgid "Nelly: \"Wait, are those pirates coming our way?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:449
+#: dat/missions/tutorial/nelly02.lua:450
 msgid ""
 "\"It looks like we've been spotted by a trio of Pirate Hyenas. Normally I "
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:450
+#: dat/missions/tutorial/nelly02.lua:451
 msgid ""
 "\"If you target a pirate and hail them with {hailkey}, you should have an "
 "option to bribe them and their friends if they are hostile. Although it can "
@@ -68595,63 +68597,63 @@ msgid ""
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:452
+#: dat/missions/tutorial/nelly02.lua:453
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
 "#g{credits}#0, that should be enough hopefully.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:459
+#: dat/missions/tutorial/nelly02.lua:460
 msgid "Hail and bribe the pirates"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:481
+#: dat/missions/tutorial/nelly02.lua:482
 #, fuzzy
 #| msgid "\"I would be able to refuel your ship for %s.\""
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
 msgstr "„Byl bych schopen natankovat vaši loď za %s.“"
 
-#: dat/missions/tutorial/nelly02.lua:489
+#: dat/missions/tutorial/nelly02.lua:490
 msgid "Nelly: \"I guess that's another way of doing it.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:491
+#: dat/missions/tutorial/nelly02.lua:492
 msgid "Nelly: \"You only bribed some pilots, try to bribe them all!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:493
+#: dat/missions/tutorial/nelly02.lua:494
 msgid ""
 "Nelly: \"Quickly! Target the hostile pirates with {targetkey} and bribe them "
 "by hailing them with {hailkey}!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:508
+#: dat/missions/tutorial/nelly02.lua:509
 msgid "I know you're out there Nelly. Please come forward voluntarily."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:509
+#: dat/missions/tutorial/nelly02.lua:510
 msgid "Stop hiding Nelly, you know this is futile."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:510
+#: dat/missions/tutorial/nelly02.lua:511
 msgid "Let us face this like adults, Nelly."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:511
+#: dat/missions/tutorial/nelly02.lua:512
 msgid "Nelly, if you come out now I would hold this against you."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:512
+#: dat/missions/tutorial/nelly02.lua:513
 msgid ""
 "You're seriously going to make me have to scan the entire universe to find "
 "you Nelly?"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:513
+#: dat/missions/tutorial/nelly02.lua:514
 msgid "Just come on out and let's get this over with, Nelly."
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:531
+#: dat/missions/tutorial/nelly02.lua:532
 msgid ""
 "Nelly seems to get a bit nervous when seeing the pacifier appear on-screen.\n"
 "\"Wait, that looks like Robin. Shit, I never paid her back did I?\"\n"
@@ -68660,11 +68662,11 @@ msgid ""
 "electronic warfare works?\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:536 dat/missions/tutorial/nelly02.lua:555
+#: dat/missions/tutorial/nelly02.lua:537 dat/missions/tutorial/nelly02.lua:556
 msgid "Learn about Electronic Warfare"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:541
+#: dat/missions/tutorial/nelly02.lua:542
 msgid ""
 "\"I'll try to be brief. So ship sensors are based on detecting gravitational "
 "anomalies, and thus the mass of a ship plays a critical role in being "
@@ -68672,7 +68674,7 @@ msgid ""
 "detect than carriers or battleship.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:542 dat/shipai.lua:113
+#: dat/missions/tutorial/nelly02.lua:543 dat/shipai.lua:113
 msgid ""
 "\"Each ship has three important electronic warfare statistics:\n"
 "- #oDetection#0 determines the distance at which a ship appears on the "
@@ -68684,7 +68686,7 @@ msgid ""
 "in stealth mode\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:546
+#: dat/missions/tutorial/nelly02.lua:547
 msgid ""
 "\"You can activate stealth mode with {stealthkey} when far enough away from "
 "other ships. When stealthed, your ship will be completely invisible to all "
@@ -68692,14 +68694,14 @@ msgid ""
 "it will slowly uncover you.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:547
+#: dat/missions/tutorial/nelly02.lua:548
 msgid ""
 "\"Besides making your ship invisible to other ships, #ostealth#0 slows down "
 "your ship heavily to mask your gravitational presence. This also has the "
 "effect of letting you jump out from jumpoints further away.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:548
+#: dat/missions/tutorial/nelly02.lua:549
 msgid ""
 "\"When not in stealth, ships can target your ship to perform a scan. This "
 "can uncover unwanted information, such as illegal cargo or outfits. The time "
@@ -68707,7 +68709,7 @@ msgid ""
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:549
+#: dat/missions/tutorial/nelly02.lua:550
 msgid ""
 "\"To avoid getting spotted by {shipname}, you should first get away from "
 "nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
@@ -68717,34 +68719,34 @@ msgid ""
 "close to them!\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:553
+#: dat/missions/tutorial/nelly02.lua:554
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:556
+#: dat/missions/tutorial/nelly02.lua:557
 msgid "\"Call me Dr. Electronic Warfare\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:560
+#: dat/missions/tutorial/nelly02.lua:561
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:566
+#: dat/missions/tutorial/nelly02.lua:567
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
 msgstr ""
 
 #. Spotter lost track of them
-#: dat/missions/tutorial/nelly02.lua:584
+#: dat/missions/tutorial/nelly02.lua:585
 msgid "Nelly: \"Phew, it seems like they lost track of us.\""
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:589
+#: dat/missions/tutorial/nelly02.lua:590
 msgid "You won't get away this time Nelly!"
 msgstr ""
 
-#: dat/missions/tutorial/nelly02.lua:598
+#: dat/missions/tutorial/nelly02.lua:599
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
@@ -78284,8 +78286,8 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1485
-#: src/player.c:3326
+#: src/ai.c:582 src/board.c:153 src/comm.c:168 src/info.c:378 src/land.c:1489
+#: src/player.c:3327
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -78380,7 +78382,12 @@ msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2923
+#: src/ai.c:2504
+#, c-format
+msgid "Pilot '%s' can't find jump to leave system!"
+msgstr ""
+
+#: src/ai.c:2951
 msgid "Invalid Bounds"
 msgstr ""
 
@@ -78425,7 +78432,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:437 src/gui.c:1715 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:437 src/gui.c:1717 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -78469,7 +78476,7 @@ msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
 #. error has occurred
-#: src/board.c:168 src/player.c:3340
+#: src/board.c:168 src/player.c:3341
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
@@ -79345,7 +79352,7 @@ msgstr ""
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1226 src/map.c:302
+#: src/dev_sysedit.c:1262 src/land.c:1230 src/map.c:302
 msgid "Faction:"
 msgstr ""
 
@@ -79742,7 +79749,7 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:483 src/gui.c:1607 src/ndata.c:199 src/news.c:104
+#: src/economy.c:483 src/gui.c:1609 src/ndata.c:199 src/news.c:104
 #: src/nfile.c:492 src/opengl_tex.c:133 src/opengl_tex.c:370 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:456
 msgid "Out of Memory"
@@ -79762,7 +79769,7 @@ msgstr ""
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1244
+#: src/equipment.c:323 src/land.c:279 src/land.c:559 src/land.c:1248
 #: src/land_outfits.c:154 src/land_shipyard.c:91 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
@@ -79789,7 +79796,7 @@ msgstr ""
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:365 src/info.c:469 src/land.c:1225 src/land_shipyard.c:223
+#: src/equipment.c:365 src/info.c:469 src/land.c:1229 src/land_shipyard.c:223
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -80066,7 +80073,7 @@ msgstr ""
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2039 src/land.c:1481
+#: src/equipment.c:2039 src/land.c:1485
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "File '%s' not found!"
@@ -80496,27 +80503,27 @@ msgstr ""
 msgid "Gfx index out of range"
 msgstr ""
 
-#: src/gui.c:1684
+#: src/gui.c:1686
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr ""
 
-#: src/gui.c:1693
+#: src/gui.c:1695
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
 msgstr ""
 
-#: src/gui.c:1714
+#: src/gui.c:1716
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
 msgstr ""
 
-#: src/gui.c:1844
+#: src/gui.c:1846
 #, c-format
 msgid "Unable to find GUI '%s'."
 msgstr ""
 
-#: src/gui.c:1857
+#: src/gui.c:1859
 #, c-format
 msgid ""
 "Failed to load GUI Lua: %s\n"
@@ -80524,22 +80531,22 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/gui.c:2001
+#: src/gui.c:2003
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr ""
 
-#: src/gui_osd.c:196
+#: src/gui_osd.c:212
 #, c-format
 msgid "OSD '%d' not found."
 msgstr ""
 
-#: src/gui_osd.c:247
+#: src/gui_osd.c:264
 #, c-format
 msgid "OSD '%u' not found to destroy."
 msgstr ""
 
-#: src/gui_osd.c:265
+#: src/gui_osd.c:282
 #, c-format
 msgid "OSD '%s' only has %d items (requested %d)"
 msgstr ""
@@ -80645,7 +80652,7 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:224 src/land.c:1229 src/land_outfits.c:188
+#: src/info.c:224 src/land.c:1233 src/land_outfits.c:188
 #: src/land_shipyard.c:297 src/land_trade.c:90 src/map_find.c:664
 msgid "Money:"
 msgstr ""
@@ -81700,44 +81707,44 @@ msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1224
+#: src/land.c:1228
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1227
+#: src/land.c:1231
 msgid "Population:"
 msgstr ""
 
-#: src/land.c:1228 src/land_trade.c:89
+#: src/land.c:1232 src/land_trade.c:89
 msgid "Free Space:"
 msgstr ""
 
-#: src/land.c:1231
+#: src/land.c:1235
 msgid "Tags:"
 msgstr ""
 
-#: src/land.c:1250
+#: src/land.c:1254
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1360
+#: src/land.c:1364
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. must be before cleaning up planet
-#: src/land.c:1422
+#: src/land.c:1426
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1431
+#: src/land.c:1435
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1498
+#: src/land.c:1502
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -84016,7 +84023,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2181
+#: src/opengl.c:109 src/player.c:2182
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -85882,98 +85889,98 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2193
+#: src/player.c:2194
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2198
+#: src/player.c:2199
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2227
+#: src/player.c:2228
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2250 src/player.c:2272
+#: src/player.c:2251 src/player.c:2273
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2305
+#: src/player.c:2306
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2318
+#: src/player.c:2319
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2324
+#: src/player.c:2325
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2540 src/player.c:2559
+#: src/player.c:2541 src/player.c:2560
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2954
+#: src/player.c:2955
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3168
+#: src/player.c:3169
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3169
+#: src/player.c:3170
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3395
+#: src/player.c:3396
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3464
+#: src/player.c:3465
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3501
+#: src/player.c:3502
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3525
+#: src/player.c:3526
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3528
+#: src/player.c:3529
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3539
+#: src/player.c:3540
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3545
+#: src/player.c:3546
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3555
+#: src/player.c:3556
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3561
+#: src/player.c:3562
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3562
+#: src/player.c:3563
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3562
+#: src/player.c:3563
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -85981,138 +85988,138 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3570
+#: src/player.c:3571
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3600
+#: src/player.c:3601
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3604
+#: src/player.c:3605
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3651
+#: src/player.c:3652
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3673
+#: src/player.c:3674
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3695
+#: src/player.c:3696
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3722
+#: src/player.c:3723
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3783
+#: src/player.c:3784
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3802
+#: src/player.c:3803
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3810
+#: src/player.c:3811
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3831
+#: src/player.c:3832
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3897
+#: src/player.c:3898
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3944
+#: src/player.c:3945
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3957 src/player.c:3970
+#: src/player.c:3958 src/player.c:3971
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3989
+#: src/player.c:3990
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4013
+#: src/player.c:4014
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4063
+#: src/player.c:4064
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4071
+#: src/player.c:4072
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4075
+#: src/player.c:4076
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4091
+#: src/player.c:4092
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4104
+#: src/player.c:4105
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4112
+#: src/player.c:4113
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4117
+#: src/player.c:4118
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4156
+#: src/player.c:4157
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4162
+#: src/player.c:4163
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4167
+#: src/player.c:4168
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4169
+#: src/player.c:4170
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
