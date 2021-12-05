@@ -433,7 +433,7 @@ static int shaderL_addPostProcess( lua_State *L )
    LuaShader_t *ls = luaL_checkshader(L,1);
    const char *str = luaL_optstring(L,2,"final");
    int priority = luaL_optinteger(L,3,0);
-   int layer;
+   int layer = PP_LAYER_FINAL;
 
    if (strcmp(str,"final")==0)
       layer = PP_LAYER_FINAL;

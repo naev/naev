@@ -898,8 +898,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       fighters = lua_toboolean(L,6);
    }
 
-   if (dist >= 0.)
-      dd = pow2(dist);
+   dd = pow2(dist);
    d2 = -1.;
 
    /* Now put all the matching pilots in a table. */
@@ -1813,13 +1812,9 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
 static int pilotL_outfits( lua_State *L )
 {
    int j;
-   Pilot *p;
-   const char *type;
-   OutfitSlotType ost;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-   type  = luaL_optstring(L,2,NULL);
+   Pilot *p = luaL_validpilot(L,1);
+   const char *type = luaL_optstring(L,2,NULL);
+   OutfitSlotType ost = OUTFIT_SLOT_NULL;
 
    /* Get type. */
    if (type != NULL) {
@@ -1832,8 +1827,6 @@ static int pilotL_outfits( lua_State *L )
       else
          NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
-   else
-      ost = OUTFIT_SLOT_NULL;
 
    j = 1;
    lua_newtable( L );
