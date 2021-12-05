@@ -18,13 +18,13 @@ local fmt = require "format"
 local formation = require "formation"
 
 -- Non-persistent state
-local source_system, source_planet, inForm, batInProcess, side
+local source_system, source_planet, battleEnded, side
 local attackers, attnum, attkilled, attdeath, defenders, defnum, defkilled, defdeath
-local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
-local baserew, reward
+local trader, attAttHook, defAttHook, hailhook, jumphook
+local reward
 local finvader, flocal
 
--- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme hailmeagain leave merchant startBattle (Hook functions passed by name)
+-- luacheck: globals attack attackerAttacked attackerDeath begin defenderAttacked defenderDeath defense hail hailagain hailme leave merchant startBattleIfReady (Hook functions passed by name)
 
 function create ()
    source_system = system.cur()
@@ -73,8 +73,7 @@ function begin ()
    hook.timer(3.0, "merchant")
    hook.timer(7.0, "attack")
    hook.timer(12.0, "defense")
-   inForm       = false -- Are people are in formation?
-   batInProcess = false -- Is battle happening?
+   battleEnded = false
 
    hook.rm(jumphook)
    hook.jumpout("leave")
@@ -97,17 +96,6 @@ function hail()
    hook.rm(hailhook)
    tk.msg(_("A battle is about to begin"), fmt.f(_([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from {sys} is going to attack {pnt}. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]), {sys=source_system, pnt=source_planet}))
    player.commClose()
-end
-
-function hailmeagain()
-    warrior:hailPlayer()
-    hailhook = hook.pilot(warrior, "hail", "hailagain")
-end
-
-function hailagain()
-   hook.rm(hailhook)
-   tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
-   player.pay(reward)
 end
 
 --Arranges a list of pilot with their mass
@@ -146,21 +134,29 @@ local function chooseInList(list)
    end
 end
 
---Computes the reward
---TODO: This looks fishy. Was it supposed to be called with attack=true to init and with attack=false for later kills?
-local function computeReward(attack, massOfVictims)
-   if attack == true then
-      baserew = 20000
-   end
-   baserew = baserew + 60*massOfVictims
+-- Prepares the reward
+local function prepareReward(massOfVictims)
+   local warrior = chooseInList(side == "attacker" and attackers or defenders)
+   if warrior == nil then return end -- Simultaneous destruction?
+   reward = 20e3 + 60*massOfVictims
+   reward = reward * (1 + rnd.sigma() / 3)
+   warrior:hailPlayer()
+   hailhook = hook.pilot(warrior, "hail", "hailagain")
+end
 
-   reward = baserew + rnd.sigma() * (baserew/3)
+function hailagain()
+   hook.rm(hailhook)
+   tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
+   player.pay(reward)
+   player.commClose()
 end
 
 -- Returns leader of fleet
 local function getLeader(list)
    local p = chooseInList(list)
-   if p:leader() == nil or not p:leader():exists() then
+   if p == nil or not p:exists() then
+      return nil
+   elseif p:leader() == nil or not p:leader():exists() then
       return p
    else
       return p:leader()
@@ -258,29 +254,41 @@ function defense ()
    defdeath = 0
    defkilled = 0 --mass of the player's victims
 
-   local alead = getLeader(attackers)
    local dlead = getLeader(defenders)
-   alead:taskClear()
    dlead:control()
-   alead:attack(dlead)
-   dlead:attack(alead)
-   inForm = true
-   hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
+
+   if attdeath >= attnum then  -- Special case: first fleet slaughtered before second fleet spawned!
+      dlead:land(source_planet)
+      battleEnded = true
+      if side == "defender" then
+         prepareReward(attkilled)
+      end
+   else
+      local alead = getLeader(attackers)
+      alead:taskClear()
+      alead:attack(dlead)
+      dlead:attack(alead)
+      hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattleIfReady", focus = dlead})
+   end
 end
 
 -- Both fleets are close enough: start the epic battle
-function startBattle()
-   if inForm then
+function startBattleIfReady()
+   if attackers ~= nil and defenders ~= nil then
+      local alead = getLeader(attackers)
+      local dlead = getLeader(defenders)
       for i, p in ipairs(attackers) do
-         p:memory().aggressive = true
+         if  p:exists() then
+            p:memory().aggressive = true
+         end
       end
-      getLeader(attackers):control(false)
+      if alead then alead:control(false) end
       for i, p in ipairs(defenders) do
-         p:memory().aggressive = true
+         if  p:exists() then
+            p:memory().aggressive = true
+         end
       end
-      getLeader(defenders):control(false)
-      inForm = false
-      batInProcess = true
+      if dlead then dlead:control(false) end
    end
 end
 
@@ -299,9 +307,7 @@ function defenderAttacked(_victim, attacker)
          side = "attacker"
       end
    end
-   if inForm then
-      startBattle()
-   end
+   startBattleIfReady()
 end
 
 function attackerAttacked(_victim, attacker)
@@ -319,57 +325,47 @@ function attackerAttacked(_victim, attacker)
          side = "defender"
       end
    end
-   if inForm then
-      startBattle()
-   end
+   startBattleIfReady()
 end
 
-function attackerDeath(victim, attacker)
-   if batInProcess then
-      attdeath = attdeath + 1
+function attackerDeath(victim, arg)
+   attdeath = attdeath + 1
 
-      local pp = player.pilot()
-      if attacker and (attacker == pp or attacker:leader() == pp) then
-         attkilled = attkilled + victim:stats().mass
-      end
+   -- Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
+   local pp = player.pilot()
+   if arg and arg.leader and (arg == pp or arg:leader() == pp) then
+      attkilled = attkilled + victim:stats().mass
+   end
 
-      if attdeath >= attnum then  --all the enemies are dead
-         local lead = getLeader(defenders)
-         lead:control()
-         lead:land(source_planet)
-         batInProcess = false -- Battle ended
-
-         --Time to get rewarded
-         if side == "defender" then
-            warrior = chooseInList(defenders)
-            computeReward(true, attkilled)
-            hook.timer(1.0, "hailmeagain")
-         end
+   if not battleEnded and attdeath >= attnum then  --all the enemies are dead
+      battleEnded = true
+      local lead = getLeader(defenders)
+      if lead == nil then return end -- Simultaneous destruction?
+      lead:control()
+      lead:land(source_planet)
+      if side == "defender" then
+         prepareReward(attkilled)
       end
    end
 end
 
-function defenderDeath(victim, attacker)
-   if batInProcess then
-      defdeath = defdeath + 1
+function defenderDeath(victim, arg)
+   defdeath = defdeath + 1
 
-      local pp = player.pilot()
-      if attacker and (attacker == pp or attacker:leader() == pp) then
-         defkilled = defkilled + victim:stats().mass
-      end
+   -- Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
+   local pp = player.pilot()
+   if arg and arg.leader and (arg == pp or arg:leader() == pp) then
+      defkilled = defkilled + victim:stats().mass
+   end
 
-      if defdeath >= defnum then  -- all the defenders died : the winner lands on his planet
-         local lead = getLeader(attackers)
-         lead:control()
-         lead:land(source_planet)
-         batInProcess = false -- Battle ended
-
-         --Time to get rewarded
-         if side == "attacker" then
-            warrior = chooseInList(attackers)
-            computeReward(true, defkilled)
-            hook.timer(1.0, "hailmeagain")
-         end
+   if not battleEnded and defdeath >= defnum then  -- all the defenders died: the winner lands on his planet
+      battleEnded = true
+      local lead = getLeader(attackers)
+      if lead == nil then return end -- Simultaneous destruction?
+      lead:control()
+      lead:land(source_planet)
+      if side == "attacker" then
+         prepareReward(defkilled)
       end
    end
 end
