@@ -178,7 +178,7 @@ static void map_setup (void)
          Planet *p = sys->planets[j];
          if (!planet_isKnown(p))
             continue;
-         if (!planet_hasService(p, PLANET_SERVICE_LAND) || !planet_hasService(p, PLANET_SERVICE_INHABITED))
+         if (!planet_hasService(p, PLANET_SERVICE_LAND))
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
          planet_updateLand( p );
