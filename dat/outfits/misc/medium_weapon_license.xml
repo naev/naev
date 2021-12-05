@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>50000</price>
   <gfx_store>license.webp</gfx_store>
-  <description>This license will authorize you to buy and use medium weapons like the ion cannon.</description>
+  <description>This license will authorize you to buy and use medium weapons like the ripper cannon.</description>
  </general>
  <specific type="license">
   <provides>Medium Weapon</provides>
