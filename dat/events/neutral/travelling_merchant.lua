@@ -170,7 +170,7 @@ function board ()
    for _,r in ipairs(mission_rewards) do
       local m = r[1]
       local o = r[2]
-      if player.misnDone(m) and player.numOutfit(o)<8 then
+      if player.misnDone(m) and player.numOutfit(o)<1 then
          table.insert( outfits, o )
       end
    end
