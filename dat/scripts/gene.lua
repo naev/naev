@@ -1,4 +1,6 @@
 local luatk = require "luatk"
+local lg = require "love.graphics"
+local utility = require "pilotname.utility"
 
 local gene = {}
 
@@ -277,8 +279,16 @@ function gene.window ()
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
-   local bx, by = 40, 40
+   local bx, by = 20, 40
    local sw, sh = 70, 70
+   -- Tier stuff
+   local font = lg.newFont(12)
+   for i=0,7 do
+      local col = { 0.95, 0.95, 0.95 }
+      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, 70, 30, string.format(_("TIER %s"),utility.roman_encode(i)), col, "center", font )
+   end
+   bx = bx + sw
+   -- Elements
    local scol = {1, 1, 1, 0.2}
    for k,l in ipairs(skillslink) do
       luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*(l.x2-l.x1)+10, sh*(l.y2-l.y1)+10, scol )
