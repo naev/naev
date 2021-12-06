@@ -979,8 +979,9 @@ void gui_clearMessages (void)
 static void gui_renderMessages( double dt )
 {
    double x, y, h, hs, vx, vy, dy;
-   int v, i, m, o;
-   glColour c, msgc;
+   int v, o;
+   glColour c = {.r=1., .g=1., .b=1.};
+   const glColour msgc = {.r=0., .g=0., .b=0., .a=0.6};
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -990,15 +991,6 @@ static void gui_renderMessages( double dt )
    v = mesg_viewpoint;
    if (v == -1)
       v = mesg_pointer;
-
-   /* Colour. */
-   c.r = 1.;
-   c.g = 1.;
-   c.b = 1.;
-   msgc.r = 0.;
-   msgc.g = 0.;
-   msgc.b = 0.;
-   msgc.a = 0.6;
 
    /* Render background. */
    h = 0;
@@ -1019,9 +1011,9 @@ static void gui_renderMessages( double dt )
    }
 
    /* Render text. */
-   for (i=0; i<conf.mesg_visible; i++) {
+   for (int i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
-      m  = (v - i) % mesg_max;
+      int m  = (v - i) % mesg_max;
       if (m < 0)
          m += mesg_max;
 
