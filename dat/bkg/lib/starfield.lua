@@ -27,7 +27,8 @@ starfield.stars = {
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
-local shader, sstarfield, sf, sz, sb
+local cvs, texw, texh, nw, nh -- For static shader
+local shader, sstarfield, sf, sz, sb -- For dynamic shader
 
 local function star_add( added, num_added )
    -- Set up parameters
@@ -121,15 +122,15 @@ function starfield.init( params )
    shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
    if static then
-      local nw, nh = gfx.dim()
-      local texw = nw / nconf.zoom_far
-      local texh = nh / nconf.zoom_far
+      nw, nh = gfx.dim()
+      texw = nw / nconf.zoom_far
+      texh = nh / nconf.zoom_far
       local texs = 4096 / math.max( texw, texh )
       if texs < 1 then
          texw = texw / texs
          texh = texh / texs
       end
-      local cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
+      cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
       shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
 
       local oldcanvas = lg.getCanvas()
@@ -140,8 +141,6 @@ function starfield.init( params )
       love_shaders.img:draw( 0, 0, 0, texw, texh )
       lg.setShader()
       lg.setCanvas( oldcanvas )
-
-      naev.bkg.image( cvs.t.tex, 0, 0, 0, texs, 0 )
    else
       sstarfield = bgshaders.init( shader, sf, {usetex=true} )
    end
@@ -152,7 +151,11 @@ function starfield.init( params )
 end
 
 function starfield.render( dt )
-   if static then return end
+   if static then
+      local z = 1/camera.getZoom()
+      cvs:draw( (nw-texw*z)/2, (nh-texh*z)/2, 0, z, z )
+      return
+   end
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()
