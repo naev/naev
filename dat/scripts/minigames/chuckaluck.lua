@@ -115,6 +115,7 @@ local function _inbox( mx, my, x, y, w, h )
 end
 
 function cl.draw( bx, by, bw, _bh )
+   naev.gfx.clearDepth()
    local sep = 25
    local w = 50
    local h = 50

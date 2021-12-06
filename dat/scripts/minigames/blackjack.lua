@@ -239,6 +239,7 @@ local function _drawhand( x, y, cards, hidefirst )
 end
 
 function bj.draw( bx, by, bw, _bh )
+   naev.gfx.clearDepth()
    local sep = 25
    local w = 75
    local h = 105
