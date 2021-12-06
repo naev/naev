@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-05 10:40-0500\n"
+"POT-Creation-Date: 2021-12-06 15:29+0900\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -26658,7 +26658,7 @@ msgstr ""
 "니다. 저는 보상으로 {credits} 크레딧을 줄 권한이 있습니다.\""
 
 #. Returns leader of fleet
-#: dat/events/dvaered/warlords_battle.lua:169
+#: dat/events/dvaered/warlords_battle.lua:178
 msgid "Invader"
 msgstr ""
 
@@ -26667,7 +26667,7 @@ msgstr ""
 #. The transport ships tend to run away
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
-#: dat/events/dvaered/warlords_battle.lua:225
+#: dat/events/dvaered/warlords_battle.lua:233
 msgid "Local Warlord's Force"
 msgstr ""
 
@@ -26679,10 +26679,8 @@ msgstr ""
 #. The player chose his side
 #. Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
 #. all the enemies are dead
-#. Simultaneous destruction?
 #. Credit the player if applicable. (This hook is overloaded; non-nil "arg.leader" means it's a death and "arg" is the killer.)
 #. all the defenders died: the winner lands on his planet
-#. Simultaneous destruction?
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="FLF/DV Derelicts">
@@ -34160,7 +34158,7 @@ msgstr ""
 #: src/gui.c:1526 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
 #: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1948
-#: src/player_autonav.c:91 src/player_autonav.c:212 src/ship.c:205
+#: src/player_autonav.c:91 src/player_autonav.c:213 src/ship.c:205
 msgid "Unknown"
 msgstr ""
 
@@ -46874,7 +46872,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:83
 msgid ""
-"You tell Kex about you encounter with the transports and how you weren't "
+"You tell Kex about your encounter with the transports and how you weren't "
 "able to find the supposed cargo."
 msgstr ""
 
@@ -46913,9 +46911,9 @@ msgstr ""
 msgid ""
 "Kex looks at you in the eyes.\n"
 "\"In cases like this it's probably best not to ask questions, and just take "
-"it as some kind of blessing. Had things like this happen all the time in the "
-"nebula and nothing good ever came from investigating. Just remember to keep "
-"an eye open.\""
+"it as some kind of blessing. I've had things like this happen all the time "
+"in the nebula and nothing good ever came from investigating. Just remember "
+"to keep an eye open.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:96
@@ -46929,8 +46927,8 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:98
 msgid ""
 "He puts his wing on the lock and you hear some sort of click. His eyes close "
-"and he begins to hum an old tune, almost sounds like a nursery rhyme. This "
-"goes on for a while before he suddenly jolts back with his eyes open."
+"and he begins to hum an old tune.  It almost sounds like a nursery rhyme. "
+"This goes on for a while before he suddenly jolts back with his eyes open."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:100
@@ -47003,46 +47001,47 @@ msgstr "네뷸라에 온것을 환영합니다"
 #: dat/missions/minerva/kex1.lua:143
 msgid ""
 "\"Nothing really great about this place. Don't know why it brings so many "
-"people from all over the universe, most of whom end up returning in rags "
-"broke. This station is a graveyard of hopes and dreams.\""
+"people from all over the universe, most of whom end up returning broke and "
+"in rags. This station is a graveyard of hopes and dreams.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:144
 msgid ""
-"\"This cycle a kid who was engaged to his childhood sweetheart came to "
+"\"This cycle, a kid, who was engaged to his childhood sweetheart, came to "
 "celebrate his engagement. They got absorbed into the game and decided to bet "
-"their savings for the wedding.\""
+"the money they'd saved for their wedding.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:145
 msgid ""
 "\"He wouldn't listen to reason, and eventually lost all of his savings. He "
-"ended up getting into the fight with the security at the station, and ended "
-"up taken away in a stretcher with a broken back. Not very pretty.\""
+"ended up getting into a fight with station security and they took him away "
+"in a stretcher with a broken back. Not very pretty.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:146
 msgid ""
-"\"Despite a life destroyed, management was fairly happy, seems like he had "
-"quite a lot saved up until he came here. Just another day at the station.\""
+"\"Despite a life destroyed, management was fairly happy. It seems like he "
+"had quite a lot saved up until he came here. Just another day at the station."
+"\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:147
 msgid ""
-"\"When you spend here so long as I have, you tend to see rhythm of the "
+"\"When you've been here as long as I have, you tend to see the rhythm of the "
 "station, and it isn't very good. Brings out the worst in people.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:148
 msgid ""
 "\"Most of the problem lies in the management, they're all a bunch of "
-"assholes led by the CEO, which is even a bigger asshole.\""
+"assholes led by the CEO, who is an even bigger asshole.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:160
 msgid ""
-"\"They've been running this joint since before I got here. Lots of rumours "
-"of them doing shady stuff that some are bound to be true.\""
+"\"They've been running this joint since before I got here. There are enough "
+"rumours of them doing shady stuff that some are bound to be true.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:161
@@ -47056,7 +47055,7 @@ msgstr ""
 msgid ""
 "\"The only thing keeping me from my freedom is the fact that the CEO legally "
 "owns me. They don't believe I am fully sentient, but I'm sure if they knew "
-"it would just make everything harder for me so I have to lay low.\""
+"it would just make everything harder for me, so I have to lay low.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:163
@@ -47065,16 +47064,16 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:164
 msgid ""
-"\"He shouldn't be too hard to find most of the time given his drinking "
-"habits. You can usually find him around the bar lounge on the 7th floor. You "
-"aren't going to go talk to him? There's no way that anything like that could "
-"work.\"\n"
+"\"He shouldn't be too hard to find. Given his drinking habits, you can "
+"usually find him around the bar lounge on the 7th floor. You aren't going to "
+"go talk to him, are you? There's no way that anything like that could work."
+"\"\n"
 "He lets out a sigh."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:175
 msgid ""
-"\"Oh, you already talked to them? How did it go?\"\n"
+"\"Oh, you already talked to him? How did it go?\"\n"
 "He looks at you expectantly."
 msgstr ""
 
@@ -47085,14 +47084,15 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:178
 msgid ""
 "He looks a bit glum.\n"
-"\"Yeah, I don't think there is talking sense into that one… Maybe if we…\"\n"
+"\"Yeah, I don't think there's talking any sense into that one… Maybe if we…"
+"\"\n"
 "He stops to think a bit."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:181
 msgid ""
 "\"This may sound crazy, but I think it might work. You're a good pilot from "
-"what I hear right?\"\n"
+"what I hear, right?\"\n"
 "He looks at you with determination.\n"
 "\"Given that the issue is the CEO, if we can somehow get rid of the CEO, "
 "there should be no issue, right?\""
@@ -47100,16 +47100,16 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:184
 msgid ""
-"\"Since I know for a certainly that he is involved in, let's call it, "
-"unsavory business, all we have to do is get him bust and in the confusion it "
-"should be more than easy for me to go free.\""
+"\"Since I know for a certain that he is involved in, let's call it, \\"
+"\"unsavory business\\\", all we have to do is get him busted and in the "
+"confusion it should be more than easy for me to go free.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:185
 msgid ""
 "He looks down at the floor.\n"
-"\"I know we've known each other for a relatively short time, but wouldn't "
-"you help a duck out? I might be able to make it worth your time afterwards.\""
+"\"I know we've known each other for a relatively short time, but would you "
+"help a duck out? I might be able to make it worth your while afterwards.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:188
@@ -47131,8 +47131,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:194 dat/missions/minerva/kex1.lua:224
 msgid ""
-"\"If you can disable the ship and find the evidence itself it would be "
-"ideal, however, given that it is always delivered in secured vaults, you "
+"\"It would be ideal if you can disable the ship and find the evidence "
+"itself, however, given that it is always delivered in secured vaults, you "
 "should be able to recover the vault from the debris if you roll that way.\""
 msgstr ""
 
@@ -47168,15 +47168,15 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:222
 msgid ""
-"\"We have to find the dirt on the CEO and get him removed. It is the only "
-"chance I have for freedom.\""
+"\"We have to find dirt on the CEO and get him removed. It is the only chance "
+"I have for freedom.\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:223
 msgid ""
 "They should be receiving a delivery. You should go intercept it at the {sys} "
 "system before it gets here. I have sent you all the precise information. It "
-"should be a breeze with with your piloting skills."
+"should be a breeze what with your piloting skills."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:239
@@ -47267,9 +47267,8 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:327
 msgid ""
 "You storm the transport and head towards the cargo bay, however, once you "
-"get there you find it is empty. Given that it is likely not to be large, you "
-"proceed to explore the rest of the ship to see if there is anything of "
-"interest."
+"get there you find it is empty. You proceed to explore the rest of the ship "
+"to see if there is anything of interest."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:328
@@ -47280,15 +47279,14 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:329
 msgid ""
-"It might be best to report back to Kex to see if his information was "
-"incorrect."
+"It might be best to report back to Kex to see if his information was correct."
 msgstr ""
 
 #. Permanently disable mainguy
 #. Message update
 #: dat/missions/minerva/kex1.lua:336
 msgid ""
-"You boarded a transport destined to the Minerva CEO, but didn't find "
+"You boarded a transport destined for the Minerva CEO, but didn't find "
 "anything."
 msgstr ""
 
@@ -47300,7 +47298,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:349
 msgid ""
-"You destroyed a transport destined to the Minerva CEO, but didn't find "
+"You destroyed a transport destined for the Minerva CEO, but didn't find "
 "anything in the debris."
 msgstr ""
 
@@ -47330,34 +47328,34 @@ msgstr ""
 #: dat/missions/minerva/kex2.lua:94
 msgid ""
 "A discrete terminal in the corner of the landing bay, you should be able to "
-"connect the program Kex gave you to it."
+"use it to load the program Kex gave you."
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:103
 msgid ""
-"You land on {pnt} and proceed to discretely approach one of the terminals "
-"and connect the program that Kex gave you."
+"You land on {pnt} and discretely approach one of the terminals.  You upload "
+"the program that Kex gave you."
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:104
 msgid ""
-"The terminal lights up dimly and begins to compute whatever was on the "
+"The terminal dimly lights up and begins to compute whatever was in the "
 "program. After a while it seems to begin downloading large amounts of data "
-"while you impatiently wait."
+"while you nervously wait."
 msgstr ""
 
 #. blaring alarm
 #: dat/missions/minerva/kex2.lua:106
 msgid ""
-"Suddenly, an alarm begins to blare. Before the security screen shuts down in "
-"the terminal you are able to grab the program as you make a run for your "
+"Suddenly, an alarm begins to blare. Before the security screen appears on "
+"the terminal, you are able to grab the program as you make a run for your "
 "ship. In the background, you hear people yelling and running around. It "
 "seems like you have to get out of here as soon as possible."
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:107
 msgid ""
-"This is probably what Kex meant with things going sour. It seems like you "
+"This is probably what Kex meant about things going sour. It seems like you "
 "have a head start on your pursuers, but you may not be able to count on it "
 "for long."
 msgstr ""
@@ -47366,25 +47364,25 @@ msgstr ""
 #. Mission is over
 #: dat/missions/minerva/kex2.lua:127
 msgid ""
-"You return tired from your escapade once again to Kex, who is at his "
-"favourite spot at Minerva station."
+"Still tired from your escapade, you look for Kex at his favourite spot at "
+"Minerva station."
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:128
-msgid "\"You look like a mess kid, You alright?\""
+msgid "\"You look like a mess kid. You alright?\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:129
 msgid ""
-"You explain how you weren't able to get all the data before you had to scram "
-"out of there, and hand him the data you were able to recover."
+"You explain how you weren't able to get all the data before you had to bug "
+"out of there, and hand him what data you were able to recover."
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:130
 msgid ""
-"\"Damn, the security was tighter than anticipated. I'm glad to see you made "
-"it in one piece despite the opposition. Aristocrats always seem to have "
-"cards up their sleeves.\""
+"\"Damn, security was tighter than anticipated. I'm glad to see you made it "
+"in one piece despite the opposition. Aristocrats always seem to have cards "
+"up their sleeves.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:131
@@ -47399,8 +47397,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex2.lua:134
 msgid ""
-"\"In the meantime, it looks like we were also able to take some credits. "
-"I'll wire you up with a reward for your efforts.\""
+"\"In the meantime, it looks like we were also able to grab some credits. "
+"I'll wire you a reward for your efforts.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:138
@@ -47426,8 +47424,9 @@ msgstr "네뷸라에 온것을 환영합니다"
 #: dat/missions/minerva/kex2.lua:166
 msgid ""
 "\"Glad you asked. It turns out she's apparently a big shot at {pnt} in the "
-"{sys} system. She deals in all sorts of trade between the Empire and Za'lek, "
-"although there also seems to be some bad rumours about her floating around.\""
+"{sys} system. She deals in all sorts of trade between the Empire and the "
+"Za'lek, although there also seems to be some nasty rumours about her "
+"floating around.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:167
@@ -47443,7 +47442,7 @@ msgid ""
 "\"I was able to get more information from some other documents in the crate, "
 "as seems like they were fairly sloppy with some of the security details. I "
 "have managed to put together a small program that hopefully should be able "
-"to access their main database, however, I'm going to need you to connect it "
+"to access their main database, however, I'm going to need you to upload it "
 "by hand.\""
 msgstr ""
 
@@ -47451,8 +47450,8 @@ msgstr ""
 msgid ""
 "\"This time the job is probably going to be much trickier than the last. "
 "Even though the documents had some security issues, it is likely that things "
-"will be much more different once you get over to {pnt}. Still, I think you "
-"should be able to handle this easily. Would you be up for the challenge?\""
+"will be different once you get over to {pnt}. Still, I think you should be "
+"able to handle this easily. Would you be up for the challenge?\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:171 dat/missions/minerva/kex3.lua:170
@@ -47494,9 +47493,8 @@ msgstr ""
 #: dat/missions/minerva/kex2.lua:176
 msgid ""
 "\"Great! Let me get you set up with the program. All you have to do is land "
-"on {pnt} and plug it in to any terminal that there should be around the "
-"docks. That should also make it easier for you to get out of there if things "
-"go sour.\""
+"on {pnt} and plug it in to any terminal you find around the docks. That "
+"should also make it easier for you to get out of there if things go sour.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:188
@@ -47509,7 +47507,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex2.lua:189
 msgid ""
-"\"All you have to do is land on {pnt} and plug in the program I gave you to "
+"\"All you have to do is land on {pnt} and upload the program I gave you to "
 "any terminal that there should be around the docks. That should also make it "
 "easier for you to get out of there if things go sour.\""
 msgstr ""
@@ -47524,7 +47522,7 @@ msgstr ""
 #: dat/missions/minerva/kex2.lua:194
 msgid ""
 "\"It's as awful as you would expect it to be. I mean, sure I can float and "
-"fly short distances, but you can't reach any tall places and have to "
+"fly short distances, but I can't reach any tall places and have to "
 "constantly avoid getting stepped on.\""
 msgstr ""
 
@@ -47538,9 +47536,9 @@ msgstr ""
 #: dat/missions/minerva/kex2.lua:196
 msgid ""
 "\"I would like to think that I'm used to it after all these cycles, but you "
-"never get used to it. There's a moment of bliss when you wake up first thing "
-"in the morning, and you still haven't remembered you're a duck, but it soon "
-"comes crashing down. You just can't get used to it.\""
+"never get used to it. There's a moment of bliss when I wake up first thing "
+"in the morning, and I still haven't remembered I'm a duck, but it soon comes "
+"crashing down. I just can't get used to it.\""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:197
@@ -47596,15 +47594,15 @@ msgstr "프론티어 시스템"
 #: dat/missions/minerva/kex3.lua:98
 msgid ""
 "You land and promptly proceed to try to find Major Malik and get the job "
-"over with. After glossing over the map of the installations, you are able to "
-"quickly locate their office and head down there."
+"over with. After glancing over the map of the installations, you are able to "
+"quickly locate his office and head down there."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:100
 msgid ""
 "You arrive and inquire about Major Malik, but are told he is apparently "
 "enjoying some leisure time at {pnt} in the {sys} system. Looks like you have "
-"no choice but to try to look for them there."
+"no choice but to try to look for him there."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:107
@@ -47651,9 +47649,9 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:122
 msgid ""
-"The directories are really organized and it doesn't take long before you can "
-"find what seem to be the correct files, and you copy them over to a "
-"holodrive that you pocket with you. This should make Kex satisfied this time."
+"The directories are nicely organized and it doesn't take long before you "
+"find what seems to be the correct files. You copy them over to your "
+"holodrive. You hope the files satisfy Kex this time."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:123
@@ -47667,15 +47665,15 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:124
 msgid ""
-"You better head over to Kex to relay the information back at Minerva Station."
+"You better head back to Minerva Station to relay the information to Kex."
 msgstr ""
 
 #. We're done here, go back to kex:)
 #. Mission is over
 #: dat/missions/minerva/kex3.lua:143
 msgid ""
-"You return exhausted from the entire ordeal, with Major Malik's dead eyes "
-"are stilled ingrained in your memory, and approach Kex."
+"Still exhausted from the entire ordeal, and with Major Malik's dead eyes "
+"still ingrained in your memory, you approach Kex."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:144
@@ -47685,7 +47683,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:145
 msgid ""
 "You explain what happened in the Crimson Gauntlet server and how you barely "
-"emerged with your life, and hand him the holodrive with the data you were "
+"escaped with your life, and hand him the holodrive with the data you were "
 "able to collect."
 msgstr ""
 
@@ -47693,8 +47691,8 @@ msgstr ""
 msgid ""
 "\"Damn. When I was still a human, we didn't have that fancy Virtual Reality "
 "shit. It's wild. Don't think I want to try it after hearing about your "
-"experience though. At least I'm glad you made it out of there alive. Don't "
-"know what I would do without you now.\""
+"experience though. I'm glad you made it out of there alive. Don't know what "
+"I would do without you now.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:147
@@ -47703,15 +47701,15 @@ msgid ""
 "He once again plugs the drive into a port somewhere under his wing and his "
 "eyes go blank.\n"
 "\"Seems like that Major Malik was into some major shit.\"\n"
-"He seems satisfied at his pun."
+"He seems amused by his pun."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:151
 msgid ""
 "He snaps out of his stupor and looks at you again.\n"
 "\"Seems like you got much more than I expected. It's going to take me a "
-"while to go over this. Meet me back up here in a period or so after I "
-"process all this data.\""
+"while to go over this. Meet me back here in a period or so after I process "
+"all this data.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:153
@@ -47740,34 +47738,34 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:167
 msgid ""
-"\"Good news kid! It looks like the information obtained from Baroness Eve "
-"got some dirt on the CEO. It seems like they're involved in some sort of "
-"money laundering, but this alone won't get us anywhere, we need more intel.\""
+"\"Good news kid! It looks like the information we obtained from Baroness Eve "
+"had some dirt on the CEO. Looks like they're involved in some sort of money "
+"laundering, but this alone won't get us anywhere, we need more intel.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:168
 msgid ""
-"\"We have another lead on another co-conspirator, this time in Dvaered "
-"space. Some individual named Major Malik seems to also be in the money "
-"laundering. Would you be up for paying them a visit and seeing what you can "
-"get out of them?\""
+"\"We have a lead on another co-conspirator, this time in Dvaered space. Some "
+"individual, named Major Malik, seems to also be in the money laundering. "
+"Would you be up for paying him a visit and seeing what you can get out of "
+"him?\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:179
 msgid ""
 "\"This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the "
-"{sys} system. They should be fairly old, so it should be enough to just "
-"outright confront him and get him to talk. I'll give you a note that if you "
-"show him should be easy enough to convince him. I'll also send you a picture "
-"of him so you can easily recognize him when you see him.\""
+"{sys} system. He should be fairly old, so it should be enough to just "
+"outright confront him and get him to talk. I'll give you a note to help "
+"convince him you mean business. I'll also send you his picture so you can "
+"easily recognize him when you see him.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:180
 msgid ""
 "\"The note? It's just your run-of-the-mill blackmail. We don't really care "
-"about Major Malik himself, what we want is dirt on the CEO. Hopefully "
-"they'll be sensible and give us what we want. However, I trust you will do "
-"what it takes in case they don't.\"\n"
+"about Major Malik himself, what we want is dirt on the CEO. Hopefully he'll "
+"be sensible and give us what we want. However, I trust you will do what it "
+"takes in case he doesn't.\"\n"
 "He winks his cyborg eye at you."
 msgstr ""
 
@@ -47779,8 +47777,8 @@ msgstr "네뷸라에 온것을 환영합니다"
 #: dat/missions/minerva/kex3.lua:202
 msgid ""
 "\"The job is pretty straightforward. We need Major Malik to talk about his "
-"dealings with the Minerva CEO. If you hand him the letter I gave you it "
-"should be enough to convince him.\""
+"dealings with the Minerva CEO. If you hand him the note I gave you it should "
+"be enough to convince him.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:203
@@ -47808,20 +47806,19 @@ msgstr ""
 msgid ""
 "\"It was not uncommon for things to break down and get weird fast when going "
 "deep into the Nebula. The radiation is really damaging to ship armour, so "
-"you always have to maximize energy to shields. It makes it hard to bring "
-"firepower, but not like it's going to do you any good in the deep Nebula. "
-"Nothing is alive there, or at least, not in the sense we sort of think of as "
-"being alive.\""
+"you have to maximize energy to shields. It makes it hard to bring firepower, "
+"but it's not like it'll do you any good in the deep Nebula. Nothing is alive "
+"there, or at least, not in the sense we sort of think of as being alive.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:213
 msgid ""
-"\"So me and Mireia had picked up a tip of some sort of weird wreck deep past "
-"Arandon. Some poor fools had gone to search for it and hadn't come back for "
-"a few hecto-periods and one of their husbands was beginning to lose it, so "
-"they came to us. Now, we weren't interested in trying to save them, once you "
-"enter the Nebula, you forfeit all chance at salvation. Search parties tend "
-"to only rack up the body counts.\""
+"\"So me and Mireia had picked up a tip about some sort of weird wreck deep "
+"past Arandon. Some poor fools had gone to search for it and hadn't come back "
+"for a few hecto-periods and one of their husbands was beginning to lose it, "
+"so they came to us. Now, we weren't interested in trying to save them -- "
+"once you enter the Nebula, you forfeit all chance of rescue. Search parties "
+"tend to only count up the bodies.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:214
@@ -47836,55 +47833,55 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:217
 msgid ""
 "\"So we loaded up our trusty Mule with all the shield generators and "
-"survival goods we could fit, and headed towards the rough location we were "
-"told the wreck was at. At first it was fairly standard, shields running at "
-"maximum power, and radiators set at maximum power. You get used to the hum "
-"and the chaos of the Nebula, but you can never relax. It sort of gets into "
-"your bones and makes you lose your sleep.\""
+"survival gear we could fit, and headed out towards the last known location "
+"of the wreck. At first it was fairly standard, our shields and radiators "
+"running at maximum power. You get used to the hum and the chaos of the "
+"Nebula, but you can never relax. It sort of gets into your bones and makes "
+"you lose your sleep.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:218
 msgid ""
 "\"We continued like that for what seemed ages. Sensors get a bit fuzzy in "
-"there, but they were reporting about a deca-period when we saw it. It was "
-"part of something very big, almost looking like some sort of metallic "
-"skeleton. We approached it cautiously because radiation was off the charts. "
-"The more you looked at it, the more it felt like it was burning into the "
-"back of your retina.\""
+"there, but they'd been scanning for about a deca-period when we saw it. It "
+"was part of something very big, almost like some sort of metallic skeleton. "
+"We approached it cautiously because the radiation was off the charts. The "
+"more you looked at it, the more it felt like it was burning into the back of "
+"your retina.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:219
 msgid ""
 "\"After our cursory analysis, we went to grab a sample. However, when we "
-"tried to approach the robotic arm to it, it never seemed to get closer. It "
-"was at some sort of constant distance from us no matter what we tried. We "
-"only had a small laser turret, but we even tried shooting at it and nothing. "
-"Zip-O.\""
+"tried to extend the robotic arm to it, it never seemed to get closer. It was "
+"at some sort of constant distance from us no matter what we tried. We only "
+"had a small laser turret, but we even tried shooting at it and nothing. Zip-"
+"O.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:220
 msgid ""
-"\"It could have been the exhausting or something else, I don't know, but we "
+"\"It could have been the exhaustion or something else, I don't know, but we "
 "decided to try to ram it. So we accelerated at maximum velocity, and that's "
 "when it happened. Suddenly there was some horrible screeching sound and "
-"everything shook. Next we know, it felt like we were getting pulled through "
-"the eye of a needle, like hyperspace sickness but much worse. And we passed "
-"out.\""
+"everything shook. Next thing we know, it felt like we were getting pulled "
+"through the eye of a needle, like hyperspace sickness but much worse. And we "
+"passed out.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:221
 msgid ""
 "\"When we woke up, there was nothing around us. Only Nebula. One of the "
-"shield generators had gone offline so we wouldn't last long. We did some "
-"emergency repairs and hauled our asses out of there. When we got out, our "
-"systems said that we had only been gone for about 22 periods, but when we "
-"hailed a ship, we found out there was a 1087 period difference between our "
-"system clock and theirs.\""
+"shield generators had gone offline. We weren't going to last long. We did "
+"some emergency repairs and hauled our asses out of there. When we got out, "
+"our systems said that we had only been gone for about 22 periods, but when "
+"we hailed a ship, we found out there was a 1087 period difference between "
+"our system clock and theirs.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:222
 msgid ""
-"\"The weird thing is we didn't have many supplies missing, so there's no way "
+"\"The weird thing is we'd hardly used up our supplies, so there's no way "
 "that could be true. I still scratch my head thinking about this today. I did "
 "tend to lose track of time and lose hunger in the deep Nebula, but nothing "
 "like that. We also had nothing from our encounter with the wreck or whatever "
@@ -47893,7 +47890,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:223
 msgid ""
-"\"After that I head back home and got totally chewed out by my wife. I had "
+"\"After that I headed back home and totally got chewed out by my wife. I had "
 "to spend a few weeks sleeping on the couch and Maikki didn't speak to me for "
 "ages.\"\n"
 "He sighs wistfully.\n"
@@ -47941,7 +47938,7 @@ msgstr ""
 msgid ""
 "\"However, I'm in a good mood today. How about we play a game? I have a "
 "private Crimson Gauntlet server here, let us duel in classic Dvaered "
-"fashion. If you win, I'll give you over the information you want.\""
+"fashion. If you win, I'll give you the information you want.\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:316
@@ -47952,8 +47949,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:323
 msgid ""
-"\"OK, then it's settled then. Follow me to my private room and we'll get "
-"started.\""
+"\"OK. It's settled then. Follow me to my private room and we'll get started."
+"\""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:324
@@ -47980,8 +47977,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:330
 msgid ""
-"You try to remove the gear and stop the boot, but it is too late. The "
-"virtual reality of the Crimson Gauntlet envelopes you…"
+"You try to remove the gear, but it's too late. The virtual reality of the "
+"Crimson Gauntlet envelopes you…"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:334
@@ -48066,7 +48063,7 @@ msgid "You really think you would be getting out of here alive?…"
 msgstr "정말 그렇게 될 줄 알았는가?"
 
 #: dat/missions/minerva/kex3.lua:613
-msgid "You are in my realm now kid!"
+msgid "You are in my realm now, kid!"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:614
@@ -48094,10 +48091,12 @@ msgid "What the hell?!"
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:57
+#, fuzzy
+#| msgid "Frontier systems"
 msgid ""
-"You have been assigned with obtaining information from Jie de Luca at {pnt} "
-"in the {sys} system."
-msgstr ""
+"You have been tasked with obtaining information from Jie de Luca at {pnt} in "
+"the {sys} system."
+msgstr "프론티어 시스템"
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex4.lua:71
@@ -48142,7 +48141,7 @@ msgstr ""
 #: dat/missions/minerva/kex4.lua:123
 msgid ""
 "He looks fairly tired.\n"
-"\"What's up kid?\""
+"\"What's up, kid?\""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:125
@@ -48232,18 +48231,18 @@ msgstr ""
 #: dat/missions/minerva/kex4.lua:163
 msgid ""
 "Before you can speak, he keeps on going.\n"
-"\"Anyway, don't let me silly thoughts bother you. Let us get back to topic."
+"\"Anyway, don't let my silly thoughts bother you. Let us get back to topic."
 "\"\n"
 "His eyes don't seem to have changed."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:166
 msgid ""
-"\"So I was putting together the pieces and found out a close collaborator of "
-"the CEO, someone called Jie de Luca who seems to be situated in the "
-"frontier. They seem to go fairly far back with the CEO and probably have "
-"more information. As this is our best lead for now, I hate to ask this of "
-"you, but would you be able to check them out and see if we can get some more "
+"\"So I was putting together the pieces and found a close collaborator of the "
+"CEO, someone called Jie de Luca who seems to be situated in the frontier. "
+"They seem to go fairly far back with the CEO and probably have more "
+"information. As this is our best lead for now, I hate to ask this of you, "
+"but would you be able to check them out and see if we can get some more "
 "information?\""
 msgstr ""
 
@@ -48276,8 +48275,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:203
 msgid ""
-"\"Been better kid. Just had some sleepless nights, staring at the ceiling "
-"while being able to move, haunted by past regrets.\"\n"
+"\"Been better, kid. Just had some sleepless nights, staring at the ceiling, "
+"unable to move, haunted by past regrets.\"\n"
 "He looks visibly tired.\n"
 "\"You ever do anything you regret, kid?\""
 msgstr ""
@@ -48335,16 +48334,16 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:221
 msgid ""
-"\"Even when I had my first child, I just couldn't stay behind. I just had to "
-"go out. But now…\"\n"
+"\"Even when I had my first child, I just couldn't stay put. I just had to go "
+"out. But now…\"\n"
 "His biological eye looks a bit hazy.\n"
 "\"I guess you don't appreciate what you have until you lose it all.\""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:236
 msgid ""
-"You approach a nonchalantly drink-sipping Jie de Luca. They seem to be "
-"reading some sort of document."
+"You approach Jie de Luca who seems to be reading some sort of document while "
+"nonchalantly sipping a drink."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:237
@@ -48374,7 +48373,7 @@ msgstr "네뷸라에 온것을 환영합니다"
 #: dat/missions/minerva/kex4.lua:247
 msgid ""
 "\"I see. I knew the day would come. Can't have a bunch of low-lives making a "
-"decent living can we now?\"\n"
+"decent living, now, can we?\"\n"
 "They take a sip from their drink."
 msgstr ""
 
@@ -48382,8 +48381,8 @@ msgstr ""
 msgid ""
 "\"Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not "
 "sure if we were orphaned or abandoned, but since a young age this world has "
-"taught us nothing but cruelty and suffering. Forced to work in the ore mines "
-"to survive.\""
+"offered us nothing but cruelty and suffering. Forced to work in the ore "
+"mines to survive.\""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:250
@@ -48404,17 +48403,17 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:253
 msgid ""
-"\"I don't think a hired gun like you would truly what the suffering is like "
-"when nearly working to death in the ore mines. Just here to do your master's "
-"bidding, like the loyal dog you are.\"\n"
+"\"I don't think a hired gun like you would truly understand the kind of "
+"suffering of nearly working to death in the ore mines. You're just here to "
+"do your master's bidding, like the loyal dog you are.\"\n"
 "They give a small chuckle and lean forward."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:255
 msgid ""
 "\"Well honestly, I don't give a shit who your master is. The result is the "
-"same, you are trying to take what we worked hard for with blood, sweat, and "
-"tears.\""
+"same, you are trying to take what we worked hard for with our blood, sweat, "
+"and tears.\""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:256
@@ -48427,7 +48426,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:259
 msgid ""
-"In the split of an eye they fling their drink at you. You manage to dodge "
+"In the blink of an eye they fling their drink at you. You manage to dodge "
 "most of it, but as you look back at them you see the table is empty. Shit, "
 "that went well…\n"
 "You rush to your ship to see if you can catch them in pursuit!"
@@ -48469,22 +48468,22 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:433
 msgid ""
-"Eventually you reach the command center and enter cautiously. The room is "
-"empty except for a chair in the center with it's back facing towards you."
+"Eventually you reach the command center and cautiously enter. The room is "
+"empty except for a chair in the center with its back facing towards you."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:435
 msgid ""
-"Slowly it turns around to reveal Jie de Luca, holding their head from which "
+"Slowly the chair turns to reveal Jie de Luca, holding their head from which "
 "blood is gushing out. In their other hand they clutch a weapon, but it "
-"doesn't really look like they are in condition to use it."
+"doesn't really look like they are in any condition to use it."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:436
 msgid ""
 "\"Feeling proud of yourself dog? Wagging your tail thinking about getting a "
 "prize from your master?\"\n"
-"They cough up and you can see some blood drip from the side of their mouth."
+"They cough and you can see some blood drip from the side of their mouth."
 msgstr ""
 
 #. blaring alarm
@@ -48492,12 +48491,12 @@ msgstr ""
 msgid ""
 "\"This is why we can't have nice things…\"\n"
 "As their head slouches down, you hear an alarm blaring, and a voice "
-"announcing \"Self-destruction imminent!\"."
+"announcing \"Self-destruct imminent!\"."
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:441
 msgid ""
-"You leave Jie behind as you rush to get back to your ship and get away from "
+"You leave Jie behind as you rush to get back to your ship to get away from "
 "the explosion."
 msgstr ""
 
@@ -48507,8 +48506,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:456
 msgid ""
-"As the debris of Jie's ship scatters you realize you never got around to "
-"questioning or getting any information at all…"
+"As the debris of Jie's ship disperses you realize you never got around to "
+"questioning them or getting any information at all…"
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:457
@@ -48523,7 +48522,7 @@ msgstr "프론티어 시스템"
 
 #: dat/missions/minerva/kex5.lua:76
 msgid ""
-"You approach Kex who is sort of slumping at his usual spot. He doesn't seem "
+"You approach Kex, who is sort of slumping at his usual spot. He doesn't seem "
 "to be in very good condition."
 msgstr ""
 
@@ -48544,9 +48543,9 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:81
 msgid ""
-"\"Coming to terms with one's own significance does give a clarity of mind "
-"and make clear one's deepest desires. What has to be done then becomes clear."
-"\""
+"\"Coming to terms with one's own insignificance does give a clarity of mind "
+"and makes clear one's deepest desires. What has to be done then becomes "
+"clear.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:82
@@ -48563,13 +48562,13 @@ msgstr ""
 msgid ""
 "\"I should have realized it sooner. It was obvious from the start that "
 "Strangelove would be involved in this travesty of a station. I found his "
-"name when reviewing some of the documents you got me, then it was all clear."
+"name when reviewing some of the documents you gave me, then it was all clear."
 "\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:94
 msgid ""
-"\"There's not too many trails to where he is right now, but I do think I "
+"\"There aren't too many trails to where he is right now, but I do think I "
 "know where to find him.\""
 msgstr ""
 
@@ -48587,7 +48586,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:98
 msgid ""
-"Without saying anything else, Kex walks off stumbling into the darkness of "
+"Without saying anything else, Kex waddles off stumbling into the darkness of "
 "the station. You feel like it is best to leave him alone right now and "
 "decide to go see Strangelove. He should be in the {sys} system."
 msgstr ""
@@ -48626,7 +48625,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:151
 msgid ""
-"He looks at you after your explanations, furrows his brows a bit.\n"
+"He looks at you after your explanation and furrows his brows a bit.\n"
 "\"I can't believe you comforted him. Do you know all the shit he's done! The "
 "shit he's put me through!\""
 msgstr ""
@@ -48640,14 +48639,14 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:158
 msgid ""
-"You explain to him how the mission went and go into graphical details of how "
+"You explain to him how the mission went and go into graphic detail of how "
 "you finished Dr. Strangelove off by shooting at him point-blank as Kex asked."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:159 dat/missions/minerva/kex5.lua:162
 msgid ""
-"You also hand him over the droid you recovered, looks at briefly before "
-"pocketing somewhere inside his mat of feathers."
+"You also hand him the droid you recovered. Kex looks at it briefly before "
+"pocketing it somewhere inside his mat of feathers."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:161
@@ -48665,10 +48664,10 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:166
 msgid ""
-"He looks at you after your explanations, furrows his brows a bit.\n"
+"He looks at you after your explanation and furrows his brows a bit.\n"
 "\"I was expecting some sort of relief. You know, having Strangelove dead is "
-"all I ever wanted sign I escaped from the laboratory. All I ever dreamed of, "
-"and when I finally get it… nothing?\""
+"all I ever wanted since I escaped from the laboratory. All I ever dreamed "
+"of, and when I finally get it… nothing?\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:171
@@ -48698,7 +48697,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:191
 msgid ""
-"\"Hey kid, I'm really grateful for all you've done, but I don't think I can "
+"\"Hey, kid, I'm really grateful for all you've done, but I don't think I can "
 "go on. I just need some time alone to gather my thoughts.\""
 msgstr ""
 
@@ -48777,16 +48776,16 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:426
 msgid ""
-"You make your way through a nearly impassible very tight passageway towards "
-"the living quarters. Although it is a mess, you don't really see any signs "
-"of anyone living here, it rather seems all abandoned."
+"You make your way through a tight, nearly impassible passageway towards the "
+"living quarters. Although it is a mess, you don't really see any signs of "
+"anyone living here. It rather seems all abandoned."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:427
 msgid ""
-"Eventually you reach a really small room with a bed capsule. The ground and "
-"bed are splattered in blood, but it seems very old and desiccated. Some "
-"empty medicinal syringes and pouches are scattered on the floor."
+"Eventually, you reach a very small room with a bed capsule. The ground and "
+"bed are splattered with blood, but it seems very old and desiccated. Some "
+"empty medical syringes and pouches are scattered on the floor."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:428
@@ -48795,7 +48794,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:433
 msgid ""
-"You head towards and eventually reach the recreation room, which has been "
+"You head towards, and eventually reach, the recreation room, which has been "
 "completely trashed. Even pieces of the wall have been ripped out, revealing "
 "shoddy cable connections and lots of weird mold."
 msgstr ""
@@ -48813,15 +48812,15 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:440
 msgid ""
-"You find a tunnel leading towards the back room. It seems to have been once "
-"blocked off, but now has been torn wide open. You ignore the \"KEEP OUT\" "
-"sign that is bent up underfoot and make your way through."
+"You find a tunnel leading towards the back room. It seems to have been "
+"blocked off once, but now has been torn wide open. You ignore the \"KEEP OUT"
+"\" sign that is bent up underfoot and make your way through."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:441
 msgid ""
 "The tunnel twists and turns as it heads towards the center of the asteroid. "
-"There is no lighting the entire way, so you rely on the lamps of your suit."
+"There is no lighting along the way, so you rely on the lamps of your suit."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:442
@@ -48834,26 +48833,24 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:443
 msgid ""
 "You start to sift through the things to try to find something of interest, "
-"but after a long time of looking around and not making significant progress "
-"given the large amounts of stuff, you decide to take a break and set on a "
-"fallen bookcase."
+"but after a long time of looking around and not making significant progress, "
+"you decide to take a break and sit on a fallen bookcase."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:444
 msgid ""
-"As you survey the room, you notice a small movement next to your feet. The "
-"motion is small that you can only notice it by being still nearby. Slowly "
-"and carefully you lift up some debris to uncover a small and heavily damaged "
-"droid."
+"As you survey the room, you notice a small movement next to your feet. "
+"Slowly and carefully you lift up some debris to uncover a small and heavily "
+"damaged droid."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:445
 msgid ""
-"You pick up the droid and dust it off. The primary lens and hover engine "
-"seem completely damaged, but it does seem like it still has power and likely "
-"data in it. You try to interface to it, but it seems to be locked with "
-"strong encryption. You pocket it as it seems like it might be something of "
-"interest to Kex."
+"You pick up the droid and dust it off. Its primary lens and hover engine "
+"seem completely destroyed, but it does seem like it still has power and "
+"likely data in it. You try to interface to it, but it seems to be locked "
+"with strong encryption. You pocket it as it seems like it might be something "
+"of interest to Kex."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:446
@@ -48869,7 +48866,7 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:454
 msgid ""
 "You spend your time carefully going through the entire station, but it ends "
-"up being mainly in vain: Dr. Strangelove is nowhere to be found. At least "
+"up being mostly in vain: Dr. Strangelove is nowhere to be found. At least "
 "you found a droid that might be useful."
 msgstr ""
 
@@ -48888,7 +48885,7 @@ msgstr ""
 #. TODO small scene
 #: dat/missions/minerva/kex5.lua:473
 msgid ""
-"As you loiter around a system, you suddenly receive an unexpected incoming "
+"As you loiter around the system, you suddenly receive an unexpected incoming "
 "transmission."
 msgstr ""
 
@@ -48896,7 +48893,7 @@ msgstr ""
 msgid ""
 "A hologram of Dr. Strangelove appears before you. He is laying down and his "
 "body seems to be sapped of all energy. He seems to muster up energy to "
-"roughly look in your direction, although his eyes seem unnaturally clouded.\n"
+"vaguely look in your direction, although his eyes seem unnaturally clouded.\n"
 "\"Is that you?\""
 msgstr ""
 
@@ -48915,10 +48912,10 @@ msgstr ""
 #. TODO small scene
 #: dat/missions/minerva/kex5.lua:495
 msgid ""
-"You carefully board the ship, not sure what you are about to encounter. "
-"Trusting your systems sensors indicating a proper atmosphere in the ship, "
-"you board without your space suit. However, when you first enter the ship, a "
-"strong pungent odour makes you partially regret your decision."
+"You cautiously board the ship, not sure what you are about to encounter. "
+"Trusting your system's sensors indicating a proper atmosphere in the ship, "
+"you board without your space suit. However, when you enter the ship, a "
+"strong, pungent odour makes you regret your decision."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:496
@@ -48932,27 +48929,25 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:497
 msgid ""
-"You pay minimal attention to the small critters, which seem harmless, and "
+"You pay little attention to the small critters, which seem harmless, and "
 "proceed through the ship. After a short walk you enter the command room."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:501
 msgid ""
-"You enter the room and meet Dr. Strangelove for the first time face-to-face. "
-"Your first impression is that more than a space ship, it looks like a "
-"hospital. Dr. Strangelove is laid out in a medical bed connected to a lot of "
-"weird machines, with a medical droid attending him. If it weren't for the "
-"fact that everything is fairly rundown and dirty, you would think you were "
-"in a planetary hospital instead of a space ship at the edge of the universe."
+"You enter the room and meet Dr. Strangelove face-to-face for the first time. "
+"Dr. Strangelove is laid out in a medical bed connected to a lot of weird "
+"machines, with a medical droid attending him. If it weren't for the fact "
+"that everything is fairly rundown and dirty, you would think you were in a "
+"planetary hospital instead of a space ship at the edge of the universe."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:502
 msgid ""
 "You take a close look at Dr. Strangelove, and he seems like a husk of what "
-"might have formerly been a man. His cheekbones protrude from his pale face, "
-"and his laboratory coat seems to be a few sizes too big on his frail body. "
-"His vitals monitor also confirms your suspicion that he is more dead than "
-"alive."
+"might have once been a man. His cheekbones protrude from his pale face and "
+"his laboratory coat seems to be a few sizes too large on his frail body. His "
+"vitals monitor also confirms your suspicion that he is more dead than alive."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:503
@@ -48983,14 +48978,14 @@ msgstr ""
 msgid ""
 "\"I thought I almost had it with the last specimen. It was all going so "
 "smoothly… The zero-point bionimorphic interface connection went flawlessly, "
-"and the entropy flux stable was nearly stable, but the connection was never "
+"and the entropy flux was nearly stable, but the connection was never "
 "established.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:512
 msgid ""
 "\"It could be the distance, but my calculations indicated that it shouldn't "
-"matter. It should be everywhere. Everything is everywhere! Folding onto of "
+"matter. It should be everywhere. Everything is everywhere! Folding onto "
 "itself and twisted around in higher dimensions. Measly Euclidean distances "
 "shouldn't matter at all.\""
 msgstr ""
@@ -49001,12 +48996,12 @@ msgid ""
 "spitting in my face. Almost as if the universe itself is unwilling to give "
 "up its secrets.\"\n"
 "He coughs violently.\n"
-"\"But it failed. Like always. It failed.\""
+"\"It failed. Like always. It failed.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:516
 msgid ""
-"\"Williams, why did you have to die? You know so much, you surpassed me in "
+"\"Williams, why did you have to die? You know so much. You surpassed me in "
 "everything I could possibly imagine. You would have been able to make it "
 "work!\""
 msgstr ""
@@ -49036,7 +49031,7 @@ msgstr ""
 msgid ""
 "\"Remember that one time we nearly caused a subatomic implosion when the "
 "hyperphased quantum auto-cycle hit the self-refractive frequency? Your quick "
-"thinking save us from turning the entire system into a sterile void.\""
+"thinking saved us from turning the entire system into a sterile void.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:530
@@ -49072,11 +49067,10 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:552
 msgid ""
-"You don't know what to answer and silence envelopes the room. Finally, he "
+"You don't know how to answer and silence envelopes the room. Finally, he "
 "breaks the calmness.\n"
 "\"I should have been the one to try to defuse the reactor core, not you. I "
-"should have been the one vaporized in the resulting explosion, not you. I "
-"should have been the one not left alone, not you…\""
+"should have been the one vaporized in the resulting explosion, not you.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:554
@@ -49088,7 +49082,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:556
 msgid ""
-"\"If only our places had been changed, you would have been able to solve it "
+"\"If only our places had been switched, you would have been able to solve it "
 "and find me again. I was so close and yet it still feels like there is some "
 "sort of impenetrable wall between me and the solution. What did I miss, "
 "where did I go wrong?\"\n"
@@ -49134,8 +49128,8 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:587
 msgid ""
 "\"Even in the last experiment? The energy wasn't sufficient? Maybe if I "
-"reroute all the ships power system and redo the experiment I might be able "
-"to connect. I must redo the experiment…\"\n"
+"reroute the ship's power system and redo the experiment I might be able to "
+"connect. I must redo the experiment…\"\n"
 "He tries feebly to get up before coughs wrack his body and stain it further "
 "with specks of blood. He falls back to the bed impotently."
 msgstr ""
@@ -49157,7 +49151,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:600
 msgid ""
-"\"It was just like you said, the Nebula is just a manifestation, not an "
+"\"It was just like you said, the nebula is just a manifestation, not an "
 "entity in itself, but establishing the connection is less straight-forward "
 "than what you left in your notes. I've tried correcting the harmonic "
 "equation, but it doesn't…\"\n"
@@ -49196,10 +49190,10 @@ msgstr ""
 #. Stop music
 #: dat/missions/minerva/kex5.lua:628
 msgid ""
-"Silence once again envelopes the room. You look around the room and decide "
-"to try to access the command console to see if there is any information "
-"left. It is a bit unsettling with a corpse nearby, but you try to focus on "
-"getting the grime off the console and interfacing with it. "
+"Silence once again envelopes the room. You look around and decide to try to "
+"access the command console to see if there is any information left. It is a "
+"bit unsettling with a corpse nearby, but you try to focus on getting the "
+"grime off the console and interfacing with it. "
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:629
@@ -49228,7 +49222,7 @@ msgstr ""
 #. Player insists and goes to kex arc
 #: dat/missions/minerva/kex5.lua:639
 msgid ""
-"He suddenly sees to regain a bit of lucidity.\n"
+"He suddenly seems to regain a bit of lucidity.\n"
 "\"Kex? Kex… where have I heard that name before… Wait… You mean Experiment "
 "#085? The one taken from the nebula wreck?\""
 msgstr ""
@@ -49261,7 +49255,7 @@ msgstr ""
 msgid ""
 "\"Why would I not go on with that perfect experiment? The subjects found in "
 "the wreck were already long dead by the modern definition of the world. You "
-"don't need any ethic committee approval for experimenting on cadavers, not "
+"don't need any ethics committee approval for experimenting on cadavers, not "
 "that I am subject to that oversight anymore.\""
 msgstr ""
 
@@ -49281,10 +49275,10 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:656
 msgid ""
 "\"Even though the vitals and neural responses seemed nominal, it didn't "
-"really seem to display any standard concious responses. It even failed the "
+"really seem to display any standard conscious responses. It even failed the "
 "LEVEL II test, a sign of a weak mind. An utter failure.\"\n"
 "He coughs violently again, spasms overtaking his body. The medical robot "
-"sees to inject him with something and he calms down again."
+"seems to inject him with something and he calms down again."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:659
@@ -49308,10 +49302,10 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:671
 msgid ""
-"Seeing him in his last stages brings out the compassion you have in you. "
-"Whether Dr. Strangelove is a monster or not is not something that you are "
-"meant to judge. You get close to him and hold his hand. It feels very cold "
-"to the touch."
+"Seeing him in his last stages brings out your compassion. Whether Dr. "
+"Strangelove is a monster or not is not something that you are meant to "
+"judge. You get close to him and hold his hand. It feels very cold to the "
+"touch."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:672
@@ -49322,16 +49316,16 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:674
 msgid ""
-"Suddenly he seems to open his eyes wide, but his expression is less of "
-"terror and more of curiosity and awe.\n"
+"Suddenly, he opens his eyes wide, but his expression is less of terror and "
+"more of curiosity and awe.\n"
 "\"It's more beautiful… than I… thought.\""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:676
 msgid ""
-"You look into his nearly opaque eyes and for a second, you think you can see "
-"the nebula in all its fury and glory reflected in them. You look around the "
-"room but nothing has changed."
+"You look into his nearly opaque eyes and, for a second, you think you can "
+"see the nebula in all its fury and glory reflected in them. You look around "
+"the room but nothing has changed."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:681
@@ -49343,8 +49337,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:682
 msgid ""
-"You look at yourself and think what you are about to do. Even if this is "
-"what Kex thinks he wants, is there any point in forcibly ending the life of "
+"You look at yourself and think of what you are about to do. Even if this is "
+"what Kex thinks he wants, is there any point in violently ending the life of "
 "someone who doesn't look like they will survive the next period? Dr. "
 "Strangelove seems unresponsive to your actions."
 msgstr ""
@@ -49356,9 +49350,9 @@ msgstr ""
 #. played backwards so should be down
 #: dat/missions/minerva/kex5.lua:693
 msgid ""
-"You pull the trigger and Dr. Strangelove's body becomes completely limp and "
-"lifeless. The vitals monitor sounds an alarm before becoming silent and "
-"certifying the death. You did the task and you can only hope this will bring "
+"You pull the trigger and Dr. Strangelove's body goes completely limp and "
+"lifeless. The vitals monitor sounds an alarm before becoming silent, "
+"confirming his death. You did the task and you can only hope this will bring "
 "Kex peace of mind, although you somehow doubt it."
 msgstr ""
 
@@ -49400,7 +49394,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:728
 msgid ""
-"As your mind wanders after all you just experienced, you realize that you "
+"As your mind wanders to all you just experienced, you realize that you "
 "should get back to Kex to report what happened. Is this what Kex wanted? You "
 "feel like not even he will know the answer to that question."
 msgstr ""
@@ -49534,7 +49528,7 @@ msgstr ""
 msgid ""
 "She suddenly remembers why she came here and your eyes light up.\n"
 "\"You wouldn't happen to be familiar with the station? I'm looking for "
-"someone\""
+"someone.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:138
@@ -49614,14 +49608,14 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:199
 msgid ""
-"\"I don't remember him at all since he disappeared when I was only 5 cycles "
-"old, but before my mother died, she told me he was a famous space pilot.\""
+"\"I don't remember him at all. He disappeared when I was only 5 cycles old. "
+"Before my mother died, she told me he was a famous space pilot.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:200
 msgid ""
 "\"She used to tell me stories about how he would go on all sorts of brave "
-"adventures in the nebula to recover artefacts of human history.\""
+"adventures in the nebula to recover artifacts of human history.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:202
@@ -49640,7 +49634,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:207
 msgid ""
-"\"My mother died without telling me, but after her death, while going "
+"\"My mother died without telling me, but, after her death, while going "
 "through her stuff, I found out that my father was the famous Kex McPherson!\""
 msgstr ""
 
@@ -49699,8 +49693,8 @@ msgstr ""
 #. TODO flashback with her family
 #: dat/missions/minerva/maikki1.lua:230
 msgid ""
-"You give a few moments to recover before explaining her what you saw in the "
-"wreck and your encounter with the scavengers."
+"You give a few moments to recover before explaining to her what you saw in "
+"the wreck and your encounter with the scavengers."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:231
@@ -49713,7 +49707,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:234
 msgid ""
-"\"If you didn't find a body I'm sure he survived! He shouldn't be a guy that "
+"\"If you didn't find a body I'm sure he survived! He wouldn't be someone who "
 "dies that easily!\"\n"
 "She looks clearly excited at the possibility."
 msgstr ""
@@ -49722,8 +49716,8 @@ msgstr ""
 msgid ""
 "She furrows her brows.\n"
 "\"The scavengers were selling to the Za'lek right? What could the Za'lek "
-"have to do with my father so far away? I always thought those creeps "
-"couldn't be up to anything good.\""
+"have to do with my father? I always thought those creeps couldn't be up to "
+"anything good.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:238
@@ -49749,8 +49743,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:270
 msgid ""
-"You see an old man casually drinking at the bar. He has a sort of self-"
-"complacent bored look on his face."
+"You see an old man casually drinking at the bar. He has a sort of distant, "
+"bored look on his face."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:274
@@ -49808,7 +49802,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:306
 msgid ""
 "\"Not much to do in Doeston. Mainly a stopping place for all them crazy folk "
-"heading into the nebula. Maybe if I were any younger I would be with them "
+"heading into the nebula. Maybe if I were younger I would be with them "
 "exploring, but can't with this bad knee.\"\n"
 "He pats his left knee."
 msgstr ""
@@ -49816,7 +49810,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:308
 msgid ""
 "\"It used to be a more popular place, but with most of the easy pickings "
-"getting scavenged out of the nebula, not many people come here after all. "
+"getting scavenged out of the nebula, not many people come here any more. "
 "Especially not after the disappearance of famous scavengers like Kex and "
 "Mireia.\"\n"
 "He muses thoughtfully."
@@ -49838,15 +49832,15 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:318
 msgid ""
-"He goes a bit quieter and gets closer to you.\n"
+"He goes a bit quieter and leans towards you.\n"
 "\"Rumour has it that there are ghosts lurking in the depths. I've seen "
 "people come back, pale as snow, claiming they seen them.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:320
 msgid ""
-"\"I believe it be the boredom getting to their heads. Likely naught but a "
-"scavenger or some debris.\""
+"\"I believe it be the boredom getting to their heads. Likely naught but "
+"another scavenger or some debris.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:324
@@ -49904,7 +49898,7 @@ msgstr ""
 #. Already got mission, just give player a refresher
 #: dat/missions/minerva/maikki1.lua:376
 msgid ""
-"\"Aren't you drinking too much. Don't forget to fix my sensors before we "
+"\"Aren't you drinking too much? Don't forget to fix my sensors before we "
 "leave to Zerantix tomorrow.\""
 msgstr ""
 
@@ -49963,7 +49957,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:392
 msgid ""
 "\"Yeah, let's do that after one more round of drinks. Got to get there "
-"before other scroungers get there.\""
+"before other scroungers do.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:393
@@ -50211,7 +50205,7 @@ msgid "Run!"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:645
-msgid "There's definately something there! Scram!"
+msgid "There's definitely something there! Scram!"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:650
@@ -50412,7 +50406,7 @@ msgstr ""
 msgid ""
 "You make your way to what is left of the bridge. You can see what appears to "
 "be very old space-weathered bloodstains over most of the controls. However, "
-"there are no bodies to be seen around."
+"there are no bodies to be seen."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:894
@@ -50559,7 +50553,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:173
 msgid ""
-"You approach Maikki who seems to have a fierce determination in her look."
+"You approach Maikki who seems to have a fierce determination in her eyes."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:175
@@ -50591,7 +50585,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:192
 msgid ""
 "\"I ran a check on Za'lek researchers that would likely be interested in "
-"stuff taken from the nebula and there seems to be less than I imagined. I "
+"stuff taken from the nebula and there seems to be fewer than I imagined. I "
 "was able to get a list of three researchers. I'll give you the details on "
 "them and you should pay them a visit to see if they know anything.\""
 msgstr ""
@@ -50620,7 +50614,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:209
 msgid ""
-"\"i thought that after your experience in the nebula you would understand "
+"\"I thought that after your experience in the nebula you would understand "
 "how dangerous this can get.\""
 msgstr ""
 
@@ -50634,7 +50628,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:225
 msgid ""
 "\"Apparently the three researchers used to work together in some project "
-"about the nebula origins, but never really made anything public. I totally "
+"about the nebula's origins, but never really made anything public. I totally "
 "think that they must know something about this; the disappearance of my "
 "father was big news!\""
 msgstr ""
@@ -50642,8 +50636,9 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:226
 msgid ""
 "She looks at you expectantly.\n"
-"\"I will stay here and search for him more. Please pay those creepy Za'lek "
-"researchers a visit and see if you can find out what happened to my father!\""
+"\"I will stay here and continue to search for him. Please pay those creepy "
+"Za'lek researchers a visit and see if you can find out what happened to my "
+"father!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:231
@@ -50679,30 +50674,30 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:246
 msgid ""
-"\"I don't think it will be easy for you to get information from the Za'lek, "
-"they never give a straight answer and it's all \"that is illogical\" and "
+"\"I don't think it will be easy for you to get information from the Za'lek. "
+"They never give a straight answer and it's all \"that is illogical\" and "
 "\"ma'am that beaker of acid is not a toy\". So boring!\"\n"
-"She frowns and shakes her head to the sides."
+"She frowns and shakes her head."
 msgstr ""
 
 #. TODO messages regarding each of the researchers
 #: dat/missions/minerva/maikki2.lua:252
 msgid ""
-"\"I don't remember much about my father, most of what I know about him is "
-"stories from my late mother and stories told by pilots who knew him.\""
+"\"I don't remember much about my father, most of what I know about him are "
+"from stories from my late mother and pilots who knew him.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:253
 msgid ""
 "Her eyes light up.\n"
 "\"Did you know that while scavenging near the incident, an asteroid hit his "
-"thrusters making them point the wrong way and he had to fly through five "
-"systems backwards through the nebula while chased by pirates? Sounds crazy!\""
+"thrusters making them point the wrong way and he had to fly backwards "
+"through five systems in the nebula while chased by pirates? Sounds crazy!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:255
 msgid ""
-"\"He was also said to be the first pilot to chart the entire systems in the "
+"\"They say he was also the first pilot to chart all the systems in the "
 "Nebula after the incident. Not even getting his leg crushed while recovering "
 "parts of the last emperor's flagship stopped him from going back and back to "
 "the nebula.\""
@@ -50711,22 +50706,22 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:256
 msgid ""
 "Her eyes darken a little and her voice softens.\n"
-"\"His obsession with finding the truth did mean he was away from home most "
-"of the time and my mother was probably very lonely. She told me he never "
-"came to any of my birthdays…\""
+"\"His obsession with finding the truth meant he was away from home most of "
+"the time and my mother was probably very lonely. She told me he never came "
+"to any of my birthdays…\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:258
 msgid ""
 "Her eyes light up again.\n"
 "\"However, those were exceptional times. Most of the universe and our "
-"history as humans was lost! I would like to love to be able to meet him "
-"again and be able to ask all sorts of things.\""
+"history as humans was lost! I would love to be able to meet him again and be "
+"able to ask him all sorts of things.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:260
 msgid ""
-"\"After you finding his ship in the nebula we have to get to the bottom of "
+"\"Since you found his ship in the nebula we have to get to the bottom of "
 "what happened! There is no way this was an accident, and I'm sure the Za'lek "
 "are involved in this. Since you didn't find a body, he has to be alive! We "
 "have to find out what happened and set things right!\"\n"
@@ -50735,9 +50730,9 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:265
 msgid ""
-"You tell her about your plight with the Za'lek researchers and Dr. "
+"You tell her about your plight with the Za'lek researchers, and Dr. "
 "Strangelove, in particular. This includes the good news that Kex should be "
-"at Minerva Station, taken custody by some thugs."
+"at Minerva Station, taken into custody by some thugs."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:266
@@ -50749,16 +50744,16 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:267
 msgid ""
-"\"I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is "
-"he even a real doctor? We still even don't know happened in the nebula nor "
-"what they want with my father. Instead of answering questions we keep on "
+"\"I'm a bit worried about that Dr. Strangelove. What exactly did he mean? Is "
+"he even a real doctor? We still don't even know what happened in the nebula "
+"nor what they want with my father. Instead of answering questions we keep on "
 "finding new questions. I suppose that this is progress?…\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:268
 msgid ""
 "\"Anyway, if we can believe Dr. Strangelove, my father is alive and "
-"somewhere here! I don't think we have any reason to doubt him, Za'leks don't "
+"somewhere here! I don't think we have any reason to doubt him. Za'leks don't "
 "tend to lie, they only bend the truth. All we have to do is find my father "
 "now and everything should fall in place.\""
 msgstr ""
@@ -50774,8 +50769,8 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:271
 msgid ""
 "\"I don't have a lead at the moment, but it can't be far. Keep your eyes "
-"open and if you find anything look suspicious, please get in touch with me! "
-"I'll also be keeping my eyes open.\""
+"open and if you find anything that looks suspicious, please get in touch "
+"with me! I'll also be keeping my eyes open.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:272
@@ -50817,7 +50812,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:315
 msgid ""
 "You see a young fellow intently reading a book. There seems to be a shrimp "
-"in a floating aquarium bowl floating around him."
+"floating in a nearby aquarium bowl."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:318
@@ -50838,9 +50833,9 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:351
 msgid ""
-"\"Oh, I suddenly remembered. There was also a post doctoral research working "
-"on the project by the name of Cayne. I think he was last working at {pnt} in "
-"the {sys} system.\""
+"\"Oh, I suddenly remembered. There was also a post-doctoral research "
+"candidate working on the project by the name of Cayne. I think he was last "
+"working at {pnt} in the {sys} system.\""
 msgstr ""
 
 #. The mission state will be updated afterwards
@@ -50871,16 +50866,16 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:373
 msgid ""
-"\"In the end, some papers results were falsified and the project leader was "
+"\"In the end, some papers' results were falsified and the project leader was "
 "barred from doing research. That was too much for them and they took their "
 "own life. How illogical!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:374
 msgid ""
-"\"If you are interested in the nebula research, you should go visit the "
-"museum of nebula artifacts. Although due to administrative changes, I don't "
-"think it'll open again for a few cycles.\""
+"\"If you are interested in nebula research, you should go visit the museum "
+"of nebula artifacts. Although due to administrative changes, I don't think "
+"it'll open again for a few cycles.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:375
@@ -50943,7 +50938,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:407
 msgid ""
 "\"At the end, we were just chaining meetings and answering e-mails and not "
-"getting anything done. We ended up handing in a 5 page report written by an "
+"getting anything done. We ended up handing in a 5-page report written by an "
 "intern for the mid-project evaluation and almost lost all the funding. The "
 "project leader panicked and it all went to hell from there.\""
 msgstr ""
@@ -50978,12 +50973,12 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:412
 msgid ""
-"\"They could change material science as we know it! Image being able to "
-"create materials with almost any property you can desire! We do still have "
-"to solve the problem of the subatomic crystallite implosion, but once I "
-"finish recovering the notes from the crater left at my last laboratory, I "
-"should be able to solve it in no time. By the way, since the accident with "
-"my last assistant, I'm looking for a new one. Would you be interested?\""
+"\"They could change material science as we know it! Imagine being able to "
+"create materials with almost any property you desire! We do still have to "
+"solve the problem of the subatomic crystallite implosion, but once I finish "
+"recovering the notes from the crater left at my last laboratory, I should be "
+"able to solve it in no time. By the way, since the accident with my last "
+"assistant, I'm looking for a new one. Would you be interested?\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:413
@@ -50999,30 +50994,30 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:436
 msgid ""
-"\"Recently, due to the illogical imbalance between science and humanities, "
-"all large Za'lek projects are require to have at least a 10% of humanities "
-"members. This has given me lots of opportunities to work on many interesting "
-"projects.\""
-msgstr ""
-
-#: dat/missions/minerva/maikki2.lua:437
-msgid ""
-"\"Oh yes, on the nebula artifacts. I remember having fun conversations with "
-"our colleagues about whether or not the artifacts from the nebula actually "
-"do exist or not given that we are using imperfect sensorial organs to see, "
-"touch, and feel them. You see, given that we only perceive reality through "
-"our imperfect organs, can we actually know whether or not there is an "
-"absolute objective reality?\""
-msgstr ""
-
-#: dat/missions/minerva/maikki2.lua:438
-msgid ""
 "\"It is a very fascinating topic. Since there is no way to prove the "
 "existence of an absolute reality, from a practical point of view, there are "
 "infinite relative realities, where everyone has their own. Everything else "
 "is an illusion derived from us projecting our understanding and reality onto "
 "the reality of others, deforming them to a way we can interpret them with "
 "our imperfect minds.\""
+msgstr ""
+
+#: dat/missions/minerva/maikki2.lua:437
+msgid ""
+"\"Recently, due to the illogical imbalance between science and humanities, "
+"all large Za'lek projects are required to have at least a 10% of humanities "
+"members. This has given me lots of opportunities to work on many interesting "
+"projects.\""
+msgstr ""
+
+#: dat/missions/minerva/maikki2.lua:438
+msgid ""
+"\"Oh yes, on the nebula artifacts. I remember having fun conversations with "
+"our colleagues about whether or not the artifacts from the nebula actually "
+"do exist or not given that we are using imperfect sensory organs to see, "
+"touch, and feel them. You see, given that we only perceive reality through "
+"our imperfect organs, can we actually know whether or not there is an "
+"absolute objective reality?\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:439
@@ -51038,25 +51033,25 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:441
 msgid ""
-"\"We must also further question not only our sensorial organs, and the "
+"\"We must also further question not only our sensory organs, and the "
 "existence of nebula artifacts, but our own existence. We apparently are able "
-"to think and some would argue that by this, that the only thing we can "
-"prove, given imperfect sensorial data, is our own existence. However, I "
-"argue that this too is an illusion, and that our existence itself is "
-"something we can't define.\""
+"to think and some would argue that by this, the only thing we can prove, "
+"given imperfect sensory data, is our own existence. However, I argue that "
+"this too is an illusion, and that our existence itself is something we can't "
+"prove.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:442
 msgid ""
 "\"Every instant, what we perceive as ourselves is ceasing to exist and a new "
-"existence, which while very close to the \"ourselves\" from the previous "
-"instance, is, arguably, a completely new existence. This fluidity makes it, "
+"existence, which, while very close to the \"ourselves\" from the previous "
+"instance, is, arguably, a completely new existence. This fluidity makes it "
 "not only impossible to perceive nor understand our self as it is, but also "
 "makes it impossible to draw a line between different individuals…\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:443
-msgid "You thank them and run away while they keeps on talking to themself."
+msgid "You thank them and run away while they keeps on talking to themselves."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:453 dat/missions/minerva/maikki2.lua:483
@@ -51118,7 +51113,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:477
 msgid ""
 "A pellet of shrimp food is released into the floating aquarium. The shrimp "
-"wastes no time in getting scarfing it down.\n"
+"wastes no time in scarfing it down.\n"
 "   \"HAPPY. GOOD.\""
 msgstr ""
 
@@ -51130,7 +51125,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:481
 msgid ""
-"\"Ah, that hellish project. Was doomed from the start you know. The full-"
+"\"Ah, that hellish project. Was doomed from the start, you know. The full-"
 "time professors and researchers let their egos get to their heads and it "
 "derailed spectacularly. I'm glad it ended as it did, or I would be still "
 "stuck in that purgatory.\""
@@ -51184,14 +51179,14 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:510
 msgid ""
 "\"After the nebula project, like most other researchers on the team, I got "
-"the hell away from nebula research. One day while visiting {pnt} I found "
+"the hell away from nebula research. One day while visiting {pnt} I found out "
 "about fresh-water shrimp breeding and became enthralled. One thing led to "
 "another, and now I'm doing shrimp research.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:511
 msgid ""
-"\"You see, these shrimps are fascinating creatures. They have a really fast "
+"\"You see, shrimp are fascinating creatures. They have a really fast "
 "reproduction cycle, and reproduce in large numbers, allowing for simple "
 "genetic manipulation. While most are bred for colors and physical traits, "
 "some have also been trained for mental traits. Calliope here is an example "
@@ -51201,9 +51196,9 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:513
 msgid ""
-"\"The capability of these shrimp are endless, and they are helping us "
-"understand much more genetic modification than the brute-force approaches of "
-"the Soromid, although our technology is still lacking behind.\""
+"\"The capabilities of these shrimp are endless, and they are helping us "
+"understand much more about genetic modification than the brute-force "
+"approaches of the Soromid, although our technology is still lagging behind.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:514
@@ -51262,9 +51257,9 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:532
 msgid ""
 "\"What sort of artifacts we were dealing with? All sorts. Pretty much "
-"anything we could get our hands on. We were trying to get a hold on stuff "
-"closer to the origin near Sol, but most of the time scavengers brought us "
-"stuff from the outer areas. Many times they even were trying to sell us "
+"anything we could get our hands on. We were trying to get a hold of stuff "
+"closer to the origin, near Sol, but, most of the time, scavengers brought us "
+"stuff from the outer areas. Many times they were even trying to sell us "
 "random debris as nebula artifacts, but that's really easy to detect.\""
 msgstr ""
 
@@ -51278,8 +51273,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:534
 msgid ""
-"\"When the project failed, most of the artifacts were confiscated to hell "
-"who knows where, but I managed to keep a nut from what I think is a space "
+"\"When the project failed, most of the artifacts were confiscated to who "
+"knows where, but I managed to keep a nut from what I think is a space "
 "station, although not entirely sure. It's a bit damaged beyond recognition "
 "you see.\""
 msgstr ""
@@ -51288,15 +51283,15 @@ msgstr ""
 msgid ""
 "\"With the failure of most nebula projects, I don't think there is anybody "
 "buying nebula artifacts anymore. Not much of a market for them, and most "
-"easy to access debris has all been scavenged away. Some collectors are still "
-"interested in that, but that's about it. Furthermore, it's not entirely "
-"legal if you catch my drift.\""
+"easy to access debris has all been scavenged anyway. Some collectors are "
+"still interested in that, but that's about it. Furthermore, it's not "
+"entirely legal if you catch my drift.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:540
 msgid ""
 "\"Most of the project members were full professors, which is probably why it "
-"failed. Us post doctoral researchers do all the work and get none of the "
+"failed. Us post-doctoral researchers do all the work and get none of the "
 "credit.\""
 msgstr ""
 
@@ -51304,16 +51299,16 @@ msgstr ""
 msgid ""
 "\"After it went to hell, many of the researchers lost their posts or went "
 "into hiding. The few I know that still are active are Prof. Stova, Prof. "
-"Sato, and Prof. Hsu. I think they even got some stupid promotion, while me "
-"and the other post docs lost our jobs.\""
+"Sato, and Prof. Hsu. I think they even got some stupid promotion, while the "
+"other post docs and I lost our jobs.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:542
 msgid ""
 "\"It's pretty incredible to think that there were originally 100ish people "
-"in the project. Yet even with all the people fired for falsification of "
+"on the project. Yet even with all the people fired for falsification of "
 "results, not a single tenured post opened! It's ridiculous! If industry "
-"wasn't so horrible I would quit academia in an instance!\""
+"wasn't so horrible, I would quit academia in an instant!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:543
@@ -51324,8 +51319,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:548
 msgid ""
-"\"Now I remember! There was a another post doctoral researcher who worked "
-"with me. He was a bit weird and kept obsessing with the nebula artifacts. "
+"\"Now I remember! There was a another post-doctoral researcher who worked "
+"with me. He was a bit weird and kept obsessing over the nebula artifacts. "
 "Quite a few went missing during the project and I think it was probably him "
 "who was taking them.\""
 msgstr ""
@@ -51340,17 +51335,16 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:551
 msgid ""
-"\"Eventually he did get out and sort of disappeared. Last I heard, he said "
-"he was going to {sys}, which is a bit strange, because not only is there not "
-"a research center there, but there isn't even an inhabited planet nor "
-"station!\""
+"\"Eventually he sort of disappeared. Last I heard, he said he was going to "
+"{sys}, which is a bit strange, because not only is there not a research "
+"center there, but there isn't even an inhabited planet nor station!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:552
 msgid ""
 "\"It's really weird but if you are really interested, I suppose you could "
-"try to take a look around there. The whole thing does give me the me the "
-"creeps though.\""
+"try to take a look around there. The whole thing gives me the me the creeps "
+"though.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:557
@@ -51395,7 +51389,7 @@ msgstr ""
 
 #. All dead
 #: dat/missions/minerva/maikki2.lua:667
-msgid "Your ships detect that one of the asteroids isn't what it seems…"
+msgid "Your ship detects that one of the asteroids isn't what it seems…"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:671
@@ -51412,7 +51406,7 @@ msgstr "%s (알수없는 경로)"
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
 #: dat/missions/minerva/maikki2.lua:689
 msgid ""
-"While the drone is blowing up, you receive a faint voice-only transmission."
+"While the drone is blowing up, you receive a faint, audio-only transmission."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:691
@@ -51421,16 +51415,15 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:692
 msgid ""
-"You wonder what that was about as you watch the drone thrash while it blows "
-"up. Westhaven is a really weird place."
+"You wonder what that was about as you watch the drone thrash as it blows up. "
+"Westhaven is a really weird place."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:693
 msgid ""
 "From the ship scraps you are able to find a very damaged… thing… You guess "
 "this is what Dr. Strangelove was referring to as a nebula artifact. "
-"Strangely, your ship sensors are identifying it as mainly biological "
-"material…"
+"Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:697
@@ -51454,7 +51447,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:705
-msgid "Just destroy me and put me out of my suffering."
+msgid "Just destroy me and put me out of my misery."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:706
@@ -51486,7 +51479,7 @@ msgstr ""
 #. We go with nebula music
 #: dat/missions/minerva/maikki2.lua:744
 msgid ""
-"The hologram projector flickers as what appears to be a grumpy old man "
+"The hologram projector flickers and what appears to be a grumpy old man "
 "appears into view. He doesn't look very pleased to be disturbed."
 msgstr ""
 
@@ -51504,13 +51497,13 @@ msgstr ""
 msgid ""
 "\"Who sent you here? Was it Dr. Bob? That weasel was always after my "
 "precious artifacts. Well, he can't have them! I got all this with my hard "
-"worked, sweat, and tears! They're all mine!\"\n"
+"work, sweat, and tears! They're all mine!\"\n"
 "He cackles manically."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:749
 msgid ""
-"\"I have hidden them very well, even though you somehow got past my security "
+"\"I have hidden them very well. Even though you somehow got past my security "
 "system and made it into my laboratory, you'll never find them!\"\n"
 "You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the "
 "room."
@@ -51518,7 +51511,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:751
 msgid ""
-"\"Anyway, I am very busy now, yes? All the science won't do itself. Almost "
+"\"Anyway, I am very busy now, yes? All this science won't do itself. Almost "
 "have a new specimen ready and it will be better than ever! The old ones were "
 "fairly inadequate.\""
 msgstr ""
@@ -51555,7 +51548,7 @@ msgstr "네뷸라에 온것을 환영합니다"
 #: dat/missions/minerva/maikki2.lua:775
 msgid ""
 "\"Ah yes, the nebula. The pinnacle of human creation! Isn't it just "
-"mesmerizing and beautiful to look at? I've always been attracted to it even "
+"mesmerizing and beautiful to look at? I've always been attracted to it ever "
 "since the incident destroyed my university. Destruction is so pretty, is it "
 "not?\""
 msgstr ""
@@ -51600,7 +51593,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:787
 msgid ""
 "\"Ahaha. You are interested, no? That information won't come cheap. I have a "
-"job that I would like you to do, and in exchange I might give you the "
+"job that I would like you to do, and, in exchange, I might give you the "
 "information you seek.\""
 msgstr ""
 
@@ -51670,17 +51663,17 @@ msgid ""
 "\"My drones dug it out and it's the cosiest place I have ever lived in, but "
 "I don't get many guests. In fact, you are my…\"\n"
 "He starts counting on his fingers intently.\n"
-"\"…first guest! Yes, that's it, the first true biological living being other "
+"\"…first guest! Yes, that's it, the first true living biological being other "
 "than me to visit!\"\n"
-"You don't like how he puts emphasis on 'biological living'…"
+"You don't like how he puts emphasis on 'living biological'…"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:824
 msgid ""
 "\"Feel free to use the facilities as you please, but stay out of the "
 "backroom.\"\n"
-"Given the smell of the entire laboratory and especially the horrible wafts "
-"emanating from the backroom, you feel like it is best to heed his advice for "
+"Given the smell of the entire laboratory and especially the horrible scents "
+"wafting from the backroom, you feel like it is best to heed his advice for "
 "your own safety."
 msgstr ""
 
@@ -51714,8 +51707,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:839
 msgid ""
-"\"I see… You don't grasp the incredibleness of this artifact. I guess it "
-"can't be helped with such an inferior intellect as yours.\"\n"
+"\"I see… You don't grasp the importance of this artifact. I guess it can't "
+"be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
 
@@ -51747,7 +51740,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:845
 msgid ""
-"\"Ah yes! I remember that wreck. A very very curious one indeed. At that "
+"\"Ah yes! I remember that wreck. A very, very curious one indeed. At that "
 "time I was exploring the nebula myself, and we came upon this most curious "
 "wreck that had clear signs of fighting. While it is not uncommon for "
 "scavengers to squabble among themselves, this one had most of the damage on "
@@ -51788,7 +51781,7 @@ msgstr ""
 msgid ""
 "\"They were oh so perfect, like Adam and Eve, ready to create a new perfect "
 "humanity. However, it isn't as simple as that. The man, an ungrateful fool, "
-"had too much attachment to his previous life. How weak… that's when I "
+"had too much attachment to his previous life. How weak… That's when I "
 "realized it. You need a perfect mind and perfect flesh to become the perfect "
 "being. With the nebula, the perfect flesh can be done, but the mind must "
 "also be perfect. It was so simple!\"\n"
@@ -51850,8 +51843,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:873
 msgid ""
-"You leave behind the hologram project and hope you won't have to deal with "
-"Dr. Strangelove in the future."
+"You leave behind the hologram projection and hope you won't have to deal "
+"with Dr. Strangelove in the future."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:877
@@ -51926,7 +51919,7 @@ msgstr ""
 msgid ""
 "\"Say what, I know you're a pretty decent pilot. Would you be interested in "
 "a somewhat non-standard job? Nothing very out of the ordinary, just want to "
-"ruff up some feathers.\""
+"ruffle some feathers.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:71 dat/missions/minerva/pirate2.lua:67
@@ -51935,8 +51928,7 @@ msgstr ""
 msgid "Kindly decline"
 msgstr ""
 
-#: dat/missions/minerva/pirate1.lua:75 dat/missions/minerva/pirate2.lua:71
-#: dat/missions/minerva/pirate3.lua:128 dat/missions/minerva/pirate4.lua:108
+#: dat/missions/minerva/pirate1.lua:75 dat/missions/minerva/pirate3.lua:128
 #: dat/missions/minerva/pirate5.lua:127
 msgid "You decline their offer and take your leave."
 msgstr ""
@@ -51944,8 +51936,8 @@ msgstr ""
 #: dat/missions/minerva/pirate1.lua:82
 msgid ""
 "\"Excellent. As you probably know, the Za'lek and Dvaered want to take "
-"control of this station, hence the large amount of military crawling over "
-"the station. This leads to inevitable disagreements, quarrels, brawls, "
+"control of this station, hence the large amount of military crawling all "
+"over the station. This leads to inevitable disagreements, quarrels, brawls, "
 "altercations, fights, you name it. Instead of trying to take care of it "
 "directly, we can sort of encourage them to take care of each other and "
 "problem solved, no?\""
@@ -51961,10 +51953,10 @@ msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:84
 msgid ""
-"\"Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, "
+"\"Sounds naïve, yes? Might be. So, I've managed to get a Za'lek drone shell, "
 "all it has is the engine and some basic following software, but no weapons "
-"nor gear. If you were to drag it along while harassing the thugs, they "
-"probably would think that there is some kind  of Za'lek involvement. They're "
+"or gear. If you were to drag it along while harassing the thugs, they "
+"probably would think that there is some kind of Za'lek involvement. They're "
 "not the smartest fellows in the world if you catch my drift.\""
 msgstr ""
 
@@ -51979,16 +51971,16 @@ msgstr ""
 #: dat/missions/minerva/pirate1.lua:86
 msgid ""
 "\"I've sent you the coordinates of both the Za'lek drone and the Dvaered "
-"thugs. I'll pay you well if you manage to pull this off. Oh and one thing, "
-"when getting away, make sure to jump to the {sys} system to make it look "
-"even more like the Za'lek did it,\"\n"
+"thugs. I'll pay you well if you manage to pull this off. Oh and one more "
+"thing, when getting away, make sure to jump to the {sys} system to make it "
+"look even more like the Za'lek did it.\"\n"
 "They beam a smile at you."
 msgstr ""
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate1.lua:95
 msgid ""
-"You accepted a job from a shady individual to harass Dvaered thugs in the "
+"You accepted a job from a sketchy individual to harass Dvaered thugs in the "
 "Limbo system and make it seem like the Za'lek were involved."
 msgstr ""
 
@@ -52016,7 +52008,7 @@ msgstr "투리온의 불꽃"
 
 #: dat/missions/minerva/pirate1.lua:120
 msgid ""
-"After you land on Minerva Station you are once again greeted by the shady "
+"After you land on Minerva Station you are once again greeted by the sketchy "
 "character that gave you the job dealing with the Dvaered thugs."
 msgstr ""
 
@@ -52108,7 +52100,7 @@ msgstr ""
 #. Mission states:
 #. nil: mission not accepted yet
 #. 0: Go kill drone
-#. 1: Get back to Minerva STation
+#. 1: Get back to Minerva Station
 #. Non-persistent state
 #. luacheck: globals drone_attacked drone_death drone_ranaway enter heartbeat land reinforcements_jumpin (Hook functions passed by name)
 #: dat/missions/minerva/pirate2.lua:48
@@ -52129,10 +52121,14 @@ msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:63
 msgid ""
-"\"I have another job if you are interested, it should be simpler than last "
+"\"I have another job if you are interested. It should be simpler than last "
 "time, only this time we target the Za'lek instead of the Dvaered to try to… "
 "improve the situation.\"\n"
-"They smiles at you."
+"She smiles at you."
+msgstr ""
+
+#: dat/missions/minerva/pirate2.lua:71 dat/missions/minerva/pirate4.lua:108
+msgid "You decline her offer and take your leave."
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:76
@@ -52145,7 +52141,7 @@ msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:77
 msgid ""
-"\"Just destroying them won't cut it though, we need to make it look like the "
+"\"Just destroying them won't cut it though. We need to make it look like the "
 "Dvaered did it this time. However, that should be simple. Make sure to use "
 "Dvaered weapons to take the drones out. You know, Mace Launchers, Vulcan "
 "Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any "
@@ -52165,14 +52161,14 @@ msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:94
 msgid ""
-"You accept another job from the shady individual to destroy some Za'lek "
+"You accept another job from the sketchy individual to destroy some Za'lek "
 "scout drones around Minerva Station with Dvaered weapons only to make it "
 "seem like the Dvaered are targeting Za'lek drones."
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:109
 msgid ""
-"After you land on Minerva Station you are once again greeted by the shady "
+"After you land on Minerva Station you are once again greeted by the sketchy "
 "character that gave you the job to clear the Za'lek drones."
 msgstr ""
 
@@ -52188,13 +52184,13 @@ msgid ""
 "There have already been 20 casualties from fighting this period! At this "
 "rate they will basically solve themselves. However, that might be a bit "
 "slow, so let us try to accelerate the process a bit more.\"\n"
-"They wink at you."
+"She winks at you."
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:113
 msgid ""
-"\"I've wired you some credits for your efforts. Meet me up at the bar for a "
-"new potential job.\""
+"\"I've wired you some credits for your efforts. Meet me up at the bar for "
+"another potential job.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:121
@@ -52293,13 +52289,13 @@ msgstr "투리온의 불꽃"
 #. Not accepted
 #: dat/missions/minerva/pirate3.lua:120
 msgid ""
-"You approach the sketch individual who seems to be calling your attention "
+"You approach the sketchy individual who seems to be calling your attention "
 "yet once again."
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:121
 msgid ""
-"\"Hello again, we have another job for you. Our previous actions has led us "
+"\"Hello again, we have another job for you. Our previous actions have led us "
 "to believe that there are several Dvaered and Za'lek spies deeply "
 "infiltrated into the station infrastructure. Would you be up to the "
 "challenge of helping us get rid of them?\""
@@ -52317,7 +52313,7 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:142
 msgid ""
-"You accepted another job from the shady individual to uncover moles at "
+"You accepted another job from the sketchy individual to uncover moles at "
 "Minerva Station."
 msgstr ""
 
@@ -52332,7 +52328,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:145
 msgid ""
 "\"That's where this comes in to place.\"\n"
-"They take out a metallic object from their pocket and show it to you. You "
+"She takes out a metallic object from her pocket and show it to you. You "
 "don't know what to make of it.\n"
 "\"Ain't she a beauty?\""
 msgstr ""
@@ -52347,21 +52343,22 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:149 dat/missions/minerva/pirate3.lua:198
 msgid ""
-"\"The main issue we have right now is that VIP rooms and such are not of "
-"easy access, so we're going to have to keep our eyes open and see if we can "
+"\"The main issue we have right now is that VIP rooms and such are not easy "
+"to access, so we're going to have to keep our eyes open and see if we can "
 "spot an opportunity to plant the device.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:150
 msgid ""
-"They hand you the signal capturing device and explain briefly how it works.\n"
+"She hands you the signal capturing device and briefly explains how it "
+"works.\n"
 "\"Take the device and see if you can find a chance to place it. I'll be at "
 "the spaceport bar if you figure anything out.\""
 msgstr ""
 
 #. Accepted.
 #: dat/missions/minerva/pirate3.lua:154 dat/missions/minerva/pirate4.lua:123
-msgid "You approach the shady character you have become familiarized with."
+msgid "You approach the sketchy character you have become familiarized with."
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:158
@@ -52412,15 +52409,15 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:196
 msgid ""
 "\"The high-tech latest gen signal capturing device I gave should be able to "
-"bypass moste jammers. However, you're going to have to plant it in a VIP "
-"room or in some place where we might be able to catch the mole.\""
+"bypass most jammers. However, you're going to have to plant it in a VIP room "
+"or in some place where we might be able to catch the mole.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:200
 msgid ""
-"\"The spa sounds like a perfect place to set up the signal capturing device. "
+"\"The Spa sounds like a perfect place to set up the signal capturing device. "
 "Nobody will suspect a thing! You should buy a ticket to the Spa and see if "
-"we can get lucky. If  not, we may have to take other measures to ensure "
+"we can get lucky. If not, we may have to take other measures to ensure "
 "success.\""
 msgstr ""
 
@@ -52438,16 +52435,16 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:209
 msgid ""
-"\"You got the ticket to the Minerva spa, so all you have to do now is go in, "
+"\"You got the ticket to the Minerva Spa, so all you have to do now is go in, "
 "plant the listening device, and enjoy the thermal waters.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:214
 msgid ""
 "\"Isn't this place great? They managed to set up an incredibly successful "
-"business model here. The way the Empire basically turns an eye to everything "
-"that goes on here is just incredible! Makes you want to root for their "
-"success you no?\""
+"business model here. The way the Empire basically turns a blind eye to "
+"everything that goes on here is just incredible! Makes you want to root for "
+"their success you know?\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:215
@@ -52466,11 +52463,11 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:220
 msgid ""
-"\"Ah, so you heard the news too? The spa sounds like a perfect place to set "
+"\"Ah, so you heard the news too? The Spa sounds like a perfect place to set "
 "up the signal capturing device. Nobody will suspect a thing! You should buy "
-"a ticket and see if we can get lucky. If  not, we may have to take other "
+"a ticket and see if we can get lucky. If not, we may have to take other "
 "measures to ensure success.\"\n"
-"They wink at you."
+"She winks at you."
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:225
@@ -52495,7 +52492,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:233
 msgid ""
 "\"Shit! I thought we had that rigged. Damn it. Give me one second.\"\n"
-"They start frantically typing into their portable holo-deck. It makes weird "
+"She starts frantically typing into her portable holo-deck. It makes weird "
 "beeps and noises."
 msgstr ""
 
@@ -52530,7 +52527,7 @@ msgstr ""
 msgid ""
 "\"Great job out there. It's like taking candy from a baby.\"\n"
 "She beams you a smile.\n"
-"\"Now go enjoy yourself at the spa and don't forget to plant the listening "
+"\"Now go enjoy yourself at the Spa and don't forget to plant the listening "
 "device!\""
 msgstr ""
 
@@ -52563,7 +52560,7 @@ msgstr ""
 #. Case harper lands with the ticket, i.e., ran away
 #: dat/missions/minerva/pirate3.lua:311
 msgid ""
-"#rMISSION FAILED! You were supposed to get the ticket but they got away!"
+"#rMISSION FAILED! You were supposed to get the ticket but Harper got away!"
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:326
@@ -52599,7 +52596,7 @@ msgstr ""
 
 #. He goes land now
 #: dat/missions/minerva/pirate3.lua:400
-msgid "You see Harper's hologram appear into view paler than usual."
+msgid "You see Harper's hologram appear into view. He looks paler than usual."
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:401
@@ -52630,7 +52627,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:428
 msgid ""
 "He laughs nervously.\n"
-"\"You have to be killing right? You wouldn't kill me in cold blood would "
+"\"You have to be kidding right? You wouldn't kill me in cold blood would "
 "you? I have a family waiting for me back home."
 msgstr ""
 
@@ -52836,7 +52833,7 @@ msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:73
 msgid ""
-"You accepted another job from the shady individual deal with a mole at "
+"You accepted another job from the sketchy individual to deal with a mole at "
 "Minerva Station."
 msgstr ""
 
@@ -52856,10 +52853,9 @@ msgstr ""
 #: dat/missions/minerva/pirate4.lua:113
 msgid ""
 "\"Glad to have you onboard again! So we have tracked down the mole and know "
-"that they are infiltrated in the station from the intercepted messages. It "
-"appears that they are most likely working at the station. Now there are not "
-"many places to work at the station so it is likely that they are involved in "
-"the gambling facility.\""
+"from intercepted messages that they are most likely working at the station. "
+"Now, there are not many places to work at the station, so it is likely that "
+"they are involved in the gambling facility.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:114
@@ -52899,7 +52895,7 @@ msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:149
 msgid ""
-"After the chuck-a-luck dealers shift you follow him to a back alley in the "
+"After the chuck-a-luck dealer's shift you follow him to a back alley in the "
 "station."
 msgstr ""
 
@@ -52917,10 +52913,10 @@ msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:154
 msgid ""
-"While they wrinkle their eyebrows, you suddenly hear a soft thud and while "
-"you hear the sound of strong electric current, you see their eyes glaze over "
-"and muscles stiffen. They quickly drop to the ground and a familiar face "
-"appears into view."
+"While they furrow their brows, you suddenly hear a soft thud and the sound "
+"of strong electric current. You see their eyes glaze over and muscles "
+"stiffen. They quickly drop to the ground and a familiar face appears into "
+"view."
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:159
@@ -52988,23 +52984,23 @@ msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:230
 msgid ""
-"You board the ship and are once again greeting by the shady figure you are "
+"You board the ship and are once again greeting by the sketchy figure you are "
 "getting used to."
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:231
 msgid ""
 "\"I was worried. Glad you made it here in one piece!\"\n"
-"Some crew member escort the Dvaered mole towards the inner part of the ship. "
-"They have a fairly rough and burly complexion."
+"Some crew members escort the Dvaered mole towards the inner part of the "
+"ship. They have fairly rough and burly complexions."
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:233
 msgid ""
 "\"Don't worry about the mole, we'll take care of them from now on.\"\n"
-"They beam you a smile.\n"
+"She beams you a smile.\n"
 "\"If all goes well, we'll get the information we were looking for in the "
-"next periods and we can all go "
+"next few periods and we can all go "
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:236
@@ -53038,11 +53034,11 @@ msgid ""
 "\"Shit, it looks like we have Dvaered company. Make sure they don't find our "
 "ship! I dunno, just shoot them or something! I'll be manning the turrets "
 "here.\"\n"
-"They rush off into the depths of the ship."
+"She rushes off into the depths of the ship."
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:248
-msgid "You rush to get back to your ship before the Dvaereds jump in."
+msgid "You race to get back to your ship before the Dvaereds jump in."
 msgstr ""
 
 #. Set up stuff
@@ -53137,8 +53133,8 @@ msgstr ""
 msgid ""
 "Zuri makes a somewhat complicated face at the unwanted interruption.\n"
 "\"I have some business to attend to.\"\n"
-"They give you a tired grin.\n"
-"\"Anyway, I'll wire you a reward and meet me back at Minerva Station.\""
+"She gives you a tired grin.\n"
+"\"Anyway, I'll wire you a reward. Meet me back at Minerva Station.\""
 msgstr ""
 
 #. Rewards
@@ -53231,8 +53227,8 @@ msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:100
 msgid ""
-"You approach Zuri to report your success. They listen to you intently as you "
-"explain how things went down when you took down the hacking center."
+"You approach Zuri to report your success. She listens to you intently as you "
+"explain how things went down when you took out the hacking center."
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:101
@@ -53247,7 +53243,7 @@ msgstr ""
 #: dat/missions/minerva/pirate5.lua:102
 msgid ""
 "\"I've wired you your reward as always.\"\n"
-"They grin at you.\n"
+"She grins at you.\n"
 "\"That said, our work is still far from done. We won't stop until Minerva "
 "Station is free from Za'lek and Dvaered inference. Meet me up in the bar in "
 "a bit if you want to help.\""
@@ -53262,16 +53258,18 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/minerva/pirate5.lua:116
+#, fuzzy
+#| msgid "The Proteron are watching you."
 msgid ""
-"You approach Zuri who seems to be motioning to you. They seem faintly tired."
-msgstr ""
+"You approach Zuri who seems to be motioning to you. She seems faintly tired."
+msgstr "프로테론이 당신을 지켜보고 있다."
 
 #: dat/missions/minerva/pirate5.lua:117
 msgid ""
 "\"I suppose you have a lot of questions, but first things first. Remember "
-"the suspicious Za'lek drones? Well, we were able to look more into that, and "
-"it seems like they were part of the scouts of an advanced hacking attack on "
-"Minerva Station.\""
+"the suspicious Za'lek drones? Well, we were able to look into that some "
+"more, and it seems like they were part of the scouts of an advanced hacking "
+"attack on Minerva Station.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:118
@@ -53286,12 +53284,12 @@ msgid ""
 "\"Long story short, we need you to take out their hacking center nearby. "
 "This time we won't be able to use much brute force, you'll have to use more "
 "finesse. Will you help us again?\"\n"
-"They smile at you."
+"She smiles at you."
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:132
 msgid ""
-"\"Great! We are always counting on you.\n"
+"\"Great! We can always count on you.\n"
 "So, as I was saying, it seems like the Za'lek have set up some pretty "
 "serious surveillance and hacking infrastructure in the nearby {sys} system. "
 "We sent a scout to look at it quickly and it looks like they have set up "
@@ -53319,10 +53317,10 @@ msgid ""
 "out the drone controllers or hacking stations if you can get close enough. "
 "So try to sneak past all the drones, plant the bombs on the drone "
 "controllers, and once they are out, do the same with the hacking center. Of "
-"course, if you prefer to be old fashion, you can take the hacking center "
+"course, if you prefer to be old fashioned, you can take the hacking center "
 "down with missiles, railguns, or whatever you have hand. Probably easier "
 "said than done, but I know you can do it.\"\n"
-"They grin at you."
+"She grins at you."
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:137
@@ -53358,11 +53356,11 @@ msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:157
 msgid ""
-"\"We've loaded explosives onto your ships, so if you are able to avoid the "
+"\"We've loaded explosives onto your ship, so if you are able to avoid the "
 "drones and board the drone controllers or even the hacking center, you "
 "should be able to detonate them easily. However, they should also be able to "
 "be taken down by conventional weapons. Whatever is easier for you.\"\n"
-"They beam you a smile.\n"
+"She beams you a smile.\n"
 "\"Make sure you take a stealthy ship that can take down a couple of drones "
 "if things go wrong, and you get caught.\""
 msgstr ""
@@ -53370,7 +53368,7 @@ msgstr ""
 #: dat/missions/minerva/pirate5.lua:163
 msgid ""
 "\"Pirates?\"\n"
-"They chuckle.\n"
+"She chuckles.\n"
 "\"Let me ask you one thing, do you think the decrepit Empire is good? "
 "Overtaxing and overworking the citizens to feed the ostentatious bureaucracy "
 "and aristocracy, all the while starving and exploiting the workers all over. "
@@ -53402,26 +53400,26 @@ msgstr ""
 msgid ""
 "\"Of course, it is not that easy, as many people are complicit even against "
 "their own interests. They believe they can become part of the elite if they "
-"work hard enough, you know, the Empire dream. However, that never happens, "
-"and they die a sad depressed life filled with delusions of grandeur. This is "
-"not the universe we wish for humankind.\""
+"work hard enough, you know, the Imperial dream. However, that never happens, "
+"and they die a sad, depressed life filled with delusions of grandeur. This "
+"is not the universe we wish for humankind.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:174
 msgid ""
-"\"It is not easy to go toe-to-toe with such the large establishment, which "
-"is why we have to work from the shadows and focus on small objectives, like "
-"Minerva Station. The Station has such a potential, yet it is wasted on "
-"Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station "
-"to live their full potential, even though we have to ruffle some feathers "
-"here and there.\""
+"\"It is not easy to go toe-to-toe with such a large establishment, which is "
+"why we have to work from the shadows and focus on small objectives, like "
+"Minerva Station. The Station has such potential, yet it is wasted on Za'lek "
+"and Dvaered squabbles. We wish to free the people of Minerva Station to live "
+"their full potential, even though we have to ruffle some feathers here and "
+"there.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:175
 msgid ""
 "\"So yes, maybe we are pirates. Pirates who dream of a better universe for "
 "you and I.\"\n"
-"Their eyes blaze with hard determination."
+"Her eyes blaze with hard determination."
 msgstr ""
 
 #. Controller spawning functions
@@ -75763,7 +75761,7 @@ msgstr ""
 #. Handle secretcode
 #. All logic here
 #: dat/scripts/minigames/blackjack.lua:131
-#: dat/scripts/minigames/chuckaluck.lua:221
+#: dat/scripts/minigames/chuckaluck.lua:222
 msgid "#rYou lost!#0"
 msgstr ""
 
@@ -75791,13 +75789,13 @@ msgstr ""
 #. See if dealer grabs another card
 #. Special chatter
 #. Dealer
-#: dat/scripts/minigames/blackjack.lua:265
+#: dat/scripts/minigames/blackjack.lua:266
 #, fuzzy, lua-format
 msgid "Dealer: %s"
 msgstr "렌더링: %s"
 
 #. Player
-#: dat/scripts/minigames/blackjack.lua:278
+#: dat/scripts/minigames/blackjack.lua:279
 #, lua-format
 msgid "Player: %d"
 msgstr ""
@@ -75808,19 +75806,19 @@ msgstr ""
 #. Dice
 #. Print status
 #. Buttons
-#: dat/scripts/minigames/blackjack.lua:324
-#: dat/scripts/minigames/chuckaluck.lua:182
+#: dat/scripts/minigames/blackjack.lua:325
+#: dat/scripts/minigames/chuckaluck.lua:183
 msgid "You have {credits} and #p{n} Minerva Token#0."
 msgid_plural "You have {credits} and #p{n} Minerva Tokens#0."
 msgstr[0] ""
 
-#: dat/scripts/minigames/blackjack.lua:331
-#: dat/scripts/minigames/chuckaluck.lua:189
+#: dat/scripts/minigames/blackjack.lua:332
+#: dat/scripts/minigames/chuckaluck.lua:190
 msgid "#rNot enough credits! You only have {credits}!#0"
 msgstr ""
 
-#: dat/scripts/minigames/blackjack.lua:335
-#: dat/scripts/minigames/chuckaluck.lua:193
+#: dat/scripts/minigames/blackjack.lua:336
+#: dat/scripts/minigames/chuckaluck.lua:194
 #, fuzzy
 #| msgid "You owe me 20 credits!"
 msgid "You bet {credits}."
@@ -75869,9 +75867,9 @@ msgstr ""
 msgid "The dealer lets out a big sigh."
 msgstr ""
 
-#: dat/scripts/minigames/chuckaluck.lua:224
-#: dat/scripts/minigames/chuckaluck.lua:227
-#: dat/scripts/minigames/chuckaluck.lua:230
+#: dat/scripts/minigames/chuckaluck.lua:225
+#: dat/scripts/minigames/chuckaluck.lua:228
+#: dat/scripts/minigames/chuckaluck.lua:231
 msgid "#gYou won #p{n} Minerva Token#g (matched one)!#0"
 msgid_plural "#gYou won #p{n} Minerva Tokens#g (matched one)!#0"
 msgstr[0] ""
@@ -75928,7 +75926,7 @@ msgstr ""
 msgid "Layer {cur} / {total}"
 msgstr ""
 
-#: dat/scripts/minigames/sokoban/core.lua:343
+#: dat/scripts/minigames/sokoban/core.lua:342
 msgid "#barrow keys#0: move, #br#0: restart, #bq#0: abort"
 msgstr ""
 
@@ -79070,7 +79068,7 @@ msgstr "Mission Lua '%s'구문 오류: %s"
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1180 src/ai.c:1246 src/nlua_pilot.c:3953
+#: src/ai.c:1180 src/ai.c:1246 src/nlua_pilot.c:3946
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
@@ -79079,7 +79077,7 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2289 src/nlua_pilot.c:4415
+#: src/ai.c:2289 src/nlua_pilot.c:4408
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
@@ -80973,7 +80971,7 @@ msgstr ""
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:524 src/slots.c:58 src/spfx.c:177 src/start.c:63
+#: src/event.c:524 src/slots.c:58 src/spfx.c:175 src/start.c:63
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
@@ -84242,12 +84240,12 @@ msgid ""
 "Number of columns in a linear optimization problem must be greater than 0!"
 msgstr ""
 
-#: src/nlua_linopt.c:313
+#: src/nlua_linopt.c:312
 #, fuzzy, c-format
 msgid "Unknown column kind '%s'!"
 msgstr "알 수없는 사운드 백엔드 '%s'."
 
-#: src/nlua_linopt.c:385
+#: src/nlua_linopt.c:384
 msgid "Table lengths don't match!"
 msgstr ""
 
@@ -84356,64 +84354,64 @@ msgstr ""
 msgid "Trying to remove the bloody player!"
 msgstr ""
 
-#: src/nlua_pilot.c:1833
+#: src/nlua_pilot.c:1828
 #, fuzzy, c-format
 msgid "Unknown slot type '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:1872
+#: src/nlua_pilot.c:1865
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
 msgstr "'%s' 대형은 발견되지 않았다"
 
-#: src/nlua_pilot.c:2142 src/pilot.c:1167
+#: src/nlua_pilot.c:2135 src/pilot.c:1167
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
 #. Broadcast message.
-#: src/nlua_pilot.c:2200 src/pilot.c:1194
+#: src/nlua_pilot.c:2193 src/pilot.c:1194
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
-#: src/nlua_pilot.c:3417
+#: src/nlua_pilot.c:3410
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:3470
+#: src/nlua_pilot.c:3463
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:3651
+#: src/nlua_pilot.c:3644
 #, fuzzy, c-format
 #| msgid "Failed to remove mission cargo '%d' for mission '%s'."
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
 msgstr "임무 '%2$s'에 대한 임무화물 '%1$d'을 제거하지 못했습니다."
 
-#: src/nlua_pilot.c:3792
+#: src/nlua_pilot.c:3785
 msgid "Pilot does not have AI."
 msgstr ""
 
-#: src/nlua_pilot.c:3988
+#: src/nlua_pilot.c:3981
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:4333
+#: src/nlua_pilot.c:4326
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:4345
+#: src/nlua_pilot.c:4338
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:4458
+#: src/nlua_pilot.c:4451
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
@@ -85732,7 +85730,7 @@ msgid "GUI (Graphical User Interface)"
 msgstr ""
 
 #: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3347
-#: src/spfx.c:1163 src/start.c:69
+#: src/spfx.c:1162 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -86024,11 +86022,11 @@ msgstr ""
 msgid "Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."
 msgstr ""
 
-#: src/pilot_ew.c:510
+#: src/pilot_ew.c:503
 msgid "You have been uncovered!"
 msgstr ""
 
-#: src/pilot_ew.c:512
+#: src/pilot_ew.c:505
 #, c-format
 msgid "You have uncovered '#%c%s#0'!"
 msgstr ""
@@ -86930,68 +86928,68 @@ msgstr ""
 msgid "#oAutonav: travelling to %s."
 msgstr ""
 
-#: src/player_autonav.c:171
+#: src/player_autonav.c:172
 msgid "#oAutonav: heading to target position."
 msgstr ""
 
-#: src/player_autonav.c:173
+#: src/player_autonav.c:174
 #, fuzzy
 msgid "position"
 msgstr "옵션"
 
-#: src/player_autonav.c:194
+#: src/player_autonav.c:195
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:198
+#: src/player_autonav.c:199
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:212
+#: src/player_autonav.c:213
 #, c-format
 msgid "#oAutonav: following %s."
 msgstr ""
 
-#: src/player_autonav.c:234
+#: src/player_autonav.c:235
 #, c-format
 msgid "#oAutonav: boarding %s."
 msgstr ""
 
-#: src/player_autonav.c:294
+#: src/player_autonav.c:295
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr ""
 
-#: src/player_autonav.c:296
+#: src/player_autonav.c:297
 msgid "#rAutonav: aborted!"
 msgstr ""
 
-#: src/player_autonav.c:305
+#: src/player_autonav.c:306
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr ""
 
-#: src/player_autonav.c:391
+#: src/player_autonav.c:392
 msgid "#oAutonav: arrived at position."
 msgstr ""
 
-#: src/player_autonav.c:401
+#: src/player_autonav.c:402
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:442
+#: src/player_autonav.c:443
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:725
+#: src/player_autonav.c:726
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:729
+#: src/player_autonav.c:730
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
@@ -88185,76 +88183,71 @@ msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
 
-#: src/spfx.c:216
+#: src/spfx.c:214
 #, c-format
 msgid "SPFX '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/spfx.c:241
+#: src/spfx.c:239
 #, c-format
 msgid "SPFX '%s' is trying to set uniform '%s' not in shader!"
 msgstr ""
 
-#: src/spfx.c:289
-#, c-format
-msgid "SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"
-msgstr ""
-
-#: src/spfx.c:299
+#: src/spfx.c:298
 #, c-format
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/spfx.c:399
+#: src/spfx.c:398
 #, fuzzy, c-format
 msgid "Loaded %d Special Effect"
 msgid_plural "Loaded %d Special Effects"
 msgstr[0] "%d개의 성운 레이어로드"
 
-#: src/spfx.c:460
+#: src/spfx.c:459
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
 
-#: src/spfx.c:474
+#: src/spfx.c:473
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:918
+#: src/spfx.c:917
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:956
+#: src/spfx.c:955
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:1004
+#: src/spfx.c:1003
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:1126
+#: src/spfx.c:1125
 #, fuzzy, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/spfx.c:1130
+#: src/spfx.c:1129
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Trail '%s' missing '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/spfx.c:1156
+#: src/spfx.c:1155
 #, fuzzy, c-format
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/spfx.c:1205
+#: src/spfx.c:1204
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1239
+#: src/spfx.c:1238
 #, fuzzy, c-format
 msgid "Trail type '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
