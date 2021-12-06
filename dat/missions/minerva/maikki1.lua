@@ -637,7 +637,7 @@ function stealthheartbeat ()
    if not pp:flags("stealth") and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg("#rYou are about to be discovered!", true)
+         player.msg( _("#rYou are about to be discovered!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
