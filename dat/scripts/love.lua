@@ -115,6 +115,7 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 local function _update( dt )
+   naev.gfx.clearDepth()
    if love.keyboard and love.keyboard._repeat then
       for k,v in pairs(love.keyboard._keystate) do
          if v then
