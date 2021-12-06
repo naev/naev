@@ -120,7 +120,7 @@ They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on i
       pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
    else
       -- Accepted.
-      vn.na(_("You approach the shady character you have become familiarized with."))
+      vn.na(_("You approach the sketchy character you have become familiarized with."))
    end
 
    vn.label("menu_msg")
@@ -146,7 +146,7 @@ function found_mole ()
    vn.scene()
    local mole = vn.newCharacter( minerva.vn_mole() )
    vn.transition()
-   vn.na(_("After the chuck-a-luck dealers shift you follow him to a back alley in the station."))
+   vn.na(_("After the chuck-a-luck dealer's shift you follow him to a back alley in the station."))
    mole(_([["I don't recognize you, are you the new messenger? Last guy got sliced up."
 They make a cutting gesture from their belly up to their neck.
 "Poor kid, not the best way to leave this world."]]))
@@ -227,12 +227,12 @@ function mainship_board ()
    local pir = vn.newCharacter( minerva.vn_pirate() )
    local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
    vn.transition()
-   vn.na(_("You board the ship and are once again greeting by the shady figure you are getting used to."))
+   vn.na(_("You board the ship and are once again greeting by the sketchy figure you are getting used to."))
    pir(_([["I was worried. Glad you made it here in one piece!"
-Some crew member escort the Dvaered mole towards the inner part of the ship. They have a fairly rough and burly complexion.]]))
+Some crew members escort the Dvaered mole towards the inner part of the ship. They have fairly rough and burly complexions.]]))
    pir(_([["Don't worry about the mole, we'll take care of them from now on."
-They beam you a smile.
-"If all goes well, we'll get the information we were looking for in the next periods and we can all go ]]))
+She beams you a smile.
+"If all goes well, we'll get the information we were looking for in the next few periods and we can all go ]]))
    maikki(_([[You faintly hear an angry voice that sounds strangely familiar.
 "What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
    pir(_([[They visibly wince when they hear the angry voice.
@@ -244,8 +244,8 @@ They beam you a smile.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
    pir:rename(_("Zuri"))
    pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
-They rush off into the depths of the ship.]]))
    vn.na(_("You rush to get back to your ship before the Dvaereds jump in."))
+She rushes off into the depths of the ship.]]))
    vn.run()
 
    -- Set up stuff
@@ -427,8 +427,8 @@ function followup ()
 "Zuri! Get your ass back to navigation! Wait until I tell you how that Dvaered squealed like a pig!"]]))
    pir(_([[Zuri makes a somewhat complicated face at the unwanted interruption.
 "I have some business to attend to."
-They give you a tired grin.
 "Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
+She gives you a tired grin.
    vn.na(fmt.reward(reward_amount))
    vn.func( function () -- Rewards
       player.pay( reward_amount )

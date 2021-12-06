@@ -34,7 +34,7 @@ local drone2pos = vec2.new( -10000,   6000 )
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: Go kill drone
---    1: Get back to Minerva STation
+--    1: Get back to Minerva Station
 mem.misn_state = nil
 local badweaps, drone1, drone2 -- Non-persistent state
 -- luacheck: globals drone_attacked drone_death drone_ranaway enter heartbeat land reinforcements_jumpin (Hook functions passed by name)
@@ -60,21 +60,21 @@ function accept ()
    vn.label( "leave" )
    vn.na(_("You approach the sketchy individual who seems to be calling your attention once again."))
    pir(_([["It seems like our last job worked better than we thought. The Dvaered are all riled up, just as planned. However, there is still a lot left to do."]]))
-   pir(_([["I have another job if you are interested, it should be simpler than last time, only this time we target the Za'lek instead of the Dvaered to try to… improve the situation."
-They smiles at you.]]))
+   pir(_([["I have another job if you are interested. It should be simpler than last time, only this time we target the Za'lek instead of the Dvaered to try to… improve the situation."
+She smiles at you.]]))
    vn.menu( {
       {_("Accept the job"), "accept"},
       {_("Kindly decline"), "decline"},
    } )
 
    vn.label("decline")
-   vn.na(_("You decline their offer and take your leave."))
+   vn.na(_("You decline her offer and take your leave."))
    vn.done()
 
    vn.label("accept")
    vn.func( function () mem.misn_state=0 end )
    pir(_([["Glad to have you onboard again! So the idea is very simple, we've seen that the Za'lek are setting up some reconnaissance stuff around the system. Nothing very conspicuous, but there are some scout drones here and there. I want you to take them out."]]))
-   pir(_([["Just destroying them won't cut it though, we need to make it look like the Dvaered did it this time. However, that should be simple. Make sure to use Dvaered weapons to take the drones out. You know, Mace Launchers, Vulcan Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any non-Dvaered weapons!"]]))
+   pir(_([["Just destroying them won't cut it though. We need to make it look like the Dvaered did it this time. However, that should be simple. Make sure to use Dvaered weapons to take the drones out. You know, Mace Launchers, Vulcan Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any non-Dvaered weapons!"]]))
    pir(_([["There should be two drones out there. I have given you the locations where they were last seen. Try to take out the drones as fast as possible and get back here in one piece."]]))
    vn.run()
 
@@ -91,7 +91,7 @@ They smiles at you.]]))
 
    mem.misnmarker = misn.markerAdd( system.cur() )
 
-   minerva.log.pirate(_("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
+   minerva.log.pirate(_("You accept another job from the sketchy individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
    hook.enter("enter")
    hook.load("land")
@@ -106,11 +106,11 @@ function land ()
       local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.music( minerva.loops.pirate )
       vn.transition()
-      vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job to clear the Za'lek drones."))
+      vn.na(_("After you land on Minerva Station you are once again greeted by the sketchy character that gave you the job to clear the Za'lek drones."))
       pir(_([["Excellent piloting there. We didn't think that the Za'lek would catch on so fast and send in reinforcements, however, it all worked out in the end."]]))
       pir(_([["This should bring suspicions to a new high between Dvaered and Za'lek. There have already been 20 casualties from fighting this period! At this rate they will basically solve themselves. However, that might be a bit slow, so let us try to accelerate the process a bit more."
-They wink at you.]]))
       pir(_([["I've wired you some credits for your efforts. Meet me up at the bar for a new potential job."]]))
+She winks at you.]]))
       vn.na(fmt.reward(reward_amount))
       vn.func( function ()
          player.pay( reward_amount )

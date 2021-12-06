@@ -80,7 +80,7 @@ function approach_kex ()
             shader = love_shaders.color{ color={0,0,0,1} },
             pos = "right" }
 
-      vn.na(_("You tell Kex about you encounter with the transports and how you weren't able to find the supposed cargo."))
+      vn.na(_("You tell Kex about your encounter with the transports and how you weren't able to find the supposed cargo."))
       kex(_([["Damn it. That must have been a decoy. These delivery logs are always a mess, and they always seem to be full of nearly identical entries. I picked the most likely, but there was also another at the same time, and it could have been that one."]]))
 
       vn.appear( maikki, "slideleft", 1, "linear" )
@@ -159,7 +159,7 @@ Kex runs off and disappears into the station.]]))
    end )
    kex(_([["They've been running this joint since before I got here. Lots of rumours of them doing shady stuff that some are bound to be true."]]))
    kex(_([["The station is lively enough that it is fairly hard to keep track of what is going on, but there are some patterns like mysterious packages and unaccounted amounts of credits disappearing."]]))
-   kex(_([["The only thing keeping me from my freedom is the fact that the CEO legally owns me. They don't believe I am fully sentient, but I'm sure if they knew it would just make everything harder for me so I have to lay low."]]))
+   kex(_([["The only thing keeping me from my freedom is the fact that the CEO legally owns me. They don't believe I am fully sentient, but I'm sure if they knew it would just make everything harder for me, so I have to lay low."]]))
    vn.na(_("You ask about where you can find the CEO."))
    kex(_([["He shouldn't be too hard to find most of the time given his drinking habits. You can usually find him around the bar lounge on the 7th floor. You aren't going to go talk to him? There's no way that anything like that could work."
 He lets out a sigh.]]))
@@ -172,13 +172,13 @@ He lets out a sigh.]]))
    vn.jump("menu_msg")
 
    vn.label("talked_ceo")
-   kex(_([["Oh, you already talked to them? How did it go?"
+   kex(_([["Oh, you already talked to him? How did it go?"
 He looks at you expectantly.]]))
    vn.na(_("You mention that you got nowhere."))
    kex(_([[He looks a bit glum.
 "Yeah, I don't think there is talking sense into that one… Maybe if we…"
 He stops to think a bit.]]))
-   kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear right?"
+   kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear, right?"
 He looks at you with determination.
 "Given that the issue is the CEO, if we can somehow get rid of the CEO, there should be no issue, right?"]]))
    kex(_([["Since I know for a certainly that he is involved in, let's call it, unsavory business, all we have to do is get him bust and in the confusion it should be more than easy for me to go free."]]))
@@ -219,9 +219,9 @@ He looks at you with determination.
    vn.done()
 
    vn.label("job")
-   kex(_([["We have to find the dirt on the CEO and get him removed. It is the only chance I have for freedom."]]))
-   kex(fmt.f(_([[They should be receiving a delivery. You should go intercept it at the {sys} system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), {sys=targetsys}))
    kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
+   kex(_([["We have to find dirt on the CEO and get him removed. It is the only chance I have for freedom."]]))
+   kex(fmt.f(_([[They should be receiving a delivery. You should go intercept it at the {sys} system before it gets here. I have sent you all the precise information. It should be a breeze what with your piloting skills.]]), {sys=targetsys}))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -333,7 +333,7 @@ function mainguy_board ()
    mainguy:disable()
 
    -- Message update
-   minerva.log.kex(_("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
+   minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))
    misn.markerMove( mem.misn_marker, system.get("Limbo") )
    mem.misn_state = 2
    misn.osdActive(2)
@@ -346,7 +346,7 @@ end
 
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
-   minerva.log.kex(_("You destroyed a transport destined to the Minerva CEO, but didn't find anything in the debris."))
+   minerva.log.kex(_("You destroyed a transport destined for the Minerva CEO, but didn't find anything in the debris."))
    misn.markerMove( mem.misn_marker, system.get("Limbo") )
    mem.misn_state = 2
    misn.osdActive(2)

@@ -73,7 +73,7 @@ function accept ()
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition( "hexagon" )
 
-   vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem to be in very good condition."))
+   vn.na(_("You approach Kex, who is sort of slumping at his usual spot. He doesn't seem to be in very good condition."))
    kex(_([[It takes a bit before Kex notices your presence. His feathers are rather disheveled.
 "Oh, hey kid."]]))
    kex(_([[It takes a while before he continues.
@@ -90,8 +90,8 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station. I found his name when reviewing some of the documents you got me, then it was all clear."]]))
-   kex(_([["There's not too many trails to where he is right now, but I do think I know where to find him."]]))
+   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station. I found his name when reviewing some of the documents you gave me, then it was all clear."]]))
+   kex(_([["There aren't too many trails to where he is right now, but I do think I know where to find him."]]))
    kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
@@ -148,15 +148,15 @@ He seems a bit nervious and speaks softer than usual.
 
    if strangelove_death=="comforted" then
       vn.na(_([[You explain to him how the mission went, handing him the drone you found in the laboratory, and explain how you comforted the dying Dr. Strangelove as he passed away from his mysterious illness in front of your eyes.]]))
-      kex(_([[He looks at you after your explanations, furrows his brows a bit.
+      kex(_([[He looks at you after your explanation and furrows his brows a bit.
 "I can't believe you comforted him. Do you know all the shit he's done! The shit he's put me through!"]]))
       kex(_([["Damn it, not only am I not feeling any relief, but I can't even get angry at you."
 He looks down sadly at the floor for a while before looking at you again.]]))
 
    else
       if strangelove_death=="shot" then
-         vn.na(_([[You explain to him how the mission went and go into graphical details of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
          vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
+         vn.na(_([[You explain to him how the mission went and go into graphic detail of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
       elseif strangelove_death=="unplug" then
          vn.na(_([[You explain to him how the mission went and go into details of how you finished Dr. Strangelove off by unplugging him as Kex asked.]]))
          vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
@@ -188,7 +188,7 @@ He looks down sadly at the floor for a while before looking at you again.]]))
    kex(_([["Shit, who am I kidding."
 He looks as glum as ever.
 "You can't kill your way out of depression…"]]))
-   kex(_([["Hey kid, I'm really grateful for all you've done, but I don't think I can go on. I just need some time alone to gather my thoughts."]]))
+   kex(_([["Hey, kid, I'm really grateful for all you've done, but I don't think I can go on. I just need some time alone to gather my thoughts."]]))
    kex(_([["I've scrounged up some cash, I don't think I'll be needing it. Here take it."]]))
 
    local sfxparams = { pitch=pitchlow, effect="reverb_drugged" }
@@ -430,7 +430,7 @@ function landed_lab ()
    vn.jump("menu")
 
    vn.label("recreation")
-   vn.na(_("You head towards and eventually reach the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mold."))
+   vn.na(_("You head towards, and eventually reach, the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mold."))
    vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly, completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove anymore."))
    vn.na(_("Try as you might, you are unable to find anything of interest."))
    vn.func( function () check_rr = true end )
@@ -470,8 +470,8 @@ function strangelove_hail ()
    local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
    vn.transition( "electric", 3 )
    -- TODO small scene
-   vn.na(_("As you loiter around a system, you suddenly receive an unexpected incoming transmission."))
    dr(_([[A hologram of Dr. Strangelove appears before you. He is laying down and his body seems to be sapped of all energy. He seems to muster up energy to roughly look in your direction, although his eyes seem unnaturally clouded.
+   vn.na(_("As you loiter around the system, you suddenly receive an unexpected incoming transmission."))
 "Is that you?"]]))
    dr(_([["I've been expecting you."
 A coughing fit wracks his body.
@@ -508,12 +508,12 @@ He doesn't seem to be focusing much on you and is just talking in your general d
 His vital monitor's warning light flashes on.]]))
    dr(_([["You were right. It was and is all connected. I should have listened to you sooner, but I was foolish and naïve."
 He lets out a sigh.]]))
-   dr(_([["I thought I almost had it with the last specimen. It was all going so smoothly… The zero-point bionimorphic interface connection went flawlessly, and the entropy flux stable was nearly stable, but the connection was never established."]]))
-   dr(_([["It could be the distance, but my calculations indicated that it shouldn't matter. It should be everywhere. Everything is everywhere! Folding onto of itself and twisted around in higher dimensions. Measly Euclidean distances shouldn't matter at all."]]))
+   dr(_([["I thought I almost had it with the last specimen. It was all going so smoothly… The zero-point bionimorphic interface connection went flawlessly, and the entropy flux was nearly stable, but the connection was never established."]]))
+   dr(_([["It could be the distance, but my calculations indicated that it shouldn't matter. It should be everywhere. Everything is everywhere! Folding onto itself and twisted around in higher dimensions. Measly Euclidean distances shouldn't matter at all."]]))
    dr(_([["…but it didn't work. Almost as if making a mockery of science itself and spitting in my face. Almost as if the universe itself is unwilling to give up its secrets."
 He coughs violently.
 "But it failed. Like always. It failed."]]))
-   dr(_([["Williams, why did you have to die? You know so much, you surpassed me in everything I could possibly imagine. You would have been able to make it work!"]]))
+   dr(_([["Williams, why did you have to die? You know so much. You surpassed me in everything I could possibly imagine. You would have been able to make it work!"]]))
    vn.menu{
       {_("Ask about Kex"), "1kex"},
       {_("Say you are sorry"), "1cont"},
@@ -526,7 +526,7 @@ He coughs violently.
    vn.label("1cont")
    dr(_([[He goes on.
 "You were always the brightest in the class. I always admired how fast you were able to solve partial differential equations so elegantly."]]))
-   dr(_([["Remember that one time we nearly caused a subatomic implosion when the hyperphased quantum auto-cycle hit the self-refractive frequency? Your quick thinking save us from turning the entire system into a sterile void."]]))
+   dr(_([["Remember that one time we nearly caused a subatomic implosion when the hyperphased quantum auto-cycle hit the self-refractive frequency? Your quick thinking saved us from turning the entire system into a sterile void."]]))
    dr(_([["If only you had been with me this entire time. We could have done so much together."
 His voice tears up slightly.]]))
    dr(_([["Why did you have to do it?"]]))
@@ -597,7 +597,7 @@ He tries feebly to get up before coughs wrack his body and stain it further with
 
    dr(_([[He seems out of breath.
 "Today is not a good day. I just need a bit more rest and I can get started again."]]))
-   dr(_([["It was just like you said, the Nebula is just a manifestation, not an entity in itself, but establishing the connection is less straight-forward than what you left in your notes. I've tried correcting the harmonic equation, but it doesn't…"
+   dr(_([["It was just like you said, the nebula is just a manifestation, not an entity in itself, but establishing the connection is less straight-forward than what you left in your notes. I've tried correcting the harmonic equation, but it doesn't…"
 His talking is slowing down and starting to get muddled. You have trouble making out what he's saying.]]))
 
    vn.menu( function ()
@@ -636,7 +636,7 @@ SELF-DESTRUCT SEQUENCE ENGAGED
 
    -- Player insists and goes to kex arc
    vn.label("kex_talk")
-   dr(_([[He suddenly sees to regain a bit of lucidity.
+   dr(_([[He suddenly seems to regain a bit of lucidity.
 "Kex? Kex… where have I heard that name before… Wait… You mean Experiment #085? The one taken from the nebula wreck?"]]))
    dr(_([["Someone also came asking about that awhile back, but my memory is all fuzzy. I don't recall much of the encounter. Must have not been interesting anyway. Most non-research talk is boring."]]))
    dr(_([["Anyway, the subject of that experiment is long gone. It was a failure."]]))
@@ -647,14 +647,14 @@ SELF-DESTRUCT SEQUENCE ENGAGED
    }
 
    vn.label("kex_why")
-   dr(_([["Why would I not go on with that perfect experiment? The subjects found in the wreck were already long dead by the modern definition of the world. You don't need any ethic committee approval for experimenting on cadavers, not that I am subject to that oversight anymore."]]))
+   dr(_([["Why would I not go on with that perfect experiment? The subjects found in the wreck were already long dead by the modern definition of the world. You don't need any ethics committee approval for experimenting on cadavers, not that I am subject to that oversight anymore."]]))
    dr(_([["Having spent so long in that wreck, whey were the perfect candidates for testing. Had I not performed it, it would have been a crime against science! It was my moral obligation to do it!"]]))
    vn.jump("kex_failure")
 
    vn.label("kex_failure")
    dr(_([["Yes, it was a failure. It never became a vessel to the void. It was just a husk of what it should have been. So much potential, all wasted."]]))
-   dr(_([["Even though the vitals and neural responses seemed nominal, it didn't really seem to display any standard concious responses. It even failed the LEVEL II test, a sign of a weak mind. An utter failure."
-He coughs violently again, spasms overtaking his body. The medical robot sees to inject him with something and he calms down again.]]))
+   dr(_([["Even though the vitals and neural responses seemed nominal, it didn't really seem to display any standard conscious responses. It even failed the LEVEL II test, a sign of a weak mind. An utter failure."
+He coughs violently again, spasms overtaking his body. The medical robot seems to inject him with something and he calms down again.]]))
    vn.menu{
       { _([["Kex sends you his regards" (draw weapon)"]]), "kex_weapon" },
       { _([[Unplug his life support.]]), "kex_unplug" },
@@ -673,7 +673,7 @@ He coughs violently again, spasms overtaking his body. The medical robot sees to
 He seems to be looking at something in the distance.]]))
    dr(_([[Suddenly he seems to open his eyes wide, but his expression is less of terror and more of curiosity and awe.
 "It's more beautiful… than I… thought."]]))
-   vn.na(_([[You look into his nearly opaque eyes and for a second, you think you can see the nebula in all its fury and glory reflected in them. You look around the room but nothing has changed.]]))
+   vn.na(_([[You look into his nearly opaque eyes and, for a second, you think you can see the nebula in all its fury and glory reflected in them. You look around the room but nothing has changed.]]))
    vn.func( function () var.push("strangelove_death","comforted") end )
    vn.jump("nonviolent_death")
 

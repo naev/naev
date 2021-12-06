@@ -121,7 +121,7 @@ function approach_kex ()
    if mem.misn_state==2 then
       vn.na(_("You head towards Kex's usual spot."))
       kex(_([[He looks fairly tired.
-"What's up kid?"]]))
+"What's up, kid?"]]))
       vn.na(_("You explain that you weren't able to get anything out of Jie and that this time it was a failure."))
       kex(_([["I see. That can't be helped. You win some, you lose some."]]))
       kex(_([["While you were out I, think I got a lead on our next target, but it's not something I really wanted to deal with right now."]]))
@@ -161,9 +161,9 @@ He seems at a loss of words.
       kex(_([[He lets out a deep sigh.
 "It's just sort of pointless. Even if we somehow get rid of the CEO and I get free, nothing really changes, you know? I'm still a damn duck. It's not like I'm getting my life back. It's just sometimes it all seems so hopeless and arbitrary. Like we're just some sort of random noise without any real purpose."]]))
       kex(_([[Before you can speak, he keeps on going.
-"Anyway, don't let me silly thoughts bother you. Let us get back to topic."
+"Anyway, don't let my silly thoughts bother you. Let us get back to topic."
 His eyes don't seem to have changed.]]))
-      kex(_([["So I was putting together the pieces and found out a close collaborator of the CEO, someone called Jie de Luca who seems to be situated in the frontier. They seem to go fairly far back with the CEO and probably have more information. As this is our best lead for now, I hate to ask this of you, but would you be able to check them out and see if we can get some more information?"]]))
+      kex(_([["So I was putting together the pieces and found a close collaborator of the CEO, someone called Jie de Luca who seems to be situated in the frontier. They seem to go fairly far back with the CEO and probably have more information. As this is our best lead for now, I hate to ask this of you, but would you be able to check them out and see if we can get some more information?"]]))
       vn.menu{
          { _("Accept"), "accept" },
          { _("Decline"), "decline" },
@@ -244,7 +244,7 @@ They speak calmly, without so much as a tinge of urgency.]]))
       { _("Ask about the Minerva CEO"), "cont1" },
    }
    vn.label("cont1")
-   jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living can we now?"
+   jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living, now, can we?"
 They take a sip from their drink.]]))
    jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines to survive."]]))
    jie(_([["This shithole taught us that nothing is given for free. You have to fight with tooth and nail to get what you want! No that's not it, what we deserve!"
@@ -252,11 +252,11 @@ They hit the table for emphasis.]]))
    jie(_([["This universe is rotten to the core you know. If you don't want to wind up as a husk of a human, toiling for the benefit of others, you have to take what you damn want. I'm not going to wind up as another corpse deep down underground."]]))
    jie(_([["I don't think a hired gun like you would truly what the suffering is like when nearly working to death in the ore mines. Just here to do your master's bidding, like the loyal dog you are."
 They give a small chuckle and lean forward.]]))
-   jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with blood, sweat, and tears."]]))
+   jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with our blood, sweat, and tears."]]))
    jie(_([[They clench their teeth.
 "I won't let you! Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
    vn.disappear(jie, "slideleft")
-   vn.na(_([[In the split of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well…
+   vn.na(_([[In the blink of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well…
 You rush to your ship to see if you can catch them in pursuit!]]))
    vn.run()
 
@@ -437,8 +437,8 @@ function jie_board ()
 They cough up and you can see some blood drip from the side of their mouth.]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    cjie(_([["This is why we can't have nice things…"
-As their head slouches down, you hear an alarm blaring, and a voice announcing "Self-destruction imminent!".]]))
-   vn.na(_("You leave Jie behind as you rush to get back to your ship and get away from the explosion."))
+As their head slouches down, you hear an alarm blaring, and a voice announcing "Self-destruct imminent!".]]))
+   vn.na(_("You leave Jie behind as you rush to get back to your ship to get away from the explosion."))
    vn.run()
 
    pjie:setHealth(-1,-1)

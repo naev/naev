@@ -199,7 +199,7 @@ He winks his cyborg eye at you.]]))
 
    vn.label("job")
    if not mem.misn_state or mem.misn_state < 1 then
-      kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
+      kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the note I gave you it should be enough to convince him."]]))
       kex(fmt.f(_([["You should be able to find him at {pnt} in the {sys} system. I don't think he should give much trouble."]]), {pnt=targetplanet, sys=targetsys}))
    else
       kex(fmt.f(_([["Oh, so Major Malik wasn't at {targetplanet}? That is really weird. Let's hope you can find him at {pnt} in the {sys} system."]]), {targetplanet=targetplanet, pnt=lastplanet, sys=lastsys}))
@@ -312,7 +312,7 @@ function approach_malik ()
    malik(_([["What do you want?"]]))
    vn.na(_("You hand him the note you got from Kex. He reads it and furrows his brows a bit."))
    malik(_([["I see. You think at my age I worry about what happens to me? I've had a good career with no regrets. Your threats don't sway me."]]))
-   malik(_([["However, I'm in a good mood today. How about we play a game? I have a private Crimson Gauntlet server here, let us duel in classic Dvaered fashion. If you win, I'll give you over the information you want."]]))
+   malik(_([["However, I'm in a good mood today. How about we play a game? I have a private Crimson Gauntlet server here, let us duel in classic Dvaered fashion. If you win, I'll give you the information you want."]]))
    malik(_([["To make it more exciting, we can both duel in Vendettas. I'll provide you with one. What do you say?"]]))
    vn.menu{
       {_("Accept"),  "accept"},
@@ -320,7 +320,7 @@ function approach_malik ()
    }
    vn.label("accept")
    vn.func( function () dogauntlet = true end )
-   malik(_([["OK, then it's settled then. Follow me to my private room and we'll get started."]]))
+   malik(_([["OK. It's settled then. Follow me to my private room and we'll get started."]]))
    vn.na(_("Major Malik leads you through the installation to a private Crimson Gauntlet server room. You enter and see that there are two virtual reality terminals."))
    malik(_([["Please sit in that terminal over there, I'll be at the one here. You know how this works right? Just connect yourself, and I'll set up the server details."]]))
    vn.na(_([[You sit down and do as you are told. Quickly it changes to the Crimson Gauntlet boot screen. You idly scan the server detail information as it boots up. Suddenly something catches your eye:
@@ -610,7 +610,7 @@ function malik_speech ()
       { delay=5, txt=_("You come to my office to harass me…"), func=malik_music },
       { delay=5, txt=_("You interrupt my leisure with blackmail…") },
       { delay=5, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
-      { delay=5, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
+      { delay=5, txt=_("You are in my realm now, kid!"), func=malik_spawn_more },
       { delay=5, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
       { delay=5, txt=_("My power is limitless here!"), func=malik_spawn_more },
       { delay=5, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more2 },

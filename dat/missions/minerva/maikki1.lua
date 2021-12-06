@@ -642,7 +642,7 @@ function stealthheartbeat ()
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
          pscavA:broadcast( _("Run!") )
-         pscavB:broadcast( _("There's definately something there! Scram!") )
+         pscavB:broadcast( _("There's definitely something there! Scram!") )
          for k,p in ipairs{pscavA, pscavB} do
             p:taskClear()
             p:hyperspace( cutscenesys )

@@ -104,7 +104,7 @@ function approach_terminal ()
    vn.na(_("The terminal lights up dimly and begins to compute whatever was on the program. After a while it seems to begin downloading large amounts of data while you impatiently wait."))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(_("Suddenly, an alarm begins to blare. Before the security screen shuts down in the terminal you are able to grab the program as you make a run for your ship. In the background, you hear people yelling and running around. It seems like you have to get out of here as soon as possible."))
-   vn.na(_("This is probably what Kex meant with things going sour. It seems like you have a head start on your pursuers, but you may not be able to count on it for long."))
+   vn.na(_("This is probably what Kex meant about things going sour. It seems like you have a head start on your pursuers, but you may not be able to count on it for long."))
    vn.run()
 
    -- Advance mission and get out of there
@@ -125,9 +125,9 @@ function approach_kex ()
    if mem.misn_state==2 then
 
       vn.na(_("You return tired from your escapade once again to Kex, who is at his favourite spot at Minerva station."))
-      kex(_([["You look like a mess kid, You alright?"]]))
       vn.na(_("You explain how you weren't able to get all the data before you had to scram out of there, and hand him the data you were able to recover."))
-      kex(_([["Damn, the security was tighter than anticipated. I'm glad to see you made it in one piece despite the opposition. Aristocrats always seem to have cards up their sleeves."]]))
+      kex(_([["You look like a mess kid. You alright?"]]))
+      kex(_([["Damn, security was tighter than anticipated. I'm glad to see you made it in one piece despite the opposition. Aristocrats always seem to have cards up their sleeves."]]))
       kex(_([["Let me take a brief look at the data you were able to collect."
 He plugs in the program directly into a port under his wing and his eyes go blank for a bit.
 "I see, looks like you were able to get quite a lot of data. However, their database had much more than expected. It will probably take me quite a bit longer to process this all and see what we got."]]))
@@ -191,7 +191,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    vn.jump("menu_msg")
 
    vn.label("duck")
-   kex(_([["It's as awful as you would expect it to be. I mean, sure I can float and fly short distances, but you can't reach any tall places and have to constantly avoid getting stepped on."]]))
+   kex(_([["It's as awful as you would expect it to be. I mean, sure I can float and fly short distances, but I can't reach any tall places and have to constantly avoid getting stepped on."]]))
    kex(_([["The worst part is the lack of communication. I mean, I've sort of lost my humanity and can't engage in all the activities I used to like. You know, drinking with friends, going out, basic human empathy, shit like that."]]))
    kex(_([["I would like to think that I'm used to it after all these cycles, but you never get used to it. There's a moment of bliss when you wake up first thing in the morning, and you still haven't remembered you're a duck, but it soon comes crashing down. You just can't get used to it."]]))
    kex(_([["I do take it a bit better these days, but the beginning was especially hard. You just lose all the will to live. There's like no going back, right? All the things I used to have and cherish, they're all gone. My work, my friends, my family…"]]))
