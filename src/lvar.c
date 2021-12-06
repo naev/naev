@@ -126,8 +126,6 @@ void lvar_rmArray( lvar **arr, lvar *rm_var )
  */
 int lvar_save( const lvar *arr, xmlTextWriterPtr writer )
 {
-   xmlw_startElem(writer,"vars");
-
    for (int i=0; i<array_size(arr); i++) {
       const lvar *v = &arr[i];
       xmlw_startElem(writer,"var");
@@ -157,7 +155,6 @@ int lvar_save( const lvar *arr, xmlTextWriterPtr writer )
       }
       xmlw_endElem(writer); /* "var" */
    }
-   xmlw_endElem(writer); /* "vars" */
 
    return 0;
 }
@@ -173,47 +170,41 @@ lvar *lvar_load( xmlNodePtr parent )
    lvar *arr = array_create( lvar );
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"vars")) {
-         xmlNodePtr cur = node->xmlChildrenNode;
-
-         do {
-            xml_onlyNodes(cur);
-            if (!xml_isNode(cur,"var")) {
-               WARN(_("Lua Var stack has unknown node '%s'!"), xml_get(cur));
-               continue;
-            }
-            lvar var;
-            char *str;
-            xmlr_attr_strd(cur,"name",var.name);
-            xmlr_attr_strd(cur,"type",str);
-            if (strcmp(str,"nil")==0)
-               var.type = LVAR_NIL;
-            else if (strcmp(str,"num")==0) {
-               var.type = LVAR_NUM;
-               var.d.num = xml_getFloat(cur);
-            }
-            else if (strcmp(str,"bool")==0) {
-               var.type = LVAR_BOOL;
-               var.d.b = xml_getInt(cur);
-            }
-            else if (strcmp(str,"str")==0) {
-               var.type = LVAR_STR;
-               var.d.str = xml_getStrd(cur);
-            }
-            else if (strcmp(str,"time")==0) {
-               var.type = LVAR_TIME;
-               var.d.time = xml_getLong(cur);
-            }
-            else { /* super error checking */
-               WARN(_("Unknown var type '%s'"), str);
-               free(var.name);
-               free(str);
-               continue;
-            }
-            free(str);
-            lvar_addArray( &arr, &var, 0 );
-         } while (xml_nextNode(cur));
+      xml_onlyNodes(node);
+      if (!xml_isNode(node,"var")) {
+         WARN(_("Lua Var stack has unknown node '%s'!"), xml_get(node));
+         continue;
       }
+      lvar var;
+      char *str;
+      xmlr_attr_strd(node,"name",var.name);
+      xmlr_attr_strd(node,"type",str);
+      if (strcmp(str,"nil")==0)
+         var.type = LVAR_NIL;
+      else if (strcmp(str,"num")==0) {
+         var.type = LVAR_NUM;
+         var.d.num = xml_getFloat(node);
+      }
+      else if (strcmp(str,"bool")==0) {
+         var.type = LVAR_BOOL;
+         var.d.b = xml_getInt(node);
+      }
+      else if (strcmp(str,"str")==0) {
+         var.type = LVAR_STR;
+         var.d.str = xml_getStrd(node);
+      }
+      else if (strcmp(str,"time")==0) {
+         var.type = LVAR_TIME;
+         var.d.time = xml_getLong(node);
+      }
+      else { /* super error checking */
+         WARN(_("Unknown var type '%s'"), str);
+         free(var.name);
+         free(str);
+         continue;
+      }
+      free(str);
+      lvar_addArray( &arr, &var, 0 );
    } while (xml_nextNode(node));
    qsort( arr, array_size(arr), sizeof(lvar), lvar_cmp );
 

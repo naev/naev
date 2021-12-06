@@ -7,6 +7,7 @@
 
 #include "nstring.h"
 #include "pilot.h"
+#include "lvar.h"
 
 /** Player flag enum. */
 enum {
@@ -59,11 +60,30 @@ enum {
 #include "player_autonav.h"
 
 /**
+ * @brief Wrapper for outfits.
+ */
+typedef struct PlayerOutfit_s {
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
+} PlayerOutfit_t;
+
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot* p;      /**< Pilot. */
+   int autoweap;  /**< Automatically update weapon sets. */
+   int favourite; /**< Whether or not it is favourited. */
+   lvar *shipvar; /**< Per-ship version of lua mission variables. */
+} PlayerShip_t;
+
+/**
  * The player struct.
  */
 typedef struct Player_s {
    /* Player intrinsics. */
    Pilot *p;         /**< Player's pilot. */
+   PlayerShip_t ps;  /**< Player's ship with extra information. */
    char *name;       /**< Player's name. */
    double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
 
@@ -88,7 +108,6 @@ typedef struct Player_s {
    /* Stuff we save. */
    char *gui;        /**< Player's GUI. */
    int guiOverride;  /**< GUI is overridden (not default). */
-   int favourite;    /**< Whether or not this ship is favourited. */
    double radar_res; /**< Player's radar resolution. */
    int eq_outfitMode;/**< Equipment outfit mode. */
    int map_minimal;  /**< Map is set in minimal mode. */
@@ -109,23 +128,6 @@ typedef struct Player_s {
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */
 } Player_t;
-
-/**
- * @brief Wrapper for outfits.
- */
-typedef struct PlayerOutfit_s {
-   const Outfit *o;  /**< Actual associated outfit. */
-   int q;            /**< Amount of outfit owned. */
-} PlayerOutfit_t;
-
-/**
- * @brief Player ship.
- */
-typedef struct PlayerShip_s {
-   Pilot* p;      /**< Pilot. */
-   int autoweap;  /**< Automatically update weapon sets. */
-   int favourite; /**< Whether or not it is favourited. */
-} PlayerShip_t;
 
 /*
  * Local player.

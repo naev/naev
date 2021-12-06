@@ -2864,8 +2864,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) /* Sort of a hack. */
+      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
          player.p = pilot;
+         player.ps.p = pilot;
+      }
    }
    else {
       pilot->think            = ai_think;
@@ -3117,8 +3119,10 @@ void pilot_free( Pilot* p )
 
    free(p->name);
    /* Case if pilot is the player. */
-   if (player.p==p)
+   if (player.p==p) {
       player.p = NULL;
+      player.ps.p = NULL;
+   }
    solid_free(p->solid);
    free(p->mounted);
 
@@ -3210,6 +3214,7 @@ void pilots_free (void)
    array_free(pilot_stack);
    pilot_stack = NULL;
    player.p = NULL;
+   memset( &player.ps, 0, sizeof(PlayerShip_t) );
 }
 
 /**
@@ -3294,6 +3299,7 @@ void pilots_cleanAll (void)
    if (player.p != NULL) {
       pilot_free(player.p);
       player.p = NULL;
+      memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
 }

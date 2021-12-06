@@ -1347,7 +1347,7 @@ static void equipment_toggleFav( unsigned int wid, const char *wgt )
    int state = window_checkboxState( wid, wgt );
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
-      player.favourite = state;
+      player.ps.favourite = state;
    }
    else {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
@@ -1412,7 +1412,7 @@ static void equipment_genShipList( unsigned int wid )
    cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
    t = gl_newImage( OVERLAY_GFX_PATH"active.webp", 0 );
    cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
-   if (player.favourite) {
+   if (player.ps.favourite) {
       t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
    }
@@ -1666,7 +1666,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       ship    = player.p;
       onboard = 1;
-      favourite = player.favourite;
+      favourite = player.ps.favourite;
    }
    else {
       ps      = player_getPlayerShip( shipname );

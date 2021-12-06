@@ -70,7 +70,10 @@ static lvar *var_get( const char *str )
  */
 int var_save( xmlTextWriterPtr writer )
 {
-   return lvar_save( var_stack, writer );
+   xmlw_startElem(writer, "vars");
+   lvar_save( var_stack, writer );
+   xmlw_endElem(writer); /* "vars" */
+   return 0;
 }
 
 /**
@@ -81,8 +84,14 @@ int var_save( xmlTextWriterPtr writer )
  */
 int var_load( xmlNodePtr parent )
 {
+   xmlNodePtr node = parent->xmlChildrenNode;
    var_cleanup();
-   var_stack = lvar_load( parent );
+   do {
+      xml_onlyNodes(node);
+      if (!xml_isNode(node,"vars"))
+         continue;
+      var_stack = lvar_load( node );
+   } while (xml_nextNode(node));
    return 0;
 }
 
