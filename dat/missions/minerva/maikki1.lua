@@ -133,7 +133,7 @@ She trails off.]]) )
       maikki(_([[She frowns a bit.
 "…unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
       maikki(_([[She suddenly remembers why she came here and your eyes light up.
-"You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
+"You wouldn't happen to be familiar with the station? I'm looking for someone."]]))
       vn.menu( {
          { _("Offer to help her"), "accept" },
          { _("Decline to help"), "decline" },
@@ -196,15 +196,15 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.menu( opts )
 
    vn.label( "father" )
-   maikki(_([["I don't remember him at all since he disappeared when I was only 5 cycles old, but before my mother died, she told me he was a famous space pilot."]]))
-   maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artefacts of human history."]]))
+   maikki(_([["I don't remember him at all. He disappeared when I was only 5 cycles old. Before my mother died, she told me he was a famous space pilot."]]))
+   maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artifacts of human history."]]))
    vn.menu( {
       { _([["He was a scavenger?"]]), "menuscholar" },
       { _([["He was a scholar?"]]), "menuscholar" },
    } )
    vn.label( "menuscholar" )
    maikki(_([["I like to think that he was a scholar, but most people would call him a scavenger."]]))
-   maikki(_([["My mother died without telling me, but after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
+   maikki(_([["My mother died without telling me, but, after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
    maikki(_([["Apparently, one day he went into the nebula with his business partner Mireia and they were never seen again. All attempts to find them failed."]]))
    maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
    maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
@@ -227,7 +227,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([["He looks so goofy in this picture, and my mother looks so happy… This is what should have been my childhood…"
 She reminisces.]]))
    -- TODO flashback with her family
-   vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
+   vn.na(_("You give a few moments to recover before explaining to her what you saw in the wreck and your encounter with the scavengers."))
    maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
 "From what you tell me, it seems like it wasn't an accident…"
 She looks up expectantly.]]))
@@ -303,9 +303,9 @@ He takes a long swig from his drink.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
-   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."
+   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were younger I would be with them exploring, but can't with this bad knee."
 He pats his left knee.]]))
-   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Mireia."
+   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here any more. Especially not after the disappearance of famous scavengers like Kex and Mireia."
 He muses thoughtfully.]]))
    om(_([["To better times."
 He downs his drink and orders another.]]))
@@ -315,9 +315,9 @@ He downs his drink and orders another.]]))
    om(_([[He whistles casually.
 "The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
    vn.sfxEerie()
-   om(_([[He goes a bit quieter and gets closer to you.
+   om(_([[He goes a bit quieter and leans towards you.
 "Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, claiming they seen them."]]))
-   om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
+   om(_([["I believe it be the boredom getting to their heads. Likely naught but another scavenger or some debris."]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
@@ -373,7 +373,7 @@ function approach_scavengers ()
 
    if mem.misn_state==4 then
       -- Already got mission, just give player a refresher
-      scavB(_([["Aren't you drinking too much. Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
+      scavB(_([["Aren't you drinking too much? Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
       scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
 He takes another long swig of his drink and burps.]]))
    else
@@ -389,7 +389,7 @@ He shivers exaggeratedly.]]))
       scavB(_([["How many times do I have to tell you? My sensors were acting up, didn't want to spend too long in Zerantix with all them ghosts around."]]))
       scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"
 He pats his biceps in a fairly uninspiring way.]]))
-      scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers get there."]]))
+      scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers do."]]))
       scavA(_([["To our future success in Zerantix!"]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
@@ -886,7 +886,7 @@ function board_wreck ()
    end )
 
    vn.label("bridge")
-   vn.na(_("You make your way to what is left of the bridge. You can see what appears to be very old space-weathered bloodstains over most of the controls. However, there are no bodies to be seen around."))
+   vn.na(_("You make your way to what is left of the bridge. You can see what appears to be very old space-weathered bloodstains over most of the controls. However, there are no bodies to be seen."))
    vn.func( function () saw_bridge = true end )
    vn.jump("menu")
 

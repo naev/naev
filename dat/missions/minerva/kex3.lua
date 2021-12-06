@@ -97,7 +97,7 @@ function generate_npc ()
       vn.transition()
       vn.na(_("You land and promptly proceed to try to find Major Malik and get the job over with. After glossing over the map of the installations, you are able to quickly locate their office and head down there."))
       vn.sfxBingo()
-      vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for them there."), {pnt=lastplanet, sys=lastsys}))
+      vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for him there."), {pnt=lastplanet, sys=lastsys}))
       vn.run()
 
       -- Advance the state
@@ -142,14 +142,14 @@ function approach_kex ()
 
       vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled ingrained in your memory, and approach Kex."))
       kex(_([["You look like a mess, kid. What happened?"]]))
-      vn.na(_("You explain what happened in the Crimson Gauntlet server and how you barely emerged with your life, and hand him the holodrive with the data you were able to collect."))
       kex(_([["Damn. When I was still a human, we didn't have that fancy Virtual Reality shit. It's wild. Don't think I want to try it after hearing about your experience though. At least I'm glad you made it out of there alive. Don't know what I would do without you now."]]))
+      vn.na(_("You explain what happened in the Crimson Gauntlet server and how you barely escaped with your life, and hand him the holodrive with the data you were able to collect."))
       kex(_([["Let me take a look at the data."
 He once again plugs the drive into a port somewhere under his wing and his eyes go blank.
 "Seems like that Major Malik was into some major shit."
-He seems satisfied at his pun.]]))
+He seems amused by his pun.]]))
       kex(_([[He snaps out of his stupor and looks at you again.
-"Seems like you got much more than I expected. It's going to take me a while to go over this. Meet me back up here in a period or so after I process all this data."]]))
+"Seems like you got much more than I expected. It's going to take me a while to go over this. Meet me back here in a period or so after I process all this data."]]))
       kex(_([["Ah yes, before I get absorbed by the data processing, here, let me reward you for your troubles."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )

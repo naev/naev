@@ -81,9 +81,9 @@ function accept ()
    end )
    pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling all over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
    pir(_([["I know what you're thinking, that's a great idea right? So it's very simple. Some Dvaered thugs are stationed around the system, they are not the cleverest of folks, so I want you to provoke them. You know, just rough them up a little and get out of there."]]))
-   pir(_([["Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons nor gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind  of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
+   pir(_([["Sounds naïve, yes? Might be. So, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons or gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
    pir(_([["To make sure they are all riled up, I want you to spend 15 seconds harassing them near their original location. Make sure to harass them, but don't kill them! We want them to tell the other Dvaereds about this. Once the time is up, get the hell away from there, in one piece if possible."]]))
-   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it,"
+   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one more thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it."
 They beam a smile at you.]]), {sys=runawaysys}))
    vn.run()
 

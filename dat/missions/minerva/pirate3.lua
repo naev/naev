@@ -146,8 +146,8 @@ function approach_pir ()
 She takes out a metallic object from her pocket and show it to you. You don't know what to make of it.
 "Ain't she a beauty?"]]))
       pir(_([["This is some high-tech shit that we got from some geeks. It's a latest gen signal capturing device, and should be able to bypass most jammers. However, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
-      pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
-      pir(_([[They hand you the signal capturing device and explain briefly how it works.
+      pir(_([["The main issue we have right now is that VIP rooms and such are not easy to access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
+      pir(_([[She hands you the signal capturing device and briefly explains how it works.
 "Take the device and see if you can find a chance to place it. I'll be at the spaceport bar if you figure anything out."]]))
    else
       -- Accepted.
@@ -197,7 +197,7 @@ She takes out a metallic object from her pocket and show it to you. You don't kn
    if mem.misn_state==0 then
       pir(_([["The main issue we have right now is that VIP rooms and such are not easy to access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
    elseif mem.misn_state==1 then
-      pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
+      pir(_([["The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If not, we may have to take other measures to ensure success."]]))
    elseif mem.misn_state==3 then
       if not mem.harper_gotticket then
          pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
@@ -211,13 +211,13 @@ She takes out a metallic object from her pocket and show it to you. You don't kn
    vn.jump("menu_msg")
 
    vn.label("station")
-   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns an eye to everything that goes on here is just incredible! Makes you want to root for their success you no?"]]))
+   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns a blind eye to everything that goes on here is just incredible! Makes you want to root for their success you know?"]]))
    pir(_([["The issue is that even though the set-up is great, all the Dvaered and Za'lek bickering is just messing it all up. It would be a real shame if things went tits up and either the Dvaered or Za'lek were able to take over this wonderful place."]]))
    pir(_([["So me and my investors thought to ourselves, what could we do to ensure the success of such a wonderful place? This led to that and here we are."]]))
    vn.jump("menu_msg")
 
    vn.label("spa")
-   pir(_([["Ah, so you heard the news too? The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket and see if we can get lucky. If  not, we may have to take other measures to ensure success."
+   pir(_([["Ah, so you heard the news too? The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket and see if we can get lucky. If not, we may have to take other measures to ensure success."
 She winks at you.]]))
    vn.jump("menu_msg")
 

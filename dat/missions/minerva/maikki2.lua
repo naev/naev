@@ -224,7 +224,7 @@ She winks at you.]]))
       seekoutmsg()
       maikki(_([["Apparently the three researchers used to work together in some project about the nebula's origins, but never really made anything public. I totally think that they must know something about this; the disappearance of my father was big news!"]]))
       maikki(_([[She looks at you expectantly.
-"I will stay here and search for him more. Please pay those creepy Za'lek researchers a visit and see if you can find out what happened to my father!"]]))
+"I will stay here and continue to search for him. Please pay those creepy Za'lek researchers a visit and see if you can find out what happened to my father!"]]))
    end
 
    local opts = {
@@ -257,15 +257,15 @@ She frowns and shakes her head.]]))
 "His obsession with finding the truth meant he was away from home most of the time and my mother was probably very lonely. She told me he never came to any of my birthdays…"]]))
    maikki(_([[Her eyes light up again.
 "However, those were exceptional times. Most of the universe and our history as humans was lost! I would like to love to be able to meet him again and be able to ask all sorts of things."]]))
-   maikki(_([["After you finding his ship in the nebula we have to get to the bottom of what happened! There is no way this was an accident, and I'm sure the Za'lek are involved in this. Since you didn't find a body, he has to be alive! We have to find out what happened and set things right!"
+   maikki(_([["Since you found his ship in the nebula we have to get to the bottom of what happened! There is no way this was an accident, and I'm sure the Za'lek are involved in this. Since you didn't find a body, he has to be alive! We have to find out what happened and set things right!"
 Her eyes sparkle with determination.]]))
    vn.jump( "menu_msg" )
 
    vn.label("news")
-   vn.na(_("You tell her about your plight with the Za'lek researchers and Dr. Strangelove, in particular. This includes the good news that Kex should be at Minerva Station, taken custody by some thugs."))
+   vn.na(_("You tell her about your plight with the Za'lek researchers, and Dr. Strangelove, in particular. This includes the good news that Kex should be at Minerva Station, taken into custody by some thugs."))
    maikki(_([["The Za'leks were assholes as expected, but I'm glad you found out what I thought: that he's somewhere here being held captive or something… This is still all very weird though."]]))
-   maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that this is progress?…"]]))
-   maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him, Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
+   maikki(_([["I'm a bit worried about that Dr. Strangelove. What exactly did he mean? Is he even a real doctor? We still don't even know what happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that this is progress?…"]]))
+   maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him. Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
    maikki(_([[She is visibly excited.
 "It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
    maikki(_([["I don't have a lead at the moment, but it can't be far. Keep your eyes open and if you find anything that looks suspicious, please get in touch with me! I'll also be keeping my eyes open."]]))
@@ -348,7 +348,7 @@ end
 local function lasthint( prof )
    if visitedhints() > 2 then
       vn.sfxBingo()
-      prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=hintsys[4]}))
+      prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post-doctoral research candidate working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=hintsys[4]}))
       -- The mission state will be updated afterwards
    end
 end
@@ -507,10 +507,10 @@ function approach_hint4 ()
       return opts end )
 
    vn.label("drshrimp")
-   drshrimp(fmt.f(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting {pnt} I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), {pnt=_(hintpnt[4])}))
-   drshrimp(_([["You see, these shrimps are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
+   drshrimp(fmt.f(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting {pnt} I found out about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), {pnt=_(hintpnt[4])}))
+   drshrimp(_([["You see, shrimp are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
 He taps the tank of the floating shrimp next to him.]]))
-   drshrimp(_([["The capability of these shrimp are endless, and they are helping us understand much more genetic modification than the brute-force approaches of the Soromid, although our technology is still lacking behind."]]))
+   drshrimp(_([["The capabilities of these shrimp are endless, and they are helping us understand much more about genetic modification than the brute-force approaches of the Soromid, although our technology is still lagging behind."]]))
    drshrimp(_([["And what's best, look how cute they are!"
 He enthusiastically points towards Calliope.
 "Isn't she the cutest?"]]))
@@ -529,9 +529,9 @@ He activates her feeding system and a food pellet drops out.]]))
    vn.jump("menu_msg")
 
    vn.label("artifacts")
-   drshrimp(_([["What sort of artifacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold on stuff closer to the origin near Sol, but most of the time scavengers brought us stuff from the outer areas. Many times they even were trying to sell us random debris as nebula artifacts, but that's really easy to detect."]]))
+   drshrimp(_([["What sort of artifacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold of stuff closer to the origin, near Sol, but, most of the time, scavengers brought us stuff from the outer areas. Many times they were even trying to sell us random debris as nebula artifacts, but that's really easy to detect."]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
-   drshrimp(_([["When the project failed, most of the artifacts were confiscated to hell who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
+   drshrimp(_([["When the project failed, most of the artifacts were confiscated to who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
    drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artifacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
    vn.func( function () mem.asked_artifacts = true end )
    vn.jump("menu_msg")
@@ -545,11 +545,11 @@ He activates her feeding system and a food pellet drops out.]]))
    vn.jump("menu_msg")
 
    vn.label("strangelove")
-   drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. He was a bit weird and kept obsessing with the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
+   drshrimp(_([["Now I remember! There was a another post-doctoral researcher who worked with me. He was a bit weird and kept obsessing over the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
    drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
-   drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps though."]]))
+   drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing gives me the me the creeps though."]]))
    vn.func( function ()
       mem.asked_strangelove = true
       if mem.misn_state==1 then
@@ -690,7 +690,7 @@ function ecc_feral_boss_dead ()
    vn.sfxEerie()
    voice(_([["Thank you for setting me free…"]]))
    vn.na(_("You wonder what that was about as you watch the drone thrash while it blows up. Westhaven is a really weird place."))
-   vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors are identifying it as mainly biological material…"))
+   vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors identify it as mainly biological material…"))
    vn.done( "hexagon" )
    vn.run()
 

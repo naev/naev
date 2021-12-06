@@ -97,10 +97,10 @@ function approach_zuri ()
    vn.transition()
 
    if mem.misn_state==3 then
-      vn.na(_("You approach Zuri to report your success. They listen to you intently as you explain how things went down when you took down the hacking center."))
+      vn.na(_("You approach Zuri to report your success. She listens to you intently as you explain how things went down when you took out the hacking center."))
       zuri(_([["Great work out there. This will definitely set the Za'lek scheme back a few decaperiods. Must have been satisfying see the show of fireworks as the hacking station went down. I just wish I was able to see it, but I haven't been able to properly pilot a ship in ages. Boss just never cuts me any slack."]]))
       zuri(_([["I've wired you your reward as always."
-They grin at you.
+She grins at you.
 "That said, our work is still far from done. We won't stop until Minerva Station is free from Za'lek and Dvaered inference. Meet me up in the bar in a bit if you want to help."]]))
       vn.sfxVictory()
       vn.func( function () -- Rewards
@@ -113,8 +113,8 @@ They grin at you.
       misn.finish(true)
    elseif  mem.misn_state==nil then
       -- Not accepted
-      zuri(_([["I suppose you have a lot of questions, but first things first. Remember the suspicious Za'lek drones? Well, we were able to look more into that, and it seems like they were part of the scouts of an advanced hacking attack on Minerva Station."]]))
       vn.na(_("You approach Zuri who seems to be motioning to you. She seems faintly tired."))
+      zuri(_([["I suppose you have a lot of questions, but first things first. Remember the suspicious Za'lek drones? Well, we were able to look into that some more, and it seems like they were part of the scouts of an advanced hacking attack on Minerva Station."]]))
       zuri(_([["Those Za'lek are always pretending to talk about science and research, and the moment you turn your back on them, they start prodding and stealing everything they can find."]]))
       zuri(_([["Long story short, we need you to take out their hacking center nearby. This time we won't be able to use much brute force, you'll have to use more finesse. Will you help us again?"
 She smiles at you.]]))
@@ -129,7 +129,7 @@ She smiles at you.]]))
 
       vn.label("accept")
       vn.func( function () mem.misn_state=0 end )
-      zuri(fmt.f(_([["Great! We are always counting on you.
+      zuri(fmt.f(_([["Great! We can always count on you.
 So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=mainsys}))
       zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
       zuri(fmt.f(_([["My recommendation to you is to jump into {sys} and stay low. We've got some really good explosives we'll hook you up with that should let you take out the drone controllers or hacking stations if you can get close enough. So try to sneak past all the drones, plant the bombs on the drone controllers, and once they are out, do the same with the hacking center. Of course, if you prefer to be old fashioned, you can take the hacking center down with missiles, railguns, or whatever you have hand. Probably easier said than done, but I know you can do it."
@@ -171,7 +171,7 @@ She chuckles.
    vn.label("cont1")
    zuri(_([["We represent those who want to stand up to this tyranny and oppression, and believe that a better universe is possible. Sure, there are those who dismissively label us as pirates or scoundrels, but that is because they represent the status quo. They do not want anyone to challenge their reign and want to continue their life of luxury."]]))
    zuri(_([["Of course, it is not that easy, as many people are complicit even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Empire dream. However, that never happens, and they die a sad depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
-   zuri(_([["It is not easy to go toe-to-toe with such the large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such a potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
+   zuri(_([["It is not easy to go toe-to-toe with such a large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
    zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and I."
 Her eyes blaze with hard determination.]]))
    vn.jump("menu_msg")

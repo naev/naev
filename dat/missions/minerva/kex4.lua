@@ -54,7 +54,7 @@ function create ()
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Jie de Luca at {pnt} in the {sys} system."), {pnt=targetplanet, sys=targetsys}) )
+   misn.setDesc( fmt.f(_("You have been tasked with obtaining information from Jie de Luca at {pnt} in the {sys} system."), {pnt=targetplanet, sys=targetsys}) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -430,11 +430,11 @@ function jie_board ()
    local cjie = vn.Character.new( _("Jie de Luca"), {image=mem.jie_image} )
    vn.transition()
    vn.na(_("You board the ship with your weapons drawn and make your way to the command center. You don't encounter any resistance on the way there."))
-   vn.na(_("Eventually you reach the command center and enter cautiously. The room is empty except for a chair in the center with it's back facing towards you."))
+   vn.na(_("Eventually you reach the command center and cautiously enter. The room is empty except for a chair in the center with its back facing towards you."))
    vn.appear(cjie)
-   vn.na(_("Slowly it turns around to reveal Jie de Luca, holding their head from which blood is gushing out. In their other hand they clutch a weapon, but it doesn't really look like they are in condition to use it."))
+   vn.na(_("Slowly the chair turns to reveal Jie de Luca, holding their head from which blood is gushing out. In their other hand they clutch a weapon, but it doesn't really look like they are in any condition to use it."))
    cjie(_([["Feeling proud of yourself dog? Wagging your tail thinking about getting a prize from your master?"
-They cough up and you can see some blood drip from the side of their mouth.]]))
+They cough and you can see some blood drip from the side of their mouth.]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    cjie(_([["This is why we can't have nice things…"
 As their head slouches down, you hear an alarm blaring, and a voice announcing "Self-destruct imminent!".]]))
@@ -453,7 +453,7 @@ function jie_epilogue ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("As the debris of Jie's ship scatters you realize you never got around to questioning or getting any information at all…"))
+   vn.na(_("As the debris of Jie's ship disperses you realize you never got around to questioning them or getting any information at all…"))
    vn.na(_("Might be best to head back to Kex for now and see what can be done."))
    vn.run()
 

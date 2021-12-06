@@ -103,7 +103,7 @@ function approach_terminal ()
    vn.na(fmt.f(_("You land on {pnt} and proceed to discretely approach one of the terminals and connect the program that Kex gave you."), {pnt=targetplanet}))
    vn.na(_("The terminal lights up dimly and begins to compute whatever was on the program. After a while it seems to begin downloading large amounts of data while you impatiently wait."))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
-   vn.na(_("Suddenly, an alarm begins to blare. Before the security screen shuts down in the terminal you are able to grab the program as you make a run for your ship. In the background, you hear people yelling and running around. It seems like you have to get out of here as soon as possible."))
+   vn.na(_("Suddenly, an alarm begins to blare. Before the security screen appears on the terminal, you are able to grab the program as you make a run for your ship. In the background, you hear people yelling and running around. It seems like you have to get out of here as soon as possible."))
    vn.na(_("This is probably what Kex meant about things going sour. It seems like you have a head start on your pursuers, but you may not be able to count on it for long."))
    vn.run()
 

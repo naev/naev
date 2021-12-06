@@ -78,7 +78,7 @@ function accept ()
 "Oh, hey kid."]]))
    kex(_([[It takes a while before he continues.
 "Compared to the vastness of all the universe, we are completely insignificant. Our sorrows and glories go unheard and seemingly devoid of all meaning."]]))
-   kex(_([["Coming to terms with one's own significance does give a clarity of mind and make clear one's deepest desires. What has to be done then becomes clear."]]))
+   kex(_([["Coming to terms with one's own insignificance does give a clarity of mind and makes clear one's deepest desires. What has to be done then becomes clear."]]))
    kex(_([[Without blinking Kex states "I need you to kill Strangelove."]]))
    vn.menu{
       { _("Accept"), "accept" },
@@ -155,16 +155,16 @@ He looks down sadly at the floor for a while before looking at you again.]]))
 
    else
       if strangelove_death=="shot" then
-         vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
          vn.na(_([[You explain to him how the mission went and go into graphic detail of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
+         vn.na(_([[You also hand him the droid you recovered. Kex looks at it briefly before pocketing it somewhere inside his mat of feathers.]]))
       elseif strangelove_death=="unplug" then
          vn.na(_([[You explain to him how the mission went and go into details of how you finished Dr. Strangelove off by unplugging him as Kex asked.]]))
-         vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
+         vn.na(_([[You also hand him the droid you recovered. Kex looks at it briefly before pocketing it somewhere inside his mat of feathers.]]))
       else
          vn.na(_([[You explain to him how the mission went, handing him the drone you found in the laboratory, and explain how Dr. Strangelove died of his mysterious illness in front of your eyes.]]))
       end
-      kex(_([[He looks at you after your explanations, furrows his brows a bit.
-"I was expecting some sort of relief. You know, having Strangelove dead is all I ever wanted sign I escaped from the laboratory. All I ever dreamed of, and when I finally get it… nothing?"]]))
+      kex(_([[He looks at you after your explanation and furrows his brows a bit.
+"I was expecting some sort of relief. You know, having Strangelove dead is all I ever wanted since I escaped from the laboratory. All I ever dreamed of, and when I finally get it… nothing?"]]))
 
    end
 
@@ -451,7 +451,7 @@ function landed_lab ()
    vn.jump("menu")
 
    vn.label("check_done")
-   vn.na(_("You spend your time carefully going through the entire station, but it ends up being mainly in vain: Dr. Strangelove is nowhere to be found. At least you found a droid that might be useful."))
+   vn.na(_("You spend your time carefully going through the entire station, but it ends up being mostly in vain: Dr. Strangelove is nowhere to be found. At least you found a droid that might be useful."))
    vn.na(_("You let out a sigh as you head outside. Maybe Dr. Strangelove escaped somewhere else?"))
    vn.run()
 
@@ -470,8 +470,8 @@ function strangelove_hail ()
    local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
    vn.transition( "electric", 3 )
    -- TODO small scene
-   dr(_([[A hologram of Dr. Strangelove appears before you. He is laying down and his body seems to be sapped of all energy. He seems to muster up energy to roughly look in your direction, although his eyes seem unnaturally clouded.
    vn.na(_("As you loiter around the system, you suddenly receive an unexpected incoming transmission."))
+   dr(_([[A hologram of Dr. Strangelove appears before you. He is laying down and his body seems to be sapped of all energy. He seems to muster up energy to vaguely look in your direction, although his eyes seem unnaturally clouded.
 "Is that you?"]]))
    dr(_([["I've been expecting you."
 A coughing fit wracks his body.
@@ -494,7 +494,7 @@ function strangelove_board ()
    -- TODO small scene
    vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
-   vn.na(_("You pay minimal attention to the small critters, which seem harmless, and proceed through the ship. After a short walk you enter the command room."))
+   vn.na(_("You pay little attention to the small critters, which seem harmless, and proceed through the ship. After a short walk you enter the command room."))
    love_audio.setEffect( "reverb_psychotic", reverb_preset.psychotic() )
    vn.music( minerva.loops.strangelove, {effect="reverb_psychotic"} )
    vn.appear(dr)
@@ -549,11 +549,11 @@ His voice tears up slightly.]]))
    vn.label("2cont")
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
-   dr(_([[You don't know what to answer and silence envelopes the room. Finally, he breaks the calmness.
 "I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you. I should have been the one not left alone, not you…"]]))
+   dr(_([[You don't know how to answer and silence envelopes the room. Finally, he breaks the calmness.
    dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
 He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
-   dr(_([["If only our places had been changed, you would have been able to solve it and find me again. I was so close and yet it still feels like there is some sort of impenetrable wall between me and the solution. What did I miss, where did I go wrong?"
+   dr(_([["If only our places had been switched, you would have been able to solve it and find me again. I was so close and yet it still feels like there is some sort of impenetrable wall between me and the solution. What did I miss, where did I go wrong?"
 The vitals monitor is still flashing.]]))
 
    vn.menu( function ()
@@ -584,7 +584,7 @@ He tries feebly to get up before coughs wrack his body and stain it further with
    vn.jump("3cont")
 
    vn.label("3contnever")
-   dr(_([["Even in the last experiment? The energy wasn't sufficient? Maybe if I reroute all the ships power system and redo the experiment I might be able to connect. I must redo the experiment…"
+   dr(_([["Even in the last experiment? The energy wasn't sufficient? Maybe if I reroute the ship's power system and redo the experiment I might be able to connect. I must redo the experiment…"
 He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
    vn.jump("3cont")
 
@@ -625,7 +625,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
    vn.label("dr_death")
    vn.musicStop() -- Stop music
-   vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
+   vn.na(_([[Silence once again envelopes the room. You look around and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a flaw in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
 #rHONEYPOT ##329 ACTIVATED
@@ -671,7 +671,7 @@ He coughs violently again, spasms overtaking his body. The medical robot seems t
    vn.na(_([[Seeing him in his last stages brings out the compassion you have in you. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
    dr(_([["I can feel it… getting close…"
 He seems to be looking at something in the distance.]]))
-   dr(_([[Suddenly he seems to open his eyes wide, but his expression is less of terror and more of curiosity and awe.
+   dr(_([[Suddenly, he opens his eyes wide, but his expression is less of terror and more of curiosity and awe.
 "It's more beautiful… than I… thought."]]))
    vn.na(_([[You look into his nearly opaque eyes and, for a second, you think you can see the nebula in all its fury and glory reflected in them. You look around the room but nothing has changed.]]))
    vn.func( function () var.push("strangelove_death","comforted") end )
@@ -725,6 +725,6 @@ function strangelove_dead ()
    vn.transition()
    vn.na(_([[The explosions clear and the system is once again silent except for your heavy breathing from running back to the ship.]]))
    vn.na(_([[As you survey the system again, you notice that you are no longer able to detect Dr. Strangelove's laboratory. Even pointing your sensors to the position where it should be, you are not able to find anything other than inert asteroids. It is possible that the self-destruct sequence didn't affect only the ship…]]))
-   vn.na(_([[As your mind wanders after all you just experienced, you realize that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
+   vn.na(_([[As your mind wanders to all you just experienced, you realize that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
    vn.run()
 end

@@ -92,10 +92,10 @@ function approach_kex ()
       kex(_([["This is one of the secured crates that I was talking about! How the hell did it get here?"]]))
       vn.na(_("You look around but there seems to be nobody else other than the two of you."))
       kex(_([[Kex looks at you in the eyes.
-"In cases like this it's probably best not to ask questions, and just take it as some kind of blessing. Had things like this happen all the time in the nebula and nothing good ever came from investigating. Just remember to keep an eye open."]]))
+"In cases like this it's probably best not to ask questions, and just take it as some kind of blessing. I've had things like this happen all the time in the nebula and nothing good ever came from investigating. Just remember to keep an eye open."]]))
       kex(_([[He now looks at the crate.
 "Let me see if I can get this open. Mmmm… fairly shoddy Nexus lock. I don't think they make these anymore. Shouldn't be a problem for my implant system."]]))
-      kex(_([[He puts his wing on the lock and you hear some sort of click. His eyes close and he begins to hum an old tune, almost sounds like a nursery rhyme. This goes on for a while before he suddenly jolts back with his eyes open.]]))
+      kex(_([[He puts his wing on the lock and you hear some sort of click. His eyes close and he begins to hum an old tune.  It almost sounds like a nursery rhyme. This goes on for a while before he suddenly jolts back with his eyes open.]]))
       vn.sfxBingo()
       kex(_([["OK, let us see what we have here."
 The crate opens unceremoniously and Kex peers.
@@ -176,7 +176,7 @@ He lets out a sigh.]]))
 He looks at you expectantly.]]))
    vn.na(_("You mention that you got nowhere."))
    kex(_([[He looks a bit glum.
-"Yeah, I don't think there is talking sense into that one… Maybe if we…"
+"Yeah, I don't think there's talking any sense into that one… Maybe if we…"
 He stops to think a bit.]]))
    kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear, right?"
 He looks at you with determination.
@@ -326,7 +326,7 @@ function mainguy_board ()
    vn.transition()
    vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. Given that it is likely not to be large, you proceed to explore the rest of the ship to see if there is anything of interest."))
    vn.na(fmt.f(_("You are not able to find what you were looking for, but you were able to find {credits} that likely won't be necessary to the crew anymore."), {credits=fmt.credits(reward)}))
-   vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
+   vn.na(_("It might be best to report back to Kex to see if his information was correct."))
    vn.run()
 
    -- Permanently disable mainguy

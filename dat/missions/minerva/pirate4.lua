@@ -70,7 +70,7 @@ function accept ()
 
    mem.sysmarker = misn.markerAdd( planet.get("Minerva Station") )
 
-   minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
+   minerva.log.pirate(_("You accepted another job from the sketchy individual to deal with a mole at Minerva Station.") )
 
    hook.load("generate_npc")
    hook.land("generate_npc")
@@ -105,7 +105,7 @@ They beam you a smile.]]))
       } )
 
       vn.label("decline")
-      vn.na(_("You decline their offer and take your leave."))
+      vn.na(_("You decline her offer and take your leave."))
       vn.done()
 
       vn.label("accept")
@@ -244,8 +244,8 @@ She beams you a smile.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
    pir:rename(_("Zuri"))
    pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
-   vn.na(_("You rush to get back to your ship before the Dvaereds jump in."))
 She rushes off into the depths of the ship.]]))
+   vn.na(_("You race to get back to your ship before the Dvaereds jump in."))
    vn.run()
 
    -- Set up stuff
@@ -427,8 +427,8 @@ function followup ()
 "Zuri! Get your ass back to navigation! Wait until I tell you how that Dvaered squealed like a pig!"]]))
    pir(_([[Zuri makes a somewhat complicated face at the unwanted interruption.
 "I have some business to attend to."
-"Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
 She gives you a tired grin.
+"Anyway, I'll wire you a reward. Meet me back at Minerva Station."]]))
    vn.na(fmt.reward(reward_amount))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
