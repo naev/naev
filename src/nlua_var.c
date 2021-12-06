@@ -153,26 +153,9 @@ static int varL_peek( lua_State *L )
    lvar *mv = var_get( str );
    if (mv == NULL)
       return 0;
-
-   switch (mv->type) {
-      case LVAR_NIL:
-         lua_pushnil(L);
-         break;
-      case LVAR_NUM:
-         lua_pushnumber(L,mv->d.num);
-         break;
-      case LVAR_BOOL:
-         lua_pushboolean(L,mv->d.b);
-         break;
-      case LVAR_STR:
-         lua_pushstring(L,mv->d.str);
-         break;
-      case LVAR_TIME:
-         lua_pushtime(L,mv->d.time);
-         break;
-   }
-   return 1;
+   return lvar_push( L, mv );
 }
+
 /**
  * @brief Pops a mission variable off the stack, destroying it.
  *
@@ -191,6 +174,7 @@ static int varL_pop( lua_State *L )
    lvar_rmArray( &var_stack, mv );
    return 0;
 }
+
 /**
  * @brief Creates a new mission variable.
  *
@@ -206,37 +190,11 @@ static int varL_push( lua_State *L )
 {
    NLUA_CHECKRW(L);
    const char *str = luaL_checkstring(L,1);
-   lvar var;
-
-   /* store appropriate data */
-   if (lua_isnil(L,2))
-      var.type = LVAR_NIL;
-   else if (lua_istime(L,2)) {
-      var.type = LVAR_TIME;
-      var.d.time = luaL_validtime(L,2);
-   }
-   else if (lua_type(L,2) == LUA_TNUMBER) {
-      var.type = LVAR_NUM;
-      var.d.num = (double) lua_tonumber(L,2);
-   }
-   else if (lua_isboolean(L,2)) {
-      var.type = LVAR_BOOL;
-      var.d.b = lua_toboolean(L,2);
-   }
-   else if (lua_type(L,2) == LUA_TSTRING) {
-      var.type = LVAR_STR;
-      var.d.str = strdup( lua_tostring(L,2) );
-   }
-   else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
-   /* Set name. */
-   var.name = strdup(str);
+   lvar var = lvar_tovar( L, str, 2 );
    var_add( &var, 1 );
-
    return 0;
 }
+
 /**
  * @brief Cleans up all the mission variables.
  */

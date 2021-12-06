@@ -5,6 +5,7 @@
 
 #include "ntime.h"
 #include "nxml.h"
+#include "nlua.h"
 
 /* similar to Lua vars, but with less variety */
 typedef enum lvar_type_ {
@@ -38,6 +39,12 @@ int lvar_addArray( lvar **arr, lvar *new_var, int sort );
 void lvar_rmArray( lvar **arr, lvar *rm_var );
 void lvar_freeArray( lvar *var );
 lvar *lvar_get( lvar *arr, const char *str );
+
+/*
+ * Lua stuff.
+ */
+int lvar_push( lua_State *L, const lvar *v );
+lvar lvar_tovar( lua_State *L, const char *name, int idx );
 
 /*
  * XML save/load.

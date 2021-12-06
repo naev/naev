@@ -9,6 +9,8 @@
 #include "lvar.h"
 
 #include "array.h"
+#include "nluadef.h"
+#include "nlua_time.h"
 
 /*
  * prototypes
@@ -40,6 +42,77 @@ lvar *lvar_get( lvar *arr, const char *str )
    if (arr == NULL)
       return NULL;
    return bsearch( &mv, arr, array_size(arr), sizeof(lvar), lvar_cmp );
+}
+
+/**
+ * @brief Pushes a lua var to a lua state.
+ *
+ *    @param L Lua state to push to.
+ *    @param v Lua variable to push.
+ *    @return Number of elements pushed onto the stack.
+ */
+int lvar_push( lua_State *L, const lvar *v )
+{
+   switch (v->type) {
+      case LVAR_NIL:
+         lua_pushnil(L);
+         break;
+      case LVAR_NUM:
+         lua_pushnumber(L,v->d.num);
+         break;
+      case LVAR_BOOL:
+         lua_pushboolean(L,v->d.b);
+         break;
+      case LVAR_STR:
+         lua_pushstring(L,v->d.str);
+         break;
+      case LVAR_TIME:
+         lua_pushtime(L,v->d.time);
+         break;
+   }
+   return 1;
+}
+
+/**
+ * @brief Gets a lua variable from an index from a lua state.
+ *
+ *    @param L Lua state to get var from.
+ *    @param name Name of the variable.
+ *    @param idx Index to get value from.
+ *    @return New lua variable that should be freed with lvar_free().
+ */
+lvar lvar_tovar( lua_State *L, const char *name, int idx )
+{
+   lvar var;
+
+   /* Store appropriate data */
+   if (lua_isnil(L,idx))
+      var.type = LVAR_NIL;
+   else if (lua_istime(L,idx)) {
+      var.type = LVAR_TIME;
+      var.d.time = luaL_validtime(L,idx);
+   }
+   else if (lua_type(L,idx) == LUA_TNUMBER) {
+      var.type = LVAR_NUM;
+      var.d.num = (double) lua_tonumber(L,idx);
+   }
+   else if (lua_isboolean(L,idx)) {
+      var.type = LVAR_BOOL;
+      var.d.b = lua_toboolean(L,idx);
+   }
+   else if (lua_type(L,idx) == LUA_TSTRING) {
+      var.type = LVAR_STR;
+      var.d.str = strdup( lua_tostring(L,idx) );
+   }
+   else {
+      /* Hack because we don't want to return 0 and can't use NLUA_INVALID_PARAMETER */
+      DEBUG( "Invalid parameter for %s.", __func__ );
+      luaL_error( L, "Invalid parameter for %s.", __func__ );
+      return var;
+   }
+   /* Set name. */
+   var.name = strdup(name);
+   return var;
 }
 
 /**
