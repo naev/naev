@@ -47,33 +47,93 @@ local skills = {
       tier = 0,
    },
    [N_("Shell Stage II")] = {
-      tier = 2,
+      tier = 1,
       requires = { "Shell Stage I" },
    },
    [N_("Shell Stage III")] = {
-      tier = 4,
+      tier = 3,
       requires = { "Shell Stage II" },
    },
    [N_("Shell Stage IV")] = {
-      tier = 6,
+      tier = 5,
       requires = { "Shell Stage III" },
    },
-   -- Weapons
-   [N_("Stinger I")] = {
+   -- Left Weapon
+   [N_("Left Stinger I")] = {
       tier = 1,
-      conflicts = { "Claw I" },
+      conflicts = { "Left Claw I" },
    },
-   [N_("Stinger II")] = {
+   [N_("Left Stinger II")] = {
       tier = 3,
-      requires = { "Stinger I" },
+      requires = { "Left Stinger I" },
    },
-   [N_("Claw I")] = {
+   [N_("Left Claw I")] = {
       tier = 1,
    },
-   [N_("Claw II")] = {
+   [N_("Left Claw II")] = {
       tier = 3,
-      requires = { "Claw I" },
-   }
+      requires = { "Left Claw I" },
+   },
+   -- Right Weapon
+   [N_("Right Stinger I")] = {
+      tier = 2,
+      conflicts = { "Right Claw I" },
+   },
+   [N_("Right Stinger II")] = {
+      tier = 4,
+      requires = { "Right Stinger I" },
+   },
+   [N_("Right Claw I")] = {
+      tier = 2,
+   },
+   [N_("Right Claw II")] = {
+      tier = 4,
+      requires = { "Right Claw I" },
+   },
+   -- Movement Line
+   [N_("Compound Eyes")] = {
+      tier = 3,
+   },
+   [N_("Hunter Spirit")] = {
+      tier = 5,
+      requires = { "Compound Eyes" },
+      conflicts = { "Wanderer Spirit" },
+   },
+   [N_("Adrenaline Gland I")] = {
+      tier = 2,
+   },
+   [N_("Adrenaline Gland II")] = {
+      tier = 4,
+      requires = { "Adrenaline Gland I" },
+   },
+   [N_("Wanderer Spirit")] = {
+      tier = 5,
+      requires = { "Adrenaline Gland II" },
+   },
+   -- Health Line
+   [N_("Bulky Abdomen")] = {
+      tier = 1,
+   },
+   [N_("Regeneration I")] = {
+      tier = 3,
+      requires = { "Bulky Abdomen" },
+   },
+   [N_("Hard Shell")] = {
+      tier = 4,
+      requires = { "Regeneration I" },
+   },
+   [N_("Regeneration II")] = {
+      tier = 5,
+      requires = { "Hard Shell" }
+   },
+   -- Attack Line
+   [N_("Feral Rage")] = {
+      tier = 3,
+   },
+   [N_("Adrenaline Hormone")] = {
+      tier = 5,
+      requires = { "Feral Rage" },
+   },
 }
 
 function gene.window ()
@@ -140,7 +200,7 @@ function gene.window ()
       end
    end
    --table.sort( groups, function( a, b ) return #a-#b < 0 end ) -- Sort by largest first
-   table.sort( groups, function( a, b ) return a.w*a.h < b.w*b.h end ) -- Sort by largest first
+   table.sort( groups, function( a, b ) return a.w*a.h > b.w*b.h end ) -- Sort by largest first
 
    -- true if intersects
    local function aabb_vs_aabb( a, b )
@@ -206,7 +266,7 @@ function gene.window ()
       end
    end
 
-   local w, h = 1000, 600
+   local w, h = 1100, 600
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_done( dying_wdw )
       dying_wdw:destroy()
@@ -217,7 +277,7 @@ function gene.window ()
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
-   local bx, by = 50, 50
+   local bx, by = 40, 40
    local sw, sh = 70, 70
    local scol = {1, 1, 1, 0.2}
    for k,l in ipairs(skillslink) do
