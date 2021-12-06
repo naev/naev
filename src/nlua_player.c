@@ -905,7 +905,10 @@ static int playerL_shipvarPeek( lua_State *L )
 {
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
-   return lvar_push( L, lvar_get( ps->shipvar, str ) );
+   lvar *var        = lvar_get( ps->shipvar, str );
+   if (var != NULL)
+      return lvar_push( L, var );
+   return 0;
 }
 
 /**
