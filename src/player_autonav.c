@@ -156,6 +156,7 @@ void player_autonavEnd (void)
 void player_autonavStartWindow( unsigned int wid, const char *str)
 {
    (void) str;
+   player_hyperspacePreempt( 1 );
    player_autonavStart();
    window_destroy( wid );
 }

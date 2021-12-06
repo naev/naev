@@ -38,7 +38,7 @@ local retpnt, retsys = planet.getS( "Katar I" )
 
 function create ()
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
-      return p:tags().research
+      return p:tags().research and p:services()["bar"]
    end )
    if not mem.destpnt then
       misn.finish()

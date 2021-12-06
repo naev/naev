@@ -104,6 +104,7 @@ end
 -- Internal function that connects to Naev
 --]]
 local function _draw( x, y, w, h )
+   naev.gfx.clearDepth()
    love.x = x
    love.y = y
    love.w = w
