@@ -414,7 +414,7 @@ int background_load( const char *name )
    nlua_env env;
 
    /* Free if exists. */
-   background_clearCurrent();
+   background_clear();
 
    /* Load default. */
    if (name == NULL)
