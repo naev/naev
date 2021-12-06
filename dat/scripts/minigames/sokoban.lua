@@ -32,6 +32,7 @@ function sokoban.vn( params )
       return score.load()
    end
    s._draw = function ()
+      naev.gfx.clearDepth()
       return score.draw()
    end
    s._keypressed = function( _self, key )
