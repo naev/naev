@@ -194,6 +194,7 @@ int var_load( xmlNodePtr parent )
                else { /* super error checking */
                   WARN(_("Unknown var type '%s'"), str);
                   free(var.name);
+                  free(str);
                   continue;
                }
                free(str);
