@@ -140,12 +140,12 @@ Kex runs off and disappears into the station.]]))
    end )
 
    vn.label("station")
-   kex(_([["Nothing really great about this place. Don't know why it brings so many people from all over the universe, most of whom end up returning in rags broke. This station is a graveyard of hopes and dreams."]]))
-   kex(_([["This cycle a kid who was engaged to his childhood sweetheart came to celebrate his engagement. They got absorbed into the game and decided to bet their savings for the wedding."]]))
-   kex(_([["He wouldn't listen to reason, and eventually lost all of his savings. He ended up getting into the fight with the security at the station, and ended up taken away in a stretcher with a broken back. Not very pretty."]]))
-   kex(_([["Despite a life destroyed, management was fairly happy, seems like he had quite a lot saved up until he came here. Just another day at the station."]]))
-   kex(_([["When you spend here so long as I have, you tend to see rhythm of the station, and it isn't very good. Brings out the worst in people."]]))
-   kex(_([["Most of the problem lies in the management, they're all a bunch of assholes led by the CEO, which is even a bigger asshole."]]))
+   kex(_([["Nothing really great about this place. Don't know why it brings so many people from all over the universe, most of whom end up returning broke and in rags. This station is a graveyard of hopes and dreams."]]))
+   kex(_([["This cycle, a kid, who was engaged to his childhood sweetheart, came to celebrate his engagement. They got absorbed into the game and decided to bet the money they'd saved for their wedding."]]))
+   kex(_([["He wouldn't listen to reason, and eventually lost all of his savings. He ended up getting into a fight with station security and they took him away in a stretcher with a broken back. Not very pretty."]]))
+   kex(_([["Despite a life destroyed, management was fairly happy. It seems like he had quite a lot saved up until he came here. Just another day at the station."]]))
+   kex(_([["When you've been here as long as I have, you tend to see the rhythm of the station, and it isn't very good. Brings out the worst in people."]]))
+   kex(_([["Most of the problem lies in the management, they're all a bunch of assholes led by the CEO, who is an even bigger asshole."]]))
    vn.func( function ()
       var.push( "kex_talk_station", true )
    end )
@@ -157,11 +157,11 @@ Kex runs off and disappears into the station.]]))
          vn.jump( "talked_ceo" )
       end
    end )
-   kex(_([["They've been running this joint since before I got here. Lots of rumours of them doing shady stuff that some are bound to be true."]]))
+   kex(_([["They've been running this joint since before I got here. There are enough rumours of them doing shady stuff that some are bound to be true."]]))
    kex(_([["The station is lively enough that it is fairly hard to keep track of what is going on, but there are some patterns like mysterious packages and unaccounted amounts of credits disappearing."]]))
    kex(_([["The only thing keeping me from my freedom is the fact that the CEO legally owns me. They don't believe I am fully sentient, but I'm sure if they knew it would just make everything harder for me, so I have to lay low."]]))
    vn.na(_("You ask about where you can find the CEO."))
-   kex(_([["He shouldn't be too hard to find most of the time given his drinking habits. You can usually find him around the bar lounge on the 7th floor. You aren't going to go talk to him? There's no way that anything like that could work."
+   kex(_([["He shouldn't be too hard to find. Given his drinking habits, you can usually find him around the bar lounge on the 7th floor. You aren't going to go talk to him, are you? There's no way that anything like that could work."
 He lets out a sigh.]]))
    vn.func( function ()
       var.push( "kex_talk_ceo", true )
@@ -181,9 +181,9 @@ He stops to think a bit.]]))
    kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear, right?"
 He looks at you with determination.
 "Given that the issue is the CEO, if we can somehow get rid of the CEO, there should be no issue, right?"]]))
-   kex(_([["Since I know for a certainly that he is involved in, let's call it, unsavory business, all we have to do is get him bust and in the confusion it should be more than easy for me to go free."]]))
+   kex(_([["Since I know for a certain that he is involved in, let's call it, \"unsavory business\", all we have to do is get him busted and in the confusion it should be more than easy for me to go free."]]))
    kex(_([[He looks down at the floor.
-"I know we've known each other for a relatively short time, but wouldn't you help a duck out? I might be able to make it worth your time afterwards."]]))
+"I know we've known each other for a relatively short time, but would you help a duck out? I might be able to make it worth your while afterwards."]]))
    vn.menu({
       { _("Help a duck out."), "help" },
       { _("Maybe later."), "nohelp" },
@@ -191,7 +191,7 @@ He looks at you with determination.
 
    vn.label("help")
    kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
-   kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
+   kex(_([["It would be ideal if you can disable the ship and find the evidence itself, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if mem.misn_state==nil then
          if not misn.accept() then
@@ -219,9 +219,9 @@ He looks at you with determination.
    vn.done()
 
    vn.label("job")
-   kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    kex(_([["We have to find dirt on the CEO and get him removed. It is the only chance I have for freedom."]]))
    kex(fmt.f(_([[They should be receiving a delivery. You should go intercept it at the {sys} system before it gets here. I have sent you all the precise information. It should be a breeze what with your piloting skills.]]), {sys=targetsys}))
+   kex(_([["It would be ideal if you can disable the ship and find the evidence itself, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -324,7 +324,7 @@ function mainguy_board ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. Given that it is likely not to be large, you proceed to explore the rest of the ship to see if there is anything of interest."))
+   vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. You proceed to explore the rest of the ship to see if there is anything of interest."))
    vn.na(fmt.f(_("You are not able to find what you were looking for, but you were able to find {credits} that likely won't be necessary to the crew anymore."), {credits=fmt.credits(reward)}))
    vn.na(_("It might be best to report back to Kex to see if his information was correct."))
    vn.run()

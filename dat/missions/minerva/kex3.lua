@@ -95,7 +95,7 @@ function generate_npc ()
       vn.clear()
       vn.scene()
       vn.transition()
-      vn.na(_("You land and promptly proceed to try to find Major Malik and get the job over with. After glossing over the map of the installations, you are able to quickly locate their office and head down there."))
+      vn.na(_("You land and promptly proceed to try to find Major Malik and get the job over with. After glancing over the map of the installations, you are able to quickly locate his office and head down there."))
       vn.sfxBingo()
       vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for him there."), {pnt=lastplanet, sys=lastsys}))
       vn.run()
@@ -119,9 +119,9 @@ function generate_npc ()
       vn.na(_([[You approach Major Malik and notice immediately that something is off. You remove the headgear from him and immediately see that his eyes are glazed over and there is some white froth coming out of his mouth. Seems like some sort of mental shock killed him.]]))
       vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Malik, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
       vn.sfxBingo()
-      vn.na(_([[The directories are really organized and it doesn't take long before you can find what seem to be the correct files, and you copy them over to a holodrive that you pocket with you. This should make Kex satisfied this time.]]))
+      vn.na(_([[The directories are nicely organized and it doesn't take long before you find what seems to be the correct files. You copy them over to your holodrive. You hope the files satisfy Kex this time.]]))
       vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
-      vn.na(_([[You better head over to Kex to relay the information back at Minerva Station.]]))
+      vn.na(_([[You better head back to Minerva Station to relay the information to Kex.]]))
       vn.run()
 
       mem.misn_state = 5 -- We're done here, go back to kex:)
@@ -140,10 +140,10 @@ function approach_kex ()
    -- Mission is over
    if mem.misn_state==5 then
 
-      vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled ingrained in your memory, and approach Kex."))
+      vn.na(_("Still exhausted from the entire ordeal, and with Major Malik's dead eyes still ingrained in your memory, you approach Kex."))
       kex(_([["You look like a mess, kid. What happened?"]]))
-      kex(_([["Damn. When I was still a human, we didn't have that fancy Virtual Reality shit. It's wild. Don't think I want to try it after hearing about your experience though. At least I'm glad you made it out of there alive. Don't know what I would do without you now."]]))
       vn.na(_("You explain what happened in the Crimson Gauntlet server and how you barely escaped with your life, and hand him the holodrive with the data you were able to collect."))
+      kex(_([["Damn. When I was still a human, we didn't have that fancy Virtual Reality shit. It's wild. Don't think I want to try it after hearing about your experience though. I'm glad you made it out of there alive. Don't know what I would do without you now."]]))
       kex(_([["Let me take a look at the data."
 He once again plugs the drive into a port somewhere under his wing and his eyes go blank.
 "Seems like that Major Malik was into some major shit."
@@ -164,8 +164,8 @@ He seems amused by his pun.]]))
 
    elseif mem.misn_state==nil then
       vn.na(_("You find Kex taking a break at his favourite spot at Minerva station. His eyes light up when he sees you and he runs over to you."))
-      kex(_([["Good news kid! It looks like the information obtained from Baroness Eve got some dirt on the CEO. It seems like they're involved in some sort of money laundering, but this alone won't get us anywhere, we need more intel."]]))
-      kex(_([["We have another lead on another co-conspirator, this time in Dvaered space. Some individual named Major Malik seems to also be in the money laundering. Would you be up for paying them a visit and seeing what you can get out of them?"]]))
+      kex(_([["Good news kid! It looks like the information we obtained from Baroness Eve had some dirt on the CEO. Looks like they're involved in some sort of money laundering, but this alone won't get us anywhere, we need more intel."]]))
+      kex(_([["We have a lead on another co-conspirator, this time in Dvaered space. Some individual, named Major Malik, seems to also be in the money laundering. Would you be up for paying him a visit and seeing what you can get out of him?"]]))
       vn.menu( {
          { _("Accept"), "accept" },
          { _("Decline"), "decline" },
@@ -176,8 +176,8 @@ He seems amused by his pun.]]))
       vn.done()
 
       vn.label("accept")
-      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), {pnt=targetplanet, sys=targetsys}))
-      kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in case they don't."
+      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. He should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note to help convince him you mean business. I'll also send you his picture so you can easily recognize him when you see him."]]), {pnt=targetplanet, sys=targetsys}))
+      kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully he'll be sensible and give us what we want. However, I trust you will do what it takes in case he doesn't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
          mem.misn_state = 0
@@ -209,18 +209,18 @@ He winks his cyborg eye at you.]]))
    vn.label("past")
    kex(_([["You are quite the curious kid. At the time I didn't think my life was all that great and exciting, but lately I yearn to take to the skies like the good old times. Did I ever tell you about the story of when I spent a kilo-period drifting in the Nebula?"
 "No? Great!"]]))
-   kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you always have to maximize energy to shields. It makes it hard to bring firepower, but not like it's going to do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
-   kex(_([["So me and Mireia had picked up a tip of some sort of weird wreck deep past Arandon. Some poor fools had gone to search for it and hadn't come back for a few hecto-periods and one of their husbands was beginning to lose it, so they came to us. Now, we weren't interested in trying to save them, once you enter the Nebula, you forfeit all chance at salvation. Search parties tend to only rack up the body counts."]]))
+   kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you have to maximize energy to shields. It makes it hard to bring firepower, but it's not like it'll do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
+   kex(_([["So me and Mireia had picked up a tip about some sort of weird wreck deep past Arandon. Some poor fools had gone to search for it and hadn't come back for a few hecto-periods and one of their husbands was beginning to lose it, so they came to us. Now, we weren't interested in trying to save them -- once you enter the Nebula, you forfeit all chance of rescue. Search parties tend to only count up the bodies."]]))
    kex(_([["However, from the looks of it, it was a very interesting find. Sometimes you find really weird things in the Nebula."
 He leans closer to you and whispers.
 "…things that shouldn't exist. Or better said, things that can't possibly exist."]]))
-   kex(_([["So we loaded up our trusty Mule with all the shield generators and survival goods we could fit, and headed towards the rough location we were told the wreck was at. At first it was fairly standard, shields running at maximum power, and radiators set at maximum power. You get used to the hum and the chaos of the Nebula, but you can never relax. It sort of gets into your bones and makes you lose your sleep."]]))
-   kex(_([["We continued like that for what seemed ages. Sensors get a bit fuzzy in there, but they were reporting about a deca-period when we saw it. It was part of something very big, almost looking like some sort of metallic skeleton. We approached it cautiously because radiation was off the charts. The more you looked at it, the more it felt like it was burning into the back of your retina."]]))
-   kex(_([["After our cursory analysis, we went to grab a sample. However, when we tried to approach the robotic arm to it, it never seemed to get closer. It was at some sort of constant distance from us no matter what we tried. We only had a small laser turret, but we even tried shooting at it and nothing. Zip-O."]]))
-   kex(_([["It could have been the exhausting or something else, I don't know, but we decided to try to ram it. So we accelerated at maximum velocity, and that's when it happened. Suddenly there was some horrible screeching sound and everything shook. Next we know, it felt like we were getting pulled through the eye of a needle, like hyperspace sickness but much worse. And we passed out."]]))
-   kex(_([["When we woke up, there was nothing around us. Only Nebula. One of the shield generators had gone offline so we wouldn't last long. We did some emergency repairs and hauled our asses out of there. When we got out, our systems said that we had only been gone for about 22 periods, but when we hailed a ship, we found out there was a 1087 period difference between our system clock and theirs."]]))
-   kex(_([["The weird thing is we didn't have many supplies missing, so there's no way that could be true. I still scratch my head thinking about this today. I did tend to lose track of time and lose hunger in the deep Nebula, but nothing like that. We also had nothing from our encounter with the wreck or whatever that was."]]))
-   kex(_([["After that I head back home and got totally chewed out by my wife. I had to spend a few weeks sleeping on the couch and Maikki didn't speak to me for ages."
+   kex(_([["So we loaded up our trusty Mule with all the shield generators and survival gear we could fit, and headed out towards the last known location of the wreck. At first it was fairly standard, our shields and radiators running at maximum power. You get used to the hum and the chaos of the Nebula, but you can never relax. It sort of gets into your bones and makes you lose your sleep."]]))
+   kex(_([["We continued like that for what seemed ages. Sensors get a bit fuzzy in there, but they'd been scanning for about a deca-period when we saw it. It was part of something very big, almost like some sort of metallic skeleton. We approached it cautiously because the radiation was off the charts. The more you looked at it, the more it felt like it was burning into the back of your retina."]]))
+   kex(_([["After our cursory analysis, we went to grab a sample. However, when we tried to extend the robotic arm to it, it never seemed to get closer. It was at some sort of constant distance from us no matter what we tried. We only had a small laser turret, but we even tried shooting at it and nothing. Zip-O."]]))
+   kex(_([["It could have been the exhaustion or something else, I don't know, but we decided to try to ram it. So we accelerated at maximum velocity, and that's when it happened. Suddenly there was some horrible screeching sound and everything shook. Next thing we know, it felt like we were getting pulled through the eye of a needle, like hyperspace sickness but much worse. And we passed out."]]))
+   kex(_([["When we woke up, there was nothing around us. Only Nebula. One of the shield generators had gone offline. We weren't going to last long. We did some emergency repairs and hauled our asses out of there. When we got out, our systems said that we had only been gone for about 22 periods, but when we hailed a ship, we found out there was a 1087 period difference between our system clock and theirs."]]))
+   kex(_([["The weird thing is we'd hardly used up our supplies, so there's no way that could be true. I still scratch my head thinking about this today. I did tend to lose track of time and lose hunger in the deep Nebula, but nothing like that. We also had nothing from our encounter with the wreck or whatever that was."]]))
+   kex(_([["After that I headed back home and totally got chewed out by my wife. I had to spend a few weeks sleeping on the couch and Maikki didn't speak to me for ages."
 He sighs wistfully.
 "That's the part I miss the most of my previous life. Having a place to go after adventuring."
 He looks a bit glum.]]))
@@ -327,7 +327,7 @@ function approach_malik ()
 #rHUMAN LIFE SAFETY OVERRIDE.
 DUEL TO THE DEATH MODE ENABLED.#0]]))
    vn.sfxEerie()
-   vn.na(_([[You try to remove the gear and stop the boot, but it is too late. The virtual reality of the Crimson Gauntlet envelopes you…]]))
+   vn.na(_([[You try to remove the gear, but it's too late. The virtual reality of the Crimson Gauntlet envelopes you…]]))
    vn.done()
 
    vn.label("decline")

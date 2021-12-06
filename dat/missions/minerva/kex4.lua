@@ -200,7 +200,7 @@ His eyes don't seem to have changed.]]))
    vn.jump("menu_msg")
 
    vn.label("alright")
-   kex(_([["Been better kid. Just had some sleepless nights, staring at the ceiling while being able to move, haunted by past regrets."
+   kex(_([["Been better, kid. Just had some sleepless nights, staring at the ceiling, unable to move, haunted by past regrets."
 He looks visibly tired.
 "You ever do anything you regret, kid?"]]))
    vn.menu{
@@ -218,7 +218,7 @@ He looks visibly tired.
    kex(_([["I haven't really paid attention to it much, but it's getting worse and worse as time goes by. I'm sure it will all get better when this is over. I mean, it has to, right?"]]))
    kex(_([[After a short pause he continues. "You know, ever since I was a kid, I always loved adventure: being at the center of everything and braving adversity. I loved the adrenaline rush and could never get enough of it all."]]))
    kex(_([["When I was getting older, I guess I tried to follow what everyone was doing and sort of settle down, but I was never very good at staying still. Whenever I stayed in the same place too long I got all itchy. It's like my soul was yearning to go out and adventure."]]))
-   kex(_([["Even when I had my first child, I just couldn't stay behind. I just had to go out. But now…"
+   kex(_([["Even when I had my first child, I just couldn't stay put. I just had to go out. But now…"
 His biological eye looks a bit hazy.
 "I guess you don't appreciate what you have until you lose it all."]]))
    vn.jump("menu_msg")
@@ -233,7 +233,7 @@ function approach_jie ()
    vn.scene()
    local jie = vn.newCharacter( _("Jie de Luca"), {image=mem.jie_image} )
    vn.transition()
-   vn.na(_("You approach a nonchalantly drink-sipping Jie de Luca. They seem to be reading some sort of document."))
+   vn.na(_("You approach Jie de Luca who seems to be reading some sort of document while nonchalantly sipping a drink."))
    jie(_([[Without looking up they address you.
 "So you're the one causing a ruckus here and there. You look a bit different from what I expected."
 They look up at you.]]))
@@ -246,11 +246,11 @@ They speak calmly, without so much as a tinge of urgency.]]))
    vn.label("cont1")
    jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living, now, can we?"
 They take a sip from their drink.]]))
-   jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines to survive."]]))
+   jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has offered us nothing but cruelty and suffering. Forced to work in the ore mines to survive."]]))
    jie(_([["This shithole taught us that nothing is given for free. You have to fight with tooth and nail to get what you want! No that's not it, what we deserve!"
 They hit the table for emphasis.]]))
    jie(_([["This universe is rotten to the core you know. If you don't want to wind up as a husk of a human, toiling for the benefit of others, you have to take what you damn want. I'm not going to wind up as another corpse deep down underground."]]))
-   jie(_([["I don't think a hired gun like you would truly what the suffering is like when nearly working to death in the ore mines. Just here to do your master's bidding, like the loyal dog you are."
+   jie(_([["I don't think a hired gun like you would truly understand the kind of suffering of nearly working to death in the ore mines. You're just here to do your master's bidding, like the loyal dog you are."
 They give a small chuckle and lean forward.]]))
    jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with our blood, sweat, and tears."]]))
    jie(_([[They clench their teeth.

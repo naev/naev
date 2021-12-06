@@ -231,10 +231,10 @@ She reminisces.]]))
    maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
 "From what you tell me, it seems like it wasn't an accident…"
 She looks up expectantly.]]))
-   maikki(_([["If you didn't find a body I'm sure he survived! He shouldn't be a guy that dies that easily!"
+   maikki(_([["If you didn't find a body I'm sure he survived! He wouldn't be someone who dies that easily!"
 She looks clearly excited at the possibility.]]))
    maikki(_([[She furrows her brows.
-"The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father so far away? I always thought those creeps couldn't be up to anything good."]]))
+"The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father? I always thought those creeps couldn't be up to anything good."]]))
    maikki(_([[Her face glows.
 "I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.sfxVictory()
@@ -267,7 +267,7 @@ function approach_oldman ()
    local om = vn.newCharacter( _("Old Man"),
          { image=oldman_image } )
    vn.transition()
-   vn.na( _("You see an old man casually drinking at the bar. He has a sort of self-complacent bored look on his face.") )
+   vn.na( _("You see an old man casually drinking at the bar. He has a sort of distant, bored look on his face.") )
 
    vn.label( "menu" )
    local opts = {

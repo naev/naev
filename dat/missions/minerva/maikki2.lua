@@ -170,7 +170,7 @@ and {name3} in the {sys3} system."]]), {
    end
    vn.transition("hexagon")
 
-   vn.na(_("You approach Maikki who seems to have a fierce determination in her look."))
+   vn.na(_("You approach Maikki who seems to have a fierce determination in her eyes."))
    if mem.misn_state==nil then
       maikki(_([[She looks encouraged by your findings in the nebula.
 "From what you told me, I think I have a good idea for our next lead. Would you be interested in helping again?"]]))
@@ -249,14 +249,14 @@ She frowns and shakes her head.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "father" )
-   maikki(_([["I don't remember much about my father, most of what I know about him is stories from my late mother and stories told by pilots who knew him."]]))
+   maikki(_([["I don't remember much about my father, most of what I know about him are from stories from my late mother and pilots who knew him."]]))
    maikki(_([[Her eyes light up.
-"Did you know that while scavenging near the incident, an asteroid hit his thrusters making them point the wrong way and he had to fly through five systems backwards through the nebula while chased by pirates? Sounds crazy!"]]))
-   maikki(_([["He was also said to be the first pilot to chart the entire systems in the Nebula after the incident. Not even getting his leg crushed while recovering parts of the last emperor's flagship stopped him from going back and back to the nebula."]]))
+"Did you know that while scavenging near the incident, an asteroid hit his thrusters making them point the wrong way and he had to fly backwards through five systems in the nebula while chased by pirates? Sounds crazy!"]]))
+   maikki(_([["They say he was also the first pilot to chart all the systems in the Nebula after the incident. Not even getting his leg crushed while recovering parts of the last emperor's flagship stopped him from going back and back to the nebula."]]))
    maikki(_([[Her eyes darken a little and her voice softens.
 "His obsession with finding the truth meant he was away from home most of the time and my mother was probably very lonely. She told me he never came to any of my birthdays…"]]))
    maikki(_([[Her eyes light up again.
-"However, those were exceptional times. Most of the universe and our history as humans was lost! I would like to love to be able to meet him again and be able to ask all sorts of things."]]))
+"However, those were exceptional times. Most of the universe and our history as humans was lost! I would love to be able to meet him again and be able to ask him all sorts of things."]]))
    maikki(_([["Since you found his ship in the nebula we have to get to the bottom of what happened! There is no way this was an accident, and I'm sure the Za'lek are involved in this. Since you didn't find a body, he has to be alive! We have to find out what happened and set things right!"
 Her eyes sparkle with determination.]]))
    vn.jump( "menu_msg" )
@@ -312,7 +312,7 @@ function generate_npc ()
       misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif mem.misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
-      misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
+      misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp floating in a nearby aquarium bowl.") )
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and mem.misn_state < 6 then
       mem.npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
@@ -409,7 +409,7 @@ They shudder when they says the word "work packages".]]))
    vn.na(_("You inquire about other project members."))
    prof(_([["The only logical step after that traumatic experience is to get as far away as possible from nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
    prof(_([["Have you heard of graphene infused hydro nano lattices? By taking sheets of graphene and creating strong lateral strain under the effect of intense Coriolis electro-magnetic induction fields, it is possible to obtain a behaviour similar to turbulent hydrofoils. And what's even better is that they naturally form octahedral quasi-lattices that allow absorbing most low-spectrum frequencies!"]]))
-   prof(_([["They could change material science as we know it! Image being able to create materials with almost any property you can desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
+   prof(_([["They could change material science as we know it! Imagine being able to create materials with almost any property you desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
    vn.na(_("You get away as fast as you can from them as they keep on rambling."))
    lasthint( prof )
 
@@ -438,9 +438,9 @@ function approach_hint3 ()
    prof(_([["Oh yes, on the nebula artifacts. I remember having fun conversations with our colleagues about whether or not the artifacts from the nebula actually do exist or not given that we are using imperfect sensory organs to see, touch, and feel them. You see, given that we only perceive reality through our imperfect organs, can we actually know whether or not there is an absolute objective reality?"]]))
    vn.na(_("You inquire about the other members of the project."))
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour! Anyway, back to what I was saying."]]))
-   prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, that the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
-   prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals…"]]))
-   vn.na(_("You thank them and run away while they keeps on talking to themself."))
+   prof(_([["We must also further question not only our sensory organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensory data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't prove."]]))
+   prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which, while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals…"]]))
+   vn.na(_("You thank them and run away while they keeps on talking to themselves."))
    lasthint( prof )
 
    vn.run()
@@ -548,7 +548,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["Now I remember! There was a another post-doctoral researcher who worked with me. He was a bit weird and kept obsessing over the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
-   drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
+   drshrimp(fmt.f(_([["Eventually he sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
    drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing gives me the me the creeps though."]]))
    vn.func( function ()
       mem.asked_strangelove = true
@@ -686,10 +686,10 @@ function ecc_feral_boss_dead ()
    end )
    local voice = vn.newCharacter( _("Unknown Voice") )
    vn.transition( "hexagon", 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
-   vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission."))
+   vn.na(_("While the drone is blowing up, you receive a faint, audio-only transmission."))
    vn.sfxEerie()
    voice(_([["Thank you for setting me free…"]]))
-   vn.na(_("You wonder what that was about as you watch the drone thrash while it blows up. Westhaven is a really weird place."))
+   vn.na(_("You wonder what that was about as you watch the drone thrash as it blows up. Westhaven is a really weird place."))
    vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors identify it as mainly biological material…"))
    vn.done( "hexagon" )
    vn.run()
@@ -702,7 +702,7 @@ function ecc_feral_boss_dead ()
 end
 
 local drone_msgs = {
-   _("Just destroy me and put me out of my suffering."),
+   _("Just destroy me and put me out of my misery."),
    _("Why am I still alive?"),
    _("I can't deal with this anymore."),
    _("Please end me!"),
@@ -741,14 +741,14 @@ function approach_eccentric ()
    vn.transition( "electric" )
 
    if not mem.ecc_visitedonce then
-      vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
+      vn.na(_("The hologram projector flickers and what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
       dr(_([["How did you get in there? Who are you!"]]))
       vn.na(_("You explain to him that you are looking for information about nebula artifacts."))
       dr(_([["Who sent you here? Was it Dr. Bob? That weasel was always after my precious artifacts. Well, he can't have them! I got all this with my hard work, sweat, and tears! They're all mine!"
 He cackles manically.]]))
       dr(_([["I have hidden them very well. Even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
-      dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
+      dr(_([["Anyway, I am very busy now, yes? All this science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       mem.ecc_visitedonce = true
       minerva.log.maikki(_("You met an eccentric researcher named Dr. Strangelove in Westhaven." ))
    else
@@ -819,10 +819,10 @@ He glares at you.]]))
 He smiles mischievously.]]))
    dr(_([["My drones dug it out and it's the cosiest place I have ever lived in, but I don't get many guests. In fact, you are my…"
 He starts counting on his fingers intently.
-"…first guest! Yes, that's it, the first true biological living being other than me to visit!"
-You don't like how he puts emphasis on 'biological living'…]]))
+"…first guest! Yes, that's it, the first true living biological being other than me to visit!"
+You don't like how he puts emphasis on 'living biological'…]]))
    dr(_([["Feel free to use the facilities as you please, but stay out of the backroom."
-Given the smell of the entire laboratory and especially the horrible wafts emanating from the backroom, you feel like it is best to heed his advice for your own safety.]]))
+Given the smell of the entire laboratory and especially the horrible scents wafting from the backroom, you feel like it is best to heed his advice for your own safety.]]))
    vn.jump("menu_msg")
 
    vn.label("handover")
@@ -836,7 +836,7 @@ no vitals… not very good… mmmm… nebula radiation at minimum… can't be he
       {_([["What the hell is this thing?"]]), "hatethisguy"},
    } )
    vn.label("hatethisguy")
-   dr(_([["I see… You don't grasp the incredibleness of this artifact. I guess it can't be helped with such an inferior intellect as yours."
+   dr(_([["I see… You don't grasp the importance of this artifact. I guess it can't be helped with such an inferior intellect as yours."
 He sneers.]]))
    dr(_([["This is my latest creation, an amalgamate of ancient nebula technology and life. Think of this as something that not only surpasses any of the Soromid biotechnology, but also Za'lek cybertechnology. It is the peak of technological advancement!"]]))
    dr(_([["While it has an incredible potential, there are… some complications still. The mental faculties tend to lack stability. While this one is a very interesting failure, it is still a failure at heart. Most of my other creations have had much more success."]]))

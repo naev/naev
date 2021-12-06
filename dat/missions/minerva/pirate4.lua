@@ -110,7 +110,7 @@ They beam you a smile.]]))
 
       vn.label("accept")
       vn.func( function () mem.misn_state=0 end )
-      pir(_([["Glad to have you onboard again! So we have tracked down the mole and know that they are infiltrated in the station from the intercepted messages. It appears that they are most likely working at the station. Now there are not many places to work at the station so it is likely that they are involved in the gambling facility."]]))
+      pir(_([["Glad to have you onboard again! So we have tracked down the mole and know from intercepted messages that they are most likely working at the station. Now, there are not many places to work at the station, so it is likely that they are involved in the gambling facility."]]))
       pir(_([["The bad news is we don't exactly know who the mole is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
 They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on it and hands it to you.]]))
       vn.func( function ()
@@ -151,7 +151,7 @@ function found_mole ()
 They make a cutting gesture from their belly up to their neck.
 "Poor kid, not the best way to leave this world."]]))
    mole(_([["Hey, wait a moment. Haven't I seen you around?"]]))
-   vn.na(_("While they wrinkle their eyebrows, you suddenly hear a soft thud and while you hear the sound of strong electric current, you see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
+   vn.na(_("While they furrow their brows, you suddenly hear a soft thud and the sound of strong electric current. You see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
 
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )

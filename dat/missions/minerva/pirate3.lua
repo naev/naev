@@ -397,7 +397,7 @@ function harper_hail ()
       vn.scene()
       local h = harper_hologram()
       vn.transition("electric")
-      vn.na(_("You see Harper's hologram appear into view paler than usual."))
+      vn.na(_("You see Harper's hologram appear into view. He looks paler than usual."))
       h(fmt.f(_([["I have had a change of mind."
 He gulps.
 "How about I give you the ticket for a mere {credits}?]]), {credits=fmt.credits(harper_bribe_sml)}))

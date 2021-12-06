@@ -95,7 +95,7 @@ function accept ()
    kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
-   vn.na(fmt.f(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=targetsys}))
+   vn.na(fmt.f(_([[Without saying anything else, Kex waddles off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=targetsys}))
 
    vn.func( function ()
       mem.misn_state = 0
@@ -423,8 +423,8 @@ function landed_lab ()
    end )
 
    vn.label("living")
-   vn.na(_("You make your way through a nearly impassible very tight passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here, it rather seems all abandoned."))
-   vn.na(_("Eventually you reach a really small room with a bed capsule. The ground and bed are splattered in blood, but it seems very old and desiccated. Some empty medicinal syringes and pouches are scattered on the floor."))
+   vn.na(_("You make your way through a tight, nearly impassible passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here. It rather seems all abandoned."))
+   vn.na(_("Eventually, you reach a very small room with a bed capsule. The ground and bed are splattered with blood, but it seems very old and desiccated. Some empty medical syringes and pouches are scattered on the floor."))
    vn.na(_("You turn over everything, but find nothing of interest."))
    vn.func( function () check_living = true end )
    vn.jump("menu")
@@ -437,12 +437,12 @@ function landed_lab ()
    vn.jump("menu")
 
    vn.label("back")
-   vn.na(_([[You find a tunnel leading towards the back room. It seems to have been once blocked off, but now has been torn wide open. You ignore the "KEEP OUT" sign that is bent up underfoot and make your way through.]]))
-   vn.na(_("The tunnel twists and turns as it heads towards the center of the asteroid. There is no lighting the entire way, so you rely on the lamps of your suit."))
+   vn.na(_([[You find a tunnel leading towards the back room. It seems to have been blocked off once, but now has been torn wide open. You ignore the "KEEP OUT" sign that is bent up underfoot and make your way through.]]))
+   vn.na(_("The tunnel twists and turns as it heads towards the center of the asteroid. There is no lighting along the way, so you rely on the lamps of your suit."))
    vn.na(_("Eventually you reach a room at the core of the asteroid. It is fairly large compared to the rest of the laboratory, but is jammed with junk and rubbish, lots of which has been recently moved around."))
-   vn.na(_("You start to sift through the things to try to find something of interest, but after a long time of looking around and not making significant progress given the large amounts of stuff, you decide to take a break and set on a fallen bookcase."))
-   vn.na(_("As you survey the room, you notice a small movement next to your feet. The motion is small that you can only notice it by being still nearby. Slowly and carefully you lift up some debris to uncover a small and heavily damaged droid."))
-   vn.na(_("You pick up the droid and dust it off. The primary lens and hover engine seem completely damaged, but it does seem like it still has power and likely data in it. You try to interface to it, but it seems to be locked with strong encryption. You pocket it as it seems like it might be something of interest to Kex."))
+   vn.na(_("You start to sift through the things to try to find something of interest, but after a long time of looking around and not making significant progress, you decide to take a break and sit on a fallen bookcase."))
+   vn.na(_("As you survey the room, you notice a small movement next to your feet. Slowly and carefully you lift up some debris to uncover a small and heavily damaged droid."))
+   vn.na(_("You pick up the droid and dust it off. Its primary lens and hover engine seem completely destroyed, but it does seem like it still has power and likely data in it. You try to interface to it, but it seems to be locked with strong encryption. You pocket it as it seems like it might be something of interest to Kex."))
    vn.na(_("You get back to searching around the stuff and end up finding nothing else of interest."))
    vn.func( function ()
       check_back = true
@@ -492,14 +492,14 @@ function strangelove_board ()
    vn.scene()
    local dr = minerva.vn_strangelove()
    -- TODO small scene
-   vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
+   vn.na(_("You cautiously board the ship, not sure what you are about to encounter. Trusting your system's sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you enter the ship, a strong, pungent odour makes you regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
    vn.na(_("You pay little attention to the small critters, which seem harmless, and proceed through the ship. After a short walk you enter the command room."))
    love_audio.setEffect( "reverb_psychotic", reverb_preset.psychotic() )
    vn.music( minerva.loops.strangelove, {effect="reverb_psychotic"} )
    vn.appear(dr)
-   vn.na(_("You enter the room and meet Dr. Strangelove for the first time face-to-face. Your first impression is that more than a space ship, it looks like a hospital. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a space ship at the edge of the universe."))
-   dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might have formerly been a man. His cheekbones protrude from his pale face, and his laboratory coat seems to be a few sizes too big on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
+   vn.na(_("You enter the room and meet Dr. Strangelove face-to-face for the first time. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a space ship at the edge of the universe."))
+   dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might have once been a man. His cheekbones protrude from his pale face and his laboratory coat seems to be a few sizes too large on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
    dr(_([["I see you were able to make it."
 He coughs violently.
 "Sorry, I haven't been feeling too well lately."
@@ -512,7 +512,7 @@ He lets out a sigh.]]))
    dr(_([["It could be the distance, but my calculations indicated that it shouldn't matter. It should be everywhere. Everything is everywhere! Folding onto itself and twisted around in higher dimensions. Measly Euclidean distances shouldn't matter at all."]]))
    dr(_([["…but it didn't work. Almost as if making a mockery of science itself and spitting in my face. Almost as if the universe itself is unwilling to give up its secrets."
 He coughs violently.
-"But it failed. Like always. It failed."]]))
+"It failed. Like always. It failed."]]))
    dr(_([["Williams, why did you have to die? You know so much. You surpassed me in everything I could possibly imagine. You would have been able to make it work!"]]))
    vn.menu{
       {_("Ask about Kex"), "1kex"},
@@ -549,8 +549,8 @@ His voice tears up slightly.]]))
    vn.label("2cont")
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
-"I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you. I should have been the one not left alone, not you…"]]))
    dr(_([[You don't know how to answer and silence envelopes the room. Finally, he breaks the calmness.
+"I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you."]]))
    dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
 He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
    dr(_([["If only our places had been switched, you would have been able to solve it and find me again. I was so close and yet it still feels like there is some sort of impenetrable wall between me and the solution. What did I miss, where did I go wrong?"
@@ -668,7 +668,7 @@ He coughs violently again, spasms overtaking his body. The medical robot seems t
    vn.jump("nonviolent_death")
 
    vn.label("kex_letbe")
-   vn.na(_([[Seeing him in his last stages brings out the compassion you have in you. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
+   vn.na(_([[Seeing him in his last stages brings out your compassion. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
    dr(_([["I can feel it… getting close…"
 He seems to be looking at something in the distance.]]))
    dr(_([[Suddenly, he opens his eyes wide, but his expression is less of terror and more of curiosity and awe.
@@ -679,7 +679,7 @@ He seems to be looking at something in the distance.]]))
 
    vn.label("kex_weapon")
    vn.na(_([[You draw your weapon and press it against Dr. Strangelove's forehead. He doesn't seem to flinch when the cold barrel makes contact with his skin. In fact, he seems very oblivious to everything around him.]]))
-   vn.na(_([[You look at yourself and think what you are about to do. Even if this is what Kex thinks he wants, is there any point in forcibly ending the life of someone who doesn't look like they will survive the next period? Dr. Strangelove seems unresponsive to your actions.]]))
+   vn.na(_([[You look at yourself and think of what you are about to do. Even if this is what Kex thinks he wants, is there any point in violently ending the life of someone who doesn't look like they will survive the next period? Dr. Strangelove seems unresponsive to your actions.]]))
    vn.menu{
       { _([[Pull the trigger.]]), "kex_shot" },
       { _([[Unplug his life support.]]), "kex_unplug" },
@@ -690,7 +690,7 @@ He seems to be looking at something in the distance.]]))
    vn.label("kex_shot")
    vn.func( function () var.push("strangelove_death","shot") end )
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
-   vn.na(_([[You pull the trigger and Dr. Strangelove's body becomes completely limp and lifeless. The vitals monitor sounds an alarm before becoming silent and certifying the death. You did the task and you can only hope this will bring Kex peace of mind, although you somehow doubt it.]]))
+   vn.na(_([[You pull the trigger and Dr. Strangelove's body goes completely limp and lifeless. The vitals monitor sounds an alarm before becoming silent, confirming his death. You did the task and you can only hope this will bring Kex peace of mind, although you somehow doubt it.]]))
    vn.jump("dr_death")
 
    vn.run()
