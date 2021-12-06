@@ -163,6 +163,15 @@ local function getLeader(list)
    end
 end
 
+local function landFleet(list)
+   for i, p in ipairs(list) do
+      if p ~= nil and p:exists() then
+         p:control()
+         p:land(source_planet)
+      end
+   end
+end
+
 function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
@@ -214,9 +223,8 @@ function attack ()
    attdeath = 0
    attkilled = 0  --mass of the player's victims
 
-   local lead = getLeader(attackers)
-   lead:control()
-   lead:land(source_planet)
+   goda:control()
+   goda:land(source_planet)
 end
 
 function defense ()
@@ -254,18 +262,17 @@ function defense ()
    defdeath = 0
    defkilled = 0 --mass of the player's victims
 
-   local dlead = getLeader(defenders)
-   dlead:control()
-
    if attdeath >= attnum then  -- Special case: first fleet slaughtered before second fleet spawned!
-      dlead:land(source_planet)
+      landFleet(defenders)
       battleEnded = true
       if side == "defender" then
          prepareReward(attkilled)
       end
    else
       local alead = getLeader(attackers)
+      local dlead = getLeader(defenders)
       alead:taskClear()
+      dlead:control()
       alead:attack(dlead)
       dlead:attack(alead)
       hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattleIfReady", focus = dlead})
@@ -339,10 +346,7 @@ function attackerDeath(victim, arg)
 
    if not battleEnded and attdeath >= attnum then  --all the enemies are dead
       battleEnded = true
-      local lead = getLeader(defenders)
-      if lead == nil then return end -- Simultaneous destruction?
-      lead:control()
-      lead:land(source_planet)
+      landFleet(defenders)
       if side == "defender" then
          prepareReward(attkilled)
       end
@@ -360,10 +364,7 @@ function defenderDeath(victim, arg)
 
    if not battleEnded and defdeath >= defnum then  -- all the defenders died: the winner lands on his planet
       battleEnded = true
-      local lead = getLeader(attackers)
-      if lead == nil then return end -- Simultaneous destruction?
-      lead:control()
-      lead:land(source_planet)
+      landFleet(attackers)
       if side == "attacker" then
          prepareReward(defkilled)
       end

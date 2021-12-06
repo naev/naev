@@ -11,8 +11,8 @@ endforeach
 feature_args = ['-DLOAD_PNG', '-DLOAD_WEBP']
 
 sdl2_dep = dependency('sdl2')
-png_dep = dependency('libpng', required: true, static: true)
-webp_dep = dependency('libwebp', required: true, static: true)
+png_dep = dependency('libpng', required: true, static: get_option('steamruntime'))
+webp_dep = dependency('libwebp', required: true, static: get_option('steamruntime'))
 
 
 sdl2_image_lib = static_library('sdl2image',

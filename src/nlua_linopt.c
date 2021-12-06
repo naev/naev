@@ -276,18 +276,17 @@ static int linoptL_setcol( lua_State *L )
    const char *name  = luaL_checkstring(L,3);
    double coef       = luaL_checknumber(L,4);
    const char *skind = luaL_optstring(L,5,"real");
-   int haslb, hasub, type, kind;
-   double lb, ub;
+   int haslb         = !lua_isnoneornil(L,6);
+   int hasub         = !lua_isnoneornil(L,7);
+   double lb         = luaL_optnumber(L,6,0.0);
+   double ub         = luaL_optnumber(L,7,0.0);
+   int type = GLP_FR, kind = GLP_CV;
 
    /* glpk stuff */
    glp_set_col_name( lp->prob, idx, name );
    glp_set_obj_coef( lp->prob, idx, coef );
 
    /* Determine bounds. */
-   haslb = !lua_isnoneornil(L,6);
-   hasub = !lua_isnoneornil(L,7);
-   lb    = luaL_optnumber(L,6,0.0);
-   ub    = luaL_optnumber(L,7,0.0);
    if (haslb && hasub) {
       if (fabs(lb-ub) < 1e-5)
          type = GLP_FX;

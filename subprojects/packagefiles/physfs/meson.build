@@ -2,7 +2,7 @@ project('physfs', 'c', version: '3.0.2')
 
 # Contrary to Meson 0.56's documentation, specifying default_options: ['warning_level=1'] has no effect. DIY.
 cc = meson.get_compiler('c')
-foreach arg: ['-Wno-attributes', '-Wno-int-in-bool-context', '-Wno-sign-compare', '-Wno-unused-parameter']
+foreach arg: ['-Wno-attributes', '-Wno-cast-function-type', '-Wno-int-in-bool-context', '-Wno-sign-compare', '-Wno-unused-parameter']
    if cc.has_argument(arg)
       add_project_arguments(arg, language : 'c')
    endif
