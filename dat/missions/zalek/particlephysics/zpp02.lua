@@ -186,7 +186,7 @@ They scratch their head.]]))
    vn.run()
 
    -- Failed to do the Sokoban
-   if not mem.state==2 or not cargo_space then
+   if mem.state~=2 or not cargo_space then
       return
    end
 

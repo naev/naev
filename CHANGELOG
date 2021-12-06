@@ -13,7 +13,7 @@
    * Fixed VN log text overlap issues
    * Fixed commodities not being added through unidiff
    * Fixed safe lane rendering alpha being wrong
-   * Fixed misbehaviours in "Travelling Merchant" and "Warlords Battle" events.
+   * Fixed misbehaviours in "Travelling Merchant", "Warlords Battle", and "Za'lek Particle Physics 2".
    * Don't give away name of destination system via autonav if unknown
    * AI should only try to jump to systems with their faction presence
    * Wrap OSD titles as necessary
