@@ -362,7 +362,7 @@ static int misn_markerAdd( lua_State *L )
    }
    else {
       issys = 1;
-      objid = luaL_checksystem(L,1);
+      objid = luaL_validsystem(L,1);
    }
    stype = luaL_optstring( L, 2, "high" );
 
