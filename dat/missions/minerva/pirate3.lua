@@ -117,8 +117,8 @@ function approach_pir ()
 
    if mem.misn_state==nil then
       -- Not accepted
-      vn.na(_("You approach the sketch individual who seems to be calling your attention yet once again."))
-      pir(_([["Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"]]))
+      vn.na(_("You approach the sketchy individual who seems to be calling your attention yet once again."))
+      pir(_([["Hello again, we have another job for you. Our previous actions have led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
          {_("Kindly decline"), "decline"},
@@ -139,19 +139,19 @@ function approach_pir ()
          local minsta = planet.get("Minerva Station")
          misn.markerAdd( minsta )
 
-         minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+         minerva.log.pirate(_("You accepted another job from the sketchy individual to uncover moles at Minerva Station.") )
       end )
       pir(_([["Glad to have you onboard again. From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
       pir(_([["That's where this comes in to place."
-They take out a metallic object from their pocket and show it to you. You don't know what to make of it.
+She takes out a metallic object from her pocket and show it to you. You don't know what to make of it.
 "Ain't she a beauty?"]]))
       pir(_([["This is some high-tech shit that we got from some geeks. It's a latest gen signal capturing device, and should be able to bypass most jammers. However, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
-      pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
-      pir(_([[They hand you the signal capturing device and explain briefly how it works.
+      pir(_([["The main issue we have right now is that VIP rooms and such are not easy to access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
+      pir(_([[She hands you the signal capturing device and briefly explains how it works.
 "Take the device and see if you can find a chance to place it. I'll be at the spaceport bar if you figure anything out."]]))
    else
       -- Accepted.
-      vn.na(_("You approach the shady character you have become familiarized with."))
+      vn.na(_("You approach the sketchy character you have become familiarized with."))
    end
 
    if mem.misn_state == 5 then
@@ -193,11 +193,11 @@ They take out a metallic object from their pocket and show it to you. You don't 
 
    vn.label("job")
    pir(_([["From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
-   pir(_([["The high-tech latest gen signal capturing device I gave should be able to bypass moste jammers. However, you're going to have to plant it in a VIP room or in some place where we might be able to catch the mole."]]))
+   pir(_([["The high-tech latest gen signal capturing device I gave should be able to bypass most jammers. However, you're going to have to plant it in a VIP room or in some place where we might be able to catch the mole."]]))
    if mem.misn_state==0 then
-      pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
+      pir(_([["The main issue we have right now is that VIP rooms and such are not easy to access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
    elseif mem.misn_state==1 then
-      pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
+      pir(_([["The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If not, we may have to take other measures to ensure success."]]))
    elseif mem.misn_state==3 then
       if not mem.harper_gotticket then
          pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
@@ -206,19 +206,19 @@ They take out a metallic object from their pocket and show it to you. You don't 
          vn.jump("trueticket")
       end
    elseif mem.misn_state==4 then
-      pir(_([["You got the ticket to the Minerva spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
+      pir(_([["You got the ticket to the Minerva Spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
    end
    vn.jump("menu_msg")
 
    vn.label("station")
-   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns an eye to everything that goes on here is just incredible! Makes you want to root for their success you no?"]]))
+   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns a blind eye to everything that goes on here is just incredible! Makes you want to root for their success you know?"]]))
    pir(_([["The issue is that even though the set-up is great, all the Dvaered and Za'lek bickering is just messing it all up. It would be a real shame if things went tits up and either the Dvaered or Za'lek were able to take over this wonderful place."]]))
    pir(_([["So me and my investors thought to ourselves, what could we do to ensure the success of such a wonderful place? This led to that and here we are."]]))
    vn.jump("menu_msg")
 
    vn.label("spa")
-   pir(_([["Ah, so you heard the news too? The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket and see if we can get lucky. If  not, we may have to take other measures to ensure success."
-They wink at you.]]))
+   pir(_([["Ah, so you heard the news too? The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket and see if we can get lucky. If not, we may have to take other measures to ensure success."
+She winks at you.]]))
    vn.jump("menu_msg")
 
    vn.label("spaticket")
@@ -231,7 +231,7 @@ The terminal pauses for emphasis.]]))
    t(_([["THE WINNER IS HARPER BOWDOIN! PLEASE COME TO YOUR NEAREST TERMINAL TO COLLECT YOUR PRIZE."]]))
    vn.disappear( t )
    pir(_([["Shit! I thought we had that rigged. Damn it. Give me one second."
-They start frantically typing into their portable holo-deck. It makes weird beeps and noises.]]))
+She starts frantically typing into her portable holo-deck. It makes weird beeps and noises.]]))
    pir(_([["OK, so we aren't so bad off. It seems like the winner was doing some space tourism around the system. Not like there is anything to see here."]]))
    pir(_([["So change of plans, I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
    vn.func( function ()
@@ -247,7 +247,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
    vn.na(_("You show them the winning ticket you took from Harper Bowdoin."))
    pir(_([["Great job out there. It's like taking candy from a baby."
 She beams you a smile.
-"Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
+"Now go enjoy yourself at the Spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
       mem.misn_state = 4
       misn.osdCreate( _("Minerva Moles"),
@@ -308,7 +308,7 @@ end
 function harper_land ()
    -- Case harper lands with the ticket, i.e., ran away
    if not mem.harper_gotticket then
-      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they got away!"))
+      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but Harper got away!"))
       misn.finish(false)
    end
 end
@@ -397,7 +397,7 @@ function harper_hail ()
       vn.scene()
       local h = harper_hologram()
       vn.transition("electric")
-      vn.na(_("You see Harper's hologram appear into view paler than usual."))
+      vn.na(_("You see Harper's hologram appear into view. He looks paler than usual."))
       h(fmt.f(_([["I have had a change of mind."
 He gulps.
 "How about I give you the ticket for a mere {credits}?]]), {credits=fmt.credits(harper_bribe_sml)}))
@@ -426,7 +426,7 @@ He coughs nervously.]]))
 
       vn.label("threaten")
       h(_([[He laughs nervously.
-"You have to be killing right? You wouldn't kill me in cold blood would you? I have a family waiting for me back home.]]))
+"You have to be kidding right? You wouldn't kill me in cold blood would you? I have a family waiting for me back home.]]))
       vn.menu( {
          { payhim(harper_bribe_sml), "pay" },
          { _("Aim your weapons at him"), "threaten2" },

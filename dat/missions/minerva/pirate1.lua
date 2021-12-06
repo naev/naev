@@ -65,7 +65,7 @@ function accept ()
    vn.label( "leave" )
    vn.na(_("You approach the sketchy individual who seems to be calling your attention."))
    pir(_([["What do you think about them Za'leks and Dvaereds? Quite a work, eh? Always getting into fights with each other and creating trouble for those who just want to enjoy life. Such a bother."]]))
-   pir(_([["Say what, I know you're a pretty decent pilot. Would you be interested in a somewhat non-standard job? Nothing very out of the ordinary, just want to ruff up some feathers."]]))
+   pir(_([["Say what, I know you're a pretty decent pilot. Would you be interested in a somewhat non-standard job? Nothing very out of the ordinary, just want to ruffle some feathers."]]))
    vn.menu( {
       {_("Accept the job"), "accept"},
       {_("Kindly decline"), "decline"},
@@ -79,11 +79,11 @@ function accept ()
    vn.func( function ()
       mem.misn_state=0
    end )
-   pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
+   pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling all over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
    pir(_([["I know what you're thinking, that's a great idea right? So it's very simple. Some Dvaered thugs are stationed around the system, they are not the cleverest of folks, so I want you to provoke them. You know, just rough them up a little and get out of there."]]))
-   pir(_([["Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons nor gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind  of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
+   pir(_([["Sounds naïve, yes? Might be. So, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons or gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
    pir(_([["To make sure they are all riled up, I want you to spend 15 seconds harassing them near their original location. Make sure to harass them, but don't kill them! We want them to tell the other Dvaereds about this. Once the time is up, get the hell away from there, in one piece if possible."]]))
-   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it,"
+   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one more thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it."
 They beam a smile at you.]]), {sys=runawaysys}))
    vn.run()
 
@@ -92,7 +92,7 @@ They beam a smile at you.]]), {sys=runawaysys}))
       return
    end
 
-   minerva.log.pirate(_("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
+   minerva.log.pirate(_("You accepted a job from a sketchy individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
    misn.osdCreate( _("Thug Decoy"),
@@ -117,7 +117,7 @@ function land ()
       vn.music( minerva.loops.pirate )
       local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.transition()
-      vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job dealing with the Dvaered thugs."))
+      vn.na(_("After you land on Minerva Station you are once again greeted by the sketchy character that gave you the job dealing with the Dvaered thugs."))
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
       pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you want more information. I have also transferred a sum of credits to your account as a reward for your services."
 She winks at you and walks way.]]))
