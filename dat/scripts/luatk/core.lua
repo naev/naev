@@ -415,7 +415,7 @@ end
    High Level dialogue stuff
 --]]
 local function msgbox_size( title, msg )
-   local font = luatk._deffont
+   local font = luatk._deffont or lg.getFont()
    local titlelen = font:getWidth( title )
    local msglen = font:getWidth( msg )
    local wi = 10
