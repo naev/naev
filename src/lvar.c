@@ -16,6 +16,9 @@
 static int lvar_cmp( const void *p1, const void *p2 );
 static void lvar_free( lvar *var );
 
+/**
+ * @brief Compares two lua variable names. For use with qsort/bsearch.
+ */
 static int lvar_cmp( const void *p1, const void *p2 )
 {
    const lvar *mv1, *mv2;
@@ -26,6 +29,10 @@ static int lvar_cmp( const void *p1, const void *p2 )
 
 /**
  * @brief Gets a lua var by name.
+ *
+ *    @param arr Array to search in.
+ *    @param str Name to use as a key.
+ *    @return Found element or NULL if not found.
  */
 lvar *lvar_get( lvar *arr, const char *str )
 {
@@ -36,9 +43,9 @@ lvar *lvar_get( lvar *arr, const char *str )
 }
 
 /**
- * @brief Frees a mission variable.
+ * @brief Frees a lua variable.
  *
- *    @param var Mission variable to free.
+ *    @param var Lua variable to free.
  */
 static void lvar_free( lvar *var )
 {
@@ -57,6 +64,11 @@ static void lvar_free( lvar *var )
    var->name = NULL;
 }
 
+/**
+ * @brief Frees a variable array.
+ *
+ *    @param arr Array to free.
+ */
 void lvar_freeArray( lvar *arr )
 {
    for (int i=0; i<array_size(arr); i++)
@@ -64,6 +76,14 @@ void lvar_freeArray( lvar *arr )
    array_free( arr );
 }
 
+/**
+ * @brief Adds a var to a var array.
+ *
+ *    @param arr Array to add var to (should be already initialized).
+ *    @param new_var New variable to add to array.
+ *    @param sort Whether or not to sort.
+ *    @return 0 on success.
+ */
 int lvar_addArray( lvar **arr, lvar *new_var, int sort )
 {
    /* Avoid Duplicates. */
@@ -85,6 +105,12 @@ int lvar_addArray( lvar **arr, lvar *new_var, int sort )
    return 0;
 }
 
+/**
+ * @brief Removes a var from a var array.
+ *
+ *    @param arr Array to remove var from.
+ *    @param rm_var Var to remove.
+ */
 void lvar_rmArray( lvar **arr, lvar *rm_var )
 {
    lvar_free( rm_var );
@@ -94,6 +120,7 @@ void lvar_rmArray( lvar **arr, lvar *rm_var )
 /**
  * @brief Saves the mission variables.
  *
+ *    @param arr Array to save.
  *    @param writer XML Writer to use.
  *    @return 0 on success.
  */
@@ -139,7 +166,7 @@ int lvar_save( const lvar *arr, xmlTextWriterPtr writer )
  * @brief Loads the vars from XML file.
  *
  *    @param parent Parent node containing the variables.
- *    @return 0 on success.
+ *    @return Newly allocated lua variable array or NULL on error.
  */
 lvar *lvar_load( xmlNodePtr parent )
 {

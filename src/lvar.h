@@ -7,13 +7,13 @@
 #include "nxml.h"
 
 /* similar to Lua vars, but with less variety */
-enum {
+typedef enum lvar_type_ {
    LVAR_NIL, /**< Nil type. */
    LVAR_NUM, /**< Number type. */
    LVAR_BOOL,/**< Boolean type. */
    LVAR_STR, /**< String type. */
    LVAR_TIME,/**< Time type. */
-};
+} lvar_type;
 
 /**
  * @struct lvar
@@ -21,13 +21,13 @@ enum {
  * @brief Contains a mission variable.
  */
 typedef struct lvar_ {
-   char* name; /**< Name of the variable. */
-   char type; /**< Type of the variable. */
+   char* name;    /**< Name of the variable. */
+   lvar_type type;/**< Type of the variable. */
    union {
       double num; /**< Used if type is number. */
-      char* str; /**< Used if type is string. */
-      int b; /**< Used if type is boolean. */
-      ntime_t time;
+      char* str;  /**< Used if type is string. */
+      int b;      /**< Used if type is boolean. */
+      ntime_t time;/**< Used if type is time. */
    } d; /**< Variable data. */
 } lvar;
 
