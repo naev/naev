@@ -633,6 +633,9 @@ static int playerL_cinematics( lua_State *L )
          player_setFlag( PLAYER_CINEMATICS_GUI );
       if (f_2x)
          player_setFlag( PLAYER_CINEMATICS_2X );
+
+      /* Redo viewport. */
+      gl_setDefViewport( 0., 0., SCREEN_W, SCREEN_H );
    }
    else {
       /* Reset speed properly to player speed. */
@@ -641,6 +644,9 @@ static int playerL_cinematics( lua_State *L )
       /* Clean up flags. */
       player_rmFlag( PLAYER_CINEMATICS_GUI );
       player_rmFlag( PLAYER_CINEMATICS_2X );
+
+      /* Reload GUI. */
+      gui_reload();
    }
 
    return 0;
