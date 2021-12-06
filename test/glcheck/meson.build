@@ -1,6 +1,6 @@
 build_gl_version = 'Unknown'
 test_renderer = 'System'
-note = 'OpenGL >= 3.1 support is available with your current driver/device.'
+note = 'Could not find a software renderer.'
 
 gl_result = cc.run(files('getglversion.c'), dependencies: sdl)
 if not gl_result.compiled()
@@ -33,6 +33,8 @@ if build_gl_version.version_compare('<3.1')
         note = 'Could not find a software renderer.'
     endif
     warning(note)
+else
+    note = 'OpenGL >= 3.1 support is available with your current driver/device.'
 endif
 
 summary('Renderer', test_renderer, section: 'Tests')
