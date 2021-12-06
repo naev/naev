@@ -81,7 +81,11 @@ static int playerL_allowLand( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
-/* Misc stuff. */
+/* Shipvars. */
+static int playerL_shipvarPeek( lua_State *L );
+static int playerL_shipvarPush( lua_State *L );
+static int playerL_shipvarPop( lua_State *L );
+/* Outfit and ship management stuff. */
 static int playerL_ships( lua_State *L );
 static int playerL_shipOutfits( lua_State *L );
 static int playerL_outfits( lua_State *L );
@@ -90,12 +94,14 @@ static int playerL_addOutfit( lua_State *L );
 static int playerL_rmOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_swapShip( lua_State *L );
+/* Mission/event management stuff. */
 static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
+/* Misc stuff. */
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
 static int playerL_chapter( lua_State *L );
@@ -130,6 +136,9 @@ static const luaL_Reg playerL_methods[] = {
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
+   { "shipvarPeek", playerL_shipvarPeek },
+   { "shipvarPush", playerL_shipvarPush },
+   { "shipvarPop", playerL_shipvarPop },
    { "ships", playerL_ships },
    { "shipOutfits", playerL_shipOutfits },
    { "outfits", playerL_outfits },
@@ -873,6 +882,61 @@ static int playerL_commclose( lua_State *L )
    (void) L;
    NLUA_CHECKRW(L);
    comm_queueClose();
+   return 0;
+}
+
+static PlayerShip_t *playerL_shipvarShip( lua_State *L, int idx )
+{
+   if (lua_isnoneornil(L,idx))
+      return &player.ps;
+   return player_getPlayerShip( luaL_checkstring(L,idx) );
+}
+
+/**
+ * @brief Peeks at a ship variable.
+ *
+ * @usage local exp = player.shipvarPeek( "exp" ) -- Checks the value of the "exp" ship var on the player's current ship
+ *
+ *    @luatparam string varname Name of the variable to check value of.
+ *    @luatparam[opt] string shipname Name of the ship to check variable of. Defaults to player's current ship.
+ * @luafunc shipvarPeek
+ */
+static int playerL_shipvarPeek( lua_State *L )
+{
+   const char *str  = luaL_checkstring(L,1);
+   PlayerShip_t *ps = playerL_shipvarShip(L,2);
+   return lvar_push( L, lvar_get( ps->shipvar, str ) );
+}
+
+/**
+ * @brief Pushes a ship variable.
+ *
+ *    @luatparam string varname Name of the variable to set value of.
+ *    @luaparam val Value to push.
+ *    @luatparam[opt] string shipname Name of the ship to push variable to. Defaults to player's current ship.
+ * @luafunc shipvarPush
+ */
+static int playerL_shipvarPush( lua_State *L )
+{
+   const char *str  = luaL_checkstring(L,1);
+   lvar var         = lvar_tovar( L, str, 2 );
+   PlayerShip_t *ps = playerL_shipvarShip(L,3);
+   lvar_addArray( &ps->shipvar, &var, 1 );
+   return 0;
+}
+
+/**
+ * @brief Pops a ship variable.
+ *
+ *    @luatparam string varname Name of the variable to pop.
+ *    @luatparam[opt] string shipname Name of the ship to pop variable from. Defaults to player's current ship.
+ * @luafunc shipvarPop
+ */
+static int playerL_shipvarPop( lua_State *L )
+{
+   const char *str  = luaL_checkstring(L,1);
+   PlayerShip_t *ps = playerL_shipvarShip(L,2);
+   lvar_rmArray( &ps->shipvar, lvar_get( ps->shipvar, str ) );
    return 0;
 }
 
