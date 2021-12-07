@@ -380,7 +380,8 @@ static int shipL_slots( lua_State *L )
  *
  * @usage for i, v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
  *
- *    @luaparam s Ship to get slots of
+ *    @luatparam Ship s Ship to get slots of
+ *    @luatparam[opt=false] boolean ignore_locked Whether or not to ignore locked slots.
  *    @luareturn A table of tables with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", and (if applicable) outfit "outfit"
  *               (Strings are English.)
  * @luafunc getSlots
@@ -389,6 +390,7 @@ static int shipL_getSlots( lua_State *L )
 {
    int k;
    const Ship *s = luaL_validship(L,1);
+   int ignore_locked = lua_toboolean(L,2);
    char *outfit_types[] = {"Structure", "Utility", "Weapon"};
    const ShipOutfitSlot *outfit_arrays[] = {
          s->outfit_structure,
@@ -402,6 +404,10 @@ static int shipL_getSlots( lua_State *L )
          const OutfitSlot *slot  = &outfit_arrays[i][j].slot;
          const ShipOutfitSlot *sslot = &outfit_arrays[i][j];
 
+         /* Skip locked if necessary. */
+         if (ignore_locked && sslot->locked)
+            continue;
+
          /* make the slot table and put it in */
          lua_newtable(L);
 
@@ -410,7 +416,7 @@ static int shipL_getSlots( lua_State *L )
          lua_rawset(L, -3); /* table[key = value ]*/
 
          lua_pushstring(L, "size"); /* key */
-         lua_pushstring(L, slotSize( slot->size) );
+         lua_pushstring(L, slotSize(slot->size) );
          lua_rawset(L, -3); /* table[key] = value */
 
          lua_pushstring(L, "property"); /* key */
@@ -418,11 +424,15 @@ static int shipL_getSlots( lua_State *L )
          lua_rawset(L, -3); /* table[key] = value */
 
          lua_pushstring(L, "required"); /* key */
-         lua_pushboolean( L, sp_required(slot->spid)); /* value */
+         lua_pushboolean( L, sslot->required); /* value */
          lua_rawset(L, -3); /* table[key] = value */
 
          lua_pushstring(L, "exclusive"); /* key */
-         lua_pushboolean( L, sp_exclusive(slot->spid)); /* value */
+         lua_pushboolean( L, sslot->exclusive); /* value */
+         lua_rawset(L, -3); /* table[key] = value */
+
+         lua_pushstring(L, "locked"); /* key */
+         lua_pushboolean( L, sslot->locked); /* value */
          lua_rawset(L, -3); /* table[key] = value */
 
          if (sslot->data != NULL) {
