@@ -15,6 +15,7 @@ fi
 # ============================== Helper commands ==============================
 # find_files <dir> <suffix>
 if [ -d .git ]; then
+   unset GIT_INDEX_FILE  # Don't let whatever pre-commit does fuck up the results.
    find_files() { git ls-files -- "$1/**.$2"; }
 else
    find_files() {
