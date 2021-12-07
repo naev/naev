@@ -67,7 +67,7 @@ function accept ()
     "Hi, I'm Mia. We need transportation, and you look as if you could use some dough. Interested?"
     You reply that for a deal to be worked out, they better provide some details.
     "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
-    You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]), {pnt=mem.destPlanet} )) then
+    You just start to marvel at the self-assurance of one so young when she signals her impatience. "Answer me now! Will you do it?"]]), {pnt=mem.destPlanet} )) then
       misn.finish(false)
    else
       if player.pilot():cargoFree() < 4 then
@@ -81,7 +81,7 @@ function accept ()
       misn.setDesc( _("Cart some nerds to their contest, and back.") )
       mem.marker = misn.markerAdd( mem.destPlanet, "low" )
 
-      tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
+      tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group visibly relax and you can almost feel Mia's confidence fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
     "Really? You'll do it? Um, great. Fantastic. I just knew that, eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=mem.destPlanet}))
       local distance = vec2.dist( planet.pos(mem.srcPlanet), planet.pos(mem.destPlanet) )
@@ -127,7 +127,7 @@ function nerds_land1()
       else
       -- late, right planet
          tk.msg(_("Angry nerds"), fmt.f(_([[Mia fumes. "Great. Just great! We're late, you jerk." She points to a crumpled banner reading "Admissions". The area below it is deserted. "No contest for us, no payment for you. Understand? Go and take your sorry excuse for a ship into the corona of a suitable star. We will find someone else to take us back to {pnt}. Someone reliable."
-    As her emphasis on the last words is still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]), {pnt=mem.srcPlanet} ))
+    With her emphasis on the last words still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]), {pnt=mem.srcPlanet} ))
          misn.finish(true)
       end
    else
@@ -173,7 +173,7 @@ function nerds_land2()
    -- you pickup the nerds in time
       mem.nerdswon = rnd.rnd() >= 0.6
       if mem.nerdswon then
-         tk.msg(_("Happy nerds"), fmt.f(_([[As soon as you get of your ship, you are surrounded by the group of nerds, who are enthusiastic. "We won!" one of the dudes shouts at you. Surprisingly, the group seems to not completely be dependent on Mia when it comes to communicating with outsiders. Maybe the booze the group is obviously intoxicated with did help a little. "Take us back to {pnt}," one of them says, "we'll continue to celebrate on the way."]]), {pnt=mem.srcPlanet}))
+         tk.msg(_("Happy nerds"), fmt.f(_([[As soon as you exit your ship, you are surrounded by the group of nerds, who are euphoric. "We won!" one of the nerds shouts at you. Surprisingly, it seems the group isn't completely dependent on Mia when it comes to communicating with outsiders. Though maybe the booze the group is copiously drinking did help a little. "Take us back to {pnt}," one of them says, "we'll continue to celebrate on the way."]]), {pnt=mem.srcPlanet}))
       else
          tk.msg(_("Sad nerds"), fmt.f(_([[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
     "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt assholes in the jury pretended not to notice!"
@@ -290,8 +290,8 @@ function nerds_land3()
     "OK, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]])) then
             tk.msg(_("So what?"), _([["Honestly, there is nothing you can do about it," Mia says impatiently, as if you were a small child complaining about the finiteness of an ice cream cone. "Just stand by while we rig the thing up."]]))
          end
-         tk.msg(_("The End"), fmt.f( _([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going for it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
-    Finally, the modified box is set before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's gotten a bit bulkier than we thought, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."
+         tk.msg(_("The End"), fmt.f( _([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going about it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
+    Finally, they set the modified box before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's a bit bulkier than we expected, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."
     With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]), {outfit=_(reward_outfit)} ))
          time.inc(time.create(0,0,5000))
          player.outfitAdd(reward_outfit)
