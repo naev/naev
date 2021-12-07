@@ -211,7 +211,7 @@ local skills = {
       requires = {"systems2"},
    },
    ["attack2"] = {
-      name = _("Adrenaline Hormone"),
+      name = _("Adrenaline Hormones"),
       tier = 5,
       requires = { "attack1" },
    },
@@ -219,6 +219,7 @@ local skills = {
 
 function gene.window ()
    --local level = 10
+
    local pp = player.pilot()
    if pp:ship() ~= ship.get("Soromid Brigand") then
       return
@@ -235,6 +236,7 @@ function gene.window ()
 
    -- Set up some helper fields
    for k,s in pairs(skills) do
+      s.id = k
       s.x = 0
       s.y = s.tier
       s._conflicts = s._conflicts or {}
@@ -257,6 +259,8 @@ function gene.window ()
          table.insert( s._requires, s2 )
       end
       s._required_by = s._required_by or {}
+
+      s.enabled = player.shipvarPeek( s.id )
    end
 
    -- Recursive group creation
@@ -356,7 +360,6 @@ function gene.window ()
                s.rx = px
                s.ry = py
                s.alt = alt
-               s.enabled = (s.tier==0)
                table.insert( skillslist, s )
                for j,r in ipairs(s._required_by) do
                   table.insert( skillslink, {
@@ -403,6 +406,7 @@ function gene.window ()
             pp:outfitAddIntrinsic( s.outfit )
          end
       end
+      player.shipvarPush( s.id, true )
       s.enabled = true
    end
 
@@ -412,6 +416,8 @@ function gene.window ()
          if s.outfit and not s.slot then
             pp:outfitRmIntrinsic( s.outfit )
          end
+         player.shipvarPop( s.id )
+         s.enabled = false
       end
       -- Add basic ones back
       for k,s in pairs(skills) do
@@ -419,6 +425,12 @@ function gene.window ()
             skill_enable( s )
          end
       end
+   end
+
+   -- Case ship not initialized
+   if not player.shipvarPeek( "bioship" ) then
+      skill_reset()
+      player.shipvarPush( "bioship", true )
    end
 
    local SkillIcon = {}
@@ -458,9 +470,6 @@ function gene.window ()
       end
    end
 
-   -- Reset for now
-   skill_reset()
-
    local w, h = 1100, 600
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_done( dying_wdw )
@@ -469,6 +478,9 @@ function gene.window ()
    end
    wdw:setCancel( wdw_done )
    luatk.newText( wdw, 0, 10, w, 20, _("BioShip Skills"), nil, "center" )
+   luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
+      skill_reset()
+   end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
