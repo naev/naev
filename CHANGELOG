@@ -7,6 +7,7 @@
    * Fixed safe lane rendering alpha being wrong
    * Fixed misbehaviours in "Travelling Merchant", "Warlords Battle", and "Za'lek Particle Physics 2"
    * Fixed backgrounds accumulating when messing with options
+   * Fixed autonav giving away pilots being autofollowed
    * Don't give away name of destination system via autonav if unknown
    * AI should only try to jump to systems with their faction presence
    * Wrap OSD titles as necessary
