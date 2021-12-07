@@ -235,7 +235,6 @@ function gene.window ()
    for k,g in ipairs(groups) do
       for x=0,20 do
          if fits_location( x, g.y, g.w, g.h ) then
-            --print( string.format( "%s : %d x %d x %d x %d", g[1].name, x, g.y, g.w, g.h ) )
             g.x = x
             g.set = true
             for i,s in ipairs(g) do
@@ -245,6 +244,7 @@ function gene.window ()
                   name = s.name,
                   x    = px,
                   y    = py,
+                  alt  = s.name, -- TODO better alt
                } )
                if s.required_by then
                   table.insert( skillslink, {
@@ -268,6 +268,32 @@ function gene.window ()
       end
    end
 
+   local SkillIcon = {}
+   setmetatable( SkillIcon, { __index = luatk.Widget } )
+   local SkillIcon_mt = { __index = SkillIcon }
+   local function newSkillIcon( parent, x, y, w, h, s )
+      local wgt   = luatk.newWidget( parent, x, y, w, h )
+      setmetatable( wgt, SkillIcon_mt )
+      wgt.skill   = s
+      return wgt
+   end
+   local font = lg.newFont(12)
+   function SkillIcon:draw( bx, by )
+      local x, y = bx+self.x, by+self.y
+      lg.setColor( {0,0,0,1} )
+      lg.rectangle( "fill", x+10,y+10,50,50 )
+      lg.setColor( {1,1,1,1} )
+      lg.print( self.skill.name, font, x+15, y+15, self.w-30, "center" )
+   end
+   function SkillIcon:drawover( bx, by )
+      local x, y = bx+self.x, by+self.y
+      if self.mouseover then
+         luatk.drawAltText( x+50, y+10, self.skill.alt, 400 )
+      end
+   end
+   --function SkillIcon:clicked ()
+   --end
+
    local w, h = 1100, 600
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_done( dying_wdw )
@@ -282,7 +308,6 @@ function gene.window ()
    local bx, by = 20, 40
    local sw, sh = 70, 70
    -- Tier stuff
-   local font = lg.newFont(12)
    for i=0,7 do
       local col = { 0.95, 0.95, 0.95 }
       luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, 70, 30, string.format(_("TIER %s"),utility.roman_encode(i)), col, "center", font )
@@ -294,7 +319,8 @@ function gene.window ()
       luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*(l.x2-l.x1)+10, sh*(l.y2-l.y1)+10, scol )
    end
    for k,s in ipairs(skillslist) do
-      luatk.newButton( wdw, bx+sw*s.x+10, by+sh*s.y+10, 50, 50, s.name, function () end )
+      newSkillIcon( wdw, bx+sw*s.x, by+sh*s.y, 70, 70, s )
+      --luatk.newButton( wdw, bx+sw*s.x+10, by+sh*s.y+10, 50, 50, s.name, function( wgt ) end )
    end
 
    luatk.run()
