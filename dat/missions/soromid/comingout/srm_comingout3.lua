@@ -29,7 +29,7 @@ local car = require "common.cargo"
 local srm = require "common.soromid"
 
 local fail -- Forward-declared functions
--- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
 -- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 
 mem.misn_title = _("A Friend's Aid")
@@ -87,9 +87,9 @@ end
 
 
 function spawnChelseaShip( param )
-   mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
 
-   chelsea = pilot.add( "Llama", mem.fass, param, _("Chelsea") )
+   chelsea = pilot.add( "Llama", fass, param, _("Chelsea") )
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
    chelsea:outfitAdd( "Unicorp PT-68 Core System" )
@@ -121,12 +121,12 @@ end
 
 
 function spawnThug( param )
-   mem.fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
-   mem.fthug:dynEnemy(mem.fass)
+   fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+   fthug:dynEnemy(fass)
 
    local shiptypes = { "Hyena", "Hyena", "Hyena", "Shark", "Lancelot" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   local thug = pilot.add( shiptype, mem.fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
