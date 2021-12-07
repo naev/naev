@@ -332,14 +332,25 @@ end
 luatk.Rect = {}
 setmetatable( luatk.Rect, { __index = luatk.Widget } )
 luatk.Rect_mt = { __index = luatk.Rect }
-function luatk.newRect( parent, x, y, w, h, col )
+function luatk.newRect( parent, x, y, w, h, col, rot )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Rect_mt )
    wgt.col     = col or {1,1,1}
+   wgt.rot     = rot
    return wgt
 end
 function luatk.Rect:draw( bx, by )
    lg.setColor( self.col )
+   if self.rot then
+      lg.push()
+      -- TODO this is still off...
+      lg.translate( bx+self.x, by+self.y )
+      lg.rotate( self.rot )
+      lg.translate( -self.w/2, -self.h/2 )
+      lg.rectangle( "fill", 0, 0, self.w, self.h )
+      lg.pop()
+      return
+   end
    lg.rectangle( "fill", bx+self.x, by+self.y, self.w, self.h )
 end
 

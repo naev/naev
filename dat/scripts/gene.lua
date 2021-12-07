@@ -166,20 +166,22 @@ local skills = {
       name =_("Hunter Spirit"),
       tier = 5,
       requires = { "compoundeyes" },
-      conflicts = { "wandererspirit" },
+      --conflicts = { "wandererspirit" },
    },
    ["afterburner1"] = {
-      name = _("Adrenaline Gland I"),
-      tier = 2,
+      name = _("Adrenal Gland I"),
+      tier = 3,
+      requires = { "engines2" },
    },
    ["afterburner2"] = {
-      name = _("Adrenaline Gland II"),
-      tier = 4,
+      name = _("Adrenal Gland II"),
+      tier = 5,
       requires = { "afterburner1" },
+      --requires = { "afterburner1", "engines3" },
    },
    ["wandererspirit"] = {
       name = _("Wanderer Spirit"),
-      tier = 5,
+      tier = 7,
       requires = { "afterburner2" },
    },
    -- Health Line
@@ -190,7 +192,7 @@ local skills = {
    ["health2"] = {
       name = _("Regeneration I"),
       tier = 3,
-      requires = { "health1" },
+      requires = { "health1", "hull2" },
    },
    ["health3"] = {
       name = _("Hard Shell"),
@@ -270,8 +272,12 @@ function gene.window ()
       for i,c in ipairs(node._conflicts) do
          grp = create_group_rec( grp, c, x+i )
       end
+      local xoff = x-1
       for i,r in ipairs(node._required_by) do
-         grp = create_group_rec( grp, r, x+i-1 )
+         if not r._g then
+            xoff = xoff+1
+         end
+         grp = create_group_rec( grp, r, xoff )
       end
       for i,r in ipairs(node._requires) do
          grp = create_group_rec( grp, r, x+i-1 )
@@ -479,7 +485,11 @@ function gene.window ()
    for k,l in ipairs(skillslink) do
       local dx = l.x2-l.x1
       local dy = l.y2-l.y1
-      if dx~=0 and dy~=0 then
+      if dx==1 and dy==1 then
+         luatk.newRect( wdw, bx+sw*l.x1+30+30, by+sh*l.y1+30+30, math.sqrt(2)*sw*dx, 10, scol, -3*math.pi/4 )
+      elseif dx==-1 and dy==1 then
+         luatk.newRect( wdw, bx+sw*l.x1+30-25, by+sh*l.y1+30+35, math.sqrt(2)*sw*dx, 10, scol, -math.pi/4 )
+      elseif dx~=0 and dy~=0 then
          -- Go to the side then up
          luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*dx, 10, scol )
          luatk.newRect( wdw, bx+sw*l.x2+30, by+sh*l.y1+30, 10, sh*dy, scol )
