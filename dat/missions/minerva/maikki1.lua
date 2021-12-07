@@ -592,7 +592,7 @@ function stealthstartanimation ()
    end
 end
 
-
+local stealthbroadcasthook
 function stealthbroadcast ()
    stealthmessages = {
       { pscavA, 4.0, _("This place always gives me the creeps.") },
@@ -627,7 +627,7 @@ function stealthbroadcast ()
    msg[1]:broadcast( msg[3] )
 
    if msg[2] > 0 then
-      mem.stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
+      stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
    end
 end
 
@@ -648,6 +648,7 @@ function stealthheartbeat ()
             p:hyperspace( cutscenesys )
          end
          player.msg( _("#rYou have been detected! Stealth failed!"), true )
+         hook.rm( stealthbroadcasthook )
          return
       end
    elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
