@@ -16,7 +16,7 @@
  */
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
-#define OUTFIT_PROP_UNIQUE             (1<<0) /**< Unique item (can only have one). Not sellable.*/
+#define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
 #define OUTFIT_PROP_WEAP_SECONDARY     (1<<10) /**< Is a secondary weapon? */
 #define OUTFIT_PROP_WEAP_SPIN          (1<<11) /**< Should weapon spin around? */
 #define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<12) /**< Weapon blows up (armour spfx)

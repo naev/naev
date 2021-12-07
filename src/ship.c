@@ -592,6 +592,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       slot->slot.spid = sp_get( buf );
       slot->exclusive = sp_exclusive( slot->slot.spid );
       slot->required  = sp_required( slot->slot.spid );
+      slot->locked    = sp_locked( slot->slot.spid );
       free( buf );
    }
    //TODO: consider inserting those two parse blocks below inside the parse block above
@@ -607,6 +608,9 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse required flag, default false. */
    xmlr_attr_int( node, "required", slot->required );
+
+   /* Parse locked flag, default false. */
+   xmlr_attr_int( node, "locked", slot->locked );
 
    /* Parse default outfit. */
    buf = xml_get(node);

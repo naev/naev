@@ -517,7 +517,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Must rechoose colour based on slot properties. */
       rc = dc;
-      if (wgt->canmodify) {
+      if (wgt->canmodify && !lst[i].sslot->locked) {
          if (lst[i].sslot->required)
             rc = &cBrightRed;
          else if (lst[i].sslot->exclusive)
@@ -714,8 +714,12 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
          display = NULL;
-         if ((i==mover) && (wgt->canmodify)) {
-            if (lst[i].outfit != NULL) {
+         if ((i==mover) && wgt->canmodify) {
+            if (lst[i].sslot->locked) {
+               display = _("Locked");
+               c = &cFontRed;
+            }
+            else if (lst[i].outfit != NULL) {
                top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], NULL );
                if (display != NULL)
@@ -1005,7 +1009,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          if (event->button.button == SDL_BUTTON_LEFT)
             wgt->slot = selected + ret;
          else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-               wgt->canmodify) {
+               wgt->canmodify && !os[ret].sslot->locked) {
             equipment_swapSlot( wid, p, &os[ret] );
             hooks_run( "equip" ); /* Equipped. */
          }
