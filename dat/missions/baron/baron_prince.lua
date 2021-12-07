@@ -50,7 +50,7 @@ function accept()
    mem.stage = 1
 
    mem.flintleyfirst = true
-   mem.artefactsfound = 0
+   mem.artifactsfound = 0
 
 
    if tk.yesno(_("His Baronship remembers you"), fmt.f(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
@@ -124,11 +124,11 @@ end
 
 function land()
    local sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers.")
-   if planet.cur() == artefactplanetA and not mem.artefactA then
+   if planet.cur() == artefactplanetA and not mem.artifactA then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
-   elseif planet.cur() == artefactplanetB and not mem.artefactB then
+   elseif planet.cur() == artefactplanetB and not mem.artifactB then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
-   elseif planet.cur() == artefactplanetC and not mem.artefactC then
+   elseif planet.cur() == artefactplanetC and not mem.artifactC then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if mem.flintleyfirst then
@@ -147,42 +147,42 @@ function flintley()
       tk.msg(_("Flintley, at your service"), fmt.f(_([[You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
     "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be {player}. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
     Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyze them to the best of my ability."]]), {player=player.name()}))
-   elseif mem.artefactA == nil and mem.artefactB == nil and mem.artefactC == nil then
+   elseif mem.artifactA == nil and mem.artifactB == nil and mem.artifactC == nil then
       tk.msg(_("Just passing through"), fmt.f(_([[Flintley greets you. "Do you have any objects for me to look at, {player}? No? Well, alright. I'll be here if you need me. Good luck out there."]]), {player=player.name()}))
    end
 
-   if mem.artefactA ~= nil then
-      if rnd.rnd(1, 3 - mem.artefactsfound) == 1 then
+   if mem.artifactA ~= nil then
+      if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
          tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([["Let's see what we have here," Flintley says as you hand him the artefact you bought on {pnt}. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
     You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]), {pnt=artefactplanetA}))
-         mem.artefactsfound = mem.artefactsfound + 1
+         mem.artifactsfound = mem.artifactsfound + 1
       end
-      misn.cargoRm(mem.artefactA)
-      mem.artefactA = nil
+      misn.cargoRm(mem.artifactA)
+      mem.artifactA = nil
    end
-   if mem.artefactB ~= nil then
-      if rnd.rnd(1, 3 - mem.artefactsfound) == 1 then
+   if mem.artifactB ~= nil then
+      if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
          tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([[You hand Flintley the artefact you procured on {pnt}. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, {player}. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
     You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]), {pnt=artefactplanetB, player=player.name()}))
-         mem.artefactsfound = mem.artefactsfound + 1
+         mem.artifactsfound = mem.artifactsfound + 1
       end
-      misn.cargoRm(mem.artefactB)
-      mem.artefactB = nil
+      misn.cargoRm(mem.artifactB)
+      mem.artifactB = nil
    end
-   if mem.artefactC ~= nil then
-      if rnd.rnd(1, 3 - mem.artefactsfound) == 1 then
+   if mem.artifactC ~= nil then
+      if rnd.rnd(1, 3 - mem.artifactsfound) == 1 then
          bingo = true
       else
          tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on {pnt} must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, {player}, close. But no cigar."
     You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for...]]), {pnt=artefactplanetC, player=player.name()}))
-         mem.artefactsfound = mem.artefactsfound + 1
+         mem.artifactsfound = mem.artifactsfound + 1
       end
-      misn.cargoRm(mem.artefactC)
-      mem.artefactC = nil
+      misn.cargoRm(mem.artifactC)
+      mem.artifactC = nil
    end
 
    if bingo then
@@ -199,7 +199,7 @@ function flintley()
       mem.stage = 3
 
       local c = commodity.new( N_("Ancient Artefact"), N_("A seemingly ancient artefact.") )
-      mem.artefactReal = misn.cargoAdd(c, 0)
+      mem.artifactReal = misn.cargoAdd(c, 0)
 
       misn.markerRm(mem.markerA)
       misn.markerRm(mem.markerB)
@@ -218,7 +218,7 @@ function seller()
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
             local c = commodity.new( N_("Artefact? A"), N_("An ancient artefact?") )
-            mem.artefactA = misn.cargoAdd(c, 0)
+            mem.artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerA)
          else
             tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
@@ -230,7 +230,7 @@ function seller()
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
             local c = commodity.new( N_("Artefact? B"), N_("An ancient artefact?") )
-            mem.artefactB = misn.cargoAdd(c, 0)
+            mem.artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerB)
          else
             tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
@@ -242,7 +242,7 @@ function seller()
             misn.npcRm(mem.sellnpc)
             player.pay( reward * 0.15 )
             local c = commodity.new( N_("Artefact? C"), N_("An ancient artefact?") )
-            mem.artefactC = misn.cargoAdd(c, 0)
+            mem.artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(mem.markerC)
          else
             tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
@@ -261,7 +261,7 @@ function enter()
       pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       mem.hhail = hook.pilot(pinnacle, "hail", "hail")
-   elseif mem.artefactA ~= nil or mem.artefactB ~= nil or mem.artefactC ~= nil or mem.artefactReal ~= nil then
+   elseif mem.artifactA ~= nil or mem.artifactB ~= nil or mem.artifactC ~= nil or mem.artifactReal ~= nil then
       -- Spawn artefact hunters, maybe.
       local choice = rnd.rnd(1, 5)
       local fleep

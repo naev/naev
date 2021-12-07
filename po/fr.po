@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-06 15:29+0900\n"
+"POT-Creation-Date: 2021-12-06 22:53-0500\n"
 "PO-Revision-Date: 2021-12-02 00:34+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -3081,7 +3081,7 @@ msgstr ""
 
 #: dat/assets/darkshed.xml:32
 msgid ""
-"The Darkshed canteen is decorated with all sorts of odd artifacts that "
+"The Darkshed canteen is decorated with all sorts of odd artefacts that "
 "chronicle trends in spaceship outfitting over the years since the station "
 "was established. Scale models of many popular ships hang from the ceiling."
 msgstr ""
@@ -33531,7 +33531,7 @@ msgstr ""
 #: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/gui.c:1526 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
+#: src/gui.c:1518 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
 #: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1948
 #: src/player_autonav.c:91 src/player_autonav.c:213 src/ship.c:205
@@ -35117,26 +35117,26 @@ msgid ""
 "you here. As you've no doubt heard, I have an interest in the unique, the "
 "exquisite.\" The Baron gestures around the room. \"I have built up quite an "
 "impressive collection, as you can see, but it is still lacking something. "
-"Fortunately, news has reached me about a priceless artifact from Earth "
+"Fortunately, news has reached me about a priceless artefact from Earth "
 "itself, dating back to before the Faction Wars. I must have it. It belongs "
 "in the hands of a connoisseur like myself.\""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:81
 msgid ""
-"\"Unfortunately, news of this artifact has reached more ears than just mine. "
+"\"Unfortunately, news of this artefact has reached more ears than just mine. "
 "All over the galaxy there are people who will try to sell you 'ancient "
-"artifacts', which always turn out to be imitations at best and worthless "
+"artefacts', which always turn out to be imitations at best and worthless "
 "scrap they picked up from the streets at worst.\" The Baron snorts "
 "derisively. \"Even the contacts who usually fenc- ah, I mean, supply me with "
 "new items for my collection are in on the frenzy.\n"
 "    \"I've narrowed down my search to three of these people. I'm confident "
 "that one of them is selling the genuine article, while the other two are "
 "shams. And this is where you come in, {wrongname1}. I want you to visit "
-"these vendors, buy their wares off them and bring me the authentic artifact. "
+"these vendors, buy their wares off them and bring me the authentic artefact. "
 "You will have the help of a man named Flintley, who is a history buff or "
 "some such rot. You will find him on {pnt} in the {sys} system. Simply tell "
-"him you're working for me and show him any artifacts in your possession. He "
+"him you're working for me and show him any artefacts in your possession. He "
 "will tell you which are authentic and which are fake.\n"
 "    \"I should warn you, {wrongname2}. Some of my, ah, colleagues have also "
 "set their sights on this item, and so you can expect their henchmen to try "
@@ -35152,7 +35152,7 @@ msgstr ""
 msgid ""
 "You are swiftly escorted back to your ship. You didn't really get the chance "
 "to ask the Baron any questions, such as who these potential attackers are, "
-"how you're supposed to pay for the artifacts once you locate the sellers, or "
+"how you're supposed to pay for the artefacts once you locate the sellers, or "
 "what you will get out of all this. You do, however, find an update to your "
 "galaxy map that shows the location of the sellers, as well as a list of "
 "names and portraits. It would seem that the only way to find out what you're "
@@ -35161,12 +35161,12 @@ msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:87
 #: dat/missions/baron/baron_prince.lua:195
-msgid "Buy the artifact and take it to Flintley"
+msgid "Buy the artefact and take it to Flintley"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:89
 msgid ""
-"Baron Sauterfeldt has tasked you with finding an ancient artifact, but he "
+"Baron Sauterfeldt has tasked you with finding an ancient artefact, but he "
 "doesn't know exactly where to get it."
 msgstr ""
 
@@ -35202,8 +35202,8 @@ msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:105
 msgid ""
-"You have not yet collected and identified the genuine artifact. Buy the "
-"artifacts from the sellers and visit Flintley on {pnt} ({sys}) to identify "
+"You have not yet collected and identified the genuine artefact. Buy the "
+"artefacts from the sellers and visit Flintley on {pnt} ({sys}) to identify "
 "the real one."
 msgstr ""
 
@@ -35219,7 +35219,7 @@ msgid ""
 "    \"Oh, this is marvelous, marvelous indeed, {wrongname1}! A piece of pre-"
 "Growth history, right here in my hands! I can almost hear the echoes of that "
 "ancient civilization when I put my ear close to it! This is going to be the "
-"centerpiece in my collection of relics and artifacts. Yes indeed!\n"
+"centerpiece in my collection of relics and artefacts. Yes indeed!\n"
 "    \"I was right to send you, {wrongname2}, you've beautifully lived up to "
 "my expectations. And I'm a man of my word, I will reward you as promised. "
 "What was it we agreed on again? What, I never promised you anything? Well, "
@@ -35238,20 +35238,22 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:119
 msgid ""
 "Baron Sauterfeldt sent you on a wild goose chase to find some ancient "
-"artifact known as a \"skate-board\", which you found for him."
+"artefact known as a \"skate-board\", which you found for him."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:126
 msgid ""
 "You spot a dodgy individual who matches one of the portraits in your ship's "
-"database. This must be one of the artifact sellers."
+"database. This must be one of the artefact sellers."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:128
 #: dat/missions/baron/baron_prince.lua:130
 #: dat/missions/baron/baron_prince.lua:132
-msgid "Artifact seller"
-msgstr ""
+#, fuzzy
+#| msgid "Artifact? A"
+msgid "Artefact seller"
+msgstr "Artefact ? A"
 
 #: dat/missions/baron/baron_prince.lua:135
 msgid "A reedy-looking man"
@@ -35280,7 +35282,7 @@ msgid ""
 "many people seem interested in that these days. The only work I can really "
 "get is the occasional appraisal, like I'm doing now for his lordship. I wish "
 "I didn't have to take jobs like this, but there you have it.\"\n"
-"    Flintley sighs. \"Well, that's that. Come to me with any artifacts you "
+"    Flintley sighs. \"Well, that's that. Come to me with any artefacts you "
 "manage to procure, and I'll analyze them to the best of my ability.\""
 msgstr ""
 
@@ -35297,12 +35299,12 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:158
 #: dat/missions/baron/baron_prince.lua:169
 #: dat/missions/baron/baron_prince.lua:180
-msgid "This is not the artifact you're looking for"
+msgid "This is not the artefact you're looking for"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:158
 msgid ""
-"\"Let's see what we have here,\" Flintley says as you hand him the artifact "
+"\"Let's see what we have here,\" Flintley says as you hand him the artefact "
 "you bought on {pnt}. \"Ah, I know what this is without even looking anything "
 "up. It's a piece of an old-fashioned airlock mechanism, as used on most "
 "ships during the Faction Wars. That makes it rather old, but that also makes "
@@ -35310,12 +35312,12 @@ msgid ""
 "apologetic look. \"Don't let it get you down. Not many people would know "
 "this on first sight. Those scammers can be pretty clever.\"\n"
 "    You feel disappointed and frustrated, but you have no choice but to "
-"deposit the \"artifact\" into the nearest disintegrator inlet."
+"deposit the \"artefact\" into the nearest disintegrator inlet."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:169
 msgid ""
-"You hand Flintley the artifact you procured on {pnt}. He examines it for a "
+"You hand Flintley the artefact you procured on {pnt}. He examines it for a "
 "few moments, then enters a few queries in the info terminal in his table. "
 "Once he has found what he was looking for, he heaves a sigh. \"I'm sorry, "
 "{player}. It seems you've been had. What you've got here is little more than "
@@ -35337,7 +35339,7 @@ msgid ""
 "the Second Growth. However, it's missing a number of vital characteristics, "
 "and some details betray its recent manufacture. Close, {player}, close. But "
 "no cigar.\"\n"
-"    You dispose of the counterfeit artifact. Hopefully the next one will be "
+"    You dispose of the counterfeit artefact. Hopefully the next one will be "
 "what Sauterfeldt is looking for..."
 msgstr ""
 
@@ -35356,7 +35358,7 @@ msgid ""
 "    You take another look at the thing. It resembles a small flat surface, "
 "apart from the crook at one end. On one side, there are cylindrical, solid "
 "protrusions that don't seem to serve any useful purpose at all. You are at a "
-"loss as to the artifact's purpose.\n"
+"loss as to the artefact's purpose.\n"
 "    \"It's called a skate-board,\" Flintley continues. \"The records about "
 "it are a bit sketchy and a lot is nothing but conjecture, but it appears it "
 "was once used in primitive communal rituals. The exact nature of these "
@@ -35368,31 +35370,37 @@ msgid ""
 "psychology.\"\n"
 "    Flintley seems to have a lot more to say on the subject, but you're not "
 "that interested, so you thank him and return to your ship with the ancient "
-"artifact. You can only hope that the Baron is as enthusiastic about this "
+"artefact. You can only hope that the Baron is as enthusiastic about this "
 "skate-board as his historian!"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:196
-msgid "Take the artifact to Baron Sauterfeldt"
+msgid "Take the artefact to Baron Sauterfeldt"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:201
-msgid "Ancient Artifact"
+#, fuzzy
+#| msgid "Ancient Artifact"
+msgid "Ancient Artefact"
 msgstr "Artefact Ancien"
 
 #: dat/missions/baron/baron_prince.lua:201
 #, fuzzy
 #| msgid "Ancient Artifact"
-msgid "A seemingly ancient artifact."
+msgid "A seemingly ancient artefact."
 msgstr "Un artefact apparemment ancien."
 
 #: dat/missions/baron/baron_prince.lua:213
-msgid "Buy the artifact ({credits})"
-msgstr ""
+#, fuzzy
+#| msgid "You owe me 20 credits!"
+msgid "Buy the artefact ({credits})"
+msgstr "Tu me dois 20 balles !"
 
 #: dat/missions/baron/baron_prince.lua:214
-msgid "Don't buy the artifact"
-msgstr ""
+#, fuzzy
+#| msgid "Nebula Artifact?"
+msgid "Don't buy the artefact"
+msgstr "Artefact de Nébuleuse ?"
 
 #: dat/missions/baron/baron_prince.lua:216
 #: dat/missions/baron/baron_prince.lua:228
@@ -35408,13 +35416,17 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:220
-msgid "Artifact? A"
+#, fuzzy
+#| msgid "Artifact? A"
+msgid "Artefact? A"
 msgstr "Artefact ? A"
 
 #: dat/missions/baron/baron_prince.lua:220
 #: dat/missions/baron/baron_prince.lua:232
 #: dat/missions/baron/baron_prince.lua:244
-msgid "An ancient artifact?"
+#, fuzzy
+#| msgid "An ancient artifact?"
+msgid "An ancient artefact?"
 msgstr "Un ancien artefact ?"
 
 #: dat/missions/baron/baron_prince.lua:224
@@ -35426,7 +35438,7 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:224
 #: dat/missions/baron/baron_prince.lua:236
 #: dat/missions/baron/baron_prince.lua:248
-msgid "You can't currently afford to buy this artifact. You need {credits}."
+msgid "You can't currently afford to buy this artefact. You need {credits}."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:228
@@ -35438,7 +35450,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:232
-msgid "Artifact? B"
+#, fuzzy
+#| msgid "Artifact? B"
+msgid "Artefact? B"
 msgstr "Artefact ? B"
 
 #: dat/missions/baron/baron_prince.lua:240
@@ -35450,14 +35464,18 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:244
-msgid "Artifact? C"
+#, fuzzy
+#| msgid "Artifact? C"
+msgid "Artefact? C"
 msgstr "Artefact ? C"
 
-#. Spawn artifact hunters, maybe.
-#. 60% chance of artifact hunters.
+#. Spawn artefact hunters, maybe.
+#. 60% chance of artefact hunters.
 #: dat/missions/baron/baron_prince.lua:278
-msgid "Artifact Hunter"
-msgstr ""
+#, fuzzy
+#| msgid "Artifact? A"
+msgid "Artefact Hunter"
+msgstr "Artefact ? A"
 
 #. Function that tries to misspell whatever string is passed to it.
 #. TODO support Unicode to a certain point
@@ -46460,7 +46478,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:184
 msgid ""
-"\"Since I know for a certain that he is involved in, let's call it, \\"
+"\"Since I know for certain that he is involved in, let's call it, \\"
 "\"unsavory business\\\", all we have to do is get him busted and in the "
 "confusion it should be more than easy for me to go free.\""
 msgstr ""
@@ -48964,7 +48982,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:200
 msgid ""
 "\"She used to tell me stories about how he would go on all sorts of brave "
-"adventures in the nebula to recover artifacts of human history.\""
+"adventures in the nebula to recover artefacts of human history.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:202
@@ -49544,6 +49562,12 @@ msgstr ""
 msgid "That's what you said last time too!"
 msgstr ""
 
+#: dat/missions/minerva/maikki1.lua:640
+#, fuzzy
+#| msgid "You discovered #%c%s#0."
+msgid "#rYou are about to be discovered!"
+msgstr "Nous avons été découverts !"
+
 #: dat/missions/minerva/maikki1.lua:644
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "Run!"
@@ -49865,7 +49889,7 @@ msgstr ""
 #. 2: Go to westhaven
 #. 3: Found base
 #. 4: Destroy drones
-#. 5: Got the artifacts
+#. 5: Got the artefacts
 #. 6: Going back to Minerva Station
 #. Non-persistent state
 #. Forward-declared functions
@@ -50002,7 +50026,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:243
 msgid ""
 "\"The researchers I told you about were involved in some sort of project "
-"trying to find out the origins of the incident by analyzing artifacts taken "
+"trying to find out the origins of the incident by analyzing artefacts taken "
 "from the nebula. Most of it is classified so I wasn't able to get much "
 "information.\""
 msgstr ""
@@ -50193,7 +50217,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:371 dat/missions/minerva/maikki2.lua:401
 #: dat/missions/minerva/maikki2.lua:434
 msgid ""
-"You inquire to about whether or not they are interested in artifacts from "
+"You inquire to about whether or not they are interested in artefacts from "
 "the nebula."
 msgstr ""
 
@@ -50214,7 +50238,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:374
 msgid ""
 "\"If you are interested in nebula research, you should go visit the museum "
-"of nebula artifacts. Although due to administrative changes, I don't think "
+"of nebula artefacts. Although due to administrative changes, I don't think "
 "it'll open again for a few cycles.\""
 msgstr ""
 
@@ -50256,7 +50280,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:402
 msgid ""
 "They rubs their temples.\n"
-"\"Ah, the nebula artifacts… Not very good experiences with those, no, not "
+"\"Ah, the nebula artefacts… Not very good experiences with those, no, not "
 "really interested in them anymore.\""
 msgstr ""
 
@@ -50336,7 +50360,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:435
 msgid ""
-"\"Ah, such fond memories. I have never been interested in the artifacts from "
+"\"Ah, such fond memories. I have never been interested in the artefacts from "
 "the nebula themselves, but I was part of a large project dealing with them "
 "as part of the philosophical and ethical committee.\""
 msgstr ""
@@ -50361,8 +50385,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:438
 msgid ""
-"\"Oh yes, on the nebula artifacts. I remember having fun conversations with "
-"our colleagues about whether or not the artifacts from the nebula actually "
+"\"Oh yes, on the nebula artefacts. I remember having fun conversations with "
+"our colleagues about whether or not the artefacts from the nebula actually "
 "do exist or not given that we are using imperfect sensory organs to see, "
 "touch, and feel them. You see, given that we only perceive reality through "
 "our imperfect organs, can we actually know whether or not there is an "
@@ -50383,7 +50407,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:441
 msgid ""
 "\"We must also further question not only our sensory organs, and the "
-"existence of nebula artifacts, but our own existence. We apparently are able "
+"existence of nebula artefacts, but our own existence. We apparently are able "
 "to think and some would argue that by this, the only thing we can prove, "
 "given imperfect sensory data, is our own existence. However, I argue that "
 "this too is an illusion, and that our existence itself is something we can't "
@@ -50469,7 +50493,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:480
 msgid ""
 "You explain to him that you are looking for information related to nebula "
-"artifacts."
+"artefacts."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:481
@@ -50504,8 +50528,10 @@ msgid "\"Dr. Shrimp?\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:495
-msgid "Ask about nebula artifacts"
-msgstr ""
+#, fuzzy
+#| msgid "Nebula Artifact?"
+msgid "Ask about nebula artefacts"
+msgstr "Artefact de Nébuleuse ?"
 
 #: dat/missions/minerva/maikki2.lua:496
 msgid "Ask about other members."
@@ -50603,11 +50629,11 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:532
 msgid ""
-"\"What sort of artifacts we were dealing with? All sorts. Pretty much "
+"\"What sort of artefacts we were dealing with? All sorts. Pretty much "
 "anything we could get our hands on. We were trying to get a hold of stuff "
 "closer to the origin, near Sol, but, most of the time, scavengers brought us "
 "stuff from the outer areas. Many times they were even trying to sell us "
-"random debris as nebula artifacts, but that's really easy to detect.\""
+"random debris as nebula artefacts, but that's really easy to detect.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:533
@@ -50620,7 +50646,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:534
 msgid ""
-"\"When the project failed, most of the artifacts were confiscated to who "
+"\"When the project failed, most of the artefacts were confiscated to who "
 "knows where, but I managed to keep a nut from what I think is a space "
 "station, although not entirely sure. It's a bit damaged beyond recognition "
 "you see.\""
@@ -50629,7 +50655,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:535
 msgid ""
 "\"With the failure of most nebula projects, I don't think there is anybody "
-"buying nebula artifacts anymore. Not much of a market for them, and most "
+"buying nebula artefacts anymore. Not much of a market for them, and most "
 "easy to access debris has all been scavenged anyway. Some collectors are "
 "still interested in that, but that's about it. Furthermore, it's not "
 "entirely legal if you catch my drift.\""
@@ -50667,7 +50693,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:548
 msgid ""
 "\"Now I remember! There was a another post-doctoral researcher who worked "
-"with me. He was a bit weird and kept obsessing over the nebula artifacts. "
+"with me. He was a bit weird and kept obsessing over the nebula artefacts. "
 "Quite a few went missing during the project and I think it was probably him "
 "who was taking them.\""
 msgstr ""
@@ -50765,18 +50791,20 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:693
 msgid ""
 "From the ship scraps you are able to find a very damaged… thing… You guess "
-"this is what Dr. Strangelove was referring to as a nebula artifact. "
+"this is what Dr. Strangelove was referring to as a nebula artefact. "
 "Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:697
-msgid "Nebula Artifact?"
+#, fuzzy
+#| msgid "Nebula Artifact?"
+msgid "Nebula Artefact?"
 msgstr "Artefact de Nébuleuse ?"
 
 #: dat/missions/minerva/maikki2.lua:697
 msgid ""
 "A very damaged thing that seems to be mainly biological. I guess this is the "
-"nebula artifact?"
+"nebula artefact?"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:700
@@ -50785,7 +50813,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:701
 msgid ""
-"You recovered a nebula artifact that Dr. Strangelove wanted from feral "
+"You recovered a nebula artefact that Dr. Strangelove wanted from feral "
 "drones."
 msgstr ""
 
@@ -50831,13 +50859,13 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:746
 msgid ""
 "You explain to him that you are looking for information about nebula "
-"artifacts."
+"artefacts."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:747
 msgid ""
 "\"Who sent you here? Was it Dr. Bob? That weasel was always after my "
-"precious artifacts. Well, he can't have them! I got all this with my hard "
+"precious artefacts. Well, he can't have them! I got all this with my hard "
 "work, sweat, and tears! They're all mine!\"\n"
 "He cackles manically."
 msgstr ""
@@ -50846,7 +50874,7 @@ msgstr ""
 msgid ""
 "\"I have hidden them very well. Even though you somehow got past my security "
 "system and made it into my laboratory, you'll never find them!\"\n"
-"You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the "
+"You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the "
 "room."
 msgstr ""
 
@@ -50876,7 +50904,7 @@ msgid "Ask about this place"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:767
-msgid "Hand over the artifact"
+msgid "Hand over the artefact"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:769
@@ -50915,7 +50943,7 @@ msgstr ""
 msgid ""
 "\"Anyway, it is a real shame that the bureaucrats in central station killed "
 "the project in its prime. At least I was able to bring most of the devices "
-"here and keep acquiring more artifacts afterwards. Haven't found anything as "
+"here and keep acquiring more artefacts afterwards. Haven't found anything as "
 "fancy as the replicator yet, but the bodies have been very interesting.\"\n"
 "He coughs, wracking his body."
 msgstr ""
@@ -50946,7 +50974,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:799
 msgid ""
 "\"I see you are braver than you look. I have a bit of an issue. You see, I "
-"was upgrading some of my drones with some nebula artifacts to test to see if "
+"was upgrading some of my drones with some nebula artefacts to test to see if "
 "the functionality could be improved. Sadly, an incompatibility resulted in "
 "the drones going… ahem… feral.\""
 msgstr ""
@@ -50962,27 +50990,27 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:802
 msgid ""
 "\"While the drones themselves are dispensable, I need you to recover the "
-"nebula artifacts used in their upgrading. They should be roaming around the "
+"nebula artefacts used in their upgrading. They should be roaming around the "
 "asteroid field and should be fairly easy to find. Make sure to recover the "
 "parts in one piece!\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:805
-msgid "Recover nebula artifacts from the {sys} asteroid field"
+msgid "Recover nebula artefacts from the {sys} asteroid field"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:808
 msgid ""
-"You accepted Dr. Strangelove's request to recover nebula artifacts from "
+"You accepted Dr. Strangelove's request to recover nebula artefacts from "
 "feral drones in Westhaven."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:813
 msgid ""
 "\"It should be an easy job. All you have to do is recover the nebula "
-"artifacts from the feral drones. They may put up a fight or not be easy to "
+"artefacts from the feral drones. They may put up a fight or not be easy to "
 "catch, but I expect that a pilot who blasted through all my security drones "
-"will have no problem with a few feral drones. Try to bring the artifacts in "
+"will have no problem with a few feral drones. Try to bring the artefacts in "
 "one piece.\"\n"
 "He glares at you."
 msgstr ""
@@ -51017,7 +51045,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:829
 msgid ""
-"You show him the nebula artifact and suddenly a couple of small drones whirl "
+"You show him the nebula artefact and suddenly a couple of small drones whirl "
 "into the room and start to perform a deeper inspection."
 msgstr ""
 
@@ -51045,7 +51073,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:839
 msgid ""
-"\"I see… You don't grasp the importance of this artifact. I guess it can't "
+"\"I see… You don't grasp the importance of this artefact. I guess it can't "
 "be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
@@ -53606,7 +53634,7 @@ msgid ""
 "expected to show up.\n"
 msgstr ""
 
-#. The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+#. The price of each artefact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 #. --
 #. Return a random jump distance, biased toward short missions (0-3 jumps).
 #. --
@@ -78439,7 +78467,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:437 src/gui.c:1717 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:437 src/gui.c:1709 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -79763,7 +79791,7 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:483 src/gui.c:1609 src/ndata.c:199 src/news.c:104
+#: src/economy.c:483 src/gui.c:1601 src/ndata.c:199 src/news.c:104
 #: src/nfile.c:492 src/opengl_tex.c:133 src/opengl_tex.c:370 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:456
 msgid "Out of Memory"
@@ -80542,27 +80570,27 @@ msgstr ""
 msgid "Gfx index out of range"
 msgstr ""
 
-#: src/gui.c:1686
+#: src/gui.c:1678
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr ""
 
-#: src/gui.c:1695
+#: src/gui.c:1687
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
 msgstr ""
 
-#: src/gui.c:1716
+#: src/gui.c:1708
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
 msgstr ""
 
-#: src/gui.c:1846
+#: src/gui.c:1838
 #, c-format
 msgid "Unable to find GUI '%s'."
 msgstr ""
 
-#: src/gui.c:1859
+#: src/gui.c:1851
 #, c-format
 msgid ""
 "Failed to load GUI Lua: %s\n"
@@ -80570,7 +80598,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/gui.c:2003
+#: src/gui.c:1995
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr ""
@@ -82754,7 +82782,7 @@ msgstr ""
 msgid "Exit to Main Menu"
 msgstr ""
 
-#: src/mission.c:103 src/nlua_player.c:1173 src/nlua_player.c:1195
+#: src/mission.c:103 src/nlua_player.c:1179 src/nlua_player.c:1201
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr ""
@@ -83388,8 +83416,8 @@ msgstr ""
 msgid "Commodity '%s' not found!"
 msgstr ""
 
-#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1289
-#: src/nlua_player.c:1309
+#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1295
+#: src/nlua_player.c:1315
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr ""
@@ -83745,47 +83773,47 @@ msgstr ""
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
 
-#: src/nlua_player.c:717
+#: src/nlua_player.c:723
 msgid "Player must be landed to force takeoff."
 msgstr ""
 
-#: src/nlua_player.c:742
+#: src/nlua_player.c:748
 #, c-format
 msgid "Planet '%s' is not in a system!"
 msgstr ""
 
-#: src/nlua_player.c:831
+#: src/nlua_player.c:837
 msgid "Must be landed to set the active land window."
 msgstr ""
 
-#: src/nlua_player.c:938
+#: src/nlua_player.c:944
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr ""
 
-#: src/nlua_player.c:1216 src/nlua_player.c:1238
+#: src/nlua_player.c:1222 src/nlua_player.c:1244
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1272
+#: src/nlua_player.c:1278
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1274
+#: src/nlua_player.c:1280
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1276
+#: src/nlua_player.c:1282
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1304
+#: src/nlua_player.c:1310
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1323
+#: src/nlua_player.c:1329
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
@@ -87992,6 +88020,9 @@ msgstr "WEAPON_LAYER non valide spécifié"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
+
+#~ msgid "Nebula Artifact?"
+#~ msgstr "Artefact de Nébuleuse ?"
 
 #~ msgid "Alexian"
 #~ msgstr "Alexian"

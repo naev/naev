@@ -501,7 +501,7 @@ function approach_hint4 ()
       end
       if mem.asked_strangelove then
          table.insert( opts, 1, {_("Ask about Dr. Strangelove"), "strangelove"} )
-      elseif mem.asked_members and mem.asked_artefacts then
+      elseif mem.asked_members and mem.asked_artifacts then
          table.insert( opts, 1, {_("Anything else?…"), "strangelove"} )
       end
       return opts end )
@@ -533,7 +533,7 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
    drshrimp(_([["When the project failed, most of the artefacts were confiscated to who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
    drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artefacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
-   vn.func( function () mem.asked_artefacts = true end )
+   vn.func( function () mem.asked_artifacts = true end )
    vn.jump("menu_msg")
 
    vn.label("members")
@@ -695,7 +695,7 @@ function ecc_feral_boss_dead ()
    vn.run()
 
    local c = commodity.new( N_("Nebula Artefact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artefact?") )
-   mem.nebula_artefacts = misn.cargoAdd( c, 0 )
+   mem.nebula_artifacts = misn.cargoAdd( c, 0 )
    mem.misn_state = 5
    misn.osdCreate( _("Finding Maikki's Father"), {_("Go back to Dr. Strangelove")} )
    minerva.log.maikki(_("You recovered a nebula artefact that Dr. Strangelove wanted from feral drones.") )
@@ -862,7 +862,7 @@ He coughs softly.]]))
 His voice gets softer and softer as he keeps on mumbling.]]))
    vn.na(_("You try to get his attention again, but it doesn't seem to work. He seems to have fallen into a stupor. You feel you have enough information to report to Maikki again."))
    vn.func( function ()
-      misn.cargoRm( mem.nebula_artefacts )
+      misn.cargoRm( mem.nebula_artifacts )
       mem.misn_state = 6
       misn.npcRm( mem.npc_ecc )
       misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
