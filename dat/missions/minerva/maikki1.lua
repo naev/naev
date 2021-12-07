@@ -197,7 +197,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
 
    vn.label( "father" )
    maikki(_([["I don't remember him at all. He disappeared when I was only 5 cycles old. Before my mother died, she told me he was a famous space pilot."]]))
-   maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artifacts of human history."]]))
+   maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artefacts of human history."]]))
    vn.menu( {
       { _([["He was a scavenger?"]]), "menuscholar" },
       { _([["He was a scholar?"]]), "menuscholar" },
