@@ -77,7 +77,7 @@ function land()
       tk.msg(_("Animal transport"), fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)}))
       player.pay(money_reward)
       var.push("shipinfested", true)
-      neu.addMiscLog( _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have swore you heard something squeak.]]) )
+      neu.addMiscLog( _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have sworn you heard something squeak.]]) )
       misn.finish(true)
    end
 end

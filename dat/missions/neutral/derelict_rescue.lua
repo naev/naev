@@ -29,7 +29,7 @@ function create ()
    -- See if we got something
    if not mem.destpnt then
       -- Can't find target so just make everyone be dead
-      vntk.msg(_("Empty derelict"), _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship. You decide to give them a decent space burial before moving on.]]))
+      vntk.msg(_("Empty derelict"), _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship. You decide to give them a proper space burial before moving on.]]))
       misn.finish(false)
    end
 
@@ -90,7 +90,7 @@ function land ()
 
    vn.clear()
    vn.scene()
-   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a while the captain comes over you and gives you the credits you were promised.]])
+   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a while, the captain comes over you and gives you the credits you were promised.]])
       .. "\n\n"
       .. fmt.reward(mem.reward_amount))
    vn.func( function ()
@@ -107,9 +107,9 @@ end
 
 function abort ()
    if player.isLanded() then
-      vntk.msg(nil, _("You inform the crew you rescued from the derelict that you won't be taking them any further. They thank you and get off your ship."))
+      vntk.msg(nil, _("You inform the crew you rescued from the derelict that you won't be taking them any further. They thank you and depart your ship."))
    else
-      vntk.msg(nil, _("You jet the crew you rescued from the derelict out of the airlock."))
+      vntk.msg(nil, _("You jettison the crew you rescued from the derelict out of the airlock."))
       misn.cargoJet( mem.civs )
    end
    misn.finish(false)
