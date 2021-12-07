@@ -251,6 +251,7 @@ function harassed ()
       mem.misn_state=3
       misn.osdActive(3)
       system.mrkRm( mem.thugsmarker )
+      mem.misnmarker = misn.markerMove( mem.misnmarker, runawaysys )
       return
    end
    hook.timer( 1.0, "harassed" )
