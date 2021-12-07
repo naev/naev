@@ -509,7 +509,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render a thick frame with a yes/no color, and geometric cue. */
-         int ok = (pilot_canEquip( p, &lst[i], o ) == NULL);
+         int ok = (!lst[i].sslot->locked && pilot_canEquip( p, &lst[i], o ) == NULL);
          glUseProgram( shaders.status.program );
          glUniform1f( shaders.status.paramf, ok );
          gl_renderShader( x, y, w, h, 0., &shaders.status, NULL, 0 );
@@ -517,10 +517,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Must rechoose colour based on slot properties. */
       rc = dc;
-      if (wgt->canmodify && !lst[i].sslot->locked) {
+      if (wgt->canmodify) {
          if (lst[i].sslot->required)
             rc = &cBrightRed;
-         else if (lst[i].sslot->exclusive)
+         else if (lst[i].sslot->exclusive || lst[i].sslot->locked)
             rc = &cWhite;
          else if (lst[i].sslot->slot.spid != 0)
             rc = &cBlack;
@@ -842,17 +842,21 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Slot is empty. */
    if (o == NULL) {
-      if (slot->sslot->slot.spid)
+      if (slot->sslot->slot.spid) {
          pos = scnprintf( alt, sizeof(alt),
-               "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
-      else {
-         pos = scnprintf( alt, sizeof(alt), _( "#%c%s #%c%s #0slot" ),
-               outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
-               outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+               "#o%s\n", _( sp_display( slot->sslot->slot.spid ) ) );
       }
-      if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
+      else
+         pos = 0;
+      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _( "#%c%s #%c%s #0slot" ),
+            outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
+            outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+      if (slot->sslot->exclusive && (pos < (int)sizeof(alt)))
          pos += scnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
+      if (slot->sslot->locked && (pos < (int)sizeof(alt)))
+         pos += scnprintf( &alt[pos], sizeof(alt)-pos,
+               "#r%s#0", _(" [locked]") );
       if (slot->sslot->slot.spid)
          scnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
