@@ -24,15 +24,15 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" x="12" y="0" h="0" />
-  <weapon size="small" prop="bio_weapon" x="-3" y="0" h="2" />
-  <weapon size="small" prop="bio_weapon" x="3" y="0" h="2" />
-  <utility size="small" prop="bio_systems" exclusive="1" required="1">Ultralight Brain Stage 1</utility>
+  <weapon size="small" prop="bio_weapon" locked="1" x="-3" y="0" h="2" />
+  <weapon size="small" prop="bio_weapon" locked="1" x="3" y="0" h="2" />
+  <weapon size="small" x="12" y="0" h="0" />
+  <utility size="small" prop="bio_systems" exclusive="1" required="1" locked="1">Ultralight Brain Stage 1</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Ultralight Fast Gene Drive Stage 1</structure>
-  <structure size="small" prop="bio_hull" exclusive="1" required="1">Ultralight Shell Stage 1</structure>
+  <structure size="small" prop="bio_engines" exclusive="1" required="1" locked="1">Ultralight Fast Gene Drive Stage 1</structure>
+  <structure size="small" prop="bio_hull" exclusive="1" required="1" locked="1">Ultralight Shell Stage 1</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>
