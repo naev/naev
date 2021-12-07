@@ -176,8 +176,8 @@ local skills = {
    ["afterburner2"] = {
       name = _("Adrenal Gland II"),
       tier = 5,
-      requires = { "afterburner1" },
-      --requires = { "afterburner1", "engines3" },
+      --requires = { "afterburner1" },
+      requires = { "afterburner1", "engines3" },
    },
    ["wandererspirit"] = {
       name = _("Wanderer Spirit"),
@@ -269,18 +269,18 @@ function gene.window ()
       grp.x2 = math.max( grp.x2, node.x )
       grp.y2 = math.max( grp.y2, node.y )
       table.insert( grp, node )
-      for i,c in ipairs(node._conflicts) do
-         grp = create_group_rec( grp, c, x+i )
-      end
       local xoff = x-1
       for i,r in ipairs(node._required_by) do
          if not r._g then
             xoff = xoff+1
+            grp = create_group_rec( grp, r, xoff )
          end
-         grp = create_group_rec( grp, r, xoff )
       end
       for i,r in ipairs(node._requires) do
          grp = create_group_rec( grp, r, x+i-1 )
+      end
+      for i,c in ipairs(node._conflicts) do
+         grp = create_group_rec( grp, c, x+i )
       end
       return grp
    end
