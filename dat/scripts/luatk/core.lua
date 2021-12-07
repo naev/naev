@@ -491,7 +491,7 @@ function luatk.drawAltText( bx, by, alt, w )
       x = lw-w-10
    end
 
-   lg.setColor( {0.0, 0.0, 0.0, 0.9} )
+   lg.setColor( {0.0, 0.0, 0.0, 0.95} )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColor( {0.5, 0.5, 0.5, 0.9} )
    lg.rectangle( "line", x, y, w, h )
