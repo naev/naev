@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-06 22:53-0500\n"
+"POT-Creation-Date: 2021-12-07 00:10-0500\n"
 "PO-Revision-Date: 2021-12-02 00:34+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -710,168 +710,6 @@ msgstr "EvanR"
 #| msgid "Major Contributors"
 msgid "Artwork Contributors"
 msgstr "Contributeurs majeurs"
-
-#: artwork/gfx/loading/admonisher.webp.txt:1
-msgid "ADMONISHER"
-msgstr "ADMONITEUR"
-
-#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
-msgid "PIRATE ADMONISHER"
-msgstr "PIRATE ADMONITEUR"
-
-#: artwork/gfx/loading/ancestor.webp.txt:1
-#, fuzzy
-msgid "ANCESTOR"
-msgstr "ANCÊTRE"
-
-#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
-#, fuzzy
-msgid "PIRATE ANCESTOR"
-msgstr "ANCÊTRE PIRATE"
-
-#: artwork/gfx/loading/archimedes.webp.txt:1
-#, fuzzy
-msgid "ARCHIMEDES"
-msgstr "ARCHIMÈDE"
-
-#: artwork/gfx/loading/derivative.webp.txt:1
-#, fuzzy
-msgid "DERIVATIVE"
-msgstr "DÉRIVÉ"
-
-#: artwork/gfx/loading/diablo.webp.txt:1
-#, fuzzy
-msgid "ZA'LEK DIABLO"
-msgstr "ZA'LEK DIABLO"
-
-#: artwork/gfx/loading/drone.webp.txt:1
-#, fuzzy
-msgid "DRONE"
-msgstr "DRONE"
-
-#: artwork/gfx/loading/fidelity.webp.txt:1
-#, fuzzy
-msgid "SIRIUS FIDELITY"
-msgstr "FIDÉLITÉ SIRIUS"
-
-#: artwork/gfx/loading/gawain.webp.txt:1
-#, fuzzy
-msgid "GAWAIN"
-msgstr "GAWAIN"
-
-#: artwork/gfx/loading/goddard.webp.txt:1
-#, fuzzy
-msgid "GODDARD"
-msgstr "GODDARD"
-
-#: artwork/gfx/loading/hawking.webp.txt:1
-#, fuzzy
-msgid "HAWKING"
-msgstr "HAWKING"
-
-#: artwork/gfx/loading/kahan.webp.txt:1
-#, fuzzy
-msgid "KAHAN"
-msgstr "KAHAN"
-
-#: artwork/gfx/loading/kestrel_pirate.webp.txt:1
-msgid "PIRATE KESTREL"
-msgstr "PIRATE CRÉCERELLE"
-
-#: artwork/gfx/loading/koala.webp.txt:1
-#, fuzzy
-msgid "KOALA"
-msgstr "KOALA"
-
-#: artwork/gfx/loading/lancelot.webp.txt:1
-#, fuzzy
-msgid "LANCELOT"
-msgstr "LANCELOT"
-
-#: artwork/gfx/loading/llama.webp.txt:1
-#, fuzzy
-msgid "LLAMA"
-msgstr "LLAMA"
-
-#: artwork/gfx/loading/mule.webp.txt:1
-#, fuzzy
-msgid "MULE"
-msgstr "MULE"
-
-#: artwork/gfx/loading/pacifier.webp.txt:1
-#, fuzzy
-msgid "PACIFIER"
-msgstr "SUCETTE"
-
-#: artwork/gfx/loading/peacemaker.webp.txt:1
-#, fuzzy
-msgid "EMPIRE PEACEMAKER"
-msgstr "PACIFICATEUR DE L'EMPIRE"
-
-#: artwork/gfx/loading/preacher.webp.txt:1
-#, fuzzy
-msgid "SIRIUS PREACHER"
-msgstr "PRÉDICATEUR SIRIUS"
-
-#: artwork/gfx/loading/quicksilver.webp.txt:1
-#, fuzzy
-msgid "QUICKSILVER"
-msgstr "MERCURE"
-
-#: artwork/gfx/loading/rhino.webp.txt:1
-#, fuzzy
-msgid "RHINO"
-msgstr "RHINOCÉROS"
-
-#: artwork/gfx/loading/rhino_pirate.webp.txt:1
-#, fuzzy
-msgid "PIRATE RHINO"
-msgstr "RHINOCÉROS PIRATE"
-
-#: artwork/gfx/loading/schroedinger.webp.txt:1
-#, fuzzy
-msgid "SCHROEDINGER"
-msgstr "SCHROEDINGER"
-
-#: artwork/gfx/loading/shaman.webp.txt:1
-#, fuzzy
-msgid "SIRIUS SHAMAN"
-msgstr "CHAMAN SIRIUS"
-
-#: artwork/gfx/loading/shark.webp.txt:1
-#, fuzzy
-msgid "SHARK"
-msgstr "REQUIN"
-
-#: artwork/gfx/loading/shark_empire.webp.txt:1
-#, fuzzy
-msgid "EMPIRE SHARK"
-msgstr "REQUIN DE L’EMPIRE"
-
-#: artwork/gfx/loading/shark_pirate.webp.txt:1
-#, fuzzy
-msgid "PIRATE SHARK"
-msgstr "REQUIN PIRATE"
-
-#: artwork/gfx/loading/sting.webp.txt:1
-#, fuzzy
-msgid "ZA'LEK STING"
-msgstr "ZA’LEK PIQÛRE"
-
-#: artwork/gfx/loading/vendetta.webp.txt:1
-#, fuzzy
-msgid "VENDETTA"
-msgstr "VENDETTA"
-
-#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
-#, fuzzy
-msgid "PIRATE VENDETTA"
-msgstr "PIRATE VENDETTA"
-
-#: artwork/gfx/loading/vigilance.webp.txt:1
-#, fuzzy
-msgid "VIGILANCE"
-msgstr "VIGILANCE"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
@@ -28557,7 +28395,6 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/derelict.lua:139
-#: dat/missions/neutral/derelict_rescue.lua:32
 msgid ""
 "This derelict is not deserted. The crew are still onboard. Unfortunately for "
 "them, they didn't survive whatever wrecked their ship. You decide to give "
@@ -52906,7 +52743,7 @@ msgstr ""
 #: dat/missions/neutral/animaltransport.lua:80
 msgid ""
 "You successfully transported a crate of rodents for a Fyrra civilian. You "
-"could have swore you heard something squeak."
+"could have sworn you heard something squeak."
 msgstr ""
 
 #.
@@ -53815,7 +53652,7 @@ msgstr ""
 msgid ""
 "You walk into the bar and know instantly that you are finally here! This is "
 "the place! You walk up to the bartender, who smiles. This has to be him. You "
-"start to describe the drink to them and he interrupts. \"A Swamp Bombing. Of "
+"start to describe the drink to him and he interrupts. \"A Swamp Bombing. Of "
 "course, that's my specialty.\" You ask if he can make it to go, prompting a "
 "bit of a chuckle. \"Sure, why not?\"\n"
 "    Just as he's about to start making it, though, you stop him and say "
@@ -53868,7 +53705,7 @@ msgid ""
 "work for him. \"This simply will not do. When I ordered this 'drink', if you "
 "can call it that, it seemed interesting. It certainly doesn't taste "
 "interesting. It's just bland. The only parts of it that are in any way "
-"interesting are not at all pleasing. It just tastes so, common.\n"
+"interesting are not at all pleasing. It just tastes so... common.\n"
 "    You know what I would really like? There was this drink at a bar on, "
 "what planet was that? Damien, do you remember? The green drink with the red "
 "fruit shavings.\" Damien looks down at him and seems to think for a second "
@@ -53882,8 +53719,8 @@ msgstr ""
 msgid ""
 "\"What do you mean, you can't leave right away? Then why even bother? Remove "
 "yourself from my sight.\" The aristocrat makes a horrible face, and sips his "
-"drink, only to look even more disgusted. He puts his drink back on the table "
-"and motions to the bartender, ignoring you beyond now."
+"drink, only to look even more disgusted. Ignoring you, he puts his drink "
+"back on the table and motions to the bartender."
 msgstr ""
 
 #: dat/missions/neutral/aristodrink.lua:81
@@ -53901,9 +53738,9 @@ msgstr ""
 #: dat/missions/neutral/aristodrink.lua:84
 msgid ""
 "\"Oh good! Of course you will be paid handsomely for your efforts. I trust "
-"you can figure out how to get it here intact on your own.\" The aristocrat "
-"goes back to sipping his drink, making an awful face every time he tastes "
-"it, ignoring you. You walk away, a bit confused."
+"you can figure out how to get it here intact on your own.\" Ignoring you, "
+"the aristocrat goes back to sipping his drink, making an awful face every "
+"time he tastes it. You walk away, a bit confused."
 msgstr ""
 
 #. how many systems you'll have to run through
@@ -53959,7 +53796,7 @@ msgid ""
 "\" You give him his drink and tell him that it wasn't easy, and how many "
 "systems you had to go through. \"Hmm. That is quite a few systems. No reason "
 "for you to be this late though.\" He takes a sip from his drink. \"Ahh! That "
-"is good though. I suppose you'll be wanting to get paid for your troubles. "
+"is good though. I suppose you'll be wanting to get paid for your efforts. "
 "You did go through a lot of trouble. Then again, you did take quite a long "
 "time. I suppose {credits} should be appropriate.\"\n"
 "    Considering the amount of effort that you went through, you feel almost "
@@ -54063,8 +53900,8 @@ msgstr ""
 
 #: dat/missions/neutral/cargo.lua:54 dat/missions/neutral/cargo_rush.lua:63
 msgid ""
-"The containers of {cargo} are rushed out of your vessel by a team shortly "
-"after you land. Before you can even collect your thoughts, one of them "
+"Shortly after you land, a team rushes the containers of {cargo} out of your "
+"vessel. Before you can even collect your thoughts, one of the workers "
 "presses a credit chip worth #g{credits}#0 in your hand and departs."
 msgstr ""
 
@@ -54209,9 +54046,9 @@ msgstr ""
 
 #: dat/missions/neutral/cargo_rush.lua:69
 msgid ""
-"The containers of {cargo} are rushed out of your vessel by a team shortly "
-"after you land. Your late arrival is stretching quite a few schedules! Your "
-"pay is only {credits} instead of {reward} because of that."
+"Shortly after you land, a team rushes the containers of {cargo} out of your "
+"vessel. Your late arrival is stretching quite a few schedules! Your pay is "
+"only {credits} instead of {reward} because of that."
 msgstr ""
 
 #: dat/missions/neutral/cargo_rush.lua:70
@@ -54294,8 +54131,8 @@ msgstr ""
 #: dat/missions/neutral/commodity_run.lua:41
 msgid ""
 "The containers of {cargo} are carried out of your ship and tallied. After "
-"several different men double-check the register to confirm the amount, you "
-"are paid {credits} and summarily dismissed."
+"several different workers double-check the register to confirm the amount, "
+"you are paid {credits} and summarily dismissed."
 msgstr ""
 
 #: dat/missions/neutral/commodity_run.lua:42
@@ -54389,16 +54226,17 @@ msgid ""
 "The private detective greets you and gets right down to business.\n"
 "   \"I have tracked down and collected evidence against a local crime lord,"
 "\" he says. \"The evidence is on this data disk. He would love nothing more "
-"than to get his hands on this.\n"
+"than to get their hands on this.\n"
 "   I want you to bring this to my associates in the {sys} system. While the "
 "local authorities have proven corruptible, my associates will ensure that "
-"this man ends up in prison, where he belongs. I must warn you, however:\n"
-"   He is a man of considerable influence. He has many friends, and no doubt "
-"will send some of his mercenaries to stop you. You'll need a fast ship to "
-"shake them off. My associates will compensate you generously when you reach "
-"{sys}.\n"
+"this criminal ends up in prison, where they belong. I must warn you, "
+"however:\n"
+"   This criminal has considerable influence and many friends. There's no "
+"doubt they will send some of their mercenaries to stop you. You'll need a "
+"fast ship to shake them off. My associates will compensate you generously "
+"when you reach {sys}.\n"
 "   Regrettably, you are not the first pilot I've contacted regarding this "
-"matter. Your predecessor was intercepted when he landed en route to {sys}. "
+"matter. Your predecessor was intercepted when they landed en route to {sys}. "
 "The crime lord has many underlings lurking in nearby spaceports -- you must "
 "NOT land until you've delivered the data.\"\n"
 "   Given the dangers, you're not sure whether the reward will make this "
@@ -54489,6 +54327,13 @@ msgid ""
 "trained on you, you see no option but to surrender the evidence."
 msgstr ""
 
+#: dat/missions/neutral/derelict_rescue.lua:32
+msgid ""
+"This derelict is not deserted. The crew are still onboard. Unfortunately for "
+"them, they didn't survive whatever wrecked their ship. You decide to give "
+"them a proper space burial before moving on."
+msgstr ""
+
 #: dat/missions/neutral/derelict_rescue.lua:44
 msgid ""
 "You enter and begin to scour the ship for anything of value. As you make "
@@ -54545,7 +54390,7 @@ msgstr ""
 #: dat/missions/neutral/derelict_rescue.lua:93
 msgid ""
 "Soon after you land the crew you rescued from the derelict burst out of the "
-"ship in joy. After a while the captain comes over you and gives you the "
+"ship in joy. After a while, the captain comes over you and gives you the "
 "credits you were promised."
 msgstr ""
 
@@ -54556,11 +54401,11 @@ msgstr ""
 #: dat/missions/neutral/derelict_rescue.lua:110
 msgid ""
 "You inform the crew you rescued from the derelict that you won't be taking "
-"them any further. They thank you and get off your ship."
+"them any further. They thank you and depart your ship."
 msgstr ""
 
 #: dat/missions/neutral/derelict_rescue.lua:112
-msgid "You jet the crew you rescued from the derelict out of the airlock."
+msgid "You jettison the crew you rescued from the derelict out of the airlock."
 msgstr ""
 
 #.
@@ -54634,15 +54479,15 @@ msgid ""
 "As you approach the group, the babbling ceases and the papers are quickly "
 "and jealously stashed away. One of the girls comes forward and introduces "
 "herself.\n"
-"    \"Hi, I'm Mia. We need transportation, and you look as if you could need "
+"    \"Hi, I'm Mia. We need transportation, and you look as if you could use "
 "some dough. Interested?\"\n"
 "    You reply that for a deal to be worked out, they better provide some "
-"detail.\n"
+"details.\n"
 "    \"Listen,\" she says, \"there's this Homebrew Processing Box Masters on "
 "{pnt}. Right over there, this system. I'm sure our box will get us the first "
 "prize. You take us there, you take us back, you get 20,000.\"\n"
-"    You just start wondering at the boldness of so young a lady as she "
-"already signals her impatience. \"What now, you do it?\""
+"    You just start to marvel at the self-assurance of one so young when she "
+"signals her impatience. \"Answer me now! Will you do it?\""
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:74
@@ -54681,13 +54526,13 @@ msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:84
 msgid ""
-"Upon accepting the task, you see the entire group relax visibly, and you can "
-"almost feel Mia's boldness fade away - to some extent, at least. It seems "
+"Upon accepting the task, you see the entire group visibly relax and you can "
+"almost feel Mia's confidence fade away - to some extent, at least. It seems "
 "that the group is quite keen on the competition, but until now had no idea "
 "how to get there.\n"
 "    As the others scramble to get up from their cramped table and start to "
 "gather their belongings, it is again up to Mia to address you:\n"
-"    \"Really? You'll do it? Um, great. Fantastic. I just knew that "
+"    \"Really? You'll do it? Um, great. Fantastic. I just knew that, "
 "eventually, someone desperate would turn up. OK, we're set to go. We better "
 "take off immediately and go directly to {pnt}, or we'll be late for the "
 "contest!\""
@@ -54721,7 +54566,7 @@ msgid ""
 "the competition and celebrate a bit. You better stay in the system. We will "
 "hail you in about 4 or 5 periods, so you can pick us up an' bring us back to "
 "{pnt}.\"\n"
-"    That said, the nerds shoulder the box and rushes towards a banner which "
+"    That said, the nerds shoulder the box and rush towards a banner which "
 "reads \"Admissions\"."
 msgstr ""
 
@@ -54743,9 +54588,9 @@ msgid ""
 "contest for us, no payment for you. Understand? Go and take your sorry "
 "excuse for a ship into the corona of a suitable star. We will find someone "
 "else to take us back to {pnt}. Someone reliable.\"\n"
-"    As her emphasis on the last words is still ringing in your ears, the "
-"gang of nerds stroll toward an archway, behind which, judging from the "
-"bustling atmosphere, the contest is already going on."
+"    With her emphasis on the last words still ringing in your ears, the gang "
+"of nerds stroll toward an archway, behind which, judging from the bustling "
+"atmosphere, the contest is already going on."
 msgstr ""
 
 #. late, not even the right planet
@@ -54763,8 +54608,8 @@ msgid ""
 "in some dump we never wanted to see. I'm sure you agree that this isn't "
 "worth any payment.\" She turns to leave, but then adds: \"Are you sure that "
 "everything is in order with your ship's core? You don't want it to melt down "
-"just in the middle of a fight, do you?\" With this, she joins the rest of "
-"her group, and they are gone."
+"in the middle of a fight, do you?\" With this, she joins the rest of her "
+"group, and they are gone."
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:154
@@ -54775,12 +54620,12 @@ msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:176
 msgid ""
-"As soon as you get of your ship, you are surrounded by the group of nerds, "
-"who are enthusiastic. \"We won!\" one of the dudes shouts at you. "
-"Surprisingly, the group seems to not completely be dependent on Mia when it "
-"comes to communicating with outsiders. Maybe the booze the group is "
-"obviously intoxicated with did help a little. \"Take us back to {pnt},\" one "
-"of them says, \"we'll continue to celebrate on the way.\""
+"As soon as you exit your ship, you are surrounded by the group of nerds, who "
+"are euphoric. \"We won!\" one of the nerds shouts at you. Surprisingly, it "
+"seems the group isn't completely dependent on Mia when it comes to "
+"communicating with outsiders. Though maybe the booze the group is copiously "
+"drinking did help a little. \"Take us back to {pnt},\" one of them says, "
+"\"we'll continue to celebrate on the way.\""
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:178
@@ -54941,13 +54786,13 @@ msgstr ""
 msgid ""
 "With sagging shoulders, the nerds unload their box. Mia turns to address "
 "you, not bold at all this time. \"Um, we got a bit of a problem here. You "
-"know, we intended to pay the trip from our prize money. Now we don't have no "
-"prize money.\"\n"
+"know, we intended to pay the trip from our prize money. Now we don't have "
+"any prize money.\"\n"
 "    As you're trying to decide what to make of the situation, one of the "
 "other nerds creeps up behind Mia and cautiously gestures for her to join the "
 "group a few yards away, all the time avoiding your eyes. Strange guy, you "
-"think, as if he was not accustomed to be socializing with strangers. Mia "
-"joins the group, and some whispering ensues. Mia returns to you after a few "
+"think, as if he was not accustomed to socializing with strangers. Mia joins "
+"the group, and some whispering ensues. Mia returns to you after a few "
 "hectoseconds.\n"
 "    \"OK, we have just solved our problem. See, that ass of a champion won "
 "the contest with a ship's processing unit. We can do it the other way round. "
@@ -54969,12 +54814,12 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:293
 msgid ""
 "\"You can wait for it, won't take longer than half a period,\" Mia informs "
-"you. You stand by as the nerds start to mod their box. As they are going for "
-"it, you wonder if they're actually wrecking it and you'll maybe be left with "
-"a piece of worthless junk.\n"
-"    Finally, the modified box is set before you. \"Here you are. Now you're "
-"the proud owner of the system's only home-made core system. It's gotten a "
-"bit bulkier than we thought, with all this rigging for energy and coolant "
+"you. You stand by as the nerds start to mod their box. As they are going "
+"about it, you wonder if they're actually wrecking it and you'll maybe be "
+"left with a piece of worthless junk.\n"
+"    Finally, they set the modified box before you. \"Here you are. Now "
+"you're the proud owner of the system's only home-made core system. It's a "
+"bit bulkier than we expected, with all this rigging for energy and coolant "
 "supply, but it should work just fine, about equivalent to the {outfit}. We "
 "need to go now and think about something more advanced for the next "
 "competition. Have a nice day.\"\n"
@@ -55031,8 +54876,8 @@ msgid ""
 "his drink. \"I was so close! I almost had it! I could feel it in my grasp! "
 "And then I messed it all up! Why did I do it? Hey, wait! You! You can help "
 "me!\" The man grabs your collar. \"How'd you like to make a bit of money and "
-"help me out? You can help me! It'll be good for you, it'll be good for me, "
-"it'll be good for everyone! Will you help me?\""
+"help me out? You can help me! It'll be good for you. It'll be good for me. "
+"It'll be good for everyone! Will you help me?\""
 msgstr ""
 
 #: dat/missions/neutral/drunkard.lua:54 dat/missions/neutral/drunkard.lua:86
@@ -55086,7 +54931,7 @@ msgid ""
 "\"Oh, thank the ancestors! I knew you would help me!\" The man relaxes "
 "considerably and puts his arm around you. \"Have a drink while I explain it "
 "to you.\", he motions to the bartender to bring two drinks over. \"You see, "
-"I know this countess, she's like...whoa...you know what I mean?\", he nudges "
+"I know this countess. She's like...whoa...you know what I mean?\", he nudges "
 "you. \"But she's rich, like personal escort fleet rich, golden shuttles, "
 "diamond laser turrets rich.\n"
 "    Well, occasionally she needs some things shipped that she can't just ask "
@@ -61835,7 +61680,7 @@ msgid ""
 "again, but remember that you still have a criminal record! If you attack any "
 "traders, civilians or {fct} ships, or commit any other felony against this "
 "faction, you will immediately become their enemy again.\n"
-"While this agreement is active your reputation will not change, but if you "
+"While this agreement is active, your reputation will not change, but if you "
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
 msgstr ""
@@ -61872,8 +61717,8 @@ msgstr ""
 #: dat/missions/rehab_common.lua:108
 msgid ""
 "You have committed another offense against this faction! Your rehabilitation "
-"procedure has been canceled, and your reputation is once again bad. You may "
-"start another rehabilitation procedure at a later time."
+"procedure has been canceled, and your reputation is once again tarnished. "
+"You may start another rehabilitation procedure at a later time."
 msgstr ""
 
 #.
@@ -63743,12 +63588,12 @@ msgid ""
 "\"I have another job for you. The Baron was unfortunately not as impressed "
 "as we hoped. So we need a better demonstration, and we think we know what to "
 "do: we're going to demonstrate that the Lancelot, our higher-end fighter "
-"design, is more than capable of defeating destroyer class ships.\n"
+"design, is more than capable of defeating Destroyer class ships.\n"
 "    \"Now, one small problem we face is that pirates almost never use "
-"destroyer class ships; they tend to stick to fighters, corvettes, and "
+"Destroyer class ships; they tend to stick to fighters, corvettes, and "
 "cruisers. More importantly, actually sending a fighter after a Destroyer is "
 "exceedingly dangerous, even if we could find a pirate piloting one. So we "
-"have another plan: we want someone to pilot a destroyer class ship and just "
+"have another plan: we want someone to pilot a Destroyer class ship and just "
 "let another pilot disable them with ion cannons.\n"
 "    \"What do you say? Are you interested?\""
 msgstr ""
@@ -63775,7 +63620,7 @@ msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:69
 msgid ""
-"Jump in {sys} with a destroyer class ship and let the Lancelot disable you"
+"Jump in {sys} with a Destroyer class ship and let the Lancelot disable you"
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:70
@@ -63810,10 +63655,10 @@ msgstr ""
 #: dat/missions/shark/sh01_corvette.lua:105
 msgid ""
 "You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to "
-"disable your Destroyer-class ship."
+"disable your Destroyer class ship."
 msgstr ""
 
-#. Jumping in Toaxis for the battle with a destroyer class ship
+#. Jumping in Toaxis for the battle with a Destroyer class ship
 #. spawns the Shark
 #. The shark becomes nice outfits
 #. you killed the shark
@@ -63834,8 +63679,8 @@ msgstr ""
 msgid ""
 "You sit at Smith's table and ask him if he has a job for you. \"Of course,\" "
 "he answers. \"But this time, it's... well...\n"
-"    \"Listen, I need to explain some background. As you know, Nexus designs "
-"are used far and wide in smaller militaries. The Empire is definitely our "
+"    \"Listen, I need to give some background. As you know, Nexus designs are "
+"used far and wide in smaller militaries. The Empire is definitely our "
 "biggest customer, but the Frontier also notably makes heavy use of our "
 "Lancelot design, as do many independent systems. Still, competition is "
 "stiff; House Dvaered's Vendetta design, for instance, is quite popular with "
@@ -64381,10 +64226,10 @@ msgid ""
 "may have their eyes on the FLF as possible buyers of the Skull and Bones "
 "pirate ships. We don't think the FLF will have any interest in those ships, "
 "but the pirates' ambitions could give them motivation to attack our false "
-"dealer's trade posts, destroying our deal with the FLF anyway. We of course "
-"can't have that.\n"
+"dealer's trade posts, destroying our deal with the FLF anyway. We, of "
+"course, can't have that.\n"
 "    \"So what we want you to do, quite simply, is to eliminate these "
-"pirates. It's not that many of them; there are four pirates we need "
+"pirates. There's not that many of them; there are four pirates we need "
 "eliminated, and thankfully, they're all spread out. That being said, some of "
 "them do have quite big ships, so you will have to make sure you can handle "
 "that. Are you willing to do this job for us?\""
@@ -67597,26 +67442,26 @@ msgstr ""
 
 #: dat/missions/trader/anxiousmerchant.lua:72
 msgid ""
-"As you sit down the merchant looks up at you with a panicked expression, "
+"As you sit down, the merchant looks up at you with a panicked expression, "
 "\"Ahh! What do you want? Can't you see I've enough on my plate as it is?\" "
 "You tell the merchant to calm down and offer a drink. \"Jeez, that's nice of "
-"you... ha, maybe I can cut a break today!\"\n"
+"you... Ha, maybe I can get a break today!\"\n"
 "    You grab a couple of drinks and hand one to the slightly more relaxed "
 "looking merchant as they start to talk. \"So, I work for the Traders Guild. "
-"I transport stuff for them, they pay me. Only problem is I kinda strained my "
-"engines running from pirates on the way to the pick-up and now I'm realising "
-"that my engines just don't have the speed to get me back to beat the "
-"deadline. And to top it all off, I'm late on my bills as is; I can't afford "
-"new engines now! it's like I'm in the Sol nebula without a shield generator."
-"\"\n"
-"    You attempt to reassure the merchant by telling them that surely the "
-"company will cut some slack. \"Like hell they will! I've already been "
+"I transport stuff for them and they pay me. Only problem is, I kinda "
+"strained my engines running from pirates on the way to the pick-up and now "
+"I'm realising that my engines just don't have the speed to get me back to "
+"beat the deadline. And to top it all off, I'm late on my bills as is; I "
+"can't afford new engines now! It's like I'm in the Sol nebula without a "
+"shield generator.\"\n"
+"    You attempt to reassure the merchant by telling them that, surely, the "
+"company will cut them some slack. \"Like hell they will! I've already been "
 "scolded by management for this exact same thing before! If I don't get this "
 "shipment of {tonnes} of {cargo} to {pnt}... I really need this job, you "
-"know? I don't know what to do....\" The merchant pauses. \"Unless... say, "
-"you wouldn't be able to help me out here, would you? I'd just need you to "
-"take the cargo to {pnt} in the {sys} system. Could you? I'll give you the "
-"payment for the mission if you do it; it means a lot!\""
+"know? I don't know what to do...\" The merchant pauses. \"Unless... Say, you "
+"wouldn't be able to help me out here, would you? I'd just need you to take "
+"the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment "
+"for the mission if you do it; it means a lot!\""
 msgstr ""
 
 #: dat/missions/trader/anxiousmerchant.lua:85
@@ -67671,13 +67516,13 @@ msgid ""
 "then anger, \"What the hell is this?! This shipment was supposed to be here "
 "ages ago! We've been shifting stuff around to make up for it and then you "
 "come waltzing in here... where the hell is the employee who was supposed to "
-"deliver this stuff?\" A group of workers rushes along with the Inspector and "
-"you as you try to explain what happened. \"That fool has been causing us all "
-"sorts of problems, and passing on the job to someone as incompetent as you "
-"is the last straw! I swear!\"\n"
+"deliver this stuff?\" A group of workers rushes along with you and the "
+"inspector and you as you try to explain what happened. \"That fool has been "
+"causing us all sorts of problems, and passing on the job to someone as "
+"incompetent as you is the last straw! I swear!\"\n"
 "    You wait to one side as the cargo is hauled off your ship at breakneck "
 "speed and wonder if you should have just dumped the stuff in space. Just as "
-"the last of the cargo is taken off your ship the inspector, who has clearly "
+"the last of the cargo is taken off your ship, the inspector, who has clearly "
 "cooled off a bit, comes up to you and says \"Look, I know you were trying to "
 "do us a favor but next time don't bother if you can't make it on time. I'm "
 "glad you didn't just dump it all into space like some people have done, but "
@@ -88008,6 +87853,135 @@ msgstr "WEAPON_LAYER non valide spécifié"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
+
+#~ msgid "ADMONISHER"
+#~ msgstr "ADMONITEUR"
+
+#~ msgid "PIRATE ADMONISHER"
+#~ msgstr "PIRATE ADMONITEUR"
+
+#, fuzzy
+#~ msgid "ANCESTOR"
+#~ msgstr "ANCÊTRE"
+
+#, fuzzy
+#~ msgid "PIRATE ANCESTOR"
+#~ msgstr "ANCÊTRE PIRATE"
+
+#, fuzzy
+#~ msgid "ARCHIMEDES"
+#~ msgstr "ARCHIMÈDE"
+
+#, fuzzy
+#~ msgid "DERIVATIVE"
+#~ msgstr "DÉRIVÉ"
+
+#, fuzzy
+#~ msgid "ZA'LEK DIABLO"
+#~ msgstr "ZA'LEK DIABLO"
+
+#, fuzzy
+#~ msgid "DRONE"
+#~ msgstr "DRONE"
+
+#, fuzzy
+#~ msgid "SIRIUS FIDELITY"
+#~ msgstr "FIDÉLITÉ SIRIUS"
+
+#, fuzzy
+#~ msgid "GAWAIN"
+#~ msgstr "GAWAIN"
+
+#, fuzzy
+#~ msgid "GODDARD"
+#~ msgstr "GODDARD"
+
+#, fuzzy
+#~ msgid "HAWKING"
+#~ msgstr "HAWKING"
+
+#, fuzzy
+#~ msgid "KAHAN"
+#~ msgstr "KAHAN"
+
+#~ msgid "PIRATE KESTREL"
+#~ msgstr "PIRATE CRÉCERELLE"
+
+#, fuzzy
+#~ msgid "KOALA"
+#~ msgstr "KOALA"
+
+#, fuzzy
+#~ msgid "LANCELOT"
+#~ msgstr "LANCELOT"
+
+#, fuzzy
+#~ msgid "LLAMA"
+#~ msgstr "LLAMA"
+
+#, fuzzy
+#~ msgid "MULE"
+#~ msgstr "MULE"
+
+#, fuzzy
+#~ msgid "PACIFIER"
+#~ msgstr "SUCETTE"
+
+#, fuzzy
+#~ msgid "EMPIRE PEACEMAKER"
+#~ msgstr "PACIFICATEUR DE L'EMPIRE"
+
+#, fuzzy
+#~ msgid "SIRIUS PREACHER"
+#~ msgstr "PRÉDICATEUR SIRIUS"
+
+#, fuzzy
+#~ msgid "QUICKSILVER"
+#~ msgstr "MERCURE"
+
+#, fuzzy
+#~ msgid "RHINO"
+#~ msgstr "RHINOCÉROS"
+
+#, fuzzy
+#~ msgid "PIRATE RHINO"
+#~ msgstr "RHINOCÉROS PIRATE"
+
+#, fuzzy
+#~ msgid "SCHROEDINGER"
+#~ msgstr "SCHROEDINGER"
+
+#, fuzzy
+#~ msgid "SIRIUS SHAMAN"
+#~ msgstr "CHAMAN SIRIUS"
+
+#, fuzzy
+#~ msgid "SHARK"
+#~ msgstr "REQUIN"
+
+#, fuzzy
+#~ msgid "EMPIRE SHARK"
+#~ msgstr "REQUIN DE L’EMPIRE"
+
+#, fuzzy
+#~ msgid "PIRATE SHARK"
+#~ msgstr "REQUIN PIRATE"
+
+#, fuzzy
+#~ msgid "ZA'LEK STING"
+#~ msgstr "ZA’LEK PIQÛRE"
+
+#, fuzzy
+#~ msgid "VENDETTA"
+#~ msgstr "VENDETTA"
+
+#, fuzzy
+#~ msgid "PIRATE VENDETTA"
+#~ msgstr "PIRATE VENDETTA"
+
+#, fuzzy
+#~ msgid "VIGILANCE"
+#~ msgstr "VIGILANCE"
 
 #~ msgid "Nebula Artifact?"
 #~ msgstr "Artefact de Nébuleuse ?"
