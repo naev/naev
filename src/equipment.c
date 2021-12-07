@@ -1980,20 +1980,25 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    for (int i=0; i<array_size(ship->outfits); i++) {
       int ret;
       const Outfit *ammo;
-      const Outfit *o = ship->outfits[i]->outfit;
+      PilotOutfitSlot *s = ship->outfits[i];
+      const Outfit *o = s->outfit;
 
       /* Skip null outfits. */
       if (o==NULL)
          continue;
 
+      /* Ignore locked slots. */
+      if (s->sslot->locked)
+         continue;
+
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
-         pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
+         pilot_rmAmmo( ship, s, outfit_amount(o) );
       }
 
       /* Remove rest. */
-      ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
+      ret = pilot_rmOutfitRaw( ship, s );
       if (ret==0)
          equipment_playerAddOutfit( o, 1 );
    }
