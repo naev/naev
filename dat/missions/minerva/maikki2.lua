@@ -747,7 +747,7 @@ function approach_eccentric ()
       dr(_([["Who sent you here? Was it Dr. Bob? That weasel was always after my precious artefacts. Well, he can't have them! I got all this with my hard work, sweat, and tears! They're all mine!"
 He cackles manically.]]))
       dr(_([["I have hidden them very well. Even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
-You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
+You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the room.]]))
       dr(_([["Anyway, I am very busy now, yes? All this science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       mem.ecc_visitedonce = true
       minerva.log.maikki(_("You met an eccentric researcher named Dr. Strangelove in Westhaven." ))
