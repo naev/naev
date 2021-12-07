@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-06 15:29+0900\n"
+"POT-Creation-Date: 2021-12-06 22:53-0500\n"
 "PO-Revision-Date: 2021-12-05 15:41+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -35315,7 +35315,7 @@ msgstr "No spawn function found"
 #: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/gui.c:1526 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
+#: src/gui.c:1518 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1681 src/map_overlay.c:221
 #: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1948
 #: src/player_autonav.c:91 src/player_autonav.c:213 src/ship.c:205
@@ -37228,7 +37228,9 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:128
 #: dat/missions/baron/baron_prince.lua:130
 #: dat/missions/baron/baron_prince.lua:132
-msgid "Artifact seller"
+#, fuzzy
+#| msgid "Artifact seller"
+msgid "Artefact seller"
 msgstr "人工遺物の売り手"
 
 #: dat/missions/baron/baron_prince.lua:135
@@ -37426,7 +37428,9 @@ msgid "Take the artefact to Baron Sauterfeldt"
 msgstr "人工遺物をザウターフェルト男爵に持っていけ。"
 
 #: dat/missions/baron/baron_prince.lua:201
-msgid "Ancient Artifact"
+#, fuzzy
+#| msgid "Ancient Artifact"
+msgid "Ancient Artefact"
 msgstr "古代の人工遺物"
 
 #: dat/missions/baron/baron_prince.lua:201
@@ -37458,7 +37462,9 @@ msgstr ""
 "提供します。ここに偽物はありませんよ！｣"
 
 #: dat/missions/baron/baron_prince.lua:220
-msgid "Artifact? A"
+#, fuzzy
+#| msgid "Artifact? A"
+msgid "Artefact? A"
 msgstr "人工遺物？　A"
 
 #: dat/missions/baron/baron_prince.lua:220
@@ -37492,7 +37498,9 @@ msgstr ""
 "のご都合主義者たちはだれも信用しないでしょうね！　それで、どうしますか？｣"
 
 #: dat/missions/baron/baron_prince.lua:232
-msgid "Artifact? B"
+#, fuzzy
+#| msgid "Artifact? B"
+msgid "Artefact? B"
 msgstr "人工遺物？　B"
 
 #: dat/missions/baron/baron_prince.lua:240
@@ -37508,13 +37516,17 @@ msgstr ""
 "よ！　偽物にかなりのクレジットをついやしたくはないですよね？｣"
 
 #: dat/missions/baron/baron_prince.lua:244
-msgid "Artifact? C"
+#, fuzzy
+#| msgid "Artifact? C"
+msgid "Artefact? C"
 msgstr "人工遺物？　C"
 
 #. Spawn artefact hunters, maybe.
 #. 60% chance of artefact hunters.
 #: dat/missions/baron/baron_prince.lua:278
-msgid "Artifact Hunter"
+#, fuzzy
+#| msgid "Artifact Hunter"
+msgid "Artefact Hunter"
 msgstr "人工遺物の追跡者"
 
 #. Function that tries to misspell whatever string is passed to it.
@@ -48644,7 +48656,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:184
 msgid ""
-"\"Since I know for a certain that he is involved in, let's call it, \\"
+"\"Since I know for certain that he is involved in, let's call it, \\"
 "\"unsavory business\\\", all we have to do is get him busted and in the "
 "confusion it should be more than easy for me to go free.\""
 msgstr ""
@@ -51690,6 +51702,12 @@ msgstr ""
 msgid "That's what you said last time too!"
 msgstr ""
 
+#: dat/missions/minerva/maikki1.lua:640
+#, fuzzy
+#| msgid "You have been uncovered!"
+msgid "#rYou are about to be discovered!"
+msgstr "あなたは発見されました！"
+
 #: dat/missions/minerva/maikki1.lua:644
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "Run!"
@@ -52899,8 +52917,10 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:697
-msgid "Nebula Artifact?"
-msgstr ""
+#, fuzzy
+#| msgid "nebula artefact"
+msgid "Nebula Artefact?"
+msgstr "星雲の人工物"
 
 #: dat/missions/minerva/maikki2.lua:697
 msgid ""
@@ -52975,7 +52995,7 @@ msgstr ""
 msgid ""
 "\"I have hidden them very well. Even though you somehow got past my security "
 "system and made it into my laboratory, you'll never find them!\"\n"
-"You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the "
+"You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the "
 "room."
 msgstr ""
 
@@ -83213,7 +83233,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr "Background -> 'background' : %s"
 
-#: src/background.c:437 src/gui.c:1717 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:437 src/gui.c:1709 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr "unknown error"
@@ -84547,7 +84567,7 @@ msgstr "Unable to enter CSparse Matrix Cell."
 msgid "Unable to create economy G Matrix."
 msgstr "Unable to create economy G Matrix."
 
-#: src/economy.c:483 src/gui.c:1609 src/ndata.c:199 src/news.c:104
+#: src/economy.c:483 src/gui.c:1601 src/ndata.c:199 src/news.c:104
 #: src/nfile.c:492 src/opengl_tex.c:133 src/opengl_tex.c:370 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:456
 msgid "Out of Memory"
@@ -85317,27 +85337,27 @@ msgstr "Adding translations from %s"
 msgid "Gfx index out of range"
 msgstr "Gfx index out of range"
 
-#: src/gui.c:1686
+#: src/gui.c:1678
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 
-#: src/gui.c:1695
+#: src/gui.c:1687
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
 msgstr "GUI '%s': no function '%s' defined!"
 
-#: src/gui.c:1716
+#: src/gui.c:1708
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
 msgstr "GUI '%s' Lua -> '%s': %s"
 
-#: src/gui.c:1846
+#: src/gui.c:1838
 #, c-format
 msgid "Unable to find GUI '%s'."
 msgstr "Unable to find GUI '%s'."
 
-#: src/gui.c:1859
+#: src/gui.c:1851
 #, c-format
 msgid ""
 "Failed to load GUI Lua: %s\n"
@@ -85348,7 +85368,7 @@ msgstr ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 
-#: src/gui.c:2003
+#: src/gui.c:1995
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr "#oレーダーの範囲を %.0f 倍に設定しました。#0"
@@ -87519,7 +87539,7 @@ msgstr "マップ艤装品"
 msgid "Exit to Main Menu"
 msgstr "メインメニューへ戻る"
 
-#: src/mission.c:103 src/nlua_player.c:1173 src/nlua_player.c:1195
+#: src/mission.c:103 src/nlua_player.c:1179 src/nlua_player.c:1201
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr "Mission '%s' not found in stack"
@@ -88195,8 +88215,8 @@ msgstr "Commodity is invalid."
 msgid "Commodity '%s' not found!"
 msgstr "Commodity '%s' not found!"
 
-#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1289
-#: src/nlua_player.c:1309
+#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1295
+#: src/nlua_player.c:1315
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr "Planet '%s' does not belong to a system."
@@ -88567,47 +88587,47 @@ msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
 "Second parameter to cinematics should be a table of options or omitted!"
 
-#: src/nlua_player.c:717
+#: src/nlua_player.c:723
 msgid "Player must be landed to force takeoff."
 msgstr "Player must be landed to force takeoff."
 
-#: src/nlua_player.c:742
+#: src/nlua_player.c:748
 #, c-format
 msgid "Planet '%s' is not in a system!"
 msgstr "Planet '%s' is not in a system!"
 
-#: src/nlua_player.c:831
+#: src/nlua_player.c:837
 msgid "Must be landed to set the active land window."
 msgstr "Must be landed to set the active land window."
 
-#: src/nlua_player.c:938
+#: src/nlua_player.c:944
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr "Player does not own a ship named '%s'"
 
-#: src/nlua_player.c:1216 src/nlua_player.c:1238
+#: src/nlua_player.c:1222 src/nlua_player.c:1244
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr "Event '%s' not found in stack"
 
-#: src/nlua_player.c:1272
+#: src/nlua_player.c:1278
 msgid "Can not teleport the player while landed!"
 msgstr "Can not teleport the player while landed!"
 
-#: src/nlua_player.c:1274
+#: src/nlua_player.c:1280
 msgid "Can not teleport the player while the comm is open!"
 msgstr "Can not teleport the player while the comm is open!"
 
-#: src/nlua_player.c:1276
+#: src/nlua_player.c:1282
 msgid "Can not teleport the player while they are boarded!"
 msgstr "Can not teleport the player while they are boarded!"
 
-#: src/nlua_player.c:1304
+#: src/nlua_player.c:1310
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr "'%s' is not a valid teleportation target."
 
-#: src/nlua_player.c:1323
+#: src/nlua_player.c:1329
 #, c-format
 msgid "System '%s' does not exist."
 msgstr "System '%s' does not exist."
