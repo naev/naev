@@ -1,16 +1,19 @@
 local luatk = require "luatk"
 local lg = require "love.graphics"
 local utility = require "pilotname.utility"
+local fmt = require "format"
 
 local gene = {}
 
 local skills = {
    [N_("Cannibalism I")] = {
       tier = 0,
+      desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
    },
    [N_("Cannibalism II")] = {
       tier = 5,
       requires = { "Cannibalism I" },
+      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and will also similarly restore energy."),
    },
    -- Core Gene Drives
    [N_("Gene Drive I")] = {
@@ -240,11 +243,31 @@ function gene.window ()
             for i,s in ipairs(g) do
                local px = g.x+s.x
                local py = s.y
+               local alt = "#o"..s.name.."#0"
+               if s.desc then
+                  alt = alt.."\n\n"..s.desc
+               end
+               if s.requires and #s.requires > 0 then
+                  local req = {}
+                  for j,r in ipairs(s.requires) do
+                     -- TODO colour code based on whether acquired
+                     table.insert( req, _(r) )
+                  end
+                  alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
+               end
+               if s.conflicts and #s.conflicts > 0 then
+                  local con = {}
+                  for j,c in ipairs(s.conflicts) do
+                     -- TODO colour code based on whether acquired
+                     table.insert( con, _(c) )
+                  end
+                  alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
+               end
                table.insert( skillslist, {
                   name = s.name,
                   x    = px,
                   y    = py,
-                  alt  = s.name, -- TODO better alt
+                  alt  = alt,
                } )
                if s.required_by then
                   table.insert( skillslink, {
@@ -283,7 +306,7 @@ function gene.window ()
       lg.setColor( {0,0,0,1} )
       lg.rectangle( "fill", x+10,y+10,50,50 )
       lg.setColor( {1,1,1,1} )
-      lg.print( self.skill.name, font, x+15, y+15, self.w-30, "center" )
+      lg.printf( self.skill.name, font, x+15, y+15, self.w-30 )
    end
    function SkillIcon:drawover( bx, by )
       local x, y = bx+self.x, by+self.y
