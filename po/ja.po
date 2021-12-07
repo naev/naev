@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-07 00:10-0500\n"
+"POT-Creation-Date: 2021-12-07 00:11-0500\n"
 "PO-Revision-Date: 2021-12-05 15:41+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -699,6 +699,138 @@ msgstr "EvanR"
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
 msgstr "アートワークへの貢献者"
+
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
+msgstr "アドマニシャー"
+
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr "海賊アドマニシャー"
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+msgid "ANCESTOR"
+msgstr "アンセスター"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr "海賊アンセスター"
+
+#: artwork/gfx/loading/archimedes.webp.txt:1
+msgid "ARCHIMEDES"
+msgstr "アルキメデス"
+
+#: artwork/gfx/loading/derivative.webp.txt:1
+msgid "DERIVATIVE"
+msgstr "デリバティブ"
+
+#: artwork/gfx/loading/diablo.webp.txt:1
+msgid "ZA'LEK DIABLO"
+msgstr "ザレク・ディアブロ"
+
+#: artwork/gfx/loading/drone.webp.txt:1
+msgid "DRONE"
+msgstr "ドローン"
+
+#: artwork/gfx/loading/fidelity.webp.txt:1
+msgid "SIRIUS FIDELITY"
+msgstr "シリウス・フィデリティー"
+
+#: artwork/gfx/loading/gawain.webp.txt:1
+msgid "GAWAIN"
+msgstr "ガウェイン"
+
+#: artwork/gfx/loading/goddard.webp.txt:1
+msgid "GODDARD"
+msgstr "ゴダード"
+
+#: artwork/gfx/loading/hawking.webp.txt:1
+msgid "HAWKING"
+msgstr "ホーキング"
+
+#: artwork/gfx/loading/kahan.webp.txt:1
+msgid "KAHAN"
+msgstr "カハン"
+
+#: artwork/gfx/loading/kestrel_pirate.webp.txt:1
+msgid "PIRATE KESTREL"
+msgstr "海賊ケストレル"
+
+#: artwork/gfx/loading/koala.webp.txt:1
+msgid "KOALA"
+msgstr "コアラ"
+
+#: artwork/gfx/loading/lancelot.webp.txt:1
+msgid "LANCELOT"
+msgstr "ランスロット"
+
+#: artwork/gfx/loading/llama.webp.txt:1
+msgid "LLAMA"
+msgstr "ラマ"
+
+#: artwork/gfx/loading/mule.webp.txt:1
+msgid "MULE"
+msgstr "ミュール"
+
+#: artwork/gfx/loading/pacifier.webp.txt:1
+msgid "PACIFIER"
+msgstr "パシファイアー"
+
+#: artwork/gfx/loading/peacemaker.webp.txt:1
+msgid "EMPIRE PEACEMAKER"
+msgstr "帝国ピースメイカー"
+
+#: artwork/gfx/loading/preacher.webp.txt:1
+msgid "SIRIUS PREACHER"
+msgstr "シリウス・プリーチャー"
+
+#: artwork/gfx/loading/quicksilver.webp.txt:1
+msgid "QUICKSILVER"
+msgstr "クイックシルバー"
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+msgid "RHINO"
+msgstr "ライノ"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr "海賊ライノ"
+
+#: artwork/gfx/loading/schroedinger.webp.txt:1
+msgid "SCHROEDINGER"
+msgstr "シュレディンガー"
+
+#: artwork/gfx/loading/shaman.webp.txt:1
+msgid "SIRIUS SHAMAN"
+msgstr "シリウス・シャーマン"
+
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr "シャーク"
+
+#: artwork/gfx/loading/shark_empire.webp.txt:1
+msgid "EMPIRE SHARK"
+msgstr "帝国シャーク"
+
+#: artwork/gfx/loading/shark_pirate.webp.txt:1
+msgid "PIRATE SHARK"
+msgstr "海賊シャーク"
+
+#: artwork/gfx/loading/sting.webp.txt:1
+msgid "ZA'LEK STING"
+msgstr "ザレク・スティング"
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+msgid "VENDETTA"
+msgstr "ベンデッタ"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr "海賊ベンデッタ"
+
+#: artwork/gfx/loading/vigilance.webp.txt:1
+msgid "VIGILANCE"
+msgstr "ビジランス"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
@@ -92884,105 +93016,6 @@ msgstr "Invalid WEAPON_LAYER specified"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
-
-#~ msgid "ADMONISHER"
-#~ msgstr "アドマニシャー"
-
-#~ msgid "PIRATE ADMONISHER"
-#~ msgstr "海賊アドマニシャー"
-
-#~ msgid "ANCESTOR"
-#~ msgstr "アンセスター"
-
-#~ msgid "PIRATE ANCESTOR"
-#~ msgstr "海賊アンセスター"
-
-#~ msgid "ARCHIMEDES"
-#~ msgstr "アルキメデス"
-
-#~ msgid "DERIVATIVE"
-#~ msgstr "デリバティブ"
-
-#~ msgid "ZA'LEK DIABLO"
-#~ msgstr "ザレク・ディアブロ"
-
-#~ msgid "DRONE"
-#~ msgstr "ドローン"
-
-#~ msgid "SIRIUS FIDELITY"
-#~ msgstr "シリウス・フィデリティー"
-
-#~ msgid "GAWAIN"
-#~ msgstr "ガウェイン"
-
-#~ msgid "GODDARD"
-#~ msgstr "ゴダード"
-
-#~ msgid "HAWKING"
-#~ msgstr "ホーキング"
-
-#~ msgid "KAHAN"
-#~ msgstr "カハン"
-
-#~ msgid "PIRATE KESTREL"
-#~ msgstr "海賊ケストレル"
-
-#~ msgid "KOALA"
-#~ msgstr "コアラ"
-
-#~ msgid "LANCELOT"
-#~ msgstr "ランスロット"
-
-#~ msgid "LLAMA"
-#~ msgstr "ラマ"
-
-#~ msgid "MULE"
-#~ msgstr "ミュール"
-
-#~ msgid "PACIFIER"
-#~ msgstr "パシファイアー"
-
-#~ msgid "EMPIRE PEACEMAKER"
-#~ msgstr "帝国ピースメイカー"
-
-#~ msgid "SIRIUS PREACHER"
-#~ msgstr "シリウス・プリーチャー"
-
-#~ msgid "QUICKSILVER"
-#~ msgstr "クイックシルバー"
-
-#~ msgid "RHINO"
-#~ msgstr "ライノ"
-
-#~ msgid "PIRATE RHINO"
-#~ msgstr "海賊ライノ"
-
-#~ msgid "SCHROEDINGER"
-#~ msgstr "シュレディンガー"
-
-#~ msgid "SIRIUS SHAMAN"
-#~ msgstr "シリウス・シャーマン"
-
-#~ msgid "SHARK"
-#~ msgstr "シャーク"
-
-#~ msgid "EMPIRE SHARK"
-#~ msgstr "帝国シャーク"
-
-#~ msgid "PIRATE SHARK"
-#~ msgstr "海賊シャーク"
-
-#~ msgid "ZA'LEK STING"
-#~ msgstr "ザレク・スティング"
-
-#~ msgid "VENDETTA"
-#~ msgstr "ベンデッタ"
-
-#~ msgid "PIRATE VENDETTA"
-#~ msgstr "海賊ベンデッタ"
-
-#~ msgid "VIGILANCE"
-#~ msgstr "ビジランス"
 
 #, c-format
 #~ msgid "SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"

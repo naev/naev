@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-07 00:10-0500\n"
+"POT-Creation-Date: 2021-12-07 00:11-0500\n"
 "PO-Revision-Date: 2021-12-02 00:34+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -710,6 +710,168 @@ msgstr "EvanR"
 #| msgid "Major Contributors"
 msgid "Artwork Contributors"
 msgstr "Contributeurs majeurs"
+
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
+msgstr "ADMONITEUR"
+
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr "PIRATE ADMONITEUR"
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+#, fuzzy
+msgid "ANCESTOR"
+msgstr "ANCÊTRE"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+#, fuzzy
+msgid "PIRATE ANCESTOR"
+msgstr "ANCÊTRE PIRATE"
+
+#: artwork/gfx/loading/archimedes.webp.txt:1
+#, fuzzy
+msgid "ARCHIMEDES"
+msgstr "ARCHIMÈDE"
+
+#: artwork/gfx/loading/derivative.webp.txt:1
+#, fuzzy
+msgid "DERIVATIVE"
+msgstr "DÉRIVÉ"
+
+#: artwork/gfx/loading/diablo.webp.txt:1
+#, fuzzy
+msgid "ZA'LEK DIABLO"
+msgstr "ZA'LEK DIABLO"
+
+#: artwork/gfx/loading/drone.webp.txt:1
+#, fuzzy
+msgid "DRONE"
+msgstr "DRONE"
+
+#: artwork/gfx/loading/fidelity.webp.txt:1
+#, fuzzy
+msgid "SIRIUS FIDELITY"
+msgstr "FIDÉLITÉ SIRIUS"
+
+#: artwork/gfx/loading/gawain.webp.txt:1
+#, fuzzy
+msgid "GAWAIN"
+msgstr "GAWAIN"
+
+#: artwork/gfx/loading/goddard.webp.txt:1
+#, fuzzy
+msgid "GODDARD"
+msgstr "GODDARD"
+
+#: artwork/gfx/loading/hawking.webp.txt:1
+#, fuzzy
+msgid "HAWKING"
+msgstr "HAWKING"
+
+#: artwork/gfx/loading/kahan.webp.txt:1
+#, fuzzy
+msgid "KAHAN"
+msgstr "KAHAN"
+
+#: artwork/gfx/loading/kestrel_pirate.webp.txt:1
+msgid "PIRATE KESTREL"
+msgstr "PIRATE CRÉCERELLE"
+
+#: artwork/gfx/loading/koala.webp.txt:1
+#, fuzzy
+msgid "KOALA"
+msgstr "KOALA"
+
+#: artwork/gfx/loading/lancelot.webp.txt:1
+#, fuzzy
+msgid "LANCELOT"
+msgstr "LANCELOT"
+
+#: artwork/gfx/loading/llama.webp.txt:1
+#, fuzzy
+msgid "LLAMA"
+msgstr "LLAMA"
+
+#: artwork/gfx/loading/mule.webp.txt:1
+#, fuzzy
+msgid "MULE"
+msgstr "MULE"
+
+#: artwork/gfx/loading/pacifier.webp.txt:1
+#, fuzzy
+msgid "PACIFIER"
+msgstr "SUCETTE"
+
+#: artwork/gfx/loading/peacemaker.webp.txt:1
+#, fuzzy
+msgid "EMPIRE PEACEMAKER"
+msgstr "PACIFICATEUR DE L'EMPIRE"
+
+#: artwork/gfx/loading/preacher.webp.txt:1
+#, fuzzy
+msgid "SIRIUS PREACHER"
+msgstr "PRÉDICATEUR SIRIUS"
+
+#: artwork/gfx/loading/quicksilver.webp.txt:1
+#, fuzzy
+msgid "QUICKSILVER"
+msgstr "MERCURE"
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+#, fuzzy
+msgid "RHINO"
+msgstr "RHINOCÉROS"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+#, fuzzy
+msgid "PIRATE RHINO"
+msgstr "RHINOCÉROS PIRATE"
+
+#: artwork/gfx/loading/schroedinger.webp.txt:1
+#, fuzzy
+msgid "SCHROEDINGER"
+msgstr "SCHROEDINGER"
+
+#: artwork/gfx/loading/shaman.webp.txt:1
+#, fuzzy
+msgid "SIRIUS SHAMAN"
+msgstr "CHAMAN SIRIUS"
+
+#: artwork/gfx/loading/shark.webp.txt:1
+#, fuzzy
+msgid "SHARK"
+msgstr "REQUIN"
+
+#: artwork/gfx/loading/shark_empire.webp.txt:1
+#, fuzzy
+msgid "EMPIRE SHARK"
+msgstr "REQUIN DE L’EMPIRE"
+
+#: artwork/gfx/loading/shark_pirate.webp.txt:1
+#, fuzzy
+msgid "PIRATE SHARK"
+msgstr "REQUIN PIRATE"
+
+#: artwork/gfx/loading/sting.webp.txt:1
+#, fuzzy
+msgid "ZA'LEK STING"
+msgstr "ZA’LEK PIQÛRE"
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+#, fuzzy
+msgid "VENDETTA"
+msgstr "VENDETTA"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+#, fuzzy
+msgid "PIRATE VENDETTA"
+msgstr "PIRATE VENDETTA"
+
+#: artwork/gfx/loading/vigilance.webp.txt:1
+#, fuzzy
+msgid "VIGILANCE"
+msgstr "VIGILANCE"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
@@ -87853,135 +88015,6 @@ msgstr "WEAPON_LAYER non valide spécifié"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
-
-#~ msgid "ADMONISHER"
-#~ msgstr "ADMONITEUR"
-
-#~ msgid "PIRATE ADMONISHER"
-#~ msgstr "PIRATE ADMONITEUR"
-
-#, fuzzy
-#~ msgid "ANCESTOR"
-#~ msgstr "ANCÊTRE"
-
-#, fuzzy
-#~ msgid "PIRATE ANCESTOR"
-#~ msgstr "ANCÊTRE PIRATE"
-
-#, fuzzy
-#~ msgid "ARCHIMEDES"
-#~ msgstr "ARCHIMÈDE"
-
-#, fuzzy
-#~ msgid "DERIVATIVE"
-#~ msgstr "DÉRIVÉ"
-
-#, fuzzy
-#~ msgid "ZA'LEK DIABLO"
-#~ msgstr "ZA'LEK DIABLO"
-
-#, fuzzy
-#~ msgid "DRONE"
-#~ msgstr "DRONE"
-
-#, fuzzy
-#~ msgid "SIRIUS FIDELITY"
-#~ msgstr "FIDÉLITÉ SIRIUS"
-
-#, fuzzy
-#~ msgid "GAWAIN"
-#~ msgstr "GAWAIN"
-
-#, fuzzy
-#~ msgid "GODDARD"
-#~ msgstr "GODDARD"
-
-#, fuzzy
-#~ msgid "HAWKING"
-#~ msgstr "HAWKING"
-
-#, fuzzy
-#~ msgid "KAHAN"
-#~ msgstr "KAHAN"
-
-#~ msgid "PIRATE KESTREL"
-#~ msgstr "PIRATE CRÉCERELLE"
-
-#, fuzzy
-#~ msgid "KOALA"
-#~ msgstr "KOALA"
-
-#, fuzzy
-#~ msgid "LANCELOT"
-#~ msgstr "LANCELOT"
-
-#, fuzzy
-#~ msgid "LLAMA"
-#~ msgstr "LLAMA"
-
-#, fuzzy
-#~ msgid "MULE"
-#~ msgstr "MULE"
-
-#, fuzzy
-#~ msgid "PACIFIER"
-#~ msgstr "SUCETTE"
-
-#, fuzzy
-#~ msgid "EMPIRE PEACEMAKER"
-#~ msgstr "PACIFICATEUR DE L'EMPIRE"
-
-#, fuzzy
-#~ msgid "SIRIUS PREACHER"
-#~ msgstr "PRÉDICATEUR SIRIUS"
-
-#, fuzzy
-#~ msgid "QUICKSILVER"
-#~ msgstr "MERCURE"
-
-#, fuzzy
-#~ msgid "RHINO"
-#~ msgstr "RHINOCÉROS"
-
-#, fuzzy
-#~ msgid "PIRATE RHINO"
-#~ msgstr "RHINOCÉROS PIRATE"
-
-#, fuzzy
-#~ msgid "SCHROEDINGER"
-#~ msgstr "SCHROEDINGER"
-
-#, fuzzy
-#~ msgid "SIRIUS SHAMAN"
-#~ msgstr "CHAMAN SIRIUS"
-
-#, fuzzy
-#~ msgid "SHARK"
-#~ msgstr "REQUIN"
-
-#, fuzzy
-#~ msgid "EMPIRE SHARK"
-#~ msgstr "REQUIN DE L’EMPIRE"
-
-#, fuzzy
-#~ msgid "PIRATE SHARK"
-#~ msgstr "REQUIN PIRATE"
-
-#, fuzzy
-#~ msgid "ZA'LEK STING"
-#~ msgstr "ZA’LEK PIQÛRE"
-
-#, fuzzy
-#~ msgid "VENDETTA"
-#~ msgstr "VENDETTA"
-
-#, fuzzy
-#~ msgid "PIRATE VENDETTA"
-#~ msgstr "PIRATE VENDETTA"
-
-#, fuzzy
-#~ msgid "VIGILANCE"
-#~ msgstr "VIGILANCE"
 
 #~ msgid "Nebula Artifact?"
 #~ msgstr "Artefact de Nébuleuse ?"

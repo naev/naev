@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-07 00:10-0500\n"
+"POT-Creation-Date: 2021-12-07 00:11-0500\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -696,6 +696,140 @@ msgstr ""
 #| msgid "Major Contributors"
 msgid "Artwork Contributors"
 msgstr "Principais Contribuintes"
+
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
+msgstr ""
+
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+#, fuzzy
+#| msgid "PIRATE SHARK"
+msgid "PIRATE ADMONISHER"
+msgstr "PIRATA TUBARÃO"
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+msgid "ANCESTOR"
+msgstr "ANTIGO"
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr "PIRATA ANTIGO"
+
+#: artwork/gfx/loading/archimedes.webp.txt:1
+msgid "ARCHIMEDES"
+msgstr "ARCHIMEDES"
+
+#: artwork/gfx/loading/derivative.webp.txt:1
+msgid "DERIVATIVE"
+msgstr "DERIVADO"
+
+#: artwork/gfx/loading/diablo.webp.txt:1
+msgid "ZA'LEK DIABLO"
+msgstr "ZA'LEK DIABLO"
+
+#: artwork/gfx/loading/drone.webp.txt:1
+msgid "DRONE"
+msgstr "DRONE"
+
+#: artwork/gfx/loading/fidelity.webp.txt:1
+msgid "SIRIUS FIDELITY"
+msgstr "SIRIUS FIDELITY"
+
+#: artwork/gfx/loading/gawain.webp.txt:1
+msgid "GAWAIN"
+msgstr "GAWAIN"
+
+#: artwork/gfx/loading/goddard.webp.txt:1
+msgid "GODDARD"
+msgstr "GODDARD"
+
+#: artwork/gfx/loading/hawking.webp.txt:1
+msgid "HAWKING"
+msgstr "HAWKING"
+
+#: artwork/gfx/loading/kahan.webp.txt:1
+msgid "KAHAN"
+msgstr "KAHAN"
+
+#: artwork/gfx/loading/kestrel_pirate.webp.txt:1
+msgid "PIRATE KESTREL"
+msgstr "PIRATA KESTREL"
+
+#: artwork/gfx/loading/koala.webp.txt:1
+msgid "KOALA"
+msgstr "KOALA"
+
+#: artwork/gfx/loading/lancelot.webp.txt:1
+msgid "LANCELOT"
+msgstr "LANCELOT"
+
+#: artwork/gfx/loading/llama.webp.txt:1
+msgid "LLAMA"
+msgstr "LLAMA"
+
+#: artwork/gfx/loading/mule.webp.txt:1
+msgid "MULE"
+msgstr "MULA"
+
+#: artwork/gfx/loading/pacifier.webp.txt:1
+msgid "PACIFIER"
+msgstr "PACIFICADOR"
+
+#: artwork/gfx/loading/peacemaker.webp.txt:1
+msgid "EMPIRE PEACEMAKER"
+msgstr "PACIFICADOR IMPERIAL"
+
+#: artwork/gfx/loading/preacher.webp.txt:1
+msgid "SIRIUS PREACHER"
+msgstr "SIRIUS PREACHER"
+
+#: artwork/gfx/loading/quicksilver.webp.txt:1
+msgid "QUICKSILVER"
+msgstr "QUICKSILVER"
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+msgid "RHINO"
+msgstr "RHINO"
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr "PIRATA RHINO"
+
+#: artwork/gfx/loading/schroedinger.webp.txt:1
+msgid "SCHROEDINGER"
+msgstr "SCHROEDINGER"
+
+#: artwork/gfx/loading/shaman.webp.txt:1
+msgid "SIRIUS SHAMAN"
+msgstr "SIRIUS SHAMAN"
+
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr "TUBARÃO"
+
+#: artwork/gfx/loading/shark_empire.webp.txt:1
+msgid "EMPIRE SHARK"
+msgstr "TUBARÃO DO IMPÉRIO"
+
+#: artwork/gfx/loading/shark_pirate.webp.txt:1
+msgid "PIRATE SHARK"
+msgstr "PIRATA TUBARÃO"
+
+#: artwork/gfx/loading/sting.webp.txt:1
+msgid "ZA'LEK STING"
+msgstr "ZA'LEK STING"
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+msgid "VENDETTA"
+msgstr "VENDETTA"
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr "PIRATA VENDETTA"
+
+#: artwork/gfx/loading/vigilance.webp.txt:1
+msgid "VIGILANCE"
+msgstr "VIGILÂNCIA"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
@@ -86649,99 +86783,6 @@ msgstr ""
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
-
-#~ msgid "ANCESTOR"
-#~ msgstr "ANTIGO"
-
-#~ msgid "PIRATE ANCESTOR"
-#~ msgstr "PIRATA ANTIGO"
-
-#~ msgid "ARCHIMEDES"
-#~ msgstr "ARCHIMEDES"
-
-#~ msgid "DERIVATIVE"
-#~ msgstr "DERIVADO"
-
-#~ msgid "ZA'LEK DIABLO"
-#~ msgstr "ZA'LEK DIABLO"
-
-#~ msgid "DRONE"
-#~ msgstr "DRONE"
-
-#~ msgid "SIRIUS FIDELITY"
-#~ msgstr "SIRIUS FIDELITY"
-
-#~ msgid "GAWAIN"
-#~ msgstr "GAWAIN"
-
-#~ msgid "GODDARD"
-#~ msgstr "GODDARD"
-
-#~ msgid "HAWKING"
-#~ msgstr "HAWKING"
-
-#~ msgid "KAHAN"
-#~ msgstr "KAHAN"
-
-#~ msgid "PIRATE KESTREL"
-#~ msgstr "PIRATA KESTREL"
-
-#~ msgid "KOALA"
-#~ msgstr "KOALA"
-
-#~ msgid "LANCELOT"
-#~ msgstr "LANCELOT"
-
-#~ msgid "LLAMA"
-#~ msgstr "LLAMA"
-
-#~ msgid "MULE"
-#~ msgstr "MULA"
-
-#~ msgid "PACIFIER"
-#~ msgstr "PACIFICADOR"
-
-#~ msgid "EMPIRE PEACEMAKER"
-#~ msgstr "PACIFICADOR IMPERIAL"
-
-#~ msgid "SIRIUS PREACHER"
-#~ msgstr "SIRIUS PREACHER"
-
-#~ msgid "QUICKSILVER"
-#~ msgstr "QUICKSILVER"
-
-#~ msgid "RHINO"
-#~ msgstr "RHINO"
-
-#~ msgid "PIRATE RHINO"
-#~ msgstr "PIRATA RHINO"
-
-#~ msgid "SCHROEDINGER"
-#~ msgstr "SCHROEDINGER"
-
-#~ msgid "SIRIUS SHAMAN"
-#~ msgstr "SIRIUS SHAMAN"
-
-#~ msgid "SHARK"
-#~ msgstr "TUBARÃO"
-
-#~ msgid "EMPIRE SHARK"
-#~ msgstr "TUBARÃO DO IMPÉRIO"
-
-#~ msgid "PIRATE SHARK"
-#~ msgstr "PIRATA TUBARÃO"
-
-#~ msgid "ZA'LEK STING"
-#~ msgstr "ZA'LEK STING"
-
-#~ msgid "VENDETTA"
-#~ msgstr "VENDETTA"
-
-#~ msgid "PIRATE VENDETTA"
-#~ msgstr "PIRATA VENDETTA"
-
-#~ msgid "VIGILANCE"
-#~ msgstr "VIGILÂNCIA"
 
 #~ msgid "Alexian"
 #~ msgstr "Alexian"

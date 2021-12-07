@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-07 00:10-0500\n"
+"POT-Creation-Date: 2021-12-07 00:11-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -624,6 +624,138 @@ msgstr ""
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
+msgstr ""
+
+#: artwork/gfx/loading/admonisher.webp.txt:1
+msgid "ADMONISHER"
+msgstr ""
+
+#: artwork/gfx/loading/admonisher_pirate.webp.txt:1
+msgid "PIRATE ADMONISHER"
+msgstr ""
+
+#: artwork/gfx/loading/ancestor.webp.txt:1
+msgid "ANCESTOR"
+msgstr ""
+
+#: artwork/gfx/loading/ancestor_pirate.webp.txt:1
+msgid "PIRATE ANCESTOR"
+msgstr ""
+
+#: artwork/gfx/loading/archimedes.webp.txt:1
+msgid "ARCHIMEDES"
+msgstr ""
+
+#: artwork/gfx/loading/derivative.webp.txt:1
+msgid "DERIVATIVE"
+msgstr ""
+
+#: artwork/gfx/loading/diablo.webp.txt:1
+msgid "ZA'LEK DIABLO"
+msgstr ""
+
+#: artwork/gfx/loading/drone.webp.txt:1
+msgid "DRONE"
+msgstr ""
+
+#: artwork/gfx/loading/fidelity.webp.txt:1
+msgid "SIRIUS FIDELITY"
+msgstr ""
+
+#: artwork/gfx/loading/gawain.webp.txt:1
+msgid "GAWAIN"
+msgstr ""
+
+#: artwork/gfx/loading/goddard.webp.txt:1
+msgid "GODDARD"
+msgstr ""
+
+#: artwork/gfx/loading/hawking.webp.txt:1
+msgid "HAWKING"
+msgstr ""
+
+#: artwork/gfx/loading/kahan.webp.txt:1
+msgid "KAHAN"
+msgstr ""
+
+#: artwork/gfx/loading/kestrel_pirate.webp.txt:1
+msgid "PIRATE KESTREL"
+msgstr ""
+
+#: artwork/gfx/loading/koala.webp.txt:1
+msgid "KOALA"
+msgstr ""
+
+#: artwork/gfx/loading/lancelot.webp.txt:1
+msgid "LANCELOT"
+msgstr ""
+
+#: artwork/gfx/loading/llama.webp.txt:1
+msgid "LLAMA"
+msgstr ""
+
+#: artwork/gfx/loading/mule.webp.txt:1
+msgid "MULE"
+msgstr ""
+
+#: artwork/gfx/loading/pacifier.webp.txt:1
+msgid "PACIFIER"
+msgstr ""
+
+#: artwork/gfx/loading/peacemaker.webp.txt:1
+msgid "EMPIRE PEACEMAKER"
+msgstr ""
+
+#: artwork/gfx/loading/preacher.webp.txt:1
+msgid "SIRIUS PREACHER"
+msgstr ""
+
+#: artwork/gfx/loading/quicksilver.webp.txt:1
+msgid "QUICKSILVER"
+msgstr ""
+
+#: artwork/gfx/loading/rhino.webp.txt:1
+msgid "RHINO"
+msgstr ""
+
+#: artwork/gfx/loading/rhino_pirate.webp.txt:1
+msgid "PIRATE RHINO"
+msgstr ""
+
+#: artwork/gfx/loading/schroedinger.webp.txt:1
+msgid "SCHROEDINGER"
+msgstr ""
+
+#: artwork/gfx/loading/shaman.webp.txt:1
+msgid "SIRIUS SHAMAN"
+msgstr ""
+
+#: artwork/gfx/loading/shark.webp.txt:1
+msgid "SHARK"
+msgstr ""
+
+#: artwork/gfx/loading/shark_empire.webp.txt:1
+msgid "EMPIRE SHARK"
+msgstr ""
+
+#: artwork/gfx/loading/shark_pirate.webp.txt:1
+msgid "PIRATE SHARK"
+msgstr ""
+
+#: artwork/gfx/loading/sting.webp.txt:1
+msgid "ZA'LEK STING"
+msgstr ""
+
+#: artwork/gfx/loading/vendetta.webp.txt:1
+msgid "VENDETTA"
+msgstr ""
+
+#: artwork/gfx/loading/vendetta_pirate.webp.txt:1
+msgid "PIRATE VENDETTA"
+msgstr ""
+
+#: artwork/gfx/loading/vigilance.webp.txt:1
+msgid "VIGILANCE"
 msgstr ""
 
 #: dat/assets/abacus.xml:2
