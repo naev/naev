@@ -309,5 +309,5 @@ function heartbeat ()
    -- Tell the player to land
    misn.osdActive(3)
    mem.state = 2
-   mem.mrk = misn.markerMove( mem.mrk, mainpnt )
+   misn.markerMove( mem.mrk, mainpnt )
 end

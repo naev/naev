@@ -205,7 +205,7 @@ function pilot_death( _p, _attacker )
    mem.state = 2
    player.msg(fmt.f(_("Target eliminated! Return to {pnt} ({sys} system)."), {pnt=mem.retpnt,sys=mem.retsys}))
    misn.osdActive( 3 )
-   mem.marker = misn.markerMove( mem.marker, mem.retpnt )
+   misn.markerMove( mem.marker, mem.retpnt )
 end
 
 function pilot_jump ()
