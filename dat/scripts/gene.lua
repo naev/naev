@@ -165,11 +165,13 @@ function gene.window ()
          end
          s2.conflicted_by = s
       end
+      s.conflicts = con
       local req = s.requires or {}
       for i,r in ipairs(req) do
          local s2 = skills[r]
          s2.required_by = s
       end
+      s.requires = req
    end
 
    -- Recursive group creation
@@ -182,13 +184,13 @@ function gene.window ()
       grp.x2 = math.max( grp.x2, node.x )
       grp.y2 = math.max( grp.y2, node.y )
       table.insert( grp, node )
-      for i,c in ipairs(node.conflicts or {}) do
+      for i,c in ipairs(node.conflicts) do
          grp = create_group_rec( grp, skills[c], x+1 )
       end
       if node.required_by then
          grp = create_group_rec( grp, node.required_by, x )
       end
-      for i,r in ipairs(node.requires or {}) do
+      for i,r in ipairs(node.requires) do
          grp = create_group_rec( grp, skills[r], x )
       end
       return grp
@@ -243,11 +245,11 @@ function gene.window ()
             for i,s in ipairs(g) do
                local px = g.x+s.x
                local py = s.y
-               local alt = "#o"..s.name.."#0"
+               local alt = "#o".._(s.name).."#0"
                if s.desc then
                   alt = alt.."\n\n"..s.desc
                end
-               if s.requires and #s.requires > 0 then
+               if #s.requires > 0 then
                   local req = {}
                   for j,r in ipairs(s.requires) do
                      -- TODO colour code based on whether acquired
@@ -255,7 +257,7 @@ function gene.window ()
                   end
                   alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
                end
-               if s.conflicts and #s.conflicts > 0 then
+               if #s.conflicts > 0 then
                   local con = {}
                   for j,c in ipairs(s.conflicts) do
                      -- TODO colour code based on whether acquired
@@ -263,12 +265,11 @@ function gene.window ()
                   end
                   alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
                end
-               table.insert( skillslist, {
-                  name = s.name,
-                  x    = px,
-                  y    = py,
-                  alt  = alt,
-               } )
+               s.x = px
+               s.y = py
+               s.alt = alt
+               s.enabled = (s.tier==0)
+               table.insert( skillslist, s )
                if s.required_by then
                   table.insert( skillslink, {
                      x1 = px,
@@ -291,6 +292,15 @@ function gene.window ()
       end
    end
 
+   local function skill_canEnable( s )
+      for k,r in ipairs(s.requires or {}) do
+         if not skills[r].enabled then
+            return false
+         end
+      end
+      return true
+   end
+
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )
    local SkillIcon_mt = { __index = SkillIcon }
@@ -302,8 +312,13 @@ function gene.window ()
    end
    local font = lg.newFont(12)
    function SkillIcon:draw( bx, by )
+      local s = self.skill
       local x, y = bx+self.x, by+self.y
-      lg.setColor( {0,0,0,1} )
+      if s.enabled then
+         lg.setColor( {0,0.4,0.8,1} )
+      else
+         lg.setColor( {0,0,0,1} )
+      end
       lg.rectangle( "fill", x+10,y+10,50,50 )
       lg.setColor( {1,1,1,1} )
       lg.printf( self.skill.name, font, x+15, y+15, self.w-30 )
@@ -314,8 +329,12 @@ function gene.window ()
          luatk.drawAltText( x+50, y+10, self.skill.alt, 400 )
       end
    end
-   --function SkillIcon:clicked ()
-   --end
+   function SkillIcon:clicked ()
+      local s = self.skill
+      if skill_canEnable( s ) then
+         self.skill.enabled = true
+      end
+   end
 
    local w, h = 1100, 600
    local wdw = luatk.newWindow( nil, nil, w, h )
