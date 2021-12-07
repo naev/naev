@@ -64,8 +64,8 @@ function accept ()
    end
 
    if not tk.yesno( _("A group of excited nerds"), fmt.f(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
-    "Hi, I'm Mia. We need transportation, and you look as if you could need some dough. Interested?"
-    You reply that for a deal to be worked out, they better provide some detail.
+    "Hi, I'm Mia. We need transportation, and you look as if you could use some dough. Interested?"
+    You reply that for a deal to be worked out, they better provide some details.
     "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
     You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]), {pnt=mem.destPlanet} )) then
       misn.finish(false)
@@ -83,7 +83,7 @@ function accept ()
 
       tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
-    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=mem.destPlanet}))
+    "Really? You'll do it? Um, great. Fantastic. I just knew that, eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=mem.destPlanet}))
       local distance = vec2.dist( planet.pos(mem.srcPlanet), planet.pos(mem.destPlanet) )
       local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
       mem.expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
@@ -115,7 +115,7 @@ function nerds_land1()
       if mem.intime then
       -- in time, right planet
          tk.msg(_("Happy nerds"), fmt.f(_([["Good job, {player}," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to {pnt}."
-    That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]), {player=player.name(), pnt=mem.srcPlanet} ))
+    That said, the nerds shoulder the box and rush towards a banner which reads "Admissions".]]), {player=player.name(), pnt=mem.srcPlanet} ))
            misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
          mem.expiryDate = time.get() + time.create(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          mem.hailed = false
@@ -134,7 +134,7 @@ function nerds_land1()
       if not mem.intime then
       -- late, not even the right planet
          tk.msg(_("Furious nerds"), _([[The nerds quickly and quietly pack up their box and start to leave your ship. Finally, Mia turns to you. Her body language suggests that she's almost bursting with anger. Yet her voice is controlled when she starts talking:
-    "You're a sorry loser. The contest is almost over and we are stranded in some dump we never wanted to see. I'm sure you agree that this isn't worth any payment." She turns to leave, but then adds: "Are you sure that everything is in order with your ship's core? You don't want it to melt down just in the middle of a fight, do you?" With this, she joins the rest of her group, and they are gone.]]))
+    "You're a sorry loser. The contest is almost over and we are stranded in some dump we never wanted to see. I'm sure you agree that this isn't worth any payment." She turns to leave, but then adds: "Are you sure that everything is in order with your ship's core? You don't want it to melt down in the middle of a fight, do you?" With this, she joins the rest of her group, and they are gone.]]))
          misn.finish(true)
       end
    end
@@ -285,8 +285,8 @@ function nerds_land3()
          tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), {player=player.name()}))
          player.pay( reward )
       else
-         if not tk.yesno(_("Minor Complications"), _([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
-    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.
+         if not tk.yesno(_("Minor Complications"), _([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have any prize money."
+    As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.
     "OK, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]])) then
             tk.msg(_("So what?"), _([["Honestly, there is nothing you can do about it," Mia says impatiently, as if you were a small child complaining about the finiteness of an ice cream cone. "Just stand by while we rig the thing up."]]))
          end
