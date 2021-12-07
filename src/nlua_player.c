@@ -945,7 +945,9 @@ static int playerL_shipvarPop( lua_State *L )
 {
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
-   lvar_rmArray( &ps->shipvar, lvar_get( ps->shipvar, str ) );
+   lvar *var        = lvar_get( ps->shipvar, str );
+   if (var != NULL)
+      lvar_rmArray( &ps->shipvar, var );
    return 0;
 }
 
