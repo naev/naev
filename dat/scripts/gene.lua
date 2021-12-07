@@ -265,8 +265,8 @@ function gene.window ()
                   end
                   alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
                end
-               s.x = px
-               s.y = py
+               s.rx = px
+               s.ry = py
                s.alt = alt
                s.enabled = (s.tier==0)
                table.insert( skillslist, s )
@@ -293,8 +293,13 @@ function gene.window ()
    end
 
    local function skill_canEnable( s )
-      for k,r in ipairs(s.requires or {}) do
+      for k,r in ipairs(s.requires) do
          if not skills[r].enabled then
+            return false
+         end
+      end
+      for k,c in ipairs(s.conflicts) do
+         if skills[c].enabled then
             return false
          end
       end
@@ -316,6 +321,8 @@ function gene.window ()
       local x, y = bx+self.x, by+self.y
       if s.enabled then
          lg.setColor( {0,0.4,0.8,1} )
+      elseif not skill_canEnable(s) then
+         lg.setColor( {0.5,0.2,0.2,1} )
       else
          lg.setColor( {0,0,0,1} )
       end
@@ -361,7 +368,7 @@ function gene.window ()
       luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*(l.x2-l.x1)+10, sh*(l.y2-l.y1)+10, scol )
    end
    for k,s in ipairs(skillslist) do
-      newSkillIcon( wdw, bx+sw*s.x, by+sh*s.y, 70, 70, s )
+      newSkillIcon( wdw, bx+sw*s.rx, by+sh*s.ry, 70, 70, s )
       --luatk.newButton( wdw, bx+sw*s.x+10, by+sh*s.y+10, 50, 50, s.name, function( wgt ) end )
    end
 
