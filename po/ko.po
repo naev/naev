@@ -55045,11 +55045,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/derelict_rescue.lua:32
-#, fuzzy
-#| msgid ""
-#| "This derelict is not deserted. The crew are still onboard. Unfortunately "
-#| "for them, they didn't survive whatever wrecked their ship. You decide to "
-#| "give them a decent space burial before moving on."
 msgid ""
 "This derelict is not deserted. The crew are still onboard. Unfortunately for "
 "them, they didn't survive whatever wrecked their ship. You decide to give "
