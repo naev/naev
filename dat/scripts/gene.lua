@@ -170,25 +170,26 @@ function gene.window ()
    for k,s in pairs(skills) do
       s.x = 0
       s.y = s.tier
-      local con = s.conflicts or {}
-      for i,c in ipairs(con) do
+      s._conflicts = s._conflicts or {}
+      for i,c in ipairs(s.conflicts or {}) do
          local s2 = skills[c]
-         s2.conflicts = s2.conflicts or {}
-         if not inlist( s2.conflicts, k ) then
-            table.insert( s2.conflicts, k )
+         s2._conflicts = s2._conflicts or {}
+         if not inlist( s2._conflicts, s ) then
+            table.insert( s2._conflicts, s )
          end
+         table.insert( s._conflicts, s2 )
       end
-      s.conflicts = con
+      s._requires = s._requires or {}
       local req = s.requires or {}
       for i,r in ipairs(req) do
          local s2 = skills[r]
-         s2.required_by = s2.required_by or {}
-         if not inlist( s2.required_by, k ) then
-            table.insert( s2.required_by, k )
+         s2._required_by = s2._required_by or {}
+         if not inlist( s2._required_by, s ) then
+            table.insert( s2._required_by, s )
          end
+         table.insert( s._requires, s2 )
       end
-      s.requires = req
-      s.required_by = s.required_by or {}
+      s._required_by = s._required_by or {}
    end
 
    -- Recursive group creation
@@ -201,14 +202,14 @@ function gene.window ()
       grp.x2 = math.max( grp.x2, node.x )
       grp.y2 = math.max( grp.y2, node.y )
       table.insert( grp, node )
-      for i,c in ipairs(node.conflicts) do
-         grp = create_group_rec( grp, skills[c], x+1 )
+      for i,c in ipairs(node._conflicts) do
+         grp = create_group_rec( grp, c, x+1 )
       end
-      for i,r in ipairs(node.required_by) do
-         grp = create_group_rec( grp, skills[r], x )
+      for i,r in ipairs(node._required_by) do
+         grp = create_group_rec( grp, r, x )
       end
-      for i,r in ipairs(node.requires) do
-         grp = create_group_rec( grp, skills[r], x )
+      for i,r in ipairs(node._requires) do
+         grp = create_group_rec( grp, r, x )
       end
       return grp
    end
@@ -266,18 +267,18 @@ function gene.window ()
                if s.desc then
                   alt = alt.."\n\n"..s.desc
                end
-               if #s.requires > 0 then
+               if #s._requires > 0 then
                   local req = {}
-                  for j,r in ipairs(s.requires) do
-                     table.insert( req, skills[r].name )
+                  for j,r in ipairs(s._requires) do
+                     table.insert( req, r.name )
                   end
                   alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
                end
-               if #s.conflicts > 0 then
+               if #s._conflicts > 0 then
                   local con = {}
-                  for j,c in ipairs(s.conflicts) do
+                  for j,c in ipairs(s._conflicts) do
                      -- TODO colour code based on whether acquired
-                     table.insert( con, skills[c].name )
+                     table.insert( con, c.name )
                   end
                   alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
                end
@@ -286,20 +287,20 @@ function gene.window ()
                s.alt = alt
                s.enabled = (s.tier==0)
                table.insert( skillslist, s )
-               for j,r in ipairs(s.required_by) do
+               for j,r in ipairs(s._required_by) do
                   table.insert( skillslink, {
                      x1 = px,
                      y1 = py,
-                     x2 = g.x+skills[r].x,
-                     y2 = skills[r].y,
+                     x2 = g.x+r.x,
+                     y2 = r.y,
                   } )
                end
-               for j,c in ipairs(s.conflicts) do
+               for j,c in ipairs(s._conflicts) do
                   table.insert( skillslink, {
                      x1 = px,
                      y1 = py,
-                     x2 = g.x+skills[c].x,
-                     y2 = skills[c].y,
+                     x2 = g.x+c.x,
+                     y2 = c.y,
                   } )
                end
             end
@@ -309,13 +310,13 @@ function gene.window ()
    end
 
    local function skill_canEnable( s )
-      for k,r in ipairs(s.requires) do
-         if not skills[r].enabled then
+      for k,r in ipairs(s._requires) do
+         if not r.enabled then
             return false
          end
       end
-      for k,c in ipairs(s.conflicts) do
-         if skills[c].enabled then
+      for k,c in ipairs(s._conflicts) do
+         if c.enabled then
             return false
          end
       end
