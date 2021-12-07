@@ -21,81 +21,141 @@ local skills = {
    ["engines1"] = {
       name = _("Gene Drive I"),
       tier = 0,
+      outfit = "Ultralight Fast Gene Drive Stage 1",
+      slot = "genedrive",
    },
    ["engines2"] = {
       name = _("Gene Drive II"),
       tier = 2,
       requires = { "engines1" },
+      outfit = "Ultralight Fast Gene Drive Stage 2",
+      slot = "genedrive",
    },
    ["engines3"] = {
       name = _("Gene Drive III"),
       tier = 4,
       requires = { "engines2" },
+      outfit = "Ultralight Fast Gene Drive Stage X",
+      slot = "genedrive",
    },
    ["engines4"] = {
       name = _("Gene Drive IV"),
       tier = 6,
       requires = { "engines3" },
+      outfit = "Ultralight Fast Gene Drive Stage X",
+      slot = "genedrive",
    },
    -- Core Brains
    ["systems1"] = {
       name = _("Brain Stage I"),
       tier = 0,
+      outfit = "Ultralight Brain Stage 1",
+      slot = "brain",
    },
    ["systems2"] = {
       name = _("Brain Stage II"),
       tier = 2,
       requires = { "systems1" },
+      outfit = "Ultralight Brain Stage 2",
+      slot = "brain",
    },
    ["systems3"] = {
       name = _("Brain Stage III"),
       tier = 4,
       requires = { "systems2" },
+      outfit = "Ultralight Brain Stage X",
+      slot = "brain",
    },
    ["systems4"] = {
       name = _("Brain Stage IV"),
       tier = 6,
       requires = { "systems3" },
+      outfit = "Ultralight Brain Stage X",
+      slot = "brain",
    },
    -- Core Shells
    ["hull1"] = {
       name = _("Shell Stage I"),
       tier = 0,
+      outfit = "Ultralight Shell Stage 1",
+      slot = "shell",
    },
    ["hull2"] = {
       name = _("Shell Stage II"),
       tier = 2,
       requires = { "hull1" },
+      outfit = "Ultralight Shell Stage 2",
+      slot = "shell",
    },
    ["hull3"] = {
       name = _("Shell Stage III"),
       tier = 4,
       requires = { "hull2" },
+      outfit = "Ultralight Shell Stage X",
+      slot = "shell",
    },
    ["hull4"] = {
       name = _("Shell Stage IV"),
       tier = 6,
       requires = { "hull3" },
+      outfit = "Ultralight Shell Stage X",
+      slot = "shell",
+   },
+   -- Right Weapon
+   ["weap2a1"] = {
+      name = _("Right Stinger I"),
+      tier = 1,
+      conflicts = { "weap2b1" },
+      slot = "rightweap",
+      outfit = "BioPlasma Stinger Stage 1",
+   },
+   ["weap2a2"] = {
+      name = _("Right Stinger I"),
+      tier = 3,
+      requires = { "weap2a1" },
+      slot = "rightweap",
+      outfit = "BioPlasma Stinger Stage X",
+   },
+   ["weap2b1"] = {
+      name = _("Right Claw I"),
+      tier = 1,
+      slot = "rightweap",
+      outfit = "BioPlasma Claw Stage 1",
+   },
+   ["weap2b2"] = {
+      name = _("Right Claw II"),
+      tier = 3,
+      requires = { "weap2b1" },
+      slot = "rightweap",
+      outfit = "BioPlasma Claw Stage X",
    },
    -- Left Weapon
    ["weap1a1"] = {
       name = _("Left Stinger I"),
       tier = 1,
       conflicts = { "weap1b1" },
+      slot = "leftweap",
+      outfit = "BioPlasma Stinger Stage 1",
    },
    ["weap1a2"] = {
       name = _("Left Stinger I"),
       tier = 3,
       requires = { "weap1a1" },
+      slot = "leftweap",
+      outfit = "BioPlasma Stinger Stage X",
    },
    ["weap1b1"] = {
       name = _("Left Claw I"),
       tier = 1,
+      slot = "leftweap",
+      outfit = "BioPlasma Claw Stage 1",
    },
    ["weap1b2"] = {
       name = _("Left Claw II"),
       tier = 3,
       requires = { "weap1b1" },
+      slot = "leftweap",
+      outfit = "BioPlasma Claw Stage X",
    },
    -- Movement Line
    ["compoundeyes"] = {
@@ -156,6 +216,10 @@ local skills = {
 
 function gene.window ()
    --local level = 10
+   local pp = player.pilot()
+   if pp:ship() ~= ship.get("Soromid Brigand") then
+      return
+   end
 
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
@@ -323,6 +387,33 @@ function gene.window ()
       return true
    end
 
+   local function skill_enable( s )
+      if s.outfit then
+         if s.slot then
+            pp:outfitRmSlot( s.slot )
+            pp:outfitAddSlot( s.outfit, s.slot, true, true )
+         else
+            pp:outfitAddIntrinsic( s.outfit )
+         end
+      end
+      s.enabled = true
+   end
+
+   local function skill_reset()
+      -- Get rid of intrinsics
+      for k,s in pairs(skills) do
+         if s.outfit and not s.slot then
+            pp:outfitRmIntrinsic( s.outfit )
+         end
+      end
+      -- Add basic ones back
+      for k,s in pairs(skills) do
+         if s.tier == 0 then
+            skill_enable( s )
+         end
+      end
+   end
+
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )
    local SkillIcon_mt = { __index = SkillIcon }
@@ -356,9 +447,12 @@ function gene.window ()
    function SkillIcon:clicked ()
       local s = self.skill
       if skill_canEnable( s ) then
-         self.skill.enabled = true
+         skill_enable( s )
       end
    end
+
+   -- Reset for now
+   skill_reset()
 
    local w, h = 1100, 600
    local wdw = luatk.newWindow( nil, nil, w, h )

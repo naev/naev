@@ -24,8 +24,8 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" locked="1" x="-3" y="0" h="2" name="left" />
-  <weapon size="small" prop="bio_weapon" locked="1" x="3" y="0" h="2" name="right"/>
+  <weapon size="small" prop="bio_weapon" locked="1" x="13" y="5" h="0" name="leftweap" />
+  <weapon size="small" prop="bio_weapon" locked="1" x="13" y="-5" h="0" name="rightweap"/>
   <weapon size="small" x="12" y="0" h="0" />
   <utility size="small" prop="bio_systems" exclusive="1" required="1" locked="1" name="brain">Ultralight Brain Stage 1</utility>
   <utility size="small" prop="accessory" exclusive="1" />
