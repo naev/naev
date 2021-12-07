@@ -73,7 +73,7 @@ for k,v in ipairs(hintpnt) do
 end
 local eccpnt = "Strangelove Lab"
 local eccdiff = "strangelove"
-local eccsys = "Westhaven"
+local eccsys = system.get( "Westhaven" )
 local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 
 -- Mission states:
