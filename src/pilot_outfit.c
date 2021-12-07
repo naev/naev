@@ -1113,6 +1113,19 @@ void pilot_healLanded( Pilot *pilot )
 }
 
 /**
+ * @brief Gets the outfit slot by name.
+ */
+PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name )
+{
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *s = pilot->outfits[i];
+      if ((s->sslot->name!=NULL) && (strcmp(s->sslot->name,name)==0))
+         return s;
+   }
+   return NULL;
+}
+
+/**
  * @brief Updates the pilot stats after mass change.
  *
  *    @param pilot Pilot to update his mass.

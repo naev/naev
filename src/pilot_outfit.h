@@ -43,6 +43,7 @@ void pilot_lockClear( Pilot *p );
 void pilot_calcStats( Pilot *pilot );
 void pilot_updateMass( Pilot *pilot );
 void pilot_healLanded( Pilot *pilot );
+PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name );
 
 /* Special outfit stuff. */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );

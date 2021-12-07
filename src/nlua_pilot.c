@@ -52,6 +52,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
+static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_slot, int bypass_cpu );
 
 /* Pilot metatable methods. */
 static int pilotL_add( lua_State *L );
@@ -119,6 +120,8 @@ static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
 static int pilotL_outfitAdd( lua_State *L );
 static int pilotL_outfitRm( lua_State *L );
+static int pilotL_outfitAddSlot( lua_State *L );
+static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
@@ -262,6 +265,8 @@ static const luaL_Reg pilotL_methods[] = {
    /* Outfits. */
    { "outfitAdd", pilotL_outfitAdd },
    { "outfitRm", pilotL_outfitRm },
+   { "outfitAddSlot", pilotL_outfitAddSlot },
+   { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "setFuel", pilotL_setFuel },
@@ -2623,6 +2628,50 @@ static int pilotL_setNoClear( lua_State *L )
 }
 
 /**
+ * @brief Adds an outfit to a specific slot.
+ */
+static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_cpu, int bypass_slot)
+{
+   int ret;
+
+   /* Must not have outfit (excluding default) already. */
+   if ((s->outfit != NULL) &&
+         (s->outfit != s->sslot->data))
+      return 0;
+
+   /* Only do a basic check. */
+   if (bypass_slot) {
+      if (!outfit_fitsSlotType( o, &s->sslot->slot ))
+         return 0;
+   }
+   else if (bypass_cpu) {
+      if (!outfit_fitsSlot( o, &s->sslot->slot ))
+         return 0;
+   }
+   /* Full check. */
+   else {
+      /* Must fit slot. */
+      if (!outfit_fitsSlot( o, &s->sslot->slot ))
+         return 0;
+
+      /* Test if can add outfit. */
+      ret = pilot_addOutfitTest( p, o, s, 0 );
+      if (ret)
+         return -1;
+   }
+
+   /* Add outfit - already tested. */
+   ret = pilot_addOutfitRaw( p, o, s );
+   if (ret==0)
+      pilot_outfitLInit( p, s );
+
+   /* Add ammo if needed. */
+   if ((ret==0) && (outfit_ammo(o) != NULL))
+      pilot_addAmmo( p, s, outfit_ammo(o), outfit_amount(o) );
+   return 1;
+}
+
+/**
  * @brief Adds an outfit to a pilot.
  *
  * This by default tries to add them to the first empty or defaultly equipped slot. Will not overwrite existing non-default outfits.
@@ -2641,7 +2690,6 @@ static int pilotL_outfitAdd( lua_State *L )
 {
    Pilot *p;
    const Outfit *o;
-   int ret;
    int q, added, bypass_cpu, bypass_slot;
 
    NLUA_CHECKRW(L);
@@ -2656,50 +2704,28 @@ static int pilotL_outfitAdd( lua_State *L )
    /* Add outfit. */
    added = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
+      int ret;
+      PilotOutfitSlot *s = p->outfits[i];
+
       /* Must still have to add outfit. */
       if (q <= 0)
          break;
 
-      /* Must not have outfit (excluding default) already. */
-      if ((p->outfits[i]->outfit != NULL) &&
-            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
+      /* Do tests and try to add. */
+      ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
+      if (ret < 0)
+         break;
+      else if (ret==0)
          continue;
-
-      /* Only do a basic check. */
-      if (bypass_slot) {
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
-            continue;
-      }
-      else if (bypass_cpu) {
-         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
-            continue;
-      }
-      /* Full check. */
-      else {
-         /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
-            continue;
-
-         /* Test if can add outfit. */
-         ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
-         if (ret)
-            break;
-      }
-
-      /* Add outfit - already tested. */
-      ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
-      if (ret==0)
-         pilot_outfitLInit( p, p->outfits[i] );
-      pilot_calcStats( p );
-
-      /* Add ammo if needed. */
-      if ((ret==0) && (outfit_ammo(o) != NULL))
-         pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), outfit_amount(o) );
 
       /* We added an outfit. */
       q--;
       added++;
    }
+
+   /* Update stats. */
+   if (added > 0)
+      pilot_calcStats( p );
 
    /* Update the weapon sets. */
    if ((added > 0) && p->autoweap)
@@ -2710,6 +2736,58 @@ static int pilotL_outfitAdd( lua_State *L )
       outfits_updateEquipmentOutfits();
 
    lua_pushnumber(L,added);
+   return 1;
+}
+
+/**
+ * @brief Adds an outfit to a pilot by slot name.
+ *
+ *    @luatparam Pilot p Pilot to add outfit to.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
+ *    @luatparam string slotname Name of the slot to add to.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
+ *    @luatparam[opt=false] boolean|string bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks. In the case bypass_slot is a string, the outfit gets added to the named slot if possible (no slot check).
+ *    @luatreturn boolean Whether or not the outfit was added.
+ * @luafunc outfitAddSlot
+ */
+static int pilotL_outfitAddSlot( lua_State *L )
+{
+   Pilot *p;
+   const Outfit *o;
+   int ret, added, bypass_cpu, bypass_slot;
+   const char *slotname;
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+   o      = luaL_validoutfit(L,2);
+   slotname = luaL_checkstring(L,3);
+   bypass_cpu = lua_toboolean(L,4);
+   bypass_slot = lua_toboolean(L,5);
+
+   /* Case named slot. */
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
+   else {
+      ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
+      added = (ret>0);
+   }
+
+   /* Update stats. */
+   if (added > 0)
+      pilot_calcStats( p );
+
+   /* Update the weapon sets. */
+   if ((added > 0) && p->autoweap)
+      pilot_weaponAuto(p);
+
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && added > 0)
+      outfits_updateEquipmentOutfits();
+
+   lua_pushboolean(L,added);
    return 1;
 }
 
@@ -2794,6 +2872,38 @@ static int pilotL_outfitRm( lua_State *L )
       outfits_updateEquipmentOutfits();
 
    lua_pushnumber( L, removed );
+   return 1;
+}
+
+/**
+ * @brief Removes an outfit from a pilot's named slot.
+ *
+ *    @luatparam Pilot p Pilot to remove outfit from.
+ *    @luatparam strin slotname Name of the slot to remove the outfit from.
+ *    @luatreturn boolean true on success.
+ * @luafunc outfitRmSlot
+ */
+static int pilotL_outfitRmSlot( lua_State *L )
+{
+   /* Get parameters. */
+   int ret, removed = 0;
+   Pilot *p    = luaL_validpilot(L,1);
+   const char *slotname = luaL_checkstring(L,2);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
+
+   ret = !pilot_rmOutfitRaw( p, s );
+   if (ret) {
+      pilot_calcStats( p ); /* Recalculate stats. */
+      /* Update equipment window if operating on the player's pilot. */
+      if (player.p != NULL && player.p == p && removed > 0)
+         outfits_updateEquipmentOutfits();
+   }
+
+   lua_pushboolean( L, ret );
    return 1;
 }
 

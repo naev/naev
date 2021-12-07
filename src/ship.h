@@ -60,6 +60,7 @@ typedef struct ShipMount_ {
  */
 typedef struct ShipOutfitSlot_ {
    OutfitSlot slot;  /**< Outfit slot type. */
+   char *name;       /**< Name of the slot if applicable. */
    int exclusive;    /**< Outfits must match property to fit. */
    int required;     /**< Outfit slot must be equipped for the ship to work. */
    int locked;       /**< Outfit slot is locked. */

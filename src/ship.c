@@ -612,6 +612,9 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    /* Parse locked flag, default false. */
    xmlr_attr_int( node, "locked", slot->locked );
 
+   /* Name if applicable. */
+   xmlr_attr_strd( node, "name", slot->name );
+
    /* Parse default outfit. */
    buf = xml_get(node);
    if (buf != NULL) {
