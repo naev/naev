@@ -83,7 +83,7 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 --    2: Go to westhaven
 --    3: Found base
 --    4: Destroy drones
---    5: Got the artifacts
+--    5: Got the artefacts
 --    6: Going back to Minerva Station
 mem.misn_state = nil
 local defense_systems, feral_drone_boss -- Non-persistent state
@@ -240,7 +240,7 @@ She winks at you.]]))
    vn.menu( opts )
 
    vn.label( "researchers" )
-   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the incident by analyzing artifacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
+   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the incident by analyzing artefacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
    maikki(_([["Apparently the project was disbanded for some reason or other, and some members went missing. However, I was able to track down a few of them, but it wasn't too easy. They have some weird system called tenure that nobody understands and makes them move constantly from research laboratory to research laboratory. So droll!"]]))
    seekoutmsg()
    maikki(_([["I don't think it will be easy for you to get information from the Za'lek. They never give a straight answer and it's all "that is illogical" and "ma'am that beaker of acid is not a toy". So boring!"
@@ -368,10 +368,10 @@ function approach_hint1 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello, how can I help you?"]]))
-   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
    prof(_([["Very interesting, but I stopped working on that line of research several cycles ago. It was really a mess of a project. The project leader was pushing us very hard due to the other competition."]]))
    prof(_([["In the end, some papers' results were falsified and the project leader was barred from doing research. That was too much for them and they took their own life. How illogical!"]]))
-   prof(_([["If you are interested in nebula research, you should go visit the museum of nebula artifacts. Although due to administrative changes, I don't think it'll open again for a few cycles."]]))
+   prof(_([["If you are interested in nebula research, you should go visit the museum of nebula artefacts. Although due to administrative changes, I don't think it'll open again for a few cycles."]]))
    prof(_([["Oh, you might have good luck talking to other members of the project. However, most of us have moved on from that traumatic experience and are now researching new topics."]]))
    prof(_([["Did I mention I have started working with infinitely meta-recursive hyper-tables? They are a fascinating type of data structure based on self-referencing Grassman manifold quasi-projections. They even implicitly handle non-convex elliptic reflections without any meta-heuristics!"
 They are getting excited.]]))
@@ -398,9 +398,9 @@ function approach_hint2 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
-   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
    prof(_([[They rubs their temples.
-"Ah, the nebula artifacts… Not very good experiences with those, no, not really interested in them anymore."]]))
+"Ah, the nebula artefacts… Not very good experiences with those, no, not really interested in them anymore."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
 They shudder when they says the word "work packages".]]))
@@ -431,14 +431,14 @@ function approach_hint3 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello."]]))
-   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
-   prof(_([["Ah, such fond memories. I have never been interested in the artifacts from the nebula themselves, but I was part of a large project dealing with them as part of the philosophical and ethical committee."]]))
+   vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
+   prof(_([["Ah, such fond memories. I have never been interested in the artefacts from the nebula themselves, but I was part of a large project dealing with them as part of the philosophical and ethical committee."]]))
    prof(_([["It is a very fascinating topic. Since there is no way to prove the existence of an absolute reality, from a practical point of view, there are infinite relative realities, where everyone has their own. Everything else is an illusion derived from us projecting our understanding and reality onto the reality of others, deforming them to a way we can interpret them with our imperfect minds."]]))
    prof(_([["Recently, due to the illogical imbalance between science and humanities, all large Za'lek projects are required to have at least a 10% of humanities members. This has given me lots of opportunities to work on many interesting projects."]]))
-   prof(_([["Oh yes, on the nebula artifacts. I remember having fun conversations with our colleagues about whether or not the artifacts from the nebula actually do exist or not given that we are using imperfect sensory organs to see, touch, and feel them. You see, given that we only perceive reality through our imperfect organs, can we actually know whether or not there is an absolute objective reality?"]]))
+   prof(_([["Oh yes, on the nebula artefacts. I remember having fun conversations with our colleagues about whether or not the artefacts from the nebula actually do exist or not given that we are using imperfect sensory organs to see, touch, and feel them. You see, given that we only perceive reality through our imperfect organs, can we actually know whether or not there is an absolute objective reality?"]]))
    vn.na(_("You inquire about the other members of the project."))
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour! Anyway, back to what I was saying."]]))
-   prof(_([["We must also further question not only our sensory organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensory data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't prove."]]))
+   prof(_([["We must also further question not only our sensory organs, and the existence of nebula artefacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensory data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't prove."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which, while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals…"]]))
    vn.na(_("You thank them and run away while they keeps on talking to themselves."))
    lasthint( prof )
@@ -477,7 +477,7 @@ function approach_hint4 ()
       shrimp(_([[A pellet of shrimp food is released into the floating aquarium. The shrimp wastes no time in scarfing it down.
    "HAPPY. GOOD."]]))
       drshrimp(_([["What do you want?"]]))
-      vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))
+      vn.na(_("You explain to him that you are looking for information related to nebula artefacts."))
       drshrimp(_([["Ah, that hellish project. Was doomed from the start, you know. The full-time professors and researchers let their egos get to their heads and it derailed spectacularly. I'm glad it ended as it did, or I would be still stuck in that purgatory."]]))
       drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
       drshrimp:rename(_("Dr. Shrimp"))
@@ -492,7 +492,7 @@ function approach_hint4 ()
    vn.menu( function ()
       local opts = {
          {_([["Dr. Shrimp?"]]), "drshrimp" },
-         {_("Ask about nebula artifacts"), "artifacts" },
+         {_("Ask about nebula artefacts"), "artefacts" },
          {_("Ask about other members."), "members" },
          {_("Leave"), "leave" },
       }
@@ -501,7 +501,7 @@ function approach_hint4 ()
       end
       if mem.asked_strangelove then
          table.insert( opts, 1, {_("Ask about Dr. Strangelove"), "strangelove"} )
-      elseif mem.asked_members and mem.asked_artifacts then
+      elseif mem.asked_members and mem.asked_artefacts then
          table.insert( opts, 1, {_("Anything else?…"), "strangelove"} )
       end
       return opts end )
@@ -528,12 +528,12 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["I named her after a muse from some archaic religion I found while researching. She is the only thing that keeps me going during my 17th post doctoral fellowship."]]))
    vn.jump("menu_msg")
 
-   vn.label("artifacts")
-   drshrimp(_([["What sort of artifacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold of stuff closer to the origin, near Sol, but, most of the time, scavengers brought us stuff from the outer areas. Many times they were even trying to sell us random debris as nebula artifacts, but that's really easy to detect."]]))
+   vn.label("artefacts")
+   drshrimp(_([["What sort of artefacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold of stuff closer to the origin, near Sol, but, most of the time, scavengers brought us stuff from the outer areas. Many times they were even trying to sell us random debris as nebula artefacts, but that's really easy to detect."]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
-   drshrimp(_([["When the project failed, most of the artifacts were confiscated to who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
-   drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artifacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
-   vn.func( function () mem.asked_artifacts = true end )
+   drshrimp(_([["When the project failed, most of the artefacts were confiscated to who knows where, but I managed to keep a nut from what I think is a space station, although not entirely sure. It's a bit damaged beyond recognition you see."]]))
+   drshrimp(_([["With the failure of most nebula projects, I don't think there is anybody buying nebula artefacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged anyway. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
+   vn.func( function () mem.asked_artefacts = true end )
    vn.jump("menu_msg")
 
    vn.label("members")
@@ -545,7 +545,7 @@ He activates her feeding system and a food pellet drops out.]]))
    vn.jump("menu_msg")
 
    vn.label("strangelove")
-   drshrimp(_([["Now I remember! There was a another post-doctoral researcher who worked with me. He was a bit weird and kept obsessing over the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
+   drshrimp(_([["Now I remember! There was a another post-doctoral researcher who worked with me. He was a bit weird and kept obsessing over the nebula artefacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
    drshrimp(fmt.f(_([["Eventually he sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
@@ -690,15 +690,15 @@ function ecc_feral_boss_dead ()
    vn.sfxEerie()
    voice(_([["Thank you for setting me free…"]]))
    vn.na(_("You wonder what that was about as you watch the drone thrash as it blows up. Westhaven is a really weird place."))
-   vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors identify it as mainly biological material…"))
+   vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artefact. Strangely, your ship sensors identify it as mainly biological material…"))
    vn.done( "hexagon" )
    vn.run()
 
-   local c = commodity.new( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
-   mem.nebula_artifacts = misn.cargoAdd( c, 0 )
+   local c = commodity.new( N_("Nebula Artefact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artefact?") )
+   mem.nebula_artefacts = misn.cargoAdd( c, 0 )
    mem.misn_state = 5
    misn.osdCreate( _("Finding Maikki's Father"), {_("Go back to Dr. Strangelove")} )
-   minerva.log.maikki(_("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
+   minerva.log.maikki(_("You recovered a nebula artefact that Dr. Strangelove wanted from feral drones.") )
 end
 
 local drone_msgs = {
@@ -743,8 +743,8 @@ function approach_eccentric ()
    if not mem.ecc_visitedonce then
       vn.na(_("The hologram projector flickers and what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
       dr(_([["How did you get in there? Who are you!"]]))
-      vn.na(_("You explain to him that you are looking for information about nebula artifacts."))
-      dr(_([["Who sent you here? Was it Dr. Bob? That weasel was always after my precious artifacts. Well, he can't have them! I got all this with my hard work, sweat, and tears! They're all mine!"
+      vn.na(_("You explain to him that you are looking for information about nebula artefacts."))
+      dr(_([["Who sent you here? Was it Dr. Bob? That weasel was always after my precious artefacts. Well, he can't have them! I got all this with my hard work, sweat, and tears! They're all mine!"
 He cackles manically.]]))
       dr(_([["I have hidden them very well. Even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
@@ -764,7 +764,7 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
          {_("Leave"), "leave"},
       }
       if mem.misn_state==5 then
-         table.insert( opts, 1, {_("Hand over the artifact"), "handover"} )
+         table.insert( opts, 1, {_("Hand over the artefact"), "handover"} )
       elseif mem.misn_state==4 then
          table.insert( opts, 1, {_("Ask about job"), "job"} )
       end
@@ -777,7 +777,7 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
 He grins as nostalgia takes him over.]]))
    dr(_([["We were able to have dedicated teams recovering all sorts of incredible items! We even found the remains of a Proteron replicator! It was only able to replicate cheese fondue, but it was incredible. I integrated it with a drone platform and that has kept me healthy and in shape since! It should be in the bar if you want to try it."
 You see a greasy robot in the corner that is boiling some sort of brown liquid. Is that… cheese?]]))
-   dr(_([["Anyway, it is a real shame that the bureaucrats in central station killed the project in its prime. At least I was able to bring most of the devices here and keep acquiring more artifacts afterwards. Haven't found anything as fancy as the replicator yet, but the bodies have been very interesting."
+   dr(_([["Anyway, it is a real shame that the bureaucrats in central station killed the project in its prime. At least I was able to bring most of the devices here and keep acquiring more artefacts afterwards. Haven't found anything as fancy as the replicator yet, but the bodies have been very interesting."
 He coughs, wracking his body.]]))
    vn.menu( {
       {_([["Bodies…?"]]), "bodies"},
@@ -796,21 +796,21 @@ He coughs, wracking his body.]]))
    vn.jump("menu_msg")
 
    vn.label("jobaccept")
-   dr(_([["I see you are braver than you look. I have a bit of an issue. You see, I was upgrading some of my drones with some nebula artifacts to test to see if the functionality could be improved. Sadly, an incompatibility resulted in the drones going… ahem… feral."]]))
+   dr(_([["I see you are braver than you look. I have a bit of an issue. You see, I was upgrading some of my drones with some nebula artefacts to test to see if the functionality could be improved. Sadly, an incompatibility resulted in the drones going… ahem… feral."]]))
    dr(_([["I was going to try to deal with them with my security drones, but as you can guess, that is no longer an option since you smashed them to smithereens."
 He glares at you.]]))
-   dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
+   dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artefacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
       misn.osdCreate( _("Finding Maikki's Father"), {
-         fmt.f(_("Recover nebula artifacts from the {sys} asteroid field"), {sys=eccsys}),
+         fmt.f(_("Recover nebula artefacts from the {sys} asteroid field"), {sys=eccsys}),
       } )
       mem.misn_state = 4
-      minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
+      minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artefacts from feral drones in Westhaven." ) )
    end )
    vn.jump("menu_msg")
 
    vn.label("job")
-   dr(_([["It should be an easy job. All you have to do is recover the nebula artifacts from the feral drones. They may put up a fight or not be easy to catch, but I expect that a pilot who blasted through all my security drones will have no problem with a few feral drones. Try to bring the artifacts in one piece."
+   dr(_([["It should be an easy job. All you have to do is recover the nebula artefacts from the feral drones. They may put up a fight or not be easy to catch, but I expect that a pilot who blasted through all my security drones will have no problem with a few feral drones. Try to bring the artefacts in one piece."
 He glares at you.]]))
    vn.jump("menu_msg")
 
@@ -826,7 +826,7 @@ Given the smell of the entire laboratory and especially the horrible scents waft
    vn.jump("menu_msg")
 
    vn.label("handover")
-   vn.na(_("You show him the nebula artifact and suddenly a couple of small drones whirl into the room and start to perform a deeper inspection."))
+   vn.na(_("You show him the nebula artefact and suddenly a couple of small drones whirl into the room and start to perform a deeper inspection."))
    dr(_([["Energy levels 7%… I see, I see… minor flux instability… not that bad…
 no vitals… not very good… mmmm… nebula radiation at minimum… can't be helped I guess…"]]))
    dr(_([[He goes on for what seems like an eternity before finally remembering that you are there.
@@ -836,7 +836,7 @@ no vitals… not very good… mmmm… nebula radiation at minimum… can't be he
       {_([["What the hell is this thing?"]]), "hatethisguy"},
    } )
    vn.label("hatethisguy")
-   dr(_([["I see… You don't grasp the importance of this artifact. I guess it can't be helped with such an inferior intellect as yours."
+   dr(_([["I see… You don't grasp the importance of this artefact. I guess it can't be helped with such an inferior intellect as yours."
 He sneers.]]))
    dr(_([["This is my latest creation, an amalgamate of ancient nebula technology and life. Think of this as something that not only surpasses any of the Soromid biotechnology, but also Za'lek cybertechnology. It is the peak of technological advancement!"]]))
    dr(_([["While it has an incredible potential, there are… some complications still. The mental faculties tend to lack stability. While this one is a very interesting failure, it is still a failure at heart. Most of my other creations have had much more success."]]))
@@ -862,7 +862,7 @@ He coughs softly.]]))
 His voice gets softer and softer as he keeps on mumbling.]]))
    vn.na(_("You try to get his attention again, but it doesn't seem to work. He seems to have fallen into a stupor. You feel you have enough information to report to Maikki again."))
    vn.func( function ()
-      misn.cargoRm( mem.nebula_artifacts )
+      misn.cargoRm( mem.nebula_artefacts )
       mem.misn_state = 6
       misn.npcRm( mem.npc_ecc )
       misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
