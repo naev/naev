@@ -45,7 +45,7 @@ function accept()
 
     player.pay(-mem.fine)
     vntk.msg(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), fmt.f(_([[Your application has been processed. The {fct} security forces will no longer attack you on sight. You may conduct your business in {fct} space again, but remember that you still have a criminal record! If you attack any traders, civilians or {fct} ships, or commit any other felony against this faction, you will immediately become their enemy again.
-While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]), {fct=mem.fac}))
+While this agreement is active, your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]), {fct=mem.fac}))
 
     mem.fac:modPlayerRaw(-mem.rep)
 
@@ -105,6 +105,6 @@ function abort()
     -- Reapply the original negative reputation.
     mem.fac:modPlayerRaw(mem.rep)
 
-    vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again bad. You may start another rehabilitation procedure at a later time.]]))
+    vntk.msg(fmt.f(_("{fct} Rehabilitation Canceled"), {fct=mem.fac}), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again tarnished. You may start another rehabilitation procedure at a later time.]]))
     misn.finish(false)
 end

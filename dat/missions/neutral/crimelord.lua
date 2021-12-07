@@ -38,10 +38,10 @@ end
 function accept ()
    -- Note: this mission does not make any system claims.
    if not tk.yesno( _("Crimelord"), fmt.f( _([[The private detective greets you and gets right down to business.
-   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
-   I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
-   He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
-   Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
+   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get their hands on this.
+   I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this criminal ends up in prison, where they belong. I must warn you, however:
+   This criminal has considerable influence and many friends. There's no doubt they will send some of their mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
+   Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when they landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
    Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=mem.targetsystem}
           ) ) then --if accepted
       misn.finish()

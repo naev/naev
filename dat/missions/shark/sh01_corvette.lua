@@ -56,8 +56,8 @@ end
 function accept()
    mem.stage = 0
 
-   if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating destroyer class ships.
-    "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
+   if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating Destroyer class ships.
+    "Now, one small problem we face is that pirates almost never use Destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a Destroyer class ship and just let another pilot disable them with ion cannons.
     "What do you say? Are you interested?"]])) then
       misn.accept()
       tk.msg(_("Wonderful"), fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]), {battlesys=battlesys, pnt=paypla, sys=paysys}))
@@ -66,7 +66,7 @@ function accept()
       misn.setReward(fmt.credits(shark.rewards.sh01/2))
       misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
       misn.osdCreate(_("Sharkman Is Back"), {
-         fmt.f(_("Jump in {sys} with a destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
+         fmt.f(_("Jump in {sys} with a Destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
          fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
@@ -102,14 +102,14 @@ function land()
       hook.rm(mem.enterhook)
       hook.rm(mem.landhook)
       hook.rm(mem.jumpouthook)
-      shark.addLog( _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer-class ship.]]) )
+      shark.addLog( _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer class ship.]]) )
       misn.finish(true)
    end
 end
 
 function enter()
    local playerclass = player.pilot():ship():class()
-   --Jumping in Toaxis for the battle with a destroyer class ship
+   --Jumping in Toaxis for the battle with a Destroyer class ship
    if system.cur() == battlesys and mem.stage == 0 and playerclass == "Destroyer" then
       pilot.clear()
       pilot.toggleSpawn( false )
