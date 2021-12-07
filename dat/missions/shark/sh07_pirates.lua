@@ -82,8 +82,8 @@ function accept()
    mem.godname = fmt.f( _("{name} II"), {name=pilotname.pirate()} )
 
    if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
-    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
-    "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
+    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
+    "So what we want you to do, quite simply, is to eliminate these pirates. There's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
       tk.msg(_("Very good"), fmt.f(_([["So, here are the details we have gathered about these pirates:
     "{gawname} should be in {gawsys}, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
