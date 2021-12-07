@@ -612,7 +612,8 @@ end
 
 
 function ecc_timer ()
-   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
+   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"), true)
+   player.autonavReset()
    mem.sysmarker = system.mrkAdd( eccpos, _("Curious Signal") )
    hook.timer( 0.5, "ecc_dist" )
 end

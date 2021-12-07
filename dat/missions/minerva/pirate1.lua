@@ -190,7 +190,7 @@ function heartbeat ()
    local pp = player.pilot()
    local dist =  pp:pos():dist( drone:pos() )
    if dist < 1000 then
-      player.msg(_("#gThe drone begins to follow you."))
+      player.msg(_("#gThe drone begins to follow you."), true)
       mem.misn_state=1
       misn.osdActive(2)
       drone:taskClear()
@@ -233,7 +233,7 @@ function harassed ()
    local dist = pp:pos():dist( thugpos )
    if dist > 5000 then
       if mem.failingdistance==nil then
-         player.msg(_("#rYou are moving too far away from the harassment point!"))
+         player.msg(_("#rYou are moving too far away from the harassment point!"), true)
          mem.failingdistance = 0
       end
       mem.failingdistance = mem.failingdistance + 1
@@ -251,6 +251,7 @@ function harassed ()
       mem.misn_state=3
       misn.osdActive(3)
       system.mrkRm( mem.thugsmarker )
+      misn.markerMove( mem.misnmarker, runawaysys )
       return
    end
    hook.timer( 1.0, "harassed" )

@@ -84845,7 +84845,7 @@ msgstr ""
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:443
 #, c-format
-msgid "#oAutonav: following target  %s has been lost."
+msgid "#oAutonav: following target %s has been lost."
 msgstr ""
 
 #: src/player_autonav.c:726
