@@ -217,9 +217,8 @@ local skills = {
    },
 }
 
+local level, skillpoints
 function gene.window ()
-   --local level = 10
-
    local pp = player.pilot()
    if pp:ship() ~= ship.get("Soromid Brigand") then
       return
@@ -384,6 +383,9 @@ function gene.window ()
    end
 
    local function skill_canEnable( s )
+      if skillpoints <= 0 then
+         return false
+      end
       for k,r in ipairs(s._requires) do
          if not r.enabled then
             return false
@@ -410,6 +412,16 @@ function gene.window ()
       s.enabled = true
    end
 
+   local function skill_count()
+      local n = 0
+      for k,s in pairs(skills) do
+         if s.tier~=0 and s.enabled then
+            n = n+1
+         end
+      end
+      return n
+   end
+
    local function skill_reset()
       -- Get rid of intrinsics
       for k,s in pairs(skills) do
@@ -425,6 +437,7 @@ function gene.window ()
             skill_enable( s )
          end
       end
+      skillpoints = level - skill_count()
    end
 
    -- Case ship not initialized
@@ -432,6 +445,9 @@ function gene.window ()
       skill_reset()
       player.shipvarPush( "bioship", true )
    end
+
+   level = player.shipvarPeek( "biolevel" ) or 1
+   skillpoints = level - skill_count()
 
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )
@@ -467,6 +483,7 @@ function gene.window ()
       local s = self.skill
       if skill_canEnable( s ) then
          skill_enable( s )
+         skillpoints = skillpoints-1
       end
    end
 
