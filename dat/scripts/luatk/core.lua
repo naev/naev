@@ -475,7 +475,8 @@ function luatk.yesno( title, msg, funcyes, funcno )
 end
 
 function luatk.drawAltText( bx, by, alt, w )
-   local font = luatk._deffont
+   naev.gfx.clearDepth()
+   local font = luatk._deffont or lg.getFont()
    w = w or 250
    local _w, tw = font:getWrap( alt, w-20 )
    local h = #tw * font:getLineHeight() + 20
