@@ -577,7 +577,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 30.0, "ecc_timer" )
-   elseif mem.misn_state==4 then
+   elseif mem.misn_state==4 and system.cur() == eccsys then
       pilot.clear()
       pilot.toggleSpawn(false)
 
