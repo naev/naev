@@ -35379,8 +35379,6 @@ msgid "Take the artefact to Baron Sauterfeldt"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:201
-#, fuzzy
-#| msgid "Ancient Artifact"
 msgid "Ancient Artefact"
 msgstr "Artefact Ancien"
 
@@ -35416,16 +35414,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:220
-#, fuzzy
-#| msgid "Artifact? A"
 msgid "Artefact? A"
 msgstr "Artefact ? A"
 
 #: dat/missions/baron/baron_prince.lua:220
 #: dat/missions/baron/baron_prince.lua:232
 #: dat/missions/baron/baron_prince.lua:244
-#, fuzzy
-#| msgid "An ancient artifact?"
 msgid "An ancient artefact?"
 msgstr "Un ancien artefact ?"
 
@@ -35450,8 +35444,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:232
-#, fuzzy
-#| msgid "Artifact? B"
 msgid "Artefact? B"
 msgstr "Artefact ? B"
 
@@ -35464,8 +35456,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:244
-#, fuzzy
-#| msgid "Artifact? C"
 msgid "Artefact? C"
 msgstr "Artefact ? C"
 
@@ -50796,8 +50786,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:697
-#, fuzzy
-#| msgid "Nebula Artifact?"
 msgid "Nebula Artefact?"
 msgstr "Artefact de Nébuleuse ?"
 

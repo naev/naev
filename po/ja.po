@@ -37228,8 +37228,6 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:128
 #: dat/missions/baron/baron_prince.lua:130
 #: dat/missions/baron/baron_prince.lua:132
-#, fuzzy
-#| msgid "Artifact seller"
 msgid "Artefact seller"
 msgstr "人工遺物の売り手"
 
@@ -37428,8 +37426,6 @@ msgid "Take the artefact to Baron Sauterfeldt"
 msgstr "人工遺物をザウターフェルト男爵に持っていけ。"
 
 #: dat/missions/baron/baron_prince.lua:201
-#, fuzzy
-#| msgid "Ancient Artifact"
 msgid "Ancient Artefact"
 msgstr "古代の人工遺物"
 
@@ -37462,8 +37458,6 @@ msgstr ""
 "提供します。ここに偽物はありませんよ！｣"
 
 #: dat/missions/baron/baron_prince.lua:220
-#, fuzzy
-#| msgid "Artifact? A"
 msgid "Artefact? A"
 msgstr "人工遺物？　A"
 
@@ -37498,8 +37492,6 @@ msgstr ""
 "のご都合主義者たちはだれも信用しないでしょうね！　それで、どうしますか？｣"
 
 #: dat/missions/baron/baron_prince.lua:232
-#, fuzzy
-#| msgid "Artifact? B"
 msgid "Artefact? B"
 msgstr "人工遺物？　B"
 
@@ -37516,16 +37508,12 @@ msgstr ""
 "よ！　偽物にかなりのクレジットをついやしたくはないですよね？｣"
 
 #: dat/missions/baron/baron_prince.lua:244
-#, fuzzy
-#| msgid "Artifact? C"
 msgid "Artefact? C"
 msgstr "人工遺物？　C"
 
 #. Spawn artefact hunters, maybe.
 #. 60% chance of artefact hunters.
 #: dat/missions/baron/baron_prince.lua:278
-#, fuzzy
-#| msgid "Artifact Hunter"
 msgid "Artefact Hunter"
 msgstr "人工遺物の追跡者"
 
