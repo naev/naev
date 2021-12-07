@@ -6,142 +6,157 @@ local fmt = require "format"
 local gene = {}
 
 local skills = {
-   [N_("Cannibalism I")] = {
+   ["cannibal1"] = {
+      name = _("Cannibalism I"),
       tier = 0,
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
    },
-   [N_("Cannibalism II")] = {
+   ["cannibal2"] = {
+      name = _("Cannibalism II"),
       tier = 5,
-      requires = { "Cannibalism I" },
+      requires = { "cannibal1" },
       desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and will also similarly restore energy."),
    },
    -- Core Gene Drives
-   [N_("Gene Drive I")] = {
+   ["engines1"] = {
+      name = _("Gene Drive I"),
       tier = 0,
    },
-   [N_("Gene Drive II")] = {
+   ["engines2"] = {
+      name = _("Gene Drive II"),
       tier = 2,
-      requires = { "Gene Drive I" },
+      requires = { "engines1" },
    },
-   [N_("Gene Drive III")] = {
+   ["engines3"] = {
+      name = _("Gene Drive III"),
       tier = 4,
-      requires = { "Gene Drive II" },
+      requires = { "engines2" },
    },
-   [N_("Gene Drive IV")] = {
+   ["engines4"] = {
+      name = _("Gene Drive IV"),
       tier = 6,
-      requires = { "Gene Drive III" },
+      requires = { "engines3" },
    },
    -- Core Brains
-   [N_("Brain Stage I")] = {
+   ["systems1"] = {
+      name = _("Brain Stage I"),
       tier = 0,
    },
-   [N_("Brain Stage II")] = {
+   ["systems2"] = {
+      name = _("Brain Stage II"),
       tier = 2,
-      requires = { "Brain Stage I" },
+      requires = { "systems1" },
    },
-   [N_("Brain Stage III")] = {
+   ["systems3"] = {
+      name = _("Brain Stage III"),
       tier = 4,
-      requires = { "Brain Stage II" },
+      requires = { "systems2" },
    },
-   [N_("Brain Stage IV")] = {
+   ["systems4"] = {
+      name = _("Brain Stage IV"),
       tier = 6,
-      requires = { "Brain Stage III" },
+      requires = { "systems3" },
    },
    -- Core Shells
-   [N_("Shell Stage I")] = {
+   ["hull1"] = {
+      name = _("Shell Stage I"),
       tier = 0,
    },
-   [N_("Shell Stage II")] = {
-      tier = 1,
-      requires = { "Shell Stage I" },
+   ["hull2"] = {
+      name = _("Shell Stage II"),
+      tier = 2,
+      requires = { "hull1" },
    },
-   [N_("Shell Stage III")] = {
-      tier = 3,
-      requires = { "Shell Stage II" },
+   ["hull3"] = {
+      name = _("Shell Stage III"),
+      tier = 4,
+      requires = { "hull2" },
    },
-   [N_("Shell Stage IV")] = {
-      tier = 5,
-      requires = { "Shell Stage III" },
+   ["hull4"] = {
+      name = _("Shell Stage IV"),
+      tier = 6,
+      requires = { "hull3" },
    },
    -- Left Weapon
-   [N_("Left Stinger I")] = {
+   ["weap1a1"] = {
+      name = _("Left Stinger I"),
       tier = 1,
-      conflicts = { "Left Claw I" },
+      conflicts = { "weap1b1" },
    },
-   [N_("Left Stinger II")] = {
+   ["weap1a2"] = {
+      name = _("Left Stinger I"),
       tier = 3,
-      requires = { "Left Stinger I" },
+      requires = { "weap1a1" },
    },
-   [N_("Left Claw I")] = {
+   ["weap1b1"] = {
+      name = _("Left Claw I"),
       tier = 1,
    },
-   [N_("Left Claw II")] = {
+   ["weap1b2"] = {
+      name = _("Left Claw II"),
       tier = 3,
-      requires = { "Left Claw I" },
-   },
-   -- Right Weapon
-   [N_("Right Stinger I")] = {
-      tier = 2,
-      conflicts = { "Right Claw I" },
-   },
-   [N_("Right Stinger II")] = {
-      tier = 4,
-      requires = { "Right Stinger I" },
-   },
-   [N_("Right Claw I")] = {
-      tier = 2,
-   },
-   [N_("Right Claw II")] = {
-      tier = 4,
-      requires = { "Right Claw I" },
+      requires = { "weap1b1" },
    },
    -- Movement Line
-   [N_("Compound Eyes")] = {
+   ["compoundeyes"] = {
+      name = _("Compound Eyes"),
       tier = 3,
    },
-   [N_("Hunter Spirit")] = {
+   ["hunterspirit"] = {
+      name =_("Hunter Spirit"),
       tier = 5,
-      requires = { "Compound Eyes" },
-      conflicts = { "Wanderer Spirit" },
+      requires = { "compoundeyes" },
+      conflicts = { "wandererspirit" },
    },
-   [N_("Adrenaline Gland I")] = {
+   ["afterburner1"] = {
+      name = _("Adrenaline Gland I"),
       tier = 2,
    },
-   [N_("Adrenaline Gland II")] = {
+   ["afterburner2"] = {
+      name = _("Adrenaline Gland II"),
       tier = 4,
-      requires = { "Adrenaline Gland I" },
+      requires = { "afterburner1" },
    },
-   [N_("Wanderer Spirit")] = {
+   ["wandererspirit"] = {
+      name = _("Wanderer Spirit"),
       tier = 5,
-      requires = { "Adrenaline Gland II" },
+      requires = { "afterburner2" },
    },
    -- Health Line
-   [N_("Bulky Abdomen")] = {
+   ["health1"] = {
+      name = _("Bulky Abdomen"),
       tier = 1,
    },
-   [N_("Regeneration I")] = {
+   ["health2"] = {
+      name = _("Regeneration I"),
       tier = 3,
-      requires = { "Bulky Abdomen" },
+      requires = { "health1" },
    },
-   [N_("Hard Shell")] = {
+   ["health3"] = {
+      name = _("Hard Shell"),
       tier = 4,
-      requires = { "Regeneration I" },
+      requires = { "health2" },
    },
-   [N_("Regeneration II")] = {
+   ["health4"] = {
+      name = _("Regeneration II"),
       tier = 5,
-      requires = { "Hard Shell" }
+      requires = { "health3" }
    },
    -- Attack Line
-   [N_("Feral Rage")] = {
+   ["attack1"] = {
+      name = _("Feral Rage"),
       tier = 3,
    },
-   [N_("Adrenaline Hormone")] = {
+   ["attack2"] = {
+      name = _("Adrenaline Hormone"),
       tier = 5,
-      requires = { "Feral Rage" },
+      requires = { "attack1" },
    },
 }
 
 function gene.window ()
+   --local level = 10
+
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
          if v==item then
@@ -153,7 +168,6 @@ function gene.window ()
 
    -- Set up some helper fields
    for k,s in pairs(skills) do
-      s.name = k
       s.x = 0
       s.y = s.tier
       local con = s.conflicts or {}
@@ -163,15 +177,18 @@ function gene.window ()
          if not inlist( s2.conflicts, k ) then
             table.insert( s2.conflicts, k )
          end
-         s2.conflicted_by = s
       end
       s.conflicts = con
       local req = s.requires or {}
       for i,r in ipairs(req) do
          local s2 = skills[r]
-         s2.required_by = s
+         s2.required_by = s2.required_by or {}
+         if not inlist( s2.required_by, k ) then
+            table.insert( s2.required_by, k )
+         end
       end
       s.requires = req
+      s.required_by = s.required_by or {}
    end
 
    -- Recursive group creation
@@ -187,8 +204,8 @@ function gene.window ()
       for i,c in ipairs(node.conflicts) do
          grp = create_group_rec( grp, skills[c], x+1 )
       end
-      if node.required_by then
-         grp = create_group_rec( grp, node.required_by, x )
+      for i,r in ipairs(node.required_by) do
+         grp = create_group_rec( grp, skills[r], x )
       end
       for i,r in ipairs(node.requires) do
          grp = create_group_rec( grp, skills[r], x )
@@ -245,15 +262,14 @@ function gene.window ()
             for i,s in ipairs(g) do
                local px = g.x+s.x
                local py = s.y
-               local alt = "#o".._(s.name).."#0"
+               local alt = "#o"..s.name.."#0"
                if s.desc then
                   alt = alt.."\n\n"..s.desc
                end
                if #s.requires > 0 then
                   local req = {}
                   for j,r in ipairs(s.requires) do
-                     -- TODO colour code based on whether acquired
-                     table.insert( req, _(r) )
+                     table.insert( req, skills[r].name )
                   end
                   alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
                end
@@ -261,7 +277,7 @@ function gene.window ()
                   local con = {}
                   for j,c in ipairs(s.conflicts) do
                      -- TODO colour code based on whether acquired
-                     table.insert( con, _(c) )
+                     table.insert( con, skills[c].name )
                   end
                   alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
                end
@@ -270,20 +286,20 @@ function gene.window ()
                s.alt = alt
                s.enabled = (s.tier==0)
                table.insert( skillslist, s )
-               if s.required_by then
+               for j,r in ipairs(s.required_by) do
                   table.insert( skillslink, {
                      x1 = px,
                      y1 = py,
-                     x2 = g.x+s.required_by.x,
-                     y2 = s.required_by.y,
+                     x2 = g.x+skills[r].x,
+                     y2 = skills[r].y,
                   } )
                end
-               if s.conflicted_by then
+               for j,c in ipairs(s.conflicts) do
                   table.insert( skillslink, {
                      x1 = px,
                      y1 = py,
-                     x2 = g.x+s.conflicted_by.x,
-                     y2 = s.conflicted_by.y,
+                     x2 = g.x+skills[c].x,
+                     y2 = skills[c].y,
                   } )
                end
             end
@@ -333,7 +349,7 @@ function gene.window ()
    function SkillIcon:drawover( bx, by )
       local x, y = bx+self.x, by+self.y
       if self.mouseover then
-         luatk.drawAltText( x+50, y+10, self.skill.alt, 400 )
+         luatk.drawAltText( x+60, y+10, self.skill.alt, 300 )
       end
    end
    function SkillIcon:clicked ()
