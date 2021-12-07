@@ -206,6 +206,7 @@ local skills = {
    ["attack1"] = {
       name = _("Feral Rage"),
       tier = 3,
+      requires = {"systems2"},
    },
    ["attack2"] = {
       name = _("Adrenaline Hormone"),
@@ -267,13 +268,13 @@ function gene.window ()
       grp.y2 = math.max( grp.y2, node.y )
       table.insert( grp, node )
       for i,c in ipairs(node._conflicts) do
-         grp = create_group_rec( grp, c, x+1 )
+         grp = create_group_rec( grp, c, x+i )
       end
       for i,r in ipairs(node._required_by) do
-         grp = create_group_rec( grp, r, x )
+         grp = create_group_rec( grp, r, x+i-1 )
       end
       for i,r in ipairs(node._requires) do
-         grp = create_group_rec( grp, r, x )
+         grp = create_group_rec( grp, r, x+i-1 )
       end
       return grp
    end
@@ -281,7 +282,7 @@ function gene.window ()
    -- Create the group list
    local groups = {}
    for k,s in pairs(skills) do
-      if not s._g then
+      if not s._g and #s._requires <= 0 then
          local grp = create_group_rec( {x=math.huge,y=math.huge,x2=-math.huge,y2=-math.huge}, s, 0 )
          grp.w = grp.x2-grp.x
          grp.h = grp.y2-grp.y
@@ -476,11 +477,18 @@ function gene.window ()
    -- Elements
    local scol = {1, 1, 1, 0.2}
    for k,l in ipairs(skillslink) do
-      luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*(l.x2-l.x1)+10, sh*(l.y2-l.y1)+10, scol )
+      local dx = l.x2-l.x1
+      local dy = l.y2-l.y1
+      if dx~=0 and dy~=0 then
+         -- Go to the side then up
+         luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*dx, 10, scol )
+         luatk.newRect( wdw, bx+sw*l.x2+30, by+sh*l.y1+30, 10, sh*dy, scol )
+      else
+         luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*dx+10, sh*dy+10, scol )
+      end
    end
    for k,s in ipairs(skillslist) do
       newSkillIcon( wdw, bx+sw*s.rx, by+sh*s.ry, 70, 70, s )
-      --luatk.newButton( wdw, bx+sw*s.x+10, by+sh*s.y+10, 50, 50, s.name, function( wgt ) end )
    end
 
    luatk.run()
