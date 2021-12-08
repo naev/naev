@@ -23,11 +23,22 @@ class BioOutfit:
             with open( f"{n.lower().replace(' ','_')}.xml", "w" ) as f:
                 f.write( self.txt.format(**p) )
 
-stinger = BioOutfit( "stinger.xml.template", {
-    "name"  : "Stinger Organ Stage I",
+"""
+ul: thorn,   nail
+l:  stinger, pincer
+m:  barb,    talon
+h:  fang,    claw
+uh: spear
+"""
+
+
+BioOutfit( "thorn.xml.template", {
+    "name"  : "Thorn Organ Stage I",
     "price" : lerpr( 4500, 20000 ),
     "damage": lerp( 8, 17 ),
     "energy": 4,
     "range" : lerp( 750, 900 ),
     "falloff": lerp( 450, 750 ),
-} ).run( ["Stinger Organ Stage I", "Stinger Organ Stage II"] )
+    "speed" : lerp( 550, 700 ),
+    "heatup": lerp( 25, 40 ),
+} ).run( ["Thorn Organ Stage I", "Thorn Organ Stage II"] )
