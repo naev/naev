@@ -165,9 +165,9 @@ local function dvaered_weapons( p )
    return #baditems==0, baditems
 end
 
-
+local fzalek
 local function drone_create( pos )
-   local d = pilot.add( "Za'lek Scout Drone", mem.fzalek, pos )
+   local d = pilot.add( "Za'lek Scout Drone", fzalek, pos )
    d:control()
    d:brake()
    hook.pilot( d, "death", "drone_death" )
@@ -188,7 +188,8 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      mem.fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
+      -- Gets reset on enter system
+      fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
       drone1 = drone_create( drone1pos )
       mem.drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
@@ -251,7 +252,7 @@ function reinforcements_jumpin ()
       "Za'lek Demon",
    }
    for k,s in ipairs(ships) do
-      local p = pilot.add( s, mem.fzalek, jumpinsys )
+      local p = pilot.add( s, fzalek, jumpinsys )
       if drone2:exists() then
          p:setLeader( drone2 )
       end

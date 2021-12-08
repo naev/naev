@@ -18,7 +18,7 @@ local fmt = require "format"
 local equipopt = require 'equipopt'
 
 local logidstr = "log_gauntlet"
-local enemies, gmods, wave_enemies, wave_killed -- Non-persistent state
+local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
 -- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
 -- luacheck: globals approach_gauntlet (NPC functions passed by name)
@@ -254,7 +254,7 @@ function enter_wave ()
    pilot.toggleSpawn(false)
 
    -- Metafactions
-   mem.enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
+   enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
 
    -- Start round
    mem.total_score = 0
@@ -276,7 +276,7 @@ function wave_round_setup ()
    pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
-      local p = pilot.add( shipname, mem.enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
+      local p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
       equipopt.generic( p, nil, "elite" )
       p:setInvincible(true)
       p:control(true)

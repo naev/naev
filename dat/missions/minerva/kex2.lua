@@ -215,10 +215,10 @@ function enter ()
       player.allowSave(true)
       player.allowLand(false)
 
-      mem.fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
+      local fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
       local pos = vec2.new( 9000, 3500 )
       local function addenemy( shipname )
-         local p = pilot.add( shipname, mem.fbaroness, pos+vec2.newP( 800*rnd.rnd(), rnd.angle()) )
+         local p = pilot.add( shipname, fbaroness, pos+vec2.newP( 800*rnd.rnd(), rnd.angle()) )
          p:control()
          p:brake()
          p:setHostile(true)
@@ -233,7 +233,7 @@ function enter ()
       }
 
       -- Spawn chasing guys
-      mem.spawn_hook = hook.timer( 10.0, "spawn_enemies" )
+      mem.spawn_hook = hook.timer( 10.0, "spawn_enemies", fbaroness )
 
       hook.timer( 0.5, "heartbeat" )
 
@@ -276,9 +276,9 @@ function blockade_attacked ()
 end
 
 -- Spawn enemies that will eventually bog down the player
-function spawn_enemies ()
+function spawn_enemies( fbaroness )
    local function addenemy( shipname )
-      local p = pilot.add( shipname, mem.fbaroness, targetplanet )
+      local p = pilot.add( shipname, fbaroness, targetplanet )
       p:setHostile(true)
       return p
    end
@@ -298,7 +298,7 @@ function spawn_enemies ()
    end
    addenemy( strongenemies[ rnd.rnd(1,#strongenemies) ] )
 
-   mem.spawn_hook = hook.timer( 20.0, "spawn_enemies" )
+   mem.spawn_hook = hook.timer( 20.0, "spawn_enemies", fbaroness )
 end
 
 function gotaway ()

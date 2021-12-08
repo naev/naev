@@ -199,11 +199,11 @@ function jumpin ()
    mem.event_finish = true
 
    local fwo = faction.get("Wild Ones")
-   mem.fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
-   mem.fpir:setPlayerStanding(0)
+   local fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
+   fpir:setPlayerStanding(0)
 
    local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
-   owner = pilot.add( "Pirate Shark", mem.fpir, pos )
+   owner = pilot.add( "Pirate Shark", fpir, pos )
    owner:control(true)
    owner:follow( player.pilot() )
    hook.timer( 1, "owner_hail_check" )

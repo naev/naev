@@ -32,7 +32,7 @@ local destplanet = planet.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions
-local fleetdv, fleethooks, hawk, jump_fleet -- Non-persistent state
+local attkfaction, fleetdv, fleethooks, hawk, hawkfaction, jump_fleet -- Non-persistent state
 -- luacheck: globals abort complete enter fleetdv_attacked hawk_attacked hawk_dead hawk_jump hawk_land jump_fleet_cap_dead jumpout land spawn_fleet undo_invuln (Hook functions passed by name)
 
 local chatter = {}
@@ -94,9 +94,9 @@ end
 function enter()
    if system.cur() == destsys then
       -- Create the custom factions
-      mem.hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
-      mem.attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
-      faction.dynEnemy( mem.hawkfaction, mem.attkfaction )
+      hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
+      attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
+      faction.dynEnemy( hawkfaction, attkfaction )
 
       -- Spawn people
       pilot.toggleSpawn(false)
@@ -105,7 +105,7 @@ function enter()
       mem.missionstarted = true
       local j = jump.get(destsys, destjump)
       local v = j:pos()
-      hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, {ai="dvaered_norun"} )
+      hawk = pilot.add( "Dvaered Goddard", hawkfaction, v-vec2.new(1500,8000), nil, {ai="dvaered_norun"} )
       hawk:outfitRm("all")
       hawk:outfitRm("cores")
       hawk:outfitAdd("Unicorp PT-2200 Core System")
@@ -118,16 +118,13 @@ function enter()
       hawk:control()
       hawk:hyperspace(destjump)
       hawk:broadcast(fmt.f(_("Alright folks, this will be Hawk's maiden jump. Continue on course to the {sys} jump gate."), {sys=destjump}))
-      hawk:setFaction(mem.hawkfaction)
       fleethooks = {}
-      fleetdv = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
+      fleetdv = fleet.add( 14, "Dvaered Vendetta", hawkfaction, hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
       for i, bi in ipairs(fleetdv) do
-         bi:changeAI("dvaered_norun")
          bi:setHilight(true)
          bi:setVisible(true)
          bi:control()
          bi:moveto(v)
-         bi:setFaction(mem.hawkfaction)
          table.insert(fleethooks, hook.pilot(bi, "attacked", "fleetdv_attacked"))
       end
 
@@ -193,8 +190,8 @@ end
 function hawk_dead () -- mission accomplished
    hawk:broadcast(_("Arrgh!"))
 
-   faction.dynEnemy( mem.hawkfaction, mem.attkfaction, true )
-   faction.dynEnemy( mem.attkfaction, mem.hawkfaction, true )
+   faction.dynEnemy( hawkfaction, attkfaction, true )
+   faction.dynEnemy( attkfaction, hawkfaction, true )
    local messages = {5, 6, 7}
    for k, v in ipairs(fleetdv) do
       if v:exists() then
@@ -256,11 +253,9 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(false)
    mem.jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-   jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", destjump, nil, {ai="dvaered_norun"} )
+   jump_fleet = fleet.add( 1, dv_med_force, attkfaction, destjump, nil, {ai="dvaered_norun"} )
    broadcast_first(jump_fleet, fmt.f(_("{pnt} will be ours! Khan, prepare to die!"), {pnt=destplanet}))
    for i, j in ipairs(jump_fleet) do
-      j:changeAI("dvaered_norun")
-      j:setFaction(mem.attkfaction)
       j:setHilight(true)
       j:setVisible()
       j:control()
