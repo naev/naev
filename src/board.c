@@ -44,6 +44,57 @@ int player_isBoarded (void)
    return board_boarded;
 }
 
+int board_hook( void *data )
+{
+   HookParam hparam[2];
+   Pilot *p = (Pilot*) data;
+
+   /*
+    * run hook if needed
+    */
+   hparam[0].type = HOOK_PARAM_PILOT;
+   hparam[0].u.lp = p->id;
+   hparam[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "board", hparam );
+   pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
+   hparam[0].u.lp = PLAYER_ID;
+   pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
+
+   if (board_stopboard) {
+      board_boarded = 0;
+      return 0;
+   }
+
+   /* Set up environment first time. */
+   if (board_env == LUA_NOREF) {
+      board_env = nlua_newEnv(1);
+      nlua_loadStandard( board_env );
+
+      size_t bufsize;
+      char *buf = ndata_read( BOARD_PATH, &bufsize );
+      if (nlua_dobufenv(board_env, buf, bufsize, BOARD_PATH) != 0) {
+         WARN( _("Error loading file: %s\n"
+             "%s\n"
+             "Most likely Lua file has improper syntax, please check"),
+               BOARD_PATH, lua_tostring(naevL,-1));
+         board_boarded = 0;
+         free(buf);
+         return -1;
+      }
+      free(buf);
+   }
+
+   /* Run Lua. */
+   nlua_getenv(board_env,"board");
+   lua_pushpilot(naevL, p->id);
+   if (nlua_pcall(board_env, 1, 0)) { /* error has occurred */
+      WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+   board_boarded = 0;
+   return 0;
+}
+
 /**
  * @brief Attempt to board the player's target.
  *
@@ -53,7 +104,6 @@ int player_tryBoard( int noisy )
 {
    Pilot *p;
    char c;
-   HookParam hparam[2];
 
    /* Not disabled. */
    if (pilot_isDisabled(player.p))
@@ -126,49 +176,7 @@ int player_tryBoard( int noisy )
    /* Don't unboard. */
    board_stopboard = 0;
 
-   /*
-    * run hook if needed
-    */
-   hparam[0].type = HOOK_PARAM_PILOT;
-   hparam[0].u.lp = p->id;
-   hparam[1].type = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "board", hparam );
-   pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
-   hparam[0].u.lp = PLAYER_ID;
-   pilot_runHookParam(p, PILOT_HOOK_BOARDING, hparam, 1);
-
-   if (board_stopboard) {
-      board_boarded = 0;
-      return PLAYER_BOARD_OK;
-   }
-
-   /* Set up environment first time. */
-   if (board_env == LUA_NOREF) {
-      board_env = nlua_newEnv(1);
-      nlua_loadStandard( board_env );
-
-      size_t bufsize;
-      char *buf = ndata_read( BOARD_PATH, &bufsize );
-      if (nlua_dobufenv(board_env, buf, bufsize, BOARD_PATH) != 0) {
-         WARN( _("Error loading file: %s\n"
-             "%s\n"
-             "Most likely Lua file has improper syntax, please check"),
-               BOARD_PATH, lua_tostring(naevL,-1));
-         board_boarded = 0;
-         free(buf);
-         return PLAYER_BOARD_ERROR;
-      }
-      free(buf);
-   }
-
-   /* Run Lua. */
-   nlua_getenv(board_env,"board");
-   lua_pushpilot(naevL, p->id);
-   if (nlua_pcall(board_env, 1, 0)) { /* error has occurred */
-      WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-   board_boarded = 0;
+   hook_addFunc( board_hook, p, "safe" );
    return PLAYER_BOARD_OK;
 }
 

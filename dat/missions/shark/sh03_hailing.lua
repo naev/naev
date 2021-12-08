@@ -56,7 +56,7 @@ function accept()
       tk.msg(_("Time to go"), _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
       misn.setTitle(_("Invitation"))
-      misn.setReward(fmt.credits(shark.rewardssh03))
+      misn.setReward(fmt.credits(shark.rewards.sh03))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
       misn.osdCreate(_("Invitation"), {
          fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=mem.missys}),
@@ -79,7 +79,7 @@ function land()
    --Job is done
    if mem.stage == 1 and planet.cur() == paypla then
    tk.msg(_("Good job"), fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]), {pnt=nextpla, sys=nextsys}))
-      player.pay(shark.rewardssh03)
+      player.pay(shark.rewards.sh03)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.osdDestroy()
       hook.rm(mem.enterhook)
