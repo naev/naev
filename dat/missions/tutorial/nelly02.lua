@@ -263,8 +263,8 @@ function enter ()
 
    elseif mem.misn_state == 2 and scur == mem.retsys then
       mem.jump_dest = jump.get( mem.retsys, mem.destsys )
-      mem.fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
-      hook.timer( 1, "timer_pirate" )
+      local fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
+      hook.timer( 1, "timer_pirate", fpir )
       if not mem.hk_reset_osd then
          mem.hk_reset_osd = hook.enter( "reset_osd_hook" )
       end
@@ -412,14 +412,14 @@ function approach_nelly ()
    mem.misn_state = 2
 end
 
-function timer_pirate ()
+function timer_pirate( fpir )
    local pp = player.pilot()
    local d = mem.jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
       -- Spawn pirates
       enemies = {}
       for i=1,3 do
-         local p = pilot.add( "Pirate Hyena", mem.fpir, mem.jump_dest )
+         local p = pilot.add( "Pirate Hyena", fpir, mem.jump_dest )
          if i>1 then
             p:setLeader( enemies[1] )
          end
@@ -440,7 +440,7 @@ function timer_pirate ()
       mem.nelly_spam = 2
       return
    end
-   hook.timer( 1, "timer_pirate" )
+   hook.timer( 1, "timer_pirate", fpir )
 end
 
 function timer_pirate_nelly ()

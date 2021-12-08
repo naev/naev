@@ -41,7 +41,7 @@ local dronepos = vec2.new( -12000, -12000 )
 --    3: Run away
 --    4: Get back to Minerva STation
 mem.misn_state = nil
-local boss, drone, thugs -- Non-persistent state
+local boss, drone, fdrone, fthugs, thugs -- Non-persistent state
 -- luacheck: globals enter harassed heartbeat land thugs_attacked thugs_dead (Hook functions passed by name)
 
 
@@ -155,10 +155,10 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      mem.fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
+      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
 
       local pos = thugpos
-      boss = pilot.add( "Dvaered Vigilance", mem.fthugs, pos )
+      boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
       boss:control()
       boss:brake()
       hook.pilot( boss, "attacked", "thugs_attacked" )
@@ -166,15 +166,15 @@ function enter ()
       thugs = { boss }
       for i = 1,3 do
          pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.angle() )
-         local p = pilot.add( "Dvaered Vendetta", mem.fthugs, pos )
+         local p = pilot.add( "Dvaered Vendetta", fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
          hook.pilot( p, "death", "thugs_dead" )
          table.insert( thugs, p )
       end
 
-      mem.fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
-      drone = pilot.add( "Za'lek Light Drone", mem.fdrone, dronepos )
+      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
+      drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
       drone:control()
       drone:brake()
 
@@ -190,7 +190,7 @@ function heartbeat ()
    local pp = player.pilot()
    local dist =  pp:pos():dist( drone:pos() )
    if dist < 1000 then
-      player.msg(_("#gThe drone begins to follow you."))
+      player.msg(_("#gThe drone begins to follow you."), true)
       mem.misn_state=1
       misn.osdActive(2)
       drone:taskClear()
@@ -208,7 +208,7 @@ function thugs_attacked ()
       pilot.toggleSpawn(true)
       misn.finish(false)
    elseif mem.misn_state==1 then
-      faction.dynEnemy( mem.fdrone, mem.fthugs ) -- Make enemies
+      faction.dynEnemy( fdrone, fthugs ) -- Make enemies
       boss:broadcast(_("I'm going to wash my ship's hull with your blood, Za'lek Scum!"))
       boss:control(false)
       mem.misn_state=2
@@ -233,7 +233,7 @@ function harassed ()
    local dist = pp:pos():dist( thugpos )
    if dist > 5000 then
       if mem.failingdistance==nil then
-         player.msg(_("#rYou are moving too far away from the harassment point!"))
+         player.msg(_("#rYou are moving too far away from the harassment point!"), true)
          mem.failingdistance = 0
       end
       mem.failingdistance = mem.failingdistance + 1
@@ -251,6 +251,7 @@ function harassed ()
       mem.misn_state=3
       misn.osdActive(3)
       system.mrkRm( mem.thugsmarker )
+      misn.markerMove( mem.misnmarker, runawaysys )
       return
    end
    hook.timer( 1.0, "harassed" )

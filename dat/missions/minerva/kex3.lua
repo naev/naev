@@ -36,7 +36,7 @@ local fmt = require "format"
 --  4: duel finished
 --  5: return to Kex
 mem.misn_state = nil
-local enemies, enemies_weak, noise_shader, pmalik, thug_leader, thug_pilots -- Non-persistent state
+local enemies, enemies_weak, enemy_faction, noise_shader, pmalik, thug_leader, thug_pilots -- Non-persistent state
 -- luacheck: globals countdown countdown_done countdown_start enter enter_the_ring generate_npc leave_the_ring maikki_arrives_extra maikki_arrives_extra_real maikki_arrives_real malik_boarded malik_death malik_disabled malik_respawn_real malik_spawn_more malik_spawn_more_real malik_speech malik_taunt player_death thug_heartbeat (Hook functions passed by name)
 -- luacheck: globals approach_kex approach_malik (NPC functions passed by name)
 
@@ -386,9 +386,9 @@ function enter_the_ring ()
    hook.pilot( player.pilot(), "death", "player_death" )
 
    -- Set up Major Malik
-   mem.enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
+   enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
    local pos = vec2.new( -1500, 1500 )
-   pmalik = pilot.add( "Dvaered Vendetta", mem.enemy_faction, pos, _("Major Malik") )
+   pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik") )
    pmalik:setInvincible(true)
    pmalik:setHostile(true)
    pmalik:control(true)
@@ -476,7 +476,7 @@ local function malik_respawn ()
    hook.timer( 2, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
-   pmalik = pilot.add("Dvaered Goddard", mem.enemy_faction, pos, _("Major Malik"), {naked=true})
+   pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"), {naked=true})
    equipopt.dvaered( pmalik, {
       type_range = {
          ["Beam Turret"] = { max = 0 },
@@ -516,7 +516,7 @@ function malik_spawn_more ()
    hook.timer( 2, "malik_spawn_more_real", pos )
 end
 function malik_spawn_more_real( pos )
-   local p = pilot.add("Dvaered Vendetta", mem.enemy_faction, pos )
+   local p = pilot.add("Dvaered Vendetta", enemy_faction, pos )
    p:setHostile(true)
    table.insert( enemies, p )
    table.insert( enemies_weak, p )

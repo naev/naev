@@ -577,7 +577,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 30.0, "ecc_timer" )
-   elseif mem.misn_state==4 then
+   elseif mem.misn_state==4 and system.cur() == eccsys then
       pilot.clear()
       pilot.toggleSpawn(false)
 
@@ -612,7 +612,8 @@ end
 
 
 function ecc_timer ()
-   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
+   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"), true)
+   player.autonavReset()
    mem.sysmarker = system.mrkAdd( eccpos, _("Curious Signal") )
    hook.timer( 0.5, "ecc_dist" )
 end

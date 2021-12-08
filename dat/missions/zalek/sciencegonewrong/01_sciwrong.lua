@@ -135,7 +135,7 @@ function targetBoard()
    c:illegalto( "Soromid" )
    mem.cargoID = misn.cargoAdd(c, 0)
    misn.osdActive(3)
-   mem.misn_mark = misn.markerMove( mem.misn_mark, mem.t_pla[1], "high" )
+   misn.markerMove( mem.misn_mark, mem.t_pla[1], "high" )
    mem.hland = hook.land("land")
    mem.boarded = true
    hook.rm(mem.hboard)

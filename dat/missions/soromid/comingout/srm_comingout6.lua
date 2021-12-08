@@ -107,9 +107,9 @@ function spawn ()
    p:setVisible( true )
    p:setHilight( true )
 
-   mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   local fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    -- Spawn Chelsea
-   chelsea = pilot.add( "Lancelot", mem.fass, mem.lastsys, _("Chelsea"), {naked=true} )
+   chelsea = pilot.add( "Lancelot", fass, mem.lastsys, _("Chelsea"), {naked=true} )
    equipopt.generic( chelsea, nil, "elite" )
 
    chelsea:setHealth( 100, 100 )

@@ -268,9 +268,9 @@ function enter ()
    end
    if system.cur() == targetsys then
       if mem.misn_state == 0 then
-         mem.fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
+         local fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
 
-         mainguy = pilot.add( "Rhino", mem.fthugs, jumpinsys, _("Transport") )
+         mainguy = pilot.add( "Rhino", fthugs, jumpinsys, _("Transport") )
          mainguy:setVisplayer(true)
          mainguy:setHilight(true)
          mainguy:control()
@@ -281,7 +281,7 @@ function enter ()
          hook.pilot( mainguy, "attacked", "mainguy_attacked" )
 
          local function addescort( shipname )
-            local p = pilot.add( shipname, mem.fthugs, jumpinsys, _("Escort") )
+            local p = pilot.add( shipname, fthugs, jumpinsys, _("Escort") )
             p:setLeader( mainguy )
             hook.pilot( p, "attacked", "mainguy_attacked" )
             return p

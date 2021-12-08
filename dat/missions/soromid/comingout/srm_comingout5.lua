@@ -25,7 +25,7 @@ local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
 local srm = require "common.soromid"
 
--- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
 
 mem.misn_title = _("Waste Collector")
 mem.misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
@@ -81,11 +81,11 @@ end
 
 
 function spawnChelseaShip( param )
-   if not mem.fass then
-      mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   if not fass then
+      fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    end
 
-   chelsea = pilot.add( "Rhino", mem.fass, param, _("Chelsea") )
+   chelsea = pilot.add( "Rhino", fass, param, _("Chelsea") )
 
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
@@ -123,14 +123,14 @@ end
 
 
 function spawnThug( param )
-   if not mem.fthug then
-      mem.fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
-      mem.fthug:dynEnemy(mem.fass)
+   if not fthug then
+      fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+      fthug:dynEnemy(fass)
    end
 
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   local thug = pilot.add( shiptype, mem.fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 

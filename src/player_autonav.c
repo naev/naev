@@ -34,6 +34,7 @@ static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double last_shield; /**< Player's last shield value. */
 static double last_armour; /**< Player's last armour value. */
+static int target_known = 0; /**< Is the target known? */
 
 /*
  * Prototypes.
@@ -210,7 +211,8 @@ void player_autonavPil( unsigned int p )
    if (player_autonavSetup() || !inrange)
       return;
 
-   player_message(_("#oAutonav: following %s."), (inrange==1) ? pilot->name : _("Unknown") );
+   target_known = (inrange > 0);
+   player_message(_("#oAutonav: following %s."), (target_known) ? pilot->name : _("Unknown") );
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = strdup( pilot->name );
    player.autonavcol = '0';
@@ -318,7 +320,7 @@ static void player_autonav (void)
 {
    JumpPoint *jp;
    Pilot *p;
-   int ret, map_npath;
+   int ret, map_npath, inrange;
    double d, t, tint;
    double vel;
 
@@ -438,10 +440,16 @@ static void player_autonav (void)
          p = pilot_getTarget( player.p );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
+
+         if (p->id != PLAYER_ID) {
+            inrange = pilot_inRangePilot( player.p, p, NULL );
+            target_known = (inrange > 0);
+         }
+
+         if ((p->id == PLAYER_ID) || (!inrange)) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
-            player_message( _("#oAutonav: following target  %s has been lost."),
-                              player.autonavmsg );
+            player_message( _("#oAutonav: following target %s has been lost."),
+                              (target_known) ? player.autonavmsg : _("Unknown") );
             player_accel( 0. );
             player_autonavEnd();
          }
