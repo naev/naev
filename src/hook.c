@@ -98,6 +98,10 @@ typedef struct Hook_ {
          unsigned int parent; /**< Event it's connected to. */
          char *func; /**< Function it runs. */
       } event; /**< Event Lua function. */
+      struct {
+         int (*func)( void* );
+         void *data;
+      } func;
    } u; /**< Type specific data. */
 } Hook;
 
@@ -409,6 +413,10 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
          ret = hook_runEvent(hook, param, claims);
          break;
 
+      case HOOK_TYPE_FUNC:
+         ret = hook->u.func.func( hook->u.func.data );
+         break;
+
       default:
          WARN(_("Invalid hook type '%d', deleting."), hook->type);
          hook->delete = 1;
@@ -555,6 +563,20 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
    /* Timer information. */
    new_hook->is_timer      = 1;
    new_hook->ms            = ms;
+
+   return new_hook->id;
+}
+
+/**
+ * @brief Adds a function hook to be run.
+ */
+unsigned int hook_addFunc( int (*func)(void*), void *data, const char *stack )
+{
+   Hook *new_hook = hook_new( HOOK_TYPE_FUNC, stack );
+
+   /* Function special stuff. */
+   new_hook->u.func.func = func;
+   new_hook->u.func.data = data;
 
    return new_hook->id;
 }
