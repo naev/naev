@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="{name}">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon</license>
+  <mass>6</mass>
+  <price>{price}</price>
+  <description>The BioPlasma Stinger is the most basic organic weaponry available, and one of the most common. While it is not especially powerful, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <gfx_store>organic_plasma_s1.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>plasma.png</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.8</delay>
+  <speed>550</speed>
+  <range>{range}</range>
+  <falloff>{falloff}</falloff>
+  <gfx_end>plasma2-end.png</gfx_end>
+  <energy>{energy}</energy>
+  <heatup>25</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>2000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>0</penetrate>
+   <physical>{damage}</physical>
+  </damage>
+ </specific>
+</outfit>
