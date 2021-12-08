@@ -943,7 +943,8 @@ static int hookL_trigger( lua_State *L )
  *    <li> "death" : triggered when pilot dies (before marked as dead). </li>
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. </li>
  *    <li> "boarding" : triggered when a pilot boards another ship (start of boarding).</li>
- *    <li> "board" : triggered when a pilot is boarded (start of boarding).</li>
+ *    <li> "board" : triggered when a pilot is boarded by the player (start of boarding).</li>
+ *    <li> "boardall" : triggered when a pilot is boarded by any pilot (start of boarding).</li>
  *    <li> "disable" : triggered when pilot is disabled (with disable set).</li>
  *    <li> "undisable" : triggered when pilot recovers from being disabled.</li>
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).</li>
@@ -1022,6 +1023,7 @@ static int hookL_pilot( lua_State *L )
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
+   else if (strcmp(hook_type,"boardall")==0)    type = PILOT_HOOK_BOARD_ALL;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;

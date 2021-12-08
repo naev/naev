@@ -48,8 +48,9 @@
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
-   PILOT_HOOK_BOARDING,  /**< Pilot is boarding. */
-   PILOT_HOOK_BOARD,     /**< Pilot got boarded. */
+   PILOT_HOOK_BOARDING,  /**< Player is boarding. */
+   PILOT_HOOK_BOARD,     /**< Player got boarded. */
+   PILOT_HOOK_BOARD_ALL,  /**< Pilot got boarded. */
    PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
    PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
    PILOT_HOOK_JUMP,      /**< Pilot jumped. */
