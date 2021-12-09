@@ -25214,7 +25214,7 @@ msgid "Cannibalize"
 msgstr ""
 
 #: dat/board.lua:369
-msgid "Boarding {shipname}"
+msgid "Boarding {plt}"
 msgstr ""
 
 #. Moolah
@@ -33521,7 +33521,7 @@ msgid ""
 "\"It looks like we entered part of the volatile nebula. The instability here "
 "causes heavy damage to any ships that enter. If our shield regeneration "
 "surpasses the volatility damage, we should be fine. However, if the "
-"volatility gets any stronger, it could be fatal to the {shipname}. Going "
+"volatility gets any stronger, it could be fatal to the {ship}. Going "
 "deeper into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
 
@@ -33746,7 +33746,7 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:140
 msgid ""
-"\"Congratulations on buying a brand new {shipname}! Unless you trade-in your "
+"\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
 "ship, when you buy a new ship it is added to your available ships. Usually, "
 "ships come with only core outfits quipped, so you should head over to the "
 "#oEquipment#0 window to deck the ship out and swap it with your current one "
@@ -60330,7 +60330,7 @@ msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:240
 msgid ""
-"You open the communication channels with the {shipname} and a hologram of a "
+"You open the communication channels with the {plt} and a hologram of a "
 "nervous-looking individual materializes in front of you."
 msgstr ""
 
@@ -60363,12 +60363,12 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:255
 msgid ""
 "Given the streak of bad luck the feline has brought you, you figure it is in "
-"your best interest to bring the cat over to the {shipname}"
+"your best interest to bring the cat over to the {plt}."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:276
 msgid ""
-"Your ship locks its boarding clamps on the {shipname}, and the airlock opens "
+"Your ship locks its boarding clamps on the {plt}, and the airlock opens "
 "up revealing some strangely musty air and pitch black darkness. How odd."
 msgstr ""
 
@@ -69407,10 +69407,10 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:550
 msgid ""
-"\"To avoid getting spotted by {shipname}, you should first get away from "
+"\"To avoid getting spotted by {plt}, you should first get away from "
 "nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
 "overlay map you can open with {overlaykey}, where the detection radius will "
-"be shown in red circles. You should then be able to fly around {shipname} "
+"be shown in red circles. You should then be able to fly around {plt} "
 "and get to the jump point. It shouldn't be hard, but be careful not to get "
 "close to them!\""
 msgstr ""

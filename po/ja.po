@@ -25839,8 +25839,8 @@ msgid "Cannibalize"
 msgstr "共食い"
 
 #: dat/board.lua:369
-msgid "Boarding {shipname}"
-msgstr "{shipname}に乗りこむ"
+msgid "Boarding {plt}"
+msgstr "{plt}に乗りこむ"
 
 #. Moolah
 #. Will go negative with loot_mod
@@ -34511,13 +34511,13 @@ msgid ""
 "\"It looks like we entered part of the volatile nebula. The instability here "
 "causes heavy damage to any ships that enter. If our shield regeneration "
 "surpasses the volatility damage, we should be fine. However, if the "
-"volatility gets any stronger, it could be fatal to the {shipname}. Going "
+"volatility gets any stronger, it could be fatal to the {ship}. Going "
 "deeper into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
 "{ainame}があなたの目の前に姿を表した。\n"
 "｢激変性の星雲に入ったようです。ここは不安定なので、ここへ入った船は大きな損害"
 "をうけます。シールド再生が変動による損傷を上まわっていればけっこうなことです"
-"が、変動度がなにか強くなると{shipname}には致命的なことにもなりかねません。星"
+"が、変動度がなにか強くなると{ship}には致命的なことにもなりかねません。星"
 "雲のさらに深くへ行くのは、とても危険な試みだったと証明されることもありえます｣"
 
 #.
@@ -34846,7 +34846,7 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:140
 msgid ""
-"\"Congratulations on buying a brand new {shipname}! Unless you trade-in your "
+"\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
 "ship, when you buy a new ship it is added to your available ships. Usually, "
 "ships come with only core outfits quipped, so you should head over to the "
 "#oEquipment#0 window to deck the ship out and swap it with your current one "
@@ -34855,7 +34855,7 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
-"｢新しい{shipname}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買"
+"｢新しい{ship}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買"
 "うと、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが装"
 "備されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と"
 "使いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこでも"
@@ -62601,10 +62601,10 @@ msgstr "神経質な人"
 
 #: dat/missions/pirate/blackcat.lua:240
 msgid ""
-"You open the communication channels with the {shipname} and a hologram of a "
+"You open the communication channels with the {plt} and a hologram of a "
 "nervous-looking individual materializes in front of you."
 msgstr ""
-"あなたは{shipname}との通信チャネルを開いた。すると神経質な感じがする人物のホ"
+"あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホ"
 "ログラフがあなたの前に姿を表した。"
 
 #: dat/missions/pirate/blackcat.lua:241
@@ -62643,17 +62643,17 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:255
 msgid ""
 "Given the streak of bad luck the feline has brought you, you figure it is in "
-"your best interest to bring the cat over to the {shipname}"
+"your best interest to bring the cat over to the {plt}."
 msgstr ""
-"ネコがあなたに立てつづけの不運を持ちこんだので、あなたはネコを{shipname}へ連"
+"ネコがあなたに立てつづけの不運を持ちこんだので、あなたはネコを{plt}へ連"
 "れていくのがもっとも利益になることだと判断した。"
 
 #: dat/missions/pirate/blackcat.lua:276
 msgid ""
-"Your ship locks its boarding clamps on the {shipname}, and the airlock opens "
+"Your ship locks its boarding clamps on the {plt}, and the airlock opens "
 "up revealing some strangely musty air and pitch black darkness. How odd."
 msgstr ""
-"あなたの船が、{shipname}と移乗用固定具で固定された。それからエアロックを開け"
+"あなたの船が、{plt}と移乗用固定具で固定された。それからエアロックを開け"
 "ると、なにか奇妙にかび臭い空気とまっ暗闇があらわになった。なんとも妙だ。"
 
 #: dat/missions/pirate/blackcat.lua:277
@@ -72503,17 +72503,17 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:550
 msgid ""
-"\"To avoid getting spotted by {shipname}, you should first get away from "
+"\"To avoid getting spotted by {plt}, you should first get away from "
 "nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
 "overlay map you can open with {overlaykey}, where the detection radius will "
-"be shown in red circles. You should then be able to fly around {shipname} "
+"be shown in red circles. You should then be able to fly around {plt} "
 "and get to the jump point. It shouldn't be hard, but be careful not to get "
 "close to them!\""
 msgstr ""
-"｢{shipname}に見つかるのを避けるために、まずは近くの船から離れて、"
+"｢{plt}に見つかるのを避けるために、まずは近くの船から離れて、"
 "{stealthkey} でステルスモードに入ってください。それから {overlaykey} で開ける"
 "オーバーレイマップを使って、ほかの船を避けるようにしてください。オーバーレイ"
-"マップには探知半径が赤い円で表示されます。だから{shipname}をうかいして、ジャ"
+"マップには探知半径が赤い円で表示されます。だから{plt}をうかいして、ジャ"
 "ンプポイントに行けるでしょう。難しくないはずですが、近よられないように注意し"
 "てください！｣"
 
