@@ -15,6 +15,7 @@ function gene.window ()
    end
 
    skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc" }
+   --intrinsics = bioskills.ship["Soromid Brigand"]
 
    local maxtier = 3
    local pss = ps:size()
@@ -211,12 +212,24 @@ function gene.window ()
    end
 
    local function skill_enable( s )
-      if s.outfit then
-         if s.slot then
-            pp:outfitRmSlot( s.slot )
-            pp:outfitAddSlot( s.outfit, s.slot, true, true )
+      local outfit = s.outfit or {}
+      local slot   = s.slot
+      if not type(outfit)=="table" then
+         outfit = {outfit}
+         if slot then
+            slot = {slot}
+         end
+      end
+      if slot and #outfit ~= #slot then
+         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+      end
+      for k,o in ipairs(outfit) do
+         if slot then
+            local sl = slot[k]
+            pp:outfitRmSlot( sl )
+            pp:outfitAddSlot( o, sl, true, true )
          else
-            pp:outfitAddIntrinsic( s.outfit )
+            pp:outfitAddIntrinsic( o )
          end
       end
       player.shipvarPush( s.id, true )
