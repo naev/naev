@@ -42,7 +42,7 @@ end
 
 function accept()
     if not tk.yesno("", fmt.f(_([["It appears we keep running into each other {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course I can't provide you a shielding system; we scientists usually don't bother with engineering. However in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting.
-    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying..."]]), {player=player:name()})) then
+    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying..."]]), {player=player.name()})) then
         tk.msg(_("No science for today"), _([["Too bad. Maybe you will change your mind."]]))
         misn.finish()
     end
