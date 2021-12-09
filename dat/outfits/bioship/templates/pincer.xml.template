@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="{name}">
  <general>
+  <typename>{typename}</typename>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
   <mass>6</mass>
   <price>{price}</price>
-  <description>The Pincer Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability.</description>
+  <description>{desc}</description>
   <gfx_store>organic_plasma_s1.webp</gfx_store>
   <cpu>0</cpu>
  </general>

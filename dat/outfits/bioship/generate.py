@@ -76,7 +76,9 @@ BioOutfit( "pincer.xml.template", {
     "falloff":  lerp(  450, 750 ),
     "speed" :   lerp(  550, 700 ),
     "heatup":   lerp(   25,  40 ),
-} ).run( [N("Pincer Organ Stage I"), N("Pincer Organ Stage II"), N("Pincer Organ Stage III")] )
+    "typename": N_("Bioship Weapon Organ"),
+    "desc":     N_("The Pincer Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
+} ).run( [N_("Pincer Organ I"), N_("Pincer Organ II"), N_("Pincer Organ III")] )
 
 BioOutfit( "perleve_cerebrum.xml.template", {
     "price":        lerpr(   0, 120e3 ),
@@ -88,7 +90,7 @@ BioOutfit( "perleve_cerebrum.xml.template", {
     "shield_regen": lerp(    5,   9 ),
     "energy":       lerp(  130, 250 ),
     "energy_regen": lerp(   12,  19 ),
-} ).run( [N("Perleve Cerebrum Stage I"), N("Perleve Cerebrum Stage II")] )
+} ).run( [N_("Perleve Cerebrum I"), N_("Perleve Cerebrum II")] )
 
 BioOutfit( "perlevis_gene_drive.xml.template", {
     "price":        lerpr(   0, 140e3 ),
@@ -101,7 +103,7 @@ BioOutfit( "perlevis_gene_drive.xml.template", {
     "fuel":         400,
     "energy_malus": lerp(    5,   5 ),
     "engine_limit": lerp(  150, 150 ),
-} ).run( [N("Perlevis Gene Drive Stage I"), N("Perlevis Gene Drive Stage II")] )
+} ).run( [N_("Perlevis Gene Drive I"), N_("Perlevis Gene Drive II")] )
 
 BioOutfit( "perlevis_cortex.xml.template", {
     "price":        lerpr(   0, 130e3 ),
@@ -111,4 +113,4 @@ BioOutfit( "perlevis_cortex.xml.template", {
     "cargo":        lerpr(   4, 4 ),
     "absorb":       lerpr(   0, 3 ),
     "armour":       lerp(   45, 65 )
-} ).run( [N("Perlevis Cortex Stage I"), N("Perlevis Cortex Stage II")] )
+} ).run( [N_("Perlevis Cortex I"), N_("Perlevis Cortex II")] )
