@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="{name}">
+ <general>
+  <typename>Bioship Shell</typename>
+  <slot prop="bio_hull">structure</slot>
+  <size>small</size>
+  <mass>{mass}</mass>
+  <price>{price}</price>
+  <description>{desc}</description>
+  <gfx_store>organic_hull_t.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>{cargo}</cargo>
+  <absorb>{absorb}</absorb>
+  <armour>{armour}</armour>
+ </specific>
+</outfit>

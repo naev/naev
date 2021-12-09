@@ -60,6 +60,7 @@ Cortex -> nominative masculine
 desc = {}
 desc["brain"] = "The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve."
 desc["engine"] = "The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and is even capable of hyperspace travel. All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve."
+desc["hull"] = "The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. All shells start off undeveloped, but over time, just like the ships themselves, they grow and improve."
 
 BioOutfit( "pincer.xml.template", {
     "price" :   lerpr(   0, 20e3 ),
@@ -93,3 +94,12 @@ BioOutfit( "perlevis_gene_drive.xml.template", {
     "energy_malus": lerp(    5,   5 ),
     "engine_limit": lerp(  150, 150 ),
 } ).run( ["Perlevis Gene Drive Stage I", "Perlevis Gene Drive Stage II"] )
+
+BioOutfit( "perlevis_cortex.xml.template", {
+    "price":        lerpr(   0, 130e3 ),
+    "mass":         30,
+    "desc":         desc["hull"],
+    "cargo":        lerpr(   4, 4 ),
+    "absorb":       lerpr(   0, 3 ),
+    "armour":       lerp(   45, 65 )
+} ).run( ["Perlevis Cortex Stage I", "Perlevis Cortex Stage II"] )
