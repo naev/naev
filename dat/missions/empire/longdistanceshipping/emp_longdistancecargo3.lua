@@ -29,7 +29,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local targetworld, targetworld_sys = planet.getS("Gerhart Station")
-local misn_desc = _("Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system")
+local misn_desc = fmt.f(_("Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"), {pnt=targetworld, sys=targetworld_sys})
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -48,7 +48,7 @@ function accept ()
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Za'lek Long Distance Recruitment"), _([["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the Gerhart Station in the Ganth system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]]) )
+   tk.msg( _("Za'lek Long Distance Recruitment"), fmt.f(_([["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the {pnt} in the {sys} system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 
@@ -70,9 +70,9 @@ function land()
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc3 )
          -- More flavour text
-         tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Outbound Station, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]) )
+         tk.msg( _("Mission Accomplished"), fmt.f(_([[You drop the diplomat off on {pnt}, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]), {pnt=targetworld} ) )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( _([[You delivered a shipping bureaucrat to Outbound Station for the Empire. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]) )
+         emp.addShippingLog( fmt.f(_([[You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]), {pnt=targetworld} ) )
          misn.finish(true)
    end
 end

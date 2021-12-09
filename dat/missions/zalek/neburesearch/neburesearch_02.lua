@@ -57,7 +57,7 @@ end
 
 function accept()
     if not tk.yesno(_("Bar"), fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
-    "Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {player=player:name(), pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)})) then
+    "Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {player=player.name(), pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)})) then
         misn.finish()
     end
     tk.msg(_("Bar"), fmt.f(_([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to {pnt} we go!"
