@@ -45,6 +45,7 @@ po/credits_pot.py \
    echo po/credits.pot
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]") | deterministic_sort
+   echo dat/outfits/bioship/generate.py
 ) | filter_skipped > po/POTFILES.in
 
 if [ "$2" = "--pre-commit" ]; then

@@ -3094,3 +3094,4 @@ src/utf8.c
 src/utf8.h
 src/weapon.c
 src/weapon.h
+dat/outfits/bioship/generate.py

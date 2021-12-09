@@ -1,5 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
+N_ = lambda text: text
 TEMPLATEPATH = "./templates/"
 
 def lerpr( a, b ):
@@ -58,9 +59,9 @@ Cortex -> nominative masculine
 """
 
 desc = {}
-desc["brain"] = "The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve."
-desc["engine"] = "The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and is even capable of hyperspace travel. All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve."
-desc["hull"] = "The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. All shells start off undeveloped, but over time, just like the ships themselves, they grow and improve."
+desc["brain"] = N_("The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve.")
+desc["engine"] = N_("The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and is even capable of hyperspace travel. All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve.")
+desc["hull"] = N_("The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. All shells start off undeveloped, but over time, just like the ships themselves, they grow and improve.")
 
 BioOutfit( "pincer.xml.template", {
     "price" :   lerpr(   0, 20e3 ),
@@ -70,7 +71,7 @@ BioOutfit( "pincer.xml.template", {
     "falloff":  lerp(  450, 750 ),
     "speed" :   lerp(  550, 700 ),
     "heatup":   lerp(   25,  40 ),
-} ).run( ["Pincer Organ Stage I", "Pincer Organ Stage II", "Pincer Organ Stage III"] )
+} ).run( [N("Pincer Organ Stage I"), N("Pincer Organ Stage II"), N("Pincer Organ Stage III")] )
 
 BioOutfit( "perleve_cerebrum.xml.template", {
     "price":        lerpr(   0, 120e3 ),
@@ -81,7 +82,7 @@ BioOutfit( "perleve_cerebrum.xml.template", {
     "shield_regen": lerp(    5,   9 ),
     "energy":       lerp(  130, 250 ),
     "energy_regen": lerp(   12,  19 ),
-} ).run( ["Perleve Cerebrum Stage I", "Perleve Cerebrum Stage II"] )
+} ).run( [N("Perleve Cerebrum Stage I"), N("Perleve Cerebrum Stage II")] )
 
 BioOutfit( "perlevis_gene_drive.xml.template", {
     "price":        lerpr(   0, 140e3 ),
@@ -93,7 +94,7 @@ BioOutfit( "perlevis_gene_drive.xml.template", {
     "fuel":         400,
     "energy_malus": lerp(    5,   5 ),
     "engine_limit": lerp(  150, 150 ),
-} ).run( ["Perlevis Gene Drive Stage I", "Perlevis Gene Drive Stage II"] )
+} ).run( [N("Perlevis Gene Drive Stage I"), N("Perlevis Gene Drive Stage II")] )
 
 BioOutfit( "perlevis_cortex.xml.template", {
     "price":        lerpr(   0, 130e3 ),
@@ -102,4 +103,4 @@ BioOutfit( "perlevis_cortex.xml.template", {
     "cargo":        lerpr(   4, 4 ),
     "absorb":       lerpr(   0, 3 ),
     "armour":       lerp(   45, 65 )
-} ).run( ["Perlevis Cortex Stage I", "Perlevis Cortex Stage II"] )
+} ).run( [N("Perlevis Cortex Stage I"), N("Perlevis Cortex Stage II")] )
