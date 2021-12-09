@@ -168,7 +168,8 @@ skills.set.misc = {
 }
 
 skills.ship["Soromid Brigand"] = {
-   ["core"] = {
+   {
+      name = _("Birth"),
       stage = 0,
       outfit = {
          "Ultralight Fast Gene Drive Stage 1",
@@ -185,17 +186,20 @@ skills.ship["Soromid Brigand"] = {
          "leftweap",
       },
    },
-   ["hull2"] = {
+   {
+      name = _("Shell Growth I"),
       stage = 1,
       outfit = "Ultralight Shell Stage X",
       slot = "shell",
    },
-   ["engine2"] = {
+   {
+      name = _("Gene Drive Growth I"),
       stage = 2,
       outfit = "Ultralight Fast Gene Drive Stage X",
       slot = "genedrive",
    },
-   ["weapons2"] = {
+   {
+      name = _("Weapon Organ Growth I"),
       stage = 3,
       outfit = {
          "BioPlasma Stinger Stage 2",
@@ -206,12 +210,14 @@ skills.ship["Soromid Brigand"] = {
          "leftweap",
       },
    },
-   ["systems2"] = {
+   {
+      name = _("Brain Growth I"),
       stage = 4,
       outfit = "Ultralight Brain Stage X",
       slot = "brain",
    },
-   ["weapons3"] = {
+   {
+      name = _("Weapon Organ Growth II"),
       stage = 5,
       outfit = {
          "BioPlasma Stinger Stage X",

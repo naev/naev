@@ -6,7 +6,7 @@ local bioskills = require "bioship.skills"
 
 local gene = {}
 
-local stage, skills, skillpoints, skilltxt
+local stage, skills, intrinsics, skillpoints, skilltxt
 function gene.window ()
    local pp = player.pilot()
    local ps = pp:ship()
@@ -15,7 +15,7 @@ function gene.window ()
    end
 
    skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc" }
-   --intrinsics = bioskills.ship["Soromid Brigand"]
+   intrinsics = bioskills.ship["Soromid Brigand"]
 
    local maxtier = 3
    local pss = ps:size()
@@ -214,7 +214,7 @@ function gene.window ()
    local function skill_enable( s )
       local outfit = s.outfit or {}
       local slot   = s.slot
-      if not type(outfit)=="table" then
+      if type(outfit)=="string" then
          outfit = {outfit}
          if slot then
             slot = {slot}
@@ -232,7 +232,9 @@ function gene.window ()
             pp:outfitAddIntrinsic( o )
          end
       end
-      player.shipvarPush( s.id, true )
+      if s.id then
+         player.shipvarPush( s.id, true )
+      end
       s.enabled = true
    end
 
@@ -271,6 +273,14 @@ function gene.window ()
 
    stage = player.shipvarPeek( "biostage" ) or 1
    skillpoints = stage - skill_count()
+
+   -- Make sure to enable intrinsics if applicable
+   -- TODO handle elsewhere
+   for k,s in ipairs(intrinsics) do
+      if stage >= s.stage then
+         skill_enable( s )
+      end
+   end
 
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
