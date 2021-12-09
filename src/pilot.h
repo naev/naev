@@ -416,7 +416,7 @@ double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
 double pilot_brakeDist( Pilot *p, Vector2d *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
-void pilot_cooldown( Pilot *p );
+void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const Pilot *target );
 

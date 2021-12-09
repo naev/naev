@@ -924,13 +924,14 @@ int pilot_interceptPos( Pilot *p, double x, double y )
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param p Pilot that should cool down.
+ *    @param dochecks Whether or not to do the standard checks or cooling down automatically.
  */
-void pilot_cooldown( Pilot *p )
+void pilot_cooldown( Pilot *p, int dochecks )
 {
    double heat_capacity, heat_mean;
 
    /* Brake if necessary. */
-   if (!pilot_isStopped(p)) {
+   if (dochecks && !pilot_isStopped(p)) {
       pilot_setFlag(p, PILOT_BRAKING);
       pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
       return;
@@ -2163,7 +2164,7 @@ void pilot_update( Pilot* pilot, double dt )
    if (pilot_isFlag(pilot, PILOT_BRAKING )) {
       if (pilot_brake( pilot )) {
          if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
-            pilot_cooldown( pilot );
+            pilot_cooldown( pilot, 1 );
          else {
             /* Normal braking is done (we're below MIN_VEL_ERR), now sidestep
              * normal physics and bring the ship to a near-complete stop.

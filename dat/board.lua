@@ -318,22 +318,14 @@ end
 local function board_cannibalize ()
    local armour, shield = board_plt:health(true)
    local cannibal2 = player.shipvarPeek("cannibal2")
-   local pp = player.pilot()
-   local ps = pp:stats()
-
-   -- Drain energy
-   if cannibal2 and pp:energy() < 100 then
-      local energy_heal = ps.energy - pp:energy(true)
-      player.msg(fmt.f(_("Your ship cannibalized {energy:.0f} energy from {plt}."),{energy=energy_heal, plt=board_plt:name()}))
-      pp:setEnergy(100)
-      board_plt:setEnergy(0)
-   end
 
    if armour <= 1 then
       return
    end
    local bs = board_plt:stats()
 
+   local pp = player.pilot()
+   local ps = pp:stats()
    local parmour, pshield, pstress = pp:health(true)
 
    local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
@@ -362,6 +354,11 @@ function board( plt )
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
 
+   local pp = player.pilot()
+   if player.shipvarPeek("cannibal2") then
+      pp:cooldownCycle()
+   end
+
    -- Destroy if exists
    if board_wdw then
       board_wdw:destroy()
@@ -382,7 +379,7 @@ function board( plt )
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
    end
 
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {shipname}"),{shipname=plt:name()}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {name}"),{shipname=plt:name()}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )
    board_updateFreespace()
 

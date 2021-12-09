@@ -115,6 +115,7 @@ static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
+static int pilotL_cooldownCycle( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
@@ -257,6 +258,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
    { "setCooldown", pilotL_setCooldown },
+   { "cooldownCycle", pilotL_cooldownCycle },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
    { "setNoClear", pilotL_setNoClear },
@@ -758,7 +760,7 @@ static int pilotL_clear( lua_State *L )
  *
  * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
  * @usage pilot.toggleSpawn( false ) -- Disables global spawning
- * @usage pliot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
  * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
  *
  *    @luatparam[opt] Faction fid Faction to enable or disable spawning off. If ommited it works on global spawning.
@@ -2591,10 +2593,25 @@ static int pilotL_setCooldown( lua_State *L )
 
    /* Set status. */
    if (state)
-      pilot_cooldown( p );
+      pilot_cooldown( p, 1 );
    else
       pilot_cooldownEnd(p, NULL);
 
+   return 0;
+}
+
+/**
+ * @brief Makes the pilot do an instant full cooldown cycle.
+ *
+ *    @luatparam Pilot p Pilot to perform cycle.
+ * @luafunc cooldownCycle
+ */
+static int pilotL_cooldownCycle( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   pilot_cooldown( p, 0 );
+   p->ctimer = -1.;
+   pilot_cooldownEnd( p, NULL );
    return 0;
 }
 

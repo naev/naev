@@ -2362,7 +2362,7 @@ void player_brake(void)
 
    stopped = pilot_isStopped(player.p);
    if (stopped && !pilot_isFlag(player.p, PILOT_COOLDOWN))
-      pilot_cooldown(player.p);
+      pilot_cooldown(player.p, 1);
    else {
       pilot_setFlag(player.p, PILOT_BRAKING);
       pilot_setFlag(player.p, PILOT_COOLDOWN_BRAKE);

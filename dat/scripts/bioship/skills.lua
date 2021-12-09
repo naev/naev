@@ -22,7 +22,7 @@ skills.set.bite = {
       tier = 2,
       requires = { "bite1" },
       shipvar = "cannibal2",
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and restores energy fully."),
+      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
    },
    ["bite3"] = {
       name = _("The Bite"),
