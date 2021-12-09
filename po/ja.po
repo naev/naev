@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-08 23:47-0500\n"
+"POT-Creation-Date: 2021-12-09 11:57-0500\n"
 "PO-Revision-Date: 2021-12-05 15:41+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -34511,14 +34511,14 @@ msgid ""
 "\"It looks like we entered part of the volatile nebula. The instability here "
 "causes heavy damage to any ships that enter. If our shield regeneration "
 "surpasses the volatility damage, we should be fine. However, if the "
-"volatility gets any stronger, it could be fatal to the {ship}. Going "
-"deeper into the nebula could prove to be a very risky endeavour.\""
+"volatility gets any stronger, it could be fatal to the {ship}. Going deeper "
+"into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
 "{ainame}があなたの目の前に姿を表した。\n"
 "｢激変性の星雲に入ったようです。ここは不安定なので、ここへ入った船は大きな損害"
 "をうけます。シールド再生が変動による損傷を上まわっていればけっこうなことです"
-"が、変動度がなにか強くなると{ship}には致命的なことにもなりかねません。星"
-"雲のさらに深くへ行くのは、とても危険な試みだったと証明されることもありえます｣"
+"が、変動度がなにか強くなると{ship}には致命的なことにもなりかねません。星雲の"
+"さらに深くへ行くのは、とても危険な試みだったと証明されることもありえます｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -34855,13 +34855,13 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
-"｢新しい{ship}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買"
-"うと、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが装"
-"備されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と"
-"使いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこでも"
-"船を交換できます。交換にさいして不利益や費用はかかりません。じつは、多様な船"
-"を手にして必要性をいちばんよく満たす船に変えるのが、ものごとをこなすすぐれた"
-"方法なんです｣"
+"｢新しい{ship}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買う"
+"と、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが装備"
+"されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と使"
+"いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこでも船"
+"を交換できます。交換にさいして不利益や費用はかかりません。じつは、多様な船を"
+"手にして必要性をいちばんよく満たす船に変えるのが、ものごとをこなすすぐれた方"
+"法なんです｣"
 
 #: dat/events/tutorial/tut_land.lua:141
 msgid ""
@@ -45197,11 +45197,11 @@ msgstr ""
 #.
 #. Mission constants
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth "
-"system"
-msgstr ""
-"帝国のために輸送局外交官をガンス星系のゲルハルト・ステーションに連れていけ。"
+#, fuzzy
+#| msgid ""
+#| "Deliver a shipping diplomat for the Empire to Madria in the Esker system"
+msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
+msgstr "帝国のために輸送局外交官をエスカー星系のマドリアに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
 msgid ""
@@ -45226,13 +45226,21 @@ msgid "Za'lek Long Distance Recruitment"
 msgstr "ザレクへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
+#, fuzzy
+#| msgid ""
+#| "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
+#| "bureaucrat ready to establish trade ties. The Za'lek are rather "
+#| "mysterious, so keep your wits about you. The diplomat only needs to go to "
+#| "the Gerhart Station in the Ganth system. He will let me know when trade "
+#| "relations have been established. There is still more work to be done, so "
+#| "I expect to see you again soon.\""
 msgid ""
 "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
 "bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, "
-"so keep your wits about you. The diplomat only needs to go to the Gerhart "
-"Station in the Ganth system. He will let me know when trade relations have "
-"been established. There is still more work to be done, so I expect to see "
-"you again soon.\""
+"so keep your wits about you. The diplomat only needs to go to the {pnt} in "
+"the {sys} system. He will let me know when trade relations have been "
+"established. There is still more work to be done, so I expect to see you "
+"again soon.\""
 msgstr ""
 "｢そうだろうと思っていました！｣ と、チェシチ大尉はいう。｢もうひとり官僚がい"
 "て、通商上のつながりを確立する準備ができています。ザレクはちょっと不思議なと"
@@ -45242,20 +45250,30 @@ msgstr ""
 "たすぐにあなたと会えると期待しています｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
+#, fuzzy
+#| msgid ""
+#| "You drop the diplomat off on Outbound Station, and she hands you a credit "
+#| "chip. Lieutenant Czesc mentioned more work, so you figure you'll run into "
+#| "him at a bar again soon."
 msgid ""
-"You drop the diplomat off on Outbound Station, and she hands you a credit "
-"chip. Lieutenant Czesc mentioned more work, so you figure you'll run into "
-"him at a bar again soon."
+"You drop the diplomat off on {pnt}, and she hands you a credit chip. "
+"Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
+"bar again soon."
 msgstr ""
 "あなたはあの外交官をゲルハルト・ステーションに降ろした。それから外交官はあな"
 "たにクレジットチップを手渡した。チェシチ大尉はもっと仕事があるといっていたの"
 "で、あなたは大尉とはバーですぐに会うことになると考えた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:75
+#, fuzzy
+#| msgid ""
+#| "You delivered a shipping bureaucrat to Outbound Station for the Empire. "
+#| "Lieutenant Czesc mentioned more work, so you figure you'll run into him "
+#| "at a bar again soon."
 msgid ""
-"You delivered a shipping bureaucrat to Outbound Station for the Empire. "
-"Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
-"bar again soon."
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
+"Czesc mentioned more work, so you figure you'll run into him at a bar again "
+"soon."
 msgstr ""
 "あなたは帝国のために、輸送局の官僚をゲルハルト・ステーションへ連れていった。"
 "チェシチ大尉はもっと仕事があるといっていたので、あなたは大尉とはバーですぐに"
@@ -62604,8 +62622,8 @@ msgid ""
 "You open the communication channels with the {plt} and a hologram of a "
 "nervous-looking individual materializes in front of you."
 msgstr ""
-"あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホ"
-"ログラフがあなたの前に姿を表した。"
+"あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホログラ"
+"フがあなたの前に姿を表した。"
 
 #: dat/missions/pirate/blackcat.lua:241
 msgid "\"H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?\""
@@ -62645,16 +62663,16 @@ msgid ""
 "Given the streak of bad luck the feline has brought you, you figure it is in "
 "your best interest to bring the cat over to the {plt}."
 msgstr ""
-"ネコがあなたに立てつづけの不運を持ちこんだので、あなたはネコを{plt}へ連"
-"れていくのがもっとも利益になることだと判断した。"
+"ネコがあなたに立てつづけの不運を持ちこんだので、あなたはネコを{plt}へ連れてい"
+"くのがもっとも利益になることだと判断した。"
 
 #: dat/missions/pirate/blackcat.lua:276
 msgid ""
-"Your ship locks its boarding clamps on the {plt}, and the airlock opens "
-"up revealing some strangely musty air and pitch black darkness. How odd."
+"Your ship locks its boarding clamps on the {plt}, and the airlock opens up "
+"revealing some strangely musty air and pitch black darkness. How odd."
 msgstr ""
-"あなたの船が、{plt}と移乗用固定具で固定された。それからエアロックを開け"
-"ると、なにか奇妙にかび臭い空気とまっ暗闇があらわになった。なんとも妙だ。"
+"あなたの船が、{plt}と移乗用固定具で固定された。それからエアロックを開けると、"
+"なにか奇妙にかび臭い空気とまっ暗闇があらわになった。なんとも妙だ。"
 
 #: dat/missions/pirate/blackcat.lua:277
 msgid ""
@@ -72503,19 +72521,18 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:550
 msgid ""
-"\"To avoid getting spotted by {plt}, you should first get away from "
-"nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
+"\"To avoid getting spotted by {plt}, you should first get away from nearby "
+"ships and stealth with {stealthkey}. Then avoid other ships using the "
 "overlay map you can open with {overlaykey}, where the detection radius will "
-"be shown in red circles. You should then be able to fly around {plt} "
-"and get to the jump point. It shouldn't be hard, but be careful not to get "
-"close to them!\""
+"be shown in red circles. You should then be able to fly around {plt} and get "
+"to the jump point. It shouldn't be hard, but be careful not to get close to "
+"them!\""
 msgstr ""
-"｢{plt}に見つかるのを避けるために、まずは近くの船から離れて、"
-"{stealthkey} でステルスモードに入ってください。それから {overlaykey} で開ける"
-"オーバーレイマップを使って、ほかの船を避けるようにしてください。オーバーレイ"
-"マップには探知半径が赤い円で表示されます。だから{plt}をうかいして、ジャ"
-"ンプポイントに行けるでしょう。難しくないはずですが、近よられないように注意し"
-"てください！｣"
+"｢{plt}に見つかるのを避けるために、まずは近くの船から離れて、{stealthkey} でス"
+"テルスモードに入ってください。それから {overlaykey} で開けるオーバーレイマッ"
+"プを使って、ほかの船を避けるようにしてください。オーバーレイマップには探知半"
+"径が赤い円で表示されます。だから{plt}をうかいして、ジャンプポイントに行けるで"
+"しょう。難しくないはずですが、近よられないように注意してください！｣"
 
 #: dat/missions/tutorial/nelly02.lua:554
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
@@ -78296,7 +78313,7 @@ msgstr[1] ""
 #.
 #. @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 #. --
-#: dat/scripts/common/pirate.lua:145
+#: dat/scripts/common/pirate.lua:148
 msgid "This mission will increase your reputation with {fct_longname}."
 msgstr "この任務は{fct_longname}にたいするあなたの評判を向上させる。"
 
@@ -85455,44 +85472,44 @@ msgstr "Hook [%s] '%d' -> '%s' failed"
 msgid "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
 msgstr "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
 
-#: src/hook.c:421
+#: src/hook.c:423
 #, c-format
 msgid "Invalid hook type '%d', deleting."
 msgstr "Invalid hook type '%d', deleting."
 
-#: src/hook.c:922
+#: src/hook.c:924
 #, c-format
 msgid "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 msgstr "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 
-#: src/hook.c:1021
+#: src/hook.c:1023
 #, c-format
 msgid "Attempting to run hook of id '%d' which is not in the stack"
 msgstr "Attempting to run hook of id '%d' which is not in the stack"
 
-#: src/hook.c:1078
+#: src/hook.c:1080
 msgid "Running hook_cleanup while hook stack is being run!"
 msgstr "Running hook_cleanup while hook stack is being run!"
 
-#: src/hook.c:1155
+#: src/hook.c:1157
 msgid "Something has gone screwy here..."
 msgstr "Something has gone screwy here..."
 
-#: src/hook.c:1249
+#: src/hook.c:1251
 #, c-format
 msgid "Hook of unknown type '%s' found, skipping."
 msgstr "Hook of unknown type '%s' found, skipping."
 
-#: src/hook.c:1278
+#: src/hook.c:1280
 #, c-format
 msgid "Save has unknown hook node '%s'."
 msgstr "Save has unknown hook node '%s'."
 
-#: src/hook.c:1283
+#: src/hook.c:1285
 msgid "Invalid hook."
 msgstr "Invalid hook."
 
-#: src/hook.c:1296
+#: src/hook.c:1298
 msgid "Save has unsupported hook type."
 msgstr "Save has unsupported hook type."
 
@@ -93027,6 +93044,13 @@ msgstr "Invalid WEAPON_LAYER specified"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
+
+#~ msgid ""
+#~ "Deliver a shipping diplomat for the Empire to Gerhart Station in the "
+#~ "Ganth system"
+#~ msgstr ""
+#~ "帝国のために輸送局外交官をガンス星系のゲルハルト・ステーションに連れてい"
+#~ "け。"
 
 #, c-format
 #~ msgid "SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"

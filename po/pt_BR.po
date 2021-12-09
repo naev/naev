@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-08 23:47-0500\n"
+"POT-Creation-Date: 2021-12-09 11:57-0500\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -32404,8 +32404,8 @@ msgid ""
 "\"It looks like we entered part of the volatile nebula. The instability here "
 "causes heavy damage to any ships that enter. If our shield regeneration "
 "surpasses the volatility damage, we should be fine. However, if the "
-"volatility gets any stronger, it could be fatal to the {ship}. Going "
-"deeper into the nebula could prove to be a very risky endeavour.\""
+"volatility gets any stronger, it could be fatal to the {ship}. Going deeper "
+"into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
 
 #.
@@ -42537,9 +42537,7 @@ msgstr ""
 #.
 #. Mission constants
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth "
-"system"
+msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
@@ -42564,24 +42562,24 @@ msgstr ""
 msgid ""
 "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
 "bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, "
-"so keep your wits about you. The diplomat only needs to go to the Gerhart "
-"Station in the Ganth system. He will let me know when trade relations have "
-"been established. There is still more work to be done, so I expect to see "
-"you again soon.\""
+"so keep your wits about you. The diplomat only needs to go to the {pnt} in "
+"the {sys} system. He will let me know when trade relations have been "
+"established. There is still more work to be done, so I expect to see you "
+"again soon.\""
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
 msgid ""
-"You drop the diplomat off on Outbound Station, and she hands you a credit "
-"chip. Lieutenant Czesc mentioned more work, so you figure you'll run into "
-"him at a bar again soon."
+"You drop the diplomat off on {pnt}, and she hands you a credit chip. "
+"Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
+"bar again soon."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:75
 msgid ""
-"You delivered a shipping bureaucrat to Outbound Station for the Empire. "
-"Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
-"bar again soon."
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
+"Czesc mentioned more work, so you figure you'll run into him at a bar again "
+"soon."
 msgstr ""
 
 #.
@@ -58820,8 +58818,8 @@ msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:276
 msgid ""
-"Your ship locks its boarding clamps on the {plt}, and the airlock opens "
-"up revealing some strangely musty air and pitch black darkness. How odd."
+"Your ship locks its boarding clamps on the {plt}, and the airlock opens up "
+"revealing some strangely musty air and pitch black darkness. How odd."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:277
@@ -67733,12 +67731,12 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:550
 msgid ""
-"\"To avoid getting spotted by {plt}, you should first get away from "
-"nearby ships and stealth with {stealthkey}. Then avoid other ships using the "
+"\"To avoid getting spotted by {plt}, you should first get away from nearby "
+"ships and stealth with {stealthkey}. Then avoid other ships using the "
 "overlay map you can open with {overlaykey}, where the detection radius will "
-"be shown in red circles. You should then be able to fly around {plt} "
-"and get to the jump point. It shouldn't be hard, but be careful not to get "
-"close to them!\""
+"be shown in red circles. You should then be able to fly around {plt} and get "
+"to the jump point. It shouldn't be hard, but be careful not to get close to "
+"them!\""
 msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:554
@@ -72467,7 +72465,7 @@ msgstr[1] ""
 #.
 #. @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 #. --
-#: dat/scripts/common/pirate.lua:145
+#: dat/scripts/common/pirate.lua:148
 msgid "This mission will increase your reputation with {fct_longname}."
 msgstr ""
 
@@ -79477,44 +79475,44 @@ msgstr ""
 msgid "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
 msgstr ""
 
-#: src/hook.c:421
+#: src/hook.c:423
 #, c-format
 msgid "Invalid hook type '%d', deleting."
 msgstr ""
 
-#: src/hook.c:922
+#: src/hook.c:924
 #, c-format
 msgid "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 msgstr ""
 
-#: src/hook.c:1021
+#: src/hook.c:1023
 #, c-format
 msgid "Attempting to run hook of id '%d' which is not in the stack"
 msgstr ""
 
-#: src/hook.c:1078
+#: src/hook.c:1080
 msgid "Running hook_cleanup while hook stack is being run!"
 msgstr ""
 
-#: src/hook.c:1155
+#: src/hook.c:1157
 msgid "Something has gone screwy here..."
 msgstr ""
 
-#: src/hook.c:1249
+#: src/hook.c:1251
 #, c-format
 msgid "Hook of unknown type '%s' found, skipping."
 msgstr ""
 
-#: src/hook.c:1278
+#: src/hook.c:1280
 #, c-format
 msgid "Save has unknown hook node '%s'."
 msgstr ""
 
-#: src/hook.c:1283
+#: src/hook.c:1285
 msgid "Invalid hook."
 msgstr ""
 
-#: src/hook.c:1296
+#: src/hook.c:1298
 msgid "Save has unsupported hook type."
 msgstr ""
 
