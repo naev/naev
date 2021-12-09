@@ -275,6 +275,9 @@ function gene.window ()
    end
 
    local function skill_text ()
+      if not skilltxt then
+         return
+      end
       skilltxt:set( fmt.f(n_("Skills ({point} point remaining)","Skills ({point} points remaining)", skillpoints),{point=skillpoints}) )
    end
 

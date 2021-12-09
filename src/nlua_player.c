@@ -930,6 +930,8 @@ static int playerL_shipvarPush( lua_State *L )
    const char *str  = luaL_checkstring(L,1);
    lvar var         = lvar_tovar( L, str, 2 );
    PlayerShip_t *ps = playerL_shipvarShip(L,3);
+   if (ps->shipvar==NULL)
+      ps->shipvar = array_create( lvar );
    lvar_addArray( &ps->shipvar, &var, 1 );
    return 0;
 }
