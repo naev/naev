@@ -1378,6 +1378,14 @@ dat/outfits/biocore_shell/superheavy_shell_stage_x.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_1.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_2.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_x.xml
+dat/outfits/bioship/skills/adrenaline_hormones.xml
+dat/outfits/bioship/skills/bulky_abdomen.xml
+dat/outfits/bioship/skills/compound_eyes.xml
+dat/outfits/bioship/skills/hard_shell.xml
+dat/outfits/bioship/skills/regeneration_i.xml
+dat/outfits/bioship/skills/regeneration_ii.xml
+dat/outfits/bioship/skills/silence.xml
+dat/outfits/bioship/skills/wanderer.xml
 dat/outfits/core_engine/dummy_engine.xml
 dat/outfits/core_engine/large/beat_up_large_engine.xml
 dat/outfits/core_engine/large/krain_remige_engine.xml

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Regeneration I">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <armour_regen>5</armour_regen>
+ </specific>
+</outfit>

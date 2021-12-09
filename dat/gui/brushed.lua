@@ -527,6 +527,8 @@ local function renderWeapBar( weapon, x, y )
             bottom_icon = icon_missile
          elseif weapon.type == "Fighter Bay" then
             bottom_icon = icon_ship
+         else
+            bottom_icon = icon_projectile
          end
 
          top_icon_w, top_icon_h = top_icon:dim()
