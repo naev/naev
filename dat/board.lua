@@ -317,13 +317,23 @@ end
 
 local function board_cannibalize ()
    local armour, shield = board_plt:health(true)
+   local cannibal2 = player.shipvarPeek("cannibal2")
+   local pp = player.pilot()
+   local ps = pp:stats()
+
+   -- Drain energy
+   if cannibal2 and pp:energy() < 100 then
+      local energy_heal = ps.energy - pp:energy(true)
+      player.msg(fmt.f(_("Your ship cannibalized {energy:.0f} energy from {plt}."),{energy=energy_heal, plt=board_plt:name()}))
+      pp:setEnergy(100)
+      board_plt:setEnergy(0)
+   end
+
    if armour <= 1 then
       return
    end
    local bs = board_plt:stats()
 
-   local pp = player.pilot()
-   local ps = pp:stats()
    local parmour, pshield, pstress = pp:health(true)
 
    local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
@@ -333,16 +343,11 @@ local function board_cannibalize ()
 
    board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
    local heal_armour = dmg/2
-   if player.shipvarPeek("cannibal2") then
+   if cannibal2 then
       heal_armour = dmg*2/3
-      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-      local heal_energy = pp:setEnergy(100)
-      board_plt:setEnergy(0)
-      player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour and {energy:.0f} energy from {plt}."),{armour=heal_armour, energy=heal_energy, plt=board_plt:name()}))
-   else
-      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-      player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt:name()}))
    end
+   pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt:name()}))
 end
 
 local function board_close ()

@@ -13,7 +13,7 @@ skills.set.bite = {
       --name = _("Cannibalism I"),
       name = _("Cannibal I"),
       tier = 1,
-      shipvar = "cannibal1",
+      shipvar = "cannibal",
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
    },
    ["bite2"] = {
