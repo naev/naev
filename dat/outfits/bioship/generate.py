@@ -59,6 +59,7 @@ Cortex -> nominative masculine
 
 desc = {}
 desc["brain"] = "The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve."
+desc["engine"] = "The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and is even capable of hyperspace travel. All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve."
 
 BioOutfit( "pincer.xml.template", {
     "price" :   lerpr(   0, 20e3 ),
@@ -71,7 +72,7 @@ BioOutfit( "pincer.xml.template", {
 } ).run( ["Pincer Organ Stage I", "Pincer Organ Stage II", "Pincer Organ Stage III"] )
 
 BioOutfit( "perleve_cerebrum.xml.template", {
-    "price":        lerpr( 0, 120e3 ),
+    "price":        lerpr(   0, 120e3 ),
     "mass":         14,
     "desc":         desc["brain"],
     "cpu":          lerpr(   3,   8 ),
@@ -79,4 +80,16 @@ BioOutfit( "perleve_cerebrum.xml.template", {
     "shield_regen": lerp(    5,   9 ),
     "energy":       lerp(  130, 250 ),
     "energy_regen": lerp(   12,  19 ),
-} ).run( ["Perleve Cerebrum Stage I", "Perleve Cerebrum Stage 2"] )
+} ).run( ["Perleve Cerebrum Stage I", "Perleve Cerebrum Stage II"] )
+
+BioOutfit( "perlevis_gene_drive.xml.template", {
+    "price":        lerpr(   0, 140e3 ),
+    "mass":         8,
+    "desc":         desc["brain"],
+    "thrust":       lerp(  145, 196 ),
+    "turn":         lerp(  120, 160 ),
+    "speed":        lerp(  255, 345 ),
+    "fuel":         400,
+    "energy_malus": lerp(    5,   5 ),
+    "engine_limit": lerp(  150, 150 ),
+} ).run( ["Perlevis Gene Drive Stage I", "Perlevis Gene Drive Stage II"] )
