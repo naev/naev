@@ -237,6 +237,38 @@ function gene.window ()
       return true
    end
 
+   local function skill_disable( s )
+      local outfit = s.outfit or {}
+      local slot   = s.slot
+      if type(outfit)=="string" then
+         outfit = {outfit}
+         if slot then
+            slot = {slot}
+         end
+      end
+      if #outfit>0 and slot and #outfit ~= #slot then
+         print( #outfit, #slot )
+         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+      end
+      for k,o in ipairs(outfit) do
+         if slot then
+            local sl = slot[k]
+            if pp:outfitSlot( sl ) == outfit.get(o) then
+               pp:outfitRmSlot( sl )
+            end
+         else
+            pp:outfitRmIntrinsic( o )
+         end
+      end
+      if s.id then
+         player.shipvarPop( s.id )
+      end
+      if s.shipvar then
+         player.shipvarPop( s.shipvar )
+      end
+      s.enabled = false
+   end
+
    local function skill_enable( s )
       local outfit = s.outfit or {}
       local slot   = s.slot
@@ -261,6 +293,9 @@ function gene.window ()
       if s.id then
          player.shipvarPush( s.id, true )
       end
+      if s.shipvar then
+         player.shipvarPush( s.shipvar, true )
+      end
       s.enabled = true
    end
 
@@ -284,11 +319,7 @@ function gene.window ()
    local function skill_reset ()
       -- Get rid of intrinsics
       for k,s in pairs(skills) do
-         if s.outfit and not s.slot then
-            pp:outfitRmIntrinsic( s.outfit )
-         end
-         player.shipvarPop( s.id )
-         s.enabled = false
+         skill_disable( s )
       end
       -- Add basic ones back
       for k,s in pairs(skills) do

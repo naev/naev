@@ -13,6 +13,7 @@ skills.set.bite = {
       --name = _("Cannibalism I"),
       name = _("Cannibal I"),
       tier = 1,
+      shipvar = "cannibal1",
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
    },
    ["bite2"] = {
@@ -20,6 +21,7 @@ skills.set.bite = {
       name = _("Cannibal II"),
       tier = 2,
       requires = { "bite1" },
+      shipvar = "cannibal2",
       desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and will also similarly restore energy."),
    },
    ["bite3"] = {

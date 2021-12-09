@@ -120,6 +120,7 @@ static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
 static int pilotL_outfitAdd( lua_State *L );
 static int pilotL_outfitRm( lua_State *L );
+static int pilotL_outfitSlot( lua_State *L );
 static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
@@ -265,6 +266,7 @@ static const luaL_Reg pilotL_methods[] = {
    /* Outfits. */
    { "outfitAdd", pilotL_outfitAdd },
    { "outfitRm", pilotL_outfitRm },
+   { "outfitSlot", pilotL_outfitSlot },
    { "outfitAddSlot", pilotL_outfitAddSlot },
    { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
@@ -2737,6 +2739,26 @@ static int pilotL_outfitAdd( lua_State *L )
 
    lua_pushnumber(L,added);
    return 1;
+}
+
+/**
+ * @brief Checks to see outfit a pilot has in a slot.
+ *
+ *    @luatparam Pilot p Pilot to check outfit slot of.
+ *    @luatparam string slotname Name of the slot to check.
+ *    @luatreturn Outfit|nil Outfit if applicable or nil otherwise.
+ * @luafunc outfitSlot
+ */
+static int pilotL_outfitSlot( lua_State *L )
+{
+   Pilot *p             = luaL_validpilot(L,1);
+   const char *slotname = luaL_checkstring(L,2);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s->outfit) {
+      lua_pushoutfit(L,s->outfit);
+      return 1;
+   }
+   return 0;
 }
 
 /**

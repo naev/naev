@@ -304,6 +304,9 @@ local function can_cannibalize ()
    if pp:ship():tags().cannibal then
       return true
    end
+   if player.shipvarPeek("cannibal") then
+      return true
+   end
    for _k,o in ipairs(pp:outfits()) do
       if o:tags().cannibal then
          return true
@@ -329,9 +332,17 @@ local function board_cannibalize ()
    end
 
    board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
-   pp:setHealth( 100*(parmour+dmg/2)/ps.armour, 100*pshield/ps.shield, pstress )
-
-   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=dmg/2, plt=board_plt:name()}))
+   local heal_armour = dmg/2
+   if player.shipvarPeek("cannibal2") then
+      heal_armour = dmg*2/3
+      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+      local heal_energy = pp:setEnergy(100)
+      board_plt:setEnergy(0)
+      player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour and {energy:.0f} energy from {plt}."),{armour=heal_armour, energy=heal_energy, plt=board_plt:name()}))
+   else
+      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+      player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt:name()}))
+   end
 end
 
 local function board_close ()
