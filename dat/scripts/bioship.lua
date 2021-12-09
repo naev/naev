@@ -2,227 +2,18 @@ local luatk = require "luatk"
 local lg = require "love.graphics"
 local utility = require "pilotname.utility"
 local fmt = require "format"
+local bioskills = require "bioship.skills"
 
 local gene = {}
 
-local skills = {
-   ["cannibal1"] = {
-      name = _("Cannibalism I"),
-      tier = 0,
-      desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
-   },
-   ["cannibal2"] = {
-      name = _("Cannibalism II"),
-      tier = 5,
-      requires = { "cannibal1" },
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and will also similarly restore energy."),
-   },
-   -- Core Gene Drives
-   ["engines1"] = {
-      name = _("Gene Drive I"),
-      tier = 0,
-      outfit = "Ultralight Fast Gene Drive Stage 1",
-      slot = "genedrive",
-   },
-   ["engines2"] = {
-      name = _("Gene Drive II"),
-      tier = 2,
-      requires = { "engines1" },
-      outfit = "Ultralight Fast Gene Drive Stage 2",
-      slot = "genedrive",
-   },
-   ["engines3"] = {
-      name = _("Gene Drive III"),
-      tier = 4,
-      requires = { "engines2" },
-      outfit = "Ultralight Fast Gene Drive Stage X",
-      slot = "genedrive",
-   },
-   ["engines4"] = {
-      name = _("Gene Drive IV"),
-      tier = 6,
-      requires = { "engines3" },
-      outfit = "Ultralight Fast Gene Drive Stage X",
-      slot = "genedrive",
-   },
-   -- Core Brains
-   ["systems1"] = {
-      name = _("Brain Stage I"),
-      tier = 0,
-      outfit = "Ultralight Brain Stage 1",
-      slot = "brain",
-   },
-   ["systems2"] = {
-      name = _("Brain Stage II"),
-      tier = 2,
-      requires = { "systems1" },
-      outfit = "Ultralight Brain Stage 2",
-      slot = "brain",
-   },
-   ["systems3"] = {
-      name = _("Brain Stage III"),
-      tier = 4,
-      requires = { "systems2" },
-      outfit = "Ultralight Brain Stage X",
-      slot = "brain",
-   },
-   ["systems4"] = {
-      name = _("Brain Stage IV"),
-      tier = 6,
-      requires = { "systems3" },
-      outfit = "Ultralight Brain Stage X",
-      slot = "brain",
-   },
-   -- Core Shells
-   ["hull1"] = {
-      name = _("Shell Stage I"),
-      tier = 0,
-      outfit = "Ultralight Shell Stage 1",
-      slot = "shell",
-   },
-   ["hull2"] = {
-      name = _("Shell Stage II"),
-      tier = 2,
-      requires = { "hull1" },
-      outfit = "Ultralight Shell Stage 2",
-      slot = "shell",
-   },
-   ["hull3"] = {
-      name = _("Shell Stage III"),
-      tier = 4,
-      requires = { "hull2" },
-      outfit = "Ultralight Shell Stage X",
-      slot = "shell",
-   },
-   ["hull4"] = {
-      name = _("Shell Stage IV"),
-      tier = 6,
-      requires = { "hull3" },
-      outfit = "Ultralight Shell Stage X",
-      slot = "shell",
-   },
-   -- Right Weapon
-   ["weap2a1"] = {
-      name = _("Right Stinger I"),
-      tier = 1,
-      conflicts = { "weap2b1" },
-      slot = "rightweap",
-      outfit = "BioPlasma Stinger Stage 1",
-   },
-   ["weap2a2"] = {
-      name = _("Right Stinger I"),
-      tier = 3,
-      requires = { "weap2a1" },
-      slot = "rightweap",
-      outfit = "BioPlasma Stinger Stage X",
-   },
-   ["weap2b1"] = {
-      name = _("Right Claw I"),
-      tier = 1,
-      slot = "rightweap",
-      outfit = "BioPlasma Claw Stage 1",
-   },
-   ["weap2b2"] = {
-      name = _("Right Claw II"),
-      tier = 3,
-      requires = { "weap2b1" },
-      slot = "rightweap",
-      outfit = "BioPlasma Claw Stage X",
-   },
-   -- Left Weapon
-   ["weap1a1"] = {
-      name = _("Left Stinger I"),
-      tier = 1,
-      conflicts = { "weap1b1" },
-      slot = "leftweap",
-      outfit = "BioPlasma Stinger Stage 1",
-   },
-   ["weap1a2"] = {
-      name = _("Left Stinger I"),
-      tier = 3,
-      requires = { "weap1a1" },
-      slot = "leftweap",
-      outfit = "BioPlasma Stinger Stage X",
-   },
-   ["weap1b1"] = {
-      name = _("Left Claw I"),
-      tier = 1,
-      slot = "leftweap",
-      outfit = "BioPlasma Claw Stage 1",
-   },
-   ["weap1b2"] = {
-      name = _("Left Claw II"),
-      tier = 3,
-      requires = { "weap1b1" },
-      slot = "leftweap",
-      outfit = "BioPlasma Claw Stage X",
-   },
-   -- Movement Line
-   ["compoundeyes"] = {
-      name = _("Compound Eyes"),
-      tier = 3,
-   },
-   ["hunterspirit"] = {
-      name =_("Hunter Spirit"),
-      tier = 5,
-      requires = { "compoundeyes" },
-      --conflicts = { "wandererspirit" },
-   },
-   ["afterburner1"] = {
-      name = _("Adrenal Gland I"),
-      tier = 3,
-      requires = { "engines2" },
-   },
-   ["afterburner2"] = {
-      name = _("Adrenal Gland II"),
-      tier = 5,
-      --requires = { "afterburner1" },
-      requires = { "afterburner1", "engines3" },
-   },
-   ["wandererspirit"] = {
-      name = _("Wanderer Spirit"),
-      tier = 7,
-      requires = { "afterburner2" },
-   },
-   -- Health Line
-   ["health1"] = {
-      name = _("Bulky Abdomen"),
-      tier = 1,
-   },
-   ["health2"] = {
-      name = _("Regeneration I"),
-      tier = 3,
-      requires = { "health1", "hull2" },
-   },
-   ["health3"] = {
-      name = _("Hard Shell"),
-      tier = 4,
-      requires = { "health2" },
-   },
-   ["health4"] = {
-      name = _("Regeneration II"),
-      tier = 5,
-      requires = { "health3" }
-   },
-   -- Attack Line
-   ["attack1"] = {
-      name = _("Feral Rage"),
-      tier = 3,
-      requires = {"systems2"},
-   },
-   ["attack2"] = {
-      name = _("Adrenaline Hormones"),
-      tier = 5,
-      requires = { "attack1" },
-   },
-}
-
-local level, skillpoints
+local level, skills, skillpoints
 function gene.window ()
    local pp = player.pilot()
    if pp:ship() ~= ship.get("Soromid Brigand") then
       return
    end
+
+   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack" }
 
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
@@ -440,14 +231,14 @@ function gene.window ()
       skillpoints = level - skill_count()
    end
 
+   level = player.shipvarPeek( "biolevel" ) or 1
+   skillpoints = level - skill_count()
+
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
       skill_reset()
       player.shipvarPush( "bioship", true )
    end
-
-   level = player.shipvarPeek( "biolevel" ) or 1
-   skillpoints = level - skill_count()
 
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )

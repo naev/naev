@@ -2627,6 +2627,8 @@ dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/rescue.lua
 dat/save_updater.lua
+dat/scripts/bioship.lua
+dat/scripts/bioship/skills.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/antlejos.lua
@@ -2674,7 +2676,6 @@ dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
 dat/scripts/formation.lua
-dat/scripts/gene.lua
 dat/scripts/lmisn.lua
 dat/scripts/lmusic.lua
 dat/scripts/love.lua
