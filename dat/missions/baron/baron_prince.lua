@@ -43,7 +43,7 @@ local pinnacle -- Non-persistent state
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. It seems he knows who you are."))
+   misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. He seems to know who you are."))
 end
 
 function accept()

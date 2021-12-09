@@ -54,7 +54,7 @@ function accept()
 "I am looking for a skilled pilot to do a simple job for me, interested?"]])) then
       tk.msg(_("A small distraction"), fmt.f(_([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.
       "However, it looks like there may be an opportunity for us in {sys}. Warlord Khan of {pnt} has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.
-"To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]), {sys=destsys, pnt=destplanet}))
+"To protect himself and the Hawk, Khan will have deployed a substantial fleet of escort fighters fleet to defend against any surprise attacks."]]), {sys=destsys, pnt=destplanet}))
       tk.msg(_("A small distraction"), fmt.f(_([["That is where you come in. You will jump into {sys} and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]), {sys=destsys}))
       tk.msg(_("A small distraction"), fmt.f(_([["We will jump in approximately 80 hectoseconds after you jump into {sys}, so the fighters must be far enough away by then not to come back and attack us."]]), {sys=destsys}))
 
@@ -74,7 +74,7 @@ function accept()
       hook.enter("enter")
       hook.land("land")
    else
-      tk.msg(_("Nuts"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the one I'm looking for. You may excuse yourself, citizen."]]))
+      tk.msg(_("Nuts"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the pilot I'm looking for. You may excuse yourself, citizen."]]))
       misn.finish()
    end
 end
