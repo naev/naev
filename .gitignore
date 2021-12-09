@@ -63,3 +63,5 @@ utils/model-view-c/*.glb
 utils/model-view-c/*.gltf
 utils/model-view-c/*.png
 utils/model-view-c/*.bin
+
+dat/outfits/bioship/*.xml
