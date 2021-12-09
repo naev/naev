@@ -74,8 +74,7 @@ static const luaL_Reg gettext_methods[] = {
  */
 static int nlua_gettext( lua_State *L )
 {
-   const char *str;
-   str = luaL_checkstring(L, 1);
+   const char *str = luaL_checkstring(L, 1);
    lua_pushstring(L, _(str) );
    return 1;
 }
@@ -92,11 +91,9 @@ static int nlua_gettext( lua_State *L )
  */
 static int nlua_ngettext( lua_State *L )
 {
-   const char *stra, *strb;
-   int n;
-   stra = luaL_checkstring(L, 1);
-   strb = luaL_checkstring(L, 2);
-   n    = luaL_checkinteger(L,3);
+   const char *stra = luaL_checkstring(L, 1);
+   const char *strb = luaL_checkstring(L, 2);
+   int n            = luaL_checkinteger(L,3);
    lua_pushstring(L, n_( stra, strb, n ) );
    return 1;
 }

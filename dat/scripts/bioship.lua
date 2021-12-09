@@ -6,14 +6,24 @@ local bioskills = require "bioship.skills"
 
 local gene = {}
 
-local level, skills, skillpoints
+local stage, skills, skillpoints, skilltxt
 function gene.window ()
    local pp = player.pilot()
-   if pp:ship() ~= ship.get("Soromid Brigand") then
+   local ps = pp:ship()
+   if ps ~= ship.get("Soromid Brigand") then
       return
    end
 
    skills = bioskills.get{ "bite", "move", "stealth", "health", "attack" }
+
+   local maxtier = 3
+   local pss = ps:size()
+   if pss > 2 then
+      maxtier = 4
+   elseif pss > 4 then
+      maxtier = 5
+   end
+   -- TODO other ways of increasing tiers
 
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
@@ -23,6 +33,15 @@ function gene.window ()
       end
       return false
    end
+
+   -- Filter out high tiers if necessary
+   local nskills = {}
+   for k,s in pairs(skills) do
+      if s.tier <= maxtier then
+         nskills[k] = s
+      end
+   end
+   skills = nskills
 
    -- Set up some helper fields
    for k,s in pairs(skills) do
@@ -213,7 +232,11 @@ function gene.window ()
       return n
    end
 
-   local function skill_reset()
+   local function skill_text ()
+      skilltxt:set( fmt.f(n_("Skills ({point} point remaining)","Skills ({point} points remaining)", skillpoints),{point=skillpoints}) )
+   end
+
+   local function skill_reset ()
       -- Get rid of intrinsics
       for k,s in pairs(skills) do
          if s.outfit and not s.slot then
@@ -228,17 +251,21 @@ function gene.window ()
             skill_enable( s )
          end
       end
-      skillpoints = level - skill_count()
+      skillpoints = stage - skill_count()
+      skill_text()
    end
 
-   level = player.shipvarPeek( "biolevel" ) or 1
-   skillpoints = level - skill_count()
+   stage = player.shipvarPeek( "biostage" ) or 1
+   skillpoints = stage - skill_count()
 
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
       skill_reset()
       player.shipvarPush( "bioship", true )
    end
+
+   local sfont = lg.newFont(10)
+   local font = lg.newFont(12)
 
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )
@@ -247,27 +274,32 @@ function gene.window ()
       local wgt   = luatk.newWidget( parent, x, y, w, h )
       setmetatable( wgt, SkillIcon_mt )
       wgt.skill   = s
+      local _maxw, wrapped = sfont:getWrap( s.name, 70 )
+      wgt.txth    = #wrapped * sfont:getLineHeight()
       return wgt
    end
-   local font = lg.newFont(12)
    function SkillIcon:draw( bx, by )
       local s = self.skill
       local x, y = bx+self.x, by+self.y
       if s.enabled then
          lg.setColor( {0,0.4,0.8,1} )
+         lg.rectangle( "fill", x+10,y+10,70,70 )
       elseif not skill_canEnable(s) then
          lg.setColor( {0.5,0.2,0.2,1} )
+         lg.rectangle( "fill", x+10,y+10,70,70 )
       else
+         lg.setColor( {0,0.4,0.8,1} )
+         lg.rectangle( "fill", x+7,y+7,76,76 )
          lg.setColor( {0,0,0,1} )
+         lg.rectangle( "fill", x+10,y+10,70,70 )
       end
-      lg.rectangle( "fill", x+10,y+10,50,50 )
       lg.setColor( {1,1,1,1} )
-      lg.printf( self.skill.name, font, x+15, y+15, self.w-30 )
+      lg.printf( self.skill.name, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
    end
    function SkillIcon:drawover( bx, by )
       local x, y = bx+self.x, by+self.y
       if self.mouseover then
-         luatk.drawAltText( x+60, y+10, self.skill.alt, 300 )
+         luatk.drawAltText( x+75, y+10, self.skill.alt, 300 )
       end
    end
    function SkillIcon:clicked ()
@@ -275,6 +307,7 @@ function gene.window ()
       if skill_canEnable( s ) then
          skill_enable( s )
          skillpoints = skillpoints-1
+         skill_text()
       end
    end
 
@@ -285,40 +318,47 @@ function gene.window ()
       return true
    end
    wdw:setCancel( wdw_done )
-   luatk.newText( wdw, 0, 10, w, 20, _("BioShip Skills"), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=player.pilot():ship():name()}), nil, "center" )
    luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
       skill_reset()
    end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
-   local bx, by = 20, 40
-   local sw, sh = 70, 70
+   local bx, by = 20, 0
+   local sw, sh = 90, 90
+
+   -- Background
+   local maxx, maxy = 0, 0
+   for k,s in pairs(skills) do
+      maxx = math.max( maxx, s.rx+1 )
+      maxy = math.max( maxy, s.ry )
+   end
+   luatk.newRect( wdw, bx, by+sh-30, sw*maxx+sw, sh*maxy+30, {0,0,0,0.8} )
+   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*maxx, 30, fmt.f(_("Skills ({point} points remaining)"),{point=skillpoints}), {1,1,1,1}, "center", font )
+
    -- Tier stuff
-   for i=0,7 do
+   for i=1,maxtier do
       local col = { 0.95, 0.95, 0.95 }
-      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, 70, 30, string.format(_("TIER %s"),utility.roman_encode(i)), col, "center", font )
+      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, sw, sh, string.format(_("TIER %s"),utility.roman_encode(i)), col, "center", font )
    end
    bx = bx + sw
+
    -- Elements
    local scol = {1, 1, 1, 0.2}
    for k,l in ipairs(skillslink) do
       local dx = l.x2-l.x1
       local dy = l.y2-l.y1
-      if dx==1 and dy==1 then
-         luatk.newRect( wdw, bx+sw*l.x1+30+30, by+sh*l.y1+30+30, math.sqrt(2)*sw*dx, 10, scol, -3*math.pi/4 )
-      elseif dx==-1 and dy==1 then
-         luatk.newRect( wdw, bx+sw*l.x1+30-25, by+sh*l.y1+30+35, math.sqrt(2)*sw*dx, 10, scol, -math.pi/4 )
-      elseif dx~=0 and dy~=0 then
+      if dx~=0 and dy~=0 then
          -- Go to the side then up
-         luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*dx, 10, scol )
-         luatk.newRect( wdw, bx+sw*l.x2+30, by+sh*l.y1+30, 10, sh*dy, scol )
+         luatk.newRect( wdw, bx+sw*l.x1+40, by+sh*l.y1+40, sw*dx, 10, scol )
+         luatk.newRect( wdw, bx+sw*l.x2+40, by+sh*l.y1+40, 10, sh*dy, scol )
       else
-         luatk.newRect( wdw, bx+sw*l.x1+30, by+sh*l.y1+30, sw*dx+10, sh*dy+10, scol )
+         luatk.newRect( wdw, bx+sw*l.x1+40, by+sh*l.y1+40, sw*dx+10, sh*dy+10, scol )
       end
    end
    for k,s in ipairs(skillslist) do
-      newSkillIcon( wdw, bx+sw*s.rx, by+sh*s.ry, 70, 70, s )
+      newSkillIcon( wdw, bx+sw*s.rx, by+sh*s.ry, sw, sh, s )
    end
 
    luatk.run()

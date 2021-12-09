@@ -7,12 +7,14 @@ local skills = {
 -- The Bite skill tree
 skills.set.bite = {
    ["bite1"] = {
-      name = _("Cannibalism I"),
+      --name = _("Cannibalism I"),
+      name = _("Cannibal I"),
       tier = 1,
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
    },
    ["bite2"] = {
-      name = _("Cannibalism II"),
+      --name = _("Cannibalism II"),
+      name = _("Cannibal II"),
       tier = 2,
       requires = { "bite1" },
       desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and will also similarly restore energy."),
@@ -87,7 +89,8 @@ skills.set.health = {
       tier = 1,
    },
    ["health2"] = {
-      name = _("Regeneration I"),
+      --name = _("Regeneration I"),
+      name = _("Regen I"),
       tier = 2,
       requires = { "health1" },
    },
@@ -97,7 +100,8 @@ skills.set.health = {
       requires = { "health2" },
    },
    ["health4"] = {
-      name = _("Regeneration II"),
+      --name = _("Regeneration II"),
+      name = _("Regen II"),
       tier = 4,
       requires = { "health3" }
    },
