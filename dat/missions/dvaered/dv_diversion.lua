@@ -63,7 +63,7 @@ function accept()
          fmt.f(_("Fly to the {sys} system"), {sys=destsys}),
          _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk"),
       })
-      misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
+      misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship, Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
       misn.setTitle(_("A Small Distraction"))
       mem.marker = misn.markerAdd( destsys, "low" )
 
