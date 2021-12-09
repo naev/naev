@@ -300,6 +300,7 @@ skills.ship["Soromid Brigand"] = {
       outfit = "Ultralight Brain Stage X",
       slot = "brain",
    },
+   --[[
    {
       name = _("Weapon Organ Growth II"),
       stage = 5,
@@ -312,6 +313,7 @@ skills.ship["Soromid Brigand"] = {
          "leftweap",
       },
    },
+   --]]
 }
 
 function skills.get( sets )
