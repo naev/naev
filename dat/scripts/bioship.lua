@@ -14,7 +14,7 @@ function gene.window ()
       return
    end
 
-   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack" }
+   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc" }
 
    local maxtier = 3
    local pss = ps:size()
@@ -45,7 +45,7 @@ function gene.window ()
 
    -- Set up some helper fields
    for k,s in pairs(skills) do
-      s.id = k
+      s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
       s._conflicts = s._conflicts or {}
@@ -266,7 +266,9 @@ function gene.window ()
    end
 
    local sfont = lg.newFont(10)
+   sfont:setOutline(1)
    local font = lg.newFont(12)
+   font:setOutline(1)
 
    local SkillIcon = {}
    setmetatable( SkillIcon, { __index = luatk.Widget } )
@@ -336,7 +338,8 @@ function gene.window ()
       maxy = math.max( maxy, s.ry )
    end
    luatk.newRect( wdw, bx, by+sh-30, sw*maxx+sw, sh*maxy+30, {0,0,0,0.8} )
-   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*maxx, 30, fmt.f(_("Skills ({point} points remaining)"),{point=skillpoints}), {1,1,1,1}, "center", font )
+   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*maxx, 30, "", {1,1,1,1}, "center", font )
+   skill_text()
 
    -- Tier stuff
    for i=1,maxtier do
