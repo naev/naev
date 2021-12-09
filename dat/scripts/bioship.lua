@@ -14,7 +14,7 @@ function gene.window ()
       return
    end
 
-   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc" }
+   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc", "plasma" }
    intrinsics = bioskills.ship["Soromid Brigand"]
 
    local maxtier = 3
@@ -46,7 +46,6 @@ function gene.window ()
 
    -- Set up some helper fields
    for k,s in ipairs(intrinsics) do
-      s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
       local alt = "#o"..s.name.."#0"
       if s.stage==0 then
          alt = alt.."\n".._("Always available")
@@ -67,6 +66,7 @@ function gene.window ()
          alt = alt.."\n".._("* ").._(o)
       end
       s.alt = alt
+      s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
    end
    for k,s in pairs(skills) do
       s.id = "bio_"..k

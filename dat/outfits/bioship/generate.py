@@ -24,16 +24,17 @@ class BioOutfit:
                 f.write( self.txt.format(**p) )
 
 """
-ul: thorn,   nail
-l:  stinger, pincer
-m:  barb,    talon
-h:  fang,    claw
-uh: spear
+pincer
+stinger
+barb
+fang
+talon
+claw
 """
 
 
-BioOutfit( "thorn.xml.template", {
-    "name"  : "Thorn Organ Stage I",
+BioOutfit( "pincer.xml.template", {
+    "name"  : "Pincer Organ Stage I",
     "price" : lerpr( 4500, 20000 ),
     "damage": lerp( 8, 17 ),
     "energy": 4,
@@ -41,4 +42,4 @@ BioOutfit( "thorn.xml.template", {
     "falloff": lerp( 450, 750 ),
     "speed" : lerp( 550, 700 ),
     "heatup": lerp( 25, 40 ),
-} ).run( ["Thorn Organ Stage I", "Thorn Organ Stage II"] )
+} ).run( ["Pincer Organ Stage I", "Pincer Organ Stage II", "Pincer Organ Stage III"] )

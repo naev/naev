@@ -43,7 +43,11 @@
  </slot>
  <slot name="bio_weapon">
   <display>Bioship Weapons</display>
-  <description>In addition to standard weapons, this slot can be used for special organic weapons which can only be equipped to bioships. Organic weapons are generally similar to their synthetic counterparts, but more efficient, which is important to compensate for the reduced CPU capacity of the brain in comparison to synthetic constructs.</description>
+  <description>This slot can be used to grow special organic weapons on bioships. Organic weapons are generally similar to their synthetic counterparts, but tend to be more efficient to do the strong coupling with the ship in comparison to purely synthetic constructs.</description>
+ </slot>
+ <slot name="bio_organ">
+  <display>Bioship Organs</display>
+  <description>Through biological synthesis, bioships are able to modify and adapt their organs for many different purposes without the need of any external equipment.</description>
  </slot>
  <slot name="fighter_bay">
   <display>Fighter Bays</display>
