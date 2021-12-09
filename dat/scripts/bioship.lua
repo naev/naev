@@ -45,6 +45,29 @@ function gene.window ()
    skills = nskills
 
    -- Set up some helper fields
+   for k,s in ipairs(intrinsics) do
+      s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
+      local alt = "#o"..s.name.."#0"
+      if s.stage==0 then
+         alt = alt.."\n".._("Always available")
+      else
+         alt = alt.."\n"..fmt.f(_("Obtained at stage {stage}"),{stage=s.stage})
+      end
+      if s.desc then
+         alt = alt.."\n\n"..s.desc
+      end
+      local outfit = s.outfit
+      if type(outfit)=="string" then
+         outfit = {outfit}
+      end
+      if #outfit > 0 then
+         alt = alt.."\n#b".._("Provides:").."#0"
+      end
+      for i,o in ipairs(outfit) do
+         alt = alt.."\n".._("* ").._(o)
+      end
+      s.alt = alt
+   end
    for k,s in pairs(skills) do
       s.id = "bio_"..k
       s.x = 0
@@ -198,6 +221,9 @@ function gene.window ()
       if skillpoints <= 0 then
          return false
       end
+      if s.stage then
+         return false
+      end
       for k,r in ipairs(s._requires) do
          if not r.enabled then
             return false
@@ -337,7 +363,18 @@ function gene.window ()
       end
    end
 
-   local w, h = 1100, 600
+   -- Figure out dimension stuff
+   local bx, by = 20, 0
+   local sw, sh = 90, 90
+   local skillx, skilly = 0, 0
+   for k,s in pairs(skills) do
+      skillx = math.max( skillx, s.rx+0.5 )
+      skilly = math.max( skilly, s.ry )
+   end
+   local intx = 3
+   local inty = math.floor((#intrinsics+1)/3)
+
+   local w, h = bx+sw*(skillx+intx+1)+40, by+sh*(math.max(skilly,inty)+1)+80
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_done( dying_wdw )
       dying_wdw:destroy()
@@ -351,25 +388,18 @@ function gene.window ()
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
-   local bx, by = 20, 0
-   local sw, sh = 90, 90
 
    -- Background
-   local maxx, maxy = 0, 0
-   for k,s in pairs(skills) do
-      maxx = math.max( maxx, s.rx+1 )
-      maxy = math.max( maxy, s.ry )
-   end
-   luatk.newRect( wdw, bx, by+sh-30, sw*maxx+sw, sh*maxy+30, {0,0,0,0.8} )
-   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*maxx, 30, "", {1,1,1,1}, "center", font )
+   luatk.newRect( wdw, bx, by+sh-30, sw*skillx+sw, sh*skilly+30, {0,0,0,0.8} )
+   skilltxt = luatk.newText( wdw, bx+sw, by+70, sw*skillx, 30, "", {1,1,1,1}, "center", font )
    skill_text()
 
    -- Tier stuff
    for i=1,maxtier do
       local col = { 0.95, 0.95, 0.95 }
-      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, sw, sh, string.format(_("TIER %s"),utility.roman_encode(i)), col, "center", font )
+      luatk.newText( wdw, bx, by+sh*i+(sh-12)/2, sw/2, sh, utility.roman_encode(i), col, "center", font )
    end
-   bx = bx + sw
+   bx = bx + sw/2-10
 
    -- Elements
    local scol = {1, 1, 1, 0.2}
@@ -386,6 +416,16 @@ function gene.window ()
    end
    for k,s in ipairs(skillslist) do
       newSkillIcon( wdw, bx+sw*s.rx, by+sh*s.ry, sw, sh, s )
+   end
+
+   -- Intrinsics
+   bx = bx+sw*skillx+70
+   luatk.newRect( wdw, bx, by+sh-30, sw*intx, sh*inty+30, {0,0,0,0.8} )
+   luatk.newText( wdw, bx, by+70, sw*intx, 30, _("Stage Traits"), {1,1,1,1}, "center", font )
+   for k,s in ipairs(intrinsics) do
+      local x = bx + ((k-1)%3)*sw
+      local y = by + math.floor((k-1)/3)*sh + sh
+      newSkillIcon( wdw, x, y, sw, sh, s )
    end
 
    luatk.run()
