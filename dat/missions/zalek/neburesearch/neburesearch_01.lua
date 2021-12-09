@@ -72,7 +72,7 @@ end
 
 function accept()
     if not tk.yesno(_("Bar"), fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
-    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]), {player=player:name()})) then
+    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]), {player=player.name()})) then
         misn.finish()
     end
 
@@ -119,7 +119,7 @@ end
 
 function takeoff()
     if mem.firstTakeOff then
-        tk.msg(_("Departure"), fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player:name()}))
+        tk.msg(_("Departure"), fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player.name()}))
         mem.firstTakeOff = false
     end
     mem.destplanet = nil
@@ -284,7 +284,7 @@ function ambushHail()
     "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]]))
     tk.msg(_("Trouble inbound"), fmt.f(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
     "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I hadn't considered this point.
-    I'm counting on you, {player}. Please help us."]]), {player=player:name()}))
+    I'm counting on you, {player}. Please help us."]]), {player=player.name()}))
 end
 
 -- Handle the destruction of the transporter. Abort the mission.
