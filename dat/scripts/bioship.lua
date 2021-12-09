@@ -247,7 +247,6 @@ function gene.window ()
          end
       end
       if #outfit>0 and slot and #outfit ~= #slot then
-         print( #outfit, #slot )
          warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
       end
       for k,o in ipairs(outfit) do
@@ -390,7 +389,7 @@ function gene.window ()
    end
    function SkillIcon:clicked ()
       local s = self.skill
-      if skill_canEnable( s ) then
+      if not s.enabled and skill_canEnable( s ) then
          skill_enable( s )
          skillpoints = skillpoints-1
          skill_text()

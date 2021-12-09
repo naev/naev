@@ -1816,13 +1816,13 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  * @brief Gets the outfits of a pilot.
  *
  *    @luatparam Pilot p Pilot to get outfits of.
- *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", or "structure".
+ *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
  *    @luatreturn table The outfits of the pilot in an ordered list.
  * @luafunc outfits
  */
 static int pilotL_outfits( lua_State *L )
 {
-   int j;
+   int intrinsics=0;
    Pilot *p = luaL_validpilot(L,1);
    const char *type = luaL_optstring(L,2,NULL);
    OutfitSlotType ost = OUTFIT_SLOT_NULL;
@@ -1835,25 +1835,36 @@ static int pilotL_outfits( lua_State *L )
          ost = OUTFIT_SLOT_UTILITY;
       else if (strcmp(type,"weapon")==0)
          ost = OUTFIT_SLOT_WEAPON;
+      else if (strcmp(type,"intrinsic")==0)
+         intrinsics = 1;
       else
          NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
 
-   j = 1;
-   lua_newtable( L );
-   for (int i=0; i<array_size(p->outfits); i++) {
+   if (intrinsics) {
+      lua_newtable( L );
+      for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+         lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
+         lua_rawseti( L, -2, i+1 );
+      }
+   }
+   else {
+      int j = 1;
+      lua_newtable( L );
+      for (int i=0; i<array_size(p->outfits); i++) {
 
-      /* Get outfit. */
-      if (p->outfits[i]->outfit == NULL)
-         continue;
+         /* Get outfit. */
+         if (p->outfits[i]->outfit == NULL)
+            continue;
 
-      /* Only match specific type. */
-      if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
-         continue;
+         /* Only match specific type. */
+         if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
+            continue;
 
-      /* Set the outfit. */
-      lua_pushoutfit( L, p->outfits[i]->outfit );
-      lua_rawseti( L, -2, j++ );
+         /* Set the outfit. */
+         lua_pushoutfit( L, p->outfits[i]->outfit );
+         lua_rawseti( L, -2, j++ );
+      }
    }
 
    return 1;
@@ -2945,6 +2956,8 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    const Outfit *o = luaL_validoutfit(L,2);
    int ret = pilot_addOutfitIntrinsic( p, o );
+   if (ret==0)
+      pilot_calcStats(p);
    lua_pushboolean(L,ret);
    return 1;
 }
@@ -2966,6 +2979,8 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
       if (s->outfit != o)
          continue;
       ret = pilot_rmOutfitIntrinsic( p, s );
+      if (ret==0)
+         pilot_calcStats(p);
       lua_pushboolean(L,ret);
       return 1;
    }
