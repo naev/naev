@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="{name}">
  <general>
-  <typename>Bioship Shell</typename>
+  <typename>{typename}</typename>
   <slot prop="bio_hull">structure</slot>
   <size>small</size>
   <mass>{mass}</mass>

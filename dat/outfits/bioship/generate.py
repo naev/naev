@@ -63,6 +63,11 @@ desc["brain"] = N_("The brain is a Soromid bioship's equivalent to core systems 
 desc["engine"] = N_("The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and is even capable of hyperspace travel. All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve.")
 desc["hull"] = N_("The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. All shells start off undeveloped, but over time, just like the ships themselves, they grow and improve.")
 
+typename = {}
+typename["brain"] = N_("Bioship Brain")
+typename["engine"] = N_("Bioship Gene Drive")
+typename["hull"] = N_("Bioship Shell")
+
 BioOutfit( "pincer.xml.template", {
     "price" :   lerpr(   0, 20e3 ),
     "damage":   lerp(    8,  17 ),
@@ -77,6 +82,7 @@ BioOutfit( "perleve_cerebrum.xml.template", {
     "price":        lerpr(   0, 120e3 ),
     "mass":         14,
     "desc":         desc["brain"],
+    "typename":     typename["brain"],
     "cpu":          lerpr(   3,   8 ),
     "shield" :      lerp(  160, 250 ),
     "shield_regen": lerp(    5,   9 ),
@@ -87,7 +93,8 @@ BioOutfit( "perleve_cerebrum.xml.template", {
 BioOutfit( "perlevis_gene_drive.xml.template", {
     "price":        lerpr(   0, 140e3 ),
     "mass":         8,
-    "desc":         desc["brain"],
+    "desc":         desc["engine"],
+    "typename":     typename["engine"],
     "thrust":       lerp(  145, 196 ),
     "turn":         lerp(  120, 160 ),
     "speed":        lerp(  255, 345 ),
@@ -100,6 +107,7 @@ BioOutfit( "perlevis_cortex.xml.template", {
     "price":        lerpr(   0, 130e3 ),
     "mass":         30,
     "desc":         desc["hull"],
+    "typename":     typename["hull"],
     "cargo":        lerpr(   4, 4 ),
     "absorb":       lerpr(   0, 3 ),
     "armour":       lerp(   45, 65 )
