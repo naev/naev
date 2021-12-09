@@ -109,7 +109,8 @@ function gene.window ()
       end
    end
    --table.sort( groups, function( a, b ) return #a-#b < 0 end ) -- Sort by largest first
-   table.sort( groups, function( a, b ) return a.w*a.h > b.w*b.h end ) -- Sort by largest first
+   --table.sort( groups, function( a, b ) return a.w*a.h > b.w*b.h end ) -- Sort by largest first
+   table.sort( groups, function( a, b ) return a[1].name < b[1].name end ) -- Sort by name
 
    -- true if intersects
    local function aabb_vs_aabb( a, b )
