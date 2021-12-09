@@ -60,7 +60,7 @@ function land()
       end
       tk.msg(
          _("The crew is home"),
-         _([[The Dvaered crew file out of your ship. You didn't really get to know them on this trip, they kept to themselves. The commanding officer brings up the rear of the departing crew, but he stops when he passes by you.
+         _([[The Dvaered crew file out of your ship. You didn't really get to know them on this trip as they kept to themselves. The commanding officer brings up the rear of the departing crew, but he stops when he passes by you.
     "Well done citizen," he says. "You have done your duty as an upstanding member of society by rendering assistance to an official Dvaered patrol. ]])
          .. mid
          .. _([[

@@ -98,7 +98,7 @@ function competitor4()
    tk.msg(_("Dvaered Pilot"), _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]]))
 end
 function competitor5()
-   tk.msg(_("Obvious Pirate"), _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]]))
+   tk.msg(_("Obvious Pirate"), _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in action. It helps to know how they fly in my job."]]))
 end
 
 function accept()
@@ -306,7 +306,7 @@ function enter()
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(_("You are dismissed"), _("You aren't allowed to use missiles"))
+      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles"))
       misn.finish(false)
    elseif mem.playerclass ~= "Fighter" then
       tk.msg(_("You are dismissed"), _("You had to use a fighter"))
