@@ -71292,12 +71292,6 @@ msgstr ""
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:61
-#, fuzzy
-#| msgid "Frontier systems"
-msgid "Return to {pnt} in the {pnt} system."
-msgstr "프론티어 시스템"
-
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:73
 #, fuzzy
 #| msgid "Frontier systems"

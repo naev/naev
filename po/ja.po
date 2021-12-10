@@ -74815,10 +74815,6 @@ msgstr "シールド試作機の資金調達"
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
 msgstr "メンシング博士を助けて、シールド試作機作成のための資金を調達せよ。"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:61
-msgid "Return to {pnt} in the {pnt} system."
-msgstr "{sys}星系の{pnt}に戻れ。"
-
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:73
 msgid "Return to {pnt} in the {sys} system."
 msgstr "{sys}星系の{pnt}に戻れ。"
