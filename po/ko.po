@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-09 11:57-0500\n"
+"POT-Creation-Date: 2021-12-09 19:17-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -42027,11 +42027,11 @@ msgstr "프론티어 시스템"
 #: dat/missions/empire/collective/ec05.lua:331
 #: dat/missions/empire/emp_cargo00.lua:92
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:73
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:73
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:76
 #: dat/missions/neutral/crimelord.lua:159
 #: dat/missions/pirate/pir_clan_cargo.lua:96
 msgid "Mission Accomplished"
@@ -43153,6 +43153,34 @@ msgstr ""
 #. Note: this mission does not make any system claims.
 #. target destination
 #. In case no suitable planets are in range.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Soromid Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
+#. <chance>30</chance>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <done_misn name="Empire Shipping">2 times or more</done_misn>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. First diplomatic mission to Soromid space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: this mission does not make any system claims.
 #.
@@ -43177,6 +43205,66 @@ msgstr ""
 #.
 #.
 #. Second diplomatic mission to Dvaered space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
+#. luacheck: globals land (Hook functions passed by name)
+#. Note: this mission does not make any system claims.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Za'lek Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+#. <chance>75</chance>
+#. <done>Dvaered Long Distance Recruitment</done>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. Third diplomatic mission to Za'lek space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
+#. luacheck: globals land (Hook functions passed by name)
+#. Note: this mission does not make any system claims.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Frontier Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+#. <chance>75</chance>
+#. <done>Za'lek Long Distance Recruitment</done>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. Fourth diplomatic mission to Frontier space that opens up the Empire long-distance cargo missions.
 #.
 #. Author: micahmumper
 #.
@@ -43246,10 +43334,10 @@ msgstr ""
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: this mission does not make any system claims.
 #: dat/missions/empire/emp_cargo00.lua:53
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:38
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:39
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:38
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid "Lieutenant"
@@ -43293,10 +43381,10 @@ msgstr ""
 #. Must be landable
 #. origtime = time.get()
 #: dat/missions/empire/emp_cargo00.lua:59
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:46
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:46
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:49
 #: dat/missions/empire/shipping/es00.lua:50
@@ -43611,44 +43699,10 @@ msgid ""
 "#0"
 msgstr ""
 
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Soromid Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
-#. <chance>30</chance>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <done_misn name="Empire Shipping">2 times or more</done_misn>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. First diplomatic mission to Soromid space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to Soromid Customs Central in the "
-"Oberon system"
-msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:38
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:39
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:38
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid ""
@@ -43656,7 +43710,7 @@ msgid ""
 "bar."
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:46
 msgid ""
 "You approach Lieutenant Czesc. His demeanor brightens as he sees you. "
 "\"Hello! I've been looking for you. You've done a great job with those "
@@ -43669,13 +43723,13 @@ msgstr ""
 #. Flavour text and mini-briefing
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:51
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:50
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:59
 msgid "Soromid Long Distance Recruitment"
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:50
 msgid ""
 "\"I knew I could count on you,\" Lieutenant Czesc exclaims. \"These missions "
 "will be long distance, meaning that you'll usually have to go at least 3 "
@@ -43686,44 +43740,54 @@ msgid ""
 "factions. We'll need a bureaucrat to handle the red tape and oversee the "
 "operations. We will begin with the Soromid. I know those genetically "
 "modified beings are kind of creepy, but business is business. Please "
-"accompany a bureaucrat to Soromid Customs Central in the Oberon system. He "
-"will report back to me when this mission is accomplished. I tend to travel "
-"within Empire space handling minor trade disputes, so keep an eye out for me "
-"in the bar on Empire controlled planets.\""
+"accompany a bureaucrat to {pnt} in the {sys} system. He will report back to "
+"me when this mission is accomplished. I tend to travel within Empire space "
+"handling minor trade disputes, so keep an eye out for me in the bar on "
+"Empire controlled planets.\""
 msgstr ""
+
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:57
+#, fuzzy
+#| msgid "Frontier systems"
+msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
+msgstr "프론티어 시스템"
 
 #. Set up the goal
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:61
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:64
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:62
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:65
 #, fuzzy
 msgid "Diplomat"
 msgstr "외교 선박"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:61
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:64
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:62
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:65
 msgid "An Imperial trade representative."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
 msgid ""
-"You drop the bureaucrat off at Soromid Customs Central, and he hands you a "
-"credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire "
-"space to continue the operation."
+"You drop the bureaucrat off at {pnt}, and he hands you a credit chip. "
+"Lieutenant Czesc told you to keep an eye out for him in Empire space to "
+"continue the operation."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:74
 msgid ""
-"You delivered a shipping bureaucrat to Soromid Customs Central for the "
-"Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire "
-"space to continue the operation."
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
+"Czesc told you to keep an eye out out for him in Empire space to continue "
+"the operation."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:46
@@ -43740,7 +43804,7 @@ msgstr ""
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:55
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:59
 msgid "Dvaered Long Distance Recruitment"
 msgstr ""
 
@@ -43749,65 +43813,26 @@ msgid ""
 "\"Great!\" says Lieutenant Czesc. \"I'll send a message to the bureaucrat to "
 "meet you at the hanger. The Dvaered are, of course, allies of the Empire. "
 "Still, they offend easily, so try not to talk too much. Your mission is to "
-"drop the bureaucrat off on Praxis in the Ogat system. He will take it from "
+"drop the bureaucrat off on {pnt} in the {sys} system. He will take it from "
 "there and report back to me when the shipping contract has been confirmed. "
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:57
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
-msgid "Deliver a shipping diplomat for the Empire to Praxis in the Ogat system"
-msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:73
 msgid ""
-"You drop the bureaucrat off on Praxis, and he hands you a credit chip. You "
+"You drop the bureaucrat off on {pnt}, and he hands you a credit chip. You "
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:74
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:75
 msgid ""
-"You delivered a shipping bureaucrat to Praxis for the Empire. Lieutenant "
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
 
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Za'lek Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-#. <chance>75</chance>
-#. <done>Dvaered Long Distance Recruitment</done>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. Third diplomatic mission to Za'lek space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:32
-#, fuzzy
-#| msgid "Frontier systems"
-msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
-msgstr "프론티어 시스템"
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:46
 msgid ""
 "Lieutenant Czesc sits at the bar. He really does seem to handle business all "
 "across the Empire. You take the seat next to him. \"Thanks to your help, the "
@@ -43819,13 +43844,13 @@ msgstr ""
 #. Flavour text and mini-briefing
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:50
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:59
 msgid "Za'lek Long Distance Recruitment"
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:50
 msgid ""
 "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
 "bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, "
@@ -43849,41 +43874,7 @@ msgid ""
 "soon."
 msgstr ""
 
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Frontier Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-#. <chance>75</chance>
-#. <done>Za'lek Long Distance Recruitment</done>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. Fourth diplomatic mission to Frontier space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to The Frontier Council in "
-"Gilligan's Light system"
-msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:46
 msgid ""
 "\"We have to stop running into each other like this.\" Lieutenant Czesc "
 "laughs at his joke. \"Just kidding, you know I owe you for helping set up "
@@ -43893,45 +43884,44 @@ msgid ""
 msgstr ""
 
 #. Flavour text and mini-briefing
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:59
 msgid "Frontier Alliance Long Distance Recruitment"
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:50
 msgid ""
 "\"I applaud your commitment,\" Lieutenant Czesc says, \"and I know these "
 "aren't the most exciting missions, but they're most useful. The frontier can "
 "be a bit dangerous, so make sure you're prepared. You need to drop the "
-"bureaucrat off at The Frontier Council in Gilligan's Light system. After "
-"this, there should only be one more faction to bring into the fold. I expect "
-"to see you again soon.\""
+"bureaucrat off at {pnt} in the {sys} system. After this, there should only "
+"be one more faction to bring into the fold. I expect to see you again soon.\""
 msgstr ""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:55
 msgid "Frontier Long Distance Recruitment"
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
 msgid ""
-"You deliver the diplomat to The Frontier Council, and she hands you a credit "
-"chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance "
-"again for one more mission. This last bureaucrat refused to stay in her "
-"quarters, preferring to hang out on the bridge and give you the ins and outs "
-"of Empire bureaucracy. Only your loyalty to the Empire stopped you from "
-"sending her out into the vacuum of space."
-msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:75
-msgid ""
-"You delivered a shipping bureaucrat to The Frontier Council for the Empire. "
+"You deliver the diplomat to {pnt}, and she hands you a credit chip. "
 "Thankfully, Lieutenant Czesc mentioned only needing your assistance again "
 "for one more mission. This last bureaucrat refused to stay in her quarters, "
 "preferring to hang out on the bridge and give you the ins and outs of Empire "
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
+msgstr ""
+
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:75
+msgid ""
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Thankfully, "
+"Lieutenant Czesc mentioned only needing your assistance again for one more "
+"mission. This last bureaucrat refused to stay in her quarters, preferring to "
+"hang out on the bridge and give you the ins and outs of Empire bureaucracy. "
+"Only your loyalty to the Empire stopped you from sending her out into the "
+"vacuum of space."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:46
@@ -43946,35 +43936,29 @@ msgstr ""
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:55
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:59
 msgid "Sirius Long Distance Recruitment"
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:50
 msgid ""
 "\"You know how this goes by now.\" says Lieutenant Czesc, \"Drop the "
-"bureaucrat off at Madria in the Esker system. Sirius space is quite a "
+"bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a "
 "distance, so be prepared for anything. Afterwards, come find me one more "
 "time and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:57
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:73
 msgid ""
-"Deliver a shipping diplomat for the Empire to Madria in the Esker system"
-msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
-msgid ""
-"You drop the diplomat off on Madria, and she hands you a credit chip. "
+"You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:74
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:75
 msgid ""
-"You delivered a shipping bureaucrat to Madria for the Empire. Lieutenant "
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
@@ -43984,9 +43968,8 @@ msgid ""
 "Lieutenant Czesc slaps you on the back as you take a seat next to him at the "
 "bar. \"We've done it! We have set up Empire Armada Shipping outposts across "
 "quite a bit of the galaxy. I just have one more favor to ask. I need "
-"transport back to Halir in the Gamma Polaris system. Once there I can "
-"authorize you to help out with the long-distance shipping missions. Can I "
-"count on you?\""
+"transport back to {pnt} in the {sys} system. Once there I can authorize you "
+"to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
 
 #. Flavour text and mini-briefing
@@ -43994,7 +43977,7 @@ msgstr ""
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:53
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:58
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:62
 msgid "Empire Long Distance Recruitment"
 msgstr ""
 
@@ -44007,11 +43990,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:60
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
-msgid "Deliver Lieutenant Czesc to Halir in the Gamma Polaris system"
-msgstr ""
+#, fuzzy
+#| msgid "Frontier systems"
+msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
+msgstr "프론티어 시스템"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:76
 msgid ""
 "Lieutenant Czesc exits your ship and takes a deep breath of air. \"I love "
 "the smell of bureaucracy in the morning.\" He shakes your hand. \"Thanks for "
@@ -44025,9 +44009,9 @@ msgid ""
 "forget such dedication.\""
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:77
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:78
 msgid ""
-"You transported Lieutenant Czesc to Halir for some paperwork. You can now do "
+"You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do "
 "long-distance cargo missions for the Empire. They pay better than regular "
 "Empire shipping missions, but often require traveling longer distances and "
 "into territory controlled by other factions. You'll probably be more likely "
@@ -65970,7 +65954,7 @@ msgid ""
 "she begins. \"You have helped me on several occasions in regard with my "
 "personal problem. I've given it some thought since then, and I've come to "
 "the conclusion that I want to get to the bottom of this. To do so, I will "
-"need your help yet again. I'm currently on assignment on {pnt} in the {pnt} "
+"need your help yet again. I'm currently on assignment on {pnt} in the {sys} "
 "system. Please meet me there at the earliest opportunity.\"\n"
 "    The message ends. You save it for later reference. Maybe you should "
 "swing by {pnt} to see what Joanne wants."
@@ -71292,6 +71276,7 @@ msgstr ""
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:61
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:73
 #, fuzzy
 #| msgid "Frontier systems"

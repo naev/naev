@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-09 11:57-0500\n"
+"POT-Creation-Date: 2021-12-09 19:17-0500\n"
 "PO-Revision-Date: 2021-12-05 15:41+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -43375,11 +43375,11 @@ msgstr ""
 #: dat/missions/empire/collective/ec05.lua:331
 #: dat/missions/empire/emp_cargo00.lua:92
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:73
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:73
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:76
 #: dat/missions/neutral/crimelord.lua:159
 #: dat/missions/pirate/pir_clan_cargo.lua:96
 msgid "Mission Accomplished"
@@ -44483,6 +44483,34 @@ msgstr ""
 #. Note: this mission does not make any system claims.
 #. target destination
 #. In case no suitable planets are in range.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Soromid Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
+#. <chance>30</chance>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <done_misn name="Empire Shipping">2 times or more</done_misn>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. First diplomatic mission to Soromid space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: this mission does not make any system claims.
 #.
@@ -44507,6 +44535,66 @@ msgstr ""
 #.
 #.
 #. Second diplomatic mission to Dvaered space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
+#. luacheck: globals land (Hook functions passed by name)
+#. Note: this mission does not make any system claims.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Za'lek Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+#. <chance>75</chance>
+#. <done>Dvaered Long Distance Recruitment</done>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. Third diplomatic mission to Za'lek space that opens up the Empire long-distance cargo missions.
+#.
+#. Author: micahmumper
+#.
+#.
+#.
+#. Mission constants
+#. luacheck: globals land (Hook functions passed by name)
+#. Note: this mission does not make any system claims.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Frontier Long Distance Recruitment">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+#. <chance>75</chance>
+#. <done>Za'lek Long Distance Recruitment</done>
+#. <location>Bar</location>
+#. <faction>Empire</faction>
+#. </avail>
+#. <notes>
+#. <campaign>Empire Shipping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. Fourth diplomatic mission to Frontier space that opens up the Empire long-distance cargo missions.
 #.
 #. Author: micahmumper
 #.
@@ -44576,10 +44664,10 @@ msgstr ""
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: this mission does not make any system claims.
 #: dat/missions/empire/emp_cargo00.lua:53
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:38
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:39
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:38
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid "Lieutenant"
@@ -44623,10 +44711,10 @@ msgstr "帝国の大尉があなたを見ていたらしいとわかった。"
 #. Must be landable
 #. origtime = time.get()
 #: dat/missions/empire/emp_cargo00.lua:59
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:46
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:46
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:46
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:49
 #: dat/missions/empire/shipping/es00.lua:50
@@ -44963,46 +45051,10 @@ msgid ""
 "#0"
 msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！#0"
 
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Soromid Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
-#. <chance>30</chance>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <done_misn name="Empire Shipping">2 times or more</done_misn>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. First diplomatic mission to Soromid space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to {pnt} in the "
-"{sys} system"
-msgstr ""
-"帝国のために輸送局外交官を{sys}星系の{pnt}に連"
-"れていけ。"
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:38
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:39
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:39
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:38
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid ""
@@ -45010,7 +45062,7 @@ msgid ""
 "bar."
 msgstr "帝国艦隊輸送局のチェシチ大尉がバーに座っている。"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:46
 msgid ""
 "You approach Lieutenant Czesc. His demeanor brightens as he sees you. "
 "\"Hello! I've been looking for you. You've done a great job with those "
@@ -45030,13 +45082,13 @@ msgstr ""
 #. Flavour text and mini-briefing
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:51
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:50
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:59
 msgid "Soromid Long Distance Recruitment"
 msgstr "ソロミドへの長距離輸送の勧誘"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:50
 msgid ""
 "\"I knew I could count on you,\" Lieutenant Czesc exclaims. \"These missions "
 "will be long distance, meaning that you'll usually have to go at least 3 "
@@ -45047,10 +45099,10 @@ msgid ""
 "factions. We'll need a bureaucrat to handle the red tape and oversee the "
 "operations. We will begin with the Soromid. I know those genetically "
 "modified beings are kind of creepy, but business is business. Please "
-"accompany a bureaucrat to {pnt} in the {sys} system. He "
-"will report back to me when this mission is accomplished. I tend to travel "
-"within Empire space handling minor trade disputes, so keep an eye out for me "
-"in the bar on Empire controlled planets.\""
+"accompany a bureaucrat to {pnt} in the {sys} system. He will report back to "
+"me when this mission is accomplished. I tend to travel within Empire space "
+"handling minor trade disputes, so keep an eye out for me in the bar on "
+"Empire controlled planets.\""
 msgstr ""
 "｢あなたを当てにできるのはわかっていました｣ と、チェシチ大尉は大きな声でいっ"
 "た。｢この任務は長距離になります。つまり、ふつうは最低でも 3 回はジャンプして"
@@ -45060,49 +45112,56 @@ msgstr ""
 "つたたいた。｢まずは、ほかの党派と運営の準備をする必要があります。形式的手つづ"
 "きの処理と運営を監督する官僚も必要となるでしょう。われわれはソロミドと始める"
 "つもりです。あの遺伝子改造人間がちょっと気色悪いのは知っていますが、仕事は仕"
-"事です。官僚と同行して{sys}星系の{pnt}へ行って"
-"ください。その官僚は、任務が達成されたらわたしのところへ報告に戻ることになっ"
-"ています。わたしは帝国宙域を旅して細かい貿易紛争に対処していることがよくある"
-"ので、帝国が支配する惑星のバーでわたしがいないかよく見ていてください｣"
+"事です。官僚と同行して{sys}星系の{pnt}へ行ってください。その官僚は、任務が達"
+"成されたらわたしのところへ報告に戻ることになっています。わたしは帝国宙域を旅"
+"して細かい貿易紛争に対処していることがよくあるので、帝国が支配する惑星のバー"
+"でわたしがいないかよく見ていてください｣"
+
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:57
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:57
+msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
+msgstr "帝国のために輸送局外交官を{sys}星系の{pnt}に連れていけ。"
 
 #. Set up the goal
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:61
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:64
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:62
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:65
 msgid "Diplomat"
 msgstr "外交官"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:62
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:62
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:61
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:64
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:62
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:65
 msgid "An Imperial trade representative."
 msgstr "帝国の貿易代表。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
 msgid ""
-"You drop the bureaucrat off at {pnt}, and he hands you a "
-"credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire "
-"space to continue the operation."
+"You drop the bureaucrat off at {pnt}, and he hands you a credit chip. "
+"Lieutenant Czesc told you to keep an eye out for him in Empire space to "
+"continue the operation."
 msgstr ""
-"あなたはあの官僚を{pnt}に降ろした。それから官僚は"
-"あなたにクレジットチップを手渡した。チェシチ大尉は帝国宙域で運営をつづけてい"
-"る自分に目を光らせておけといっていた。"
+"あなたはあの官僚を{pnt}に降ろした。それから官僚はあなたにクレジットチップを手"
+"渡した。チェシチ大尉は帝国宙域で運営をつづけている自分に目を光らせておけと"
+"いっていた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:74
 msgid ""
-"You delivered a shipping bureaucrat to {pnt} for the "
-"Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire "
-"space to continue the operation."
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
+"Czesc told you to keep an eye out out for him in Empire space to continue "
+"the operation."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を{pnt}へ連れて"
-"いった。チェシチ大尉は帝国宙域で運営をつづけている自分に目を光らせておけと"
-"いっていた。"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。チェシチ大尉は帝国宙"
+"域で運営をつづけている自分に目を光らせておけといっていた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:46
 msgid ""
@@ -45123,7 +45182,7 @@ msgstr ""
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:55
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:59
 msgid "Dvaered Long Distance Recruitment"
 msgstr "ドベーレッドへの長距離輸送の勧誘"
 
@@ -45140,30 +45199,30 @@ msgstr ""
 "｢すばらしい！｣ と、チェシチ大尉がいう。｢官僚に連絡をして、格納庫であなたに会"
 "うようにいっておきます。ドベーレッドはもちろん帝国の味方です。それでも、簡単"
 "に怒らせることをするんです。だからあまり話をしようとしないでください。あなた"
-"の任務は官僚を{sys}星系の{pnt}に降ろすことです。その官僚は、輸送契約"
-"が承認されたら、それをもってわたしのところへ報告しに戻ることになっています。"
-"そのあとは、帝国宙域でわたしに目を光らせておいてください。そうすればこの活動"
-"をつづけられます｣"
+"の任務は官僚を{sys}星系の{pnt}に降ろすことです。その官僚は、輸送契約が承認さ"
+"れたら、それをもってわたしのところへ報告しに戻ることになっています。そのあと"
+"は、帝国宙域でわたしに目を光らせておいてください。そうすればこの活動をつづけ"
+"られます｣"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:73
 msgid ""
 "You drop the bureaucrat off on {pnt}, and he hands you a credit chip. You "
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
-"あなたはあの官僚を{pnt}に降ろした。それから官僚はあなたにクレジットチッ"
-"プを手渡した。チェシチ大尉が、終わったら帝国が支配する惑星で自分をさがせと"
-"いっていたのをあなたは思いだした。"
+"あなたはあの官僚を{pnt}に降ろした。それから官僚はあなたにクレジットチップを手"
+"渡した。チェシチ大尉が、終わったら帝国が支配する惑星で自分をさがせといってい"
+"たのをあなたは思いだした。"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:74
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:75
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。チェシチ大尉"
-"は、終わったら帝国が支配する惑星で自分をさがせといっていた。"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。チェシチ大尉は、終"
+"わったら帝国が支配する惑星で自分をさがせといっていた。"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:46
 msgid ""
 "Lieutenant Czesc sits at the bar. He really does seem to handle business all "
 "across the Empire. You take the seat next to him. \"Thanks to your help, the "
@@ -45179,13 +45238,13 @@ msgstr ""
 #. Flavour text and mini-briefing
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:50
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:55
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:59
 msgid "Za'lek Long Distance Recruitment"
 msgstr "ザレクへの長距離輸送の勧誘"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:50
 msgid ""
 "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
 "bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, "
@@ -45196,9 +45255,10 @@ msgid ""
 msgstr ""
 "｢そうだろうと思っていました！｣ と、チェシチ大尉はいう。｢もうひとり官僚がい"
 "て、通商上のつながりを確立する準備ができています。ザレクはちょっと不思議なと"
-"ころなので、油断しないようにしてください。外交官は{sys}星系の{pnt}に行く必要があるだけです。その外交官は、通商関係が確立したら、わた"
-"しに知らせることになっています。それでもやるべき仕事はまだあります。だからま"
-"たすぐにあなたと会えると期待しています｣"
+"ころなので、油断しないようにしてください。外交官は{sys}星系の{pnt}に行く必要"
+"があるだけです。その外交官は、通商関係が確立したら、わたしに知らせることに"
+"なっています。それでもやるべき仕事はまだあります。だからまたすぐにあなたと会"
+"えると期待しています｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
 msgid ""
@@ -45206,9 +45266,9 @@ msgid ""
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
-"あなたはあの外交官を{pnt}に降ろした。それから外交官はあな"
-"たにクレジットチップを手渡した。チェシチ大尉はもっと仕事があるといっていたの"
-"で、あなたは大尉とはバーですぐに会うことになると考えた。"
+"あなたはあの外交官を{pnt}に降ろした。それから外交官はあなたにクレジットチップ"
+"を手渡した。チェシチ大尉はもっと仕事があるといっていたので、あなたは大尉とは"
+"バーですぐに会うことになると考えた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:75
 msgid ""
@@ -45216,46 +45276,11 @@ msgid ""
 "Czesc mentioned more work, so you figure you'll run into him at a bar again "
 "soon."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。"
-"チェシチ大尉はもっと仕事があるといっていたので、あなたは大尉とはバーですぐに"
-"会うことになると考えた。"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。チェシチ大尉はもっと"
+"仕事があるといっていたので、あなたは大尉とはバーですぐに会うことになると考え"
+"た。"
 
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Frontier Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-#. <chance>75</chance>
-#. <done>Za'lek Long Distance Recruitment</done>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. Fourth diplomatic mission to Frontier space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:32
-msgid ""
-"Deliver a shipping diplomat for the Empire to {pnt} in "
-"{sys} system"
-msgstr ""
-"帝国のために輸送局外交官を{sys}星系の{pnt}に連れていけ。"
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:47
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:46
 msgid ""
 "\"We have to stop running into each other like this.\" Lieutenant Czesc "
 "laughs at his joke. \"Just kidding, you know I owe you for helping set up "
@@ -45270,63 +45295,69 @@ msgstr ""
 "です。いままでのくり返しなのはわかりますね。手助けの用意はありますか？｣"
 
 #. Flavour text and mini-briefing
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:59
 msgid "Frontier Alliance Long Distance Recruitment"
 msgstr "辺境同盟への長距離輸送の勧誘"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:51
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:50
+#, fuzzy
+#| msgid ""
+#| "\"I applaud your commitment,\" Lieutenant Czesc says, \"and I know these "
+#| "aren't the most exciting missions, but they're most useful. The frontier "
+#| "can be a bit dangerous, so make sure you're prepared. You need to drop "
+#| "the bureaucrat off at {pnt} in {sys} system. After this, there should "
+#| "only be one more faction to bring into the fold. I expect to see you "
+#| "again soon.\""
 msgid ""
 "\"I applaud your commitment,\" Lieutenant Czesc says, \"and I know these "
 "aren't the most exciting missions, but they're most useful. The frontier can "
 "be a bit dangerous, so make sure you're prepared. You need to drop the "
-"bureaucrat off at {pnt} in {sys} system. After "
-"this, there should only be one more faction to bring into the fold. I expect "
-"to see you again soon.\""
+"bureaucrat off at {pnt} in the {sys} system. After this, there should only "
+"be one more faction to bring into the fold. I expect to see you again soon.\""
 msgstr ""
 "｢あなたの献身を賞賛していますよ｣ と、チェシチ大尉はいった。｢それにこれがあま"
 "り刺激的な任務ではないのもわかっています。しかしとくべつ役に立っているんで"
 "す。辺境はちょっと危険なので、かならず準備をしておいてください。官僚はガリガ"
-"ンズ・ライト星系の{pnt}に降ろさなければなりません。このあとは、もうひと"
-"つの党派しか仲間に引きこむのはありません。またすぐあなたと会えると期待してい"
-"ます｣"
+"ンズ・ライト星系の{pnt}に降ろさなければなりません。このあとは、もうひとつの党"
+"派しか仲間に引きこむのはありません。またすぐあなたと会えると期待しています｣"
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:56
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:55
 msgid "Frontier Long Distance Recruitment"
 msgstr "辺境への長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
 msgid ""
-"You deliver the diplomat to {pnt}, and she hands you a credit "
-"chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance "
-"again for one more mission. This last bureaucrat refused to stay in her "
-"quarters, preferring to hang out on the bridge and give you the ins and outs "
-"of Empire bureaucracy. Only your loyalty to the Empire stopped you from "
-"sending her out into the vacuum of space."
-msgstr ""
-"あなたはあの外交官を{pnt}に連れていった。それから外交官はあなたにクレ"
-"ジットチップを手渡した。ありがたいことに、チェシチ大尉はまたあなたの助力が必"
-"要なのは、もうひとつの任務だけだといっていた。この今回の官僚は自分の船室にと"
-"どまることを拒絶したのだ。船橋に出入りするのを好み、帝国の官僚式手つづきの一"
-"部始終をあなたにもたらした。帝国への義理だけが、この官僚を真空の宇宙に放りだ"
-"すことを止めたのだった。"
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:75
-msgid ""
-"You delivered a shipping bureaucrat to {pnt} for the Empire. "
+"You deliver the diplomat to {pnt}, and she hands you a credit chip. "
 "Thankfully, Lieutenant Czesc mentioned only needing your assistance again "
 "for one more mission. This last bureaucrat refused to stay in her quarters, "
 "preferring to hang out on the bridge and give you the ins and outs of Empire "
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。ありがたいこと"
-"に、チェシチ大尉はまたあなたの助力が必要なのは、もうひとつの任務だけだといっ"
-"ていた。この今回の官僚は自分の船室にとどまることを拒絶したのだ。船橋に出入り"
-"するのを好み、帝国の官僚式手つづきの一部始終をあなたにもたらした。帝国への義"
-"理だけが、この官僚を真空の宇宙に放りだすことを止めたのだった。"
+"あなたはあの外交官を{pnt}に連れていった。それから外交官はあなたにクレジット"
+"チップを手渡した。ありがたいことに、チェシチ大尉はまたあなたの助力が必要なの"
+"は、もうひとつの任務だけだといっていた。この今回の官僚は自分の船室にとどまる"
+"ことを拒絶したのだ。船橋に出入りするのを好み、帝国の官僚式手つづきの一部始終"
+"をあなたにもたらした。帝国への義理だけが、この官僚を真空の宇宙に放りだすこと"
+"を止めたのだった。"
+
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:75
+msgid ""
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Thankfully, "
+"Lieutenant Czesc mentioned only needing your assistance again for one more "
+"mission. This last bureaucrat refused to stay in her quarters, preferring to "
+"hang out on the bridge and give you the ins and outs of Empire bureaucracy. "
+"Only your loyalty to the Empire stopped you from sending her out into the "
+"vacuum of space."
+msgstr ""
+"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。ありがたいことに、"
+"チェシチ大尉はまたあなたの助力が必要なのは、もうひとつの任務だけだといってい"
+"た。この今回の官僚は自分の船室にとどまることを拒絶したのだ。船橋に出入りする"
+"のを好み、帝国の官僚式手つづきの一部始終をあなたにもたらした。帝国への義理だ"
+"けが、この官僚を真空の宇宙に放りだすことを止めたのだった。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:46
 msgid ""
@@ -45343,7 +45374,7 @@ msgstr ""
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:55
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:59
 msgid "Sirius Long Distance Recruitment"
 msgstr "シリウスへの長距離輸送の勧誘"
 
@@ -45356,52 +45387,50 @@ msgid ""
 "missions.\""
 msgstr ""
 "｢もうどうやって進めるかわかってますね｣ と、チェシチ大尉がいう。｢官僚をエス"
-"カー星系の{pnt}で降ろしてください。シリウス宙域はかなり遠いです。だからす"
-"べてのことに用意をしておいてください。そのあとで、わたしともういちど会ってく"
-"ださい。この任務であなたが作ってくれたすべての書類仕事を終わらせてしまうつも"
-"りです｣"
+"カー星系の{pnt}で降ろしてください。シリウス宙域はかなり遠いです。だからすべて"
+"のことに用意をしておいてください。そのあとで、わたしともういちど会ってくださ"
+"い。この任務であなたが作ってくれたすべての書類仕事を終わらせてしまうつもりで"
+"す｣"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:73
 msgid ""
 "You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
-"あなたはあの外交官を{pnt}に降ろした。それから外交官はあなたにクレジット"
-"チップを手渡した。チェシチ大尉は書類仕事をするために、帝国のバーで自分をさが"
-"せといっていた。官僚制の極致である。"
+"あなたはあの外交官を{pnt}に降ろした。それから外交官はあなたにクレジットチップ"
+"を手渡した。チェシチ大尉は書類仕事をするために、帝国のバーで自分をさがせと"
+"いっていた。官僚制の極致である。"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:74
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:75
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。チェシチ大尉は書"
-"類仕事をするために、帝国のバーで自分をさがせといっていた。官僚制の極致であ"
-"る。"
+"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。チェシチ大尉は書類仕"
+"事をするために、帝国のバーで自分をさがせといっていた。官僚制の極致である。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:49
 msgid ""
 "Lieutenant Czesc slaps you on the back as you take a seat next to him at the "
 "bar. \"We've done it! We have set up Empire Armada Shipping outposts across "
 "quite a bit of the galaxy. I just have one more favor to ask. I need "
-"transport back to {pnt} in the {sys} system. Once there I can "
-"authorize you to help out with the long-distance shipping missions. Can I "
-"count on you?\""
+"transport back to {pnt} in the {sys} system. Once there I can authorize you "
+"to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
 "あなたがバーにいたチェシチ大尉の隣の席をとると、大尉はあなたの背中をたたい"
 "た。｢われわれはやりました！　帝国艦隊輸送拠点を銀河じゅうにたくさん立ちあげた"
 "んです。わたしにはもうひとつだけご好意をお願いしたいことがあります。わたしは"
-"{sys}星系の{pnt}へ戻る便を必要としています。そこへ着けば、長距離"
-"輸送任務への協力をあなたに許可できます。あなたを頼っていいですか？｣"
+"{sys}星系の{pnt}へ戻る便を必要としています。そこへ着けば、長距離輸送任務への"
+"協力をあなたに許可できます。あなたを頼っていいですか？｣"
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:53
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:58
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:62
 msgid "Empire Long Distance Recruitment"
 msgstr "帝国への長距離輸送の勧誘"
 
@@ -45419,11 +45448,10 @@ msgstr ""
 "んよ！｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:60
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
 msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
 msgstr "チェシチ大尉を{sys}星系の{pnt}に連れていけ。"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:76
 msgid ""
 "Lieutenant Czesc exits your ship and takes a deep breath of air. \"I love "
 "the smell of bureaucracy in the morning.\" He shakes your hand. \"Thanks for "
@@ -45447,7 +45475,7 @@ msgstr ""
 "へのお礼がじゅうぶんにはできません！　帝国がそのような献身をすぐに忘れること"
 "はありませんから｣"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:77
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:78
 msgid ""
 "You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do "
 "long-distance cargo missions for the Empire. They pay better than regular "
@@ -45456,11 +45484,11 @@ msgid ""
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
-"あなたは書類仕事のためにチェシチ大尉を{pnt}に輸送した。あなたはもう帝国のた"
-"めの長距離貨物任務をうけることができる。その任務は通常の輸送任務より支払いが"
-"よいが、もっと長い距離を旅することや、ほかの党派が支配する領域へ旅する必要が"
-"あることもしばしばだ。おそらく、帝国宙域の端のほうがその任務を見る機会が多く"
-"なる。貨物はそこで、ほかの党派へ出ていく用意がされるからだ。"
+"あなたは書類仕事のためにチェシチ大尉を{pnt}に輸送した。あなたはもう帝国のため"
+"の長距離貨物任務をうけることができる。その任務は通常の輸送任務より支払いがよ"
+"いが、もっと長い距離を旅することや、ほかの党派が支配する領域へ旅する必要があ"
+"ることもしばしばだ。おそらく、帝国宙域の端のほうがその任務を見る機会が多くな"
+"る。貨物はそこで、ほかの党派へ出ていく用意がされるからだ。"
 
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -68461,7 +68489,7 @@ msgid ""
 "she begins. \"You have helped me on several occasions in regard with my "
 "personal problem. I've given it some thought since then, and I've come to "
 "the conclusion that I want to get to the bottom of this. To do so, I will "
-"need your help yet again. I'm currently on assignment on {pnt} in the {pnt} "
+"need your help yet again. I'm currently on assignment on {pnt} in the {sys} "
 "system. Please meet me there at the earliest opportunity.\"\n"
 "    The message ends. You save it for later reference. Maybe you should "
 "swing by {pnt} to see what Joanne wants."
@@ -74815,6 +74843,7 @@ msgstr "シールド試作機の資金調達"
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
 msgstr "メンシング博士を助けて、シールド試作機作成のための資金を調達せよ。"
 
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:61
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:73
 msgid "Return to {pnt} in the {sys} system."
 msgstr "{sys}星系の{pnt}に戻れ。"
@@ -92975,6 +93004,9 @@ msgstr "Invalid WEAPON_LAYER specified"
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
+
+#~ msgid "Deliver a shipping diplomat for the Empire to {pnt} in {sys} system"
+#~ msgstr "帝国のために輸送局外交官を{sys}星系の{pnt}に連れていけ。"
 
 #~ msgid ""
 #~ "Deliver a shipping diplomat for the Empire to Gerhart Station in the "
