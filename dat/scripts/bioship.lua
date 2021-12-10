@@ -4,13 +4,15 @@ local utility = require "pilotname.utility"
 local fmt = require "format"
 local bioskills = require "bioship.skills"
 
-local gene = {}
+local bioship = {}
 
 local stage, skills, intrinsics, skillpoints, skilltxt
-function gene.window ()
+function bioship.window ()
    local pp = player.pilot()
    local ps = pp:ship()
-   if ps ~= ship.get("Soromid Brigand") then
+
+   -- Only bioships are good for now
+   if not ps:tags().bioship then
       return
    end
 
@@ -464,4 +466,4 @@ function gene.window ()
    luatk.run()
 end
 
-return gene
+return bioship
