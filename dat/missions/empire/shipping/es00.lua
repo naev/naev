@@ -56,7 +56,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   mem.misn_marker = misn.markerAdd( mem.destsys, "low" )
+   mem.misn_marker = misn.markerAdd( mem.dest, "low" )
 
    -- Mission details
    mem.misn_stage = 0
@@ -94,7 +94,7 @@ function land ()
     From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
          tk.msg(_("Prisoner Exchange"), _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
     You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]) )
-         misn.markerMove( mem.misn_marker, mem.retsys )
+         misn.markerMove( mem.misn_marker, mem.ret )
          misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}) )
          misn.osdCreate(_("Prisoner Exchange"), {
             fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}),

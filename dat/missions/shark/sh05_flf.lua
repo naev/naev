@@ -91,7 +91,7 @@ function hail( p )
       tk.msg(_("Peaceful Resolution"), _([[The FLF ship peacefully responds to you. You explain the details of what is going on and transmit the proposal, after which you both go your separate ways.]]))
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
    end
 end
 
@@ -101,6 +101,6 @@ function board( p )
       tk.msg(_("Some Resistance Encountered"), _([[The FLF officers are clearly ready for battle, but after subduing them, you assure them that you're just here to talk. Eventually, you are able to give them a copy of the proposal and leave peacefully, for lack of a better word.]]))
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
    end
 end

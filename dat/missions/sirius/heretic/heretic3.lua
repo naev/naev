@@ -57,7 +57,7 @@ function accept()
 
       misn.accept()
       misn.setDesc(fmt.f(_([[A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin in destroying this fleet.]]), {sys=mem.homesys}))
-      misn.markerAdd(mem.homesys, "high")
+      misn.markerAdd(mem.homeasset, "high")
       misn.osdCreate(_("The Assault"), {
          fmt.f(_("Defend {pnt} against the Sirius assault"), {pnt=mem.homeasset}),
          fmt.f(_("Return to {pnt}"), {pnt=mem.homeasset}),

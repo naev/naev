@@ -62,7 +62,7 @@ function accept ()
    misn.accept()
 
    mem.misn_stage = 0
-   mem.misn_marker = misn.markerAdd( misn_target_sys, "low" )
+   mem.misn_marker = misn.markerAdd( misn_target, "low" )
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
@@ -171,7 +171,7 @@ function endCutscene()
     removeSwarm(swarm3)
     tk.msg(_("Collective Espionage"), _([[That should be enough. Time to report your findings.]]))
     mem.misn_stage = 1
-    misn.markerMove( mem.misn_marker, misn_base_sys )
+    misn.markerMove( mem.misn_marker, misn_base )
     player.pilot():setHide(false)
     player.cinematics(false)
     misn.osdActive(2)

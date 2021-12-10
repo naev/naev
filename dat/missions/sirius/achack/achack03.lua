@@ -173,7 +173,7 @@ function board()
    hook.rm(mem.enterhook)
    hook.rm(mem.datehook)
    misn.osdActive(3)
-   misn.markerAdd(mem.destsys, "low")
+   misn.markerAdd(mem.destplanet, "low")
    mem.harjatalked = true
 end
 

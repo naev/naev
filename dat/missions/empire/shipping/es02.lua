@@ -229,7 +229,7 @@ function board ()
 
    -- Update mission details
    mem.misn_stage = 2
-   misn.markerMove( mem.misn_marker, mem.retsys )
+   misn.markerMove( mem.misn_marker, mem.ret )
    misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=mem.ret, sys=mem.retsys} ))
    misn.osdCreate(_("Empire VIP Rescue"), {
       fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=mem.ret, sys=mem.retsys}),

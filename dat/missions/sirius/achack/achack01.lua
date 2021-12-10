@@ -54,7 +54,7 @@ function accept()
     })
     misn.setDesc(_([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]]))
     misn.setReward(misn_reward)
-    misn.markerAdd(destsys, "high")
+    misn.markerAdd(destplanet, "high")
 
     hook.land("land")
     hook.enter("enter")

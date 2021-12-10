@@ -59,7 +59,7 @@ function accept()
    tk.msg(_("The Egress"),_([["Thank you! I knew you would do it!" Draga then proceeds to file as many people as can possibly fit onto your ship, enough to fill your ship's cargo hold to the brim. The number of Nasin members shocks you as they are packed into your ship.
     As the Sirii approach ever closer, Draga yells at you to get the ship going and take off. You begin taking off just in time to see Draga under fire by a Sirian soldier who has infiltrated the base. The last thing you see as you take off is him lying on the ground, lifeless.]]))
    --convo over. time to finish setting the mission stuff.
-   misn.markerAdd(targetsys,"high")
+   misn.markerAdd(targetasset, "high")
    local free_cargo = player.pilot():cargoFree()
    mem.people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(_("The Egress"))

@@ -56,7 +56,7 @@ function accept ()
       misn.setTitle( _("Coming of Age") )
       misn.setDesc( fmt.f( _("Chelsea needs you to take her to {pnt} so she can buy her first ship and kick off her piloting career."), {pnt=mem.misplanet} ) )
       misn.setReward( fmt.credits( mem.credits ) )
-      mem.marker = misn.markerAdd( mem.missys, "low" )
+      mem.marker = misn.markerAdd( mem.misplanet, "low" )
 
       misn.osdCreate( _("Coming of Age"), {
          fmt.f( _("Go to the {sys} system and land on the planet {pnt}."), {sys=mem.missys, pnt=mem.misplanet} ),

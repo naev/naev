@@ -57,7 +57,7 @@ function create ()
       misn.accept()
 
       mem.misn_stage = 0
-      mem.misn_marker = misn.markerAdd( misn_target_sys, "low" )
+      mem.misn_marker = misn.markerAdd( misn_target, "low" )
 
       -- Mission details
       misn.setTitle(_("Collective Extraction"))

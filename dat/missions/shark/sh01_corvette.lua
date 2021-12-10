@@ -156,7 +156,7 @@ function disabled(pilot, attacker)
       mem.stage = 2
       misn.osdActive(2)
       misn.markerRm(mem.marker)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
       pilot.toggleSpawn( true )
    end
    sharkboy:control()

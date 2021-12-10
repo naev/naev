@@ -57,7 +57,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   mem.misn_marker       = misn.markerAdd( mem.pickupsys, "low" )
+   mem.misn_marker       = misn.markerAdd( mem.pickup, "low" )
 
    -- Mission details
    mem.misn_stage = 0
@@ -102,7 +102,7 @@ function land ()
       mem.misn_stage = 1
       mem.jumped = 0
       misn.setDesc( fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=mem.dest, sys=mem.destsys}) )
-      misn.markerMove( mem.misn_marker, mem.destsys )
+      misn.markerMove( mem.misn_marker, mem.dest )
       misn.osdCreate(_("Empire Shipping Delivery"), {
          fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=mem.dest, sys=mem.destsys}),
       })
@@ -115,7 +115,7 @@ function land ()
          -- Update mission
          mem.misn_stage = 2
          misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=mem.ret, sys=mem.retsys}) )
-         misn.markerMove( mem.misn_marker, mem.retsys )
+         misn.markerMove( mem.misn_marker, mem.ret )
          misn.osdCreate(_("Empire Shipping Delivery"), {fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=mem.ret, sys=mem.retsys})})
 
          -- Some text

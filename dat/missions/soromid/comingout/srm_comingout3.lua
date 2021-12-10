@@ -67,7 +67,7 @@ function accept ()
       misn.setTitle( mem.misn_title )
       misn.setDesc( fmt.f( mem.misn_desc, {pnt=mem.misplanet} ) )
       misn.setReward( fmt.credits( mem.credits ) )
-      mem.marker = misn.markerAdd( mem.missys, "low" )
+      mem.marker = misn.markerAdd( mem.misplanet, "low" )
 
       misn.osdCreate( mem.misn_title, {
          fmt.f(_("Escort Chelsea to {pnt} in the {sys} system."), {pnt=mem.misplanet, sys=mem.missys} ),

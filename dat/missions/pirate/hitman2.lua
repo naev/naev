@@ -101,7 +101,7 @@ function attack_finished()
    mem.misn_done = true
    player.msg( _("MISSION SUCCESS! Return for payment.") )
    misn.markerRm( mem.misn_marker )
-   mem.misn_marker = misn.markerAdd( mem.misn_base_sys, "low" )
+   mem.misn_marker = misn.markerAdd( mem.misn_base, "low" )
    misn.osdActive(2)
    hook.land("landed")
 end

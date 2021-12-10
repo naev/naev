@@ -107,7 +107,7 @@ function accept()
       fmt.f(_("Intercept the convoy in {sys}. Your Vendetta escort must survive"), {sys=intsys}),
       fmt.f(_("Report back on {pnt} in {sys}"), {pnt=reppla, sys=repsys}),
    } )
-   mem.mark = misn.markerAdd(hamsys, "low")
+   mem.mark = misn.markerAdd(hampla, "low")
 end
 
 function landBar()
@@ -454,7 +454,7 @@ function targetBoarded()
    mem.stage = 2
    misn.osdActive(3)
    misn.markerRm(mem.mark)
-   mem.mark = misn.markerAdd(repsys, "low")
+   mem.mark = misn.markerAdd(reppla, "low")
 
    -- Reset the zlk standing
    local stand1 = fzlk:playerStanding()

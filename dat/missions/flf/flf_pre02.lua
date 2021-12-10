@@ -193,7 +193,7 @@ function hail ()
       misn.osdActive( 1 )
       misn.osdCreate( _("Dvaered Patrol"), mem.osd_desc )
       misn.markerRm( mem.marker )
-      mem.marker = misn.markerAdd( mem.DVsys, "high" )
+      mem.marker = misn.markerAdd( mem.DVplanet, "high" )
 
       mem.spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )

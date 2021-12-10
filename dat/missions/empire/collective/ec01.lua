@@ -112,7 +112,7 @@ function scantimer()
 
         if mem.sysdone1 and mem.sysdone2 then
             misn.osdActive(2)
-            misn.markerAdd(misn_base_sys, "low")
+            misn.markerAdd(misn_base, "low")
         end
 
         return

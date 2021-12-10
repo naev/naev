@@ -239,7 +239,7 @@ function timer ()
       mem.job_done = true
       player.msg( fmt.f(_("All attractions visited. Return to {pnt} and collect your pay."), {pnt=mem.startingplanet} ) )
       misn.osdActive( 3 )
-      misn.markerMove( mem.marker, mem.startingsystem )
+      misn.markerMove( mem.marker, mem.startingplanet )
    end
 
    if not mem.job_done then

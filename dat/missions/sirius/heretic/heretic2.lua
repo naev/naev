@@ -59,7 +59,7 @@ function accept()
     "Oh, and one last thing: don't even think of bailing out on us at the last second. If you jump out or land before your mission is completed, consider yourself fired."]]) )
 
       misn.setDesc(fmt.f(_("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered {sys}."), {sys=mem.homesys}))
-      misn.markerAdd(mem.homesys, "high")
+      misn.markerAdd(mem.homeasset, "high")
       misn.osdCreate(_("The Patrol"), {
          _("Destroy the Sirius patrol"),
          fmt.f(_("Land on {pnt}"), {pnt=mem.homeasset} ),

@@ -36,7 +36,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local dronequota = 5 -- The amount of drones the player must whack to win
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base = planet.get("Omega Station")
 local misn_target_sys = system.get("C-59")
 
 -- luacheck: globals death jumpin land (Hook functions passed by name)
@@ -115,7 +115,7 @@ function death(pilot)
         if mem.droneleft == 0 then
             mem.misn_stage = 1
             misn.osdActive(3)
-            misn.markerMove(mem.misn_marker, misn_base_sys)
+            misn.markerMove(mem.misn_marker, misn_base)
         end
     end
 end

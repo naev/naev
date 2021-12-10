@@ -65,7 +65,7 @@ function accept()
       })
       misn.osdActive(1)
 
-      mem.marker = misn.markerAdd(missys, "low")
+      mem.marker = misn.markerAdd(mispla, "low")
 
       local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
       mem.smith = misn.cargoAdd( c, 0 )
@@ -86,7 +86,7 @@ function land()
       mem.stage = 1
       misn.osdActive(2)
       misn.markerRm(mem.marker)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
    end
 
    --Job is done
