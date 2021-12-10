@@ -623,13 +623,15 @@ function vn.StateSay.new( who, what )
    s._keypressed = vn.StateSay._finish
    s._type = "Say"
    s.who = who
-   s.what = what
+   s._what = what
    return s
 end
 function vn.StateSay:_init()
    -- Get the main text
-   if type(self.what)=="function" then
-      self.what = self.what()
+   if type(self._what)=="function" then
+      self.what = self._what()
+   else
+      self.what = self._what
    end
    self._textbuf = self.what
    -- Parse for line breaks and insert newlines
