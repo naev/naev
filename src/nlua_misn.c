@@ -623,18 +623,8 @@ static int misn_accept( lua_State *L )
  */
 static int misn_finish( lua_State *L )
 {
-   int b;
-   Mission *cur_mission;
-
-   if (lua_isboolean(L,1))
-      b = lua_toboolean(L,1);
-   else {
-      lua_pushstring(L, NLUA_DONE);
-      lua_error(L); /* THERE IS NO RETURN */
-      return 0;
-   }
-
-   cur_mission = misn_getFromLua(L);
+   int b = lua_toboolean(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
 
    lua_pushboolean( L, 1 );
    nlua_setenv(cur_mission->env, "__misn_delete");
