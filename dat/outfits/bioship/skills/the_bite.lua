@@ -88,6 +88,7 @@ function update( p, po, dt )
             -- Hit the enemy! TODO damage based on mass
             t:damage( 500, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
+            camera.shake( 0.5 )
             return turnoff( p, po )
          end
       end
