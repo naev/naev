@@ -53594,10 +53594,6 @@ msgid ""
 "participate in the babbling, but look at you expectantly."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:62
-msgid "\"Sorry, we're busy right now.\""
-msgstr ""
-
 #: dat/missions/neutral/diy-nerds.lua:66
 msgid "A group of excited nerds"
 msgstr ""
