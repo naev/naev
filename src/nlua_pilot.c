@@ -4929,11 +4929,11 @@ static int pilotL_knockback( lua_State *L )
       p2 = NULL;
    }
 
-   double norm    = MOD(x1->x-x2->x, x1->y-x2->y);
-   double a1      = (2.*m2) / (m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
+   double a1      = -(2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
    vect_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
-      double a2   = (2.*m1) / (m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      double a2   = -(2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
       vect_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
    }
 
