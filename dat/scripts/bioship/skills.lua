@@ -279,6 +279,58 @@ skills.set.misc = {
    },
 }
 
+-- Brigand intrinsics
+skills.ship["Soromid Brigand"] = {
+   {
+      name = _("Innate"),
+      stage = 0,
+      outfit = {
+         "Perleve Cerebrum I",
+         "Perlevis Cortex I",
+         "Perlevis Gene Drive I",
+         "Pincer Organ I",
+         "Pincer Organ I",
+      },
+      slot = {
+         "genedrive",
+         "shell",
+         "brain",
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Shell Growth I"),
+      stage = 1,
+      outfit = "Perlevis Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      stage = 2,
+      outfit = "Perlevis Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      stage = 3,
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Brain Growth I"),
+      stage = 4,
+      outfit = "Perleve Cerebrum II",
+      slot = "brain",
+   },
+}
+
 -- Arx Intrinsics
 skills.ship["Soromid Arx"] = {
    {
