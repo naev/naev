@@ -4898,12 +4898,13 @@ static int pilotL_damage( lua_State *L )
 }
 
 /**
- * @brief Knocks back a pilot.
+ * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
  *
  *    @luatparam Pilot p Pilot being knockeb back.
  *    @luatparam number m Mass of object knocking back pilot.
  *    @luatparam Vec2 v Velocity of object knocking back pilot.
  *    @luatparam[opt=p:pos()] Vec2 p Position of the object knocking back the pilot.
+ *    @luatparam[opt=1.] number e Coefficient of restitution. Use 1. for elastic collisions, and 0. for inelastic collisions.
  * @luafunc knockback
  */
 static int pilotL_knockback( lua_State *L )
@@ -4916,25 +4917,48 @@ static int pilotL_knockback( lua_State *L )
    double m2;
    Vector2d *v2;
    Vector2d *x2;
+   double e;
    if (lua_ispilot(L,2)) {
       p2 = luaL_validpilot(L,2);
       m2 = p2->solid->mass;
       v2 = &p2->solid->vel;
       x2 = &p2->solid->pos;
+      e  = luaL_optnumber(L,3,1.);
    }
    else {
       m2 = luaL_checknumber(L,2);
       v2 = luaL_checkvector(L,3);
       x2 = luaL_optvector(L,4,x1);
       p2 = NULL;
+      e  = luaL_optnumber(L,5,1.);
    }
 
+   /* Pure inlastic case. */
+   if (e==0.) {
+      double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
+      double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
+      vect_cset( &p1->solid->vel, vx, vy );
+      if (p1 != NULL)
+         vect_cset( &p2->solid->vel, vx, vy );
+      return 0.;
+   }
+
+   /* Pure elastic. */
    double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
-   double a1      = -(2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   double a1      = -e * (2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
    vect_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
-      double a2   = -(2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      double a2   = -e * (2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
       vect_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
+   }
+
+   /* Modulate. TODO this is probably totally wrong and needs fixing to be physicaly correct. */
+   if (e != 1.) {
+      double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
+      double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
+      vect_cset( &p1->solid->vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
+      if (p2 != NULL)
+         vect_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
    }
 
    return 0;
