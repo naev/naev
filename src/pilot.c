@@ -3316,6 +3316,9 @@ void pilots_update( double dt )
    for (int i=array_size(pilot_stack)-1; i>=0; i--) {
       Pilot *p = pilot_stack[i];
 
+      /* Clear target. */
+      p->ptarget = NULL;
+
       /* Destroy pilot and go on. */
       if (pilot_isFlag(p, PILOT_DELETE))
          pilot_destroy(p);
@@ -3324,9 +3327,6 @@ void pilots_update( double dt )
    /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
-
-      /* Clear target. */
-      p->ptarget = NULL;
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(p, PILOT_HIDE))

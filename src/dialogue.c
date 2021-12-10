@@ -478,7 +478,9 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          font, NULL, msg );
    /* input */
    window_addInput( input_dialogue.input_wid, 20, 20+30+10, w, 30,"inpInput", max, 1, NULL );
-   window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
+   /* Illegal characters on Linux FS: : */
+   /* Illegal characters on Windows FS: < > : " / \ | ? * */
+   window_setInputFilter( input_dialogue.input_wid, "inpInput", "/:<>\"\\|?*" ); /* Remove illegal stuff. */
    /* button */
    window_addButton( input_dialogue.input_wid, -20, 20, 80, 30,
          "btnClose", _("Done"), dialogue_inputClose );

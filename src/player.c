@@ -396,17 +396,16 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       int trade, int noname )
 {
    char *ship_name, *old_name;
-   int w;
    Pilot *new_ship;
 
    /* temporary values while player doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
-   player_ship    = ship;
+   player_ship  = ship;
    if (!noname)
-      ship_name      = dialogue_input( _("Ship Name"), 1, 60,
+      ship_name = dialogue_input( _("Ship Name"), 1, 60,
             _("Please name your new ship:") );
    else
-      ship_name      = NULL;
+      ship_name = NULL;
 
    /* Dialogue cancelled. */
    if (ship_name == NULL) {
@@ -450,7 +449,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
 
    /* Update ship list if landed. */
    if (landed) {
-      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
 
