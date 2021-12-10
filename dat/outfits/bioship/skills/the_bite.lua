@@ -27,6 +27,7 @@ local function turnon( p, po )
    end
    po:state("on")
    po:progress(1)
+   mem.timer = duration
    mem.active = true
 
    -- Visual effect
