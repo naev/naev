@@ -80,7 +80,7 @@ function accept ()
       misn.setTitle( _("Coming Out") )
       misn.setDesc( fmt.f(_("Your new friend needs you to take them to their parents in {sys}."), {sys=missys} ) )
       misn.setReward( _("The satisfaction of helping out a new friend") )
-      mem.marker = misn.markerAdd( missys, "low" )
+      mem.marker = misn.markerAdd( misplanet, "low" )
 
       misn.osdCreate( _("Coming Out"), {
          fmt.f(_("Go to the {sys} system and land on the planet {pnt}."), {sys=missys, pnt=misplanet} ),

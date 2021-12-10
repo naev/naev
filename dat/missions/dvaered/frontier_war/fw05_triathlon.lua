@@ -84,7 +84,7 @@ function create()
    misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Fly to {pnt}"), {pnt=destpla})} )
    misn.setDesc(_("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."))
    misn.setReward(_("Say goodbye to Lieutenant Strafer"))
-   misn.markerAdd(destsys, "low")
+   misn.markerAdd(destpla, "low")
 
    mem.stage = 0
    hook.land("land")

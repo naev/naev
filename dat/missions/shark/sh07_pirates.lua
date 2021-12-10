@@ -117,7 +117,7 @@ end
 
 function land ()
    --Job is done
-   if mem.stage == 1 and planet.cur() == planet.get("Darkshed") then
+   if mem.stage == 1 and planet.cur() == paypla then
       tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
     He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
@@ -273,6 +273,6 @@ function generic_dead()
       tk.msg(_("Mission accomplished"), fmt.f(_("You have killed the four pirates. Now to return to {sys} and collect your payment..."), {sys=paysys}))
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
    end
 end

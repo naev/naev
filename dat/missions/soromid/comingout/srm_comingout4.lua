@@ -57,7 +57,7 @@ function accept ()
       misn.setTitle( _("Visiting Family") )
       misn.setDesc( fmt.f( _("Chelsea wants to revisit their family in {pnt}."), {pnt=misplanet} ) )
       misn.setReward( _("None") )
-      mem.marker = misn.markerAdd( missys, "low" )
+      mem.marker = misn.markerAdd( misplanet, "low" )
 
       misn.osdCreate( _("Visiting Family"), {
          fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=misplanet, sys=missys} ),
@@ -103,7 +103,7 @@ function land ()
       mem.stage = 2
       misn.osdActive( 2 )
       if mem.marker ~= nil then misn.markerRm( mem.marker ) end
-      mem.marker = misn.markerAdd( missys2, "low" )
+      mem.marker = misn.markerAdd( misplanet2, "low" )
 
       player.takeoff()
    elseif mem.stage >= 2 and planet.cur() == misplanet2 then

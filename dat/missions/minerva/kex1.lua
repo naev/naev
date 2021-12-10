@@ -334,7 +334,7 @@ function mainguy_board ()
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))
-   misn.markerMove( mem.misn_marker, system.get("Limbo") )
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
    mem.misn_state = 2
    misn.osdActive(2)
    player.unboard()
@@ -347,7 +347,7 @@ end
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
    minerva.log.kex(_("You destroyed a transport destined for the Minerva CEO, but didn't find anything in the debris."))
-   misn.markerMove( mem.misn_marker, system.get("Limbo") )
+   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
    mem.misn_state = 2
    misn.osdActive(2)
 end

@@ -63,7 +63,7 @@ function create()
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")
-   mem.mark = misn.markerAdd( startsys, "low" )
+   mem.mark = misn.markerAdd( startplanet, "low" )
 end
 
 -- Land hook.
@@ -153,7 +153,7 @@ function talkHarja()
 
       misn.osdActive(3)
       misn.npcRm(mem.harja_npc)
-      misn.markerMove(mem.marker, startsys)
+      misn.markerMove(mem.marker, startplanet)
 
       hook.enter("enter")
       hook.jumpout("jumpout")

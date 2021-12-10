@@ -75,7 +75,7 @@ function accept()
       })
       misn.osdActive(1)
 
-      mem.markeri = misn.markerAdd(missys, "low")
+      mem.markeri = misn.markerAdd(mispla, "low")
 
       mem.jumpouthook = hook.jumpout("jumpout")
       mem.landhook = hook.land("land")
@@ -167,6 +167,6 @@ end
 function pirate_dead()  --wou win
    mem.stage = 4
    misn.markerRm(mem.marker1)
-   mem.marker2 = misn.markerAdd(missys, "low")
+   mem.marker2 = misn.markerAdd(mispla, "low")
    misn.osdActive(3)
 end

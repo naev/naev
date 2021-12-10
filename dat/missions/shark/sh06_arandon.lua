@@ -138,7 +138,7 @@ function board()
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paysys, "low")
+   mem.marker2 = misn.markerAdd(paypla, "low")
 end
 
 function dead()  --Actually, I don't know how it could happened...

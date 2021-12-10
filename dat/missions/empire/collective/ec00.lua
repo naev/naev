@@ -129,7 +129,7 @@ function spotdrone()
    player.msg(_("Drone spotted!"))
    misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys}) )
    mem.misn_stage = 1
-   misn.markerMove( mem.misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base )
 end
 
 function land()

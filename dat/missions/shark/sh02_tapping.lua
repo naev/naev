@@ -75,7 +75,7 @@ function accept()
       })
       misn.osdActive(1)
 
-      mem.marker = misn.markerAdd(mem.missys, "low")
+      mem.marker = misn.markerAdd(mem.mispla, "low")
 
       mem.landhook = hook.land("land")
       mem.enterhook = hook.enter("enter")
@@ -124,7 +124,7 @@ function beginrun()
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paysys, "low")
+   mem.marker2 = misn.markerAdd(paypla, "low")
 
    --remove the spy
    misn.npcRm(mem.agent)

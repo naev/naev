@@ -55,7 +55,7 @@ end
 
 
 function accept ()
-   misn.markerAdd( mem.sys, "low" )
+   misn.markerAdd( mem.dest, "low" )
 
    -- Intro text
    if not tk.yesno( _("Spaceport Bar"), _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.

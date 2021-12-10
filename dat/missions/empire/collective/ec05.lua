@@ -175,7 +175,7 @@ function enter ( from_sys )
       player.msg( _("Mission Failure: Return to base.") )
       misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
             {pnt=misn_base, sys=misn_base_sys} ))
-      misn.markerMove( mem.misn_marker, misn_base_sys )
+      misn.markerMove( mem.misn_marker, misn_base )
    end
 end
 
@@ -350,7 +350,7 @@ function trinity_kill () -- Got killed
    misn.osdActive(3)
    mem.trinity_alive = false
    misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
-   misn.markerMove( mem.misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base )
 end
 
 
@@ -360,5 +360,5 @@ function trinity_jump () -- Got away
    misn.osdActive(3)
    mem.trinity_alive = true
    misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
-   misn.markerMove( mem.misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base )
 end

@@ -83,7 +83,7 @@ function accept()
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
          fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
       })
-      mem.misn_marker = misn.markerAdd( sys, "low" )
+      mem.misn_marker = misn.markerAdd( pnt, "low" )
       mem.shadowrun = 2
 
       mem.dateres = 500

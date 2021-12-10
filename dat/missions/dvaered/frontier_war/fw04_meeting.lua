@@ -115,7 +115,7 @@ function accept()
    misn.osdCreate( _("The Meeting"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
    misn.setDesc(_("You are part of the space security service for an extraordinary meeting of the high council of Warlords, where the invasion plan of the frontier will be discussed."))
    misn.setReward(_("The greatness of House Dvaered."))
-   misn.markerAdd(destsys, "low")
+   misn.markerAdd(destpla, "low")
 
    mem.stage = 0
    hook.land("land")
