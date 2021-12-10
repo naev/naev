@@ -1385,6 +1385,7 @@ dat/outfits/bioship/skills/hard_shell.xml
 dat/outfits/bioship/skills/regeneration_i.xml
 dat/outfits/bioship/skills/regeneration_ii.xml
 dat/outfits/bioship/skills/silence.xml
+dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/wanderer.xml
 dat/outfits/core_engine/dummy_engine.xml
 dat/outfits/core_engine/large/beat_up_large_engine.xml
@@ -2616,6 +2617,7 @@ dat/missions/zalek/zlk_cargorun.lua
 dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
 dat/outfits/accessory/black_cat_doll.lua
+dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/fake_transponder.lua

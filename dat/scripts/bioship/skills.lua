@@ -27,6 +27,7 @@ skills.set.bite = {
    ["bite3"] = {
       name = _("The Bite"),
       tier = 3,
+      outfit = "The Bite",
       slot = "thebite",
       requires = { "bite2" },
       desc = _("The ship will lunge at the target enemy and take a huge bite out of it. +200% thrust, +50% absorb for 3 seconds or until target ship is bitten. Damage is based on ship's mass and half of armour damage done will be restored."),
