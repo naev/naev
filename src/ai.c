@@ -1013,10 +1013,10 @@ static void ai_create( Pilot* pilot )
          WARN( _("Pilot '%s' equip '%s' -> '%s': %s"), pilot->name, pilot->ai->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
-   }
 
-   /* Since the pilot changes outfits and cores, we must heal him up. */
-   pilot_healLanded( pilot );
+      /* Since the pilot changes outfits and cores, we must heal him up. */
+      pilot_healLanded( pilot );
+   }
 
    /* Must have AI. */
    if (pilot->ai == NULL)
