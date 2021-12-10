@@ -44,6 +44,11 @@ local misn_cargoamount2 = 4
 local reward_outfit = "Unicorp PT-16 Core System"
 
 function create ()
+   -- the mission cannot be started with less than two landable assets in the system
+   if not system_hasAtLeast(2, "land") then
+      misn.finish(false)
+   end
+
    misn.setNPC( _("Young People"), "neutral/unique/mia.webp", _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.") )
 end
 
@@ -55,12 +60,6 @@ function accept ()
          mem.destPlanet=p
          break -- atm, just take the first landable planet which is not the current one
       end
-   end
-
-   -- the mission cannot be started with less than two landable assets in the system
-   if not system_hasAtLeast(2, "land") then
-      tk.msg(_("Young People"), _([["Sorry, we're busy right now."]]))
-      misn.finish(false)
    end
 
    if not tk.yesno( _("A group of excited nerds"), fmt.f(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
