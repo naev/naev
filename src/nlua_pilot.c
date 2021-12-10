@@ -182,6 +182,7 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
+static int pilotL_knockback( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -320,6 +321,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "choosePoint", pilotL_choosePoint },
    { "collisionTest", pilotL_collisionTest },
    { "damage", pilotL_damage },
+   { "knockback", pilotL_knockback },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -4893,4 +4895,47 @@ static int pilotL_damage( lua_State *L )
 
    lua_pushnumber(L, damage);
    return 1;
+}
+
+/**
+ * @brief Knocks back a pilot.
+ *
+ *    @luatparam Pilot p Pilot being knockeb back.
+ *    @luatparam number m Mass of object knocking back pilot.
+ *    @luatparam Vec2 v Velocity of object knocking back pilot.
+ *    @luatparam[opt=p:pos()] Vec2 p Position of the object knocking back the pilot.
+ * @luafunc knockback
+ */
+static int pilotL_knockback( lua_State *L )
+{
+   Pilot *p1      = luaL_validpilot(L,1);
+   double m1      = p1->solid->mass;
+   Vector2d *v1   = &p1->solid->vel;
+   Vector2d *x1   = &p1->solid->pos;
+   Pilot *p2;
+   double m2;
+   Vector2d *v2;
+   Vector2d *x2;
+   if (lua_ispilot(L,2)) {
+      p2 = luaL_validpilot(L,2);
+      m2 = p2->solid->mass;
+      v2 = &p2->solid->vel;
+      x2 = &p2->solid->pos;
+   }
+   else {
+      m2 = luaL_checknumber(L,2);
+      v2 = luaL_checkvector(L,3);
+      x2 = luaL_optvector(L,4,x1);
+      p2 = NULL;
+   }
+
+   double norm    = MOD(x1->x-x2->x, x1->y-x2->y);
+   double a1      = (2.*m2) / (m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   vect_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
+   if (p2 != NULL) {
+      double a2   = (2.*m1) / (m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      vect_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
+   }
+
+   return 0;
 }

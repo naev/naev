@@ -87,6 +87,7 @@ function update( p, po, dt )
          else
             -- Hit the enemy! TODO damage based on mass
             t:damage( 500, 0, 100, "impact", p )
+            t:knockback( p )
             return turnoff( p, po )
          end
       end
