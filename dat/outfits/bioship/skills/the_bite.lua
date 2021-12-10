@@ -86,7 +86,7 @@ function update( p, po, dt )
             po:progress( mem.timer / duration )
          else
             -- Hit the enemy! TODO damage based on mass
-            local dmg = 3*math.pow(p:mass(), 0.7)
+            local dmg = 4*math.pow(p:mass(), 0.7)
             t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
             camera.shake( 0.5 )
