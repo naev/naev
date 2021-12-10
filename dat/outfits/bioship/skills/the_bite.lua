@@ -79,9 +79,16 @@ function update( p, po, dt )
          if t==nil then
             return turnoff( p, po )
          end
-         p:taskClear()
-         p:moveto( t:pos(), false, false )
-         po:progress( mem.timer / duration )
+         local c = p:collisionTest( t )
+         if not c then
+            p:taskClear()
+            p:moveto( t:pos(), false, false )
+            po:progress( mem.timer / duration )
+         else
+            -- Hit the enemy!
+            t:setHealth( 0, 0 )
+            return turnoff( p, po )
+         end
       end
    else
       oshader:update_cooldown(dt)

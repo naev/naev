@@ -257,7 +257,6 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
 int CollidePolygon( const CollPoly* at, const Vector2d* ap,
       const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
 {
-   int i;
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
@@ -286,7 +285,7 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    inter_y1 = MIN( ay2, by2 );
 
    /* loop on the points of bt to see if one of them is in polygon at. */
-   for (i=0; i<=bt->npt-1; i++) {
+   for (int i=0; i<=bt->npt-1; i++) {
       xabs = bt->x[i] + VX(*bp);
       yabs = bt->y[i] + VY(*bp);
 
@@ -305,9 +304,9 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    y1 = bt->y[0] + VY(*bp);
    x2 = bt->x[bt->npt-1] + VX(*bp);
    y2 = bt->y[bt->npt-1] + VY(*bp);
-   if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+   if (LineOnPolygon( at, ap, x1, y1, x2, y2, crash ))
       return 1;
-   for (i=0; i<=bt->npt-2; i++) {
+   for (int i=0; i<=bt->npt-2; i++) {
       x1 = bt->x[i] + VX(*bp);
       y1 = bt->y[i] + VY(*bp);
       x2 = bt->x[i+1] + VX(*bp);

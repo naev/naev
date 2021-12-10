@@ -180,6 +180,7 @@ static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
+static int pilotL_collisionTest( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -316,6 +317,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
    { "choosePoint", pilotL_choosePoint },
+   { "collisionTest", pilotL_collisionTest },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -4829,4 +4831,33 @@ static int pilotL_hookClear( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    pilot_clearHooks( p );
    return 0;
+}
+
+
+static const CollPoly *getCollPoly( const Pilot *p )
+{
+   int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
+   return &p->ship->polygon[k];
+}
+
+/**
+ * @brief Tests to see if two ships collide.
+ *
+ *    @luatparam Pilot p First pilot to check.
+ *    @luatparam Pilot t Second pilot to check.
+ *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if collided.
+ * @luafunc collisionTest
+ */
+static int pilotL_collisionTest( lua_State *L )
+{
+   Vector2d crash;
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+
+   int ret = CollidePolygon( getCollPoly(p), &p->solid->pos, getCollPoly(t), &t->solid->pos, &crash );
+   if (!ret)
+      return 0;
+
+   lua_pushvector( L, crash );
+   return 1;
 }
