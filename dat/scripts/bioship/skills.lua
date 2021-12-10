@@ -292,15 +292,15 @@ skills.ship["Soromid Brigand"] = {
          "Pincer Organ I",
       },
       slot = {
-         "genedrive",
-         "shell",
          "brain",
+         "shell",
+         "genedrive",
          "rightweap",
          "leftweap",
       },
    },
    {
-      name = _("Shell Growth I"),
+      name = _("Cortex Growth I"),
       stage = 1,
       outfit = "Perlevis Cortex II",
       slot = "shell",
@@ -324,7 +324,7 @@ skills.ship["Soromid Brigand"] = {
       },
    },
    {
-      name = _("Brain Growth I"),
+      name = _("Cerebrum Growth I"),
       stage = 4,
       outfit = "Perleve Cerebrum II",
       slot = "brain",
@@ -336,9 +336,9 @@ skills.ship["Soromid Arx"] = {
    {
       name = _("Innate"),
       outfit = {
-         "Immane Cerebrum I",
-         "Immanis Cortex I",
          "Immanis Gene Drive I",
+         "Immanis Cortex I",
+         "Immane Cerebrum I",
          "Pincer Organ I",
          "Pincer Organ I",
       },
@@ -351,7 +351,7 @@ skills.ship["Soromid Arx"] = {
       },
    },
    {
-      name = _("Shell Growth I"),
+      name = _("Cortex Growth I"),
       outfit = "Immanis Cortex II",
       slot = "shell",
    },
@@ -372,12 +372,12 @@ skills.ship["Soromid Arx"] = {
       },
    },
    {
-      name = _("Brain Growth I"),
+      name = _("Cerebrum Growth I"),
       outfit = "Immane Cerebrum II",
       slot = "brain",
    },
    {
-      name = _("Shell Growth II"),
+      name = _("Cortex Growth II"),
       outfit = "Immanis Cortex III",
       slot = "shell",
    },
@@ -398,7 +398,7 @@ skills.ship["Soromid Arx"] = {
       slot = "genedrive",
    },
    {
-      name = _("Brain Growth II"),
+      name = _("Cerebrum Growth II"),
       outfit = "Immane Cerebrum III",
       slot = "brain",
    },

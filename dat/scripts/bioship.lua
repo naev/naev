@@ -284,7 +284,7 @@ function bioship.window ()
             slot = {slot}
          end
       end
-      if slot and #outfit ~= #slot then
+      if #outfit>0 and slot and #outfit ~= #slot then
          warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
       end
       for k,o in ipairs(outfit) do
