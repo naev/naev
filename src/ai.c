@@ -127,6 +127,7 @@ static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
+static int ai_sort( const void *p1, const void *p2 );
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
@@ -521,6 +522,13 @@ void ai_destroy( Pilot* p )
    ai_cleartasks( p );
 }
 
+static int ai_sort( const void *p1, const void *p2 )
+{
+   AI_Profile *ai1 = (AI_Profile*) p1;
+   AI_Profile *ai2 = (AI_Profile*) p2;
+   return strcmp( ai1->name, ai2->name );
+}
+
 /**
  * @brief Initializes the AI stuff which is basically Lua.
  *
@@ -551,6 +559,7 @@ int ai_load (void)
             WARN( _("Error loading AI profile '%s'"), path);
       }
    }
+   qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
    /* More clean up. */
    PHYSFS_freeList( files );
@@ -677,14 +686,13 @@ static int ai_loadProfile( const char* filename )
  *    @param[in] name Name of the profile to get.
  *    @return The profile or NULL on error.
  */
-AI_Profile* ai_getProfile( char* name )
+AI_Profile* ai_getProfile( const char *name )
 {
-   for (int i=0; i<array_size(profiles); i++)
-      if (strcmp(name,profiles[i].name)==0)
-         return &profiles[i];
-
-   WARN( _("AI Profile '%s' not found in AI stack"), name);
-   return NULL;
+   const AI_Profile ai = { .name = (char*)name };
+   AI_Profile *ret = bsearch( &ai, profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
+   if (ret==NULL)
+      WARN( _("AI Profile '%s' not found in AI stack"), name);
+   return ret;
 }
 
 /**
