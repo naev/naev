@@ -40,8 +40,7 @@ end
 
 
 function accept ()
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.markerAdd( targetworld_sys, "low")
+   misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc waves you over when he notices you enter the bar. "I knew we would run into each other soon enough. Great job delivering that bureaucrat. We should be up and running in Soromid space in no time!" He presses a button on his wrist computer. "We're hoping to expand to Dvaered territory next. Can I count on your help?"]]) ) then
       misn.finish()

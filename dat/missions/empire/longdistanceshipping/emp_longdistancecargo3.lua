@@ -40,8 +40,7 @@ end
 
 
 function accept ()
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.markerAdd( targetworld_sys, "low")
+   misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc sits at the bar. He really does seem to handle business all across the Empire. You take the seat next to him. "Thanks to your help, the Empire Armada Shipping Division will soon operate across the galaxy. Our next mission is to get House Za'lek on board. Interested in helping out again?"]]) ) then
       misn.finish()

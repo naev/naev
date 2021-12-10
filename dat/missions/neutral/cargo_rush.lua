@@ -140,8 +140,7 @@ function accept()
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          misn.finish()
       end
-   elseif system.cur():jumpDist(mem.destsys, false, true) == nil
-         or system.cur():jumpDist(mem.destsys, false, true) < mem.numjumps then
+   elseif system.cur():jumpDist(mem.destsys, false, true) > mem.numjumps then
       if not tk.yesno( _("Unknown route"), fmt.f(
             _("The fastest route to {pnt} is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than {jumps} may cause you to miss the deadline. Accept the mission anyway?"),
 	    {pnt=mem.destplanet, jumps=fmt.jumps(mem.numjumps)} ) ) then
