@@ -445,6 +445,8 @@ static void player_autonav (void)
             inrange = pilot_inRangePilot( player.p, p, NULL );
             target_known = (inrange > 0);
          }
+         else
+            inrange = 0;
 
          if ((p->id == PLAYER_ID) || (!inrange)) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
