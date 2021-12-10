@@ -16,9 +16,7 @@ function bioship.window ()
       return
    end
 
-   skills = bioskills.get{ "bite", "move", "stealth", "health", "attack", "misc", "plasma" }
-   intrinsics = bioskills.ship["Soromid Brigand"]
-
+   local skilllist = { "bite", "health", "attack", "misc", "plasma" }
    local maxtier = 3
    local pss = ps:size()
    if pss > 2 then
@@ -26,7 +24,13 @@ function bioship.window ()
    elseif pss > 4 then
       maxtier = 5
    end
+   if pss <= 4 then
+      table.insert( skilllist, "move" )
+      table.insert( skilllist, "stealth" )
+   end
    -- TODO other ways of increasing tiers
+   skills = bioskills.get( skilllist )
+   intrinsics = bioskills.ship["Soromid Brigand"]
 
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
