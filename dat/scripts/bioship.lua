@@ -259,7 +259,7 @@ function bioship.window ()
       for k,o in ipairs(outfit) do
          if slot then
             local sl = slot[k]
-            if pp:outfitSlot( sl ) == outfit.get(o) then
+            if pp:outfitSlot( sl ) == naev.outfit.get(o) then
                pp:outfitRmSlot( sl )
             end
          else

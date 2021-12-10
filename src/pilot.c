@@ -1388,18 +1388,17 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *
  *    @param p Pilot that is taking damage.
  *    @param w Solid that is hitting pilot.
- *    @param shooter Attacker that shot the pilot.
+ *    @param pshooter Attacker that shot the pilot.
  *    @param dmg Damage being done.
  *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, int reset )
 {
-   int mod;
+   int mod, shooter;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
    double tdshield, tdarmour;
-   Pilot *pshooter;
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
@@ -1407,9 +1406,9 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       return 0.;
 
    /* Defaults. */
-   pshooter       = NULL;
    dam_mod        = 0.;
    ddmg           = 0.;
+   shooter        = (pshooter==NULL) ? 0 : pshooter->id;
 
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
@@ -1531,7 +1530,6 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
          pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         pshooter = pilot_get(shooter);
          if ((pshooter != NULL) && pilot_isWithPlayer(pshooter)) {
 
             /* About 6 for a llama, 52 for hawking. */
@@ -1753,7 +1751,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
       s.vel.y = ry;
 
       /* Actual damage calculations. */
-      pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg, 1 );
+      pilot_hit( p, &s, parent, &ddmg, 1 );
 
       /* Shock wave from the explosion. */
       if (p->id == PILOT_PLAYER)

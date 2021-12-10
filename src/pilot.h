@@ -408,7 +408,7 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, int reset );
 void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );

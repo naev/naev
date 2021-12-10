@@ -36,6 +36,7 @@ void beam_end( const unsigned int parent, unsigned int beam );
 void weapon_explode( double x, double y, double radius,
       int dtype, double damage,
       const Pilot *parent, int mode );
+void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg );
 
 /*
  * Update.

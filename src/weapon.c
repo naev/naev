@@ -1162,7 +1162,7 @@ static void weapon_sample_trail( Weapon* w )
  *    @param shooter Pilot that shot.
  *    @param dmg Damage done to p.
  */
-static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
+void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
 {
    /* Must be a valid shooter. */
    if (shooter == NULL)
@@ -1225,7 +1225,7 @@ static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1315,7 +1315,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->timer2 == -1.) {

@@ -85,8 +85,8 @@ function update( p, po, dt )
             p:moveto( t:pos(), false, false )
             po:progress( mem.timer / duration )
          else
-            -- Hit the enemy!
-            t:setHealth( 0, 0 )
+            -- Hit the enemy! TODO damage based on mass
+            t:damage( 500, 0, 100, "impact", p )
             return turnoff( p, po )
          end
       end

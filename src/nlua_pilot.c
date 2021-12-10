@@ -181,6 +181,7 @@ static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static int pilotL_collisionTest( lua_State *L );
+static int pilotL_damage( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -318,6 +319,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "hookClear", pilotL_hookClear },
    { "choosePoint", pilotL_choosePoint },
    { "collisionTest", pilotL_collisionTest },
+   { "damage", pilotL_damage },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -4833,13 +4835,11 @@ static int pilotL_hookClear( lua_State *L )
    return 0;
 }
 
-
 static const CollPoly *getCollPoly( const Pilot *p )
 {
    int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
    return &p->ship->polygon[k];
 }
-
 /**
  * @brief Tests to see if two ships collide.
  *
@@ -4859,5 +4859,38 @@ static int pilotL_collisionTest( lua_State *L )
       return 0;
 
    lua_pushvector( L, crash );
+   return 1;
+}
+
+/**
+ * @brief Damages a pilot.
+ *
+ *    @luatparam Pilot p Pilot being damaged.
+ *    @luatparam number dmg Damage being done.
+ *    @luatparam[opt=0.] number disable Disable being done.
+ *    @luatparam[opt=0.] number penetration Penetration (in %).
+ *    @luatparam[opt="normal"] string type Damage type being done.
+ *    @luatparam[opt=nil] Pilot shooter Pilot doing the damage.
+ *    @luatreturn number Amount of damage done.
+ * @luafunc damage
+ */
+static int pilotL_damage( lua_State *L )
+{
+   Damage dmg;
+   Pilot *p, *parent;
+   double damage;
+
+   p = luaL_validpilot(L,1);
+   dmg.damage = luaL_checknumber(L,2);
+   dmg.disable = luaL_optnumber(L,3,0.);
+   dmg.penetration = luaL_optnumber(L,4,0.) / 100.;
+   dmg.type = dtype_get( luaL_optstring(L,5,"normal") );
+   parent = (lua_isnoneornil(L,6)) ? NULL : luaL_validpilot(L,6);
+
+   damage = pilot_hit( p, NULL, parent, &dmg, 1 );
+   if (parent != NULL)
+      weapon_hitAI( p, parent, damage );
+
+   lua_pushnumber(L, damage);
    return 1;
 }
