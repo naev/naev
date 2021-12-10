@@ -113,10 +113,8 @@ msgstr ""
 "Velké domy nyní hlídaly vesmírné cesty."
 
 #: dat/intro:23
-#, fuzzy
-#| msgid "Rise and fall, the rhythm of history. "
 msgid "Rise and fall, the rhythm of history."
-msgstr "Vzestup a pád, rytmus historie. "
+msgstr "Vzestup a pád, rytmus historie."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."

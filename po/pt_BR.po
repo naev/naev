@@ -118,10 +118,8 @@ msgstr ""
 "espaciais."
 
 #: dat/intro:23
-#, fuzzy
-#| msgid "Rise and fall, the rhythm of history. "
 msgid "Rise and fall, the rhythm of history."
-msgstr "Ascensão e queda, o ritmo da história "
+msgstr "Ascensão e queda, o ritmo da história."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
