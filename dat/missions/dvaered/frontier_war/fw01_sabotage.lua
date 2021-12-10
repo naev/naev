@@ -129,7 +129,7 @@ function hamfresser()
 
       misn.markerRm(mem.mark)
       misn.osdActive(2)
-      mem.mark = misn.markerAdd(sabotpla, "low")
+      mem.mark = misn.markerAdd(sabotsys, "low")
       player.takeoff()
    else
       tk.msg(_("Not enough free space"), fmt.f(_("Your ship does not have enough free space. Come back with {tonnes} free."), {tonnes=fmt.tonnes(bombMass)}))
@@ -180,7 +180,7 @@ function enter()
          fmt.f(_("Go to {sys}, approach {pnt} and wait for the Phalanx"), {sys=intsys, pnt=intpla}),
          _("Disable and board the Phalanx"),
          fmt.f(_("Report back on {pnt} in {sys}"), {pnt=duelpla, sys=duelsys})} )
-      mem.mark = misn.markerAdd(intpla, "low")
+      mem.mark = misn.markerAdd(intsys, "low")
 
    elseif mem.stage == 3 and system.cur() == intsys then
       hook.timer(0.5, "proximity", {location = intpla:pos(), radius = 1000, funcname = "spawn_phalanx", focus = player.pilot()})
