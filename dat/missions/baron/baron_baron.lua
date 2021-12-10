@@ -95,9 +95,8 @@ end
 
 function jumpin()
    if mem.talked and system.cur() == sys2 then
-      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
+      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
-      pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
@@ -172,10 +171,9 @@ function takeoff()
 end
 
 function takeoff_delay ()
-   vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
-   vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
+   vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, _("Dvaered Police Vendetta"), {ai="dvaered_norun"} )
+   vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, _("Dvaered Police Vendetta"), {ai="dvaered_norun"} )
    for k,v in ipairs{vendetta1, vendetta2} do
-      v:rename(_("Dvaered Police Vendetta"))
       v:setHostile(true)
    end
    vendetta1:broadcast(fmt.f(_("All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"), {ship_type=player.pilot():ship():baseType(), ship_name=player.ship(), pnt=pnt}), true)

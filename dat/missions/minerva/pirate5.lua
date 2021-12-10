@@ -249,8 +249,7 @@ function enter ()
 
    -- Controller spawning functions
    local function spawn_drone_controller( pos )
-      local dc = pilot.add( "Za'lek Sting", zfact, pos, nil, {naked=true} )
-      dc:rename(_("Drone Controller"))
+      local dc = pilot.add( "Za'lek Sting", zfact, pos, _("Drone Controller"), {naked=true} )
       dc:control()
       dc:brake()
       dc:setHostile(true)

@@ -133,8 +133,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid") )
-      badboy:rename(mem.piratename)
+      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid"), mem.piratename )
       badboy:setHostile()
       badboy:setVisplayer()
       badboy:setHilight()

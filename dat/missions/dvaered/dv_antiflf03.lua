@@ -254,8 +254,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], nil, {ai="dvaered_norun"} )
-    obstinate:rename(_("Obstinate"))
+    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], _("Obstinate"), {ai="dvaered_norun"} )
     obstinate:setDir(math.pi/2)
     obstinate:setFriendly()
     obstinate:setNoDisable(true)

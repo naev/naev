@@ -29,10 +29,7 @@ function create ()
    local dfact = "Independent"
 
    local function addDrone( ship, pos, name )
-      local d = pilot.add( ship, dfact, pos )
-      if name then
-         d:rename( name )
-      end
+      local d = pilot.add( ship, dfact, pos, name )
       d:setVisplayer(true)
       d:setInvincible(true)
       d:setVel( vec2.new(0,0) )

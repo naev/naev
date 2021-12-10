@@ -169,7 +169,7 @@ function enter ()
       pilot.toggleSpawn(false)
       local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), mem.kername1, {ai="pirate_norun"} )
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
          pilot.add( "Pirate Hyena", fenemy, vec2.new(0,100) ),
@@ -178,7 +178,6 @@ function enter ()
          p:setLeader( baddie )
       end
 
-      baddie:rename(mem.kername1)
       baddie:setHilight()
       baddie:setHostile()
 
@@ -189,7 +188,7 @@ function enter ()
       pilot.toggleSpawn(false)
       local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), mem.kername2, {ai="pirate_norun"} )
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
          pilot.add( "Pirate Shark", fenemy, vec2.new(0,100) ),
@@ -200,7 +199,6 @@ function enter ()
       end
 
 
-      baddie:rename(mem.kername2)
       baddie:setHilight()
       baddie:setHostile()
 

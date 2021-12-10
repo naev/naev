@@ -112,8 +112,7 @@ end
 function takeoff()
    if system.cur() == mem.delivSys and mem.droppedoff then
 
-      willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Trader Mule") )
-      willie:rename(_("Ol Bess"))
+      willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Ol Bess") )
       willie:setFaction("Independent")
       willie:setFriendly()
       willie:setInvincible()

@@ -112,9 +112,7 @@ end
 
 function takeoff()
    if system.cur() == mem.delivSys and mem.droppedoff then
-
-      logan = pilot.add( "Gawain", "Independent", player.pos() + vec2.new(-500,-500) )
-      logan:rename(_("Dr. Logan"))
+      logan = pilot.add( "Gawain", "Independent", player.pos() + vec2.new(-500,-500), _("Dr. Logan") )
       logan:setFaction("Za'lek")
       logan:setFriendly()
       logan:setInvincible()

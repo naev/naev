@@ -144,8 +144,7 @@ end
 function cutscene00 ()
    -- Add scavenger drone
    local pos = vec2.newP( 1500+1000*rnd.rnd(), rnd.angle() )
-   d_scav = pilot.add( "Drone (Hyena)", drone_faction, pos )
-   d_scav:rename(_("Scavenger Drone"))
+   d_scav = pilot.add( "Drone (Hyena)", drone_faction, pos, _("Scavenger Drone") )
    d_scav:setInvisible(true)
    d_scav:setInvincible(true)
    d_scav:setVel( vec2.new(0,0) )

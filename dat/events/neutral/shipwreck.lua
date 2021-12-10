@@ -59,9 +59,8 @@ function create ()
 
    -- Create the derelict.
    local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.angle() )
-   derelict    = pilot.add( dship, "Derelict", pos, nil, {ai="dummy"} )
+   derelict    = pilot.add( dship, "Derelict", pos, fmt.f(_("Shipwrecked {plt}"), {plt=shipname}), {ai="dummy"} )
    derelict:disable()
-   derelict:rename(fmt.f(_("Shipwrecked {plt}"), {plt=shipname}))
    -- Added extra visibility for big systems (A.)
    derelict:setVisplayer( true )
    derelict:setHilight( true )

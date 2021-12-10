@@ -240,7 +240,7 @@ function timer_transporterSafe()
 end
 
 function spawnTransporter()
-    transporter = pilot.add( "Rhino", "Za'lek", mem.origin, _("Nebula Research Shuttle") )
+    transporter = pilot.add( "Rhino", "Za'lek", mem.origin, _("Research Shuttle") )
     hook.pilot(transporter, "death", "transporterDeath")
     hook.pilot(transporter, "jump", "transporterJump")
     hook.pilot(transporter, "land", "transporterLand")
@@ -251,7 +251,6 @@ function spawnTransporter()
     transporter:setVisplayer()
     transporter:setVisible() -- Hack to make ambushes more reliable.
     transporter:setFriendly()
-    transporter:rename( _("Research Shuttle") )
     continueToDest(transporter)
     hook.timer( 2.0, "timer_transporterSafe" )
 end
