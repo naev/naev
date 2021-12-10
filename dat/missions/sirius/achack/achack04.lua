@@ -52,7 +52,7 @@ local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 function create()
    -- Note: this mission does not make any system claims.
    tk.msg(_("You have mail"), fmt.f(_([[Your computer console flashes you a notice. It seems you received a message through the Sirian information exchange network. You play it.
-    The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {pnt} system. Please meet me there at the earliest opportunity."
+    The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {sys} system. Please meet me there at the earliest opportunity."
     The message ends. You save it for later reference. Maybe you should swing by {pnt} to see what Joanne wants.]]), {player=player.name(), pnt=startplanet, sys=startsys}))
 
    mem.stage = stages.start

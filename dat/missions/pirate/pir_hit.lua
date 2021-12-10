@@ -117,7 +117,7 @@ function create ()
 
    -- Set mission details
    if pir.factionIsClan( mem.paying_faction ) then
-      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys:name(), msg=fmt.f(_(" ({fct})"), {fct=mem.paying_faction} )} ) )
+      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=fmt.f(_(" ({fct})"), {fct=mem.paying_faction} )} ) )
    else
       misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=""} ) )
    end

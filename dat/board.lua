@@ -339,7 +339,7 @@ local function board_cannibalize ()
       heal_armour = dmg*2/3
    end
    pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt:name()}))
+   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt}))
 end
 
 local function board_close ()
@@ -379,7 +379,7 @@ function board( plt )
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
    end
 
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {name}"),{shipname=plt:name()}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )
    board_updateFreespace()
 
@@ -416,7 +416,7 @@ function board_lootOne( wgt, nomsg )
       player.pay( l.q )
       looted = true
       clear = true
-      player.msg(fmt.f(_("You looted {creds} from {plt}."),{creds=fmt.credits(l.q), plt=board_plt:name()}))
+      player.msg(fmt.f(_("You looted {creds} from {plt}."),{creds=fmt.credits(l.q), plt=board_plt}))
    elseif l.type=="fuel" then
       local pp = player.pilot()
       local ps = pp:stats()
@@ -431,7 +431,7 @@ function board_lootOne( wgt, nomsg )
       end
       board_plt:setFuel( board_plt:stats().fuel - q )
       pp:setFuel( ps.fuel + q )
-      player.msg(fmt.f(_("You looted {amount} fuel from {plt}."),{amount=q, plt=board_plt:name()}))
+      player.msg(fmt.f(_("You looted {amount} fuel from {plt}."),{amount=q, plt=board_plt}))
       looted = true
 
       -- Looted all the fuel
@@ -442,20 +442,20 @@ function board_lootOne( wgt, nomsg )
    elseif l.type=="outfit" then
       local o = l.data
       if l.price and l.price > 0 then
-         luatk.yesno(fmt.f(_("Extract {outfit}?"),{outfit=o:name()}),
+         luatk.yesno(fmt.f(_("Extract {outfit}?"),{outfit=o}),
                fmt.f(_("It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. You have {playercreds}. Extract the {outfit}?"),
-                  {credits=fmt.credits(l.price), playercreds=fmt.credits(player.credits()), outfit=o:name()}), function ()
+                  {credits=fmt.credits(l.price), playercreds=fmt.credits(player.credits()), outfit=o}), function ()
             local pc = player.credits()
             if pc < l.price then
                luatk.msg(_("Insufficient Credits"), fmt.f(_("You lack #r{diff}#0 to be able to extract the {outfit}."),
-                     {diff=fmt.credits(l.price-pc), outfit=o:name()}))
+                     {diff=fmt.credits(l.price-pc), outfit=o}))
                return
             end
             if board_plt:outfitRm( o ) ~= 1 then
-               warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
+               warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o, plt=board_plt}))
             end
             player.outfitAdd( o )
-            player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o:name(), plt=board_plt:name()}))
+            player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
             wgt.selected = false
             wgt.loot = nil
          end )
@@ -463,12 +463,12 @@ function board_lootOne( wgt, nomsg )
       end
       if board_plt:outfitRm( o ) ~= 1 then
          -- Soft warning
-	 print(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
+	 print(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o, plt=board_plt}))
       end
       player.outfitAdd( o )
       looted = true
       clear = true
-      player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o:name(), plt=board_plt:name()}))
+      player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
    elseif l.type=="cargo" then
       local c = l.data
       local pp = player.pilot()
@@ -483,7 +483,7 @@ function board_lootOne( wgt, nomsg )
       end
       local qr = board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
       pp:cargoAdd( c, qr )
-      player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c:name(), plt=board_plt:name()}))
+      player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c, plt=board_plt}))
       board_updateFreespace()
       looted = true
 
