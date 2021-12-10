@@ -15,15 +15,20 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 }
 ]])
 
-
 local function turnon( p, po )
+   -- Still on cooldown
+   if mem.timer and mem.timer > 0 then
+      return false
+   end
    -- Needs a target
    local t = p:target()
    if t==nil then
       return false
    end
-   -- Still on cooldown
-   if mem.timer and mem.timer > 0 then
+   -- Must be roughly infront
+   local tp = t:pos()
+   local _m, a = (p:pos()-tp):polar()
+   if math.abs(math.fmod(p:dir()-a, math.pi*2)) > 10/math.pi then
       return false
    end
    po:state("on")
@@ -32,7 +37,7 @@ local function turnon( p, po )
    mem.active = true
 
    p:control(true)
-   p:moveto( t:pos(), false )
+   p:moveto( t:pos(), false, false )
 
    -- Visual effect
    if mem.isp then oshader:on() end
@@ -75,7 +80,7 @@ function update( p, po, dt )
             return turnoff( p, po )
          end
          p:taskClear()
-         p:moveto( t:pos(), false )
+         p:moveto( t:pos(), false, false )
          po:progress( mem.timer / duration )
       end
    else
