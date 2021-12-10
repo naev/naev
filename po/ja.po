@@ -44993,10 +44993,10 @@ msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達�
 #. Mission constants
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:32
 msgid ""
-"Deliver a shipping diplomat for the Empire to Soromid Customs Central in the "
-"Oberon system"
+"Deliver a shipping diplomat for the Empire to {pnt} in the "
+"{sys} system"
 msgstr ""
-"帝国のために輸送局外交官をオベロン星系のソロミド・カスタムズ・セントラルに連"
+"帝国のために輸送局外交官を{sys}星系の{pnt}に連"
 "れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:39
@@ -45047,7 +45047,7 @@ msgid ""
 "factions. We'll need a bureaucrat to handle the red tape and oversee the "
 "operations. We will begin with the Soromid. I know those genetically "
 "modified beings are kind of creepy, but business is business. Please "
-"accompany a bureaucrat to Soromid Customs Central in the Oberon system. He "
+"accompany a bureaucrat to {pnt} in the {sys} system. He "
 "will report back to me when this mission is accomplished. I tend to travel "
 "within Empire space handling minor trade disputes, so keep an eye out for me "
 "in the bar on Empire controlled planets.\""
@@ -45060,7 +45060,7 @@ msgstr ""
 "つたたいた。｢まずは、ほかの党派と運営の準備をする必要があります。形式的手つづ"
 "きの処理と運営を監督する官僚も必要となるでしょう。われわれはソロミドと始める"
 "つもりです。あの遺伝子改造人間がちょっと気色悪いのは知っていますが、仕事は仕"
-"事です。官僚と同行してオベロン星系のソロミド・カスタムズ・セントラルへ行って"
+"事です。官僚と同行して{sys}星系の{pnt}へ行って"
 "ください。その官僚は、任務が達成されたらわたしのところへ報告に戻ることになっ"
 "ています。わたしは帝国宙域を旅して細かい貿易紛争に対処していることがよくある"
 "ので、帝国が支配する惑星のバーでわたしがいないかよく見ていてください｣"
@@ -45086,21 +45086,21 @@ msgstr "帝国の貿易代表。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:72
 msgid ""
-"You drop the bureaucrat off at Soromid Customs Central, and he hands you a "
+"You drop the bureaucrat off at {pnt}, and he hands you a "
 "credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire "
 "space to continue the operation."
 msgstr ""
-"あなたはあの官僚をソロミド・カスタムズ・セントラルに降ろした。それから官僚は"
+"あなたはあの官僚を{pnt}に降ろした。それから官僚は"
 "あなたにクレジットチップを手渡した。チェシチ大尉は帝国宙域で運営をつづけてい"
 "る自分に目を光らせておけといっていた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:74
 msgid ""
-"You delivered a shipping bureaucrat to Soromid Customs Central for the "
+"You delivered a shipping bureaucrat to {pnt} for the "
 "Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire "
 "space to continue the operation."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚をソロミド・カスタムズ・セントラルへ連れて"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れて"
 "いった。チェシチ大尉は帝国宙域で運営をつづけている自分に目を光らせておけと"
 "いっていた。"
 
@@ -45132,7 +45132,7 @@ msgid ""
 "\"Great!\" says Lieutenant Czesc. \"I'll send a message to the bureaucrat to "
 "meet you at the hanger. The Dvaered are, of course, allies of the Empire. "
 "Still, they offend easily, so try not to talk too much. Your mission is to "
-"drop the bureaucrat off on Praxis in the Ogat system. He will take it from "
+"drop the bureaucrat off on {pnt} in the {sys} system. He will take it from "
 "there and report back to me when the shipping contract has been confirmed. "
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
@@ -45140,68 +45140,28 @@ msgstr ""
 "｢すばらしい！｣ と、チェシチ大尉がいう。｢官僚に連絡をして、格納庫であなたに会"
 "うようにいっておきます。ドベーレッドはもちろん帝国の味方です。それでも、簡単"
 "に怒らせることをするんです。だからあまり話をしようとしないでください。あなた"
-"の任務は官僚をオガット星系のプラクシスに降ろすことです。その官僚は、輸送契約"
+"の任務は官僚を{sys}星系の{pnt}に降ろすことです。その官僚は、輸送契約"
 "が承認されたら、それをもってわたしのところへ報告しに戻ることになっています。"
 "そのあとは、帝国宙域でわたしに目を光らせておいてください。そうすればこの活動"
 "をつづけられます｣"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:57
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
-msgid "Deliver a shipping diplomat for the Empire to Praxis in the Ogat system"
-msgstr "帝国のために輸送局の官僚をオガット星系のプラクシスに連れていけ。"
-
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
 msgid ""
-"You drop the bureaucrat off on Praxis, and he hands you a credit chip. You "
+"You drop the bureaucrat off on {pnt}, and he hands you a credit chip. You "
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
-"あなたはあの官僚をプラクシスに降ろした。それから官僚はあなたにクレジットチッ"
+"あなたはあの官僚を{pnt}に降ろした。それから官僚はあなたにクレジットチッ"
 "プを手渡した。チェシチ大尉が、終わったら帝国が支配する惑星で自分をさがせと"
 "いっていたのをあなたは思いだした。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:74
 msgid ""
-"You delivered a shipping bureaucrat to Praxis for the Empire. Lieutenant "
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚をプラクシスへ連れていった。チェシチ大尉"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。チェシチ大尉"
 "は、終わったら帝国が支配する惑星で自分をさがせといっていた。"
-
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Za'lek Long Distance Recruitment">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-#. <chance>75</chance>
-#. <done>Dvaered Long Distance Recruitment</done>
-#. <location>Bar</location>
-#. <faction>Empire</faction>
-#. </avail>
-#. <notes>
-#. <campaign>Empire Shipping</campaign>
-#. </notes>
-#. </mission>
-#. --
-#.
-#.
-#. Third diplomatic mission to Za'lek space that opens up the Empire long-distance cargo missions.
-#.
-#. Author: micahmumper
-#.
-#.
-#.
-#. Mission constants
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:32
-#, fuzzy
-#| msgid ""
-#| "Deliver a shipping diplomat for the Empire to Madria in the Esker system"
-msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
-msgstr "帝国のために輸送局外交官をエスカー星系のマドリアに連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:47
 msgid ""
@@ -45226,14 +45186,6 @@ msgid "Za'lek Long Distance Recruitment"
 msgstr "ザレクへの長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:51
-#, fuzzy
-#| msgid ""
-#| "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
-#| "bureaucrat ready to establish trade ties. The Za'lek are rather "
-#| "mysterious, so keep your wits about you. The diplomat only needs to go to "
-#| "the Gerhart Station in the Ganth system. He will let me know when trade "
-#| "relations have been established. There is still more work to be done, so "
-#| "I expect to see you again soon.\""
 msgid ""
 "\"I had a feeling you would!\" says Lieutenant Czesc. \"I've got another "
 "bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, "
@@ -45244,38 +45196,27 @@ msgid ""
 msgstr ""
 "｢そうだろうと思っていました！｣ と、チェシチ大尉はいう。｢もうひとり官僚がい"
 "て、通商上のつながりを確立する準備ができています。ザレクはちょっと不思議なと"
-"ころなので、油断しないようにしてください。外交官はガンス星系のゲルハルト・ス"
-"テーションに行く必要があるだけです。その外交官は、通商関係が確立したら、わた"
+"ころなので、油断しないようにしてください。外交官は{sys}星系の{pnt}に行く必要があるだけです。その外交官は、通商関係が確立したら、わた"
 "しに知らせることになっています。それでもやるべき仕事はまだあります。だからま"
 "たすぐにあなたと会えると期待しています｣"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:73
-#, fuzzy
-#| msgid ""
-#| "You drop the diplomat off on Outbound Station, and she hands you a credit "
-#| "chip. Lieutenant Czesc mentioned more work, so you figure you'll run into "
-#| "him at a bar again soon."
 msgid ""
 "You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
-"あなたはあの外交官をゲルハルト・ステーションに降ろした。それから外交官はあな"
+"あなたはあの外交官を{pnt}に降ろした。それから外交官はあな"
 "たにクレジットチップを手渡した。チェシチ大尉はもっと仕事があるといっていたの"
 "で、あなたは大尉とはバーですぐに会うことになると考えた。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:75
-#, fuzzy
-#| msgid ""
-#| "You delivered a shipping bureaucrat to Outbound Station for the Empire. "
-#| "Lieutenant Czesc mentioned more work, so you figure you'll run into him "
-#| "at a bar again soon."
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc mentioned more work, so you figure you'll run into him at a bar again "
 "soon."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚をゲルハルト・ステーションへ連れていった。"
+"あなたは帝国のために、輸送局の官僚を{pnt}へ連れていった。"
 "チェシチ大尉はもっと仕事があるといっていたので、あなたは大尉とはバーですぐに"
 "会うことになると考えた。"
 
@@ -45309,10 +45250,10 @@ msgstr ""
 #. Mission constants
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:32
 msgid ""
-"Deliver a shipping diplomat for the Empire to The Frontier Council in "
-"Gilligan's Light system"
+"Deliver a shipping diplomat for the Empire to {pnt} in "
+"{sys} system"
 msgstr ""
-"帝国のために輸送局外交官をガリガンズ・ライト星系の辺境評議会に連れていけ。"
+"帝国のために輸送局外交官を{sys}星系の{pnt}に連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:47
 msgid ""
@@ -45339,14 +45280,14 @@ msgid ""
 "\"I applaud your commitment,\" Lieutenant Czesc says, \"and I know these "
 "aren't the most exciting missions, but they're most useful. The frontier can "
 "be a bit dangerous, so make sure you're prepared. You need to drop the "
-"bureaucrat off at The Frontier Council in Gilligan's Light system. After "
+"bureaucrat off at {pnt} in {sys} system. After "
 "this, there should only be one more faction to bring into the fold. I expect "
 "to see you again soon.\""
 msgstr ""
 "｢あなたの献身を賞賛していますよ｣ と、チェシチ大尉はいった。｢それにこれがあま"
 "り刺激的な任務ではないのもわかっています。しかしとくべつ役に立っているんで"
 "す。辺境はちょっと危険なので、かならず準備をしておいてください。官僚はガリガ"
-"ンズ・ライト星系の辺境評議会に降ろさなければなりません。このあとは、もうひと"
+"ンズ・ライト星系の{pnt}に降ろさなければなりません。このあとは、もうひと"
 "つの党派しか仲間に引きこむのはありません。またすぐあなたと会えると期待してい"
 "ます｣"
 
@@ -45358,14 +45299,14 @@ msgstr "辺境への長距離輸送の勧誘"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:73
 msgid ""
-"You deliver the diplomat to The Frontier Council, and she hands you a credit "
+"You deliver the diplomat to {pnt}, and she hands you a credit "
 "chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance "
 "again for one more mission. This last bureaucrat refused to stay in her "
 "quarters, preferring to hang out on the bridge and give you the ins and outs "
 "of Empire bureaucracy. Only your loyalty to the Empire stopped you from "
 "sending her out into the vacuum of space."
 msgstr ""
-"あなたはあの外交官を辺境評議会に連れていった。それから外交官はあなたにクレ"
+"あなたはあの外交官を{pnt}に連れていった。それから外交官はあなたにクレ"
 "ジットチップを手渡した。ありがたいことに、チェシチ大尉はまたあなたの助力が必"
 "要なのは、もうひとつの任務だけだといっていた。この今回の官僚は自分の船室にと"
 "どまることを拒絶したのだ。船橋に出入りするのを好み、帝国の官僚式手つづきの一"
@@ -45374,14 +45315,14 @@ msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:75
 msgid ""
-"You delivered a shipping bureaucrat to The Frontier Council for the Empire. "
+"You delivered a shipping bureaucrat to {pnt} for the Empire. "
 "Thankfully, Lieutenant Czesc mentioned only needing your assistance again "
 "for one more mission. This last bureaucrat refused to stay in her quarters, "
 "preferring to hang out on the bridge and give you the ins and outs of Empire "
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚を辺境評議会に連れていった。ありがたいこと"
+"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。ありがたいこと"
 "に、チェシチ大尉はまたあなたの助力が必要なのは、もうひとつの任務だけだといっ"
 "ていた。この今回の官僚は自分の船室にとどまることを拒絶したのだ。船橋に出入り"
 "するのを好み、帝国の官僚式手つづきの一部始終をあなたにもたらした。帝国への義"
@@ -45409,40 +45350,34 @@ msgstr "シリウスへの長距離輸送の勧誘"
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:50
 msgid ""
 "\"You know how this goes by now.\" says Lieutenant Czesc, \"Drop the "
-"bureaucrat off at Madria in the Esker system. Sirius space is quite a "
+"bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a "
 "distance, so be prepared for anything. Afterwards, come find me one more "
 "time and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
 "｢もうどうやって進めるかわかってますね｣ と、チェシチ大尉がいう。｢官僚をエス"
-"カー星系のマドリアで降ろしてください。シリウス宙域はかなり遠いです。だからす"
+"カー星系の{pnt}で降ろしてください。シリウス宙域はかなり遠いです。だからす"
 "べてのことに用意をしておいてください。そのあとで、わたしともういちど会ってく"
 "ださい。この任務であなたが作ってくれたすべての書類仕事を終わらせてしまうつも"
 "りです｣"
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:57
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:58
-msgid ""
-"Deliver a shipping diplomat for the Empire to Madria in the Esker system"
-msgstr "帝国のために輸送局外交官をエスカー星系のマドリアに連れていけ。"
-
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
 msgid ""
-"You drop the diplomat off on Madria, and she hands you a credit chip. "
+"You drop the diplomat off on {pnt}, and she hands you a credit chip. "
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
-"あなたはあの外交官をマドリアに降ろした。それから外交官はあなたにクレジット"
+"あなたはあの外交官を{pnt}に降ろした。それから外交官はあなたにクレジット"
 "チップを手渡した。チェシチ大尉は書類仕事をするために、帝国のバーで自分をさが"
 "せといっていた。官僚制の極致である。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:74
 msgid ""
-"You delivered a shipping bureaucrat to Madria for the Empire. Lieutenant "
+"You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
-"あなたは帝国のために、輸送局の官僚をマドリアに連れていった。チェシチ大尉は書"
+"あなたは帝国のために、輸送局の官僚を{pnt}に連れていった。チェシチ大尉は書"
 "類仕事をするために、帝国のバーで自分をさがせといっていた。官僚制の極致であ"
 "る。"
 
@@ -45451,14 +45386,14 @@ msgid ""
 "Lieutenant Czesc slaps you on the back as you take a seat next to him at the "
 "bar. \"We've done it! We have set up Empire Armada Shipping outposts across "
 "quite a bit of the galaxy. I just have one more favor to ask. I need "
-"transport back to Halir in the Gamma Polaris system. Once there I can "
+"transport back to {pnt} in the {sys} system. Once there I can "
 "authorize you to help out with the long-distance shipping missions. Can I "
 "count on you?\""
 msgstr ""
 "あなたがバーにいたチェシチ大尉の隣の席をとると、大尉はあなたの背中をたたい"
 "た。｢われわれはやりました！　帝国艦隊輸送拠点を銀河じゅうにたくさん立ちあげた"
 "んです。わたしにはもうひとつだけご好意をお願いしたいことがあります。わたしは"
-"ガンマ・ポラリス星系のハリルへ戻る便を必要としています。そこへ着けば、長距離"
+"{sys}星系の{pnt}へ戻る便を必要としています。そこへ着けば、長距離"
 "輸送任務への協力をあなたに許可できます。あなたを頼っていいですか？｣"
 
 #. Flavour text and mini-briefing
@@ -45485,8 +45420,8 @@ msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:60
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
-msgid "Deliver Lieutenant Czesc to Halir in the Gamma Polaris system"
-msgstr "チェシチ大尉をガンマ・ポラリス星系のハリルに連れていけ。"
+msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
+msgstr "チェシチ大尉を{sys}星系の{pnt}に連れていけ。"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
 msgid ""
@@ -45514,14 +45449,14 @@ msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:77
 msgid ""
-"You transported Lieutenant Czesc to Halir for some paperwork. You can now do "
+"You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do "
 "long-distance cargo missions for the Empire. They pay better than regular "
 "Empire shipping missions, but often require traveling longer distances and "
 "into territory controlled by other factions. You'll probably be more likely "
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
-"あなたは書類仕事のためにチェシチ大尉をハリルに輸送した。あなたはもう帝国のた"
+"あなたは書類仕事のためにチェシチ大尉を{pnt}に輸送した。あなたはもう帝国のた"
 "めの長距離貨物任務をうけることができる。その任務は通常の輸送任務より支払いが"
 "よいが、もっと長い距離を旅することや、ほかの党派が支配する領域へ旅する必要が"
 "あることもしばしばだ。おそらく、帝国宙域の端のほうがその任務を見る機会が多く"

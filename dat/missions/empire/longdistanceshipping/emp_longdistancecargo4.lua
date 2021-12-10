@@ -29,7 +29,6 @@ local emp = require "common.empire"
 
 -- Mission constants
 local targetworld, targetworld_sys = planet.getS("The Frontier Council")
-local misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -48,13 +47,14 @@ function accept ()
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Frontier Alliance Long Distance Recruitment"), _([["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at The Frontier Council in Gilligan's Light system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]]) )
+   tk.msg( _("Frontier Alliance Long Distance Recruitment"), fmt.f( _([["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at {pnt} in the {sys} system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setTitle(_("Frontier Long Distance Recruitment"))
    misn.setReward( fmt.credits( emp.rewards.ldc4 ) )
+   local misn_desc = fmt.f(_("Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"), {pnt=targetworld, sys=targetworld_sys})
    misn.setDesc( misn_desc )
    misn.osdCreate(_("Frontier Alliance Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
@@ -70,9 +70,9 @@ function land()
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc4 )
          -- More flavour text
-         tk.msg( _("Mission Accomplished"), _([[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]) )
+         tk.msg( _("Mission Accomplished"), fmt.f( _([[You deliver the diplomat to {pnt}, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]), {pnt=targetworld} ) )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( _([[You delivered a shipping bureaucrat to The Frontier Council for the Empire. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]) )
+         emp.addShippingLog( fmt.f( _([[You delivered a shipping bureaucrat to {pnt} for the Empire. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]), {pnt=targetworld} ) )
          misn.finish(true)
    end
 end
