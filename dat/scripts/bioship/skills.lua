@@ -279,11 +279,10 @@ skills.set.misc = {
    },
 }
 
--- Brigand Intrinsics
-skills.ship["Soromid Brigand"] = {
+-- Arx Intrinsics
+skills.ship["Soromid Arx"] = {
    {
       name = _("Innate"),
-      stage = 0,
       outfit = {
          "Immane Cerebrum I",
          "Immanis Cortex I",
@@ -301,19 +300,16 @@ skills.ship["Soromid Brigand"] = {
    },
    {
       name = _("Shell Growth I"),
-      stage = 1,
       outfit = "Immanis Cortex II",
       slot = "shell",
    },
    {
       name = _("Gene Drive Growth I"),
-      stage = 2,
       outfit = "Immanis Gene Drive II",
       slot = "genedrive",
    },
    {
       name = _("Weapon Organ Growth I"),
-      stage = 3,
       outfit = {
          "Pincer Organ II",
          "Pincer Organ II",
@@ -325,54 +321,46 @@ skills.ship["Soromid Brigand"] = {
    },
    {
       name = _("Brain Growth I"),
-      stage = 4,
       outfit = "Immane Cerebrum II",
       slot = "brain",
    },
    {
       name = _("Shell Growth II"),
-      stage = 5,
       outfit = "Immanis Cortex III",
       slot = "shell",
    },
    {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
       name = _("Gene Drive Growth II"),
-      stage = 6,
       outfit = "Immanis Gene Drive III",
       slot = "genedrive",
    },
    {
-      name = _("Weapon Organ Growth II"),
-      stage = 7,
-      outfit = {
-         "Pincer Organ II",
-         "Pincer Organ II",
-      },
-      slot = {
-         "rightweap",
-         "leftweap",
-      },
-   },
-   {
       name = _("Brain Growth II"),
-      stage = 8,
       outfit = "Immane Cerebrum III",
       slot = "brain",
    },
-   --[[
    {
-      name = _("Weapon Organ Growth II"),
-      stage = 5,
+      name = _("Weapon Organ Growth III"),
       outfit = {
-         "BioPlasma Stinger Stage X",
-         "BioPlasma Stinger Stage X",
+         "Pincer Organ II",
+         "Pincer Organ II",
       },
       slot = {
          "rightweap",
          "leftweap",
       },
    },
-   --]]
 }
 
 function skills.get( sets )

@@ -19,10 +19,10 @@ function bioship.window ()
    local skilllist = { "bite", "health", "attack", "misc", "plasma" }
    local maxtier = 3
    local pss = ps:size()
-   if pss > 2 then
-      maxtier = 4
-   elseif pss > 4 then
+   if pss > 4 then
       maxtier = 5
+   elseif pss > 2 then
+      maxtier = 4
    end
    if pss <= 4 then
       table.insert( skilllist, "move" )
@@ -30,7 +30,7 @@ function bioship.window ()
    end
    -- TODO other ways of increasing tiers
    skills = bioskills.get( skilllist )
-   intrinsics = bioskills.ship["Soromid Brigand"]
+   intrinsics = bioskills.ship[ ps:nameRaw() ]
 
    local function inlist( lst, item )
       for k,v in ipairs(lst) do
@@ -52,8 +52,9 @@ function bioship.window ()
 
    -- Set up some helper fields
    for k,s in ipairs(intrinsics) do
+      s.stage = k
       local alt = "#o"..s.name.."#0"
-      if s.stage==0 then
+      if s.stage==1 then
          alt = alt.."\n".._("Always available")
       else
          alt = alt.."\n"..fmt.f(_("Obtained at stage {stage}"),{stage=s.stage})
@@ -411,7 +412,7 @@ function bioship.window ()
       skilly = math.max( skilly, s.ry )
    end
    local intx = 3
-   local inty = math.floor((#intrinsics+1)/3)
+   local inty = math.floor((#intrinsics+1)/3+1)
 
    local w, h = bx+sw*(skillx+intx+1)+40, by+sh*(math.max(skilly,inty)+1)+80
    local wdw = luatk.newWindow( nil, nil, w, h )
