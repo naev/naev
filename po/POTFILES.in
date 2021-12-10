@@ -1382,8 +1382,8 @@ dat/outfits/bioship/skills/adrenaline_hormones.xml
 dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/compound_eyes.xml
 dat/outfits/bioship/skills/hard_shell.xml
-dat/outfits/bioship/skills/regeneration_i.xml
-dat/outfits/bioship/skills/regeneration_ii.xml
+dat/outfits/bioship/skills/natural_healing_i.xml
+dat/outfits/bioship/skills/natural_healing_ii.xml
 dat/outfits/bioship/skills/silence.xml
 dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/wanderer.xml

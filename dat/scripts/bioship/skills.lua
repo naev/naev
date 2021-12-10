@@ -29,7 +29,7 @@ skills.set.bite = {
       name = _("The Bite"),
       tier = 3,
       outfit = "The Bite",
-      slot = "thebite",
+      slot = "the_bite",
       requires = { "bite2" },
       desc = function( p )
          local dmg = 4*math.pow(p:mass(), 0.7)
@@ -40,14 +40,14 @@ skills.set.bite = {
       name = _("Blood Lust"),
       tier = 4,
       requires = {"bite3"},
-      desc = _("more range"),
+      desc = _("damage bonus after biting"),
       -- TODO
    },
    ["bite5"] = {
       name = _("Strong Jaws"),
       tier = 5,
       requires = {"bite4"},
-      desc = _("more damage"),
+      desc = _("more damage + healing based on armour damage"),
       -- TODO
    },
 }
@@ -59,7 +59,7 @@ skills.set.move = {
    ["move1"] = {
       name = _("Adrenal Gland I"),
       tier = 1,
-      slot = "adrenal",
+      slot = "adrenal_gland",
       desc = _("weak afterburner"),
       -- TODO
    },
@@ -68,7 +68,7 @@ skills.set.move = {
       tier = 2,
       requires = { "move1" },
       replaces = "move1",
-      slot = "adrenal",
+      slot = "adrenal_gland",
       desc = _("improved afterburner"),
       -- TODO
    },
@@ -84,7 +84,7 @@ skills.set.move = {
       tier = 4,
       requires = { "move3" },
       replaces = "move2",
-      slot = "adrenal",
+      slot = "adrenal_gland",
       desc = _("+ time slowdown and mass limit")
       -- TODO
    },
@@ -135,12 +135,11 @@ skills.set.health = {
       outfit = "Bulky Abdomen",
    },
    ["health2"] = {
-      --name = _("Regeneration I"),
-      name = _("Regen I"),
+      name = _("Natural Healing I"),
       tier = 2,
       requires = { "health1" },
       desc = _("Gives 5 armour regeneration."),
-      outfit = "Regeneration I",
+      outfit = "Natural Healing I",
    },
    ["health3"] = {
       name = _("Hard Shell"),
@@ -150,12 +149,11 @@ skills.set.health = {
       outfit = "Hard Shell",
    },
    ["health4"] = {
-      --name = _("Regeneration II"),
-      name = _("Regen II"),
+      name = _("Natural Healing II"),
       tier = 4,
       requires = { "health3" },
       desc = _("Gives 5 additional armour regeneration."),
-      outfit = "Regeneration II",
+      outfit = "Natural Healing II",
    },
    ["health5"] = {
       name = _("Reflective Shell"),
@@ -203,6 +201,7 @@ skills.set.attack = {
       tier = 5,
       requires = { "attack4" },
       --replaces = "attack3",
+      slot = "feral_rage",
       desc = _("feral rage becomes a triggerable skill too"),
       -- TODO
    },

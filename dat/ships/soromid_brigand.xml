@@ -29,12 +29,11 @@
   <weapon size="small" x="12" y="0" h="0" />
   <utility size="small" prop="bio_systems" exclusive="1" required="1" locked="1" name="brain">Ultralight Brain Stage 1</utility>
   <utility size="small" prop="accessory" exclusive="1" />
-  <utility size="small" prop="bio_organ" locked="1" name="adrenal" />
-  <utility size="small" prop="bio_organ" locked="1" name="thebite" />
+  <utility size="small" prop="bio_organ" locked="1" name="adrenal_gland" />
+  <utility size="small" prop="bio_organ" locked="1" name="the_bite" />
   <utility size="small" />
   <structure size="small" prop="bio_engines" exclusive="1" required="1" locked="1" name="genedrive">Ultralight Fast Gene Drive Stage 1</structure>
   <structure size="small" prop="bio_hull" exclusive="1" required="1" locked="1" name="shell">Ultralight Shell Stage 1</structure>
-  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

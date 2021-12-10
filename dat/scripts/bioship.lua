@@ -6,6 +6,15 @@ local bioskills = require "bioship.skills"
 
 local bioship = {}
 
+local function inlist( lst, item )
+   for k,v in ipairs(lst) do
+      if v==item then
+         return true
+      end
+   end
+   return false
+end
+
 local stage, skills, intrinsics, skillpoints, skilltxt
 function bioship.window ()
    local pp = player.pilot()
@@ -31,15 +40,6 @@ function bioship.window ()
    -- TODO other ways of increasing tiers
    skills = bioskills.get( skilllist )
    intrinsics = bioskills.ship[ ps:nameRaw() ]
-
-   local function inlist( lst, item )
-      for k,v in ipairs(lst) do
-         if v==item then
-            return true
-         end
-      end
-      return false
-   end
 
    -- Filter out high tiers if necessary
    local nskills = {}
@@ -74,12 +74,24 @@ function bioship.window ()
          alt = alt.."\n#b".._("Provides:").."#0"
       end
       for i,o in ipairs(outfit) do
-         alt = alt.."\n".._("* ").._(o)
+         alt = alt.."\n".._("* ")..naev.outfit.get(o):name()
       end
       s.alt = alt
       s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
    end
    for k,s in pairs(skills) do
+      -- Tests outfits if they exist
+      if __debugging then
+         local outfit = s.outfit or {}
+         if type(outfit)=="string" then
+            outfit = {outfit}
+         end
+         for i,o in ipairs(outfit) do
+            if naev.outfit.get(o) == nil then
+               warn(fmt.f(_("Bioship skill '{skill}' can't find outfit '{outfit}'!"),{skill=k, outfit=o}))
+            end
+         end
+      end
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
