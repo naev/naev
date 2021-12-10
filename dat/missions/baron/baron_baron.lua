@@ -95,22 +95,24 @@ end
 
 function jumpin()
    if mem.talked and system.cur() == sys2 then
-      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+      local homepos = planet.get("Ulios"):pos()
+      pinnacle = pilot.add( "Proteron Kahan", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(homepos + vec2.new( 400, -400), false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   local homepos = planet.get("Ulios"):pos()
+   pinnacle:moveto(homepos + vec2.new( 400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400, -400), false)
+   pinnacle:moveto(homepos + vec2.new( 400, -400), false)
 end
 
 function hail()
