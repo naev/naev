@@ -1,4 +1,5 @@
 local mt = require "merge_tables"
+local fmt = require "format"
 
 local skills = {
    set = {},
@@ -30,8 +31,10 @@ skills.set.bite = {
       outfit = "The Bite",
       slot = "thebite",
       requires = { "bite2" },
-      desc = _("The ship will lunge at the target enemy and take a huge bite out of it. +200% thrust, +50% absorb for 3 seconds or until target ship is bitten. Damage is based on ship's mass and half of armour damage done will be restored."),
-      -- TODO
+      desc = function( p )
+         local dmg = 3*math.pow(p:mass(), 0.7)
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +50% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+      end,
    },
    ["bite4"] = {
       name = _("Blood Lust"),

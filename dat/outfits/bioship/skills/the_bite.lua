@@ -1,7 +1,7 @@
 local osh = require 'outfits.shaders'
 
 local duration = 3 -- time to try to bite
-local cooldown = 8 -- cooldown time in seconds
+local cooldown = 15 -- cooldown time in seconds
 local oshader = osh.new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -86,7 +86,8 @@ function update( p, po, dt )
             po:progress( mem.timer / duration )
          else
             -- Hit the enemy! TODO damage based on mass
-            t:damage( 500, 0, 100, "impact", p )
+            local dmg = 3*math.pow(p:mass(), 0.7)
+            t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
             camera.shake( 0.5 )
             return turnoff( p, po )

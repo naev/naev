@@ -60,7 +60,11 @@ function bioship.window ()
          alt = alt.."\n"..fmt.f(_("Obtained at stage {stage}"),{stage=s.stage})
       end
       if s.desc then
-         alt = alt.."\n\n"..s.desc
+         if type(s.desc)=="function" then
+            alt = alt.."\n\n"..s.desc(pp)
+         else
+            alt = alt.."\n\n"..s.desc
+         end
       end
       local outfit = s.outfit
       if type(outfit)=="string" then
@@ -181,7 +185,11 @@ function bioship.window ()
                local py = s.y
                local alt = "#o"..s.name.."#0"
                if s.desc then
-                  alt = alt.."\n\n"..s.desc
+                  if type(s.desc)=="function" then
+                     alt = alt.."\n\n"..s.desc(pp)
+                  else
+                     alt = alt.."\n\n"..s.desc
+                  end
                end
                if #s._requires > 0 then
                   local req = {}

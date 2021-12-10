@@ -11,8 +11,7 @@
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/the_bite.lua</lua>
-  <thrust>500</thrust>
-  <speed>50</speed>
+  <thrust>800</thrust>
   <absorb>50</absorb>
  </specific>
 </outfit>
