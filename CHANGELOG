@@ -7,23 +7,35 @@
    * Player ships can store their own variables now
    * 3 New missions
 
-* 0.9.0 (since beta.2)
+* 0.9.0-beta.3
+   * Fixed warning about cargo rush deliveries when you don't know the best route
+   * Fixed another crash related to pilot removal
+   * Fixed wonky backgrounds during death cutscenes, for the sake of *other* players of course
    * Fixed crash when techs are first patched to planets through unidiff
    * Fixed potential spurious warnings about incomplete translations, even when running in English
    * Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
    * Fixed VN log text overlap issues
    * Fixed commodities not being added through unidiff
    * Fixed safe lane rendering alpha being wrong
-   * Fixed misbehaviours in "Travelling Merchant", "Warlords Battle", and "Za'lek Particle Physics 2"
+   * Fixed misbehaviours with Maikki, Nelly 2, Shark 3, Shipwreck, Travelling Merchant, Warlords Battle, and Particle Physics 2
    * Fixed backgrounds accumulating when messing with options
-   * Fixed autonav giving away pilots being autofollowed
    * Fixed issues with board scripts getting deferred with respect to boarding script
-   * Don't give away name of destination system via autonav if unknown
+   * Fixed some instances of background text interfering with how foreground text was drawn
+   * Fixed some missions causing trouble when saved/reloaded (due to dynamic factions)
+   * Fixed minor Ship AI issues (rename at game start)
+   * Fixed autonav via the map during a landing sequence
+   * Fixed autonav giving away autofollowed pilots and unknown destination systems
+   * Improved speed and accuracy of autonav stopping
+   * Improved mission marker behavior (show planets more, always clean up at end of mission)
+   * Kicked Empire patrols out of the Arandon system
+   * Gave pirate ships dodgier outfits
+   * Proofread too many parts of the game to mention
    * AI should only try to jump to systems with their faction presence
    * Wrap OSD titles as necessary
    * Don't allow illegal characters in pilot name
+   * Be kinder to old video drivers
 
-* 0.9.0 (since beta.1)
+* 0.9.0-beta.2
    * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
    * Fixed missing credits and translation coverage data
    * Improved phrasing
