@@ -45,8 +45,7 @@ local function turnon( p, po )
 
    -- Visual effect
    if mem.isp then
-      local dt_mod = player.dt_mod()
-      sfx_start:setPitch( dt_mod )
+      sfx_start:setPitch( player.dt_mod() )
       sfx_start:play()
       oshader:on()
    end
@@ -99,9 +98,8 @@ function update( p, po, dt )
             t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
             if mem.isp then
-               local dt_mod = player.dt_mod()
                sfx_start:stop()
-               sfx_bite:setPitch( dt_mod )
+               sfx_bite:setPitch( player.dt_mod() )
                sfx_bite:play()
                camera.shake( 0.8 )
             end
