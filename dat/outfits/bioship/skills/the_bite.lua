@@ -31,7 +31,7 @@ local function turnon( p, po )
    -- Must be roughly infront
    local tp = t:pos()
    local _m, a = (p:pos()-tp):polar()
-   if math.abs(math.fmod(p:dir()-a, math.pi*2)) > 10/math.pi then
+   if math.abs(math.fmod(p:dir()-a, math.pi*2)) > 30/math.pi then
       return false
    end
    po:state("on")

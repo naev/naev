@@ -202,7 +202,7 @@ function lunge( target )
       ai.poptask()
       return
    end
-   ai.face( target, nil, true )
+   ai.aim( target )
    ai.accel()
 end
 
