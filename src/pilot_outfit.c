@@ -513,7 +513,7 @@ int pilot_slotsCheckSafety( const Pilot *p )
  */
 int pilot_slotsCheckRequired( const Pilot *p )
 {
-   for (int i=0; i < array_size(p->outfits); i++)
+   for (int i=0; i<array_size(p->outfits); i++)
       if (p->outfits[i]->sslot->required && p->outfits[i]->outfit == NULL)
          return 0;
    return 1;
