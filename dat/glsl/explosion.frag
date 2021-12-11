@@ -134,10 +134,11 @@ vec4 effect( vec2 texture_coords )
    Squaring it we get pos^2 + 2 * pos * ray * t + t^2 = r^2
    Solve for value t we get quadratic equation:
       t^2 + (2*pos*ray)*t + (pos^2 - r^2) = 0
+   Also, express the pos^2 term as CAM_DIST*CAM_DIST since we've seen an old Radeon driver fail to recognize dot() as constexpr.
    */
    float b = dot( eye, ray ); /* We don't add the 2 here because
    it gets cancelled out by the 4 in the 4ac term in the sqrt. */
-   const float c = dot( eye, eye ) - RADIUS * RADIUS;
+   const float c = CAM_DIST * CAM_DIST - RADIUS * RADIUS;
    float h = b*b - c; /* inside the square root (b^2-4ac) */
    /* Imaginary solution - no real intersection, we're done here. */
    if (h < 0.0)
