@@ -9,7 +9,6 @@
   <price>{price}</price>
   <description>{desc}</description>
   <gfx_store>organic_plasma_s1.webp</gfx_store>
-  <cpu>0</cpu>
  </general>
  <specific type="bolt">
   <gfx>plasma.png</gfx>
