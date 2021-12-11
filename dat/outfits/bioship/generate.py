@@ -82,11 +82,13 @@ BioOutfit( "pincer.xml.template", {
     "desc":     N_("The Pincer Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
 } ).run( [N_("Pincer Organ I"), N_("Pincer Organ II")] )
 
-BioOutfit( "perleve_cerebrum.xml.template", {
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "small",
     "price":        lerpr(   0, 120e3 ),
     "mass":         14,
     "desc":         desc["brain"],
-    "typename":     typename["brain"],
+    "gfx_store":    "organic_core_s1.webp",
     "cpu":          lerpr(   3,   8 ),
     "shield" :      lerp(  160, 250 ),
     "shield_regen": lerp(    5,   9 ),
@@ -94,11 +96,13 @@ BioOutfit( "perleve_cerebrum.xml.template", {
     "energy_regen": lerp(   12,  19 ),
 } ).run( [N_("Perleve Cerebrum I"), N_("Perleve Cerebrum II")] )
 
-BioOutfit( "perlevis_gene_drive.xml.template", {
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "small",
     "price":        lerpr(   0, 140e3 ),
     "mass":         8,
     "desc":         desc["engine"],
-    "typename":     typename["engine"],
+    "gfx_store":    "organic_engine_fast_s1.webp",
     "thrust":       lerp(  145, 196 ),
     "turn":         lerp(  120, 160 ),
     "speed":        lerp(  255, 345 ),
@@ -107,21 +111,66 @@ BioOutfit( "perlevis_gene_drive.xml.template", {
     "engine_limit": lerp(  150, 150 ),
 } ).run( [N_("Perlevis Gene Drive I"), N_("Perlevis Gene Drive II")] )
 
-BioOutfit( "perlevis_cortex.xml.template", {
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "small",
     "price":        lerpr(   0, 130e3 ),
     "mass":         30,
     "desc":         desc["hull"],
-    "typename":     typename["hull"],
+    "gfx_store":    "organic_hull_t.webp",
     "cargo":        lerpr(   4, 4 ),
     "absorb":       lerpr(   0, 3 ),
     "armour":       lerp(   45, 65 )
 } ).run( [N_("Perlevis Cortex I"), N_("Perlevis Cortex II")] )
 
-BioOutfit( "immane_cerebrum.xml.template", {
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "small",
+    "price":        lerpr(   0, 210e3 ),
+    "mass":         50,
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_s2.webp",
+    "cpu":          lerpr(  14,  32 ),
+    "shield" :      lerp(  200, 310 ),
+    "shield_regen": lerp(    6,  10 ),
+    "energy":       lerp(  270, 400 ),
+    "energy_regen": lerp(   24,  34 ),
+} ).run( [N_("Laevum Cerebrum I"), N_("Laevum Cerebrum II")] )
+
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "small",
+    "price":        lerpr(   0, 90e3 ),
+    "mass":         15,
+    "desc":         desc["engine"],
+    "gfx_store":    "organic_engine_fast_s2.webp",
+    "thrust":       lerp(   85, 115 ),
+    "turn":         lerp(   70,  95 ),
+    "speed":        lerp(  190, 225 ),
+    "fuel":         500,
+    "energy_malus": lerp(    7,   7 ),
+    "engine_limit": lerp(  400, 400 ),
+} ).run( [N_("Laevis Gene Drive I"), N_("Laevis Gene Drive II")] )
+
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "small",
+    "price":        lerpr(   0, 240e3 ),
+    "mass":         60,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_s.webp",
+    "cargo":        lerpr(   9, 9 ),
+    "absorb":       lerpr(   3, 6 ),
+    "armour":       lerp(   75, 110 )
+} ).run( [N_("Laevis Cortex I"), N_("Laevis Cortex II")] )
+
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "large",
     "price":        lerpr(   0, 4e6 ),
     "mass":         1400,
     "desc":         desc["brain"],
-    "typename":     typename["brain"],
+    "gfx_store":    "organic_core_l2.webp",
     "cpu":          lerpr( 500, 1800 ),
     "shield" :      lerp(  700, 1200 ),
     "shield_regen": lerp(   12,  22 ),
@@ -129,11 +178,13 @@ BioOutfit( "immane_cerebrum.xml.template", {
     "energy_regen": lerp(  135, 170 ),
 } ).run( [N_("Immane Cerebrum I"), N_("Immane Cerebrum II"), N_("Immane Cerebrum III")] )
 
-BioOutfit( "immanis_gene_drive.xml.template", {
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "large",
     "price":        lerpr(   0, 3.6e6 ),
     "mass":         100,
     "desc":         desc["engine"],
-    "typename":     typename["engine"],
+    "gfx_store":    "organic_engine_fast_l2.webp",
     "thrust":       lerp(   26,  35 ),
     "turn":         lerp(   30,  45 ),
     "speed":        lerp(   55,  70 ),
@@ -142,11 +193,13 @@ BioOutfit( "immanis_gene_drive.xml.template", {
     "engine_limit": lerp( 8000, 8000 ),
 } ).run( [N_("Immanis Gene Drive I"), N_("Immanis Gene Drive II"), N_("Immanis Gene Drive III")] )
 
-BioOutfit( "immanis_cortex.xml.template", {
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "large",
     "price":        lerpr(   0, 2.9e6 ),
     "mass":         1950,
     "desc":         desc["hull"],
-    "typename":     typename["hull"],
+    "gfx_store":    "organic_hull_x.webp",
     "cargo":        lerpr(  90, 90 ),
     "absorb":       lerpr(  59, 80 ),
     "armour":       lerp( 1700, 2400 )

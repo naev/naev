@@ -3,7 +3,7 @@
  <general>
   <typename>{typename}</typename>
   <slot prop="bio_hull">structure</slot>
-  <size>large</size>
+  <size>{size}</size>
   <mass>{mass}</mass>
   <price>{price}</price>
   <description>{desc}</description>
