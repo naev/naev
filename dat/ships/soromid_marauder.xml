@@ -29,12 +29,12 @@
   <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0" />
   <weapon size="small" prop="bio_weapon" x="-2" y="9" h="-1" />
   <weapon size="small" prop="bio_weapon" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Brain Stage 1</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" prop="bio_systems">Light Brain Stage 1</utility>
+  <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Strong Gene Drive Stage 1</structure>
-  <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Shell Stage 1</structure>
+  <structure size="small" prop="bio_engines">Light Strong Gene Drive Stage 1</structure>
+  <structure size="small" prop="bio_hull">Light Shell Stage 1</structure>
   <structure size="small" />
  </slots>
  <stats>

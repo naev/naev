@@ -35,8 +35,8 @@
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="-20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="20" h="0" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
@@ -44,8 +44,8 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
