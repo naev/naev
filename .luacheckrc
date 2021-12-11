@@ -101,6 +101,7 @@ stds.AI.globals = {
    "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
+   "lunge",                     -- the_bite
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway

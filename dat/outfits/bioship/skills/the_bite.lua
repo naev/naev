@@ -40,7 +40,7 @@ local function turnon( p, po )
    mem.active = true
 
    p:control(true)
-   p:moveto( t:pos(), false, false )
+   p:pushtask( "lunge", t )
 
    -- Visual effect
    if mem.isp then
@@ -102,8 +102,6 @@ function update( p, po, dt )
          end
          local c = p:collisionTest( t )
          if not c then
-            p:taskClear()
-            p:moveto( t:pos(), false, false )
             po:progress( mem.timer / mem.duration )
          else
             -- Hit the enemy!
