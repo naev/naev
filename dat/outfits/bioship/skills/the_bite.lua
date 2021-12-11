@@ -1,7 +1,6 @@
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 
-local duration = 3 -- time to try to bite
 local cooldown = 15 -- cooldown time in seconds
 local oshader = osh.new([[
 #include "lib/blend.glsl"
@@ -37,7 +36,7 @@ local function turnon( p, po )
    end
    po:state("on")
    po:progress(1)
-   mem.timer = duration
+   mem.timer = mem.duration
    mem.active = true
 
    p:control(true)
@@ -66,6 +65,10 @@ local function turnoff( p, po )
    return true
 end
 
+
+--local o_base = outfit.get("The Bite")
+local o_lust = outfit.get("The Bite - Blood Lust")
+local o_improved = outfit.get("The Bite - Improved")
 function init( p, po )
    turnoff()
    mem.timer = nil
@@ -73,6 +76,16 @@ function init( p, po )
    po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
    oshader:force_off()
+
+   local o = po:outfit()
+   mem.improved = (o==o_improved)
+   mem.lust = mem.improved or (o==o_lust)
+
+   if mem.lust then
+      mem.duration = 5
+   else
+      mem.duration = 3
+   end
 end
 
 function update( p, po, dt )
@@ -91,12 +104,27 @@ function update( p, po, dt )
          if not c then
             p:taskClear()
             p:moveto( t:pos(), false, false )
-            po:progress( mem.timer / duration )
+            po:progress( mem.timer / mem.duration )
          else
-            -- Hit the enemy! TODO damage based on mass
+            -- Hit the enemy!
             local dmg = 4*math.pow(p:mass(), 0.7)
+            local ta = t:health(true)
+            if mem.improved then
+               dmg = dmg*1.5
+            end
+            --if mem.lust then
+               -- TODO lust bonus
+            --end
             t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
+            -- Do the healing
+            if mem.improved then
+               local heal = 0.25 * (ta - t:health(true))
+               local pa = p:health()
+               local ps = p:stats()
+               p:setHealth( math.min(100, pa+100*heal/ps.armour) )
+            end
+            -- Player effects
             if mem.isp then
                sfx_start:stop()
                sfx_bite:setPitch( player.dt_mod() )

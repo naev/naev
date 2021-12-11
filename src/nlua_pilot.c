@@ -3196,8 +3196,8 @@ static int pilotL_setTemp( lua_State *L )
  * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no stress
  *
  *    @luatparam Pilot p Pilot to set health of.
- *    @luatparam number armour Value to set armour to, should be double from 0-100 (in percent).
- *    @luatparam number shield Value to set shield to, should be double from 0-100 (in percent).
+ *    @luatparam[opt=current armour] number armour Value to set armour to, should be double from 0-100 (in percent).
+ *    @luatparam[opt=current shield] number shield Value to set shield to, should be double from 0-100 (in percent).
  *    @luatparam[opt=0] number stress Value to set stress (disable damage) to, should be double from 0-100 (in percent of current armour).
  * @luafunc setHealth
  */
@@ -3210,8 +3210,8 @@ static int pilotL_setHealth( lua_State *L )
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   a  = luaL_checknumber(L, 2);
-   s  = luaL_checknumber(L, 3);
+   a  = luaL_optnumber(L, 2, 100.*p->armour / p->armour_max);
+   s  = luaL_optnumber(L, 3, 100.*p->shield / p->shield_max);
    st = luaL_optnumber(L,4,0.);
 
    a  /= 100.;

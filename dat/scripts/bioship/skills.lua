@@ -33,22 +33,24 @@ skills.set.bite = {
       requires = { "bite2" },
       desc = function( p )
          local dmg = 4*math.pow(p:mass(), 0.7)
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +50% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
       end,
    },
    ["bite4"] = {
       name = _("Blood Lust"),
       tier = 4,
       requires = {"bite3"},
-      desc = _("damage bonus after biting"),
-      -- TODO
+      desc = _("Lung time increased to 5 seconds. On successful bite, weapon damage is increased by 25% for 10 seconds."),
+      outfit = "The Bite - Blood Lust",
+      slot = "the_bite",
    },
    ["bite5"] = {
       name = _("Strong Jaws"),
       tier = 5,
       requires = {"bite4"},
-      desc = _("more damage + healing based on armour damage"),
-      -- TODO
+      desc = _("Bite damage increased by 50%, and 25% of bitten armour is restored to the ship."),
+      outfit = "The Bite - Improved",
+      slot = "the_bite",
    },
 }
 
