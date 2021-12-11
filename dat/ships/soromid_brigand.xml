@@ -24,16 +24,16 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" locked="1" x="13" y="5" h="0" name="leftweap" />
-  <weapon size="small" prop="bio_weapon" locked="1" x="13" y="-5" h="0" name="rightweap"/>
+  <weapon size="small" prop="bio_weapon" x="13" y="5" h="0" name="leftweap" />
+  <weapon size="small" prop="bio_weapon" x="13" y="-5" h="0" name="rightweap"/>
   <weapon size="small" x="12" y="0" h="0" />
-  <utility size="small" prop="bio_systems" exclusive="1" required="1" locked="1" name="brain">Ultralight Brain Stage 1</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
-  <utility size="small" prop="bio_organ" locked="1" name="adrenal_gland" />
-  <utility size="small" prop="bio_organ" locked="1" name="the_bite" />
+  <utility size="small" prop="bio_systems" name="brain">Ultralight Brain Stage 1</utility>
+  <utility size="small" prop="accessory"/>
+  <utility size="small" prop="bio_organ" name="adrenal_gland" />
+  <utility size="small" prop="bio_organ" name="the_bite" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1" locked="1" name="genedrive">Ultralight Fast Gene Drive Stage 1</structure>
-  <structure size="small" prop="bio_hull" exclusive="1" required="1" locked="1" name="shell">Ultralight Shell Stage 1</structure>
+  <structure size="small" prop="bio_engines" name="genedrive">Ultralight Fast Gene Drive Stage 1</structure>
+  <structure size="small" prop="bio_hull" name="shell">Ultralight Shell Stage 1</structure>
   <structure size="small" />
  </slots>
  <stats>

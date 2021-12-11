@@ -32,19 +32,19 @@
  </characteristics>
  <slots>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" locked="1" name="leftweap"/>
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="leftweap"/>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" locked="1" name="rightweap"/>
+  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="rightweap"/>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
-  <utility size="large" prop="bio_systems" exclusive="1" required="1" locked="1" name="brain">Superheavy Brain Stage 1</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
-  <utility size="large" prop="bio_organ" locked="1" name="the_bite" />
-  <utility size="large" prop="bio_organ" locked="1" name="feral_rage" />
-  <utility size="large" prop="bio_organ" locked="1" name="primal_yell" />
+  <utility size="large" prop="bio_systems" name="brain">Superheavy Brain Stage 1</utility>
+  <utility size="large" prop="accessory"/>
+  <utility size="large" prop="bio_organ" name="the_bite" />
+  <utility size="large" prop="bio_organ" name="feral_rage" />
+  <utility size="large" prop="bio_organ" name="primal_yell" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="bio_engines" exclusive="1" required="1" locked="1" name="genedrive">Superheavy Strong Gene Drive Stage 1</structure>
-  <structure size="large" prop="bio_hull" exclusive="1" required="1" locked="1" name="shell">Superheavy Shell Stage 1</structure>
+  <structure size="large" prop="bio_engines" name="genedrive">Superheavy Strong Gene Drive Stage 1</structure>
+  <structure size="large" prop="bio_hull" name="shell">Superheavy Shell Stage 1</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

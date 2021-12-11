@@ -562,7 +562,6 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 {
    OutfitSlotSize base_size;
    char *buf;
-   const Outfit *o;
 
    /* Initialize. */
    memset( slot, 0, sizeof(ShipOutfitSlot) );
@@ -598,7 +597,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    //TODO: consider inserting those two parse blocks below inside the parse block above
 
    /* Parse exclusive flag, default false. */
-   xmlr_attr_int( node, "exclusive", slot->exclusive );
+   xmlr_attr_int_def( node, "exclusive", slot->exclusive, slot->exclusive );
    /* TODO: decide if exclusive should even belong in ShipOutfitSlot,
     * remove this hack, and fix slot->exclusive to slot->slot.exclusive
     * in it's two previous occurrences, meaning three lines above and 12
@@ -607,10 +606,10 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    slot->slot.exclusive = slot->exclusive;
 
    /* Parse required flag, default false. */
-   xmlr_attr_int( node, "required", slot->required );
+   xmlr_attr_int_def( node, "required", slot->required, slot->required );
 
    /* Parse locked flag, default false. */
-   xmlr_attr_int( node, "locked", slot->locked );
+   xmlr_attr_int_def( node, "locked", slot->locked, slot->locked );
 
    /* Name if applicable. */
    xmlr_attr_strd( node, "name", slot->name );
@@ -618,7 +617,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    /* Parse default outfit. */
    buf = xml_get(node);
    if (buf != NULL) {
-      o = outfit_get( buf );
+      const Outfit *o = outfit_get( buf );
       if (o == NULL)
          WARN( _("Ship '%s' has default outfit '%s' which does not exist."), temp->name, buf );
       slot->data = o;
