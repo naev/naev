@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Adrenal Gland III">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>The bioship adrenal gland organ is able to generate immense amounts of adrenaline from raw energy, allowing the ship to temporarily have augmented movement.</description>
+  <gfx_store>organic_engine_strong_s1.webp</gfx_store>
+  <limit>afterburner</limit>
+ </general>
+ <specific type="afterburner" group="8">
+  <rumble>0.7</rumble>
+  <sound>afterburner</sound>
+  <sound_off>afb_disengage</sound_off>
+  <thrust>350</thrust>
+  <speed>55</speed>
+  <energy>55</energy>
+  <mass_limit>300</mass_limit>
+  <heatup>13</heatup>
+  <heat_base>400</heat_base>
+  <heat_cap>650</heat_cap>
+  <time_mod>-25</time_mod>
+  <time_mod>+25</time_mod>
+ </specific>
+</outfit>

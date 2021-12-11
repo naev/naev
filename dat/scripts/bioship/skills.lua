@@ -63,7 +63,8 @@ skills.set.move = {
       name = _("Adrenal Gland I"),
       tier = 1,
       slot = "adrenal_gland",
-      desc = _("weak afterburner"),
+      outfit = "Adrenal Gland I",
+      desc = _("The ship is able to generate an overflow of adrenaline from energy, allowing for accelerated motion for a short time."),
       test = function( p )
          for k,o in ipairs(p:outfits()) do
             if o:typeBroad()=="Afterburner" then
@@ -81,8 +82,8 @@ skills.set.move = {
       requires = { "move1" },
       replaces = "move1",
       slot = "adrenal_gland",
-      desc = _("improved afterburner"),
-      -- TODO
+      outfit = "Adrenal Gland II",
+      desc = _("The adrenal gland is improved to both last longer and have a stronger effect, although at the cost of more energy usage."),
    },
    ["move3"] = {
       name = _("Wanderer"),
@@ -97,8 +98,8 @@ skills.set.move = {
       requires = { "move3" },
       replaces = "move2",
       slot = "adrenal_gland",
-      desc = _("+ time slowdown and mass limit")
-      -- TODO
+      outfit = "Adrenal Gland III",
+      desc = _("The intense adrenaline is also able to create an accelerated sense of time."),
    },
 }
 

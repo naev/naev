@@ -1378,6 +1378,9 @@ dat/outfits/biocore_shell/superheavy_shell_stage_x.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_1.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_2.xml
 dat/outfits/biocore_shell/ultralight_shell_stage_x.xml
+dat/outfits/bioship/skills/adrenal_gland_i.xml
+dat/outfits/bioship/skills/adrenal_gland_ii.xml
+dat/outfits/bioship/skills/adrenal_gland_iii.xml
 dat/outfits/bioship/skills/adrenaline_hormones.xml
 dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/compound_eyes.xml
