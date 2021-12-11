@@ -343,6 +343,15 @@ if buildExec.disabled() == false
       install_dir: ndata_path / 'dat/gettext_stats',
    )
 
+   gen_zip_overlay = find_program('utils/build/gen_zip_overlay.py')
+   zip_overlay = custom_target(
+      'zip_overlay',
+      command: [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()],
+      output: 'meson_overlay.zip',
+      depends: [authors, gettext_stats],
+      build_by_default: true
+   )
+
    naev_sh = configure_file(
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
@@ -350,8 +359,7 @@ if buildExec.disabled() == false
          'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path(),
-         'authors' : authors.full_path(),
-         'gettext_stats' : gettext_stats.full_path(),
+         'zip_overlay' : zip_overlay.full_path(),
       }
    )
 

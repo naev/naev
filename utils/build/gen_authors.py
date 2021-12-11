@@ -3,7 +3,6 @@
 import argparse
 import re
 import yaml
-import zipfile
 
 def main():
     ap = argparse.ArgumentParser()
@@ -15,9 +14,6 @@ def main():
     with open(args.output, 'w', encoding='utf-8') as out:
         out.write(open(args.preamble, encoding='utf-8').read())
         out.writelines(map('{}\n'.format, people))
-    # Also go behind Meson's back and save a zipfile that we can definitely use as a physfs overlay for naev.sh.
-    with zipfile.ZipFile(args.output + '.zip', 'w') as zout:
-        zout.write(args.output, 'AUTHORS')
 
 def authors(yaml_paths):
     ''' Yield all authors/contributors named in the **_LICENSE.yaml files. '''
