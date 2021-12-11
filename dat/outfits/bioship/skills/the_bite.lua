@@ -1,4 +1,5 @@
-local osh = require 'outfits.shaders'
+local osh   = require 'outfits.shaders'
+local audio = require 'love.audio'
 
 local duration = 3 -- time to try to bite
 local cooldown = 15 -- cooldown time in seconds
@@ -14,6 +15,9 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
    return color;
 }
 ]])
+
+local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
+local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
 
 local function turnon( p, po )
    -- Still on cooldown
@@ -40,7 +44,12 @@ local function turnon( p, po )
    p:moveto( t:pos(), false, false )
 
    -- Visual effect
-   if mem.isp then oshader:on() end
+   if mem.isp then
+      local dt_mod = player.dt_mod()
+      sfx_start:setPitch( dt_mod )
+      sfx_start:play()
+      oshader:on()
+   end
 
    return true
 end
@@ -89,7 +98,13 @@ function update( p, po, dt )
             local dmg = 4*math.pow(p:mass(), 0.7)
             t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
-            camera.shake( 0.5 )
+            if mem.isp then
+               local dt_mod = player.dt_mod()
+               sfx_start:stop()
+               sfx_bite:setPitch( dt_mod )
+               sfx_bite:play()
+               camera.shake( 0.8 )
+            end
             return turnoff( p, po )
          end
       end
