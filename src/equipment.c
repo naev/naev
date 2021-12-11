@@ -518,16 +518,19 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Must rechoose colour based on slot properties. */
       rc = dc;
       if (wgt->canmodify) {
-         if (lst[i].sslot->required)
+         if (lst[i].sslot->locked)
+            rc = NULL;
+         else if (lst[i].sslot->required)
             rc = &cBrightRed;
-         else if (lst[i].sslot->exclusive || lst[i].sslot->locked)
+         else if (lst[i].sslot->exclusive)
             rc = &cWhite;
          else if (lst[i].sslot->slot.spid != 0)
             rc = &cBlack;
       }
 
       /* Draw outline. */
-      toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
+      if (rc != NULL)
+         toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
       // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;

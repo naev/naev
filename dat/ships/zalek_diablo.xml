@@ -15,8 +15,8 @@
  <trail_generator x="-60" y="-10" h="-10" always_under="1">zalekL</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Za'lek") &gt; 50</cond>
- <condstr>You need at least 50 reputation with House Za'lek.</condstr>
+ <cond>faction.playerStanding("Za'lek") &gt; 70</cond>
+ <condstr>You need at least 70 reputation with House Za'lek.</condstr>
  <description>This carrier is the archetypical Za'lek warship. Virtually unarmored and equipped with heavy shields, they are meant to serve as a platform for devastating drone swarms, not frontline combat.</description>
  <health>
   <armour>1000</armour>
