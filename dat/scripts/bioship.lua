@@ -95,15 +95,6 @@ function bioship.window ()
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
-      s._conflicts = s._conflicts or {}
-      for i,c in ipairs(s.conflicts or {}) do
-         local s2 = skills[c]
-         s2._conflicts = s2._conflicts or {}
-         if not inlist( s2._conflicts, s ) then
-            table.insert( s2._conflicts, s )
-         end
-         table.insert( s._conflicts, s2 )
-      end
       s._requires = s._requires or {}
       local req = s.requires or {}
       for i,r in ipairs(req) do
@@ -138,9 +129,6 @@ function bioship.window ()
       end
       for i,r in ipairs(node._requires) do
          grp = create_group_rec( grp, r, x+i-1 )
-      end
-      for i,c in ipairs(node._conflicts) do
-         grp = create_group_rec( grp, c, x+i )
       end
       return grp
    end
@@ -210,14 +198,6 @@ function bioship.window ()
                   end
                   alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
                end
-               if #s._conflicts > 0 then
-                  local con = {}
-                  for j,c in ipairs(s._conflicts) do
-                     -- TODO colour code based on whether acquired
-                     table.insert( con, c.name )
-                  end
-                  alt = alt.."\n#b".._("Conflicts: ").."#0"..fmt.list( con )
-               end
                s.rx = px
                s.ry = py
                s.alt = alt
@@ -228,14 +208,6 @@ function bioship.window ()
                      y1 = py,
                      x2 = g.x+r.x,
                      y2 = r.y,
-                  } )
-               end
-               for j,c in ipairs(s._conflicts) do
-                  table.insert( skillslink, {
-                     x1 = px,
-                     y1 = py,
-                     x2 = g.x+c.x,
-                     y2 = c.y,
                   } )
                end
             end
@@ -253,11 +225,6 @@ function bioship.window ()
       end
       for k,r in ipairs(s._requires) do
          if not r.enabled then
-            return false
-         end
-      end
-      for k,c in ipairs(s._conflicts) do
-         if c.enabled then
             return false
          end
       end
