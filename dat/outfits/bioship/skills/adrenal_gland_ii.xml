@@ -2,7 +2,7 @@
 <outfit name="Adrenal Gland II">
  <general>
   <typename>Bioship Organ</typename>
-  <slot>utility</slot>
+  <slot prop="bio_organ">utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>0</price>
