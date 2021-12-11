@@ -5,7 +5,7 @@
  <GFX size="124" sx="12" sy="12">arx</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_soromid</sound>
  <class display="Bio-Carrier">Carrier</class>
  <price>8900000</price>
  <time_mod>1.5</time_mod>

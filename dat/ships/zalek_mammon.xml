@@ -5,7 +5,7 @@
  <GFX size="128" sx="12" sy="12">mammon_zalek</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class>Bulk Freighter</class>
  <price>4600000</price>
  <time_mod>1.375</time_mod>

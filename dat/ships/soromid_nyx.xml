@@ -5,7 +5,7 @@
  <GFX size="96" sx="10" sy="10">nyx</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>
  <price>2100000</price>
  <time_mod>1.25</time_mod>

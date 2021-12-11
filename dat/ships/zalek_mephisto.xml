@@ -5,7 +5,7 @@
  <GFX size="156" sx="12" sy="12">mephisto</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class>Battleship</class>
  <price>9100000</price>
  <time_mod>1.375</time_mod>

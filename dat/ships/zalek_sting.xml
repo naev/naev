@@ -5,7 +5,7 @@
  <GFX sx="10" sy="10">sting</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class>Corvette</class>
  <price>1300000</price>
  <time_mod>1</time_mod>

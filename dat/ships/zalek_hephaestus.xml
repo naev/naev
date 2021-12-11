@@ -5,7 +5,7 @@
  <GFX size="170" sx="12" sy="12">hephaestus</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class>Carrier</class>
  <price>16000000</price>
  <time_mod>1.5</time_mod>

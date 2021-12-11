@@ -5,7 +5,7 @@
  <GFX size="68">reaver</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
  <price>570000</price>
  <time_mod>0.9</time_mod>
