@@ -1,5 +1,6 @@
 local mt = require "merge_tables"
 local fmt = require "format"
+local luatk = require "luatk"
 
 local skills = {
    set = {},
@@ -63,7 +64,16 @@ skills.set.move = {
       tier = 1,
       slot = "adrenal_gland",
       desc = _("weak afterburner"),
-      -- TODO
+      test = function( p )
+         for k,o in ipairs(p:outfits()) do
+            if o:typeBroad()=="Afterburner" then
+               --if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
+               luatk.msg(_("Afterburner"),_("Your ship already has an afterburner equipped! Please remove to be able to learn this skill."))
+               return false
+            end
+         end
+         return true
+      end,
    },
    ["move2"] = {
       name = _("Adrenal Gland II"),

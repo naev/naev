@@ -262,7 +262,7 @@ function bioship.window ()
       s.enabled = false
    end
 
-   local function skill_enable( s )
+   local function skill_enable( p, s )
       local outfit = s.outfit or {}
       local slot   = s.slot
       if type(outfit)=="string" then
@@ -273,6 +273,9 @@ function bioship.window ()
       end
       if #outfit>0 and slot and #outfit ~= #slot then
          warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+      end
+      if s.test and not s.test(p) then
+         return false
       end
       for k,o in ipairs(outfit) do
          if slot then
@@ -290,6 +293,7 @@ function bioship.window ()
          player.shipvarPush( s.shipvar, true )
       end
       s.enabled = true
+      return true
    end
 
    local function skill_count()
@@ -314,12 +318,6 @@ function bioship.window ()
       for k,s in pairs(skills) do
          skill_disable( s )
       end
-      -- Add basic ones back
-      for k,s in pairs(skills) do
-         if s.tier == 0 then
-            skill_enable( s )
-         end
-      end
       skillpoints = stage - skill_count()
       skill_text()
    end
@@ -331,7 +329,7 @@ function bioship.window ()
    -- TODO handle elsewhere
    for k,s in ipairs(intrinsics) do
       if stage >= s.stage then
-         skill_enable( s )
+         skill_enable( pp, s )
       end
    end
 
@@ -384,9 +382,10 @@ function bioship.window ()
    function SkillIcon:clicked ()
       local s = self.skill
       if not s.enabled and skill_canEnable( s ) then
-         skill_enable( s )
-         skillpoints = skillpoints-1
-         skill_text()
+         if skill_enable( pp, s ) then
+            skillpoints = skillpoints-1
+            skill_text()
+         end
       end
    end
 
@@ -402,6 +401,7 @@ function bioship.window ()
    local inty = math.floor((#intrinsics+2)/3)
 
    local w, h = bx+sw*(skillx+intx+1)+40, by+sh*(math.max(skilly,inty)+1)+80
+   luatk.setDefaultFont( font )
    local wdw = luatk.newWindow( nil, nil, w, h )
    local function wdw_done( dying_wdw )
       dying_wdw:destroy()
