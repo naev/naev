@@ -1,8 +1,13 @@
-local luatk = require "luatk"
-local lg = require "love.graphics"
-local utility = require "pilotname.utility"
-local fmt = require "format"
-local bioskills = require "bioship.skills"
+--[[
+
+   BioShip skill and stage (level) handler
+
+--]]
+local luatk    = require "luatk"
+local lg       = require "love.graphics"
+local utility  = require "pilotname.utility"
+local fmt      = require "format"
+local bioskills= require "bioship.skills"
 
 local bioship = {}
 

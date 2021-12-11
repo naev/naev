@@ -299,7 +299,6 @@ skills.set.misc = {
 skills.ship["Soromid Brigand"] = {
    {
       name = _("Innate"),
-      stage = 0,
       outfit = {
          "Perleve Cerebrum I",
          "Perlevis Cortex I",
@@ -317,19 +316,16 @@ skills.ship["Soromid Brigand"] = {
    },
    {
       name = _("Cortex Growth I"),
-      stage = 1,
       outfit = "Perlevis Cortex II",
       slot = "shell",
    },
    {
       name = _("Gene Drive Growth I"),
-      stage = 2,
       outfit = "Perlevis Gene Drive II",
       slot = "genedrive",
    },
    {
       name = _("Weapon Organ Growth I"),
-      stage = 3,
       outfit = {
          "Pincer Organ II",
          "Pincer Organ II",
@@ -341,9 +337,113 @@ skills.ship["Soromid Brigand"] = {
    },
    {
       name = _("Cerebrum Growth I"),
-      stage = 4,
       outfit = "Perleve Cerebrum II",
       slot = "brain",
+   },
+}
+
+-- Marauder intrinsics
+skills.ship["Soromid Marauder"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Laevum Cerebrum I",
+         "Laevis Cortex I",
+         "Laevis Gene Drive I",
+         "Pincer Organ I",
+         "Pincer Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "leftweap",
+         "rightweap",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Laevis Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Laevis Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Laevum Cerebrum II",
+      slot = "brain",
+   },
+}
+
+-- Reaver intrinsics
+skills.ship["Soromid Reaver"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Laevum Cerebrum I",
+         "Laevis Cortex I",
+         "Laevis Gene Drive I",
+         "Pincer Organ I",
+         "Pincer Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "leftweap",
+         "rightweap",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Laevis Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Laevis Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Laevum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "rightweap",
+         "leftweap",
+      },
    },
 }
 
