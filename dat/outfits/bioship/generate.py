@@ -166,6 +166,143 @@ BioOutfit( "cortex.xml.template", {
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
+    "size":         "medium",
+    "price":        lerpr(   0, 330e3 ),
+    "mass":         90,
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_m1.webp",
+    "cpu":          lerpr(  60, 100 ),
+    "shield" :      lerp(  360, 550 ),
+    "shield_regen": lerp(    8,  13 ),
+    "energy":       lerp(  600, 900 ),
+    "energy_regen": lerp(   40,  56 ),
+} ).run( [N_("Mediocre Cerebrum I"), N_("Mediocre Cerebrum II")] )
+
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "medium",
+    "price":        lerpr(   0, 360e3 ),
+    "mass":         20,
+    "desc":         desc["engine"],
+    "gfx_store":    "organic_engine_fast_m1.webp",
+    "thrust":       lerp(   98, 130 ),
+    "turn":         lerp(   85, 115 ),
+    "speed":        lerp(  170, 230 ),
+    "fuel":         800,
+    "energy_malus": lerp(   10,  10 ),
+    "engine_limit": lerp(  550, 550 ),
+} ).run( [N_("Mediocris Gene Drive I"), N_("Mediocris Gene Drive II")] )
+
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "medium",
+    "price":        lerpr(   0, 360e3 ),
+    "mass":         110,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_m.webp",
+    "cargo":        lerpr(  18,  18 ),
+    "absorb":       lerpr(  11,  15 ),
+    "armour":       lerp(  170, 300 )
+} ).run( [N_("Mediocris Cortex I"), N_("Mediocris Cortex II")] )
+
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "medium",
+    "price":        lerpr(   0, 600e3 ),
+    "mass":         200,
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_m2.webp",
+    "cpu":          lerpr( 150, 250 ),
+    "shield" :      lerp(  400, 700 ),
+    "shield_regen": lerp(    9,  14 ),
+    "energy":       lerp( 1050, 1800 ),
+    "energy_regen": lerp(   62,  87 ),
+} ).run( [N_("Largum Cerebrum I"), N_("Largum Cerebrum II")] )
+
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "medium",
+    "price":        lerpr(   0, 360e3 ),
+    "mass":         25,
+    "desc":         desc["engine"],
+    "gfx_store":    "organic_engine_fast_m2.webp",
+    "thrust":       lerp(   75, 100 ),
+    "turn":         lerp(   70,  90 ),
+    "speed":        lerp(  130, 275 ),
+    "fuel":         800,
+    "energy_malus": lerp(   15,  15 ),
+    "engine_limit": lerp( 1200, 1200 ),
+} ).run( [N_("Largus Gene Drive I"), N_("Largus Gene Drive II")] )
+
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "medium",
+    "price":        lerpr(   0, 640e3 ),
+    "mass":         310,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_l.webp",
+    "cargo":        lerpr(  36,  36 ),
+    "absorb":       lerpr(  20,  30 ),
+    "armour":       lerp(  470, 660 )
+} ).run( [N_("Largus Cortex I"), N_("Largus Cortex II")] )
+
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "large",
+    "price":        lerpr(   0, 3e6 ),
+    "mass":         660,
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_l1.webp",
+    "cpu":          lerpr( 260, 350 ),
+    "shield" :      lerp(  600, 1050 ),
+    "shield_regen": lerp(   11,  19 ),
+    "energy":       lerp( 2500, 3375 ),
+    "energy_regen": lerp(  105, 135 ),
+} ).run( [N_("Ponderosum Cerebrum I"), N_("Ponderosum Cerebrum II")] )
+
+BioOutfit( "gene_drive.xml.template", {
+    "typename":     typename["engine"],
+    "size":         "large",
+    "price":        lerpr(   0, 11e6 ),
+    "mass":         75,
+    "desc":         desc["engine"],
+    "gfx_store":    "organic_engine_strong_l1.webp",
+    "thrust":       lerp(   34,  47 ),
+    "turn":         lerp(   35,  50 ),
+    "speed":        lerp(   65,  90 ),
+    "fuel":         2000,
+    "energy_malus": lerp(   25,  25 ),
+    "engine_limit": lerp( 4500, 4500 ),
+} ).run( [N_("Ponderosus Gene Drive I"), N_("Ponderosus Gene Drive II")] )
+
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "medium",
+    "price":        lerpr(   0, 22e6 ),
+    "mass":         1150,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_h.webp",
+    "cargo":        lerpr(  70,  70 ),
+    "absorb":       lerpr(  38,  56 ),
+    "armour":       lerp( 1200, 1650 ),
+} ).run( [N_("Ponderosus Cortex I"), N_("Ponderosus Cortex II")] )
+
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "large",
+    "price":        lerpr(   0, 4e6 ),
+    "mass":         1400,
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_l2.webp",
+    "cpu":          lerpr( 500, 1800 ),
+    "shield" :      lerp(  700, 1200 ),
+    "shield_regen": lerp(   12,  22 ),
+    "energy":       lerp( 3000, 5250 ),
+    "energy_regen": lerp(  135, 170 ),
+} ).run( [N_("Immane Cerebrum I"), N_("Immane Cerebrum II"), N_("Immane Cerebrum III")] )
+
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
     "size":         "large",
     "price":        lerpr(   0, 4e6 ),
     "mass":         1400,
