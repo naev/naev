@@ -5,7 +5,7 @@
  <GFX sx="12" sy="12">demon</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine_zalek</sound>
+ <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>
  <time_mod>1.25</time_mod>

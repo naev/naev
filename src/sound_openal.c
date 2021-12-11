@@ -101,6 +101,7 @@ typedef struct alGroup_s {
    int fade_timer; /**< Fadeout timer. */
    int speed; /**< Whether or not pitch affects. */
    double volume; /**< Volume of the group. */
+   double pitch; /**< Pitch of the group. */
 } alGroup_t;
 static alGroup_t *al_groups = NULL; /**< Created groups. */
 static int al_ngroups       = 0; /**< Number of created groups. */
@@ -1021,7 +1022,7 @@ void sound_al_setSpeed( double s )
       if (!g->speed)
          continue;
       for (int j=0; j<g->nsources; j++)
-         alSourcef( g->sources[j], AL_PITCH, s );
+         alSourcef( g->sources[j], AL_PITCH, s*g->pitch );
    }
    /* Check for errors. */
    al_checkErr();
@@ -1162,6 +1163,7 @@ int sound_al_createGroup( int size )
    g->state = VOICE_PLAYING;
    g->speed = 1;
    g->volume = 1.;
+   g->pitch = 1.;
 
    /* Allocate sources. */
    g->sources  = calloc( size, sizeof(ALuint) );
@@ -1322,6 +1324,16 @@ void sound_al_resumeGroup( int group )
    soundUnlock();
 }
 
+static void groupSpeedReset( alGroup_t *g )
+{
+   for (int i=0; i<g->nsources; i++) {
+      if (g->speed)
+         alSourcef( g->sources[i], AL_PITCH, sound_speed*g->pitch );
+      else
+         alSourcef( g->sources[i], AL_PITCH, 1. );
+   }
+}
+
 /**
  * @brief Sets the speed of the group.
  */
@@ -1331,7 +1343,10 @@ void sound_al_speedGroup( int group, int enable )
    if (g == NULL)
       return;
 
+   soundLock();
    g->speed = enable;
+   groupSpeedReset(g);
+   soundUnlock();
 }
 
 /**
@@ -1344,6 +1359,21 @@ void sound_al_volumeGroup( int group, double volume )
       return;
 
    g->volume = volume;
+}
+
+/**
+ * @brief Sets the pitch of the group.
+ */
+void sound_al_pitchGroup( int group, double pitch )
+{
+   alGroup_t *g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   soundLock();
+   g->pitch = pitch;
+   groupSpeedReset(g);
+   soundUnlock();
 }
 
 /**

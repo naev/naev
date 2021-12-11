@@ -139,7 +139,8 @@ typedef struct Ship_ {
    char* gui;        /**< Name of the GUI the ship uses by default. */
 
    /* Sound */
-   int sound;        /**< Sound motor uses. */
+   int sound;        /**< Sound engine uses. */
+   double engine_pitch; /**< Sets the base pitch of the engine. */
 
    /* Outfits */
    ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */

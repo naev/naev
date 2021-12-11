@@ -5,7 +5,7 @@
  <GFX sx="12" sy="12">vox</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine_soromid</sound>
+ <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>
  <price>14000000</price>
  <time_mod>1.375</time_mod>

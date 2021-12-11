@@ -73,6 +73,7 @@ void sound_pauseGroup( int group );
 void sound_resumeGroup( int group );
 void sound_speedGroup( int group, int enable );
 void sound_volumeGroup( int group, double volume );
+void sound_pitchGroup( int group, double pitch );
 
 /*
  * Environmental functions.

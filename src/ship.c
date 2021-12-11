@@ -777,6 +777,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       xmlr_strd(node,"GUI",temp->gui);
       if (xml_isNode(node,"sound")) {
+         xmlr_attr_float_def( node, "pitch", temp->engine_pitch, 1. );
          temp->sound = sound_get( xml_get(node) );
          continue;
       }

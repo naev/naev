@@ -5,7 +5,7 @@
  <GFX size="112" sx="12" sy="12">ira</GFX>
  <GUI>brushed</GUI>
  <rarity>2</rarity>
- <sound>engine_soromid</sound>
+ <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
  <price>5500000</price>
  <time_mod>1.375</time_mod>

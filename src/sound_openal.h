@@ -149,6 +149,7 @@ void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );
 void sound_al_speedGroup( int group, int enable );
 void sound_al_volumeGroup( int group, double volume );
+void sound_al_pitchGroup( int group, double pitch );
 
 /*
  * Env.
