@@ -301,20 +301,6 @@ BioOutfit( "cerebrum.xml.template", {
     "energy_regen": lerp(  135, 170 ),
 } ).run( [N_("Immane Cerebrum I"), N_("Immane Cerebrum II"), N_("Immane Cerebrum III")] )
 
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "large",
-    "price":        lerpr(   0, 4e6 ),
-    "mass":         1400,
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_l2.webp",
-    "cpu":          lerpr( 500, 1800 ),
-    "shield" :      lerp(  700, 1200 ),
-    "shield_regen": lerp(   12,  22 ),
-    "energy":       lerp( 3000, 5250 ),
-    "energy_regen": lerp(  135, 170 ),
-} ).run( [N_("Immane Cerebrum I"), N_("Immane Cerebrum II"), N_("Immane Cerebrum III")] )
-
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "large",
