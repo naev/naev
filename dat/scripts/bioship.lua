@@ -66,9 +66,9 @@ function bioship.window ()
       end
       if s.desc then
          if type(s.desc)=="function" then
-            alt = alt.."\n\n"..s.desc(pp)
+            alt = alt.."\n"..s.desc(pp)
          else
-            alt = alt.."\n\n"..s.desc
+            alt = alt.."\n"..s.desc
          end
       end
       local outfit = s.outfit

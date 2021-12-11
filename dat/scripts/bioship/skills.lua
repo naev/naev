@@ -447,6 +447,70 @@ skills.ship["Soromid Reaver"] = {
    },
 }
 
+-- Odiumintrinsics
+skills.ship["Soromid Odium"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Mediocre Cerebrum I",
+         "Mediocris Cortex I",
+         "Mediocris Gene Drive I",
+         "Pincer Organ I",
+         "Pincer Organ I",
+         "Pincer Organ I",
+      },
+      slot = {
+         "brain",
+         "shell",
+         "genedrive",
+         "weap1",
+         "weap2",
+         "weap3",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Mediocris Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Mediocris Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+         "weap3",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Mediocre Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Pincer Organ II",
+         "Pincer Organ II",
+         "Pincer Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+         "weap3",
+      },
+   },
+}
+
 -- Vox Intrinsics
 skills.ship["Soromid Vox"] = {
    {
