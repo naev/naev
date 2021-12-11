@@ -348,7 +348,10 @@ if buildExec.disabled() == false
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
    gen_zip_command += ['--cd', 'outfits/bioship']
    foreach target: bio_outfits
-     gen_zip_command += target.to_list()
+     # Meson 0.60 supports "gen_zip_command += target.to_list()", but until then...
+     foreach output: target.to_list()
+       gen_zip_command += output.full_path()
+     endforeach
    endforeach
    zip_overlay = custom_target(
       'zip_overlay',
