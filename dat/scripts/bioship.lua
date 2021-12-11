@@ -399,7 +399,7 @@ function bioship.window ()
       skilly = math.max( skilly, s.ry )
    end
    local intx = 3
-   local inty = math.floor((#intrinsics+1)/3+1)
+   local inty = math.floor((#intrinsics+2)/3)
 
    local w, h = bx+sw*(skillx+intx+1)+40, by+sh*(math.max(skilly,inty)+1)+80
    local wdw = luatk.newWindow( nil, nil, w, h )
