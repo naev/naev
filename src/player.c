@@ -1266,7 +1266,7 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
-   double pitch = 1.;
+   double pitch = 1., volume = 1.;
 
    /* Calculate engine sound to use. */
    if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
@@ -1279,6 +1279,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
       else {
          engsound = pplayer->ship->sound;
          pitch = pplayer->ship->engine_pitch;
+         volume = conf.engine_vol;
       }
    }
    else
@@ -1287,8 +1288,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    if (player_lastEngineSound != engsound) {
       sound_stopGroup( player_engine_group );
       if (engsound >= 0) {
-         sound_playGroup( player_engine_group, engsound, 0 );
          sound_pitchGroup( player_engine_group, pitch );
+         sound_volumeGroup( player_engine_group, volume );
+         sound_playGroup( player_engine_group, engsound, 0 );
       }
    }
    player_lastEngineSound = engsound;

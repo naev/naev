@@ -98,6 +98,7 @@ static void opt_audioDefaults( unsigned int wid, const char *str );
 static void opt_audioUpdate( unsigned int wid );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
 static void opt_setAudioLevel( unsigned int wid, const char *str );
+static void opt_setEngineLevel( unsigned int wid, const char *str );
 static void opt_beep( unsigned int wid, const char *str );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
@@ -826,6 +827,15 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
    dialogue_msgRaw( _("Defaults Restored"), _("Keybindings restored to defaults."));
 }
 
+static void opt_setEngineLevel( unsigned int wid, const char *str )
+{
+   char buf[32];
+   double vol = window_getFaderValue(wid, str);
+   conf.engine_vol = vol;
+   snprintf( buf, sizeof(buf), "Engine Volume: %.0f%%", vol*100. );
+   window_modifyText( wid, "txtEngine", buf );
+}
+
 /**
  * @brief Callback to set the sound or music level.
  *
@@ -835,9 +845,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
 static void opt_setAudioLevel( unsigned int wid, const char *str )
 {
    char buf[32], *widget;
-   double vol;
-
-   vol = window_getFaderValue(wid, str);
+   double vol = window_getFaderValue(wid, str);
    if (strcmp(str,"fadSound")==0) {
       sound_volume(vol);
       widget = "txtSound";
@@ -922,7 +930,7 @@ static void opt_audio( unsigned int wid )
    window_addFader( wid, x, y, cw, 20, "fadSound", 0., 1.,
          sound_getVolume(), opt_setAudioLevel );
    window_faderScrollDone( wid, "fadSound", opt_beep );
-   y -= 40;
+   y -= 30;
 
    /* Music fader. */
    window_addText( wid, x, y, cw, 20, 1, "txtMusic",
@@ -930,6 +938,15 @@ static void opt_audio( unsigned int wid )
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadMusic", 0., 1.,
          music_getVolume(), opt_setAudioLevel );
+   y -= 30;
+
+   /* Engine fader. */
+   window_addText( wid, x, y, cw, 20, 1, "txtEngine",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x, y, cw, 20, "fadEngine", 0., 1.,
+         conf.engine_vol, opt_setEngineLevel );
+   opt_setEngineLevel( wid, "fadEngine" );
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
@@ -968,6 +985,7 @@ static int opt_audioSave( unsigned int wid, const char *str )
    /* Faders. */
    conf.sound = window_getFaderValue(wid, "fadSound");
    conf.music = window_getFaderValue(wid, "fadMusic");
+   conf.engine_vol = window_getFaderValue(wid, "fadEngine");
 
    return 0;
 }
@@ -983,6 +1001,7 @@ static void opt_audioDefaults( unsigned int wid, const char *str )
    /* Faders. */
    window_faderValue( wid, "fadSound", SOUND_VOLUME_DEFAULT );
    window_faderValue( wid, "fadMusic", MUSIC_VOLUME_DEFAULT );
+   window_faderValue( wid, "fadEngine", ENGINE_VOLUME_DEFAULT );
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
@@ -1001,6 +1020,7 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
+   window_faderValue( wid, "fadMusic", conf.engine_vol );
 }
 
 /**
