@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="{name}">
+ <general>
+  <typename>{typename}</typename>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon</license>
+  <mass>75</mass>
+  <price>{price}</price>
+  <description>{desc}</description>
+  <gfx_store>organic_plasma_t.webp</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <gfx>massL.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.45</delay>
+  <speed>{speed}</speed>
+  <range>{range}</range>
+  <falloff>{falloff}</falloff>
+  <gfx_end>massL-end.png</gfx_end>
+  <energy>{energy}</energy>
+  <heatup>{heatup}</heatup>
+  <trackmin>5000</trackmin>
+  <trackmax>20000</trackmax>
+  <damage>
+   <type>impact</type>
+   <penetrate>100</penetrate>
+   <physical>{damage}</physical>
+  </damage>
+ </specific>
+</outfit>

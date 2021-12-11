@@ -151,3 +151,15 @@ BioOutfit( "immanis_cortex.xml.template", {
     "absorb":       lerpr(  59, 80 ),
     "armour":       lerp( 1700, 2400 )
 } ).run( [N_("Immanis Cortex I"), N_("Immanis Cortex II"), N_("Immanis Cortex III")] )
+
+BioOutfit( "claw.xml.template", {
+    "price" :   lerpr(   0, 125e3 ),
+    "desc":     N_("The Claw Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through even the strongest of armours."),
+    "damage":   lerp(   40,  80 ),
+    "energy":   174,
+    "range" :   lerp( 1700, 2400 ),
+    "falloff":  lerp( 1100, 1800 ),
+    "speed" :   lerp(  425, 600 ),
+    "heatup":   lerp(   25,  60 ),
+    "typename": N_("Bioship Weapon Organ"),
+} ).run( [N_("Claw Organ I"), N_("Claw Organ II"), N_("Claw Organ III"), N_("Claw Organ IV")] )

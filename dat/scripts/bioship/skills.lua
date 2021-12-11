@@ -344,8 +344,8 @@ skills.ship["Soromid Arx"] = {
          "Immanis Gene Drive I",
          "Immanis Cortex I",
          "Immane Cerebrum I",
-         "Pincer Organ I",
-         "Pincer Organ I",
+         "Claw Organ I",
+         "Claw Organ I",
       },
       slot = {
          "genedrive",
@@ -368,8 +368,8 @@ skills.ship["Soromid Arx"] = {
    {
       name = _("Weapon Organ Growth I"),
       outfit = {
-         "Pincer Organ II",
-         "Pincer Organ II",
+         "Claw Organ II",
+         "Claw Organ II",
       },
       slot = {
          "rightweap",
@@ -389,8 +389,8 @@ skills.ship["Soromid Arx"] = {
    {
       name = _("Weapon Organ Growth II"),
       outfit = {
-         "Pincer Organ II",
-         "Pincer Organ II",
+         "Claw Organ III",
+         "Claw Organ III",
       },
       slot = {
          "rightweap",
@@ -410,8 +410,8 @@ skills.ship["Soromid Arx"] = {
    {
       name = _("Weapon Organ Growth III"),
       outfit = {
-         "Pincer Organ II",
-         "Pincer Organ II",
+         "Claw Organ IV",
+         "Claw Organ IV",
       },
       slot = {
          "rightweap",
