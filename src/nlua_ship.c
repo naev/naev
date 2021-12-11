@@ -25,7 +25,7 @@
 /*
  * Prototypes.
  */
-static const OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id );
+static const ShipOutfitSlot* ship_outfitSlotFromID( const Ship *s, int id );
 
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
@@ -454,7 +454,7 @@ static int shipL_getSlots( lua_State *L )
  *    @param s Ship to get slot of.
  *    @param id ID to get slot of.
  */
-static const OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id )
+static const ShipOutfitSlot* ship_outfitSlotFromID( const Ship *s, int id )
 {
    const ShipOutfitSlot *outfit_arrays[] = {
          s->outfit_structure,
@@ -464,7 +464,7 @@ static const OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id )
    for (int i=0; i<3 ; i++) {
       int n = array_size(outfit_arrays[i]);
       if (id <= n)
-         return &outfit_arrays[i][ id-1 ].slot;
+         return &outfit_arrays[i][ id-1 ];
       id -= n;
    }
    return NULL;
@@ -484,8 +484,12 @@ static int shipL_fitsSlot( lua_State *L )
    const Ship *s  = luaL_validship(L,1);
    int id         = luaL_checkinteger(L,2);
    const Outfit *o= luaL_validoutfit(L,3);
-   const OutfitSlot *os = ship_outfitSlotFromID( s, id );
-   lua_pushboolean( L, outfit_fitsSlot( o, os ) );
+   const ShipOutfitSlot *ss = ship_outfitSlotFromID( s, id );
+   if (ss->locked) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+   lua_pushboolean( L, outfit_fitsSlot( o, &ss->slot ) );
    return 1;
 }
 

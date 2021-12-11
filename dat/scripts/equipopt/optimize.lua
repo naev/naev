@@ -284,22 +284,24 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Determine what outfits from outfit_list we can actually equip
    -- We actually remove duplicates too
    local usable_outfits = {}
-   local slots_base = ps:getSlots(true)
+   local slots_base = ps:getSlots()
    for m,o in ipairs(outfit_list) do
       if not usable_outfits[o] then
-         for k,v in ipairs( slots_base ) do
-            local ok = true
-            -- Afterburners will be ignored if the ship is too heavy
-            if o:type() == "Afterburner" then
-               local spec = o:specificstats()
-               if spec.mass_limit < 0.8*ss.engine_limit then
-                  ok = false
-               end
+         local ok = true
+         -- Afterburners will be ignored if the ship is too heavy
+         if o:type() == "Afterburner" then
+            local spec = o:specificstats()
+            if spec.mass_limit < 0.8*ss.engine_limit then
+               ok = false
             end
-            -- Check to see if fits slot
-            if ok and ps:fitsSlot( k, o ) then
-               usable_outfits[o] = true
-               break
+         end
+         if ok then
+            for k,v in ipairs(slots_base) do
+               -- Check to see if fits slot
+               if ps:fitsSlot( k, o ) then
+                  usable_outfits[o] = true
+                  break
+               end
             end
          end
       end
@@ -429,7 +431,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
-   for k,v in ipairs( slots_base ) do
+   for k,v in ipairs(slots_base) do
       local has_outfits = {}
       local outfitpos = {}
       for m,o in ipairs(outfit_list) do
