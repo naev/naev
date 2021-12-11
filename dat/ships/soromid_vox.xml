@@ -21,7 +21,6 @@
  <description>The Vox is the biggest vessel the Soromid field hands down. This battleship serves as the core of any given Soromid war fleet and only called upon in notable engagements.</description>
  <health>
   <armour>2000</armour>
-  <armour_regen>10.5</armour_regen>
  </health>
  <characteristics>
   <crew>42</crew>
@@ -30,27 +29,21 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" />
-  <utility size="large" prop="bio_systems">Superheavy Brain Stage 1</utility>
+  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" name="weap2" x="20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" name="weap3" x="-20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" name="weap4" x="-40" y="0" h="0" />
+  <weapon size="large" x="20" y="0" h="0" />
+  <weapon size="large" x="-20" y="0" h="0" />
+  <utility size="large" prop="bio_systems" name="brain">Superheavy Brain Stage 1</utility>
+  <utility size="large" prop="bio_organ" name="the_bite" />
+  <utility size="large" prop="bio_organ" name="feral_rage" />
+  <utility size="large" prop="bio_organ" name="primal_yell" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="bio_engines">Superheavy Strong Gene Drive Stage 1</structure>
-  <structure size="large" prop="bio_hull">Superheavy Shell Stage 1</structure>
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large" prop="bio_engines" name="genedrive">Superheavy Strong Gene Drive Stage 1</structure>
+  <structure size="large" prop="bio_hull" name="shell">Superheavy Shell Stage 1</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -59,7 +52,7 @@
   <armour_mod>90</armour_mod>
   <shield_mod>30</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <misc_instant_jump>1</misc_instant_jump>
+  <tur_damage>30</tur_damage>
  </stats>
  <tags>
   <tag>soromid</tag>

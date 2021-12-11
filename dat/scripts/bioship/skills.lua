@@ -336,6 +336,106 @@ skills.ship["Soromid Brigand"] = {
    },
 }
 
+-- Vox Intrinsics
+skills.ship["Soromid Vox"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Immanis Gene Drive I",
+         "Immanis Cortex I",
+         "Immane Cerebrum I",
+         "Claw Organ I",
+         "Claw Organ I",
+         "Claw Organ I",
+         "Claw Organ I",
+      },
+      slot = {
+         "genedrive",
+         "shell",
+         "brain",
+         "weap1",
+         "weap2",
+         "weap3",
+         "weap4",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Immanis Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Immanis Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Claw Organ II",
+         "Claw Organ II",
+         "Claw Organ II",
+         "Claw Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+         "weap3",
+         "weap4",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Immane Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Cortex Growth II"),
+      outfit = "Immanis Cortex III",
+      slot = "shell",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Claw Organ III",
+         "Claw Organ III",
+         "Claw Organ III",
+         "Claw Organ III",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+         "weap3",
+         "weap4",
+      },
+   },
+   {
+      name = _("Gene Drive Growth II"),
+      outfit = "Immanis Gene Drive III",
+      slot = "genedrive",
+   },
+   {
+      name = _("Cerebrum Growth II"),
+      outfit = "Immane Cerebrum III",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth III"),
+      outfit = {
+         "Claw Organ IV",
+         "Claw Organ IV",
+         "Claw Organ IV",
+         "Claw Organ IV",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+         "weap3",
+         "weap4",
+      },
+   },
+}
+
 -- Arx Intrinsics
 skills.ship["Soromid Arx"] = {
    {

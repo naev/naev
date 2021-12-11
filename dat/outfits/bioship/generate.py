@@ -131,15 +131,15 @@ BioOutfit( "immane_cerebrum.xml.template", {
 
 BioOutfit( "immanis_gene_drive.xml.template", {
     "price":        lerpr(   0, 3.6e6 ),
-    "mass":         80,
+    "mass":         100,
     "desc":         desc["engine"],
     "typename":     typename["engine"],
-    "thrust":       lerp(   31,  45 ),
-    "turn":         lerp(   34,  55 ),
-    "speed":        lerp(   61,  75 ),
+    "thrust":       lerp(   26,  35 ),
+    "turn":         lerp(   30,  45 ),
+    "speed":        lerp(   55,  70 ),
     "fuel":         1600,
-    "energy_malus": lerp(   50,  50 ),
-    "engine_limit": lerp( 6500, 6500 ),
+    "energy_malus": lerp(   45,  45 ),
+    "engine_limit": lerp( 8000, 8000 ),
 } ).run( [N_("Immanis Gene Drive I"), N_("Immanis Gene Drive II"), N_("Immanis Gene Drive III")] )
 
 BioOutfit( "immanis_cortex.xml.template", {
