@@ -18,7 +18,6 @@
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>
  <health>
   <armour>550</armour>
-  <armour_regen>4</armour_regen>
  </health>
  <characteristics>
   <crew>17</crew>
@@ -27,21 +26,19 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" x="-15" y="-10" h="-10" />
-  <weapon size="large" prop="bio_weapon" x="-15" y="10" h="-10" />
-  <weapon size="medium" prop="bio_weapon" x="20" y="0" h="-10" />
-  <weapon size="medium" prop="bio_weapon" x="4" y="-5" h="-10" />
-  <weapon size="medium" prop="bio_weapon" x="4" y="5" h="-10" />
-  <utility size="medium" prop="bio_systems">Medium-Heavy Brain Stage 1</utility>
+  <weapon size="large" prop="bio_weapon" name="weap1" x="-15" y="-10" h="-10" />
+  <weapon size="large" prop="bio_weapon" name="weap2" x="-15" y="10" h="-10" />
+  <weapon size="medium" prop="bio_weapon" name="weap3" x="20" y="0" h="-10" />
+  <weapon size="medium" x="4" y="-5" h="-10" />
+  <weapon size="medium" x="4" y="5" h="-10" />
+  <utility size="medium" prop="bio_systems" name="brain">Medium-Heavy Brain Stage 1</utility>
+  <utility size="medium" prop="bio_organ" name="the_bite" />
   <utility size="medium" prop="accessory" />
   <utility size="large" />
-  <utility size="large" />
   <utility size="medium" />
-  <utility size="medium" />
-  <structure size="medium" prop="bio_engines">Medium-Heavy Fast Gene Drive Stage 1</structure>
-  <structure size="medium" prop="bio_hull">Medium-Heavy Shell Stage 1</structure>
+  <structure size="medium" prop="bio_engines" name="genedrive">Medium-Heavy Fast Gene Drive Stage 1</structure>
+  <structure size="medium" prop="bio_hull" name="shell">Medium-Heavy Shell Stage 1</structure>
   <structure size="large" />
-  <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>

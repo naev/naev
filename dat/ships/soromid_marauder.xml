@@ -18,7 +18,6 @@
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>
   <armour>80</armour>
-  <armour_regen>3</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>
