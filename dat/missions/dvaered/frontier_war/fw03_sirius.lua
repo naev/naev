@@ -589,10 +589,9 @@ end
 
 -- Spawn Hamelsen and make her escape
 function spawnHamelsen( origin )
-   hamelsen = pilot.add( "Schroedinger", "Independent", origin )
+   hamelsen = pilot.add( "Schroedinger", "Independent", origin, _("Colonel Hamelsen") )
    hamelsen:setInvincible()
    hamelsen:setFaction("Warlords")
-   hamelsen:rename(_("Colonel Hamelsen"))
 
    hamelsen:comm( _("You won't catch me alive! Never!") )
    hamelsen:control()

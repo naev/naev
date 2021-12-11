@@ -132,11 +132,10 @@ function game_of_drones ()
    tk.msg(_([[On the intercom]]), fmt.f(_([["There! The tracker shows it must be here! It is right next to {pnt}! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]), {pnt=mem.t_pla[1]}))
    -- spawn drones
 
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], nil, {ai="trader"} ) -- prototype is a scout drone
+   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
-   t_drone:rename(_("Prototype Drone"))
    t_drone:setInvincible(true)
    t_drone:control()
    t_drone:setHilight(true)
@@ -237,11 +236,16 @@ end
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
    tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]]))
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()), nil, {ai="dummy"} ) -- prototype is a scout drone
+   t_drone = pilot.add(
+      "Za'lek Scout Drone",
+      "Za'lek",
+      vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()),
+      _("Prototype Drone"),
+      {ai="dummy"}
+   )
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
-   t_drone:rename(_("Prototype Drone"))
    t_drone:control()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)

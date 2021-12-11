@@ -193,14 +193,13 @@ function enter ()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, nil, {ai="guard"} )
+      mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, _("Interrogation Ship"), {ai="guard"} )
       local aimem = mainship:memory()
       aimem.aggressive = false -- only fight back
       aimem.guardpos = shippos -- Stay around origin
       aimem.guarddodist = 2500
       aimem.guardreturndist = 4000
       aimem.enemyclose = aimem.guarddodist
-      mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
       mainship:setHilight(true)

@@ -178,8 +178,7 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
-   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
-   majorTam:rename(_("Major Tam"))
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction("DHC")
@@ -207,8 +206,7 @@ function encounterWarlord( name, origin )
       pilot.clearSelect(f)
    end
 
-   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin )
-   warlord:rename( name )
+   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin, name )
    warlord:control(true)
    warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
 
@@ -343,9 +341,8 @@ function moreBadGuys()
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")
    end
-   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2 )
+   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2, _("Colonel Hamelsen") )
    buff:setFaction("Warlords")
-   buff:rename(_("Colonel Hamelsen"))
    buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")

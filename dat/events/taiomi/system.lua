@@ -29,10 +29,7 @@ function create ()
    local dfact = "Independent"
 
    local function addDrone( ship, pos, name )
-      local d = pilot.add( ship, dfact, pos )
-      if name then
-         d:rename( name )
-      end
+      local d = pilot.add( ship, dfact, pos, name )
       d:setVisplayer(true)
       d:setInvincible(true)
       d:setVel( vec2.new(0,0) )
@@ -41,27 +38,27 @@ function create ()
    end
 
    -- Scavenger
-   d_scavenger = addDrone( "Drone (Hyena)", vec2.new(500,200), "Scavenger Drone" )
+   d_scavenger = addDrone( "Drone (Hyena)", vec2.new(500,200), _("Scavenger Drone") )
    d_scavenger:face(pp)
    d_scavenger:setHilight(true)
    hook.pilot( d_scavenger, "hail", "hail_scavenger" )
 
    -- Philosopher
-   d_philosopher = addDrone( "Drone", vec2.new(1000,-500), "Philosopher Drone" )
+   d_philosopher = addDrone( "Drone", vec2.new(1000,-500), _("Philosopher Drone") )
    d_philosopher:face(pp)
    d_philosopher:setHilight(true)
    hook.pilot( d_philosopher, "hail", "hail_philosopher" )
 
    -- Worn-out Drone
-   d_wornout = addDrone( "Drone", vec2.new(-500,-300), "Worn-out Drone" )
+   d_wornout = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
    d_wornout:setHilight(true)
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
    -- Younglings  that follow around the player
-   d_young_a = addDrone( "Drone", vec2.new(-1000,0), "Curious Drone" )
+   d_young_a = addDrone( "Drone", vec2.new(-1000,0), _("Curious Drone") )
    d_young_a:follow(pp)
    hook.pilot( d_young_a, "hail", "hail_youngling" )
-   d_young_b = addDrone( "Drone", vec2.new(-1200,300), "Curious Drone" )
+   d_young_b = addDrone( "Drone", vec2.new(-1200,300), _("Curious Drone") )
    d_young_b:follow(pp)
    hook.pilot( d_young_b, "hail", "hail_youngling" )
 

@@ -77,9 +77,8 @@ function sys_enter ()
    if system.cur() == mem.t_sys[2] and mem.targetalive then
       local dist = rnd.rnd() * system.cur():radius() *1/2
       local location = vec2.newP(dist, rnd.angle())
-      target = pilot.add( "Soromid Odium", "Soromid", location )
+      target = pilot.add( "Soromid Odium", "Soromid", location, shpnm )
       target:control()
-      target:rename(shpnm)
       target:setFaction("Soromid")
       target:memory().aggressive = true
       target:setHilight(true)

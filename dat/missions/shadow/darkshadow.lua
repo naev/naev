@@ -53,7 +53,7 @@ function create()
    tk.msg(_("An urgent invitation"), fmt.f(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
     "Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
     The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]), {player=player.name(), pnt=seirplanet, sys=seirsys}))
-   mem.firstmarker = misn.markerAdd(seirplanet, "low")
+   mem.firstmarker = misn.markerAdd(seirsys, "low")
    accept() -- The player automatically accepts this mission.
 end
 
@@ -128,7 +128,7 @@ function joeBoard()
    local c = commodity.new(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
    player.unboard()
-   misn.markerMove(mem.marker, seirplanet)
+   misn.markerMove(mem.marker, seirsys)
    misn.osdActive(2)
    mem.stage = 5
 end
