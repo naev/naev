@@ -81,8 +81,8 @@ static void clear_newslines (void);
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
  */
-news_t* new_article(char* title, char* content, const char* faction, ntime_t date,
-    ntime_t date_to_rm)
+news_t* new_article( const char* title, const char* content,
+      const char* faction, ntime_t date, ntime_t date_to_rm )
 {
    news_t *article_ptr, *n_article;
 
