@@ -2347,6 +2347,7 @@ dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
+dat/events/bioship.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dev/system_tour.lua
 dat/events/discovery.lua
