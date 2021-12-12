@@ -162,6 +162,7 @@ function board ()
       { "Deliver Love",             "Love Letter" },
       --{ "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
       { "Operation Cold Metal",     "Left Boot" },
+      { "Black Cat",                "Black Cat Doll" },
    }
    -- Special case: this mission has multiple endings, and only one gives the reward.
    if var.peek( "flfbase_intro" ) == nil then

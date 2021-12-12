@@ -25,6 +25,7 @@
    * Wrap OSD titles as necessary
    * Don't allow illegal characters in pilot name
    * Be kinder to old video drivers
+   * More meow
 
 * 0.9.0-beta.2
    * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
