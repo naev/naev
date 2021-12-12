@@ -20,18 +20,10 @@ local function inlist( lst, item )
    return false
 end
 
-local stage, skills, intrinsics, skillpoints, skilltxt
-function bioship.window ()
-   local pp = player.pilot()
-   local ps = pp:ship()
-
-   -- Only bioships are good for now
-   if not ps:tags().bioship then
-      return
-   end
-
+local function _getskills( p )
    local skilllist = { "bite", "health", "attack", "misc", "plasma" }
    local maxtier = 3
+   local ps = p:ship()
    local pss = ps:size()
    if pss > 4 then
       maxtier = 5
@@ -42,9 +34,8 @@ function bioship.window ()
       table.insert( skilllist, "move" )
       table.insert( skilllist, "stealth" )
    end
-   -- TODO other ways of increasing tiers
-   skills = bioskills.get( skilllist )
-   intrinsics = bioskills.ship[ ps:nameRaw() ]
+   local skills = bioskills.get( skilllist )
+   local intrinsics = bioskills.ship[ ps:nameRaw() ]
 
    -- Filter out high tiers if necessary
    local nskills = {}
@@ -58,6 +49,139 @@ function bioship.window ()
    -- Set up some helper fields
    for k,s in ipairs(intrinsics) do
       s.stage = k
+   end
+   for k,s in pairs(skills) do
+      -- Tests outfits if they exist
+      if __debugging then
+         local outfit = s.outfit or {}
+         if type(outfit)=="string" then
+            outfit = {outfit}
+         end
+         for i,o in ipairs(outfit) do
+            if naev.outfit.get(o) == nil then
+               warn(fmt.f(_("Bioship skill '{skill}' can't find outfit '{outfit}'!"),{skill=k, outfit=o}))
+            end
+         end
+      end
+      s._requires = s._requires or {}
+      local req = s.requires or {}
+      for i,r in ipairs(req) do
+         local s2 = skills[r]
+         s2._required_by = s2._required_by or {}
+         if not inlist( s2._required_by, s ) then
+            table.insert( s2._required_by, s )
+         end
+         table.insert( s._requires, s2 )
+      end
+      s._required_by = s._required_by or {}
+   end
+
+   return skills, intrinsics, maxtier
+end
+
+local function skill_enable( p, s )
+   local outfit = s.outfit or {}
+   local slot   = s.slot
+   if type(outfit)=="string" then
+      outfit = {outfit}
+      if slot then
+         slot = {slot}
+      end
+   end
+   if #outfit>0 and slot and #outfit ~= #slot then
+      warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+   end
+   if s.test and not s.test(p) then
+      return false
+   end
+   for k,o in ipairs(outfit) do
+      if slot then
+         local sl = slot[k]
+         p:outfitRmSlot( sl )
+         p:outfitAddSlot( o, sl, true, true )
+      else
+         p:outfitAddIntrinsic( o )
+      end
+   end
+   if p == player.pilot() then
+      if s.id then
+         player.shipvarPush( s.id, true )
+      end
+      if s.shipvar then
+         player.shipvarPush( s.shipvar, true )
+      end
+   end
+   s.enabled = true
+   return true
+end
+
+local _maxstageSize = {
+   5,
+   6,
+   8,
+   9,
+   10,
+   12
+}
+function bioship.maxstage( p )
+   return _maxstageSize[ p:ship():size() ]
+end
+
+function bioship.simulate( p, stage )
+   if not p:ship():tags().bioship then
+      return
+   end
+
+   local skills, intrinsics, _maxtier = _getskills( p )
+
+   -- First handle intrinsics
+   for k,s in ipairs(intrinsics) do
+      if stage >= s.stage then
+         skill_enable( p, s )
+      end
+   end
+
+   local function skill_canEnable( s )
+      if s.stage then
+         return false
+      end
+      for k,r in ipairs(s._requires) do
+         if not r.enabled then
+            return false
+         end
+      end
+      return true
+   end
+
+   -- Simulate adding one by one randomly
+   for i=1,stage do
+      local a = {}
+      for k,s in pairs(skills) do
+         if skill_canEnable( skills, s ) then
+            table.insert( a, s )
+         end
+      end
+      local s = a[ rnd.rnd(1,#a) ]
+      skill_enable( p, s )
+   end
+end
+
+local stage, skills, intrinsics, skillpoints, skilltxt
+function bioship.window ()
+   local pp = player.pilot()
+   local ps = pp:ship()
+
+   -- Only bioships are good for now
+   if not ps:tags().bioship then
+      return
+   end
+
+   local maxtier
+   skills, intrinsics, maxtier = _getskills( pp )
+   -- TODO other ways of increasing tiers
+
+   -- Set up some helper fields for ease of display
+   for k,s in ipairs(intrinsics) do
       local alt = "#o"..s.name.."#0"
       if s.stage==1 then
          alt = alt.."\n".._("Always available")
@@ -85,32 +209,9 @@ function bioship.window ()
       s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
    end
    for k,s in pairs(skills) do
-      -- Tests outfits if they exist
-      if __debugging then
-         local outfit = s.outfit or {}
-         if type(outfit)=="string" then
-            outfit = {outfit}
-         end
-         for i,o in ipairs(outfit) do
-            if naev.outfit.get(o) == nil then
-               warn(fmt.f(_("Bioship skill '{skill}' can't find outfit '{outfit}'!"),{skill=k, outfit=o}))
-            end
-         end
-      end
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
-      s._requires = s._requires or {}
-      local req = s.requires or {}
-      for i,r in ipairs(req) do
-         local s2 = skills[r]
-         s2._required_by = s2._required_by or {}
-         if not inlist( s2._required_by, s ) then
-            table.insert( s2._required_by, s )
-         end
-         table.insert( s._requires, s2 )
-      end
-      s._required_by = s._required_by or {}
 
       s.enabled = player.shipvarPeek( s.id )
    end
@@ -120,8 +221,8 @@ function bioship.window ()
       if node._g then return grp end
       node._g= true
       node.x = x
-      grp.x  = math.min( grp.x, node.x )
-      grp.y  = math.min( grp.y, node.y )
+      grp.x  = math.min( grp.x,  node.x )
+      grp.y  = math.min( grp.y,  node.y )
       grp.x2 = math.max( grp.x2, node.x )
       grp.y2 = math.max( grp.y2, node.y )
       table.insert( grp, node )
@@ -148,8 +249,6 @@ function bioship.window ()
          table.insert( groups, grp )
       end
    end
-   --table.sort( groups, function( a, b ) return #a-#b < 0 end ) -- Sort by largest first
-   --table.sort( groups, function( a, b ) return a.w*a.h > b.w*b.h end ) -- Sort by largest first
    table.sort( groups, function( a, b ) return a[1].name < b[1].name end ) -- Sort by name
 
    -- true if intersects
@@ -265,40 +364,6 @@ function bioship.window ()
          player.shipvarPop( s.shipvar )
       end
       s.enabled = false
-   end
-
-   local function skill_enable( p, s )
-      local outfit = s.outfit or {}
-      local slot   = s.slot
-      if type(outfit)=="string" then
-         outfit = {outfit}
-         if slot then
-            slot = {slot}
-         end
-      end
-      if #outfit>0 and slot and #outfit ~= #slot then
-         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
-      end
-      if s.test and not s.test(p) then
-         return false
-      end
-      for k,o in ipairs(outfit) do
-         if slot then
-            local sl = slot[k]
-            pp:outfitRmSlot( sl )
-            pp:outfitAddSlot( o, sl, true, true )
-         else
-            pp:outfitAddIntrinsic( o )
-         end
-      end
-      if s.id then
-         player.shipvarPush( s.id, true )
-      end
-      if s.shipvar then
-         player.shipvarPush( s.shipvar, true )
-      end
-      s.enabled = true
-      return true
    end
 
    local function skill_count()
