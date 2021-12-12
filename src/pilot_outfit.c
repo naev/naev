@@ -392,6 +392,7 @@ int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
 {
    PilotOutfitSlot *s;
+   int ret;
 
    if (!outfit_isMod(outfit)) {
       WARN(_("Instrinsic outfits must be modifiers!"));
@@ -402,7 +403,10 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit )
       pilot->outfit_intrinsic = array_create( PilotOutfitSlot );
 
    s = &array_grow( &pilot->outfit_intrinsic );
-   return pilot_addOutfitRaw( pilot, outfit, s );
+   ret = pilot_addOutfitRaw( pilot, outfit, s );
+   if (ret==0)
+      pilot_outfitLInit( pilot, s );
+   return ret;
 }
 
 /**
@@ -1208,7 +1212,7 @@ void pilot_outfitLInitAll( Pilot *pilot )
    for (int i=0; i<array_size(pilot->outfits); i++)
       pilot_outfitLInit( pilot, pilot->outfits[i] );
    for (int i=0; i<array_size(pilot->outfit_intrinsic); i++)
-      pilot_outfitLInit( pilot, pilot->outfits[i] );
+      pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
    /* Recalculate if anything changed. */
    if (pilotoutfit_modified)
       pilot_calcStats( pilot );
@@ -1275,11 +1279,14 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
 {
    if (po->outfit==NULL || !outfit_isMod(po->outfit))
       return 0;
-   if (po->outfit->u.mod.lua_init == LUA_NOREF)
+   if (po->outfit->u.mod.lua_env == LUA_NOREF)
       return 0;
 
    /* Create the memory if necessary and initialize stats. */
    pilot_outfitLmem( po );
+
+   if (po->outfit->u.mod.lua_init == LUA_NOREF)
+      return 0;
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_init); /* f */
