@@ -122,7 +122,7 @@ function land ()
       vn.done( zbh.zach.transition )
       vn.run()
 
-      zbh.unidiff( "sigma13_fixed1" )
+      zbh.unidiff( "sigma13_fixed2" )
 
       faction.modPlayer("Za'lek", zbh.fctmod.zbh02)
       player.pay( reward )
@@ -131,6 +131,7 @@ function land ()
    end
 end
 
+-- Set up seeing the feral bioship on the way back
 local firsttime = true
 function enter ()
    if system.cur() ~= retsys or not firsttime then
