@@ -53,6 +53,7 @@ void gettext_init()
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
+   free( gettext_systemLanguage );
    for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
       const char *language = getenv( env_vars[i] );
       if (language != NULL && *language != 0) {
@@ -60,6 +61,7 @@ void gettext_init()
          return; /* The first env var with language settings wins. */
       }
    }
+   gettext_systemLanguage = strdup( "" );
 }
 
 /**
