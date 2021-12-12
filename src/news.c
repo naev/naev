@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file news.c
  *
  * @brief Handles news generation.
  */
-
-
 /** @cond */
 #include <stdint.h>
 #include <stdlib.h>
@@ -33,7 +30,6 @@
 #include "nxml_lua.h"
 #include "space.h"
 #include "toolkit.h"
-
 
 #define NEWS_MAX_LENGTH       8192
 
@@ -128,7 +124,6 @@ news_t* new_article(char* title, char* content, const char* faction, ntime_t dat
    return n_article;
 }
 
-
 /**
  * @brief frees an article in the news list
  *    @param id the id of the article to remove
@@ -172,7 +167,6 @@ int free_article(int id)
    return 0;
 }
 
-
 /**
  * @brief Initiate news linked list with a stack
  */
@@ -189,13 +183,11 @@ int news_init (void)
    return 0;
 }
 
-
 /**
  * @brief Kills the old news thread
  */
 void news_exit (void)
 {
-   int i;
    news_t *article_ptr, *temp;
 
    if (news_list == NULL)
@@ -215,7 +207,7 @@ void news_exit (void)
       free(temp);
    }
 
-   for (i=0; i<array_size(news_lines); i++)
+   for (int i=0; i<array_size(news_lines); i++)
       free(news_lines[i]);
    array_free(news_lines);
    array_free(news_restores);
@@ -224,19 +216,14 @@ void news_exit (void)
    textlength  = 0;
 
    news_list = NULL;
-
 }
-
-
 
 /**
  * @brief gets the article with id ID, else NULL
  */
 news_t* news_get(int id)
 {
-   news_t *article_ptr;
-
-   article_ptr = news_list;
+   news_t *article_ptr = news_list;
 
    while ((article_ptr != NULL) && (article_ptr->id != id))
       article_ptr = article_ptr->next;
@@ -246,7 +233,6 @@ news_t* news_get(int id)
 
    return article_ptr;
 }
-
 
 /**
  * @brief Generates news from newslist from specific faction AND Generic news
@@ -312,7 +298,6 @@ int *generate_news( int faction )
    return 0;
 }
 
-
 /**
  * @brief Creates a news widget.
  *
@@ -351,19 +336,15 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
 }
 
-
-
 /* clears newslines for bar text, for when taking off */
 void clear_newslines (void)
 {
-   int i;
-   for (i=0; i<array_size(news_lines); i++)
+   for (int i=0; i<array_size(news_lines); i++)
       free(news_lines[i]);
 
    array_resize(&news_lines, 0);
    array_resize(&news_restores, 0);
 }
-
 
 /**
  * @brief Called when it's de-focused.
@@ -374,7 +355,6 @@ static void news_focusLose( unsigned int wid, const char* wgtname )
    (void) wgtname;
    news_drag = 0;
 }
-
 
 /**
  * @brief News widget mouse event handler.
@@ -429,7 +409,6 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
    return 0;
 }
 
-
 /**
  * @brief Renders a news widget.
  *
@@ -442,7 +421,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, s, m, p;
+   int s, m, p;
    unsigned int t;
    double y, dt;
 
@@ -478,7 +457,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
    y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
-   for (i=s; i<p; i++) {
+   for (int i=s; i<p; i++) {
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
             bx+10, by+y, &cFontGreen, -1., news_lines[i] );
@@ -514,11 +493,10 @@ static char* make_clean( char* unclean )
 
 }
 
-
 /*
  * @brief replace any \027 strings with the ascii character
  */
-static char* get_fromclean( char *clean)
+static char* get_fromclean( char *clean )
 {
    int line_max, i, j;
    char *new, *unclean;
@@ -547,7 +525,6 @@ static char* get_fromclean( char *clean)
 
    return unclean;
 }
-
 
 /*
  * @brief saves all current articles
@@ -593,7 +570,6 @@ int news_saveArticles( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Loads the player's active articles from a save, initilizes news
  *
@@ -622,8 +598,6 @@ int news_loadArticles( xmlNodePtr parent )
 
    return 0;
 }
-
-
 
 /**
  * @brief Parses articles
@@ -678,7 +652,6 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
 
       ntitle = get_fromclean(title);
       ndesc  = get_fromclean(desc);
-
 
       /* make the article*/
       n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
