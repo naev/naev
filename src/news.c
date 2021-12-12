@@ -411,13 +411,13 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-	 window_setFocus( wid, "cstNews" );
+    window_setFocus( wid, "cstNews" );
 
-	 news_drag = 1;
+    news_drag = 1;
          return 1;
 
       case SDL_MOUSEBUTTONUP:
-	 news_drag = 0;
+    news_drag = 0;
          break;
 
       case SDL_MOUSEMOTION:
