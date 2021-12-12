@@ -70,8 +70,6 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
-static char* make_clean( char* unclean );
-static char* get_fromclean( char *clean );
 static void clear_newslines (void);
 
 /**
@@ -468,65 +466,6 @@ static void news_render( double bx, double by, double w, double h, void *data )
 }
 
 /*
- * @brief replace ascii character 27 with the string "\027"
- */
-static char* make_clean( char* unclean )
-{
-   int i, j, l;
-   char *new;
-
-   l = 4*strlen(unclean)+1;
-   new = malloc( l );
-
-   for (i=0, j=0; unclean[i] != 0; i++, j++) {
-      if (unclean[i] == 27) {
-         new[j++] = '\\';
-         j += scnprintf( &new[j], l, "%.3d", unclean[i] )-1;
-      }
-      else
-         new[j] = unclean[i];
-   }
-
-   new[j] = 0;
-
-   return new;
-
-}
-
-/*
- * @brief replace any \027 strings with the ascii character
- */
-static char* get_fromclean( char *clean )
-{
-   int line_max, i, j;
-   char *new, *unclean;
-
-   line_max = 1024;
-   new = malloc(line_max);
-
-   for (i=0, j=0; clean[i] != 0; i++, j++) {
-      if  (j>=line_max-3) {
-         line_max = line_max*2;
-         new = realloc(new, line_max);
-      }
-      if (clean[i] == '\\' && clean[i+1] == '0' && clean[i+2] == '2' &&
-            clean[i+3] == '7') {
-         new[j] = 27;
-         i += 3;
-      }
-      else
-         new[j] = clean[i];
-   }
-   new[j] = 0;
-
-   unclean = strdup(new);
-
-   free(new);
-
-   return unclean;
-}
-
-/*
  * @brief saves all current articles
  *    @return 0 on success
  */
@@ -544,8 +483,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
             article_ptr->faction != NULL ) {
          xmlw_startElem(writer, "article");
 
-         ntitle = make_clean( article_ptr->title );
-         ndesc  = make_clean( article_ptr->desc );
+         ntitle = article_ptr->title;
+         ndesc  = article_ptr->desc;
 
          xmlw_attr(writer, "title", "%s", ntitle);
          xmlw_attr(writer, "desc", "%s", ndesc);
@@ -556,9 +495,6 @@ int news_saveArticles( xmlTextWriterPtr writer )
 
          if (article_ptr->tag != NULL)
             xmlw_attr(writer, "tag", "%s", article_ptr->tag);
-
-         free(ntitle);
-         free(ndesc);
 
          xmlw_endElem(writer); /* "article" */
       }
@@ -607,7 +543,7 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char *ntitle, *ndesc, *title, *desc, *faction;
+   char *title, *desc, *faction;
    char *buff;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
@@ -626,8 +562,6 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
          continue;
 
       /* Reset parameters. */
-      ntitle  = NULL;
-      ndesc   = NULL;
       title   = NULL;
       desc    = NULL;
       faction = NULL;
@@ -650,17 +584,12 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
 
       largestID = MAX(largestID, next_id + 1);
 
-      ntitle = get_fromclean(title);
-      ndesc  = get_fromclean(desc);
-
       /* make the article*/
-      n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
+      n_article = new_article(title, desc, faction, date, date_to_rm);
       /* Read optional tag. */
       xmlr_attr_strd(node, "tag", n_article->tag);
 
 cleanup:
-      free(ntitle);
-      free(ndesc);
       free(title);
       free(desc);
       free(faction);
