@@ -105,7 +105,7 @@ function update( p, po, dt )
             po:progress( mem.timer / mem.duration )
          else
             -- Hit the enemy!
-            local dmg = 4*math.pow(p:mass(), 0.7)
+            local dmg = 10*math.sqrt(p:mass())
             local ta = t:health(true)
             if mem.improved then
                dmg = dmg*1.5
