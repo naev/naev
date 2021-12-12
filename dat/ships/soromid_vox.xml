@@ -29,21 +29,21 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" name="weap2" x="20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" name="weap3" x="-20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" name="weap4" x="-40" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="0">Claw Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap2" x="20" y="0" h="0">Claw Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap3" x="-20" y="0" h="0">Claw Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap4" x="-40" y="0" h="0">Claw Organ I</weapon>
   <weapon size="large" x="20" y="0" h="0" />
   <weapon size="large" x="-20" y="0" h="0" />
-  <utility size="large" prop="bio_systems" name="brain">Superheavy Brain Stage 1</utility>
+  <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="primal_yell" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="bio_engines" name="genedrive">Superheavy Strong Gene Drive Stage 1</structure>
-  <structure size="large" prop="bio_hull" name="shell">Superheavy Shell Stage 1</structure>
+  <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive I</structure>
+  <structure size="large" prop="bio_hull" name="shell">Immanis Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

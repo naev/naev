@@ -451,7 +451,7 @@ skills.ship["Soromid Reaver"] = {
    },
 }
 
--- Odiumintrinsics
+-- Odium intrinsics
 skills.ship["Soromid Odium"] = {
    {
       name = _("Innate"),
