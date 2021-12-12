@@ -118,15 +118,14 @@ skills.set.stealth = {
       tier = 2,
       requires = { "stealth1" },
       desc = _("Gives a +40% speed bonus when stealthed."),
-      --outfit = "Hunter's Instinct",
-      -- TODO
+      outfit = "Hunter's Instinct",
    },
    ["stealth3"] = {
       name =_("Ambush Hunter"),
       tier = 3,
       requires = { "stealth2" },
-      desc = _("TODO temporary damage bonus after stealth"),
-      -- TODO
+      desc = _("+50% damage with weapons for 10 seconds after destealthing."),
+      outfit = "Ambush Hunter",
    },
    ["stealth4"] = {
       name =_("Silence"),
