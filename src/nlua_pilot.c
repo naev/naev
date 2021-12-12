@@ -2788,6 +2788,10 @@ static int pilotL_outfitSlot( lua_State *L )
    Pilot *p             = luaL_validpilot(L,1);
    const char *slotname = luaL_checkstring(L,2);
    PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
    if (s->outfit) {
       lua_pushoutfit(L,s->outfit);
       return 1;

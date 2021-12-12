@@ -31,8 +31,10 @@ local function _getskills( p )
    elseif pss > 2 then
       maxtier = 4
    end
-   if pss <= 4 then
+   if pss <= 3 then
       table.insert( skilllist, "move" )
+   end
+   if pss <= 4 then
       table.insert( skilllist, "stealth" )
    end
    local skills = bioskills.get( skilllist )

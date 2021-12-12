@@ -121,7 +121,10 @@ BioOutfit( "pincer.xml.template", {
     "heatup":   lerp(   25,  40 ),
     "typename": N_("Bioship Weapon Organ"),
     "desc":     N_("The Pincer Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
-} ).run( [N_("Pincer Organ I"), N_("Pincer Organ II")] )
+} ).run( [
+    N_("Pincer Organ I"),
+    N_("Pincer Organ II")
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -135,7 +138,10 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(    5,   9 ),
     "energy":       lerp(  130, 250 ),
     "energy_regen": lerp(   12,  19 ),
-} ).run( [N_("Perleve Cerebrum I"), N_("Perleve Cerebrum II")] )
+} ).run( [
+    N_("Perleve Cerebrum I"),
+    N_("Perleve Cerebrum II"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -150,7 +156,10 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         400,
     "energy_malus": lerp(    5,   5 ),
     "engine_limit": lerp(  150, 150 ),
-} ).run( [N_("Perlevis Gene Drive I"), N_("Perlevis Gene Drive II")] )
+} ).run( [
+    N_("Perlevis Gene Drive I"),
+    N_("Perlevis Gene Drive II"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -162,7 +171,10 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(   4, 4 ),
     "absorb":       lerpr(   0, 3 ),
     "armour":       lerp(   45, 65 )
-} ).run( [N_("Perlevis Cortex I"), N_("Perlevis Cortex II")] )
+} ).run( [
+    N_("Perlevis Cortex I"),
+    N_("Perlevis Cortex II"),
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -176,7 +188,10 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(    6,  10 ),
     "energy":       lerp(  270, 400 ),
     "energy_regen": lerp(   24,  34 ),
-} ).run( [N_("Laevum Cerebrum I"), N_("Laevum Cerebrum II")] )
+} ).run( [
+    N_("Laevum Cerebrum I"),
+    N_("Laevum Cerebrum II"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -191,7 +206,10 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         500,
     "energy_malus": lerp(    7,   7 ),
     "engine_limit": lerp(  400, 400 ),
-} ).run( [N_("Laevis Gene Drive I"), N_("Laevis Gene Drive II")] )
+} ).run( [
+    N_("Laevis Gene Drive I"),
+    N_("Laevis Gene Drive II"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -203,7 +221,10 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(   9, 9 ),
     "absorb":       lerpr(   3, 6 ),
     "armour":       lerp(   75, 110 )
-} ).run( [N_("Laevis Cortex I"), N_("Laevis Cortex II")] )
+} ).run( [
+    N_("Laevis Cortex I"),
+    N_("Laevis Cortex II"),
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -217,7 +238,10 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(    8,  13 ),
     "energy":       lerp(  600, 900 ),
     "energy_regen": lerp(   40,  56 ),
-} ).run( [N_("Mediocre Cerebrum I"), N_("Mediocre Cerebrum II")] )
+} ).run( [
+    N_("Mediocre Cerebrum I"),
+    N_("Mediocre Cerebrum II"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -232,7 +256,10 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         800,
     "energy_malus": lerp(   10,  10 ),
     "engine_limit": lerp(  550, 550 ),
-} ).run( [N_("Mediocris Gene Drive I"), N_("Mediocris Gene Drive II")] )
+} ).run( [
+    N_("Mediocris Gene Drive I"),
+    N_("Mediocris Gene Drive II"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -244,7 +271,10 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(  18,  18 ),
     "absorb":       lerpr(  11,  15 ),
     "armour":       lerp(  170, 300 )
-} ).run( [N_("Mediocris Cortex I"), N_("Mediocris Cortex II")] )
+} ).run( [
+    N_("Mediocris Cortex I"),
+    N_("Mediocris Cortex II")
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -258,7 +288,10 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(    9,  14 ),
     "energy":       lerp( 1050, 1800 ),
     "energy_regen": lerp(   62,  87 ),
-} ).run( [N_("Largum Cerebrum I"), N_("Largum Cerebrum II")] )
+} ).run( [
+    N_("Largum Cerebrum I"),
+    N_("Largum Cerebrum II"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -273,7 +306,10 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         800,
     "energy_malus": lerp(   15,  15 ),
     "engine_limit": lerp( 1200, 1200 ),
-} ).run( [N_("Largus Gene Drive I"), N_("Largus Gene Drive II")] )
+} ).run( [
+    N_("Largus Gene Drive I"),
+    N_("Largus Gene Drive II"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -285,7 +321,10 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(  36,  36 ),
     "absorb":       lerpr(  20,  30 ),
     "armour":       lerp(  470, 660 )
-} ).run( [N_("Largus Cortex I"), N_("Largus Cortex II")] )
+} ).run( [
+    N_("Largus Cortex I"),
+    N_("Largus Cortex II"),
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -299,7 +338,11 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(   11,  19 ),
     "energy":       lerp( 2500, 3375 ),
     "energy_regen": lerp(  105, 135 ),
-} ).run( [N_("Ponderosum Cerebrum I"), N_("Ponderosum Cerebrum II")] )
+} ).run( [
+    N_("Ponderosum Cerebrum I"),
+    N_("Ponderosum Cerebrum II"),
+    N_("Ponderosum Cerebrum III"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -314,7 +357,11 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         2000,
     "energy_malus": lerp(   25,  25 ),
     "engine_limit": lerp( 4500, 4500 ),
-} ).run( [N_("Ponderosus Gene Drive I"), N_("Ponderosus Gene Drive II")] )
+} ).run( [
+    N_("Ponderosus Gene Drive I"),
+    N_("Ponderosus Gene Drive II"),
+    N_("Ponderosus Gene Drive III"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -326,7 +373,11 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(  70,  70 ),
     "absorb":       lerpr(  38,  56 ),
     "armour":       lerp( 1200, 1650 ),
-} ).run( [N_("Ponderosus Cortex I"), N_("Ponderosus Cortex II")] )
+} ).run( [
+    N_("Ponderosus Cortex I"),
+    N_("Ponderosus Cortex II"),
+    N_("Ponderosus Cortex III"),
+] )
 
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
@@ -340,7 +391,11 @@ BioOutfit( "cerebrum.xml.template", {
     "shield_regen": lerp(   12,  22 ),
     "energy":       lerp( 3000, 5250 ),
     "energy_regen": lerp(  135, 170 ),
-} ).run( [N_("Immane Cerebrum I"), N_("Immane Cerebrum II"), N_("Immane Cerebrum III")] )
+} ).run( [
+    N_("Immane Cerebrum I"),
+    N_("Immane Cerebrum II"),
+    N_("Immane Cerebrum III"),
+] )
 
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
@@ -355,7 +410,11 @@ BioOutfit( "gene_drive.xml.template", {
     "fuel":         1600,
     "energy_malus": lerp(   45,  45 ),
     "engine_limit": lerp( 8000, 8000 ),
-} ).run( [N_("Immanis Gene Drive I"), N_("Immanis Gene Drive II"), N_("Immanis Gene Drive III")] )
+} ).run( [
+    N_("Immanis Gene Drive I"),
+    N_("Immanis Gene Drive II"),
+    N_("Immanis Gene Drive III"),
+] )
 
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -367,7 +426,11 @@ BioOutfit( "cortex.xml.template", {
     "cargo":        lerpr(  90, 90 ),
     "absorb":       lerpr(  59, 80 ),
     "armour":       lerp( 1700, 2400 )
-} ).run( [N_("Immanis Cortex I"), N_("Immanis Cortex II"), N_("Immanis Cortex III")] )
+} ).run( [
+    N_("Immanis Cortex I"),
+    N_("Immanis Cortex II"),
+    N_("Immanis Cortex III"),
+] )
 
 BioOutfit( "claw.xml.template", {
     "price" :   lerpr(   0, 125e3 ),
@@ -379,4 +442,9 @@ BioOutfit( "claw.xml.template", {
     "speed" :   lerp(  425, 600 ),
     "heatup":   lerp(   25,  60 ),
     "typename": N_("Bioship Weapon Organ"),
-} ).run( [N_("Claw Organ I"), N_("Claw Organ II"), N_("Claw Organ III"), N_("Claw Organ IV")] )
+} ).run( [
+    N_("Claw Organ I"),
+    N_("Claw Organ II"),
+    N_("Claw Organ III"),
+    N_("Claw Organ IV")
+] )
