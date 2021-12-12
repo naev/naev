@@ -2685,7 +2685,6 @@ dat/scripts/common/zalek_physics.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
-dat/scripts/equipopt/cores_soromid.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
 dat/scripts/equipopt/params.lua

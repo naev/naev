@@ -5,6 +5,7 @@
 --]]
 local optimize = {}
 local eparams = require 'equipopt.params'
+local bioship = require 'bioship'
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Create caches and stuff
@@ -256,6 +257,12 @@ function optimize.optimize( p, cores, outfit_list, params )
          return false
       end
       return true
+   end
+
+   -- Specila case bioships
+   if ps:tags().bioship then
+      local stage = bioship.maxstage( p )
+      bioship.simulate( p, rnd.rnd(1,stage) )
    end
 
    -- Handle cores

@@ -160,7 +160,7 @@ function bioship.simulate( p, stage )
    for i=1,stage do
       local a = {}
       for k,s in pairs(skills) do
-         if skill_canEnable( skills, s ) then
+         if skill_canEnable( s ) then
             table.insert( a, s )
          end
       end
