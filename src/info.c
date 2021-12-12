@@ -1284,7 +1284,7 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
-	 window_setFocus( wid, "lstLogEntries" );
+         window_setFocus( wid, "lstLogEntries" );
       }
       logWidgetsReady=1;
    }

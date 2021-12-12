@@ -971,7 +971,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-	 window_setFocus( wid, "cstSysEdit" );
+         window_setFocus( wid, "cstSysEdit" );
          lastClick = uniedit_lastClick;
          uniedit_lastClick = SDL_GetTicks();
 

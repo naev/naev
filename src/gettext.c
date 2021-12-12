@@ -57,7 +57,7 @@ void gettext_init()
       const char *language = getenv( env_vars[i] );
       if (language != NULL && *language != 0) {
          gettext_systemLanguage = strdup( language );
-	 return; /* The first env var with language settings wins. */
+         return; /* The first env var with language settings wins. */
       }
    }
 }

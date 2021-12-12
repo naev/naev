@@ -225,7 +225,7 @@ static int canvasL_set( lua_State *L )
       if (!previous_fbo_set) {
          previous_fbo = gl_screen.current_fbo;
          previous_fbo_set = 1;
-	 was_scissored = glIsEnabled(GL_SCISSOR_TEST);
+         was_scissored = glIsEnabled(GL_SCISSOR_TEST);
       }
       gl_screen.current_fbo = lc->fbo;
       glDisable(GL_SCISSOR_TEST);
