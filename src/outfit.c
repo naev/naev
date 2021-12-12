@@ -1537,7 +1537,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.lau.delay);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
-      xmlr_int(node,"reload_time",temp->u.lau.reload_time);
+      xmlr_float(node,"reload_time",temp->u.lau.reload_time);
       xmlr_float(node,"trackmin",temp->u.lau.trackmin);
       xmlr_float(node,"trackmax",temp->u.lau.trackmax);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
