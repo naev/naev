@@ -32,14 +32,14 @@
   <weapon size="medium" prop="bio_weapon" name="weap3" x="4" y="-2" h="-5" />
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
-  <utility size="medium" prop="bio_systems" name="brain">Medium Brain Stage 1</utility>
+  <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum I</utility>
   <utility size="medium" prop="bio_organ" name="the_bite" />
   <utility size="small" prop="bio_organ" name="adrenal_gland" />
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="bio_engines" name="genedrive">Medium Fast Gene Drive Stage 1</structure>
-  <structure size="medium" prop="bio_hull" name="shell">Medium Shell Stage 1</structure>
+  <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive I</structure>
+  <structure size="medium" prop="bio_hull" name="shell">Mediocris Cortex I</structure>
   <structure size="medium" />
   <structure size="medium" />
  </slots>
