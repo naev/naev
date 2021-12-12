@@ -256,6 +256,7 @@ typedef struct OutfitModificationData_ {
    int lua_cooldown; /**< Run when cooldown is started or stopped. */
    int lua_land;     /**< Run when the player lands. */
    int lua_takeoff;  /**< Run when the player takes off. */
+   int lua_jumpin;   /**< Run when the player jumps in. */
 } OutfitModificationData;
 
 /**

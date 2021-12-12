@@ -167,6 +167,7 @@ stds.PilotOutfit.globals={
    "ontoggle",
    "outofenergy",
    "takeoff",
+   "jumpin",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }

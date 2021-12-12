@@ -125,14 +125,14 @@ skills.set.stealth = {
       name =_("Ambush Hunter"),
       tier = 3,
       requires = { "stealth2" },
-      desc = _("temporary damage bonus after stealth"),
+      desc = _("TODO temporary damage bonus after stealth"),
       -- TODO
    },
    ["stealth4"] = {
       name =_("Silence"),
       tier = 4,
       requires = { "stealth3" },
-      desc = _("increased stealth"),
+      desc = _("Gives a 15% bonus to stealth."),
       outfit = "Silence",
    },
 }
@@ -172,7 +172,7 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("damage reflection?"),
+      desc = _("TODO damage reflection?"),
       -- TODO
    },
 }
@@ -191,7 +191,7 @@ skills.set.attack = {
       name = _("Adrenaline Hormones"),
       tier = 2,
       requires = { "attack1" },
-      desc = _("Gives a 8% bonus to weapon fire rate."),
+      desc = _("Gives a 8% bonus to both turret and forward weapon fire rate."),
       outfit = "Adrenaline Hormones",
    },
    ["attack3"] = {
@@ -206,8 +206,8 @@ skills.set.attack = {
       name = _("Antenna Sensitivity"),
       tier = 4,
       requires = { "attack3" },
-      desc = _("tracking bonus"),
-      -- TODO
+      desc = _("Gives a 30% tracking bonus."),
+      outfit = "Tracking Antennae",
    },
    ["attack5"] = {
       name = _("Feral Rage III"),
@@ -267,31 +267,36 @@ skills.set.misc = {
    ["misc1"] = {
       name = _("Cargo Sacs"),
       tier = 1,
-      desc = _("cargo bonus"),
+      desc = _("Increases cargo space by 100% and lowers cargo inertia by 50%."),
+      outfit = "Cargo Sacs",
    },
    ["misc2"] = {
       name = _("Fuel Bladder"),
       tier = 2,
       requires = { "misc1" },
-      desc = _("fuel bonus"),
+      desc = _("Increases fuel capacity by 100%."),
+      outfit = "Fuel Bladder",
    },
    ["misc3"] = {
       name = _("Adaptive Jump"),
       tier = 3,
       requires = { "misc2" },
-      desc = _("jump delay bonus"),
+      desc = _("Decreases jumping time by 50%, increases jump detection by 50%, and allowed jump distance by 100%."),
+      outfit = "Adaptive Jump",
    },
    ["misc4"] = {
       name = _("Enhanced Smell"),
       tier = 4,
       requires = { "misc3" },
-      desc = _("looting bonus"),
+      desc = _("Increases boarding loot bonus by 100%."),
+      outfit = "Enhanced Smell",
    },
    ["misc5"] = {
-      name = _("TODO"),
+      name = _("Tunnelling Organ"),
       tier = 5,
       requires = { "misc4" },
-      desc = _("TODO"),
+      desc = _("Allows for instant jumping and the ship performs an active cooldown cycle on each jump."),
+      outfit = "Tunnelling Organ",
    },
 }
 

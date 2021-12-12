@@ -1746,6 +1746,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_cooldown   = LUA_NOREF;
    temp->u.mod.lua_land       = LUA_NOREF;
    temp->u.mod.lua_takeoff    = LUA_NOREF;
+   temp->u.mod.lua_jumpin     = LUA_NOREF;
 
    do { /* load all the data */
       ShipStatList *ll;
@@ -2547,6 +2548,7 @@ int outfit_load (void)
          o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
          o->u.mod.lua_land       = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
          o->u.mod.lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
+         o->u.mod.lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
       }
    }
 

@@ -26,6 +26,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURN_MOD,         /**< Turn multiplier. */
    SS_TYPE_D_THRUST_MOD,       /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
+   SS_TYPE_D_FUEL_MOD,         /**< Fuel capacity multiplier. */
    SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
    SS_TYPE_D_SHIELD_MOD,       /**< Shield multiplier. */
@@ -216,6 +217,7 @@ typedef struct ShipStats_ {
 
    /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
+   double fuel_mod;           /**< Fuel capacity multiplier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
    double absorb;             /**< Flat damage absorption. */

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Adaptive Jump">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <jump_delay>-50</jump_delay>
+  <ew_jump_detect>50</ew_jump_detect>
+  <jump_distance>100</jump_distance>
+ </specific>
+</outfit>

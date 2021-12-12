@@ -1977,6 +1977,7 @@ void player_brokeHyperspace (void)
    pilot_outfitLInitAll( player.p );
 
    /* Safe since this is run in the player hook section. */
+   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
@@ -2922,6 +2923,7 @@ void player_runHooks (void)
       player_rmFlag( PLAYER_HOOK_HYPER );
    }
    if (player_isFlag( PLAYER_HOOK_JUMPIN)) {
+      pilot_outfitLOnjumpin( player.p );
       hooks_run( "jumpin" );
       hooks_run( "enter" );
       events_trigger( EVENT_TRIGGER_ENTER );

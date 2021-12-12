@@ -1457,6 +1457,7 @@ static int playerL_teleport( lua_State *L )
    ovr_initAlpha();
 
    /* Run hooks - order is important. */
+   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
