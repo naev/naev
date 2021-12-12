@@ -3440,6 +3440,9 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
       o = outfit_get( lua_tostring(naevL,-1) );
    else if (lua_isoutfit(naevL,-1))
       o = lua_tooutfit(naevL,-1);
+   else
+      WARN(_("Outfit '%s' in player save not found!"), name );
+
    lua_pop(naevL,1);
 
    return o;
@@ -4067,7 +4070,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
                continue;
             }
-            const Outfit *o = player_tryGetOutfit( xml_get(node), 1 );
+            const Outfit *o = player_tryGetOutfit( xml_get(cur), 1 );
             if (o!=NULL)
                pilot_addOutfitIntrinsic( ship, o );
          } while (xml_nextNode(cur));
