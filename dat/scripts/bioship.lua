@@ -8,6 +8,7 @@ local lg       = require "love.graphics"
 local utility  = require "pilotname.utility"
 local fmt      = require "format"
 local bioskills= require "bioship.skills"
+local biointrin= require "bioship.intrinsics"
 
 local bioship = {}
 
@@ -35,7 +36,7 @@ local function _getskills( p )
       table.insert( skilllist, "stealth" )
    end
    local skills = bioskills.get( skilllist )
-   local intrinsics = bioskills.ship[ ps:nameRaw() ]
+   local intrinsics = biointrin[ ps:nameRaw() ]
 
    -- Filter out high tiers if necessary
    local nskills = {}
