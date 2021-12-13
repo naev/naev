@@ -532,6 +532,7 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
+   HookParam hparam[5];
    Pilot *ship;
    Vector2d v;
    double dir;
@@ -608,6 +609,19 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Bind camera. */
    cam_setTargetPilot( player.p->id, 0 );
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = player.p->name;
+   hparam[1].type    = HOOK_PARAM_STRING;
+   hparam[1].u.str   = player.p->ship->name;
+   hparam[2].type    = HOOK_PARAM_STRING;
+   hparam[2].u.str   = ps->p->name;
+   hparam[3].type    = HOOK_PARAM_STRING;
+   hparam[3].u.str   = ps->p->ship->name;
+   hparam[4].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_swap", hparam );
+
    return;
 }
 

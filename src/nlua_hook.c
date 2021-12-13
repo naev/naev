@@ -50,6 +50,7 @@ static int hookL_outfitbuy( lua_State *L );
 static int hookL_outfitsell( lua_State *L );
 static int hookL_shipbuy( lua_State *L );
 static int hookL_shipsell( lua_State *L );
+static int hookL_shipswap( lua_State *L );
 static int hookL_equip( lua_State *L );
 static int hookL_input( lua_State *L );
 static int hookL_mouse( lua_State *L );
@@ -86,6 +87,7 @@ static const luaL_Reg hookL_methods[] = {
    { "equip", hookL_equip },
    { "ship_buy", hookL_shipbuy },
    { "ship_sell", hookL_shipsell },
+   { "ship_swap", hookL_shipswap },
    { "input", hookL_input },
    { "mouse", hookL_mouse },
    { "safe", hookL_safe },
@@ -689,6 +691,23 @@ static int hookL_shipbuy( lua_State *L )
 static int hookL_shipsell( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "ship_sell", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hooks the function to the player swapping their ship.
+ *
+ * The hook receives the name of the ship swapped to and the name of the ship swapped from (if applicable).
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc ship_swap
+ */
+static int hookL_shipswap( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "ship_swap", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

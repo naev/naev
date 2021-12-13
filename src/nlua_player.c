@@ -25,6 +25,7 @@
 #include "gui.h"
 #include "gui_omsg.h"
 #include "hook.h"
+#include "info.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
@@ -1528,7 +1529,7 @@ static int playerL_infoButtonRegister( lua_State *L )
    lua_pushvalue( L, 2 );
    id = info_buttonRegister( L, caption );
    lua_pushinteger(L,id);
-   return 0;
+   return 1;
 }
 
 /**

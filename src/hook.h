@@ -9,7 +9,7 @@
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
 
-#define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
+#define HOOK_MAX_PARAM  5 /**< Maximum hook params, to avoid dynamic allocation. */
 
 /**
  * @brief The hook parameter types.

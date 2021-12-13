@@ -9,6 +9,24 @@
 </event>
 --]]
 local fmt = require "format"
+local bioship = require "bioship"
+
+-- luacheck: globals update_bioship (Hook functions passed by name)
+
+local infobtn
+function update_bioship ()
+   local is_bioship = player.pilot():ship():tags().bioship
+   if is_bioship then
+      if not infobtn then
+         infobtn = player.infoButtonRegister( _("Bioship"), bioship.window )
+      end
+   else
+      if infobtn then
+         player.infoButtonUnregister( infobtn )
+         infobtn = nil
+      end
+   end
+end
 
 local remove_types = {
    ["Bioship Organ"] = true,
@@ -26,4 +44,9 @@ function create ()
          print(fmt.f(_("Removing unobtainable Bioship outfit '{outfit}'!"),{outfit=o}))
       end
    end
+
+   -- Try update
+   update_bioship()
+
+   hook.ship_swap( "update_bioship" )
 end
