@@ -530,7 +530,7 @@ He scoffs at you and closes the transmission.]]))
       if minerva.tokens_get() > harper_bribe_tkn then
          table.insert( opts, 1,
             { fmt.f(_([[Offer {bribe} (have {tokens})]]), {
-               brkbe = minerva.tokens_str( harper_bribe_tkn ),
+               bribe = minerva.tokens_str( harper_bribe_tkn ),
                tokens = minerva.tokens_str( minerva.tokens_get() ) }),
             "money_tkn" } )
       end
