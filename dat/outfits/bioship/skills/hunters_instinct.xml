@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/hidden.webp</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/hunters_instinct.lua</lua>

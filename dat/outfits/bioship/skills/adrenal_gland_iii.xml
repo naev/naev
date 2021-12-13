@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>The bioship adrenal gland organ is able to generate immense amounts of adrenaline from raw energy, allowing the ship to temporarily have augmented movement.</description>
-  <gfx_store>organic_engine_strong_s1.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/lightning-electron.webp</gfx_store>
   <limit>afterburner</limit>
  </general>
  <specific type="afterburner" group="8">

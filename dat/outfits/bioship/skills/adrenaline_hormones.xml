@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/internal-organ.webp</gfx_store>
  </general>
  <specific type="modification">
   <fwd_firerate>8</fwd_firerate>
