@@ -432,7 +432,7 @@ BioOutfit( "gene_drive.xml.template", {
     "price":        lerpr(   0, 11e6 ),
     "mass":         75,
     "desc":         desc["engine"],
-    "gfx_store":    "organic_engine_strong_l1.webp",
+    "gfx_store":    "organic_engine_fast_l1.webp",
     "thrust":       lerp(   34,  47 ),
     "turn":         lerp(   35,  50 ),
     "speed":        lerp(   65,  90 ),
