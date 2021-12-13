@@ -174,9 +174,11 @@ local stage, skills, intrinsics, skillpoints, skilltxt
 function bioship.window ()
    local pp = player.pilot()
    local ps = pp:ship()
+   local island = player.isLanded()
 
    -- Only bioships are good for now
    if not ps:tags().bioship then
+      warn(fmt.f(_("Tried to open bioship menu on non-bioship ship '{shipname}' of class '{class}'"),{shipname=pp, class=ps}))
       return
    end
 
@@ -326,6 +328,9 @@ function bioship.window ()
    end
 
    local function skill_canEnable( s )
+      if not island then
+         return false
+      end
       if skillpoints <= 0 then
          return false
       end
