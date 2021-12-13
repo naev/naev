@@ -157,7 +157,7 @@ They then lean it to whisper to you.
       cargo_space = true
    end
 
-   vn.na(fmt.f(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+   vn.na(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"))
    vn.run()
 
    if not cargo_space then
