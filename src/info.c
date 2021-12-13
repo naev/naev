@@ -186,7 +186,7 @@ static void info_buttonClick( unsigned int wid, const char *str )
 
       lua_rawgeti( btn->L, LUA_REGISTRYINDEX, btn->func );
       if (nlua_pcall( btn->env, 0, 0 )) {
-         WARN(_("Failure to run info button with id '%d'!"),btn->id);
+         WARN(_("Failure to run info button with id '%d':\n%s"),btn->id, lua_tostring(btn->L,-1));
          lua_pop(btn->L, 1);
       }
       return;
