@@ -106,6 +106,8 @@ static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
 static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
+static int playerL_infoButtonRegister( lua_State *L );
+static int playerL_infoButtonUnregister( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -157,6 +159,8 @@ static const luaL_Reg playerL_methods[] = {
    { "dt_mod", playerL_dt_mod },
    { "chapter", playerL_chapter },
    { "chapterSet", playerL_chapterSet },
+   { "infoButtonRegister", playerL_infoButtonRegister },
+   { "infoButtonUnregister", playerL_infoButtonUnregister },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1505,5 +1509,39 @@ static int playerL_chapterSet( lua_State *L )
    const char *str = luaL_checkstring(L,1);
    free( player.chapter );
    player.chapter = strdup(str);
+   return 0;
+}
+
+/**
+ * @brief Registers a button in the info window.
+ *
+ *    @luatparam string caption Caption of the button.
+ *    @luatparam function func Function to run when clicked.
+ *    @luatreturn number ID of the info window button for use with player.infoButtonUnregister.
+ * @luafunc infoButtonRegister
+ */
+static int playerL_infoButtonRegister( lua_State *L )
+{
+   int id;
+   const char *caption = luaL_checkstring( L, 1 );
+   luaL_checktype( L, 2, LUA_TFUNCTION );
+   lua_pushvalue( L, 2 );
+   id = info_buttonRegister( L, caption );
+   lua_pushinteger(L,id);
+   return 0;
+}
+
+/**
+ * @brief Unregisters a button in the info window.
+ *
+ *    @luatparam number ID of the button to unregister.
+ * @luafunc infoButtonUnregister
+ */
+static int playerL_infoButtonUnregister( lua_State *L )
+{
+   int id = luaL_checkinteger(L,1);
+   int ret = info_buttonUnregister( id );
+   if (ret != 0)
+      WARN(_("Failed to unregister info button with id '%d'!"), id);
    return 0;
 }

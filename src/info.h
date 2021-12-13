@@ -3,6 +3,8 @@
  */
 #pragma once
 
+#include "nlua.h"
+
 #define INFO_MAIN       0 /**< Main info window. */
 #define INFO_SHIP       1 /**< Ship info window. */
 #define INFO_WEAPONS    2 /**< Weapons info window. */
@@ -16,3 +18,8 @@
  */
 void menu_info( int window );
 void info_update (void);
+
+/* Custom buttons. */
+int info_buttonRegister( lua_State *L, const char *caption );
+int info_buttonUnregister( int id );
+void info_buttonClear (void);

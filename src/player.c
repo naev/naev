@@ -29,6 +29,7 @@
 #include "gui.h"
 #include "gui_omsg.h"
 #include "hook.h"
+#include "info.h"
 #include "input.h"
 #include "intro.h"
 #include "land.h"
@@ -715,6 +716,9 @@ void player_cleanup (void)
    gui_cleanup();
    player_guiCleanup();
    ovr_setOpen(0);
+
+   /* Clear up info buttons. */
+   info_buttonClear();
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++)

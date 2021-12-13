@@ -63,6 +63,20 @@ static const char *info_names[INFO_WINDOWS] = {
    N_("Ship log"),
 }; /**< Name of the tab windows. */
 
+/**
+ * @brief For use with registered info buttons.
+ */
+typedef struct InfoButton_s {
+   int id;        /**< Unique ID. */
+   char *caption; /**< Button caption. */
+   char button[32]; /**< Current button caption. */
+   /* Lua stuff .*/
+   lua_State *L;  /**< Lua state to use. */
+   nlua_env env;  /**< Runtime environment. */
+   int func;      /**< Function to call. */
+} InfoButton_t;
+static InfoButton_t *info_buttons = NULL;
+
 static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
@@ -116,6 +130,69 @@ static void mission_menu_update( unsigned int wid, const char *str );
 static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
 static void info_changeTab( unsigned int wid, const char *str, int old, int new );
+
+static void info_buttonFree( InfoButton_t *btn )
+{
+   free( btn->caption );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
+}
+
+int info_buttonRegister( lua_State *L, const char *caption )
+{
+   static int button_idgen = 0;
+   InfoButton_t *btn;
+
+   if (info_buttons == NULL)
+      info_buttons = array_create( InfoButton_t );
+
+   btn = &array_grow( &info_buttons );
+   btn->id     = ++button_idgen;
+   btn->caption= strdup( caption );
+   btn->button[0] = '\0';
+   btn->L      = L;
+   btn->env    = __NLUA_CURENV;
+   btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
+
+   return btn->id;
+}
+
+int info_buttonUnregister( int id )
+{
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (btn->id != id)
+         continue;
+      info_buttonFree( btn );
+      array_erase( &info_buttons, btn, btn+1 );
+      return 0;
+   }
+   return -1;
+}
+
+void info_buttonClear (void)
+{
+   for (int i=0; i<array_size(info_buttons); i++)
+      info_buttonFree( &info_buttons[i] );
+   array_free( info_buttons );
+   info_buttons = NULL;
+}
+
+static void info_buttonClick( unsigned int wid, const char *str )
+{
+   (void) wid;
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (strcmp( btn->button, str )!=0)
+         continue;
+
+      lua_pushvalue( btn->L, btn->func );
+      if (nlua_pcall( btn->env, 1, 0 )) {
+         WARN(_("Failure to run info button with id '%d'!"),btn->id);
+         lua_pop(btn->L, 1);
+      }
+      return;
+   }
+}
 
 /**
  * @brief Opens the information menu.
@@ -270,6 +347,14 @@ static void info_openMain( unsigned int wid )
    window_addButtonKey( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnShipAI", _("Ship AI"), info_shipAI, SDLK_a );
+
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
+      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            btn->button, btn->caption, info_buttonClick );
+   }
 
    buf = player_getLicenses();
    nlicenses = array_size( buf );
