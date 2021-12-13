@@ -29,10 +29,10 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="0">Claw Organ I</weapon>
-  <weapon size="large" prop="bio_weapon" name="weap2" x="20" y="0" h="0">Claw Organ I</weapon>
-  <weapon size="large" prop="bio_weapon" name="weap3" x="-20" y="0" h="0">Claw Organ I</weapon>
-  <weapon size="large" prop="bio_weapon" name="weap4" x="-40" y="0" h="0">Claw Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="0">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap2" x="20" y="0" h="0">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap3" x="-20" y="0" h="0">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap4" x="-40" y="0" h="0">Tentacle Organ I</weapon>
   <weapon size="large" x="20" y="0" h="0" />
   <weapon size="large" x="-20" y="0" h="0" />
   <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>

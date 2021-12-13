@@ -19,7 +19,7 @@
  <license>Heavy Combat Vessel</license>
  <cond>faction.playerStanding("Soromid") &gt; 60</cond>
  <condstr>You need at least 60 reputation with the Soromid.</condstr>
- <description>The Ira is a purpose-grown light cruiser commonly found leading Soromid forces. While its armor is somewhat weak, this rarely saves those met with its devastating barrage.</description>
+ <description>The Ira is a purpose-grown cruiser commonly found leading Soromid forces. While its armor is somewhat weak, this rarely saves those met with its devastating barrage.</description>
  <health>
   <armour>1700</armour>
  </health>
@@ -30,10 +30,10 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="2" />
-  <weapon size="large" prop="bio_weapon" name="weap2" x="25" y="0" h="2" />
-  <weapon size="large" prop="bio_weapon" name="weap3" x="12" y="-6" h="0" />
-  <weapon size="large" prop="bio_weapon" name="weap4" x="12" y="6" h="0" />
+  <weapon size="large" prop="bio_weapon" name="weap1" x="40" y="0" h="2">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap2" x="25" y="0" h="2">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap3" x="12" y="-6" h="0">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap4" x="12" y="6" h="0">Tentacle Organ I</weapon>
   <weapon size="large" x="0" y="0" h="7" />
   <weapon size="large" x="-15" y="0" h="7" />
   <weapon size="large" x="-33" y="0" h="7" />

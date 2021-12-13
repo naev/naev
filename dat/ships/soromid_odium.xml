@@ -27,9 +27,9 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" prop="bio_weapon" name="weap1" x="15" y="0" h="2" />
-  <weapon size="medium" prop="bio_weapon" name="weap2" x="4" y="2" h="-5" />
-  <weapon size="medium" prop="bio_weapon" name="weap3" x="4" y="-2" h="-5" />
+  <weapon size="medium" prop="bio_weapon" name="weap1" x="15" y="0" h="2">Talon Organ I</weapon>
+  <weapon size="medium" prop="bio_weapon" name="weap2" x="4" y="2" h="-5">Talon Organ I</weapon>
+  <weapon size="medium" prop="bio_weapon" name="weap3" x="4" y="-2" h="-5">Talon Organ I</weapon>
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum I</utility>

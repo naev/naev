@@ -25,8 +25,8 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" x="13" y="5" h="0" name="leftweap">Pincer Organ I</weapon>
-  <weapon size="small" prop="bio_weapon" x="13" y="-5" h="0" name="rightweap">Pincer Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" x="13" y="5" h="0" name="leftweap">Stinger Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" x="13" y="-5" h="0" name="rightweap">Stinger Organ I</weapon>
   <weapon size="small" x="12" y="0" h="0" />
   <utility size="small" prop="bio_systems" name="brain">Perleve Cerebrum I</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland" />

@@ -111,19 +111,35 @@ typename["hull"] = N_("Bioship Shell")
 ## BioOutfit generation rules.
 ## See comments in this directory's meson.build file: these rules must match the build rules.
 
-BioOutfit( "pincer.xml.template", {
+BioOutfit( "weapon.xml.template", {
+    "typename": N_("Bioship Weapon Organ"),
+    "size":     "small",
+    "license":  "Medium Weapon",
+    "mass":     6,
     "price" :   lerpr(   0, 20e3 ),
-    "damage":   lerp(    8,  17 ),
-    "energy":   4,
+    "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
+    "gfx_store":"organic_plasma_s1.webp",
+    "specific": "bolt",
+    "gfx":      "plasma.png",
+    "gfx_end":  "plasma2-end.png",
+    "sound":    "plasma",
+    "spfx_shield":"ShiS",
+    "spfx_armour":"PlaS2",
+    "delay":    0.8,
+    "speed" :   lerp(  550, 700 ),
     "range" :   lerp(  750, 900 ),
     "falloff":  lerp(  450, 750 ),
-    "speed" :   lerp(  550, 700 ),
+    "energy":   4,
     "heatup":   lerp(   25,  40 ),
-    "typename": N_("Bioship Weapon Organ"),
-    "desc":     N_("The Pincer Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
+    "trackmin": 0,
+    "trackmax": 2000,
+    "penetrate":lerpr(   0,   0 ),
+    "damage":   lerp(    8,  17 ),
+    "extra":    "<swivel>22</swivel>",
 } ).run( [
-    N_("Pincer Organ I"),
-    N_("Pincer Organ II")
+    N_("Stinger Organ I"),
+    N_("Stinger Organ II"),
+    N_("Stinger Organ III"), # TODO make stronger
 ] )
 
 BioOutfit( "cerebrum.xml.template", {
@@ -211,6 +227,38 @@ BioOutfit( "gene_drive.xml.template", {
     N_("Laevis Gene Drive II"),
 ] )
 
+BioOutfit( "weapon.xml.template", {
+    "typename": N_("Bioship Weapon Organ"),
+    "size":     "medium",
+    "license":  "Medium Weapon",
+    "mass":     30,
+    "price" :   lerpr(   0, 20e3 ),
+    "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
+    "gfx_store":"organic_plasma_s3.webp",
+    "specific": "bolt",
+    "gfx":      "plasma2.png",
+    "gfx_end":  "plasma2-end.png",
+    "sound":    "plasma",
+    "spfx_shield":"ShiS",
+    "spfx_armour":"PlaS2",
+    "delay":    1.2,
+    "speed" :   lerp(  550, 700 ),
+    "range" :   lerp(  900, 1100 ),
+    "falloff":  lerp(  750, 950 ),
+    "energy":   30,
+    "heatup":   lerp(   15,  30 ),
+    "trackmin": 0,
+    "trackmax": 3000,
+    "penetrate":lerpr(  18,  24 ),
+    "damage":   lerp(   19,  38 ),
+    "extra":    "<swivel>22</swivel>",
+} ).run( [
+    N_("Talon Organ I"),
+    N_("Talon Organ II"),
+    N_("Talon Organ III"),
+    N_("Talon Organ IV"),
+] )
+
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
@@ -259,6 +307,7 @@ BioOutfit( "gene_drive.xml.template", {
 } ).run( [
     N_("Mediocris Gene Drive I"),
     N_("Mediocris Gene Drive II"),
+    N_("Mediocris Gene Drive III"),
 ] )
 
 BioOutfit( "cortex.xml.template", {
@@ -324,6 +373,39 @@ BioOutfit( "cortex.xml.template", {
 } ).run( [
     N_("Largus Cortex I"),
     N_("Largus Cortex II"),
+    N_("Largus Cortex III"),
+] )
+
+BioOutfit( "weapon.xml.template", {
+    "typename": N_("Bioship Weapon Organ"),
+    "size":     "large",
+    "license":  "Heavy Weapon",
+    "mass":     75,
+    "price" :   lerpr(   0, 125e3 ),
+    "desc":     N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through even the strongest of armours."),
+    "gfx_store":"organic_plasma_t.webp",
+    "specific": "turret bolt",
+    "gfx":      "plasma.png",
+    "gfx_end":  "plasma2-end.png",
+    "sound":    "plasma",
+    "spfx_shield":"ShiM",
+    "spfx_armour":"PlaM",
+    "delay":    1.45,
+    "speed" :   lerp(  425, 600 ),
+    "range" :   lerp( 1700, 2400 ),
+    "falloff":  lerp( 1100, 1800 ),
+    "energy":   174,
+    "heatup":   lerp(   25,  60 ),
+    "trackmin": 5000,
+    "trackmax": 20000,
+    "penetrate":lerpr(  80, 100 ),
+    "damage":   lerp(   40,  80 ),
+    "extra":    "",
+} ).run( [
+    N_("Tentacle Organ I"),
+    N_("Tentacle Organ II"),
+    N_("Tentacle Organ III"),
+    N_("Tentacle Organ IV")
 ] )
 
 BioOutfit( "cerebrum.xml.template", {
@@ -430,21 +512,4 @@ BioOutfit( "cortex.xml.template", {
     N_("Immanis Cortex I"),
     N_("Immanis Cortex II"),
     N_("Immanis Cortex III"),
-] )
-
-BioOutfit( "claw.xml.template", {
-    "price" :   lerpr(   0, 125e3 ),
-    "desc":     N_("The Claw Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through even the strongest of armours."),
-    "damage":   lerp(   40,  80 ),
-    "energy":   174,
-    "range" :   lerp( 1700, 2400 ),
-    "falloff":  lerp( 1100, 1800 ),
-    "speed" :   lerp(  425, 600 ),
-    "heatup":   lerp(   25,  60 ),
-    "typename": N_("Bioship Weapon Organ"),
-} ).run( [
-    N_("Claw Organ I"),
-    N_("Claw Organ II"),
-    N_("Claw Organ III"),
-    N_("Claw Organ IV")
 ] )

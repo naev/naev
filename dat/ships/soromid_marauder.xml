@@ -26,8 +26,8 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" name="leftweap" x="-2" y="9" h="-1">Pincer Organ I</weapon>
-  <weapon size="small" prop="bio_weapon" name="rightweap" x="-2" y="-9" h="-1">Pincer Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" name="leftweap" x="-2" y="9" h="-1">Stinger Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" name="rightweap" x="-2" y="-9" h="-1">Stinger Organ I</weapon>
   <weapon size="medium" x="8" y="0" h="0" />
   <weapon size="medium" x="8" y="0" h="0" />
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>

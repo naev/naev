@@ -9,11 +9,12 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 # We're discussing ideas about how to reduce this duplication. For now, the build rules and generate.py blocks MUST MATCH.
 
 bio_outfits = [
-   custom_target('pincer_organ', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/pincer.xml.template'),
+   custom_target('stinger_organ', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/weapon.xml.template'),
       output: [
-        'pincer_organ_i.xml',
-        'pincer_organ_ii.xml',
+        'stinger_organ_i.xml',
+        'stinger_organ_ii.xml',
+        'stinger_organ_iii.xml',
       ],
    ),
    custom_target('perleve_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
@@ -58,6 +59,15 @@ bio_outfits = [
          'laevis_cortex_ii.xml',
       ],
    ),
+   custom_target('talon_organ', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/weapon.xml.template'),
+      output: [
+        'talon_organ_i.xml',
+        'talon_organ_ii.xml',
+        'talon_organ_iii.xml',
+        'talon_organ_iv.xml',
+      ],
+   ),
    custom_target('mediocre_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
       input: files('templates/cerebrum.xml.template'),
       output: [
@@ -70,6 +80,7 @@ bio_outfits = [
       output: [
          'mediocris_gene_drive_i.xml',
          'mediocris_gene_drive_ii.xml',
+         'mediocris_gene_drive_iii.xml',
       ],
    ),
    custom_target('mediocris_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
@@ -98,6 +109,7 @@ bio_outfits = [
       output: [
          'largus_cortex_i.xml',
          'largus_cortex_ii.xml',
+         'largus_cortex_iii.xml',
       ],
    ),
    custom_target('ponderosum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
@@ -148,13 +160,13 @@ bio_outfits = [
          'immanis_cortex_iii.xml',
       ],
    ),
-   custom_target('claw_organ', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/claw.xml.template'),
+   custom_target('tentacle_organ', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/weapon.xml.template'),
       output: [
-        'claw_organ_i.xml',
-        'claw_organ_ii.xml',
-        'claw_organ_iii.xml',
-        'claw_organ_iv.xml'
+        'tentacle_organ_i.xml',
+        'tentacle_organ_ii.xml',
+        'tentacle_organ_iii.xml',
+        'tentacle_organ_iv.xml'
       ],
    ),
 ]
