@@ -109,7 +109,7 @@ function create ()
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {mem.missys} ) )
+   misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {sys=mem.missys} ) )
    misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive."), {sys=mem.missys, fct=mem.paying_faction} ) )
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
