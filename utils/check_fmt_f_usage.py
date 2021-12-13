@@ -9,23 +9,30 @@
 # cd to the git repo root. (The script assumes it's working in a git checkout, not an extracted source tarball.)
 # Then just execute this script (no arguments).
 
-import collections
 import logging
 import re
-import subprocess
+import sys
 import tempfile
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
 
 def main():
-    #c = Counter()
+    errors = 0
+    for filename in sys.argv[1:] or all_files_in_repo():
+        for keys, tabkeys, fstr in analyze(filename):
+            errors += 1
+            print(f'In {filename} requested {keys} and provided {tabkeys}')
+            print(fstr)
+            print()
+    if errors:
+        sys.exit(f'The {sys.argv[0]} script reported {errors} errors. Please fix, or disable this step in .pre-commit-config.yaml in case of unfixable false positives.')
+
+def all_files_in_repo():
+    import subprocess
     with subprocess.Popen(['git', 'grep', '-Il', r'\<fmt\.f(', 'dat/**.lua'], stdout=subprocess.PIPE, encoding='utf-8') as pipe:
         for line in pipe.stdout:
-            for keys, tabkeys, fstr in analyze(line.rstrip()):
-                print(f'In {line.rstrip()} requested {keys} and provided {tabkeys}')
-                print(fstr)
-                print()
+            yield line.rstrip()
 
 def analyze(fn):
     with open(fn) as f:
