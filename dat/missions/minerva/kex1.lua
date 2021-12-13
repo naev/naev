@@ -181,7 +181,7 @@ He stops to think a bit.]]))
    kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear, right?"
 He looks at you with determination.
 "Given that the issue is the CEO, if we can somehow get rid of the CEO, there should be no issue, right?"]]))
-   kex(_([["Since I know for certain that he is involved in, let's call it, \"unsavory business\", all we have to do is get him busted and in the confusion it should be more than easy for me to go free."]]))
+   kex(_([["Since I know for certain that he is involved in, let's call it, "unsavory business", all we have to do is get him busted and in the confusion it should be more than easy for me to go free."]]))
    kex(_([[He looks down at the floor.
 "I know we've known each other for a relatively short time, but would you help a duck out? I might be able to make it worth your while afterwards."]]))
    vn.menu({
