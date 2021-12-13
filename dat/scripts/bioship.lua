@@ -131,6 +131,35 @@ function bioship.maxstage( p )
    return _maxstageSize[ p:ship():size() ]
 end
 
+function bioship.setstage( stage )
+   local pp = player.pilot()
+   local _skills, intrinsics, _maxtier = _getskills( pp )
+
+   -- Make sure to enable intrinsics if applicable
+   for k,s in ipairs(intrinsics) do
+      if stage >= s.stage then
+         skill_enable( pp, s )
+      end
+   end
+   player.shipvarPush("biostage",stage)
+end
+
+local function _skill_count( skills )
+   local n = 0
+   for k,s in pairs(skills) do
+      if s.tier~=0 and s.enabled then
+         n = n+1
+      end
+   end
+   return n
+end
+
+function bioship.skillpointsused ()
+   local pp = player.pilot()
+   local skills, _intrinsics, _maxtier = _getskills( pp )
+   return _skill_count( skills )
+end
+
 function bioship.simulate( p, stage )
    if not p:ship():tags().bioship then
       return
@@ -376,16 +405,6 @@ function bioship.window ()
       s.enabled = false
    end
 
-   local function skill_count()
-      local n = 0
-      for k,s in pairs(skills) do
-         if s.tier~=0 and s.enabled then
-            n = n+1
-         end
-      end
-      return n
-   end
-
    local function skill_text ()
       if not skilltxt then
          return
@@ -398,20 +417,12 @@ function bioship.window ()
       for k,s in pairs(skills) do
          skill_disable( s )
       end
-      skillpoints = stage - skill_count()
+      skillpoints = stage - _skill_count( skills )
       skill_text()
    end
 
    stage = player.shipvarPeek( "biostage" ) or 1
-   skillpoints = stage - skill_count()
-
-   -- Make sure to enable intrinsics if applicable
-   -- TODO handle elsewhere
-   for k,s in ipairs(intrinsics) do
-      if stage >= s.stage then
-         skill_enable( pp, s )
-      end
-   end
+   skillpoints = stage - _skill_count( skills )
 
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
