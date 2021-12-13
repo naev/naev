@@ -73,6 +73,7 @@ local bioship_parts = {
 
 
 function create ()
+   evt.finish()
    hook.pay( "pay" )
 end
 
