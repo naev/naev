@@ -5,6 +5,7 @@
 --]]
 local luatk    = require "luatk"
 local lg       = require "love.graphics"
+local lk       = require "love.keyboard"
 local utility  = require "pilotname.utility"
 local fmt      = require "format"
 local bioskills= require "bioship.skills"
@@ -215,6 +216,7 @@ function bioship.window ()
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
+      s.gfx = lg.newImage( "gfx/misc/icons/"..s.icon )
 
       s.enabled = player.shipvarPeek( s.id )
    end
@@ -293,9 +295,9 @@ function bioship.window ()
                local alt = "#o"..s.name.."#0"
                if s.desc then
                   if type(s.desc)=="function" then
-                     alt = alt.."\n\n"..s.desc(pp)
+                     alt = alt.."\n"..s.desc(pp)
                   else
-                     alt = alt.."\n\n"..s.desc
+                     alt = alt.."\n"..s.desc
                   end
                end
                if #s._requires > 0 then
@@ -444,7 +446,11 @@ function bioship.window ()
          lg.rectangle( "fill", x+10,y+10,70,70 )
       end
       lg.setColor( {1,1,1,1} )
-      lg.printf( self.skill.name, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
+      if s.gfx and not (lk.isDown("left ctrl") or lk.isDown("right ctrl")) then
+         s.gfx:draw( x+10, y+10, 0, 70/256, 70/256 )
+      else
+         lg.printf( self.skill.name, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
+      end
    end
    function SkillIcon:drawover( bx, by )
       local x, y = bx+self.x, by+self.y
