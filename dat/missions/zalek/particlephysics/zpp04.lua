@@ -63,8 +63,8 @@ function accept ()
    }
 
    vn.label("decline")
-   n(fmt.f(_([["OK. I'll try to figure something out…"
-She furrows her brow.]]),{pnt=destpnt}))
+   n(_([["OK. I'll try to figure something out…"
+She furrows her brow.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")

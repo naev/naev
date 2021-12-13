@@ -47,7 +47,7 @@ function accept ()
    vn.transition( zpp.noona.transition )
    vn.na(_([[You meet Noona who seems to be a bit more calm than usually.]]))
    n(fmt.f(_([["Thanks for all you've done for me. I've got a ton of data from the experiment that will take me a long time to process. In the meantime, I've written up a preliminary report that I would need taken to {pnt} in the {sys} system. I would go myself, except, I'm… a bit busy. Would you be willing to me this favour and deliver my report to {pnt}?"]]),
-      {pnt=destpnt, sys=destsys, credits=fmt.credits(reward)}))
+      {pnt=destpnt, sys=destsys}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
