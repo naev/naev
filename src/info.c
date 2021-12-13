@@ -101,7 +101,6 @@ static int logWidgetsReady=0;
 static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_setGui( unsigned int wid, const char *str );
-static void info_shipAI( unsigned int wid, const char *str );
 static void setgui_load( unsigned int wdw, const char *str );
 static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
@@ -185,8 +184,8 @@ static void info_buttonClick( unsigned int wid, const char *str )
       if (strcmp( btn->button, str )!=0)
          continue;
 
-      lua_pushvalue( btn->L, btn->func );
-      if (nlua_pcall( btn->env, 1, 0 )) {
+      lua_rawgeti( btn->L, LUA_REGISTRYINDEX, btn->func );
+      if (nlua_pcall( btn->env, 0, 0 )) {
          WARN(_("Failure to run info button with id '%d'!"),btn->id);
          lua_pop(btn->L, 1);
       }
@@ -344,9 +343,6 @@ static void info_openMain( unsigned int wid )
    window_addButtonKey( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
-   window_addButtonKey( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnShipAI", _("Ship AI"), info_shipAI, SDLK_a );
 
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
@@ -440,42 +436,6 @@ static void info_setGui( unsigned int wid, const char *str )
 
    /* default action */
    window_setAccept( wid, setgui_load );
-}
-
-/**
- * @brief Allows the player to set a different GUI.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void info_shipAI( unsigned int wid, const char *str )
-{
-   (void) wid;
-   (void) str;
-   size_t bufsize;
-   char *buf = ndata_read( SHIPAI_PATH, &bufsize );
-
-   nlua_env shipai_env = nlua_newEnv( 1 );
-   nlua_loadStandard( shipai_env );
-   nlua_loadTk( shipai_env );
-
-   if (nlua_dobufenv(shipai_env, buf, bufsize, SHIPAI_PATH) != 0) {
-      WARN( _("Error loading file: %s\n"
-            "%s\n"
-            "Most likely Lua file has improper syntax, please check"),
-            SHIPAI_PATH, lua_tostring(naevL,-1));
-      free(buf);
-      return;
-   }
-   free(buf);
-
-   nlua_getenv( shipai_env, "create" );
-   if (nlua_pcall( shipai_env, 0, 0 )) {
-      WARN( _("Ship AI: '%s'"), lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-
-   nlua_freeEnv( shipai_env );
 }
 
 /**

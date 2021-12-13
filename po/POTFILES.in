@@ -2384,6 +2384,7 @@ dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
 dat/events/restricted.lua
+dat/events/shipai.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
@@ -2766,7 +2767,6 @@ dat/scripts/vn/options.lua
 dat/scripts/vn/sdf.lua
 dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
-dat/shipai.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
