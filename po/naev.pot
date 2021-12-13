@@ -45505,8 +45505,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:184
 msgid ""
-"\"Since I know for certain that he is involved in, let's call it, \\"
-"\"unsavory business\\\", all we have to do is get him busted and in the "
+"\"Since I know for certain that he is involved in, let's call it, "
+"\"unsavory business\", all we have to do is get him busted and in the "
 "confusion it should be more than easy for me to go free.\""
 msgstr ""
 
