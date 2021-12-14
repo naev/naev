@@ -8,6 +8,10 @@
    * Bioships go rawr (new skill system)
    * 3 New missions
 
+* 0.9.0
+   * Fixed glitchy appearance of the map's mode menu
+   * Map mode is remembered throughout the gaming session
+
 * 0.9.0-beta.3
    * Fixed warning about cargo rush deliveries when you don't know the best route
    * Fixed another crash related to pilot removal
