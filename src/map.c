@@ -2618,7 +2618,6 @@ int localmap_isUseless( const Outfit *lmap )
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
-   StarSystem *sys;
    CstMapWidget *cst = calloc( 1, sizeof(CstMapWidget) );
 
    /* New widget. */
@@ -2636,13 +2635,8 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    /* Set zoom. */
    map_setZoom( wid, zoom );
 
-   /* Make sure selected is valid. */
-   /*
-   sys = system_getIndex( map_selected );
-   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
-         !sys_isKnown(sys) && !space_sysReachable(sys))
-      */
-      map_selectCur();
+   /* Should get overwritten later. */
+   map_selectCur();
 
    map_reset( cst, MAPMODE_TRAVEL );
 }
