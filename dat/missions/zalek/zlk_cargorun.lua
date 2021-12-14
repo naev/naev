@@ -68,7 +68,7 @@ function accept ()
 
       mem.marker = misn.markerAdd( mem.pickupSys, "low" )  -- pickup
       -- OSD
-      misn.osdCreate( _("Za'lek Cargo Monkey"), {
+      misn.osdCreate( _("Za'lek Cargo Jockey"), {
          fmt.f(_("Go pick up some equipment at {pnt} in the {sys} system"), {pnt=mem.pickupWorld, sys=mem.pickupSys}),
          fmt.f(_("Drop off the equipment at {pnt} in the {sys} system"), {pnt=mem.delivWorld, sys=mem.delivSys}),
       } )
