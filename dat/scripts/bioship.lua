@@ -22,6 +22,27 @@ local function inlist( lst, item )
    return false
 end
 
+local nextstage = 50
+function bioship.exptostage( stage )
+   local exp = 0
+   for i=1,stage do
+      exp = exp + nextstage * math.pow(1.5,i)
+   end
+   return math.floor(exp)
+end
+function bioship.curstage( exp, maxstage )
+   maxstage = maxstage or 30
+   local curstage
+   for i=1,maxstage do
+      curstage = i
+      nextstage = nextstage * math.pow(1.5,i)
+      if exp < nextstage then
+         break
+      end
+   end
+   return curstage
+end
+
 local function _getskills( p )
    local skilllist = { "bite", "health", "attack", "misc", "plasma" }
    local maxtier = 3
@@ -509,7 +530,17 @@ function bioship.window ()
       return true
    end
    wdw:setCancel( wdw_done )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=player.pilot():ship():name()}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=ps:name()}), nil, "center" )
+   local stagetxt
+   local maxstage = bioship.maxstage(pp)
+   if stage==maxstage then
+      stagetxt = "#g".._("Max Stage!").."#0"
+   else
+      local exp = player.shipvarPeek("bioshipexp") or 0
+      local nextexp = bioship.exptostage( stage+1 )
+      stagetxt = fmt.f(_("Current Experience: {exp} points ({nextexp} points until next stage)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
+   end
+   luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
    luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
       skill_reset()
    end )

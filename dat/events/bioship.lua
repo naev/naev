@@ -76,16 +76,7 @@ local function expstage ()
    local exp = player.shipvarPeek("bioshipexp") or 0
    local maxstage = bioship.maxstage( player.pilot() )
 
-   local curstage
-   local nextlevel = 100
-   for i=1,maxstage do
-      curstage = i
-      nextlevel = nextlevel * math.pow(1.5,i)
-      if exp < nextlevel then
-         break
-      end
-   end
-   return curstage
+   return bioship.curstage( exp, maxstage )
 end
 
 function bioship_land ()
