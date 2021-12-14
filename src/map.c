@@ -34,6 +34,17 @@
 #include "toolkit.h"
 #include "utf8.h"
 
+const double MAP_FLYTO_SPEED = 2000.; /**< Linear speeed at which the map flies to a location. */
+
+#define BUTTON_WIDTH    100 /**< Map button width. */
+#define BUTTON_HEIGHT   30 /**< Map button height. */
+
+#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
+
+#define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
+
+#define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
+
 /**
  * @brief Faction presence container to be used for the map information stuff.
  */
@@ -61,15 +72,6 @@ typedef struct CstMapWidget_ {
    double alpha_markers;   /**< Alpha for system markers. */
    MapMode mode;           /**< Default map mode. */
 } CstMapWidget;
-
-#define BUTTON_WIDTH    100 /**< Map button width. */
-#define BUTTON_HEIGHT   30 /**< Map button height. */
-
-#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
-
-#define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
-
-#define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
@@ -2077,7 +2079,8 @@ else (x) = MAX( y, (x) - dt )
    mod   = MOD(dx,dy);
    if (mod > 1e-5) {
       angle = ANGLE(dx,dy);
-      mod = MIN( mod, dt*1000.);
+      /* TODO we should really do this with some nicer easing. */
+      mod = MIN( mod, dt*MAP_FLYTO_SPEED);
       cst->xpos += mod * cos(angle);
       cst->ypos += mod * sin(angle);
    }
