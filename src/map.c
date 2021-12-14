@@ -115,6 +115,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_setup (void);
+static void map_updateAlpha( double dt );
 static void map_reset (void);
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
@@ -828,50 +829,13 @@ static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    double x,y,r;
-   double dt = naev_getrealdt();
    glColour col;
    StarSystem *sys;
-   double mapmin = 1.-map_minimal_mode;
+   double dt = naev_getrealdt();
 
    /* Update timer. */
-   map_dt += naev_getrealdt();
-
-#define AMAX(x) (x) = MIN( 1., (x) + dt )
-#define AMIN(x) (x) = MAX( 0., (x) - dt )
-#define ATAR(x,y) \
-if ((x) < y) (x) = MIN( y, (x) + dt ); \
-else (x) = MAX( y, (x) - dt )
-   switch (map_mode) {
-      case MAPMODE_TRAVEL:
-         ATAR( map_alpha_decorators, mapmin );
-         ATAR( map_alpha_faction, mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMAX( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMAX( map_alpha_markers );
-         break;
-
-      case MAPMODE_DISCOVER:
-         ATAR( map_alpha_decorators, 0.5 * mapmin );
-         ATAR( map_alpha_faction, 0.5 * mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMIN( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMIN( map_alpha_markers );
-         break;
-
-      case MAPMODE_TRADE:
-         AMIN( map_alpha_decorators );
-         AMIN( map_alpha_faction );
-         AMIN( map_alpha_env );
-         AMIN( map_alpha_path );
-         AMIN( map_alpha_names );
-         AMIN( map_alpha_markers );
-         break;
-   }
-#undef AMAX
-#undef AMIN
-#undef ATAR
+   map_dt += dt;
+   map_updateAlpha( dt );
 
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
@@ -2073,17 +2037,53 @@ void map_clear (void)
    map_selectCur();
 }
 
+static void map_updateAlpha( double dt )
+{
+   double mapmin = 1.-map_minimal_mode;
+#define AMAX(x) (x) = MIN( 1., (x) + dt )
+#define AMIN(x) (x) = MAX( 0., (x) - dt )
+#define ATAR(x,y) \
+if ((x) < y) (x) = MIN( y, (x) + dt ); \
+else (x) = MAX( y, (x) - dt )
+   switch (map_mode) {
+      case MAPMODE_TRAVEL:
+         ATAR( map_alpha_decorators, mapmin );
+         ATAR( map_alpha_faction, mapmin );
+         ATAR( map_alpha_env, mapmin );
+         AMAX( map_alpha_path );
+         AMAX( map_alpha_names );
+         AMAX( map_alpha_markers );
+         break;
+
+      case MAPMODE_DISCOVER:
+         ATAR( map_alpha_decorators, 0.5 * mapmin );
+         ATAR( map_alpha_faction, 0.5 * mapmin );
+         ATAR( map_alpha_env, mapmin );
+         AMIN( map_alpha_path );
+         AMAX( map_alpha_names );
+         AMIN( map_alpha_markers );
+         break;
+
+      case MAPMODE_TRADE:
+         AMIN( map_alpha_decorators );
+         AMIN( map_alpha_faction );
+         AMIN( map_alpha_env );
+         AMIN( map_alpha_path );
+         AMIN( map_alpha_names );
+         AMIN( map_alpha_markers );
+         break;
+   }
+#undef AMAX
+#undef AMIN
+#undef ATAR
+}
+
 static void map_reset (void)
 {
    double mapmin = 1.-map_minimal_mode;
-   cur_commod = -1;
-   map_mode = MAPMODE_TRAVEL;
-   map_alpha_decorators   = mapmin;
-   map_alpha_faction      = mapmin;
-   map_alpha_env          = mapmin;
-   map_alpha_path         = 1.;
-   map_alpha_names        = 1.;
-   map_alpha_markers      = 1.;
+   //cur_commod = -1;
+   //map_mode = MAPMODE_TRAVEL;
+   map_updateAlpha( 1000. );
 }
 
 /**
