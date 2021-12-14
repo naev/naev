@@ -33,7 +33,7 @@ function update_bioship ()
          local sp = stage - bioship.skillpointsused()
          local caption = _("Bioship")
          if sp > 0 then
-            caption = caption .. _(" #r!#0")
+            caption = caption .. _(" #r!!#0")
          end
          infobtn = player.infoButtonRegister( caption, bioship.window )
       end
