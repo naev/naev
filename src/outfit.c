@@ -1900,8 +1900,8 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       ShipStatList *ll;
 
       xml_onlyNodes(node);
-      xmlr_int(node,"delay",temp->u.bay.delay);
-      xmlr_int(node,"reload_time",temp->u.bay.reload_time);
+      xmlr_float(node,"delay",temp->u.bay.delay);
+      xmlr_float(node,"reload_time",temp->u.bay.reload_time);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
       xmlr_int(node,"amount",temp->u.bay.amount);
 
