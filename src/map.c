@@ -1810,7 +1810,7 @@ static void map_buttonZoom( unsigned int wid, const char* str )
       cst->zoom = MAX(0.5, cst->zoom);
    }
 
-   map_setZoom(cst->zoom);
+   map_setZoom( wid, cst->zoom );
 
    /* Transform coords back. */
    cst->xpos *= cst->zoom;
@@ -2021,21 +2021,8 @@ void map_close (void)
  */
 void map_clear (void)
 {
-   CstMapWidget *cst = map_globalCustomData(0);
-   map_setZoom(1.);
-   if (cur_system != NULL) {
-      cst->xpos = cur_system->pos.x;
-      cst->ypos = cur_system->pos.y;
-   }
-   else {
-      cst->xpos = 0.;
-      cst->ypos = 0.;
-   }
    array_free(map_path);
    map_path = NULL;
-
-   /* default system is current system */
-   map_selectCur();
 }
 
 static void map_updateAlpha( CstMapWidget *cst, double dt )
@@ -2365,9 +2352,9 @@ static void A_freeList( SysNode *first )
 }
 
 /** @brief Sets map_zoom to zoom and recreates the faction disk texture. */
-void map_setZoom( double zoom )
+void map_setZoom( unsigned int wid, double zoom )
 {
-   CstMapWidget *cst = map_globalCustomData(0);
+   CstMapWidget *cst = map_globalCustomData(wid);
    cst->zoom = zoom;
 }
 
@@ -2634,6 +2621,11 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    StarSystem *sys;
    CstMapWidget *cst = calloc( 1, sizeof(CstMapWidget) );
 
+   /* New widget. */
+   window_addCust( wid, x, y, w, h,
+         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
+   window_custAutoFreeData( wid, "cstMap" );
+
    /* Set up stuff. */
    map_setup();
 
@@ -2642,17 +2634,16 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    cst->ypos = cur_system->pos.y * zoom;
 
    /* Set zoom. */
-   map_setZoom(zoom);
+   map_setZoom( wid, zoom );
 
    /* Make sure selected is valid. */
+   /*
    sys = system_getIndex( map_selected );
    if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
          !sys_isKnown(sys) && !space_sysReachable(sys))
+      */
       map_selectCur();
 
-   window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
-   window_custAutoFreeData( wid, "cstMap" );
    map_reset( cst, MAPMODE_TRAVEL );
 }
 

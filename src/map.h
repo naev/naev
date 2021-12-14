@@ -36,15 +36,15 @@ int map_isOpen (void);
 
 /* misc */
 StarSystem* map_getDestination( int *jumps );
-void map_setZoom( double zoom );
+void map_setZoom( unsigned int wid, double zoom );
 void map_select( const StarSystem *sys, char shifted );
 void map_cleanup (void);
 void map_clear (void);
 void map_jump (void);
 
 /* manipulate universe stuff */
-StarSystem **map_getJumpPath( const char *sysstart, const char *sysend, int ignore_known, int show_hidden,
-                              StarSystem **old_data );
+StarSystem **map_getJumpPath( const char *sysstart, const char *sysend,
+      int ignore_known, int show_hidden, StarSystem **old_data );
 int map_map( const Outfit *map );
 int map_isUseless( const Outfit* map );
 
