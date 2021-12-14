@@ -424,6 +424,12 @@ function bioship.window ()
    stage = player.shipvarPeek( "biostage" ) or 1
    skillpoints = stage - _skill_count( skills )
 
+   for k,s in ipairs(intrinsics) do
+      if stage >= s.stage then
+         s.enabled = true
+      end
+   end
+
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
       skill_reset()
