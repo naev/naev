@@ -1979,9 +1979,9 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    char *buf;
-   StarSystem *sys, *system_stack;
+   StarSystem *system_stack;
    Planet *asset;
    JumpPoint *jump;
 
@@ -1999,39 +1999,38 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
       if (xml_isNode(node,"sys")) {
          xmlr_attr_strd(node,"name",buf);
-         sys = system_get(buf);
-         if (sys != NULL) {
-            free(buf);
-            array_grow( &temp->u.map->systems ) = sys;
-
-            cur = node->children;
-
-            do {
-               xml_onlyNodes(cur);
-
-               if (xml_isNode(cur,"asset")) {
-                  buf = xml_get(cur);
-                  if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
-                     array_grow( &temp->u.map->assets ) = asset;
-                  else
-                     WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);
-               }
-               else if (xml_isNode(cur,"jump")) {
-                  buf = xml_get(cur);
-                  if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
-                        temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
-                     array_grow( &temp->u.map->jumps ) = jump;
-                  else
-                     WARN(_("Map '%s' has invalid jump point '%s'"), temp->name, buf);
-               }
-               else
-                  WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, cur->name);
-            } while (xml_nextNode(cur));
-         }
-         else {
+         StarSystem *sys = system_get(buf);
+         if (sys == NULL) {
             WARN(_("Map '%s' has invalid system '%s'"), temp->name, buf);
             free(buf);
+            continue;
          }
+
+         free(buf);
+         array_grow( &temp->u.map->systems ) = sys;
+
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+
+            if (xml_isNode(cur,"asset")) {
+               buf = xml_get(cur);
+               if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
+                  array_grow( &temp->u.map->assets ) = asset;
+               else
+                  WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);
+            }
+            else if (xml_isNode(cur,"jump")) {
+               buf = xml_get(cur);
+               if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
+                     temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
+                  array_grow( &temp->u.map->jumps ) = jump;
+               else
+                  WARN(_("Map '%s' has invalid jump point '%s'"), temp->name, buf);
+            }
+            else
+               WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, cur->name);
+         } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
