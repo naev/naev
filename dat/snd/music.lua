@@ -212,6 +212,7 @@ function choose_table.ambient ()
       -- Do not change songs so soon
       if songpos < 10. then
          music.delay( "ambient", 10. - songpos )
+         last = "ambient"  -- or else a periodic "idle" may stomp the change!
          return false
       end
    end
