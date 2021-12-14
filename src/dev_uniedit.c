@@ -674,7 +674,7 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderJumps( x, y, r, 1 );
 
    /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 1 );
+   map_renderSystems( bx, by, x, y, w, h, r, MAPMODE_EDITOR );
 
    /* Render system names. */
    map_renderNames( bx, by, x, y, w, h, 1, 1. );

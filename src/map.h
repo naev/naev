@@ -15,6 +15,16 @@ typedef struct MapDecorator_ {
    int auto_fade;
 } MapDecorator;
 
+/**
+ * @brief Different map modes available to the player.
+ */
+typedef enum MapMode_ {
+   MAPMODE_TRAVEL,   /**< Standard mode with lots of shiny stuff. */
+   MAPMODE_DISCOVER, /**< Indicates whether or not systems are fully discovered. */
+   MAPMODE_TRADE,    /**< Shows price values and the likes. */
+   MAPMODE_EDITOR,   /**< Shows price values and the likes. */
+} MapMode;
+
 /* init/exit */
 int map_init (void);
 void map_exit (void);
@@ -54,7 +64,7 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 void map_renderDecorators( double x, double y, int editor, double alpha );
 void map_renderJumps( double x, double y, double radius, int editor );
 void map_renderSystems( double bx, double by, double x, double y,
-      double w, double h, double r, int editor );
+      double w, double h, double r, MapMode mode );
 void map_renderNames( double bx, double by, double x, double y,
       double w, double h, int editor, double alpha );
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient );

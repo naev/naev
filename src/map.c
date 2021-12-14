@@ -44,13 +44,17 @@ typedef struct FactionPresence_ {
 } FactionPresence;
 
 /**
- * @brief Different map modes available to the player.
+ * @brief Map widget data.
  */
-typedef enum MapMode_ {
-   MAPMODE_TRAVEL,   /**< Standard mode with lots of shiny stuff. */
-   MAPMODE_DISCOVER, /**< Indicates whether or not systems are fully discovered. */
-   MAPMODE_TRADE,    /**< Shows price values and the likes. */
-} MapMode;
+typedef struct CstMapWidget_ {
+   double alpha_decorators; /**< Alpha for decorators. */
+   double alpha_faction;    /**< Alpha for factions. */
+   double alpha_env;        /**< Alpha for environmental stuff. */
+   double alpha_path;       /**< Alpha for path stuff. */
+   double alpha_names;      /**< Alpha for system names. */
+   double alpha_markers;    /**< Alpha for system markers. */
+   MapMode mode;            /**< Default map mode. */
+} CstMapWidget;
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -69,12 +73,6 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-double map_alpha_decorators   = 1.; /**< Alpha for decorators. */
-double map_alpha_faction      = 1.; /**< Alpha for factions. */
-double map_alpha_env          = 1.; /**< Alpha for environmental stuff. */
-double map_alpha_path         = 1.; /**< Alpha for path stuff. */
-double map_alpha_names        = 1.; /**< Alpha for system names. */
-double map_alpha_markers      = 1.; /**< Alpha for system markers. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 static int cur_commod         = -1; /**< Current commodity selected. */
@@ -116,8 +114,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_setup (void);
-static void map_updateAlpha( double dt );
-static void map_reset (void);
+static void map_updateAlpha( CstMapWidget *cst, double dt );
+static void map_reset( CstMapWidget* cst, MapMode mode );
+static CstMapWidget* map_globalCustomData (void);
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
@@ -226,9 +225,7 @@ void map_open (void)
    int w, h, x, y, rw;
    const int indent = MAP_TEXT_INDENT;
 
-   /* Not displaying commodities */
    map_minimal_mode = player.map_minimal;
-   map_reset();
    listMapModeVisible = 0;
 
    /* Not under manual control. */
@@ -367,6 +364,7 @@ void map_open (void)
     * The map itself.
     */
    map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
+   map_reset( map_globalCustomData(), map_mode );
 
    map_update( wid );
 
@@ -456,6 +454,9 @@ static void map_update( unsigned int wid )
    /* Needs map to update. */
    if (!map_isOpen())
       return;
+
+   /* Propagate updates to map_mode, if an. */
+   map_globalCustomData()->mode = map_mode;
 
    /* Get selected system. */
    sys = system_getIndex( map_selected );
@@ -828,7 +829,7 @@ static void map_drawMarker( double x, double y, double r, double a,
  */
 static void map_render( double bx, double by, double w, double h, void *data )
 {
-   (void) data;
+   CstMapWidget *cst = data;
    double x,y,r;
    glColour col;
    StarSystem *sys;
@@ -836,7 +837,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Update timer. */
    map_dt += dt;
-   map_updateAlpha( dt );
+   map_updateAlpha( cst, dt );
 
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
@@ -844,37 +845,37 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (map_alpha_decorators > 0.)
-      map_renderDecorators( x, y, 0, map_alpha_decorators );
+   if (cst->alpha_decorators > 0.)
+      map_renderDecorators( x, y, 0, cst->alpha_decorators );
 
    /* Render faction disks. */
-   if (map_alpha_faction > 0.)
-      map_renderFactionDisks( x, y, r, 0, map_alpha_faction );
+   if (cst->alpha_faction > 0.)
+      map_renderFactionDisks( x, y, r, 0, cst->alpha_faction );
 
       /* Render environmental features. */
-   if (map_alpha_env > 0.)
-      map_renderSystemEnvironment( x, y, 0, map_alpha_env );
+   if (cst->alpha_env > 0.)
+      map_renderSystemEnvironment( x, y, 0, cst->alpha_env );
 
    /* Render jump routes. */
    map_renderJumps( x, y, r, 0 );
 
    /* Render the player's jump route. */
-   if (map_alpha_path > 0.)
-      map_renderPath( x, y, r, map_alpha_path );
+   if (cst->alpha_path > 0.)
+      map_renderPath( x, y, r, cst->alpha_path );
 
    /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+   map_renderSystems( bx, by, x, y, w, h, r, cst->mode );
 
    /* Render system names. */
-   if (map_alpha_names > 0.)
-      map_renderNames( bx, by, x, y, w, h, 0, map_alpha_names );
+   if (cst->alpha_names > 0.)
+      map_renderNames( bx, by, x, y, w, h, 0, cst->alpha_names );
 
    /* Render system markers. */
-   if (map_alpha_markers > 0.)
-     map_renderMarkers( x, y, r, map_alpha_markers );
+   if (cst->alpha_markers > 0.)
+     map_renderMarkers( x, y, r, cst->alpha_markers );
 
    /* Render commodity info. */
-   if (map_mode == MAPMODE_TRADE)
+   if (cst->mode == MAPMODE_TRADE)
       map_renderCommod(  bx, by, x, y, w, h, r, 0 );
 
    /* Values from cRadar_tPlanet */
@@ -1128,7 +1129,7 @@ void map_renderJumps( double x, double y, double radius, int editor )
  * @brief Renders the systems.
  */
 void map_renderSystems( double bx, double by, double x, double y,
-      double w, double h, double r, int editor)
+      double w, double h, double r, MapMode mode )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       const glColour *col;
@@ -1140,7 +1141,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-           && !space_sysReachable(sys)) && !editor)
+           && !space_sysReachable(sys)) && mode != MAPMODE_EDITOR)
          continue;
 
       tx = x + sys->pos.x*map_zoom;
@@ -1151,24 +1152,24 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       /* Draw an outer ring. */
-      if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE)
+      if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE)
          gl_renderCircle( tx, ty, r, &cInert, 0 );
 
       /* Ignore not known systems when not in the editor. */
-      if (!editor && !sys_isKnown(sys))
+      if (mode != MAPMODE_EDITOR && !sys_isKnown(sys))
          continue;
 
-      if (editor || map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE) {
+      if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE) {
          if (!system_hasPlanet(sys))
             continue;
-         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && !editor)
+         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && mode != MAPMODE_EDITOR)
             continue;
          /* Planet colours */
-         if (!editor && !sys_isKnown(sys))
+         if (mode != MAPMODE_EDITOR && !sys_isKnown(sys))
             col = &cInert;
          else if (sys->faction < 0)
             col = &cInert;
-         else if (editor)
+         else if (mode == MAPMODE_EDITOR)
             col = &cNeutral;
          else if (areEnemies(FACTION_PLAYER,sys->faction))
             col = &cHostile;
@@ -1179,14 +1180,14 @@ void map_renderSystems( double bx, double by, double x, double y,
          else
             col = &cNeutral;
 
-         if (editor) {
+         if (mode == MAPMODE_EDITOR) {
             /* Radius slightly shorter. */
             gl_renderCircle( tx, ty, 0.5 * r, col, 1 );
          }
          else
             gl_renderCircle( tx, ty, 0.65 * r, col, 1 );
       }
-      else if (map_mode == MAPMODE_DISCOVER) {
+      else if (mode == MAPMODE_DISCOVER) {
          gl_renderCircle( tx, ty, r, &cInert, 0 );
          if (sys_isFlag( sys, SYSTEM_DISCOVERED ))
             gl_renderCircle( tx, ty,  0.65 * r, &cGreen, 1 );
@@ -1409,7 +1410,7 @@ void map_renderCommod( double bx, double by, double x, double y,
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
    /* If not plotting commodities, return */
-   if (cur_commod == -1 || map_selected == -1)
+   if (cur_commod == -1 || map_selected == -1 || commod_known == NULL)
       return;
 
    c = commod_known[cur_commod];
@@ -1995,7 +1996,6 @@ static void map_window_close( unsigned int wid, const char *str )
       free( map_modes[i] );
    array_free( map_modes );
    map_modes = NULL;
-   map_reset();
    window_close(wid,str);
 }
 
@@ -2021,8 +2021,6 @@ void map_close (void)
 void map_clear (void)
 {
    map_setZoom(1.);
-   cur_commod = -1;
-   map_mode = MAPMODE_TRAVEL;
    if (cur_system != NULL) {
       map_xpos = cur_system->pos.x;
       map_ypos = cur_system->pos.y;
@@ -2038,7 +2036,7 @@ void map_clear (void)
    map_selectCur();
 }
 
-static void map_updateAlpha( double dt )
+static void map_updateAlpha( CstMapWidget *cst, double dt )
 {
    double mapmin = 1.-map_minimal_mode;
 #define AMAX(x) (x) = MIN( 1., (x) + dt )
@@ -2046,32 +2044,33 @@ static void map_updateAlpha( double dt )
 #define ATAR(x,y) \
 if ((x) < y) (x) = MIN( y, (x) + dt ); \
 else (x) = MAX( y, (x) - dt )
-   switch (map_mode) {
+   switch (cst->mode) {
+      case MAPMODE_EDITOR: /* fall through */
       case MAPMODE_TRAVEL:
-         ATAR( map_alpha_decorators, mapmin );
-         ATAR( map_alpha_faction, mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMAX( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMAX( map_alpha_markers );
+         ATAR( cst->alpha_decorators, mapmin );
+         ATAR( cst->alpha_faction, mapmin );
+         ATAR( cst->alpha_env, mapmin );
+         AMAX( cst->alpha_path );
+         AMAX( cst->alpha_names );
+         AMAX( cst->alpha_markers );
          break;
 
       case MAPMODE_DISCOVER:
-         ATAR( map_alpha_decorators, 0.5 * mapmin );
-         ATAR( map_alpha_faction, 0.5 * mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMIN( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMIN( map_alpha_markers );
+         ATAR( cst->alpha_decorators, 0.5 * mapmin );
+         ATAR( cst->alpha_faction, 0.5 * mapmin );
+         ATAR( cst->alpha_env, mapmin );
+         AMIN( cst->alpha_path );
+         AMAX( cst->alpha_names );
+         AMIN( cst->alpha_markers );
          break;
 
       case MAPMODE_TRADE:
-         AMIN( map_alpha_decorators );
-         AMIN( map_alpha_faction );
-         AMIN( map_alpha_env );
-         AMIN( map_alpha_path );
-         AMIN( map_alpha_names );
-         AMIN( map_alpha_markers );
+         AMIN( cst->alpha_decorators );
+         AMIN( cst->alpha_faction );
+         AMIN( cst->alpha_env );
+         AMIN( cst->alpha_path );
+         AMIN( cst->alpha_names );
+         AMIN( cst->alpha_markers );
          break;
    }
 #undef AMAX
@@ -2079,12 +2078,22 @@ else (x) = MAX( y, (x) - dt )
 #undef ATAR
 }
 
-static void map_reset (void)
+/**
+ * @brief Set the steady-state transparency values.
+ */
+static void map_reset( CstMapWidget* cst, MapMode mode )
 {
-   double mapmin = 1.-map_minimal_mode;
-   //cur_commod = -1;
-   //map_mode = MAPMODE_TRAVEL;
-   map_updateAlpha( 1000. );
+   cst->mode = mode;
+   map_updateAlpha( cst, 1000. );
+}
+
+/**
+ * @brief Returns the data pointer for "the" map window's widget (or NULL if map isn't open).
+ */
+static CstMapWidget* map_globalCustomData (void)
+{
+   unsigned int wid = window_get(MAP_WDWNAME);
+   return (wid > 0) ? window_custGetData( wid, "cstMap" ) : NULL;
 }
 
 /**
@@ -2622,6 +2631,7 @@ int localmap_isUseless( const Outfit *lmap )
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
    StarSystem *sys;
+   CstMapWidget *cst = calloc( 1, sizeof(CstMapWidget) );
 
    /* Set up stuff. */
    map_setup();
@@ -2640,7 +2650,9 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
       map_selectCur();
 
    window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, NULL );
+         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
+   window_custAutoFreeData( wid, "cstMap" );
+   map_reset( cst, MAPMODE_TRAVEL );
 }
 
 /**
