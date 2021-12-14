@@ -70,6 +70,7 @@ typedef struct InfoButton_s {
    int id;        /**< Unique ID. */
    char *caption; /**< Button caption. */
    char button[32]; /**< Current button caption. */
+   int priority;  /**< Button priority. */
    /* Lua stuff .*/
    lua_State *L;  /**< Lua state to use. */
    nlua_env env;  /**< Runtime environment. */
@@ -130,15 +131,27 @@ static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
 static void info_changeTab( unsigned int wid, const char *str, int old, int new );
 
+static int sort_buttons( const void *p1, const void *p2 )
+{
+   const InfoButton_t *b1 = p1;
+   const InfoButton_t *b2 = p2;
+   if (b1->priority < b2->priority)
+      return -1;
+   else if (b1->priority > b2->priority)
+      return +1;
+   return strcmp(b1->caption,b2->caption);
+}
+
 static void info_buttonFree( InfoButton_t *btn )
 {
    free( btn->caption );
    luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
 }
 
-int info_buttonRegister( lua_State *L, const char *caption )
+int info_buttonRegister( lua_State *L, const char *caption, int priority )
 {
    static int button_idgen = 0;
+   int id;
    InfoButton_t *btn;
 
    if (info_buttons == NULL)
@@ -148,11 +161,15 @@ int info_buttonRegister( lua_State *L, const char *caption )
    btn->id     = ++button_idgen;
    btn->caption= strdup( caption );
    btn->button[0] = '\0';
+   btn->priority = priority;
    btn->L      = L;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
-   return btn->id;
+   id = btn->id;
+   qsort( info_buttons, array_size(info_buttons), sizeof(InfoButton_t), sort_buttons );
+
+   return id;
 }
 
 int info_buttonUnregister( int id )

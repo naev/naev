@@ -31,7 +31,7 @@ function update_bioship ()
    if is_bioship then
       if not infobtn then
          local sp = stage - bioship.skillpointsused()
-         local caption = _("bioship")
+         local caption = _("Bioship")
          if sp > 0 then
             caption = caption .. _(" #r!#0")
          end

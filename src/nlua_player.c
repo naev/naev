@@ -1523,11 +1523,12 @@ static int playerL_chapterSet( lua_State *L )
  */
 static int playerL_infoButtonRegister( lua_State *L )
 {
-   int id;
+   int id, priority;
    const char *caption = luaL_checkstring( L, 1 );
    luaL_checktype( L, 2, LUA_TFUNCTION );
+   priority = luaL_optinteger(L,3,5);
    lua_pushvalue( L, 2 );
-   id = info_buttonRegister( L, caption );
+   id = info_buttonRegister( L, caption, priority );
    lua_pushinteger(L,id);
    return 1;
 }

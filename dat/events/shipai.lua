@@ -186,5 +186,5 @@ function advice ()
 end
 
 function create ()
-   player.infoButtonRegister( _("Ship AI"), clicked )
+   player.infoButtonRegister( _("Ship AI"), clicked, 1 )
 end
