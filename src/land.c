@@ -750,7 +750,7 @@ static void misn_update( unsigned int wid, const char *str )
    misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
    sys = mission_sysComputerMark( misn );
    if (sys!=NULL)
-      map_center( sys->name );
+      map_center( wid, sys->name );
    snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );

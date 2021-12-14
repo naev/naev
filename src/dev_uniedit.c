@@ -630,18 +630,18 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
 
 /* @brief Renders important map stuff.
  */
-void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
+void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double zoom, double r )
 {
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   map_renderDecorators( x, y, 1, 1. );
+   map_renderDecorators( x, y, uniedit_zoom, 1, 1. );
 
    /* Render faction disks. */
    switch (uniedit_viewmode) {
       case UNIEDIT_VIEW_DEFAULT:
-         map_renderFactionDisks( x, y, r, 1, 1. );
-         map_renderSystemEnvironment( x, y, 1, 1. );
+         map_renderFactionDisks( x, y, uniedit_zoom, r, 1, 1. );
+         map_renderSystemEnvironment( x, y, uniedit_zoom, 1, 1. );
          break;
 
       case UNIEDIT_VIEW_VIRTUALASSETS:
@@ -671,13 +671,13 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    }
 
    /* Render jump paths. */
-   map_renderJumps( x, y, r, 1 );
+   map_renderJumps( x, y, zoom, r, 1 );
 
    /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, MAPMODE_EDITOR );
+   map_renderSystems( bx, by, x, y, zoom, w, h, r, MAPMODE_EDITOR );
 
    /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 1, 1. );
+   map_renderNames( bx, by, x, y, zoom, w, h, 1, 1. );
 }
 
 /**
@@ -694,7 +694,7 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    map_renderParams( bx, by, uniedit_xpos, uniedit_ypos, w, h, uniedit_zoom, &x, &y, &r );
 
    /* Render map stuff. */
-   uniedit_renderMap( bx, by, w, h, x, y, r );
+   uniedit_renderMap( bx, by, w, h, x, y, uniedit_zoom, r );
 
    /* Render the selected system selections. */
    for (int i=0; i<array_size(uniedit_sys); i++) {

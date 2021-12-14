@@ -1215,7 +1215,7 @@ static void mission_menu_genList( unsigned int wid, int first )
  */
 static void mission_menu_update( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    Mission* misn;
    const StarSystem *sys;
    int pos = toolkit_getListPos(wid, "lstMission" );
@@ -1233,7 +1233,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
    /* Select the system. */
    sys = mission_getSystemMarker( misn );
    if (sys != NULL)
-      map_center( sys->name );
+      map_center( wid, sys->name );
 }
 /**
  * @brief Aborts a mission in the mission menu.
@@ -1241,7 +1241,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
  */
 static void mission_menu_abort( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    int pos;
    Mission *misn;
    int ret;

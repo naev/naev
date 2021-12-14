@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /** @cond */
 #include <assert.h>
 
@@ -21,10 +19,8 @@
 #include "tech.h"
 #include "toolkit.h"
 
-
 #define BUTTON_WIDTH    120 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
-
 
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
@@ -40,7 +36,6 @@ static char **map_foundOutfitNames  = NULL; /**< Array (array.h): Internal names
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Array (array.h) of known techs. */
 static Planet **map_known_planets   = NULL;  /**< Array (array.h) of known planets with techs. */
-
 
 /*
  * Prototypes.
@@ -68,14 +63,12 @@ static char **map_outfitsMatch( const char *name );
 static char **map_fuzzyShips( Ship **o, const char *name );
 static char **map_shipsMatch( const char *name );
 
-
 /**
  * @brief Initializes stuff the pilot knows.
  */
 static int map_knownInit (void)
 {
-   int i, j;
-   Planet *pnt, **planets;
+   Planet **planets;
    StarSystem *sys;
    tech_group_t **t;
 
@@ -85,12 +78,12 @@ static int map_knownInit (void)
    sys      = system_getAll();
 
    /* Get techs. */
-   for (i=0; i<array_size(sys); i++) {
+   for (int i=0; i<array_size(sys); i++) {
       if (!sys_isKnown( &sys[i] ))
          continue;
 
-      for (j=0; j<array_size(sys[i].planets); j++) {
-         pnt = sys[i].planets[j];
+      for (int j=0; j<array_size(sys[i].planets); j++) {
+         Planet *pnt = sys[i].planets[j];
 
          /* Must be known. */
          if (!planet_isKnown( pnt ))
@@ -111,7 +104,6 @@ static int map_knownInit (void)
    return 0;
 }
 
-
 /**
  * @brief Cleans up stuff the pilot knows.
  */
@@ -122,7 +114,6 @@ static void map_knownClean (void)
    array_free( map_known_planets );
    map_known_planets = NULL;
 }
-
 
 /**
  * @brief Updates the checkboxes.
@@ -139,7 +130,6 @@ static void map_find_check_update( unsigned int wid, const char* str )
    window_checkboxSet( wid, "chkOutfit", map_find_outfits );
    window_checkboxSet( wid, "chkShip",   map_find_ships );
 }
-
 
 /**
  * @brief Starts the map search with a specific default type.
@@ -166,7 +156,6 @@ void map_inputFindType( unsigned int parent, const char *type )
    map_inputFind(parent, NULL);
 }
 
-
 /**
  * @brief Closes the find window.
  */
@@ -182,7 +171,6 @@ static void map_findClose( unsigned int wid, const char* str )
    map_knownClean();
 }
 
-
 /**
  * @brief Goes to a found system to display it.
  */
@@ -197,12 +185,11 @@ static void map_findDisplayMark( unsigned int wid, const char* str )
 
    /* Select. */
    map_select( sys, 0 );
-   map_center( sys->name );
+   map_center( wid, sys->name );
 
    /* Close parent. */
    window_close( window_getParent(wid), str );
 }
-
 
 /**
  * @brief Displays the results of the find.
@@ -240,7 +227,6 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
          "btnClose", _("Cancel"), window_close );
 }
 
-
 /**
  * @brief qsort compare function for map finds.
  */
@@ -268,7 +254,6 @@ static int map_sortCompare( const void *p1, const void *p2 )
    return strcasecmp( f1->sys->name, f2->sys->name );
 }
 
-
 /**
  * @brief Sorts the map findings.
  */
@@ -276,7 +261,6 @@ static void map_sortFound( map_find_t *found, int n )
 {
    qsort( found, n, sizeof(map_find_t), map_sortCompare );
 }
-
 
 /**
  * @brief Gets the distance.
@@ -390,7 +374,6 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    return 0;
 }
 
-
 /**
  * @brief Loads a search result into a table.
  *
@@ -432,7 +415,6 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             _(pnt->name), _(sys->name), route_info );
 }
 
-
 /**
  * @brief Searches for a system.
  *
@@ -441,9 +423,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
  */
 static int map_findSearchSystems( unsigned int parent, const char *name )
 {
-   int i;
    const char *sysname;
-   StarSystem *sys;
    char **names;
    int len, n;
    map_find_t *found;
@@ -457,10 +437,10 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    /* Exact match. */
    if ((sysname != NULL) && (len == 1)) {
       /* Select and show. */
-      sys = system_get(sysname);
+      StarSystem *sys = system_get(sysname);
       if (sys_isKnown(sys)) {
          map_select( sys, 0 );
-         map_center( sysname );
+         map_center( parent, sysname );
          free(names);
          return 1;
       }
@@ -469,10 +449,10 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<len; i++) {
+   for (int i=0; i<len; i++) {
 
       /* System must be known. */
-      sys = system_get( names[i] );
+      StarSystem *sys = system_get( names[i] );
       if (!sys_isKnown(sys))
          continue;
 
@@ -493,7 +473,6 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    return 0;
 }
 
-
 /**
  * @brief Searches for a planet.
  *
@@ -502,13 +481,10 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
  */
 static int map_findSearchPlanets( unsigned int parent, const char *name )
 {
-   int i;
    char **names;
    int len, n;
    map_find_t *found;
    const char *sysname, *pntname;
-   StarSystem *sys;
-   Planet *pnt;
 
    /* Match planet first. */
    pntname = planet_existsCase( name );
@@ -523,14 +499,14 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       sysname = planet_getSystem( pntname );
       if (sysname != NULL) {
          /* Make sure it's known. */
-         pnt = planet_get( pntname );
+         Planet *pnt = planet_get( pntname );
          if ((pnt != NULL) && planet_isKnown(pnt)) {
 
             /* Select and show. */
-            sys = system_get(sysname);
+            StarSystem *sys = system_get(sysname);
             if (sys_isKnown(sys)) {
                map_select( sys, 0 );
-               map_center( sysname );
+               map_center( parent, sysname );
                free(names);
                return 1;
             }
@@ -541,10 +517,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<len; i++) {
+   for (int i=0; i<len; i++) {
+      StarSystem *sys;
 
       /* Planet must be real. */
-      pnt = planet_get( names[i] );
+      Planet *pnt = planet_get( names[i] );
       if (pnt == NULL)
          continue;
       if (!planet_isKnown(pnt))
@@ -575,7 +552,6 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    return 0;
 }
 
-
 /**
  * @brief Gets a colour char for a planet, simplified for map use.
  */
@@ -589,7 +565,6 @@ static char map_getPlanetColourChar( Planet *p )
    return colcode;
 }
 
-
 /**
  * @brief Gets a symbol for a planet, simplified for map use.
  */
@@ -598,7 +573,6 @@ static const char *map_getPlanetSymbol( Planet *p )
    planet_updateLand(p);
    return planet_getSymbol(p);
 }
-
 
 /**
  * @brief Does fuzzy name matching for outfits in an Array. Searches translated names but returns internal names.
@@ -818,19 +792,15 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    return 0;
 }
 
-
 /**
  * @brief Does fuzzy name matching for ships in an Array. Searches translated names but returns internal names.
  */
 static char **map_fuzzyShips( Ship **s, const char *name )
 {
-   int i;
-   char **names;
-
-   names = array_create( char* );
+   char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (i=0; i<array_size(s); i++)
+   for (int i=0; i<array_size(s); i++)
       if (strcasestr( _(s[i]->name), name ) != NULL)
          array_push_back( &names, s[i]->name );
 
@@ -937,7 +907,6 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    return 0;
 }
 
-
 /**
  * @brief Does a search.
  */
@@ -990,7 +959,6 @@ static void map_findSearch( unsigned int wid, const char* str )
    if (ret > 0)
       map_findClose( wid, str );
 }
-
 
 /**
  * @brief Opens a search input box to find a system or planet.

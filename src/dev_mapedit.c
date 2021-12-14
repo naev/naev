@@ -340,7 +340,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
    /* Parameters. */
    map_renderParams( bx, by, mapedit_xpos, mapedit_ypos, w, h, mapedit_zoom, &x, &y, &r );
 
-   uniedit_renderMap( bx, by, w, h, x, y, r );
+   uniedit_renderMap( bx, by, w, h, x, y, mapedit_zoom, r );
 
    /* Render the selected system selections. */
    for (int i=0; i<mapedit_nsys; i++) {
