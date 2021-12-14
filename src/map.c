@@ -364,8 +364,6 @@ void map_open (void)
     */
    map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
    cst = map_globalCustomData(wid);
-   cst->xtarget = cst->xpos;
-   cst->ytarget = cst->ypos;
    map_reset( cst, map_mode );
    map_update( wid );
 
@@ -2647,8 +2645,8 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    map_setup();
 
    /* Set position to focus on current system. */
-   cst->xpos = cur_system->pos.x * zoom;
-   cst->ypos = cur_system->pos.y * zoom;
+   cst->xtarget = cst->xpos = cur_system->pos.x * zoom;
+   cst->ytarget = cst->ypos = cur_system->pos.y * zoom;
 
    /* Set zoom. */
    map_setZoom( wid, zoom );
