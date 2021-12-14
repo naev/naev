@@ -50,6 +50,8 @@ typedef struct CstMapWidget_ {
    double zoom;            /**< Level of zoom. */
    double xpos;            /**< Centered x position. */
    double ypos;            /**< Centered y position. */
+   double xtarget;         /**< Target X position. */
+   double ytarget;         /**< Target Y position. */
    int drag;               /**< Is the user dragging the map? */
    double alpha_decorators;/**< Alpha for decorators. */
    double alpha_faction;   /**< Alpha for factions. */
@@ -114,7 +116,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_setup (void);
-static void map_updateAlpha( CstMapWidget *cst, double dt );
+static void map_updateInternal( CstMapWidget *cst, double dt );
 static void map_reset( CstMapWidget* cst, MapMode mode );
 static CstMapWidget* map_globalCustomData( unsigned int wid );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
@@ -362,8 +364,8 @@ void map_open (void)
     */
    map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
    cst = map_globalCustomData(wid);
-   cst->xpos = cur_system->pos.x;
-   cst->ypos = cur_system->pos.y;
+   cst->xtarget = cst->xpos;
+   cst->ytarget = cst->ypos;
    map_reset( cst, map_mode );
    map_update( wid );
 
@@ -837,7 +839,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Update timer. */
    map_dt += dt;
-   map_updateAlpha( cst, dt );
+   map_updateInternal( cst, dt );
 
    /* Parameters. */
    map_renderParams( bx, by, cst->xpos, cst->ypos, w, h, cst->zoom, &x, &y, &r );
@@ -1726,9 +1728,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
          return 0;
       if (event->wheel.y > 0)
-         map_buttonZoom( 0, "btnZoomIn" );
+         map_buttonZoom( wid, "btnZoomIn" );
       else if (event->wheel.y < 0)
-         map_buttonZoom( 0, "btnZoomOut" );
+         map_buttonZoom( wid, "btnZoomOut" );
       return 1;
 
    case SDL_MOUSEBUTTONDOWN:
@@ -1778,8 +1780,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    case SDL_MOUSEMOTION:
       if (cst->drag) {
          /* axis is inverted */
-         cst->xpos -= rx;
-         cst->ypos += ry;
+         cst->xtarget = cst->xpos -= rx;
+         cst->ytarget = cst->ypos += ry;
       }
       break;
    }
@@ -1799,6 +1801,8 @@ static void map_buttonZoom( unsigned int wid, const char* str )
    /* Transform coords to normal. */
    cst->xpos /= cst->zoom;
    cst->ypos /= cst->zoom;
+   cst->xtarget /= cst->zoom;
+   cst->ytarget /= cst->zoom;
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
@@ -1815,6 +1819,8 @@ static void map_buttonZoom( unsigned int wid, const char* str )
    /* Transform coords back. */
    cst->xpos *= cst->zoom;
    cst->ypos *= cst->zoom;
+   cst->xtarget *= cst->zoom;
+   cst->ytarget *= cst->zoom;
 }
 
 /**
@@ -2025,9 +2031,11 @@ void map_clear (void)
    map_path = NULL;
 }
 
-static void map_updateAlpha( CstMapWidget *cst, double dt )
+static void map_updateInternal( CstMapWidget *cst, double dt )
 {
+   double dx, dy, mod, angle;
    double mapmin = 1.-map_minimal_mode;
+
 #define AMAX(x) (x) = MIN( 1., (x) + dt )
 #define AMIN(x) (x) = MAX( 0., (x) - dt )
 #define ATAR(x,y) \
@@ -2065,15 +2073,25 @@ else (x) = MAX( y, (x) - dt )
 #undef AMAX
 #undef AMIN
 #undef ATAR
+
+   dx = (cst->xtarget - cst->xpos);
+   dy = (cst->ytarget - cst->ypos);
+   mod   = MOD(dx,dy);
+   if (mod > 1e-5) {
+      angle = ANGLE(dx,dy);
+      mod = MIN( mod, dt*1000.);
+      cst->xpos += mod * cos(angle);
+      cst->ypos += mod * sin(angle);
+   }
 }
 
 /**
- * @brief Set the steady-state transparency values.
+ * @brief Set the steady-state values.
  */
 static void map_reset( CstMapWidget* cst, MapMode mode )
 {
    cst->mode = mode;
-   map_updateAlpha( cst, 1000. );
+   map_updateInternal( cst, 1000. );
 }
 
 /**
@@ -2657,8 +2675,8 @@ int map_center( int wid, const char *sys )
       return -1;
 
    /* Center on the system. */
-   cst->xpos = ssys->pos.x * cst->zoom;
-   cst->ypos = ssys->pos.y * cst->zoom;
+   cst->xtarget = ssys->pos.x * cst->zoom;
+   cst->ytarget = ssys->pos.y * cst->zoom;
 
    return 0;
 }
