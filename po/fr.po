@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-14 00:25-0500\n"
+"POT-Creation-Date: 2021-12-14 01:50-0500\n"
 "PO-Revision-Date: 2021-12-14 06:51+0000\n"
 "Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -31003,7 +31003,7 @@ msgstr ""
 
 #: dat/events/neutral/npc.lua:287
 msgid ""
-"\"So there's some Za'lek scientist looking for a cargo monkey out on "
+"\"So there's some Za'lek scientist looking for a cargo jockey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
 msgstr ""
 
@@ -38922,8 +38922,8 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:709
 msgid ""
-"You hear an unusual and aggitated voice coming from the living quarters. "
-"When you get there, you see that the VIP is back on his feet. \"To sum up, a "
+"You hear an unusual and agitated voice coming from the living quarters. When "
+"you get there, you see that the VIP is back on his feet. \"To sum up, a "
 "Dvaered general, whose name you won't disclose, sent you to free me from the "
 "Za'lek, for reasons you won't explain, right?\" Hamfresser answers: "
 "\"Totally correct, sir.\"\n"
@@ -72456,7 +72456,7 @@ msgstr ""
 #. pickup
 #. OSD
 #: dat/missions/zalek/zlk_cargorun.lua:71
-msgid "Za'lek Cargo Monkey"
+msgid "Za'lek Cargo Jockey"
 msgstr ""
 
 #: dat/missions/zalek/zlk_cargorun.lua:72
