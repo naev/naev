@@ -50,6 +50,7 @@ typedef struct CstMapWidget_ {
    double zoom;            /**< Level of zoom. */
    double xpos;            /**< Centered x position. */
    double ypos;            /**< Centered y position. */
+   int drag;               /**< Is the user dragging the map? */
    double alpha_decorators;/**< Alpha for decorators. */
    double alpha_faction;   /**< Alpha for factions. */
    double alpha_env;       /**< Alpha for environmental stuff. */
@@ -71,7 +72,6 @@ typedef struct CstMapWidget_ {
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 
-static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
@@ -1696,9 +1696,9 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
  */
 static void map_focusLose( unsigned int wid, const char* wgtname )
 {
-   (void) wid;
    (void) wgtname;
-   map_drag = 0;
+   CstMapWidget *cst = map_globalCustomData( wid );
+   cst->drag = 0;
 }
 
 /**
@@ -1740,7 +1740,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       /* selecting star system */
       mx -= w/2 - cst->xpos;
       my -= h/2 - cst->ypos;
-      map_drag = 1;
+      cst->drag = 1;
 
       for (int i=0; i<array_size(systems_stack); i++) {
          double x, y;
@@ -1762,7 +1762,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             if (map_selected != -1) {
                if (sys == system_getIndex( map_selected ) && sys_isKnown(sys)) {
                   map_system_open( map_selected );
-                  map_drag = 0;
+                  cst->drag = 0;
                }
             }
             map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
@@ -1772,11 +1772,11 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       return 1;
 
    case SDL_MOUSEBUTTONUP:
-      map_drag = 0;
+      cst->drag = 0;
       break;
 
    case SDL_MOUSEMOTION:
-      if (map_drag) {
+      if (cst->drag) {
          /* axis is inverted */
          cst->xpos -= rx;
          cst->ypos += ry;
