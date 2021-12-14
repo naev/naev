@@ -70,22 +70,14 @@ function create ()
    hook.land( "bioship_land" )
 end
 
-local function expstage ()
-   if not playerisbioship() then return 0 end
-
-   local exp = player.shipvarPeek("bioshipexp") or 0
-   local maxstage = bioship.maxstage( player.pilot() )
-
-   return bioship.curstage( exp, maxstage )
-end
-
 function bioship_land ()
    if not playerisbioship() then return end
 
-   local curstage = player.shipvarPeek("biostage")
-   local stage = expstage()
-   if stage > curstage then
-      bioship.setstage( stage )
+   -- Check for stage up!
+   local exp = player.shipvarPeek("bioshipexp") or 0
+   local stage = player.shipvarPeek("biostage")
+   if exp >= bioship.exptostage( stage+1 ) then
+      bioship.setstage( stage+1 )
    end
 end
 
@@ -100,15 +92,13 @@ function bioship_pay( amount, _reason )
    end
 
    local exp = player.shipvarPeek("bioshipexp") or 0
-   exp = exp + math.floor(amount / 10e3)
+   exp = exp + math.floor(amount / 1e3)
    player.shipvarPush("bioshipexp",exp)
 
-   local nextstage = expstage()
-
-   -- Level up!
-   if nextstage > stage then
+   -- Stage up!
+   if exp >= bioship.exptostage( stage+1 ) then
       -- TODO sound and effect?
-      player.msg(_("#gYour bioship has advanced a stage!#0"))
+      player.msg(_("#gYour bioship has enough experience to advance a stage!#0"))
       if player.isLanded() then
          bioship.setstage( stage+1 )
       end

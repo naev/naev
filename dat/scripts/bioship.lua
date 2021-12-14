@@ -22,20 +22,22 @@ local function inlist( lst, item )
    return false
 end
 
-local nextstage = 50
+local _base = 300
+local _mult = 1.2
 function bioship.exptostage( stage )
-   local exp = 0
-   for i=1,stage do
-      exp = exp + nextstage * math.pow(1.5,i)
+   local exp = _base
+   for i=1,stage-2 do
+      exp = exp + _base * math.pow(_mult,i)
    end
    return math.floor(exp)
 end
 function bioship.curstage( exp, maxstage )
    maxstage = maxstage or 30
    local curstage
-   for i=1,maxstage do
+   local nextstage = 0
+   for i=0,maxstage do
       curstage = i
-      nextstage = nextstage * math.pow(1.5,i)
+      nextstage = nextstage + _base * math.pow(_mult,i)
       if exp < nextstage then
          break
       end
@@ -538,7 +540,7 @@ function bioship.window ()
    else
       local exp = player.shipvarPeek("bioshipexp") or 0
       local nextexp = bioship.exptostage( stage+1 )
-      stagetxt = fmt.f(_("Current Experience: {exp} points ({nextexp} points until next stage)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
+      stagetxt = fmt.f(_("Current Experience: {exp} points (next stage at {nextexp} points)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
    luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
