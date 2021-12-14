@@ -382,7 +382,7 @@ static int shipL_slots( lua_State *L )
  *
  *    @luatparam Ship s Ship to get slots of
  *    @luatparam[opt=false] boolean ignore_locked Whether or not to ignore locked slots.
- *    @luareturn A table of tables with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", and (if applicable) outfit "outfit"
+ *    @luareturn A table of tables with slot properties string "size", string "type", string "property", boolean "required", boolean "exclusive", boolean "locked", and (if applicable) outfit "outfit"
  *               (Strings are English.)
  * @luafunc getSlots
  */

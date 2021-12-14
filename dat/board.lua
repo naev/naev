@@ -144,7 +144,7 @@ local function compute_lootables ( plt )
       end
 
       local ocand = {}
-      for _k,o in ipairs(plt:outfits()) do
+      for _k,o in ipairs(plt:outfits(nil,true)) do
          local _name, _size, _prop, req = o:slot()
          -- Don't allow looting required outfits
          if not req and (not oloot or o~=oloot) then

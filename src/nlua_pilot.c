@@ -1825,6 +1825,7 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  *
  *    @luatparam Pilot p Pilot to get outfits of.
  *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
+ *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.
  * @luafunc outfits
  */
@@ -1833,6 +1834,7 @@ static int pilotL_outfits( lua_State *L )
    int intrinsics=0;
    Pilot *p = luaL_validpilot(L,1);
    const char *type = luaL_optstring(L,2,NULL);
+   int skip_locked = lua_toboolean(L,3);
    OutfitSlotType ost = OUTFIT_SLOT_NULL;
 
    /* Get type. */
@@ -1867,6 +1869,10 @@ static int pilotL_outfits( lua_State *L )
 
          /* Only match specific type. */
          if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
+            continue;
+
+         /* Skip locked. */
+         if (skip_locked && p->outfits[i]->sslot->locked)
             continue;
 
          /* Set the outfit. */
