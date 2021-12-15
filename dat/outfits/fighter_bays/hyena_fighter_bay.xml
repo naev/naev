@@ -6,7 +6,7 @@
   <license>Light Combat Vessel</license>
   <mass>60</mass>
   <price>600000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>hyena_fighter.webp</gfx_store>
   <description>This fighter bay allows your ship to carry twin Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors.</description>
   <cpu>-150</cpu>
  </general>

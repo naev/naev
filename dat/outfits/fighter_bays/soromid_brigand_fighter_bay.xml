@@ -7,7 +7,7 @@
   <rarity>2</rarity>
   <mass>300</mass>
   <price>1580000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>soromid_brigand_fighter.webp</gfx_store>
   <description>This fighter bay allows your ship to carry a triplet of Soromid Brigand class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-450</cpu>
  </general>

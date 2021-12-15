@@ -7,7 +7,7 @@
   <rarity>2</rarity>
   <mass>300</mass>
   <price>1980000</price>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>thurion_perspicacity_fighter.webp</gfx_store>
   <description>This fighter bay allows your ship to carry four Thurion Perspicacity class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-600</cpu>
  </general>
