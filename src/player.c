@@ -3971,13 +3971,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Commodity *com;
    PilotFlags flags;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
-   int favourite;
-   PlayerShip_t *ps;
+   PlayerShip_t ps;
+
+   memset( &ps, 0, sizeof(PlayerShip_t) );
 
    /* Parse attributes. */
    xmlr_attr_strd( parent, "name", name );
    xmlr_attr_strd( parent, "model", model );
-   xmlr_attr_int_def( parent, "favourite", favourite, 0 );
+   xmlr_attr_int_def( parent, "favourite", ps.favourite, 0 );
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
@@ -3999,7 +4000,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Add GUI if applicable. */
    player_guiAdd( ship_parsed->gui );
 
-   /* player is currently on this ship */
+   /* Player is currently on this ship */
    if (is_player != 0) {
       unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
@@ -4007,6 +4008,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+   ps.p = ship;
 
    /* Ship should not have default outfits. */
    for (int i=0; i<array_size(ship->outfits); i++)
@@ -4145,16 +4147,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       pilot_calcStats( ship );
    }
 
-   /* add it to the stack if it's not what the player is in */
-   if (is_player == 0) {
-      ps = &array_grow( &player_stack );
-      memset( ps, 0, sizeof(PlayerShip_t) );
-      ps->p = ship;
-   }
-   else
-      ps = &player.ps;
-   ps->favourite = favourite;
-
    /* Sets inrange by default if weapon sets are missing. */
    for (int i=0; i<PILOT_WEAPON_SETS; i++)
       pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
@@ -4166,7 +4158,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       xmlNodePtr cur;
 
       if (xml_isNode(node,"vars")) {
-         ps->shipvar = lvar_load( node );
+         ps.shipvar = lvar_load( node );
          continue;
       }
       else if (!xml_isNode(node,"weaponsets"))
@@ -4266,6 +4258,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Set aimLines */
    ship->aimLines = aim_lines;
+
+   /* Add it to the stack if it's not what the player is in */
+   if (is_player == 0)
+      array_push_back( &player_stack, ps );
+   else
+      player.ps = ps;
 
    return 0;
 }

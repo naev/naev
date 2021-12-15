@@ -968,6 +968,8 @@ static int playerL_shipvarPop( lua_State *L )
  */
 static int playerL_ships( lua_State *L )
 {
+   PLAYER_CHECK();
+
    const PlayerShip_t *ships = player_getShipStack();
    lua_newtable(L);  /* t */
    for (int i=0; i<array_size(ships); i++) {
@@ -995,12 +997,12 @@ static int playerL_ships( lua_State *L )
  */
 static int playerL_shipOutfits( lua_State *L )
 {
+   PLAYER_CHECK();
+
    const char *str;
    int j;
    const PlayerShip_t *ships;
    Pilot *p;
-
-   PLAYER_CHECK();
 
    /* Get name. */
    str = luaL_checkstring(L, 1);
@@ -1053,6 +1055,8 @@ static int playerL_shipOutfits( lua_State *L )
  */
 static int playerL_outfits( lua_State *L )
 {
+   PLAYER_CHECK();
+
    const PlayerOutfit_t *outfits = player_getOutfits();
    lua_newtable(L);
    for (int i=0; i<array_size(outfits); i++) {
@@ -1074,6 +1078,8 @@ static int playerL_outfits( lua_State *L )
  */
 static int playerL_numOutfit( lua_State *L )
 {
+   PLAYER_CHECK();
+
    const Outfit *o;
    int q, unequipped_only;
 
