@@ -20,15 +20,15 @@ end
 local infobtn
 function update_bioship ()
    local is_bioship = playerisbioship()
-   local stage = player.shipvarPeek("biostage")
-   -- Initialize in the case stage isn't set
-   if not stage then
-      bioship.setstage( 1 )
-      stage = 1
-   end
 
    -- Enable info window button based on bioship status
    if is_bioship then
+      local stage = player.shipvarPeek("biostage")
+      -- Initialize in the case stage isn't set
+      if not stage then
+         bioship.setstage( 1 )
+         stage = 1
+      end
       if not infobtn then
          local sp = stage - bioship.skillpointsused()
          local caption = _("Bioship")
