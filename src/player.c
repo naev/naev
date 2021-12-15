@@ -3201,6 +3201,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer,"favourite", "%d",pship->favourite);
 
    /* Metadata. */
+   xmlw_elem(writer, "time_played","%f", pship->time_played);
    xmlw_elem(writer, "dmg_done_shield", "%f", pship->dmg_done_shield);
    xmlw_elem(writer, "dmg_done_armour", "%f", pship->dmg_done_armour);
    xmlw_elem(writer, "dmg_taken_shield", "%f", pship->dmg_taken_shield);
@@ -3336,17 +3337,19 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 static int player_saveMetadata( xmlTextWriterPtr writer )
 {
    time_t t = time(NULL);
+   double diff = difftime( t, player.time_since_save );
 
    /* Compute elapsed time. */
-   player.time_played += difftime( t, player.time_since_save );
+   player.time_played += diff;
+   player.ps.time_played += diff;
    player.time_since_save = t;
 
    /* Save the stuff. */
    xmlw_saveTime(writer, "last_played", time(NULL));
    xmlw_saveTime(writer, "date_created", player.date_created);
-   xmlw_elem(writer,"time_played","%f",player.time_played);
 
    /* Meta-data. */
+   xmlw_elem(writer, "time_played","%f", player.time_played);
    xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
    xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
    xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
@@ -4054,6 +4057,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       xml_onlyNodes(node);
 
       /* Meta-data. */
+      xmlr_float(node,"time_played",ps.time_played);
       xmlr_float(node,"dmg_done_shield",ps.dmg_done_shield);
       xmlr_float(node,"dmg_done_armour",ps.dmg_done_armour);
       xmlr_float(node,"dmg_taken_shield",ps.dmg_taken_shield);

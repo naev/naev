@@ -293,8 +293,6 @@ static void info_openMain( unsigned int wid )
 {
    const char **buf;
    char str[STRMAX_SHORT], creds[ECON_CRED_STRLEN];
-   char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
-   char slanded[NUM2STRLEN], sjumped[NUM2STRLEN], sdied[NUM2STRLEN];
    char **licenses;
    int nlicenses;
    char *nt;
@@ -315,7 +313,7 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "#nPilot:" );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Date:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Money:") );
-   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ship:") );
+   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Current Ship:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Fuel:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Time played:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times died:") );
@@ -327,12 +325,6 @@ static void info_openMain( unsigned int wid )
    window_addText( wid, 40, 20, 120, h-80, 0, "txtDPilot", &gl_smallFont, NULL, str );
 
    credits2str( creds, player.p->credits, 2 );
-   num2str( sdied, (double)player.death_counter, 0 );
-   num2str( sjumped, (double)player.jumped_times, 0 );
-   num2str( slanded, (double)player.landed_times, 0 );
-   num2str( sdmgdone, player.dmg_done_shield + player.dmg_done_armour, 0 );
-   num2str( sdmgtaken, player.dmg_taken_shield + player.dmg_taken_armour, 0 );
-   num2str( sdestroyed, destroyed, 0 );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", player.name );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", nt );
    l += scnprintf( &str[l], sizeof(str)-l, "\n\n%s", creds );
@@ -341,13 +333,13 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%.1f hours"), player.time_played / 3600. );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sdied );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sjumped );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", slanded );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgdone );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.death_counter,0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.jumped_times, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", num2strU((double)player.landed_times, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_done_shield + player.dmg_done_armour, 0) );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", "" );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgtaken );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sdestroyed );
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
    window_addText( wid, 180, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
