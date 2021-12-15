@@ -3193,6 +3193,27 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer,"model","%s",ship->ship->name);
    xmlw_attr(writer,"favourite", "%d",pship->favourite);
 
+   /* Metadata. */
+   xmlw_elem(writer, "dmg_done_shield", "%f", pship->dmg_done_shield);
+   xmlw_elem(writer, "dmg_done_armour", "%f", pship->dmg_done_armour);
+   xmlw_elem(writer, "dmg_taken_shield", "%f", pship->dmg_taken_shield);
+   xmlw_elem(writer, "dmg_taken_armour", "%f", pship->dmg_taken_armour);
+   xmlw_elem(writer, "jumped_times", "%u", pship->jumped_times);
+   xmlw_elem(writer, "landed_times", "%u", pship->landed_times);
+   xmlw_elem(writer, "death_counter", "%u", pship->death_counter);
+
+   /* Ships destroyed by class. */
+   xmlw_startElem(writer,"ships_destroyed");
+   for (int i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+      char buf[STRMAX_SHORT];
+      strncpy( buf, ship_classToString(i), sizeof(buf)-1 );
+      for (size_t j=0; j<strlen(buf); j++)
+         if (buf[j]==' ')
+            buf[j]='_';
+      xmlw_elem(writer, buf, "%u", pship->ships_destroyed[i]);
+   }
+   xmlw_endElem(writer); /* "ships_destroyed" */
+
    /* save the fuel */
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
@@ -3318,7 +3339,7 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
    xmlw_saveTime(writer, "date_created", player.date_created);
    xmlw_elem(writer,"time_played","%f",player.time_played);
 
-   /* Damage stuff. */
+   /* Meta-data. */
    xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
    xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
    xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
@@ -3838,26 +3859,23 @@ static int player_parseMetadata( xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"last_played"))
+      xmlr_float(node,"dmg_done_shield",player.dmg_done_shield);
+      xmlr_float(node,"dmg_done_armour",player.dmg_done_armour);
+      xmlr_float(node,"dmg_taken_shield",player.dmg_taken_shield);
+      xmlr_float(node,"dmg_taken_armour",player.dmg_taken_armour);
+      xmlr_uint(node,"jumped_times",player.jumped_times);
+      xmlr_uint(node,"landed_times",player.landed_times);
+      xmlr_uint(node,"death_counter",player.death_counter);
+      xmlr_float(node,"time_played",player.time_played);
+
+      if (xml_isNode(node,"last_played")) {
          xml_parseTime(node, &player.last_played);
-      else if (xml_isNode(node,"time_played"))
-         player.time_played = xml_getFloat(node);
-      else if (xml_isNode(node,"date_created"))
+         continue;
+      }
+      else if (xml_isNode(node,"date_created")) {
          xml_parseTime(node, &player.date_created);
-      else if (xml_isNode(node,"dmg_done_shield"))
-         player.dmg_done_shield = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_done_armour"))
-         player.dmg_done_armour = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_taken_shield"))
-         player.dmg_taken_shield = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_taken_armour"))
-         player.dmg_taken_armour = xml_getFloat(node);
-      else if (xml_isNode(node,"jumped_times"))
-         player.jumped_times = xml_getUInt(node);
-      else if (xml_isNode(node,"landed_times"))
-         player.landed_times = xml_getUInt(node);
-      else if (xml_isNode(node,"death_counter"))
-         player.death_counter = xml_getUInt(node);
+         continue;
+      }
       else if (xml_isNode(node,"ships_destroyed")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
@@ -4028,7 +4046,38 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    do {
       xml_onlyNodes(node);
 
-      /* get fuel */
+      /* Meta-data. */
+      xmlr_float(node,"dmg_done_shield",ps.dmg_done_shield);
+      xmlr_float(node,"dmg_done_armour",ps.dmg_done_armour);
+      xmlr_float(node,"dmg_taken_shield",ps.dmg_taken_shield);
+      xmlr_float(node,"dmg_taken_armour",ps.dmg_taken_armour);
+      xmlr_uint(node,"jumped_times",ps.jumped_times);
+      xmlr_uint(node,"landed_times",ps.landed_times);
+      xmlr_uint(node,"death_counter",ps.death_counter);
+      if (xml_isNode(node,"ships_destroyed")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do {
+            char buf[STRMAX_SHORT];
+            int class;
+
+            xml_onlyNodes(cur);
+
+            strncpy( buf, (const char*)cur->name, sizeof(buf)-1 );
+            for (size_t i=0; i<strlen(buf); i++)
+               if (buf[i]=='_')
+                  buf[i] = ' ';
+
+            class = ship_classFromString( buf );
+            if (class==SHIP_CLASS_NULL) {
+               WARN(_("Unknown ship class '%s' when parsing 'ships_destroyed' node!"), (const char*)cur->name );
+               continue;
+            }
+
+            ps.ships_destroyed[class] = xml_getULong(cur);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Get fuel. */
       xmlr_int(node,"fuel",fuel);
 
       /* New outfit loading. */
