@@ -379,7 +379,7 @@ function enter_the_ring ()
    pilot.clear() -- Want no escorts and the likes
 
    -- Set up Player
-   local player_vendetta = player.addShip( "Vendetta", _("Ketchup"), true )
+   local player_vendetta = player.addShip( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
    mem.player_prevship = player.pilot():name() -- Ship to go back to
    player.swapShip( player_vendetta, true )
    equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )

@@ -379,7 +379,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
-   char buf[ECON_CRED_STRLEN];
+   char buf[STRMAX_SHORT];
    Ship* ship;
    HookParam hparam[2];
 
@@ -399,8 +399,9 @@ static void shipyard_buy( unsigned int wid, const char* str )
          _("Do you really want to spend %s on a new ship?"), buf )==0)
       return;
 
-   /* player just got a new ship */
-   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
+   /* Player just got a new ship */
+   snprintf( buf, sizeof(buf), _("Bought at %s in the %s system."), _(land_planet->name), _(cur_system->name) );
+   if (player_newShip( ship, NULL, 0, buf, 0 ) == NULL) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -531,7 +532,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
-   char buf[ECON_CRED_STRLEN], buf2[ECON_CRED_STRLEN],
+   char buf[STRMAX_SHORT], buf2[ECON_CRED_STRLEN],
          buf3[ECON_CRED_STRLEN], buf4[ECON_CRED_STRLEN];
    Ship* ship;
 
@@ -573,7 +574,8 @@ static void shipyard_trade( unsigned int wid, const char* str )
    }
 
    /* player just got a new ship */
-   if (player_newShip( ship, NULL, 1, 0 ) == NULL)
+   snprintf( buf, sizeof(buf), _("Bought at %s in the %s system."), _(land_planet->name), _(cur_system->name) );
+   if (player_newShip( ship, NULL, 1, buf, 0 ) == NULL)
       return; /* Player aborted the naming process. */
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */

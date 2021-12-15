@@ -135,7 +135,7 @@ static void player_checkHail (void);
 /* creation */
 static void player_newSetup();
 static int player_newMake (void);
-static Pilot* player_newShipMake( const char* name );
+static PlayerShip_t* player_newShipMake( const char* name );
 /* sound */
 static void player_initSound (void);
 /* save/load */
@@ -324,7 +324,7 @@ void player_new (void)
 static int player_newMake (void)
 {
    const Ship *ship;
-   const char *shipname;
+   const char *shipname, *acquired;
    double x,y;
 
    if (player_stack==NULL)
@@ -347,8 +347,9 @@ static int player_newMake (void)
       WARN(_("Ship not properly set by module."));
       return -1;
    }
+   acquired = start_acquired();
    /* Setting a default name in the XML prevents naming prompt. */
-   if (player_newShip( ship, shipname, 0, (shipname==NULL) ? 0 : 1 ) == NULL) {
+   if (player_newShip( ship, shipname, 0, (acquired!=NULL) ? acquired : _("???"), (shipname==NULL) ? 0 : 1 ) == NULL) {
       player_new();
       return -1;
    }
@@ -388,16 +389,17 @@ static int player_newMake (void)
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if cancelled.
  *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param acquired Description of how the ship was acquired.
  *    @param noname Whether or not to let the player name it.
  *    @return Newly created pilot on success or NULL if dialogue was cancelled.
  *
  * @sa player_newShipMake
  */
 Pilot* player_newShip( const Ship* ship, const char *def_name,
-      int trade, int noname )
+      int trade, const char *acquired, int noname )
 {
    char *ship_name, *old_name;
-   Pilot *new_ship;
+   PlayerShip_t *ps;
 
    /* temporary values while player doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
@@ -435,7 +437,11 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       return NULL;
    }
 
-   new_ship = player_newShipMake( ship_name );
+   ps = player_newShipMake( ship_name );
+   ps->autoweap  = 1;
+   ps->favourite = 0;
+   ps->shipvar   = array_create( lvar );
+   ps->acquired  = strdup( acquired );
 
    /* Player is trading ship in. */
    if (trade) {
@@ -454,16 +460,16 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       equipment_regenLists( w, 0, 1 );
    }
 
-   return new_ship;
+   return ps->p;
 }
 
 /**
  * @brief Actually creates the new ship.
  */
-static Pilot* player_newShipMake( const char* name )
+static PlayerShip_t *player_newShipMake( const char *name )
 {
    PilotFlags flags;
-   Pilot *new_pilot;
+   PlayerShip_t *ps;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -497,17 +503,14 @@ static Pilot* player_newShipMake( const char* name )
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
             dir, &vp, &vv, flags, 0, 0 );
       cam_setTargetPilot( id, 0 );
-      new_pilot = pilot_get( id );
+      ps = &player.ps;
    }
    else {
       /* Grow memory. */
-      PlayerShip_t *ship = &array_grow( &player_stack );
+      ps = &array_grow( &player_stack );
+      memset( ps, 0, sizeof(PlayerShip_t) );
       /* Create the ship. */
-      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
-      new_pilot   = ship->p;
-      ship->autoweap  = 1;
-      ship->favourite = 0;
-      ship->shipvar   = array_create( lvar );
+      ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
    }
 
    if (player.p == NULL)
@@ -521,7 +524,7 @@ static Pilot* player_newShipMake( const char* name )
    player_creds = 0;
    player_payback = 0;
 
-   return new_pilot;
+   return ps;
 }
 
 /**
@@ -664,14 +667,18 @@ credits_t player_shipPrice( const char *shipname )
 void player_rmShip( const char *shipname )
 {
    for (int i=0; i<array_size(player_stack); i++) {
+      PlayerShip_t *ps = &player_stack[i];
+
       /* Not the ship we are looking for. */
-      if (strcmp(shipname,player_stack[i].p->name)!=0)
+      if (strcmp(shipname,ps->p->name)!=0)
          continue;
 
       /* Free player ship. */
-      pilot_free(player_stack[i].p);
+      pilot_free( ps->p );
+      lvar_freeArray( ps->shipvar );
+      free( ps->acquired );
 
-      array_erase( &player_stack, &player_stack[i], &player_stack[i+1] );
+      array_erase( &player_stack, ps, ps+1 );
    }
 
    /* Update ship list if landed. */

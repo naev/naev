@@ -30,9 +30,10 @@ end
    Can fail if the player can't copy all the mission cargo over.
 
    @tparam Pilot template Template pilot to swap with the player. Note that the template pilot gets removed on success.
+   @tparam string acquired Description of how the new ship was acquired.
    @treturn boolean true on success, false otherwise
 --]]
-function swapship.swap( template )
+function swapship.swap( template, acquired )
    local pp = player.pilot()
 
    local total_cargo = 0
@@ -106,7 +107,7 @@ function swapship.swap( template )
    end
 
    -- Create new ship and swap to it
-   local newship = player.addShip( template:ship() )
+   local newship = player.addShip( template:ship(), acquired )
    player.swapShip( newship )
    pp = player.pilot() -- Update struct to new pilot
 

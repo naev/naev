@@ -1180,10 +1180,11 @@ static int playerL_rmOutfit( lua_State *L )
  *
  * @note Should be given when landed, ideally on a planet with a shipyard. Furthermore, this invalidates all player.pilot() references.
  *
- * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
+ * @usage player.addShip( "Pirate Kestrel", _("Seiryuu"), _("") ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luatparam string ship Name of the ship to add.
- *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luatparam[opt=ship.get(ship):name()] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luatparam[opt=_("???")] string acquired
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  *    @luatreturn string The new ship's name.
  * @luafunc addShip
@@ -1194,11 +1195,12 @@ static int playerL_addShip( lua_State *L )
    Pilot *new_ship;
    /* Handle parameters. */
    const Ship *s     = luaL_validship(L, 1);
-   const char *name  = luaL_optstring(L, 2, _(s->name) );
-   int noname        = lua_toboolean(L, 3);
+   const char *name  = luaL_optstring(L, 2, _(s->name));
+   const char *acquired = luaL_optstring(L, 3, _("???"));
+   int noname        = lua_toboolean(L, 4);
    /* Add the ship, look in case it's cancelled. */
    do {
-      new_ship = player_newShip( s, name, 0, noname );
+      new_ship = player_newShip( s, name, 0, acquired, noname );
    } while (new_ship == NULL);
    /* Return the new name. */
    lua_pushstring( L, new_ship->name );

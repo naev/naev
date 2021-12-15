@@ -2,7 +2,7 @@
 <Start>
  <name>Sea of Darkness</name>
  <player>
-  <ship name="El Ego de Deiz">Llama</ship>
+  <ship name="El Ego de Deiz" acquired="Your first space-worthy ship!">Llama</ship>
   <credits>30000</credits>
   <system>
    <name>Delta Polaris</name>

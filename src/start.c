@@ -24,17 +24,18 @@
  * @brief The start data structure.
  */
 typedef struct ndata_start_s {
-   char *name; /**< Name of ndata. */
-   char *ship; /**< Default starting ship model. */
-   char *shipname; /**< Default starting ship name. */
+   char *name;       /**< Name of ndata. */
+   char *ship;       /**< Default starting ship model. */
+   char *shipname;   /**< Default starting ship name. */
+   char *acquired;   /**< How the player acquired their first ship. */
    unsigned int credits; /**< Starting credits. */
-   ntime_t date; /**< Starting date. */
-   char *system; /**< Starting system. */
-   double x; /**< Starting X position. */
-   double y; /**< Starting Y position. */
-   char *mission; /**< Starting mission. */
-   char *event; /**< Starting event. */
-   char *chapter; /**< Starting chapter. */
+   ntime_t date;     /**< Starting date. */
+   char *system;     /**< Starting system. */
+   double x;         /**< Starting X position. */
+   double y;         /**< Starting Y position. */
+   char *mission;    /**< Starting mission. */
+   char *event;      /**< Starting event. */
+   char *chapter;    /**< Starting chapter. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -86,8 +87,9 @@ int start_load (void)
             xmlr_strd( cur, "chapter", start_data.chapter );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr_strd( cur, "name",    start_data.shipname );
-               xmlr_strd( cur, "ship",    start_data.ship );
+               xmlr_attr_strd( cur, "name", start_data.shipname );
+               xmlr_attr_strd( cur, "acquired", start_data.acquired );
+               xmlr_strd( cur, "ship", start_data.ship );
             }
             else if (xml_isNode(cur, "system")) {
                xmlNodePtr tmp = cur->children;
@@ -152,6 +154,7 @@ void start_cleanup (void)
 {
    free( start_data.name );
    free( start_data.shipname );
+   free( start_data.acquired );
    free( start_data.ship );
    free( start_data.system );
    free( start_data.mission );
@@ -185,6 +188,15 @@ const char* start_ship (void)
 const char* start_shipname (void)
 {
    return start_data.shipname;
+}
+
+/**
+ * @brief Gets the module's starting ship was acquired.
+ *    @return The default acquiration method of the starting ship.
+ */
+const char* start_acquired (void)
+{
+   return start_data.acquired;
 }
 
 /**
