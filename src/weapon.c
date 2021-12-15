@@ -1590,8 +1590,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* Handle seekers. */
    if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
-      w->timer2   = launcher->u.lau.iflockon;
-      w->paramf   = launcher->u.lau.iflockon;
+      w->timer2   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
+      w->paramf   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
       w->status   = (w->timer2 > 0.) ? WEAPON_STATUS_LOCKING : WEAPON_STATUS_OK;
 
       w->think = think_seeker; /* AI is the same atm. */
