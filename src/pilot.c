@@ -1540,6 +1540,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
             /* Note that player destroyed the ship. */
             player.ships_destroyed[p->ship->class]++;
+            player.ps.ships_destroyed[p->ship->class]++;
          }
       }
    }
@@ -1557,12 +1558,16 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    if (p->id == PLAYER_ID) {
       player.dmg_taken_shield += tdshield;
       player.dmg_taken_armour += tdarmour;
+      player.ps.dmg_taken_shield += tdshield;
+      player.ps.dmg_taken_armour += tdarmour;
    }
    /* TODO we might want to actually resolve shooter and check for
     * FACTION_PLAYER so that escorts also get counted... */
    else if (shooter == PLAYER_ID) {
       player.dmg_done_shield += tdshield;
       player.dmg_done_armour += tdarmour;
+      player.ps.dmg_done_shield += tdshield;
+      player.ps.dmg_done_armour += tdarmour;
    }
 
    if (w != NULL)

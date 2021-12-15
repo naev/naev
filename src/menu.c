@@ -515,6 +515,7 @@ static void menu_death_continue( unsigned int wid, const char *str )
 
    save_reload();
    player.death_counter++; /* Add death here. */
+   player.ps.death_counter++;
 }
 
 /**

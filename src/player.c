@@ -2006,6 +2006,7 @@ void player_brokeHyperspace (void)
 
    /* Increment times jumped. */
    player.jumped_times++;
+   player.ps.jumped_times++;
 }
 
 /**

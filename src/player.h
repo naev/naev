@@ -71,10 +71,22 @@ typedef struct PlayerOutfit_s {
  * @brief Player ship.
  */
 typedef struct PlayerShip_s {
-   Pilot* p;      /**< Pilot. */
+   Pilot *p;      /**< Pilot. */
    int autoweap;  /**< Automatically update weapon sets. */
    int favourite; /**< Whether or not it is favourited. */
    lvar *shipvar; /**< Per-ship version of lua mission variables. */
+
+   /* Some meta-data. */
+   char *acquired;            /**< How it got acquired. */
+   time_t acquired_date;      /**< When the player was created. */
+   double dmg_done_shield;    /**< Total damage done to shields. */
+   double dmg_done_armour;    /**< Total damage done to armour. */
+   double dmg_taken_shield;   /**< Total damage taken to shields. */
+   double dmg_taken_armour;   /**< Total damage taken to armour. */
+   unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
+   unsigned int jumped_times; /**< Times the player jumped. */
+   unsigned int landed_times; /**< Times the player landed. */
+   unsigned int death_counter;/**< Times the player got annihilated. */
 } PlayerShip_t;
 
 /**
