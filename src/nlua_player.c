@@ -38,6 +38,7 @@
 #include "nlua_planet.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
+#include "nlua_time.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nstring.h"
@@ -89,6 +90,7 @@ static int playerL_shipvarPop( lua_State *L );
 /* Outfit and ship management stuff. */
 static int playerL_ships( lua_State *L );
 static int playerL_shipOutfits( lua_State *L );
+static int playerL_shipMetadata( lua_State *L );
 static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
@@ -144,6 +146,7 @@ static const luaL_Reg playerL_methods[] = {
    { "shipvarPop", playerL_shipvarPop },
    { "ships", playerL_ships },
    { "shipOutfits", playerL_shipOutfits },
+   { "shipMetadata", playerL_shipMetadata },
    { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "outfitAdd", playerL_addOutfit },
@@ -991,7 +994,7 @@ static int playerL_ships( lua_State *L )
  *
  * @usage outfits = player.shipOutfits("Llama") -- Gets the Llama's outfits
  *
- *   @luatparam string name Name of the ship to get the outfits of.
+ *   @luatparam[nil=Current ship] string name Name of the ship to get the outfits of.
  *   @luatreturn {Outfit,...} Table of outfits.
  * @luafunc shipOutfits
  */
@@ -1005,15 +1008,14 @@ static int playerL_shipOutfits( lua_State *L )
    Pilot *p;
 
    /* Get name. */
-   str = luaL_checkstring(L, 1);
-
+   str = luaL_optstring(L, 1, NULL);
    ships = player_getShipStack();
 
    /* Get outfit. */
    lua_newtable(L);
 
    p = NULL;
-   if (strcmp(str, player.p->name)==0)
+   if ((str==NULL) || (strcmp(str, player.p->name)==0))
       p = player.p;
    else {
       for (int i=0; i<array_size(ships); i++) {
@@ -1039,6 +1041,82 @@ static int playerL_shipOutfits( lua_State *L )
       lua_pushoutfit( L, p->outfits[i]->outfit );
       lua_rawseti( L, -2, j++ );
    }
+
+   return 1;
+}
+
+/**
+ * @brief Gets meta-data about one of the player's ships.
+ *
+ *   @luatparam[nil=Current ship] string name Name of the ship to get the meta-data of.
+ *   @luatreturn Table of meta-data.
+ * @luafunc shipMetadata
+ */
+static int playerL_shipMetadata( lua_State *L )
+{
+   PLAYER_CHECK();
+
+   int destroyed = 0;
+   const char *str = luaL_optstring(L, 1, NULL);
+   const PlayerShip_t *ships = player_getShipStack();
+   const PlayerShip_t *ps = NULL;
+   if ((str==NULL) || (strcmp(str, player.p->name)==0))
+      ps = &player.ps;
+   else {
+      for (int i=0; i<array_size(ships); i++) {
+         if (strcmp(str, ships[i].p->name)==0) {
+            ps = &ships[i];
+            break;
+         }
+      }
+   }
+   if (ps == NULL) {
+      NLUA_ERROR( L, _("Player does not own a ship named '%s'"), str );
+      return 0;
+   }
+
+   lua_newtable(L);
+
+   lua_pushnumber( L, ps->time_played );
+   lua_setfield( L, -2, "time_played" );
+
+   lua_pushstring( L, ps->acquired );
+   lua_setfield( L, -2, "acquired" );
+
+   lua_pushtime( L, ps->acquired_date );
+   lua_setfield( L, -2, "acquired_date" );
+
+   lua_pushnumber( L, ps->dmg_done_shield );
+   lua_setfield( L, -2, "dmg_done_shield" );
+
+   lua_pushnumber( L, ps->dmg_done_armour );
+   lua_setfield( L, -2, "dmg_done_armour" );
+
+   lua_pushnumber( L, ps->dmg_done_shield+ps->dmg_done_armour );
+   lua_setfield( L, -2, "dmg_done" );
+
+   lua_pushnumber( L, ps->dmg_taken_shield );
+   lua_setfield( L, -2, "dmg_taken_shield" );
+
+   lua_pushnumber( L, ps->dmg_taken_armour );
+   lua_setfield( L, -2, "dmg_taken_armour" );
+
+   lua_pushnumber( L, ps->dmg_taken_shield+ps->dmg_taken_armour );
+   lua_setfield( L, -2, "dmg_taken" );
+
+   lua_pushinteger( L, ps->jumped_times );
+   lua_setfield( L, -2, "jumped_times" );
+
+   lua_pushinteger( L, ps->landed_times );
+   lua_setfield( L, -2, "landed_times" );
+
+   lua_pushinteger( L, ps->death_counter );
+   lua_setfield( L, -2, "death_counter" );
+
+   for (int i=0; i<SHIP_CLASS_TOTAL; i++)
+      destroyed += ps->ships_destroyed[i];
+   lua_pushinteger( L, destroyed );
+   lua_setfield( L, -2, "ships_destroyed" );
 
    return 1;
 }
