@@ -16,7 +16,7 @@ zpp.noona = {
    portrait = "noona.png",
    image = "noona.png",
    name = _("Noona"),
-   color = nil,
+   color = { 1, 0.75, 0.75},
    transition = nil, -- Use default
    description = _("You see Noona who looks like she might have a job for you."),
 }

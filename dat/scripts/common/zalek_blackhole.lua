@@ -11,8 +11,8 @@ local zbh = {}
 -- Zach Xiao
 zbh.zach = {
    -- TODO proper graphics
-   portrait = "zalek2.png",
-   image = "zalek2.png",
+   portrait = "zach.webp",
+   image = "zach.webp",
    name = _("Zach"),
    color = nil,
    transition = nil, -- Use default
