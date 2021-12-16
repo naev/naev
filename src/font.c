@@ -1092,7 +1092,7 @@ int gl_printLinesRaw( const glFont *ft_font,
    while (gl_printLineIteratorNext( &iter ))
       n++;
 
-   return n+1;
+   return n;
 }
 
 /**

@@ -1695,7 +1695,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "Acquired Date:" );
-   for (int i=0; i<hacquired; i++)
+   for (int i=0; i<hacquired+1; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    if (ship_mode==0) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
@@ -1720,7 +1720,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
    }
    else {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Flown:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jumped Times:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Landed Times:") );
@@ -1746,7 +1745,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    window_moveWidget( wid, "txtAcquired", x, -40-h-6 );
    window_modifyText( wid, "txtAcquired", acquired );
 
-   for (int i=0; i<hacquired; i++)
+   for (int i=0; i<hacquired+1; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    if (ship_mode==0) {
       /* Some core stats. */
@@ -1792,7 +1791,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       int destroyed = 0;
       for (int i=0; i<SHIP_CLASS_TOTAL; i++)
          destroyed += ps->ships_destroyed[i];
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%.1f hours"), ps->time_played/3600. );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->jumped_times,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->landed_times,0) );
