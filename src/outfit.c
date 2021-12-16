@@ -1789,7 +1789,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD( l, temp, "%s", _("\n#rActivated Outfit#0") );
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
       SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
-   SDESC_COND_COLOUR( l, temp, _("%+.0f CPU"), temp->cpu );
+   SDESC_COND_COLOUR( l, temp, _("\n%+.0f CPU"), temp->cpu );
 }
 
 /**
