@@ -570,7 +570,7 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
 
    /* Core Slots */
    if (!pilot_slotsCheckRequired(p))
-      return _("Not All Core Slots are equipped");
+      return _("Not all core slots are equipped");
 
    /* All OK. */
    return NULL;
@@ -588,33 +588,35 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
 {
 #define SPACEWORTHY_CHECK(cond,msg) \
    if (cond) { ret++; \
+      if (pos > 0) \
+         pos += scnprintf( &buf[pos], bufSize-pos, "\n" ); \
       pos += scnprintf( &buf[pos], bufSize-pos, (msg) ); }
    int pos = 0;
    int ret = 0;
 
    /* Core Slots */
-   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), _("!! Not All Core Slots are equipped\n") );
+   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), _("!! Not All Core Slots are equipped") );
    /* CPU. */
-   SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU\n") );
+   SPACEWORTHY_CHECK( p->cpu < 0, _("!! Insufficient CPU") );
 
    /* Movement. */
-   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Thrust\n") );
-   SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed\n") );
-   SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn\n") );
+   SPACEWORTHY_CHECK( p->thrust < 0, _("!! Insufficient Thrust") );
+   SPACEWORTHY_CHECK( p->speed < 0,  _("!! Insufficient Speed") );
+   SPACEWORTHY_CHECK( p->turn < 0,   _("!! Insufficient Turn") );
 
    /* Health. */
-   SPACEWORTHY_CHECK( p->armour < 0.,       _("!! Insufficient Armour\n") );
-   SPACEWORTHY_CHECK( p->armour_regen < 0., _("!! Insufficient Armour Regeneration\n") );
-   SPACEWORTHY_CHECK( p->shield < 0.,       _("!! Insufficient Shield\n") );
-   SPACEWORTHY_CHECK( p->shield_regen < 0., _("!! Insufficient Shield Regeneration\n") );
-   SPACEWORTHY_CHECK( p->energy_max < 0.,   _("!! Insufficient Energy\n") );
-   SPACEWORTHY_CHECK( p->energy_regen < 0., _("!! Insufficient Energy Regeneration\n") );
+   SPACEWORTHY_CHECK( p->armour < 0.,       _("!! Insufficient Armour") );
+   SPACEWORTHY_CHECK( p->armour_regen < 0., _("!! Insufficient Armour Regeneration") );
+   SPACEWORTHY_CHECK( p->shield < 0.,       _("!! Insufficient Shield") );
+   SPACEWORTHY_CHECK( p->shield_regen < 0., _("!! Insufficient Shield Regeneration") );
+   SPACEWORTHY_CHECK( p->energy_max < 0.,   _("!! Insufficient Energy") );
+   SPACEWORTHY_CHECK( p->energy_regen < 0., _("!! Insufficient Energy Regeneration") );
 
    /* Misc. */
-   SPACEWORTHY_CHECK( p->fuel_max < 0,         _("!! Insufficient Fuel Maximum\n") );
-   SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("!! Insufficient Fuel Consumption\n") );
-   SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space\n") );
-   SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew\n") );
+   SPACEWORTHY_CHECK( p->fuel_max < 0,         _("!! Insufficient Fuel Maximum") );
+   SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("!! Insufficient Fuel Consumption") );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space") );
+   SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew") );
 
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
