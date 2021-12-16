@@ -59,8 +59,8 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You approach Zach who seems a bit tired out.]]))
-   z(fmt.f(_([[]]),
-      {pnt=mem.destpnt, sys=mem.destsys, credits=fmt.credits(reward)}))
+   --z(fmt.f(_([[]]),
+   --   {pnt=mem.destpnt, sys=mem.destsys, credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -134,7 +134,7 @@ end
 -- Set up seeing the feral bioship on the way back
 local firsttime = true
 function enter ()
-   if system.cur() ~= retsys or not firsttime then
+   if misn.state~=2 or system.cur() ~= retsys or not firsttime then
       return
    end
 

@@ -131,6 +131,7 @@ He gives a puzzled look.
    faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )
    zbh.log(fmt.f(_("You took Zach to {pnt} where he found all his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
+   music.play()
    misn.finish(true)
 end
 
@@ -157,6 +158,7 @@ function heartbeat ()
       pp:comm(_([[Zach: "I hope she's all right."]]))
       msg = 2
    elseif msg==2 and d < 3e3 then
+      music.stop(true)
       player.autonavReset(3)
       pp:comm(_([[Zach: "Everything looks too quiet."]]))
       msg = 3

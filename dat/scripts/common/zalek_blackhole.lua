@@ -5,8 +5,14 @@
 --]]
 local vn = require "vn"
 local mt = require 'merge_tables'
+local audio = require "love.audio"
 
 local zbh = {}
+
+zbh.sfx = {
+   spacewhale1 = audio.newSource( "snd/sounds/spacewhale1.ogg" ),
+   spacewhale2 = audio.newSource( "snd/sounds/spacewhale2.ogg" ),
+}
 
 -- Zach Xiao
 zbh.zach = {
