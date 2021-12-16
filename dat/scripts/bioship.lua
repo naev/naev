@@ -116,7 +116,7 @@ local function skill_enable( p, s )
       end
    end
    if #outfit>0 and slot and #outfit ~= #slot then
-      warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+      warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.displayname}))
    end
    if s.test and not s.test(p) then
       return false
@@ -240,7 +240,8 @@ function bioship.window ()
 
    -- Set up some helper fields for ease of display
    for k,s in ipairs(intrinsics) do
-      local alt = "#o"..s.name.."#0"
+      s.displayname = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
+      local alt = "#o"..s.displayname.."#0"
       if s.stage==1 then
          alt = alt.."\n".._("Always available")
       else
@@ -264,9 +265,9 @@ function bioship.window ()
          alt = alt.."\n".._("* ")..naev.outfit.get(o):name()
       end
       s.alt = alt
-      s.name = fmt.f(_("Stage {stage}"),{stage=s.stage}).."\n"..s.name
    end
    for k,s in pairs(skills) do
+      s.displayname = k
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
@@ -308,7 +309,7 @@ function bioship.window ()
          table.insert( groups, grp )
       end
    end
-   table.sort( groups, function( a, b ) return a[1].name < b[1].name end ) -- Sort by name
+   table.sort( groups, function( a, b ) return a[1].displayname < b[1].displayname end ) -- Sort by name
 
    -- true if intersects
    local function aabb_vs_aabb( a, b )
@@ -346,7 +347,7 @@ function bioship.window ()
             for i,s in ipairs(g) do
                local px = g.x+s.x
                local py = s.y
-               local alt = "#o"..s.name.."#0"
+               local alt = "#o"..s.displayname.."#0"
                if s.desc then
                   if type(s.desc)=="function" then
                      alt = alt.."\n"..s.desc(pp)
@@ -357,7 +358,7 @@ function bioship.window ()
                if #s._requires > 0 then
                   local req = {}
                   for j,r in ipairs(s._requires) do
-                     table.insert( req, r.name )
+                     table.insert( req, r.displayname )
                   end
                   alt = alt.."\n#b".._("Requires: ").."#0"..fmt.list( req )
                end
@@ -407,7 +408,7 @@ function bioship.window ()
          end
       end
       if #outfit>0 and slot and #outfit ~= #slot then
-         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.name}))
+         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.displayname}))
       end
       for k,o in ipairs(outfit) do
          if slot then
@@ -471,7 +472,7 @@ function bioship.window ()
       local wgt   = luatk.newWidget( parent, x, y, w, h )
       setmetatable( wgt, SkillIcon_mt )
       wgt.skill   = s
-      local _maxw, wrapped = sfont:getWrap( s.name, 70 )
+      local _maxw, wrapped = sfont:getWrap( s.displayname, 70 )
       wgt.txth    = #wrapped * sfont:getLineHeight()
       return wgt
    end
@@ -494,7 +495,7 @@ function bioship.window ()
       if s.gfx and not (lk.isDown("left ctrl") or lk.isDown("right ctrl")) then
          s.gfx:draw( x+10, y+10, 0, 70/256, 70/256 )
       else
-         lg.printf( self.skill.name, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
+         lg.printf( self.skill.displayname, sfont, x+10, y+10+(70-self.txth)/2, 70, "center" )
       end
    end
    function SkillIcon:drawover( bx, by )
