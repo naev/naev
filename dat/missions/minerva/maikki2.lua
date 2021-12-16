@@ -45,13 +45,13 @@ local hint1_image = "zalek1.png"
 local hint1_colour = nil
 
 local hint2_name = _("Prof. Stova") -- Material Science
-local hint2_portrait = "zalek2.png"
-local hint2_image = "zalek2.png"
+local hint3_portrait = "zalek3.webp"
+local hint3_image = "zalek3.webp"
 local hint2_colour = nil
 
 local hint3_name = _("Prof. Hsu") -- Philosophy
-local hint3_portrait = "zalek3.png"
-local hint3_image = "zalek3.png"
+local hint2_portrait = "zalek2.png"
+local hint2_image = "zalek2.png"
 local hint3_colour = nil
 
 local hint4_name = _("Dr. Cayne") -- Dr. Shrimp
