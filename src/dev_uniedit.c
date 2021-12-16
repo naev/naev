@@ -255,8 +255,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
          "cstSysEdit", 1, uniedit_render, uniedit_mouse, NULL, uniedit_focusLose, NULL );
    window_custSetOverlay( wid, "cstSysEdit", uniedit_renderOverlay );
-   /* Needed to generate faction disk. */
-   map_setZoom( wid, 1. );
 
    /* Deselect everything. */
    uniedit_deselect();
@@ -1428,6 +1426,7 @@ void uniedit_selectText (void)
  */
 static void uniedit_buttonZoom( unsigned int wid, const char* str )
 {
+   (void) wid;
    /* Transform coords to normal. */
    uniedit_xpos /= uniedit_zoom;
    uniedit_ypos /= uniedit_zoom;
@@ -1441,9 +1440,6 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str )
       uniedit_zoom /= UNIEDIT_ZOOM_STEP;
       uniedit_zoom = MAX(pow(UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN), uniedit_zoom);
    }
-
-   /* Hack for the circles to work. */
-   map_setZoom( wid, uniedit_zoom );
 
    /* Transform coords back. */
    uniedit_xpos *= uniedit_zoom;
