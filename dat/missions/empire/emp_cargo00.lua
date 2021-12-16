@@ -73,7 +73,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    tk.msg( _("Empire Recruitment"), fmt.f( _([["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."
-    He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to {pnt}. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]), {pnt=mem.dest} ))
+    He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to {pnt}. The best pilots started by delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]), {pnt=mem.dest} ))
    misn.osdCreate(_("Empire Recruitment"), {fmt.f(_("Deliver some parcels for the Empire to {pnt} in {sys}."), {pnt=mem.dest, sys=mem.sys})})
 
    -- Set up the goal
@@ -89,7 +89,7 @@ function land()
       if misn.cargoRm(mem.parcels) then
          player.pay( emp.rewards.cargo00 )
          -- More flavour text
-         tk.msg(_("Mission Accomplished"), fmt.f( _([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
+         tk.msg(_("Mission Accomplished"), fmt.f( _([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer.
     You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]]), {pnt=mem.dest} ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);

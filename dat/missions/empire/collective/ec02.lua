@@ -74,7 +74,7 @@ function accept ()
    })
 
    tk.msg( _("Collective Espionage"), fmt.f(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
-    "When the Collective struck, they quickly took many systems; one of the bigger hits was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}) )
+    "When the Collective struck, they quickly took many systems; one of the bigger losses was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}) )
    tk.msg( _("Collective Espionage"), fmt.f(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to {pnt} in the {sys} system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
     "Good luck, I'll be waiting for you on your return."]]), {pnt=misn_target, sys=misn_target_sys}) )
 
@@ -90,7 +90,7 @@ function land()
    -- Return bit
    elseif mem.misn_stage == 1 and planet.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
+    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 
       -- Rewards
       faction.modPlayerSingle("Empire",5)
@@ -108,7 +108,7 @@ function takeoff()
     music.play()
 
     -- Some text
-    tk.msg( _("Collective Espionage"), fmt.f(_([[You quickly land on {pnt} and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]), {pnt=misn_target}) )
+    tk.msg( _("Collective Espionage"), fmt.f(_([[You quickly land on {pnt} and hide in its deep, dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck, there won't be too many Collective drones when you take off.]]), {pnt=misn_target}) )
     misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }

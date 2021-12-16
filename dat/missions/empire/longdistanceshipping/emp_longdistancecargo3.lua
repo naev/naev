@@ -35,7 +35,7 @@ local targetworld, targetworld_sys = planet.getS("Gerhart Station")
 function create ()
  -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
 end
 
 

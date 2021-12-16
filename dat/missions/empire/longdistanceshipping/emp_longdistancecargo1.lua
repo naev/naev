@@ -35,18 +35,18 @@ local targetworld, targetworld_sys = planet.getS("Soromid Customs Central")
 function create ()
  -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
 end
 
 
 function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), _([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped business potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Soromid Long Distance Recruitment"), fmt.f( _([["I knew I could count on you," Lieutenant Czesc exclaims. "These missions will be long distance, meaning that you'll usually have to go at least 3 jumps to make the delivery. In addition, you'll often find yourself in the territory of other factions, where the Empire may not be able to protect you. In return, you will be nicely compensated." He hits a couple buttons on his wrist computer. "First, we need to set up operations with the other factions. We'll need a bureaucrat to handle the red tape and oversee the operations. We will begin with the Soromid. I know those genetically modified beings are kind of creepy, but business is business. Please accompany a bureaucrat to {pnt} in the {sys} system. He will report back to me when this mission is accomplished. I tend to travel within Empire space handling minor trade disputes, so keep an eye out for me in the bar on Empire controlled planets."]]), {pnt=targetworld, sys=targetworld_sys} ) )
+   tk.msg( _("Soromid Long Distance Recruitment"), fmt.f( _([["I knew I could count on you," Lieutenant Czesc exclaims. "These missions will be long distance, meaning that you'll usually have to go at least 3 jumps to make the delivery. In addition, you'll often find yourself in the territory of other factions, where the Empire may not be able to protect you. In return, you will be nicely compensated." He hits a couple buttons on his wrist computer. "First, we need to set up operations with the other factions. We'll need a bureaucrat to handle the red tape and oversee the operations. We will begin with the Soromid. I know those genetically modified beings are kind of creepy, but business is business. Please transport a bureaucrat to {pnt} in the {sys} system. He will report back to me when this mission is accomplished. I tend to travel within Empire space handling minor trade disputes, so keep an eye out for me in the bar on Empire controlled planets."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 

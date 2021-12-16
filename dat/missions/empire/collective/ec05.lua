@@ -80,7 +80,7 @@ function accept ()
     Finally they toss you into what seems to be an interrogation room, simply telling you to wait.]]) )
 
    -- Intro text
-   if not tk.yesno( _("Interrogation Room"), _([[After what seems to be the whole period, you hear the door open. You see a highly decorated woman walk in, with two soldiers standing guard at the door. She seems to be a Commodore, from the insignia on her uniform.
+   if not tk.yesno( _("Interrogation Room"), _([[After what seems to be a whole period, you hear the door open. You see a highly decorated woman walk in, with two soldiers standing guard at the door. She seems to be a Commodore, from the insignia on her uniform.
     "Hello, I'm Commodore Keer, I've taken over the Collective issue. I have heard about your success in the previous missions and would like to offer you more work. However, further proceedings must be kept in strict confidentiality for the interest of the Empire. You willing to go all the way with this?"]]) ) then
       misn.finish()
    end
@@ -104,11 +104,11 @@ function accept ()
 
    tk.msg( _("Interrogation Room"), fmt.f(_([[You accept and she dismisses both of the soldiers, who proceed to wait outside.
     "We've been following Lt. Commander Dimitri's progress since he started at {pnt}. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), {pnt=misn_base} ) )
-   tk.msg( _("Operation Black Trinity"), fmt.f(_([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on {pnt}. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
-    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]), {pnt=_("Eiroik")}))
+   tk.msg( _("Operation Black Trinity"), fmt.f(_([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on {pnt}. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor, Welsh, went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
+    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we are weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]), {pnt=_("Eiroik")}))
    emp.addCollectiveLog( _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]) )
-   tk.msg( _("Mission Accomplished"), fmt.f(_([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape.
-    "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys} ) )
+   tk.msg( _("Mission Accomplished"), fmt.f(_([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. As a last resort, you are authorized to kill Zakred. He must not escape.
+    "We'll be sending you with a small force. We expect you to hang back, but, if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys} ) )
 
    -- Escorts
    hook.jumpout("jumpout")
@@ -325,7 +325,7 @@ function land ()
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]]) )
          var.push("trinity", true)
          credits = credits / 2
-         emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
+         emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a hitch in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
       else
          -- Successfully killed
          tk.msg( _("Mission Accomplished"), fmt.f(_([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.

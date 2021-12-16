@@ -35,7 +35,7 @@ local targetworld, targetworld_sys = planet.getS("Praxis")
 function create ()
  -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
 end
 
 
@@ -46,7 +46,7 @@ function accept ()
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Dvaered Long Distance Recruitment"), fmt.f( _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on {pnt} in the {sys} system. He will take it from there and report back to me when the shipping contract has been confirmed. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]]), {pnt=targetworld, sys=targetworld_sys} ) )
+   tk.msg( _("Dvaered Long Distance Recruitment"), fmt.f( _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on {pnt} in the {sys} system. He will take it from there and report back to me when the shipping contract has been established. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 
