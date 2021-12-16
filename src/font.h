@@ -105,6 +105,8 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text );
 PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, int width, const char *text );
 PRINTF_FORMAT( 3, 4 )int gl_printHeight( const glFont *ft_font, int width, const char *fmt, ... );
+int gl_printLinesRaw( const glFont *ft_font, int width, const char *text );
+PRINTF_FORMAT( 3, 4 )int gl_printLines( const glFont *ft_font, int width, const char *fmt, ... );
 
 /* Restore hacks. */
 void gl_printRestoreClear (void);

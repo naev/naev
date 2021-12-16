@@ -1646,7 +1646,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    PlayerShip_t *ps;
    char *nt;
    int onboard, cargo, jumps, favourite, x, h;
-   int ww, wh, sw, sh;
+   int ww, wh, sw, sh, herrorReport;
    size_t l = 0;
 
    equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
@@ -1678,6 +1678,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Get ship error report. */
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
+   x = 20+sw+20+100+10;
+   herrorReport = gl_printLinesRaw( &gl_defFont, ww-x-150, errorReport );
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
@@ -1714,6 +1716,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
       /* Meta-data. */
+      for (int i=0; i<herrorReport-1; i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "Acquired Date:" );
    }
    /*
@@ -1741,7 +1745,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       if (ps->acquired_date==0)
          snprintf( tbuf, sizeof(tbuf), _("Unknown") );
       else
-         ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 2 );
+         ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 0 );
 
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
@@ -1809,7 +1813,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
    }
    */
    window_modifyText( wid, "txtDDesc", buf );
-   x = 20+sw+20+100+10;
    h = gl_printHeightRaw( &gl_defFont, ww-x-150, buf );
    window_moveWidget( wid, "txtAcquired", x+80, -40-h-6 );
    window_modifyText( wid, "txtAcquired", (ps->acquired) ? ps->acquired : _("You do not remember how you acquired this ship.") );
