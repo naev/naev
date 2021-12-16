@@ -59,7 +59,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar as usual.") )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar, as usual.") )
 end
 
 
@@ -68,8 +68,8 @@ function accept ()
    mem.credits = emp.rewards.ec03
 
    -- Intro text
-   if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
-    "It looks like you got something. It's not very clear because of {pnt}'s atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), {pnt=mem.commando_planet}) )
+   if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri, you notice he seems somewhat excited.
+    "It looks like you got something! It's not very clear because of {pnt}'s atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), {pnt=mem.commando_planet}) )
       then
       misn.accept()
 
@@ -134,7 +134,7 @@ function land()
       player.pay(mem.credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
+      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
 
       misn.finish(true)
    end

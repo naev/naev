@@ -52,7 +52,7 @@ function create ()
    end
 
    -- Intro text
-   if tk.yesno( _("Collective Extraction"), _([[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+   if tk.yesno( _("Collective Extraction"), _([[As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
     "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
       misn.accept()
 
