@@ -1051,14 +1051,14 @@ int gl_printHeightRaw( const glFont *ft_font,
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[1024]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
 
    if (fmt == NULL)
       return -1;
    else { /* convert the symbols to text */
       va_list ap;
       va_start(ap, fmt);
-      vsnprintf(text, 1024, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
