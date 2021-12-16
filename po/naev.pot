@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-beta.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-14 01:50-0500\n"
+"POT-Creation-Date: 2021-12-15 21:07-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15953,7 +15953,7 @@ msgstr ""
 msgid "Za'lek Bomber Drone Fighter Bay"
 msgstr ""
 
-#: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:12
+#: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:11
 msgid ""
 "This docking facility can launch a wing of bomber drones capable of "
 "bombarding enemy capital ships into submission without the mothership ever "
@@ -40409,15 +40409,15 @@ msgstr ""
 #. Flavour text and mini-briefing
 #: dat/missions/empire/collective/ec00.lua:74
 msgid ""
-"\"I don't think we've met. I'm Lt. Commander Dimitri. If all goes well "
+"\"I don't think we've met. I'm Lt. Commander Dimitri. If all goes well, "
 "you'll be reporting to me for the next assignments.\n"
-"    \"You've heard about the Collective right?  From what we know, the "
+"    \"You've heard about the Collective, right?  From what we know, the "
 "Collective seems to be a sort of 'hive' of robots. They're a recent menace; "
 "had the timing to arrive more or less when the Incident occurred, otherwise "
 "they would have been wiped out by the Emperor's Armada without a sweat. They "
-"completely wiped out all human life in Eiroik, and the other worlds they "
-"hit. We managed to stop them here, in {sys}, and constructed this base. "
-"Since then it's been more or less a stalemate.\""
+"completely wiped out all human life in Eiroik and the other worlds they hit. "
+"We managed to stop them here, in {sys}, and constructed this base. Since "
+"then it's been more or less a stalemate.\""
 msgstr ""
 
 #: dat/missions/empire/collective/ec00.lua:76
@@ -40723,7 +40723,7 @@ msgid ""
 "of hiding and monitoring from a safer spot, hopefully catching them more "
 "relaxed.\n"
 "    \"When the Collective struck, they quickly took many systems; one of the "
-"bigger hits was {pnt}, an important gas giant rich in methane. They "
+"bigger losses was {pnt}, an important gas giant rich in methane. They "
 "destroyed the gas refineries and slaughtered the humans. There was nothing "
 "we could do. The turbulence and dense atmosphere there should be able to "
 "hide your ship.\""
@@ -40745,7 +40745,7 @@ msgid ""
 "you.\n"
 "    \"How was the weather?\" he asks jokingly. \"Glad to see you're still in "
 "one piece. We'll get right on analyzing the data acquired. Those robots have "
-"to be up to something. Meet me in the bar later. Meanwhile give yourself a "
+"to be up to something. Meet me in the bar later. Meanwhile, give yourself a "
 "treat; you've earned it. We've made a 700K credit deposit into your bank "
 "account. Enjoy it.\""
 msgstr ""
@@ -40760,9 +40760,9 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec02.lua:111
 msgid ""
-"You quickly land on {pnt} and hide in its deep dense methane atmosphere. "
+"You quickly land on {pnt} and hide in its deep, dense methane atmosphere. "
 "Your monitoring gear flickers into action, hopefully catching something of "
-"some use. With some luck there won't be too many Collective drones when you "
+"some use. With some luck, there won't be too many Collective drones when you "
 "take off."
 msgstr ""
 
@@ -40834,13 +40834,14 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: dat/missions/empire/collective/ec03.lua:62
-msgid "You see Lt. Commander Dimitri at the bar as usual."
+msgid "You see Lt. Commander Dimitri at the bar, as usual."
 msgstr ""
 
 #: dat/missions/empire/collective/ec03.lua:71
 msgid ""
-"As you approach Lt. Commander Dimitri you notice he seems somewhat excited.\n"
-"    \"It looks like you got something. It's not very clear because of "
+"As you approach Lt. Commander Dimitri, you notice he seems somewhat "
+"excited.\n"
+"    \"It looks like you got something! It's not very clear because of "
 "{pnt}'s atmosphere creating a lot of noise, but it does seem to be similar "
 "to Empire transmissions. We've got another plan to try for a cleaner signal. "
 "It'll be uglier then the last one. You in?\""
@@ -40904,10 +40905,11 @@ msgstr ""
 #. Rewards
 #: dat/missions/empire/collective/ec03.lua:137
 msgid ""
-"You delivered a commando team to Eiroik for the Empire to set up more "
-"sophisticated surveillance of the Collective. Lt. Commander Dimitri said "
-"that they should be back in about 10 periods and that the Empire will "
-"probably need your assistance on Omega Station again at that time."
+"You provided a distraction while a commando team was inserted into Eiroik "
+"for the Empire to set up more sophisticated surveillance of the Collective. "
+"Lt. Commander Dimitri said that they should be back in about 10 periods and "
+"that the Empire will probably need your assistance on Omega Station again at "
+"that time."
 msgstr ""
 
 #.
@@ -40958,7 +40960,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec04.lua:55
 msgid ""
-"As soon as you exit the landing pad you see Lt. Commander Dimitri waiting "
+"As soon as you exit the landing pad, you see Lt. Commander Dimitri waiting "
 "for you. He seems a bit more nervous then usual.\n"
 "    \"The commando team has sent us an SOS. They were discovered by the "
 "Collective, and now they're under heavy fire. We need you to go and get them "
@@ -41173,7 +41175,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec05.lua:83
 msgid ""
-"After what seems to be the whole period, you hear the door open. You see a "
+"After what seems to be a whole period, you hear the door open. You see a "
 "highly decorated woman walk in, with two soldiers standing guard at the "
 "door. She seems to be a Commodore, from the insignia on her uniform.\n"
 "    \"Hello, I'm Commodore Keer, I've taken over the Collective issue. I "
@@ -41222,11 +41224,11 @@ msgid ""
 "charge of the secret science facility on {pnt}. Shortly after the Incident, "
 "we stopped hearing from them. We sent a recon and were met with hostile "
 "Collective drones. It seems like the project had been a success, but the "
-"traitor Welsh went rogue. Under normal circumstances we would have easily "
+"traitor, Welsh, went rogue. Under normal circumstances we would have easily "
 "crushed the Collective, but after the Incident these are hardly normal "
 "circumstances.\"\n"
 "    She goes on. \"Things have gotten out of hand. We have had chances to "
-"crush Welsh, but he always seems to evade us and strike where we were "
+"crush Welsh, but he always seems to evade us and strike where we are "
 "weakest. We always knew there must have been another traitor in our midst, "
 "but with the datapad information we now know who he is.\""
 msgstr ""
@@ -41250,11 +41252,11 @@ msgid ""
 "Trinity'. We have reason to believe that the ESS Trinity has been operating "
 "with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You "
 "will form part of an assault team with the primary objective of arresting "
-"Zakred. If all goes to worse, you are ordered to kill Zakred. He must not "
+"Zakred. As a last resort, you are authorized to kill Zakred. He must not "
 "escape.\n"
-"    \"We'll be sending you with a small force. You just stick around and if "
-"any trouble arises, take the ESS Trinity down. Zakred is currently on "
-"manoeuvre exercises in {sys}. You will have to find him there. The other "
+"    \"We'll be sending you with a small force. We expect you to hang back, "
+"but, if any trouble arises, take the ESS Trinity down. Zakred is currently "
+"on manoeuvre exercises in {sys}. You will have to find him there. The other "
 "ships will follow your lead to {sys}. Good luck.\""
 msgstr ""
 
@@ -41341,7 +41343,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec05.lua:328
 msgid ""
-"You failed to destroy the ESS Trinity, putting a wedge in the Empire's "
+"You failed to destroy the ESS Trinity, putting a hitch in the Empire's "
 "plans. You should meet back with Commodore Keer at the bar on Omega Station; "
 "she said that they would notify you if they have something more that you can "
 "do."
@@ -41420,7 +41422,7 @@ msgid ""
 "You join Commodore Keer at her table.\n"
 "    She begins, \"We're going to finally attack the Collective. We've gotten "
 "the Emperor himself to bless the mission and send some of his better pilots. "
-"Would you be interested in joining the destruction of the Collective?\""
+"Would you be interested in aiding in the destruction of the Collective?\""
 msgstr ""
 
 #. Accept the mission
@@ -41540,10 +41542,10 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec06.lua:243
 msgid ""
-"As you do your approach to land on {pnt} you notice big banners placed on "
-"the exterior of the station. They seem to be in celebration of the final "
-"defeat of the Collective. When you do land you are saluted by the welcoming "
-"committee in charge of saluting all the returning pilots.\n"
+"As you approach to land on {pnt} you notice big banners placed on the "
+"exterior of the station. They seem to be in celebration of the final defeat "
+"of the Collective. Upon landing, you are saluted by the welcoming committee "
+"in charge of honoring all the returning pilots.\n"
 "    You notice Commodore Keer. Upon greeting her, she says, \"You did a good "
 "job out there. No need to worry about the Collective anymore. Without Welsh, "
 "the Collective won't stand a chance, since they aren't truly autonomous. "
@@ -41874,7 +41876,7 @@ msgid ""
 "ever had in the armada.\"\n"
 "    He hits a couple buttons on his wrist computer, which springs into "
 "action. \"It looks like we already have a simple task for you. Deliver these "
-"parcels to {pnt}. The best pilots started delivering papers and ended up "
+"parcels to {pnt}. The best pilots started by delivering papers and ended up "
 "flying into combat against gigantic warships with the Interception Division."
 "\""
 msgstr ""
@@ -41893,8 +41895,7 @@ msgid ""
 "You deliver the parcels to the Empire Shipping station at the {pnt} "
 "spaceport. Afterwards, they make you do some paperwork to formalise your "
 "participation with the Empire. They tell you to keep an eye out for missions "
-"labeled ES, which stands for Empire Shipping, in the mission computer, to "
-"which you now have access.\n"
+"labeled ES, which stands for Empire Shipping, in the mission computer.\n"
 "    You aren't too sure of what to make of your encounter with the Empire. "
 "Only time will tell..."
 msgstr ""
@@ -42142,8 +42143,8 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid ""
-"Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the "
-"bar."
+"Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at "
+"the bar."
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:45
@@ -42152,8 +42153,8 @@ msgid ""
 "\"Hello! I've been looking for you. You've done a great job with those "
 "Empire Shipping missions and we have a new exciting opportunity. You see, "
 "the head office is looking to expand business with other factions, which has "
-"enormous untapped business potential. They need someone competent and "
-"trustworthy to help them out. That's where you come in. Interested?\""
+"enormous untapped potential. They need someone competent and trustworthy to "
+"help them out. That's where you come in. Interested?\""
 msgstr ""
 
 #. Flavour text and mini-briefing
@@ -42176,7 +42177,7 @@ msgid ""
 "factions. We'll need a bureaucrat to handle the red tape and oversee the "
 "operations. We will begin with the Soromid. I know those genetically "
 "modified beings are kind of creepy, but business is business. Please "
-"accompany a bureaucrat to {pnt} in the {sys} system. He will report back to "
+"transport a bureaucrat to {pnt} in the {sys} system. He will report back to "
 "me when this mission is accomplished. I tend to travel within Empire space "
 "handling minor trade disputes, so keep an eye out for me in the bar on "
 "Empire controlled planets.\""
@@ -42247,7 +42248,7 @@ msgid ""
 "meet you at the hanger. The Dvaered are, of course, allies of the Empire. "
 "Still, they offend easily, so try not to talk too much. Your mission is to "
 "drop the bureaucrat off on {pnt} in the {sys} system. He will take it from "
-"there and report back to me when the shipping contract has been confirmed. "
+"there and report back to me when the shipping contract has been established. "
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
 msgstr ""
@@ -42401,7 +42402,7 @@ msgid ""
 "Lieutenant Czesc slaps you on the back as you take a seat next to him at the "
 "bar. \"We've done it! We have set up Empire Armada Shipping outposts across "
 "quite a bit of the galaxy. I just have one more favor to ask. I need "
-"transport back to {pnt} in the {sys} system. Once there I can authorize you "
+"transport back to {pnt} in the {sys} system. Once there, I can authorize you "
 "to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
 
@@ -42550,14 +42551,14 @@ msgstr ""
 #: dat/missions/empire/shipping/es00.lua:68
 msgid ""
 "\"We've got a prisoner exchange set up with the FLF to take place on "
-"{dest_pnt} in the {dest_sys} system. They want a more neutral pilot to do "
+"{dest_pnt} in the {dest_sys} system. They want a more 'neutral' pilot to do "
 "the exchange. You would have to go to {dest_pnt} with some FLF prisoners "
 "aboard your ship and exchange them for some of our own. You won't have "
-"visible escorts but we will have your movements watched by ships in nearby "
-"sectors.\n"
-"    \"Once you get the men they captured back, bring them over to {ret_pnt} "
-"in {ret_sys} for debriefing. You'll be compensated for your troubles. Good "
-"luck.\""
+"visible escorts but we will use ships in nearby sectors to monitor your "
+"status.\n"
+"    \"Once you get our captured people back, bring them over to {ret_pnt} in "
+"{ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."
+"\""
 msgstr ""
 
 #. Set up the goal
@@ -42571,7 +42572,7 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es00.lua:76
 msgid ""
-"The Prisoners are loaded onto your ship along with a few marines to ensure "
+"The prisoners are loaded onto your ship along with a few marines to ensure "
 "nothing untoward happens."
 msgstr ""
 
@@ -42581,8 +42582,8 @@ msgid ""
 "explosives rigged on some of the columns. This doesn't look good. The "
 "marines tell you to sit still while they go out to try to complete the "
 "prisoner exchange.\n"
-"    From the cockpit you see how the marines lead the prisoners in front of "
-"them with guns to their backs. You see figures step out of the shadows with "
+"    From the cockpit you see the marines lead the prisoners in front of them "
+"with guns to their backs. You see figures step out of the shadows with "
 "weapons too; most likely the FLF."
 msgstr ""
 
@@ -42595,7 +42596,7 @@ msgid ""
 "doesn't look good at all.\n"
 "    You start your climb out of the atmosphere and notice how you're picking "
 "up many FLF and Dvaered ships. Looks like you're going to have quite a run "
-"to get the hell out of here. It didn't go as you expected."
+"to get the hell out of here. This didn't go as you expected."
 msgstr ""
 
 #: dat/missions/empire/shipping/es00.lua:98
@@ -42620,10 +42621,10 @@ msgid ""
 "    \"It was all the Dvaered's fault. They just came in out of nowhere and "
 "started shooting. What a horrible mess. We're already working on sorting out "
 "the blame.\"\n"
-"    He sighs. \"We had good men there. And we certainly didn't want you to "
-"start with a mess like this, but if you're interested in another, meet me up "
-"in the bar in a while. We get no rest around here. The payment has already "
-"been transferred to your bank account.\""
+"    He sighs. \"We had good people there. And we certainly didn't want you "
+"to start with a mess like this, but if you're interested in more missions, "
+"meet me up in the bar in a while. We get no rest around here. The payment "
+"has already been transferred to your bank account.\""
 msgstr ""
 
 #: dat/missions/empire/shipping/es00.lua:123
@@ -42632,7 +42633,7 @@ msgid ""
 "Unfortunately, the prisoner exchange failed. \"It was all the Dvaered's "
 "fault. They just came in out of nowhere and started shooting.\" Commander "
 "Soldner has asked you to meet him in the bar on Halir if you're interested "
-"in another mission."
+"in more missions."
 msgstr ""
 
 #. Force FLF combat music (note: must clear this later on).
@@ -42701,7 +42702,7 @@ msgid "Soldner"
 msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:46
-msgid "You see Commander Soldner who is expecting you."
+msgid "You see Commander Soldner. He is expecting you."
 msgstr ""
 
 #. See if accept mission
@@ -42721,7 +42722,7 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:52
 msgid ""
 "You approach Commander Soldner, who seems to be waiting for you.\n"
-"\"Hello, ready for your next mission?\""
+"\"Ready for your next mission?\""
 msgstr ""
 
 #. target destination
@@ -42740,8 +42741,8 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:69
 msgid ""
-"Commander Soldner begins, \"We have an important package that we must take "
-"from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the "
+"Commander Soldner begins, \"We have an important package that must get from "
+"{pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the "
 "{dropoff_sys} system. We have reason to believe that it is also wanted by "
 "external forces.\n"
 "    \"The plan is to send an advance convoy with guards to make the run in "
@@ -42752,9 +42753,9 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:76
 msgid ""
-"\"Avoid hostility at all costs. The package must arrive at its destination. "
-"Since you are undercover, Empire ships won't assist you if you come under "
-"fire, so stay sharp. Good luck.\""
+"\"Avoid hostilities at all costs. The package must arrive at its "
+"destination. Since you are undercover, Empire ships won't assist you if you "
+"come under fire, so stay sharp. Good luck.\""
 msgstr ""
 
 #. Set hooks
@@ -42806,7 +42807,7 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:122
 msgid ""
-"Workers quickly unload the package as mysteriously as it was loaded. You "
+"Workers quickly unload the package as discreetly as it was loaded. You "
 "notice that one of them gives you a note. Looks like you'll have to go to "
 "{pnt} in the {sys} system to report to Commander Soldner."
 msgstr ""
@@ -42816,8 +42817,8 @@ msgid ""
 "You arrive at {pnt} and report to Commander Soldner. He greets you and "
 "starts talking. \"I heard you encountered resistance. At least you were able "
 "to deliver the package. Great work there. I've managed to get you cleared "
-"for the Heavy Weapon License. You'll still have to pay the fee for getting "
-"it, though.\n"
+"for a Heavy Weapon License. You'll still have to pay the fee for getting it, "
+"though.\n"
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
@@ -42835,7 +42836,7 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:143
 msgid ""
 "You successfully completed a package delivery for the Empire. As a result, "
-"you have been cleared for the Heavy Weapon License and can now buy it at an "
+"you have been cleared for a Heavy Weapon License and can now buy it at an "
 "outfitter. Commander Soldner said that you can meet him in the bar at Halir "
 "if you're interested in more work."
 msgstr ""
@@ -42926,11 +42927,11 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:84
 msgid ""
 "Commander Soldner nods and continues, \"We've had reports that a transport "
-"vessel came under attack while transporting a VIP. They managed to escape, "
-"but the engine ended up giving out in the {sys} system. The ship is now "
-"disabled and we need someone to board the ship and rescue the VIP. There "
-"have been many FLF ships detected near the sector, but we've managed to "
-"organise a Dvaered escort for you.\n"
+"vessel came under attack while carrying a VIP. They managed to escape, but "
+"the engine ended up giving out in the {sys} system. The ship is now disabled "
+"and we need someone to board the ship and rescue the VIP. There have been "
+"many FLF ships detected near the sector, but we've managed to organise a "
+"Dvaered escort for you.\n"
 "    \"You're going to have to fly to the {sys} system, find and board the "
 "transport ship to rescue the VIP, and then fly back. The sector is most "
 "likely going to be hot. That's where your Dvaered escorts will come in. "
@@ -42952,14 +42953,14 @@ msgid ""
 "thanks you profusely before heading off. You proceed to pay Commander "
 "Soldner a visit. He seems to be happy, for once.\n"
 "    \"It seems like you managed to pull it off. I had my doubts at first, "
-"but you've proven to be a very skilled pilot. Oh, and I've cleared you for "
-"the Heavy Combat Vessel License; congratulations! We have nothing more for "
-"you now, but check in periodically in case something comes up for you.\""
+"but you've proven to be a very skilled pilot. Oh, and I've cleared you for a "
+"Heavy Combat Vessel License; congratulations! We have nothing more for you "
+"now, but check in periodically in case something comes up for you.\""
 msgstr ""
 
 #: dat/missions/empire/shipping/es02.lua:120
 msgid ""
-"You successfully rescued a VIP for the Empire and have been cleared for the "
+"You successfully rescued a VIP for the Empire and have been cleared for a "
 "Heavy Combat Vessel License; you can now buy one at the outfitter."
 msgstr ""
 
@@ -79001,57 +79002,57 @@ msgid_plural "Loaded %d Factions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/font.c:1101
+#: src/font.c:1092
 #, c-format
 msgid ""
 "Font '%s' unicode character '%#x' not found in font! Using missing glyph."
 msgstr ""
 
-#: src/font.c:1108
+#: src/font.c:1099
 msgid "FT_Load_Glyph failed."
 msgstr ""
 
-#: src/font.c:1115
+#: src/font.c:1106
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr ""
 
-#: src/font.c:1156
+#: src/font.c:1147
 #, c-format
 msgid "Unable to load character '%#x'!"
 msgstr ""
 
-#: src/font.c:1382
+#: src/font.c:1373
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr ""
 
-#: src/font.c:1467
+#: src/font.c:1458
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr ""
 
-#: src/font.c:1615
+#: src/font.c:1606
 #, c-format
 msgid "Unable to read font: %s"
 msgstr ""
 
-#: src/font.c:1623
+#: src/font.c:1614
 #, c-format
 msgid "FT_New_Memory_Face failed loading library from %s"
 msgstr ""
 
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: src/font.c:1636
+#: src/font.c:1627
 msgid "FT_Set_Char_Size failed."
 msgstr ""
 
-#: src/font.c:1642
+#: src/font.c:1633
 msgid "Font isn't resizable!"
 msgstr ""
 
-#: src/font.c:1646
+#: src/font.c:1637
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr ""
 
