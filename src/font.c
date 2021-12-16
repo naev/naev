@@ -1020,7 +1020,8 @@ int gl_printHeightRaw( const glFont *ft_font,
       const int width, const char *text )
 {
    glPrintLineIterator iter;
-   double y;
+   int line_height;
+   double y = 0.;
 
    /* Check 0 length strings. */
    if (text[0] == '\0')
@@ -1029,12 +1030,12 @@ int gl_printHeightRaw( const glFont *ft_font,
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   y = 0.;
+   line_height = 1.5*(double)ft_font->h;
    gl_printLineIteratorInit( &iter, ft_font, text, width );
    while (gl_printLineIteratorNext( &iter ))
-      y += 1.5*(double)ft_font->h; /* move position down */
+      y += line_height;
 
-   return (int) (y - 0.5*(double)ft_font->h) + 1;
+   return (int)y - line_height + ft_font->h + 1;
 }
 
 /**
