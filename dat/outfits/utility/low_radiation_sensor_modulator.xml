@@ -7,7 +7,7 @@
   <mass>1</mass>
   <price>370000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>By using special modulation highly tuned for low radiation environments, the Low Radiation Sensor Modulator is able to increase the detection of nearby ships while also giving more sensibility to jump point signatures when stealthed.</description>
+  <description>By using special modulation highly tuned for low radiation environments, the Low Radiation Sensor Modulator is able to increase the detection of nearby ships while also giving more sensitivity to jump point signatures when stealthed.</description>
   <desc_extra>#pOnly active when in stealth.#0</desc_extra>
   <limit>low_radiation_sensor_modulator</limit>
  </general>
