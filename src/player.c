@@ -349,7 +349,7 @@ static int player_newMake (void)
    }
    acquired = start_acquired();
    /* Setting a default name in the XML prevents naming prompt. */
-   if (player_newShip( ship, shipname, 0, (acquired!=NULL) ? acquired : _("???"), (shipname==NULL) ? 0 : 1 ) == NULL) {
+   if (player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 ) == NULL) {
       player_new();
       return -1;
    }
@@ -441,7 +441,8 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
    ps->autoweap  = 1;
    ps->favourite = 0;
    ps->shipvar   = array_create( lvar );
-   ps->acquired  = strdup( acquired );
+   ps->acquired  = (acquired!=NULL) ? strdup( acquired ) : NULL;
+   ps->acquired_date = ntime_get();
 
    /* Player is trading ship in. */
    if (trade) {

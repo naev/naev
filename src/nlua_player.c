@@ -1184,7 +1184,7 @@ static int playerL_rmOutfit( lua_State *L )
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt=ship.get(ship):name()] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt=_("???")] string acquired
+ *    @luatparam[opt] string acquired
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  *    @luatreturn string The new ship's name.
  * @luafunc addShip
@@ -1196,7 +1196,7 @@ static int playerL_addShip( lua_State *L )
    /* Handle parameters. */
    const Ship *s     = luaL_validship(L, 1);
    const char *name  = luaL_optstring(L, 2, _(s->name));
-   const char *acquired = luaL_optstring(L, 3, _("???"));
+   const char *acquired = luaL_optstring(L, 3, NULL);
    int noname        = lua_toboolean(L, 4);
    /* Add the ship, look in case it's cancelled. */
    do {
