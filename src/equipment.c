@@ -1698,7 +1698,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
    for (int i=0; i<hacquired; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    if (ship_mode==0) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
@@ -1750,7 +1749,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
    for (int i=0; i<hacquired; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    if (ship_mode==0) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       /* Some core stats. */
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
