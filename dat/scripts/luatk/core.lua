@@ -477,10 +477,11 @@ end
 function luatk.drawAltText( bx, by, alt, w )
    naev.gfx.clearDepth()
    local font = luatk._deffont or lg.getFont()
-   w = w or 250
-   local _w, tw = font:getWrap( alt, w-20 )
+   w = w or 400
+   local maxw, tw = font:getWrap( alt, w-20 )
    local h = #tw * font:getLineHeight() + 20
    local lw, lh = lg.getDimensions()
+   w = math.min( maxw+20, w )
 
    local x = bx + 10
    local y = by
