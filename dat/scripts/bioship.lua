@@ -267,7 +267,7 @@ function bioship.window ()
       s.alt = alt
    end
    for k,s in pairs(skills) do
-      s.displayname = k
+      s.displayname = s.name
       s.id = "bio_"..k
       s.x = 0
       s.y = s.tier
