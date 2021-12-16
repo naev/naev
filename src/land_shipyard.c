@@ -400,7 +400,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
       return;
 
    /* Player just got a new ship */
-   snprintf( buf, sizeof(buf), _("Bought at %s in the %s system."), _(land_planet->name), _(cur_system->name) );
+   snprintf( buf, sizeof(buf), _("You bought at %s in the %s system."), _(land_planet->name), _(cur_system->name) );
    if (player_newShip( ship, NULL, 0, buf, 0 ) == NULL) {
       /* Player actually aborted naming process. */
       return;
