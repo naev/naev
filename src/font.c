@@ -964,23 +964,12 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    gl_fontKernStart();
    nmax = n = 0.;
    i = 0;
-   while ((ch = u8_nextchar( text, &i ))) {
-      /* Ignore escape sequence. */
-      if (ch == FONT_COLOUR_CODE) {
-         if (text[i] != '\0')
-            i++;
-
-         continue;
-      }
-
+   while ((ch = font_nextChar( text, &i ))) {
       /* Newline. */
       if (ch == '\n') {
 	 gl_fontKernStart();
          nmax = MAX( nmax, n );
          n = 0.;
-         if (text[i] != '\0')
-            i++;
-
          continue;
       }
 
