@@ -21,7 +21,7 @@ zbh.zach = {
    image = "zach.webp",
    name = _("Zach"),
    color = nil,
-   transition = nil, -- Use default
+   transition = "hexagon",
    description = _("Zach looks like he is idle at the bar. You wonder what he's thinking about."),
 }
 
