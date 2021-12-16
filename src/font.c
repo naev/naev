@@ -587,10 +587,9 @@ static uint32_t font_nextChar( const char *s, size_t *i )
    uint32_t ch = s[*i]; /* To be corrected: the character starting at byte *i. Whether it's zero or not is already correct. */
    while (ch != 0) {
       ch = u8_nextchar(s, i);
-      if (ch==FONT_COLOUR_CODE)
-         ch = u8_nextchar(s, i); /* Skip the operand and try again. */
-      else if (ch != '\t')
-         return ch; /* Skip tabs and try again; else return the char. */
+      if (ch != FONT_COLOUR_CODE)
+         return ch;
+      ch = u8_nextchar(s, i); /* Skip the operand and try again. */
    }
    return 0;
 }
