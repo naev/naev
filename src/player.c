@@ -3202,7 +3202,8 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer,"favourite", "%d",pship->favourite);
 
    /* Metadata. */
-   xmlw_elem(writer, "acquired","%s", pship->acquired);
+   if (pship->acquired)
+      xmlw_elem(writer, "acquired","%s", pship->acquired);
    xmlw_saveTime(writer, "acquired_date", pship->acquired_date);
    xmlw_elem(writer, "time_played","%f", pship->time_played);
    xmlw_elem(writer, "dmg_done_shield", "%f", pship->dmg_done_shield);
