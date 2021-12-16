@@ -201,12 +201,6 @@ tech_group_t *tech_groupCreateXML( xmlNodePtr node )
    /* Load data. */
    tech_group_t *tech = tech_groupCreate();
    tech_parseNodeData( tech, node );
-
-   if (tech->items == NULL) {
-      tech_groupDestroy(tech);
-      tech = NULL;
-   }
-
    return tech;
 }
 
