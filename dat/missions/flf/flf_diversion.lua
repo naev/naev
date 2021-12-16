@@ -25,12 +25,12 @@ local flf = require "missions.flf.flf_common"
 -- luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
 
 success_text = {
-   _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base."),
+   _("You receive a transmission from an FLF officer saying that the operation was completed, and you can now return to the base."),
 }
 
 pay_text = {
    _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay."),
-   _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay."),
+   _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other and the officer hands you your pay."),
 }
 
 mem.osd_desc    = {

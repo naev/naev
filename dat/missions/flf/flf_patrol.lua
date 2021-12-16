@@ -34,9 +34,9 @@ misn_title = {
 }
 
 local text = {
-   _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work."),
-   _("As you get your pay from the officer, FLF soldiers congratulate you for your victory."),
-   _("You collect your pay from the officer, who then congratulates you for your victory."),
+   _("After you are handed your pay, an FLF soldier congratulates you on your victory and buys you a drink. You chat for a while before getting back to work."),
+   _("As you get your pay from the officer, FLF soldiers congratulate you on your victory."),
+   _("You collect your pay from the officer, who then congratulates you on your victory."),
 }
 
 mem.osd_desc    = {
