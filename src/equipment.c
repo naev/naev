@@ -98,7 +98,7 @@ static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, const char* str );
 static void equipment_renameShip( unsigned int wid, const char *str );
-//static void equipment_shipMode( unsigned int wid, const char *str );
+static void equipment_shipMode( unsigned int wid, const char *str );
 static void equipment_transChangeShip( unsigned int wid, const char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, const char* str );
@@ -365,7 +365,7 @@ void equipment_open( unsigned int wid )
    window_addText( wid, x, y,
          130, y-20+h-bh, 0, "txtSDesc", &gl_defFont, &cFontGrey, NULL );
    window_addText( wid, x, y,
-         w-x-20, y-20+h-bh, 0, "txtAcquired", &gl_defFont, NULL, NULL );
+         w-x-128-30, y-20+h-bh, 0, "txtAcquired", &gl_defFont, NULL, NULL );
    x += 130;
    window_addText( wid, x, y,
          w-x-20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
@@ -381,11 +381,9 @@ void equipment_open( unsigned int wid )
    window_addButtonKey( wid, -16, -20-150-ch-bh,
          128+8, bh, "btnRenameShip",
          _("Rename"), equipment_renameShip, SDLK_r );
-   /*
    window_addButtonKey( wid, -16, -20-150-ch-2*bh-10,
          128+8, bh, "btnShipMode",
          _("Toggle Display"), equipment_shipMode, SDLK_m );
-   */
 
    /* Generate lists. */
    equipment_genLists( wid );
@@ -1638,15 +1636,15 @@ void equipment_updateShips( unsigned int wid, const char* str )
 {
    (void) str;
    char buf[STRMAX], buf_price[ECON_CRED_STRLEN];
-   char errorReport[STRMAX_SHORT];
-   const char *shipname;
+   char errorReport[STRMAX_SHORT], tbuf[64];
+   const char *shipname, *acquired;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship, *prevship;
    PlayerShip_t *ps;
    char *nt;
    int onboard, cargo, jumps, favourite, x, h;
-   int ww, wh, sw, sh, herrorReport;
+   int ww, wh, sw, sh, hacquired;
    size_t l = 0;
 
    equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
@@ -1678,10 +1676,13 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Get ship error report. */
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
-   x = 20+sw+20+100+10;
-   herrorReport = gl_printLinesRaw( &gl_defFont, ww-x-150, errorReport );
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
+
+   /* Get acquired text length. */
+   x = 20+sw+20+180+10;
+   acquired = (ps->acquired) ? ps->acquired : _("You do not remember how you acquired this ship.");
+   hacquired = gl_printLinesRaw( &gl_defFont, ww-x-128-30, acquired );
 
    /* Stealth stuff. */
    num2str( sdet, ship->ew_detection, 0 );
@@ -1693,10 +1694,13 @@ void equipment_updateShips( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
-   if (ship_mode==0) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "Acquired Date:" );
+   for (int i=0; i<hacquired; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   if (ship_mode==0) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
@@ -1715,14 +1719,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
-      /* Meta-data. */
-      for (int i=0; i<herrorReport-1; i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "Acquired Date:" );
    }
-   /*
    else {
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Acquired Date:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Flown:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jumped Times:") );
@@ -1731,7 +1729,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Taken:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ships Destroyed:") );
    }
-   */
    window_modifyText( wid, "txtSDesc", buf );
 
    /* Fill the buffer. */
@@ -1740,17 +1737,23 @@ void equipment_updateShips( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", ship->name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->ship->name) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_classDisplay(ship->ship)) );
-   if (ship_mode==0) {
-      char tbuf[64];
-      if (ps->acquired_date==0)
-         snprintf( tbuf, sizeof(tbuf), _("Unknown") );
-      else
-         ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 0 );
+   if (ps->acquired_date==0)
+      snprintf( tbuf, sizeof(tbuf), _("Unknown") );
+   else
+      ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 2 );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", tbuf );
 
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
+   h = gl_printHeightRaw( &gl_defFont, ww-x-128-30, buf );
+   window_moveWidget( wid, "txtAcquired", x, -40-h-6 );
+   window_modifyText( wid, "txtAcquired", acquired );
+
+   for (int i=0; i<hacquired; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      /* Movement. */
+   if (ship_mode==0) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      /* Some core stats. */
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
@@ -1786,21 +1789,11 @@ void equipment_updateShips( unsigned int wid, const char* str )
             sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
-      /* Meta-data. */
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tbuf );
    }
-   /*
    else {
-      char tbuf[64];
-      //const char *acquired = (ps->acquired!=NULL) ? ps->acquired : _("???");
       int destroyed = 0;
       for (int i=0; i<SHIP_CLASS_TOTAL; i++)
          destroyed += ps->ships_destroyed[i];
-      if (ps->acquired_date==0)
-         snprintf( tbuf, sizeof(tbuf), _("???") );
-      else
-         ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 2 );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", tbuf );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%.1f hours"), ps->time_played/3600. );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->jumped_times,0) );
@@ -1811,11 +1804,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
    }
-   */
    window_modifyText( wid, "txtDDesc", buf );
-   h = gl_printHeightRaw( &gl_defFont, ww-x-150, buf );
-   window_moveWidget( wid, "txtAcquired", x+80, -40-h-6 );
-   window_modifyText( wid, "txtAcquired", (ps->acquired) ? ps->acquired : _("You do not remember how you acquired this ship.") );
 
    /* Clean up. */
    free( nt );
@@ -2252,13 +2241,11 @@ static void equipment_renameShip( unsigned int wid, const char *str )
 /**
  * @brief Toggles the ship visualization mode.
  */
-/*
 static void equipment_shipMode( unsigned int wid, const char *str )
 {
    ship_mode = 1-ship_mode;
    equipment_updateShips( wid, str );
 }
-*/
 
 /**
  * @brief Wrapper to only add unique outfits.
