@@ -967,7 +967,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    while ((ch = font_nextChar( text, &i ))) {
       /* Newline. */
       if (ch == '\n') {
-	 gl_fontKernStart();
+         gl_fontKernStart();
          nmax = MAX( nmax, n );
          n = 0.;
          continue;
