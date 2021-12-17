@@ -103,7 +103,7 @@ function land ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
    vn.transition( zbh.zach.transition )
-   vn.na(_("As you approach the station you can tell that it's in very bad shape there are clear plasma blast craters on the outside of the shape and you have to avoid debris when trying to dock at the space port. Zach is silent the entire approach and has a dumbfounded look on his face. You don't think this is what he was expecting."))
+   vn.na(_("As you approach the station you can can make out clear plasma blast craters on the outer hull. Your ship has to push away floating debris as you make a landing approach at the space docks while Zach is silent the entire time with a dumbfounded look on his face. You don't think this is what he was expecting. After what seems like an eternity, the ship's magnetic docking clamps make contact with the station."))
    z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"
 He looks pale.]]))
    vn.menu{
@@ -112,15 +112,21 @@ He looks pale.]]))
       {_([[Begin to search]]), "cont01"},
    }
    vn.label("cont01")
-   vn.na(_("You begin to search the eerily quiet station. It seems like it became empty quite recently. The base is quite a mess, but knowing the Za'lek, chances are that was the usual state of affairs at the station. You go through al the rooms, but are unable to find any signs of life."))
-   vn.na(_("You eventually make your way around the entire station and end up back at the docks. Zach seems to be staring at some of the of the damage."))
+   vn.na(_("You and Zach don your space suits and begin to search the atmosphere-less breached station in eerie silence. A floating spoon, some dirty boots… It seems like the station had inhabitants in it until quite recently. Although the base is quite a mess, knowing the Za'lek, chances are that was the usual state of affairs at the station. As you go through all the rooms one by one, but are unable to find any signs of life. During the whole ordeal, Zach remains silent and concentrated."))
+   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot():name()} ))
    z(_([["Say, doesn't that over there look like bite marks?"]]))
-   vn.na(_("You look over at where Zach is pointing and squint a bit. Indeed it does seem like it could be bite marks, but what on earth would bite a station?"))
-   z(_([["Something isn't right here. Well, besides the obvious, it just doesn't make sense."
-He gives a puzzled look.
-"I think I'm going to stay here and try to continue the research. It shouldn't be too hard to reactivate the station. I have to found out what happened to her!"]]))
-   z(_([[He goes back to your ship and brings his engineering toolkit and personal drones with him, and gets to. He works in a flurry of determination, and after a short while, you hear the buzz and whirs of a station coming back to life. It seems like he was able to activate it all.]]))
-   z(_([["Let me pay you for your services. I'll start seeing if I can figure out what happened and what they were researching on. I don't know much about the details. If you want to help, you should be able to find be around the station while I check everything. I might have things for you to do."]]))
+   vn.na(_([[You look over at where Zach is pointing, but can't really make out what he's getting at. However, after a while of staring and squinting, you seem to make out some damage that could indeed be bite marks, but what on earth would bite a station?]]))
+   z(_([["Something isn't right here."
+He stops one second realizing what he just said and gives a puzzled look.
+"Well, besides the obvious, it just doesn't make sense. Why would anyone want to do this to a basic research laboratory? There is nothing over here other than the black hole…"]]))
+   z(_([[He goes silent and seems to be lost in thought. Finally, he looks up and looks around the ship, his gaze becoming determined like rocks after the snow melts away.] He then turns to you.
+"I think I'm going to stay here and try to continue the research. It shouldn't be too hard to reactivate basic station functionality. I would never forgive myself if I went back without finding out what happened to her."]]))
+   z(_([[Zach goes back to your ship and brings his engineering toolkit and personal drones with him. He starts floating around scanning the hull panels of the station, apparently looking for something. Eventually, he seems to have found what he was looking for, and he rips off a panel almost as a gesture of rebelling against fate. He motions to the drones and disappears with them into the depths of the station internals.]]))
+   vn.na(_([[You float close by and peer through but can't make much out in the dark tangle of cables and electronics. Only occasional flashes of light indicate the presence of Zach and his drones, with a drone occasionally coming out to drop damaged electronics and procure new supplies. Knowing you won't be of help, you wait at the docks wondering how long it'll take him, and begin to nod off.]]))
+   vn.na(_([[Suddenly, you are awoken by the buzz, whirs, and groans of a station coming back back to life. Alarms blaze as the station begins to generate a breathable atmosphere and weak gravitational field. While you are distracted by all the commotion, you feel a tap on your shoulder and turn around to see a grinning Zach, helmet in hand.]]))
+   z(_([["The gravitational flux quantifier was bust, but I managed to hot-wire it with a reverse Fleuret capacitor. The station isn't in great shape, but it's a good starting point to get things working like they should be. You can take off your helmet now."]]))
+   vn.na(_([[You unlatch your helmet, and take a breath of the new atmosphere. It smells heavily of ionization but has a weird musty tang to it which makes you grimace slightly.]]))
+   z(_([["You smell that too? I have no idea what it is, but it should go away once the filters get cycled. Here, let me pay you for your services. I'll start seeing if I can figure out what happened to this station and what exactly they were researching on. I'm afraid I'm currently in the dark and don't really know much about the details. If you want to help, you should be able to find me around the station while I finish up the repairs. I might have things for you to help with."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
