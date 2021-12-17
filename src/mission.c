@@ -899,21 +899,21 @@ Mission* missions_genList( int *n, int faction,
 static int mission_location( const char *loc )
 {
    if (loc != NULL) {
-      if (strcmp( loc, "None" ) == 0)
+      if (strcasecmp( loc, "None" ) == 0)
          return MIS_AVAIL_NONE;
-      else if (strcmp( loc, "Computer" ) == 0)
+      else if (strcasecmp( loc, "Computer" ) == 0)
          return MIS_AVAIL_COMPUTER;
-      else if (strcmp( loc, "Bar" ) == 0)
+      else if (strcasecmp( loc, "Bar" ) == 0)
          return MIS_AVAIL_BAR;
-      else if (strcmp( loc, "Outfit" ) == 0)
+      else if (strcasecmp( loc, "Outfit" ) == 0)
          return MIS_AVAIL_OUTFIT;
-      else if (strcmp( loc, "Shipyard" ) == 0)
+      else if (strcasecmp( loc, "Shipyard" ) == 0)
          return MIS_AVAIL_SHIPYARD;
-      else if (strcmp( loc, "Land" ) == 0)
+      else if (strcasecmp( loc, "Land" ) == 0)
          return MIS_AVAIL_LAND;
-      else if (strcmp( loc, "Commodity" ) == 0)
+      else if (strcasecmp( loc, "Commodity" ) == 0)
          return MIS_AVAIL_COMMODITY;
-      else if (strcmp( loc, "Space" ) == 0)
+      else if (strcasecmp( loc, "Space" ) == 0)
          return MIS_AVAIL_SPACE;
    }
    return -1;
@@ -966,6 +966,8 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"location")) {
                temp->avail.loc = mission_location( xml_get(cur) );
+               if (temp->avail.loc < 0)
+                  WARN(_("Mission '%s' has unknown location '%s'!"), temp->name, xml_get(cur) );
                continue;
             }
             xmlr_int(cur,"chance",temp->avail.chance);
