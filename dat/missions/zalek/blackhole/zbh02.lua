@@ -27,7 +27,7 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat cutscene_done (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat cutscene_done welcome_back (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")
@@ -60,7 +60,7 @@ function accept ()
    vn.transition( zbh.zach.transition )
    vn.na(_([[You approach Zach who seems a bit tired out from all his work on repairing the station.]]))
    z(fmt.f(_([["Hey, I got most of the station working, but to get the rest, including the shipyard, I'm going to need some additional supplies that I can't improvise my way out of. If I could get {amount} of {cargo}, I should be able to get it all operational. I was able to arrange a pick-up at {pnt} in the {sys} system, however, I have to stay here and watch {curpnt}. Would you be willing to bring the {cargo} from {pnt} for {credits}?"]]),
-      {pnt=mem.destpnt, sys=mem.destsys, credits=fmt.credits(reward), cargo=cargo_name, amount=fmt.tonnes(cargo_amount), curpnt=mem.retpnt}))
+      {pnt=mem.destpnt, sys=mem.destsys, credits=fmt.credits(reward), cargo=cargo_name, amount=fmt.tonnes(cargo_amount), curpnt=retpnt}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -109,7 +109,7 @@ function land ()
       end
 
       local lied = false
-      local pd = vn.Character.new( _("Za'lek Individual"), {image="zalek_thug1.png", pos="left"} )
+      local pd = vn.Character.new( _("Za'lek Individual"), {image="zalek_thug1.png"} )
       vn.clear()
       vn.scene()
       vn.transition()
@@ -194,7 +194,7 @@ end
 -- Set up seeing the feral bioship on the way back
 local firsttime = true
 function enter ()
-   if misn.state~=2 or system.cur() ~= retsys or not firsttime then
+   if mem.state~=2 or system.cur() ~= retsys or not firsttime then
       return
    end
 
@@ -206,20 +206,19 @@ function heartbeat ()
    local pp = player.pilot()
    local d = retpnt:pos():dist( pp:pos() )
    if mem.state==2 and d < 10e3 then
-      local fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship") )
-      local pos = vec2.new( 8e3, 10e3 )
+      local fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
+      local pos = player.pos() + vec2.new( 3e3, 9e3 )
       -- TODO proper feral ships
-      local feral = pilot.add( "Soromid Reaper", fct, pos, _("Feral Reaper")  )
+      local feral = pilot.add( "Soromid Reaver", fct, pos, _("Feral Reaver")  )
       feral:setInvisible(true)
       feral:control(true)
       feral:hyperspace( system.get("NGC-2601") )
       zbh.sfx.spacewhale1:play()
-      camera:set( feral, true )
+      camera.set( feral, true, 4000 )
 
-      pp:control(true)
-      pp:brake()
+      player.autonavAbort(_("You thought you saw something!"))
 
-      hook.timer( 3, "cutscene_done" )
+      hook.timer( 10, "cutscene_done" )
       return
    end
    hook.timer( 3, "heartbeat" )
@@ -228,7 +227,10 @@ end
 function cutscene_done ()
    local pp = player.pilot()
    pp:control(false)
-   camera:set( nil, true )
+   camera.set( nil, true )
+   hook.timer( 5, "welcome_back")
+end
 
+function welcome_back ()
    pilot.broadcast( _("Sigma-13"), fmt.f(_("Zach: Welcome back {playername}."), {playername=player.name()}) )
 end

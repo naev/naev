@@ -1053,10 +1053,14 @@ static void ai_create( Pilot* pilot )
 Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
-   nlua_env env = p->ai->env;
+
+   if (p->ai==NULL) {
+      WARN(_("Trying to create new task for pilot '%s' that has no AI!"), p->name);
+      return NULL;
+   }
 
    /* Check if the function is good. */
-   nlua_getenv( env, func );
+   nlua_getenv( p->ai->env, func );
    luaL_checktype( naevL, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
