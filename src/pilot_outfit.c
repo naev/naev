@@ -1077,7 +1077,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy = ec * pilot->energy_max;
 
    /* Dump excess fuel */
-   pilot->fuel   = (pilot->fuel_max >= pilot->fuel) ? pilot->fuel : pilot->fuel_max;
+   pilot->fuel   = MIN( pilot->fuel, pilot->fuel_max );
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;

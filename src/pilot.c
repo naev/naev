@@ -2799,7 +2799,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->fuel   = pilot->fuel_max   = 1; /* ditto fuel */
+   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
 
