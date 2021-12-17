@@ -19,7 +19,7 @@
 --[[
    Za'lek Black Hole 02
 
-   Player has to bring back supplies to Zach, first encounter with Bad PI's lackeys and feral ship
+   Player has to bring back supplies to Zach, first encounter with evil PI's lackeys and feral ship
 ]]--
 local vn = require "vn"
 local vntk = require "vntk"
