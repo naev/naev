@@ -916,7 +916,8 @@ void player_render( double dt )
    /* Render the aiming lines. */
    if ((player.p->target != PLAYER_ID) && player.p->aimLines
         && !pilot_isFlag( player.p, PILOT_HYPERSPACE ) && !pilot_isFlag( player.p, PILOT_DISABLED )
-        && !pilot_isFlag( player.p, PILOT_LANDING ) && !pilot_isFlag( player.p, PILOT_TAKEOFF ))
+        && !pilot_isFlag( player.p, PILOT_LANDING ) && !pilot_isFlag( player.p, PILOT_TAKEOFF )
+        && !player_isFlag( PLAYER_CINEMATICS_GUI ))
       player_renderAimHelper( dt );
 
    /* Render the player's pilot. */
