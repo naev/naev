@@ -61,7 +61,7 @@ static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
-      const char* planet, const char* sysname );
+      const Planet *pnt, const StarSystem *sys );
 static int mission_matchFaction( const MissionData* misn, int faction );
 static int mission_location( const char *loc );
 /* Loading. */
@@ -218,23 +218,27 @@ int mission_alreadyRunning( const MissionData* misn )
  *
  *    @param mission ID of the mission to check.
  *    @param faction Faction of the current planet.
- *    @param planet Name of the current planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  *    @return 1 if requirements are met, 0 if they aren't.
  */
 static int mission_meetReq( int mission, int faction,
-      const char* planet, const char* sysname )
+      const Planet *pnt, const StarSystem *sys )
 {
    const MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
    /* If planet, must match planet. */
-   if ((misn->avail.planet != NULL) && (strcmp(misn->avail.planet,planet)!=0))
+   if (misn->avail.planet != NULL) {
+      if ((pnt==NULL) || strcmp(misn->avail.planet,pnt->name)!=0)
+         return 0;
+   }
+   else if (planet_isFlag(pnt, PLANET_NOMISNSPAWN))
       return 0;
 
    /* If system, must match system. */
-   if ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)!=0))
+   if ((misn->avail.system != NULL) && (sys==NULL || (strcmp(misn->avail.system,sys->name)!=0)))
       return 0;
 
    /* If chapter, must match chapter. TODO make this regex. */
@@ -288,10 +292,10 @@ static int mission_meetReq( int mission, int faction,
  *
  *    @param loc Location to match.
  *    @param faction Faction of the planet.
- *    @param planet Name of the current planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  */
-void missions_run( MissionAvailability loc, int faction, const char* planet, const char* sysname )
+void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys )
 {
    for (int i=0; i<array_size(mission_stack); i++) {
       Mission mission;
@@ -301,7 +305,7 @@ void missions_run( MissionAvailability loc, int faction, const char* planet, con
       if (misn->avail.loc != loc)
          continue;
 
-      if (!mission_meetReq(i, faction, planet, sysname))
+      if (!mission_meetReq(i, faction, pnt, sys))
          continue;
 
       chance = (double)(misn->avail.chance % 100)/100.;
@@ -828,13 +832,13 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *
  *    @param[out] n Missions created.
  *    @param faction Faction of the planet.
- *    @param planet Name of the planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, MissionAvailability loc )
+      const Planet *pnt, const StarSystem *sys, MissionAvailability loc )
 {
    int m, alloced;
    int rep;
@@ -851,7 +855,7 @@ Mission* missions_genList( int *n, int faction,
          continue;
 
       /* Must meet requirements. */
-      if (!mission_meetReq(i, faction, planet, sysname))
+      if (!mission_meetReq(i, faction, pnt, sys))
          continue;
 
       /* Must hit chance. */

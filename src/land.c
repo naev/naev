@@ -1056,11 +1056,11 @@ void land_genWindows( int load, int changetab )
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR) && !planet_isFlag(land_planet, PLANET_NOMISNSPAWN))
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
          npc_generateMissions(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
-               land_planet->presence.faction, land_planet->name, cur_system->name,
+               land_planet->presence.faction, land_planet, cur_system,
                MIS_AVAIL_COMPUTER );
    }
 
@@ -1101,7 +1101,7 @@ void land_genWindows( int load, int changetab )
       /* Check land missions. */
       if (!has_visited(VISITED_LAND)) {
          missions_run(MIS_AVAIL_LAND, land_planet->presence.faction,
-               land_planet->name, cur_system->name);
+               land_planet, cur_system);
          visited(VISITED_LAND);
       }
    }

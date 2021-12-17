@@ -117,9 +117,9 @@ extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * creates missions for a planet and such
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, MissionAvailability loc );
+      const Planet *pnt, const StarSystem *sys, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
-void missions_run( MissionAvailability loc, int faction, const char* planet, const char* sysname );
+void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
 
 /*
