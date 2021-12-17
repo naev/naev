@@ -26,7 +26,7 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat cutscene_done (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh02
 --local cargo_name = _("Repair Supplies and Assistants")
@@ -146,8 +146,29 @@ function heartbeat ()
    local pp = player.pilot()
    local d = retpnt:pos():dist( pp:pos() )
    if mem.state==2 and d < 10e3 then
-      -- TODO cutscene
-      mem.state = 2
+      local fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship") )
+      local pos = vec2.new( 8e3, 10e3 )
+      -- TODO proper feral ships
+      local feral = pilot.add( "Soromid Reaper", fct, pos, _("Feral Reaper")  )
+      feral:setInvisible(true)
+      feral:control(true)
+      feral:hyperspace( system.get("NGC-2601") )
+      zbh.sfx.spacewhale1:play()
+      camera:set( feral, true )
+
+      pp:control(true)
+      pp:brake()
+
+      hook.timer( 3, "cutscene_done" )
+      return
    end
    hook.timer( 3, "heartbeat" )
+end
+
+function cutscene_done ()
+   local pp = player.pilot()
+   pp:control(false)
+   camera:set( nil, true )
+
+   pilot.broadcast( _("Sigma-13"), fmt.f(_("Zach: Welcome back {playername}."), {playername=player.name()}) )
 end
