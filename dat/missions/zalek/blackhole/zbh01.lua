@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>100</chance>
+  <chance>20</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
   <done>Za'lek Particle Physics 6</done>

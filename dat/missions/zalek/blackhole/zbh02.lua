@@ -36,7 +36,6 @@ local cargo_amount = 83 -- Amount of cargo to take
 local retpnt, retsys = planet.getS("Research Post Sigma-13")
 
 function create ()
-   misn.finish()
    if not misn.claim( retsys ) then
       misn.finish()
    end
