@@ -845,35 +845,37 @@ Mission* missions_genList( int *n, int faction,
    m        = 0;
    alloced  = 0;
    for (int i=0; i<array_size(mission_stack); i++) {
+      double chance;
       MissionData *misn = &mission_stack[i];
-      if (misn->avail.loc == loc) {
-         double chance;
+      if (misn->avail.loc != loc)
+         continue;
 
-         /* Must meet requirements. */
-         if (!mission_meetReq(i, faction, planet, sysname))
+      /* Must meet requirements. */
+      if (!mission_meetReq(i, faction, planet, sysname))
+         continue;
+
+      /* Must hit chance. */
+      chance = (double)(misn->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
+      rep = MAX(1, misn->avail.chance / 100);
+
+      /* random chance of rep appearances */
+      for (int j=0; j<rep; j++) {
+         if (RNGF() > chance)
             continue;
-
-         /* Must hit chance. */
-         chance = (double)(misn->avail.chance % 100)/100.;
-         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-            chance = 1.;
-         rep = MAX(1, misn->avail.chance / 100);
-
-         for (int j=0; j<rep; j++) /* random chance of rep appearances */
-            if (RNGF() < chance) {
-               m++;
-               /* Extra allocation. */
-               if (m > alloced) {
-                  if (alloced == 0)
-                     alloced = 32;
-                  else
-                     alloced *= 2;
-                  tmp      = realloc( tmp, sizeof(Mission) * alloced );
-               }
-               /* Initialize the mission. */
-               if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
-                  m--;
-            }
+         m++;
+         /* Extra allocation. */
+         if (m > alloced) {
+            if (alloced == 0)
+               alloced = 32;
+            else
+               alloced *= 2;
+            tmp      = realloc( tmp, sizeof(Mission) * alloced );
+         }
+         /* Initialize the mission. */
+         if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
+            m--;
       }
    }
 
