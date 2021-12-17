@@ -662,12 +662,6 @@ void load_all (void)
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
-   events_load(); /* no dep */
-
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
-   missions_load(); /* no dep */
-
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI...") );
    ai_load(); /* dep for fleets */
 
@@ -675,7 +669,13 @@ void load_all (void)
    tech_load(); /* dep for space */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe...") );
-   space_load();
+   space_load(); /* dep for events/missions */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
+   events_load();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
+   missions_load();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs...") );
    diff_loadAvailable();

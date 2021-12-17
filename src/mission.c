@@ -1022,6 +1022,8 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
+   MELEMENT( ((temp->avail.planet!=NULL) && planet_get(temp->avail.planet)==NULL), "avail.planet" );
+   MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "avail.system" );
 #undef MELEMENT
 
    return 0;
