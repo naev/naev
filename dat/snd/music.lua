@@ -30,7 +30,8 @@ local planet_songs = {
    ["Strangelove Lab"] = { "landing_sinister" },
    ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
    ["Research Post Sigma-13"] = function ()
-         if not diff.isApplied("sigma13_fixed") then
+         if not diff.isApplied("sigma13_fixed1") and
+            not diff.isApplied("sigma13_fixed2") then
             return "landing_sinister"
          end
       end,
