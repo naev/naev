@@ -10,7 +10,7 @@
   <price>1000000</price>
   <description>A fake transponder to make ship appear like a non-descript and harmless independent ship.</description>
   <desc_extra>Makes the ship appear as independent to other ships. Becomes temporarily void when discovered.</desc_extra>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>fake_transponder.webp</gfx_store>
   <limit>fake_transponder</limit>
   <illegalto>
    <faction>Empire</faction>
