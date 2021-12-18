@@ -45761,8 +45761,7 @@ msgid ""
 "considerable amount of credits in your account, as well as put you into a "
 "position to make an ally out of House Dvaered. If you refuse, however, I "
 "guarantee you that you will never again be safe in Dvaered space. What say "
-"you? Surely this proposition beats anything that those rabble can do for you?"
-"\""
+"you? Surely this proposition beats anything that rabble can do for you?\""
 msgstr ""
 
 #: dat/missions/flf/flf_pre02.lua:173
