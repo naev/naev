@@ -231,5 +231,5 @@ function cutscene_done ()
 end
 
 function welcome_back ()
-   pilot.broadcast( _("Sigma-13"), fmt.f(_("Zach: Welcome back {playername}."), {playername=player.name()}) )
+   pilot.comm( _("Sigma-13"), fmt.f(_("Zach: Welcome back {playername}."), {playername=player.name()}) )
 end
