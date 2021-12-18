@@ -17,9 +17,20 @@ local function playerisbioship ()
    return player.pilot():ship():tags().bioship
 end
 
+local function bioship_click ()
+   bioship.window()
+   update_bioship()
+end
+
 local infobtn
 function update_bioship ()
    local is_bioship = playerisbioship()
+
+   -- Easier to always reset
+   if infobtn then
+      player.infoButtonUnregister( infobtn )
+      infobtn = nil
+   end
 
    -- Enable info window button based on bioship status
    if is_bioship then
@@ -29,19 +40,12 @@ function update_bioship ()
          bioship.setstage( 1 )
          stage = 1
       end
-      if not infobtn then
-         local sp = stage - bioship.skillpointsused()
-         local caption = _("Bioship")
-         if sp > 0 then
-            caption = caption .. _(" #r!!#0")
-         end
-         infobtn = player.infoButtonRegister( caption, bioship.window )
+      local sp = stage - bioship.skillpointsused()
+      local caption = _("Bioship")
+      if sp > 0 then
+         caption = caption .. _(" #r!!#0")
       end
-   else
-      if infobtn then
-         player.infoButtonUnregister( infobtn )
-         infobtn = nil
-      end
+      infobtn = player.infoButtonRegister( caption, bioship_click )
    end
 end
 

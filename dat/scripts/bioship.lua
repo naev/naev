@@ -180,6 +180,10 @@ end
 function bioship.skillpointsused ()
    local pp = player.pilot()
    local skills, _intrinsics, _maxtier = _getskills( pp )
+   for k,s in pairs(skills) do
+      s.id = "bio_"..k
+      s.enabled = player.shipvarPeek( s.id )
+   end
    return _skill_count( skills )
 end
 
