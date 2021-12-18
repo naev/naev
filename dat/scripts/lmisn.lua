@@ -2,6 +2,7 @@
    Mission helper utilities.
    @module lmisn
 --]]
+local fmt = require "format"
 local lmisn = {}
 
 --[[
@@ -290,6 +291,16 @@ function lmisn.anyMissionActive( names )
       end
    end
    return false
+end
+
+--[[--
+   Wrapper for player.msg + misn.finish for when the player fails a mission.
+
+   @tparam string reason Reason the mission failed.
+--]]
+function lmisn.fail( reason )
+   player.msg(fmt.f(_("#rMISSION FAILED: {reason}"),{reason=reason}))
+   misn.finish(false)
 end
 
 return lmisn
