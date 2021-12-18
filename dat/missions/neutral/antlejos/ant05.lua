@@ -25,6 +25,7 @@
 local vn = require "vn"
 local fmt = require "format"
 local ant = require "common.antlejos"
+local lmisn = require "lmisn"
 
 local reward = ant.rewards.ant05
 
@@ -120,8 +121,7 @@ function land ()
       ant.dateupdate()
       misn.finish(true)
    else
-      player.msg(_("#rMISSION FAILED: You were supposed to guard the supply ships!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to guard the supply ships!"))
    end
 end
 
@@ -177,9 +177,7 @@ function enter ()
    end
    -- Wrong system
    if system.cur() ~= mainsys then
-      player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
-      misn.finish(false)
-      return
+      lmisn.fail(fmt.f(_("You were not supposed to leave {sys}!"),{sys=mainsys}))
    end
 
    pilot.clear()
@@ -302,8 +300,7 @@ function heartbeat ()
    end
 
    if supplylanded <= 0 then
-      player.msg(_("#rMISSION FAILED: No supply ships made it through!"))
-      misn.finish(false)
+      lmisn.fail(_("No supply ships made it through!"))
    end
 
    -- Tell the player to land
