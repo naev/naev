@@ -22,6 +22,7 @@
 local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -215,7 +216,6 @@ function tick()
       })
    elseif mem.timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))
-      misn.finish(false)
+      lmisn.fail(_("You have failed to deliver the goods on time!"))
    end
 end

@@ -19,6 +19,7 @@
 local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -149,7 +150,6 @@ function tick()
       misn.osdCreate(_("Empire Shipping"), osd_msg)
    elseif mem.timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(_("#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!#0"))
-      misn.finish(false)
+      lmisn.fail(_("You have failed to deliver the goods to the Empire on time!"))
    end
 end

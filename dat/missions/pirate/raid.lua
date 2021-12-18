@@ -189,8 +189,7 @@ end
 function enter ()
    local q = player.pilot():cargoHas( mem.misn_cargo )
    if mem.convoy_spawned and q <= 0 then
-      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
-      misn.finish(false)
+      lmisn.fail(fmt.f(_("You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
    end
    if mem.convoy_spawned and q > 0 then
       misn.osdActive(3)
