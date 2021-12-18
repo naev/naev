@@ -35,7 +35,6 @@ local mainpnt, mainsys = planet.getS("Research Post Sigma-13")
 local jumpsys = system.get("NGC-23")
 
 function create ()
-   misn.finish()
    if not misn.claim( mainsys ) then
       misn.finish()
    end
@@ -101,7 +100,7 @@ He chuckles slightly.]]))
    misn.setReward( fmt.reward(reward) )
    misn.setDesc( _("") )
 
-   mem.mrk = misn.markerAdd( mem.destpnt )
+   mem.mrk = misn.markerAdd( mainsys )
    mem.state = 1
 
    misn.osdCreate( _("Black Hole Scouting"), {
@@ -159,10 +158,11 @@ function heartbeat ()
 
       local fbadguys = faction.dynAdd( "Za'lek", "zbh_baddies", _("Za'lek"), {ai="baddiepos"} )
       local ships = {"Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Light Drone"}
-      if player.pilot():size() >= 5 then
-         table.insert( ships, "Za'lek Demon", 1 )
+      if player.pilot():ship():size() >= 5 then
+         table.insert( ships, 1, "Za'lek Demon" )
       end
-      badguys = fleet.add( 1, ships, fbadguys, jump.get(system.cur(),jumpsys) )
+      local jp = jump.get( system.cur(), jumpsys )
+      badguys = fleet.add( 1, ships, fbadguys, jp )
       for k,p in ipairs(badguys) do
          local m = p:memory()
          m.guardpos = mainpnt:pos()
@@ -210,4 +210,5 @@ function badguys_check ()
    pilot.comm( _("Sigma-13"), fmt.f(_("Zach: It looks like the coast is clear. Come back to {pnt}."),{pnt=mainpnt} ))
    misn.osdActive(2)
    mem.state = 2
+   misn.markerMove( mem.mrk, mainpnt )
 end
