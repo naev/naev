@@ -33,7 +33,7 @@ local pilotname = require "pilotname"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
--- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
+-- luacheck: globals board_fail bounty_setup get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
 -- luacheck: globals hunter_hail hunter_leave jumpin jumpout land pilot_attacked pilot_board pilot_disable pilot_jump takeoff timer_hail (Hook functions passed by name)
 
 subdue_text = {
@@ -89,9 +89,9 @@ mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys
 
 -- Messages
 msg = {
-   _("MISSION FAILURE! {plt} got away."),
-   _("MISSION FAILURE! Another pilot eliminated {plt}."),
-   _("MISSION FAILURE! You have left the {sys} system."),
+   _("{plt} got away."),
+   _("Another pilot eliminated {plt}."),
+   _("You have left the {sys} system."),
 }
 
 mem.osd_title = _("Bounty Hunt")
@@ -197,7 +197,7 @@ function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if not mem.job_done and mem.last_sys == mem.missys then
-      fail( fmt.f( msg[3], {sys=mem.last_sys} ) )
+      lmisn.fail( fmt.f( msg[3], {sys=mem.last_sys} ) )
    end
 end
 
@@ -303,14 +303,14 @@ function pilot_death( _p, attacker )
          hook.timer( 3.0, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
-         fail( fmt.f( msg[2], {plt=mem.name} ) )
+         lmisn.fail( fmt.f( msg[2], {plt=mem.name} ) )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( fmt.f( msg[1], {plt=mem.name} ) )
+   lmisn.fail( fmt.f( msg[1], {plt=mem.name} ) )
 end
 
 
@@ -392,7 +392,7 @@ function spawn_pirate( param )
 
    -- Can't jump anymore
    if mem.jumps_permitted < 0 then
-      fail( fmt.f( msg[1], {plt=mem.name} ) )
+      lmisn.fail( fmt.f( msg[1], {plt=mem.name} ) )
       return
    end
 
@@ -451,19 +451,4 @@ function succeed ()
    end
    hook.rm( mem.pir_jump_hook )
    hook.rm( mem.pir_land_hook )
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

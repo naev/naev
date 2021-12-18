@@ -32,7 +32,7 @@ local fmt = require "format"
 local vntk = require "vntk"
 
 local convoy -- Non-persistent state
-local continueToDest, fail, spawnConvoy -- Forward-declared functions
+local continueToDest, spawnConvoy -- Forward-declared functions
 -- luacheck: globals jumpin jumpout land takeoff timer_traderSafe traderAttacked traderDeath traderJump traderLand traderShutup (Hook functions passed by name)
 
 local misn_title = {}
@@ -131,7 +131,7 @@ end
 
 function jumpin()
    if system.cur() ~= mem.nextsys then
-      fail( _("MISSION FAILED! You jumped into the wrong system.") )
+      lmisn.fail( _("You jumped into the wrong system.") )
    else
       spawnConvoy()
    end
@@ -139,7 +139,7 @@ end
 
 function jumpout()
    if mem.alive <= 0 or mem.exited <= 0 then
-      fail( _("MISSION FAILED! You jumped before the convoy you were escorting.") )
+      lmisn.fail( _("You jumped before the convoy you were escorting.") )
    else
       -- Treat those that didn't exit as dead
       mem.alive = math.min( mem.alive, mem.exited )
@@ -181,7 +181,7 @@ end
 function traderDeath()
    mem.alive = mem.alive - 1
    if mem.alive <= 0 then
-      fail( _("MISSION FAILED! The convoy you were escorting has been destroyed.") )
+      lmisn.fail( _("The convoy you were escorting has been destroyed.") )
    end
 end
 
@@ -352,18 +352,4 @@ function continueToDest( p )
          p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ), true )
       end
    end
-end
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

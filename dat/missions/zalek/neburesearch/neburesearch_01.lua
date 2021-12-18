@@ -31,7 +31,7 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 local ships, transporter -- Non-persistent state
-local fail, spawnTransporter, updateGoalDisplay -- Forward-declared functions
+local spawnTransporter, updateGoalDisplay -- Forward-declared functions
 -- luacheck: globals ambushHail jumpin jumpout land startAmbush takeoff timer_transporterSafe transporterAttacked transporterDeath transporterJump transporterLand transporterShutup (Hook functions passed by name)
 
 -- Mission info stuff
@@ -129,7 +129,7 @@ end
 
 function jumpin()
      if system.cur() ~= mem.nextsys then
-        fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
+        lmisn.fail(_("You jumped into the wrong system. You failed science miserably!"))
     else
         mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
         updateGoalDisplay()
@@ -149,7 +149,7 @@ end
 
 function jumpout()
     if not mem.exited then
-        fail(_("MISSION FAILED! You jumped before the transport ship you were escorting."))
+        lmisn.fail(_("You jumped before the transport ship you were escorting."))
     end
     mem.origin = system.cur()
     if mem.nextsys == t_sys[mem.stage] then
@@ -290,18 +290,4 @@ end
 function transporterDeath()
     tk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
     misn.finish(false)
-end
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

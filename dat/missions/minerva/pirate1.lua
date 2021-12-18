@@ -24,6 +24,7 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission constants:
 local time_needed = 15 -- in seconds
@@ -136,8 +137,7 @@ end
 
 function enter ()
    if mem.misn_state==1 or mem.misn_state==2 then
-      player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to harass the thugs with the drone."))
    end
 
    if mem.misn_state==3 then
@@ -146,8 +146,7 @@ function enter ()
          misn.osdActive(4)
          misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
       else
-         player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
-         misn.finish(false)
+         lmisn.fail(fmt.f(_("You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
       end
    end
 
@@ -204,9 +203,8 @@ end
 
 function thugs_attacked ()
    if mem.misn_state==0 then
-      player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
       pilot.toggleSpawn(true)
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to harass the thugs with the drone."))
    elseif mem.misn_state==1 then
       faction.dynEnemy( fdrone, fthugs ) -- Make enemies
       boss:broadcast(_("I'm going to wash my ship's hull with your blood, Za'lek Scum!"))
@@ -222,9 +220,8 @@ end
 
 
 function thugs_dead ()
-   player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs, not kill them!"))
    pilot.toggleSpawn(true)
-   misn.finish(false)
+   lmisn.fail(_("You were supposed to harass the thugs, not kill them!"))
 end
 
 
@@ -238,9 +235,8 @@ function harassed ()
       end
       mem.failingdistance = mem.failingdistance + 1
       if mem.failingdistance > 6 then
-         player.msg(_("#rMISSION FAILED! You moved too far away from the harassment location!"))
          pilot.toggleSpawn(true)
-         misn.finish(false)
+         lmisn.fail(_("You moved too far away from the harassment location!"))
       end
    else
       mem.failingdistance = nil

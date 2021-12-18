@@ -27,6 +27,7 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 local reward_amount = minerva.rewards.pirate3
 
@@ -299,8 +300,7 @@ end
 
 function harper_death ()
    if not mem.harper_gotticket then
-      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket, but you blew up Harper's ship!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to get the ticket, but you blew up Harper's ship!"))
    end
 end
 
@@ -308,8 +308,7 @@ end
 function harper_land ()
    -- Case harper lands with the ticket, i.e., ran away
    if not mem.harper_gotticket then
-      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but Harper got away!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to get the ticket but Harper got away!"))
    end
 end
 

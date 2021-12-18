@@ -25,6 +25,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 local reward_amount = minerva.rewards.pirate4
 
@@ -181,9 +182,8 @@ end
 
 function enter ()
    if mem.misn_state==2 then
-      player.msg(_("#rMISSION FAILED! You were supposed to protect the interrogation ship!"))
       var.pop("minerva_chuckaluck_change")
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to protect the interrogation ship!"))
    end
 
    if mem.misn_state==1 and system.cur()==mainsys then
@@ -290,9 +290,8 @@ function mainship_stealth( _p, status )
 end
 
 function mainship_dead ()
-   player.msg(_("#rMISSION FAILED! The interrogation ship was destroyed!"))
    var.pop("minerva_chuckaluck_change")
-   misn.finish(false)
+   lmisn.fail(_("The interrogation ship was destroyed!"))
 end
 
 function pir_reinforcements ()

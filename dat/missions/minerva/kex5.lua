@@ -32,6 +32,7 @@ local love_shaders = require 'love_shaders'
 local reverb_preset = require 'reverb_preset'
 local lmusic   = require 'lmusic'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -210,8 +211,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
    if mem.misn_state==2 and system.cur() ~= targetsys then
-      player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
-      misn.finish(false)
+      lmisn.fail(_("You never met up with Dr. Strangelove."))
    end
 
    local function spawn_thugs( pos, dofollow )

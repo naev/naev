@@ -28,10 +28,11 @@
 
 --]]
 local fmt = require "format"
+local lmisn = require "lmisn"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
--- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+-- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
 
 local kill_instead_text = {
    _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {plt}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]]),
@@ -76,7 +77,7 @@ function pilot_death ()
       succeed()
       mem.target_killed = true
    else
-      fail( fmt.f( _("MISSION FAILURE! {plt} has been killed."), {plt=mem.name} ) )
+      lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=mem.name} ) )
    end
 end
 

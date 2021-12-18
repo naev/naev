@@ -23,6 +23,7 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission constants:
 local reward_amount = minerva.rewards.pirate2
@@ -201,8 +202,7 @@ end
 
 function drone_death ()
    if not dvaered_weapons( player.pilot() ) then
-      player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to kill the drones with Dvaered-only weapons!"))
    end
    mem.drones_killed = mem.drones_killed+1
    if mem.drones_killed==1 then
@@ -225,8 +225,7 @@ function drone_attacked( p )
    p:setHostile()
 end
 function drone_ranaway ()
-   player.msg(_("#rMISSION FAILED! You let a drone get away!"))
-   misn.finish(false)
+   lmisn.fail(_("You let a drone get away!"))
 end
 
 

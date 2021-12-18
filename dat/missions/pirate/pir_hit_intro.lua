@@ -34,7 +34,7 @@ local lmisn = require "lmisn"
 local vn = require "vn"
 local portrait = require "portrait"
 
-local fail, spawn_target -- Forward-declared functions
+local spawn_target -- Forward-declared functions
 -- luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 local hunters = {}
@@ -168,7 +168,7 @@ function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
-      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
+      lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
 
@@ -209,7 +209,7 @@ function pilot_death( _p, _attacker )
 end
 
 function pilot_jump ()
-   fail( _("MISSION FAILURE! Target got away.") )
+   lmisn.fail( _("Target got away.") )
 end
 
 -- Spawn the ship at the location param.
@@ -220,7 +220,7 @@ function spawn_target( param )
    end
 
    if mem.jumps_permitted < 0 then
-      fail( _("MISSION FAILURE! Target got away.") )
+      lmisn.fail( _("Target got away.") )
       return
    end
 
@@ -237,21 +237,6 @@ function spawn_target( param )
    hook.pilot( target_ship, "jump", "pilot_jump" )
    hook.pilot( target_ship, "land", "pilot_jump" )
    return target_ship
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end
 
 

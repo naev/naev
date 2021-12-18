@@ -50,8 +50,8 @@ msg = {
    _("Outsiders detected. Eliminate all outsiders."),
    _("Outsiders eliminated."),
    _("Patrol complete. You can now collect your pay."),
-   _("MISSION FAILURE! You showed up too late."),
-   _("MISSION FAILURE! You have left the {sys} system."),
+   _("You showed up too late."),
+   _("You have left the {sys} system."),
 }
 
 mem.osd_msg = {

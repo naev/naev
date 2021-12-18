@@ -38,6 +38,7 @@
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local shark = require "common.shark"
 
 -- luacheck: globals enter jumpout land pirate_dead pirate_jump (Hook functions passed by name)
@@ -111,8 +112,7 @@ end
 --jumping out the system
 function jumpout()
    if mem.stage == 2 then   --You were supposed to kill him, not to go away !
-      player.msg( "#r" .. _("MISSION FAILED: You left the pirate.") .. "#0" )
-      misn.finish(false)
+      lmisn.fail( _("You left the pirate.") )
    end
 end
 
@@ -124,8 +124,7 @@ function enter()
       local playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
-         player.msg( "#r" .. _("MISSION FAILED: You were supposed to use a Shark.") .. "#0" )
-         misn.finish(false)
+         lmisn.fail( _("You were supposed to use a Shark.") )
       end
 
       --Be sure that nobody unexpected will take part in our epic battle
@@ -159,8 +158,7 @@ function beginbattle()
 end
 
 function pirate_jump()  --he went away
-   player.msg( "#r" .. _("MISSION FAILED: The pirate ran away.") .. "#0" )
-   misn.finish( false )
+   lmisn.fail( _("The pirate ran away.") )
 end
 
 function pirate_dead()  --wou win

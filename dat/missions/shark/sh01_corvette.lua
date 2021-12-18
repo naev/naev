@@ -34,6 +34,7 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local shark = require "common.shark"
 
 local sharkboy -- Non-persistent state
@@ -84,15 +85,13 @@ end
 
 function jumpout()
    if mem.stage == 1 then --player trying to escape
-      player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
-      misn.finish(false)
+      lmisn.fail( _("You ran away.") )
    end
 end
 
 function land()
    if mem.stage == 1 then --player trying to escape
-      player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
-      misn.finish(false)
+      lmisn.fail( _("You ran away.") )
    end
    if mem.stage == 2 and planet.cur() == paypla then
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
@@ -147,8 +146,7 @@ function lets_go()
 end
 
 function shark_dead()  --you killed the shark
-   player.msg( "#r" .. _("MISSION FAILED: You destroyed the Lancelot.") .. "#0" )
-   misn.finish(false)
+   lmisn.fail( _("You destroyed the Lancelot.") )
 end
 
 function disabled(pilot, attacker)

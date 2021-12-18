@@ -29,6 +29,7 @@ local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local reverb_preset = require 'reverb_preset'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -91,8 +92,7 @@ end
 
 function generate_npc ()
    if mem.misn_state==1 then
-      player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to take care of Jie!"))
    end
 
    if planet.cur() == planet.get("Minerva Station") then
@@ -272,8 +272,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
    if mem.misn_state==1 and system.cur() ~= targetsys then
-      player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to take care of Jie!"))
    end
 
    local function spawn_thugs( pos, dofollow )
