@@ -299,7 +299,7 @@ end
    @tparam string reason Reason the mission failed.
 --]]
 function lmisn.fail( reason )
-   player.msg(fmt.f(_("#rMISSION FAILED: {reason}"),{reason=reason}))
+   player.msg("#r"..fmt.f(_("MISSION FAILED: {reason}"),{reason=reason}))
    misn.finish(false)
 end
 
