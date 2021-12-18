@@ -1046,9 +1046,9 @@ static int hookL_pilot( lua_State *L )
 
    /* Parameters. */
    if (lua_ispilot(L,1))
-      p           = luaL_checkpilot(L,1);
+      p  = luaL_checkpilot(L,1);
    else if (lua_isnil(L,1))
-      p           = 0;
+      p  = 0;
    else {
       NLUA_ERROR(L, _("Invalid parameter #1 for hook.pilot, expecting pilot or nil."));
       return 0;
@@ -1059,16 +1059,16 @@ static int hookL_pilot( lua_State *L )
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
-   else if (strcmp(hook_type,"boardall")==0)    type = PILOT_HOOK_BOARD_ALL;
+   else if (strcmp(hook_type,"boardall")==0) type = PILOT_HOOK_BOARD_ALL;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
-   else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
+   else if (strcmp(hook_type,"undisable")==0)type = PILOT_HOOK_UNDISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
-   else if (strcmp(hook_type,"discovered")==0) type = PILOT_HOOK_DISCOVERED;
-   else if (strcmp(hook_type,"scan")==0)  type = PILOT_HOOK_SCAN;
+   else if (strcmp(hook_type,"discovered")==0)type = PILOT_HOOK_DISCOVERED;
+   else if (strcmp(hook_type,"scan")==0)     type = PILOT_HOOK_SCAN;
    else if (strcmp(hook_type,"scanned")==0)  type = PILOT_HOOK_SCANNED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
