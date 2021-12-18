@@ -102,9 +102,9 @@ function land ()
       elseif supplydied < 3 then
          v(_([["Almost all the ships made it! Against those odds I think we did very good."]]))
       else
-         v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take more than I was hoping for."]]))
+         v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take longer than I was hoping for."]]))
       end
-      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up ad working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
+      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up and working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()

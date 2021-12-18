@@ -54,7 +54,7 @@ function accept ()
          end
       end
       if player.pilot():cargoFree() <  1 then
-         tk.msg( _("Absence Makes The Heart Grow Fonder"), _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]]) )
+         tk.msg( _("Absence Makes The Heart Grow Fonder"), _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free up some space." You didn't expect him to have a LITERAL tonne of letters...]]) )
          misn.finish()
       end
    else
@@ -71,7 +71,7 @@ function accept ()
 
    misn.setTitle( _([[Deliver Love]]) )
    misn.setReward( fmt.credits( mem.reward ) )
-   misn.setDesc( fmt.f(_([[Deliver the love letters to {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
+   misn.setDesc( fmt.f(_([[Deliver love letters to {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _([[Deliver Love]]), {
       fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=targetworld, sys=targetworld_sys} ),

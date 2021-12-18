@@ -40,7 +40,7 @@ end
 
 
 function accept ()
-    if tk.yesno(_("Youngsters these days"), _([["Excuse me," the man says as you approach him. "I'm looking for a capable pilot to resolve a small matter for me. Perhaps you can help me? You see, it's my son. He's taken my yacht to space without my permission, taking along his girlfriend. That boy is such a handful. I'm sure he's trying to show off his piloting skills to impress her. I need you to get out there, disable the yacht and take them both back here. Can you do this for me? I'll make it worth your while."]])) then
+    if tk.yesno(_("Youngsters these days"), _([["Excuse me," the man says as you approach him. "I'm looking for a capable pilot to resolve a small matter for me. Perhaps you can help me? You see, it's my son. He's taken my yacht, along with his girlfriend, to space without my permission. That boy is such a handful. I'm sure he's trying to show off his piloting skills to impress her. I need you to get out there, disable the yacht, and take them both back here. Can you do this for me? I'll make it worth your while."]])) then
         misn.accept()
         misn.setDesc(fmt.f(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the {sys} system."), {sys=mem.cursys}))
         misn.setReward(_("You will be compensated for your efforts."))
@@ -48,7 +48,7 @@ function accept ()
            _("Disable Gawain Credence"),
            fmt.f(_("Bring the teenagers back to planet {pnt}"), {pnt=mem.curplanet}),
         })
-        tk.msg(_("It's a lousy job, but..."), _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]]))
+        tk.msg(_("It's a lousy job, but..."), _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it, board it, and then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]]))
         hook.enter("enter")
         mem.targetlive = true
     else
@@ -108,12 +108,12 @@ end
 
 function land()
     if planet.cur() == mem.curplanet then
-        tk.msg(_("You're grounded, young man"), _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple droops off, and the father turns to face you.
-    "You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]]))
+        tk.msg(_("You're grounded, young man"), _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple despondently walks off, and the father turns to face you.
+    "You've done me a service, Captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]]))
         player.pay( reward )
         misn.finish(true)
 
-        neu.addMiscLog( _("You helped bring back some young teenagers from a joyride through force.") )
+        neu.addMiscLog( _("Through force, you helped bring some young teenagers back from a joyride.") )
     end
 end
 

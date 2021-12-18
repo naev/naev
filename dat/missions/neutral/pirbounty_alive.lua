@@ -42,7 +42,7 @@ local kill_instead_text = {
 
 pay_capture_text = {
    _("An officer takes {plt} into custody and hands you your pay."),
-   _("The officer seems to think your acceptance of the alive bounty for {plt} was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay."),
+   _("The officer seems to think you were foolish to accept a live bounty for {plt}. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay."),
    _("The officer you deal with seems to especially dislike {plt}. They take the pirate off your hands and hand you your pay without speaking a word."),
    _("A fearful-looking officer rushes {plt} into a secure hold, pays you the appropriate bounty, and then hurries off."),
    _("The officer you deal with thanks you profusely for capturing {plt} alive, pays you, and sends you off."),
@@ -53,8 +53,8 @@ pay_capture_text = {
 pay_kill_text = {
    _("After verifying that you killed {plt}, an officer hands you your pay."),
    _("After verifying that {plt} is indeed dead, the officer sighs and hands you your pay."),
-   _("This officer is clearly annoyed that {plt} is dead. They mumble something about incompetent bounty hunters the entire time as they takes care of the paperwork and hand you your bounty."),
-   _("The officer seems disappointed, yet unsurprised that you failed to capture {plt} alive. You are handed your lesser bounty without a word."),
+   _("This officer is clearly annoyed that {plt} is dead. They mumble something about incompetent bounty hunters the entire time as they take care of the paperwork and hand you your bounty."),
+   _("The officer seems disappointed, yet unsurprised, that you failed to capture {plt} alive. You are handed your lesser bounty without a word."),
    _("When you ask the officer for your bounty on {plt}, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless bounty hunters are."),
    _("The officer verifies the death of {plt}, goes through the necessary paperwork, and hands you your pay, looking annoyed the entire time."),
 }
