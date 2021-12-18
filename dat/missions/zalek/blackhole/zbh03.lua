@@ -27,7 +27,7 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat badguys_check (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh03
 
@@ -157,7 +157,7 @@ function heartbeat ()
       pilot.comm( _("Sigma-13"), fmt.f(_("Zach: I've detected some incoming ships from {sys}!"), {sys=jumpsys}) )
 
       local fbadguys = faction.dynAdd( "Za'lek", "zbh_baddies", _("Za'lek"), {ai="baddiepos"} )
-      local ships = {"Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Light Drone"}
+      local ships = {"Za'lek Sting", "Za'lek Light Drone", "Za'lek Light Drone"}
       if player.pilot():ship():size() >= 5 then
          table.insert( ships, 1, "Za'lek Demon" )
       end
@@ -166,8 +166,6 @@ function heartbeat ()
       for k,p in ipairs(badguys) do
          local m = p:memory()
          m.guardpos = mainpnt:pos()
-         hook.pilot( p, "death", "badguys_check" )
-         hook.pilot( p, "jump", "badguys_check" )
       end
       local l = badguys[1]
       l:setVisplayer(true)
@@ -180,7 +178,7 @@ function heartbeat ()
       pilot.broadcast( _("Sigma-13"), fmt.f(_("This is {pnt}. Please state your purpose."), {pnt=mainpnt}) )
 
    elseif heartbeat_state == 4 then
-      badguys[1]:broadcast( _("You should haev left when you had a chance Zach!"), true )
+      badguys[1]:broadcast( _("You should have left when you had a chance Zach!"), true )
 
    elseif heartbeat_state == 5 then
       pilot.comm( _("Sigma-13"), _("Zach: It looks like they're hostile, engage the enemy!") )
@@ -192,23 +190,24 @@ function heartbeat ()
          fmt.f(_("Eliminate hostiles in {sys}"), {sys=mainsys}),
          fmt.f(_("Return to {pnt} ({sys} system)"), {pnt=mainpnt, sys=mainsys}),
       } )
-   end
+   else
+      local alive = false
+      for k,p in ipairs(badguys) do
+         if p:exists() then
+            alive = true
+            break
+         end
+      end
 
-   if heartbeat_state < 5 then
-      hook.timer( 6, "heartbeat" )
-   end
-end
-
-function badguys_check ()
-   for k,p in ipairs(badguys) do
-      if p:exists() then
+      if not alive then
+         -- All gone
+         pilot.comm( _("Sigma-13"), fmt.f(_("Zach: It looks like the coast is clear. Come back to {pnt}."),{pnt=mainpnt} ))
+         misn.osdActive(2)
+         mem.state = 2
+         misn.markerMove( mem.mrk, mainpnt )
          return
       end
    end
 
-   -- All gone
-   pilot.comm( _("Sigma-13"), fmt.f(_("Zach: It looks like the coast is clear. Come back to {pnt}."),{pnt=mainpnt} ))
-   misn.osdActive(2)
-   mem.state = 2
-   misn.markerMove( mem.mrk, mainpnt )
+   hook.timer( 6, "heartbeat" )
 end
