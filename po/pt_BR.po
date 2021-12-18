@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-15 21:07-0500\n"
+"POT-Creation-Date: 2021-12-17 21:49-0500\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -33051,7 +33051,7 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
 #: src/gui.c:1518 src/map.c:503 src/map.c:509 src/map.c:515 src/map.c:521
 #: src/map.c:527 src/map.c:533 src/map.c:1646 src/map_overlay.c:221
-#: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1947
+#: src/outfit.c:295 src/outfit.c:314 src/outfit.c:932 src/player.c:1948
 #: src/player_autonav.c:92 src/player_autonav.c:215 src/player_autonav.c:454
 #: src/ship.c:205
 msgid "Unknown"
@@ -43339,7 +43339,7 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk01.lua:37
 msgid ""
 "As you dock the station, Benito approaches you with a smile. \"Thank you for "
-"your help,\" she says. \"The mission was a rousing success! What we've "
+"your help,\" she says. \"The mission was a resounding success! What we've "
 "accomplished will greatly help our efforts against the Dvaereds in the "
 "future.\" She hands you a credit chip. \"That's your payment. Until next "
 "time!\" Benito sees herself out as a number of additional FLF soldiers "
@@ -43683,11 +43683,11 @@ msgid ""
 "you. Send your mates over to the new station whenever you're ready. It "
 "should be up and running in just a couple periods or so. And in the "
 "meantime, you can consider yourselves one of us! Bwa ha ha!\"\n"
-"    You exchange what must for lack of a better word be called pleasantries "
-"with the pirate, with him telling a story about a pitifully armed Mule he "
-"recently plundered and you sharing stories of your victories against Dvaered "
-"scum. You seem to get along well. You then part ways. Now to report to "
-"Benito...."
+"    You exchange what must, for lack of a better word, be called "
+"pleasantries with the pirate, with him telling a story about a pitifully "
+"armed Mule he recently plundered and you sharing stories of your victories "
+"against Dvaered scum. You seem to get along well. You then part ways. Now to "
+"report to Benito...."
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:173
@@ -43943,10 +43943,10 @@ msgid ""
 "    You manage to make your way over to Benito, who is clearly pleased with "
 "the outcome. \"Outstanding job!\" she says. \"That base has been a burden on "
 "us for so long. Now it is gone, 100% gone! I don't think I need to tell you "
-"how fantastic of a victory this is. Victory is within our grasp!\" That's "
-"when all doubt is erased from your mind. She's right; so what if the Empire "
-"is against you now? You exchange some more words with Benito, after which "
-"she hands you your pay for a job well done and excuses herself. You, on the "
+"how fantastic a triumph this is. Victory is within our grasp!\" That's when "
+"all doubt is erased from your mind. She's right; so what if the Empire is "
+"against you now? You exchange some more words with Benito, after which she "
+"hands you your pay for a job well done and excuses herself. You, on the "
 "other hand, stay behind to celebrate for a few more periods before finally "
 "excusing yourself."
 msgstr ""
@@ -44068,9 +44068,9 @@ msgstr ""
 #. luacheck: globals enter land_flf leave misn_title pay_text setDescription (from base mission flf_pirates)
 #: dat/missions/flf/dvk/flf_dvk05.lua:31
 msgid ""
-"Benito seems pleased upon your return to hear that the mission was "
+"Upon your return, Benito seems pleased to hear that the mission was "
 "successful. \"Excellent,\" she says. \"It's kind of an annoying detour, I "
-"know, but I appreciate that your help very much. I'll try to have a better "
+"know, but I appreciate your help very much. I'll try to have a better "
 "mission for you next time, eh?\" You both grin and exchange some "
 "pleasantries before parting ways."
 msgstr ""
@@ -44087,19 +44087,19 @@ msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:56
 msgid ""
-"Benito looks up and immediately seems relieved to see you. It seems she has "
-"a problem she's dealing with. \"Well met, {player},\" she says. \"I've just "
-"been thinking of how to deal with a problem for a while now, and seeing you, "
-"that makes the solution so much simpler! Can you help me? It's nothing too "
-"huge, just destroying some more ships. We're prepared to give you {credits} "
-"in exchange.\""
+"Benito glances up and immediately looks relieved to see you. It seems she "
+"has a problem she's dealing with. \"Well met, {player},\" she says. \"I've "
+"just been thinking of how to deal with a problem for a while now, and, "
+"seeing you, that makes the solution so much simpler! Can you help me? It's "
+"nothing too huge, just destroying some more ships. We're prepared to give "
+"you {credits} in exchange.\""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:57
 msgid ""
 "\"Thanks! As always, you're a life saver. Well, for us, that is.\" Benito "
 "smirks before continuing. \"See, a few pirates have decided to be "
-"opportunistic, going against the clans we are allied with, and attack our "
+"opportunistic, going against the clans we are allied with, and attacking our "
 "ships. Now, we expected this to happen at some point, but this puts us in an "
 "annoying pickle: we need to dispatch the aggressors, which the pirate clans "
 "have already agreed is perfectly acceptable, but we can't go diverting our "
@@ -44128,7 +44128,7 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk06.lua:50
 msgid ""
 "\"{player}, we were just saying you should join in on this one! It's another "
-"great victory against the Dvaered oppressors, and we'd like you to lead the "
+"great assault against the Dvaered oppressors, and we'd like you to lead the "
 "way to victory once again! Are you in?\""
 msgstr ""
 
@@ -44168,15 +44168,15 @@ msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:301
 msgid ""
-"If your comrades were happy about your victory at Raelid, they are ecstatic "
+"If your comrades were happy about your success at Raelid, they are ecstatic "
 "about your victory at Haleb. As you enter the station, you are met with "
-"cheers from what seems to be everyone. It takes you longer than usual to "
-"make it to Benito as a result. \"Congratulations,\" she says. \"That was an "
+"cheers from what seems to be everyone. As a result, it takes you longer than "
+"usual to make it to Benito. \"Congratulations,\" she says. \"That was an "
 "astounding victory, sure to set back the Dvaered oppressors substantially! "
 "This is the first time we've pushed them out of Frontier space, and for "
 "that, we all thank you. If you haven't noticed, you've made yourself into a "
 "bit of a hero!\n"
-"    \"Here is your pay, {player}. May we have another great victory later "
+"    \"Here is your pay, {player}. May we have another daring operation later "
 "on! Down with the oppressors!\" You exchange some more words with Benito, "
 "party with the others for a period or two, and then make your way back to "
 "your ship for some much-needed rest."
@@ -44204,7 +44204,7 @@ msgid ""
 "As you approach, you notice that Benito has an unusually annoyed expression. "
 "But when she sees you, she calms down somewhat. \"Ah, {player}.\" She sighs. "
 "\"No one is willing to take up this mission, and while I can understand it's "
-"a tough mission, it really has to be taken care of.\n"
+"a tough one, it really has to be taken care of.\n"
 "    \"See, for some reason, a group of FLF pilots has decided to turn "
 "traitor on us. They're hanging around outside of Sindbad and shooting us "
 "down. They need to be stopped, but no one wants to get their hands dirty "
@@ -44216,12 +44216,12 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk07.lua:51
 msgid ""
 "\"Yes, finally!\" It's as if a massive weight has been lifted off of "
-"Benito's chest. \"Everyone trusts you a lot, so I'm sure this will convince "
-"them that, yes, killing traitors is the right thing to do. They're no better "
-"than Dvaereds, or those Empire scum who started shooting at us recently! "
-"Thank you for accepting the mission. Now I should at least be able to get a "
-"couple more pilots to join in and help you defend our interests against the "
-"traitors. Good luck!\""
+"Benito's shoulders. \"Everyone trusts you a lot, so I'm sure this will "
+"convince them that, yes, killing traitors is the right thing to do. They're "
+"no better than Dvaereds, or those Empire scum who started shooting at us "
+"recently! Thank you for accepting the mission. Now I should at least be able "
+"to get a couple more pilots to join in and help you defend our interests "
+"against the traitors. Good luck!\""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:56
@@ -44339,7 +44339,7 @@ msgstr ""
 #. luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
 #: dat/missions/flf/flf_diversion.lua:28
 msgid ""
-"You receive a transmission from an FLF officer saying that the operation has "
+"You receive a transmission from an FLF officer saying that the operation was "
 "completed, and you can now return to the base."
 msgstr ""
 
@@ -44352,7 +44352,7 @@ msgstr ""
 #: dat/missions/flf/flf_diversion.lua:33
 msgid ""
 "You greet the FLF officer in charge of the primary operation, who seems "
-"happy that the mission was a success. You congratulate each other, and the "
+"happy that the mission was a success. You congratulate each other and the "
 "officer hands you your pay."
 msgstr ""
 
@@ -44512,20 +44512,20 @@ msgstr ""
 
 #: dat/missions/flf/flf_patrol.lua:37
 msgid ""
-"After you are handed your pay, an FLF soldier congratulates you for your "
+"After you are handed your pay, an FLF soldier congratulates you on your "
 "victory and buys you a drink. You chat for a while before getting back to "
 "work."
 msgstr ""
 
 #: dat/missions/flf/flf_patrol.lua:38
 msgid ""
-"As you get your pay from the officer, FLF soldiers congratulate you for your "
+"As you get your pay from the officer, FLF soldiers congratulate you on your "
 "victory."
 msgstr ""
 
 #: dat/missions/flf/flf_patrol.lua:39
 msgid ""
-"You collect your pay from the officer, who then congratulates you for your "
+"You collect your pay from the officer, who then congratulates you on your "
 "victory."
 msgstr ""
 
@@ -44806,7 +44806,7 @@ msgstr ""
 msgid ""
 "You and Gregar step out of your airlock and onto Sindbad. You are greeted by "
 "a group of five or six FLF soldiers. They seem relieved to see Gregar, but "
-"they clearly regard you with mistrust. You are taken to meet with a senior "
+"they clearly regard you with distrust. You are taken to meet with a senior "
 "officer of the base. Gregar doesn't come with you, as he seems to have "
 "urgent matters to attend to - away from prying ears like your own.\n"
 "    \"Alright, {player},\" the officer begins. \"I don't know who you are or "
@@ -44863,7 +44863,7 @@ msgstr ""
 #: dat/missions/flf/flf_pre01.lua:128
 msgid ""
 "It doesn't take Dvaered security long to arrive at your landing bay. They "
-"board your ship, seize Gregar and take him away before he even comprehends "
+"board your ship, seize Gregar, and take him away before he even comprehends "
 "what's going on.\n"
 "    \"You have served House Dvaered adequately, citizen,\" the stone-faced "
 "captain of the security detail tells you. \"In recognition of your service, "
@@ -44899,7 +44899,7 @@ msgstr ""
 #: dat/missions/flf/flf_pre01.lua:161
 msgid ""
 "\"Wha- hey! What's going on!\"\n"
-"    You were too busy dodging incoming fire, rebalancing your shields and "
+"    You were too busy dodging incoming fire, rebalancing your shields, and "
 "generally trying to kill your attackers before they kill you to notice that "
 "Gregar, your passenger, has roused from his slumber. Clearly the noise and "
 "the rocking have jolted him awake. You snap at him not to distract you from "
@@ -45080,8 +45080,8 @@ msgid ""
 "\"I know your type, {player}. You take jobs where profit is to be had, and "
 "you side with the highest bidder. There are many like you in the galaxy, "
 "though admittedly not so many with your talent. That's why I'm willing to "
-"make you this offer: you will provide us with information on their base of "
-"operations and their combat strength. In return, I will convince my "
+"make you this offer: you will provide us with information on the FLF's base "
+"of operations and their combat strength. In return, I will convince my "
 "superiors that you were working for me all along, so you won't face any "
 "repercussions for assaulting Dvaered ships. Furthermore, I will transfer a "
 "considerable amount of credits in your account, as well as put you into a "
@@ -45160,8 +45160,8 @@ msgstr ""
 
 #: dat/missions/flf/flf_pre02.lua:308
 msgid ""
-"Benito takes you to the station's bar and buys you what for lack of a better "
-"word must be called a drink.\n"
+"Benito takes you to the station's bar and buys you what, for lack of a "
+"better word, must be called a drink.\n"
 "    \"We will of course reward you for your service,\" she says once you are "
 "seated. \"Though you must understand the FLF doesn't have that big a budget. "
 "Financial support is tricky, and the Frontier doesn't have that much to "
@@ -45215,10 +45215,10 @@ msgid ""
 "Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't "
 "take a genius to figure out you're the best thing that's happened to him in "
 "a long time.\n"
-"    \"Anyway. I promised you money, status and opportunities, and I intend "
+"    \"Anyway. I promised you money, status, and opportunities, and I intend "
 "to make good on those promises. Your money is already in your account. Check "
-"your balance sheet later. As for status, I can assure you that no Dvaered "
-"will find out what you've been up to. As far as the military machine is "
+"your balance later. As for status, I can assure you that no Dvaered will "
+"find out what you've been up to. As far as the military machine is "
 "concerned, you have nothing to do with the FLF. In fact, you're known as an "
 "important ally in the fight against them! Finally, opportunities. We're "
 "analyzing the data from your flight recorder as we speak, and you'll be "
@@ -45236,7 +45236,7 @@ msgid ""
 "leave. But I hope we'll meet again, and if you continue to build your career "
 "like you have today, I'm sure we will. Good day to you!\"\n"
 "    You leave the Colonel's office. You are then taken to an interrogation "
-"room, where Dvaered petty officers question you politely yet persistently "
+"room, where Dvaered petty officers question you politely yet persistently, "
 "about your brief stay with the FLF. Once their curiosity is satisfied, they "
 "let you go, and you are free to return to your ship."
 msgstr ""
@@ -77145,7 +77145,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/ai.c:582 src/board.c:77 src/comm.c:168 src/info.c:378 src/land.c:1489
-#: src/player.c:3326
+#: src/player.c:3327
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -77294,12 +77294,12 @@ msgid "unknown error"
 msgstr ""
 
 #. error has occurred
-#: src/board.c:92 src/player.c:3340
+#: src/board.c:92 src/player.c:3341
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
 
-#: src/board.c:123 src/player.c:1664
+#: src/board.c:123 src/player.c:1665
 msgid "#rYou need a target to board first!"
 msgstr ""
 
@@ -79285,57 +79285,57 @@ msgid_plural "Loaded %d Factions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/font.c:1092
+#: src/font.c:1093
 #, c-format
 msgid ""
 "Font '%s' unicode character '%#x' not found in font! Using missing glyph."
 msgstr ""
 
-#: src/font.c:1099
+#: src/font.c:1100
 msgid "FT_Load_Glyph failed."
 msgstr ""
 
-#: src/font.c:1106
+#: src/font.c:1107
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr ""
 
-#: src/font.c:1147
+#: src/font.c:1148
 #, c-format
 msgid "Unable to load character '%#x'!"
 msgstr ""
 
-#: src/font.c:1373
+#: src/font.c:1374
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr ""
 
-#: src/font.c:1458
+#: src/font.c:1459
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr ""
 
-#: src/font.c:1606
+#: src/font.c:1607
 #, c-format
 msgid "Unable to read font: %s"
 msgstr ""
 
-#: src/font.c:1614
+#: src/font.c:1615
 #, c-format
 msgid "FT_New_Memory_Face failed loading library from %s"
 msgstr ""
 
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: src/font.c:1627
+#: src/font.c:1628
 msgid "FT_Set_Char_Size failed."
 msgstr ""
 
-#: src/font.c:1633
+#: src/font.c:1634
 msgid "Font isn't resizable!"
 msgstr ""
 
-#: src/font.c:1637
+#: src/font.c:1638
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr ""
 
@@ -82852,7 +82852,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2181
+#: src/opengl.c:109 src/player.c:2182
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -84612,101 +84612,101 @@ msgstr ""
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1367
+#: src/player.c:1368
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1412
+#: src/player.c:1413
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1415
+#: src/player.c:1416
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1420
+#: src/player.c:1421
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1485
+#: src/player.c:1486
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1522
+#: src/player.c:1523
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1529
+#: src/player.c:1530
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1547
+#: src/player.c:1548
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1557
+#: src/player.c:1558
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1563
+#: src/player.c:1564
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1605
+#: src/player.c:1606
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1616
+#: src/player.c:1617
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1641
+#: src/player.c:1642
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1682
+#: src/player.c:1683
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1780
+#: src/player.c:1781
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1833
+#: src/player.c:1834
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1840
+#: src/player.c:1841
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1842 src/player_autonav.c:84
+#: src/player.c:1843 src/player_autonav.c:84
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1844
+#: src/player.c:1845
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1846
+#: src/player.c:1847
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1938
+#: src/player.c:1939
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1944
+#: src/player.c:1945
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -84714,98 +84714,98 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2193
+#: src/player.c:2194
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2198
+#: src/player.c:2199
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2227
+#: src/player.c:2228
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2250 src/player.c:2272
+#: src/player.c:2251 src/player.c:2273
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2305
+#: src/player.c:2306
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2318
+#: src/player.c:2319
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2324
+#: src/player.c:2325
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2540 src/player.c:2559
+#: src/player.c:2541 src/player.c:2560
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2954
+#: src/player.c:2955
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3168
+#: src/player.c:3169
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3169
+#: src/player.c:3170
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3395
+#: src/player.c:3396
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3464
+#: src/player.c:3465
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3501
+#: src/player.c:3502
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3525
+#: src/player.c:3526
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3528
+#: src/player.c:3529
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3539
+#: src/player.c:3540
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3545
+#: src/player.c:3546
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3555
+#: src/player.c:3556
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3561
+#: src/player.c:3562
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3562
+#: src/player.c:3563
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3562
+#: src/player.c:3563
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -84813,138 +84813,138 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3570
+#: src/player.c:3571
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3600
+#: src/player.c:3601
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3604
+#: src/player.c:3605
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3651
+#: src/player.c:3652
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3673
+#: src/player.c:3674
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3695
+#: src/player.c:3696
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3722
+#: src/player.c:3723
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3783
+#: src/player.c:3784
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3802
+#: src/player.c:3803
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3810
+#: src/player.c:3811
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3831
+#: src/player.c:3832
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3897
+#: src/player.c:3898
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3944
+#: src/player.c:3945
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3957 src/player.c:3970
+#: src/player.c:3958 src/player.c:3971
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3989
+#: src/player.c:3990
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4013
+#: src/player.c:4014
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4063
+#: src/player.c:4064
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4071
+#: src/player.c:4072
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4075
+#: src/player.c:4076
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4091
+#: src/player.c:4092
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4104
+#: src/player.c:4105
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4112
+#: src/player.c:4113
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4117
+#: src/player.c:4118
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4156
+#: src/player.c:4157
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4162
+#: src/player.c:4163
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4167
+#: src/player.c:4168
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4169
+#: src/player.c:4170
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 

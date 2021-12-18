@@ -162,7 +162,7 @@ function pilot_hail_boss ()
       end
    elseif player.pilot():cargoHas( "Ore" ) >= mem.ore_needed then
       tk.msg( _("I knew we could work something out"), _([["Ha, you came back after all! Wonderful. I'll just take that ore, then." You hesitate for a moment, but considering the number of pirates around, they'll probably take it from you by force if you refuse at this point. You jettison the cargo into space, which the Kestrel promptly picks up with a tractor beam. "Excellent! Well, it's been a pleasure doing business with you. Send your mates over to the new station whenever you're ready. It should be up and running in just a couple periods or so. And in the meantime, you can consider yourselves one of us! Bwa ha ha!"
-    You exchange what must for lack of a better word be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]]) )
+    You exchange what must, for lack of a better word, be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]]) )
       mem.stage = 3
       player.pilot():cargoRm( "Ore", mem.ore_needed )
       hook.rm( mem.boss_hook )
