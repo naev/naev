@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of going into the important details of the ship, it just shows a high definition holographic rendition of the supposed Golden Llama.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>trading_card_rare.webp</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">
