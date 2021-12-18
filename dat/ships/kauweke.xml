@@ -23,7 +23,7 @@
   <armour>1300</armour>
  </health>
  <characteristics>
-  <crew>0</crew>
+  <crew>1</crew>
   <mass>1900</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>110</cargo>
