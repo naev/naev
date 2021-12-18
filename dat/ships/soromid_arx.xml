@@ -24,7 +24,6 @@
  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amply the strentgh of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>
   <armour>1300</armour>
-  <armour_regen>4</armour_regen>
  </health>
  <characteristics>
   <crew>36</crew>

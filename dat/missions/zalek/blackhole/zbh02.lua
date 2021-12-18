@@ -208,8 +208,7 @@ function heartbeat ()
    if mem.state==2 and d < 10e3 then
       local fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
       local pos = player.pos() + vec2.new( 3e3, 9e3 )
-      -- TODO proper feral ships
-      local feral = pilot.add( "Soromid Reaver", fct, pos, _("Feral Reaver")  )
+      local feral = pilot.add( "Nohinohi", fct, pos )
       feral:setInvisible(true)
       feral:control(true)
       feral:hyperspace( system.get("NGC-2601") )

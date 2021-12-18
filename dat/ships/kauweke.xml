@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Kauweke">
+ <points>200</points>
+ <base_type>Arx</base_type>
+ <GFX size="124" sx="12" sy="12">arx</GFX>
+ <rarity>5</rarity>
+ <GUI>brushed</GUI>
+ <sound pitch="0.5">engine_soromid</sound>
+ <class display="Elder Feral Bioship">Battleship</class>
+ <price>8900000</price>
+ <time_mod>1.5</time_mod>
+ <trail_generator x="-45" y="8" h="2">soromid</trail_generator>
+ <trail_generator x="-45" y="10" h="-5">soromid</trail_generator>
+ <trail_generator x="-45" y="15" h="0">soromidS</trail_generator>
+ <trail_generator x="-45" y="-8" h="2">soromid</trail_generator>
+ <trail_generator x="-45" y="-10" h="-5">soromid</trail_generator>
+ <trail_generator x="-45" y="-15" h="0">soromidS</trail_generator>
+ <trail_generator x="0" y="15" h="-15">nebula</trail_generator>
+ <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
+ <fabricator>Soromid</fabricator>
+ <description>TODO</description>
+ <health>
+  <armour>1300</armour>
+ </health>
+ <characteristics>
+  <crew>0</crew>
+  <mass>1900</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>110</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="weap1">Tentacle Organ IV</weapon>
+  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="weap2">Tentacle Organ IV</weapon>
+  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0" name="weap3">Tentacle Organ IV</weapon>
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="weapn4">Tentacle Organ IV</weapon>
+  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" name="weap5">Tentacle Organ IV</weapon>
+  <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum III</utility>
+  <utility size="large" prop="bio_organ" name="the_bite" />
+  <utility size="large" prop="bio_organ" name="feral_rage" />
+  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="accessory" />
+  <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive III</structure>
+  <structure size="large" prop="bio_hull" name="shell">Immanis Cortex III</structure>
+ </slots>
+ <stats>
+  <ew_hide>10</ew_hide>
+ </stats>
+ <tags>
+  <tag>feral</tag>
+  <!--<tag>bioship</tag>-->
+ </tags>
+</ship>

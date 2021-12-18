@@ -1708,11 +1708,13 @@ dat/ships/gawain.xml
 dat/ships/goddard.xml
 dat/ships/hawking.xml
 dat/ships/hyena.xml
+dat/ships/kauweke.xml
 dat/ships/kestrel.xml
 dat/ships/koala.xml
 dat/ships/lancelot.xml
 dat/ships/llama.xml
 dat/ships/mule.xml
+dat/ships/nohinohi.xml
 dat/ships/pacifier.xml
 dat/ships/phalanx.xml
 dat/ships/pirate_admonisher.xml
@@ -1749,6 +1751,7 @@ dat/ships/soromid_odium.xml
 dat/ships/soromid_reaver.xml
 dat/ships/soromid_vox.xml
 dat/ships/starbridge.xml
+dat/ships/taitamariki.xml
 dat/ships/thurion_apprehension.xml
 dat/ships/thurion_certitude.xml
 dat/ships/thurion_ingenuity.xml
