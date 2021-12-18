@@ -51,7 +51,7 @@ pay_s_lux_text[4] = _("When it comes time to collect your fare, the passengers c
 
 local pay_s_nolux_text    = {}
 pay_s_nolux_text[1] = _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment.")
-pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they upset they did not get to travel in your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
+pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
 pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
 
 --Sightseeing Messages
