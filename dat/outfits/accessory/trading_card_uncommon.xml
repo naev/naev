@@ -10,7 +10,8 @@
   <price>1000000</price>
   <description>A #oDvaered Vigilance#0 trading card game card of #buncommon#0 rarity. It describes into detail all the important statistics of the Dvaered Vigilance. Did you know that the Vigilance has triply redundant life support systems, allowing the crew to man it past damage that would usually incapacitate normal ships?</description>
   <gfx_store>placeholder.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>3</rarity>
+ </general>
  <specific type="modification">
   <fwd_firerate>10</fwd_firerate>
  </specific>

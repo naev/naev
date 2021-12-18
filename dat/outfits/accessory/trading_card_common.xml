@@ -10,7 +10,8 @@
   <price>1000000</price>
   <description>A #oHyena#0 trading card game card of common rarity. It describes into detail all the important statistics of the Hyena. Did you know that early models of the Hyena put so much strain on the pilots that it could crush them during high acceleration?</description>
   <gfx_store>placeholder.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>1</rarity>
+ </general>
  <specific type="modification">
   <loot_mod>25</loot_mod>
  </specific>
