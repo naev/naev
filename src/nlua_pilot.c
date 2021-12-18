@@ -2168,7 +2168,7 @@ static int pilotL_broadcast( lua_State *L )
       const char *msg = luaL_checkstring(L,2);
       const char *col = luaL_optstring(L,3,NULL);
 
-      player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
+      player_message( _("#%cBroadcast %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
       if (player.p)
          pilot_setCommMsg( player.p, msg );
    }
@@ -2226,7 +2226,7 @@ static int pilotL_comm( lua_State *L )
       }
 
       /* Broadcast message. */
-      player_message( _("#%cBroadcast %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
+      player_message( _("#%cComm %s>#0 \"%s\""), ((col==NULL)?'N':col[0]), s, msg );
       if (player.p)
          pilot_setCommMsg( player.p, msg );
    }

@@ -226,9 +226,9 @@ function abort()
       if mem.victory ~= true then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
-         player.msg( fmt.f( _("Comm Trader>You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
+         player.msg( fmt.f( _("Comm Trader> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
       else
-         player.msg( fmt.f( _("Comm Trader>You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
+         player.msg( fmt.f( _("Comm Trader> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
       end
 
 end

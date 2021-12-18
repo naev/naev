@@ -109,7 +109,7 @@ function land ()
          mem.osd_text[4] = _("Go to Zhiru in Goddard to lie to Cynthia's father")
          tk.msg(_("The Search for Cynthia"), _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
       else
-         tk.msg(_("The Search for Cynthia"), _([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless.]]))
+         tk.msg(_("The Search for Cynthia"), _([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attempts to talk to her end up fruitless.]]))
          local c = commodity.new( cargoname, cargodesc )
          mem.cargoID = misn.cargoAdd( c, 0 )
       end

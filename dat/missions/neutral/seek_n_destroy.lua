@@ -53,7 +53,7 @@ quotes.clue[5] = _([["If I was looking for {plt}, I would look in the {sys} syst
 
 quotes.dono    = {}
 quotes.dono[1] = _("This person has never heard of {plt}. It seems you will have to ask someone else.")
-quotes.dono[2] = _("This person is also looking for {plt}, but doesn't seem to know anything you don't.")
+quotes.dono[2] = _("This person is also looking for {plt}, but doesn't seem to know anything more than you.")
 quotes.dono[3] = _([["{plt}? Nope, I haven't seen that person in many cycles at this point."]])
 quotes.dono[4] = _([["Sorry, I have no idea where {plt} is."]])
 quotes.dono[5] = _([["Oh, hell no, I stay as far away from {plt} as I possibly can."]])
@@ -114,7 +114,7 @@ comms.ambush[3] = _("Why are you following {plt}?")
 comms.ambush[4] = _("Quit following {plt}!")
 comms.ambush[5] = _("Your quest for {plt} ends here!")
 comms.ambush[6] = _("You ask too many questions about {plt}!")
-comms.ambush[7] = _("You were not supposed to get on the trail of {plt}!")
+comms.ambush[7] = _("You were not supposed to pick up the trail of {plt}!")
 
 quotes.pay    = {}
 quotes.pay[1] = _("An officer hands you your pay.")
@@ -347,7 +347,7 @@ end
 function hail_ad()
    hook.rm(mem.hailie)
    hook.rm(mem.hailie2)
-   tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction of your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
+   tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
 end
 
 -- Player hails a ship for info
