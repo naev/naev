@@ -26,6 +26,7 @@ local vn = require "vn"
 local vntk = require "vntk"
 local fmt = require "format"
 local ant = require "common.antlejos"
+local lmisn = require "lmisn"
 
 local reward = ant.rewards.ant06
 
@@ -126,8 +127,7 @@ function enter ()
    end
    -- Wrong system
    if mem.state==1 and system.cur() ~= mainsys then
-      player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
-      misn.finish(false)
+      lmisn.fail(fmt.f(_("You were not supposed to leave {sys}!"),{sys=mainsys}))
       return
    end
    if system.cur() ~= mainsys then
