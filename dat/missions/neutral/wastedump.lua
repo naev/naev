@@ -32,8 +32,8 @@ local vntk = require "vntk"
 
 local text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea.")
-text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")
-text[3] = _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
+text[2] = _("Workers pack your cargo hold full of as much garbage as it can carry, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")
+text[3] = _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold reaches you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
 
 local finish_text = {}
 finish_text[1] = _("You drop the garbage off, relieved to have it out of your ship.")
@@ -72,7 +72,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
-   misn.setDesc( _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
+   misn.setDesc( _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
 end
 
@@ -120,7 +120,7 @@ function abort ()
    if mem.landed then
       misn.cargoRm( mem.cid )
       local fine = 2 * mem.credits
-      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
+      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
       player.pay( -fine )
       misn.finish( false )
    else

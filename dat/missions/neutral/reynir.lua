@@ -65,7 +65,7 @@ function accept ()
             return count > 1
          end) ()
       and tk.yesno( _("Spaceport Bar"), _([["Do you like money?"]]) ) and tk.yesno( _("Spaceport Bar"), _([["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]) ) then
+    "I am getting old now, as you can see. Before I die, I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]) ) then
 
       misn.accept()  -- For missions from the Bar only.
 

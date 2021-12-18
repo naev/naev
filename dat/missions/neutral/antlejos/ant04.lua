@@ -62,7 +62,7 @@ function create ()
    vn.transition()
    vn.na(_("Your ship touches ground and Verner comes to greet you."))
    v(fmt.f(_([[He beams a smile at you.
-"The amosphere is starting to take shape, we're almost ready for the next step. Without a vacuum we can now try to introduce some sort of stable form of life and bootstrap the final terraforming stages. I've found out a supplier of Morphogenic Archaea that should be able to do just the job. Would you be able to go to {pnt} in the {sys} system to bring some {amount} of archaea over? You'll get {creds} for your troubles. Are you interested?"]]),
+"The atmosphere is starting to take shape. We're almost ready for the next step. We can now try to introduce some sort of stable form of life and bootstrap the final terraforming stages. I've found a supplier of Morphogenic Archaea that should be able to do the job. Would you be able to go to {pnt} in the {sys} system to bring some {amount} of archaea over? You'll get {creds} for your troubles. Are you interested?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -127,8 +127,8 @@ function land ()
       vn.na(fmt.f(_([[You land your planet after all the commotion going on outside, and find Verner waiting for you. His gang unloads the {cargo} while he talks to you.]]),
          {cargo=cargo_name}))
       v(_([["I see you met them. They are part of the #oPilots United Against Atmosphere Anthropocentrism#0 or #oPUAAA#0 for short. What they are is a bunch of assholes that reject progress and terraforming barren moons like this one into places suitable for human living."]]))
-      v(_([["They must have noticed when the paperwork I filed at the Empire for terraforming permission was made public. I thought we would have had a lot more time before they started messing things up. Looks like we'll have to be careful from now on as they'll only get more aggressive as they see our wonderful progress."]]))
-      v(_([["The archaea look like they're in tip-top shape, and we'll get to spreading them around right away. Things should start looking much better now that life should start to take a hold on this moon."]]))
+      v(_([["They must have noticed when the paperwork I filed at the Empire for terraforming permission was made public. I thought we would have a lot more time before they started messing things up. Looks like we'll have to be careful from now on as they'll only get more aggressive as they see our wonderful progress."]]))
+      v(_([["The archaea look like they're in tip-top shape. We'll get to spreading them around right away. Things should start looking much better now that life will start to take a hold on this moon."]]))
       v(_([["We still have a ton of things for you to do. If you are interested, please meet me up here again after I organize things a bit."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
