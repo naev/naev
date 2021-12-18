@@ -54,7 +54,7 @@ function create ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("As soon as you land, Verner comes bouncing up to you."))
-   v(fmt.f(_([["Everything is going great thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Could you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
+   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -66,7 +66,7 @@ function create ()
    vn.done()
 
    vn.label("accept")
-   v(_([["Perfect! We're starting to make true progress!."]]))
+   v(_([["Perfect! We're starting to make true progress!"]]))
    vn.func( function () accepted = true end )
 
    vn.run()
@@ -115,7 +115,7 @@ function land ()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
-      vn.na(fmt.f(_([[As soon as your ship sets foot, Verner and his gang scramble to carefully unload the {cargo} to start setting it up.]]),
+      vn.na(fmt.f(_([[As soon as your ship alights, Verner and his gang scramble to carefully unload the {cargo} and start setting it up.]]),
          {cargo=cargo_name}))
       v(_([["Wow, great work! You sure are proving to be invaluable to the project. Once we start getting an atmosphere we should almost be there. It seems like my calculations were all spot on!"
 You can see glee in his eyes.

@@ -78,7 +78,7 @@ function land ()
       misn.cargoRm( mem.cargoID )
       player.pay( reward )
 
-      tk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind yourself.
+      tk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind you.
     When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]) )
 
       neu.addMiscLog( _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]]) )

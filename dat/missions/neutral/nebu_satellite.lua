@@ -38,7 +38,7 @@ local articles={
    {
       "Generic",
       _("Scientists Launch Research Probe Into Nebula"),
-      _("A group of scientists have successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
+      _("A group of scientists successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
    }
 }
 
@@ -72,7 +72,7 @@ function accept ()
    end
 
    -- Add cargo
-   local c = commodity.new( N_("Satellite"), N_("A small satellite loaded with sensors for exploring the depths of the nebula.") )
+   local c = commodity.new( N_("Satellite"), N_("A small space probe loaded with sensors for exploring the depths of the nebula.") )
    mem.cargo = misn.cargoAdd( c, 3 )
 
    -- Set up mission information
@@ -85,9 +85,9 @@ function accept ()
    misn.accept()
 
    -- More flavour text
-   tk.msg( _("Scientific Exploration"), fmt.f(_([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we have to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
-    He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this satellite we're going to launch."]]), {sys=mem.satellite_sys}) )
-   tk.msg( _("Scientific Exploration"), fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. The probe will automatically send us the data we need if all goes well. You'll be paid {credits} when we arrive."]]), {sys=mem.satellite_sys,
+   tk.msg( _("Scientific Exploration"), fmt.f(_([["We had a trip scheduled with a space trader, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we want to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
+    He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost heritage. So far, the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this probe we're going to launch."]]), {sys=mem.satellite_sys}) )
+   tk.msg( _("Scientific Exploration"), fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. If all goes well, the probe will automatically send us the data we need. You'll be paid {credits} when we arrive."]]), {sys=mem.satellite_sys,
          home_pnt=mem.homeworld, home_sys=mem.homeworld_sys, credits=fmt.credits(credits)} ) )
 
    misn.osdCreate(_("Nebula Satellite"), {fmt.f(_("Go to the {sys} system to launch the probe."), {sys=mem.satellite_sys})})
@@ -101,7 +101,7 @@ function land ()
    mem.landed = planet.cur()
    -- Mission success
    if mem.misn_stage == 1 and mem.landed == mem.homeworld then
-      tk.msg( _("Mission Success"), _([[The scientists thank you for your help before going back to their home to continue their nebula research. One of them gives you a mock-up of the satellite you helped them launch as a keepsake.]]) )
+      tk.msg( _("Mission Success"), _([[The scientists thank you for your help before going back to their home to continue their nebula research. As a keepsake, one of them gives you a mock-up of the probe you helped them launch.]]) )
       player.outfitAdd( "Satellite Mock-up" )
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay( credits )
@@ -123,7 +123,7 @@ end
    Launch process
 --]]
 function beginLaunch ()
-   player.msg( _("Preparing to launch satellite probe...") )
+   player.msg( _("Preparing to launch space probe...") )
    misn.osdDestroy()
    hook.timer( 3.0, "beginCountdown" )
 end
@@ -146,7 +146,7 @@ function launchSatellite ()
    news.add(articles)
 
    mem.misn_stage = 1
-   player.msg( _("Satellite launch successful!") )
+   player.msg( _("Space probe launch successful!") )
    misn.cargoJet( mem.cargo )
    misn.setDesc( fmt.f( _("Drop off the scientists at {pnt} in the {sys} system."), {pnt=mem.homeworld, sys=mem.homeworld_sys} ) )
    misn.osdCreate(_("Nebula Satellite"), {fmt.f(_("Drop off the scientists at {pnt} in the {sys} system."), {pnt=mem.homeworld, sys=mem.homeworld_sys})})

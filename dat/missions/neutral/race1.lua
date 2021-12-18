@@ -43,7 +43,7 @@ end
 
 
 function accept ()
-   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
+   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
       misn.accept()
       misn.setDesc(_("You're participating in a race!"))
       misn.setReward(fmt.credits(mem.credits))
@@ -53,7 +53,7 @@ function accept ()
          _("Board checkpoint 3"),
          fmt.f(_("Land at {pnt}"), {pnt=mem.curplanet}),
       })
-      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=mem.curplanet}))
+      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in Yacht class ships. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=mem.curplanet}))
       hook.takeoff("takeoff")
    else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
