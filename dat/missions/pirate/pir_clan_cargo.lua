@@ -74,7 +74,7 @@ Will you accept the mission?]]) ) then
    misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeve and head off to your ship.]]) )
+   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeves and head off to your ship.]]) )
    misn.osdCreate(_("Spaceport Bar"), {
       fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}),
    })
