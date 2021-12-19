@@ -32,8 +32,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-12-19 08:58-0500\n"
-"PO-Revision-Date: 2021-12-19 13:59+0000\n"
-"Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
+"PO-Revision-Date: 2021-12-19 14:33+0000\n"
+"Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -62532,16 +62532,10 @@ msgid "You leave the cat behind and unceremoniously depart from the derelict."
 msgstr "あなたはネコをあとに残し、あっさりと遺棄船から離れた。"
 
 #: dat/missions/pirate/blackcat.lua:97
-#, fuzzy
-#| msgid ""
-#| "You found a black cat on a derelict ship. It seems to want to go back "
-#| "somewhere, but you aren't sure where. Maybe if you could find their owner?"
 msgid ""
 "You found a black cat on a derelict ship. It seems to want to go back "
 "somewhere, but you aren't sure where. Maybe if you could find its owner?"
-msgstr ""
-"あなたは遺棄船で黒ネコを発見した。どこかへ帰りたいらしいが、どこなのかはわか"
-"らない。もしかして、飼い主が見つけられれば？"
+msgstr "あなたは遺棄船で黒ネコを発見した。どこかへ帰りたいらしいが、どこなのかはわからない。もしかして、飼い主が見つけられれば？"
 
 #: dat/missions/pirate/blackcat.lua:100
 msgid ""
@@ -62587,8 +62581,6 @@ msgid "The black cat's tail fluffs up and it sprints away."
 msgstr "黒ネコのしっぽがぴくっと立って、ネコは全力疾走していった。"
 
 #: dat/missions/pirate/blackcat.lua:148
-#, fuzzy
-#| msgid "The black cat scratches he airlock. It wants out?"
 msgid "The black cat scratches the airlock. It wants out?"
 msgstr "黒ネコがエアロックをひっかいた。出たいのか？"
 
@@ -62632,22 +62624,14 @@ msgid "P-p-please bring them o-over."
 msgstr "お、お、お願いだ。つ、連れてきてくれ。"
 
 #: dat/missions/pirate/blackcat.lua:238
-#, fuzzy
-#| msgid "Nervious Individual"
 msgid "Nervous Individual"
 msgstr "神経質な人"
 
 #: dat/missions/pirate/blackcat.lua:240
-#, fuzzy
-#| msgid ""
-#| "You open the communication channels with the {plt} and a hologram of a "
-#| "nervous-looking individual materializes in front of you."
 msgid ""
 "You open a communication channel with the {plt} and a hologram of a nervous-"
 "looking individual materializes in front of you."
-msgstr ""
-"あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホログラ"
-"フがあなたの前に姿を表した。"
+msgstr "あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホログラフがあなたの前に姿を表した。"
 
 #: dat/missions/pirate/blackcat.lua:241
 msgid "\"H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?\""
@@ -62673,19 +62657,13 @@ msgstr ""
 "えたのはあきらかだった。"
 
 #: dat/missions/pirate/blackcat.lua:253
-#, fuzzy
-#| msgid ""
-#| "They let out a sigh of relief.\n"
-#| "\"You f-f-found them! I thought I was a g-g-goner! I'll b-brake my ship "
-#| "so you c-can bring them over.\""
 msgid ""
 "They let out a sigh of relief.\n"
 "\"You f-f-found it! I thought I was a g-g-goner! I'll b-brake my ship so you "
 "c-can bring it over.\""
 msgstr ""
 "むこうの人物が安心してため息をついた。\n"
-"｢み、見つけてくれた！　もうだ、だ、だめだと思っていました！　船をと、止めるの"
-"で、つ、連れてこられます｣"
+"｢み、見つけてくれた！　もうだ、だ、だめだと思っていました！　船をと、止めるので、つ、連れてこられます｣"
 
 #: dat/missions/pirate/blackcat.lua:255
 msgid ""
@@ -62704,34 +62682,22 @@ msgstr ""
 "なにか奇妙にかび臭い空気とまっ暗闇があらわになった。なんとも妙だ。"
 
 #: dat/missions/pirate/blackcat.lua:277
-#, fuzzy
-#| msgid ""
-#| "You realize the cat is no where to be seen, and start to search for it to "
-#| "bring them over. Funny how it always seems to be where you don't want it "
-#| "and when you need it you can't find it."
 msgid ""
 "You realize the cat is no where to be seen, and start to search for it to "
 "bring it over. Funny how it always seems to be where you don't want it and "
 "when you need it you can't find it."
 msgstr ""
-"あなたはネコが見える範囲にいないことに気がついたので、連れていくためにさがし"
-"はじめた。なんともおかしなことに、ネコはいてほしくないときにはいつもいて、必"
-"要なときには見つからないのだ。"
+"あなたはネコが見える範囲にいないことに気がついたので、連れていくためにさがしはじめた。なんともおかしなことに、ネコはいてほしくないときにはいつもいて、必要"
+"なときには見つからないのだ。"
 
 #: dat/missions/pirate/blackcat.lua:279
-#, fuzzy
-#| msgid ""
-#| "You scour the ship and end up going back to the commander chair, as you "
-#| "are about to look behind it, you hear a sonorous meow and a black shadow "
-#| "flies past you towards the airlock."
 msgid ""
 "You scour the ship and end up going back to the commander chair. As you are "
 "about to look behind it, you hear a sonorous meow and a black shadow flies "
 "past you towards the airlock."
 msgstr ""
-"あなたは船をさがしまわって、けっきょく船長席まで戻ってきた。あなたがその背後"
-"を見ようとすると、よくとおる鳴き声が聞こえ、黒い影があなたを飛びこし、エア"
-"ロックの方へ向かっていった。"
+"あなたは船をさがしまわって、けっきょく船長席まで戻ってきた。あなたがその背後を見ようとすると、よくとおる鳴き声が聞こえ、黒い影があなたを飛びこし、エアロッ"
+"クの方へ向かっていった。"
 
 #: dat/missions/pirate/blackcat.lua:281
 msgid ""
@@ -62842,8 +62808,6 @@ msgid "Illegal Waste"
 msgstr "違法な投棄物"
 
 #: dat/missions/pirate/contraband.lua:63
-#, fuzzy
-#| msgid "A diversity of highly illegal waste."
 msgid "A melange of highly illegal waste."
 msgstr "雑多な高度に違法な廃棄物。"
 
@@ -62860,24 +62824,16 @@ msgid "Unmarked Boxes"
 msgstr "しるしのついていない箱"
 
 #: dat/missions/pirate/contraband.lua:65
-#, fuzzy
-#| msgid ""
-#| "A bunch of unmarked boxes containing what you can only assume to be "
-#| "highly illegal items."
 msgid ""
 "A multitude of unmarked boxes containing what you can only assume to be "
 "highly illegal items."
-msgstr ""
-"しるしのついていない箱の集まりで、高度に違法な品物が入っているとしか思えな"
-"い。"
+msgstr "しるしのついていない箱の集まりで、高度に違法な品物が入っているとしか思えない。"
 
 #: dat/missions/pirate/contraband.lua:66
 msgid "Exotic Animals"
 msgstr "外来の動物"
 
 #: dat/missions/pirate/contraband.lua:66
-#, fuzzy
-#| msgid "A bunch of exotic animals that can not be legally traded."
 msgid "A collection of exotic animals that can not be legally traded."
 msgstr "外来の動物の群れで、合法的には取引できないものだ。"
 
@@ -62894,8 +62850,6 @@ msgid "Illegal Drugs"
 msgstr "違法薬物"
 
 #: dat/missions/pirate/contraband.lua:68
-#, fuzzy
-#| msgid "A bunch of drugs made illegal in most systems."
 msgid "A batch of drugs made illegal in most systems."
 msgstr "薬物の束で、ほとんどの星系では違法だ。"
 
@@ -62904,8 +62858,6 @@ msgid "Illegal Body Mods"
 msgstr "違法な身体改造用品"
 
 #: dat/missions/pirate/contraband.lua:69
-#, fuzzy
-#| msgid "A lot of illegal body modifications."
 msgid "An array of illegal body modifications."
 msgstr "たくさんの違法な身体改造用品。"
 
@@ -62914,8 +62866,6 @@ msgid "Unauthorized Weapons"
 msgstr "無許可の武器"
 
 #: dat/missions/pirate/contraband.lua:70
-#, fuzzy
-#| msgid "A bunch of illegal weapons."
 msgid "An assemblage of illegal weapons."
 msgstr "違法な武器の束。"
 
@@ -62999,8 +62949,6 @@ msgid "Pineapple Pizza"
 msgstr "パイナップル・ピザ"
 
 #: dat/missions/pirate/contraband.lua:80
-#, fuzzy
-#| msgid "Pizza with pineapple on it, there is no way this is legal."
 msgid "Pizza with pineapple on it. There is no way this is legal."
 msgstr "パイナップルが乗ったピザで、これが合法なわけがない。"
 
@@ -63111,8 +63059,6 @@ msgid "Bio-weapons"
 msgstr "生物兵器"
 
 #: dat/missions/pirate/contraband.lua:99
-#, fuzzy
-#| msgid "Highly dangerous illegal biological weapons."
 msgid "Highly dangerous, illegal biological weapons."
 msgstr "とても危険で違法な生物学的兵器。"
 
@@ -63312,14 +63258,6 @@ msgstr ""
 "るかのようだ。"
 
 #: dat/missions/pirate/contraband_cake.lua:70
-#, fuzzy
-#| msgid ""
-#| "They pant for a while and then try to recover somewhat their composure as "
-#| "they sit down once more. They seem sweatier than before.\n"
-#| "\"Hey, say, you look like a pilot. You see, I was asked to deliver a "
-#| "package, but I'm not feeling so well…\"\n"
-#| "They coughs to the side somewhat exaggeratedly while looking at you from "
-#| "the corner of the eye."
 msgid ""
 "They pant for a while and then try to somewhat recover their composure as "
 "they sit down once more. They seem sweatier than before.\n"
@@ -63328,10 +63266,8 @@ msgid ""
 "They cough to the side somewhat exaggeratedly while looking at you from the "
 "corner of their eye."
 msgstr ""
-"それからしばらくあえぐと、いくらか平静を取りもどそうとして、もういちど座りな"
-"おした。まえよりもっと汗をかいているようだ。\n"
-"｢ああ、ちょっと、あなたはパイロットみたいですね。ほら、小包の配達を頼まれてい"
-"たんですが、ちょっと気分がよくなくて……｣\n"
+"それからしばらくあえぐと、いくらか平静を取りもどそうとして、もういちど座りなおした。まえよりもっと汗をかいているようだ。\n"
+"｢ああ、ちょっと、あなたはパイロットみたいですね。ほら、小包の配達を頼まれていたんですが、ちょっと気分がよくなくて……｣\n"
 "そういって横にむけてややおおげさにせきをしつつ、横目であなたの方を見やる。"
 
 #: dat/missions/pirate/contraband_cake.lua:73
@@ -63396,10 +63332,6 @@ msgid "You decline their offer."
 msgstr "あなたは申し出を断った。"
 
 #: dat/missions/pirate/contraband_cake.lua:92
-#, fuzzy
-#| msgid ""
-#| "They slump down in the chair in defeat.\n"
-#| "\"Shit, what am I going to do. Think Sam think!\""
 msgid ""
 "They slump down in the chair in defeat.\n"
 "\"Shit, what am I going to do. Think, Sam, think!\""
@@ -63440,15 +63372,6 @@ msgid "Of course!"
 msgstr "もちろん！"
 
 #: dat/missions/pirate/contraband_cake.lua:109
-#, fuzzy
-#| msgid ""
-#| "\"Oh boy, you're not going to deliver this cake in one piece without "
-#| "stealth. It's very simple, all ships have three main statistics: range "
-#| "they are detected at, evasion range, and stealth range. Detection "
-#| "determines how far away ships can detect your presence, while evasion "
-#| "range controls how well they can target your ship and identify it. When "
-#| "within evasion range, ships can then scan you which does nasty things "
-#| "like melting cakes.\""
 msgid ""
 "\"Oh boy, you're not going to deliver this cake in one piece without "
 "stealth. It's very simple. All ships have three main statistics: range they "
@@ -63457,12 +63380,9 @@ msgid ""
 "well they can target your ship and identify it. When within evasion range, "
 "ships can then scan you which does nasty things like melting cakes.\""
 msgstr ""
-"｢ああ、ちょっと、このケーキを無事に配達するのにステルスなしじゃできませんよ。"
-"ステルスはとても単純です。すべての船には 3 つのおもな統計値があって、探知され"
-"る距離、回避距離、それからステルス距離です。探知はどれくらい離れた船からあな"
-"たの存在が探知できるかを決定します。いっぽう、回避距離はどれくらいうまくあな"
-"たの船を選択して身元をあきらかにできるかを制御します。回避距離内にいると、船"
-"はあなたをスキャンできるので、ケーキが溶けるというような嫌なことがおきます｣"
+"｢ああ、ちょっと、このケーキを無事に配達するのにステルスなしじゃできませんよ。ステルスはとても単純です。すべての船には 3 つのおもな統計値があって、探知"
+"される距離、回避距離、それからステルス距離です。探知はどれくらい離れた船からあなたの存在が探知できるかを決定します。いっぽう、回避距離はどれくらいうまくあ"
+"なたの船を選択して身元をあきらかにできるかを制御します。回避距離内にいると、船はあなたをスキャンできるので、ケーキが溶けるというような嫌なことがおきます｣"
 
 #: dat/missions/pirate/contraband_cake.lua:110
 msgid ""
@@ -63505,16 +63425,10 @@ msgstr ""
 "ください。それとスキャンには気をつけて！｣"
 
 #: dat/missions/pirate/contraband_cake.lua:119
-#, fuzzy
-#| msgid ""
-#| "As leave them behind you can hear them let out a big sigh of what you can "
-#| "only assume is relief."
 msgid ""
 "As you leave, behind you can hear them let out a big sigh of what you can "
 "only assume is relief."
-msgstr ""
-"あの汗をかいた人から離れると、ほっとしたからとしか思えない大きなため息があな"
-"たに聞こえた。"
+msgstr "あの汗をかいた人から離れると、ほっとしたからとしか思えない大きなため息があなたに聞こえた。"
 
 #: dat/missions/pirate/contraband_cake.lua:128
 msgid "Cake"
@@ -64215,19 +64129,13 @@ msgstr ""
 "｢{name}に対処する件で、考えを変えてくれた？　顧客がしきりに知りたがっててね｣"
 
 #: dat/missions/pirate/pir_hit_intro.lua:109
-#, fuzzy
-#| msgid ""
-#| "\"My clients will be pleased to hear that. {name} can be found around the "
-#| "{sys} system. Leaving their ship as a charred memento to their avarice "
-#| "will be a fitting end to them.\""
 msgid ""
 "\"My clients will be pleased to hear that. {name} can be found around the "
 "{sys} system. Leaving their ship as a charred memento to their avarice will "
 "be a fitting end for them.\""
 msgstr ""
-"｢顧客はそれを聞いて喜ぶと思うよ。{name}は{sys}星系あたりで見つけられる。貪欲"
-"にたいする黒焦げの形見みたいにやつの船を残しておけば、その最期にふさわしいだ"
-"ろうね｣"
+"｢顧客はそれを聞いて喜ぶと思うよ。{name}は{sys}星系あたりで見つけられる。貪欲にたいする黒焦げの形見みたいにやつの船を残しておけば、その最期にふ"
+"さわしいだろうね｣"
 
 #: dat/missions/pirate/pir_hit_intro.lua:115
 msgid "You curtly decline and leave."
