@@ -2228,11 +2228,14 @@ void pilot_update( Pilot* pilot, double dt )
          /* Run Lua stuff. */
          pilot_outfitLOutfofenergy( pilot );
       }
-
-      /* Must recalculate stats because something changed state. */
-      if (nchg > 0)
-         pilot_calcStats( pilot );
    }
+
+   /* Update effects. */
+   nchg += effect_update( &pilot->effects, dt );
+
+   /* Must recalculate stats because something changed state. */
+   if (nchg > 0)
+      pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
@@ -2784,6 +2787,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
    ss_statsInit( &pilot->intrinsic_stats );
+   pilot->effects = effect_init();
 
    /* Basic information. */
    pilot->ship = ship;
@@ -3114,6 +3118,8 @@ void pilot_free( Pilot* p )
    array_free(p->outfit_utility);
    array_free(p->outfit_weapon);
    array_free(p->outfit_intrinsic);
+
+   effect_cleanup( p->effects );
 
    pilot_cargoRmAll( p, 1 );
 

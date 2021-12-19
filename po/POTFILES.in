@@ -2827,6 +2827,8 @@ src/economy.c
 src/economy.h
 src/edtaa3func.c
 src/edtaa3func.h
+src/effect.c
+src/effect.h
 src/env.c
 src/env.h
 src/equipment.c

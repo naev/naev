@@ -633,7 +633,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     16. /**< Amount of loading stages. */
+#define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
    int stage = 0;
@@ -646,6 +646,9 @@ void load_all (void)
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects...") );
+   effect_load(); /* no dep */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types...") );
    dtype_load(); /* dep for outfits */
@@ -718,6 +721,7 @@ void unload_all (void)
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
+   effect_exit();
    dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_exit(); /* Clean up events. */

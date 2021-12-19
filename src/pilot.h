@@ -7,6 +7,7 @@
 
 #include "ai.h"
 #include "commodity.h"
+#include "effect.h"
 #include "faction.h"
 #include "ntime.h"
 #include "outfit.h"
@@ -26,9 +27,9 @@
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           2. * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
-#define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
-#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
+#define HYPERSPACE_VEL           (2.*HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ENTER_MIN     (HYPERSPACE_VEL*0.3) /**< Minimum entering distance. */
+#define HYPERSPACE_ENTER_MAX     (HYPERSPACE_VEL*0.4) /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 /* Land/takeoff. */
 #define PILOT_LANDING_DELAY      1. /**< Delay for land animation. */
@@ -281,6 +282,9 @@ typedef struct Pilot_ {
    /* Ship statistics. */
    ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics, used for comparisons.. */
+
+   /* Ship effects. */
+   Effect *effects; /**< Pilot's current activated effects. */
 
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */

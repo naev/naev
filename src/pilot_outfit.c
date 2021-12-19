@@ -1006,6 +1006,9 @@ void pilot_calcStats( Pilot* pilot )
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
 
+   /* Compute effects. */
+   effect_compute( &pilot->stats, pilot->effects );
+
    /* Apply system effects. */
    if (cur_system->stats != NULL)
       ss_statsModFromList( &pilot->stats, cur_system->stats );
