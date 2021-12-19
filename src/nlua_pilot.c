@@ -32,6 +32,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_vec2.h"
+#include "nlua_tex.h"
 #include "nluadef.h"
 #include "pilot.h"
 #include "pilot_heat.h"
@@ -3187,6 +3188,12 @@ static int pilotL_effectGet( lua_State *L )
 
       lua_pushnumber(L,e->timer);
       lua_setfield(L,-2,"timer");
+
+      lua_pushnumber(L,e->data->duration);
+      lua_setfield(L,-2,"duration");
+
+      lua_pushtex(L,e->data->icon);
+      lua_setfield(L,-2,"icon");
 
       lua_rawseti(L,-2,i+1);
    }
