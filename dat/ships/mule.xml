@@ -14,7 +14,7 @@
  <trail_generator x="-33" y="0" h="0">fire</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel</license>
- <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favorite target of pirates, so avoiding dangerous systems is strongly advised.</description>
+ <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favourite target of pirates, so avoiding dangerous systems is strongly advised.</description>
  <health>
   <armour>350</armour>
   <armour_regen>0</armour_regen>

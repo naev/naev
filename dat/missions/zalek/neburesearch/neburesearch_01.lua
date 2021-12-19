@@ -174,7 +174,7 @@ function land()
         mem.station_visited = true
     elseif planet.cur() == homeworld then
         tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
-    "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
+    "We'll be able to return to Jorla safely from here on. You did science a great favour today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
         player.pay(credits)
         zlk.addNebuResearchLog(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
         misn.finish(true)
