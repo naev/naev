@@ -92,7 +92,7 @@ function accept ()
       vn.na(_([[You approach the shady character who begins to speak in a low voice, almost as if they don't want to be heard.]]))
       g(fmt.f(_([["You look like a decent pilot. I represent some clients, who value pilots who can get the job done with a bit of secrecy. You know what I mean? Getting the job done means making sure nothing gets in the way. My clients want a certain pilot by the name of {name} to be responsible for their actions. It's not very fair to ask for favours and not doing anything in return right?"]]),
          {name=mem.name}))
-      g(fmt.f(_([["My clients want a pilot to go find {name} and get compensation for the damages caused. However, it is past the time that the problem can be solved by paying back the favour. {name} has to punished for their excesses in more drastic measures. Would you be willing to meet up with {name} and express my clients' discontent with, say, the full brunt of hot plasma? You will be compensated well."
+      g(fmt.f(_([["My clients want a pilot to go find {name} and get compensation for the damages caused. However, it is past the time that the problem can be solved by paying back the favour. {name} has to be punished for their excesses through more... lethal measures. Would you be willing to meet up with {name} and express my clients' discontent with, say, the full brunt of hot plasma? You will be compensated well."
 They grin.]]),
          {name=mem.name}))
       talked = true
@@ -106,7 +106,7 @@ They grin.]]),
    }
 
    vn.label("accept")
-   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system. Leaving their ship as a charred memento to their avarice will be a fitting end to them."]]),
+   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
       {name=mem.name, sys=mem.missys}))
    vn.func( function () accepted = true end )
    vn.done()

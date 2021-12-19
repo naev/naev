@@ -94,7 +94,7 @@ It seems like it wants to come back with you. What do you do?]]))
    misn.accept()
 
    misn.setTitle(_("Black Cat"))
-   misn.setDesc(_("You found a black cat on a derelict ship. It seems to want to go back somewhere, but you aren't sure where. Maybe if you could find their owner?"))
+   misn.setDesc(_("You found a black cat on a derelict ship. It seems to want to go back somewhere, but you aren't sure where. Maybe if you could find its owner?"))
    misn.setReward(_("Unknown"))
 
    local c = commodity.new( N_("Black Cat"), N_([[A cute four-legged mammal "Felis catus" that seems to enjoy chasing random things around the ship.]]) )
@@ -145,7 +145,7 @@ local function event ()
          _("The black cat stares at you ominously."),
          _("A waft of black cat hair flies around."),
          _("The black cat's tail fluffs up and it sprints away."),
-         _("The black cat scratches he airlock. It wants out?"),
+         _("The black cat scratches the airlock. It wants out?"),
          _("The black cat unceremoniously barfs up a hairball."),
          _("You hear weird noises from the black cat freaking out over nothing."),
          _("The black cat suddenly sprints through the ship."),
@@ -235,9 +235,9 @@ function owner_hail ()
 
    vn.clear()
    vn.scene()
-   local o = vn.newCharacter( _("Nervious Individual"), {image=owner_image, color=owner_colour, shader=love_shaders.hologram()} )
+   local o = vn.newCharacter( _("Nervous Individual"), {image=owner_image, color=owner_colour, shader=love_shaders.hologram()} )
    vn.transition("electric")
-   vn.na(fmt.f(_("You open the communication channels with the {plt} and a hologram of a nervous-looking individual materializes in front of you."),{plt=owner}))
+   vn.na(fmt.f(_("You open a communication channel with the {plt} and a hologram of a nervous-looking individual materializes in front of you."),{plt=owner}))
    o(_([["H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?"]]))
    vn.menu{
       {_([["Yes."]]), "catyes"},
@@ -251,7 +251,7 @@ function owner_hail ()
 
    vn.label("catyes")
    o(_([[They let out a sigh of relief.
-"You f-f-found them! I thought I was a g-g-goner! I'll b-brake my ship so you c-can bring them over."]]))
+"You f-f-found it! I thought I was a g-g-goner! I'll b-brake my ship so you c-can bring it over."]]))
    vn.na(fmt.f(_("Given the streak of bad luck the feline has brought you, you figure it is in your best interest to bring the cat over to the {plt}."),{plt=owner}))
 
    vn.done("electric")
@@ -274,9 +274,9 @@ function owner_board ()
    vn.sfx( der.sfx.board )
    vn.transition()
    vn.na(fmt.f(_("Your ship locks its boarding clamps on the {plt}, and the airlock opens up revealing some strangely musty air and pitch black darkness. How odd."),{plt=owner}))
-   vn.na(_("You realize the cat is no where to be seen, and start to search for it to bring them over. Funny how it always seems to be where you don't want it and when you need it you can't find it."))
+   vn.na(_("You realize the cat is no where to be seen, and start to search for it to bring it over. Funny how it always seems to be where you don't want it and when you need it you can't find it."))
    vn.sfx( meow )
-   vn.na(_("You scour the ship and end up going back to the commander chair, as you are about to look behind it, you hear a sonorous meow and a black shadow flies past you towards the airlock."))
+   vn.na(_("You scour the ship and end up going back to the commander chair. As you are about to look behind it, you hear a sonorous meow and a black shadow flies past you towards the airlock."))
    vn.sfx( der.sfx.unboard )
    vn.na(_("You run to try to catch it, but hear the sound of the airlock closing and detaching of the locking clamps. You run back to your command chair to see what the other ship is doing, but you can not find it anywhere. They seem to have a knack for fleeing."))
    vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a credit chip with {credits} on the floor. It looks like it has cat bite marks too."),{credits=fmt.credits(credit_reward)}))

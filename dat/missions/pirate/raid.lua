@@ -104,12 +104,12 @@ function create ()
    local cargoes = {
       -- Standard stuff
       {N_("Corporate Documents"), N_("Documents detailing transactions and operations of certain corporations.")},
-      {N_("Technology Blueprints"), N_("Blueprints of under development advanced technology.")},
-      {N_("Research Prototypes"), N_("Advanced prototypes of cutting edge research. Doesn't seem like of much use outside of an academic environment.")},
-      {N_("High-end Implants"), N_("Some of the newest and fanciest cybernetic implants available. They included nose implants that allow amplifying and modifying smells beyond human imagination.")},
-      {N_("Synthetic Organs"), N_("Special synthetic copies of natural human organs that are able to ")},
+      {N_("Technology Blueprints"), N_("Blueprints of advanced technology under development.")},
+      {N_("Research Prototypes"), N_("Advanced prototypes of cutting edge research. Doesn't seem to be of much use outside of an academic environment.")},
+      {N_("High-end Implants"), N_("Some of the newest and fanciest cybernetic implants available. They include nose implants that allow amplifying and modifying smells beyond human imagination.")},
+      {N_("Synthetic Organs"), N_("Special synthetic copies of natural human organs.")},
       {N_("Brand Goods"), N_("A variety of high quality brand luxury goods.")},
-      {N_("Rare Ores"), N_("Rare ores that are hard to find, usually only located in isolated asteroid fields.")},
+      {N_("Rare Ores"), N_("Rare ores that are usually only located in isolated asteroid fields.")},
       {N_("Fine Arts"), N_("Museum-quality artwork done in all sorts of mediums.")},
       {N_("Highly Refined Metals"), N_("High quality refined metals suitable for building space craft and other advanced technological objects.")},
       {N_("Nebula Artefacts"), N_("Rare and weird artefacts of ship debris and unidentified objects found in the Nebula.")},
@@ -126,8 +126,8 @@ function create ()
       {N_("High Quality Pasta"), N_("Dried pasta of the highest quality.")},
       {N_("Premium Body Soap"), N_("Incredibly silky soap that creates a seemingly infinite amount of bubbles.")},
       {N_("Luxury Captain Chairs"), N_("Very comfortable chairs meant for ship captains. Every captain dreams of having such chairs.")},
-      {N_("Incredibly Spicy Sauce"), N_("Hot sauce made from the spiciest peppers that have been genetically engineered. Not really suited for human consumption, but people use them anyway.")},
-      {N_("Exquisite Cat Toys"), N_("Cat toys with built in light and motion system to stimulate any cat to the max. They also don't use cheap glue that make them break down within 5 minutes of playing with a cat.")},
+      {N_("Incredibly Spicy Sauce"), N_("Hot sauce made from the spiciest, genetically engineered peppers. Not really suited for human consumption, but people use them anyway.")},
+      {N_("Exquisite Cat Toys"), N_("Cat toys with built in lights and motion systems to stimulate any cat to the max. They also don't use cheap glue that make them break down within 5 minutes of playing with a cat.")},
    }
 
    -- Finish mission details

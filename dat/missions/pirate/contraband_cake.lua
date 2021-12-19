@@ -67,9 +67,9 @@ function accept()
    g(_([[They are fairly absorbed in thought and take a while to notice you. Suddenly, without warning, they jump out of their chair and almost fall to the ground.
 "Crikes! You scared the shit out of me."
 They clutch at their shirt as if trying to hold their heart in their ribcage.]]))
-   g(_([[They pant for a while and then try to recover somewhat their composure as they sit down once more. They seem sweatier than before.
+   g(_([[They pant for a while and then try to somewhat recover their composure as they sit down once more. They seem sweatier than before.
 "Hey, say, you look like a pilot. You see, I was asked to deliver a package, but I'm not feeling so well…"
-They coughs to the side somewhat exaggeratedly while looking at you from the corner of the eye.]]))
+They cough to the side somewhat exaggeratedly while looking at you from the corner of their eye.]]))
    g(fmt.f(_([[They lean closer to you and lower their voice.
 "I was asked to deliver a… a…"
 They furrow their brows for a second.
@@ -90,7 +90,7 @@ They extend their sweaty hand towards you.
    vn.label("decline")
    vn.na(_("You decline their offer."))
    g(_([[They slump down in the chair in defeat.
-"Shit, what am I going to do. Think Sam think!"]]))
+"Shit, what am I going to do. Think, Sam, think!"]]))
    vn.na(_("As you take your leave, you notice they have once again started to profusely sweat."))
    vn.done()
 
@@ -106,7 +106,7 @@ They lean forward and get a bit more serious.
    }
 
    vn.label("stealthtut")
-   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple, all ships have three main statistics: range they are detected at, evasion range, and stealth range. Detection determines how far away ships can detect your presence, while evasion range controls how well they can target your ship and identify it. When within evasion range, ships can then scan you which does nasty things like melting cakes."]]))
+   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple. All ships have three main statistics: range they are detected at, evasion range, and stealth range. Detection determines how far away ships can detect your presence, while evasion range controls how well they can target your ship and identify it. When within evasion range, ships can then scan you which does nasty things like melting cakes."]]))
    g(fmt.f(_([["To avoid getting spotted and scanned, you can go into stealth with {key}. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
    g(fmt.f(_([["So as long as you stealth with {key} and stay away from ships, you won't be scanned and the cake will be alright."]]),
@@ -116,7 +116,7 @@ They lean forward and get a bit more serious.
    g(fmt.f(_([["Great. One second, let me get the cake."
 They go to the restroom and come back holding a nondescript brown box that seems to have 'Cake' hastily scribbled on it. They promptly hand it over to you while looking both ways.
 "OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and watch out for scanning!"]]), {pnt=mem.destplanet, sys=mem.destsys}))
-   vn.na(_("As leave them behind you can hear them let out a big sigh of what you can only assume is relief."))
+   vn.na(_("As you leave, behind you can hear them let out a big sigh of what you can only assume is relief."))
    vn.run()
 
    if not accepted then
@@ -164,7 +164,7 @@ As they lumber away, you suddenly notice that quite a few suspicious figures in 
 
    player.pay(mem.reward)
 
-   pir.addMiscLog(_("You helped deliver 'cake' for some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
+   pir.addMiscLog(_("You helped deliver a 'cake' to some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
 
    -- increase faction
    faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))

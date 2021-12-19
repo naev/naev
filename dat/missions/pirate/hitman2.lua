@@ -42,7 +42,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiety seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
       misn.finish()
    end
    misn.accept()
@@ -63,7 +63,7 @@ function accept ()
       fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=mem.misn_base, sys=mem.misn_base_sys} ),
    } )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]) )
+   tk.msg( _("Spaceport Bar"), _([[He nods approvingly. "It seems that the traders are rather stubborn. They didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "That simply won't do. It's bad for business. Perhaps if a few of their ships disappear, they'll get the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]) )
 
    -- Set hooks
    hook.enter("sys_enter")
