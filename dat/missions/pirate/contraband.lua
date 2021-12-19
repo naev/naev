@@ -68,8 +68,8 @@ function create()
       {N_("Illegal Drugs"), N_("A batch of drugs made illegal in most systems.")},
       {N_("Illegal Body Mods"), N_("An array of illegal body modifications.")},
       {N_("Unauthorized Weapons"), N_("An assemblage of illegal weapons.")},
-      {N_("Contraband"), N_("A bundle of illegal contraband goods.")},
-      {N_("Counterfeit Goods"), N_("A great quantity of illegal counterfeit goods of many famous brands.")},
+      {N_("Contraband"), N_("A diverse assortment of illegal contraband goods.")},
+      {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
       {N_("Stolen Art"), N_("Artwork that was illegally seized from a collector or gallery.")},
       -- Below less serious stuff
       {N_("User Databases"), N_("Stolen user databases with lots of personal information obtained illegally.")},

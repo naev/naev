@@ -164,7 +164,7 @@ As they lumber away, you suddenly notice that quite a few suspicious figures in 
 
    player.pay(mem.reward)
 
-   pir.addMiscLog(_("You helped deliver a 'cake' to some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
+   pir.addMiscLog(_("You helped deliver a 'cake' for some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
 
    -- increase faction
    faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))
