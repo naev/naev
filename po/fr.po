@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-18 20:08-0500\n"
+"POT-Creation-Date: 2021-12-19 08:58-0500\n"
 "PO-Revision-Date: 2021-12-14 06:51+0000\n"
 "Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -31621,14 +31621,14 @@ msgid ""
 "interest in you."
 msgstr ""
 
-#: dat/events/pirate/fake_transponder.lua:67
+#: dat/events/pirate/fake_transponder.lua:68
 msgid ""
 "\"You won't regret this purchase! Just make sure to not get scanned, or "
 "they'll find out who you are.\"\n"
 "Having sold his wares, the pirate disappears into the shadows."
 msgstr ""
 
-#: dat/events/pirate/fake_transponder.lua:72
+#: dat/events/pirate/fake_transponder.lua:73
 msgid "You leave the pirate and their fake transponder behind."
 msgstr ""
 
@@ -59517,7 +59517,7 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:97
 msgid ""
 "You found a black cat on a derelict ship. It seems to want to go back "
-"somewhere, but you aren't sure where. Maybe if you could find their owner?"
+"somewhere, but you aren't sure where. Maybe if you could find its owner?"
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:100
@@ -59561,7 +59561,7 @@ msgid "The black cat's tail fluffs up and it sprints away."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:148
-msgid "The black cat scratches he airlock. It wants out?"
+msgid "The black cat scratches the airlock. It wants out?"
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:149
@@ -59602,13 +59602,13 @@ msgid "P-p-please bring them o-over."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:238
-msgid "Nervious Individual"
+msgid "Nervous Individual"
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:240
 msgid ""
-"You open the communication channels with the {plt} and a hologram of a "
-"nervous-looking individual materializes in front of you."
+"You open a communication channel with the {plt} and a hologram of a nervous-"
+"looking individual materializes in front of you."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:241
@@ -59633,8 +59633,8 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:253
 msgid ""
 "They let out a sigh of relief.\n"
-"\"You f-f-found them! I thought I was a g-g-goner! I'll b-brake my ship so "
-"you c-can bring them over.\""
+"\"You f-f-found it! I thought I was a g-g-goner! I'll b-brake my ship so you "
+"c-can bring it over.\""
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:255
@@ -59652,13 +59652,13 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:277
 msgid ""
 "You realize the cat is no where to be seen, and start to search for it to "
-"bring them over. Funny how it always seems to be where you don't want it and "
+"bring it over. Funny how it always seems to be where you don't want it and "
 "when you need it you can't find it."
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:279
 msgid ""
-"You scour the ship and end up going back to the commander chair, as you are "
+"You scour the ship and end up going back to the commander chair. As you are "
 "about to look behind it, you hear a sonorous meow and a black shadow flies "
 "past you towards the airlock."
 msgstr ""
@@ -59758,7 +59758,7 @@ msgid "Illegal Waste"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:63
-msgid "A diversity of highly illegal waste."
+msgid "A melange of highly illegal waste."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:64
@@ -59775,8 +59775,8 @@ msgstr "Boîtes Non Marquées"
 
 #: dat/missions/pirate/contraband.lua:65
 msgid ""
-"A bunch of unmarked boxes containing what you can only assume to be highly "
-"illegal items."
+"A multitude of unmarked boxes containing what you can only assume to be "
+"highly illegal items."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:66
@@ -59784,7 +59784,7 @@ msgid "Exotic Animals"
 msgstr "Animaux Exotiques"
 
 #: dat/missions/pirate/contraband.lua:66
-msgid "A bunch of exotic animals that can not be legally traded."
+msgid "A collection of exotic animals that can not be legally traded."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:67
@@ -59800,7 +59800,7 @@ msgid "Illegal Drugs"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:68
-msgid "A bunch of drugs made illegal in most systems."
+msgid "A batch of drugs made illegal in most systems."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:69
@@ -59808,7 +59808,7 @@ msgid "Illegal Body Mods"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:69
-msgid "A lot of illegal body modifications."
+msgid "An array of illegal body modifications."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:70
@@ -59816,7 +59816,7 @@ msgid "Unauthorized Weapons"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:70
-msgid "A bunch of illegal weapons."
+msgid "An assemblage of illegal weapons."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:71
@@ -59826,7 +59826,7 @@ msgid "Contraband"
 msgstr "Contributions"
 
 #: dat/missions/pirate/contraband.lua:71
-msgid "An diverse assortment of illegal contraband goods."
+msgid "A bundle of illegal contraband goods."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:72
@@ -59836,7 +59836,7 @@ msgid "Counterfeit Goods"
 msgstr "Biens Industriels"
 
 #: dat/missions/pirate/contraband.lua:72
-msgid "An assortment of illegal counterfeit goods of many famous brands."
+msgid "A great quantity of illegal counterfeit goods of many famous brands."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:73
@@ -59896,7 +59896,7 @@ msgid "Pineapple Pizza"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:80
-msgid "Pizza with pineapple on it, there is no way this is legal."
+msgid "Pizza with pineapple on it. There is no way this is legal."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:81
@@ -60004,7 +60004,7 @@ msgid "Bio-weapons"
 msgstr "Armes"
 
 #: dat/missions/pirate/contraband.lua:99
-msgid "Highly dangerous illegal biological weapons."
+msgid "Highly dangerous, illegal biological weapons."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:100
@@ -60193,12 +60193,12 @@ msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:70
 msgid ""
-"They pant for a while and then try to recover somewhat their composure as "
+"They pant for a while and then try to somewhat recover their composure as "
 "they sit down once more. They seem sweatier than before.\n"
 "\"Hey, say, you look like a pilot. You see, I was asked to deliver a "
 "package, but I'm not feeling so well…\"\n"
-"They coughs to the side somewhat exaggeratedly while looking at you from the "
-"corner of the eye."
+"They cough to the side somewhat exaggeratedly while looking at you from the "
+"corner of their eye."
 msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:73
@@ -60248,7 +60248,7 @@ msgstr ""
 #: dat/missions/pirate/contraband_cake.lua:92
 msgid ""
 "They slump down in the chair in defeat.\n"
-"\"Shit, what am I going to do. Think Sam think!\""
+"\"Shit, what am I going to do. Think, Sam, think!\""
 msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:94
@@ -60280,7 +60280,7 @@ msgstr ""
 #: dat/missions/pirate/contraband_cake.lua:109
 msgid ""
 "\"Oh boy, you're not going to deliver this cake in one piece without "
-"stealth. It's very simple, all ships have three main statistics: range they "
+"stealth. It's very simple. All ships have three main statistics: range they "
 "are detected at, evasion range, and stealth range. Detection determines how "
 "far away ships can detect your presence, while evasion range controls how "
 "well they can target your ship and identify it. When within evasion range, "
@@ -60315,7 +60315,7 @@ msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:119
 msgid ""
-"As leave them behind you can hear them let out a big sigh of what you can "
+"As you leave, behind you can hear them let out a big sigh of what you can "
 "only assume is relief."
 msgstr ""
 
@@ -60390,7 +60390,7 @@ msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:167
 msgid ""
-"You helped deliver 'cake' for some shady individuals. Your success has "
+"You helped deliver a 'cake' to some shady individuals. Your success has "
 "opened up more 'special' delivery missions from the mission computer."
 msgstr ""
 
@@ -60542,9 +60542,9 @@ msgstr ""
 
 #: dat/missions/pirate/hitman2.lua:45
 msgid ""
-"As you approach, the man turns to face you and his anxiousness seems to "
-"abate somewhat. As you take a seat he greets you, \"Ah, so we meet again. "
-"My, shall we say... problem, has recurred.\" Leaning closer, he continues, "
+"As you approach, the man turns to face you and his anxiety seems to abate "
+"somewhat. As you take a seat he greets you, \"Ah, so we meet again. My, "
+"shall we say... problem, has recurred.\" Leaning closer, he continues, "
 "\"This will be somewhat bloodier than last time, but I'll pay you more for "
 "your trouble. Are you up for it?\""
 msgstr ""
@@ -60571,11 +60571,11 @@ msgstr "Aller au système suivant"
 
 #: dat/missions/pirate/hitman2.lua:66
 msgid ""
-"He nods approvingly. \"It seems that the traders are rather stubborn, they "
+"He nods approvingly. \"It seems that the traders are rather stubborn. They "
 "didn't get the message last time and their presence is increasing.\" He lets "
-"out a brief sigh before continuing, \"This simply won't do, it's bad for "
-"business. Perhaps if a few of their ships disappear, they'll take the hint."
-"\" With the arrangement in place, he gets up. \"I look forward to seeing you "
+"out a brief sigh before continuing, \"That simply won't do. It's bad for "
+"business. Perhaps if a few of their ships disappear, they'll get the hint.\" "
+"With the arrangement in place, he gets up. \"I look forward to seeing you "
 "soon. Hopefully this will be the end of my problems.\""
 msgstr ""
 
@@ -60635,7 +60635,7 @@ msgstr ""
 msgid ""
 "You are hit in the face with something and glare in the direction it came "
 "from, only to see the crime boss waving at you. When you look down, you see "
-"that it is your agreed-upon payment, so you take it and let out a grin."
+"that it is your agreed-upon payment, so you take it and manage a grin."
 msgstr ""
 
 #: dat/missions/pirate/patrol.lua:35
@@ -60749,7 +60749,7 @@ msgid "Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."
 msgstr "Aller au système suivant"
 
 #: dat/missions/pirate/pir_clan_cargo.lua:77
-msgid "You roll up your sleeve and head off to your ship."
+msgid "You roll up your sleeves and head off to your ship."
 msgstr ""
 
 #. Set up the goal
@@ -60960,10 +60960,10 @@ msgstr ""
 msgid ""
 "\"My clients want a pilot to go find {name} and get compensation for the "
 "damages caused. However, it is past the time that the problem can be solved "
-"by paying back the favour. {name} has to punished for their excesses in more "
-"drastic measures. Would you be willing to meet up with {name} and express my "
-"clients' discontent with, say, the full brunt of hot plasma? You will be "
-"compensated well.\"\n"
+"by paying back the favour. {name} has to be punished for their excesses "
+"through more... lethal measures. Would you be willing to meet up with {name} "
+"and express my clients' discontent with, say, the full brunt of hot plasma? "
+"You will be compensated well.\"\n"
 "They grin."
 msgstr ""
 
@@ -60977,7 +60977,7 @@ msgstr ""
 msgid ""
 "\"My clients will be pleased to hear that. {name} can be found around the "
 "{sys} system. Leaving their ship as a charred memento to their avarice will "
-"be a fitting end to them.\""
+"be a fitting end for them.\""
 msgstr ""
 
 #: dat/missions/pirate/pir_hit_intro.lua:115
@@ -61299,7 +61299,7 @@ msgid "Technology Blueprints"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:107
-msgid "Blueprints of under development advanced technology."
+msgid "Blueprints of advanced technology under development."
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:108
@@ -61310,7 +61310,7 @@ msgstr "Prototype"
 
 #: dat/missions/pirate/raid.lua:108
 msgid ""
-"Advanced prototypes of cutting edge research. Doesn't seem like of much use "
+"Advanced prototypes of cutting edge research. Doesn't seem to be of much use "
 "outside of an academic environment."
 msgstr ""
 
@@ -61320,7 +61320,7 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:109
 msgid ""
-"Some of the newest and fanciest cybernetic implants available. They included "
+"Some of the newest and fanciest cybernetic implants available. They include "
 "nose implants that allow amplifying and modifying smells beyond human "
 "imagination."
 msgstr ""
@@ -61330,7 +61330,7 @@ msgid "Synthetic Organs"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:110
-msgid "Special synthetic copies of natural human organs that are able to "
+msgid "Special synthetic copies of natural human organs."
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:111
@@ -61350,9 +61350,7 @@ msgid "Rare Ores"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:112
-msgid ""
-"Rare ores that are hard to find, usually only located in isolated asteroid "
-"fields."
+msgid "Rare ores that are usually only located in isolated asteroid fields."
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:113
@@ -61501,9 +61499,8 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:129
 msgid ""
-"Hot sauce made from the spiciest peppers that have been genetically "
-"engineered. Not really suited for human consumption, but people use them "
-"anyway."
+"Hot sauce made from the spiciest, genetically engineered peppers. Not really "
+"suited for human consumption, but people use them anyway."
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:130
@@ -61512,7 +61509,7 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:130
 msgid ""
-"Cat toys with built in light and motion system to stimulate any cat to the "
+"Cat toys with built in lights and motion systems to stimulate any cat to the "
 "max. They also don't use cheap glue that make them break down within 5 "
 "minutes of playing with a cat."
 msgstr ""
