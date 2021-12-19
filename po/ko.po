@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-19 08:58-0500\n"
+"POT-Creation-Date: 2021-12-19 09:30-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -60511,7 +60511,7 @@ msgid "Contraband"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:71
-msgid "A bundle of illegal contraband goods."
+msgid "A diverse assortment of illegal contraband goods."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:72
@@ -60519,7 +60519,7 @@ msgid "Counterfeit Goods"
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:72
-msgid "A great quantity of illegal counterfeit goods of many famous brands."
+msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:73
@@ -61079,7 +61079,7 @@ msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:167
 msgid ""
-"You helped deliver a 'cake' to some shady individuals. Your success has "
+"You helped deliver a 'cake' for some shady individuals. Your success has "
 "opened up more 'special' delivery missions from the mission computer."
 msgstr ""
 
@@ -61649,9 +61649,9 @@ msgid ""
 "\"My clients want a pilot to go find {name} and get compensation for the "
 "damages caused. However, it is past the time that the problem can be solved "
 "by paying back the favour. {name} has to be punished for their excesses "
-"through more... lethal measures. Would you be willing to meet up with {name} "
-"and express my clients' discontent with, say, the full brunt of hot plasma? "
-"You will be compensated well.\"\n"
+"through more... drastic measures. Would you be willing to meet up with "
+"{name} and express my clients' discontent with, say, the full brunt of hot "
+"plasma? You will be compensated well.\"\n"
 "They grin."
 msgstr ""
 
