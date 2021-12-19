@@ -200,9 +200,10 @@ skills.set.attack = {
    ["attack1"] = {
       name = _("Feral Rage I"),
       tier = 1,
-      desc = _("Temporary damage bonus on armour damage"),
+      slot = "feral_rage",
+      outfit = "Feral Rage I",
+      desc = _("Upon receiving armour damage, the bioship enters a short 5 second trance during which forward and turret weapon damage is increased by 20%."),
       icon = "oni.webp",
-      -- TODO
    },
    ["attack2"] = {
       name = _("Adrenaline Hormones"),
@@ -216,9 +217,9 @@ skills.set.attack = {
       name = _("Feral Rage II"),
       tier = 3,
       requires = { "attack2" },
-      --replaces = "attack1",
-      desc = _("movement bonus to feral rage"),
-      -- TODO
+      slot = "feral_rage",
+      outfit = "Feral Rage II",
+      desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and thrust bonuses, and a 15% turning bonus."),
       icon = "oni.webp",
    },
    ["attack4"] = {
@@ -233,10 +234,9 @@ skills.set.attack = {
       name = _("Feral Rage III"),
       tier = 5,
       requires = { "attack4" },
-      --replaces = "attack3",
       slot = "feral_rage",
-      desc = _("feral rage becomes a triggerable skill too"),
-      -- TODO
+      outfit = "Feral Rage III",
+      desc = _("The state of feral rage duration is increased to 7 seconds with a 30% damage bonus, and can be triggered manually with a 30 second cooldown.."),
       icon = "oni.webp",
    },
 }

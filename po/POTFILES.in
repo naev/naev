@@ -1391,6 +1391,9 @@ dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/cargo_sacs.xml
 dat/outfits/bioship/skills/compound_eyes.xml
 dat/outfits/bioship/skills/enhanced_smell.xml
+dat/outfits/bioship/skills/feral_rage_i.xml
+dat/outfits/bioship/skills/feral_rage_ii.xml
+dat/outfits/bioship/skills/feral_rage_iii.xml
 dat/outfits/bioship/skills/fuel_bladder.xml
 dat/outfits/bioship/skills/hard_shell.xml
 dat/outfits/bioship/skills/hunters_instinct.xml
@@ -2640,6 +2643,8 @@ dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
 dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/bioship/skills/ambush_hunter.lua
+dat/outfits/bioship/skills/feral_rage_i.lua
+dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua

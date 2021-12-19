@@ -33,8 +33,9 @@
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum I</utility>
+  <utility size="medium" prop="bio_organ" name="adrenal_gland" />
+  <utility size="medium" prop="bio_organ" name="feral_rage" />
   <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="small" prop="bio_organ" name="adrenal_gland" />
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />

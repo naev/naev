@@ -31,6 +31,7 @@
   <weapon size="medium" x="-3" y="0" h="2" />
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland" />
+  <utility size="small" prop="bio_organ" name="feral_rage" />
   <utility size="small" prop="bio_organ" name="the_bite" />
   <utility size="small" prop="accessory" />
   <utility size="small" />
