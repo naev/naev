@@ -54,7 +54,7 @@ escort_hailed = fw.escort_hailed -- common hooks
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten
 
-local hamfr_desc = _("Hamfresser and his team are gathered at a table. The captain drinks from his favorite pink straw while incessantly scanning the room.")
+local hamfr_desc = _("Hamfresser and his team are gathered at a table. The captain drinks from his favourite pink straw while incessantly scanning the room.")
 local hamfr_des2 = _("The captain sits alone at a distant table. He nervously chews his pink straw while waiting for your signal to infiltrate the hospital.")
 local nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as a Totoran gladiator on cocaine. Clearly, open spaces like this bar with many people around are not suited to commandos, who are used to seeing strangers as potential hostiles.")
 local tronk_desc = _("The young cyborg sits to the right of his captain and looks suspiciously at his glass of sparkling water.")
