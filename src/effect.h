@@ -12,6 +12,7 @@
 typedef struct EffectData_s {
    char *name;          /**< Name of the effect. */
    char *desc;          /**< Description of the effect. */
+   char *overwrite;     /**< Common string to overwrite when adding. */
    double duration;     /**< Max duration of the effect. */
    glTexture *icon;     /**< Effect icon texture. */
    ShipStatList *stats; /**< Actual effect. */

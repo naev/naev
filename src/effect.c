@@ -61,6 +61,7 @@ static int effect_parse( EffectData *efx, const char *file )
       xml_onlyNodes(node);
 
       xmlr_strd(node, "description", efx->desc);
+      xmlr_strd(node, "overwrite", efx->overwrite);
       xmlr_float(node, "duration", efx->duration);
       if (xml_isNode(node,"icon")) {
          efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -145,6 +146,7 @@ void effect_exit (void)
       EffectData *e = &effect_list[i];
       free( e->name );
       free( e->desc );
+      free( e->overwrite );
       gl_freeTexture( e->icon );
       ss_free( e->stats );
    }
@@ -206,8 +208,23 @@ int effect_update( Effect **efxlist, double dt )
  */
 int effect_add( Effect **efxlist, const EffectData *efx )
 {
-   Effect *e = &array_grow( efxlist );
-   e->data = efx;
+   Effect *e = NULL;
+
+   /* See if we should overwrite. */
+   if (efx->overwrite != NULL) {
+      for (int i=0; i<array_size(*efxlist); i++) {
+         Effect *el = &(*efxlist)[i];
+         if ((el->data->overwrite!=NULL) && (strcmp(efx->overwrite, el->data->overwrite)==0)) {
+            e = el;
+            break;
+         }
+      }
+   }
+
+   /* Add new effect if necessary. */
+   if (e==NULL)
+      e = &array_grow( efxlist );
+   e->data  = efx;
    e->timer = efx->duration;
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    return 0;
