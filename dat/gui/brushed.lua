@@ -281,6 +281,7 @@ function create()
    update_system()
    update_nav()
    update_cargo()
+   update_effects()
 end
 
 local function roundto(num, idp)
@@ -424,6 +425,11 @@ function update_ship()
 end
 
 function update_system()
+end
+
+local effects
+function update_effects()
+   effects = pp:effectGet()
 end
 
 local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
@@ -879,7 +885,7 @@ function render( _dt )
 
    -- Effects
    local ex, ey = sysx-60, sysy+20
-   for k,e in ipairs(pp:effectGet()) do
+   for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
       ex = ex - 48
    end

@@ -147,6 +147,7 @@ stds.GUI.globals = {
    "update_nav",
    "update_ship",
    "update_system",
+   "update_effects",
    "update_target",
 }
 stds.Misn.globals={"abort", "accept", "create", "mem"}

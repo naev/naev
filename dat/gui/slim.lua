@@ -305,6 +305,7 @@ function create()
    update_nav()
    update_faction()
    update_cargo()
+   update_effects()
 end
 
 function update_target()
@@ -421,6 +422,11 @@ end
 
 function update_system()
    sysname = system.cur():name()
+end
+
+local effects
+function update_effects()
+   effects = pp:effectGet()
 end
 
 local function update_wset()
@@ -642,7 +648,7 @@ function render( dt, dt_mod )
 
    -- Effects
    local ex, ey = radar_x-48, screen_h-32-32
-   for k,e in ipairs(pp:effectGet()) do
+   for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
       ex = ex - 48
    end

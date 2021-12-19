@@ -17,6 +17,7 @@
 #include "log.h"
 #include "nxml.h"
 #include "ndata.h"
+#include "gui.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 
@@ -198,6 +199,8 @@ int effect_update( Effect **efxlist, double dt )
       array_erase( efxlist, e, e+1 );
       n++;
    }
+   if (n>0)
+      gui_updateEffects();
    return n;
 }
 
@@ -231,6 +234,7 @@ int effect_add( Effect **efxlist, const EffectData *efx )
    e->data  = efx;
    e->timer = efx->duration;
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
+   gui_updateEffects();
    return 0;
 }
 

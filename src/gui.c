@@ -163,6 +163,7 @@ static int gui_lua_update_target    = LUA_NOREF;
 static int gui_lua_update_ship      = LUA_NOREF;
 static int gui_lua_update_system    = LUA_NOREF;
 static int gui_lua_update_faction   = LUA_NOREF;
+static int gui_lua_update_effects   = LUA_NOREF;
 
 /*
  * prototypes
@@ -1774,6 +1775,11 @@ void gui_updateFaction (void)
       gui_doFunc( gui_lua_update_faction, "update_faction" );
 }
 
+void gui_updateEffects (void)
+{
+   gui_doFunc( gui_lua_update_effects, "update_effects" );
+}
+
 /**
  * @brief Calls trigger functions depending on who the pilot is.
  *
@@ -1877,6 +1883,7 @@ int gui_load( const char* name )
    LUA_FUNC( update_ship );
    LUA_FUNC( update_system );
    LUA_FUNC( update_faction );
+   LUA_FUNC( update_effects );
 #undef LUA_FUNC
 
    /* Run create function. */
@@ -1943,6 +1950,7 @@ void gui_cleanup (void)
    LUA_CLEANUP( gui_lua_update_ship );
    LUA_CLEANUP( gui_lua_update_system );
    LUA_CLEANUP( gui_lua_update_faction );
+   LUA_CLEANUP( gui_lua_update_effects );
 #undef LUA_CLEANUP
 }
 
