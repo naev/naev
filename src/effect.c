@@ -11,12 +11,12 @@
 #include "array.h"
 #include "nxml.h"
 
-static Effect *effect_list = NULL;
+static EffectData *effect_list = NULL; /* List of all available effects. */
 
 static int effect_cmp( const void *p1, const void *p2 )
 {
-   const Effect *e1 = p1;
-   const Effect *e2 = p2;
+   const EffectData *e1 = p1;
+   const EffectData *e2 = p2;
    return strcmp( e1->name, e2->name );
 }
 
@@ -34,8 +34,8 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
  */
 int effect_load (void)
 {
-   effect_list = array_create( Effect );
-   qsort( effect_list, array_size(effect_list), sizeof(Effect), effect_cmp );
+   effect_list = array_create( EffectData );
+   qsort( effect_list, array_size(effect_list), sizeof(EffectData), effect_cmp );
    return 0;
 }
 
@@ -45,7 +45,7 @@ int effect_load (void)
 void effect_exit (void)
 {
    for (int i=0; i<array_size(effect_list); i++) {
-      Effect *e = &effect_list[i];
+      EffectData *e = &effect_list[i];
       free( e->name );
       free( e->desc );
       gl_freeTexture( e->tex );
@@ -60,12 +60,12 @@ void effect_exit (void)
  *    @param name Name of the base effect to get.
  *    @return The base effect or NULL if not applicable.
  */
-const Effect *effect_get( const char *name )
+const EffectData *effect_get( const char *name )
 {
-   const Effect k = { .name = (char*)name };
-   Effect *e = bsearch( &k, effect_list, array_size(effect_list), sizeof(Effect), effect_cmp );
+   const EffectData k = { .name = (char*)name };
+   EffectData *e = bsearch( &k, effect_list, array_size(effect_list), sizeof(EffectData), effect_cmp );
    if (e==NULL)
-      WARN(_("Trying to get unknown effect '%s'!"), name);
+      WARN(_("Trying to get unknown effect data '%s'!"), name);
    return e;
 }
 
@@ -107,11 +107,11 @@ int effect_update( Effect **efxlist, double dt )
  *    @param efx Effect to add.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const Effect *efx )
+int effect_add( Effect **efxlist, const EffectData *efx )
 {
    Effect *e = &array_grow( efxlist );
-   *e = *efx;
-   e->timer = e->duration;
+   e->data = efx;
+   e->timer = efx->duration;
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    return 0;
 }
@@ -135,7 +135,7 @@ void effect_clear( Effect **efxlist )
 void effect_compute( ShipStats *s, const Effect *efxlist )
 {
    for (int i=0; i<array_size(efxlist); i++)
-      ss_statsModFromList( s, efxlist[i].stats );
+      ss_statsModFromList( s, efxlist[i].data->stats );
 }
 
 /**
