@@ -1,7 +1,7 @@
 --[[
 
 Example of what can be done with Lua outfits. This is only the Lua-side of the
-API and must be set in the XML file.
+API and must be set in the XML file. This only works for *Modifier* outfits!
 
 * All functions are optional. In the case they don't exist, nothing happens.
 * ontoggle is a special case that allows the player to toggle the outfit if it exists.
