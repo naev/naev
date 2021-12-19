@@ -545,7 +545,7 @@ local function renderWeapBar( weapon, x, y )
 
       if weapon.is_outfit then
          gfx.renderTex( icon_outfit, x + offsets[1], y + offsets[5] )
-         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34, 1, 1, 0, 0, 1, 1 )
+         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34 )
          if weapon.weapset ~= nil then
             local ws_name
             if weapon.weapset == 10 then
@@ -625,7 +625,7 @@ local function renderField( text, x, y, w, col, icon )
 
    gfx.renderTex( field_frame_left, x, y )
    if w > 28 then
-      gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h )
    end
    if w >= 28 then
       gfx.renderTex( field_frame_right, x+w-14, y )
@@ -686,7 +686,7 @@ function render( _dt )
    local lockons = pp:lockon()
 
    -- Top Bar
-   gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h )
    gfx.renderTex( top_bar_left, margin, tbar_y )
    gfx.renderTex( top_bar_right, screen_w - margin - tbar_right_w, tbar_y )
 
@@ -702,7 +702,7 @@ function render( _dt )
          screen_w - 2*margin - math.max( gui_w, 1024 ),
          math.floor( (screen_w - 2*margin - gui_w)/3 ) ) )
    local mod_y = margin
-   gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
 
    local right_side_h = end_right_h
@@ -716,9 +716,9 @@ function render( _dt )
       right_side_h = right_side_h + height
       gfx.renderTex( popup_bottom2, popup_right_x + mod_x, popup_right_y + mod_y )
       gfx.renderTex( popup_top, popup_right_x + mod_x, popup_right_y + 6 + height + mod_y )
-      gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6 + mod_y, 165, height, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6 + mod_y, 165, height )
       gfx.renderTex( popup_bottom_side_left, popup_right_x + 7 + mod_x, popup_right_y + mod_y )
-      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y + mod_y, -3, 19, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y + mod_y, -3, 19 )
 
       for i=1, (amount+1) do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
@@ -874,7 +874,15 @@ function render( _dt )
 
    --System name
    local sysname = system.cur():name()
-   gfx.print( false, sysname, screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19, col_text, 132, true )
+   local sysx, sysy = screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19
+   gfx.print( false, sysname, sysx, sysy, col_text, 132, true )
+
+   -- Effects
+   local ex, ey = sysx-60, sysy+20
+   for k,e in ipairs(pp:effectGet()) do
+      gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      ex = ex - 48
+   end
 
    for k, v in ipairs(buttontypes) do
       renderButton( v )
@@ -900,7 +908,7 @@ function render( _dt )
 
       --Render planet image.
       if ta_pnt_gfx_w > 140 or ta_pnt_gfx_h > 140 then
-         gfx.renderTexRaw( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_draw_w / 2, ta_pnt_center_y - ta_pnt_gfx_draw_h / 2, ta_pnt_gfx_draw_w, ta_pnt_gfx_draw_h, 1, 1, 0, 0, 1, 1)
+         gfx.renderTexRaw( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_draw_w / 2, ta_pnt_center_y - ta_pnt_gfx_draw_h / 2, ta_pnt_gfx_draw_w, ta_pnt_gfx_draw_h )
       else
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
