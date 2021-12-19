@@ -56,12 +56,32 @@ end
 function onstealth( _p, _po, _stealthed )
 end
 
+-- Run when the pilot is scanned by a scanner pilot.
+function onscanned( _p, _po, _scanner )
+end
+
+-- Run when the pilot scans a target pilot.
+function onscan( _p, _po, _target )
+end
+
 -- The cooldown function is triggered when both cooldown starts and when
 -- it ends. The done is a boolean value which indicates whether or not it
 -- finished. In the case done is false, opt will indicate the number of
 -- seconds the cooldown will take. If done is true, then opt will be a
 -- a boolean indicating whether or not it successfully completed.
 function cooldown( _p, _po, _done, _opt )
+end
+
+-- Triggered when pilot lands (player only)
+function land( _p, _po )
+end
+
+-- Triggered when pilot takes off (player only)
+function takeoff( _p, _po )
+end
+
+-- Triggered when pilot jumps in (player only)
+function jumpin( _p, _po )
 end
 
 
