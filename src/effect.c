@@ -50,6 +50,7 @@ static int effect_parse( EffectData *efx, const char *file )
    /* Clear data. */
    memset( efx, 0, sizeof(EffectData) );
    efx->duration = -1.;
+   efx->priority = 5;
 
    xmlr_attr_strd(parent,"name",efx->name);
    if (efx->name == NULL)
@@ -62,6 +63,7 @@ static int effect_parse( EffectData *efx, const char *file )
 
       xmlr_strd(node, "description", efx->desc);
       xmlr_strd(node, "overwrite", efx->overwrite);
+      xmlr_int(node, "priority", efx->priority);
       xmlr_float(node, "duration", efx->duration);
       if (xml_isNode(node,"icon")) {
          efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -214,7 +216,9 @@ int effect_add( Effect **efxlist, const EffectData *efx )
    if (efx->overwrite != NULL) {
       for (int i=0; i<array_size(*efxlist); i++) {
          Effect *el = &(*efxlist)[i];
-         if ((el->data->overwrite!=NULL) && (strcmp(efx->overwrite, el->data->overwrite)==0)) {
+         if ((el->data->overwrite!=NULL) &&
+               (efx->priority <= el->data->priority) &&
+               (strcmp(efx->overwrite, el->data->overwrite)==0)) {
             e = el;
             break;
          }
