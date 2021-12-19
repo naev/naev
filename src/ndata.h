@@ -38,6 +38,7 @@
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
 #define OUTFIT_DATA_PATH         "outfits/" /**< Path to outfits. */
+#define EFFECT_DATA_PATH         "effects/" /**< Path to effects. */
 #define MAP_DATA_PATH            "outfits/maps/" /**< Path to maps. */
 #define PLANET_DATA_PATH         "assets/" /**< Path to planets. */
 #define VIRTUALASSET_DATA_PATH   "assets_virtual/" /**< Path to planets. */

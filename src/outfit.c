@@ -2199,7 +2199,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), OUTFIT_DATA_PATH );
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
       return -1;
    }
 
@@ -2209,7 +2209,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN(_("Outfit in %s has invalid or no name"), OUTFIT_DATA_PATH);
+      WARN(_("Outfit '%s' has invalid or no name"), file);
 
    node = parent->xmlChildrenNode;
 

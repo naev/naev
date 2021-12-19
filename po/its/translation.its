@@ -45,6 +45,10 @@
   <its:translateRule selector="/outfit/general/condstr" translate="yes"/>
   <its:translateRule selector="/outfit/specific/provides" translate="yes"/>
 
+  <!-- Effects -->
+  <its:translateRule selector="/effect/@name" translate="yes"/>
+  <its:translateRule selector="/effect/description" translate="yes"/>
+
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
   <its:translateRule selector="/ssys/general/features" translate="yes"/>

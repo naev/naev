@@ -6,10 +6,17 @@
  *
  * @brief Handles pilot effects.
  */
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "effect.h"
 
 #include "array.h"
+#include "conf.h"
+#include "log.h"
 #include "nxml.h"
+#include "ndata.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 
@@ -27,6 +34,71 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
    return e1->timer - e2->timer;
 }
 
+static int effect_parse( EffectData *efx, const char *file )
+{
+   xmlNodePtr node, parent;
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first system node */
+   if (parent == NULL) {
+      ERR( _("Malformed '%s' file: does not contain elements"), file );
+      return -1;
+   }
+
+   /* Clear data. */
+   memset( efx, 0, sizeof(EffectData) );
+   efx->duration = -1.;
+
+   xmlr_attr_strd(parent,"name",efx->name);
+   if (efx->name == NULL)
+      WARN(_("Effect '%s' has invalid or no name"), file);
+
+   node = parent->xmlChildrenNode;
+   do { /* load all the data */
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
+      xmlr_strd(node, "description", efx->desc);
+      xmlr_float(node, "duration", efx->duration);
+      if (xml_isNode(node,"icon")) {
+         efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
+         continue;
+      }
+
+      if (xml_isNode(node,"stats")) {
+         xmlNodePtr cur = node->children;
+         do {
+            ShipStatList *ll;
+            xml_onlyNodes(cur);
+            /* Stats. */
+            ll = ss_listFromXML( cur );
+            if (ll != NULL) {
+               ll->next    = efx->stats;
+               efx->stats = ll;
+               continue;
+            }
+            WARN(_("Effect '%s' has unknown node '%s'"), efx->name, cur->name);
+         } while (xml_nextNode(cur));
+         continue;
+      }
+      WARN(_("Effect '%s' has unknown node '%s'"),efx->name, node->name);
+   } while (xml_nextNode(node));
+
+#define MELEMENT(o,s) \
+if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< Define to help check for data errors. */
+   MELEMENT(efx->name==NULL,"name");
+   MELEMENT(efx->desc==NULL,"description");
+   MELEMENT(efx->duration<0.,"duration");
+   MELEMENT(efx->icon==NULL,"icon");
+#undef MELEMENT
+
+   xmlFreeDoc(doc);
+
+   return 0;
+}
+
 /**
  * @brief Loads all the effects.
  *
@@ -34,8 +106,33 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
  */
 int effect_load (void)
 {
+   int ne;
+   Uint32 time = SDL_GetTicks();
+   char **effect_files = ndata_listRecursive( EFFECT_DATA_PATH );
    effect_list = array_create( EffectData );
-   qsort( effect_list, array_size(effect_list), sizeof(EffectData), effect_cmp );
+
+   for (int i=0; i<array_size(effect_files); i++) {
+      if (ndata_matchExt( effect_files[i], "xml" )) {
+         int ret = effect_parse( &array_grow(&effect_list), effect_files[i] );
+         if (ret < 0) {
+            int n = array_size( effect_list );
+            array_erase( &effect_list, &effect_list[n-1], &effect_list[n] );
+         }
+      }
+      free( effect_files[i] );
+   }
+   array_free( effect_files );
+
+   ne = array_size(effect_list);
+   qsort( effect_list, ne, sizeof(EffectData), effect_cmp );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Effect in %.3f s", "Loaded %d Effects in %.3f s", ne ), ne, time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Effect", "Loaded %d Effects", ne ), ne );
+
    return 0;
 }
 
@@ -48,7 +145,7 @@ void effect_exit (void)
       EffectData *e = &effect_list[i];
       free( e->name );
       free( e->desc );
-      gl_freeTexture( e->tex );
+      gl_freeTexture( e->icon );
       ss_free( e->stats );
    }
    array_free( effect_list );
