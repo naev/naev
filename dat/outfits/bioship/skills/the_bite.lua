@@ -70,7 +70,7 @@ end
 local o_lust = outfit.get("The Bite - Blood Lust")
 local o_improved = outfit.get("The Bite - Improved")
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
