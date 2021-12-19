@@ -61,6 +61,7 @@ function approach_pirate ()
          vn.jump("broke")
          return
       end
+      player.pay( -cost )
       player.outfitAdd( transponder )
    end )
    vn.na( fmt.reward(transponder:name()) )
