@@ -12,6 +12,11 @@ API and must be set in the XML file.
 * Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
 
+-- The onload is run once when the outfit Lua is loaded. Useful for setting up
+-- variables. The passed variable is the outfit itself.
+function onload( _o )
+end
+
 -- The init is run when the pilot is created
 function init( _p, _po )
 end
