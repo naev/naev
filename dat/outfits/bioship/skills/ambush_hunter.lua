@@ -1,18 +1,18 @@
-local duration = 10
-
-function onstealth( _p, po, stealthed )
-   if stealthed then
-      po:state( "on" )
-      mem.timer = duration
+local function _update( p, stealthed )
+   if mem.stealthed and not stealthed then
+      p:effectAdd( "Ambush Hunter" )
    end
+   mem.stealthed = stealthed
 end
 
-function update( p, po, dt )
-   if mem.timer then
-      mem.timer = mem.timer - dt
-      if mem.timer <= 0 then
-         po:state( "off" )
-      end
-   end
-   onstealth( p, po, p:flags("stealth") )
+function init( p, _po )
+   mem.stealthed = p:flags("stealth")
+end
+
+function onstealth( p, _po, stealthed )
+   _update( p, stealthed )
+end
+
+function update( p, _po, _dt )
+   _update( p, p:flags("stealth") )
 end
