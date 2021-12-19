@@ -110,9 +110,9 @@ function update( p, po, dt )
             if mem.improved then
                dmg = dmg*1.5
             end
-            --if mem.lust then
-               -- TODO lust bonus
-            --end
+            if mem.lust then
+               p:effectAdd( "Blood Lust" )
+            end
             t:damage( dmg, 0, 100, "impact", p )
             t:knockback( p, 0.5 )
             -- Do the healing

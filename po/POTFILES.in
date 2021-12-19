@@ -1196,6 +1196,7 @@ dat/commodities/medicine.xml
 dat/commodities/ore.xml
 dat/commodities/water.xml
 dat/damagetype.xml
+dat/effects/bloodlust.xml
 dat/effects/feral_rage_i.xml
 dat/faction.xml
 dat/map.xml
