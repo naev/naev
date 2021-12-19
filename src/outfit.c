@@ -30,6 +30,7 @@
 #include "nlua.h"
 #include "nlua_gfx.h"
 #include "nlua_pilotoutfit.h"
+#include "nlua_outfit.h"
 #include "nlua_camera.h"
 #include "nstring.h"
 #include "nstring.h"
@@ -2617,7 +2618,8 @@ int outfit_loadPost (void)
          if (lua_isnil(naevL,-1))
             lua_pop(naevL,1);
          else {
-            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
+            lua_pushoutfit( naevL, o );
+            if (nlua_pcall( o->u.mod.lua_env, 1, 0 )) {
                WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
                lua_pop(naevL,1);
             }
