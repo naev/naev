@@ -130,6 +130,9 @@ static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
 static int pilotL_intrinsicSet( lua_State *L );
 static int pilotL_intrinsicGet( lua_State *L );
+static int pilotL_effectClear( lua_State *L );
+static int pilotL_effectAdd( lua_State *L );
+static int pilotL_effectGet( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
@@ -280,6 +283,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "intrinsicReset", pilotL_intrinsicReset },
    { "intrinsicSet", pilotL_intrinsicSet },
    { "intrinsicGet", pilotL_intrinsicGet },
+   { "effectClear", pilotL_effectClear },
+   { "effectAdd", pilotL_effectAdd },
+   { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
    { "cargoFree", pilotL_cargoFree },
@@ -3121,6 +3127,69 @@ static int pilotL_intrinsicGet( lua_State *L )
    const char *name  = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
    ss_statsGetLua( L, &p->intrinsic_stats, name, internal );
+   return 1;
+}
+
+/**
+ * @brief Clears the effect on a pilot.
+ *
+ *    @luatparam Pilot p Pilot to clear effects of.
+ * @luafunc effectClear
+ */
+static int pilotL_effectClear( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   effect_clear( &p->effects );
+   pilot_calcStats( p );
+   return 0;
+}
+
+/**
+ * @brief Adds an effect to a pilot.
+ *
+ *    @luatparam Pilot p Pilot to add effect to.
+ *    @luatparam string name Name of the effect to add.
+ *    @luatreturn boolean Whether or not the effect was successfully added.
+ * @luafunc effectAdd
+ */
+static int pilotL_effectAdd( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *effectname = luaL_checkstring(L,2);
+   const EffectData *efx = effect_get( effectname );
+   if (efx != NULL) {
+      if (!effect_add( &p->effects, efx ))
+         pilot_calcStats( p );
+      lua_pushboolean(L,1);
+   }
+   else
+      lua_pushboolean(L,0);
+   return 1;
+}
+
+/**
+ * @brief Gets the effects on a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get effects of.
+ *    @luatreturn table Table of effects which are treated as tables with "name" and "timer" elements.
+ * @luafunc effectGet
+ */
+static int pilotL_effectGet( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(p->effects); i++) {
+      Effect *e = &p->effects[i];
+      lua_newtable(L);
+
+      lua_pushstring(L,e->data->name);
+      lua_setfield(L,-2,"name");
+
+      lua_pushnumber(L,e->timer);
+      lua_setfield(L,-2,"timer");
+
+      lua_rawseti(L,-2,i+1);
+   }
    return 1;
 }
 
