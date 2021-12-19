@@ -31,7 +31,7 @@ require "missions.neutral.patrol"
 pay_text = {
    _("The crime boss grins and hands you your pay."),
    _("The local crime boss pays what you were promised, though not before trying (and failing) to pick your pocket."),
-   _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and let out a grin."),
+   _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and manage a grin."),
    _("You are handed your pay in what seems to be a million different credit chips by the crime boss, but sure enough, it adds up to exactly the amount promised."),
 }
 

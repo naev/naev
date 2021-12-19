@@ -60,15 +60,15 @@ function create()
       -- Serious stuff here
       {N_("Stolen Goods"), N_("A lot of goods obtained by illicit and illegal means.")},
       {N_("Hacked Electronics"), N_("An assortment of illegally modified electronic goods.")},
-      {N_("Illegal Waste"), N_("A diversity of highly illegal waste.")},
+      {N_("Illegal Waste"), N_("A melange of highly illegal waste.")},
       {N_("Powerful Stimulants"), N_("A bunch of illegal stimulants.")},
-      {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items.")},
-      {N_("Exotic Animals"), N_("A bunch of exotic animals that can not be legally traded.")},
+      {N_("Unmarked Boxes"), N_("A multitude of unmarked boxes containing what you can only assume to be highly illegal items.")},
+      {N_("Exotic Animals"), N_("A collection of exotic animals that can not be legally traded.")},
       {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials.")},
-      {N_("Illegal Drugs"), N_("A bunch of drugs made illegal in most systems.")},
-      {N_("Illegal Body Mods"), N_("A lot of illegal body modifications.")},
-      {N_("Unauthorized Weapons"), N_("A bunch of illegal weapons.")},
-      {N_("Contraband"), N_("An diverse assortment of illegal contraband goods.")},
+      {N_("Illegal Drugs"), N_("A batch of drugs made illegal in most systems.")},
+      {N_("Illegal Body Mods"), N_("An array of illegal body modifications.")},
+      {N_("Unauthorized Weapons"), N_("An assemblage of illegal weapons.")},
+      {N_("Contraband"), N_("A diverse assortment of illegal contraband goods.")},
       {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
       {N_("Stolen Art"), N_("Artwork that was illegally seized from a collector or gallery.")},
       -- Below less serious stuff
@@ -77,7 +77,7 @@ function create()
       {N_("Catnip"), N_("Highly illegal drug that is very attractive to cats.")},
       {N_("Hypnotoads"), N_("Illegal amphibian with some mind-control abilities.")},
       {N_("Extra Spicy Burritos"), N_("Burritos that are so spicy, they are illegal.")},
-      {N_("Pineapple Pizza"), N_("Pizza with pineapple on it, there is no way this is legal.")},
+      {N_("Pineapple Pizza"), N_("Pizza with pineapple on it. There is no way this is legal.")},
       {N_("Illicit Shader Code"), N_("Program used for rendering images with nefarious and illegal purposes.")},
    }
    local fact_cargoes = {
@@ -96,7 +96,7 @@ function create()
       },
       ["Soromid"] = {
          {N_("Unstable DNA"), N_("Illegal DNA with strong reactive properties.")},
-         {N_("Bio-weapons"), N_("Highly dangerous illegal biological weapons.")},
+         {N_("Bio-weapons"), N_("Highly dangerous, illegal biological weapons.")},
          {N_("Abducted Drosophila"), N_("Genetically modified small fruit flies illegally stolen from a laboratory.")},
          {N_("Mislabeled Plasmids"), N_("Independently replicating DNA that has been mislabeled and is no longer clear what exactly it does. Illegal for its uncertain and dangerous nature.")},
       },
