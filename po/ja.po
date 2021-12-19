@@ -62883,8 +62883,6 @@ msgid "Contraband"
 msgstr "禁制品"
 
 #: dat/missions/pirate/contraband.lua:71
-#, fuzzy
-#| msgid "An diverse assortment of illegal contraband goods."
 msgid "A diverse assortment of illegal contraband goods."
 msgstr "違法な禁制品の多様な詰めあわせ。"
 
@@ -62893,8 +62891,6 @@ msgid "Counterfeit Goods"
 msgstr "模造品"
 
 #: dat/missions/pirate/contraband.lua:72
-#, fuzzy
-#| msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgstr "多数の有名ブランドの違法な模造品の詰めあわせ。"
 
@@ -63533,10 +63529,6 @@ msgstr ""
 "に巻きこまれたのだろうか？"
 
 #: dat/missions/pirate/contraband_cake.lua:167
-#, fuzzy
-#| msgid ""
-#| "You helped deliver 'cake' for some shady individuals. Your success has "
-#| "opened up more 'special' delivery missions from the mission computer."
 msgid ""
 "You helped deliver a 'cake' for some shady individuals. Your success has "
 "opened up more 'special' delivery missions from the mission computer."
@@ -64111,15 +64103,6 @@ msgstr ""
 "好意を期待して返礼になにもしないってのは、あまり公平じゃないでしょ？｣"
 
 #: dat/missions/pirate/pir_hit_intro.lua:95
-#, fuzzy
-#| msgid ""
-#| "\"My clients want a pilot to go find {name} and get compensation for the "
-#| "damages caused. However, it is past the time that the problem can be "
-#| "solved by paying back the favour. {name} has to punished for their "
-#| "excesses in more drastic measures. Would you be willing to meet up with "
-#| "{name} and express my clients' discontent with, say, the full brunt of "
-#| "hot plasma? You will be compensated well.\"\n"
-#| "They grin."
 msgid ""
 "\"My clients want a pilot to go find {name} and get compensation for the "
 "damages caused. However, it is past the time that the problem can be solved "
