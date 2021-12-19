@@ -42,6 +42,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 local maikki_portrait = minerva.maikki.portrait
 
@@ -849,13 +850,12 @@ end
 
 function scav_attacked ()
    if mem.found_wreck then return end
-   player.msg(_("MISSION FAILED! Scavenger attacked."))
    for k,p in ipairs{pscavA, pscavB} do
       if p:exists() then
          p:control( false )
       end
    end
-   misn.finish( false )
+   lmisn.fail(_("Scavenger attacked."))
 end
 
 

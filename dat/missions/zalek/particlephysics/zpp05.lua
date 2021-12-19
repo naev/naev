@@ -24,6 +24,7 @@
 ]]--
 local vn = require "vn"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 local audio = require 'love.audio'
@@ -124,8 +125,7 @@ function enter ()
       return
    end
    if system.cur() ~= mainsys then
-      player.msg(_("#rMISSION FAILED: You were supposed to perform the experiment!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to perform the experiment!"))
    end
 
    -- Spawn the drones

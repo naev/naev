@@ -26,6 +26,7 @@ local minerva = require "common.minerva"
 local love_shaders = require 'love_shaders'
 local vn = require 'vn'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -263,8 +264,7 @@ end
 
 function enter ()
    if mem.misn_state==1 then
-      player.msg(_("#rMISSION FAILED! You were supposed to raid the transport!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to raid the transport!"))
    end
    if system.cur() == targetsys then
       if mem.misn_state == 0 then
@@ -297,8 +297,7 @@ function enter ()
 end
 
 function mainguy_left ()
-   player.msg(_("#rMISSION FAILED! The transport got away!"))
-   misn.finish(false)
+   lmisn.fail(_("The transport got away!"))
 end
 
 function mainguy_attacked ()

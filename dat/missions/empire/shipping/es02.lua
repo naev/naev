@@ -39,6 +39,7 @@
 ]]--
 local fleet = require "fleet"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local emp = require "common.empire"
 
 -- Mission constants
@@ -188,10 +189,9 @@ function enter ()
    -- Can't run away from combat
    elseif mem.misn_stage == 1 then
       -- Notify of mission failure
-      player.msg( _("MISSION FAILED: You abandoned the VIP.") )
       emp.addShippingLog( log_text_fail )
       var.pop( "music_combat_force" )
-      misn.finish(false)
+      lmisn.fail( _("You abandoned the VIP.") )
    end
 end
 
@@ -242,20 +242,18 @@ end
 function death ()
    if mem.misn_stage == 1 then
       -- Notify of death
-      player.msg( _("MISSION FAILED: VIP is dead.") )
       emp.addShippingLog( log_text_fail )
       var.pop( "music_combat_force" )
-      misn.finish(false)
+      lmisn.fail( _("VIP is dead.") )
    end
 end
 
 
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)
-   player.msg( _("MISSION FAILED: You abandoned the VIP.") )
    emp.addShippingLog( log_text_fail )
    if system.cur() == destsys then
       var.pop( "music_combat_force" )
    end
-   misn.finish(false)
+   lmisn.fail( _("You abandoned the VIP.") )
 end

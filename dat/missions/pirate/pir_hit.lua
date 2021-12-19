@@ -31,7 +31,7 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
-local bounty_setup, fail, level_setup, spawn_target, succeed -- Forward-declared functions
+local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared functions
 -- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
@@ -170,7 +170,7 @@ function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
-      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
+      lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
 
@@ -230,14 +230,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         fail( _("MISSION FAILURE! Another pilot eliminated your target.") )
+         lmisn.fail( _("Another pilot eliminated your target.") )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( _("MISSION FAILURE! Target got away.") )
+   lmisn.fail( _("Target got away.") )
 end
 
 
@@ -537,7 +537,7 @@ end
 local _target_faction
 function spawn_target( param )
    if mem.jumps_permitted < 0 then
-      fail( _("MISSION FAILURE! Target got away.") )
+      lmisn.fail( _("Target got away.") )
       return
    end
 
@@ -589,19 +589,4 @@ function succeed ()
 
    mem.paying_faction:modPlayerSingle( mem.reputation )
    misn.finish( true )
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

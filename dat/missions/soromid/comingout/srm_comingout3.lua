@@ -28,7 +28,6 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
-local fail -- Forward-declared functions
 -- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
 -- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 
@@ -167,7 +166,7 @@ function jumpin ()
       jumpNext()
       hook.timer( 5.0, "thug_timer" )
    else
-      fail( _("MISSION FAILED: You have abandoned the mission.") )
+      lmisn.fail( _("You have abandoned the mission.") )
    end
 end
 
@@ -195,7 +194,7 @@ end
 
 
 function chelsea_death ()
-   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
+   lmisn.fail( _("A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
@@ -204,7 +203,7 @@ function chelsea_jump( _p, jump_point )
       player.msg( fmt.f( _("Chelsea has jumped to {sys}."), {sys=jump_point:dest()} ) )
       mem.chelsea_jumped = true
    else
-      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+      lmisn.fail( _("Chelsea has abandoned the mission.") )
    end
 end
 
@@ -214,7 +213,7 @@ function chelsea_land( _p, planet )
       player.msg( fmt.f( _("Chelsea has landed on {pnt}."), {pnt=planet} ) )
       mem.chelsea_jumped = true
    else
-      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+      lmisn.fail( _("Chelsea has abandoned the mission.") )
    end
 end
 
@@ -237,19 +236,4 @@ function thug_removed ()
    spawnThug()
    hook.rm( mem.distress_timer_hook )
    jumpNext()
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

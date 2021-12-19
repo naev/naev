@@ -22,7 +22,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 require "missions.neutral.pirbounty_dead"
 
--- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+-- luacheck: globals board_fail bounty_setup get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
 
 subdue_text = {
    _("You and your crew infiltrate the ship's pathetic security and subdue the dissident. You transport them to your ship."),
@@ -65,9 +65,9 @@ share_text = {
 
 -- Messages
 msg = {
-   _("MISSION FAILURE! Your target got away."),
-   _("MISSION FAILURE! Another pilot eliminated your target."),
-   _("MISSION FAILURE! You have left the {sys} system."),
+   _("Your target got away."),
+   _("Another pilot eliminated your target."),
+   _("You have left the {sys} system."),
 }
 
 mem.osd_title = _("Bounty Hunt")

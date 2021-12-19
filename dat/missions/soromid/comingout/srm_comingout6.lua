@@ -30,7 +30,7 @@ local equipopt = require 'equipopt'
 local lmisn = require "lmisn"
 
 local chelsea -- Non-persistent state
-local fail, spawn -- Forward-declared functions
+local spawn -- Forward-declared functions
 -- luacheck: globals chelsea_death chelsea_leave enter leave pirate_death win_timer (Hook functions passed by name)
 
 function create ()
@@ -131,18 +131,18 @@ end
 function leave ()
    mem.lastsys = system.cur()
    if mem.lastsys == mem.missys then
-      fail( _("MISSION FAILED: You have abandoned the mission.") )
+      lmisn.fail( _("You have abandoned the mission.") )
    end
 end
 
 
 function chelsea_death ()
-   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
+   lmisn.fail( _("A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
 function chelsea_leave ()
-   fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+   lmisn.fail( _("Chelsea has abandoned the mission.") )
 end
 
 
@@ -163,19 +163,4 @@ function win_timer ()
    srm.addComingOutLog( _([[You helped Chelsea hunt down a wanted pirate, earning a bounty for both of you and allowing Chelsea to acquire a retired Dvaered warlord's old Vigilance.]]) )
 
    misn.finish( true )
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

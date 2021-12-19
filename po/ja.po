@@ -45045,10 +45045,8 @@ msgstr "帝国の輸送任務"
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:152
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
-msgid ""
-"#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
-"#0"
-msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達に失敗した！#0"
+msgid "You have failed to deliver the goods to the Empire on time!"
+msgstr "制限時間以内の帝国への物資の配達に失敗した！"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:38
@@ -46229,8 +46227,12 @@ msgstr "VIP"
 #. If aborted you'll also leave the VIP to fate. (A.)
 #: dat/missions/empire/shipping/es02.lua:189
 #: dat/missions/empire/shipping/es02.lua:253
-msgid "MISSION FAILED: You abandoned the VIP."
-msgstr "任務に失敗 : あなたは VIP を見捨てた。"
+msgid "You abandoned the VIP."
+msgstr "あなたは VIP を見捨てた。"
+
+#: dat/scripts/lmisn.lua:302
+msgid "MISSION FAILED: {reason}"
+msgstr "任務に失敗 : {reason}"
 
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "A Very Important Person."
@@ -46257,8 +46259,8 @@ msgstr "VIPといっしょに{sys}星系の{pnt}へ戻れ。"
 #. Force unboard
 #. Notify of death
 #: dat/missions/empire/shipping/es02.lua:243
-msgid "MISSION FAILED: VIP is dead."
-msgstr "任務に失敗 : VIP が死んだ。"
+msgid "VIP is dead."
+msgstr "VIP が死んだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -59602,8 +59604,8 @@ msgid "Patrol complete. You can now collect your pay."
 msgstr "巡視を完了。もう報酬を受けとれる。"
 
 #: dat/missions/neutral/patrol.lua:64 dat/missions/pirate/patrol.lua:53
-msgid "MISSION FAILURE! You showed up too late."
-msgstr "任務に失敗！　来るのが遅すぎた。"
+msgid "You showed up too late."
+msgstr "来るのが遅すぎた。"
 
 #. Nothing to do.
 #: dat/missions/neutral/patrol.lua:65
@@ -59611,8 +59613,8 @@ msgstr "任務に失敗！　来るのが遅すぎた。"
 #: dat/missions/pirate/pir_hit.lua:173
 #: dat/missions/pirate/pir_hit_intro.lua:171
 #: dat/missions/proteron/dissbounty_dead.lua:70
-msgid "MISSION FAILURE! You have left the {sys} system."
-msgstr "任務に失敗！　{sys}星系を離れた。"
+msgid "You have left the {sys} system."
+msgstr "{sys}星系を離れた。"
 
 #: dat/missions/neutral/patrol.lua:71
 msgid "Eliminate hostiles"
@@ -59887,8 +59889,8 @@ msgid "Capture {plt}"
 msgstr "{plt}を捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:79
-msgid "MISSION FAILURE! {plt} has been killed."
-msgstr "任務に失敗！　{plt}を殺してしまった。"
+msgid "{plt} has been killed."
+msgstr "{plt}を殺してしまった。"
 
 #. Store original one
 #. Set up the ship, credits, and reputation based on the level.
@@ -60181,12 +60183,12 @@ msgstr ""
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:92
-msgid "MISSION FAILURE! {plt} got away."
-msgstr "任務に失敗！　{plt}が逃げた。"
+msgid "{plt} got away."
+msgstr "{plt}が逃げた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:93
-msgid "MISSION FAILURE! Another pilot eliminated {plt}."
-msgstr "任務に失敗！　ほかのパイロットが{plt}を除去した。"
+msgid "Another pilot eliminated {plt}."
+msgstr "ほかのパイロットが{plt}を除去した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:97
 #: dat/missions/proteron/dissbounty_dead.lua:73
@@ -63334,8 +63336,8 @@ msgstr "{cargo}の密輸"
 
 #. Case missed deadline
 #: dat/missions/pirate/contraband.lua:218
-msgid "MISSION FAILED: You have failed to deliver the goods on time!"
-msgstr "任務に失敗 : 制限時間内に品物を配達できなかった！"
+msgid "You have failed to deliver the goods on time!"
+msgstr "制限時間内に品物を配達できなかった！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66920,14 +66922,14 @@ msgstr ""
 #. jumping out the system
 #. You were supposed to kill him, not to go away !
 #: dat/missions/shark/sh00_ancestorkill.lua:114
-msgid "MISSION FAILED: You left the pirate."
-msgstr "任務に失敗 : あなたは海賊を放置した。"
+msgid "You left the pirate."
+msgstr "あなたは海賊を放置した。"
 
 #. Jumping in Toaxis for the battle
 #. Check if the player uses a Shark
 #: dat/missions/shark/sh00_ancestorkill.lua:127
-msgid "MISSION FAILED: You were supposed to use a Shark."
-msgstr "任務に失敗 : あなたはシャークを使うことになっていた。"
+msgid "You were supposed to use a Shark."
+msgstr "あなたはシャークを使うことになっていた。"
 
 #. Be sure that nobody unexpected will take part in our epic battle
 #. spawns the bad guy
@@ -66963,8 +66965,8 @@ msgstr ""
 
 #. he went away
 #: dat/missions/shark/sh00_ancestorkill.lua:162
-msgid "MISSION FAILED: The pirate ran away."
-msgstr "任務に失敗 : 海賊が逃げた。"
+msgid "The pirate ran away."
+msgstr "海賊が逃げた。"
 
 #: dat/missions/shark/sh01_corvette.lua:53
 msgid ""
@@ -67041,8 +67043,8 @@ msgstr "｢そうですか、わかりました｣"
 #. player trying to escape
 #: dat/missions/shark/sh01_corvette.lua:87
 #: dat/missions/shark/sh01_corvette.lua:94
-msgid "MISSION FAILED: You ran away."
-msgstr "任務に失敗 : あなたは逃げた。"
+msgid "You ran away."
+msgstr "あなたは逃げた。"
 
 #: dat/missions/shark/sh01_corvette.lua:98
 msgid "Reward"
@@ -67074,8 +67076,8 @@ msgstr ""
 #. The shark becomes nice outfits
 #. you killed the shark
 #: dat/missions/shark/sh01_corvette.lua:150
-msgid "MISSION FAILED: You destroyed the Lancelot."
-msgstr "任務に失敗 : あなたはランスロットを破壊してしまった。"
+msgid "You destroyed the Lancelot."
+msgstr "あなたはランスロットを破壊してしまった。"
 
 #: dat/missions/shark/sh02_tapping.lua:54
 msgid "Arnold Smith is here. Perhaps he might have another job for you."
@@ -71041,8 +71043,8 @@ msgstr "悪漢の{ship}"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:170
 #: dat/missions/soromid/comingout/srm_comingout6.lua:134
-msgid "MISSION FAILED: You have abandoned the mission."
-msgstr "任務に失敗 : あなたは任務を放棄した。"
+msgid "You have abandoned the mission."
+msgstr "あなたは任務を放棄した。"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:177
 msgid "Another Happy Landing"
@@ -71093,10 +71095,10 @@ msgstr "あなたはチェルシーとの連絡を失った。それゆえ任務
 #: dat/missions/soromid/comingout/srm_comingout3.lua:198
 #: dat/missions/soromid/comingout/srm_comingout6.lua:140
 msgid ""
-"MISSION FAILED: A rift in the space-time continuum causes you to have never "
+"A rift in the space-time continuum causes you to have never "
 "met Chelsea in that bar."
 msgstr ""
-"任務に失敗 : 時空連続体の裂けめにより、あなたはチェルシーとあのバーで会ったこ"
+"時空連続体の裂けめにより、あなたはチェルシーとあのバーで会ったこ"
 "とはなくなった。"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:204
@@ -71106,8 +71108,8 @@ msgstr "チェルシーが{sys}星系にジャンプした。"
 #: dat/missions/soromid/comingout/srm_comingout3.lua:207
 #: dat/missions/soromid/comingout/srm_comingout3.lua:217
 #: dat/missions/soromid/comingout/srm_comingout6.lua:145
-msgid "MISSION FAILED: Chelsea has abandoned the mission."
-msgstr "任務に失敗 : チェルシーが任務を放棄した。"
+msgid "Chelsea has abandoned the mission."
+msgstr "チェルシーが任務を放棄した。"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:214
 msgid "Chelsea has landed on {pnt}."
@@ -71856,12 +71858,12 @@ msgid "Escort a convoy of traders to {pnt} in the {sys} system"
 msgstr "商船団を{sys}星系の{pnt}まで護衛せよ。"
 
 #: dat/missions/trader/trader_escort.lua:134
-msgid "MISSION FAILED! You jumped into the wrong system."
-msgstr "任務に失敗！　まちがった星系にジャンプした。"
+msgid "You jumped into the wrong system."
+msgstr "まちがった星系にジャンプした。"
 
 #: dat/missions/trader/trader_escort.lua:142
-msgid "MISSION FAILED! You jumped before the convoy you were escorting."
-msgstr "任務に失敗！　護衛している船団よりまえにジャンプした。"
+msgid "You jumped before the convoy you were escorting."
+msgstr "護衛している船団よりまえにジャンプした。"
 
 #. Treat those that didn't exit as dead
 #: dat/missions/trader/trader_escort.lua:155
@@ -71924,8 +71926,8 @@ msgstr ""
 "である #g{credits}#0 を支払われた。"
 
 #: dat/missions/trader/trader_escort.lua:184
-msgid "MISSION FAILED! The convoy you were escorting has been destroyed."
-msgstr "任務に失敗！　あなたが護衛していた船団は破壊された。"
+msgid "The convoy you were escorting has been destroyed."
+msgstr "あなたが護衛していた船団は破壊された。"
 
 #. Handle the jumps of convoy.
 #: dat/missions/trader/trader_escort.lua:193
@@ -74523,10 +74525,10 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:132
 msgid ""
-"MISSION FAILED! You jumped into the wrong system. You failed science "
+"You jumped into the wrong system. You failed science "
 "miserably!"
 msgstr ""
-"任務に失敗！　あなたはまちがった星系にジャンプした。あなたはみじめにも科学に"
+"あなたはまちがった星系にジャンプした。あなたはみじめにも科学に"
 "落第したのだ！"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:152
@@ -76658,8 +76660,8 @@ msgstr ""
 "あいだにまったく理解できないなにかを見ることになった。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:126
-msgid "#rMISSION FAILED: You were supposed to perform the experiment!"
-msgstr "#r任務に失敗 : あなたは実験を行なうことになっていた！"
+msgid "You were supposed to perform the experiment!"
+msgstr "あなたは実験を行なうことになっていた！"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
