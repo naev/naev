@@ -938,10 +938,8 @@ void display_fps( const double dt )
 
    x = fps_x;
    y = fps_y;
-   if (conf.fps_show) {
-      gl_print( NULL, x, y, &cFontWhite, "%3.2f", fps );
-      y -= gl_defFont.h + 5.;
-   }
+   if (conf.fps_show)
+      gl_print( &gl_defFontMono, x, y, &cFontWhite, "%3.2f", fps );
 
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {

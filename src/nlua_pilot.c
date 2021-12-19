@@ -3192,7 +3192,7 @@ static int pilotL_effectGet( lua_State *L )
       lua_pushnumber(L,e->data->duration);
       lua_setfield(L,-2,"duration");
 
-      lua_pushtex(L,e->data->icon);
+      lua_pushtex(L,gl_dupTexture(e->data->icon));
       lua_setfield(L,-2,"icon");
 
       lua_rawseti(L,-2,i+1);
