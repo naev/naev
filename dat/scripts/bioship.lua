@@ -46,7 +46,8 @@ function bioship.curstage( exp, maxstage )
 end
 
 local function _getskills( p )
-   local skilllist = { "bite", "health", "attack", "misc", "plasma" }
+   --local skilllist = { "bite", "health", "attack", "misc", "plasma" }
+   local skilllist = { "bite", "health", "attack", "misc" }
    local maxtier = 3
    local ps = p:ship()
    local pss = ps:size()
@@ -101,9 +102,46 @@ local function _getskills( p )
          table.insert( s._requires, s2 )
       end
       s._required_by = s._required_by or {}
+
+      if s.replaces then
+         s._replaces = skills[s.replaces]
+      end
    end
 
    return skills, intrinsics, maxtier
+end
+
+local function skill_disable( p, s, keepvar )
+   local outfit = s.outfit or {}
+   local slot   = s.slot
+   if type(outfit)=="string" then
+      outfit = {outfit}
+      if slot then
+         slot = {slot}
+      end
+   end
+   if #outfit>0 and slot and #outfit ~= #slot then
+      warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.displayname}))
+   end
+   for k,o in ipairs(outfit) do
+      if slot then
+         local sl = slot[k]
+         if p:outfitSlot( sl ) == naev.outfit.get(o) then
+            p:outfitRmSlot( sl )
+         end
+      else
+         p:outfitRmIntrinsic( o )
+      end
+   end
+   if not keepvar and p == player.pilot() then
+      if s.id then
+         player.shipvarPop( s.id )
+      end
+      if s.shipvar then
+         player.shipvarPop( s.shipvar )
+      end
+   end
+   s.enabled = false
 end
 
 local function skill_enable( p, s )
@@ -120,6 +158,9 @@ local function skill_enable( p, s )
    end
    if s.test and not s.test(p) then
       return false
+   end
+   if s._replaces then
+      skill_disable( p, s._replaces, true )
    end
    for k,o in ipairs(outfit) do
       if slot then
@@ -145,10 +186,10 @@ end
 local _maxstageSize = {
    5,
    6,
+   7,
    8,
    9,
-   10,
-   12
+  10
 }
 function bioship.maxstage( p )
    return _maxstageSize[ p:ship():size() ]
@@ -402,37 +443,6 @@ function bioship.window ()
       return true
    end
 
-   local function skill_disable( s )
-      local outfit = s.outfit or {}
-      local slot   = s.slot
-      if type(outfit)=="string" then
-         outfit = {outfit}
-         if slot then
-            slot = {slot}
-         end
-      end
-      if #outfit>0 and slot and #outfit ~= #slot then
-         warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.displayname}))
-      end
-      for k,o in ipairs(outfit) do
-         if slot then
-            local sl = slot[k]
-            if pp:outfitSlot( sl ) == naev.outfit.get(o) then
-               pp:outfitRmSlot( sl )
-            end
-         else
-            pp:outfitRmIntrinsic( o )
-         end
-      end
-      if s.id then
-         player.shipvarPop( s.id )
-      end
-      if s.shipvar then
-         player.shipvarPop( s.shipvar )
-      end
-      s.enabled = false
-   end
-
    local function skill_text ()
       if not skilltxt then
          return
@@ -443,7 +453,7 @@ function bioship.window ()
    local function skill_reset ()
       -- Get rid of intrinsics
       for k,s in pairs(skills) do
-         skill_disable( s )
+         skill_disable( pp, s )
       end
       skillpoints = stage - _skill_count( skills )
       skill_text()

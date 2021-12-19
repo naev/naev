@@ -16,7 +16,6 @@ zbh.sfx = {
 
 -- Zach Xiao
 zbh.zach = {
-   -- TODO proper graphics
    portrait = "zach.webp",
    image = "zach.webp",
    name = _("Zach"),
@@ -68,12 +67,14 @@ zbh.rewards = {
    zbh01 = 200e3,
    zbh02 = 300e3,
    zbh03 = 400e3,
+   zbh04 = 300e3,
 }
 
 zbh.fctmod = {
    zbh01 = 2,
    zbh02 = 2,
    zbh03 = 2,
+   zbh04 = 2,
 }
 
 return zbh
