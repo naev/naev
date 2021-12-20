@@ -1586,9 +1586,10 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
 
       /* Set up the function: onhit( p, po ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.blt.lua_onhit); /* f */
-      lua_pushpilot(naevL, p->id); /* f, p */
+      lua_pushpilot(naevL, pshooter->id); /* f, p */
       lua_pushpilotoutfit(naevL, po);  /* f, p, po */
-      if (nlua_pcall( po->outfit->u.blt.lua_env, 2, 0 )) {   /* */
+      lua_pushpilot(naevL, p->id); /* f, p, po, p  */
+      if (nlua_pcall( po->outfit->u.blt.lua_env, 3, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, po->outfit->name, "onhit", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
@@ -2245,6 +2246,15 @@ void pilot_update( Pilot* pilot, double dt )
          /* Run Lua stuff. */
          pilot_outfitLOutfofenergy( pilot );
       }
+   }
+
+   /* Damage effect. */
+   if (pilot->stats.damage > 0.) {
+      dmg.type          = dtype_get("normal");
+      dmg.damage        = pilot->stats.damage * dt;
+      dmg.penetration   = 1.; /* Full penetration. */
+      dmg.disable       = 0.;
+      pilot_hit( pilot, NULL, NULL, &dmg, NULL, 0 );
    }
 
    /* Update effects. */
