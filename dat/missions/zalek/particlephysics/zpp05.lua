@@ -103,7 +103,7 @@ function land ()
    vn.na(_([[You land after the dizzying event. What was that about?]]))
    n(_([["You don't look so good. Did something happen?"]]))
    vn.na(_([[You don't know how to start explaining and give up on mentioning anything.]]))
-   n(_([["The experiment looks like it collected a ton of data I'll need to process and analyze. I was sort of expecting a more violent reaction, but you're lucky that did not happen. You never know how things will go with particle physics."
+   n(_([["The experiment looks like it collected a ton of data I'll need to process and analyse. I was sort of expecting a more violent reaction, but you're lucky that did not happen. You never know how things will go with particle physics."
 She gives you a not too reassuring smile.]]))
    n(_([["I have to process some data real quick, but meet me up at the spaceport bar in a bit. I should have another task for you."
 She starts to hum and skips off towards her laboratory space.]]))
