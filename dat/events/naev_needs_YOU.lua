@@ -24,7 +24,7 @@ DESCRIPTION:
 -- Stage one: something goes wrong in fabric of reality.
 local text = {}
 text[1] = _([[As you step out of your ship, the sunlight suddenly flickers. The local star in the sky turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.
-    Then a voice speaks, louder than an earthquake. It seems to echo inside your bones and from the very center of the galaxy. "Oh crap..." it says.
+    Then a voice speaks, louder than an earthquake. It seems to echo inside your bones and from the very centre of the galaxy. "Oh crap..." it says.
     Another voice laughs musically, as if world itself were singing. "bobbens, did you just destroy the universe, again?"
     "Mmmm, hold on," the first voice rumbles. "...SIGSEGV... libc start main+0xe5... ah ha!  There's the problem."  You feel something fundamental in the fabric of reality change. The sensation is like sneezing and hiccuping at the same time. "There, that should fix it."
     A window opens in the darkness, infinitely far away and infinitely large. A face peeps down at you from the height of eternity.

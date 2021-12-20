@@ -52,9 +52,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
-   misn.setDesc( _("Zuri wants you to disable a Za'lek hacking center located near Minerva Station.") )
+   misn.setDesc( _("Zuri wants you to disable a Za'lek hacking centre located near Minerva Station.") )
    misn.setReward( _("Cold hard credits") )
-   misn.setTitle( _("Za'lek Hacking Center") )
+   misn.setTitle( _("Za'lek Hacking Centre") )
 end
 
 function accept ()
@@ -66,14 +66,14 @@ function accept ()
    end
 
    misn.accept()
-   misn.osdCreate( _("Za'lek Hacking Center"), {
+   misn.osdCreate( _("Za'lek Hacking Centre"), {
       fmt.f( _("Go to the {sys} system"), {sys=mainsys} ),
-      _("Destroy the hacking center"),
+      _("Destroy the hacking centre"),
       _("Return to Minerva Station"),
    } )
    mem.mrk_mainsys = misn.markerAdd( mainsys )
 
-   minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking center at the {sys} system"), {sys=mainsys}) )
+   minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking centre at the {sys} system"), {sys=mainsys}) )
    local c = commodity.new( N_("High-Density Explosives"), N_("Explosives that can be used to detonate all sorts of critical infrastructure.") )
    misn.cargoAdd( c, 0 )
 
@@ -97,7 +97,7 @@ function approach_zuri ()
    vn.transition()
 
    if mem.misn_state==3 then
-      vn.na(_("You approach Zuri to report your success. She listens to you intently as you explain how things went down when you took out the hacking center."))
+      vn.na(_("You approach Zuri to report your success. She listens to you intently as you explain how things went down when you took out the hacking centre."))
       zuri(_([["Great work out there. This will definitely set the Za'lek scheme back a few decaperiods. Must have been satisfying see the show of fireworks as the hacking station went down. I just wish I was able to see it, but I haven't been able to properly pilot a ship in ages. Boss just never cuts me any slack."]]))
       zuri(_([["I've wired you your reward as always."
 She grins at you.
@@ -105,7 +105,7 @@ She grins at you.
       vn.sfxVictory()
       vn.func( function () -- Rewards
          player.pay( reward_amount )
-         minerva.log.pirate(_("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
+         minerva.log.pirate(_("You took down an advanced Za'lek hacking centre and got rewarded for your efforts.") )
          faction.modPlayerSingle("Wild Ones", 5)
       end )
       vn.na(fmt.reward(reward_amount))
@@ -116,7 +116,7 @@ She grins at you.
       vn.na(_("You approach Zuri who seems to be motioning to you. She seems faintly tired."))
       zuri(_([["I suppose you have a lot of questions, but first things first. Remember the suspicious Za'lek drones? Well, we were able to look into that some more, and it seems like they were part of the scouts of an advanced hacking attack on Minerva Station."]]))
       zuri(_([["Those Za'lek are always pretending to talk about science and research, and the moment you turn your back on them, they start prodding and stealing everything they can find."]]))
-      zuri(_([["Long story short, we need you to take out their hacking center nearby. This time we won't be able to use much brute force, you'll have to use more finesse. Will you help us again?"
+      zuri(_([["Long story short, we need you to take out their hacking centre nearby. This time we won't be able to use much brute force, you'll have to use more finesse. Will you help us again?"
 She smiles at you.]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
@@ -130,9 +130,9 @@ She smiles at you.]]))
       vn.label("accept")
       vn.func( function () mem.misn_state=0 end )
       zuri(fmt.f(_([["Great! We can always count on you.
-So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=mainsys}))
-      zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
-      zuri(fmt.f(_([["My recommendation to you is to jump into {sys} and stay low. We've got some really good explosives we'll hook you up with that should let you take out the drone controllers or hacking stations if you can get close enough. So try to sneak past all the drones, plant the bombs on the drone controllers, and once they are out, do the same with the hacking center. Of course, if you prefer to be old fashioned, you can take the hacking center down with missiles, railguns, or whatever you have hand. Probably easier said than done, but I know you can do it."
+So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking centre. The main objective is taking out the hacking centre, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=mainsys}))
+      zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking centre a piece of cake."]]))
+      zuri(fmt.f(_([["My recommendation to you is to jump into {sys} and stay low. We've got some really good explosives we'll hook you up with that should let you take out the drone controllers or hacking stations if you can get close enough. So try to sneak past all the drones, plant the bombs on the drone controllers, and once they are out, do the same with the hacking centre. Of course, if you prefer to be old fashioned, you can take the hacking centre down with missiles, railguns, or whatever you have hand. Probably easier said than done, but I know you can do it."
 She grins at you.]]), {sys=mainsys}))
       zuri(_([["That said, given the amount of drones, you should probably take a stealthy ship that is also able to take some out if you get found. They are really fast, so it's unlikely you will be able to outrun them while planting the explosives."
 "Oh and about the explosives, they've already been loaded onto your ship so you don't have to worry about them."]]))
@@ -153,8 +153,8 @@ She grins at you.]]), {sys=mainsys}))
    end )
 
    vn.label("job")
-   zuri(fmt.f(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking center in the {sys} system; everything else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking center."]]), {sys=mainsys}))
-   zuri(_([["We've loaded explosives onto your ship, so if you are able to avoid the drones and board the drone controllers or even the hacking center, you should be able to detonate them easily. However, they should also be able to be taken down by conventional weapons. Whatever is easier for you."
+   zuri(fmt.f(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking centre in the {sys} system; everything else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking centre."]]), {sys=mainsys}))
+   zuri(_([["We've loaded explosives onto your ship, so if you are able to avoid the drones and board the drone controllers or even the hacking centre, you should be able to detonate them easily. However, they should also be able to be taken down by conventional weapons. Whatever is easier for you."
 She beams you a smile.
 "Make sure you take a stealthy ship that can take down a couple of drones if things go wrong, and you get caught."]]))
    vn.jump("menu_msg")
@@ -457,5 +457,5 @@ function hacking_center_dead ()
    misn.markerMove( mem.mrk_mainsys, planet.get("Minerva Station") )
    misn.osdActive(3)
    mem.misn_state = 3
-   player.msg("#gThe hacking center has been destroyed!#0")
+   player.msg("#gThe hacking centre has been destroyed!#0")
 end

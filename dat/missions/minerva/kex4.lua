@@ -216,7 +216,7 @@ He looks visibly tired.
    vn.label("alright_cont1")
    kex(_([["Lately, my past seems to haunt me. When I am able to sleep, I have been waking up in the middle of the night in cold sweat, well probably would if I had some damn sweat glands, gasping for breath."]]))
    kex(_([["I haven't really paid attention to it much, but it's getting worse and worse as time goes by. I'm sure it will all get better when this is over. I mean, it has to, right?"]]))
-   kex(_([[After a short pause he continues. "You know, ever since I was a kid, I always loved adventure: being at the center of everything and braving adversity. I loved the adrenaline rush and could never get enough of it all."]]))
+   kex(_([[After a short pause he continues. "You know, ever since I was a kid, I always loved adventure: being at the centre of everything and braving adversity. I loved the adrenaline rush and could never get enough of it all."]]))
    kex(_([["When I was getting older, I guess I tried to follow what everyone was doing and sort of settle down, but I was never very good at staying still. Whenever I stayed in the same place too long I got all itchy. It's like my soul was yearning to go out and adventure."]]))
    kex(_([["Even when I had my first child, I just couldn't stay put. I just had to go out. But now…"
 His biological eye looks a bit hazy.
@@ -428,8 +428,8 @@ function jie_board ()
    vn.scene()
    local cjie = vn.Character.new( _("Jie de Luca"), {image=mem.jie_image} )
    vn.transition()
-   vn.na(_("You board the ship with your weapons drawn and make your way to the command center. You don't encounter any resistance on the way there."))
-   vn.na(_("Eventually you reach the command center and cautiously enter. The room is empty except for a chair in the center with its back facing towards you."))
+   vn.na(_("You board the ship with your weapons drawn and make your way to the command centre. You don't encounter any resistance on the way there."))
+   vn.na(_("Eventually you reach the command centre and cautiously enter. The room is empty except for a chair in the centre with its back facing towards you."))
    vn.appear(cjie)
    vn.na(_("Slowly the chair turns to reveal Jie de Luca, holding their head from which blood is gushing out. In their other hand they clutch a weapon, but it doesn't really look like they are in any condition to use it."))
    cjie(_([["Feeling proud of yourself dog? Wagging your tail thinking about getting a prize from your master?"
