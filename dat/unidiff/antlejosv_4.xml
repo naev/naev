@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="antlejosv_4">
  <asset name="Antlejos V">
-  <description>A mostly barren moon devoid of all life with a sprawling terraforming base camp that is already visible from space. An atmosphere has started to form around the surface of the planet and it seems like there are fungus and bacteria starting to colonize the surface. There is a deafening background noise of heavy machinery operating non-stop.</description>
+  <description>A mostly barren moon devoid of all life with a sprawling terraforming base camp that is already visible from space. An atmosphere has started to form around the surface of the planet and it seems like there are fungus and bacteria starting to colonise the surface. There is a deafening background noise of heavy machinery operating non-stop.</description>
   <service_add>refuel</service_add>
   <exterior>uninhabited-rocky-cyan-04.webp</exterior>
  </asset>

@@ -45,7 +45,7 @@ end
 function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), fmt.f( _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favour to ask. I need transport back to {pnt} in the {sys} system. Once there, I can authorize you to help out with the long-distance shipping missions. Can I count on you?"]]), {pnt=targetworld, sys=targetworld_sys} ) ) then
+   if not tk.yesno( _("Spaceport Bar"), fmt.f( _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favour to ask. I need transport back to {pnt} in the {sys} system. Once there, I can authorise you to help out with the long-distance shipping missions. Can I count on you?"]]), {pnt=targetworld, sys=targetworld_sys} ) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing

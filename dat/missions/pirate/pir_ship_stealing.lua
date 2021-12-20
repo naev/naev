@@ -207,7 +207,7 @@ function land()
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!
-         tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
+         tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realise you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
          tmp:rm() -- Get rid of the temporary pilot
          return
       end

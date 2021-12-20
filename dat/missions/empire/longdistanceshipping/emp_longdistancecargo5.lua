@@ -46,7 +46,7 @@ function accept ()
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Sirius Long Distance Recruitment"), fmt.f( _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]]), {pnt=targetworld, sys=targetworld_sys} ) )
+   tk.msg( _("Sirius Long Distance Recruitment"), fmt.f( _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalise the paperwork to get you all set up for these missions."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 

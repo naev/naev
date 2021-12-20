@@ -121,7 +121,7 @@ They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on i
       pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
    else
       -- Accepted.
-      vn.na(_("You approach the sketchy character you have become familiarized with."))
+      vn.na(_("You approach the sketchy character you have become familiarised with."))
    end
 
    vn.label("menu_msg")
@@ -148,7 +148,7 @@ function found_mole ()
    local mole = vn.newCharacter( minerva.vn_mole() )
    vn.transition()
    vn.na(_("After the chuck-a-luck dealer's shift you follow him to a back alley in the station."))
-   mole(_([["I don't recognize you, are you the new messenger? Last guy got sliced up."
+   mole(_([["I don't recognise you, are you the new messenger? Last guy got sliced up."
 They make a cutting gesture from their belly up to their neck.
 "Poor kid, not the best way to leave this world."]]))
    mole(_([["Hey, wait a moment. Haven't I seen you around?"]]))

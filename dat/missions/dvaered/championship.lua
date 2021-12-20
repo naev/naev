@@ -254,12 +254,12 @@ function enter()
       for i, k in ipairs({sec11, sec12, sec21, sec22}) do
          k:outfitRm("all")
          k:outfitAdd("Gauss Gun", 3)
-         k:outfitAdd("Improved Stabilizer")
+         k:outfitAdd("Improved Stabiliser")
       end
 
       for i, k in ipairs({tv1,tv2}) do
          k:outfitRm("all")
-         k:outfitAdd("Improved Stabilizer", 2)
+         k:outfitAdd("Improved Stabiliser", 2)
       end
 
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do

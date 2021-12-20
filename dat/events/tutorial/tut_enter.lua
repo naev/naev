@@ -39,7 +39,7 @@ function tut_volatility ()
    vn.transition( tut.shipai.transition )
    vn.na(fmt.f(_([[As you jump the system you notice a small alarm lights up in the control panel:
 #rWARNING - Volatile nebula detected in {sys}! Taking {nebvol:.1f} MW damage!#0]]),{sys=sys, nebvol=nebvol}))
-   sai(fmt.f(_([[{ainame} materializes in front of you.
+   sai(fmt.f(_([[{ainame} materialises in front of you.
 "It looks like we entered part of the volatile nebula. The instability here causes heavy damage to any ships that enter. If our shield regeneration surpasses the volatility damage, we should be fine. However, if the volatility gets any stronger, it could be fatal to the {ship}. Going deeper into the nebula could prove to be a very risky endeavour."]]), {ship=player.ship(), ainame=tut.ainame()} ) )
    vn.done( tut.shipai.transition )
    vn.run()

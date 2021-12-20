@@ -44,7 +44,7 @@ local pirate_outfits = eoutfits.merge{{
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   "Improved Stabilizer", "Engine Reroute",
+   "Improved Stabiliser", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster",
 }}

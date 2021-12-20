@@ -446,11 +446,11 @@ local function get_econ_article( cargo, pnt, credits )
       },
       {
          title = _("Commodity Trading Likened to Gambling"),
-         desc = _([[In a controversial statement, one activist has likened commodity trading to gambling. "It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop."]])
+         desc = _([[In a controversial statement, one activist has likened commodity trading to gambling. "It's legalised gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop."]])
       },
       {
          title = _("Leadership Decision Disrupts Prices"),
-         desc = _([[The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.]])
+         desc = _([[The price of {cargo} was jeopardised on {pnt} today when the local government passed a controversial law, bringing it to {credits} per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilise.]])
       },
       {
          title = _("Five Cycle Old Child Starts Commodity Trading"),

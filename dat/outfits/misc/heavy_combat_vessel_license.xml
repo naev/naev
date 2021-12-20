@@ -6,7 +6,7 @@
   <mass>0</mass>
   <price>900000</price>
   <gfx_store>license.webp</gfx_store>
-  <description>This license will authorize you to buy cruiser and carrier-class ships.</description>
+  <description>This license will authorise you to buy cruiser and carrier-class ships.</description>
  </general>
  <specific type="license">
   <provides>Heavy Combat Vessel</provides>

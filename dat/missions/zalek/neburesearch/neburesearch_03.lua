@@ -178,7 +178,7 @@ function start_talk()
         text1 = _("Wearing a lab coat you blend in nicely with your audience.")
         faction.modPlayerSingle("Za'lek", 1)
     else
-        text1 = _("It is just now that you realize that you're the only person not wearing a lab coat. That's a nightmare! Well, maybe it would be for a scientist?")
+        text1 = _("It is just now that you realise that you're the only person not wearing a lab coat. That's a nightmare! Well, maybe it would be for a scientist?")
     end
     tk.msg(_("Scientific Talk"), _([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are lead to a rather small seminar room. Finally you are ready to give your talk and a few scientist take seat. Actually you expected more than 17 listener. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
     if mem.learned_text then
@@ -188,7 +188,7 @@ function start_talk()
         tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. With the text being displayed on your glasses you don't have to look down on a paper to read the text, but some of the occurring terms are difficult to pronounce correctly.]]))
         faction.modPlayerSingle("Za'lek", 1)
     else
-        tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]]))
+        tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. You realise that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]]))
     end
     tk.msg(_("Scientific Talk"), _([[Finally you are finished with your text and sigh in relief. After a brief applause someone raises his hand. Apparently he wants to ask a question. What should you do?]]))
     local c = tk.choice(_("Scientific Talk"), _([[You haven't understood the question, not even a single word.]]), _("This is a good question."), _("It's an open question."), _("Run!"))

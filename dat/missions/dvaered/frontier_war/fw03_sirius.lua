@@ -60,7 +60,7 @@ lore_text[3] = _([[You ask Major Tam to continue his story about when he used to
    "But the two others... Actually those are a much longer story. I'll tell you another time maybe."]])
 
 lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. The rest of his squad, I'm not too sure. I don't know them very well actually. They are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
-   "Oh, and we went to the funeral of private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron made an aerial display with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. Not only to honour the memory of the dead warrior, but also to have some fun."]])
+   "Oh, and we went to the funeral of private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron made an aerial display with a mace rocket concerto for the occasion, and we organised a fight to death between a convicted criminal and a gladiator in General Klank's private arena. Not only to honour the memory of the dead warrior, but also to have some fun."]])
 
 local flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
 
@@ -86,7 +86,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( _("Ready for some diplomacy?"), fmt.f(_([[Major Tam seems to be in a very good mood: "Hello, citizen {player}! Have you got plans for tonight?" You fear he might invite you to a brawl-party, or some other kind of event Dvaered usually organize when they want to have good time, but he continues: "Because I've got a very important mission for you.
+   if not tk.yesno( _("Ready for some diplomacy?"), fmt.f(_([[Major Tam seems to be in a very good mood: "Hello, citizen {player}! Have you got plans for tonight?" You fear he might invite you to a brawl-party, or some other kind of event Dvaered usually organise when they want to have good time, but he continues: "Because I've got a very important mission for you.
    "Let me explain: I am currently in the middle of a secret diplomatic campaign with the Imperials, House Goddard, and the Sirii. But a group of assassins is constantly harassing me as I travel. This is very annoying and we have already lost two pilots of Leblanc's squadron in these ambushes, including the second in command. The attackers use a mix of fighters supported by medium ships. They even have a Kestrel!
    "So we have decided to deal with them before we proceed with the diplomatic meetings. Are you in?"]]), {player=player.name()}) ) then
       tk.msg(_("Another time maybe"), _([[Major Tam really seems disappointed. "As you wish, citizen..."]]))
@@ -241,7 +241,7 @@ function land()
          compute_reward()
          tk.msg( _("End of the hunt"), fmt.f(_([[You land and walk around the spacedock, in search of your target's ship. You finally see it. A mighty {ship}, covered in the score marks of the battle that just occurred. You hide yourself behind some crates near the ship and wait for the pilot to come back and take off in order to finish your job in space.
    When looking closer at the ship, you see both ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship. Among the ship's scars, you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They had to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
-   Suddenly, you realize someone whispers behind you "Hey, {player}, you're blocking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]]), {ship=mem.shi, player=player.name()}) )
+   Suddenly, you realise someone whispers behind you "Hey, {player}, you're blocking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]]), {ship=mem.shi, player=player.name()}) )
          if mem.shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
             tk.msg( _("End of the hunt"), fmt.f(_([[A few moments later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a flash, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
    "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of {credits} by now."]]), {credits=fmt.credits(mem.effective_credits)}) )
@@ -275,7 +275,7 @@ function spawnEscort( origin )
       escort[1]:outfitAdd("Nexus Stealth Coating")
       escort[1]:outfitAdd("Hellburner")
       escort[1]:outfitAdd("Milspec Scrambler")
-      escort[1]:outfitAdd("Improved Stabilizer")
+      escort[1]:outfitAdd("Improved Stabiliser")
       escort[1]:outfitAdd("Gauss Gun")
       escort[1]:setHealth(100,100)
       escort[1]:setEnergy(100)
@@ -413,7 +413,7 @@ end
 -- Death hooks
 function escort_died1( )
    mem.alive[1] = false
-   tk.msg(_("This is not good"),_([[You suddenly realize that your radar no longer displays Strafer's sensor data. This means the Lieutenant got killed. As a result, the fleet is flying blind and the mission has failed.]]))
+   tk.msg(_("This is not good"),_([[You suddenly realise that your radar no longer displays Strafer's sensor data. This means the Lieutenant got killed. As a result, the fleet is flying blind and the mission has failed.]]))
    misn.finish(false)
 end
 function escort_died2( )
@@ -423,7 +423,7 @@ function escort_died3( )
    mem.alive[3] = false
 end
 function tamDied()
-   tk.msg(_("This is not good"), _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. At first you think your screen is buggy and hit it with your open hand, but soon, you realize that the radar works perfectly well. This means that the major's ship was annihilated by the ambushers, and therefore your mission is a miserable failure.]]))
+   tk.msg(_("This is not good"), _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. At first you think your screen is buggy and hit it with your open hand, but soon, you realise that the radar works perfectly well. This means that the major's ship was annihilated by the ambushers, and therefore your mission is a miserable failure.]]))
    misn.finish(false)
 end
 

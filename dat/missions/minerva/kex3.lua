@@ -119,7 +119,7 @@ function generate_npc ()
       vn.na(_([[You approach Major Malik and notice immediately that something is off. You remove the headgear from him and immediately see that his eyes are glazed over and there is some white froth coming out of his mouth. Seems like some sort of mental shock killed him.]]))
       vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Malik, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
       vn.sfxBingo()
-      vn.na(_([[The directories are nicely organized and it doesn't take long before you find what seems to be the correct files. You copy them over to your holodrive. You hope the files satisfy Kex this time.]]))
+      vn.na(_([[The directories are nicely organised and it doesn't take long before you find what seems to be the correct files. You copy them over to your holodrive. You hope the files satisfy Kex this time.]]))
       vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
       vn.na(_([[You better head back to Minerva Station to relay the information to Kex.]]))
       vn.run()
@@ -176,7 +176,7 @@ He seems amused by his pun.]]))
       vn.done()
 
       vn.label("accept")
-      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. He should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note to help convince him you mean business. I'll also send you his picture so you can easily recognize him when you see him."]]), {pnt=targetplanet, sys=targetsys}))
+      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. He should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note to help convince him you mean business. I'll also send you his picture so you can easily recognise him when you see him."]]), {pnt=targetplanet, sys=targetsys}))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully he'll be sensible and give us what we want. However, I trust you will do what it takes in case he doesn't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
@@ -209,7 +209,7 @@ He winks his cyborg eye at you.]]))
    vn.label("past")
    kex(_([["You are quite the curious kid. At the time I didn't think my life was all that great and exciting, but lately I yearn to take to the skies like the good old times. Did I ever tell you about the story of when I spent a kilo-period drifting in the Nebula?"
 "No? Great!"]]))
-   kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you have to maximize energy to shields. It makes it hard to bring firepower, but it's not like it'll do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
+   kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you have to maximise energy to shields. It makes it hard to bring firepower, but it's not like it'll do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
    kex(_([["So me and Mireia had picked up a tip about some sort of weird wreck deep past Arandon. Some poor fools had gone to search for it and hadn't come back for a few hecto-periods and one of their husbands was beginning to lose it, so they came to us. Now, we weren't interested in trying to save them -- once you enter the Nebula, you forfeit all chance of rescue. Search parties tend to only count up the bodies."]]))
    kex(_([["However, from the looks of it, it was a very interesting find. Sometimes you find really weird things in the Nebula."
 He leans closer to you and whispers.

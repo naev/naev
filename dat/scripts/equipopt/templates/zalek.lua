@@ -25,7 +25,7 @@ local zalek_outfits = eoutfits.merge{{
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
    "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
+   "Weapons Ioniser", "Sensor Array",
    "Faraday Tempest Coating", "Hive Combat AI",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
@@ -35,7 +35,7 @@ local zalek_outfits = eoutfits.merge{{
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   "Improved Stabilizer", "Engine Reroute",
+   "Improved Stabiliser", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster",
 }}

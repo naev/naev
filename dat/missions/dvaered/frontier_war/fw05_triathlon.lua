@@ -152,7 +152,7 @@ end
 
 -- Introduction scene (with flowers everywhere)
 function introduction()
-   tk.msg( _("The Mace Ballet"), _([[Your sensors detect a group of warships doing maneuvers around Dvaer Prime. When you approach, a Vigilance hails you and you recognize the voice of Major Tam:
+   tk.msg( _("The Mace Ballet"), _([[Your sensors detect a group of warships doing maneuvers around Dvaer Prime. When you approach, a Vigilance hails you and you recognise the voice of Major Tam:
    "Greetings, citizen. Are you here for the ceremony? Of course, you are! You see? We have already thrown a few garlands. The funeral parade will soon be over, and after that we will start with the mace ballet. Meet us in the bar of Dvaer Prime."
    Before giving you any chance to ask him what the event is about, Tam closes the communication channel, and your find yourself surrounded by a field of giant blooms of white flowers. You let your mind idly navigate among the bio-engineered plants that have invaded Dvaer's orbit, and think that even if your alliance with the Dvaered has not been very lucrative until now, it has at least rewarded you with this unique view of overgrown flowers aimlessly drifting on the starry background.]]) )
    leader:taskClear()
@@ -200,7 +200,7 @@ function spawnNpcs()
       end
 
       if mem.stage == 0 then
-         mem.npc = misn.npcAdd( "approach", _("Dvaered People"), portrait.getMil( "Dvaered" ), _([[A rather large group is gathered around a few reserved tables. You recognize many faces, among which General Klank, Major Tam, and members of their group. But there are people you do not know as well, mostly military, but also civilians. You can tell they're all there for the ceremony from their black armbands and the slow military music playing on the speakers.]]))
+         mem.npc = misn.npcAdd( "approach", _("Dvaered People"), portrait.getMil( "Dvaered" ), _([[A rather large group is gathered around a few reserved tables. You recognise many faces, among which General Klank, Major Tam, and members of their group. But there are people you do not know as well, mostly military, but also civilians. You can tell they're all there for the ceremony from their black armbands and the slow military music playing on the speakers.]]))
       else
          populate_bar()
 
@@ -588,7 +588,7 @@ end
 function compDie( _victim, attacker )
    -- This was a bad idea
    if attacker == player.pilot() then
-      tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddently remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realize they will probably just kill you instead.]]) )
+      tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddently remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realise they will probably just kill you instead.]]) )
       faction.get("Dvaered").setPlayerStanding(-100)
       for i, p in ipairs(competitors) do
          p:taskClear()

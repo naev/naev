@@ -72,7 +72,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
-   misn.setDesc( _("Take as many waste containers as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
+   misn.setDesc( _("Take as many waste containers as your ship can hold and drop them off at any authorised garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.credits_factor)} ) )
 end
 
@@ -120,7 +120,7 @@ function abort ()
    if mem.landed then
       misn.cargoRm( mem.cid )
       local fine = 2 * mem.credits
-      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
+      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologise profusely and explain the situation was an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
       player.pay( -fine )
       misn.finish( false )
    else

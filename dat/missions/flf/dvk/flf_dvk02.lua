@@ -149,7 +149,7 @@ function pilot_hail_boss ()
          else
             mem.boss_hailed = true
             if mem.stage <= 0 then
-               tk.msg( _("Who are you calling a weakling?"), _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why would I want to talk to a normie like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
+               tk.msg( _("Who are you calling a weakling?"), _([[A scraggly-looking pirate appears on your viewscreen. You realise this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why would I want to talk to a normie like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
     The pirate immediately cuts his connection. Well, if these pirates won't talk to you, maybe it's time to show him what you're made of. Destroying just one or two of his escorts should do the trick.]]) )
                mem.osd_desc[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
                mem.osd_desc[4] = _("Return to FLF base")

@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>1000</mass>
   <price>650000</price>
-  <description>Criticized by some as nothing more than a cluster of PT-400 systems, the PT-2200 nevertheless offers acceptable performance for capital ships at a fraction of its competitors' prices.</description>
+  <description>Criticised by some as nothing more than a cluster of PT-400 systems, the PT-2200 nevertheless offers acceptable performance for capital ships at a fraction of its competitors' prices.</description>
   <gfx_store>core_system_basic_l2.webp</gfx_store>
   </general>
  <specific type="modification">

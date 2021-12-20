@@ -196,7 +196,7 @@ function interceptors()
       badguys[i]:outfitAdd("Tricon Zephyr Engine")
 
       badguys[i]:outfitAdd("Gauss Gun",3)
-      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
+      badguys[i]:outfitAdd("Improved Stabiliser") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -281,7 +281,7 @@ function cruiser()
       badguy:outfitAdd("Pinpoint Combat AI")
       badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
       badguy:outfitAdd("Reactor Class III")
-      badguy:outfitAdd("Improved Stabilizer",3)
+      badguy:outfitAdd("Improved Stabiliser",3)
       badguy:setHealth(100,100)
       badguy:setEnergy(100)
 

@@ -101,7 +101,7 @@
   <item>Biometal Armour</item>
   <item>Droid Repair Crew</item>
   <item>Engine Reroute</item>
-  <item>Improved Stabilizer</item>
+  <item>Improved Stabiliser</item>
   <item>Unicorp Light Afterburner</item>
   <item>Unicorp Medium Afterburner</item>
   <item>Hellburner</item>
@@ -275,7 +275,7 @@
   <item>Medium-Heavy Strong Gene Drive Stage X</item>
   <item>Heavy Strong Gene Drive Stage X</item>
   <item>Superheavy Strong Gene Drive Stage X</item>
-  <item>Weapons Ionizer</item>
+  <item>Weapons Ioniser</item>
   <item>Boarding Androids MK1</item>
   <item>Boarding Androids MK2</item>
   <item>Combat Hologram Projector</item>
@@ -283,7 +283,7 @@
   <item>Targeting Conduit</item>
   <item>Blink Drive</item>
   <item>Hyperbolic Blink Engine</item>
-  <item>Weakness Harmonizer AI</item>
+  <item>Weakness Harmoniser AI</item>
   <item>Neural Accelerator Interface</item>
   <item>Berserk Chip</item>
   <item>Cryogenic Repair Nanobots</item>
@@ -408,11 +408,11 @@
   <item>Razor MK2</item>
   <item>Slicer</item>
   <item>Razor Turret MK2</item>
-  <item>Weapons Ionizer</item>
+  <item>Weapons Ioniser</item>
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
-  <item>Weapons Ionizer</item>
+  <item>Weapons Ioniser</item>
  </tech>
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
@@ -559,7 +559,7 @@
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
-  <item>Weapons Ionizer</item>
+  <item>Weapons Ioniser</item>
   <item>Hyena Fighter Bay</item>
   <item>Hyena Fighter Dock</item>
   </tech>
@@ -607,7 +607,7 @@
   <item>Plasteel Plating</item>
   <item>Nanobond Plating</item>
   <item>Engine Reroute</item>
-  <item>Improved Stabilizer</item>
+  <item>Improved Stabiliser</item>
   <item>Unicorp Light Afterburner</item>
   <item>Unicorp Medium Afterburner</item>
   <item>Small Fuel Pod</item>
@@ -643,11 +643,11 @@
   <item>Emergency Shield Booster</item>
   <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
-  <item>Weapons Ionizer</item>
+  <item>Weapons Ioniser</item>
   <item>Boarding Androids MK2</item>
   <item>Combat Hologram Projector</item>
   <item>Hyperbolic Blink Engine</item>
-  <item>Weakness Harmonizer AI</item>
+  <item>Weakness Harmoniser AI</item>
   <item>Emergency Stasis Inducer</item>
   <item>Neural Accelerator Interface</item>
  </tech>

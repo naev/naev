@@ -89,7 +89,7 @@ function takeoff()
    racers[2] = pilot.add("Llama", "Independent", mem.curplanet)
    racers[2]:outfitAdd("Engine Reroute")
    racers[3] = pilot.add("Llama", "Independent", mem.curplanet)
-   racers[3]:outfitAdd("Improved Stabilizer")
+   racers[3]:outfitAdd("Improved Stabiliser")
    for i, j in ipairs(racers) do
       j:rename(fmt.f(_("Racer {n}"), {n=i}))
       j:setHilight(true)

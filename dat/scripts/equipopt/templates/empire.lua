@@ -33,7 +33,7 @@ local empire_outfits = eoutfits.merge{{
    "Active Plating", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
+   "Plasteel Plating", "Battery I", "Improved Stabiliser", "Engine Reroute",
    "Reactor Class I", "Small Fuel Pod",
    "Small Shield Booster",
 }}

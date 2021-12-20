@@ -50,7 +50,7 @@ function create()
       abort()
    end
 
-   tk.msg(_("An urgent invitation"), fmt.f(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
+   tk.msg(_("An urgent invitation"), fmt.f(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognise the plain grey uniform as belonging to the Four Winds.
     "Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
     The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]), {player=player.name(), pnt=seirplanet, sys=seirsys}))
    mem.firstmarker = misn.markerAdd(seirsys, "low")
@@ -376,7 +376,7 @@ function spawnInterceptors()
       j:outfitRm("all")
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
-      j:outfitAdd("Improved Stabilizer", 1)
+      j:outfitAdd("Improved Stabiliser", 1)
       j:control()
       j:attack(player.pilot())
    end

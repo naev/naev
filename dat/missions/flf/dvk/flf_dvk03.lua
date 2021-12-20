@@ -300,7 +300,7 @@ end
 function timer_station ()
    tk.msg( _("Ominous Foretelling"), _([[As Raelid Outpost erupts into a fantastic explosion before your very eyes, your comrades cheer. But then, you see something odd. Someone is hailing you... an Empire ship? Surely this can't be. Cautiously, you answer. The man whose face comes up on your view screen wastes no time.
     "So, you actually showed your face. I half expected you to run away and hide. But no matter." You try not to show any reaction to his icy stare. He continues.]]) )
-   tk.msg( _("Ominous Foretelling"), _([["Terrorist, I'd bet you think this latest act of yours is a victory for you. Perhaps, for now, it is. But I assure you that the Empire will not ignore your activities any longer. I have already sent word to the Emperor, and he has authorized a declaration of your organisation, the FLF, as an enemy of the Empire. Count the minutes on your fingers, terrorist. Your days are numbered."
+   tk.msg( _("Ominous Foretelling"), _([["Terrorist, I'd bet you think this latest act of yours is a victory for you. Perhaps, for now, it is. But I assure you that the Empire will not ignore your activities any longer. I have already sent word to the Emperor, and he has authorised a declaration of your organisation, the FLF, as an enemy of the Empire. Count the minutes on your fingers, terrorist. Your days are numbered."
     The Empire officer then immediately ceases communication, and you suddenly feel a chill down your spine. But one of your wingmates snaps you out of it. "Pay the Empire no mind," he says. "More importantly, we have to get out of here! We'll meet you at Sindbad."]]) )
 
    for i, j in ipairs( flf_fleet ) do

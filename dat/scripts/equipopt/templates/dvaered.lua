@@ -28,7 +28,7 @@ local dvaered_outfits = eoutfits.merge{{
    "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
    "Active Plating", "Reactor Class II",
    -- Small Structural
-   "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
+   "Plasteel Plating", "Battery I", "Improved Stabiliser", "Engine Reroute",
    "Reactor Class I", "Small Fuel Pod",
 }}
 

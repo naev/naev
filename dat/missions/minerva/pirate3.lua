@@ -152,7 +152,7 @@ She takes out a metallic object from her pocket and show it to you. You don't kn
 "Take the device and see if you can find a chance to place it. I'll be at the spaceport bar if you figure anything out."]]))
    else
       -- Accepted.
-      vn.na(_("You approach the sketchy character you have become familiarized with."))
+      vn.na(_("You approach the sketchy character you have become familiarised with."))
    end
 
    if mem.misn_state == 5 then

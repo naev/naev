@@ -128,7 +128,7 @@ function jumpin()
 end
 
 function beginFirstScan()
-    tk.msg("", fmt.f(_([[The student enters your cockpit as you arrive in the {sys1} system. "Greetings, Captain! I realize I forgot to introduce myself. My name is Robert Hofer, student of Professor Voges himself! I'm sure you must have heard of him?" You tell him that the name doesn't sound familiar to you. "How can that be? Well, you would understand if you were a Za'lek.
+    tk.msg("", fmt.f(_([[The student enters your cockpit as you arrive in the {sys1} system. "Greetings, Captain! I realise I forgot to introduce myself. My name is Robert Hofer, student of Professor Voges himself! I'm sure you must have heard of him?" You tell him that the name doesn't sound familiar to you. "How can that be? Well, you would understand if you were a Za'lek.
     "Anyway, I will now start with the measurements. The density of the nebula is lower in this sector, so it's not particularly volatile. For the real measurements we have to enter {sys2}. I will let you know when we're done here."]]), {sys1=t_sys[1], sys2=t_sys[2]}))
     mem.shook = hook.timer(30.0, "startProblems")
 end
@@ -153,7 +153,7 @@ end
 
 function noticeProblems()
     tk.msg("", _([[Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship.
-    You realize that your shields are down as well. In an environment like this... That's it, you're going to die here! You knew accepting this mission was a mistake from the very first moment.]]))
+    You realise that your shields are down as well. In an environment like this... That's it, you're going to die here! You knew accepting this mission was a mistake from the very first moment.]]))
     hook.timer(10.0, "stopProblems")
 end
 

@@ -149,7 +149,7 @@ function land ()
       lmisn.sfxVictory()
       tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
-    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]), {credits=fmt.credits(payment)} ) )
+    When you get back to your ship you realise you have a drink left over. It might look good like an ornament?]]), {credits=fmt.credits(payment)} ) )
       player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 

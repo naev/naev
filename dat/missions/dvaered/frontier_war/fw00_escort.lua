@@ -235,7 +235,7 @@ function tamDied()
    if hamelsen ~= nil then
       hamelsen:rm() -- Because she is immortal and could kill the player
    end
-   tk.msg(_("Mission failed"), _([[As you watch the final explosion of Major Tam's ship hurl the remains of what once was a proud Vendetta to the far corners of the system, you realize that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have another chance sooner or later."]]))
+   tk.msg(_("Mission failed"), _([[As you watch the final explosion of Major Tam's ship hurl the remains of what once was a proud Vendetta to the far corners of the system, you realise that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have another chance sooner or later."]]))
    misn.finish(false)
 end
 
@@ -379,7 +379,7 @@ function hamelsenAmbush()
    hamelsen:outfitAdd("Tricon Zephyr Engine")
    hamelsen:outfitAdd("Hellburner")
    hamelsen:outfitAdd("Milspec Impacto-Plastic Coating")
-   hamelsen:outfitAdd("Improved Stabilizer",2)
+   hamelsen:outfitAdd("Improved Stabiliser",2)
    hamelsen:outfitAdd("Gauss Gun",3)
    hamelsen:setHealth(100,100)
    hamelsen:setEnergy(100)
@@ -409,7 +409,7 @@ function hamelsenAmbush()
 end
 
 function ambush_msg()
-   tk.msg(_("Say hello to my mace rockets"), _([[As your ship decelerates to its normal speed after jumping in, you realize there are hostile ships around. An enemy Shark broadcasts the following message: "Tam, you small, fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]]))
+   tk.msg(_("Say hello to my mace rockets"), _([[As your ship decelerates to its normal speed after jumping in, you realise there are hostile ships around. An enemy Shark broadcasts the following message: "Tam, you small, fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]]))
    ambush[1]:comm(_("You wanted to meet Lord Jim? How about you meet your doom instead?"))
 
    majorTam:control(false)
@@ -458,7 +458,7 @@ function discussWithTam()
    elseif mem.stage == 5 then
       if tk.yesno(_("Major Tam is talkative today"), _([["Hello, citizen. Did you already recover from Lord Battleaddict's last trick? It reminded me of my youth, when I used to belong to a fighter squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])) then
          tk.msg(_("Major Tam before he was at the Headquarters"), _([["You know, I've not always worked at Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stands for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords."
-   "Warlords' forces can be requisitioned by DHC, but only to fight forces that threaten the integrity of the Dvaered Nation, so, in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
+   "Warlords' forces can be requisitioned by DHC, but only to fight forces that threaten the integrity of the Dvaered Nation, so, in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealised past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]]))
       end
    end

@@ -331,7 +331,7 @@ local actors = {
    _("Id"),
    _("Impact Wrench"),
    _("Inazuma"),
-   _("Ionizer"),
+   _("Ioniser"),
    _("Ishi"),
    _("Itoyōji"),
    _("Jalapeño"),

@@ -71,7 +71,7 @@ function accept ()
    -- Mission details
    misn.setTitle(_("Operation Cold Metal"))
    misn.setReward( _("Fame and Glory") )
-   misn.setDesc( fmt.f(_("Neutralize enemy forces in {sys}"), {sys=misn_target_sys1} ))
+   misn.setDesc( fmt.f(_("Neutralise enemy forces in {sys}"), {sys=misn_target_sys1} ))
    local osd_msg = {
       fmt.f(_("Fly to {final_sys} via {sys} and meet up with the Imperial fleet"), {final_sys=misn_final_sys, sys=misn_target_sys2}),
       _("Defeat the Starfire"),

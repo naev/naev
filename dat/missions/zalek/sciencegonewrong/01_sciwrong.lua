@@ -55,7 +55,7 @@ function accept()
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
+   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognise it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
     So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
@@ -119,7 +119,7 @@ function targetDeath()
       sor:modPlayer(-5)
       return
    end
-   tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
+   tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realise that you will never be able to get the secret tech now.]]))
    sor:modPlayer(-5)
    misn.finish(false)
 end

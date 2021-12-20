@@ -54,7 +54,7 @@ outfits.standard.structural = {
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   --"Improved Stabilizer", "Engine Reroute",
+   --"Improved Stabiliser", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster",
 }
@@ -74,7 +74,7 @@ outfits.elite.utility = outfits.merge{ {
    }, outfits.standard.utility,
 }
 outfits.elite.structural = outfits.merge{ {
-   "Improved Stabilizer", "Engine Reroute",
+   "Improved Stabiliser", "Engine Reroute",
    }, outfits.standard.structural
 }
 outfits.elite.set = outfits.merge{

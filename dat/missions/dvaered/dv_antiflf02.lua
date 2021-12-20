@@ -202,7 +202,7 @@ function disableFLF()
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             if mem.flfactive == 0 and not mem.messaged then
-               fleetDV[i]:comm(_("All targets neutralized. Download the flight log and let's get out of here!"))
+               fleetDV[i]:comm(_("All targets neutralised. Download the flight log and let's get out of here!"))
                mem.messaged = true
             end
             j:changeAI("dvaered_norun")

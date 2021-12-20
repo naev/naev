@@ -161,7 +161,7 @@ function enter ()
       fleet.add( 1, dv_med_force, "Dvaered", enter_vect )
 
       -- Player should not be able to reland
-      player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))
+      player.allowLand(false,_("The docking stabilisers have been damaged by weapons fire!"))
    end
 end
 

@@ -68,7 +68,7 @@ local pilot_messages = {
    _([["The Crimson Gauntlet has really taught me to appreciate the small things in life, you know, blowing up your enemies with mace rockets and such."]]),
    _([["I used to be a pretty sloppy pilot before participating in the Crimson Gauntlet. I still am, but I used to be too."]]),
    _([["Sometimes I get motion sickness from the virtual reality. What's more troublesome is it also happens when I fly my real ship!"]]),
-   _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
+   _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realise I haven't actually been blown up to smithereens."]]),
 }
 
 local guide_priority = 6

@@ -91,7 +91,7 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station. I found his name when reviewing some of the documents you gave me, then it was all clear."]]))
+   kex(_([["I should have realised it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station. I found his name when reviewing some of the documents you gave me, then it was all clear."]]))
    kex(_([["There aren't too many trails to where he is right now, but I do think I know where to find him."]]))
    kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
@@ -399,7 +399,7 @@ function landed_lab ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("Your ship sensors indicate that Strangelove's laboratory is no longer pressurized and without an atmosphere, so you don your space suit before entering."))
+   vn.na(_("Your ship sensors indicate that Strangelove's laboratory is no longer pressurised and without an atmosphere, so you don your space suit before entering."))
    vn.na(_("The first thing you notice is that the laboratory has been ravaged, likely by the Bounty Hunters you encountered outside. The place was already a mess the last time you came, but now you have to jump over obstacles as you progress through the laboratory."))
 
    vn.label("menu")
@@ -550,7 +550,7 @@ His voice tears up slightly.]]))
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
    dr(_([[You don't know how to answer and silence envelopes the room. Finally, he breaks the calmness.
-"I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you."]]))
+"I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporised in the resulting explosion, not you."]]))
    dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
 He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
    dr(_([["If only our places had been switched, you would have been able to solve it and find me again. I was so close and yet it still feels like there is some sort of impenetrable wall between me and the solution. What did I miss, where did I go wrong?"
@@ -591,7 +591,7 @@ He tries feebly to get up before coughs wrack his body and stain it further with
    vn.label("3kex")
    vn.func( function () kexcount = kexcount+1 end )
    vn.label("3contsilence")
-   dr(_([["I am so close, I can't stop here in front of you. Recalibrating the polymorphic tissue might stabilize the connection…"
+   dr(_([["I am so close, I can't stop here in front of you. Recalibrating the polymorphic tissue might stabilise the connection…"
 He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
    vn.label("3cont")
 
@@ -631,7 +631,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
 #rHONEYPOT ##329 ACTIVATED
 SELF-DESTRUCT SEQUENCE ENGAGED
 30 SECONDS REMAINING#0]]))
-   vn.na(_([[Cursing to yourself, you realize you don't have enough time to override the console and you make a dash for your ship. As the airlock closes behind you you can hear explosions starting to rip Dr. Strangelove's ship apart.]]))
+   vn.na(_([[Cursing to yourself, you realise you don't have enough time to override the console and you make a dash for your ship. As the airlock closes behind you you can hear explosions starting to rip Dr. Strangelove's ship apart.]]))
    vn.done()
 
    -- Player insists and goes to kex arc
@@ -725,6 +725,6 @@ function strangelove_dead ()
    vn.transition()
    vn.na(_([[The explosions clear and the system is once again silent except for your heavy breathing from running back to the ship.]]))
    vn.na(_([[As you survey the system again, you notice that you are no longer able to detect Dr. Strangelove's laboratory. Even pointing your sensors to the position where it should be, you are not able to find anything other than inert asteroids. It is possible that the self-destruct sequence didn't affect only the ship…]]))
-   vn.na(_([[As your mind wanders to all you just experienced, you realize that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
+   vn.na(_([[As your mind wanders to all you just experienced, you realise that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
    vn.run()
 end

@@ -196,7 +196,7 @@ function got_boarded(shipp)
    shipp:setActiveBoard(false)
    --get nearest jumppoints and let ship escape in this direction
    shipp:hyperspace(mem.jpt:dest())
-   tk.msg(_("The Deception"), _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
+   tk.msg(_("The Deception"), _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realise what has happened, the lady rushes past you and closes the airlock.
     You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]]))
    -- turn mercs hostile
    for i=1,#badguys do
@@ -238,7 +238,7 @@ function spawn_baddies(sp)
       badguys[i]:outfitAdd("Tricon Zephyr Engine")
 
       badguys[i]:outfitAdd("Laser Cannon MK2",3)
-      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
+      badguys[i]:outfitAdd("Improved Stabiliser") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)

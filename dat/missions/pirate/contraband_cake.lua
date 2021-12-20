@@ -76,7 +76,7 @@ They furrow their brows for a second.
 "…a cake! To {pnt} in the {sys} system."]]), {pnt=mem.destplanet, sys=mem.destsys}))
    g(_([["It's nothing out of the ordinary, I swear! Only that this cake you see, it's got some special… icing that is really sensitive. Like super sensitive. The slightest disturbance can melt it and lay it all to waste. In particular, any radiation can easily melt it even though it is shielded. Especially stuff like scanning radiation. You catch my drift?"]]))
    g(fmt.f(_([["All you would have to do is take the cake and go to {pnt} in the {sys} system, without getting any of that nasty scanning radiation on you."
-They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
+They shiver with disgust to emphasise and you can see some of their sweat fly off onto the bar floor.
 "Once you deliver it I'll split the money half and half with you."]]), {pnt=mem.destplanet, sys=mem.destsys}))
    vn.na(_("You stare at them coldly."))
    g(fmt.f(_([["Fine fine, take it all. It should be {credits}. Just remember no scanning means no problems."

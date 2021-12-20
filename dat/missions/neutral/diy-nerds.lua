@@ -208,7 +208,7 @@ end
 -- date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 function nerds_fly2()
    if not mem.hailed and time.get() > mem.expiryDate then
-      tk.msg(_("In-system communication"), fmt.f(_([[A beep from your communications equipment tells you that someone wants to talk to you. You realize it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on {pnt}."]]), {pnt=mem.srcPlanet}) )
+      tk.msg(_("In-system communication"), fmt.f(_([[A beep from your communications equipment tells you that someone wants to talk to you. You realise it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on {pnt}."]]), {pnt=mem.srcPlanet}) )
         misn.osdCreate( _("DIY Nerds"), {
            fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=mem.destPlanet, dropoff_pnt=mem.srcPlanet}),
         })

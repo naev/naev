@@ -113,7 +113,7 @@ function takeoff()
    if mem.choice == 1 then
       racers[1]:outfitAdd("Engine Reroute")
       racers[2]:outfitAdd("Engine Reroute")
-      racers[3]:outfitAdd("Improved Stabilizer")
+      racers[3]:outfitAdd("Improved Stabiliser")
    else
       for i in pairs(racers) do
          racers[i]:outfitRm("all")

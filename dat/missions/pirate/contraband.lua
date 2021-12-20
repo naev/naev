@@ -67,7 +67,7 @@ function create()
       {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials.")},
       {N_("Illegal Drugs"), N_("A batch of drugs made illegal in most systems.")},
       {N_("Illegal Body Mods"), N_("An array of illegal body modifications.")},
-      {N_("Unauthorized Weapons"), N_("An assemblage of illegal weapons.")},
+      {N_("Unauthorised Weapons"), N_("An assemblage of illegal weapons.")},
       {N_("Contraband"), N_("A diverse assortment of illegal contraband goods.")},
       {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
       {N_("Stolen Art"), N_("Artwork that was illegally seized from a collector or gallery.")},
@@ -85,7 +85,7 @@ function create()
          {N_("Tax-evasion Documents"), N_("Illegal documents detailing tax evasion by high empire officials.")},
          {N_("Leaked Documents"), N_("Documents illegally leaked from governmental entities.")},
          {N_("Incriminating Evidence"), N_("Illegally obtained evidence that incriminates high empire officials.")},
-         {N_("Unauthorized Office Supplies"), N_("Office supplies that don't meet the standards of the Empire bureaucracy, including flimsy red staplers.")},
+         {N_("Unauthorised Office Supplies"), N_("Office supplies that don't meet the standards of the Empire bureaucracy, including flimsy red staplers.")},
          {N_("Paper Deshredders"), N_("Devices that are able to reconstruct original documents from their shredded remains.")},
       },
       ["Dvaered"] = {
@@ -103,7 +103,7 @@ function create()
       ["Sirius"] = {
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
          {N_("Itch Powder"), N_("A banned substance with a history of disrupting robed processions.")},
-         {N_("Unauthorized Sirichana Merchandise"), N_("Horribly tacky and outright bad merchandise with Sirichana pasted all over it. Sirichana toenail clipper anyone?")},
+         {N_("Unauthorised Sirichana Merchandise"), N_("Horribly tacky and outright bad merchandise with Sirichana pasted all over it. Sirichana toenail clipper anyone?")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},

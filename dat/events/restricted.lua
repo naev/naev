@@ -27,16 +27,16 @@ function create ()
 end
 
 local msg_list = {
-   ["Za'lek"] = _("#rWARNING: Entering militarized zone. Unauthorized access will be met with force.#0"),
+   ["Za'lek"] = _("#rWARNING: Entering militarised zone. Unauthorised access will be met with force.#0"),
    ["Dvaered"] = _("#rWARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES.#0"),
-   ["Empire"] = _("#rWARNING: This is a restricted military system. Unauthorized ships will be shot on sight.#0"),
+   ["Empire"] = _("#rWARNING: This is a restricted military system. Unauthorised ships will be shot on sight.#0"),
 }
 local msg_delay
 function msg_buoy ()
    local msg = msg_list[ sysfct:nameRaw() ]
    if not msg then
       -- Gneeric message
-      msg = _("#rWARNING: Unauthorized entry to restricted area will be met with force. Leave immediately.#0")
+      msg = _("#rWARNING: Unauthorised entry to restricted area will be met with force. Leave immediately.#0")
    end
    if not msg_delay then
       -- Probably going to die but be nice and add reset autonav the first time

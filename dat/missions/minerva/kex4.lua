@@ -452,7 +452,7 @@ function jie_epilogue ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("As the debris of Jie's ship disperses you realize you never got around to questioning them or getting any information at all…"))
+   vn.na(_("As the debris of Jie's ship disperses you realise you never got around to questioning them or getting any information at all…"))
    vn.na(_("Might be best to head back to Kex for now and see what can be done."))
    vn.run()
 

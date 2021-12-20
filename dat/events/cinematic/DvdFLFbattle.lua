@@ -29,7 +29,7 @@ local articles = {
 {
    "Empire",
    _("Dvaered forces engaged in combat with small terrorist group"),
-   _("In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganized FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits worth in ships and crew to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence."),
+   _("In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganised FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits worth in ships and crew to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence."),
    time.get()+time.create(0,30,0)
 },
 

@@ -44,7 +44,7 @@ local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnB
 
 message = fw.message -- common hooks
 
--- TODO: hooks to penalize attacking people
+-- TODO: hooks to penalise attacking people
 
 -- Mission constants
 local destpla, destsys = planet.getS("Dvaer Prime")
@@ -151,7 +151,7 @@ function land()
 
    -- Player killed attackers, and can finally land for reward
    elseif (mem.stage == 4 and planet.cur() == destpla) then
-      tk.msg( _("Time for a gorgeous reward?"), _([[When you step out of your ship, you see an officer alone on the dock, obviously waiting for you. As you get closer, you recognize Major Tam. The cold wind pulls the lapels of his coat, and make them whip his sad face.
+      tk.msg( _("Time for a gorgeous reward?"), _([[When you step out of your ship, you see an officer alone on the dock, obviously waiting for you. As you get closer, you recognise Major Tam. The cold wind pulls the lapels of his coat, and make them whip his sad face.
    "We had better days, eh, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots, and Hamelsen escaped... Once more." Tam looks at the sky as it starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice as hard in winter, and the rain often turns to acid."
    You enter and head to the military bar. Tam looks at you: "I grew up on Nanek in Allous. For 13 years, the only part of the universe I knew was my village on Nanek, and the only people I knew were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point. Now they are corpses, drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is filled with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )
       tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel winds of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
@@ -492,7 +492,7 @@ function equipHyena( p )
    p:outfitAdd("Milspec Orion 2301 Core System")
    p:outfitAdd("S&K Ultralight Combat Plating")
    p:outfitAdd("Gauss Gun",3)
-   p:outfitAdd("Improved Stabilizer")
+   p:outfitAdd("Improved Stabiliser")
    p:outfitAdd("Hellburner")
    p:setHealth(100,100)
    p:setEnergy(100)
@@ -550,7 +550,7 @@ end
 
 -- Discuss with an officer on Laarss
 function discussOff()
-   tk.msg( _("No trace of Hamelsen"), _([[You approach the soldier, who seems to recognize you. Captain Leblanc probably sent your image ahead of time. "After we received the message from your captain, we seized the Hyena you were pursuing, but the pilot managed to escape unnoticed."
+   tk.msg( _("No trace of Hamelsen"), _([[You approach the soldier, who seems to recognise you. Captain Leblanc probably sent your image ahead of time. "After we received the message from your captain, we seized the Hyena you were pursuing, but the pilot managed to escape unnoticed."
    Having no way to track Hamelsen on land, you decide it's better to take off again and to wait for further instructions from Leblanc.]]) )
    misn.npcRm( mem.npc )
 end

@@ -111,10 +111,10 @@ function land ()
    vn.na(_([[The Za'lek officers leave as fast as they got here, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
    if getlicense then
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By know you've probably realised I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
    else
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By know you've probably realised I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

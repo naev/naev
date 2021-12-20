@@ -160,7 +160,7 @@ function wakeUpGregarYouLazyBugger()
     if not mem.flfdead then
         tk.msg(_("Gregar puts an end to hostilities"), _([["Wha- hey! What's going on!"
     You were too busy dodging incoming fire, rebalancing your shields, and generally trying to kill your attackers before they kill you to notice that Gregar, your passenger, has roused from his slumber. Clearly the noise and the rocking have jolted him awake. You snap at him not to distract you from this fight, but he desperately interrupts.
-    "These guys are my contacts, my friends! I was supposed to meet them here! Oh crap, this is not good. I didn't realize I'd be out this long! Look, I need to use your comm array right now. Trust me!"
+    "These guys are my contacts, my friends! I was supposed to meet them here! Oh crap, this is not good. I didn't realise I'd be out this long! Look, I need to use your comm array right now. Trust me!"
     Before you have a chance to ask him what he thinks he's doing, Gregar begins tuning your communications array, and soon finds the frequency he wants.
     "FLF sentinel formation, this is Lt. Gregar Fletcher, authorisation code six-six-niner-four-seven-Gamma-Foxtrot! Cease fire, I repeat, cease fire!" He then turns to you. "Same to you. Stop shooting. This is a misunderstanding, they're not your enemies."]]))
         tk.msg(_("Gregar puts an end to hostilities"), _([[You are skeptical at first, but a few seconds later it becomes apparent that the FLF fighters have indeed ceased firing. Then, there is an incoming comm from the lead ship.
