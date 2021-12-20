@@ -69,7 +69,7 @@ function accept()
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
-        tk.msg(_("The battlefield awaits"), _([["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
+        tk.msg(_("The battlefield awaits"), _([["Excellent. Please report to the local military command centre at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
     Several periods later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]]))
