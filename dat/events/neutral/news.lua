@@ -306,8 +306,8 @@ articles["Pirate"] = {
       Business
    --]]
    {
-      tag = N_([[Draconis Favorite Plundering Space]]),
-      desc = _([[Draconis has recently passed Delta Pavonis in the pirate polls as the most favored plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits.]])
+      tag = N_([[Draconis Favourite Plundering Space]]),
+      desc = _([[Draconis has recently passed Delta Pavonis in the pirate polls as the most favoured plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits.]])
    },
    {
       tag = N_([[New Ships for Skull and Bones]]),

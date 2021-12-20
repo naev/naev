@@ -64,7 +64,7 @@ quotes.dono[9] = _("When you ask about {plt}, you are promptly told to get lost.
 quotes.dono[10] = _([["I'd love to get back at {plt} for last cycle, but I haven't seen them in quite some time now."]])
 quotes.dono[11] = _([["I've not seen {plt}, but good luck in your search!"]])
 quotes.dono[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, though. Sorry!"]])
-quotes.dono[13] = _([["I used to work with {plt}. We haven't seen each other since they stole my favorite ship, though."]])
+quotes.dono[13] = _([["I used to work with {plt}. We haven't seen each other since they stole my favourite ship, though."]])
 
 quotes.money    = {}
 quotes.money[1] = _([["{plt}, you say? Well, I don't offer my services for free. Pay me {credits} and I'll tell you where to look; how does that sound?"]])

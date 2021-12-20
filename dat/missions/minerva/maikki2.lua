@@ -508,7 +508,7 @@ function approach_hint4 ()
 
    vn.label("drshrimp")
    drshrimp(fmt.f(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting {pnt} I found out about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), {pnt=_(hintpnt[4])}))
-   drshrimp(_([["You see, shrimp are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
+   drshrimp(_([["You see, shrimp are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colours and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
 He taps the tank of the floating shrimp next to him.]]))
    drshrimp(_([["The capabilities of these shrimp are endless, and they are helping us understand much more about genetic modification than the brute-force approaches of the Soromid, although our technology is still lagging behind."]]))
    drshrimp(_([["And what's best, look how cute they are!"

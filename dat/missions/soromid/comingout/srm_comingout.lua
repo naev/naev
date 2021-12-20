@@ -135,7 +135,7 @@ function land ()
          tk.msg( "", chatter[ mem.chatter_index ] )
       end
 
-      tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favor. "Can you come with me, as a friend?" You smile and say that you can.
+      tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favour. "Can you come with me, as a friend?" You smile and say that you can.
     As it turns out, Chelsea has arranged to see her parents at the bar. When you arrive, Chelsea's parents immediately recognize and greet her, calling her by a different name. A look of sadness appears on Chelsea's face as she hears this, but she quickly hides it and her parents don't seem to notice. Chelsea greets her parents, introduces you as her friend, then sits down. You sit down next to her.]]) )
       tk.msg( "", _([["It's been so long!" Chelsea's mother says. "Your hair's getting long! I'm so glad you were able to make it over."
     Chelsea laughs nervously. "There's something I have to tell you," she says. "I, um... I'm transgender. I would like for you to call me Chelsea and refer to me with she/her pronouns from now on... if that's okay."

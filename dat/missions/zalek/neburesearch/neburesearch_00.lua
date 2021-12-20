@@ -111,9 +111,9 @@ end
 
 function takeoff()
    local title = _("A Mess On Your Ship")
-   tk.msg(title, fmt.f(_([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
+   tk.msg(title, fmt.f(_([[As you enter your ship you notice dozens of cables of various colours stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
    "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is {sys}." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
-   "A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]), {sys=t_sys[1]}))
+   "A mess, you say? Haven't you noticed the colour coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]), {sys=t_sys[1]}))
    hook.rm(mem.thook)
 end
 

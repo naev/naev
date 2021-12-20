@@ -42,7 +42,7 @@ end
 function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favorite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favourite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
