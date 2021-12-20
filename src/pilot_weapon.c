@@ -987,7 +987,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  *    @param time Expected flight time.
  *    @return 0 if nothing was shot and 1 if something was shot.
  */
-static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
+static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
 {
    Vector2d vp, vv;
    double rate_mod, energy_mod;
@@ -1050,7 +1050,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      weapon_add( w->outfit, w->heat_T, p->solid->dir,
+      weapon_add( w, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, time );
    }
 
@@ -1068,8 +1068,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
-      w->u.beamid = beam_start( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p, p->target, w );
+      w->u.beamid = beam_start( w, p->solid->dir,
+            &vp, &p->solid->vel, p, p->target );
 
       w->timer = w->outfit->u.bem.duration;
 
@@ -1098,7 +1098,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      weapon_add( w->outfit, w->heat_T, p->solid->dir,
+      weapon_add( w, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, time );
 
       pilot_rmAmmo( p, w, 1 );

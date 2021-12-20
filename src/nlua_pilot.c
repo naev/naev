@@ -4975,7 +4975,7 @@ static int pilotL_damage( lua_State *L )
    dmg.type = dtype_get( luaL_optstring(L,5,"normal") );
    parent = (lua_isnoneornil(L,6)) ? NULL : luaL_validpilot(L,6);
 
-   damage = pilot_hit( p, NULL, parent, &dmg, 1 );
+   damage = pilot_hit( p, NULL, parent, &dmg, NULL, 1 );
    if (parent != NULL)
       weapon_hitAI( p, parent, damage );
 

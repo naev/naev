@@ -142,7 +142,7 @@ typedef struct OutfitBoltData_ {
    int spfx_shield;  /**< special effect on hit. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
+   CollPoly *polygon;/**< Array (array.h): Collision polygons. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */
    char *lua_file;   /**< Lua File. */
