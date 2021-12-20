@@ -435,7 +435,7 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  *    @param list Single element to apply.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
+int ss_statsModSingle( ShipStats *stats, const ShipStatList *list )
 {
    char *ptr;
    char *fieldptr;
@@ -477,6 +477,55 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
 }
 
 /**
+ * @brief Modifies a stat structure using a single element.
+ *
+ *    @param stats Stat structure to modify.
+ *    @param list Single element to apply.
+ *    @param scale Scaling factor.
+ *    @return 0 on success.
+ */
+int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale )
+{
+   char *ptr;
+   char *fieldptr;
+   double *dbl;
+   int *i;
+   const ShipStatsLookup *sl = &ss_lookup[ list->type ];
+
+   ptr = (char*) stats;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl *= 1.0+list->d.d * scale;
+         if (*dbl < 0.) /* Don't let the values go negative. */
+            *dbl = 0.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl += list->d.d * scale;
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
+         *i   += list->d.i * scale;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
+         *i    = 1; /* Can only set to true. */
+         break;
+   }
+
+   return 0;
+}
+
+/**
  * @brief Updates a stat structure from a stat list.
  *
  *    @param stats Stats to update.
@@ -487,7 +536,21 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
       ret |= ss_statsModSingle( stats, ll );
+   return ret;
+}
 
+/**
+ * @brief Updates a stat structure from a stat list.
+ *
+ *    @param stats Stats to update.
+ *    @param list List to update from.
+ *    @param scale Scaling factor.
+ */
+int ss_statsModFromListScale( ShipStats *stats, const ShipStatList* list, double scale )
+{
+   int ret = 0;
+   for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
+      ret |= ss_statsModSingleScale( stats, ll, scale );
    return ret;
 }
 

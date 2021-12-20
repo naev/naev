@@ -3150,6 +3150,7 @@ static int pilotL_effectClear( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to add effect to.
  *    @luatparam string name Name of the effect to add.
+ *    @luatparam[opt=1] scale Scaling factor.
  *    @luatreturn boolean Whether or not the effect was successfully added.
  * @luafunc effectAdd
  */
@@ -3157,9 +3158,10 @@ static int pilotL_effectAdd( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    const char *effectname = luaL_checkstring(L,2);
+   double scale = luaL_optnumber(L,3,1.);
    const EffectData *efx = effect_get( effectname );
    if (efx != NULL) {
-      if (!effect_add( &p->effects, efx ))
+      if (!effect_add( &p->effects, efx, scale ))
          pilot_calcStats( p );
       lua_pushboolean(L,1);
    }

@@ -25,6 +25,7 @@ typedef struct EffectData_s {
 typedef struct Effect_s {
    const EffectData *data;/**< Base data of the effect. */
    double timer;        /**< Time left on the effect. */
+   double scale;        /**< Scales the effect. */
 } Effect;
 
 /*
@@ -39,7 +40,7 @@ const EffectData *effect_get( const char *name );
  */
 Effect *effect_init (void);
 int effect_update( Effect **efxlist, double dt );
-int effect_add( Effect **efxlist, const EffectData *efx );
+int effect_add( Effect **efxlist, const EffectData *efx, double scale );
 void effect_clear( Effect **efxlist );
 void effect_compute( ShipStats *s, const Effect *efxlist );
 void effect_cleanup( Effect *efxlist );

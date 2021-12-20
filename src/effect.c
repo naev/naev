@@ -209,9 +209,10 @@ int effect_update( Effect **efxlist, double dt )
  *
  *    @param efxlist List of effects.
  *    @param efx Effect to add.
+ *    @param scale Scaling effect.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const EffectData *efx )
+int effect_add( Effect **efxlist, const EffectData *efx, double scale )
 {
    Effect *e = NULL;
 
@@ -233,6 +234,7 @@ int effect_add( Effect **efxlist, const EffectData *efx )
       e = &array_grow( efxlist );
    e->data  = efx;
    e->timer = efx->duration;
+   e->scale = scale;
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    gui_updateEffects();
    return 0;
@@ -256,8 +258,10 @@ void effect_clear( Effect **efxlist )
  */
 void effect_compute( ShipStats *s, const Effect *efxlist )
 {
-   for (int i=0; i<array_size(efxlist); i++)
-      ss_statsModFromList( s, efxlist[i].data->stats );
+   for (int i=0; i<array_size(efxlist); i++) {
+      const Effect *e = &efxlist[i];
+      ss_statsModFromListScale( s, e->data->stats, e->scale );
+   }
 }
 
 /**

@@ -318,8 +318,10 @@ void ss_free( ShipStatList *ll );
  */
 int ss_statsInit( ShipStats *stats );
 int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list );
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
+int ss_statsModSingle( ShipStats *stats, const ShipStatList *list );
+int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale );
+int ss_statsModFromList( ShipStats *stats, const ShipStatList *list );
+int ss_statsModFromListScale( ShipStats *stats, const ShipStatList *list, double scale );
 
 /*
  * Lookup.
