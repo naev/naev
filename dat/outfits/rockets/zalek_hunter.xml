@@ -4,7 +4,7 @@
   <license>Heavy Weapon</license>
   <mass>1.5</mass>
   <price>0</price>
-  <description>This little drone is little more than a guidance computer with bare-bones AI, a propulsion system, and a bomb wrapped in an armored shell.</description>
+  <description>This little drone is little more than a guidance computer with bare-bones AI, a propulsion system, and a bomb wrapped in an armoured shell.</description>
   <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">

@@ -16,7 +16,7 @@
  <trail_generator x="-20" y="5" h="-5" always_under="1">pirate</trail_generator>
  <trail_generator x="-20" y="-5" h="-5" always_under="1">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
- <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
+ <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armour regeneration rates.</description>
  <health>
   <armour>200</armour>
   <armour_regen>0</armour_regen>
