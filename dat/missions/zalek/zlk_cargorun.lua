@@ -121,7 +121,7 @@ function takeoff()
       logan:hailPlayer()
       logan:control()
       logan:moveto(player.pos() + vec2.new( 150, 75), true)
-      tk.msg( _("Takeoff"), _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late, especially given the lack of organization you've seen on the planet. Suddenly, you hear a ping on your console, signifying that someone's hailing you.]]) )
+      tk.msg( _("Takeoff"), _([[You feel a little agitated as you leave the atmosphere, but you guess you can't blame the scientist for being late, especially given the lack of organisation you've seen on the planet. Suddenly, you hear a ping on your console, signifying that someone's hailing you.]]) )
       mem.hailhook = hook.pilot(logan, "hail", "hail")
 
       -- TODO probably handle the case the player ignores Logan

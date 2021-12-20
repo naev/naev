@@ -152,7 +152,7 @@ function reveal()  --transforms the spawn drones into baddies
       end
       if mem.firstambush == true then
          --Surprise message
-         tk.msg(_("What is going on?"), _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]]))
+         tk.msg(_("What is going on?"), _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorisation to destroy it."]]))
          mem.firstambush = false
       end
       mem.proba = mem.proba - 0.1 * #badguy --processing the probability change

@@ -79,7 +79,7 @@ greet_table["Sirius"] = {
 }
 greet_table["Proteron"] = {""}
 greet_table["Za'lek"] = {
-   _("Information by optimization."),
+   _("Information by optimisation."),
    _("Statistically significant news."),
    _("Peer reviewed news."),
 }

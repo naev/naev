@@ -8,7 +8,7 @@
   <license>Heavy Weapon</license>
   <mass>0</mass>
   <price>675000</price>
-  <description>This Combat AI focuses on the optimization of the ship's sensor infrastructure. By making small tweaks online, it is able to effectively increase the range at which other ships are detected.</description>
+  <description>This Combat AI focuses on the optimisation of the ship's sensor infrastructure. By making small tweaks online, it is able to effectively increase the range at which other ships are detected.</description>
   <gfx_store>scanning_combat_ai.webp</gfx_store>
   <limit>combatai</limit>
  </general>

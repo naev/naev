@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>0</mass>
   <price>135000</price>
-  <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds and turning while still keeping the ship stable. As another side effect, the improved stabilizers allowing reversing the thrusters with a small loss of thrust.</description>
+  <description>By improving your ship's stabilisation systems drastically, this modification will allow you to reach higher speeds and turning while still keeping the ship stable. As another side effect, the improved stabilizers allowing reversing the thrusters with a small loss of thrust.</description>
   <gfx_store>stabilizer.webp</gfx_store>
  </general>
  <specific type="modification">

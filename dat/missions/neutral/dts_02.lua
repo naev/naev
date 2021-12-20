@@ -69,7 +69,7 @@ function create()
     Two young men rise abruptly from a table in the back of the room and come stiffly forward. One goes to the grieving couple while the other turns address the room.
     "These raiders must be stopped. We are cadets at the Imperial Flight School. If you feel the injustice of this family's loss, will you fly with us to avenge their son's death?"]]) ) then
       misn.accept()
-      tk.msg( _("Volunteers"), _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organization. We can destroy them if you team up and focus your fire on one ship at a time."]]))
+      tk.msg( _("Volunteers"), _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organisation. We can destroy them if you team up and focus your fire on one ship at a time."]]))
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
@@ -251,7 +251,7 @@ function celebrate_victory()
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
          tk.msg( _("The Governor's speech"), fmt.f( _([[
-"Even here on {pnt}, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they threaten the very foundations of our peace. We are grateful for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they, and their volunteers, will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
+"Even here on {pnt}, even in the protective embrace of civilisation, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they threaten the very foundations of our peace. We are grateful for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they, and their volunteers, will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
     The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), {pnt=mem.this_planet} ) )
          misn.finish( true)
       else

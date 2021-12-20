@@ -141,8 +141,8 @@ end
 function zlk_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Docking sequence transmitted."),
-         _("Authorization level too low to grant access."),
-         _("Authorization denied."),
+         _("Authorisation level too low to grant access."),
+         _("Authorisation denied."),
          _("Money is irrelevant."))
 end
 

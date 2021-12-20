@@ -44,7 +44,7 @@ end
 function accept()
    tk.msg(_("The Return"),_([[You approach the tall man and he glances up at you. You notice that some of the papers on the table are maps and as you eye the maps curiously, and the man grins and motions for you to sit.
     "Hello there," he says. "I'm sure you don't recognize me, but I certainly recognize you!. My name is Shaman, proud commander of the Nasin. You've worked for us before." The strange man and his delivery. Of course.
-    "Let me tell you a bit about our organization. The Sirii describe us simply as 'heretics'. But we are so much more than that! We are the true followers of Sirichana!"]]))
+    "Let me tell you a bit about our organisation. The Sirii describe us simply as 'heretics'. But we are so much more than that! We are the true followers of Sirichana!"]]))
    tk.msg(_("The Return"),_([["We Nasin were at one point all part of House Sirius and believed solely in the teachings of Sirichana. We loved him, and our hearts were his. As all religions do at some point, however, the teachings of Sirichana became weighed down by the ideologies and agendas of man. Most people still accepted these teachings as straight from the mouth of Sirichana himself, but we, the Nasin, knew better.
     "We started a splinter religion, still trying to cooperate with the Sirii, but when they felt threatened by our presence, they branded us as heretics and forced us out of Sirius space. We didn't know what to do at first, but then Jan Jusi pi Lawa came to lead us. He was the one who named us, the Nasin, which means "The Way" in an old earth language."
     Shaman seems to get caught up in the moment. "It was he! He who led us to join our hands! He who led us to work together! He who led us to fight back against the oppressors! It was he! The very, the only, the True Voice of Sirichana!"
@@ -77,7 +77,7 @@ function landing()
       mem.misn_tracker = mem.misn_tracker + 1
       faction.modPlayer("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
       var.push("heretic_misn_tracker", mem.misn_tracker)
-      srs.addHereticLog( _([[You found out that the organization you delivered an illegal package for is Nasin, a group of followers of Sirichana who the Sirii brand as "heretics". You then delivered a message for Nasin to their base in The Wringer. You were then invited to meet the Nasin officials at the bar on The Wringer.]]) )
+      srs.addHereticLog( _([[You found out that the organisation you delivered an illegal package for is Nasin, a group of followers of Sirichana who the Sirii brand as "heretics". You then delivered a message for Nasin to their base in The Wringer. You were then invited to meet the Nasin officials at the bar on The Wringer.]]) )
       misn.finish(true)
    end
 end
