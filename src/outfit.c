@@ -1213,6 +1213,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.falloff        = -1.;
    temp->u.blt.trackmin       = -1.;
    temp->u.blt.trackmax       = -1.;
+   temp->u.blt.lua_env        = LUA_NOREF;
+   temp->u.blt.lua_init       = LUA_NOREF;
+   temp->u.blt.lua_onshoot    = LUA_NOREF;
+   temp->u.blt.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1224,6 +1228,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.blt.trackmin);
       xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
+      xmlr_strd(node,"lua",temp->u.blt.lua_file);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
@@ -2480,7 +2485,7 @@ int outfit_load (void)
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
-      if (outfit_isLauncher(&outfit_stack[i])) {
+      if (outfit_isLauncher(o)) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
          if (outfit_isSeeker(o) && /* Smart seekers. */
                (o->u.lau.ammo->u.amm.ai)) {
@@ -2499,10 +2504,45 @@ int outfit_load (void)
 
          outfit_launcherDesc(o);
       }
-      else if (outfit_isFighterBay(&outfit_stack[i]))
+      else if (outfit_isFighterBay(o))
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
 
-      else if (outfit_isMod(&outfit_stack[i])) {
+      else if (outfit_isBolt(o)) {
+         if (o->u.blt.lua_file==NULL)
+            continue;
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( o->u.blt.lua_file, &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.blt.lua_file );
+            continue;
+         }
+
+         env = nlua_newEnv(1);
+         o->u.blt.lua_env = env;
+         /* TODO limit libraries here. */
+         nlua_loadStandard( env );
+         nlua_loadGFX( env );
+         nlua_loadPilotOutfit( env );
+         nlua_loadCamera( env );
+
+         /* Run code. */
+         if (nlua_dobufenv( env, dat, sz, o->u.blt.lua_file ) != 0) {
+            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( o->u.blt.lua_env );
+            free( dat );
+            o->u.blt.lua_env = LUA_NOREF;
+            continue;
+         }
+         free( dat );
+
+         /* Check functions as necessary. */
+         o->u.blt.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+         o->u.blt.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.blt.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+      }
+      else if (outfit_isMod(o)) {
          if (o->u.mod.lua_file==NULL)
             continue;
          nlua_env env;
@@ -2610,6 +2650,20 @@ int outfit_loadPost (void)
          SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
          for (int j=0; j<array_size(o->illegalto); j++)
             SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
+      }
+
+      /* Handle initializing module stuff. */
+      if (outfit_isBolt(o) && (o->u.blt.lua_env != LUA_NOREF)) {
+         nlua_getenv( o->u.blt.lua_env, "onload" );
+         if (lua_isnil(naevL,-1))
+            lua_pop(naevL,1);
+         else {
+            lua_pushoutfit( naevL, o );
+            if (nlua_pcall( o->u.blt.lua_env, 1, 0 )) {
+               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
+               lua_pop(naevL,1);
+            }
+         }
       }
 
       /* Handle initializing module stuff. */

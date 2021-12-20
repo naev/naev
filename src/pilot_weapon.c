@@ -31,6 +31,7 @@
 #include "escort.h"
 #include "log.h"
 #include "nxml.h"
+#include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"
@@ -907,11 +908,12 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
 
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
-      for (int i=0; i<array_size(ws->slots); i++)
+      for (int i=0; i<array_size(ws->slots); i++) {
          if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level)) {
             ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
             ws->slots[i].slot->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
          }
+      }
       return ret;
    }
 
@@ -1020,10 +1022,30 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
     * regular bolt weapons
     */
    if (outfit_isBolt(w->outfit)) {
-
       /* enough energy? */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
+
+      /* Need Lua check? */
+      if (w->outfit->u.blt.lua_onshoot != LUA_NOREF) {
+         int canshoot = 0;
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
+         nlua_setenv(w->outfit->u.blt.lua_env, "mem"); /* */
+
+         /* Set up the function: onshoot( p, po ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.blt.lua_onshoot); /* f */
+         lua_pushpilot(naevL, p->id); /* f, p */
+         lua_pushpilotoutfit(naevL, w);  /* f, p, po */
+         if (nlua_pcall( w->outfit->u.blt.lua_env, 2, 1 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "onshoot", lua_tostring(naevL,-1) );
+            lua_pop(naevL, 1);
+         }
+         canshoot = lua_toboolean(naevL,-1);
+         lua_pop(naevL, 1);
+
+         if (!canshoot)
+            return 0;
+      }
 
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;

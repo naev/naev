@@ -47,44 +47,44 @@ struct Outfit_;
  * @note If you modify this DON'T FORGET TO MODIFY outfit_getType too!!!
  */
 typedef enum OutfitType_ {
-   OUTFIT_TYPE_NULL, /**< Null type. */
-   OUTFIT_TYPE_BOLT, /**< Fixed bolt cannon. */
-   OUTFIT_TYPE_BEAM, /**< Fixed beam cannon. */
-   OUTFIT_TYPE_TURRET_BOLT, /**< Rotary bolt turret. */
-   OUTFIT_TYPE_TURRET_BEAM, /**< Rotary beam turret. */
-   OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
-   OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
+   OUTFIT_TYPE_NULL,       /**< Null type. */
+   OUTFIT_TYPE_BOLT,       /**< Fixed bolt cannon. */
+   OUTFIT_TYPE_BEAM,       /**< Fixed beam cannon. */
+   OUTFIT_TYPE_TURRET_BOLT,/**< Rotary bolt turret. */
+   OUTFIT_TYPE_TURRET_BEAM,/**< Rotary beam turret. */
+   OUTFIT_TYPE_LAUNCHER,   /**< Launcher. */
+   OUTFIT_TYPE_AMMO,       /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
    OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
-   OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
-   OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
-   OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
-   OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
-   OUTFIT_TYPE_LOCALMAP, /**< Gives the player more knowledge about the current system. */
-   OUTFIT_TYPE_GUI, /**< GUI for the player. */
-   OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
-   OUTFIT_TYPE_SENTINEL /**< indicates last type */
+   OUTFIT_TYPE_AFTERBURNER,/**< Gives the ship afterburn capability. */
+   OUTFIT_TYPE_FIGHTER_BAY,/**< Contains other ships. */
+   OUTFIT_TYPE_FIGHTER,    /**< Ship contained in FIGHTER_BAY. */
+   OUTFIT_TYPE_MAP,        /**< Gives the player more knowledge about systems. */
+   OUTFIT_TYPE_LOCALMAP,   /**< Gives the player more knowledge about the current system. */
+   OUTFIT_TYPE_GUI,        /**< GUI for the player. */
+   OUTFIT_TYPE_LICENSE,    /**< License that allows player to buy special stuff. */
+   OUTFIT_TYPE_SENTINEL    /**< indicates last type */
 } OutfitType;
 
 /**
  * @brief Outfit slot types.
  */
 typedef enum OutfitSlotType_ {
-   OUTFIT_SLOT_NULL, /**< Invalid slot type. */
-   OUTFIT_SLOT_NA, /**< Slot type not applicable. */
-   OUTFIT_SLOT_STRUCTURE, /**< Low energy slot. */
-   OUTFIT_SLOT_UTILITY, /**< Medium energy slot. */
-   OUTFIT_SLOT_WEAPON /**< High energy slot. */
+   OUTFIT_SLOT_NULL,       /**< Invalid slot type. */
+   OUTFIT_SLOT_NA,         /**< Slot type not applicable. */
+   OUTFIT_SLOT_STRUCTURE,  /**< Low energy slot. */
+   OUTFIT_SLOT_UTILITY,    /**< Medium energy slot. */
+   OUTFIT_SLOT_WEAPON      /**< High energy slot. */
 } OutfitSlotType;
 
 /**
  * @brief Outfit slot sizes.
  */
 typedef enum OutfitSlotSize_ {
-   OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
+   OUTFIT_SLOT_SIZE_NA,    /**< Not applicable slot size. */
    OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
-   OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
-   OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
+   OUTFIT_SLOT_SIZE_MEDIUM,/**< Medium slot size. */
+   OUTFIT_SLOT_SIZE_HEAVY  /**< Heavy slot size. */
 } OutfitSlotSize;
 
 /**
@@ -92,8 +92,8 @@ typedef enum OutfitSlotSize_ {
  */
 typedef enum OutfitAmmoAI_ {
    AMMO_AI_UNGUIDED, /**< No AI. */
-   AMMO_AI_SEEK, /**< Aims at the target. */
-   AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
+   AMMO_AI_SEEK,     /**< Aims at the target. */
+   AMMO_AI_SMART     /**< Aims at the target, correcting for relative velocity. */
 } OutfitAmmoAI;
 
 /**
@@ -143,6 +143,13 @@ typedef struct OutfitBoltData_ {
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_init;     /**< Run when outfit is initilaized. */
+   int lua_onshoot;  /**< Run when outfit is shot. */
+   int lua_onhit;    /**< Run when an enemy is hit. */
 } OutfitBoltData;
 
 /**
@@ -218,7 +225,7 @@ typedef struct OutfitAmmoData_ {
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
    const TrailSpec* trail_spec; /**< Trail style if applicable, else NULL. */
-   double trail_x_offset;       /**< Offset x. */
+   double trail_x_offset; /**< Offset x. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
@@ -248,7 +255,7 @@ typedef struct OutfitModificationData_ {
    int lua_update;   /**< Run periodically. */
    int lua_ontoggle; /**< Run when toggled. */
    int lua_onhit;    /**< Run when pilot takes damage. */
-   int lua_outofenergy; /**< Run when the pilot runs out of energy. */
+   int lua_outofenergy;/**< Run when the pilot runs out of energy. */
    int lua_onshoot;  /**< Run when pilot shoots. */
    int lua_onstealth;/**< Run when pilot toggles stealth. */
    int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
@@ -271,7 +278,7 @@ typedef struct OutfitAfterburnerData_ {
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
-   double mass_limit; /**< Limit at which effectiveness starts to drop. */
+   double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
    double heat_cap;  /**< Temperature at which the outfit overheats (K). */
@@ -286,7 +293,7 @@ typedef struct OutfitFighterBayData_ {
    const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
-   double reload_time; /**< Time it takes to reload 1 ammo. */
+   double reload_time;/**< Time it takes to reload 1 ammo. */
 } OutfitFighterBayData;
 
 /**
@@ -348,11 +355,11 @@ typedef struct Outfit_ {
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
-   glTexture *gfx_store;      /**< Store graphic. */
-   glTexture **gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
+   glTexture *gfx_store;   /**< Store graphic. */
+   glTexture **gfx_overlays;/**< Array (array.h): Store overlay graphics. */
 
-   unsigned int properties;   /**< Properties stored bitwise. */
-   unsigned int group;        /**< Weapon group to use when autoweap is enabled. */
+   unsigned int properties;/**< Properties stored bitwise. */
+   unsigned int group;     /**< Weapon group to use when autoweap is enabled. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
