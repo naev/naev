@@ -149,7 +149,7 @@ function enter_spaceport()
         start_talk()
         return
     elseif not mem.has_lab_coat and c == 3 then
-        local lab_coat_text = fmt.f(_([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colors, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads {credits}.]]), {credits=fmt.credits(lab_coat_price)})
+        local lab_coat_text = fmt.f(_([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colours, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads {credits}.]]), {credits=fmt.credits(lab_coat_price)})
         if player.credits() < lab_coat_price then
             tk.msg(_("Lab Coat Shop"), lab_coat_text .. "\n\n" .. _("Apparently this is too expensive for you. Looks like you have to give your talk without a lab coat."))
         else
