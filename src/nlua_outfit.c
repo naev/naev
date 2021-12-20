@@ -754,7 +754,7 @@ static int outfitL_tags( lua_State *L )
 }
 
 #define OL_NUMBER( val, name ) \
-while (1) { lua_pushnumber(L,val); lua_setfield(L,-2,name); }
+while (0) { lua_pushnumber(L,val); lua_setfield(L,-2,name); }
 /**
  * @brief Gets the outfit specifics.
  *
