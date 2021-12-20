@@ -259,7 +259,7 @@ local msg_tip = {
    _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
    _([["The '¤' symbol is the official galactic symbol for credits. Supposedly it comes from the currency symbol of an ancient Earth civilization. It's sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' for millions of credits, and so on."]]),
    _([["If you're piloting a medium ship, I'd recommend you invest in at least one turreted missile launcher. I had a close call a few decaperiods ago where a bomber nearly blew me to bits outside the range of my Laser Turrets. Luckily I just barely managed to escape to a nearby planet so I could escape the pilot. I've not had that problem ever since I equipped a turreted missile launcher."]]),
-   _([["I've heard rumors that a pirate's reputations depends on flying pirate ships, but I think they only loathe peaceful honest work."]]),
+   _([["I've heard rumours that a pirate's reputations depends on flying pirate ships, but I think they only loathe peaceful honest work."]]),
    fmt.f(_([["These computer symbols can be confusing sometimes! I've figured it out, though: '{F}' means friendly, '{N}' means neutral, '{H}' means hostile, '{R}' means restricted, and '{U}' means uninhabited but landable. I wish someone had told me that!"]]), {F="#F+#0", N="#N~#0", H="#H!!#0", R="#R*#0", U="#I=#0"} ),
    _([["Trade Lanes are the safest bet to travel around the universe. They have many patrols to keep you safe from pirates."]]),
 }

@@ -17,7 +17,7 @@
  <trail_generator x="-40" y="-12" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel</license>
- <description>The Ira is a purpose-grown light cruiser commonly found leading Soromid forces. While its armor is somewhat weak, this rarely saves those met with its devastating barrage.</description>
+ <description>The Ira is a purpose-grown light cruiser commonly found leading Soromid forces. While its armour is somewhat weak, this rarely saves those met with its devastating barrage.</description>
  <health>
   <armour>1700</armour>
   <armour_regen>5</armour_regen>

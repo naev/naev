@@ -92,7 +92,7 @@ function competitor2()
    tk.msg(_("Hello"), _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]]))
 end
 function competitor3()
-   tk.msg(_("Imperial Pilot"), _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]]))
+   tk.msg(_("Imperial Pilot"), _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armour and firepower are useful."]]))
 end
 function competitor4()
    tk.msg(_("Dvaered Pilot"), _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]]))
