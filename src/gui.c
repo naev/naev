@@ -1777,7 +1777,8 @@ void gui_updateFaction (void)
 
 void gui_updateEffects (void)
 {
-   gui_doFunc( gui_lua_update_effects, "update_effects" );
+   if (player.p != NULL)
+      gui_doFunc( gui_lua_update_effects, "update_effects" );
 }
 
 /**
