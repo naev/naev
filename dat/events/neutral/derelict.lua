@@ -110,7 +110,7 @@ function board()
    local pp = player.pilot()
    local stats = pp:stats()
    if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
-      derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you syphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
+      derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
       pp:setFuel( true )
       destroyevent()
       return
@@ -198,7 +198,7 @@ function goodevent()
    local stats = pp:stats()
    if stats.fuel < 2*stats.fuel_consumption then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you syphon it off to fill your ships fuel tanks.]]) )
+         derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
          pp:setFuel(true)
       end )
    end
