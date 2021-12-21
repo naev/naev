@@ -1800,8 +1800,8 @@ void pilot_render( Pilot* p, const double dt )
       return;
 
    /* Render effects. */
-   //for (int i=0; i<array_size(p->effects); i++) {
-   for (int i=array_size(p->effects)-1; i>=0; i--) {
+   for (int i=0; i<array_size(p->effects); i++) {
+   //for (int i=array_size(p->effects)-1; i>=0; i--) {
       Effect *eiter = &p->effects[i];
       if (eiter->data->program==0)
          continue;
