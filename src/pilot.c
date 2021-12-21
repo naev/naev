@@ -1842,29 +1842,21 @@ void pilot_render( Pilot* p, const double dt )
    }
 
    /* Base ship. */
-   if (p->ship->gfx_3d != NULL) {
-      /* 3d */
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
-
-      /* TODO fix 3D rendering. */
-   }
-   else {
-      /* Sprites */
-#if 0
-      //gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-      //      1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-      gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, 0., 0., scale, scale,
-            p->tsx, p->tsy, &c );
-#endif
-   }
 
    /* Render normally. */
    if (e==NULL) {
-      gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            scale, scale, p->tsx, p->tsy, &c );
+      if (p->ship->gfx_3d != NULL) {
+         /* 3d */
+         object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
+         object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+
+         /* TODO fix 3D rendering. */
+      }
+      else {
+         gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+               scale, scale, p->tsx, p->tsy, &c );
+      }
    }
    /* Render effect single effect. */
    else {
