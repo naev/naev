@@ -32136,7 +32136,7 @@ msgstr ""
 
 #: dat/events/neutral/npc.lua:241
 msgid ""
-"\"Some weapons have a different effect on shields than they do on armor. "
+"\"Some weapons have a different effect on shields than they do on armour. "
 "Keep that in mind when equipping your ship.\""
 msgstr ""
 "｢一部の武器は、シールドと装甲では異なる効果がある。船に装備するときには忘れな"
