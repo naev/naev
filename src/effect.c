@@ -228,10 +228,11 @@ int effect_update( Effect **efxlist, double dt )
  *
  *    @param efxlist List of effects.
  *    @param efx Effect to add.
+ *    @param duration Duration of the effect or set to negative for default.
  *    @param scale Scaling effect.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const EffectData *efx, double scale )
+int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale )
 {
    Effect *e = NULL;
 
@@ -252,7 +253,8 @@ int effect_add( Effect **efxlist, const EffectData *efx, double scale )
    if (e==NULL)
       e = &array_grow( efxlist );
    e->data  = efx;
-   e->timer = efx->duration;
+   e->duration = (duration > 0.) ? duration : efx->duration;
+   e->timer = e->duration;
    e->scale = scale;
    e->r     = RNGF();
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );

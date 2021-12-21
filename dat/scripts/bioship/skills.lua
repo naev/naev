@@ -248,32 +248,32 @@ skills.set.plasma = {
    ["plasma1"] = {
       name = _("Corrosion I"),
       tier = 1,
-      desc = _("increases plasma burn effect (more damage over longer time)"),
-      -- TODO
+      outfit = "Corrosion I",
+      desc = _("Plasma burn duration increased by 50%."),
       icon = "acid-blob.webp",
    },
    ["plasma2"] = {
       name = _("Paralyzing Plasma"),
       tier = 2,
+      outfit = "Paralyzing Plasma",
       requires = { "plasma1" },
-      desc = _("plasma burns slow down enemies"),
-      -- TODO
+      desc = _("Plasma burn slows enemy speed, thrust, and turn by 25%."),
       icon = "chemical-bolt.webp",
    },
    ["plasma3"] = {
       name = _("Crippling Plasma"),
       tier = 3,
+      outfit = "Crippling Plasma",
       requires = { "plasma2" },
-      desc = _("plasma burns lower enemy fire rate"),
+      desc = _("Plasma burn slows enemy fire rate by 20%."),
       icon = "chemical-bolt.webp",
-      -- TODO
    },
    ["plasma4"] = {
       name = _("Corrosion II"),
       tier = 4,
+      outfit = "Corrosion II",
       requires = { "plasma3" },
-      desc = _("further increases plasma burn effect"),
-      -- TODO
+      desc = _("Plasma burn duration further increased by 50%."),
       icon = "acid-blob.webp",
    },
    ["plasma5"] = {

@@ -46,8 +46,7 @@ function bioship.curstage( exp, maxstage )
 end
 
 local function _getskills( p )
-   --local skilllist = { "bite", "health", "attack", "misc", "plasma" }
-   local skilllist = { "bite", "health", "attack", "misc" }
+   local skilllist = { "bite", "health", "attack", "misc", "plasma" }
    local maxtier = 3
    local ps = p:ship()
    local pss = ps:size()
