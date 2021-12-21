@@ -10,11 +10,11 @@ uniform float u_timer = 0.0;
 
 const float FADE  = 0.3;
 
-in vec2 pos;
+in vec2 tex_coord;
 out vec4 colour_out;
 
 void main(void) {
-   colour_out = texture( u_tex, pos );
+   colour_out = texture( u_tex, tex_coord );
    if (colour_out.a <= 0.0)
       return;
 
@@ -23,7 +23,7 @@ void main(void) {
    alpha *= smoothstep( 0.0, FADE, u_timer );
    alpha *= 1.0 - smoothstep( u_duration-FADE, u_duration, u_timer );
 
-   vec3 coord = vec3( 0.02 * (2.0*pos-1.0) * dimensions.xy / dimensions.z, u_timer + u_r );
+   vec3 coord = vec3( 0.01 * tex_coord * dimensions.xy / dimensions.z, u_timer + u_r );
    alpha *= 0.75 + 0.5*snoise( coord );
 
    /* Do the effect. */

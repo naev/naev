@@ -1791,12 +1791,23 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
-   double scale;
+   double scale, x,y, w,h, z;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
+
+   /* Transform coordinates. */
+   z = cam_getZoom();
+   w = p->ship->gfx_space->sw;
+   h = p->ship->gfx_space->sh;
+   gl_gameToScreenCoords( &x, &y, p->solid->pos.x-w/2., p->solid->pos.y-h/2. );
+
+   /* Check if inbounds */
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* Render effects. */
@@ -1836,19 +1847,33 @@ void pilot_render( Pilot* p, const double dt )
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
 
-      /* TODO render effects. */
+      /* TODO fix 3D rendering. */
    }
    else {
       /* Sprites */
-      gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            scale, scale,
+#if 0
+      //gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+      //      1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+      gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+            1.-p->engine_glow, 0., 0., scale, scale,
             p->tsx, p->tsy, &c );
+#endif
    }
 
+   /* Render normally. */
+   if (e==NULL) {
+      gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+            scale, scale, p->tsx, p->tsy, &c );
+   }
    /* Render effect single effect. */
-   if (e!=NULL) {
+   else {
+      gl_Matrix4 projection, tex_mat;
       const EffectData *ed = e->data;
+
+      gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+            1.-p->engine_glow, 0., 0., scale, scale,
+            p->tsx, p->tsy, &c );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
@@ -1862,7 +1887,14 @@ void pilot_render( Pilot* p, const double dt )
       glEnableVertexAttribArray( ed->vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
-      gl_Matrix4_Uniform(ed->projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+      projection = gl_view_matrix;
+      projection = gl_Matrix4_Translate(projection, x, y, 0);
+      projection = gl_Matrix4_Scale(projection, z*w, z*h, 1);
+      gl_Matrix4_Uniform(ed->projection, projection);
+
+      tex_mat = gl_Matrix4_Identity();
+      tex_mat = gl_Matrix4_Scale(tex_mat, w/SCREEN_W, h/SCREEN_H, 1);
+      gl_Matrix4_Uniform(ed->tex_mat, tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );
@@ -1876,7 +1908,7 @@ void pilot_render( Pilot* p, const double dt )
    }
 
 #ifdef DEBUGGING
-   double dircos, dirsin, x, y;
+   double dircos, dirsin;
    int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
    Vector2d v;
    if (debug_mark_emitter) {

@@ -26,21 +26,17 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
  */
 /* blits texture */
 void gl_renderTextureRaw( GLuint texture, uint8_t flags,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c, double angle );
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th,
+      const glColour *c, double angle );
 void gl_renderTexture( const glTexture* texture,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c, double angle );
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th,
+      const glColour *c, double angle );
 void gl_renderTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, double inter,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c );
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th, const glColour *c );
 /* blits a sprite, relative pos */
 void gl_renderSprite( const glTexture* sprite,
       double bx, double by,
@@ -48,6 +44,13 @@ void gl_renderSprite( const glTexture* sprite,
 /* Blits a sprite interpolating between textures, relative pos. */
 void gl_renderSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, double bx, double by,
+      int sx, int sy, const glColour *c );
+void gl_renderStaticSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+      double inter, double bx, double by,
+      int sx, int sy, const glColour *c );
+void gl_renderStaticSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+      double inter, double bx, double by,
+      double scalew, double scaleh,
       int sx, int sy, const glColour *c );
 /* Blits a sprite interpolating between textures and scaling, relative pos. */
 void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,

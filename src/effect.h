@@ -22,6 +22,7 @@ typedef struct EffectData_ {
    GLuint program;
    GLuint vertex;
    GLuint projection;
+   GLuint tex_mat;
    GLuint dimensions;
    GLuint u_r;
    GLuint u_tex;

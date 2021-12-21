@@ -217,10 +217,11 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   if (angle==0.){
+   if (angle==0.) {
      projection = gl_Matrix4_Translate(projection, x, y, 0);
      projection = gl_Matrix4_Scale(projection, w, h, 1);
-   } else {
+   }
+   else {
      projection = gl_Matrix4_Translate(projection, x+hw, y+hh, 0);
      projection = gl_Matrix4_Rotate2d(projection, angle);
      projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
@@ -563,6 +564,76 @@ void gl_renderStaticSprite( const glTexture* sprite, double bx, double by,
    /* actual blitting */
    gl_renderTexture( sprite, x, y, sprite->sw, sprite->sh,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
+}
+
+/**
+ * @brief Blits a sprite interpolating, position is relative to the player.
+ *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
+ * Interpolation is:  sa*inter + sb*1.-inter)
+ *
+ *    @param sa Sprite A to blit.
+ *    @param sb Sprite B to blit.
+ *    @param inter Amount to interpolate.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderStaticSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+      double inter, double bx, double by,
+      int sx, int sy, const glColour *c )
+{
+   gl_renderStaticSpriteInterpolateScale( sa, sb, inter, bx, by, 1., 1., sx, sy, c );
+}
+
+/**
+ * @brief Blits a sprite interpolating, position is relative to the player.
+ *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
+ * Interpolation is:  sa*inter + sb*1.-inter)
+ *
+ *    @param sa Sprite A to blit.
+ *    @param sb Sprite B to blit.
+ *    @param inter Amount to interpolate.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param scalew X scale factor.
+ *    @param scaleh Y scale factor.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderStaticSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+      double inter, double bx, double by,
+      double scalew, double scaleh,
+      int sx, int sy, const glColour *c )
+{
+   double x,y, w,h, tx,ty;
+
+   x = bx;
+   y = by;
+
+   /* Scaled sprite dimensions. */
+   w = sa->sw*scalew;
+   h = sa->sh*scaleh;
+
+   /* check if inbounds */
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
+      return;
+
+   /* texture coords */
+   tx = sa->sw*(double)(sx)/sa->w;
+   ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
+
+   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h,
+         tx, ty, sa->srw, sa->srh, c );
 }
 
 /**

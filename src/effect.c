@@ -71,9 +71,10 @@ static int effect_parse( EffectData *efx, const char *file )
          continue;
       }
       if (xml_isNode(node,"shader")) {
-         efx->program = gl_program_vert_frag( "project_pos.vert", xml_get(node) );
+         efx->program = gl_program_vert_frag( "texture.vert", xml_get(node) );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
          efx->projection= glGetUniformLocation( efx->program, "projection" );
+         efx->tex_mat   = glGetUniformLocation( efx->program, "tex_mat" );
          efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
          efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
