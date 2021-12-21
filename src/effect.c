@@ -75,7 +75,6 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
          efx->projection= glGetUniformLocation( efx->program, "projection" );
          efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
-         efx->dt        = glGetUniformLocation( efx->program, "dt" );
          efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
          efx->u_duration     = glGetUniformLocation( efx->program, "u_duration" );
@@ -254,6 +253,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double scale )
    e->data  = efx;
    e->timer = efx->duration;
    e->scale = scale;
+   e->r     = RNGF();
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    gui_updateEffects();
    return 0;

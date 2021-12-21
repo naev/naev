@@ -75,7 +75,6 @@ vec3 blendVividLight(vec3 base, vec3 blend, float opacity) {
    return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity));
 }
 
-
 /* Screen. */
 float blendScreen(float base, float blend) {
    return 1.0-((1.0-base)*(1.0-blend));
