@@ -1850,12 +1850,14 @@ void pilot_render( Pilot* p, const double dt )
    if (e!=NULL) {
       const EffectData *ed = e->data;
 
-      glUseProgram( ed->program );
-
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
 
       glUseProgram( ed->program );
+
+      glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+      glUniform1i( ed->u_tex, 0 );
 
       glEnableVertexAttribArray( ed->vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );

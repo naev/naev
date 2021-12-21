@@ -24,6 +24,7 @@ typedef struct EffectData_ {
    GLuint dimensions;
    GLuint dt;
    GLuint u_r;
+   GLuint u_tex;
 } EffectData;
 
 /**

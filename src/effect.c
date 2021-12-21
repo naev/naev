@@ -77,6 +77,7 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
          efx->dt        = glGetUniformLocation( efx->program, "dt" );
          efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
+         efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
          continue;
       }
 
