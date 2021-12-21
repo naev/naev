@@ -20166,7 +20166,7 @@ msgstr "잘렉 헤파이스토스"
 #: dat/ships/zalek_hephaestus.xml:18
 msgid ""
 "The crown of the House Za'lek Defense Fleet, these proud buttresses of the "
-"Za'lek's ideals frequently serve as the nerve center of a Za'lek battle "
+"Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle "
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
 msgstr ""
@@ -28686,7 +28686,7 @@ msgid ""
 "in the sky turns blue, then a deep purple, and then goes dark. The whole "
 "planet plunges into darkness.\n"
 "    Then a voice speaks, louder than an earthquake. It seems to echo inside "
-"your bones and from the very center of the galaxy. \"Oh crap...\" it says.\n"
+"your bones and from the very centre of the galaxy. \"Oh crap...\" it says.\n"
 "    Another voice laughs musically, as if world itself were singing. "
 "\"bobbens, did you just destroy the universe, again?\"\n"
 "    \"Mmmm, hold on,\" the first voice rumbles. \"...SIGSEGV... libc start "
@@ -53177,10 +53177,9 @@ msgstr ""
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate5.lua:57 dat/missions/minerva/pirate5.lua:69
-#, fuzzy
 #| msgid "Za'lek Heavy Drone"
-msgid "Za'lek Hacking Center"
-msgstr "잘렉 헤비 드론"
+msgid "Za'lek Hacking Centre"
+msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:70 dat/missions/pirate/raid.lua:180
 #, fuzzy

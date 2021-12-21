@@ -1672,7 +1672,7 @@ msgstr "Anya"
 
 #: dat/assets/anya.xml:29
 msgid ""
-"Anya is the twin planet to Sabe, orbiting around their shared center of "
+"Anya is the twin planet to Sabe, orbiting around their shared centre of "
 "gravity in tandem. Anya is shrouded in a permanent cloud cover of ash and "
 "snow however, as a result of geological activity. A small number of Thurions "
 "live on the surface of Anya but no large scale colonization effort has "
@@ -2734,7 +2734,7 @@ msgstr "Stanice Cantina"
 
 #: dat/assets/cantina_station.xml:29
 msgid ""
-"This station is primarily a trade center for western Za'lek space. Many "
+"This station is primarily a trade centre for western Za'lek space. Many "
 "deals are made here, and given the frequent and transitory foot traffic, it "
 "makes for a good place to meet someone."
 msgstr ""
@@ -52598,10 +52598,8 @@ msgstr ""
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate5.lua:57 dat/missions/minerva/pirate5.lua:69
-#, fuzzy
-#| msgid "Za'lek Belligerent"
-msgid "Za'lek Hacking Center"
-msgstr "Útočný Za'lek"
+msgid "Za'lek Hacking Centre"
+msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:70 dat/missions/pirate/raid.lua:180
 msgid "Go to the {sys} system"
