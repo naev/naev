@@ -1200,6 +1200,7 @@ dat/effects/ambush_hunter.xml
 dat/effects/bloodlust.xml
 dat/effects/feral_rage_i.xml
 dat/effects/plasma_burn.xml
+dat/effects/plasma_burn_ii.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
@@ -2645,6 +2646,7 @@ dat/missions/zalek/zlk_test.lua
 dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/bioship/skills/ambush_hunter.lua
 dat/outfits/bioship/skills/bioplasma.lua
+dat/outfits/bioship/skills/bioplasma2.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
 dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
