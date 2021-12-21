@@ -109,6 +109,7 @@ static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
 static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
+static void info_buttonClick( unsigned int wid, const char *str );
 static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
@@ -148,6 +149,31 @@ static void info_buttonFree( InfoButton_t *btn )
    luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
 }
 
+static void info_buttonRegen (void)
+{
+   int wid;
+   if (info_wid == 0)
+      return;
+   wid = info_windows[ INFO_WIN_MAIN ];
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
+      if (widget_exists( wid, btn->button ))
+         window_destroyWidget( wid, btn->button );
+      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            btn->button, btn->caption, info_buttonClick );
+   }
+}
+
+/**
+ * @brief Registers a button in the info menu.
+ *
+ *    @param L Lua state being registered from.
+ *    @param caption Caption to give the button.
+ *    @param priority Button priority, lower is more important.
+ *    @return Newly created button ID.
+ */
 int info_buttonRegister( lua_State *L, const char *caption, int priority )
 {
    static int button_idgen = 0;
@@ -169,28 +195,52 @@ int info_buttonRegister( lua_State *L, const char *caption, int priority )
    id = btn->id;
    qsort( info_buttons, array_size(info_buttons), sizeof(InfoButton_t), sort_buttons );
 
+   info_buttonRegen();
    return id;
 }
 
+/**
+ * @brief Unregisters a button in the info menu.
+ *
+ *    @param id ID of the button to unregister and previously created by info_buttonRegister.
+ *    @return 0 on success.
+ */
 int info_buttonUnregister( int id )
 {
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
       if (btn->id != id)
          continue;
+      if (info_wid != 0) {
+         int wid = info_windows[ INFO_WIN_MAIN ];
+         if (widget_exists( wid, btn->button ))
+            window_destroyWidget( wid, btn->button );
+      }
       info_buttonFree( btn );
       array_erase( &info_buttons, btn, btn+1 );
+      info_buttonRegen();
       return 0;
    }
    return -1;
 }
 
+/**
+ * @brief Clears all te registered buttons.
+ */
 void info_buttonClear (void)
 {
-   for (int i=0; i<array_size(info_buttons); i++)
-      info_buttonFree( &info_buttons[i] );
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (info_wid != 0) {
+         int wid = info_windows[ INFO_WIN_MAIN ];
+         if (widget_exists( wid, btn->button ))
+            window_destroyWidget( wid, btn->button );
+      }
+      info_buttonFree( btn );
+   }
    array_free( info_buttons );
    info_buttons = NULL;
+   info_buttonRegen();
 }
 
 static void info_buttonClick( unsigned int wid, const char *str )
@@ -272,6 +322,7 @@ static void info_close( unsigned int wid, const char *str )
    if (info_wid > 0) {
       window_close( info_wid, str );
       info_wid = 0;
+      info_windows = NULL;
       logs = NULL;
       menu_Close(MENU_INFO);
    }
