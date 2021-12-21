@@ -349,20 +349,19 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int i, j, n;
-   Planet *planets, *p;
+   int n, h, k;
+   Planet *planets;
    char **str;
-   int h;
-   int *factions, f, hasfact;
+   int *factions;
 
    /* Find usable factions. */
    factions = faction_getAll();
    planets  = planet_getAll();
-   for (i=0; i<array_size(factions); i++) {
-      f = factions[i];
-      hasfact = 0;
-      for (j=0; j<array_size(planets); j++) {
-         p = &planets[j];
+   for (int i=0; i<array_size(factions); i++) {
+      int f = factions[i];
+      int hasfact = 0;
+      for (int j=0; j<array_size(planets); j++) {
+         Planet *p = &planets[j];
          if ((p->presence.faction != f) && !factionGenerates(p->presence.faction,f,NULL))
             continue;
          if (p->presence.base==0. && p->presence.bonus==0.)
@@ -387,15 +386,15 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    str[4]= strdup(_("Tech"));
    str[5]= strdup(_("Sum of Presences"));
    n     = 6; /* Number of special cases. */
-   j     = n;
-   for (i=0; i<array_size(factions); i++) {
-      f = factions[i];
+   k     = n;
+   for (int i=0; i<array_size(factions); i++) {
+      int f = factions[i];
       if (f>=0)
-         str[j++] = strdup( faction_name( f ) ); /* Not translating so we can use faction_get */
+         str[k++] = strdup( faction_name( f ) ); /* Not translating so we can use faction_get */
    }
-   qsort( &str[n], j-n, sizeof(char*), strsort );
+   qsort( &str[n], k-n, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
-   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, j, 0, NULL, NULL );
+   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, k, 0, NULL, NULL );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -511,8 +510,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
 
 static void uniedit_renderVirtualAssets( double x, double y, double r )
 {
-   glColour c = cWhite;
-   c.a = 0.3;
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
@@ -531,8 +529,7 @@ static void uniedit_renderVirtualAssets( double x, double y, double r )
 
 static void uniedit_renderRadius( double x, double y, double r )
 {
-   glColour c = cWhite;
-   c.a = 0.3;
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
@@ -551,8 +548,7 @@ static void uniedit_renderRadius( double x, double y, double r )
 
 static void uniedit_renderBackground( double x, double y, double r )
 {
-   glColour c = cWhite;
-   c.a = 0.3;
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
@@ -574,8 +570,7 @@ static void uniedit_renderBackground( double x, double y, double r )
 
 static void uniedit_renderTech( double x, double y, double r )
 {
-   glColour c = cWhite;
-   c.a = 0.3;
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
@@ -603,8 +598,7 @@ static void uniedit_renderTech( double x, double y, double r )
 
 static void uniedit_renderPresenceSum( double x, double y, double r )
 {
-   glColour c = cWhite;
-   c.a = 0.3;
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
@@ -1327,7 +1321,7 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
 static void uniedit_deselect (void)
 {
    array_free(uniedit_sys);
-   uniedit_sys    = NULL;
+   uniedit_sys = NULL;
 
    /* Change window stuff. */
    window_disableButton( uniedit_wid, "btnJump" );
@@ -1386,12 +1380,11 @@ static void uniedit_selectRm( StarSystem *sys )
  */
 void uniedit_selectText (void)
 {
-   int i, l;
+   int l;
    char buf[STRMAX];
-   StarSystem *sys;
 
    l = 0;
-   for (i=0; i<array_size(uniedit_sys); i++) {
+   for (int i=0; i<array_size(uniedit_sys); i++) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == array_size(uniedit_sys)-1) ? "" : ", " );
    }
@@ -1402,7 +1395,7 @@ void uniedit_selectText (void)
 
       /* Presence text. */
       if (array_size(uniedit_sys) == 1) {
-         sys         = uniedit_sys[0];
+         StarSystem *sys = uniedit_sys[0];
          map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
 
          if (sys->nebu_density<=0.)
@@ -1558,7 +1551,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
  */
 static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n )
 {
-   int i, y, h;
+   int y, h;
    char **str;
 
    /* Destroy if exists. */
@@ -1576,7 +1569,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
       qsort( found, n, sizeof(map_find_t), uniedit_sortCompare );
 
       str = malloc( sizeof(char*) * n );
-      for (i=0; i<n; i++)
+      for (int i=0; i<n; i++)
          str[i] = strdup( found[i].display );
    }
 
@@ -1652,7 +1645,7 @@ static void uniedit_editSys (void)
    /* Must have a system. */
    if (array_size(uniedit_sys)==0)
       return;
-   sys   = uniedit_sys[0];
+   sys = uniedit_sys[0];
 
    /* Create the window. */
    wid = window_create( "wdwStarSystemPropertyEditor", _("Star System Property Editor"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
@@ -1706,8 +1699,6 @@ static void uniedit_editSys (void)
    window_addInput( wid, x += l + 7, y, 55, 20, "inpInterference", 5, 1, NULL );
    window_setInputFilter( wid, "inpInterference", INPUT_FILTER_NUMBER );
 
-   (void)x;
-
    /* New row. */
    x = 20;
    y -= gl_defFont.h + 15;
@@ -1735,8 +1726,6 @@ static void uniedit_editSys (void)
    window_addInput( wid, x += l + 7, y, 50, 20, "inpHue", 4, 1, NULL );
    window_setInputFilter( wid, "inpHue", INPUT_FILTER_NUMBER );
    x += 50 + 12;
-
-   (void)x;
 
    /* Load values */
    snprintf( buf, sizeof(buf), "%g", sys->radius );
