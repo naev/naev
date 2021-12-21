@@ -292,7 +292,7 @@ function enter ()
    hook.pilot( drone_control2, "death", "drone_control2_dead" )
    hook.pilot( drone_control2, "board", "plant_explosives" )
    hacking_center = spawn_drone_controller( pos_hacking_center )
-   hacking_center:rename(_("Hacking Center"))
+   hacking_center:rename(_("Hacking Centre"))
    hook.pilot( hacking_center, "death", "hacking_center_dead" )
    hook.pilot( hacking_center, "board", "plant_explosives" )
 
