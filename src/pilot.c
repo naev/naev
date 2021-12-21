@@ -1864,6 +1864,9 @@ void pilot_render( Pilot* p, const double dt )
 
       gl_Matrix4_Uniform(ed->projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
 
+      glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
+      glUniform1f( ed->u_timer, e->timer );
+
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 

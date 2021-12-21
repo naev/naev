@@ -25,6 +25,8 @@ typedef struct EffectData_ {
    GLuint dt;
    GLuint u_r;
    GLuint u_tex;
+   GLuint u_duration;
+   GLuint u_timer;
 } EffectData;
 
 /**

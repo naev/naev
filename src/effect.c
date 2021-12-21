@@ -78,6 +78,8 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->dt        = glGetUniformLocation( efx->program, "dt" );
          efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
+         efx->u_duration     = glGetUniformLocation( efx->program, "u_duration" );
+         efx->u_timer     = glGetUniformLocation( efx->program, "u_timer" );
          continue;
       }
 
@@ -99,6 +101,13 @@ static int effect_parse( EffectData *efx, const char *file )
       }
       WARN(_("Effect '%s' has unknown node '%s'"),efx->name, node->name);
    } while (xml_nextNode(node));
+
+   /* Set some default safe values. */
+   if (efx->program != 0) {
+      glUseProgram( efx->program );
+      glUniform1f( efx->u_duration, efx->duration );
+      glUseProgram( 0 );
+   }
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< Define to help check for data errors. */
