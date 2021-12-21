@@ -1198,7 +1198,9 @@ dat/commodities/water.xml
 dat/damagetype.xml
 dat/effects/ambush_hunter.xml
 dat/effects/bloodlust.xml
+dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
+dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/faction.xml
@@ -1392,6 +1394,9 @@ dat/outfits/bioship/skills/ambush_hunter.xml
 dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/cargo_sacs.xml
 dat/outfits/bioship/skills/compound_eyes.xml
+dat/outfits/bioship/skills/corrosion_i.xml
+dat/outfits/bioship/skills/corrosion_ii.xml
+dat/outfits/bioship/skills/crippling_plasma.xml
 dat/outfits/bioship/skills/enhanced_smell.xml
 dat/outfits/bioship/skills/feral_rage_i.xml
 dat/outfits/bioship/skills/feral_rage_ii.xml
@@ -1401,6 +1406,7 @@ dat/outfits/bioship/skills/hard_shell.xml
 dat/outfits/bioship/skills/hunters_instinct.xml
 dat/outfits/bioship/skills/natural_healing_i.xml
 dat/outfits/bioship/skills/natural_healing_ii.xml
+dat/outfits/bioship/skills/paralyzing_plasma.xml
 dat/outfits/bioship/skills/silence.xml
 dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/the_bite_blood_lust.xml

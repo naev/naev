@@ -31,22 +31,18 @@ static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
  */
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
 {
-   float d;
-   xmlNodePtr cur;
-   char *list, *ch;
-   int i;
-
-   cur = node->children;
+   xmlNodePtr cur = node->children;
    do {
       if (xml_isNode(cur,"x")) {
-         list = xml_get(cur);
-         i = 0;
+         char *list = xml_get(cur);
+         int i = 0;
          /* split the list of coordiantes */
-         ch = strtok(list, ",");
+         char *ch = strtok(list, ",");
          polygon->x = malloc( sizeof(float) );
          polygon->xmin = 0;
          polygon->xmax = 0;
-         while ( ch != NULL ) {
+         while (ch != NULL) {
+            float d;
             i++;
             polygon->x = realloc( polygon->x, sizeof(float) * i );
             d = atof(ch);
@@ -57,14 +53,15 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
          }
       }
       else if (xml_isNode(cur,"y")) {
-         list = xml_get(cur);
-         i = 0;
+         char *list = xml_get(cur);
+         int i = 0;
          /* split the list of coordiantes */
-         ch = strtok(list, ",");
+         char *ch = strtok(list, ",");
          polygon->y = malloc( sizeof(float) );
          polygon->ymin = 0;
          polygon->ymax = 0;
-         while ( ch != NULL ) {
+         while (ch != NULL) {
+            float d;
             i++;
             polygon->y = realloc( polygon->y, sizeof(float) * i );
             d = atof(ch);
