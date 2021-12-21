@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <effect name="Plasma Burn">
- <description>Plasma is burning the ship.</description>
+ <description>Plasma is burning the ship!</description>
  <duration>5</duration>
  <icon>/gfx/misc/icons/burning-embers.webp</icon>
  <shader>effects/plasma_burn.frag</shader>

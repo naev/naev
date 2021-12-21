@@ -11,7 +11,7 @@
   <gfx_store>{gfx_store}</gfx_store>
  </general>
  <specific type="{specific}">
-  <lua>outfits/bioship/skills/bioplasma.lua</lua>
+  <lua>outfits/bioship/skills/{lua}</lua>
   <gfx>{gfx}</gfx>
   <gfx_end>{gfx_end}</gfx_end>
   <sound>{sound}</sound>
