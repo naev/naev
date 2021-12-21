@@ -1834,15 +1834,6 @@ void pilot_render( Pilot* p, const double dt )
    if (pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
-   /* Only render to framebuffer if necessary. */
-   if (e!=NULL) {
-      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-      glClearColor( 0., 0., 0., 0. );
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   }
-
-   /* Base ship. */
-
    /* Render normally. */
    if (e==NULL) {
       if (p->ship->gfx_3d != NULL) {
@@ -1862,6 +1853,10 @@ void pilot_render( Pilot* p, const double dt )
    else {
       gl_Matrix4 projection, tex_mat;
       const EffectData *ed = e->data;
+
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glClearColor( 0., 0., 0., 0. );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
             1.-p->engine_glow, 0., 0., scale, scale,
