@@ -1793,7 +1793,6 @@ void pilot_render( Pilot* p, const double dt )
    (void) dt;
    double scale;
    Effect *e = NULL;
-   const SimpleShader *shd;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
@@ -1804,12 +1803,11 @@ void pilot_render( Pilot* p, const double dt )
    //for (int i=0; i<array_size(p->effects); i++) {
    for (int i=array_size(p->effects)-1; i>=0; i--) {
       Effect *eiter = &p->effects[i];
-      if (eiter->data->shader.program==0)
+      if (eiter->data->program==0)
          continue;
 
       /* Only render one effect for now. */
       e = eiter;
-      shd = &eiter->data->shader;
       break;
    }
 
@@ -1850,23 +1848,25 @@ void pilot_render( Pilot* p, const double dt )
 
    /* Render effect single effect. */
    if (e!=NULL) {
-      glUseProgram( shd->program );
+      const EffectData *ed = e->data;
+
+      glUseProgram( ed->program );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
 
-      glUseProgram( shd->program );
+      glUseProgram( ed->program );
 
-      glEnableVertexAttribArray( shd->vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
+      glEnableVertexAttribArray( ed->vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
-      gl_Matrix4_Uniform(shd->projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+      gl_Matrix4_Uniform(ed->projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
       /* Clear state. */
-      glDisableVertexAttribArray( shd->vertex );
+      glDisableVertexAttribArray( ed->vertex );
    }
 
 #ifdef DEBUGGING

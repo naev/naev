@@ -3,6 +3,7 @@
  <description>Plasma is burning the ship.</description>
  <duration>5</duration>
  <icon>/gfx/misc/icons/burning-embers.webp</icon>
+ <shader>effects/plasmaburn.frag</shader>
  <stats>
   <damage>0.2</damage>
  </stats>

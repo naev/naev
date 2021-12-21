@@ -18,7 +18,12 @@ typedef struct EffectData_ {
    ShipStatList *stats; /**< Actual effect. */
    /* Visuals. */
    glTexture *icon;     /**< Effect icon texture. */
-   SimpleShader shader; /**< Shader effect on the pilot. */
+   GLuint program;
+   GLuint vertex;
+   GLuint projection;
+   GLuint dimensions;
+   GLuint dt;
+   GLuint u_r;
 } EffectData;
 
 /**

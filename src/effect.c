@@ -70,6 +70,15 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->icon = xml_parseTexture( node, "%s", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
       }
+      if (xml_isNode(node,"shader")) {
+         efx->program = gl_program_vert_frag( "project_pos.vert", xml_get(node) );
+         efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
+         efx->projection= glGetUniformLocation( efx->program, "projection" );
+         efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
+         efx->dt        = glGetUniformLocation( efx->program, "dt" );
+         efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
+         continue;
+      }
 
       if (xml_isNode(node,"stats")) {
          xmlNodePtr cur = node->children;
