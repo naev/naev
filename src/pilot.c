@@ -1840,8 +1840,6 @@ void pilot_render( Pilot* p, const double dt )
          /* 3d */
          object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
          object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
-
-         /* TODO fix 3D rendering. */
       }
       else {
          gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
@@ -1858,6 +1856,7 @@ void pilot_render( Pilot* p, const double dt )
       glClearColor( 0., 0., 0., 0. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+      /* TODO fix 3D rendering. */
       gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
             1.-p->engine_glow, 0., 0., scale, scale,
             p->tsx, p->tsy, &c );
