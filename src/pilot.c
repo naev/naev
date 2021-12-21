@@ -2130,6 +2130,15 @@ void pilot_update( Pilot* pilot, double dt )
       }
    }
 
+   /* Damage effect. */
+   if (pilot->stats.damage > 0.) {
+      dmg.type          = dtype_get("normal");
+      dmg.damage        = pilot->stats.damage * dt;
+      dmg.penetration   = 1.; /* Full penetration. */
+      dmg.disable       = 0.;
+      pilot_hit( pilot, NULL, NULL, &dmg, NULL, 0 );
+   }
+
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
       if (pilot->ptimer < 0.) {
@@ -2298,15 +2307,6 @@ void pilot_update( Pilot* pilot, double dt )
          /* Run Lua stuff. */
          pilot_outfitLOutfofenergy( pilot );
       }
-   }
-
-   /* Damage effect. */
-   if (pilot->stats.damage > 0.) {
-      dmg.type          = dtype_get("normal");
-      dmg.damage        = pilot->stats.damage * dt;
-      dmg.penetration   = 1.; /* Full penetration. */
-      dmg.disable       = 0.;
-      pilot_hit( pilot, NULL, NULL, &dmg, NULL, 0 );
    }
 
    /* Update effects. */

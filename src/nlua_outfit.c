@@ -46,7 +46,6 @@ static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
 static int outfitL_illegality( lua_State *L );
 static int outfitL_tags( lua_State *L );
-static int outfitL_specific( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -69,7 +68,6 @@ static const luaL_Reg outfitL_methods[] = {
    { "specificstats", outfitL_specificStats },
    { "illegality", outfitL_illegality },
    { "tags", outfitL_tags },
-   { "specific", outfitL_specific },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -752,40 +750,3 @@ static int outfitL_tags( lua_State *L )
    }
    return 1;
 }
-
-#define OL_NUMBER( val, name ) \
-while (0) { lua_pushnumber(L,val); lua_setfield(L,-2,name); }
-/**
- * @brief Gets the outfit specifics.
- *
- *    @luatparam Outfit o Outfit to get specifics of.
- *    @luatreturn table Table containing the specifics.
- * @luafunc specific
- */
-static int outfitL_specific( lua_State *L )
-{
-   const Outfit *o = luaL_validoutfit(L,1);
-   lua_newtable(L);
-
-   OL_NUMBER( o->mass, "mass" );
-   OL_NUMBER( o->cpu, "cpu" );
-
-   if (outfit_isBolt(o)) {
-      OL_NUMBER( o->u.blt.delay, "delay" );
-      OL_NUMBER( o->u.blt.speed, "speed" );
-      OL_NUMBER( o->u.blt.range, "range" );
-      OL_NUMBER( o->u.blt.falloff, "falloff" );
-      OL_NUMBER( o->u.blt.dmg.penetration, "penetration" );
-      OL_NUMBER( o->u.blt.dmg.damage, "damage" );
-      OL_NUMBER( o->u.blt.dmg.disable, "disable" );
-      OL_NUMBER( o->u.blt.energy, "energy" );
-      OL_NUMBER( o->u.blt.heatup, "heatup" );
-      OL_NUMBER( o->u.blt.heat, "heat" );
-      OL_NUMBER( o->u.blt.trackmin, "trackmin" );
-      OL_NUMBER( o->u.blt.trackmax, "trackmax" );
-      OL_NUMBER( o->u.blt.swivel, "swivel" );
-   }
-
-   return 1;
-}
-#undef OL_NUMBER

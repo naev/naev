@@ -1,6 +1,6 @@
 local damage
 function onload( o )
-   local s = o:specific()
+   local s = o:specificstats()
    damage = s.damage
 end
 
