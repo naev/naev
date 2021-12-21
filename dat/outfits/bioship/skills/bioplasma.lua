@@ -21,11 +21,11 @@ end
 
 function onhit( _p, _po, target )
    if mem.corrosion_ii then
-      target:effectAdd( "Plasma Burn I", 10, damage )
+      target:effectAdd( "Plasma Burn", 10, damage )
       target:effectAdd( "Paralyzing Plasma", 10 )
       target:effectAdd( "Crippling Plasma", 10 )
    elseif mem.corrosion_i then
-      target:effectAdd( "Plasma Burn I", 7.5, damage )
+      target:effectAdd( "Plasma Burn", 7.5, damage )
       if mem.paralyzing then
          target:effectAdd( "Paralyzing Plasma", 7.5 )
       end
@@ -33,6 +33,6 @@ function onhit( _p, _po, target )
          target:effectAdd( "Crippling Plasma", 7.5 )
       end
    else
-      target:effectAdd( "Plasma Burn I", 5, damage )
+      target:effectAdd( "Plasma Burn", 5, damage )
    end
 end
