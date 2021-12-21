@@ -1793,7 +1793,7 @@ void pilot_render( Pilot* p, const double dt )
    (void) dt;
    double scale;
    Effect *e = NULL;
-   SimpleShader *shd;
+   const SimpleShader *shd;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
@@ -1801,14 +1801,15 @@ void pilot_render( Pilot* p, const double dt )
       return;
 
    /* Render effects. */
-   for (int i=0; i<array_size(p->effects); i++) {
+   //for (int i=0; i<array_size(p->effects); i++) {
+   for (int i=array_size(p->effects)-1; i>=0; i--) {
       Effect *eiter = &p->effects[i];
-      if (eiter->data->shader==NULL)
+      if (eiter->data->shader.program==0)
          continue;
 
       /* Only render one effect for now. */
       e = eiter;
-      shd = eiter->data->shader;
+      shd = &eiter->data->shader;
       break;
    }
 
