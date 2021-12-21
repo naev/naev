@@ -195,10 +195,9 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
  *    @param angle Rotation to apply (radians ccw around the center).
  */
 void gl_renderTextureRaw( GLuint texture, uint8_t flags,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c, double angle )
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th,
+      const glColour *c, double angle )
 {
    // Half width and height
    double hw, hh;
@@ -269,10 +268,9 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
  *    @param angle Rotation to apply (radians ccw around the center).
  */
 void gl_renderTexture( const glTexture* texture,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c, double angle )
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th,
+      const glColour *c, double angle )
 {
    gl_renderTextureRaw( texture->texture, texture->flags, x, y, w, h, tx, ty, tw, th, c, angle );
 }
@@ -297,10 +295,8 @@ void gl_renderTexture( const glTexture* texture,
  */
 void gl_renderTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, double inter,
-      double x, double y,
-      double w, double h,
-      double tx, double ty,
-      double tw, double th, const glColour *c )
+      double x, double y, double w, double h,
+      double tx, double ty, double tw, double th, const glColour *c )
 {
    /* No interpolation. */
    if (tb == NULL) {
@@ -309,11 +305,11 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
    }
 
    /* Corner cases. */
-   if (inter == 1.) {
+   if (inter >= 1.) {
       gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
-   else if (inter == 0.) {
+   else if (inter <= 0.) {
       gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
