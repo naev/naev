@@ -1199,6 +1199,7 @@ dat/damagetype.xml
 dat/effects/ambush_hunter.xml
 dat/effects/bloodlust.xml
 dat/effects/feral_rage_i.xml
+dat/effects/plasma_burn.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
