@@ -827,7 +827,7 @@ void ovr_render( double dt )
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
       /* Clear state. */
-      glDisableVertexAttribArray( shaders.texture.vertex );
+      glDisableVertexAttribArray( shaders.stealthoverlay.vertex );
    }
 
    /* Render markers foreground. */

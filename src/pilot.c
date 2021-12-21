@@ -1792,11 +1792,25 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scale;
+   Effect *e = NULL;
+   SimpleShader *shd;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
+
+   /* Render effects. */
+   for (int i=0; i<array_size(p->effects); i++) {
+      Effect *eiter = &p->effects[i];
+      if (eiter->data->shader==NULL)
+         continue;
+
+      /* Only render one effect for now. */
+      e = eiter;
+      shd = eiter->data->shader;
+      break;
+   }
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING ))
@@ -1806,21 +1820,52 @@ void pilot_render( Pilot* p, const double dt )
    else
       scale = 1.;
 
-   /* Add some transparency if stealthed. */
+   /* Add some transparency if stealthed. TODO better effect */
    if (pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
+
+   /* Only render to framebuffer if necessary. */
+   if (e!=NULL) {
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glClearColor( 0., 0., 0., 0. );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   }
 
    /* Base ship. */
    if (p->ship->gfx_3d != NULL) {
       /* 3d */
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
-   } else {
+
+      /* TODO render effects. */
+   }
+   else {
       /* Sprites */
       gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
             1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
             scale, scale,
             p->tsx, p->tsy, &c );
+   }
+
+   /* Render effect single effect. */
+   if (e!=NULL) {
+      glUseProgram( shd->program );
+
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      glClearColor( 0., 0., 0., 1. );
+
+      glUseProgram( shd->program );
+
+      glEnableVertexAttribArray( shd->vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
+
+      gl_Matrix4_Uniform(shd->projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shd->vertex );
    }
 
 #ifdef DEBUGGING
