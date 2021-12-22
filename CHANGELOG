@@ -9,6 +9,7 @@
    * Pilots should be a bit less trigger happy when jumping in
    * Fixed minor visual artefacts with pirate trails
    * Added option for disabling resizing of window
+   * Stealthed pilots don't affect autonav
    * Meow meow
 
 * 0.9.0-beta.3
