@@ -1838,7 +1838,8 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  */
 static int pilotL_outfits( lua_State *L )
 {
-   int intrinsics=0;
+   int normal = 1;
+   int intrinsics = 0;
    Pilot *p = luaL_validpilot(L,1);
    const char *type = luaL_optstring(L,2,NULL);
    int skip_locked = lua_toboolean(L,3);
@@ -1846,28 +1847,25 @@ static int pilotL_outfits( lua_State *L )
 
    /* Get type. */
    if (type != NULL) {
-      if (strcmp(type,"structure")==0)
+      if (strcmp(type,"all")==0)
+         intrinsics = 1;
+      else if (strcmp(type,"structure")==0)
          ost = OUTFIT_SLOT_STRUCTURE;
       else if (strcmp(type,"utility")==0)
          ost = OUTFIT_SLOT_UTILITY;
       else if (strcmp(type,"weapon")==0)
          ost = OUTFIT_SLOT_WEAPON;
-      else if (strcmp(type,"intrinsic")==0)
+      else if (strcmp(type,"intrinsic")==0) {
          intrinsics = 1;
+         normal = 0;
+      }
       else
          NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
 
-   if (intrinsics) {
-      lua_newtable( L );
-      for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
-         lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
-         lua_rawseti( L, -2, i+1 );
-      }
-   }
-   else {
+   lua_newtable( L );
+   if (normal) {
       int j = 1;
-      lua_newtable( L );
       for (int i=0; i<array_size(p->outfits); i++) {
 
          /* Get outfit. */
@@ -1885,6 +1883,12 @@ static int pilotL_outfits( lua_State *L )
          /* Set the outfit. */
          lua_pushoutfit( L, p->outfits[i]->outfit );
          lua_rawseti( L, -2, j++ );
+      }
+   }
+   if (intrinsics) {
+      for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+         lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
+         lua_rawseti( L, -2, i+1 );
       }
    }
 
