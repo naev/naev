@@ -83,6 +83,7 @@ typedef struct PlayerConf_s {
    double nebu_scale; /**< Downscaling factor for the expensively rendered nebula. */
    int fullscreen; /**< Whether or not game is fullscreen. */
    int modesetting; /**< Whether to use modesetting for fullscreen. */
+   int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
    int colorblind; /**< Whether to enable colorblindness simulation. */
