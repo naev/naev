@@ -698,7 +698,7 @@ function render( _dt )
    local gui_w = right_side_w + left_side_w - 10
    local mod_x = math.max( margin, math.min(
          screen_w - 2*margin - math.max( gui_w, 1024 ),
-         math.floor( (screen_w - 2*margin - gui_w)/3 ) ) )
+         math.floor( (screen_w - 2*margin - gui_w)/2 ) ) )
    local mod_y = margin
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
