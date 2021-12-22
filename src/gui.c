@@ -1906,6 +1906,9 @@ void gui_cleanup (void)
    /* Set the viewport. */
    gui_clearViewport();
 
+   /* Set overlay bounds. */
+   ovr_boundsSet( 0, 0, 0, 0 );
+
    /* Reset FPS. */
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
