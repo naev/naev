@@ -143,7 +143,7 @@ function ship_buy( shipname )
       vn.run()
       var.push( "tut_buyship", true )
 
-   elseif s:tags().bioship then
+   elseif s:tags().bioship and not var.peek( "tut_bioship" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
