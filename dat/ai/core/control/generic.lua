@@ -73,7 +73,7 @@ control_rate   = 2
 --[[
    Binary flags for the different states that default to nil (false).
    - forced: the task is forced and shouldn't be changed
-   - attack: the pilot is attacked their target
+   - attack: the pilot is attacking their target
    - fighting: the pilot is engaged in combat (including running away )
    - noattack: do not try to find new targets to attack
 --]]
@@ -116,6 +116,9 @@ local stateinfo = {
    },
    flyback = {
       forced   = true,
+      noattack = true,
+   },
+   idle_wait = {
       noattack = true,
    },
 }
