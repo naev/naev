@@ -300,7 +300,7 @@ end
 -- last hook
 function land_home()
    if planet.cur() == mem.t_pla[2] then
-      tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=mem.t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
+      tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=mem.t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyse the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       player.pay(reward)
       player.outfitAdd("Toy Drone")
       sciwrong.addLog( _([[You helped Dr. Geller retrieve his lost prototype drone.]]) )

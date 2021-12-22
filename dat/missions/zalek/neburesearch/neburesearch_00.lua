@@ -99,7 +99,7 @@ function land()
    mem.landed = planet.cur()
    if mem.misn_stage == 3 and mem.landed == homeworld then
       tk.msg( "", fmt.f(_([[The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land.
-   "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
+   "Once again, thank you for your help. I still have to analyse the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
    He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]]),
          {pnt=homeworld, credits=fmt.credits(credits)} ) )
       player.pay(credits)
