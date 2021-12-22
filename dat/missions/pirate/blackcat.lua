@@ -111,12 +111,29 @@ It seems like it wants to come back with you. What do you do?]]))
    hook.jumpin("jumpin")
 end
 
+local function islucky ()
+   local pp = player.pilot()
+   if pp:ship():tags().lucky then
+      return true
+   end
+   for k,o in ipairs(pp:outfits("all")) do
+      if o:tags().lucky then
+         return true
+      end
+   end
+   return false
+end
+
 local event_list = {
    function () -- Overheat
       local pp = player.pilot()
+      meow:play()
+      if islucky() then
+         player.msg(_("Black cat hair has clogs the radiators but burns up before overheating the ship."), true)
+         return
+      end
       local t = pp:temp()
       pp:setTemp( math.max(400, t+50) )
-      meow:play()
       player.msg(_("Black cat hair has clogged the radiators and overheated the ship!"), true)
       player.autonavReset()
    end,
@@ -124,16 +141,24 @@ local event_list = {
       local pp = player.pilot()
       local _a, _s, _st, dis = pp:health()
       if dis then return end -- Already disabled
+      meow:play()
+      if islucky() then
+         player.msg(_("The black cat accidently hit the ship restart button, but nothing happens."), true)
+         return
+      end
       pp:disable( true )
       hook.timer( 5, "disable_restart" )
-      meow:play()
       player.msg(_("The black cat accidentally hit the ship restart button!"), true)
       player.autonavReset()
    end,
    function () -- Energy discharge
       local pp = player.pilot()
-      pp:setEnergy( 0 )
       meow:play()
+      if islucky() then
+         player.msg(_("The black cat managed to accidentally disconnect the energy capacitors, but the back up system takes over while you fix it."), true)
+         return
+      end
+      pp:setEnergy( 0 )
       player.msg(_("The black cat managed to accidentally disconnect the energy capacitors!"), true)
       player.autonavReset()
    end,
