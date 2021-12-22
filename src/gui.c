@@ -1029,11 +1029,11 @@ static void gui_renderMessages( double dt )
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
-               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
                dy = gl_printHeightRaw( NULL, gui_mesg_w, mesg_stack[m].str) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
-               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
             y += dy;
