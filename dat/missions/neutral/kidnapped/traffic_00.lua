@@ -97,7 +97,7 @@ function land2()
 end
 
 function firstpirates()
-  tk.msg(_("Rumors"), fmt.f(_([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you can. You catch the pirates in mid-conversation. "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2K! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
+  tk.msg(_("Rumours"), fmt.f(_([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you can. You catch the pirates in mid-conversation. "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2K! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
     The other pirate sitting there replies with a glint in his eye, "Actually, I heard in the bar over on {pnt} that you can make fat stacks doing a little more risky work. You just gotta nab some brats, and you can sell 'em for 15 big ones a pop!"
     "Human trafficking? No way man, that stuff gives me the heebie jeebies!" The other pirate replies.
     "Whatever, man."

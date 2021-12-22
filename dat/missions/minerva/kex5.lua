@@ -438,7 +438,7 @@ function landed_lab ()
 
    vn.label("back")
    vn.na(_([[You find a tunnel leading towards the back room. It seems to have been blocked off once, but now has been torn wide open. You ignore the "KEEP OUT" sign that is bent up underfoot and make your way through.]]))
-   vn.na(_("The tunnel twists and turns as it heads towards the center of the asteroid. There is no lighting along the way, so you rely on the lamps of your suit."))
+   vn.na(_("The tunnel twists and turns as it heads towards the centre of the asteroid. There is no lighting along the way, so you rely on the lamps of your suit."))
    vn.na(_("Eventually you reach a room at the core of the asteroid. It is fairly large compared to the rest of the laboratory, but is jammed with junk and rubbish, lots of which has been recently moved around."))
    vn.na(_("You start to sift through the things to try to find something of interest, but after a long time of looking around and not making significant progress, you decide to take a break and sit on a fallen bookcase."))
    vn.na(_("As you survey the room, you notice a small movement next to your feet. Slowly and carefully you lift up some debris to uncover a small and heavily damaged droid."))

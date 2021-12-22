@@ -19,7 +19,7 @@
  <license>Heavy Combat Vessel</license>
  <cond>faction.playerStanding("Soromid") &gt; 60</cond>
  <condstr>You need at least 60 reputation with the Soromid.</condstr>
- <description>The Ira is a purpose-grown cruiser commonly found leading Soromid forces. While its armor is somewhat weak, this rarely saves those met with its devastating barrage.</description>
+ <description>The Ira is a purpose-grown cruiser commonly found leading Soromid forces. While its armour is somewhat weak, this rarely saves those met with its devastating barrage.</description>
  <health>
   <armour>1700</armour>
  </health>

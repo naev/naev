@@ -24,8 +24,8 @@
    <bar/>
   </services>
   <commodities/>
-  <description>The Soromid Databank is the primary Soromid data center. All administration about interplanetary policy as well as the records of the gene treatment industry are managed here. This is why, although the Soromid Databank is not a military base, it has been classified a restricted facility.</description>
-  <bar>Most visitors don't make it past the spacedock bar, not even ranking Soromid personnel. The data center is managed mostly by internal automated drones, requiring manual maintenance only occasionally. Information requests are taken at booths adjoining the spacedock bar, which are manned by secretive-looking Soromid who never leave the station.</bar>
+  <description>The Soromid Databank is the primary Soromid data centre. All administration about interplanetary policy as well as the records of the gene treatment industry are managed here. This is why, although the Soromid Databank is not a military base, it has been classified a restricted facility.</description>
+  <bar>Most visitors don't make it past the spacedock bar, not even ranking Soromid personnel. The data centre is managed mostly by internal automated drones, requiring manual maintenance only occasionally. Information requests are taken at booths adjoining the spacedock bar, which are manned by secretive-looking Soromid who never leave the station.</bar>
  </general>
  <tags>
   <tag>restricted</tag>

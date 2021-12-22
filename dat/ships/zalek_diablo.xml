@@ -17,7 +17,7 @@
  <license>Heavy Combat Vessel</license>
  <cond>faction.playerStanding("Za'lek") &gt; 70</cond>
  <condstr>You need at least 70 reputation with House Za'lek.</condstr>
- <description>This carrier is the archetypical Za'lek warship. Virtually unarmored and equipped with heavy shields, they are meant to serve as a platform for devastating drone swarms, not frontline combat.</description>
+ <description>This carrier is the archetypical Za'lek warship. Virtually unarmoured and equipped with heavy shields, they are meant to serve as a platform for devastating drone swarms, not frontline combat.</description>
  <health>
   <armour>1000</armour>
   <armour_regen>0</armour_regen>

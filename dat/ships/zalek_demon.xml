@@ -17,7 +17,7 @@
  <license>Medium Combat Vessel</license>
  <cond>faction.playerStanding("Za'lek") &gt; 50</cond>
  <condstr>You need at least 50 reputation with House Za'lek.</condstr>
- <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
+ <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armour like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
  <health>
   <armour>400</armour>
   <armour_regen>0</armour_regen>

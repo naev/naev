@@ -113,7 +113,7 @@ function land ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_("Your ship touches down at the smaller than expected research center and a single loading drone begins to slowly unload your ship. Talk about understaffed."))
+   vn.na(_("Your ship touches down at the smaller than expected research centre and a single loading drone begins to slowly unload your ship. Talk about understaffed."))
    n(_([[Her eyes seem to be sparkling.
 "This… is… awesome! Did you see the testing site from the ship? I thought I saw a flash, maybe it was a Dirac-Bosemann supersymmetry feedback flare. I've never seen one of those in person yet!"
 As she keeps on babbling she sort of wanders off into the base, and you make no attempt to follow her.]]))

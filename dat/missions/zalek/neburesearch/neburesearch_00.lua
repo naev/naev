@@ -163,10 +163,10 @@ function stopProblems()
    ps:setEnergy(100)
    if zlk.hasZalekShip() then
      tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
-   "I should investigate the damage it caused to the armor once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
+    "I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    else
      tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
-   "I should investigate the damage it caused to the armor once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
+   "I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    end
    mem.misn_stage = 1
    misn.markerMove(mem.misn_marker, t_sys[2])

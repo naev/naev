@@ -431,7 +431,7 @@ function info_cargo ()
 end
 
 function info_mission ()
-   info_msg( fmt.f(_([["The #oMission Info#0 shows you information of all currently accepted missions. Selecting each mission will center the map on mission markers if available. Clicking on systems here also allows you to set routes directly. Make sure this mission is selected and try setting a route to {destsys} is marked on your map."]]), {destsys=mem.destsys} ) )
+   info_msg( fmt.f(_([["The #oMission Info#0 shows you information of all currently accepted missions. Selecting each mission will centre the map on mission markers if available. Clicking on systems here also allows you to set routes directly. Make sure this mission is selected and try setting a route to {destsys} is marked on your map."]]), {destsys=mem.destsys} ) )
    hook.rm( mem.hk_info_mission )
    mem.hk_info_mission = nil
 
