@@ -686,6 +686,9 @@ int player_autonavShouldResetSpeed (void)
          if (!pilot_isHostile( p ))
             continue;
 
+         if (pilot_isFlag(p,PILOT_STEALTH))
+            continue;
+
          if (pilot_inRangePilot( player.p, pstk[i], &d2 )!=1)
             continue;
 
