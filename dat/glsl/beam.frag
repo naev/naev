@@ -177,11 +177,11 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    // Modulate width
    ncoord = vec2( 0.03 * pos_px.x, 7.0*ANIM_SPEED*dt ) + 1000.0 * r;
-   y = pos_tex.y + 0.7 * snoise( ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( ncoord ), -1.0, 1.0 );
    v = sharpbeam( y, m );
-   y = pos_tex.y + 0.7 * snoise( 1.5*ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( 1.5*ncoord ), -1.0, 1.0 );
    v += sharpbeam( y, 2.0*m );
-   y = pos_tex.y + 0.7 * snoise( 2.0*ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( 2.0*ncoord ), -1.0, 1.0 );
    v += sharpbeam( y, 4.0*m );
 
    v = abs(v);
