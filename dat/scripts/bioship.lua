@@ -554,7 +554,11 @@ function bioship.window ()
    else
       local exp = player.shipvarPeek("bioshipexp") or 0
       local nextexp = bioship.exptostage( stage+1 )
-      stagetxt = fmt.f(_("Current Experience: {exp} points (next stage at {nextexp} points)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
+      if not player.isLanded() and nextexp <= exp then
+         stagetxt = fmt.f(_("Current Experience: {exp} points (land to advance to the next stage)"),{exp=fmt.number(exp)})
+      else
+         stagetxt = fmt.f(_("Current Experience: {exp} points (next stage at {nextexp} points)"),{exp=fmt.number(exp),nextexp=fmt.number(nextexp)})
+      end
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
    luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
