@@ -1858,7 +1858,7 @@ void pilot_render( Pilot* p, const double dt )
 
       /* TODO fix 3D rendering. */
       gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, 0., 0., scale, scale,
+            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, scale, scale,
             p->tsx, p->tsy, &c );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
