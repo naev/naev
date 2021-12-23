@@ -1329,9 +1329,9 @@ static void sysedit_editPnt( void )
    /* Tags. */
    x = 250;
    y -= gl_defFont.h + 20;
-   l = scnprintf( buf, sizeof(buf), "#nTags:#0 " );
+   l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags:") );
    for (int i=0; i<array_size(p->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), p->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s %s", ((i>0) ? "," : ""), p->tags[i] );
    window_addText( wid, x, y, 300, 20, 0, "txtTags", NULL, NULL, buf );
 
    /* Bottom buttons. */

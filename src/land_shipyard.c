@@ -246,11 +246,13 @@ void shipyard_update( unsigned int wid, const char* str )
    }
    if (ship->speed) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f m/s", ship->speed );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s"), ship->speed );
    }
    if (ship->turn) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f deg/s", ship->turn*180/M_PI );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), ship->turn*180/M_PI );
    }
    if (ship->dt_default != 1.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Time Constant:") );

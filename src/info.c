@@ -219,7 +219,7 @@ static void info_openMain( unsigned int wid )
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
-   k += scnprintf( &str[k], sizeof(str)-k, "Pilot:" );
+   k += scnprintf( &str[k], sizeof(str)-k, "%s", _("Pilot:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Date:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Money:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ship:") );
