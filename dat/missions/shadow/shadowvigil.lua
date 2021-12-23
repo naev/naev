@@ -44,7 +44,7 @@ local accept_m -- Forward-declared functions
 -- text: The text to be said
 --
 -- Example usage: hook.timer(2.0, "chatter", {pilot = p, text = "Hello, space!"})
-local function chatter(chat)
+function chatter(chat)
     if chat.pilot:exists() then
         chat.pilot:comm(chat.text)
     end
