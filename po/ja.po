@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-21 18:12-0500\n"
+"POT-Creation-Date: 2021-12-23 09:20-0500\n"
 "PO-Revision-Date: 2021-12-19 14:33+0000\n"
 "Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -23960,7 +23960,7 @@ msgstr "燃料の移送を完了した。"
 #.
 #. Binary flags for the different states that default to nil (false).
 #. - forced: the task is forced and shouldn't be changed
-#. - attack: the pilot is attacked their target
+#. - attack: the pilot is attacking their target
 #. - fighting: the pilot is engaged in combat (including running away )
 #. - noattack: do not try to find new targets to attack
 #. --
@@ -23995,7 +23995,7 @@ msgstr "燃料の移送を完了した。"
 #. Medium ships
 #. Capital ships
 #. Generic AI
-#: dat/ai/core/control/generic.lua:234
+#: dat/ai/core/control/generic.lua:237
 msgid "Pilot '{plt}': formation '{formation}' not found!"
 msgstr "Pilot '{plt}': formation '{formation}' not found!"
 
@@ -32820,27 +32820,34 @@ msgid ""
 msgstr "あなたはクイズに正解したので、宇宙船マニアから{credits}を獲得した。"
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:263
+#: dat/events/neutral/shiplover.lua:264
+#, fuzzy
+#| msgid ""
+#| "\"That's right! Damn, I thought you wouldn't know this one. You've solved "
+#| "my quiz {n} times now! Here, take this as a reward for your performance.\""
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
+"quiz {n} time now! Here, take this as a reward for your performance.\""
+msgid_plural ""
+"\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
-msgstr ""
+msgstr[0] ""
 "｢正解！　ちくしょう、これは知らないと思ったんだけどな。もう {n} 回もクイズを"
 "解いたね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:268 dat/events/neutral/shiplover.lua:282
+#: dat/events/neutral/shiplover.lua:271 dat/events/neutral/shiplover.lua:285
 msgid "Ship Enthusiast"
 msgstr "宇宙船マニア"
 
-#: dat/events/neutral/shiplover.lua:268
+#: dat/events/neutral/shiplover.lua:271
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr "小さな船の模型で遊んでいる驚くほど若い人物に気づいた。"
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:287
+#: dat/events/neutral/shiplover.lua:290
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
@@ -32848,29 +32855,29 @@ msgstr ""
 "奇妙な音をたてている人物に近づいた。宇宙船の音をまねているようだ。宇宙船のお"
 "もちゃで遊んでいる。"
 
-#: dat/events/neutral/shiplover.lua:288
+#: dat/events/neutral/shiplover.lua:291
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr "｢やあ、こんにちは。新しい限定品のランスロットの模型なんだけど？｣"
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:294
 msgid "\"It looks great!\""
 msgstr "｢すごいね！｣"
 
-#: dat/events/neutral/shiplover.lua:292
+#: dat/events/neutral/shiplover.lua:295
 msgid "\"It's awful.\""
 msgstr "｢ひどいね｣"
 
-#: dat/events/neutral/shiplover.lua:293
+#: dat/events/neutral/shiplover.lua:296
 msgid "\"Aren't you too young to be here?\""
 msgstr "｢こんなところにいるには若すぎない？｣"
 
-#: dat/events/neutral/shiplover.lua:304
+#: dat/events/neutral/shiplover.lua:307
 msgid "\"You know I own a real one.\""
 msgstr "｢ほら、本物をもってるから｣"
 
-#: dat/events/neutral/shiplover.lua:310
+#: dat/events/neutral/shiplover.lua:313
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
@@ -32878,7 +32885,7 @@ msgstr ""
 "｢わかってるね！　見つけるのにたくさんかかったんだよ。ずっと売りきれてて！　で"
 "もけっきょく報われたんだ｣"
 
-#: dat/events/neutral/shiplover.lua:314
+#: dat/events/neutral/shiplover.lua:317
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -32892,7 +32899,7 @@ msgstr ""
 "あなたは近くから見て、たしかにパイロットを見ることができた。この詳細度はかな"
 "りばかげている。"
 
-#: dat/events/neutral/shiplover.lua:319
+#: dat/events/neutral/shiplover.lua:322
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
@@ -32900,7 +32907,7 @@ msgstr ""
 "｢ここにいるには年よりすぎない？　飲むようなことしてないでしょ｣\n"
 "あなたに舌を出してみせてながら、まだ宇宙船で遊びつづけている。"
 
-#: dat/events/neutral/shiplover.lua:324
+#: dat/events/neutral/shiplover.lua:327
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -32914,7 +32921,7 @@ msgstr ""
 "そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートが"
 "あなたにもなんとか見わけられた。"
 
-#: dat/events/neutral/shiplover.lua:329
+#: dat/events/neutral/shiplover.lua:332
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -32924,56 +32931,56 @@ msgstr ""
 "もし正しく答えられたらいい賞品をあげるよ。やりたい？｣"
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:335
+#: dat/events/neutral/shiplover.lua:338
 msgid "You once again approach the ship enthusiast."
 msgstr "あなたはまた、あの宇宙船マニアに近づいた。"
 
-#: dat/events/neutral/shiplover.lua:336
+#: dat/events/neutral/shiplover.lua:339
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr "｢じゃあ戻ってきたんだ。船のクイズをやるのも考えなおした？｣"
 
-#: dat/events/neutral/shiplover.lua:338
+#: dat/events/neutral/shiplover.lua:341
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 "あなたはまた、あの宇宙船マニアに近づいた。どうもかなりあちこちと移動している"
 "らしい。"
 
-#: dat/events/neutral/shiplover.lua:339
+#: dat/events/neutral/shiplover.lua:342
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely!\""
 msgstr "｢船のクイズをまたやりたい？　用意した質問には完全にまいると思うな！｣"
 
-#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/maikki2.lua:196
+#: dat/events/neutral/shiplover.lua:345 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
 msgstr "｢はい！｣"
 
-#: dat/events/neutral/shiplover.lua:343 dat/missions/minerva/kex4.lua:149
+#: dat/events/neutral/shiplover.lua:346 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
 msgstr "｢いいえ｣"
 
-#: dat/events/neutral/shiplover.lua:347
+#: dat/events/neutral/shiplover.lua:350
 msgid "\"Oh well, your loss!\""
 msgstr "｢しかたがないな。もったいなかったね！｣"
 
-#: dat/events/neutral/shiplover.lua:352
+#: dat/events/neutral/shiplover.lua:355
 msgid "\"Great! So here it goes. Listen carefully.\""
 msgstr "｢いいね！　じゃあやるよ。よく聞いててね｣"
 
-#: dat/events/neutral/shiplover.lua:369
+#: dat/events/neutral/shiplover.lua:372
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr "｢いいね！　じゃあこの船を見て、よく聞いててね｣"
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:409
+#: dat/events/neutral/shiplover.lua:412
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr "あなたは宇宙船マニアのクイズで不正解になった。"
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:413
+#: dat/events/neutral/shiplover.lua:416
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -35339,8 +35346,8 @@ msgstr "No spawn function found"
 #. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 #. Initialize the map overlay stuff.
 #: dat/factions/spawn/lib/common.lua:184 dat/gui/brushed.lua:384
-#: dat/gui/brushed.lua:818 dat/gui/brushed.lua:857 dat/gui/legacy.lua:210
-#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
+#: dat/gui/brushed.lua:818 dat/gui/brushed.lua:857 dat/gui/legacy.lua:213
+#: dat/gui/legacy.lua:304 dat/gui/legacy.lua:318 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
 #: src/gui.c:1518 src/map.c:503 src/map.c:509 src/map.c:515 src/map.c:521
@@ -35931,6 +35938,7 @@ msgstr ""
 #. Misc position
 #. Bottom bar
 #. gui.viewport( 0, 20, screen_w, screen_h-20 )
+#. Overlay bounds
 #. Update stuff
 #. --
 #. This function is run whenever the player changes nav target (be in hyperspace or planet target).
@@ -35950,19 +35958,19 @@ msgstr ""
 #. --
 #. gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 #. Renders the navigation computer
-#: dat/gui/legacy.lua:193
+#: dat/gui/legacy.lua:196
 msgid "Landing"
 msgstr "着陸"
 
-#: dat/gui/legacy.lua:199 dat/gui/legacy.lua:214 dat/gui/legacy.lua:222
+#: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
 msgid "Off"
 msgstr "なし"
 
-#: dat/gui/legacy.lua:204
+#: dat/gui/legacy.lua:207
 msgid "Hyperspace"
 msgstr "超空間"
 
-#: dat/gui/legacy.lua:220
+#: dat/gui/legacy.lua:223
 msgid "Navigation"
 msgstr "航法"
 
@@ -35988,7 +35996,7 @@ msgstr "航法"
 #. gfx.print( true, _("None"), weapon_x, weapon_y-32, col_gray, weapon_w, true )
 #. end
 #. --
-#: dat/gui/legacy.lua:268
+#: dat/gui/legacy.lua:271
 msgid "No Target"
 msgstr "目標なし"
 
@@ -36000,37 +36008,37 @@ msgstr "目標なし"
 #. Faction Logo
 #. Cargo light cargo_light_off
 #. Status information
-#: dat/gui/legacy.lua:332 dat/gui/slim.lua:940
+#: dat/gui/legacy.lua:335 dat/gui/slim.lua:940
 msgid "Disabled"
 msgstr "無効"
 
-#: dat/gui/legacy.lua:334
+#: dat/gui/legacy.lua:337
 #, lua-format
 msgid "Armour: %.0f%%"
 msgstr "装甲 : %.0f%%"
 
-#: dat/gui/legacy.lua:336
+#: dat/gui/legacy.lua:339
 #, lua-format
 msgid "Shield: %.0f%%"
 msgstr "シールド : %.0f%%"
 
 #. Render faction logo.
 #. Renders the miscellaneous stuff
-#: dat/gui/legacy.lua:353
+#: dat/gui/legacy.lua:356
 msgid "Creds:"
 msgstr "ｸﾚｼﾞｯﾄ:"
 
-#: dat/gui/legacy.lua:357
+#: dat/gui/legacy.lua:360
 msgid "Cargo Free:"
 msgstr "船倉容量 :"
 
 #. Renders the warnings like system volatility
 #. Render warnings
-#: dat/gui/legacy.lua:374
+#: dat/gui/legacy.lua:377
 msgid "LOCK-ON DETECTED"
 msgstr "捕捉されました。"
 
-#: dat/gui/legacy.lua:378
+#: dat/gui/legacy.lua:381
 msgid "VOLATILE ENVIRONMENT DETECTED"
 msgstr "激変性環境を検出しました。"
 
@@ -84329,73 +84337,73 @@ msgstr "   -h, --help            このメッセージを表示して終了す�
 msgid "   -v, --version         print the version and exit"
 msgstr "   -v, --version         バージョンを表示して終了する"
 
-#: src/conf.c:429
+#: src/conf.c:430
 msgid "Found keybind with no type field!"
 msgstr "Found keybind with no type field!"
 
-#: src/conf.c:433
+#: src/conf.c:434
 msgid "Found keybind with invalid type field!"
 msgstr "Found keybind with invalid type field!"
 
-#: src/conf.c:447
+#: src/conf.c:448
 msgid "Found keybind with no key field!"
 msgstr "Found keybind with no key field!"
 
-#: src/conf.c:451
+#: src/conf.c:452
 msgid "Found keybind with invalid key field!"
 msgstr "Found keybind with invalid key field!"
 
-#: src/conf.c:477
+#: src/conf.c:478
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr "Unknown keybinding of type %s"
 
-#: src/conf.c:483
+#: src/conf.c:484
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr "Keybind for '%s' is invalid"
 
-#: src/conf.c:496
+#: src/conf.c:497
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr "Unknown keybinding mod of type %s"
 
-#: src/conf.c:507
+#: src/conf.c:508
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr "Malformed keybind for '%s' in '%s'."
 
 #. failed to load the config file
-#: src/conf.c:514
+#: src/conf.c:515
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr "Config file '%s' has invalid syntax:"
 
-#: src/conf.c:609
+#: src/conf.c:610
 msgid "Enabling developer mode."
 msgstr "Enabling developer mode."
 
 # コンフィグファイルのコメントになるらしい
 #. Write a nice header for new configuration files
-#: src/conf.c:786
+#: src/conf.c:787
 msgid "Naev configuration file"
 msgstr "Naevの設定ファイル"
 
-#: src/conf.c:792
+#: src/conf.c:793
 msgid "Not saving configuration."
 msgstr "Not saving configuration."
 
-#: src/conf.c:798
+#: src/conf.c:799
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr "このセクションの内容はNaevによって書き換えられます！"
 
 #. ndata.
-#: src/conf.c:802
+#: src/conf.c:803
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr "Naevのデータパックの場所。一般的に ｢ndata｣ と呼ばれる"
 
 #. Language.
-#: src/conf.c:807
+#: src/conf.c:808
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
@@ -84404,52 +84412,56 @@ msgstr ""
 "動設定するなら ｢nil｣。"
 
 #. OpenGL.
-#: src/conf.c:812
+#: src/conf.c:813
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr "全体的に使用するアンチエイリアシングの係数"
 
-#: src/conf.c:813
+#: src/conf.c:814
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr "2より小さければ、たんにFSAAを無効化する"
 
-#: src/conf.c:817
+#: src/conf.c:818
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr "フレームバッファの更新を垂直ブランキング期間に同期させるか"
 
 #. Window.
-#: src/conf.c:822
+#: src/conf.c:823
 msgid "The window size or screen resolution"
 msgstr "ウィンドウの大きさ、または画面解像度"
 
-#: src/conf.c:823
+#: src/conf.c:824
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr "両方0に設定すると、Naevはデスクトップの解像度で試す"
 
-#: src/conf.c:833
+#: src/conf.c:834
 msgid "Factor used to divide the above resolution with"
 msgstr "上述の解像度をこの係数で除算する"
 
-#: src/conf.c:834
+#: src/conf.c:835
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr "これを描画用の解像度を下げるのに使ってから、もとの解像度に調整する"
 
-#: src/conf.c:838
+#: src/conf.c:839
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr "背景の星雲を描画するのに使う拡大率。"
 
-#: src/conf.c:839
+#: src/conf.c:840
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr "大きな値にすると時間が節約できるが、それだけ不鮮明な見ばえになる。"
 
-#: src/conf.c:843
+#: src/conf.c:844
 msgid "Run Naev in full-screen mode"
 msgstr "Naevをフルスクリーンモードで動かすか"
 
-#: src/conf.c:847
+#: src/conf.c:848
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr "フルスクリーンを有効にしたときに、ビデオモード設定を使うか"
 
-#: src/conf.c:851
+#: src/conf.c:852
+msgid "Disable allowing resizing the window."
+msgstr ""
+
+#: src/conf.c:856
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
@@ -84457,157 +84469,157 @@ msgstr ""
 "ウィンドウの装飾をなしにする。注意して使ってください。それから終了とフルスク"
 "リーン切り替えのキーボード制御を覚えておいてください。"
 
-#: src/conf.c:855 src/options.c:1311
+#: src/conf.c:860 src/options.c:1311
 msgid "Minimize on focus loss"
 msgstr "フォーカスのロスを最小化"
 
-#: src/conf.c:859 src/options.c:1314
+#: src/conf.c:864 src/options.c:1314
 msgid "Colorblind mode"
 msgstr "色覚不要モード"
 
-#: src/conf.c:863
+#: src/conf.c:868
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr "背景の明るさ。1がふつうの明るさで、0は背景が真っ黒になる。"
 
-#: src/conf.c:867
+#: src/conf.c:872
 msgid ""
 "Nebula brightness. 1 is normal brightness while setting it to 0 would make "
 "the nebula pitch black."
 msgstr "星雲の明るさ。1がふつうの明るさで、0は背景が真っ黒になる。"
 
-#: src/conf.c:871
+#: src/conf.c:876
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr "ガンマ補正のパラメーター。1なら無効化(直線になる)。"
 
-#: src/conf.c:875
+#: src/conf.c:880
 msgid "Expensive high quality shaders for the background. Defaults to false."
 msgstr "処理の重い高品質の背景描画。デフォルトはfalse。"
 
 #. FPS
-#: src/conf.c:880
+#: src/conf.c:885
 msgid "Display a frame rate counter"
 msgstr "フレームレートを表示するか"
 
-#: src/conf.c:884
+#: src/conf.c:889
 msgid "Limit the rendering frame rate"
 msgstr "描画するフレームレートの制限"
 
 #. Pause
-#: src/conf.c:889
+#: src/conf.c:894
 msgid "Show 'PAUSED' on screen while paused"
 msgstr "一時停止中に ｢PAUSE｣ と画面に表示するか"
 
 #. Sound.
-#: src/conf.c:894
+#: src/conf.c:899
 msgid "Enables EFX extension for OpenAL backend."
 msgstr "OpenALバックエンドのEFX拡張を有効にするか。"
 
-#: src/conf.c:898
+#: src/conf.c:903
 msgid "Disable all sound"
 msgstr "すべてのサウンドを無効にするか"
 
-#: src/conf.c:902
+#: src/conf.c:907
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr "サウンドエフェクトと音楽の音量。0.0から1.0の間"
 
 #. Joystick.
-#: src/conf.c:908
+#: src/conf.c:913
 msgid "The name or numeric index of the joystick to use"
 msgstr "使用するジョイスティックの名前か数値インデックス"
 
-#: src/conf.c:909
+#: src/conf.c:914
 msgid "Setting this to nil disables the joystick support"
 msgstr "これをnilに設定すると、ジョイスティックのサポートは無効化される"
 
 #. GUI.
-#: src/conf.c:922
+#: src/conf.c:927
 msgid "Number of lines visible in the comm window."
 msgstr "通信ウィンドウに表示する行数。"
 
-#: src/conf.c:924
+#: src/conf.c:929
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr "オーバーレイマップの不透明度(0から1)。"
 
 #. Key repeat.
-#: src/conf.c:930
+#: src/conf.c:935
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr "キーリピートが始まるまでの、ms単位の遅延(0なら無効化)"
 
-#: src/conf.c:932
+#: src/conf.c:937
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr "リピートが始まってからの、ms単位でのリピート間の遅延"
 
 #. Zoom.
-#: src/conf.c:937
+#: src/conf.c:942
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr "ゲーム内で使用する、最大・最小拡大率"
 
-#: src/conf.c:938
+#: src/conf.c:943
 msgid "At 1.0, no sprites are scaled"
 msgstr "1.0のときは、スプライトがそのまま表示される"
 
-#: src/conf.c:939
+#: src/conf.c:944
 msgid "zoom_far should be less then zoom_near"
 msgstr "zoom_farはzoom_nearより小さくなければならない"
 
-#: src/conf.c:945
+#: src/conf.c:950
 msgid "Zooming speed in factor increments per second"
 msgstr "1秒あたりの拡大速度係数"
 
-#: src/conf.c:949
+#: src/conf.c:954
 msgid "Zooming modulation factor for the starry background"
 msgstr "背景の星あかりの拡大調整係数"
 
 #. Fonts.
-#: src/conf.c:954
+#: src/conf.c:959
 msgid "Font sizes (in pixels) for Naev"
 msgstr "Naevで使うフォントの大きさ(ピクセル単位)"
 
-#: src/conf.c:955
+#: src/conf.c:960
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr "注意: デフォルト以外に設定すると、画面が異常になる場合がある！"
 
-#: src/conf.c:956
+#: src/conf.c:961
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr "-- コンソールのデフォルトは: %d\n"
 
-#: src/conf.c:958
+#: src/conf.c:963
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr "-- イントロのデフォルトは: %d\n"
 
-#: src/conf.c:960
+#: src/conf.c:965
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr "-- デフォルトサイズは: %d\n"
 
-#: src/conf.c:962
+#: src/conf.c:967
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr "-- 小さいサイズは: %d\n"
 
 #. Misc.
-#: src/conf.c:966
+#: src/conf.c:971
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr "時間圧縮が有効なときの、圧縮する最大速度(px/s)の設定。"
 
-#: src/conf.c:970
+#: src/conf.c:975
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr "時間圧縮が有効なときの、最大圧縮係数の設定。"
 
-#: src/conf.c:974
+#: src/conf.c:979
 msgid "Redirects log and error output to files"
 msgstr "ログとエラーの出力をファイルにリダイレクトするか"
 
-#: src/conf.c:978
+#: src/conf.c:983
 msgid "Enables compression on saved games"
 msgstr "ゲームの保存ファイルの圧縮を有効にするか"
 
-#: src/conf.c:982
+#: src/conf.c:987
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
@@ -84615,67 +84627,67 @@ msgstr ""
 "ダブルタップの感度 (アフターバーナーや冷却器の作動のために加速や逆推進をダブ"
 "ルタップするのに使う)"
 
-#: src/conf.c:986
+#: src/conf.c:991
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr "マウスの中ボタンのクリックで、マウス飛行モードをトグルするかどうか。"
 
-#: src/conf.c:990
+#: src/conf.c:995
 msgid "Mouse-flying thrust control"
 msgstr "マウス飛行での推力制御"
 
-#: src/conf.c:994
+#: src/conf.c:999
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr "ダブルクリックの最大間隔 (0なら無効化)。"
 
-#: src/conf.c:998
+#: src/conf.c:1003
 msgid "Enemy distance at which autonav speed resets."
 msgstr "敵の距離がこの値になったら自動操縦の速度をもとに戻す。"
 
-#: src/conf.c:1002
+#: src/conf.c:1007
 msgid "Shield value at which autonav speed resets."
 msgstr "シールドがこの値になったら自動操縦の速度をもとに戻す。"
 
-#: src/conf.c:1006
+#: src/conf.c:1011
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr "開発者モードを有効化するか(ユニバースエディターとその同類)"
 
-#: src/conf.c:1010
+#: src/conf.c:1015
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 "ユニバースエディターを使ったときに、編集を終了するといつでも自動的に保存する"
 "か"
 
-#: src/conf.c:1014
+#: src/conf.c:1019
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 "ゲームが終了したときに、毎回設定ファイルを保存するか(これを書きかえるか)"
 
-#: src/conf.c:1018
+#: src/conf.c:1023
 msgid "Indicates the last version the game has run in before"
 msgstr "以前実行したことのある最新のゲームの版数"
 
-#: src/conf.c:1022
+#: src/conf.c:1027
 msgid ""
 "Indicates whether we've already warned about incomplete game translations."
 msgstr "不完全なゲームの翻訳についてすでに注意したかどうか。"
 
 #. Debugging.
-#: src/conf.c:1027
+#: src/conf.c:1032
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr "FPU例外の有効化 - DEBUGビルドでのみ作用する"
 
 #. Editor.
-#: src/conf.c:1032
+#: src/conf.c:1037
 msgid "Paths for saving different files from the editor"
 msgstr "エディターでいろいろなファイルを保存するパス"
 
-#: src/conf.c:1042
+#: src/conf.c:1047
 msgid "Keybindings"
 msgstr "キーの割り当て"
 
-#: src/conf.c:1111
+#: src/conf.c:1116
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -85369,7 +85381,7 @@ msgid "Take Off"
 msgstr "離陸"
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2104
+#: src/equipment.c:327 src/equipment.c:2108
 msgid "Sell Ship"
 msgstr "船を売る"
 
@@ -85531,50 +85543,51 @@ msgstr "#%c%s #%c%s #0スロット"
 msgid " [exclusive]"
 msgstr " [排他的]"
 
-#: src/equipment.c:1337
-#, c-format
-msgid ""
-"\n"
-"%.2f DPS [%.2f EPS]"
+#: src/equipment.c:1341
+#, fuzzy, c-format
+#| msgid ""
+#| "\n"
+#| "%.2f DPS [%.2f EPS]"
+msgid "%.2f DPS [%.2f EPS]"
 msgstr ""
 "\n"
 "%.2f ダメージ/秒 [%.2f エネルギー/秒]"
 
-#: src/equipment.c:1446
+#: src/equipment.c:1450
 #, c-format
 msgid "Ship Stats\n"
 msgstr "船の状態\n"
 
-#: src/equipment.c:1522 src/land_outfits.c:261 src/shiplog.c:489
+#: src/equipment.c:1526 src/land_outfits.c:261 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr "すべて"
 
-#: src/equipment.c:1555
+#: src/equipment.c:1559
 msgid "Very little space on equipment outfit tabs!"
 msgstr "Very little space on equipment outfit tabs!"
 
-#: src/equipment.c:1565 src/land_outfits.c:291
+#: src/equipment.c:1569 src/land_outfits.c:291
 msgid "Filter…"
 msgstr "しぼりこみ..."
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1735 src/info.c:517 src/info.c:537
+#: src/equipment.c:1710 src/equipment.c:1739 src/info.c:517 src/info.c:537
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] "トン"
 
-#: src/equipment.c:1708 src/info.c:519
+#: src/equipment.c:1712 src/info.c:519
 #, c-format
 msgid "%s average"
 msgstr "平均 %s"
 
-#: src/equipment.c:1710
+#: src/equipment.c:1714
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr "#%c%s%.0f#0 kN/トン"
 
-#: src/equipment.c:1712
+#: src/equipment.c:1716
 #, c-format
 msgid ""
 "\n"
@@ -85583,7 +85596,7 @@ msgstr ""
 "\n"
 "#%c%s%.0f#0 m/s (最大 #%c%s%.0f#0 m/s)"
 
-#: src/equipment.c:1715
+#: src/equipment.c:1719
 #, c-format
 msgid ""
 "\n"
@@ -85592,131 +85605,131 @@ msgstr ""
 "\n"
 "#%c%s%.0f#0 度/s"
 
-#: src/equipment.c:1719
+#: src/equipment.c:1723
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr "%s (スキャンあたり %.1f 秒)"
 
-#: src/equipment.c:1724 src/equipment.c:1727 src/equipment.c:1730
+#: src/equipment.c:1728 src/equipment.c:1731 src/equipment.c:1734
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 
 #. Misc.
-#: src/equipment.c:1734
+#: src/equipment.c:1738
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr "%d / #%c%s%d#0 %s"
 
-#: src/equipment.c:1737
+#: src/equipment.c:1741
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr "%s %s (%d %s)"
 
-#: src/equipment.c:1738 src/info.c:539 src/land_shipyard.c:288
+#: src/equipment.c:1742 src/info.c:539 src/land_shipyard.c:288
 #: src/land_shipyard.c:292 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] "ユニット"
 
-#: src/equipment.c:1738 src/info.c:248 src/info.c:540
+#: src/equipment.c:1742 src/info.c:248 src/info.c:540
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] "ジャンプ"
 
-#: src/equipment.c:1817
+#: src/equipment.c:1821
 msgid "Show all outfits"
 msgstr "すべての艤装品を見る"
 
-#: src/equipment.c:1818
+#: src/equipment.c:1822
 msgid "Show only equipable outfits"
 msgstr "装備可能な艤装品だけを見る"
 
-#: src/equipment.c:1819
+#: src/equipment.c:1823
 msgid "Show only light outfits"
 msgstr "軽量艤装品だけを見る"
 
-#: src/equipment.c:1820
+#: src/equipment.c:1824
 msgid "Show only medium outfits"
 msgstr "中級艤装品だけを見る"
 
-#: src/equipment.c:1821
+#: src/equipment.c:1825
 msgid "Show only heavy outfits"
 msgstr "重量艤装品だけを見る"
 
-#: src/equipment.c:1958
+#: src/equipment.c:1962
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 "改造なしで保管できる量をこえる積み荷があるときには、船から撤去はできません！"
 
-#: src/equipment.c:1961
+#: src/equipment.c:1965
 msgid "Unequip Ship"
 msgstr "船から撤去"
 
 #. confirm
-#: src/equipment.c:1962
+#: src/equipment.c:1966
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr "ほんとうにすべての装備を船から撤去したいですか？"
 
-#: src/equipment.c:1965 src/land.c:175
+#: src/equipment.c:1969 src/land.c:175
 msgid "Recall Fighters"
 msgstr "戦闘機の回収"
 
-#: src/equipment.c:1965 src/land.c:175
+#: src/equipment.c:1969 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr "これは展開した戦闘機を呼びもどすことになります。それでいいですか？"
 
-#: src/equipment.c:2039 src/land.c:1485
+#: src/equipment.c:2043 src/land.c:1485
 #, c-format
 msgid "File '%s' not found!"
 msgstr "File '%s' not found!"
 
-#: src/equipment.c:2047
+#: src/equipment.c:2051
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr "Failed to run '%s': %s"
 
-#: src/equipment.c:2059
+#: src/equipment.c:2063
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr "'%s' doesn't have valid required 'autoequip' function!"
 
-#: src/equipment.c:2065
+#: src/equipment.c:2069
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr "'%s' failed to run required 'autoequip' function: %s"
 
-#: src/equipment.c:2105
+#: src/equipment.c:2109
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "ほんとうに船 ｢%s｣ を %sで売りたいですか？"
 
 #. Display widget.
-#: src/equipment.c:2122
+#: src/equipment.c:2126
 msgid "Ship Sold"
 msgstr "船の売却"
 
-#: src/equipment.c:2123
+#: src/equipment.c:2127
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr "あなたは船 ｢%s｣ を %sで売りました。"
 
-#: src/equipment.c:2148 src/player.c:403
+#: src/equipment.c:2152 src/player.c:403
 msgid "Ship Name"
 msgstr "船の名前"
 
-#: src/equipment.c:2149
+#: src/equipment.c:2153
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr "｢%s｣ の新しい名前を入力してください:"
 
-#: src/equipment.c:2157
+#: src/equipment.c:2161
 msgid "Name Collision"
 msgstr "名前の重複"
 
-#: src/equipment.c:2158 src/player.c:430
+#: src/equipment.c:2162 src/player.c:430
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr "あなたのほかの船と同じ名前をつけないでください。"
 
@@ -86144,7 +86157,7 @@ msgstr ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 
-#: src/gui.c:1995
+#: src/gui.c:1998
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr "#oレーダーの範囲を %.0f 倍に設定しました。#0"
@@ -88535,7 +88548,7 @@ msgstr "Failed to parse version string '%s'!"
 msgid "Unable to initialize SDL: %s"
 msgstr "Unable to initialize SDL: %s"
 
-#: src/naev.c:217 src/opengl.c:421
+#: src/naev.c:217 src/opengl.c:423
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr "Unable to initialize SDL Video: %s"
@@ -89747,61 +89760,61 @@ msgstr "GL unknown error"
 msgid "OpenGL error [%s:%d]: %s"
 msgstr "OpenGL error [%s:%d]: %s"
 
-#: src/opengl.c:259
+#: src/opengl.c:261
 #, c-format
 msgid "Unable to create window! %s"
 msgstr "Unable to create window! %s"
 
-#: src/opengl.c:273
+#: src/opengl.c:275
 #, c-format
 msgid "Unable to create OpenGL context! %s"
 msgstr "Unable to create OpenGL context! %s"
 
 #. Debug happiness
-#: src/opengl.c:322
+#: src/opengl.c:324
 #, c-format
 msgid "OpenGL Drawable Created: %dx%d@%dbpp"
 msgstr "OpenGL Drawable Created: %dx%d@%dbpp"
 
-#: src/opengl.c:323
+#: src/opengl.c:325
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 msgstr "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 
-#: src/opengl.c:325 src/opengl.c:327
+#: src/opengl.c:327 src/opengl.c:329
 msgid "yes"
 msgstr "yes"
 
-#: src/opengl.c:325 src/opengl.c:327
+#: src/opengl.c:327 src/opengl.c:329
 msgid "no"
 msgstr "no"
 
-#: src/opengl.c:327
+#: src/opengl.c:329
 #, c-format
 msgid "vsync: %s"
 msgstr "vsync: %s"
 
-#: src/opengl.c:328 src/sound_openal.c:338
+#: src/opengl.c:330 src/sound_openal.c:338
 #, c-format
 msgid "Renderer: %s"
 msgstr "Renderer: %s"
 
-#: src/opengl.c:329
+#: src/opengl.c:331
 #, c-format
 msgid "Version: %s"
 msgstr "Version: %s"
 
-#: src/opengl.c:333
+#: src/opengl.c:335
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
 msgstr "Missing texture units (%d required, %d found)"
 
-#: src/opengl.c:336
+#: src/opengl.c:338
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr "Unable to get requested FSAA level (%d requested, got %d)"
 
-#: src/opengl.c:385
+#: src/opengl.c:387
 msgid "Screen size too small, upscaling..."
 msgstr "Screen size too small, upscaling..."
 
@@ -92021,11 +92034,11 @@ msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
 msgid "#oAutonav: following target %s has been lost."
 msgstr "#o自動操縦装置 : 追跡していた%sを見失いました。"
 
-#: src/player_autonav.c:736
+#: src/player_autonav.c:742
 msgid "Target changed to current system"
 msgstr "現在の星系に目標が変わった"
 
-#: src/player_autonav.c:740
+#: src/player_autonav.c:746
 msgid "Not enough fuel for autonav to continue"
 msgstr "自動操縦をつづけるための燃料が不足している"
 
