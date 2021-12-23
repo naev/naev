@@ -18,6 +18,9 @@
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
 
+* 0.9.1 (unreleased)
+   * Minor countermeasures for long player ship names
+
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu
    * Map mode is remembered throughout the gaming session
