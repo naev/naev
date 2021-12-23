@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-21 18:12-0500\n"
+"POT-Creation-Date: 2021-12-23 09:20-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -23326,7 +23326,7 @@ msgstr ""
 #.
 #. Binary flags for the different states that default to nil (false).
 #. - forced: the task is forced and shouldn't be changed
-#. - attack: the pilot is attacked their target
+#. - attack: the pilot is attacking their target
 #. - fighting: the pilot is engaged in combat (including running away )
 #. - noattack: do not try to find new targets to attack
 #. --
@@ -23361,7 +23361,7 @@ msgstr ""
 #. Medium ships
 #. Capital ships
 #. Generic AI
-#: dat/ai/core/control/generic.lua:234
+#: dat/ai/core/control/generic.lua:237
 #, fuzzy
 #| msgid "Formation '%s' not found"
 msgid "Pilot '{plt}': formation '{formation}' not found!"
@@ -31916,59 +31916,62 @@ msgid ""
 msgstr ""
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:263
+#: dat/events/neutral/shiplover.lua:264
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
+"quiz {n} time now! Here, take this as a reward for your performance.\""
+msgid_plural ""
+"\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
-msgstr ""
+msgstr[0] ""
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:268 dat/events/neutral/shiplover.lua:282
+#: dat/events/neutral/shiplover.lua:271 dat/events/neutral/shiplover.lua:285
 msgid "Ship Enthusiast"
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:268
+#: dat/events/neutral/shiplover.lua:271
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr ""
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:287
+#: dat/events/neutral/shiplover.lua:290
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:288
+#: dat/events/neutral/shiplover.lua:291
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:294
 msgid "\"It looks great!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:292
+#: dat/events/neutral/shiplover.lua:295
 msgid "\"It's awful.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:293
+#: dat/events/neutral/shiplover.lua:296
 msgid "\"Aren't you too young to be here?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:304
+#: dat/events/neutral/shiplover.lua:307
 msgid "\"You know I own a real one.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:310
+#: dat/events/neutral/shiplover.lua:313
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:314
+#: dat/events/neutral/shiplover.lua:317
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -31977,13 +31980,13 @@ msgid ""
 "is fairly ridiculous."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:319
+#: dat/events/neutral/shiplover.lua:322
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:324
+#: dat/events/neutral/shiplover.lua:327
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -31992,7 +31995,7 @@ msgid ""
 "etched on the side."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:329
+#: dat/events/neutral/shiplover.lua:332
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -32000,56 +32003,56 @@ msgid ""
 msgstr ""
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:335
+#: dat/events/neutral/shiplover.lua:338
 #, fuzzy
 #| msgid "You are no match for the Empire!"
 msgid "You once again approach the ship enthusiast."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: dat/events/neutral/shiplover.lua:336
+#: dat/events/neutral/shiplover.lua:339
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:338
+#: dat/events/neutral/shiplover.lua:341
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:339
+#: dat/events/neutral/shiplover.lua:342
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:342 dat/missions/minerva/maikki2.lua:196
+#: dat/events/neutral/shiplover.lua:345 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:343 dat/missions/minerva/kex4.lua:149
+#: dat/events/neutral/shiplover.lua:346 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:347
+#: dat/events/neutral/shiplover.lua:350
 msgid "\"Oh well, your loss!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:352
+#: dat/events/neutral/shiplover.lua:355
 msgid "\"Great! So here it goes. Listen carefully.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:369
+#: dat/events/neutral/shiplover.lua:372
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr ""
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:409
+#: dat/events/neutral/shiplover.lua:412
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr ""
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:413
+#: dat/events/neutral/shiplover.lua:416
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -34167,8 +34170,8 @@ msgstr ""
 #. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 #. Initialize the map overlay stuff.
 #: dat/factions/spawn/lib/common.lua:184 dat/gui/brushed.lua:384
-#: dat/gui/brushed.lua:818 dat/gui/brushed.lua:857 dat/gui/legacy.lua:210
-#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:384
+#: dat/gui/brushed.lua:818 dat/gui/brushed.lua:857 dat/gui/legacy.lua:213
+#: dat/gui/legacy.lua:304 dat/gui/legacy.lua:318 dat/gui/slim.lua:384
 #: dat/gui/slim.lua:971 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
 #: src/gui.c:1518 src/map.c:503 src/map.c:509 src/map.c:515 src/map.c:521
@@ -34763,6 +34766,7 @@ msgstr ""
 #. Misc position
 #. Bottom bar
 #. gui.viewport( 0, 20, screen_w, screen_h-20 )
+#. Overlay bounds
 #. Update stuff
 #. --
 #. This function is run whenever the player changes nav target (be in hyperspace or planet target).
@@ -34782,20 +34786,20 @@ msgstr ""
 #. --
 #. gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 #. Renders the navigation computer
-#: dat/gui/legacy.lua:193
+#: dat/gui/legacy.lua:196
 #, fuzzy
 msgid "Landing"
 msgstr "조판됨:"
 
-#: dat/gui/legacy.lua:199 dat/gui/legacy.lua:214 dat/gui/legacy.lua:222
+#: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
 msgid "Off"
 msgstr ""
 
-#: dat/gui/legacy.lua:204
+#: dat/gui/legacy.lua:207
 msgid "Hyperspace"
 msgstr ""
 
-#: dat/gui/legacy.lua:220
+#: dat/gui/legacy.lua:223
 msgid "Navigation"
 msgstr ""
 
@@ -34821,7 +34825,7 @@ msgstr ""
 #. gfx.print( true, _("None"), weapon_x, weapon_y-32, col_gray, weapon_w, true )
 #. end
 #. --
-#: dat/gui/legacy.lua:268
+#: dat/gui/legacy.lua:271
 msgid "No Target"
 msgstr ""
 
@@ -34833,38 +34837,38 @@ msgstr ""
 #. Faction Logo
 #. Cargo light cargo_light_off
 #. Status information
-#: dat/gui/legacy.lua:332 dat/gui/slim.lua:940
+#: dat/gui/legacy.lua:335 dat/gui/slim.lua:940
 msgid "Disabled"
 msgstr ""
 
-#: dat/gui/legacy.lua:334
+#: dat/gui/legacy.lua:337
 #, lua-format
 msgid "Armour: %.0f%%"
 msgstr ""
 
-#: dat/gui/legacy.lua:336
+#: dat/gui/legacy.lua:339
 #, lua-format
 msgid "Shield: %.0f%%"
 msgstr ""
 
 #. Render faction logo.
 #. Renders the miscellaneous stuff
-#: dat/gui/legacy.lua:353
+#: dat/gui/legacy.lua:356
 #, fuzzy
 msgid "Creds:"
 msgstr "크레딧"
 
-#: dat/gui/legacy.lua:357
+#: dat/gui/legacy.lua:360
 msgid "Cargo Free:"
 msgstr ""
 
 #. Renders the warnings like system volatility
 #. Render warnings
-#: dat/gui/legacy.lua:374
+#: dat/gui/legacy.lua:377
 msgid "LOCK-ON DETECTED"
 msgstr ""
 
-#: dat/gui/legacy.lua:378
+#: dat/gui/legacy.lua:381
 msgid "VOLATILE ENVIRONMENT DETECTED"
 msgstr ""
 
@@ -79438,343 +79442,347 @@ msgstr ""
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:429
+#: src/conf.c:430
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:433
+#: src/conf.c:434
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:447
+#: src/conf.c:448
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:451
+#: src/conf.c:452
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:477
+#: src/conf.c:478
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:483
+#: src/conf.c:484
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:496
+#: src/conf.c:497
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:507
+#: src/conf.c:508
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:514
+#: src/conf.c:515
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:609
+#: src/conf.c:610
 msgid "Enabling developer mode."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:786
+#: src/conf.c:787
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:792
+#: src/conf.c:793
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:798
+#: src/conf.c:799
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:802
+#: src/conf.c:803
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:807
+#: src/conf.c:808
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:812
+#: src/conf.c:813
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:813
+#: src/conf.c:814
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:817
+#: src/conf.c:818
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
 #. Window.
-#: src/conf.c:822
+#: src/conf.c:823
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:823
+#: src/conf.c:824
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:833
+#: src/conf.c:834
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:834
+#: src/conf.c:835
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:838
+#: src/conf.c:839
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr ""
 
-#: src/conf.c:839
+#: src/conf.c:840
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
 
-#: src/conf.c:843
+#: src/conf.c:844
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:847
+#: src/conf.c:848
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:851
+#: src/conf.c:852
+msgid "Disable allowing resizing the window."
+msgstr ""
+
+#: src/conf.c:856
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:855 src/options.c:1311
+#: src/conf.c:860 src/options.c:1311
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:859 src/options.c:1314
+#: src/conf.c:864 src/options.c:1314
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/conf.c:863
+#: src/conf.c:868
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
 
-#: src/conf.c:867
+#: src/conf.c:872
 msgid ""
 "Nebula brightness. 1 is normal brightness while setting it to 0 would make "
 "the nebula pitch black."
 msgstr ""
 
-#: src/conf.c:871
+#: src/conf.c:876
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
 
-#: src/conf.c:875
+#: src/conf.c:880
 msgid "Expensive high quality shaders for the background. Defaults to false."
 msgstr ""
 
 #. FPS
-#: src/conf.c:880
+#: src/conf.c:885
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:884
+#: src/conf.c:889
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:889
+#: src/conf.c:894
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:894
+#: src/conf.c:899
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:898
+#: src/conf.c:903
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:902
+#: src/conf.c:907
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:908
+#: src/conf.c:913
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:909
+#: src/conf.c:914
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:922
+#: src/conf.c:927
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:924
+#: src/conf.c:929
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:930
+#: src/conf.c:935
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:932
+#: src/conf.c:937
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:937
+#: src/conf.c:942
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:938
+#: src/conf.c:943
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:939
+#: src/conf.c:944
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:945
+#: src/conf.c:950
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: src/conf.c:949
+#: src/conf.c:954
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:954
+#: src/conf.c:959
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:955
+#: src/conf.c:960
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: src/conf.c:956
+#: src/conf.c:961
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr ""
 
-#: src/conf.c:958
+#: src/conf.c:963
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr ""
 
-#: src/conf.c:960
+#: src/conf.c:965
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr ""
 
-#: src/conf.c:962
+#: src/conf.c:967
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
 #. Misc.
-#: src/conf.c:966
+#: src/conf.c:971
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:970
+#: src/conf.c:975
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:974
+#: src/conf.c:979
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:978
+#: src/conf.c:983
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:982
+#: src/conf.c:987
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
 msgstr ""
 
-#: src/conf.c:986
+#: src/conf.c:991
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
 
-#: src/conf.c:990
+#: src/conf.c:995
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: src/conf.c:994
+#: src/conf.c:999
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:998
+#: src/conf.c:1003
 msgid "Enemy distance at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:1002
+#: src/conf.c:1007
 msgid "Shield value at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:1006
+#: src/conf.c:1011
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:1010
+#: src/conf.c:1015
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:1014
+#: src/conf.c:1019
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1018
+#: src/conf.c:1023
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
-#: src/conf.c:1022
+#: src/conf.c:1027
 msgid ""
 "Indicates whether we've already warned about incomplete game translations."
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1027
+#: src/conf.c:1032
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1032
+#: src/conf.c:1037
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: src/conf.c:1042
+#: src/conf.c:1047
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1111
+#: src/conf.c:1116
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -80469,7 +80477,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2104
+#: src/equipment.c:327 src/equipment.c:2108
 msgid "Sell Ship"
 msgstr ""
 
@@ -80636,187 +80644,185 @@ msgstr ""
 msgid " [exclusive]"
 msgstr ""
 
-#: src/equipment.c:1337
+#: src/equipment.c:1341
 #, c-format
-msgid ""
-"\n"
-"%.2f DPS [%.2f EPS]"
+msgid "%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1446
+#: src/equipment.c:1450
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1522 src/land_outfits.c:261 src/shiplog.c:489
+#: src/equipment.c:1526 src/land_outfits.c:261 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1555
+#: src/equipment.c:1559
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1565 src/land_outfits.c:291
+#: src/equipment.c:1569 src/land_outfits.c:291
 msgid "Filter…"
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1706 src/equipment.c:1735 src/info.c:517 src/info.c:537
+#: src/equipment.c:1710 src/equipment.c:1739 src/info.c:517 src/info.c:537
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 
-#: src/equipment.c:1708 src/info.c:519
+#: src/equipment.c:1712 src/info.c:519
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1710
+#: src/equipment.c:1714
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr ""
 
-#: src/equipment.c:1712
+#: src/equipment.c:1716
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1715
+#: src/equipment.c:1719
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
 msgstr ""
 
-#: src/equipment.c:1719
+#: src/equipment.c:1723
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1724 src/equipment.c:1727 src/equipment.c:1730
+#: src/equipment.c:1728 src/equipment.c:1731 src/equipment.c:1734
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1734
+#: src/equipment.c:1738
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1737
+#: src/equipment.c:1741
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1738 src/info.c:539 src/land_shipyard.c:288
+#: src/equipment.c:1742 src/info.c:539 src/land_shipyard.c:288
 #: src/land_shipyard.c:292 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 
-#: src/equipment.c:1738 src/info.c:248 src/info.c:540
+#: src/equipment.c:1742 src/info.c:248 src/info.c:540
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 
-#: src/equipment.c:1817
+#: src/equipment.c:1821
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1818
+#: src/equipment.c:1822
 msgid "Show only equipable outfits"
 msgstr ""
 
-#: src/equipment.c:1819
+#: src/equipment.c:1823
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1820
+#: src/equipment.c:1824
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1821
+#: src/equipment.c:1825
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:1958
+#: src/equipment.c:1962
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:1961
+#: src/equipment.c:1965
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:1962
+#: src/equipment.c:1966
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1965 src/land.c:175
+#: src/equipment.c:1969 src/land.c:175
 #, fuzzy
 msgid "Recall Fighters"
 msgstr "랜슬롯"
 
-#: src/equipment.c:1965 src/land.c:175
+#: src/equipment.c:1969 src/land.c:175
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2039 src/land.c:1485
+#: src/equipment.c:2043 src/land.c:1485
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/equipment.c:2047
+#: src/equipment.c:2051
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid "Failed to run '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/equipment.c:2059
+#: src/equipment.c:2063
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2065
+#: src/equipment.c:2069
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2105
+#: src/equipment.c:2109
 #, fuzzy, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Naev를 나가겠습니까?"
 
 #. Display widget.
-#: src/equipment.c:2122
+#: src/equipment.c:2126
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2123
+#: src/equipment.c:2127
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2148 src/player.c:403
+#: src/equipment.c:2152 src/player.c:403
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2149
+#: src/equipment.c:2153
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2157
+#: src/equipment.c:2161
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2158 src/player.c:430
+#: src/equipment.c:2162 src/player.c:430
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -81223,7 +81229,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/gui.c:1995
+#: src/gui.c:1998
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr ""
@@ -83619,7 +83625,7 @@ msgstr ""
 msgid "Unable to initialize SDL: %s"
 msgstr ""
 
-#: src/naev.c:217 src/opengl.c:421
+#: src/naev.c:217 src/opengl.c:423
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr ""
@@ -84807,62 +84813,62 @@ msgstr "GL 알 수 없는 오류"
 msgid "OpenGL error [%s:%d]: %s"
 msgstr "OpenGL 오류 [%s: %d]: %s"
 
-#: src/opengl.c:259
+#: src/opengl.c:261
 #, c-format
 msgid "Unable to create window! %s"
 msgstr "창을 만들 수 없습니다! %s"
 
-#: src/opengl.c:273
+#: src/opengl.c:275
 #, c-format
 msgid "Unable to create OpenGL context! %s"
 msgstr "OpenGL 컨텍스트를 만들 수 없습니다! %s"
 
 #. Debug happiness
-#: src/opengl.c:322
+#: src/opengl.c:324
 #, c-format
 msgid "OpenGL Drawable Created: %dx%d@%dbpp"
 msgstr "OpenGL 드로어블 생성: %dx%d@%dbpp"
 
-#: src/opengl.c:323
+#: src/opengl.c:325
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 msgstr "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 
-#: src/opengl.c:325 src/opengl.c:327
+#: src/opengl.c:327 src/opengl.c:329
 msgid "yes"
 msgstr "맞아"
 
-#: src/opengl.c:325 src/opengl.c:327
+#: src/opengl.c:327 src/opengl.c:329
 msgid "no"
 msgstr "아니야"
 
-#: src/opengl.c:327
+#: src/opengl.c:329
 #, fuzzy, c-format
 #| msgid "Version: %s"
 msgid "vsync: %s"
 msgstr "버전: %s"
 
-#: src/opengl.c:328 src/sound_openal.c:338
+#: src/opengl.c:330 src/sound_openal.c:338
 #, c-format
 msgid "Renderer: %s"
 msgstr "렌더링: %s"
 
-#: src/opengl.c:329
+#: src/opengl.c:331
 #, c-format
 msgid "Version: %s"
 msgstr "버전: %s"
 
-#: src/opengl.c:333
+#: src/opengl.c:335
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
 msgstr "텍스처 단위 누락 (%d필요, %d 개 발견)"
 
-#: src/opengl.c:336
+#: src/opengl.c:338
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr "요청 된 FSAA 수준을 가져올 수 없습니다 (요청한 %d, %d 가져옴)."
 
-#: src/opengl.c:385
+#: src/opengl.c:387
 msgid "Screen size too small, upscaling..."
 msgstr "화면 크기가 너무 작아서 확장 중..."
 
@@ -86960,11 +86966,11 @@ msgstr ""
 msgid "#oAutonav: following target %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:736
+#: src/player_autonav.c:742
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:740
+#: src/player_autonav.c:746
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
