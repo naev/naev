@@ -141,6 +141,12 @@ cp "$TEMPPATH"/naev-itch-deployment/.itch.toml "$OUTDIR"/win64
 sed -i "s/%EXECNAME%/naev-$SUFFIX-win64.exe/" "$OUTDIR"/win64/.itch.toml
 sed -i 's/%PLATFORM%/windows/' "$OUTDIR"/win64/.itch.toml
 
+# Prepare soundtrack
+if [ "$NIGHTLY" == "false" && "$PRERELEASE" == "false" ]; then
+    mkdir -p "$OUTDIR"/soundtrack
+    unzip "$TEMPPATH"/naev-soundtrack/*.zip -d "$OUTDIR"/soundtrack
+fi
+
 # Push builds to itch.io via butler
 
 if [ "$DRYRUN" == "false" ]; then
