@@ -17,14 +17,14 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.4</delay>
-  <speed>700</speed>
+  <speed>1400</speed>
   <range>1750</range>
   <falloff>1400</falloff>
   <gfx_end>laser2L.png</gfx_end>
   <energy>49</energy>
   <heatup>75</heatup>
-  <trackmin>2000</trackmin>
-  <trackmax>8000</trackmax>
+  <trackmin>2400</trackmin>
+  <trackmax>9600</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>62</penetrate>
