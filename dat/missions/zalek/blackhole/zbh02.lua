@@ -174,9 +174,9 @@ They then notice your worried face and ask what is wrong. You explain the encoun
 "This makes it clear that what happened here was not an accident, but a deliberate act of destruction. This doesn't clear things up, but it is obvious that we must continue to investigate until the end. I have to find out what happened to her and find out who did this."
 He trembles slightly with contained anger.]]))
       z(_([[He closes his eyes, mutters something you can't make out, and lets out a deep breath.
-"I must not let myself get carried away in rage. We must analyze this and proceed methodologically. There is no room for emotion-caused errors. Science guides to glory."
+"I must not let myself get carried away in rage. We must analyse this and proceed methodologically. There is no room for emotion-caused errors. Science guides to glory."
 He looks more determined than ever.]]))
-      z(_([["We must proceed carefully. It is clear that someone or something does not us to be here. We also don't know what is going on around here with more questions than answers, however, to find answers you must first ask the right questions. I will analyze our options, meet me up at the bar once you are ready for the next steps."]]))
+      z(_([["We must proceed carefully. It is clear that someone or something does not us to be here. We also don't know what is going on around here with more questions than answers, however, to find answers you must first ask the right questions. I will analyse our options, meet me up at the bar once you are ready for the next steps."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
