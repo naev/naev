@@ -20,6 +20,7 @@
 
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
+   * Fix broken dialogue in the "Shadow Vigil" mission
 
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu
