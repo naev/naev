@@ -1910,7 +1910,7 @@ void gui_cleanup (void)
    ovr_boundsSet( 0, 0, 0, 0 );
 
    /* Reset FPS. */
-   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFontMono.h) );
 
    /* Destroy offset. */
    gui_xoff = 0.;

@@ -335,7 +335,7 @@ int main( int argc, char** argv )
    music_choose("load");
 
    /* FPS stuff. */
-   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFontMono.h) );
 
    /* Misc graphics init */
    render_init();
@@ -792,7 +792,7 @@ void naev_resize (void)
       background_initStars( 1000. ); /* from loadscreen_load */
 
    /* Must be before gui_reload */
-   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFontMono.h) );
 
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
@@ -930,8 +930,8 @@ void display_fps( const double dt )
    x = fps_x;
    y = fps_y;
    if (conf.fps_show) {
-      gl_print( NULL, x, y, &cFontWhite, "%3.2f", fps );
-      y -= gl_defFont.h + 5.;
+      gl_print( &gl_defFontMono, x, y, &cFontWhite, "%3.2f", fps );
+      y -= gl_defFontMono.h + 5.;
    }
 
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -939,7 +939,7 @@ void display_fps( const double dt )
       dt_mod_base = player_dt_default();
    }
    if (dt_mod != dt_mod_base)
-      gl_print( NULL, x, y, &cFontWhite, "%3.1fx", dt_mod / dt_mod_base);
+      gl_print( &gl_defFontMono, x, y, &cFontWhite, "%3.1fx", dt_mod / dt_mod_base);
 
    if (!paused || !player_paused || !conf.pause_show)
       return;
