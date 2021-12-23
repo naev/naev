@@ -109,7 +109,7 @@ local function clicked ()
          {_("Stealth"), "tut_stealth"},
          {_("Nevermind"), "mainmenu"},
       }
-      table.insert( opts, #opts-1, {_("Bioships"), "tut_bioship"} )
+      table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
       return opts
    end )
 
