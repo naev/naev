@@ -198,7 +198,7 @@ static void opt_close( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Handles resize events nfor the options menu.
+ * @brief Handles resize events for the options menu.
  */
 void opt_resize (void)
 {
