@@ -112,7 +112,7 @@ function bioship_pay( amount, _reason )
       -- TODO sound and effect?
       player.msg(_("#gYour bioship has enough experience to advance a stage!#0"))
       if player.isLanded() then
-         bioship.setstage( stage+1 )
+         bioship.setstage( bioship.curstage( exp, maxstage ) )
       end
    end
 end
