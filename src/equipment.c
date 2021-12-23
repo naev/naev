@@ -1318,8 +1318,9 @@ void equipment_addAmmo (void)
  *    @param max_len Maximum length of the string to allocate.
  *    @param s Pilot to get stats of.
  *    @param dpseps Whether or not to display dps and eps.
+ *    @param name Whether or not to display the pilot name.
  */
-int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps, int name )
 {
    int l;
    double eps, dps;
@@ -1331,10 +1332,13 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
       pilot_dpseps( s, &dps, &eps );
 
    /* Write to buffer. */
-   l = scnprintf( buf, max_len, "%s", s->name );
+   if (name)
+      l = scnprintf( buf, max_len, "%s\n", s->name );
+   else
+      l = 0;
    if (dps > 0.)
       l += scnprintf( &buf[l], (max_len-l),
-            _("\n%.2f DPS [%.2f EPS]"), dps, eps );
+            _("%.2f DPS [%.2f EPS]"), dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
@@ -1444,7 +1448,7 @@ static void equipment_genShipList( unsigned int wid )
       s  = player_getShip( cships[i].caption );
       cships[i].alt = malloc( STRMAX_SHORT );
       l  = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
-      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
+      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1, 1 );
       if (l == 0) {
          free( cships[i].alt );
          cships[i].alt = NULL;

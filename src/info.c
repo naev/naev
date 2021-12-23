@@ -464,28 +464,28 @@ static void info_openShip( unsigned int wid )
          "closeOutfits", _("Close"), info_close );
 
    /* Text. */
-      l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
-   window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
+   window_addText( wid, 20, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
+   window_addText( wid, 160, -40, w-20-20-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -540,7 +540,7 @@ static void ship_update( unsigned int wid )
          pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n" );
 
-   equipment_shipStats( &buf[l], sizeof(buf)-l, player.p, 1 );
+   equipment_shipStats( &buf[l], sizeof(buf)-l, player.p, 1, 0 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
 }
