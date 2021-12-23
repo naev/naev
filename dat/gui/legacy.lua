@@ -104,6 +104,9 @@ function create()
    -- Bottom bar
    --gui.viewport( 0, 20, screen_w, screen_h-20 )
 
+   -- Overlay bounds
+   gui.setMapOverlayBounds(15, 185, 15, 185)
+
    -- Update stuff
    update_cargo()
    update_nav()
