@@ -368,7 +368,7 @@ void equipment_open( unsigned int wid )
          w-x-128-30, y-20+h-bh, 0, "txtAcquired", &gl_defFont, NULL, NULL );
    x += 130;
    window_addText( wid, x, y,
-         w-x-20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
+         w-x-20-128-20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
@@ -1644,7 +1644,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
    PlayerShip_t *ps;
    char *nt;
    int onboard, cargo, jumps, favourite, x, h;
-   int ww, wh, sw, sh, hacquired;
+   int ww, wh, sw, sh, hacquired, hname;
+   int wgtw, wgth;
    size_t l = 0;
 
    equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
@@ -1682,7 +1683,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
    /* Get acquired text length. */
    x = 20+sw+20+180+10;
    acquired = (ps->acquired) ? ps->acquired : _("You do not remember how you acquired this ship.");
-   hacquired = gl_printLinesRaw( &gl_defFont, ww-x-128-30, acquired );
+   window_dimWidget( wid, "txtAcquired", &wgtw, &wgth );
+   hacquired = gl_printLinesRaw( &gl_defFont, wgtw, acquired );
+   window_dimWidget( wid, "txtDDesc", &wgtw, &wgth );
+   hname = gl_printLinesRaw( &gl_defFont, wgtw, ship->name );
 
    /* Stealth stuff. */
    num2str( sdet, ship->ew_detection, 0 );
@@ -1692,6 +1696,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
    num2str( sfuel, ship->fuel_max, 0 );
 
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
+   for (int i=0; i<hname-1; i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "Acquired Date:" );
@@ -1741,7 +1747,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", tbuf );
 
-   h = gl_printHeightRaw( &gl_defFont, ww-x-128-30, buf );
+   h = gl_printHeightRaw( &gl_defFont, wgtw, buf );
    window_moveWidget( wid, "txtAcquired", x, -40-h-6 );
    window_modifyText( wid, "txtAcquired", acquired );
 
