@@ -38,6 +38,7 @@
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
 #define OUTFIT_DATA_PATH         "outfits/" /**< Path to outfits. */
+#define EFFECT_DATA_PATH         "effects/" /**< Path to effects. */
 #define MAP_DATA_PATH            "outfits/maps/" /**< Path to maps. */
 #define PLANET_DATA_PATH         "assets/" /**< Path to planets. */
 #define VIRTUALASSET_DATA_PATH   "assets_virtual/" /**< Path to planets. */
@@ -75,7 +76,6 @@
 #define AUTOEQUIP_PATH           "autoequip.lua"
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
-#define SHIPAI_PATH              "shipai.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"
 
 void ndata_setupWriteDir (void);

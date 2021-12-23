@@ -252,6 +252,15 @@ local custom_events = {
       title = _("Southern Stellar Winds"),
       --subtitle = _("None"),
    },
+   BlackHole = {
+      test = function ()
+         return system.cur():background() == "blackhole"
+      end,
+      type = "enter",
+      name = "disc_blackhole",
+      title = _("Anubis Black Hole"),
+      subtitle = _("Gapping Maw of the Abyss"),
+   },
    WildOnes = {
       test = function ()
          local p = system.cur():presences()["Wild Ones"]

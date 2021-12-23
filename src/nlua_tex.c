@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_tex.c
  *
  * @brief Handles the Lua texture bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 #include "SDL.h"
@@ -26,13 +24,10 @@
 #include "nlua_file.h"
 #include "nluadef.h"
 
-
 static int nlua_tex_counter = 0;
-
 
 /* Helpers. */
 static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
-
 
 /* Texture metatable methods. */
 static int texL_close( lua_State *L );
@@ -58,9 +53,6 @@ static const luaL_Reg texL_methods[] = {
    {0,0}
 }; /**< Texture metatable methods. */
 
-
-
-
 /**
  * @brief Loads the texture library.
  *
@@ -72,7 +64,6 @@ int nlua_loadTex( nlua_env env )
    nlua_register(env, TEX_METATABLE, texL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with OpenGL textures.
@@ -122,8 +113,7 @@ glTexture* luaL_checktex( lua_State *L, int ind )
  */
 glTexture** lua_pushtex( lua_State *L, glTexture *texture )
 {
-   glTexture **t;
-   t = (glTexture**) lua_newuserdata(L, sizeof(glTexture*));
+   glTexture **t = (glTexture**) lua_newuserdata(L, sizeof(glTexture*));
    *t = texture;
    luaL_getmetatable(L, TEX_METATABLE);
    lua_setmetatable(L, -2);
@@ -152,7 +142,6 @@ int lua_istex( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees the texture.
  *
@@ -166,7 +155,6 @@ static int texL_close( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Opens a texture.
@@ -257,7 +245,6 @@ static int texL_new( lua_State *L )
    return 1;
 }
 
-
 static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
 {
    int bpp = surface->format->BytesPerPixel;
@@ -288,7 +275,6 @@ static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
          return 0;       /* shouldn't happen, but avoids warnings */
    }
 }
-
 
 /**
  * @brief Reads image data from a file.
@@ -360,7 +346,6 @@ static int texL_readData( lua_State *L )
    return 3;
 }
 
-
 /**
  * @brief Saves texture data as a png.
  *
@@ -372,7 +357,7 @@ static int texL_writeData( lua_State *L )
 {
    glTexture *tex = luaL_checktex(L,1);
    const char *filename = luaL_checkstring(L,2);
-   int i, w, h;
+   int w, h;
    size_t len;
    char *data;
    SDL_Surface *surface;
@@ -390,7 +375,7 @@ static int texL_writeData( lua_State *L )
 
    /* Convert to PNG. */
    surface = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
-   for (i=0; i<h; i++)
+   for (int i=0; i<h; i++)
       memcpy( (GLubyte*)surface->pixels + i * (4*w), &data[ (h - i - 1) * (4*w) ], 4*w );
 
    /* Free buffer. */
@@ -408,7 +393,6 @@ static int texL_writeData( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the dimensions of the texture.
  *
@@ -423,10 +407,7 @@ static int texL_writeData( lua_State *L )
  */
 static int texL_dim( lua_State *L )
 {
-   glTexture *tex;
-
-   /* Get texture. */
-   tex = luaL_checktex( L, 1 );
+   glTexture *tex = luaL_checktex( L, 1 );
 
    /* Get all 4 values. */
    lua_pushnumber( L, tex->w  );
@@ -435,7 +416,6 @@ static int texL_dim( lua_State *L )
    lua_pushnumber( L, tex->sh );
    return 4;
 }
-
 
 /**
  * @brief Gets the number of sprites in the texture.
@@ -450,10 +430,7 @@ static int texL_dim( lua_State *L )
  */
 static int texL_sprites( lua_State *L )
 {
-   glTexture *tex;
-
-   /* Get texture. */
-   tex = luaL_checktex( L, 1 );
+   glTexture *tex = luaL_checktex( L, 1 );
 
    /* Get sprites. */
    lua_pushnumber( L, tex->sx * tex->sy );
@@ -461,7 +438,6 @@ static int texL_sprites( lua_State *L )
    lua_pushnumber( L, tex->sy );
    return 3;
 }
-
 
 /**
  * @brief Gets the sprite that corresponds to a direction.
@@ -476,16 +452,12 @@ static int texL_sprites( lua_State *L )
  */
 static int texL_spriteFromDir( lua_State *L )
 {
-   double a;
-   glTexture *tex;
-   int sx, sy;
-
    NLUA_CHECKRW(L);
 
-   /* Params. */
-   tex = luaL_checktex( L, 1 );
+   int sx, sy;
 
-   a = luaL_checknumber( L, 2 );
+   glTexture *tex = luaL_checktex( L, 1 );
+   double a = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */
    if ((a >= 2.*M_PI) || (a < 0.)) {
@@ -500,7 +472,6 @@ static int texL_spriteFromDir( lua_State *L )
    lua_pushinteger( L, sy+1 );
    return 2;
 }
-
 
 /**
  * @brief Sets the texture minification and magnification filters.
@@ -530,7 +501,6 @@ static int texL_setFilter( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Sets the texture wrapping.

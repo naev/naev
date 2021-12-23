@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Feral Rage I">
+ <description>TODO</description>
+ <duration>10</duration>
+ <icon>/gfx/misc/icons/oni.webp</icon>
+ <overwrite>feral_rage</overwrite>
+ <stats>
+  <fwd_damage>30</fwd_damage>
+  <tur_damage>30</tur_damage>
+ </stats>
+</effect>

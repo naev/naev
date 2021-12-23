@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Taitamariki">
+ <points>60</points>
+ <base_type>Odium</base_type>
+ <GFX>odium</GFX>
+ <rarity>5</rarity>
+ <GUI>brushed</GUI>
+ <sound>engine_soromid</sound>
+ <class display="Bio-Corvette">Corvette</class>
+ <price>950000</price>
+ <time_mod>1</time_mod>
+ <trail_generator x="-10" y="8" h="0">soromid</trail_generator>
+ <trail_generator x="-15" y="0" h="0">soromid</trail_generator>
+ <trail_generator x="-10" y="-8" h="0">soromid</trail_generator>
+ <fabricator>Soromid</fabricator>
+ <description>TODO</description>
+ <health>
+  <armour>220</armour>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>140</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" prop="bio_weapon" name="weap1" x="15" y="0" h="2">Talon Organ III</weapon>
+  <weapon size="medium" prop="bio_weapon" name="weap2" x="4" y="2" h="-5">Talon Organ III</weapon>
+  <weapon size="medium" prop="bio_weapon" name="weap3" x="4" y="-2" h="-5">Talon Organ III</weapon>
+  <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum II</utility>
+  <utility size="medium" prop="bio_organ" name="the_bite" />
+  <utility size="small" prop="bio_organ" name="adrenal_gland" />
+  <utility size="medium" prop="accessory" />
+  <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive III</structure>
+  <structure size="medium" prop="bio_hull" name="shell">Mediocris Cortex II</structure>
+ </slots>
+ <stats>
+  <ew_hide>10</ew_hide>
+ </stats>
+ <tags>
+  <tag>feral</tag>
+  <!--<tag>bioship</tag>-->
+ </tags>
+</ship>

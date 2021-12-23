@@ -11,6 +11,9 @@
   <location>Bar</location>
   <done>Za'lek Particle Physics 5</done>
  </avail>
+ <tags>
+  <tag>zlk_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
   <tier>1</tier>
@@ -120,6 +123,7 @@ function land ()
    vn.na( fmt.reward(reward) )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp06)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_combat_vessel_license")

@@ -144,7 +144,7 @@ local function compute_lootables ( plt )
       end
 
       local ocand = {}
-      for _k,o in ipairs(plt:outfits()) do
+      for _k,o in ipairs(plt:outfits(nil,true)) do
          local _name, _size, _prop, req = o:slot()
          -- Don't allow looting required outfits
          if not req and (not oloot or o~=oloot) then
@@ -304,6 +304,9 @@ local function can_cannibalize ()
    if pp:ship():tags().cannibal then
       return true
    end
+   if player.shipvarPeek("cannibal") then
+      return true
+   end
    for _k,o in ipairs(pp:outfits()) do
       if o:tags().cannibal then
          return true
@@ -314,6 +317,8 @@ end
 
 local function board_cannibalize ()
    local armour, shield = board_plt:health(true)
+   local cannibal2 = player.shipvarPeek("cannibal2")
+
    if armour <= 1 then
       return
    end
@@ -329,9 +334,12 @@ local function board_cannibalize ()
    end
 
    board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
-   pp:setHealth( 100*(parmour+dmg/2)/ps.armour, 100*pshield/ps.shield, pstress )
-
-   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=dmg/2, plt=board_plt}))
+   local heal_armour = dmg/2
+   if cannibal2 then
+      heal_armour = dmg*2/3
+   end
+   pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt}))
 end
 
 local function board_close ()
@@ -345,6 +353,11 @@ function board( plt )
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
+
+   local pp = player.pilot()
+   if player.shipvarPeek("cannibal2") then
+      pp:cooldownCycle()
+   end
 
    -- Destroy if exists
    if board_wdw then

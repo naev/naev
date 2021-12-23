@@ -116,6 +116,7 @@ static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
+static int land_canSave (void);
 /* spaceport bar */
 static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
@@ -137,6 +138,23 @@ static void misn_update( unsigned int wid, const char *str );
 void land_queueTakeoff (void)
 {
    land_takeoff = 1;
+}
+
+/**
+ * @brief Whether or not the player can save.
+ */
+static int land_canSave (void)
+{
+   int should_save = 0;
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *p = cur_system->planets[i];
+      planet_updateLand( p );
+      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
+         should_save = 1;
+         break;
+      }
+   }
+   return should_save;
 }
 
 /**
@@ -259,6 +277,7 @@ static void bar_getDim( int wid,
 static void bar_open( unsigned int wid )
 {
    int w, h, iw, ih, bw, bh, dh, th;
+   const char *desc;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_BAR);
@@ -267,8 +286,9 @@ static void bar_open( unsigned int wid )
    window_onClose( wid, bar_close );
 
    /* Get dimensions. */
+   desc = (land_planet->bar_description!=NULL) ? _(land_planet->bar_description) : "(NULL)";
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, desc );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -282,10 +302,8 @@ static void bar_open( unsigned int wid )
          _("Approach"), bar_approach, SDLK_a );
 
    /* Bar description. */
-   window_addText( wid, iw + 40, -40,
-         w - iw - 60, dh, 0,
-         "txtDescription", &gl_defFont, NULL,
-         _(land_planet->bar_description) );
+   window_addText( wid, iw + 40, -40, w - iw - 60, dh, 0,
+         "txtDescription", &gl_defFont, NULL, desc );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
@@ -316,7 +334,7 @@ static int bar_genList( unsigned int wid )
    glTexture *bg;
    char *focused;
    int w, h, iw, ih, bw, bh;
-   int i, n, pos;
+   int n, pos;
 
    /* Validity check. */
    if (wid == 0)
@@ -356,7 +374,7 @@ static int bar_genList( unsigned int wid )
       portraits    = calloc(n, sizeof(ImageArrayCell));
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
-      for (i=0; i<npc_getArraySize(); i++) {
+      for (int i=0; i<npc_getArraySize(); i++) {
          p = &portraits[i+1];
          bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
@@ -732,7 +750,7 @@ static void misn_update( unsigned int wid, const char *str )
    misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
    sys = mission_sysComputerMark( misn );
    if (sys!=NULL)
-      map_center( sys->name );
+      map_center( wid, sys->name );
    snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
@@ -1038,11 +1056,11 @@ void land_genWindows( int load, int changetab )
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR) && !planet_isFlag(land_planet, PLANET_NOMISNSPAWN))
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
          npc_generateMissions(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
-               land_planet->presence.faction, land_planet->name, cur_system->name,
+               land_planet->presence.faction, land_planet, cur_system,
                MIS_AVAIL_COMPUTER );
    }
 
@@ -1083,7 +1101,7 @@ void land_genWindows( int load, int changetab )
       /* Check land missions. */
       if (!has_visited(VISITED_LAND)) {
          missions_run(MIS_AVAIL_LAND, land_planet->presence.faction,
-               land_planet->name, cur_system->name);
+               land_planet, cur_system);
          visited(VISITED_LAND);
       }
    }
@@ -1133,8 +1151,10 @@ void land( Planet* p, int load )
       return;
 
    /* Incrcement times player landed. */
-   if (!load)
+   if (!load) {
       player.landed_times++;
+      player.ps.landed_times++;
+   }
 
    /* Clear some unnecessary flags. */
    pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE);
@@ -1148,6 +1168,10 @@ void land( Planet* p, int load )
 
    /* Stop player sounds. */
    player_soundStop();
+
+   /* Clear message stuff. */
+   free( player.p->comm_msg );
+   player.p->comm_msg = NULL;
 
    /* Clear some target stuff. */
    player.p->nav_planet = -1;
@@ -1350,7 +1374,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay )
 {
-   int h, stu, should_save;
+   int h, stu;
    char *nt;
    double a, r;
 
@@ -1412,17 +1436,8 @@ void takeoff( int delay )
    space_init( NULL, 1 );
    player.p->nav_hyperspace = h;
 
-   /* Save all. */
-   should_save = 0; /* Only save when the player shouldn't get stranded. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
-      planet_updateLand( p );
-      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
-         should_save = 1;
-         break;
-      }
-   }
-   if (should_save && (save_all() < 0)) /* must be before cleaning up planet */
+   /* Only save when the player shouldn't get stranded. */
+   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up planet */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */

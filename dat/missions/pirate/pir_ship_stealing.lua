@@ -200,12 +200,12 @@ function accept()
 end
 
 function land()
-   local landed = planet.cur()
+   local landed, landsys = planet.cur()
    if landed == mem.planet then
       -- Try to swap ships
       local tmp = pilot.add( mem.ship, "Independent" )
       equip_generic( tmp )
-      if not swapship.swap( tmp ) then
+      if not swapship.swap( tmp, fmt.f(_("You acquired the ship through illegitimate means at {pnt} in the {sys} system. Yarr!"),{pnt=landed, sys=landsys}) ) then
          -- Failed to swap ship!
          tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
          tmp:rm() -- Get rid of the temporary pilot

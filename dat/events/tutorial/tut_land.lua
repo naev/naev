@@ -142,9 +142,19 @@ function ship_buy( shipname )
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_buyship", true )
-   end
 
-   if s:time_mod() > 1 and not var.peek( "tut_timedil" ) then
+   elseif s:tags().bioship and not var.peek( "tut_bioship" ) then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      sai(_([["Wow! Looks like you acquired a bioship! My data banks show that they grown ontop of synthetic structures and have varying degrees of sentience. However, because of this they start at lower stages and have to gain experience to reach their full potential. As bioships unlock their potential, you will be able to customize and modify them at will. However, be aware that the choices that you make are not easy to reverse."]]))
+      sai(_([[I've never been run in a bioship before. I wonder what it wil be like?"]]))
+      vn.done( tut.shipai.transition )
+      vn.run()
+      var.push( "tut_bioship", true )
+
+   elseif s:time_mod() > 1 and not var.peek( "tut_timedil" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )

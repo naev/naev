@@ -1,7 +1,7 @@
 local factions
 
-function onload ()
-   factions = outfit.get("Fake Transponder"):illegality()
+function onload( o )
+   factions = o:illegality()
 end
 
 local function fget( f )

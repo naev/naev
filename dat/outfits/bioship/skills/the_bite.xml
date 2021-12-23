@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="The Bite">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>/gfx/misc/icons/fangs.webp</gfx_store>
+  <desc_extra>Makes the ship lunge at the target to take a bite out of it. Damage is based on ship's mass.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/bioship/skills/the_bite.lua</lua>
+  <thrust>800</thrust>
+  <absorb>30</absorb>
+ </specific>
+</outfit>

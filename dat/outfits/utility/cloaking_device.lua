@@ -1,4 +1,5 @@
 local osh = require 'outfits.shaders'
+local audio = require 'love.audio'
 
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
@@ -18,6 +19,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 ]])
 oshader.fade = 1
 
+local sfx = audio.newSource( 'snd/sounds/activate5.ogg' )
 
 local function turnon( p, po )
    -- Still on cooldown
@@ -37,6 +39,8 @@ local function turnon( p, po )
    p:setInvisible( true )
    if mem.isp then
       oshader:on()
+      sfx:setPitch( player.dt_mod() )
+      sfx:play()
    else
       p:setNoRender( true )
    end

@@ -3,12 +3,12 @@ local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
+local bioship = require 'bioship'
 
 local soromid_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Soromid Brigand Fighter Bay",
    "Heavy Laser Turret", "Grave Beam",
-   "BioPlasma Talon Stage X",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
@@ -19,12 +19,9 @@ local soromid_outfits = eoutfits.merge{{
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
    "Plasma Cluster Cannon",
-   "BioPlasma Fang Stage X",
    -- Small Weapons
    "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
    "Unicorp Mace Launcher", "TeraCom Mace Launcher",
-   "BioPlasma Claw Stage X",
-   "BioPlasma Stinger Stage X",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
@@ -52,8 +49,6 @@ local soromid_params = {
       } end,
 }
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
-local soromid_cores = {
-}
 
 local soromid_params_overwrite = {
    -- Prefer to use the Soromid utilities
@@ -63,6 +58,19 @@ local soromid_params_overwrite = {
    },
    max_same_stru = 3,
 }
+
+local function poisson_sample( lambda )
+   local x = 0
+   local p = math.exp(-lambda)
+   local s = p
+   local u = rnd.rnd()
+   while u > s do
+      x = x+1
+      p = p * lambda / x
+      s = s + p
+   end
+   return x
+end
 
 --[[
 -- @brief Does Soromid pilot equipping
@@ -84,11 +92,12 @@ local function equip_soromid( p, opt_params  )
    end
    params = mt.merge_tables( params, opt_params )
 
-   -- See cores
+   -- Set cores
    local cores
-   local srmcor = soromid_cores[ sname ]
-   if srmcor then
-      cores = srmcor()
+   if ps:tags().bioship then
+      local maxstage = bioship.maxstage( p )
+      local stage = math.max( 1, maxstage - poisson_sample( 1 ) )
+      bioship.simulate( p, stage )
    else
       cores = ecores.get( p, { all="elite" } )
    end

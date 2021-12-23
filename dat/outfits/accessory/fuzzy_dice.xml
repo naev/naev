@@ -16,4 +16,7 @@
   <stress_dissipation>10</stress_dissipation>
   <engine_limit_rel>3</engine_limit_rel>
  </specific>
+ <tags>
+  <tag>lucky</tag>
+ </tags>
 </outfit>

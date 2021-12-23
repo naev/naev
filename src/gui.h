@@ -33,6 +33,7 @@ void gui_setTarget (void);
 void gui_setShip (void);
 void gui_setSystem (void);
 void gui_updateFaction (void);
+void gui_updateEffects (void);
 void gui_setGeneric( const Pilot* pilot );
 
 /*

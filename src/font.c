@@ -1051,18 +1051,75 @@ int gl_printHeightRaw( const glFont *ft_font,
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... )
 {
-   char text[1024]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
 
    if (fmt == NULL)
       return -1;
    else { /* convert the symbols to text */
       va_list ap;
       va_start(ap, fmt);
-      vsnprintf(text, 1024, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
    return gl_printHeightRaw( ft_font, width, text );
+}
+
+/**
+ * @brief Gets the number of lines of a non-formatted string.
+ *
+ * Does not display the text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Width to jump to next line once reached.
+ *    @param text Text to get the height of.
+ *    @return The number of lines of the text.
+ */
+int gl_printLinesRaw( const glFont *ft_font,
+      const int width, const char *text )
+{
+   glPrintLineIterator iter;
+   int n = 0;
+
+   /* Check 0 length strings. */
+   if (text[0] == '\0')
+      return 0;
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
+   gl_printLineIteratorInit( &iter, ft_font, text, width );
+   while (gl_printLineIteratorNext( &iter ))
+      n++;
+
+   return n;
+}
+
+/**
+ * @brief Gets the number of lines of the text if it were printed.
+ *
+ * Does not display the text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Width to jump to next line once reached.
+ *    @param fmt Text to get the height of in printf format.
+ *    @return The number of lines of he text.
+ */
+int gl_printLines( const glFont *ft_font,
+      const int width, const char *fmt, ... )
+{
+   char text[STRMAX_SHORT]; /* holds the string */
+
+   if (fmt == NULL)
+      return -1;
+   else { /* convert the symbols to text */
+      va_list ap;
+      va_start(ap, fmt);
+      vsnprintf(text, sizeof(text), fmt, ap);
+      va_end(ap);
+   }
+
+   return gl_printLinesRaw( ft_font, width, text );
 }
 
 /*
@@ -1194,7 +1251,8 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, c
    gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
 
    /* Depth testing is used to draw the outline under the glyph. */
-   glEnable( GL_DEPTH_TEST );
+   if (outlineR > 0.)
+      glEnable( GL_DEPTH_TEST );
 }
 
 /**

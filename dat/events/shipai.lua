@@ -1,4 +1,14 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Bioship Manager">
+ <trigger>load</trigger>
+ <chance>100</chance>
+ <flags>
+  <unique />
+ </flags>
+</event>
+--]]
+--[[
    Handles the Ship AI (tutorial-ish?) being triggered from the info menu
 --]]
 local fmt = require "format"
@@ -9,7 +19,7 @@ local vn  = require "vn"
 local advice
 local gave_advice
 
-function create ()
+local function clicked ()
    gave_advice = false
 
    vn.clear()
@@ -173,4 +183,8 @@ function advice ()
 
    -- Run random advice
    return adv_rnd[ rnd.rnd(1,#adv_rnd) ]
+end
+
+function create ()
+   player.infoButtonRegister( _("Ship AI"), clicked, 1 )
 end

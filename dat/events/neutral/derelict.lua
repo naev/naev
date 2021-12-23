@@ -103,6 +103,19 @@ local function derelict_msg( title, text )
    } )
 end
 
+local function islucky ()
+   local pp = player.pilot()
+   if pp:ship():tags().lucky then
+      return true
+   end
+   for k,o in ipairs(pp:outfits("all")) do
+      if o:tags().lucky then
+         return true
+      end
+   end
+   return false
+end
+
 function board()
    player.unboard()
 
@@ -117,12 +130,22 @@ function board()
    end
 
    -- Roll for events
+   local badprob, neuprob, goodprob
+   if islucky() then
+      badprob = 0.025
+      neuprob = 0.15
+      goodprob = 0.6
+   else
+      badprob = 0.125
+      neuprob = 0.25
+      goodprob = 0.6
+   end
    local prob = rnd.rnd()
-   if prob <= 0.125 then
+   if prob <= badprob then
       badevent()
-   elseif prob <= 0.25 then
+   elseif prob <= neuprob then
       neutralevent()
-   elseif prob <= 0.6 then
+   elseif prob <= goodprob then
       goodevent()
    else
       missionevent()

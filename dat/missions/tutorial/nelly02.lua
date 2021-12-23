@@ -18,6 +18,7 @@
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
   <done>Helping Nelly Out 1</done>
+  <chapter>[01]</chapter>
  </avail>
  <notes>
   <campaign>Tutorial Nelly</campaign>

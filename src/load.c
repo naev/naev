@@ -34,12 +34,13 @@
 #include "outfit.h"
 #include "player.h"
 #include "shiplog.h"
+#include "start.h"
 #include "space.h"
 #include "toolkit.h"
 #include "unidiff.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
-#define LOAD_HEIGHT     500 /**< Load window height. */
+#define LOAD_HEIGHT     530 /**< Load window height. */
 
 #define BUTTON_WIDTH    200 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -143,6 +144,7 @@ static int load_load( nsave_t *save, const char *path )
             /* Player info. */
             xmlr_strd(node, "location", save->planet);
             xmlr_ulong(node, "credits", save->credits);
+            xmlr_strd(node, "chapter", save->chapter);
 
             /* Time. */
             if (xml_isNode(node, "time")) {
@@ -167,6 +169,10 @@ static int load_load( nsave_t *save, const char *path )
          continue;
       }
    } while (xml_nextNode(parent));
+
+   /* Defaults. */
+   if (save->chapter==NULL)
+      save->chapter = strdup( start_chapter() );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -301,6 +307,7 @@ void load_free (void)
       free(ns->version);
       free(ns->data);
       free(ns->planet);
+      free(ns->chapter);
       free(ns->shipname);
       free(ns->shipmodel);
    }
@@ -416,6 +423,8 @@ static void load_menu_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Planet:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
@@ -434,7 +443,7 @@ static void load_menu_update( unsigned int wid, const char *str )
  */
 static void load_menu_load( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    const char *save;
    int wid, pos;
    int diff;

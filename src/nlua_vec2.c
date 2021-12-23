@@ -480,10 +480,7 @@ static int vectorL_dot( lua_State *L )
  */
 static int vectorL_get( lua_State *L )
 {
-   Vector2d *v1;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
+   Vector2d *v1 = luaL_checkvector(L,1);
 
    /* Push the vector. */
    lua_pushnumber(L, v1->x);

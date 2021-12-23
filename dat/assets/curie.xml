@@ -34,10 +34,8 @@
  <tech>
   <item>Laser 1</item>
   <item>Ion 1</item>
-  <item>Kinetic 1</item>
-  <item>Kinetic 2</item>
-  <item>Plasma 1</item>
-  <item>Plasma 2</item>
+  <item>Beam 1</item>
+  <item>Missiles 1</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
@@ -45,6 +43,7 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
+  <item>Za'lek Outfits Low</item>
  </tech>
  <tags>
   <tag>mining</tag>

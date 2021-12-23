@@ -15,6 +15,7 @@
 
 #include "faction.h"
 
+#include "conf.h"
 #include "array.h"
 #include "colour.h"
 #include "hook.h"
@@ -29,19 +30,19 @@
 #include "rng.h"
 #include "space.h"
 
-#define XML_FACTION_ID     "Factions"   /**< XML section identifier */
-#define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
+#define XML_FACTION_ID  "Factions"  /**< XML section identifier */
+#define XML_FACTION_TAG "faction"   /**< XML tag identifier. */
 
-#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
-#define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
-#define FACTION_DYNAMIC       (1<<3) /**< Faction was created dynamically. */
+#define FACTION_STATIC     (1<<0) /**< Faction doesn't change standing with player. */
+#define FACTION_INVISIBLE  (1<<1) /**< Faction isn't exposed to the player. */
+#define FACTION_KNOWN      (1<<2) /**< Faction is known to the player. */
+#define FACTION_DYNAMIC    (1<<3) /**< Faction was created dynamically. */
 #define FACTION_USESHIDDENJUMPS (1<<4) /**< Faction will try to use hidden jumps when possible. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
 #define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
-#define faction_isKnown_(fa)   ((fa)->flags & (FACTION_KNOWN))
+#define faction_isKnown_(fa)  ((fa)->flags & (FACTION_KNOWN))
 
 int faction_player; /**< Player faction identifier. */
 
@@ -82,6 +83,7 @@ typedef struct Faction_ {
    int lua_hit;         /**< "standing.hit" */
    int lua_text_rank;   /**< "standing.text_rank" */
    int lua_text_broad;  /**< "standing.text_broad" */
+   int lua_reputation_max; /**< "standing.reputation_max" */
 
    /* Safe lanes. */
    double lane_length_per_presence; /**< Influences the choice to build patrolled safe lanes in the way the name suggests. */
@@ -734,7 +736,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 {
    Faction *faction;
    double old, delta;
-   HookParam hparam[3];
 
    faction = &faction_stack[f];
 
@@ -782,6 +783,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    /* Run hook if necessary. */
    delta = faction->player - old;
    if (FABS(delta) > 1e-10) {
+      HookParam hparam[3];
       hparam[0].type    = HOOK_PARAM_FACTION;
       hparam[0].u.lf    = f;
       hparam[1].type    = HOOK_PARAM_NUMBER;
@@ -941,10 +943,8 @@ double faction_getPlayer( int f )
 {
    if (faction_isFaction(f))
       return faction_stack[f].player;
-   else {
-      WARN(_("Faction id '%d' is invalid."), f);
-      return -1000.;
-   }
+   WARN(_("Faction id '%d' is invalid."), f);
+   return -1000.;
 }
 
 /**
@@ -957,10 +957,8 @@ double faction_getPlayerDef( int f )
 {
    if (faction_isFaction(f))
       return faction_stack[f].player_def;
-   else {
-      WARN(_("Faction id '%d' is invalid."), f);
-      return -1000.;
-   }
+   WARN(_("Faction id '%d' is invalid."), f);
+   return -1000.;
 }
 
 /**
@@ -972,7 +970,6 @@ double faction_getPlayerDef( int f )
 int faction_isPlayerFriend( int f )
 {
    Faction *faction = &faction_stack[f];
-
    return faction->player >= faction->friendly_at;
 }
 
@@ -985,7 +982,6 @@ int faction_isPlayerFriend( int f )
 int faction_isPlayerEnemy( int f )
 {
    Faction *faction = &faction_stack[f];
-
    return faction->player < 0;
 }
 
@@ -1080,6 +1076,7 @@ const char *faction_getStandingText( int f )
 const char *faction_getStandingBroad( int f, int bribed, int override )
 {
    Faction *faction;
+   const char *r;
 
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
@@ -1089,35 +1086,78 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 
    if (faction->env == LUA_NOREF)
       return _("???");
-   else {
-      const char *r;
-      /* Set up the method:
-       * standing:text_broad( standing, bribed, override ) */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_broad );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
-      lua_pushnumber( naevL, faction->player );
-      lua_pushboolean( naevL, bribed );
-      lua_pushnumber( naevL, override );
 
-      /* Call function. */
-      if (nlua_pcall( faction->env, 4, 1 )) {
-         /* An error occurred. */
-         WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
-         return "???";
-      }
+   /* Set up the method:
+      * standing:text_broad( standing, bribed, override ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_broad );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
+   lua_pushnumber( naevL, faction->player );
+   lua_pushboolean( naevL, bribed );
+   lua_pushnumber( naevL, override );
 
-      /* Parse return. */
-      if (!lua_isstring( naevL, -1 )) {
-         WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_broad(...)'."), faction->name );
-         r = "???";
-      }
-      else
-         r = lua_tostring( naevL, -1 );
+   /* Call function. */
+   if (nlua_pcall( faction->env, 4, 1 )) {
+      /* An error occurred. */
+      WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-
-      return r;
+      return "???";
    }
+
+   /* Parse return. */
+   if (!lua_isstring( naevL, -1 )) {
+      WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_broad(...)'."), faction->name );
+      r = "???";
+   }
+   else
+      r = lua_tostring( naevL, -1 );
+   lua_pop( naevL, 1 );
+
+   return r;
+}
+
+/**
+ * @brief Gets the maximum reputation of a faction.
+ *
+ *    @param f Faction to get maximum reputation of.
+ *    @return Maximum value of the reputation with a faction.
+ */
+double faction_reputationMax( int f )
+{
+   Faction *faction;
+   double r;
+
+   /* Escorts always have the same standing. */
+   if (f == FACTION_PLAYER)
+      return 100.;
+
+   faction = &faction_stack[f];
+
+   if (faction->env == LUA_NOREF)
+      return 0.;
+
+   /* Set up the method:
+      * standing:reputation_max( standing ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_reputation_max );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
+
+   /* Call function. */
+   if (nlua_pcall( faction->env, 1, 1 )) {
+      /* An error occurred. */
+      WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return 0.;
+   }
+
+   /* Parse return. */
+   if (!lua_isnumber( naevL, -1 )) {
+      WARN( _("Lua script for faction '%s' did not return a string from 'standing:reputation_max(...)'."), faction->name );
+      r =  0.;
+   }
+   else
+      r = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
+
+   return r;
 }
 
 /**
@@ -1319,6 +1359,7 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
    temp->lua_hit           = nlua_reffield( temp->lua_standing, "hit" );
    temp->lua_text_broad    = nlua_reffield( temp->lua_standing, "text_broad" );
    temp->lua_text_rank     = nlua_reffield( temp->lua_standing, "text_rank" );
+   temp->lua_reputation_max= nlua_reffield( temp->lua_standing, "reputation_max" );
 
    if (temp->lua_standing != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, temp->lua_standing );
@@ -1473,6 +1514,7 @@ int factions_load (void)
 {
    xmlNodePtr factions, node;
    Faction *f;
+   Uint32 time = SDL_GetTicks();
 
    /* Load the document. */
    xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
@@ -1562,7 +1604,13 @@ int factions_load (void)
    xmlFreeDoc(doc);
 
    faction_computeGrid();
-   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Faction in %.3f s", "Loaded %d Factions in %.3f s", array_size(faction_stack) ), array_size(faction_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+
    return 0;
 }
 

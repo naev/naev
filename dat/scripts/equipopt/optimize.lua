@@ -5,6 +5,7 @@
 --]]
 local optimize = {}
 local eparams = require 'equipopt.params'
+local bioship = require 'bioship'
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Create caches and stuff
@@ -106,13 +107,13 @@ end
 special_ships["Drone (Hyena)"] = special_ships["Drone"]
 special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
-      "Milspec Orion 3701 Core System",
+      "Milspec Thalos 3602 Core System",
       "Unicorp Hawk 350 Engine",
       choose_one{"Nexus Light Stealth Plating", "S&K Light Combat Plating"},
       "Shatterer Launcher",
       "Shatterer Launcher",
-      "Neutron Disruptor",
-      "Neutron Disruptor",
+      "Heavy Neutron Disruptor",
+      "Heavy Neutron Disruptor",
    } do
       p:outfitAdd( o, 1, true )
    end
@@ -258,6 +259,12 @@ function optimize.optimize( p, cores, outfit_list, params )
       return true
    end
 
+   -- Specila case bioships
+   if ps:tags().bioship then
+      local stage = bioship.maxstage( p )
+      bioship.simulate( p, rnd.rnd(1,stage) )
+   end
+
    -- Handle cores
    if cores then
       -- Don't actually have to remove cores as it should overwrite default
@@ -287,19 +294,21 @@ function optimize.optimize( p, cores, outfit_list, params )
    local slots_base = ps:getSlots()
    for m,o in ipairs(outfit_list) do
       if not usable_outfits[o] then
-         for k,v in ipairs( slots_base ) do
-            local ok = true
-            -- Afterburners will be ignored if the ship is too heavy
-            if o:type() == "Afterburner" then
-               local spec = o:specificstats()
-               if spec.mass_limit < 0.8*ss.engine_limit then
-                  ok = false
-               end
+         local ok = true
+         -- Afterburners will be ignored if the ship is too heavy
+         if o:type() == "Afterburner" then
+            local spec = o:specificstats()
+            if spec.mass_limit < 0.8*ss.engine_limit then
+               ok = false
             end
-            -- Check to see if fits slot
-            if ok and ps:fitsSlot( k, o ) then
-               usable_outfits[o] = true
-               break
+         end
+         if ok then
+            for k,v in ipairs(slots_base) do
+               -- Check to see if fits slot
+               if ps:fitsSlot( k, o ) then
+                  usable_outfits[o] = true
+                  break
+               end
             end
          end
       end
@@ -429,7 +438,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
-   for k,v in ipairs( slots_base ) do
+   for k,v in ipairs(slots_base) do
       local has_outfits = {}
       local outfitpos = {}
       for m,o in ipairs(outfit_list) do

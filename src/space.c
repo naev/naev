@@ -1336,7 +1336,7 @@ void space_update( const double dt )
       /* Damage pilots in volatile systems. */
       pilot_stack = pilot_getAll();
       for (int i=0; i<array_size(pilot_stack); i++)
-         pilot_hit( pilot_stack[i], NULL, 0, &dmg, 0 );
+         pilot_hit( pilot_stack[i], NULL, NULL, &dmg, NULL, 0 );
    }
 
    /* Faction updates. */
@@ -1479,13 +1479,13 @@ void space_update( const double dt )
 
             /* Check boundaries */
             if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
-               d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+               d->pos.x -= SCREEN_W + 2.*DEBRIS_BUFFER;
             else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
-               d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+               d->pos.y -= SCREEN_H + 2.*DEBRIS_BUFFER;
             else if (d->pos.x < -DEBRIS_BUFFER)
-               d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+               d->pos.x += SCREEN_W + 2.*DEBRIS_BUFFER;
             else if (d->pos.y < -DEBRIS_BUFFER)
-               d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+               d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
          }
       }
    }
@@ -1633,6 +1633,7 @@ void space_init( const char* sysname, int do_simulate )
       pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
    if (do_simulate) {
+      /* Uint32 time = SDL_GetTicks(); */
       s = sound_disabled;
       sound_disabled = 1;
       ntime_allowUpdate( 0 );
@@ -1645,6 +1646,10 @@ void space_init( const char* sysname, int do_simulate )
          update_routine( fps_min_simulation, 1 );
       ntime_allowUpdate( 1 );
       sound_disabled = s;
+      /*
+      if (conf.devmode)
+         DEBUG(_("System simulated in %.3f s"), (SDL_GetTicks()-time)/1000.);
+      */
    }
    player_messageToggle( 1 );
    if (player.p != NULL)
@@ -1685,7 +1690,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->armour = at->armour;
 
    do {
-      double angle = RNGF() * 2 * M_PI;
+      double angle = RNGF() * 2. * M_PI;
       double radius = RNGF() * field->radius;
       ast->pos.x = radius * cos(angle) + field->pos.x;
       ast->pos.y = radius * sin(angle) + field->pos.y;
@@ -1703,7 +1708,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20;
+   mod = RNGF() * 20.;
    vect_pset( &ast->vel, mod, theta );
 
    /* Grow effect stuff */
@@ -1720,8 +1725,8 @@ void debris_init( Debris *deb )
    double theta, mod;
 
    /* Position */
-   deb->pos.x = (double)RNG(-DEBRIS_BUFFER, SCREEN_W + DEBRIS_BUFFER);
-   deb->pos.y = (double)RNG(-DEBRIS_BUFFER, SCREEN_H + DEBRIS_BUFFER);
+   deb->pos.x = -DEBRIS_BUFFER + RNGF()*(SCREEN_W + 2.*DEBRIS_BUFFER);
+   deb->pos.y = -DEBRIS_BUFFER + RNGF()*(SCREEN_H + 2.*DEBRIS_BUFFER);
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -2273,7 +2278,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &planet->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("Planet '%s' has unknown node in tags '%s'."), planet->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2788,7 +2795,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &sys->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("System '%s' has unknown node in tags '%s'."), sys->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2800,6 +2809,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
 
+   ss_sort( &sys->stats );
    array_shrink( &sys->planets );
    array_shrink( &sys->planetsid );
 
@@ -3421,6 +3431,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
+   Uint32 time = SDL_GetTicks();
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3484,11 +3495,18 @@ static int systems_load (void)
       xmlFreeDoc(doc);
    }
 
-   DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-   DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
-
    /* Clean up. */
    PHYSFS_freeList( system_files );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Planet in %.3f s", "       with %d Planets in %.3f s", array_size(planet_stack) ), array_size(planet_stack), time/1000. );
+   }
+   else {
+      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+   }
 
    return 0;
 }

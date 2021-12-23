@@ -305,6 +305,7 @@ function create()
    update_nav()
    update_faction()
    update_cargo()
+   update_effects()
 end
 
 function update_target()
@@ -421,6 +422,11 @@ end
 
 function update_system()
    sysname = system.cur():name()
+end
+
+local effects
+function update_effects()
+   effects = pp:effectGet()
 end
 
 local function update_wset()
@@ -640,12 +646,19 @@ function render( dt, dt_mod )
    gfx.renderTex( radar_gfx, radar_x, radar_y )
    gui.radarRender( radar_x + 2, radar_y + 2 )
 
+   -- Effects
+   local ex, ey = radar_x-48, screen_h-32-32
+   for k,e in ipairs(effects) do
+      gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      ex = ex - 48
+   end
+
    --Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
    local filler_h = #wset * 28 -- extend the pane according to the number of weapon bars
    filler_h = math.max( filler_h - 6, 0 )
 
-   gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h, 1, 1, 0, 0, 1, 1)
+   gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h)
    gfx.renderTex( player_pane_b, pl_pane_x + 33, pl_pane_y - filler_h - pl_pane_h_b )
 
    local txt = {}

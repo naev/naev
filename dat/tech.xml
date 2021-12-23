@@ -70,16 +70,6 @@
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
-  <item>BioPlasma Stinger Stage 1</item>
-  <item>BioPlasma Stinger Stage X</item>
-  <item>BioPlasma Claw Stage 1</item>
-  <item>BioPlasma Claw Stage X</item>
-  <item>BioPlasma Fang Stage 1</item>
-  <item>BioPlasma Fang Stage X</item>
-  <item>BioPlasma Talon Stage 1</item>
-  <item>BioPlasma Talon Stage X</item>
-  <item>BioPlasma Tentacle Stage 1</item>
-  <item>BioPlasma Tentacle Stage X</item>
   <item>Battery I</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -227,54 +217,6 @@
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
   <item>S&amp;K Superheavy Combat Plating</item>
-  <item>Ultralight Brain Stage 1</item>
-  <item>Light Brain Stage 1</item>
-  <item>Medium Brain Stage 1</item>
-  <item>Medium-Heavy Brain Stage 1</item>
-  <item>Heavy Brain Stage 1</item>
-  <item>Superheavy Brain Stage 1</item>
-  <item>Ultralight Shell Stage 1</item>
-  <item>Light Shell Stage 1</item>
-  <item>Medium Shell Stage 1</item>
-  <item>Medium-Heavy Shell Stage 1</item>
-  <item>Heavy Shell Stage 1</item>
-  <item>Superheavy Shell Stage 1</item>
-  <item>Ultralight Fast Gene Drive Stage 1</item>
-  <item>Light Fast Gene Drive Stage 1</item>
-  <item>Medium Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
-  <item>Heavy Fast Gene Drive Stage 1</item>
-  <item>Superheavy Fast Gene Drive Stage 1</item>
-  <item>Ultralight Strong Gene Drive Stage 1</item>
-  <item>Light Strong Gene Drive Stage 1</item>
-  <item>Medium Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
-  <item>Heavy Strong Gene Drive Stage 1</item>
-  <item>Superheavy Strong Gene Drive Stage 1</item>
-  <item>Ultralight Brain Stage X</item>
-  <item>Light Brain Stage X</item>
-  <item>Medium Brain Stage X</item>
-  <item>Medium-Heavy Brain Stage X</item>
-  <item>Heavy Brain Stage X</item>
-  <item>Superheavy Brain Stage X</item>
-  <item>Ultralight Shell Stage X</item>
-  <item>Light Shell Stage X</item>
-  <item>Medium Shell Stage X</item>
-  <item>Medium-Heavy Shell Stage X</item>
-  <item>Heavy Shell Stage X</item>
-  <item>Superheavy Shell Stage X</item>
-  <item>Ultralight Fast Gene Drive Stage X</item>
-  <item>Light Fast Gene Drive Stage X</item>
-  <item>Medium Fast Gene Drive Stage X</item>
-  <item>Medium-Heavy Fast Gene Drive Stage X</item>
-  <item>Heavy Fast Gene Drive Stage X</item>
-  <item>Superheavy Fast Gene Drive Stage X</item>
-  <item>Ultralight Strong Gene Drive Stage X</item>
-  <item>Light Strong Gene Drive Stage X</item>
-  <item>Medium Strong Gene Drive Stage X</item>
-  <item>Medium-Heavy Strong Gene Drive Stage X</item>
-  <item>Heavy Strong Gene Drive Stage X</item>
-  <item>Superheavy Strong Gene Drive Stage X</item>
   <item>Weapons Ionizer</item>
   <item>Boarding Androids MK1</item>
   <item>Boarding Androids MK2</item>
@@ -711,16 +653,18 @@
   <item>Heavy Razor Turret</item>
   <item>Fidelity Fighter Bay</item>
  </tech>
- <tech name="Za'lek Elite Outfits">
+ <tech name="Za'lek Outfits Low">
   <item>Faraday Tempest Coating</item>
-  <item>Hive Combat AI</item>
- </tech>
- <tech name="Za'lek Military Outfits">
   <item>Za'lek Hunter Launcher</item>
-  <item>Za'lek Reaper Launcher</item>
+ </tech>
+ <tech name="Za'lek Outfits Medium">
+  <item>Hive Combat AI</item>
   <item>Za'lek Light Drone Fighter Bay</item>
   <item>Za'lek Heavy Drone Fighter Bay</item>
   <item>Za'lek Bomber Drone Fighter Bay</item>
+ </tech>
+ <tech name="Za'lek Outfits High">
+  <item>Za'lek Reaper Launcher</item>
   <item>Za'lek Light Drone Fighter Dock</item>
   <item>Za'lek Heavy Drone Fighter Dock</item>
   <item>Za'lek Bomber Drone Fighter Dock</item>
@@ -765,35 +709,6 @@
 
  <!-- outfits -->
  <tech name="Bioship Outfits">
-  <item>BioPlasma Stinger Stage 1</item>
-  <item>BioPlasma Claw Stage 1</item>
-  <item>BioPlasma Fang Stage 1</item>
-  <item>BioPlasma Talon Stage 1</item>
-  <item>BioPlasma Tentacle Stage 1</item>
-  <item>Ultralight Brain Stage 1</item>
-  <item>Light Brain Stage 1</item>
-  <item>Medium Brain Stage 1</item>
-  <item>Medium-Heavy Brain Stage 1</item>
-  <item>Heavy Brain Stage 1</item>
-  <item>Superheavy Brain Stage 1</item>
-  <item>Ultralight Shell Stage 1</item>
-  <item>Light Shell Stage 1</item>
-  <item>Medium Shell Stage 1</item>
-  <item>Medium-Heavy Shell Stage 1</item>
-  <item>Heavy Shell Stage 1</item>
-  <item>Superheavy Shell Stage 1</item>
-  <item>Ultralight Fast Gene Drive Stage 1</item>
-  <item>Light Fast Gene Drive Stage 1</item>
-  <item>Medium Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
-  <item>Heavy Fast Gene Drive Stage 1</item>
-  <item>Superheavy Fast Gene Drive Stage 1</item>
-  <item>Ultralight Strong Gene Drive Stage 1</item>
-  <item>Light Strong Gene Drive Stage 1</item>
-  <item>Medium Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
-  <item>Heavy Strong Gene Drive Stage 1</item>
-  <item>Superheavy Strong Gene Drive Stage 1</item>
   <item>Soromid Brigand Fighter Bay</item>
  </tech>
 
@@ -904,8 +819,14 @@
   <item>Thurion Certitude</item>
  </tech>
  <tech name="Za'lek Military Ships">
+  <item>Za'lek Ships Medium</item>
+  <item>Za'lek Ships Large</item>
+ </tech>
+ <tech name="Za'lek Ships Medium">
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
+ </tech>
+ <tech name="Za'lek Ships Large">
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
   <item>Za'lek Mammon</item>

@@ -6,6 +6,8 @@
   <size>medium</size>
   <rarity>1</rarity>
   <license>Heavy Weapon</license>
+  <cond>faction.playerStanding("Za'lek") &gt; 10</cond>
+  <condstr>You need at least 10 reputation with House Za'lek.</condstr>
   <mass>0</mass>
   <price>850000</price>
   <description>Heavily inspired by bee and other insect colonies, the Hive Combat AI increases the sharing of data and parameters between a carrier and its fighters, allowing for increased efficiency in communication. This results in more efficient movement of the fighters, and a better ability to respond to mishaps such as lost fighters.</description>

@@ -26,6 +26,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURN_MOD,         /**< Turn multiplier. */
    SS_TYPE_D_THRUST_MOD,       /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
+   SS_TYPE_D_FUEL_MOD,         /**< Fuel capacity multiplier. */
    SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
    SS_TYPE_D_SHIELD_MOD,       /**< Shield multiplier. */
@@ -55,6 +56,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
+   SS_TYPE_D_LAUNCH_CALIBRATION,/**< Calibration speed of launchers. */
    SS_TYPE_D_LAUNCH_RELOAD,   /**< Regeneration rate of launcher ammo. */
 
    /* Fighter Bays. */
@@ -110,6 +112,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ARMOUR,          /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,    /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS,/**< Flat armour regeneration modifier (not multiplied). */
+   SS_TYPE_A_DAMAGE,          /**< Flat damage modifier (eats through shield first then armour). */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,         /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
@@ -213,9 +216,11 @@ typedef struct ShipStats_ {
    double armour_mod;         /**< Armour multiplier. */
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
    double armour_regen_malus; /**< Armour regeneration (flat). */
+   double damage;             /**< Damage over time. */
 
    /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
+   double fuel_mod;           /**< Fuel capacity multiplier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
    double absorb;             /**< Flat damage absorption. */
@@ -247,6 +252,7 @@ typedef struct ShipStats_ {
    double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
+   double launch_calibration;/**< Calibration speed of launchers. */
    double launch_reload;   /**< Reload rate of launchers. */
 
    /* Fighter bays. */
@@ -306,6 +312,7 @@ int ss_check (void);
  */
 ShipStatList* ss_listFromXML( xmlNodePtr node );
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll );
+int ss_sort( ShipStatList **ll );
 void ss_free( ShipStatList *ll );
 
 /*
@@ -313,8 +320,10 @@ void ss_free( ShipStatList *ll );
  */
 int ss_statsInit( ShipStats *stats );
 int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list );
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
+int ss_statsModSingle( ShipStats *stats, const ShipStatList *list );
+int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale );
+int ss_statsModFromList( ShipStats *stats, const ShipStatList *list );
+int ss_statsModFromListScale( ShipStats *stats, const ShipStatList *list, double scale );
 
 /*
  * Lookup.

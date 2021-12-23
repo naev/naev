@@ -17,6 +17,7 @@
   <faction>Sirius</faction>
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
+  <chapter>[01]</chapter>
  </avail>
  <notes>
   <campaign>Tutorial Nelly</campaign>

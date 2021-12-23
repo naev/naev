@@ -25,11 +25,12 @@
  * @brief Representation of a slot property.
  */
 typedef struct SlotProperty_s {
-   char *name;          /**< Internal name of the property. */
-   char *display;       /**< Display name of the property. */
-   char *description;   /**< Description of the property. */
-   int required;        /**< Required slot property. */
-   int exclusive;       /**< Exclusive slot property. */
+   char *name;       /**< Internal name of the property. */
+   char *display;    /**< Display name of the property. */
+   char *description;/**< Description of the property. */
+   int required;     /**< Required slot property. */
+   int exclusive;    /**< Exclusive slot property. */
+   int locked;       /**< Locked and not modifyable by the player. */
 } SlotProperty_t;
 
 static SlotProperty_t *sp_array = NULL; /**< Slot property array. */
@@ -94,6 +95,10 @@ int sp_load (void)
          }
          if (xml_isNode( cur, "exclusive" )) {
             sp->exclusive = 1;
+            continue;
+         }
+         if (xml_isNode( cur, "locked" )) {
+            sp->locked = 1;
             continue;
          }
 
@@ -190,4 +195,14 @@ int sp_exclusive( unsigned int spid )
    if (sp_check(spid))
       return 0;
    return sp_array[ spid-1 ].exclusive;
+}
+
+/**
+ * @brief Gets whether or not a slot property is locked.
+ */
+int sp_locked( unsigned int spid )
+{
+   if (sp_check(spid))
+      return 0;
+   return sp_array[ spid-1 ].locked;
 }

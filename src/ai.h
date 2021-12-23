@@ -51,7 +51,7 @@ typedef struct AI_Profile_ {
 /*
  * misc
  */
-AI_Profile* ai_getProfile( char* name );
+AI_Profile* ai_getProfile( const char *name );
 
 /*
  * init/exit

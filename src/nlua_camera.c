@@ -175,7 +175,7 @@ static int camL_getZoom( lua_State *L )
  * @brief Makes the camera shake.
  *
  * @usage camera.shake() -- Shakes the camera with amplitude 1.
- * @usage camera.shake( .5 ) -- Shakes the camera with amplitude .5
+ * @usage camera.shake( 0.5 ) -- Shakes the camera with amplitude .5
  *
  *    @luatparam float amplitude: amplitude of the shaking
  * @luafunc shake

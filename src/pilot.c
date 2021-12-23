@@ -35,6 +35,7 @@
 #include "log.h"
 #include "map.h"
 #include "music.h"
+#include "nlua_pilotoutfit.h"
 #include "ndata.h"
 #include "nstring.h"
 #include "ntime.h"
@@ -924,13 +925,14 @@ int pilot_interceptPos( Pilot *p, double x, double y )
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param p Pilot that should cool down.
+ *    @param dochecks Whether or not to do the standard checks or cooling down automatically.
  */
-void pilot_cooldown( Pilot *p )
+void pilot_cooldown( Pilot *p, int dochecks )
 {
    double heat_capacity, heat_mean;
 
    /* Brake if necessary. */
-   if (!pilot_isStopped(p)) {
+   if (dochecks && !pilot_isStopped(p)) {
       pilot_setFlag(p, PILOT_BRAKING);
       pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
       return;
@@ -1387,18 +1389,18 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *
  *    @param p Pilot that is taking damage.
  *    @param w Solid that is hitting pilot.
- *    @param shooter Attacker that shot the pilot.
+ *    @param pshooter Attacker that shot the pilot.
  *    @param dmg Damage being done.
+ *    @param po Outfit slot doing the damage if applicable.
  *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
-      const Damage *dmg, int reset )
+double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
+      const Damage *dmg, PilotOutfitSlot *po, int reset )
 {
-   int mod;
+   int mod, shooter;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
    double tdshield, tdarmour;
-   Pilot *pshooter;
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
@@ -1406,9 +1408,9 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       return 0.;
 
    /* Defaults. */
-   pshooter       = NULL;
    dam_mod        = 0.;
    ddmg           = 0.;
+   shooter        = (pshooter==NULL) ? 0 : pshooter->id;
 
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
@@ -1530,7 +1532,6 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
          pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         pshooter = pilot_get(shooter);
          if ((pshooter != NULL) && pilot_isWithPlayer(pshooter)) {
 
             /* About 6 for a llama, 52 for hawking. */
@@ -1541,6 +1542,7 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
 
             /* Note that player destroyed the ship. */
             player.ships_destroyed[p->ship->class]++;
+            player.ps.ships_destroyed[p->ship->class]++;
          }
       }
    }
@@ -1558,12 +1560,16 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
    if (p->id == PLAYER_ID) {
       player.dmg_taken_shield += tdshield;
       player.dmg_taken_armour += tdarmour;
+      player.ps.dmg_taken_shield += tdshield;
+      player.ps.dmg_taken_armour += tdarmour;
    }
    /* TODO we might want to actually resolve shooter and check for
     * FACTION_PLAYER so that escorts also get counted... */
    else if (shooter == PLAYER_ID) {
       player.dmg_done_shield += tdshield;
       player.dmg_done_armour += tdarmour;
+      player.ps.dmg_done_shield += tdshield;
+      player.ps.dmg_done_armour += tdarmour;
    }
 
    if (w != NULL)
@@ -1572,6 +1578,22 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       vect_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
+
+   /* On hit weapon effects. */
+   if ((po!=NULL) && outfit_isBolt(po->outfit) && (po->outfit->u.blt.lua_onhit != LUA_NOREF)) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(po->outfit->u.blt.lua_env, "mem"); /* */
+
+      /* Set up the function: onhit( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.blt.lua_onhit); /* f */
+      lua_pushpilot(naevL, pshooter->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushpilot(naevL, p->id); /* f, p, po, p  */
+      if (nlua_pcall( po->outfit->u.blt.lua_env, 3, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, po->outfit->name, "onhit", lua_tostring(naevL,-1) );
+         lua_pop(naevL, 1);
+      }
+   }
 
    /* On hit Lua outfits activate. */
    pilot_outfitLOnhit( p, tdarmour, tdshield, shooter );
@@ -1752,7 +1774,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
       s.vel.y = ry;
 
       /* Actual damage calculations. */
-      pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg, 1 );
+      pilot_hit( p, &s, parent, &ddmg, NULL, 1 );
 
       /* Shock wave from the explosion. */
       if (p->id == PILOT_PLAYER)
@@ -1769,12 +1791,36 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
-   double scale;
+   double scale, x,y, w,h, z;
+   Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
       return;
+
+   /* Transform coordinates. */
+   z = cam_getZoom();
+   w = p->ship->gfx_space->sw;
+   h = p->ship->gfx_space->sh;
+   gl_gameToScreenCoords( &x, &y, p->solid->pos.x-w/2., p->solid->pos.y-h/2. );
+
+   /* Check if inbounds */
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
+      return;
+
+   /* Render effects. */
+   for (int i=0; i<array_size(p->effects); i++) {
+   //for (int i=array_size(p->effects)-1; i>=0; i--) {
+      Effect *eiter = &p->effects[i];
+      if (eiter->data->program==0)
+         continue;
+
+      /* Only render one effect for now. */
+      e = eiter;
+      break;
+   }
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING ))
@@ -1784,25 +1830,71 @@ void pilot_render( Pilot* p, const double dt )
    else
       scale = 1.;
 
-   /* Add some transparency if stealthed. */
+   /* Add some transparency if stealthed. TODO better effect */
    if (pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
-   /* Base ship. */
-   if (p->ship->gfx_3d != NULL) {
-      /* 3d */
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
-      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
-   } else {
-      /* Sprites */
-      gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            scale, scale,
+   /* Render normally. */
+   if (e==NULL) {
+      if (p->ship->gfx_3d != NULL) {
+         /* 3d */
+         object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", c.a, p->ship->gfx_3d_scale * scale);
+         object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
+      }
+      else {
+         gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+               scale, scale, p->tsx, p->tsy, &c );
+      }
+   }
+   /* Render effect single effect. */
+   else {
+      gl_Matrix4 projection, tex_mat;
+      const EffectData *ed = e->data;
+
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glClearColor( 0., 0., 0., 0. );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      /* TODO fix 3D rendering. */
+      gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, scale, scale,
             p->tsx, p->tsy, &c );
+
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      glClearColor( 0., 0., 0., 1. );
+
+      glUseProgram( ed->program );
+
+      glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+      glUniform1i( ed->u_tex, 0 );
+
+      glEnableVertexAttribArray( ed->vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
+
+      projection = gl_view_matrix;
+      projection = gl_Matrix4_Translate(projection, x, y, 0);
+      projection = gl_Matrix4_Scale(projection, z*w, z*h, 1);
+      gl_Matrix4_Uniform(ed->projection, projection);
+
+      tex_mat = gl_Matrix4_Identity();
+      tex_mat = gl_Matrix4_Scale(tex_mat, w/SCREEN_W, h/SCREEN_H, 1);
+      gl_Matrix4_Uniform(ed->tex_mat, tex_mat);
+
+      glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
+      glUniform1f( ed->u_timer, e->timer );
+      glUniform1f( ed->u_r, e->r );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( ed->vertex );
    }
 
 #ifdef DEBUGGING
-   double dircos, dirsin, x, y;
+   double dircos, dirsin;
    int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
    Vector2d v;
    if (debug_mark_emitter) {
@@ -2056,6 +2148,15 @@ void pilot_update( Pilot* pilot, double dt )
       }
    }
 
+   /* Damage effect. */
+   if (pilot->stats.damage > 0.) {
+      dmg.type          = dtype_get("normal");
+      dmg.damage        = pilot->stats.damage * dt;
+      dmg.penetration   = 1.; /* Full penetration. */
+      dmg.disable       = 0.;
+      pilot_hit( pilot, NULL, NULL, &dmg, NULL, 0 );
+   }
+
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
       if (pilot->ptimer < 0.) {
@@ -2163,7 +2264,7 @@ void pilot_update( Pilot* pilot, double dt )
    if (pilot_isFlag(pilot, PILOT_BRAKING )) {
       if (pilot_brake( pilot )) {
          if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
-            pilot_cooldown( pilot );
+            pilot_cooldown( pilot, 1 );
          else {
             /* Normal braking is done (we're below MIN_VEL_ERR), now sidestep
              * normal physics and bring the ship to a near-complete stop.
@@ -2224,11 +2325,14 @@ void pilot_update( Pilot* pilot, double dt )
          /* Run Lua stuff. */
          pilot_outfitLOutfofenergy( pilot );
       }
-
-      /* Must recalculate stats because something changed state. */
-      if (nchg > 0)
-         pilot_calcStats( pilot );
    }
+
+   /* Update effects. */
+   nchg += effect_update( &pilot->effects, dt );
+
+   /* Must recalculate stats because something changed state. */
+   if (nchg > 0)
+      pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
@@ -2780,6 +2884,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
    ss_statsInit( &pilot->intrinsic_stats );
+   pilot->effects = effect_init();
 
    /* Basic information. */
    pilot->ship = ship;
@@ -2795,7 +2900,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->fuel   = pilot->fuel_max   = 1; /* ditto fuel */
+   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
 
@@ -2864,8 +2969,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) /* Sort of a hack. */
+      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
          player.p = pilot;
+         player.ps.p = pilot;
+      }
    }
    else {
       pilot->think            = ai_think;
@@ -3107,6 +3214,9 @@ void pilot_free( Pilot* p )
    array_free(p->outfit_structure);
    array_free(p->outfit_utility);
    array_free(p->outfit_weapon);
+   array_free(p->outfit_intrinsic);
+
+   effect_cleanup( p->effects );
 
    pilot_cargoRmAll( p, 1 );
 
@@ -3116,8 +3226,10 @@ void pilot_free( Pilot* p )
 
    free(p->name);
    /* Case if pilot is the player. */
-   if (player.p==p)
+   if (player.p==p) {
       player.p = NULL;
+      player.ps.p = NULL;
+   }
    solid_free(p->solid);
    free(p->mounted);
 
@@ -3209,6 +3321,7 @@ void pilots_free (void)
    array_free(pilot_stack);
    pilot_stack = NULL;
    player.p = NULL;
+   memset( &player.ps, 0, sizeof(PlayerShip_t) );
 }
 
 /**
@@ -3293,6 +3406,7 @@ void pilots_cleanAll (void)
    if (player.p != NULL) {
       pilot_free(player.p);
       player.p = NULL;
+      memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
 }

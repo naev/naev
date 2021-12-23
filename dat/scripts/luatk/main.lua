@@ -1,4 +1,5 @@
 local luatk = require 'luatk.core'
+local le = require 'love.event'
 
 function love.keypressed( key )
    luatk.keypressed( key )
@@ -21,6 +22,10 @@ function love.draw()
 end
 
 function love.update(dt)
+   if #luatk._windows<=0 then
+      le.quit()
+      return
+   end
    luatk.update(dt)
 end
 

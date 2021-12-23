@@ -1,4 +1,5 @@
 local osh = require 'outfits.shaders'
+local audio = require 'love.audio'
 
 -- Global constant variables for the outfit
 local cooldown = 8 -- cooldown period in seconds
@@ -17,6 +18,8 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
    return color;
 }
 ]])
+
+local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
 
 -- Init function run on creation
 function init( p, po )
@@ -69,6 +72,10 @@ function onhit( _p, po, armour, _shield )
       po:progress(1)
 
       -- Visual effect
-      if mem.isp then oshader:on() end
+      if mem.isp then
+         oshader:on()
+         sfx:setPitch( player.dt_mod() )
+         sfx:play()
+      end
    end
 end

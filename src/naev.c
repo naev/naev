@@ -162,6 +162,7 @@ int naev_isQuit (void)
 int main( int argc, char** argv )
 {
    char conf_file_path[PATH_MAX], **search_path;
+   Uint32 starttime;
 
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -173,7 +174,7 @@ int main( int argc, char** argv )
    log_init();
 
    /* Set up PhysicsFS. */
-   if( PHYSFS_init( env.argv0 ) == 0 ) {
+   if (PHYSFS_init( env.argv0 ) == 0) {
       ERR( "PhysicsFS initialization failed: %s",
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return -1;
@@ -190,16 +191,17 @@ int main( int argc, char** argv )
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
 
-   if ( env.isAppImage )
+   if (env.isAppImage)
       LOG( "AppImage detected. Running from: %s", env.appdir );
    else
       DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   if ( SDL_Init( 0 ) ) {
+   if (SDL_Init( 0 )) {
       ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
       return -1;
    }
+   starttime = SDL_GetTicks();
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -363,7 +365,10 @@ int main( int argc, char** argv )
    /* Start menu. */
    menu_main();
 
-   LOG( _( "Reached main menu" ) );
+   if (conf.devmode)
+      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+   else
+      LOG( _( "Reached main menu" ) );
 
    fps_init(); /* initializes the time_ms */
 
@@ -628,7 +633,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     16. /**< Amount of loading stages. */
+#define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
    int stage = 0;
@@ -641,6 +646,9 @@ void load_all (void)
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects...") );
+   effect_load(); /* no dep */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types...") );
    dtype_load(); /* dep for outfits */
@@ -657,12 +665,6 @@ void load_all (void)
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
-   events_load(); /* no dep */
-
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
-   missions_load(); /* no dep */
-
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI...") );
    ai_load(); /* dep for fleets */
 
@@ -670,7 +672,13 @@ void load_all (void)
    tech_load(); /* dep for space */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe...") );
-   space_load();
+   space_load(); /* dep for events/missions */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
+   events_load();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
+   missions_load();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs...") );
    diff_loadAvailable();
@@ -713,6 +721,7 @@ void unload_all (void)
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
+   effect_exit();
    dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_exit(); /* Clean up events. */

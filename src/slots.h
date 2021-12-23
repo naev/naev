@@ -13,3 +13,4 @@ const char *sp_display( unsigned int sp );
 const char *sp_description( unsigned int sp );
 int sp_required( unsigned int spid );
 int sp_exclusive( unsigned int spid );
+int sp_locked( unsigned int spid );

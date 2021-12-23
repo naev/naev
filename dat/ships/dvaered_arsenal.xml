@@ -36,14 +36,14 @@
   <weapon size="medium" x="-32" y="12" h="4" />
   <weapon size="medium" x="-32" y="-12" h="4" />
   <weapon size="medium" x="-44" y="-12" h="6" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
