@@ -16,14 +16,14 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>1.0</delay>
-  <speed>700</speed>
+  <speed>1400</speed>
   <range>1100</range>
   <falloff>950</falloff>
   <gfx_end>laser1M.png</gfx_end>
   <energy>30</energy>
   <heatup>50</heatup>
-  <trackmin>1000</trackmin>
-  <trackmax>4000</trackmax>
+  <trackmin>1200</trackmin>
+  <trackmax>4800</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>
