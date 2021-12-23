@@ -2,7 +2,7 @@
 
 const float SPEED = 1.0; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
-const float SIZE  = 0.5; /**< Size of the black hole relative to texture. */
+const float SIZE  = 1.5; /**< Size of the black hole relative to texture. */
 /* Set up rotation matrix at compile-time for efficiency. */
 const vec3 rotang = vec3( %f, %f, %f );
 const float cx = cos(rotang.x);
@@ -28,6 +28,7 @@ const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */
 /* Uniforms. Most is hardcoded. */
 uniform float u_time = 0.0;
 uniform vec3 u_camera= vec3( 0.0, 0.0, 1.0 );
+uniform sampler2D u_bgtex;
 
 float hash(float x){ return fract(sin(x)*152754.742); }
 float hash(vec2 x){  return hash(x.x + hash(x.y)); }
@@ -118,13 +119,15 @@ vec4 raymarch_disk( vec3 ro, vec3 rd )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = ((texture_coords - 0.5)*love_ScreenSize.xy) / love_ScreenSize.y;
+   vec2 uv = ((2.0*texture_coords-1.0)*love_ScreenSize.xy) / love_ScreenSize.y;
 
    /* Camera. */
    vec3 ro  = vec3(u_camera.xy, -100.0 * u_camera.z);
    vec3 rd  = R*normalize( vec3(0.1*uv, 1.0));
    vec3 pos = R*ro;
    vec3 rdo = rd;
+   //float rdw = R*normalize( vec3(0.1*love_ScreenSize.x/love_ScreenSize.y,0.0,1.0) );
+   //float rdh = R*normalize( vec3(0.0,1.0,1.0) );
 
    /* Initialize stuff. */
    vec4 col    = vec4(0.0);
@@ -161,9 +164,12 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
          return vec4( col.rgb*col.a + glow.rgb*(1.0-col.a ), 1.0) ;
       }
       else if (dist2 > SIZE * 1000.0) { /* Escaped black hole. */
-         //vec4 bg = color * texture( tex, texture_coords + (rdo.xy - rd.xy) );
-         vec4 bg = color * texture( tex, texture_coords );
-         //vec4 bg = color * texture( tex, texture_coords * rd.xy / rdo.xy );
+         /* Have to undo the deformation effect. */
+         vec3 bgrd = inverse(R) * rd;
+         vec2 bgc = 0.5 * 10.0 * bgrd.xy / length(vec2(1.0,0.1)) / love_ScreenSize.xy * love_ScreenSize.y + 0.5;
+         bgc = mix( bgc, texture_coords, 0.8 ); /* Soften effect */
+         vec4 bg = texture( u_bgtex, bgc );
+
          return vec4( col.rgb*col.a + (bg.rgb + glow.rgb)*(1.0-col.a), bg.a+(1.0-bg.a)*col.a );
       }
       else if (abs(pos.y) <= SIZE * 0.002) { /* Hit accretion disk. */

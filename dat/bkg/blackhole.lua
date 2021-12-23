@@ -11,6 +11,7 @@ local prng = require("prng").new()
 local pixelcode = lf.read( "bkg/shaders/blackhole.frag" )
 
 local blackhole, shader, time, bx, by, sf
+local bgstars
 function background ()
    local nconf = naev.conf()
    sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
@@ -27,6 +28,8 @@ function background ()
    shader = lg.newShader( string.format( pixelcode, ax, ay, az ), love_shaders.vertexcode )
    time = -1000 * rnd.rnd()
 
+   bgstars = lg.newCanvas()
+
    starfield.init{ nolocalstars=true }
    blackhole = bgshaders.init( shader, sf )
 end
@@ -36,8 +39,12 @@ function renderfg( dt )
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.00005, -by-y*0.00005, z )
+   shader:send( "u_camera", bx+x*0.00009, -by-y*0.00009, z )
 
+   lg.setCanvas( bgstars )
    starfield.render( dt )
+   lg.setCanvas()
+
+   shader:send( "u_bgtex", bgstars )
    blackhole:render( dt, {0,0,0,0} )
 end
