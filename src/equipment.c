@@ -1704,7 +1704,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "Acquired Date:" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Acquired Date:") );
    for (int i=0; i<hacquired+1; i++)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    if (ship_mode==0) {
