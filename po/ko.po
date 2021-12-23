@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-23 10:00-0500\n"
+"POT-Creation-Date: 2021-12-23 17:41-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -18550,7 +18550,7 @@ msgstr ""
 msgid "Sensor Array"
 msgstr ""
 
-#: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:107
+#: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
 msgid "Electronic Warfare"
 msgstr ""
 
@@ -32947,7 +32947,7 @@ msgstr ""
 msgid "Reset tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:73 dat/events/shipai.lua:109
+#: dat/events/shipai.lua:73 dat/events/shipai.lua:110
 #: dat/missions/tutorial/tutorial.lua:109
 #: dat/missions/tutorial/tutorial.lua:118
 msgid "Nevermind"
@@ -32977,17 +32977,22 @@ msgstr ""
 msgid "\"Hello {playername}. What do you want to learn about?\""
 msgstr ""
 
-#: dat/events/shipai.lua:106
+#: dat/events/shipai.lua:107
 #, fuzzy
 #| msgid "Weapon Set 8"
 msgid "Weapon Sets"
 msgstr "무기 세트 8"
 
-#: dat/events/shipai.lua:108 src/input.c:58 src/shipstats.c:103
+#: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:103
 msgid "Stealth"
 msgstr ""
 
-#: dat/events/shipai.lua:113
+#: dat/events/shipai.lua:112
+#, fuzzy
+msgid "Bioships"
+msgstr "바이오함선 수직 안정핀"
+
+#: dat/events/shipai.lua:117
 msgid ""
 "\"A large part of combat is decided ahead of time by the ship classes and "
 "their load out. However, good piloting can turn the tables easily. It is "
@@ -32996,7 +33001,7 @@ msgid ""
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:114
+#: dat/events/shipai.lua:118
 msgid ""
 "\"There are three different types of weapon sets:\n"
 "- #oWeapons - Switched#0: activating the hotkey will set your primary and "
@@ -33006,7 +33011,7 @@ msgid ""
 "the outfits"
 msgstr ""
 
-#: dat/events/shipai.lua:118
+#: dat/events/shipai.lua:122
 msgid ""
 "\"By default, the weapon sets will be automatically managed by me, with "
 "forward bolts in set 1 (switched), turret weapons in set 2 (switched), and "
@@ -33016,7 +33021,7 @@ msgid ""
 "whenever you change your outfits.\""
 msgstr ""
 
-#: dat/events/shipai.lua:122
+#: dat/events/shipai.lua:126
 msgid ""
 "\"Ship sensors are based on detecting gravitational anomalies, and thus the "
 "mass of a ship plays a critical role in being detected. Smaller ships like "
@@ -33024,7 +33029,7 @@ msgid ""
 "battleship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:123 dat/missions/tutorial/nelly02.lua:543
+#: dat/events/shipai.lua:127 dat/missions/tutorial/nelly02.lua:543
 msgid ""
 "\"Each ship has three important electronic warfare statistics:\n"
 "- #oDetection#0 determines the distance at which a ship appears on the "
@@ -33036,7 +33041,7 @@ msgid ""
 "in stealth mode\""
 msgstr ""
 
-#: dat/events/shipai.lua:127
+#: dat/events/shipai.lua:131
 msgid ""
 "\"#oDetection#0 plays a crucial in how much attention you draw in a system, "
 "and detection bonuses can be very useful for avoiding lurking dangers. "
@@ -33045,7 +33050,7 @@ msgid ""
 "you get your hands on them.\""
 msgstr ""
 
-#: dat/events/shipai.lua:128
+#: dat/events/shipai.lua:132
 msgid ""
 "\"#oEvasion#0 is very important when it comes to combat as it determines how "
 "well weapons can track your ship. If your evasion is below your enemies "
@@ -33056,14 +33061,14 @@ msgid ""
 "the time it takes for rockets to lock on to you.\""
 msgstr ""
 
-#: dat/events/shipai.lua:129
+#: dat/events/shipai.lua:133
 msgid ""
 "\"#oStealth#0 is a whole different beast and is only useful when entering "
 "stealth mode with {stealthkey}. If you want to learn more about stealth, "
 "please ask me about it.\""
 msgstr ""
 
-#: dat/events/shipai.lua:133
+#: dat/events/shipai.lua:137
 msgid ""
 "\"You can activate stealth mode with {stealthkey} when far enough away from "
 "other ships, and only when you have no missiles locked on to you. When "
@@ -33072,7 +33077,7 @@ msgid ""
 "uncover you.\""
 msgstr ""
 
-#: dat/events/shipai.lua:134
+#: dat/events/shipai.lua:138
 msgid ""
 "\"Besides making your ship invisible to other ships, #ostealth#0 slows down "
 "your ship by 50% to mask your gravitational presence. This also has the "
@@ -33081,7 +33086,7 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/shipai.lua:135
+#: dat/events/shipai.lua:139
 msgid ""
 "\"When not in stealth, ships can target your ship to perform a scan. This "
 "can uncover unwanted information, such as illegal cargo or outfits. The time "
@@ -33093,7 +33098,7 @@ msgid ""
 "are until you are on top of them.\""
 msgstr ""
 
-#: dat/events/shipai.lua:136
+#: dat/events/shipai.lua:140
 msgid ""
 "\"Finally, escorts and fighters will automatically stealth when their leader "
 "goes into stealth, so you don't have to worry giving stealth orders to ships "
@@ -33101,8 +33106,18 @@ msgid ""
 "it is good to make as many friends as possible.\""
 msgstr ""
 
+#. TODO more text
+#: dat/events/shipai.lua:145 dat/events/tutorial/tut_land.lua:152
+msgid ""
+"\"You can see the status of your current bioship from the #bInfo menu#0, "
+"which you can access with #b{infokey}#0. As your bioship gains experience, "
+"and advances to new stages, you'll be able to obtain new skills that open up "
+"new possibilities. Make sure to choose your skills carefully as it is not "
+"easy to change them once they have been chosen.\""
+msgstr ""
+
 #. Tries to give the player useful contextual information
-#: dat/events/shipai.lua:151
+#: dat/events/shipai.lua:160
 msgid ""
 "\"When out of fuel, if there is an inhabitable planet you can land to refuel "
 "for free. However, if you want to save time or have no other option, it is "
@@ -33111,14 +33126,14 @@ msgid ""
 "fuel afterwards.\""
 msgstr ""
 
-#: dat/events/shipai.lua:158
+#: dat/events/shipai.lua:167
 msgid ""
 "\"When being overwhelmed by hostile enemies, you can sometimes get out of a "
 "pinch by bribing them so that they leave you alone. Not all pilots or "
 "factions are susceptible to bribing, however.\""
 msgstr ""
 
-#: dat/events/shipai.lua:165
+#: dat/events/shipai.lua:174
 msgid ""
 "\"When your ship or weapons get very hot, it is usually a good idea to "
 "perform an active cooldown when it is safe to do so. You can actively "
@@ -33128,7 +33143,7 @@ msgid ""
 "fighters.\""
 msgstr ""
 
-#: dat/events/shipai.lua:172
+#: dat/events/shipai.lua:181
 msgid ""
 "\"In general, ships are unable to regenerate armour damage in space. If you "
 "take heavy armour damage, it is best to try to find a safe place to land to "
@@ -33145,7 +33160,7 @@ msgstr ""
 #.
 #. --
 #. TODO replace with real portrait
-#: dat/events/shipai.lua:189 dat/scripts/common/tutorial.lua:16
+#: dat/events/shipai.lua:198 dat/scripts/common/tutorial.lua:16
 #, fuzzy
 #| msgid "Ship"
 msgid "Ship AI"
@@ -34636,12 +34651,12 @@ msgid ""
 "be aware that the choices that you make are not easy to reverse.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:152
+#: dat/events/tutorial/tut_land.lua:153
 msgid ""
 "I've never been run in a bioship before. I wonder what it wil be like?\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:162
+#: dat/events/tutorial/tut_land.lua:163
 msgid ""
 "\"Whoa, it looks like you just acquired your first large ship. You may have "
 "noticed by now, but ships have a '#oTime Constant#0' rating, which indicates "
@@ -34653,7 +34668,7 @@ msgid ""
 "the ship feel less cumbersome to fly.\""
 msgstr ""
 
-#: dat/events/tutorial/tut_land.lua:163
+#: dat/events/tutorial/tut_land.lua:164
 msgid ""
 "\"In general, due to the low maneuverability of large ships, you should "
 "consider using turret weapons and/or fighter bays for self defense. They "
@@ -35027,9 +35042,9 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
 #: src/equipment.c:1749 src/gui.c:1519 src/map.c:505 src/map.c:511
 #: src/map.c:517 src/map.c:523 src/map.c:529 src/map.c:535 src/map.c:1649
-#: src/map_overlay.c:221 src/outfit.c:297 src/outfit.c:316 src/outfit.c:934
-#: src/player.c:1998 src/player_autonav.c:92 src/player_autonav.c:215
-#: src/player_autonav.c:454 src/ship.c:211
+#: src/map_overlay.c:221 src/map_system.c:479 src/outfit.c:297 src/outfit.c:316
+#: src/outfit.c:934 src/player.c:1998 src/player_autonav.c:92
+#: src/player_autonav.c:215 src/player_autonav.c:454 src/ship.c:211
 #, c-format
 msgid "Unknown"
 msgstr ""
@@ -35847,7 +35862,7 @@ msgstr ""
 msgid "CLASS:"
 msgstr ""
 
-#: dat/gui/slim.lua:1082
+#: dat/gui/slim.lua:1082 src/info.c:364
 msgid "Pilot:"
 msgstr ""
 
@@ -35871,7 +35886,7 @@ msgid "Nav:"
 msgstr ""
 
 #: dat/gui/slim.lua:1083 src/equipment.c:1728 src/info.c:368 src/info.c:589
-#: src/land_shipyard.c:288 src/map_system.c:681
+#: src/land_shipyard.c:290 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
 
@@ -82267,6 +82282,10 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
+#: src/dev_sysedit.c:1332 src/land.c:1259
+msgid "Tags:"
+msgstr ""
+
 #: src/dev_sysedit.c:1339
 msgid "Rm Service"
 msgstr ""
@@ -82826,6 +82845,10 @@ msgstr "모드"
 msgid "Class:"
 msgstr ""
 
+#: src/equipment.c:1707
+msgid "Acquired Date:"
+msgstr ""
+
 #: src/equipment.c:1711
 msgid "Value:"
 msgstr ""
@@ -82856,12 +82879,12 @@ msgstr ""
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1717 src/info.c:581 src/land_shipyard.c:253
+#: src/equipment.c:1717 src/info.c:581 src/land_shipyard.c:254
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1718 src/info.c:582 src/land_shipyard.c:257
+#: src/equipment.c:1718 src/info.c:582 src/land_shipyard.c:259
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
@@ -82881,27 +82904,27 @@ msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1723 src/info.c:584 src/land_shipyard.c:262
+#: src/equipment.c:1723 src/info.c:584 src/land_shipyard.c:264
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1724 src/info.c:585 src/land_shipyard.c:267
+#: src/equipment.c:1724 src/info.c:585 src/land_shipyard.c:269
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1725 src/info.c:586 src/land_shipyard.c:272
+#: src/equipment.c:1725 src/info.c:586 src/land_shipyard.c:274
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1726 src/info.c:587 src/land_shipyard.c:277
+#: src/equipment.c:1726 src/info.c:587 src/land_shipyard.c:279
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1727 src/info.c:588 src/land_shipyard.c:284
+#: src/equipment.c:1727 src/info.c:588 src/land_shipyard.c:286
 #: src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
@@ -82987,8 +83010,8 @@ msgstr ""
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1796 src/info.c:644 src/land_shipyard.c:289
-#: src/land_shipyard.c:293 src/map_system.c:681 src/map_system.c:683
+#: src/equipment.c:1796 src/info.c:644 src/land_shipyard.c:291
+#: src/land_shipyard.c:295 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
@@ -83659,7 +83682,7 @@ msgid "Date:"
 msgstr "날짜:"
 
 #: src/info.c:366 src/land.c:1257 src/land_outfits.c:189 src/land_outfits.c:359
-#: src/land_shipyard.c:298 src/land_trade.c:90 src/map_find.c:638
+#: src/land_shipyard.c:300 src/land_trade.c:90 src/map_find.c:638
 msgid "Money:"
 msgstr ""
 
@@ -83750,7 +83773,7 @@ msgstr ""
 msgid "%.0f m/s (max %.0f m/s)"
 msgstr ""
 
-#: src/info.c:631 src/map_system.c:669
+#: src/info.c:631 src/land_shipyard.c:256 src/map_system.c:669
 #, c-format
 msgid "%.0f deg/s"
 msgstr ""
@@ -84714,10 +84737,6 @@ msgstr "옵션"
 msgid "Free Space:"
 msgstr ""
 
-#: src/land.c:1259
-msgid "Tags:"
-msgstr ""
-
 #: src/land.c:1278
 msgid "No refueling services."
 msgstr ""
@@ -84763,12 +84782,12 @@ msgstr ""
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:188 src/land_outfits.c:358 src/land_shipyard.c:296
+#: src/land_outfits.c:188 src/land_outfits.c:358 src/land_shipyard.c:298
 #: src/map_find.c:637 src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
-#: src/land_outfits.c:190 src/land_outfits.c:422 src/land_shipyard.c:300
+#: src/land_outfits.c:190 src/land_outfits.c:422 src/land_shipyard.c:302
 #: src/map_find.c:639 src/map_system.c:685
 #, fuzzy
 #| msgid "License"
@@ -84779,7 +84798,7 @@ msgstr "라이센스"
 msgid "Other"
 msgstr ""
 
-#: src/land_outfits.c:429 src/land_shipyard.c:303
+#: src/land_outfits.c:429 src/land_shipyard.c:305
 msgid "Requires:"
 msgstr ""
 
@@ -84812,7 +84831,7 @@ msgstr ""
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:685 src/land_shipyard.c:450 src/land_shipyard.c:518
+#: src/land_outfits.c:685 src/land_shipyard.c:452 src/land_shipyard.c:520
 #: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
@@ -84872,61 +84891,67 @@ msgid "teraflop"
 msgid_plural "teraflops"
 msgstr[0] ""
 
-#: src/land_shipyard.c:264 src/map_system.c:673
+#: src/land_shipyard.c:251 src/map_system.c:667
+#, c-format
+msgid "%.0f m/s"
+msgstr ""
+
+#: src/land_shipyard.c:266 src/map_system.c:673
 #, fuzzy, c-format
 msgid "%.0f%% damage"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/land_shipyard.c:269 src/land_shipyard.c:274 src/land_shipyard.c:279
+#: src/land_shipyard.c:271 src/land_shipyard.c:276 src/land_shipyard.c:281
+#: src/map_system.c:675 src/map_system.c:677 src/map_system.c:679
 #, c-format
 msgid "%.0f MJ (%.1f MW)"
 msgstr ""
 
-#: src/land_shipyard.c:292 src/map_system.c:682
+#: src/land_shipyard.c:294 src/map_system.c:682
 msgid "Fuel Use:"
 msgstr ""
 
-#: src/land_shipyard.c:398 src/land_shipyard.c:558 src/land_shipyard.c:564
-#: src/land_shipyard.c:570
+#: src/land_shipyard.c:400 src/land_shipyard.c:560 src/land_shipyard.c:566
+#: src/land_shipyard.c:572
 msgid "Are you sure?"
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:399
+#: src/land_shipyard.c:401
 #, c-format
 msgid "Do you really want to spend %s on a new ship?"
 msgstr ""
 
 #. Player just got a new ship
-#: src/land_shipyard.c:403
+#: src/land_shipyard.c:405
 #, fuzzy, c-format
 #| msgid "Frontier systems"
 msgid "You bought at %s in the %s system."
 msgstr "프론티어 시스템"
 
-#: src/land_shipyard.c:436 src/land_shipyard.c:511
+#: src/land_shipyard.c:438 src/land_shipyard.c:513
 #, c-format
 msgid "You need the '%s' license to buy this ship."
 msgstr ""
 
 #. Already on-board.
-#: src/land_shipyard.c:464
+#: src/land_shipyard.c:466
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
 
-#: src/land_shipyard.c:483
+#: src/land_shipyard.c:485
 #, c-format
 msgid "You have %g tonne more cargo than the new ship can hold."
 msgid_plural "You have %g tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 
 #. Escorts are in space.
-#: src/land_shipyard.c:490
+#: src/land_shipyard.c:492
 msgid "You can't strand your fighters in space."
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:559
+#: src/land_shipyard.c:561
 #, c-format
 msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
@@ -84934,7 +84959,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:565
+#: src/land_shipyard.c:567
 #, c-format
 msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
@@ -84942,7 +84967,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:571
+#: src/land_shipyard.c:573
 #, c-format
 msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
@@ -84950,13 +84975,13 @@ msgid ""
 msgstr ""
 
 #. player just got a new ship
-#: src/land_shipyard.c:577
+#: src/land_shipyard.c:579
 #, fuzzy, c-format
 #| msgid "Frontier systems"
 msgid "Bought at %s in the %s system."
 msgstr "프론티어 시스템"
 
-#: src/land_shipyard.c:611
+#: src/land_shipyard.c:613
 msgid "Slots:"
 msgstr ""
 
@@ -85574,11 +85599,6 @@ msgstr ""
 
 #: src/map_system.c:537
 msgid "This system does not sell ships"
-msgstr ""
-
-#: src/map_system.c:667
-#, c-format
-msgid "%.0f m/s"
 msgstr ""
 
 #: src/map_system.c:712
