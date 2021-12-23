@@ -1336,7 +1336,7 @@ void space_update( const double dt )
       /* Damage pilots in volatile systems. */
       pilot_stack = pilot_getAll();
       for (int i=0; i<array_size(pilot_stack); i++)
-         pilot_hit( pilot_stack[i], NULL, NULL, &dmg, NULL, 0 );
+         pilot_hit( pilot_stack[i], NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
    }
 
    /* Faction updates. */

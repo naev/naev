@@ -12,6 +12,8 @@ local mapping = {
    ["Corrosion II"] = "corrosion_ii",
 }
 function init( p, _po )
+   local ps = p:stats()
+   mem.absorb = ps.absorb
    for k,o in ipairs(p:outfits("intrinsic")) do
       local m = mapping[ o:nameRaw() ]
       if m then
@@ -20,9 +22,8 @@ function init( p, _po )
    end
 end
 
-function onhit( p, _po, target )
-   local ps = p:stats()
-   local dmg = damage * (1 - math.min( 1, math.max( 0, ps.absorb - penetration ) ))
+function onhit( _p, target )
+   local dmg = damage * (1 - math.min( 1, math.max( 0, mem.absorb - penetration ) ))
 
    if mem.corrosion_ii then
       target:effectAdd( "Plasma Burn II", 10, dmg )

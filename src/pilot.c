@@ -1391,12 +1391,13 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param w Solid that is hitting pilot.
  *    @param pshooter Attacker that shot the pilot.
  *    @param dmg Damage being done.
- *    @param po Outfit slot doing the damage if applicable.
+ *    @param outfit Outfit doing the damage if applicable.
+ *    @param lua_mem Lua reference to the Pilot Outfit's mem table, if applicable.
  *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
 double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
-      const Damage *dmg, PilotOutfitSlot *po, int reset )
+      const Damage *dmg, const Outfit *outfit, int lua_mem, int reset )
 {
    int mod, shooter;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
@@ -1580,17 +1581,16 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    /* On hit weapon effects. */
-   if ((po!=NULL) && outfit_isBolt(po->outfit) && (po->outfit->u.blt.lua_onhit != LUA_NOREF)) {
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-      nlua_setenv(po->outfit->u.blt.lua_env, "mem"); /* */
+   if ((outfit!=NULL) && outfit_isBolt(outfit) && (outfit->u.blt.lua_onhit != LUA_NOREF)) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
+      nlua_setenv(outfit->u.blt.lua_env, "mem"); /* */
 
-      /* Set up the function: onhit( p, po ) */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.blt.lua_onhit); /* f */
-      lua_pushpilot(naevL, pshooter->id); /* f, p */
-      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
-      lua_pushpilot(naevL, p->id); /* f, p, po, p  */
-      if (nlua_pcall( po->outfit->u.blt.lua_env, 3, 0 )) {   /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, po->outfit->name, "onhit", lua_tostring(naevL,-1) );
+      /* Set up the function: onhit( pshooter, p ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->u.blt.lua_onhit); /* f */
+      lua_pushpilot(naevL, shooter); /* f, p */
+      lua_pushpilot(naevL, p->id); /* f, p, p  */
+      if (nlua_pcall( outfit->u.blt.lua_env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onhit", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
    }
@@ -1774,7 +1774,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
       s.vel.y = ry;
 
       /* Actual damage calculations. */
-      pilot_hit( p, &s, parent, &ddmg, NULL, 1 );
+      pilot_hit( p, &s, parent, &ddmg, NULL, LUA_NOREF, 1 );
 
       /* Shock wave from the explosion. */
       if (p->id == PILOT_PLAYER)
@@ -2154,7 +2154,7 @@ void pilot_update( Pilot* pilot, double dt )
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = 0.;
-      pilot_hit( pilot, NULL, NULL, &dmg, NULL, 0 );
+      pilot_hit( pilot, NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
    }
 
    /* Handle takeoff/landing. */
