@@ -46,5 +46,5 @@ function renderfg( dt )
    lg.setCanvas()
 
    shader:send( "u_bgtex", bgstars )
-   blackhole:render( dt, {0,0,0,0} )
+   blackhole:render( dt )
 end
