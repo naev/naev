@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: manual-nightly
   schedule:
