@@ -176,6 +176,7 @@ static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_stealth( lua_State *L );
+static int pilotL_tryStealth( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
@@ -187,6 +188,7 @@ static int pilotL_choosePoint( lua_State *L );
 static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
 static int pilotL_knockback( lua_State *L );
+static int pilotL_calcStats( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -317,6 +319,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
    { "stealth", pilotL_stealth },
+   { "tryStealth", pilotL_tryStealth },
    { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
@@ -329,6 +332,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "collisionTest", pilotL_collisionTest },
    { "damage", pilotL_damage },
    { "knockback", pilotL_knockback },
+   { "calcStats", pilotL_calcStats },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -4655,7 +4659,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
- *    @luatparam Pilot p Pilot to tell to hyperspace.
+ *    @luatparam Pilot p Pilot to tell to try to stealth.
  * @luasee control
  * @luafunc stealth
  */
@@ -4671,6 +4675,20 @@ static int pilotL_stealth( lua_State *L )
    t->dat   = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
+}
+
+/**
+ * @brief Tries to make the pilot stealth.
+ *
+ *    @luatparam Pilot p Pilot to try to make stealth.
+ *    @luatreturn boolean Whether or not the pilot was able to stealth.
+ * @luafunc tryStealth
+ */
+static int pilotL_tryStealth( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean( L, pilot_stealth(p) );
+   return 1;
 }
 
 /**
@@ -5054,5 +5072,18 @@ static int pilotL_knockback( lua_State *L )
          vect_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
    }
 
+   return 0;
+}
+
+/**
+ * @brief Forces a recomputation of the pilots' stats.
+ *
+ *    @luatparam Pilot p Pilot to recalculate stats of.
+ * @luafunc calcStats
+ */
+static int pilotL_calcStats( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   pilot_calcStats( p );
    return 0;
 }
