@@ -13,6 +13,14 @@ local biointrin= require "bioship.intrinsics"
 
 local bioship = {}
 
+function bioship.isbioship( p )
+   return p:ship():tags().bioship
+end
+
+function bioship.playerisbioship ()
+   return bioship.isbioship( player.pilot() )
+end
+
 local function inlist( lst, item )
    for k,v in ipairs(lst) do
       if v==item then
@@ -225,6 +233,11 @@ function bioship.skillpointsused ()
       s.enabled = player.shipvarPeek( s.id )
    end
    return _skill_count( skills )
+end
+
+function bioship.skillpointsfree ()
+   local stage = player.shipvarPeek("biostage")
+   return stage - bioship.skillpointsused()
 end
 
 function bioship.simulate( p, stage )
