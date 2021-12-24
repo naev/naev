@@ -50,5 +50,9 @@
   <item>Pirate Maps</item>
   <item>Kretogg Maps</item>
   <item>Pirate Elite Outfits</item>
+  <item>Criminal Outfits</item>
  </tech>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
 </asset>

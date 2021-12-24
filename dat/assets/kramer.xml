@@ -49,5 +49,9 @@
   <item>Missiles 1</item>
   <item>Pirate Ships</item>
   <item>Pirate Elite Outfits</item>
+  <item>Criminal Outfits</item>
  </tech>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
 </asset>
