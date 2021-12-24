@@ -74,8 +74,6 @@ sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
 sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
-# (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
-cp -f "$SOURCEROOT/org.naev.naev.desktop" "$DESTDIR/usr/share/applications/"
 
 # Set ARCH of AppImage
 export ARCH=$(arch)
