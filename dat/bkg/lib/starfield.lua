@@ -153,6 +153,7 @@ end
 function starfield.render( dt )
    if static then
       local z = 1/camera.getZoom()
+      lg.setColor( {sb,sb,sb,1} )
       cvs:draw( (nw-texw*z)/2, (nh-texh*z)/2, 0, z, z )
       return
    end
@@ -163,7 +164,7 @@ function starfield.render( dt )
    y = y / 1e6
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
 
-   sstarfield:render( dt, {1,1,1,sb} )
+   sstarfield:render( dt )
 end
 
 return starfield

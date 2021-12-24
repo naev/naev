@@ -19,6 +19,7 @@ lg.origin()
 
 local bgshader = {}
 local bgshader_mt = { __index = bgshader }
+local bgbright
 
 function bgshaders.init( shader, scale, params )
    local shd = {
@@ -37,12 +38,17 @@ function bgshaders.init( shader, scale, params )
       shd.prevcanvas = lg.newCanvas( shd.cw, shd.ch )
    end
 
+   bgbright =  naev.conf().bg_brightness
+
    return shd
 end
 
 function bgshader:render( dt, col )
    dt = dt or 0
    col = col or {1, 1, 1, 1}
+   col[1] = col[1] * bgbright
+   col[2] = col[2] * bgbright
+   col[3] = col[3] * bgbright
 
    -- Update shader if necessary
    if self.bgshader.update then
