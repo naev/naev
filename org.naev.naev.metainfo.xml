@@ -5,7 +5,6 @@
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
   <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
-  <icon type="stock">naev</icon>
   <url type="homepage">https://naev.org</url>
   <url type="bugtracker">https://github.com/naev/naev/issues</url>
   <metadata_license>CC0-1.0</metadata_license>
