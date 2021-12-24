@@ -152,7 +152,12 @@ end
 --[[
 -- Whether or not we want to scan, ignore players for now
 --]]
-local function __wanttoscan( _p, target )
+local function __wanttoscan( p, target )
+   -- Bribed pilots don't care about scanning
+   if p:flags("bribed") then
+      return false
+   end
+
    -- Don't care about stuff that doesn't need scan
    if not __needs_scan( target ) then
       return false
