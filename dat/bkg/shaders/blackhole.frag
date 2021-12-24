@@ -168,7 +168,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
          vec3 bgrd = inverse(R) * rd;
          vec2 bgc = 0.5 * 10.0 * bgrd.xy / length(vec2(1.0,0.1)) / love_ScreenSize.xy * love_ScreenSize.y + 0.5;
          bgc = mix( bgc, texture_coords, 0.8 ); /* Soften effect */
-         vec4 bg = texture( u_bgtex, bgc );
+         vec4 bg = texture( u_bgtex, bgc ) / color;
 
          return color * vec4( col.rgb*col.a + (bg.rgb + glow.rgb)*(1.0-col.a), bg.a+(1.0-bg.a)*col.a );
       }
