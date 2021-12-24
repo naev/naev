@@ -123,6 +123,7 @@ As she keeps on babbling she sort of wanders off into the base, and you make no 
    vn.done( zpp.noona.transition )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp01)
    player.pay( reward )
    zpp.log(fmt.f(_("You helped deliver Noona and her equipment to {pnt}. It seems like she may still have more work for you."),{pnt=destpnt}))
    misn.finish(true)

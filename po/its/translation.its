@@ -9,6 +9,7 @@
   <!-- Start -->
   <its:translateRule selector="/Start/name" translate="yes"/>
   <its:translateRule selector="/Start/player/ship/@name" translate="yes"/>
+  <its:translateRule selector="/Start/player/ship/@acquired" translate="yes"/>
 
   <!-- Factions -->
   <its:translateRule selector="/Factions/faction/display" translate="yes"/>
@@ -34,13 +35,19 @@
   <its:translateRule selector="/ship/@name" translate="yes"/>
   <its:translateRule selector="/ship/fabricator" translate="yes"/>
   <its:translateRule selector="/ship/description" translate="yes"/>
+  <its:translateRule selector="/ship/condstr" translate="yes"/>
 
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
   <its:translateRule selector="/outfit/general/typename" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
   <its:translateRule selector="/outfit/general/desc_extra" translate="yes"/>
+  <its:translateRule selector="/outfit/general/condstr" translate="yes"/>
   <its:translateRule selector="/outfit/specific/provides" translate="yes"/>
+
+  <!-- Effects -->
+  <its:translateRule selector="/effect/@name" translate="yes"/>
+  <its:translateRule selector="/effect/description" translate="yes"/>
 
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>

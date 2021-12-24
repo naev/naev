@@ -25,9 +25,9 @@ function autoequip( p )
       return
    end
 
-   -- Remove all non-cores from the ship and add to invertory
+   -- Remove all non-cores from the ship and add to inventory
    for k,v in ipairs( s:getSlots() ) do
-      if not v.required then
+      if not v.required and not v.locked then
          local o = p:outfitByID(k)
          if o then
             -- Store and remove old
@@ -59,7 +59,7 @@ function autoequip( p )
 
    -- Remove equipped outfits from inventory
    for k,v in ipairs( s:getSlots() ) do
-      if not v.required then
+      if not v.required and not v.locked then
          local o = p:outfitByID(k)
          if o then
             player.outfitRm( o )

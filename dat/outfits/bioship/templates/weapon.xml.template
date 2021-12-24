@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="{name}">
+ <general>
+  <typename>{typename}</typename>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>{size}</size>
+  <license>{license}</license>
+  <mass>{mass}</mass>
+  <price>{price}</price>
+  <description>{desc}</description>
+  <gfx_store>{gfx_store}</gfx_store>
+  <desc_extra>Plasma burns deal an extra {damage} of damage over 5 seconds on the target.</desc_extra>
+ </general>
+ <specific type="{specific}">
+  <lua>outfits/bioship/skills/{lua}</lua>
+  <gfx>{gfx}</gfx>
+  <gfx_end>{gfx_end}</gfx_end>
+  <sound>{sound}</sound>
+  <spfx_shield>{spfx_shield}</spfx_shield>
+  <spfx_armour>{spfx_armour}</spfx_armour>
+  <delay>{delay}</delay>
+  <speed>{speed}</speed>
+  <range>{range}</range>
+  <falloff>{falloff}</falloff>
+  <energy>{energy}</energy>
+  <heatup>{heatup}</heatup>
+  <trackmin>{trackmin}</trackmin>
+  <trackmax>{trackmax}</trackmax>
+  {extra}
+  <damage>
+   <type>normal</type>
+   <penetrate>{penetrate}</penetrate>
+   <physical>{damage}</physical>
+  </damage>
+ </specific>
+</outfit>

@@ -265,6 +265,10 @@ static int hook_parseParam( lua_State *L, const HookParam *param )
          case HOOK_PARAM_JUMP:
             lua_pushjump( L, param[n].u.lj );
             break;
+         case HOOK_PARAM_REF:
+            lua_rawgeti( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
+            luaL_unref( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
+            break;
 
          default:
             WARN( _("Unknown Lua parameter type.") );

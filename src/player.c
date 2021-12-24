@@ -29,6 +29,7 @@
 #include "gui.h"
 #include "gui_omsg.h"
 #include "hook.h"
+#include "info.h"
 #include "input.h"
 #include "intro.h"
 #include "land.h"
@@ -134,13 +135,13 @@ static void player_checkHail (void);
 /* creation */
 static void player_newSetup();
 static int player_newMake (void);
-static Pilot* player_newShipMake( const char* name );
+static PlayerShip_t* player_newShipMake( const char* name );
 /* sound */
 static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
-static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
-static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite );
+static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i );
+static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship );
 static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
@@ -181,6 +182,7 @@ int player_init (void)
    if (player_outfits==NULL)
       player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
+   memset( &player.ps, 0, sizeof(PlayerShip_t) );
    return 0;
 }
 
@@ -205,6 +207,7 @@ static void player_newSetup()
    player.last_played = time(NULL);
    player.date_created = player.last_played;
    player.time_since_save = player.last_played;
+   player.chapter = strdup( start_chapter() );
 
    /* For pretty background. */
    pilots_cleanAll();
@@ -321,7 +324,7 @@ void player_new (void)
 static int player_newMake (void)
 {
    const Ship *ship;
-   const char *shipname;
+   const char *shipname, *acquired;
    double x,y;
 
    if (player_stack==NULL)
@@ -344,8 +347,9 @@ static int player_newMake (void)
       WARN(_("Ship not properly set by module."));
       return -1;
    }
+   acquired = start_acquired();
    /* Setting a default name in the XML prevents naming prompt. */
-   if (player_newShip( ship, shipname, 0, (shipname==NULL) ? 0 : 1 ) == NULL) {
+   if (player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 ) == NULL) {
       player_new();
       return -1;
    }
@@ -385,16 +389,17 @@ static int player_newMake (void)
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if cancelled.
  *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param acquired Description of how the ship was acquired.
  *    @param noname Whether or not to let the player name it.
  *    @return Newly created pilot on success or NULL if dialogue was cancelled.
  *
  * @sa player_newShipMake
  */
 Pilot* player_newShip( const Ship* ship, const char *def_name,
-      int trade, int noname )
+      int trade, const char *acquired, int noname )
 {
    char *ship_name, *old_name;
-   Pilot *new_ship;
+   PlayerShip_t *ps;
 
    /* temporary values while player doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
@@ -432,7 +437,12 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       return NULL;
    }
 
-   new_ship = player_newShipMake( ship_name );
+   ps = player_newShipMake( ship_name );
+   ps->autoweap  = 1;
+   ps->favourite = 0;
+   ps->shipvar   = array_create( lvar );
+   ps->acquired  = (acquired!=NULL) ? strdup( acquired ) : NULL;
+   ps->acquired_date = ntime_get();
 
    /* Player is trading ship in. */
    if (trade) {
@@ -451,16 +461,16 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       equipment_regenLists( w, 0, 1 );
    }
 
-   return new_ship;
+   return ps->p;
 }
 
 /**
  * @brief Actually creates the new ship.
  */
-static Pilot* player_newShipMake( const char* name )
+static PlayerShip_t *player_newShipMake( const char *name )
 {
    PilotFlags flags;
-   Pilot *new_pilot;
+   PlayerShip_t *ps;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -494,15 +504,14 @@ static Pilot* player_newShipMake( const char* name )
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
             dir, &vp, &vv, flags, 0, 0 );
       cam_setTargetPilot( id, 0 );
-      new_pilot = pilot_get( id );
+      ps = &player.ps;
    }
    else {
       /* Grow memory. */
-      PlayerShip_t *ship = &array_grow( &player_stack );
+      ps = &array_grow( &player_stack );
+      memset( ps, 0, sizeof(PlayerShip_t) );
       /* Create the ship. */
-      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
-      new_pilot   = ship->p;
-      ship->favourite = 0;
+      ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
    }
 
    if (player.p == NULL)
@@ -516,7 +525,7 @@ static Pilot* player_newShipMake( const char* name )
    player_creds = 0;
    player_payback = 0;
 
-   return new_pilot;
+   return ps;
 }
 
 /**
@@ -527,76 +536,97 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
+   HookParam hparam[5];
+   Pilot *ship;
+   Vector2d v;
+   double dir;
+   PlayerShip_t *ps = NULL;
+   PlayerShip_t ptemp;
+
+   /* Try to find the ship. */
    for (int i=0; i<array_size(player_stack); i++) {
-      int fav;
-      Pilot *ship;
-      Vector2d v;
-      double dir;
-
-      if (strcmp(shipname,player_stack[i].p->name)!=0)
-         continue;
-
-      /* Run onremove hook for all old outfits. */
-      for (int j=0; j<array_size(player.p->outfits); j++)
-         pilot_outfitLRemove( player.p, player.p->outfits[j] );
-
-      /* Get rid of deployed escorts. */
-      escort_clearDeployed( player.p );
-
-      /* swap player and ship */
-      ship = player_stack[i].p;
-
-      /* move credits over */
-      ship->credits = player.p->credits;
-
-      /* move cargo over */
-      if (move_cargo)
-         pilot_cargoMove( ship, player.p );
-
-      /* Copy target info */
-      ship->target = player.p->target;
-      ship->nav_planet = player.p->nav_planet;
-      ship->nav_hyperspace = player.p->nav_hyperspace;
-      ship->nav_anchor = player.p->nav_anchor;
-      ship->nav_asteroid = player.p->nav_asteroid;
-
-      /* Store position. */
-      v     = player.p->solid->pos;
-      dir   = player.p->solid->dir;
-
-      /* extra pass to calculate stats */
-      pilot_calcStats( ship );
-      pilot_calcStats( player.p );
-
-      /* Run onadd hook for all new outfits. */
-      for (int j=0; j<array_size(ship->outfits); j++)
-         pilot_outfitLAdd( ship, ship->outfits[j] );
-
-      /* now swap the players */
-      player_stack[i].p = player.p;
-      player.p          = pilot_replacePlayer( ship );
-
-      /* Swap favouriteness. */
-      fav = player_stack[i].favourite;
-      player_stack[i].favourite = player.favourite;
-      player.favourite = fav;
-
-      /* Copy position back. */
-      player.p->solid->pos = v;
-      player.p->solid->dir = dir;
-
-      /* Fill the tank. */
-      if (landed)
-         land_refuel();
-
-      /* Set some gui stuff. */
-      gui_load( gui_pick() );
-
-      /* Bind camera. */
-      cam_setTargetPilot( player.p->id, 0 );
+      if (strcmp(shipname,player_stack[i].p->name)==0) {
+         ps = &player_stack[i];
+         break;
+      }
+   }
+   if (ps==NULL) {
+      WARN( _("Unable to swap player.p with ship '%s': ship does not exist!"), shipname );
       return;
    }
-   WARN( _("Unable to swap player.p with ship '%s': ship does not exist!"), shipname );
+
+   /* Run onremove hook for all old outfits. */
+   for (int j=0; j<array_size(player.p->outfits); j++)
+      pilot_outfitLRemove( player.p, player.p->outfits[j] );
+
+   /* Get rid of deployed escorts. */
+   escort_clearDeployed( player.p );
+
+   /* Swap information over. */
+   ptemp = player.ps;
+   player.ps = *ps;
+   *ps = ptemp;
+
+   /* Swap player and ship */
+   ship = player.ps.p;
+
+   /* move credits over */
+   ship->credits = player.p->credits;
+
+   /* move cargo over */
+   if (move_cargo)
+      pilot_cargoMove( ship, player.p );
+
+   /* Copy target info */
+   ship->target = player.p->target;
+   ship->nav_planet = player.p->nav_planet;
+   ship->nav_hyperspace = player.p->nav_hyperspace;
+   ship->nav_anchor = player.p->nav_anchor;
+   ship->nav_asteroid = player.p->nav_asteroid;
+
+   /* Store position. */
+   v     = player.p->solid->pos;
+   dir   = player.p->solid->dir;
+
+   /* extra pass to calculate stats */
+   pilot_calcStats( ship );
+   pilot_calcStats( player.p );
+
+   /* Run onadd hook for all new outfits. */
+   for (int j=0; j<array_size(ship->outfits); j++)
+      pilot_outfitLAdd( ship, ship->outfits[j] );
+
+   /* now swap the players */
+   player.p    = pilot_replacePlayer( ship );
+   player.ps.p = player.p;
+
+   /* Copy position back. */
+   player.p->solid->pos = v;
+   player.p->solid->dir = dir;
+
+   /* Fill the tank. */
+   if (landed)
+      land_refuel();
+
+   /* Set some gui stuff. */
+   gui_load( gui_pick() );
+
+   /* Bind camera. */
+   cam_setTargetPilot( player.p->id, 0 );
+
+   /* Run hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = player.p->name;
+   hparam[1].type    = HOOK_PARAM_STRING;
+   hparam[1].u.str   = player.p->ship->name;
+   hparam[2].type    = HOOK_PARAM_STRING;
+   hparam[2].u.str   = ps->p->name;
+   hparam[3].type    = HOOK_PARAM_STRING;
+   hparam[3].u.str   = ps->p->ship->name;
+   hparam[4].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_swap", hparam );
+
+   return;
 }
 
 /**
@@ -638,14 +668,18 @@ credits_t player_shipPrice( const char *shipname )
 void player_rmShip( const char *shipname )
 {
    for (int i=0; i<array_size(player_stack); i++) {
+      PlayerShip_t *ps = &player_stack[i];
+
       /* Not the ship we are looking for. */
-      if (strcmp(shipname,player_stack[i].p->name)!=0)
+      if (strcmp(shipname,ps->p->name)!=0)
          continue;
 
       /* Free player ship. */
-      pilot_free(player_stack[i].p);
+      pilot_free( ps->p );
+      lvar_freeArray( ps->shipvar );
+      free( ps->acquired );
 
-      array_erase( &player_stack, &player_stack[i], &player_stack[i+1] );
+      array_erase( &player_stack, ps, ps+1 );
    }
 
    /* Update ship list if landed. */
@@ -691,8 +725,11 @@ void player_cleanup (void)
    /* Reset factions. */
    factions_reset();
 
+   /* Free stuff. */
    free(player.name);
    player.name = NULL;
+   array_free( player.ps.shipvar );
+   memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);
    player_message_noland = NULL;
@@ -701,6 +738,9 @@ void player_cleanup (void)
    gui_cleanup();
    player_guiCleanup();
    ovr_setOpen(0);
+
+   /* Clear up info buttons. */
+   info_buttonClear();
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++)
@@ -735,6 +775,8 @@ void player_cleanup (void)
    player_payback = 0;
    free( player.gui );
    player.gui = NULL;
+   free( player.chapter );
+   player.chapter = NULL;
 
    /* Clear omsg. */
    omsg_cleanup();
@@ -1251,24 +1293,32 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
+   double pitch = 1., volume = 1.;
 
    /* Calculate engine sound to use. */
    if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
    else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
       /* See if is in hyperspace. */
-      if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
+      if (pilot_isFlag(pplayer, PILOT_HYPERSPACE)) {
          engsound = snd_hypEng;
-      else
+      }
+      else {
          engsound = pplayer->ship->sound;
+         pitch = pplayer->ship->engine_pitch;
+         volume = conf.engine_vol;
+      }
    }
    else
       engsound = -1;
    /* See if sound must change. */
    if (player_lastEngineSound != engsound) {
       sound_stopGroup( player_engine_group );
-      if (engsound >= 0)
+      if (engsound >= 0) {
+         sound_pitchGroup( player_engine_group, pitch );
+         sound_volumeGroup( player_engine_group, volume );
          sound_playGroup( player_engine_group, engsound, 0 );
+      }
    }
    player_lastEngineSound = engsound;
 
@@ -1954,6 +2004,7 @@ void player_brokeHyperspace (void)
    pilot_outfitLInitAll( player.p );
 
    /* Safe since this is run in the player hook section. */
+   pilot_outfitLOnjumpin( player.p );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
@@ -1964,6 +2015,7 @@ void player_brokeHyperspace (void)
 
    /* Increment times jumped. */
    player.jumped_times++;
+   player.ps.jumped_times++;
 }
 
 /**
@@ -2346,7 +2398,7 @@ void player_brake(void)
 
    stopped = pilot_isStopped(player.p);
    if (stopped && !pilot_isFlag(player.p, PILOT_COOLDOWN))
-      pilot_cooldown(player.p);
+      pilot_cooldown(player.p, 1);
    else {
       pilot_setFlag(player.p, PILOT_BRAKING);
       pilot_setFlag(player.p, PILOT_COOLDOWN_BRAKE);
@@ -2764,6 +2816,9 @@ static int cmp_int( const void *p1, const void *p2 )
  */
 void player_missionFinished( int id )
 {
+   HookParam h[2];
+   const MissionData *m;
+
    /* Make sure not already marked. */
    if (player_missionAlreadyDone(id))
       return;
@@ -2774,6 +2829,14 @@ void player_missionFinished( int id )
    array_push_back( &missions_done, id );
 
    qsort( missions_done, array_size(missions_done), sizeof(int), cmp_int );
+
+   /* Run the completion hook. */
+   m = mission_get( id );
+   mission_toLuaTable( naevL, m ); /* Push to stack. */
+   h[0].type = HOOK_PARAM_REF;
+   h[0].u.ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* Pops from stack. */
+   h[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "mission_done", h );
 }
 
 /**
@@ -2786,6 +2849,16 @@ int player_missionAlreadyDone( int id )
 {
    const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
    return i!=NULL;
+}
+
+/**
+ * @brief Gets a list of all the missions the player has done.
+ *
+ *    @return Array (array.c) of all the missions the player has done. Do not free!
+ */
+int* player_missionsDoneList (void)
+{
+   return missions_done;
 }
 
 /**
@@ -2817,6 +2890,16 @@ int player_eventAlreadyDone( int id )
 {
    const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
    return i!=NULL;
+}
+
+/**
+ * @brief Gets a list of all the events the player has done.
+ *
+ *    @return Array (array.c) of all the events the player has done. Do not free!
+ */
+int* player_eventsDoneList (void)
+{
+   return events_done;
 }
 
 /**
@@ -2868,6 +2951,7 @@ void player_runHooks (void)
       player_rmFlag( PLAYER_HOOK_HYPER );
    }
    if (player_isFlag( PLAYER_HOOK_JUMPIN)) {
+      pilot_outfitLOnjumpin( player.p );
       hooks_run( "jumpin" );
       hooks_run( "enter" );
       events_trigger( EVENT_TRIGGER_ENTER );
@@ -2970,12 +3054,12 @@ int player_addEscorts (void)
 static int player_saveEscorts( xmlTextWriterPtr writer )
 {
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      if (player.p->escorts[i].persist) {
-         xmlw_startElem(writer, "escort");
-         xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-         xmlw_str(writer, "%s", player.p->escorts[i].ship);
-         xmlw_endElem(writer); /* "escort" */
-      }
+      if (!player.p->escorts[i].persist)
+         continue;
+      xmlw_startElem(writer, "escort");
+      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
+      xmlw_str(writer, "%s", player.p->escorts[i].ship);
+      xmlw_endElem(writer); /* "escort" */
    }
 
    return 0;
@@ -2999,6 +3083,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"dt_mod","%f",player.dt_mod);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
+   xmlw_elem(writer,"chapter","%s",player.chapter);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
@@ -3019,12 +3104,12 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Current ship. */
    xmlw_elem(writer, "location", "%s", land_planet->name);
-   player_saveShip( writer, player.p, player.favourite ); /* current ship */
+   player_saveShip( writer, &player.ps ); /* current ship */
 
    /* Ships. */
    xmlw_startElem(writer,"ships");
    for (int i=0; i<array_size(player_stack); i++)
-      player_saveShip( writer, player_stack[i].p, player_stack[i].favourite );
+      player_saveShip( writer, &player_stack[i] );
    xmlw_endElem(writer); /* "ships" */
 
    /* GUIs. */
@@ -3055,7 +3140,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (int i=0; i<array_size(missions_done); i++) {
-      MissionData *m = mission_get(missions_done[i]);
+      const MissionData *m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
    }
@@ -3086,7 +3171,7 @@ int player_save( xmlTextWriterPtr writer )
 /**
  * @brief Saves an outfit slot.
  */
-static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i )
+static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i )
 {
    const Outfit *o = slot->outfit;
    xmlw_startElem(writer,"outfit");
@@ -3106,21 +3191,50 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  * @brief Saves a ship.
  *
  *    @param writer XML writer.
- *    @param ship Ship to save.
- *    @param favourite Whether or not this ship is a favourite.
+ *    @param pship Ship to save.
  *    @return 0 on success.
  */
-static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite )
+static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 {
+   Pilot *ship = pship->p;
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
-   xmlw_attr(writer,"favourite", "%d",favourite);
+   xmlw_attr(writer,"favourite", "%d",pship->favourite);
+
+   /* Metadata. */
+   if (pship->acquired)
+      xmlw_elem(writer, "acquired","%s", pship->acquired);
+   xmlw_saveTime(writer, "acquired_date", pship->acquired_date);
+   xmlw_elem(writer, "time_played","%f", pship->time_played);
+   xmlw_elem(writer, "dmg_done_shield", "%f", pship->dmg_done_shield);
+   xmlw_elem(writer, "dmg_done_armour", "%f", pship->dmg_done_armour);
+   xmlw_elem(writer, "dmg_taken_shield", "%f", pship->dmg_taken_shield);
+   xmlw_elem(writer, "dmg_taken_armour", "%f", pship->dmg_taken_armour);
+   xmlw_elem(writer, "jumped_times", "%u", pship->jumped_times);
+   xmlw_elem(writer, "landed_times", "%u", pship->landed_times);
+   xmlw_elem(writer, "death_counter", "%u", pship->death_counter);
+
+   /* Ships destroyed by class. */
+   xmlw_startElem(writer,"ships_destroyed");
+   for (int i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+      char buf[STRMAX_SHORT];
+      strncpy( buf, ship_classToString(i), sizeof(buf)-1 );
+      for (size_t j=0; j<strlen(buf); j++)
+         if (buf[j]==' ')
+            buf[j]='_';
+      xmlw_elem(writer, buf, "%u", pship->ships_destroyed[i]);
+   }
+   xmlw_endElem(writer); /* "ships_destroyed" */
 
    /* save the fuel */
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
    /* save the outfits */
+   xmlw_startElem(writer,"outfits_intrinsic"); /* Want them to be first. */
+   for (int i=0; i<array_size(ship->outfit_intrinsic); i++)
+      player_saveShipSlot( writer, &ship->outfit_intrinsic[i], i );
+   xmlw_endElem(writer); /* "outfits_intrinsic" */
    xmlw_startElem(writer,"outfits_structure");
    for (int i=0; i<array_size(ship->outfit_structure); i++) {
       if (ship->outfit_structure[i].outfit==NULL)
@@ -3209,6 +3323,11 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
    }
    xmlw_endElem(writer); /* "weaponsets" */
 
+   /* Ship variables. */
+   xmlw_startElem(writer, "vars");
+   lvar_save( pship->shipvar, writer );
+   xmlw_endElem(writer); /* "vars" */
+
    xmlw_endElem(writer); /* "ship" */
 
    return 0;
@@ -3223,17 +3342,19 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
 static int player_saveMetadata( xmlTextWriterPtr writer )
 {
    time_t t = time(NULL);
+   double diff = difftime( t, player.time_since_save );
 
    /* Compute elapsed time. */
-   player.time_played += difftime( t, player.time_since_save );
+   player.time_played += diff;
+   player.ps.time_played += diff;
    player.time_since_save = t;
 
    /* Save the stuff. */
    xmlw_saveTime(writer, "last_played", time(NULL));
    xmlw_saveTime(writer, "date_created", player.date_created);
-   xmlw_elem(writer,"time_played","%f",player.time_played);
 
-   /* Damage stuff. */
+   /* Meta-data. */
+   xmlw_elem(writer, "time_played","%f", player.time_played);
    xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
    xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
    xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
@@ -3300,6 +3421,10 @@ Planet* player_load( xmlNodePtr parent )
 
    /* Set up meta-data. */
    player.time_since_save = time(NULL);
+
+   /* Defaults as necessary. */
+   if (player.chapter==NULL)
+      player.chapter = strdup( start_chapter() );
 
    return pnt;
 }
@@ -3370,6 +3495,9 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
       o = outfit_get( lua_tostring(naevL,-1) );
    else if (lua_isoutfit(naevL,-1))
       o = lua_tooutfit(naevL,-1);
+   else
+      WARN(_("Outfit '%s' in player save not found!"), name );
+
    lua_pop(naevL,1);
 
    return o;
@@ -3746,26 +3874,23 @@ static int player_parseMetadata( xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"last_played"))
+      xmlr_float(node,"dmg_done_shield",player.dmg_done_shield);
+      xmlr_float(node,"dmg_done_armour",player.dmg_done_armour);
+      xmlr_float(node,"dmg_taken_shield",player.dmg_taken_shield);
+      xmlr_float(node,"dmg_taken_armour",player.dmg_taken_armour);
+      xmlr_uint(node,"jumped_times",player.jumped_times);
+      xmlr_uint(node,"landed_times",player.landed_times);
+      xmlr_uint(node,"death_counter",player.death_counter);
+      xmlr_float(node,"time_played",player.time_played);
+
+      if (xml_isNode(node,"last_played")) {
          xml_parseTime(node, &player.last_played);
-      else if (xml_isNode(node,"time_played"))
-         player.time_played = xml_getFloat(node);
-      else if (xml_isNode(node,"date_created"))
+         continue;
+      }
+      else if (xml_isNode(node,"date_created")) {
          xml_parseTime(node, &player.date_created);
-      else if (xml_isNode(node,"dmg_done_shield"))
-         player.dmg_done_shield = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_done_armour"))
-         player.dmg_done_armour = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_taken_shield"))
-         player.dmg_taken_shield = xml_getFloat(node);
-      else if (xml_isNode(node,"dmg_taken_armour"))
-         player.dmg_taken_armour = xml_getFloat(node);
-      else if (xml_isNode(node,"jumped_times"))
-         player.jumped_times = xml_getUInt(node);
-      else if (xml_isNode(node,"landed_times"))
-         player.landed_times = xml_getUInt(node);
-      else if (xml_isNode(node,"death_counter"))
-         player.death_counter = xml_getUInt(node);
+         continue;
+      }
       else if (xml_isNode(node,"ships_destroyed")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
@@ -3879,13 +4004,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Commodity *com;
    PilotFlags flags;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
-   int favourite;
-   PlayerShip_t *ps;
+   PlayerShip_t ps;
+
+   memset( &ps, 0, sizeof(PlayerShip_t) );
 
    /* Parse attributes. */
    xmlr_attr_strd( parent, "name", name );
    xmlr_attr_strd( parent, "model", model );
-   xmlr_attr_int_def( parent, "favourite", favourite, 0 );
+   xmlr_attr_int_def( parent, "favourite", ps.favourite, 0 );
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
@@ -3907,7 +4033,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Add GUI if applicable. */
    player_guiAdd( ship_parsed->gui );
 
-   /* player is currently on this ship */
+   /* Player is currently on this ship */
    if (is_player != 0) {
       unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
@@ -3915,6 +4041,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+   ps.p = ship;
 
    /* Ship should not have default outfits. */
    for (int i=0; i<array_size(ship->outfits); i++)
@@ -3932,48 +4059,113 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Start parsing. */
    node = parent->xmlChildrenNode;
    do {
-      /* get fuel */
+      xml_onlyNodes(node);
+
+      /* Meta-data. */
+      xmlr_strd(node,"acquired",ps.acquired);
+      if (xml_isNode(node,"acquired_date")) {
+         xml_parseTime(node, &ps.acquired_date);
+         continue;
+      }
+      xmlr_float(node,"time_played",ps.time_played);
+      xmlr_float(node,"dmg_done_shield",ps.dmg_done_shield);
+      xmlr_float(node,"dmg_done_armour",ps.dmg_done_armour);
+      xmlr_float(node,"dmg_taken_shield",ps.dmg_taken_shield);
+      xmlr_float(node,"dmg_taken_armour",ps.dmg_taken_armour);
+      xmlr_uint(node,"jumped_times",ps.jumped_times);
+      xmlr_uint(node,"landed_times",ps.landed_times);
+      xmlr_uint(node,"death_counter",ps.death_counter);
+      if (xml_isNode(node,"ships_destroyed")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do {
+            char buf[STRMAX_SHORT];
+            int class;
+
+            xml_onlyNodes(cur);
+
+            strncpy( buf, (const char*)cur->name, sizeof(buf)-1 );
+            for (size_t i=0; i<strlen(buf); i++)
+               if (buf[i]=='_')
+                  buf[i] = ' ';
+
+            class = ship_classFromString( buf );
+            if (class==SHIP_CLASS_NULL) {
+               WARN(_("Unknown ship class '%s' when parsing 'ships_destroyed' node!"), (const char*)cur->name );
+               continue;
+            }
+
+            ps.ships_destroyed[class] = xml_getULong(cur);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Get fuel. */
       xmlr_int(node,"fuel",fuel);
 
       /* New outfit loading. */
       if (xml_isNode(node,"outfits_structure")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_structure))) {
-                  WARN(_("Outfit slot out of range, not adding to ship."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_structure))) {
+               WARN(_("Outfit slot out of range, not adding to ship."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"outfits_utility")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_utility))) {
-                  WARN(_("Outfit slot out of range, not adding."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_utility))) {
+               WARN(_("Outfit slot out of range, not adding."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"outfits_weapon")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_int_def( cur, "slot", n, -1 );
-               if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
-                  WARN(_("Outfit slot out of range, not adding."));
-                  continue;
-               }
-               player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
             }
+            xmlr_attr_int_def( cur, "slot", n, -1 );
+            if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
+               WARN(_("Outfit slot out of range, not adding."));
+               continue;
+            }
+            player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
          } while (xml_nextNode(cur));
+         continue;
+      }
+      else if (xml_isNode(node,"outfits_intrinsic")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do { /* load each outfit */
+            xml_onlyNodes(cur);
+            if (!xml_isNode(cur,"outfit")) {
+               WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
+               continue;
+            }
+            const Outfit *o = player_tryGetOutfit( xml_get(cur), 1 );
+            if (o!=NULL)
+               pilot_addOutfitIntrinsic( ship, o );
+         } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node, "commodities")) {
          xmlNodePtr cur = node->xmlChildrenNode;
@@ -3999,7 +4191,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   array_back(ship->commodities).id = cid;
             }
          } while (xml_nextNode(cur));
+         continue;
       }
+      //WARN(_("Save has unknown '%s' tag!"),xml_get(node));
    } while (xml_nextNode(node));
 
    /* Update stats. */
@@ -4023,15 +4217,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       pilot_calcStats( ship );
    }
 
-   /* add it to the stack if it's not what the player is in */
-   if (is_player == 0) {
-      ps = &array_grow( &player_stack );
-      ps->p = ship;
-      ps->favourite = favourite;
-   }
-   else
-      player.favourite = favourite;
-
    /* Sets inrange by default if weapon sets are missing. */
    for (int i=0; i<PILOT_WEAPON_SETS; i++)
       pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
@@ -4042,7 +4227,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    do {
       xmlNodePtr cur;
 
-      if (!xml_isNode(node,"weaponsets"))
+      if (xml_isNode(node,"vars")) {
+         ps.shipvar = lvar_load( node );
+         continue;
+      }
+      else if (!xml_isNode(node,"weaponsets"))
          continue;
 
       /* Check for autoweap. */
@@ -4139,6 +4328,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Set aimLines */
    ship->aimLines = aim_lines;
+
+   /* Add it to the stack if it's not what the player is in */
+   if (is_player == 0)
+      array_push_back( &player_stack, ps );
+   else
+      player.ps = ps;
 
    return 0;
 }

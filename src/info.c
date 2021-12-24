@@ -63,6 +63,21 @@ static const char *info_names[INFO_WINDOWS] = {
    N_("Ship log"),
 }; /**< Name of the tab windows. */
 
+/**
+ * @brief For use with registered info buttons.
+ */
+typedef struct InfoButton_s {
+   int id;        /**< Unique ID. */
+   char *caption; /**< Button caption. */
+   char button[32]; /**< Current button caption. */
+   int priority;  /**< Button priority. */
+   /* Lua stuff .*/
+   lua_State *L;  /**< Lua state to use. */
+   nlua_env env;  /**< Runtime environment. */
+   int func;      /**< Function to call. */
+} InfoButton_t;
+static InfoButton_t *info_buttons = NULL;
+
 static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
@@ -87,7 +102,6 @@ static int logWidgetsReady=0;
 static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_setGui( unsigned int wid, const char *str );
-static void info_shipAI( unsigned int wid, const char *str );
 static void setgui_load( unsigned int wdw, const char *str );
 static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
@@ -95,6 +109,7 @@ static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
 static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
+static void info_buttonClick( unsigned int wid, const char *str );
 static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
@@ -116,6 +131,134 @@ static void mission_menu_update( unsigned int wid, const char *str );
 static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
 static void info_changeTab( unsigned int wid, const char *str, int old, int new );
+
+static int sort_buttons( const void *p1, const void *p2 )
+{
+   const InfoButton_t *b1 = p1;
+   const InfoButton_t *b2 = p2;
+   if (b1->priority < b2->priority)
+      return -1;
+   else if (b1->priority > b2->priority)
+      return +1;
+   return strcmp(b1->caption,b2->caption);
+}
+
+static void info_buttonFree( InfoButton_t *btn )
+{
+   free( btn->caption );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
+}
+
+static void info_buttonRegen (void)
+{
+   int wid;
+   if (info_wid == 0)
+      return;
+   wid = info_windows[ INFO_WIN_MAIN ];
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
+      if (widget_exists( wid, btn->button ))
+         window_destroyWidget( wid, btn->button );
+      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            btn->button, btn->caption, info_buttonClick );
+   }
+}
+
+/**
+ * @brief Registers a button in the info menu.
+ *
+ *    @param L Lua state being registered from.
+ *    @param caption Caption to give the button.
+ *    @param priority Button priority, lower is more important.
+ *    @return Newly created button ID.
+ */
+int info_buttonRegister( lua_State *L, const char *caption, int priority )
+{
+   static int button_idgen = 0;
+   int id;
+   InfoButton_t *btn;
+
+   if (info_buttons == NULL)
+      info_buttons = array_create( InfoButton_t );
+
+   btn = &array_grow( &info_buttons );
+   btn->id     = ++button_idgen;
+   btn->caption= strdup( caption );
+   btn->button[0] = '\0';
+   btn->priority = priority;
+   btn->L      = L;
+   btn->env    = __NLUA_CURENV;
+   btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
+
+   id = btn->id;
+   qsort( info_buttons, array_size(info_buttons), sizeof(InfoButton_t), sort_buttons );
+
+   info_buttonRegen();
+   return id;
+}
+
+/**
+ * @brief Unregisters a button in the info menu.
+ *
+ *    @param id ID of the button to unregister and previously created by info_buttonRegister.
+ *    @return 0 on success.
+ */
+int info_buttonUnregister( int id )
+{
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (btn->id != id)
+         continue;
+      if (info_wid != 0) {
+         int wid = info_windows[ INFO_WIN_MAIN ];
+         if (widget_exists( wid, btn->button ))
+            window_destroyWidget( wid, btn->button );
+      }
+      info_buttonFree( btn );
+      array_erase( &info_buttons, btn, btn+1 );
+      info_buttonRegen();
+      return 0;
+   }
+   return -1;
+}
+
+/**
+ * @brief Clears all te registered buttons.
+ */
+void info_buttonClear (void)
+{
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (info_wid != 0) {
+         int wid = info_windows[ INFO_WIN_MAIN ];
+         if (widget_exists( wid, btn->button ))
+            window_destroyWidget( wid, btn->button );
+      }
+      info_buttonFree( btn );
+   }
+   array_free( info_buttons );
+   info_buttons = NULL;
+   info_buttonRegen();
+}
+
+static void info_buttonClick( unsigned int wid, const char *str )
+{
+   (void) wid;
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      if (strcmp( btn->button, str )!=0)
+         continue;
+
+      lua_rawgeti( btn->L, LUA_REGISTRYINDEX, btn->func );
+      if (nlua_pcall( btn->env, 0, 0 )) {
+         WARN(_("Failure to run info button with id '%d':\n%s"),btn->id, lua_tostring(btn->L,-1));
+         lua_pop(btn->L, 1);
+      }
+      return;
+   }
+}
 
 /**
  * @brief Opens the information menu.
@@ -179,6 +322,7 @@ static void info_close( unsigned int wid, const char *str )
    if (info_wid > 0) {
       window_close( info_wid, str );
       info_wid = 0;
+      info_windows = NULL;
       logs = NULL;
       menu_Close(MENU_INFO);
    }
@@ -200,8 +344,6 @@ static void info_openMain( unsigned int wid )
 {
    const char **buf;
    char str[STRMAX_SHORT], creds[ECON_CRED_STRLEN];
-   char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
-   char slanded[NUM2STRLEN], sjumped[NUM2STRLEN], sdied[NUM2STRLEN];
    char **licenses;
    int nlicenses;
    char *nt;
@@ -219,10 +361,10 @@ static void info_openMain( unsigned int wid )
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
-   k += scnprintf( &str[k], sizeof(str)-k, "#nPilot:" );
+   k += scnprintf( &str[k], sizeof(str)-k, "%s", _("Pilot:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Date:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Money:") );
-   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ship:") );
+   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Current Ship:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Fuel:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Time played:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times died:") );
@@ -231,15 +373,9 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage done:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Damage taken:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Ships destroyed:") );
-   window_addText( wid, 40, 20, 120, h-80, 0, "txtDPilot", &gl_smallFont, NULL, str );
+   window_addText( wid, 20, 20, 120, h-80, 0, "txtDPilot", &gl_smallFont, &cFontGrey, str );
 
    credits2str( creds, player.p->credits, 2 );
-   num2str( sdied, (double)player.death_counter, 0 );
-   num2str( sjumped, (double)player.jumped_times, 0 );
-   num2str( slanded, (double)player.landed_times, 0 );
-   num2str( sdmgdone, player.dmg_done_shield + player.dmg_done_armour, 0 );
-   num2str( sdmgtaken, player.dmg_taken_shield + player.dmg_taken_armour, 0 );
-   num2str( sdestroyed, destroyed, 0 );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", player.name );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", nt );
    l += scnprintf( &str[l], sizeof(str)-l, "\n\n%s", creds );
@@ -248,15 +384,15 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%.1f hours"), player.time_played / 3600. );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sdied );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sjumped );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", slanded );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgdone );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.death_counter,0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.jumped_times, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s\n", num2strU((double)player.landed_times, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_done_shield + player.dmg_done_armour, 0) );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", "" );
-   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), sdmgtaken );
-   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", sdestroyed );
-   window_addText( wid, 180, 20,
-         w-80-200-40+20-180, h-80,
+   l += scnprintf( &str[l], sizeof(str)-l, _("%s MJ"), num2strU(player.dmg_taken_shield + player.dmg_taken_armour, 0) );
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU(destroyed, 0) );
+   window_addText( wid, 160, 20,
+         w-80-160-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
@@ -267,9 +403,14 @@ static void info_openMain( unsigned int wid )
    window_addButtonKey( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
-   window_addButtonKey( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnShipAI", _("Ship AI"), info_shipAI, SDLK_a );
+
+   for (int i=0; i<array_size(info_buttons); i++) {
+      InfoButton_t *btn = &info_buttons[i];
+      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
+      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            btn->button, btn->caption, info_buttonClick );
+   }
 
    buf = player_getLicenses();
    nlicenses = array_size( buf );
@@ -283,9 +424,9 @@ static void info_openMain( unsigned int wid )
         licenses[i] = strdup( _(buf[i]) );
       qsort( licenses, nlicenses, sizeof(char*), strsort );
    }
-   window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
+   window_addText( wid, -20, -40, w-80-240-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
-   window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
+   window_addList( wid, -20, -70, w-80-240-40-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
    window_setFocus( wid, "lstLicenses" );
 }
@@ -355,42 +496,6 @@ static void info_setGui( unsigned int wid, const char *str )
 
    /* default action */
    window_setAccept( wid, setgui_load );
-}
-
-/**
- * @brief Allows the player to set a different GUI.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void info_shipAI( unsigned int wid, const char *str )
-{
-   (void) wid;
-   (void) str;
-   size_t bufsize;
-   char *buf = ndata_read( SHIPAI_PATH, &bufsize );
-
-   nlua_env shipai_env = nlua_newEnv( 1 );
-   nlua_loadStandard( shipai_env );
-   nlua_loadTk( shipai_env );
-
-   if (nlua_dobufenv(shipai_env, buf, bufsize, SHIPAI_PATH) != 0) {
-      WARN( _("Error loading file: %s\n"
-            "%s\n"
-            "Most likely Lua file has improper syntax, please check"),
-            SHIPAI_PATH, lua_tostring(naevL,-1));
-      free(buf);
-      return;
-   }
-   free(buf);
-
-   nlua_getenv( shipai_env, "create" );
-   if (nlua_pcall( shipai_env, 0, 0 )) {
-      WARN( _("Ship AI: '%s'"), lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-
-   nlua_freeEnv( shipai_env );
 }
 
 /**
@@ -464,28 +569,28 @@ static void info_openShip( unsigned int wid )
          "closeOutfits", _("Close"), info_close );
 
    /* Text. */
-      l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
-   window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stats:") );
+   window_addText( wid, 20, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
+   window_addText( wid, 160, -40, w-20-20-20-160-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -540,7 +645,7 @@ static void ship_update( unsigned int wid )
          pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", "\n\n" );
 
-   equipment_shipStats( &buf[l], sizeof(buf)-l, player.p, 1 );
+   equipment_shipStats( &buf[l], sizeof(buf)-l, player.p, 0, 0 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
 }
@@ -1049,9 +1154,8 @@ static void standings_update( unsigned int wid, const char *str )
    (void) str;
    int p, y;
    const glTexture *t;
-   int w, h, lw;
-   char buf[STRMAX_SHORT];
-   int m;
+   int w, h, lw, m, l;
+   char buf[STRMAX];
 
    /* Get dimensions. */
    info_getDim( wid, &w, &h, &lw );
@@ -1086,7 +1190,9 @@ static void standings_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
    y -= 30;
-   window_modifyText( wid, "txtDescription", faction_description( info_factions[p] ) );
+   l  = scnprintf( buf, sizeof(buf), "%s\n\n", faction_description( info_factions[p] ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("You can have a maximum reputation of %.0f%% with this faction."), round(faction_reputationMax( info_factions[p] )) );
+   window_modifyText( wid, "txtDescription", buf );
    window_moveWidget( wid, "txtDescription", lw+40, y );
 }
 
@@ -1169,7 +1275,7 @@ static void mission_menu_genList( unsigned int wid, int first )
  */
 static void mission_menu_update( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    Mission* misn;
    const StarSystem *sys;
    int pos = toolkit_getListPos(wid, "lstMission" );
@@ -1187,7 +1293,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
    /* Select the system. */
    sys = mission_getSystemMarker( misn );
    if (sys != NULL)
-      map_center( sys->name );
+      map_center( wid, sys->name );
 }
 /**
  * @brief Aborts a mission in the mission menu.
@@ -1195,7 +1301,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
  */
 static void mission_menu_abort( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    int pos;
    Mission *misn;
    int ret;

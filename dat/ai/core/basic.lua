@@ -144,7 +144,7 @@ end
 -- Goes to a target position without braking
 --]]
 function moveto_nobrake( target )
-   local dir      = ai.face( target, nil, true )
+   local dir   = ai.face( target, nil, true )
    __moveto_generic( target, dir )
 end
 
@@ -153,7 +153,7 @@ end
 -- Goes to a target position without braking
 --]]
 function moveto_nobrake_raw( target )
-   local dir      = ai.face( target )
+   local dir   = ai.face( target )
    __moveto_generic( target, dir )
 end
 
@@ -162,8 +162,8 @@ end
 -- Goes to a target position
 --]]
 function moveto( target )
-   local dir      = ai.face( target, nil, true )
-   local dist     = ai.dist( target )
+   local dir   = ai.face( target, nil, true )
+   local dist  = ai.dist( target )
 
    -- Handle finished
    if ai.isstopped() and dist < 10 then
@@ -189,8 +189,21 @@ end
 --]]
 -- luacheck: globals inspect_moveto (AI Task functions passed by name)
 function inspect_moveto( target )
-   local dir      = ai.face( target, nil, true )
+   local dir   = ai.face( target, nil, true )
    __moveto_generic( target, dir )
+end
+
+
+--[[
+-- Lunges towards the target always thrusting
+--]]
+function lunge( target )
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+   ai.aim( target )
+   ai.accel()
 end
 
 
@@ -198,8 +211,8 @@ end
 -- Generic moveto function.
 --]]
 function __moveto_generic( target, dir )
-   local dist     = ai.dist( target )
-   local bdist    = 50
+   local dist  = ai.dist( target )
+   local bdist = 50
 
    -- Need to get closer
    if dir < math.rad(10) and dist > bdist then

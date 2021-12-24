@@ -20,7 +20,7 @@ enum {
    PILOT_EMPTY,         /**< Do not add pilot to stack. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
    /*
-    * Dinamic flags
+    * Dynamic flags
     */
    /* Hyperspace. */
    PILOT_HYP_PREP,      /**< Pilot is getting ready for hyperspace. */

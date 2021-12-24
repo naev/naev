@@ -5,7 +5,7 @@
  <GFX size="66">marauder</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_soromid</sound>
  <class display="Bio-Bomber">Bomber</class>
  <price>600000</price>
  <time_mod>0.9</time_mod>
@@ -13,10 +13,11 @@
  <trail_generator x="7" y="-8" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel</license>
+ <cond>faction.playerStanding("Soromid") &gt; 30</cond>
+ <condstr>You need at least 30 reputation with the Soromid.</condstr>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>
   <armour>80</armour>
-  <armour_regen>3</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>
@@ -25,16 +26,18 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0" />
-  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0" />
-  <weapon size="small" prop="bio_weapon" x="-2" y="9" h="-1" />
-  <weapon size="small" prop="bio_weapon" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Brain Stage 1</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <weapon size="small" prop="bio_weapon" name="leftweap" x="-2" y="9" h="-1">Stinger Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" name="rightweap" x="-2" y="-9" h="-1">Stinger Organ I</weapon>
+  <weapon size="medium" x="8" y="0" h="0" />
+  <weapon size="medium" x="8" y="0" h="0" />
+  <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>
+  <utility size="small" prop="bio_organ" name="adrenal_gland" />
+  <utility size="small" prop="bio_organ" name="feral_rage" />
+  <utility size="small" prop="bio_organ" name="the_bite" />
+  <utility size="small" prop="accessory" />
   <utility size="small" />
-  <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Strong Gene Drive Stage 1</structure>
-  <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Shell Stage 1</structure>
+  <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
+  <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
   <structure size="small" />
  </slots>
  <stats>
@@ -47,7 +50,7 @@
   <ammo_capacity>50</ammo_capacity>
  </stats>
  <tags>
-  <tag>cannibal</tag>
   <tag>soromid</tag>
+  <tag>bioship</tag>
  </tags>
 </ship>

@@ -16,6 +16,10 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 
+/* Intrinsic outfits. */
+int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
+int pilot_rmOutfitIntrinsic( Pilot *pilot, PilotOutfitSlot *s );
+
 /* Ammo. */
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
@@ -39,6 +43,7 @@ void pilot_lockClear( Pilot *p );
 void pilot_calcStats( Pilot *pilot );
 void pilot_updateMass( Pilot *pilot );
 void pilot_healLanded( Pilot *pilot );
+PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name );
 
 /* Special outfit stuff. */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
@@ -60,4 +65,5 @@ void pilot_outfitLOnscan( Pilot *pilot );
 void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLOnland( Pilot *pilot );
 void pilot_outfitLOntakeoff( Pilot *pilot );
+void pilot_outfitLOnjumpin( Pilot *pilot );
 void pilot_outfitLCleanup( Pilot *pilot );

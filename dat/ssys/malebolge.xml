@@ -39,7 +39,7 @@
   </jump>
  </jumps>
  <stats>
-  <shield_regen_mod>-50.000000</shield_regen_mod>
   <shield_mod>-50.000000</shield_mod>
+  <shield_regen_mod>-50.000000</shield_regen_mod>
  </stats>
 </ssys>

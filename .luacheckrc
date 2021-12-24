@@ -101,6 +101,7 @@ stds.AI.globals = {
    "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
+   "lunge",                     -- the_bite
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway
@@ -146,6 +147,7 @@ stds.GUI.globals = {
    "update_nav",
    "update_ship",
    "update_system",
+   "update_effects",
    "update_target",
 }
 stds.Misn.globals={"abort", "accept", "create", "mem"}
@@ -166,6 +168,7 @@ stds.PilotOutfit.globals={
    "ontoggle",
    "outofenergy",
    "takeoff",
+   "jumpin",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }
@@ -182,7 +185,7 @@ files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
 files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
-files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
+files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"

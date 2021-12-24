@@ -32,8 +32,11 @@
   <bar>This bar is built on one of the upper decks of the underwater cities, with the entire ceiling being a window out into Naga's oceans. With intense lighting attracting all sorts of subaquatic life, the sight is nothing short of breathtaking.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
+  <item>Systems Low</item>
   <item>Laser 1</item>
   <item>Ion 1</item>
+  <item>Beam 1</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>

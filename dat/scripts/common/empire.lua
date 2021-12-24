@@ -6,14 +6,6 @@
 --]]
 local emp = {}
 
---[[
-   @brief Increases the reputation limit of the player.
---]]
-function emp.modReputation( increment )
-   local cur = var.peek("_fcap_empire") or 30
-   var.push( "_fcap_empire", math.min(cur+increment, 100) )
-end
-
 function emp.addShippingLog( text )
    shiplog.create("empire_shipping", _("Empire Shipping"), _("Empire"))
    shiplog.append("empire_shipping", text)

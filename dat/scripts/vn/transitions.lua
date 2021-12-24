@@ -29,11 +29,11 @@ vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 transitions._t.blur = [[
 #include "lib/blur.glsl"
 
-const float intensity = 3.0;
+const float INTENSITY = 3.0;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
-   float disp = intensity*(0.5-distance(0.5, progress));
+   float disp = INTENSITY*(0.5-distance(0.5, progress));
    vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
    vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
    return mix(c1, c2, progress);
@@ -230,6 +230,26 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec4 c1 = Texel( texprev, point );
    vec4 c2 = Texel( MainTex, point );
    return mix( c1, c2, progress );
+}
+]]
+
+transitions._t.crosshatch = [[
+/* Loosely based on https://gl-transitions.com/editor/crosshatch
+ * Author: pthrasher
+ * License: MIT
+ */
+#include "lib/math.glsl"
+
+const float THRESHOLD   = 3.0;
+const float FADE_EDGE   = 0.1;
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+
+   float dist = distance(vec2(0.5), uv) / THRESHOLD;
+   float r = progress - min(random(vec2(uv.y, 0.0)), random(vec2(0.0, uv.x)));
+   return mix( c1, c2, mix(0.0, mix(step(dist, r), 1.0, smoothstep(1.0-FADE_EDGE, 1.0, progress)), smoothstep(0.0, FADE_EDGE, progress)));
 }
 ]]
 

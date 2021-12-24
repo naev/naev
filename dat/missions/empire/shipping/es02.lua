@@ -12,6 +12,9 @@
   <location>Bar</location>
   <planet>Halir</planet>
  </avail>
+ <tags>
+  <tag>emp_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>
@@ -110,7 +113,6 @@ function land ()
 
          -- Rewards
          player.pay( emp.rewards.es02 )
-         emp.modReputation( 5 ) -- Bump cap a bit
          faction.modPlayerSingle("Empire",5)
          faction.modPlayerSingle("Dvaered",5)
 

@@ -735,6 +735,20 @@ void sound_volumeGroup( int group, double volume )
 }
 
 /**
+ * @brief Sets the pitch of a group.
+ *
+ *    @param group Group to set the pitch of.
+ *    @param pitch Pitch to set to.
+ */
+void sound_pitchGroup( int group, double pitch )
+{
+   if (sound_disabled)
+      return;
+
+   sound_al_pitchGroup( group, pitch );
+}
+
+/**
  * @brief Sets up the sound environment.
  *
  *    @param env Type of environment to set up.

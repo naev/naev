@@ -5,7 +5,7 @@
  <GFX size="124" sx="12" sy="12">arx</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Carrier">Carrier</class>
  <price>8900000</price>
  <time_mod>1.5</time_mod>
@@ -19,10 +19,11 @@
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel</license>
- <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it to carry more ships per slot, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
+ <cond>faction.playerStanding("Soromid") &gt; 70</cond>
+ <condstr>You need at least 70 reputation with the Soromid.</condstr>
+ <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amply the strentgh of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>
   <armour>1300</armour>
-  <armour_regen>4</armour_regen>
  </health>
  <characteristics>
   <crew>36</crew>
@@ -31,21 +32,20 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="leftweap">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="rightweap">Tentacle Organ I</weapon>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="20" y="0" h="0" />
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
-  <utility size="large" prop="bio_systems" exclusive="1" required="1">Superheavy Brain Stage 1</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>
+  <utility size="large" prop="bio_organ" name="the_bite" />
+  <utility size="large" prop="bio_organ" name="feral_rage" />
+  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="accessory"/>
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="bio_engines" exclusive="1" required="1">Superheavy Strong Gene Drive Stage 1</structure>
-  <structure size="large" prop="bio_hull" exclusive="1" required="1">Superheavy Shell Stage 1</structure>
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive I</structure>
+  <structure size="large" prop="bio_hull" name="shell">Immanis Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -59,7 +59,7 @@
   <fbay_reload>-10</fbay_reload>
  </stats>
  <tags>
-  <tag>cannibal</tag>
   <tag>soromid</tag>
+  <tag>bioship</tag>
  </tags>
 </ship>

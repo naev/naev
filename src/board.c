@@ -228,11 +228,11 @@ int pilot_board( Pilot *p )
    p->ptimer = 3.;
 
    /* Run pilot board hook. */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp       = target->id;
-   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   hparam[0].type = HOOK_PARAM_PILOT;
+   hparam[0].u.lp = target->id;
+   hparam[1].type = HOOK_PARAM_SENTINEL;
    pilot_runHookParam(target, PILOT_HOOK_BOARD_ALL, hparam, 1);
-   hparam[0].u.lp       = p->id;
+   hparam[0].u.lp = p->id;
    pilot_runHookParam(target, PILOT_HOOK_BOARDING, hparam, 1);
 
    return 1;

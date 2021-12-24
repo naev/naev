@@ -20,6 +20,7 @@
 
 #include "commodity.h"
 
+#include "conf.h"
 #include "array.h"
 #include "economy.h"
 #include "hook.h"
@@ -628,6 +629,7 @@ int commodity_tempIllegalto( Commodity *com, int faction )
 int commodity_load (void)
 {
    char **commodities = PHYSFS_enumerateFiles( COMMODITY_DATA_PATH );
+   Uint32 time = SDL_GetTicks();
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
@@ -668,7 +670,12 @@ int commodity_load (void)
 
    PHYSFS_freeList( commodities );
 
-   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Commodity in %.3f s", "Loaded %d Commodities in %.3f s", array_size(commodity_stack) ), array_size(commodity_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 
    return 0;
 }

@@ -52,6 +52,7 @@
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
+#define ENGINE_VOLUME_DEFAULT                0.8   /**< Default engine volume. */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
 #define DEV_SAVE_ASSET_DEFAULT            "../assets/"
@@ -97,6 +98,7 @@ typedef struct PlayerConf_s {
    int nosound; /**< Whether or not sound is on. */
    double sound; /**< Sound level for sound effects. */
    double music; /**< Sound level for music. */
+   double engine_vol; /**< Sound level for engines (relative). */
 
    /* FPS. */
    int fps_show; /**< Whether or not FPS should be shown */

@@ -56,8 +56,8 @@ end
 function accept()
    -- Mission details:
    if not tk.yesno( _([[In the bar]]), _([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]]) ) then
-      tk.msg(_("No Science Today"), _("I guess you don't care for science..."))
-      misn.finish()
+      tk.msg(_("No Science Today"), _("I guess you don't care for science…"))
+      return
    end
    tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]) )
    misn.accept()

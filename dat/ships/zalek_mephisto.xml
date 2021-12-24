@@ -5,7 +5,7 @@
  <GFX size="156" sx="12" sy="12">mephisto</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound pitch="0.5">engine_zalek</sound>
  <class>Battleship</class>
  <price>9100000</price>
  <time_mod>1.375</time_mod>
@@ -13,6 +13,8 @@
  <trail_generator x="-40" y="-8" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Za'lek") &gt; 70</cond>
+ <condstr>You need at least 70 reputation with House Za'lek.</condstr>
  <description>A mighty ship, the Mephisto has grand energy and shielding management, and its shields allow it to shrug off a lot of abuse. A core of these ships can reduce even powerful fleets to slag in short order.</description>
  <health>
   <armour>1200</armour>
@@ -32,15 +34,15 @@
   <weapon size="large" x="12" y="6" h="0" />
   <weapon size="large" prop="fighter_bay" x="15" y="-6" h="7" />
   <weapon size="large" prop="fighter_bay" x="15" y="6" h="7" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

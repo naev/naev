@@ -71,6 +71,7 @@
 
 #include "ai.h"
 
+#include "conf.h"
 #include "array.h"
 #include "board.h"
 #include "escort.h"
@@ -126,6 +127,7 @@ static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
+static int ai_sort( const void *p1, const void *p2 );
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
@@ -520,6 +522,13 @@ void ai_destroy( Pilot* p )
    ai_cleartasks( p );
 }
 
+static int ai_sort( const void *p1, const void *p2 )
+{
+   AI_Profile *ai1 = (AI_Profile*) p1;
+   AI_Profile *ai2 = (AI_Profile*) p2;
+   return strcmp( ai1->name, ai2->name );
+}
+
 /**
  * @brief Initializes the AI stuff which is basically Lua.
  *
@@ -529,6 +538,7 @@ int ai_load (void)
 {
    char** files;
    int suflen;
+   Uint32 time = SDL_GetTicks();
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -549,11 +559,17 @@ int ai_load (void)
             WARN( _("Error loading AI profile '%s'"), path);
       }
    }
-
-   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+   qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
    /* More clean up. */
    PHYSFS_freeList( files );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* Load equipment thingy. */
    return ai_loadEquip();
@@ -670,14 +686,13 @@ static int ai_loadProfile( const char* filename )
  *    @param[in] name Name of the profile to get.
  *    @return The profile or NULL on error.
  */
-AI_Profile* ai_getProfile( char* name )
+AI_Profile* ai_getProfile( const char *name )
 {
-   for (int i=0; i<array_size(profiles); i++)
-      if (strcmp(name,profiles[i].name)==0)
-         return &profiles[i];
-
-   WARN( _("AI Profile '%s' not found in AI stack"), name);
-   return NULL;
+   const AI_Profile ai = { .name = (char*)name };
+   AI_Profile *ret = bsearch( &ai, profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
+   if (ret==NULL)
+      WARN( _("AI Profile '%s' not found in AI stack"), name);
+   return ret;
 }
 
 /**
@@ -1006,10 +1021,10 @@ static void ai_create( Pilot* pilot )
          WARN( _("Pilot '%s' equip '%s' -> '%s': %s"), pilot->name, pilot->ai->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
-   }
 
-   /* Since the pilot changes outfits and cores, we must heal him up. */
-   pilot_healLanded( pilot );
+      /* Since the pilot changes outfits and cores, we must heal him up. */
+      pilot_healLanded( pilot );
+   }
 
    /* Must have AI. */
    if (pilot->ai == NULL)
@@ -1038,10 +1053,14 @@ static void ai_create( Pilot* pilot )
 Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
-   nlua_env env = p->ai->env;
+
+   if (p->ai==NULL) {
+      WARN(_("Trying to create new task for pilot '%s' that has no AI!"), p->name);
+      return NULL;
+   }
 
    /* Check if the function is good. */
-   nlua_getenv( env, func );
+   nlua_getenv( p->ai->env, func );
    luaL_checktype( naevL, -1, LUA_TFUNCTION );
 
    /* Create the new task. */

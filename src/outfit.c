@@ -30,6 +30,8 @@
 #include "nlua.h"
 #include "nlua_gfx.h"
 #include "nlua_pilotoutfit.h"
+#include "nlua_outfit.h"
+#include "nlua_camera.h"
 #include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -1211,6 +1213,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.falloff        = -1.;
    temp->u.blt.trackmin       = -1.;
    temp->u.blt.trackmax       = -1.;
+   temp->u.blt.lua_env        = LUA_NOREF;
+   temp->u.blt.lua_init       = LUA_NOREF;
+   temp->u.blt.lua_onshoot    = LUA_NOREF;
+   temp->u.blt.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1222,6 +1228,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.blt.trackmin);
       xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
+      xmlr_strd(node,"lua",temp->u.blt.lua_file);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
@@ -1364,7 +1371,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    MELEMENT(temp->u.blt.range==0,"range");
    MELEMENT(temp->u.blt.dmg.damage==0,"damage");
    MELEMENT(temp->u.blt.energy==0.,"energy");
-   MELEMENT(temp->cpu==0.,"cpu");
+   //MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
    MELEMENT(temp->u.blt.heatup==0.,"heatup");
    MELEMENT(((temp->u.blt.swivel > 0.) || outfit_isTurret(temp)) && (temp->u.blt.trackmin<0.),"trackmin");
@@ -1745,6 +1752,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_cooldown   = LUA_NOREF;
    temp->u.mod.lua_land       = LUA_NOREF;
    temp->u.mod.lua_takeoff    = LUA_NOREF;
+   temp->u.mod.lua_jumpin     = LUA_NOREF;
 
    do { /* load all the data */
       ShipStatList *ll;
@@ -1787,7 +1795,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD( l, temp, "%s", _("\n#rActivated Outfit#0") );
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
       SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
-   SDESC_COND_COLOUR( l, temp, _("%+.0f CPU"), temp->cpu );
+   SDESC_COND_COLOUR( l, temp, _("\n%+.0f CPU"), temp->cpu );
 }
 
 /**
@@ -1977,9 +1985,9 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    char *buf;
-   StarSystem *sys, *system_stack;
+   StarSystem *system_stack;
    Planet *asset;
    JumpPoint *jump;
 
@@ -1997,39 +2005,38 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
       if (xml_isNode(node,"sys")) {
          xmlr_attr_strd(node,"name",buf);
-         sys = system_get(buf);
-         if (sys != NULL) {
-            free(buf);
-            array_grow( &temp->u.map->systems ) = sys;
-
-            cur = node->children;
-
-            do {
-               xml_onlyNodes(cur);
-
-               if (xml_isNode(cur,"asset")) {
-                  buf = xml_get(cur);
-                  if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
-                     array_grow( &temp->u.map->assets ) = asset;
-                  else
-                     WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);
-               }
-               else if (xml_isNode(cur,"jump")) {
-                  buf = xml_get(cur);
-                  if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
-                        temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
-                     array_grow( &temp->u.map->jumps ) = jump;
-                  else
-                     WARN(_("Map '%s' has invalid jump point '%s'"), temp->name, buf);
-               }
-               else
-                  WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, cur->name);
-            } while (xml_nextNode(cur));
-         }
-         else {
+         StarSystem *sys = system_get(buf);
+         if (sys == NULL) {
             WARN(_("Map '%s' has invalid system '%s'"), temp->name, buf);
             free(buf);
+            continue;
          }
+
+         free(buf);
+         array_grow( &temp->u.map->systems ) = sys;
+
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+
+            if (xml_isNode(cur,"asset")) {
+               buf = xml_get(cur);
+               if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
+                  array_grow( &temp->u.map->assets ) = asset;
+               else
+                  WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);
+            }
+            else if (xml_isNode(cur,"jump")) {
+               buf = xml_get(cur);
+               if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
+                     temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
+                  array_grow( &temp->u.map->jumps ) = jump;
+               else
+                  WARN(_("Map '%s' has invalid jump point '%s'"), temp->name, buf);
+            }
+            else
+               WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, cur->name);
+         } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2198,7 +2205,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), OUTFIT_DATA_PATH );
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
       return -1;
    }
 
@@ -2208,7 +2215,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN(_("Outfit in %s has invalid or no name"), OUTFIT_DATA_PATH);
+      WARN(_("Outfit '%s' has invalid or no name"), file);
 
    node = parent->xmlChildrenNode;
 
@@ -2223,6 +2230,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             xml_onlyNodes(cur);
             xmlr_int(cur,"rarity",temp->rarity);
             xmlr_strd(cur,"license",temp->license);
+            xmlr_strd(cur,"cond",temp->cond);
+            xmlr_strd(cur,"condstr",temp->condstr);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_long(cur,"price",temp->price);
@@ -2324,7 +2333,9 @@ static int outfit_parse( Outfit* temp, const char* file )
                char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &temp->tags, strdup(tmp) );
+               continue;
             }
+            WARN(_("Outfit '%s' has unknown node in tags '%s'."), temp->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2418,6 +2429,8 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
+   MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
+   MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
 #undef MELEMENT
 
    xmlFreeDoc(doc);
@@ -2457,12 +2470,14 @@ static int outfit_loadDir( char *dir )
 int outfit_load (void)
 {
    int noutfits;
+   Uint32 time = SDL_GetTicks();
 
-   /* First pass, loads up ammunition. */
+   /* First pass, Loads up all outfits, without filling ammunition and the likes. */
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink( &outfit_stack );
    noutfits = array_size(outfit_stack);
+   /* Sort up licenses. */
    qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
    if (license_stack != NULL)
       qsort( license_stack, array_size(license_stack), sizeof(char*), strsort );
@@ -2470,7 +2485,7 @@ int outfit_load (void)
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
-      if (outfit_isLauncher(&outfit_stack[i])) {
+      if (outfit_isLauncher(o)) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
          if (outfit_isSeeker(o) && /* Smart seekers. */
                (o->u.lau.ammo->u.amm.ai)) {
@@ -2489,10 +2504,45 @@ int outfit_load (void)
 
          outfit_launcherDesc(o);
       }
-      else if (outfit_isFighterBay(&outfit_stack[i]))
+      else if (outfit_isFighterBay(o))
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
 
-      else if (outfit_isMod(&outfit_stack[i])) {
+      else if (outfit_isBolt(o)) {
+         if (o->u.blt.lua_file==NULL)
+            continue;
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( o->u.blt.lua_file, &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.blt.lua_file );
+            continue;
+         }
+
+         env = nlua_newEnv(1);
+         o->u.blt.lua_env = env;
+         /* TODO limit libraries here. */
+         nlua_loadStandard( env );
+         nlua_loadGFX( env );
+         nlua_loadPilotOutfit( env );
+         nlua_loadCamera( env );
+
+         /* Run code. */
+         if (nlua_dobufenv( env, dat, sz, o->u.blt.lua_file ) != 0) {
+            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( o->u.blt.lua_env );
+            free( dat );
+            o->u.blt.lua_env = LUA_NOREF;
+            continue;
+         }
+         free( dat );
+
+         /* Check functions as necessary. */
+         o->u.blt.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+         o->u.blt.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.blt.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+      }
+      else if (outfit_isMod(o)) {
          if (o->u.mod.lua_file==NULL)
             continue;
          nlua_env env;
@@ -2509,6 +2559,7 @@ int outfit_load (void)
          nlua_loadStandard( env );
          nlua_loadGFX( env );
          nlua_loadPilotOutfit( env );
+         nlua_loadCamera( env );
 
          /* Run code. */
          if (nlua_dobufenv( env, dat, sz, o->u.mod.lua_file ) != 0) {
@@ -2537,6 +2588,7 @@ int outfit_load (void)
          o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
          o->u.mod.lua_land       = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
          o->u.mod.lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
+         o->u.mod.lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
       }
    }
 
@@ -2563,7 +2615,12 @@ int outfit_load (void)
    free(outfit_names);
 #endif /* DEBUGGING */
 
-   DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Outfit in %.3f s", "Loaded %d Outfits in %.3f s", noutfits ), noutfits, time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }
@@ -2596,12 +2653,27 @@ int outfit_loadPost (void)
       }
 
       /* Handle initializing module stuff. */
+      if (outfit_isBolt(o) && (o->u.blt.lua_env != LUA_NOREF)) {
+         nlua_getenv( o->u.blt.lua_env, "onload" );
+         if (lua_isnil(naevL,-1))
+            lua_pop(naevL,1);
+         else {
+            lua_pushoutfit( naevL, o );
+            if (nlua_pcall( o->u.blt.lua_env, 1, 0 )) {
+               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
+               lua_pop(naevL,1);
+            }
+         }
+      }
+
+      /* Handle initializing module stuff. */
       if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
          nlua_getenv( o->u.mod.lua_env, "onload" );
          if (lua_isnil(naevL,-1))
             lua_pop(naevL,1);
          else {
-            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
+            lua_pushoutfit( naevL, o );
+            if (nlua_pcall( o->u.mod.lua_env, 1, 0 )) {
                WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
                lua_pop(naevL,1);
             }
@@ -2837,6 +2909,8 @@ void outfit_free (void)
       free(o->limit);
       free(o->desc_short);
       free(o->license);
+      free(o->cond);
+      free(o->condstr);
       free(o->name);
       gl_freeTexture(o->gfx_store);
       for (int j=0; j<array_size(o->gfx_overlays); j++)

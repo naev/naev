@@ -301,7 +301,7 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    inp = window_getInput( sysedit_widEdit, "inpClass" );
    free( p->class );
 
-   if ( inp[0] == '\0' )
+   if (inp[0] == '\0')
       p->class = NULL;
    else
       p->class = strdup( inp );
@@ -675,8 +675,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render cursor position. */
-   gl_print( &gl_smallFont, bx + 5., by + 5.,
-         &cWhite, "%.2f, %.2f",
+   gl_print( &gl_defFontMono, bx + 5., by + 5.,
+         &cWhite, "% 9.2f x % 9.2f",
          (bx + sysedit_mx - x)/z,
          (by + sysedit_my - y)/z );
 }
@@ -1329,9 +1329,9 @@ static void sysedit_editPnt( void )
    /* Tags. */
    x = 250;
    y -= gl_defFont.h + 20;
-   l = scnprintf( buf, sizeof(buf), "#nTags:#0 " );
+   l = scnprintf( buf, sizeof(buf), "#n%s#0", _("Tags:") );
    for (int i=0; i<array_size(p->tags); i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? ", " : ""), p->tags[i] );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s %s", ((i>0) ? "," : ""), p->tags[i] );
    window_addText( wid, x, y, 300, 20, 0, "txtTags", NULL, NULL, buf );
 
    /* Bottom buttons. */

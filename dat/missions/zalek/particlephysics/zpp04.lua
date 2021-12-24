@@ -31,7 +31,7 @@ local fleet = require "fleet"
 -- luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp04
-local cargo_name = _("nebula artefact")
+local cargo_name = _("strange container")
 local cargo_amount = 5 -- Amount of cargo to take
 
 local destpnt, destsys = planet.getS( "Thaddius Station" )
@@ -81,8 +81,8 @@ She furrows her brow.]]))
    -- mission details
    misn.setTitle( _("Particle Physics") )
    misn.setReward( fmt.reward(reward) )
-   misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
-      {cargo=cargo_name, pnt=destpnt, sys=destsys, retpnt=retpnt} ))
+   misn.setDesc( fmt.f(_("Pick up some cargo from {pnt} in the {sys} system and deliver them to {retpnt}."),
+      {pnt=destpnt, sys=destsys, retpnt=retpnt} ))
 
    mem.mrk = misn.markerAdd( destpnt )
 
@@ -118,6 +118,7 @@ She points at the lone cargo drone.
       vn.done( zpp.noona.transition )
       vn.run()
 
+      faction.modPlayer("Za'lek", zpp.fctmod.zpp04)
       player.pay( reward )
       zpp.log(_("You helped Noona get some materials from a shady dealer in order for her to pursue her research and perform experiments."))
       misn.finish(true)

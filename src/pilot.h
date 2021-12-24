@@ -7,6 +7,7 @@
 
 #include "ai.h"
 #include "commodity.h"
+#include "effect.h"
 #include "faction.h"
 #include "ntime.h"
 #include "outfit.h"
@@ -26,9 +27,9 @@
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           2. * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
-#define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
-#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
+#define HYPERSPACE_VEL           (2.*HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ENTER_MIN     (HYPERSPACE_VEL*0.3) /**< Minimum entering distance. */
+#define HYPERSPACE_ENTER_MAX     (HYPERSPACE_VEL*0.4) /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 /* Land/takeoff. */
 #define PILOT_LANDING_DELAY      1. /**< Delay for land animation. */
@@ -282,6 +283,9 @@ typedef struct Pilot_ {
    ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics, used for comparisons.. */
 
+   /* Ship effects. */
+   Effect *effects; /**< Pilot's current activated effects. */
+
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
    void (*update)(struct Pilot_*, const double); /**< Updates the pilot. */
@@ -293,6 +297,7 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_structure;/**< Array (array.h): The structure slots. */
    PilotOutfitSlot *outfit_utility;  /**< Array (array.h): The utility slots. */
    PilotOutfitSlot *outfit_weapon;   /**< Array (array.h): The weapon slots. */
+   PilotOutfitSlot *outfit_intrinsic;/**< Array (array.h): The intrinsic slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */
@@ -407,15 +412,15 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
-      const Damage *dmg, int reset );
+double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
+      const Damage *dmg, const Outfit *outfit, int lua_mem, int reset );
 void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
 double pilot_brakeDist( Pilot *p, Vector2d *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
-void pilot_cooldown( Pilot *p );
+void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const Pilot *target );
 

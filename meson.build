@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.9.0',
+   version : '0.10.0-alpha.1',
    default_options : [
       'warning_level=2',
       'optimization=g',
@@ -50,6 +50,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/outfits/bioship')
 subdir('dat/scripts')
 subdir('docs')
 subdir('po')
@@ -82,6 +83,7 @@ if buildExec.disabled() == false
 
    naev_deps += cc.find_library('m', required : false)
 
+   pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'])
    sdl = dependency('sdl2', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
@@ -105,6 +107,7 @@ if buildExec.disabled() == false
       dependency('freetype2', required: true),
       libunibreak,
       libxml2,
+      pcre2,
       sdl,
       sdl_image,
       declare_dependency(
@@ -342,11 +345,19 @@ if buildExec.disabled() == false
    )
 
    gen_zip_overlay = find_program('utils/build/gen_zip_overlay.py')
+   gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
+   gen_zip_command += ['--cd', 'outfits/bioship']
+   foreach target: bio_outfits
+     # Meson 0.60 supports "gen_zip_command += target.to_list()", but until then...
+     foreach output: target.to_list()
+       gen_zip_command += output.full_path()
+     endforeach
+   endforeach
    zip_overlay = custom_target(
       'zip_overlay',
-      command: [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()],
+      command: gen_zip_command,
       output: 'meson_overlay.zip',
-      depends: [authors, gettext_stats],
+      depends: [authors, gettext_stats] + bio_outfits,
       build_by_default: true
    )
 
@@ -374,7 +385,9 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
-      exclude_files: 'AUTHORS',  # In favor of the above "authors" target.
+      # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build'],
+      exclude_directories: 'outfits/bioship/templates',
    )
 
    install_subdir(

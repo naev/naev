@@ -32,6 +32,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_vec2.h"
+#include "nlua_tex.h"
 #include "nluadef.h"
 #include "pilot.h"
 #include "pilot_heat.h"
@@ -52,6 +53,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
+static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_slot, int bypass_cpu );
 
 /* Pilot metatable methods. */
 static int pilotL_add( lua_State *L );
@@ -114,15 +116,24 @@ static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
+static int pilotL_cooldownCycle( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
 static int pilotL_outfitAdd( lua_State *L );
 static int pilotL_outfitRm( lua_State *L );
+static int pilotL_outfitSlot( lua_State *L );
+static int pilotL_outfitAddSlot( lua_State *L );
+static int pilotL_outfitRmSlot( lua_State *L );
+static int pilotL_outfitAddIntrinsic( lua_State *L );
+static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
 static int pilotL_intrinsicSet( lua_State *L );
 static int pilotL_intrinsicGet( lua_State *L );
+static int pilotL_effectClear( lua_State *L );
+static int pilotL_effectAdd( lua_State *L );
+static int pilotL_effectGet( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
@@ -173,6 +184,9 @@ static int pilotL_setLeader( lua_State *L );
 static int pilotL_followers( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
+static int pilotL_collisionTest( lua_State *L );
+static int pilotL_damage( lua_State *L );
+static int pilotL_knockback( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -251,6 +265,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
    { "setCooldown", pilotL_setCooldown },
+   { "cooldownCycle", pilotL_cooldownCycle },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
    { "setNoClear", pilotL_setNoClear },
@@ -260,10 +275,18 @@ static const luaL_Reg pilotL_methods[] = {
    /* Outfits. */
    { "outfitAdd", pilotL_outfitAdd },
    { "outfitRm", pilotL_outfitRm },
+   { "outfitSlot", pilotL_outfitSlot },
+   { "outfitAddSlot", pilotL_outfitAddSlot },
+   { "outfitRmSlot", pilotL_outfitRmSlot },
+   { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
+   { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "setFuel", pilotL_setFuel },
    { "intrinsicReset", pilotL_intrinsicReset },
    { "intrinsicSet", pilotL_intrinsicSet },
    { "intrinsicGet", pilotL_intrinsicGet },
+   { "effectClear", pilotL_effectClear },
+   { "effectAdd", pilotL_effectAdd },
+   { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
    { "cargoFree", pilotL_cargoFree },
@@ -303,6 +326,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
    { "choosePoint", pilotL_choosePoint },
+   { "collisionTest", pilotL_collisionTest },
+   { "damage", pilotL_damage },
+   { "knockback", pilotL_knockback },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -747,7 +773,7 @@ static int pilotL_clear( lua_State *L )
  *
  * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
  * @usage pilot.toggleSpawn( false ) -- Disables global spawning
- * @usage pliot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
  * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
  *
  *    @luatparam[opt] Faction fid Faction to enable or disable spawning off. If ommited it works on global spawning.
@@ -1805,44 +1831,65 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  * @brief Gets the outfits of a pilot.
  *
  *    @luatparam Pilot p Pilot to get outfits of.
- *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", or "structure".
+ *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
+ *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.
  * @luafunc outfits
  */
 static int pilotL_outfits( lua_State *L )
 {
-   int j;
+   int normal = 1;
+   int intrinsics = 0;
    Pilot *p = luaL_validpilot(L,1);
    const char *type = luaL_optstring(L,2,NULL);
+   int skip_locked = lua_toboolean(L,3);
    OutfitSlotType ost = OUTFIT_SLOT_NULL;
 
    /* Get type. */
    if (type != NULL) {
-      if (strcmp(type,"structure")==0)
+      if (strcmp(type,"all")==0)
+         intrinsics = 1;
+      else if (strcmp(type,"structure")==0)
          ost = OUTFIT_SLOT_STRUCTURE;
       else if (strcmp(type,"utility")==0)
          ost = OUTFIT_SLOT_UTILITY;
       else if (strcmp(type,"weapon")==0)
          ost = OUTFIT_SLOT_WEAPON;
+      else if (strcmp(type,"intrinsic")==0) {
+         intrinsics = 1;
+         normal = 0;
+      }
       else
          NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
 
-   j = 1;
    lua_newtable( L );
-   for (int i=0; i<array_size(p->outfits); i++) {
+   if (normal) {
+      int j = 1;
+      for (int i=0; i<array_size(p->outfits); i++) {
 
-      /* Get outfit. */
-      if (p->outfits[i]->outfit == NULL)
-         continue;
+         /* Get outfit. */
+         if (p->outfits[i]->outfit == NULL)
+            continue;
 
-      /* Only match specific type. */
-      if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
-         continue;
+         /* Only match specific type. */
+         if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
+            continue;
 
-      /* Set the outfit. */
-      lua_pushoutfit( L, p->outfits[i]->outfit );
-      lua_rawseti( L, -2, j++ );
+         /* Skip locked. */
+         if (skip_locked && p->outfits[i]->sslot->locked)
+            continue;
+
+         /* Set the outfit. */
+         lua_pushoutfit( L, p->outfits[i]->outfit );
+         lua_rawseti( L, -2, j++ );
+      }
+   }
+   if (intrinsics) {
+      for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+         lua_pushoutfit( L, p->outfit_intrinsic[i].outfit );
+         lua_rawseti( L, -2, i+1 );
+      }
    }
 
    return 1;
@@ -2569,10 +2616,25 @@ static int pilotL_setCooldown( lua_State *L )
 
    /* Set status. */
    if (state)
-      pilot_cooldown( p );
+      pilot_cooldown( p, 1 );
    else
       pilot_cooldownEnd(p, NULL);
 
+   return 0;
+}
+
+/**
+ * @brief Makes the pilot do an instant full cooldown cycle.
+ *
+ *    @luatparam Pilot p Pilot to perform cycle.
+ * @luafunc cooldownCycle
+ */
+static int pilotL_cooldownCycle( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   pilot_cooldown( p, 0 );
+   p->ctimer = -1.;
+   pilot_cooldownEnd( p, NULL );
    return 0;
 }
 
@@ -2619,6 +2681,50 @@ static int pilotL_setNoClear( lua_State *L )
 }
 
 /**
+ * @brief Adds an outfit to a specific slot.
+ */
+static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, int bypass_cpu, int bypass_slot)
+{
+   int ret;
+
+   /* Must not have outfit (excluding default) already. */
+   if ((s->outfit != NULL) &&
+         (s->outfit != s->sslot->data))
+      return 0;
+
+   /* Only do a basic check. */
+   if (bypass_slot) {
+      if (!outfit_fitsSlotType( o, &s->sslot->slot ))
+         return 0;
+   }
+   else if (bypass_cpu) {
+      if (!outfit_fitsSlot( o, &s->sslot->slot ))
+         return 0;
+   }
+   /* Full check. */
+   else {
+      /* Must fit slot. */
+      if (!outfit_fitsSlot( o, &s->sslot->slot ))
+         return 0;
+
+      /* Test if can add outfit. */
+      ret = pilot_addOutfitTest( p, o, s, 0 );
+      if (ret)
+         return -1;
+   }
+
+   /* Add outfit - already tested. */
+   ret = pilot_addOutfitRaw( p, o, s );
+   if (ret==0)
+      pilot_outfitLInit( p, s );
+
+   /* Add ammo if needed. */
+   if ((ret==0) && (outfit_ammo(o) != NULL))
+      pilot_addAmmo( p, s, outfit_ammo(o), outfit_amount(o) );
+   return 1;
+}
+
+/**
  * @brief Adds an outfit to a pilot.
  *
  * This by default tries to add them to the first empty or defaultly equipped slot. Will not overwrite existing non-default outfits.
@@ -2637,7 +2743,6 @@ static int pilotL_outfitAdd( lua_State *L )
 {
    Pilot *p;
    const Outfit *o;
-   int ret;
    int q, added, bypass_cpu, bypass_slot;
 
    NLUA_CHECKRW(L);
@@ -2652,50 +2757,28 @@ static int pilotL_outfitAdd( lua_State *L )
    /* Add outfit. */
    added = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
+      int ret;
+      PilotOutfitSlot *s = p->outfits[i];
+
       /* Must still have to add outfit. */
       if (q <= 0)
          break;
 
-      /* Must not have outfit (excluding default) already. */
-      if ((p->outfits[i]->outfit != NULL) &&
-            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
+      /* Do tests and try to add. */
+      ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
+      if (ret < 0)
+         break;
+      else if (ret==0)
          continue;
-
-      /* Only do a basic check. */
-      if (bypass_slot) {
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
-            continue;
-      }
-      else if (bypass_cpu) {
-         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
-            continue;
-      }
-      /* Full check. */
-      else {
-         /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
-            continue;
-
-         /* Test if can add outfit. */
-         ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
-         if (ret)
-            break;
-      }
-
-      /* Add outfit - already tested. */
-      ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
-      if (ret==0)
-         pilot_outfitLInit( p, p->outfits[i] );
-      pilot_calcStats( p );
-
-      /* Add ammo if needed. */
-      if ((ret==0) && (outfit_ammo(o) != NULL))
-         pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), outfit_amount(o) );
 
       /* We added an outfit. */
       q--;
       added++;
    }
+
+   /* Update stats. */
+   if (added > 0)
+      pilot_calcStats( p );
 
    /* Update the weapon sets. */
    if ((added > 0) && p->autoweap)
@@ -2710,12 +2793,88 @@ static int pilotL_outfitAdd( lua_State *L )
 }
 
 /**
+ * @brief Checks to see outfit a pilot has in a slot.
+ *
+ *    @luatparam Pilot p Pilot to check outfit slot of.
+ *    @luatparam string slotname Name of the slot to check.
+ *    @luatreturn Outfit|nil Outfit if applicable or nil otherwise.
+ * @luafunc outfitSlot
+ */
+static int pilotL_outfitSlot( lua_State *L )
+{
+   Pilot *p             = luaL_validpilot(L,1);
+   const char *slotname = luaL_checkstring(L,2);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
+   if (s->outfit) {
+      lua_pushoutfit(L,s->outfit);
+      return 1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Adds an outfit to a pilot by slot name.
+ *
+ *    @luatparam Pilot p Pilot to add outfit to.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
+ *    @luatparam string slotname Name of the slot to add to.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
+ *    @luatparam[opt=false] boolean|string bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks. In the case bypass_slot is a string, the outfit gets added to the named slot if possible (no slot check).
+ *    @luatreturn boolean Whether or not the outfit was added.
+ * @luafunc outfitAddSlot
+ */
+static int pilotL_outfitAddSlot( lua_State *L )
+{
+   Pilot *p;
+   const Outfit *o;
+   int ret, added, bypass_cpu, bypass_slot;
+   const char *slotname;
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+   o      = luaL_validoutfit(L,2);
+   slotname = luaL_checkstring(L,3);
+   bypass_cpu = lua_toboolean(L,4);
+   bypass_slot = lua_toboolean(L,5);
+
+   /* Case named slot. */
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
+   else {
+      ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
+      added = (ret>0);
+   }
+
+   /* Update stats. */
+   if (added > 0)
+      pilot_calcStats( p );
+
+   /* Update the weapon sets. */
+   if ((added > 0) && p->autoweap)
+      pilot_weaponAuto(p);
+
+   /* Update equipment window if operating on the player's pilot. */
+   if (player.p != NULL && player.p == p && added > 0)
+      outfits_updateEquipmentOutfits();
+
+   lua_pushboolean(L,added);
+   return 1;
+}
+
+/**
  * @brief Removes an outfit from a pilot.
  *
- * "all" will remove all outfits except cores.
+ * "all" will remove all outfits except cores and locked outfits.
  * "cores" will remove all cores, but nothing else.
  *
- * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores).
+ * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores and locked outfits).
  * @usage p:outfitRm( "cores" ) -- Strips the pilot of its cores, leaving it dead in space.
  * @usage p:outfitRm( "Neutron Disruptor" ) -- Removes a neutron disruptor.
  * @usage p:outfitRm( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
@@ -2741,10 +2900,12 @@ static int pilotL_outfitRm( lua_State *L )
    if (lua_isstring(L,2)) {
       const char *outfit = luaL_checkstring(L,2);
 
-      /* If outfit is "all", we remove everything except cores. */
+      /* If outfit is "all", we remove everything except cores and locked outfits. */
       if (strcmp(outfit,"all")==0) {
          for (int i=0; i<array_size(p->outfits); i++) {
             if (p->outfits[i]->sslot->required)
+               continue;
+            if (p->outfits[i]->sslot->locked)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
             removed++;
@@ -2763,6 +2924,8 @@ static int pilotL_outfitRm( lua_State *L )
          pilot_calcStats( p ); /* Recalculate stats. */
          matched = 1;
       }
+      else
+         NLUA_INVALID_PARAMETER(L);
    }
 
    if (!matched) {
@@ -2790,6 +2953,82 @@ static int pilotL_outfitRm( lua_State *L )
       outfits_updateEquipmentOutfits();
 
    lua_pushnumber( L, removed );
+   return 1;
+}
+
+/**
+ * @brief Removes an outfit from a pilot's named slot.
+ *
+ *    @luatparam Pilot p Pilot to remove outfit from.
+ *    @luatparam strin slotname Name of the slot to remove the outfit from.
+ *    @luatreturn boolean true on success.
+ * @luafunc outfitRmSlot
+ */
+static int pilotL_outfitRmSlot( lua_State *L )
+{
+   /* Get parameters. */
+   int ret, removed = 0;
+   Pilot *p    = luaL_validpilot(L,1);
+   const char *slotname = luaL_checkstring(L,2);
+   PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
+   if (s==NULL) {
+      WARN(_("Pilot '%s' with ship '%s' does not have named slot '%s'!"), p->name, _(p->ship->name), slotname );
+      return 0;
+   }
+
+   ret = !pilot_rmOutfitRaw( p, s );
+   if (ret) {
+      pilot_calcStats( p ); /* Recalculate stats. */
+      /* Update equipment window if operating on the player's pilot. */
+      if (player.p != NULL && player.p == p && removed > 0)
+         outfits_updateEquipmentOutfits();
+   }
+
+   lua_pushboolean( L, ret );
+   return 1;
+}
+
+/**
+ * @brief Adds an intrinsic outfit to the pilot.
+ *
+ *    @luatparam Pilot p Pilot to add intrinsic outfit to.
+ *    @luatparam Outfit o Outfit to add as intrinsic outfit (must be modifier outfit).
+ * @luafunc outfitAddIntrinsic
+ */
+static int pilotL_outfitAddIntrinsic( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const Outfit *o = luaL_validoutfit(L,2);
+   int ret = pilot_addOutfitIntrinsic( p, o );
+   if (ret==0)
+      pilot_calcStats(p);
+   lua_pushboolean(L,ret);
+   return 1;
+}
+
+/**
+ * @brief Removes an intrinsic outfit from the pilot.
+ *
+ *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
+ *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
+ * @luafunc outfitRmIntrinsic
+ */
+static int pilotL_outfitRmIntrinsic( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const Outfit *o = luaL_validoutfit(L,2);
+   for (int i=0; i<array_size(p->outfit_intrinsic); i++) {
+      PilotOutfitSlot *s = &p->outfit_intrinsic[i];
+      int ret;
+      if (s->outfit != o)
+         continue;
+      ret = pilot_rmOutfitIntrinsic( p, s );
+      if (ret==0)
+         pilot_calcStats(p);
+      lua_pushboolean(L,ret);
+      return 1;
+   }
+   lua_pushboolean(L,0);
    return 1;
 }
 
@@ -2897,6 +3136,79 @@ static int pilotL_intrinsicGet( lua_State *L )
 }
 
 /**
+ * @brief Clears the effect on a pilot.
+ *
+ *    @luatparam Pilot p Pilot to clear effects of.
+ * @luafunc effectClear
+ */
+static int pilotL_effectClear( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   effect_clear( &p->effects );
+   pilot_calcStats( p );
+   return 0;
+}
+
+/**
+ * @brief Adds an effect to a pilot.
+ *
+ *    @luatparam Pilot p Pilot to add effect to.
+ *    @luatparam string name Name of the effect to add.
+ *    @luatparam[opt=-1] duration Duration of the effect or set to negative to be default.
+ *    @luatparam[opt=1] scale Scaling factor.
+ *    @luatreturn boolean Whether or not the effect was successfully added.
+ * @luafunc effectAdd
+ */
+static int pilotL_effectAdd( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *effectname = luaL_checkstring(L,2);
+   double duration = luaL_optnumber(L,3,-1.);
+   double scale = luaL_optnumber(L,4,1.);
+   const EffectData *efx = effect_get( effectname );
+   if (efx != NULL) {
+      if (!effect_add( &p->effects, efx, duration, scale ))
+         pilot_calcStats( p );
+      lua_pushboolean(L,1);
+   }
+   else
+      lua_pushboolean(L,0);
+   return 1;
+}
+
+/**
+ * @brief Gets the effects on a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get effects of.
+ *    @luatreturn table Table of effects which are treated as tables with "name" and "timer" elements.
+ * @luafunc effectGet
+ */
+static int pilotL_effectGet( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(p->effects); i++) {
+      Effect *e = &p->effects[i];
+      lua_newtable(L);
+
+      lua_pushstring(L,e->data->name);
+      lua_setfield(L,-2,"name");
+
+      lua_pushnumber(L,e->timer);
+      lua_setfield(L,-2,"timer");
+
+      lua_pushnumber(L,e->data->duration);
+      lua_setfield(L,-2,"duration");
+
+      lua_pushtex(L,gl_dupTexture(e->data->icon));
+      lua_setfield(L,-2,"icon");
+
+      lua_rawseti(L,-2,i+1);
+   }
+   return 1;
+}
+
+/**
  * @brief Changes the pilot's AI.
  *
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
@@ -2978,8 +3290,8 @@ static int pilotL_setTemp( lua_State *L )
  * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no stress
  *
  *    @luatparam Pilot p Pilot to set health of.
- *    @luatparam number armour Value to set armour to, should be double from 0-100 (in percent).
- *    @luatparam number shield Value to set shield to, should be double from 0-100 (in percent).
+ *    @luatparam[opt=current armour] number armour Value to set armour to, should be double from 0-100 (in percent).
+ *    @luatparam[opt=current shield] number shield Value to set shield to, should be double from 0-100 (in percent).
  *    @luatparam[opt=0] number stress Value to set stress (disable damage) to, should be double from 0-100 (in percent of current armour).
  * @luafunc setHealth
  */
@@ -2992,8 +3304,8 @@ static int pilotL_setHealth( lua_State *L )
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   a  = luaL_checknumber(L, 2);
-   s  = luaL_checknumber(L, 3);
+   a  = luaL_optnumber(L, 2, 100.*p->armour / p->armour_max);
+   s  = luaL_optnumber(L, 3, 100.*p->shield / p->shield_max);
    st = luaL_optnumber(L,4,0.);
 
    a  /= 100.;
@@ -3306,7 +3618,6 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
-   PUSH_DOUBLE( L, "dmg_absorb", p->dmg_absorb );
    PUSH_DOUBLE( L, "ew_detection", p->ew_detection );
    PUSH_DOUBLE( L, "ew_evasion", p->ew_evasion );
    PUSH_DOUBLE( L, "ew_stealth", p->ew_stealth );
@@ -4616,5 +4927,132 @@ static int pilotL_hookClear( lua_State *L )
    NLUA_CHECKRW(L);
    Pilot *p = luaL_validpilot(L,1);
    pilot_clearHooks( p );
+   return 0;
+}
+
+static const CollPoly *getCollPoly( const Pilot *p )
+{
+   int k = p->ship->gfx_space->sx * p->tsy + p->tsx;
+   return &p->ship->polygon[k];
+}
+/**
+ * @brief Tests to see if two ships collide.
+ *
+ *    @luatparam Pilot p First pilot to check.
+ *    @luatparam Pilot t Second pilot to check.
+ *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if collided.
+ * @luafunc collisionTest
+ */
+static int pilotL_collisionTest( lua_State *L )
+{
+   Vector2d crash;
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
+
+   int ret = CollidePolygon( getCollPoly(p), &p->solid->pos, getCollPoly(t), &t->solid->pos, &crash );
+   if (!ret)
+      return 0;
+
+   lua_pushvector( L, crash );
+   return 1;
+}
+
+/**
+ * @brief Damages a pilot.
+ *
+ *    @luatparam Pilot p Pilot being damaged.
+ *    @luatparam number dmg Damage being done.
+ *    @luatparam[opt=0.] number disable Disable being done.
+ *    @luatparam[opt=0.] number penetration Penetration (in %).
+ *    @luatparam[opt="normal"] string type Damage type being done.
+ *    @luatparam[opt=nil] Pilot shooter Pilot doing the damage.
+ *    @luatreturn number Amount of damage done.
+ * @luafunc damage
+ */
+static int pilotL_damage( lua_State *L )
+{
+   Damage dmg;
+   Pilot *p, *parent;
+   double damage;
+
+   p = luaL_validpilot(L,1);
+   dmg.damage = luaL_checknumber(L,2);
+   dmg.disable = luaL_optnumber(L,3,0.);
+   dmg.penetration = luaL_optnumber(L,4,0.) / 100.;
+   dmg.type = dtype_get( luaL_optstring(L,5,"normal") );
+   parent = (lua_isnoneornil(L,6)) ? NULL : luaL_validpilot(L,6);
+
+   damage = pilot_hit( p, NULL, parent, &dmg, NULL, LUA_NOREF, 1 );
+   if (parent != NULL)
+      weapon_hitAI( p, parent, damage );
+
+   lua_pushnumber(L, damage);
+   return 1;
+}
+
+/**
+ * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
+ *
+ *    @luatparam Pilot p Pilot being knockeb back.
+ *    @luatparam number m Mass of object knocking back pilot.
+ *    @luatparam Vec2 v Velocity of object knocking back pilot.
+ *    @luatparam[opt=p:pos()] Vec2 p Position of the object knocking back the pilot.
+ *    @luatparam[opt=1.] number e Coefficient of restitution. Use 1. for elastic collisions, and 0. for inelastic collisions.
+ * @luafunc knockback
+ */
+static int pilotL_knockback( lua_State *L )
+{
+   Pilot *p1      = luaL_validpilot(L,1);
+   double m1      = p1->solid->mass;
+   Vector2d *v1   = &p1->solid->vel;
+   Vector2d *x1   = &p1->solid->pos;
+   Pilot *p2;
+   double m2;
+   Vector2d *v2;
+   Vector2d *x2;
+   double e;
+   if (lua_ispilot(L,2)) {
+      p2 = luaL_validpilot(L,2);
+      m2 = p2->solid->mass;
+      v2 = &p2->solid->vel;
+      x2 = &p2->solid->pos;
+      e  = luaL_optnumber(L,3,1.);
+   }
+   else {
+      m2 = luaL_checknumber(L,2);
+      v2 = luaL_checkvector(L,3);
+      x2 = luaL_optvector(L,4,x1);
+      p2 = NULL;
+      e  = luaL_optnumber(L,5,1.);
+   }
+
+   /* Pure inlastic case. */
+   if (e==0.) {
+      double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
+      double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
+      vect_cset( &p1->solid->vel, vx, vy );
+      if (p1 != NULL)
+         vect_cset( &p2->solid->vel, vx, vy );
+      return 0.;
+   }
+
+   /* Pure elastic. */
+   double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
+   double a1      = -e * (2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   vect_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
+   if (p2 != NULL) {
+      double a2   = -e * (2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      vect_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
+   }
+
+   /* Modulate. TODO this is probably totally wrong and needs fixing to be physicaly correct. */
+   if (e != 1.) {
+      double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
+      double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
+      vect_cset( &p1->solid->vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
+      if (p2 != NULL)
+         vect_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
+   }
+
    return 0;
 }

@@ -1,4 +1,14 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Bioship Manager">
+ <trigger>load</trigger>
+ <chance>100</chance>
+ <flags>
+  <unique />
+ </flags>
+</event>
+--]]
+--[[
    Handles the Ship AI (tutorial-ish?) being triggered from the info menu
 --]]
 local fmt = require "format"
@@ -9,7 +19,7 @@ local vn  = require "vn"
 local advice
 local gave_advice
 
-function create ()
+local function clicked ()
    gave_advice = false
 
    vn.clear()
@@ -92,12 +102,18 @@ function create ()
 
    vn.label("tutorials")
    sai(fmt.f(_([["Hello {playername}. What do you want to learn about?"]]),{playername=player.name()}))
-   vn.menu{
-      {_("Weapon Sets"), "tut_weaponsets"},
-      {_("Electronic Warfare"), "tut_ewarfare"},
-      {_("Stealth"), "tut_stealth"},
-      {_("Nevermind"), "mainmenu"},
-   }
+   vn.menu( function ()
+      local opts = {
+         {_("Weapon Sets"), "tut_weaponsets"},
+         {_("Electronic Warfare"), "tut_ewarfare"},
+         {_("Stealth"), "tut_stealth"},
+         {_("Nevermind"), "mainmenu"},
+      }
+      if var.peek( "tut_bioship" ) then
+         table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
+      end
+      return opts
+   end )
 
    vn.label("tut_weaponsets")
    sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]]))
@@ -124,6 +140,11 @@ function create ()
    sai(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship by 50% to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away. There are many outfits that can change and modify this behaviour to get more out of stealth."]]))
    sai(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, you should use stealth as much as possible. Enemy ships may also use stealth. Similarly to how you get uncovered when ships enter your #ostealth#0 range, you can uncover neutral or hostile ships by entering their #ostealth#0 range, however, you will not be able to know where they are until you are on top of them."]]))
    sai(_([["Finally, escorts and fighters will automatically stealth when their leader goes into stealth, so you don't have to worry giving stealth orders to ships you may be commanding. Friendly ships will also not uncover your stealth, so it is good to make as many friends as possible."]]))
+   vn.jump("tutorials")
+
+   vn.label("tut_bioship")
+   -- TODO more text
+   sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with #b{infokey}#0. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as it is not easy to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
    vn.jump("tutorials")
 
    vn.label("close")
@@ -173,4 +194,8 @@ function advice ()
 
    -- Run random advice
    return adv_rnd[ rnd.rnd(1,#adv_rnd) ]
+end
+
+function create ()
+   player.infoButtonRegister( _("Ship AI"), clicked, 1 )
 end

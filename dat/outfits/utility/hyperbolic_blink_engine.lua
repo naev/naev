@@ -1,13 +1,19 @@
+local audio = require 'love.audio'
+
 local masslimit = 6000^2 -- squared
 local jumpdist = 2000
 local cooldown = 8
 local warmup = 2
 local penalty = -50
 
-function init( _p, po )
+local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
+local sfx_warmup = audio.newSource( 'snd/sounds/activate1.ogg' )
+
+function init( p, po )
    po:state("off")
    mem.timer = 0
    mem.warmup = false
+   mem.isp = (p == player.pilot())
 end
 
 function update( p, po, dt )
@@ -25,7 +31,12 @@ function update( p, po, dt )
          end
          -- Direction is random
          p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
-         -- TODO Add blink effect and sound effect
+         -- TODO Add blink effect
+         if mem.isp then
+            -- TODO play for other pilots
+            sfx:setPitch( player.dt_mod() )
+            sfx:play()
+         end
 
          -- Set cooldown and maluses
          po:state("cooldown")
@@ -65,6 +76,10 @@ function ontoggle( _p, po, on )
    mem.timer = warmup
    po:state("on")
    po:progress(1)
-   -- TODO add warm-up sound effect
+   if mem.isp then
+      -- TODO play for other pilots
+      sfx_warmup:setPitch( player.dt_mod() )
+      sfx_warmup:play()
+   end
    return true
 end

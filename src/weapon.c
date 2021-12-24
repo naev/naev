@@ -76,7 +76,8 @@ typedef struct Weapon_ {
    GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
-   double falloff; /**< Point at which damage falls off. Used to determine solwodwn for smart seekers.  */
+   int lua_mem; /**< Mem table, in case of a Pilot Outfit. */
+   double falloff; /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
    int sy; /**< Current Y sprite to use. */
@@ -112,7 +113,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
-static Weapon* weapon_create( const Outfit* outfit, double T,
+static Weapon* weapon_create( PilotOutfitSlot* po, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target, double time );
 /* Updating. */
@@ -1162,7 +1163,7 @@ static void weapon_sample_trail( Weapon* w )
  *    @param shooter Pilot that shot.
  *    @param dmg Damage done to p.
  */
-static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
+void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
 {
    /* Must be a valid shooter. */
    if (shooter == NULL)
@@ -1225,7 +1226,7 @@ static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1315,7 +1316,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->timer2 == -1.) {
@@ -1468,9 +1469,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    Vector2d v;
-   double mass, rdir;
+   double mass, rdir, acc;
    Pilot *pilot_target;
-   double acc;
    const glTexture *gfx;
 
    /* Only difference is the direction of fire */
@@ -1590,8 +1590,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* Handle seekers. */
    if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
-      w->timer2   = launcher->u.lau.iflockon;
-      w->paramf   = launcher->u.lau.iflockon;
+      w->timer2   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
+      w->paramf   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
       w->status   = (w->timer2 > 0.) ? WEAPON_STATUS_LOCKING : WEAPON_STATUS_OK;
 
       w->think = think_seeker; /* AI is the same atm. */
@@ -1625,7 +1625,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 /**
  * @brief Creates a new weapon.
  *
- *    @param outfit Outfit which spawned the weapon.
+ *    @param po Outfit slot which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
@@ -1635,7 +1635,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
  *    @param time Expected flight time.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( const Outfit* outfit, double T,
+static Weapon* weapon_create( PilotOutfitSlot *po, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot* parent, const unsigned int target, double time )
 {
@@ -1644,6 +1644,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    AsteroidAnchor *field;
    Asteroid *ast;
    Weapon* w;
+   const Outfit *outfit = po->outfit;
 
    /* Create basic features */
    w           = calloc( 1, sizeof(Weapon) );
@@ -1652,6 +1653,11 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */
+   w->lua_mem  = LUA_NOREF;
+   if (po != NULL && po->lua_mem != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      w->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   }
    if (outfit_isLauncher(outfit))
       w->outfit   = outfit->u.lau.ammo; /* non-changeable */
    else
@@ -1737,7 +1743,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 /**
  * @brief Creates a new weapon.
  *
- *    @param outfit Outfit which spawns the weapon.
+ *    @param po Outfit slot which spawns the weapon.
  *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
@@ -1746,7 +1752,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
  *    @param target Target ID that is getting shot.
  *    @param time Expected flight time.
  */
-void weapon_add( const Outfit* outfit, const double T, const double dir,
+void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, unsigned int target, double time )
 {
@@ -1754,14 +1760,14 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    Weapon *w, **m;
    size_t bufsize;
 
-   if (!outfit_isBolt(outfit) &&
-         !outfit_isLauncher(outfit)) {
+   if (!outfit_isBolt(po->outfit) &&
+         !outfit_isLauncher(po->outfit)) {
       ERR(_("Trying to create a Weapon from a non-Weapon type Outfit"));
       return;
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w     = weapon_create( outfit, T, dir, pos, vel, parent, target, time );
+   w     = weapon_create( po, T, dir, pos, vel, parent, target, time );
 
    /* set the proper layer */
    switch (layer) {
@@ -1794,36 +1800,34 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 /**
  * @brief Starts a beam weapon.
  *
- *    @param outfit Outfit which spawns the weapon.
+ *    @param po Outfit slot which spawns the weapon.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot shooter.
  *    @param target Target ID that is getting shot.
- *    @param mount Mount on the ship.
  *    @return The identifier of the beam weapon.
  *
  * @sa beam_end
  */
-unsigned int beam_start( const Outfit* outfit,
+unsigned int beam_start( PilotOutfitSlot *po,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const Pilot *parent, const unsigned int target,
-      PilotOutfitSlot *mount )
+      const Pilot *parent, const unsigned int target )
 {
    WeaponLayer layer;
    Weapon *w, **m;
    GLsizei size;
    size_t bufsize;
 
-   if (!outfit_isBeam(outfit)) {
+   if (!outfit_isBeam(po->outfit)) {
       ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
       return -1;
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, 0., dir, pos, vel, parent, target, 0. );
+   w = weapon_create( po, 0., dir, pos, vel, parent, target, 0. );
    w->ID = ++beam_idgen;
-   w->mount = mount;
+   w->mount = po;
    w->timer2 = 0.;
 
    /* set the proper layer */
@@ -1940,6 +1944,9 @@ static void weapon_free( Weapon* w )
 
    /* Free the trail, if any. */
    spfx_trail_remove(w->trail);
+
+   /* Free the Lua ref, if any. */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, w->lua_mem );
 
 #ifdef DEBUGGING
    memset(w, 0, sizeof(Weapon));

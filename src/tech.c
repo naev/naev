@@ -13,6 +13,7 @@
 
 #include "tech.h"
 
+#include "conf.h"
 #include "array.h"
 #include "economy.h"
 #include "log.h"
@@ -21,8 +22,8 @@
 #include "outfit.h"
 #include "ship.h"
 
-#define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */
-#define XML_TECH_TAG        "tech"           /**< Individual tech xml tag. */
+#define XML_TECH_ID   "Techs" /**< Tech xml document tag. */
+#define XML_TECH_TAG  "tech"  /**< Individual tech xml tag. */
 
 /**
  * @brief Different tech types.
@@ -31,7 +32,6 @@ typedef enum tech_item_type_e {
    TECH_TYPE_OUTFIT,       /**< Tech contains an outfit. */
    TECH_TYPE_SHIP,         /**< Tech contains a ship. */
    TECH_TYPE_COMMODITY,    /**< Tech contains a commodity. */
-   /*TECH_TYPE_CONTRABAND,*/   /**< Tech contains contraband. */
    TECH_TYPE_GROUP,        /**< Tech contains another tech group. */
    TECH_TYPE_GROUP_POINTER /**< Tech contains a tech group pointer. */
 } tech_item_type_t;
@@ -93,6 +93,7 @@ int tech_load (void)
    xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
+   Uint32 time = SDL_GetTicks();
 
    /* Load the data. */
    doc = xml_parsePhysFS( TECH_DATA_PATH );
@@ -156,7 +157,12 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d tech group in %.3f s", "Loaded %d tech groups in %.3f s", s ), s, time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    xmlFreeDoc(doc);
@@ -195,12 +201,6 @@ tech_group_t *tech_groupCreateXML( xmlNodePtr node )
    /* Load data. */
    tech_group_t *tech = tech_groupCreate();
    tech_parseNodeData( tech, node );
-
-   if (tech->items == NULL) {
-      tech_groupDestroy(tech);
-      tech = NULL;
-   }
-
    return tech;
 }
 

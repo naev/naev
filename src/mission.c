@@ -56,13 +56,13 @@ static MissionData *mission_stack = NULL; /**< Unmutable after creation */
 /* static */
 /* Generation. */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id );
+static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
-      const char* planet, const char* sysname );
-static int mission_matchFaction( MissionData* misn, int faction );
+      const Planet *pnt, const StarSystem *sys );
+static int mission_matchFaction( const MissionData* misn, int faction );
 static int mission_location( const char *loc );
 /* Loading. */
 static int missions_cmp( const void *a, const void *b );
@@ -110,7 +110,7 @@ int mission_getID( const char* name )
  *    @param id ID to match.
  *    @return MissonData matching ID.
  */
-MissionData* mission_get( int id )
+const MissionData* mission_get( int id )
 {
    if ((id < 0) || (id >= array_size(mission_stack))) return NULL;
    return &mission_stack[id];
@@ -119,7 +119,7 @@ MissionData* mission_get( int id )
 /**
  * @brief Gets mission data from a name.
  */
-MissionData* mission_getFromName( const char* name )
+const MissionData* mission_getFromName( const char* name )
 {
    int id = mission_getID( name );
    if (id < 0)
@@ -138,7 +138,7 @@ MissionData* mission_getFromName( const char* name )
  *    @param[out] id ID of the newly created mission.
  *    @return 0 on success.
  */
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
+static int mission_init( Mission* mission, const MissionData* misn, int genid, int create, unsigned int *id )
 {
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
@@ -218,24 +218,45 @@ int mission_alreadyRunning( const MissionData* misn )
  *
  *    @param mission ID of the mission to check.
  *    @param faction Faction of the current planet.
- *    @param planet Name of the current planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  *    @return 1 if requirements are met, 0 if they aren't.
  */
 static int mission_meetReq( int mission, int faction,
-      const char* planet, const char* sysname )
+      const Planet *pnt, const StarSystem *sys )
 {
-   MissionData* misn = mission_get( mission );
+   const MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
    /* If planet, must match planet. */
-   if ((misn->avail.planet != NULL) && (strcmp(misn->avail.planet,planet)!=0))
+   if (misn->avail.planet != NULL) {
+      if ((pnt==NULL) || strcmp(misn->avail.planet,pnt->name)!=0)
+         return 0;
+   }
+   else if (planet_isFlag(pnt, PLANET_NOMISNSPAWN))
       return 0;
 
    /* If system, must match system. */
-   if ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)!=0))
+   if ((misn->avail.system != NULL) && (sys==NULL || (strcmp(misn->avail.system,sys->name)!=0)))
       return 0;
+
+   /* If chapter, must match chapter. TODO make this regex. */
+   if (misn->avail.chapter_re != NULL) {
+      pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
+      int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+      if (rc < 0) {
+         switch (rc) {
+            case PCRE2_ERROR_NOMATCH:
+               return 0;
+            default:
+               WARN(_("Matching error %d"), rc );
+               break;
+         }
+         pcre2_match_data_free( match_data );
+      }
+      return 0;
+   }
 
    /* Match faction. */
    if ((faction >= 0) && !mission_matchFaction(misn,faction))
@@ -271,10 +292,10 @@ static int mission_meetReq( int mission, int faction,
  *
  *    @param loc Location to match.
  *    @param faction Faction of the planet.
- *    @param planet Name of the current planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  */
-void missions_run( int loc, int faction, const char* planet, const char* sysname )
+void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys )
 {
    for (int i=0; i<array_size(mission_stack); i++) {
       Mission mission;
@@ -284,7 +305,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
       if (misn->avail.loc != loc)
          continue;
 
-      if (!mission_meetReq(i, faction, planet, sysname))
+      if (!mission_meetReq(i, faction, pnt, sys))
          continue;
 
       chance = (double)(misn->avail.chance % 100)/100.;
@@ -311,7 +332,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
 int mission_start( const char *name, unsigned int *id )
 {
    Mission mission;
-   MissionData *mdat;
+   const MissionData *mdat;
    int ret;
 
    /* Try to get the mission. */
@@ -394,6 +415,24 @@ MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t )
          WARN(_("Unknown marker type."));
          return -1;
    }
+}
+
+void mission_toLuaTable( lua_State *L , const MissionData *m )
+{
+   lua_newtable(L);
+
+   lua_pushstring(L, m->name);
+   lua_setfield(L,-2,"name");
+
+   lua_pushboolean(L,mis_isFlag(m,MISSION_UNIQUE));
+   lua_setfield(L,-2,"unique");
+
+   lua_newtable(L);
+   for (int j=0; j<array_size(m->tags); j++) {
+      lua_pushboolean(L,1);
+      lua_setfield(L,-2,m->tags[j]);
+   }
+   lua_setfield(L,-2,"tags");
 }
 
 /**
@@ -712,9 +751,14 @@ static void mission_freeData( MissionData* mission )
    free(mission->sourcefile);
    free(mission->avail.planet);
    free(mission->avail.system);
+   free(mission->avail.chapter);
    array_free(mission->avail.factions);
    free(mission->avail.cond);
    free(mission->avail.done);
+
+   for (int i=0; i<array_size(mission->tags); i++)
+      free(mission->tags[i]);
+   array_free(mission->tags);
 
    /* Clear the memory. */
 #ifdef DEBUGGING
@@ -729,7 +773,7 @@ static void mission_freeData( MissionData* mission )
  *    @param faction Faction to check against.
  *    @return 1 if it meets the faction requirement, 0 if it doesn't.
  */
-static int mission_matchFaction( MissionData* misn, int faction )
+static int mission_matchFaction( const MissionData* misn, int faction )
 {
    /* No faction always accepted. */
    if (array_size(misn->avail.factions) == 0)
@@ -788,13 +832,13 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *
  *    @param[out] n Missions created.
  *    @param faction Faction of the planet.
- *    @param planet Name of the planet.
- *    @param sysname Name of the current system.
+ *    @param pnt Planet to run on.
+ *    @param sys System to run on.
  *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, int loc )
+      const Planet *pnt, const StarSystem *sys, MissionAvailability loc )
 {
    int m, alloced;
    int rep;
@@ -805,35 +849,37 @@ Mission* missions_genList( int *n, int faction,
    m        = 0;
    alloced  = 0;
    for (int i=0; i<array_size(mission_stack); i++) {
+      double chance;
       MissionData *misn = &mission_stack[i];
-      if (misn->avail.loc == loc) {
-         double chance;
+      if (misn->avail.loc != loc)
+         continue;
 
-         /* Must meet requirements. */
-         if (!mission_meetReq(i, faction, planet, sysname))
+      /* Must meet requirements. */
+      if (!mission_meetReq(i, faction, pnt, sys))
+         continue;
+
+      /* Must hit chance. */
+      chance = (double)(misn->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
+      rep = MAX(1, misn->avail.chance / 100);
+
+      /* random chance of rep appearances */
+      for (int j=0; j<rep; j++) {
+         if (RNGF() > chance)
             continue;
-
-         /* Must hit chance. */
-         chance = (double)(misn->avail.chance % 100)/100.;
-         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-            chance = 1.;
-         rep = MAX(1, misn->avail.chance / 100);
-
-         for (int j=0; j<rep; j++) /* random chance of rep appearances */
-            if (RNGF() < chance) {
-               m++;
-               /* Extra allocation. */
-               if (m > alloced) {
-                  if (alloced == 0)
-                     alloced = 32;
-                  else
-                     alloced *= 2;
-                  tmp      = realloc( tmp, sizeof(Mission) * alloced );
-               }
-               /* Initialize the mission. */
-               if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
-                  m--;
-            }
+         m++;
+         /* Extra allocation. */
+         if (m > alloced) {
+            if (alloced == 0)
+               alloced = 32;
+            else
+               alloced *= 2;
+            tmp      = realloc( tmp, sizeof(Mission) * alloced );
+         }
+         /* Initialize the mission. */
+         if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
+            m--;
       }
    }
 
@@ -857,21 +903,21 @@ Mission* missions_genList( int *n, int faction,
 static int mission_location( const char *loc )
 {
    if (loc != NULL) {
-      if (strcmp( loc, "None" ) == 0)
+      if (strcasecmp( loc, "None" ) == 0)
          return MIS_AVAIL_NONE;
-      else if (strcmp( loc, "Computer" ) == 0)
+      else if (strcasecmp( loc, "Computer" ) == 0)
          return MIS_AVAIL_COMPUTER;
-      else if (strcmp( loc, "Bar" ) == 0)
+      else if (strcasecmp( loc, "Bar" ) == 0)
          return MIS_AVAIL_BAR;
-      else if (strcmp( loc, "Outfit" ) == 0)
+      else if (strcasecmp( loc, "Outfit" ) == 0)
          return MIS_AVAIL_OUTFIT;
-      else if (strcmp( loc, "Shipyard" ) == 0)
+      else if (strcasecmp( loc, "Shipyard" ) == 0)
          return MIS_AVAIL_SHIPYARD;
-      else if (strcmp( loc, "Land" ) == 0)
+      else if (strcasecmp( loc, "Land" ) == 0)
          return MIS_AVAIL_LAND;
-      else if (strcmp( loc, "Commodity" ) == 0)
+      else if (strcasecmp( loc, "Commodity" ) == 0)
          return MIS_AVAIL_COMMODITY;
-      else if (strcmp( loc, "Space" ) == 0)
+      else if (strcasecmp( loc, "Space" ) == 0)
          return MIS_AVAIL_SPACE;
    }
    return -1;
@@ -893,6 +939,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
    /* Defaults. */
    temp->avail.priority = 5;
+   temp->avail.loc = MIS_AVAIL_UNSET;
 
    /* get the name */
    xmlr_attr_strd(parent,"name",temp->name);
@@ -923,11 +970,14 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"location")) {
                temp->avail.loc = mission_location( xml_get(cur) );
+               if (temp->avail.loc < 0)
+                  WARN(_("Mission '%s' has unknown location '%s'!"), temp->name, xml_get(cur) );
                continue;
             }
             xmlr_int(cur,"chance",temp->avail.chance);
             xmlr_strd(cur,"planet",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
+            xmlr_strd(cur,"chapter",temp->avail.chapter);
             if (xml_isNode(cur,"faction")) {
                if (temp->avail.factions == NULL)
                   temp->avail.factions = array_create( int );
@@ -941,15 +991,43 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
+      else if (xml_isNode(node,"tags")) {
+         xmlNodePtr cur = node->children;
+         temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+               continue;
+            }
+            WARN(_("Mission '%s' has unknown node in tags '%s'."), temp->name, cur->name );
+         } while (xml_nextNode(cur));
+         continue;
+      }
       else if (xml_isNode(node,"notes")) continue; /* Notes for the python mission mapping script */
 
-      DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
+      WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
+
+   if (temp->avail.chapter_re != NULL) {
+      int errornumber;
+      PCRE2_SIZE erroroffset;
+      temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
+      if (temp->avail.chapter_re == NULL){
+         PCRE2_UCHAR buffer[256];
+         pcre2_get_error_message( errornumber, buffer, sizeof(buffer) );
+         WARN(_("Mission '%s' chapter PCRE2 compilation failed at offset %d: %s"), temp->name, (int)erroroffset, buffer );
+      }
+   }
 
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT(temp->avail.loc==-1,"location");
+   MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
+   MELEMENT( ((temp->avail.planet!=NULL) && planet_get(temp->avail.planet)==NULL), "avail.planet" );
+   MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "avail.system" );
 #undef MELEMENT
 
    return 0;
@@ -978,6 +1056,7 @@ static int missions_cmp( const void *a, const void *b )
 int missions_load (void)
 {
    char **mission_files;
+   Uint32 time = SDL_GetTicks();
 
    /* Allocate player missions. */
    for (int i=0; i<MISSION_MAX; i++)
@@ -996,7 +1075,12 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
-   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Mission in %.3f s", "Loaded %d Missions in %.3f s", array_size(mission_stack) ), array_size(mission_stack), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
    return 0;
 }
@@ -1321,8 +1405,6 @@ int missions_loadActive( xmlNodePtr parent )
  */
 static int missions_parseActive( xmlNodePtr parent )
 {
-   Mission *misn;
-   MissionData *data;
    int m, i;
    char *buf;
    char *title;
@@ -1335,7 +1417,8 @@ static int missions_parseActive( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "mission")) {
-         misn = player_missions[m];
+         const MissionData *data;
+         Mission *misn = player_missions[m];
 
          /* process the attributes to create the mission */
          xmlr_attr_strd(node, "data", buf);
@@ -1433,8 +1516,15 @@ static int missions_parseActive( xmlNodePtr parent )
 
 int mission_reload( const char *name )
 {
-   int res;
-   MissionData save, *temp = mission_getFromName( name );
+   int res, id;
+   MissionData save, *temp;
+
+   /* Can't use mission_getFromName here. */
+   id = mission_getID( name );
+   if (id < 0)
+      return -1;
+   temp = &mission_stack[id];
+
    if (temp == NULL)
       return -1;
    save = *temp;

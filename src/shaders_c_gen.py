@@ -44,7 +44,8 @@ class SimpleShader(Shader):
         super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","paramf","parami","paramv"], subroutines={} )
     def header_chunks(self):
         yield f"   SimpleShader {self.name};\n"
-
+    def source_chunks(self):
+        yield f"   shaders_loadSimple( &shaders.{self.name}, \"{self.fs_path}\" );"
 
 SHADERS = [
    Shader(
@@ -358,6 +359,7 @@ typedef struct Shaders_ {
 
 extern Shaders shaders;
 
+int shaders_loadSimple( SimpleShader *shd, const char *fs_path );
 void shaders_load (void);
 void shaders_unload (void);
 """
@@ -371,6 +373,20 @@ def generate_c_file():
 #include "opengl_shader.h"
 
 Shaders shaders;
+
+int shaders_loadSimple( SimpleShader *shd, const char *fs_path )
+{
+    shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
+    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
+    shd->projection = glGetUniformLocation( shd->program, "projection" );
+    shd->color  = glGetUniformLocation( shd->program, "color" );
+    shd->dimensions = glGetUniformLocation( shd->program, "dimensions" );
+    shd->dt     = glGetUniformLocation( shd->program, "dt" );
+    shd->paramf = glGetUniformLocation( shd->program, "paramf" );
+    shd->parami = glGetUniformLocation( shd->program, "parami" );
+    shd->paramv = glGetUniformLocation( shd->program, "paramv" );
+    return 0;
+}
 
 void shaders_load (void) {
 """

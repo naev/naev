@@ -50,6 +50,7 @@ static int hookL_outfitbuy( lua_State *L );
 static int hookL_outfitsell( lua_State *L );
 static int hookL_shipbuy( lua_State *L );
 static int hookL_shipsell( lua_State *L );
+static int hookL_shipswap( lua_State *L );
 static int hookL_equip( lua_State *L );
 static int hookL_input( lua_State *L );
 static int hookL_mouse( lua_State *L );
@@ -57,6 +58,7 @@ static int hookL_safe( lua_State *L );
 static int hookL_update( lua_State *L );
 static int hookL_renderbg( lua_State *L );
 static int hookL_renderfg( lua_State *L );
+static int hookL_mission_done( lua_State *L );
 static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
 static int hookL_pay( lua_State *L );
@@ -85,12 +87,14 @@ static const luaL_Reg hookL_methods[] = {
    { "equip", hookL_equip },
    { "ship_buy", hookL_shipbuy },
    { "ship_sell", hookL_shipsell },
+   { "ship_swap", hookL_shipswap },
    { "input", hookL_input },
    { "mouse", hookL_mouse },
    { "safe", hookL_safe },
    { "update", hookL_update },
    { "renderbg", hookL_renderbg },
    { "renderfg", hookL_renderfg },
+   { "mission_done", hookL_mission_done },
    { "standing", hookL_standing },
    { "discover", hookL_discover },
    { "pay", hookL_pay },
@@ -692,6 +696,23 @@ static int hookL_shipsell( lua_State *L )
 }
 
 /**
+ * @brief Hooks the function to the player swapping their ship.
+ *
+ * The hook receives the name of the ship swapped to and the name of the ship swapped from (if applicable).
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc ship_swap
+ */
+static int hookL_shipswap( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "ship_swap", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
  * @brief Hooks the function to the player pressing any input.
  *
  * It returns the name of the key being pressed like "accel" and whether or not it's a press.<br/>
@@ -854,6 +875,21 @@ static int hookL_renderfg( lua_State *L )
 }
 
 /**
+ * @brief Hook that runs when a mission is complete. The entire mission information table is passed similar to player.misnDoneList().
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc mission_done
+ */
+static int hookL_mission_done( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "mission_done", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
  * @brief Hook run once at the end of the next frame regardless when manually triggered.
  *
  *    @luatparam string hookname Name to give the hook. This should not overlap with standard names.
@@ -1010,9 +1046,9 @@ static int hookL_pilot( lua_State *L )
 
    /* Parameters. */
    if (lua_ispilot(L,1))
-      p           = luaL_checkpilot(L,1);
+      p  = luaL_checkpilot(L,1);
    else if (lua_isnil(L,1))
-      p           = 0;
+      p  = 0;
    else {
       NLUA_ERROR(L, _("Invalid parameter #1 for hook.pilot, expecting pilot or nil."));
       return 0;
@@ -1023,16 +1059,16 @@ static int hookL_pilot( lua_State *L )
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
-   else if (strcmp(hook_type,"boardall")==0)    type = PILOT_HOOK_BOARD_ALL;
+   else if (strcmp(hook_type,"boardall")==0) type = PILOT_HOOK_BOARD_ALL;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
-   else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
+   else if (strcmp(hook_type,"undisable")==0)type = PILOT_HOOK_UNDISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
-   else if (strcmp(hook_type,"discovered")==0) type = PILOT_HOOK_DISCOVERED;
-   else if (strcmp(hook_type,"scan")==0)  type = PILOT_HOOK_SCAN;
+   else if (strcmp(hook_type,"discovered")==0)type = PILOT_HOOK_DISCOVERED;
+   else if (strcmp(hook_type,"scan")==0)     type = PILOT_HOOK_SCAN;
    else if (strcmp(hook_type,"scanned")==0)  type = PILOT_HOOK_SCANNED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;

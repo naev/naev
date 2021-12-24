@@ -1392,6 +1392,7 @@ int input_clickedPlanet( int planet, int autonav )
 
    if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
       player_hyperspacePreempt(0);
+      planet_updateLand( pnt );
       if ((pnt->presence.faction < 0) || pnt->can_land || pnt->bribed ||
             (pnt->land_override > 0)) {
          int ret = player_land(0);

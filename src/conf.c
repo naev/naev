@@ -197,6 +197,7 @@ void conf_setAudioDefaults (void)
    conf.nosound      = MUTE_SOUND_DEFAULT;
    conf.sound        = SOUND_VOLUME_DEFAULT;
    conf.music        = MUSIC_VOLUME_DEFAULT;
+   conf.engine_vol   = ENGINE_VOLUME_DEFAULT;
 }
 
 /**
@@ -348,6 +349,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "nosound", conf.nosound );
       conf_loadFloat( lEnv, "sound", conf.sound );
       conf_loadFloat( lEnv, "music", conf.music );
+      conf_loadFloat( lEnv, "engine_vol", conf.engine_vol );
 
       /* Joystick. */
       nlua_getenv( lEnv, "joystick" );
@@ -907,6 +909,8 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Volume of sound effects and music, between 0.0 and 1.0"));
    conf_saveFloat("sound",(sound_disabled) ? conf.sound : sound_getVolume());
    conf_saveFloat("music",(music_disabled) ? conf.music : music_getVolume());
+   conf_saveComment(_("Relative engine sound volume. Should be between 0.0 and 1.0"));
+   conf_saveFloat("engine_vol", conf.engine_vol);
    conf_saveEmptyLine();
 
    /* Joystick. */

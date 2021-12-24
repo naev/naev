@@ -31,19 +31,11 @@ function spir.PirateStanding:init(args)
       [0]  = _("Common Thief"),
       [-1] = _("Normie"),
    }
+   args.text_bribed  = _("Paid Off")
    return sbase.Standing.init( self, args )
 end
 
-local text_bribed = _("Paid Off")
-
-function spir.PirateStanding:text_broad( value, bribed, override )
-   if bribed then
-      return text_bribed
-   else
-      return sbase.Standing.text_broad( self, value, bribed, override )
-   end
-end
-
+-- Override hit function
 function spir.PirateStanding:hit( current, amount, source, secondary )
    local value = math.max( -50, sbase.Standing.hit( self, current, amount, source, secondary ) )
 

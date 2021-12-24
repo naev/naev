@@ -31,22 +31,18 @@ static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
  */
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
 {
-   float d;
-   xmlNodePtr cur;
-   char *list, *ch;
-   int i;
-
-   cur = node->children;
+   xmlNodePtr cur = node->children;
    do {
       if (xml_isNode(cur,"x")) {
-         list = xml_get(cur);
-         i = 0;
+         char *list = xml_get(cur);
+         int i = 0;
          /* split the list of coordiantes */
-         ch = strtok(list, ",");
+         char *ch = strtok(list, ",");
          polygon->x = malloc( sizeof(float) );
          polygon->xmin = 0;
          polygon->xmax = 0;
-         while ( ch != NULL ) {
+         while (ch != NULL) {
+            float d;
             i++;
             polygon->x = realloc( polygon->x, sizeof(float) * i );
             d = atof(ch);
@@ -57,14 +53,15 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
          }
       }
       else if (xml_isNode(cur,"y")) {
-         list = xml_get(cur);
-         i = 0;
+         char *list = xml_get(cur);
+         int i = 0;
          /* split the list of coordiantes */
-         ch = strtok(list, ",");
+         char *ch = strtok(list, ",");
          polygon->y = malloc( sizeof(float) );
          polygon->ymin = 0;
          polygon->ymax = 0;
-         while ( ch != NULL ) {
+         while (ch != NULL) {
+            float d;
             i++;
             polygon->y = realloc( polygon->y, sizeof(float) * i );
             d = atof(ch);
@@ -257,7 +254,6 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
 int CollidePolygon( const CollPoly* at, const Vector2d* ap,
       const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
 {
-   int i;
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
    int inter_x0, inter_x1, inter_y0, inter_y1;
@@ -286,7 +282,7 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    inter_y1 = MIN( ay2, by2 );
 
    /* loop on the points of bt to see if one of them is in polygon at. */
-   for (i=0; i<=bt->npt-1; i++) {
+   for (int i=0; i<=bt->npt-1; i++) {
       xabs = bt->x[i] + VX(*bp);
       yabs = bt->y[i] + VY(*bp);
 
@@ -305,9 +301,9 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    y1 = bt->y[0] + VY(*bp);
    x2 = bt->x[bt->npt-1] + VX(*bp);
    y2 = bt->y[bt->npt-1] + VY(*bp);
-   if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+   if (LineOnPolygon( at, ap, x1, y1, x2, y2, crash ))
       return 1;
-   for (i=0; i<=bt->npt-2; i++) {
+   for (int i=0; i<=bt->npt-2; i++) {
       x1 = bt->x[i] + VX(*bp);
       y1 = bt->y[i] + VY(*bp);
       x2 = bt->x[i+1] + VX(*bp);

@@ -12,6 +12,9 @@
   <location>Bar</location>
   <faction>Empire</faction>
  </avail>
+ <tags>
+  <tag>emp_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>

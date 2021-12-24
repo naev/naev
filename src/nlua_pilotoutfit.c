@@ -111,8 +111,7 @@ PilotOutfitSlot* luaL_validpilotoutfit( lua_State *L, int ind )
  */
 PilotOutfitSlot** lua_pushpilotoutfit( lua_State *L, PilotOutfitSlot *po )
 {
-   PilotOutfitSlot **lpo;
-   lpo = (PilotOutfitSlot**) lua_newuserdata(L, sizeof(PilotOutfitSlot*));
+   PilotOutfitSlot **lpo = (PilotOutfitSlot**) lua_newuserdata(L, sizeof(PilotOutfitSlot*));
    *lpo = po;
    luaL_getmetatable(L, PILOTOUTFIT_METATABLE);
    lua_setmetatable(L, -2);

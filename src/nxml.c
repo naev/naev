@@ -42,8 +42,11 @@ glTexture* xml_parseTexture( xmlNodePtr node,
    if (buf == NULL)
       return NULL;
 
-   /* Convert name. */
-   snprintf( filename, sizeof(filename), (path != NULL) ? path : "%s", buf );
+   /* Check for absolute pathe. */
+   if ((buf[0]=='/') || (path==NULL))
+      snprintf( filename, sizeof(filename), "%s", buf );
+   else
+      snprintf( filename, sizeof(filename), path, buf );
 
    /* Load the graphic. */
    if ((sx == 1) && (sy == 1))

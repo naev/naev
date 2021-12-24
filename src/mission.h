@@ -3,6 +3,9 @@
  */
 #pragma once
 
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+
 #include "claim.h"
 #include "commodity.h"
 #include "nlua.h"
@@ -12,8 +15,9 @@
 #include "mission_markers.h"
 
 /* availability by location */
-enum {
-   MIS_AVAIL_NONE,       /**< Mission isn't available. */
+typedef enum MissionAvailability_ {
+   MIS_AVAIL_UNSET=-1,   /**< Mission isn't set. */
+   MIS_AVAIL_NONE=0,     /**< Mission isn't available. */
    MIS_AVAIL_COMPUTER,   /**< Mission is available at mission computer. */
    MIS_AVAIL_BAR,        /**< Mission is available at bar. */
    MIS_AVAIL_OUTFIT,     /**< Mission is available at outfitter. */
@@ -21,31 +25,33 @@ enum {
    MIS_AVAIL_LAND,       /**< Mission is available on landing. */
    MIS_AVAIL_COMMODITY,  /**< Mission is available at commodity exchange. */
    MIS_AVAIL_SPACE       /**< Mission is available in space. */
-};
+} MissionAvailability;
 
 /* flag functions */
 #define mis_isFlag(m,f)    ((m)->flags & (f))
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
 #define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
-#define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
+#define MISSION_UNIQUE     (1<<0) /**< Unique missions can't be repeated */
 
 /**
  * @brief Defines the availability of a mission.
  */
 typedef struct MissionAvail_s {
-   int loc; /**< Location of the mission. */
+   MissionAvailability loc; /**< Location of the mission. */
    int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
-   /* for specific cases */
+   /* For specific cases */
    char *planet; /**< Planet name. */
    char *system; /**< System name. */
+   char *chapter; /**< Chapter name. */
+   pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
 
-   /* for generic cases */
-   int* factions; /**< Array (array.h): To certain factions. */
+   /* For generic cases */
+   int *factions; /**< Array (array.h): To certain factions. */
 
-   char* cond; /**< Condition that must be met (Lua). */
-   char* done; /**< Previous mission that must have been done. */
+   char *cond; /**< Condition that must be met (Lua). */
+   char *done; /**< Previous mission that must have been done. */
 
    int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } MissionAvail_t;
@@ -61,8 +67,11 @@ typedef struct MissionData_ {
    MissionAvail_t avail; /**< Mission availability. */
 
    unsigned int flags; /**< Flags to store binary properties */
-   char* lua; /**< Lua data to use. */
-   char* sourcefile; /**< Source file name. */
+   char *lua; /**< Lua data to use. */
+   char *sourcefile; /**< Source file name. */
+
+   /* Tags. */
+   char **tags; /**< Mission tags with more information. */
 } MissionData;
 
 /**
@@ -71,7 +80,7 @@ typedef struct MissionData_ {
  * @brief Represents an active mission.
  */
 typedef struct Mission_ {
-   MissionData *data; /**< Data to use. */
+   const MissionData *data; /**< Data to use. */
    unsigned int id; /**< Unique mission identifier, used for keeping track of hooks. */
    int accepted; /**< Mission is a player mission. */
 
@@ -108,9 +117,9 @@ extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * creates missions for a planet and such
  */
 Mission* missions_genList( int *n, int faction,
-      const char* planet, const char* sysname, int loc );
+      const Planet *pnt, const StarSystem *sys, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
-void missions_run( int loc, int faction, const char* planet, const char* sysname );
+void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
 
 /*
@@ -118,14 +127,15 @@ int mission_start( const char *name, unsigned int *id );
  */
 int mission_alreadyRunning( const MissionData* misn );
 int mission_getID( const char* name );
-MissionData* mission_get( int id );
-MissionData* mission_getFromName( const char* name );
+const MissionData* mission_get( int id );
+const MissionData* mission_getFromName( const char* name );
 int mission_addMarker( Mission *misn, int id, int sys, MissionMarkerType type );
 void mission_sysMark (void);
 const StarSystem* mission_sysComputerMark( const Mission* misn );
 const StarSystem* mission_getSystemMarker( const Mission* misn );
 MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t );
 MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t );
+void mission_toLuaTable( lua_State *L, const MissionData *m );
 
 /*
  * cargo stuff
