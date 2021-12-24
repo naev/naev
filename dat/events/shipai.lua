@@ -109,7 +109,9 @@ local function clicked ()
          {_("Stealth"), "tut_stealth"},
          {_("Nevermind"), "mainmenu"},
       }
-      table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
+      if var.peek( "tut_bioship" ) then
+         table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
+      end
       return opts
    end )
 
