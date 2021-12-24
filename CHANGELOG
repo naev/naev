@@ -1,27 +1,8 @@
-* 0.10.0 (unreleased)
-   * New Mechanics
-      * Support for restrictions for outfits and ships
-      * Significantly improved how faction reputation caps are handled
-      * Pilots can have intrinsic outfits
-      * Bioships go rawr (new skill system)
-      * Plasma has a burning effect
-   * New Content
-      * Added a gigantic black hole
-      * More engine sounds
-      * 5 New missions
-         * More terraforming
-         * Continuation of the Za'lek story
-   * Quality of Life
-      * Engine sound volume is configurable
-   * Engine changes
-      * Support for tags in missions
-      * Player ships can store their own variables now
-      * Weapon outfits support some Lua scripting
-
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
    * Fix broken dialogue in the "Shadow Vigil" mission
    * Fix some text labels that couldn't be translated from English
+   * Darkened nebulas and lowere default background darkness
 
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu
