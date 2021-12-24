@@ -94,11 +94,13 @@ function scans.scan( target )
          ai.pushtask( "attack", target )
          local msg = mem.scan_msg_bad or _("Illegal objects detected! Do not resist!")
          p:comm( target, msg )
+         mem.found_illegal = true
 
          -- Player gets faction hit and more hostiles on them
          if target == player.pilot() then
             for k,v in ipairs(p:getAllies(5000, nil, true, false, true)) do
                v:setHostile(true)
+               v:memory().found_illegal = true
             end
             -- Small faction hit
             p:faction():modPlayer( -1 )
