@@ -2149,11 +2149,11 @@ void pilot_update( Pilot* pilot, double dt )
    }
 
    /* Damage effect. */
-   if (pilot->stats.damage > 0.) {
+   if ((pilot->stats.damage > 0.) || (pilot->stats.disable > 0.)) {
       dmg.type          = dtype_get("normal");
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
-      dmg.disable       = 0.;
+      dmg.disable       = pilot->stats.disable * dt;
       pilot_hit( pilot, NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
    }
 

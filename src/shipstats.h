@@ -112,7 +112,8 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ARMOUR,          /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,    /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS,/**< Flat armour regeneration modifier (not multiplied). */
-   SS_TYPE_A_DAMAGE,          /**< Flat damage modifier (eats through shield first then armour). */
+   SS_TYPE_A_DAMAGE,          /**< Flat damage modifier (eats through shield first then armour like normal damage). */
+   SS_TYPE_A_DISABLE,         /**< Flat disable modifier (acts like normal disable damage). */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,         /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
@@ -217,6 +218,7 @@ typedef struct ShipStats_ {
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
    double armour_regen_malus; /**< Armour regeneration (flat). */
    double damage;             /**< Damage over time. */
+   double disable;            /**< Disable over time. */
 
    /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
