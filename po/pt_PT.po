@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-23 17:41-0500\n"
+"POT-Creation-Date: 2021-12-23 22:15-0500\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -14160,1082 +14160,6 @@ msgid ""
 "outfit's real name."
 msgstr ""
 
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:2
-msgid "BioPlasma Claw Stage 1"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:9
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:9
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_3.xml:9
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_4.xml:9
-msgid ""
-"A more powerful cousin of the BioPlasma Stinger, the BioPlasma Claw uses "
-"more precious brain capacity, but features markedly increased damage output "
-"in return. As with all organs, it starts out weak, but over time it grows "
-"and improves."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:2
-msgid "BioPlasma Claw Stage 2"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_3.xml:2
-msgid "BioPlasma Claw Stage 3"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_4.xml:2
-msgid "BioPlasma Claw Stage 4"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:2
-msgid "BioPlasma Claw Stage X"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:9
-msgid ""
-"A more powerful cousin of the BioPlasma Stinger, the BioPlasma Claw uses "
-"more precious brain capacity, but features markedly increased damage output "
-"in return. This organ has reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:2
-msgid "BioPlasma Fang Stage 1"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:9
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:9
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_3.xml:9
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_4.xml:9
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_5.xml:9
-msgid ""
-"The BioPlasma Fang takes the enhancement of the BioPlasma Claw even further. "
-"While its cognitive requirements are relatively high, they're still low "
-"enough for medium-sized organisms to handle. They are commonly found on "
-"Soromid Odiums, which usually have enough brain capacity left over to render "
-"the damage upgrade worthwhile. As with all organs, it starts out weak, but "
-"over time it grows and improves."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:2
-msgid "BioPlasma Fang Stage 2"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_3.xml:2
-msgid "BioPlasma Fang Stage 3"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_4.xml:2
-msgid "BioPlasma Fang Stage 4"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_5.xml:2
-msgid "BioPlasma Fang Stage 5"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:2
-msgid "BioPlasma Fang Stage X"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:9
-msgid ""
-"The BioPlasma Fang takes the enhancement of the BioPlasma Claw even further. "
-"While its cognitive requirements are relatively high, they're still low "
-"enough for medium-sized organisms to handle. They are commonly found on "
-"Soromid Odiums. This organ has reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:2
-msgid "BioPlasma Stinger Stage 1"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:9
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:10
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_3.xml:10
-msgid ""
-"The BioPlasma Stinger is the most basic organic weaponry available, and one "
-"of the most common. While it is not especially powerful, it is prized for "
-"its reliability and low cognitive requirements. As with all organs, it "
-"starts out weak, but over time it grows and improves."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:2
-msgid "BioPlasma Stinger Stage 2"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_3.xml:2
-msgid "BioPlasma Stinger Stage 3"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:2
-msgid "BioPlasma Stinger Stage X"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:10
-msgid ""
-"The BioPlasma Stinger is the most basic organic weaponry available, and one "
-"of the most common. While it is not especially powerful, it is prized for "
-"its reliability and low cognitive requirements. This organ has reached Stage "
-"X, its full potential."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:2
-msgid "BioPlasma Talon Stage 1"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:10
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:10
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_3.xml:10
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_4.xml:10
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_5.xml:10
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_6.xml:10
-msgid ""
-"The BioPlasma Talon is the strongest forward-facing organic weapon in "
-"existence. Boasting damage which puts it in line with some of the strongest "
-"weapons in the galaxy with incredibly low cognitive requirements for its "
-"damage output, Soromid ships equipped with this weapon are rightly feared. "
-"As with all organs, it starts out weak, but over time it grows and improves."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:2
-msgid "BioPlasma Talon Stage 2"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_3.xml:2
-msgid "BioPlasma Talon Stage 3"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_4.xml:2
-msgid "BioPlasma Talon Stage 4"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_5.xml:2
-msgid "BioPlasma Talon Stage 5"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_6.xml:2
-msgid "BioPlasma Talon Stage 6"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:2
-msgid "BioPlasma Talon Stage X"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:10
-msgid ""
-"The BioPlasma Talon is the strongest forward-facing organic weapon in "
-"existence. Boasting damage which puts it in line with some of the strongest "
-"weapons in the galaxy with incredibly low cognitive requirements for its "
-"damage output, Soromid ships equipped with this weapon are rightly feared. "
-"This organ has reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:2
-msgid "BioPlasma Tentacle Stage 1"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_3.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_4.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_5.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_6.xml:10
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_7.xml:10
-msgid ""
-"The BioPlasma Tentacle is hands-down the strongest and versatile organic "
-"weapon grown by the Soromid. It has the distinction of being the only "
-"rotating organic weapon while also boasting a power output that is unmatched "
-"by most weaponry found throughout the galaxy once fully developed. As with "
-"all organs, it starts out weak, but over time it grows and improves."
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:2
-msgid "BioPlasma Tentacle Stage 2"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_3.xml:2
-msgid "BioPlasma Tentacle Stage 3"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_4.xml:2
-msgid "BioPlasma Tentacle Stage 4"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_5.xml:2
-msgid "BioPlasma Tentacle Stage 5"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_6.xml:2
-msgid "BioPlasma Tentacle Stage 6"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_7.xml:2
-msgid "BioPlasma Tentacle Stage 7"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:2
-msgid "BioPlasma Tentacle Stage X"
-msgstr ""
-
-#: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:10
-msgid ""
-"The BioPlasma Tentacle is hands-down the strongest and versatile organic "
-"weapon grown by the Soromid. It has the distinction of being the only "
-"rotating organic weapon while also boasting a power output that is unmatched "
-"by most weaponry found throughout the galaxy once fully developed. This "
-"organ has reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:2
-msgid "Heavy Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:4
-#: dat/outfits/biocore_brain/heavy_brain_stage_3.xml:5
-#: dat/outfits/biocore_brain/heavy_brain_stage_4.xml:5
-#: dat/outfits/biocore_brain/heavy_brain_stage_5.xml:5
-#: dat/outfits/biocore_brain/heavy_brain_stage_6.xml:5
-#: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:5
-#: dat/outfits/biocore_brain/light_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/light_brain_stage_2.xml:5
-#: dat/outfits/biocore_brain/light_brain_stage_3.xml:5
-#: dat/outfits/biocore_brain/light_brain_stage_x.xml:5
-#: dat/outfits/biocore_brain/medium_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/medium_brain_stage_2.xml:4
-#: dat/outfits/biocore_brain/medium_brain_stage_3.xml:5
-#: dat/outfits/biocore_brain/medium_brain_stage_4.xml:5
-#: dat/outfits/biocore_brain/medium_brain_stage_x.xml:5
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_2.xml:4
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_3.xml:5
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_4.xml:5
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_5.xml:5
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_x.xml:5
-#: dat/outfits/biocore_brain/superheavy_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/superheavy_brain_stage_2.xml:4
-#: dat/outfits/biocore_brain/superheavy_brain_stage_3.xml:4
-#: dat/outfits/biocore_brain/superheavy_brain_stage_4.xml:5
-#: dat/outfits/biocore_brain/superheavy_brain_stage_5.xml:5
-#: dat/outfits/biocore_brain/superheavy_brain_stage_6.xml:5
-#: dat/outfits/biocore_brain/superheavy_brain_stage_7.xml:5
-#: dat/outfits/biocore_brain/superheavy_brain_stage_x.xml:5
-#: dat/outfits/biocore_brain/ultralight_brain_stage_1.xml:4
-#: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:5
-#: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:5
-#: dat/outfits/bioship/generate.py:107
-msgid "Bioship Brain"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:10
-#: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:10
-#: dat/outfits/biocore_brain/heavy_brain_stage_3.xml:11
-#: dat/outfits/biocore_brain/heavy_brain_stage_4.xml:11
-#: dat/outfits/biocore_brain/heavy_brain_stage_5.xml:11
-#: dat/outfits/biocore_brain/heavy_brain_stage_6.xml:11
-#: dat/outfits/biocore_brain/light_brain_stage_1.xml:10
-#: dat/outfits/biocore_brain/light_brain_stage_2.xml:11
-#: dat/outfits/biocore_brain/light_brain_stage_3.xml:11
-#: dat/outfits/biocore_brain/medium_brain_stage_1.xml:9
-#: dat/outfits/biocore_brain/medium_brain_stage_2.xml:9
-#: dat/outfits/biocore_brain/medium_brain_stage_3.xml:10
-#: dat/outfits/biocore_brain/medium_brain_stage_4.xml:10
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_1.xml:10
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_2.xml:10
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_3.xml:11
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_4.xml:11
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_5.xml:11
-#: dat/outfits/biocore_brain/superheavy_brain_stage_1.xml:10
-#: dat/outfits/biocore_brain/superheavy_brain_stage_2.xml:10
-#: dat/outfits/biocore_brain/superheavy_brain_stage_3.xml:10
-#: dat/outfits/biocore_brain/superheavy_brain_stage_4.xml:11
-#: dat/outfits/biocore_brain/superheavy_brain_stage_5.xml:11
-#: dat/outfits/biocore_brain/superheavy_brain_stage_6.xml:11
-#: dat/outfits/biocore_brain/superheavy_brain_stage_7.xml:11
-#: dat/outfits/biocore_brain/ultralight_brain_stage_1.xml:9
-#: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:10
-#: dat/outfits/bioship/generate.py:102
-msgid ""
-"The brain is a Soromid bioship's equivalent to core systems in synthetic "
-"ships. Possibly the most important organ, the brain provides processing "
-"power and allocates energy to the rest of the organism. All brains start off "
-"undeveloped, but over time, just like the ships themselves, they grow and "
-"improve."
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:2
-msgid "Heavy Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_3.xml:2
-msgid "Heavy Brain Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_4.xml:2
-msgid "Heavy Brain Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_5.xml:2
-msgid "Heavy Brain Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_6.xml:2
-msgid "Heavy Brain Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:2
-msgid "Heavy Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:10
-#: dat/outfits/biocore_brain/light_brain_stage_x.xml:11
-#: dat/outfits/biocore_brain/medium_brain_stage_x.xml:10
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_x.xml:11
-#: dat/outfits/biocore_brain/superheavy_brain_stage_x.xml:11
-#: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:10
-msgid ""
-"The brain is a Soromid bioship's equivalent to core systems in synthetic "
-"ships. Possibly the most important organ, the brain provides processing "
-"power and allocates energy to the rest of the organism. This brain has "
-"reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/biocore_brain/light_brain_stage_1.xml:2
-msgid "Light Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/light_brain_stage_2.xml:2
-msgid "Light Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/light_brain_stage_3.xml:2
-msgid "Light Brain Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_brain/light_brain_stage_x.xml:2
-msgid "Light Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_brain/medium_brain_stage_1.xml:2
-msgid "Medium Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/medium_brain_stage_2.xml:2
-msgid "Medium Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/medium_brain_stage_3.xml:2
-msgid "Medium Brain Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_brain/medium_brain_stage_4.xml:2
-msgid "Medium Brain Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_brain/medium_brain_stage_x.xml:2
-msgid "Medium Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_1.xml:2
-msgid "Medium-Heavy Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_2.xml:2
-msgid "Medium-Heavy Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_3.xml:2
-msgid "Medium-Heavy Brain Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_4.xml:2
-msgid "Medium-Heavy Brain Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_5.xml:2
-msgid "Medium-Heavy Brain Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_brain/mediumheavy_brain_stage_x.xml:2
-msgid "Medium-Heavy Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_1.xml:2
-msgid "Superheavy Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_2.xml:2
-msgid "Superheavy Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_3.xml:2
-msgid "Superheavy Brain Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_4.xml:2
-msgid "Superheavy Brain Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_5.xml:2
-msgid "Superheavy Brain Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_6.xml:2
-msgid "Superheavy Brain Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_7.xml:2
-msgid "Superheavy Brain Stage 7"
-msgstr ""
-
-#: dat/outfits/biocore_brain/superheavy_brain_stage_x.xml:2
-msgid "Superheavy Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_brain/ultralight_brain_stage_1.xml:2
-msgid "Ultralight Brain Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:2
-msgid "Ultralight Brain Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:2
-msgid "Ultralight Brain Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:2
-msgid "Heavy Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_6.xml:5
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_6.xml:5
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_2.xml:5
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_2.xml:5
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_x.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_3.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_x.xml:5
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_3.xml:4
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_6.xml:5
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_7.xml:5
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_x.xml:5
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_2.xml:4
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_3.xml:4
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_4.xml:5
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_5.xml:5
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_6.xml:5
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_7.xml:5
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_x.xml:5
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_2.xml:5
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_x.xml:4
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_1.xml:4
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:5
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:4
-#: dat/outfits/bioship/generate.py:108
-msgid "Bioship Gene Drive"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:9
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_4.xml:10
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_5.xml:10
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_6.xml:10
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_2.xml:9
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_4.xml:10
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_5.xml:10
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_6.xml:10
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_2.xml:11
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_3.xml:11
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_2.xml:11
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_3.xml:11
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_2.xml:9
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_4.xml:10
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_2.xml:9
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_4.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_2.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_3.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_4.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_5.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_2.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_3.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_4.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_5.xml:11
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_2.xml:10
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_4.xml:11
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_5.xml:11
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_6.xml:11
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_7.xml:11
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_1.xml:10
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_2.xml:10
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_3.xml:10
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_4.xml:11
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_5.xml:11
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_6.xml:11
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_7.xml:11
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_2.xml:10
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_1.xml:9
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:10
-msgid ""
-"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
-"ships. It is charged with moving the organism through space and comes in "
-"either a strong form (for heavy loads) or a fast form (for greater speed and "
-"agility). All gene drives start off undeveloped, but over time, just like "
-"the ships themselves, they grow and improve."
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:2
-msgid "Heavy Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_3.xml:2
-msgid "Heavy Fast Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_4.xml:2
-msgid "Heavy Fast Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_5.xml:2
-msgid "Heavy Fast Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_6.xml:2
-msgid "Heavy Fast Gene Drive Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:2
-msgid "Heavy Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:10
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:10
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_x.xml:10
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_x.xml:10
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_x.xml:11
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_x.xml:10
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:10
-msgid ""
-"The gene drive is a Soromid bioship's equivalent to engines in synthetic "
-"ships. It is charged with moving the organism through space and comes in "
-"either a strong form (for heavy loads) or a fast form (for greater speed and "
-"agility). This gene drive has reached Stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_1.xml:2
-msgid "Heavy Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_2.xml:2
-msgid "Heavy Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_3.xml:2
-msgid "Heavy Strong Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_4.xml:2
-msgid "Heavy Strong Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_5.xml:2
-msgid "Heavy Strong Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_6.xml:2
-msgid "Heavy Strong Gene Drive Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:2
-msgid "Heavy Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_1.xml:2
-msgid "Light Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_2.xml:2
-msgid "Light Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_3.xml:2
-msgid "Light Fast Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_fast_gene_drive_stage_x.xml:2
-msgid "Light Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_1.xml:2
-msgid "Light Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_2.xml:2
-msgid "Light Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_3.xml:2
-msgid "Light Strong Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/light_strong_gene_drive_stage_x.xml:2
-msgid "Light Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_1.xml:2
-msgid "Medium Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_2.xml:2
-msgid "Medium Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_3.xml:2
-msgid "Medium Fast Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_4.xml:2
-msgid "Medium Fast Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_x.xml:2
-msgid "Medium Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_1.xml:2
-msgid "Medium Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_2.xml:2
-msgid "Medium Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_3.xml:2
-msgid "Medium Strong Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_4.xml:2
-msgid "Medium Strong Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_x.xml:2
-msgid "Medium Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_1.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_2.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_3.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_4.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_5.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_x.xml:2
-msgid "Medium-Heavy Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_1.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_2.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_3.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_4.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_5.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_x.xml:2
-msgid "Medium-Heavy Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_1.xml:2
-msgid "Superheavy Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_2.xml:2
-msgid "Superheavy Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_3.xml:2
-msgid "Superheavy Fast Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_4.xml:2
-msgid "Superheavy Fast Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_5.xml:2
-msgid "Superheavy Fast Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_6.xml:2
-msgid "Superheavy Fast Gene Drive Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_7.xml:2
-msgid "Superheavy Fast Gene Drive Stage 7"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_x.xml:2
-msgid "Superheavy Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_1.xml:2
-msgid "Superheavy Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_2.xml:2
-msgid "Superheavy Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_3.xml:2
-msgid "Superheavy Strong Gene Drive Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_4.xml:2
-msgid "Superheavy Strong Gene Drive Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_5.xml:2
-msgid "Superheavy Strong Gene Drive Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_6.xml:2
-msgid "Superheavy Strong Gene Drive Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_7.xml:2
-msgid "Superheavy Strong Gene Drive Stage 7"
-msgstr ""
-
-#: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_x.xml:2
-msgid "Superheavy Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_1.xml:2
-msgid "Ultralight Fast Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_2.xml:2
-msgid "Ultralight Fast Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_x.xml:2
-msgid "Ultralight Fast Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_1.xml:2
-msgid "Ultralight Strong Gene Drive Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:2
-msgid "Ultralight Strong Gene Drive Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:2
-msgid "Ultralight Strong Gene Drive Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:2
-msgid "Heavy Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:4
-#: dat/outfits/biocore_shell/heavy_shell_stage_3.xml:5
-#: dat/outfits/biocore_shell/heavy_shell_stage_4.xml:5
-#: dat/outfits/biocore_shell/heavy_shell_stage_5.xml:5
-#: dat/outfits/biocore_shell/heavy_shell_stage_6.xml:5
-#: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:4
-#: dat/outfits/biocore_shell/light_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/light_shell_stage_2.xml:5
-#: dat/outfits/biocore_shell/light_shell_stage_3.xml:5
-#: dat/outfits/biocore_shell/light_shell_stage_x.xml:4
-#: dat/outfits/biocore_shell/medium_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/medium_shell_stage_2.xml:4
-#: dat/outfits/biocore_shell/medium_shell_stage_3.xml:5
-#: dat/outfits/biocore_shell/medium_shell_stage_4.xml:5
-#: dat/outfits/biocore_shell/medium_shell_stage_x.xml:4
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_2.xml:4
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_3.xml:5
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_4.xml:5
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_5.xml:5
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_x.xml:4
-#: dat/outfits/biocore_shell/superheavy_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/superheavy_shell_stage_2.xml:4
-#: dat/outfits/biocore_shell/superheavy_shell_stage_3.xml:4
-#: dat/outfits/biocore_shell/superheavy_shell_stage_4.xml:5
-#: dat/outfits/biocore_shell/superheavy_shell_stage_5.xml:5
-#: dat/outfits/biocore_shell/superheavy_shell_stage_6.xml:5
-#: dat/outfits/biocore_shell/superheavy_shell_stage_7.xml:5
-#: dat/outfits/biocore_shell/superheavy_shell_stage_x.xml:4
-#: dat/outfits/biocore_shell/ultralight_shell_stage_1.xml:4
-#: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:5
-#: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:4
-#: dat/outfits/bioship/generate.py:109
-msgid "Bioship Shell"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:9
-#: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:9
-#: dat/outfits/biocore_shell/heavy_shell_stage_3.xml:10
-#: dat/outfits/biocore_shell/heavy_shell_stage_4.xml:10
-#: dat/outfits/biocore_shell/heavy_shell_stage_5.xml:10
-#: dat/outfits/biocore_shell/heavy_shell_stage_6.xml:10
-#: dat/outfits/biocore_shell/light_shell_stage_1.xml:10
-#: dat/outfits/biocore_shell/light_shell_stage_2.xml:11
-#: dat/outfits/biocore_shell/light_shell_stage_3.xml:11
-#: dat/outfits/biocore_shell/medium_shell_stage_1.xml:9
-#: dat/outfits/biocore_shell/medium_shell_stage_2.xml:9
-#: dat/outfits/biocore_shell/medium_shell_stage_3.xml:10
-#: dat/outfits/biocore_shell/medium_shell_stage_4.xml:10
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_1.xml:10
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_2.xml:10
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_3.xml:11
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_4.xml:11
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_5.xml:11
-#: dat/outfits/biocore_shell/superheavy_shell_stage_1.xml:10
-#: dat/outfits/biocore_shell/superheavy_shell_stage_2.xml:10
-#: dat/outfits/biocore_shell/superheavy_shell_stage_3.xml:10
-#: dat/outfits/biocore_shell/superheavy_shell_stage_4.xml:11
-#: dat/outfits/biocore_shell/superheavy_shell_stage_5.xml:11
-#: dat/outfits/biocore_shell/superheavy_shell_stage_6.xml:11
-#: dat/outfits/biocore_shell/superheavy_shell_stage_7.xml:11
-#: dat/outfits/biocore_shell/ultralight_shell_stage_1.xml:9
-#: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:10
-#: dat/outfits/bioship/generate.py:104
-msgid ""
-"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
-"synthetic ships. The shell is responsible both for protecting the organism's "
-"internal organs and for creating camouflage to reduce the risk of being "
-"detected by hostiles. All shells start off undeveloped, but over time, just "
-"like the ships themselves, they grow and improve."
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:2
-msgid "Heavy Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_3.xml:2
-msgid "Heavy Shell Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_4.xml:2
-msgid "Heavy Shell Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_5.xml:2
-msgid "Heavy Shell Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_6.xml:2
-msgid "Heavy Shell Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:2
-msgid "Heavy Shell Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:10
-#: dat/outfits/biocore_shell/light_shell_stage_x.xml:11
-#: dat/outfits/biocore_shell/medium_shell_stage_x.xml:10
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_x.xml:11
-#: dat/outfits/biocore_shell/superheavy_shell_stage_x.xml:11
-#: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:10
-msgid ""
-"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
-"synthetic ships. The shell is responsible both for protecting the organism's "
-"internal organs and for creating camouflage to reduce the risk of being "
-"detected by hostiles. This shell has reached stage X, its full potential."
-msgstr ""
-
-#: dat/outfits/biocore_shell/light_shell_stage_1.xml:2
-msgid "Light Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/light_shell_stage_2.xml:2
-msgid "Light Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/light_shell_stage_3.xml:2
-msgid "Light Shell Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_shell/light_shell_stage_x.xml:2
-msgid "Light Shell Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/medium_shell_stage_1.xml:2
-msgid "Medium Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/medium_shell_stage_2.xml:2
-msgid "Medium Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/medium_shell_stage_3.xml:2
-msgid "Medium Shell Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_shell/medium_shell_stage_4.xml:2
-msgid "Medium Shell Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_shell/medium_shell_stage_x.xml:2
-msgid "Medium Shell Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_1.xml:2
-msgid "Medium-Heavy Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_2.xml:2
-msgid "Medium-Heavy Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_3.xml:2
-msgid "Medium-Heavy Shell Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_4.xml:2
-msgid "Medium-Heavy Shell Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_5.xml:2
-msgid "Medium-Heavy Shell Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_shell/mediumheavy_shell_stage_x.xml:2
-msgid "Medium-Heavy Shell Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_1.xml:2
-msgid "Superheavy Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_2.xml:2
-msgid "Superheavy Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_3.xml:2
-msgid "Superheavy Shell Stage 3"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_4.xml:2
-msgid "Superheavy Shell Stage 4"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_5.xml:2
-msgid "Superheavy Shell Stage 5"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_6.xml:2
-msgid "Superheavy Shell Stage 6"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_7.xml:2
-msgid "Superheavy Shell Stage 7"
-msgstr ""
-
-#: dat/outfits/biocore_shell/superheavy_shell_stage_x.xml:2
-msgid "Superheavy Shell Stage X"
-msgstr ""
-
-#: dat/outfits/biocore_shell/ultralight_shell_stage_1.xml:2
-msgid "Ultralight Shell Stage 1"
-msgstr ""
-
-#: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:2
-msgid "Ultralight Shell Stage 2"
-msgstr ""
-
-#: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:2
-msgid "Ultralight Shell Stage X"
-msgstr ""
-
 #: dat/outfits/bioship/skills/adaptive_jump.xml:2
 #: dat/scripts/bioship/skills.lua:309
 msgid "Adaptive Jump"
@@ -18292,7 +17216,7 @@ msgstr ""
 msgid "Sensor Array"
 msgstr ""
 
-#: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
+#: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:109
 msgid "Electronic Warfare"
 msgstr ""
 
@@ -24894,14 +23818,14 @@ msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
 msgstr ""
 
 #. Destroy if exists
-#: dat/board.lua:375 dat/comm.lua:166 dat/events/shipai.lua:36
-#: dat/events/shipai.lua:49 src/comm.c:340 src/console.c:649
+#: dat/board.lua:375 dat/comm.lua:166 dat/events/shipai.lua:37
+#: dat/events/shipai.lua:50 src/comm.c:340 src/console.c:649
 #: src/dev_sysedit.c:1351 src/dev_sysedit.c:1461 src/dev_sysedit.c:1522
 #: src/dev_sysedit.c:1714 src/dev_sysedit.c:1901 src/dev_sysedit.c:1982
 #: src/dev_uniedit.c:401 src/dev_uniedit.c:1460 src/dev_uniedit.c:1659
 #: src/dev_uniedit.c:1895 src/info.c:402 src/info.c:487 src/info.c:569
 #: src/info.c:705 src/info.c:897 src/info.c:1117 src/info.c:1214
-#: src/info.c:1559 src/land_outfits.c:160 src/map.c:336 src/map_find.c:999
+#: src/info.c:1559 src/land_outfits.c:160 src/map.c:336 src/map_find.c:1000
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -25137,16 +24061,16 @@ msgstr ""
 #. Easier to always reset
 #. Enable info window button based on bioship status
 #. Initialize in the case stage isn't set
-#: dat/events/bioship.lua:44
+#: dat/events/bioship.lua:38
 msgid "Bioship"
 msgstr ""
 
-#: dat/events/bioship.lua:46
+#: dat/events/bioship.lua:40
 msgid " #r!!#0"
 msgstr ""
 
 #. Try to clean up outfits
-#: dat/events/bioship.lua:65
+#: dat/events/bioship.lua:59
 msgid "Removing unobtainable Bioship outfit '{outfit}'!"
 msgstr ""
 
@@ -25157,7 +24081,7 @@ msgstr ""
 #. Add exp
 #. Stage up!
 #. TODO sound and effect?
-#: dat/events/bioship.lua:113
+#: dat/events/bioship.lua:107
 msgid "#gYour bioship has enough experience to advance a stage!#0"
 msgstr ""
 
@@ -31550,102 +30474,102 @@ msgstr ""
 #. Handles the Ship AI (tutorial-ish?) being triggered from the info menu
 #. --
 #. Functions:
-#: dat/events/shipai.lua:30
+#: dat/events/shipai.lua:31
 msgid ""
 "\"Hello {playername}! Is there anything you want to change or brush up on?\""
 msgstr ""
 
-#: dat/events/shipai.lua:33
+#: dat/events/shipai.lua:34
 msgid "Get Advice"
 msgstr ""
 
-#: dat/events/shipai.lua:34
+#: dat/events/shipai.lua:35
 msgid "Get Information"
 msgstr ""
 
-#: dat/events/shipai.lua:35
+#: dat/events/shipai.lua:36
 msgid "Tutorial/Ship AI Options"
 msgstr ""
 
-#: dat/events/shipai.lua:47
+#: dat/events/shipai.lua:48
 msgid "Reset all tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:48
+#: dat/events/shipai.lua:49
 msgid "Rename Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:52 dat/events/updater.lua:94
+#: dat/events/shipai.lua:53 dat/events/updater.lua:94
 msgid "Enable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:54 dat/events/updater.lua:95
+#: dat/events/shipai.lua:55 dat/events/updater.lua:95
 msgid "Disable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:61
+#: dat/events/shipai.lua:62
 msgid ""
 "\"In-game hints are now enabled! If you want to revisit old tutorial hints, "
 "make sure to reset them.\""
 msgstr ""
 
-#: dat/events/shipai.lua:66
+#: dat/events/shipai.lua:67
 msgid "\"In-game tutorial hints are now disabled.\""
 msgstr ""
 
-#: dat/events/shipai.lua:70
+#: dat/events/shipai.lua:71
 msgid ""
 "\"This will reset and enable all in-game tutorial hints, are you sure you "
 "want to do this?\""
 msgstr ""
 
-#: dat/events/shipai.lua:72
+#: dat/events/shipai.lua:73
 msgid "Reset tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:73 dat/events/shipai.lua:110
+#: dat/events/shipai.lua:74 dat/events/shipai.lua:111
 #: dat/missions/tutorial/tutorial.lua:109
 #: dat/missions/tutorial/tutorial.lua:118
 msgid "Nevermind"
 msgstr ""
 
-#: dat/events/shipai.lua:77
+#: dat/events/shipai.lua:78
 msgid ""
 "\"All in-game tutorial hints have been set and enabled! They will naturally "
 "pop up as you do different things in the game.\""
 msgstr ""
 
 #. TODO integrate into vn
-#: dat/events/shipai.lua:84
+#: dat/events/shipai.lua:85
 msgid "Name your Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:84
+#: dat/events/shipai.lua:85
 msgid "SAI"
 msgstr ""
 
 #. Can't use rename here
-#: dat/events/shipai.lua:100
+#: dat/events/shipai.lua:101
 msgid "Your Ship AI has been renamed '{ainame}'."
 msgstr ""
 
-#: dat/events/shipai.lua:104
+#: dat/events/shipai.lua:105
 msgid "\"Hello {playername}. What do you want to learn about?\""
 msgstr ""
 
-#: dat/events/shipai.lua:107
+#: dat/events/shipai.lua:108
 msgid "Weapon Sets"
 msgstr ""
 
-#: dat/events/shipai.lua:109 src/input.c:58 src/shipstats.c:103
+#: dat/events/shipai.lua:110 src/input.c:58 src/shipstats.c:103
 msgid "Stealth"
 msgstr ""
 
-#: dat/events/shipai.lua:112
+#: dat/events/shipai.lua:114
 msgid "Bioships"
 msgstr ""
 
-#: dat/events/shipai.lua:117
+#: dat/events/shipai.lua:120
 msgid ""
 "\"A large part of combat is decided ahead of time by the ship classes and "
 "their load out. However, good piloting can turn the tables easily. It is "
@@ -31654,7 +30578,7 @@ msgid ""
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:118
+#: dat/events/shipai.lua:121
 msgid ""
 "\"There are three different types of weapon sets:\n"
 "- #oWeapons - Switched#0: activating the hotkey will set your primary and "
@@ -31664,7 +30588,7 @@ msgid ""
 "the outfits"
 msgstr ""
 
-#: dat/events/shipai.lua:122
+#: dat/events/shipai.lua:125
 msgid ""
 "\"By default, the weapon sets will be automatically managed by me, with "
 "forward bolts in set 1 (switched), turret weapons in set 2 (switched), and "
@@ -31674,7 +30598,7 @@ msgid ""
 "whenever you change your outfits.\""
 msgstr ""
 
-#: dat/events/shipai.lua:126
+#: dat/events/shipai.lua:129
 msgid ""
 "\"Ship sensors are based on detecting gravitational anomalies, and thus the "
 "mass of a ship plays a critical role in being detected. Smaller ships like "
@@ -31682,7 +30606,7 @@ msgid ""
 "battleship.\""
 msgstr ""
 
-#: dat/events/shipai.lua:127 dat/missions/tutorial/nelly02.lua:543
+#: dat/events/shipai.lua:130 dat/missions/tutorial/nelly02.lua:543
 msgid ""
 "\"Each ship has three important electronic warfare statistics:\n"
 "- #oDetection#0 determines the distance at which a ship appears on the "
@@ -31694,7 +30618,7 @@ msgid ""
 "in stealth mode\""
 msgstr ""
 
-#: dat/events/shipai.lua:131
+#: dat/events/shipai.lua:134
 msgid ""
 "\"#oDetection#0 plays a crucial in how much attention you draw in a system, "
 "and detection bonuses can be very useful for avoiding lurking dangers. "
@@ -31703,7 +30627,7 @@ msgid ""
 "you get your hands on them.\""
 msgstr ""
 
-#: dat/events/shipai.lua:132
+#: dat/events/shipai.lua:135
 msgid ""
 "\"#oEvasion#0 is very important when it comes to combat as it determines how "
 "well weapons can track your ship. If your evasion is below your enemies "
@@ -31714,14 +30638,14 @@ msgid ""
 "the time it takes for rockets to lock on to you.\""
 msgstr ""
 
-#: dat/events/shipai.lua:133
+#: dat/events/shipai.lua:136
 msgid ""
 "\"#oStealth#0 is a whole different beast and is only useful when entering "
 "stealth mode with {stealthkey}. If you want to learn more about stealth, "
 "please ask me about it.\""
 msgstr ""
 
-#: dat/events/shipai.lua:137
+#: dat/events/shipai.lua:140
 msgid ""
 "\"You can activate stealth mode with {stealthkey} when far enough away from "
 "other ships, and only when you have no missiles locked on to you. When "
@@ -31730,7 +30654,7 @@ msgid ""
 "uncover you.\""
 msgstr ""
 
-#: dat/events/shipai.lua:138
+#: dat/events/shipai.lua:141
 msgid ""
 "\"Besides making your ship invisible to other ships, #ostealth#0 slows down "
 "your ship by 50% to mask your gravitational presence. This also has the "
@@ -31739,7 +30663,7 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/shipai.lua:139
+#: dat/events/shipai.lua:142
 msgid ""
 "\"When not in stealth, ships can target your ship to perform a scan. This "
 "can uncover unwanted information, such as illegal cargo or outfits. The time "
@@ -31751,7 +30675,7 @@ msgid ""
 "are until you are on top of them.\""
 msgstr ""
 
-#: dat/events/shipai.lua:140
+#: dat/events/shipai.lua:143
 msgid ""
 "\"Finally, escorts and fighters will automatically stealth when their leader "
 "goes into stealth, so you don't have to worry giving stealth orders to ships "
@@ -31760,7 +30684,7 @@ msgid ""
 msgstr ""
 
 #. TODO more text
-#: dat/events/shipai.lua:145 dat/events/tutorial/tut_land.lua:152
+#: dat/events/shipai.lua:148 dat/events/tutorial/tut_land.lua:152
 msgid ""
 "\"You can see the status of your current bioship from the #bInfo menu#0, "
 "which you can access with #b{infokey}#0. As your bioship gains experience, "
@@ -31770,7 +30694,7 @@ msgid ""
 msgstr ""
 
 #. Tries to give the player useful contextual information
-#: dat/events/shipai.lua:160
+#: dat/events/shipai.lua:163
 msgid ""
 "\"When out of fuel, if there is an inhabitable planet you can land to refuel "
 "for free. However, if you want to save time or have no other option, it is "
@@ -31779,14 +30703,14 @@ msgid ""
 "fuel afterwards.\""
 msgstr ""
 
-#: dat/events/shipai.lua:167
+#: dat/events/shipai.lua:170
 msgid ""
 "\"When being overwhelmed by hostile enemies, you can sometimes get out of a "
 "pinch by bribing them so that they leave you alone. Not all pilots or "
 "factions are susceptible to bribing, however.\""
 msgstr ""
 
-#: dat/events/shipai.lua:174
+#: dat/events/shipai.lua:177
 msgid ""
 "\"When your ship or weapons get very hot, it is usually a good idea to "
 "perform an active cooldown when it is safe to do so. You can actively "
@@ -31796,13 +30720,22 @@ msgid ""
 "fighters.\""
 msgstr ""
 
-#: dat/events/shipai.lua:181
+#: dat/events/shipai.lua:184
 msgid ""
 "\"In general, ships are unable to regenerate armour damage in space. If you "
 "take heavy armour damage, it is best to try to find a safe place to land to "
 "get fully repaired. However, there exists many different outfits that allow "
 "you to repair your ship, and some ships have built-in  armour regeneration "
 "allowing you to survive longer in space.\""
+msgstr ""
+
+#: dat/events/shipai.lua:191
+msgid ""
+"\"Bioships gain experience over time, allowing them to advance to new stages "
+"and learn new abilities. Bioships must land to advance to new stages, and "
+"only while landed will they will be able to learn new skills. You can set "
+"the skills fro mthe bioship interface which is accessible from the #bInfo "
+"window#0 which you can open with #b{infokey}#0.\""
 msgstr ""
 
 #. Return important advice
@@ -31813,7 +30746,7 @@ msgstr ""
 #.
 #. --
 #. TODO replace with real portrait
-#: dat/events/shipai.lua:198 dat/scripts/common/tutorial.lua:16
+#: dat/events/shipai.lua:210 dat/scripts/common/tutorial.lua:16
 msgid "Ship AI"
 msgstr ""
 
@@ -32184,56 +31117,6 @@ msgstr ""
 #. the preacher has landed. Land all his followers too
 #. the preacher has jumped. Jump all his followers too
 #. attack back as they move away?
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Bioship Upgrade">
-#. <trigger>load</trigger>
-#. <chance>100</chance>
-#. <flags>
-#. <unique />
-#. </flags>
-#. </event>
-#. --
-#.
-#.
-#. Bioship Upgrade Event
-#.
-#. This event runs in the background to upgrade any bioship the player
-#. may be flying. Bioships upgrade whenever the player gets paid;
-#. getting paid, if flying a bioship, triggers an increase in
-#. "experience" points, stored in the "_bioship_exp" variable. Note: all
-#. bioships share the same experience points; this is done because
-#. there's no really reliable way to divide them up and players can
-#. easily game the system anyway by swapping out ships at the right
-#. moment for many missions (e.g. doing a bounty mission, then swapping
-#. ships before landing on the faction's planet to get paid).
-#.
-#. --
-#. luacheck: globals pay (Hook functions passed by name)
-#. A table of all part types. Each entry is another table with
-#. two entries. The first entry in each inner table is the base name of
-#. the part containing %s, which will be replaced by a number indicating
-#. the stage of the part, or "X" for the final stage. The second entry
-#. in each inner table is the number of normal "stages", excluding the
-#. final stage (Stage X).
-#. Brains (Core System analog)
-#. Shells (Hull analog)
-#. Fins (Engine analog)
-#. Weapons
-#. Returns the index of bioship_parts the given outfit is a part of if a
-#. valid undeveloped part, or nil otherwise.
-#. Returns a table of inner tables for each undeveloped bioship part on
-#. the player; each inner table contains, respectively:
-#. * The outfit name
-#. * The corresponding index in bioship_parts
-#. Only check slot stuff, ignore CPU and the rest.
-#: dat/events/soromid/bioship_upgrade.lua:165
-#, lua-format
-msgid "Unable to upgrade Soromid outfit to %s!"
-msgstr ""
-
-#. Try to add previous one
-#. Reset stats since we leveled up (prevents gameplay problems)
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Faction Standing">
@@ -73805,11 +72688,11 @@ msgstr ""
 #. Filter out high tiers if necessary
 #. Set up some helper fields
 #. Tests outfits if they exist
-#: dat/scripts/bioship.lua:89
+#: dat/scripts/bioship.lua:97
 msgid "Bioship skill '{skill}' can't find outfit '{outfit}'!"
 msgstr ""
 
-#: dat/scripts/bioship.lua:123 dat/scripts/bioship.lua:156
+#: dat/scripts/bioship.lua:131 dat/scripts/bioship.lua:164
 msgid "Number of outfits doesn't match number of slots for skill '{skill}'"
 msgstr ""
 
@@ -73817,7 +72700,7 @@ msgstr ""
 #. First handle intrinsics
 #. Simulate adding one by one randomly
 #. Only bioships are good for now
-#: dat/scripts/bioship.lua:277
+#: dat/scripts/bioship.lua:290
 msgid ""
 "Tried to open bioship menu on non-bioship ship '{shipname}' of class "
 "'{class}'"
@@ -73825,23 +72708,23 @@ msgstr ""
 
 #. TODO other ways of increasing tiers
 #. Set up some helper fields for ease of display
-#: dat/scripts/bioship.lua:287
+#: dat/scripts/bioship.lua:300
 msgid "Stage {stage}"
 msgstr ""
 
-#: dat/scripts/bioship.lua:290
+#: dat/scripts/bioship.lua:303
 msgid "Always available"
 msgstr ""
 
-#: dat/scripts/bioship.lua:292
+#: dat/scripts/bioship.lua:305
 msgid "Obtained at stage {stage}"
 msgstr ""
 
-#: dat/scripts/bioship.lua:306
+#: dat/scripts/bioship.lua:319
 msgid "Provides:"
 msgstr ""
 
-#: dat/scripts/bioship.lua:309
+#: dat/scripts/bioship.lua:322
 msgid "* "
 msgstr ""
 
@@ -73850,11 +72733,11 @@ msgstr ""
 #. Sort by name
 #. true if intersects
 #. Figure out location greedily
-#: dat/scripts/bioship.lua:407
+#: dat/scripts/bioship.lua:420
 msgid "Requires: "
 msgstr ""
 
-#: dat/scripts/bioship.lua:449
+#: dat/scripts/bioship.lua:462
 msgid "Skills ({point} point remaining)"
 msgid_plural "Skills ({point} points remaining)"
 msgstr[0] ""
@@ -73863,23 +72746,23 @@ msgstr[1] ""
 #. Get rid of intrinsics
 #. Case ship not initialized
 #. Figure out dimension stuff
-#: dat/scripts/bioship.lua:549
+#: dat/scripts/bioship.lua:562
 msgid "Stage {stage} {name}"
 msgstr ""
 
-#: dat/scripts/bioship.lua:553
+#: dat/scripts/bioship.lua:566
 msgid "Max Stage!"
 msgstr ""
 
-#: dat/scripts/bioship.lua:558
+#: dat/scripts/bioship.lua:571
 msgid "Current Experience: {exp} points (land to advance to the next stage)"
 msgstr ""
 
-#: dat/scripts/bioship.lua:560
+#: dat/scripts/bioship.lua:573
 msgid "Current Experience: {exp} points (next stage at {nextexp} points)"
 msgstr ""
 
-#: dat/scripts/bioship.lua:564
+#: dat/scripts/bioship.lua:577
 msgid "Reset"
 msgstr ""
 
@@ -74117,7 +73000,7 @@ msgstr ""
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/bioship.lua:567 dat/scripts/luatk/core.lua:464
+#: dat/scripts/bioship.lua:580 dat/scripts/luatk/core.lua:464
 #: src/dialogue.c:151 src/dialogue.c:273 src/dialogue.c:329 src/dialogue.c:720
 #: src/options.c:263 src/options.c:592 src/options.c:901 src/options.c:1215
 msgid "OK"
@@ -74128,7 +73011,7 @@ msgstr ""
 #. Elements
 #. Go to the side then up
 #. Intrinsics
-#: dat/scripts/bioship.lua:603
+#: dat/scripts/bioship.lua:616
 msgid "Stage Traits"
 msgstr ""
 
@@ -80278,7 +79161,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:231 src/map.c:341 src/map_find.c:997
+#: src/dev_uniedit.c:231 src/map.c:341 src/map_find.c:998
 msgid "Find"
 msgstr ""
 
@@ -81491,7 +80374,7 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: src/info.c:58 src/map_find.c:948
+#: src/info.c:58 src/map_find.c:949
 msgid "Ship"
 msgstr ""
 
@@ -82560,7 +81443,7 @@ msgstr ""
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:960 src/map_find.c:1010 src/space.c:172
+#: src/land.c:960 src/map_find.c:1011 src/space.c:172
 msgid "Outfits"
 msgstr ""
 
@@ -83196,40 +82079,40 @@ msgstr ""
 msgid "Search results for ships matching '%s':"
 msgstr ""
 
-#: src/map_find.c:936
+#: src/map_find.c:937
 msgid "System"
 msgstr ""
 
-#: src/map_find.c:940
+#: src/map_find.c:941
 msgid "Planet"
 msgstr ""
 
-#: src/map_find.c:944
+#: src/map_find.c:945
 msgid "Outfit"
 msgstr ""
 
-#: src/map_find.c:954
+#: src/map_find.c:955
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr ""
 
-#: src/map_find.c:978
+#: src/map_find.c:979
 msgid "Find..."
 msgstr ""
 
-#: src/map_find.c:987
+#: src/map_find.c:988
 msgid "Enter keyword to search for:"
 msgstr ""
 
-#: src/map_find.c:1004
+#: src/map_find.c:1005
 msgid "Systems"
 msgstr ""
 
-#: src/map_find.c:1007
+#: src/map_find.c:1008
 msgid "Planets"
 msgstr ""
 
-#: src/map_find.c:1013
+#: src/map_find.c:1014
 msgid "Ships"
 msgstr ""
 
@@ -86134,11 +85017,10 @@ msgstr ""
 
 #. mem
 #.
-#. Set up the function: onhit( p, po )
+#. Set up the function: onhit( pshooter, p )
 #. f
 #. f, p
-#. f, p, po
-#. f, p, po, p
+#. f, p, p
 #.
 #. mem
 #.
@@ -88666,44 +87548,53 @@ msgstr ""
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
-#: src/weapon.c:401
+#: src/weapon.c:402
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:562 src/weapon.c:711 src/weapon.c:1777
+#: src/weapon.c:563 src/weapon.c:712 src/weapon.c:1782
 msgid "Unknown weapon layer!"
 msgstr ""
 
-#: src/weapon.c:665
+#: src/weapon.c:666
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
 
-#: src/weapon.c:850
+#: src/weapon.c:851
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1726
+#: src/weapon.c:1731
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1760
+#: src/weapon.c:1765
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:1818
+#: src/weapon.c:1823
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:1838 src/weapon.c:1880 src/weapon.c:2022
+#: src/weapon.c:1843 src/weapon.c:1885 src/weapon.c:2030
 msgid "Invalid WEAPON_LAYER specified"
 msgstr ""
 
-#: src/weapon.c:1886
+#: src/weapon.c:1891
 msgid "Trying to remove beam with ID 0!"
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:102
+msgid ""
+"The brain is a Soromid bioship's equivalent to core systems in synthetic "
+"ships. Possibly the most important organ, the brain provides processing "
+"power and allocates energy to the rest of the organism. All brains start off "
+"undeveloped, but over time, just like the ships themselves, they grow and "
+"improve."
 msgstr ""
 
 #: dat/outfits/bioship/generate.py:103
@@ -88712,6 +87603,27 @@ msgid ""
 "ships. It is charged with moving the organism through space and is even "
 "capable of hyperspace travel. All gene drives start off undeveloped, but "
 "over time, just like the ships themselves, they grow and improve."
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:104
+msgid ""
+"The shell is a Soromid bioship's natural protection, equivalent to hulls of "
+"synthetic ships. The shell is responsible both for protecting the organism's "
+"internal organs and for creating camouflage to reduce the risk of being "
+"detected by hostiles. All shells start off undeveloped, but over time, just "
+"like the ships themselves, they grow and improve."
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:107
+msgid "Bioship Brain"
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:108
+msgid "Bioship Gene Drive"
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:109
+msgid "Bioship Shell"
 msgstr ""
 
 #: dat/outfits/bioship/generate.py:115 dat/outfits/bioship/generate.py:232
