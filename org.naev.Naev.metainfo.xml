@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>org.naev.naev</id>
+  <id>org.naev.Naev</id>
 
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
   <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
-  <icon type="stock">naev</icon>
+  <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
   <url type="bugtracker">https://github.com/naev/naev/issues</url>
   <metadata_license>CC0-1.0</metadata_license>
