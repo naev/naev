@@ -74,7 +74,7 @@
     </release>
   </releases>
 
-  <launchable type="desktop-id">org.naev.naev.desktop</launchable>
+  <launchable type="desktop-id">org.naev.Naev.desktop</launchable>
 
   <screenshots>
     <screenshot type="default">
