@@ -1,6 +1,7 @@
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
    * Fix broken dialogue in the "Shadow Vigil" mission
+   * Fix issue with "Minerva Pirates 4" mission
    * Fix some text labels that couldn't be translated from English
    * Darkened nebulas and lowere default background darkness
 
