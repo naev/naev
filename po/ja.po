@@ -33506,17 +33506,6 @@ msgid "The preaching begins..."
 msgstr "伝道の開始……"
 
 #: dat/events/sirius/preach.lua:377
-#, fuzzy
-#| msgid ""
-#| "A Sirian appears on your viewscreen. He seems different than most Sirii "
-#| "you've met. He regards you with a neutral yet intense gaze.\n"
-#| "    \"Man is cruel and deceptive,\" he says. \"You deserve more than you "
-#| "shall ever get from humanity. Your only hope is to follow the Holy One, "
-#| "Sirichana. He shall guide you to peace and wisdom. He is the sole refuge "
-#| "for humans like you and me. You MUST follow him!\"\n"
-#| "    You feel a brief but overpowering urge to follow him, but it passes "
-#| "and your head clears. The Sirian ship makes no further attempt to "
-#| "communicate with you."
 msgid ""
 "A Sirian appears on your viewscreen. He seems different than most Sirii "
 "you've met. He regards you with a neutral, yet intense, gaze.\n"
@@ -34396,14 +34385,6 @@ msgstr ""
 #. --
 #. luacheck: globals outfit_buy ship_buy takeoff (Hook functions passed by name)
 #: dat/events/tutorial/tut_land.lua:36
-#, fuzzy
-#| msgid ""
-#| "\"Looks like you just bought an #oAfterburner#0 outfit. Afterburners are "
-#| "active outfits that you can only equip one of on any specific ship. You "
-#| "can either configure to be set to a weapon set keybinding in the Info "
-#| "menu (opened with {infokey}, or double tap {accelkey} to trigger it. Note "
-#| "that they are prone to overheating and use a lot of energy, so it is bes "
-#| "to use afterburners only when necessary.\""
 msgid ""
 "\"Looks like you just bought an #oAfterburner#0 outfit. Afterburners are "
 "active outfits that you can only equip one of on any specific ship. You can "
@@ -34468,14 +34449,6 @@ msgstr ""
 "す｣"
 
 #: dat/events/tutorial/tut_land.lua:49
-#, fuzzy
-#| msgid ""
-#| "\"Finally, the ammo of launchers regenerates over time: there is no need "
-#| "to buy ammunition. By either performing a cooldown with {cooldownkey} or "
-#| "double-tapping {reversekey}, or landing on a planet or station you can "
-#| "instantly refill the ammunition when necessary. Launchers can be very "
-#| "useful if you master them, please try them out with different "
-#| "configurations!\""
 msgid ""
 "\"Finally, the ammo of launchers regenerates over time: there is no need to "
 "buy ammunition. By either performing a cooldown with {cooldownkey} or double-"
@@ -34490,15 +34463,6 @@ msgstr ""
 "変えたりしてじゅうぶんに試してください！｣"
 
 #: dat/events/tutorial/tut_land.lua:59
-#, fuzzy
-#| msgid ""
-#| "\"Looks like you are moving up in the world with your first #oFighter "
-#| "Bay#0 outfit! As you can expect, fighter bays let you launch and control "
-#| "interceptor or fighter class escorts. They autonomously will defend your "
-#| "ship when deployed, and can be given particular orders. You can tell them "
-#| "to #oattack#0 your target with {eattackkey}, #oclear orders#0 with "
-#| "{eclearkey}, #ohold position#0 with {eholdkey}, and #oreturn to ship#0 "
-#| "with {ereturnkey}.\""
 msgid ""
 "\"Looks like you are moving up in the world with your first #oFighter Bay#0 "
 "outfit! As you can expect, fighter bays let you launch and control "
@@ -34516,14 +34480,6 @@ msgstr ""
 "る#0ように指示したり、{ereturnkey} で#o船に戻る#0ようにさせたりできます｣"
 
 #: dat/events/tutorial/tut_land.lua:60
-#, fuzzy
-#| msgid ""
-#| "\"Like ammunition in launchers, lost fighters will regenerate slowly over "
-#| "time, and you can restock them by either performing a cooldown operation "
-#| "with {cooldownkey} or double-tapping {reversekey}, or landing on a planet "
-#| "or station. You can either fly around with deployed fighters or keep them "
-#| "inside your ship and only deploy as necessary. You should try to see "
-#| "whatever works best for you!\""
 msgid ""
 "\"Like ammunition in launchers, lost fighters will regenerate slowly over "
 "time and you can restock them either by performing a cooldown operation with "
@@ -34611,14 +34567,6 @@ msgstr ""
 "武器を装備するようにしてください！｣"
 
 #: dat/events/tutorial/tut_land.lua:90
-#, fuzzy
-#| msgid ""
-#| "\"It looks like you can finally get your hands on combat vessels with the "
-#| "#oLight Combat Vessel License#0! Combat vessels differ from civilians in "
-#| "that they are intrinsically suited for combat. This, in general, "
-#| "translates to higher mobility and firepower, at the cost of cargo "
-#| "capacity and utility. There are mainly three classes of light combat "
-#| "vessels: #oFighters#0, #oBombers#0, and #oInterceptors#0.\""
 msgid ""
 "\"It looks like you can finally get your hands on combat vessels with the "
 "#oLight Combat Vessel License#0! Combat vessels differ from civilian vessels "
@@ -34647,14 +34595,6 @@ msgstr ""
 "搭載することで、最大級の戦艦でさえ破壊できることで知られています｣"
 
 #: dat/events/tutorial/tut_land.lua:92
-#, fuzzy
-#| msgid ""
-#| "\"To make the most of combat ships it is recommended you look at their "
-#| "strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-"
-#| "class ship is not going to make for an effective combat vessel. Slots "
-#| "also play an important role, with #oInterceptor#0-class ships being more "
-#| "limited than #oFighter#0-class ships. Be sure to experiment with set ups "
-#| "to see what works well for you.\""
 msgid ""
 "\"To make the most of combat ships, it is recommended you look at their "
 "strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-"
@@ -34698,14 +34638,6 @@ msgstr ""
 "しょう｣"
 
 #: dat/events/tutorial/tut_land.lua:105
-#, fuzzy
-#| msgid ""
-#| "\"Looks like you finally got your hand on the #oHeavy Combat Vessel "
-#| "License#0! This will allow you to pilot the largest of the combat ships, "
-#| "which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class "
-#| "ships. These ships sacrifice size and utility for survivability and "
-#| "firepower, being able to lay devasting barrages to devastate enemy forces."
-#| "\""
 msgid ""
 "\"Looks like you finally got your hands on the #oHeavy Combat Vessel "
 "License#0! This will allow you to pilot the largest of the combat ships, "
@@ -34735,14 +34667,6 @@ msgstr ""
 "使いながら、生存性も最大限に高めています｣"
 
 #: dat/events/tutorial/tut_land.lua:107
-#, fuzzy
-#| msgid ""
-#| "\"Flying a heavy combat vessel is very different from other clases of "
-#| "ships. Given their size, usually time seems to pass at a faster rate than "
-#| "smaller ships which can be seen by their '#oTime dilation#0' value. "
-#| "Furthermore, given their size, stealth becomes difficult and they can be "
-#| "vulnerable to volleys of torpedoes. Escorts and fighter bays can help "
-#| "them deal with enemy bombers.\""
 msgid ""
 "\"Flying a heavy combat vessel is very different from other classes of "
 "ships. Given their size, usually time seems to pass at a faster rate than "
@@ -34757,14 +34681,6 @@ msgstr ""
 "なることもあります。護衛と戦闘機格納庫が、敵の爆撃機への対処に役立つでしょう｣"
 
 #: dat/events/tutorial/tut_land.lua:113
-#, fuzzy
-#| msgid ""
-#| "\"It looks like you got a #oMercenary License#0. This will enable bounty "
-#| "collection missions that should start appearing in your mission computer "
-#| "screens from now on. These missions are usually generally combat-oriented "
-#| "and will require you to have a suitable combat vessel to succeed in them. "
-#| "They can be fairly challenging at the beginning so make sure your ship is "
-#| "properly equipped for combat.\""
 msgid ""
 "\"It looks like you got a #oMercenary License#0. This will enable bounty "
 "collection missions that should start appearing in your mission computer "
@@ -34843,17 +34759,6 @@ msgstr ""
 "りわずらわしく感じさせないようにしてくれます｣"
 
 #: dat/events/tutorial/tut_land.lua:164
-#, fuzzy
-#| msgid ""
-#| "\"In general, due to the low maneuverability of large ships, you should "
-#| "consider using turret weapons and/or fighter bays for self defense. They "
-#| "allow you to worry less about aiming, and more about getting jobs done. "
-#| "Turrets rely heavily on their tracking values. '#oMinimum Tracking#0' "
-#| "refers to the '#oEvasion#0' value of a target ship at which the turret "
-#| "will not be able to track. On the other hand, if the target ship is above "
-#| "the '#oOptimal Tracking#0', your turrets will be able to perfectly track "
-#| "them. It is best to try out different turrets and see what feels best for "
-#| "your ship.\""
 msgid ""
 "\"In general, due to the low manoeuvrability of large ships, you should "
 "consider using turret weapons and/or fighter bays for self defense. They "
@@ -34898,15 +34803,6 @@ msgstr ""
 #. - outfit balance
 #. - safe lanes
 #: dat/events/updater.lua:65
-#, fuzzy
-#| msgid ""
-#| "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
-#| "resident in your ship controlling your Autonav and other functionality, "
-#| "but with new updates, I can now materializes and communicate directly to "
-#| "you as a hologram.\"\n"
-#| "They stare at you for a few seconds.\n"
-#| "\"Say, now that I can see you, you look very familiar. You wouldn't be "
-#| "related my late previous owner? Terrible what happened…\""
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
 "resident in your ship controlling your Autonav and other functionality, but "
@@ -34995,11 +34891,6 @@ msgstr ""
 "小さな違いにも気づくことになるでしょう｣"
 
 #: dat/events/updater.lua:92
-#, fuzzy
-#| msgid ""
-#| "\"With that said, would you like me to provide small in-game advice as "
-#| "you do things throughout the game? Some might refer to things you are "
-#| "already familiar with, but it could help learn new things.\""
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
