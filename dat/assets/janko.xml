@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>4e+08</population>
+  <population>4e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -46,4 +46,7 @@
   <item>Basic Civilian Ships</item>
   <item>Soromid Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rural</tag>
+ </tags>
 </asset>

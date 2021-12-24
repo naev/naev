@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>Y</class>
-  <population>1.5e+09</population>
+  <population>8.5e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -29,7 +29,7 @@
   </services>
   <commodities/>
   <description>Quite a lot of Soromid live on Flach. Where normal humans would have built a mining colony at best, the Soromid found a planet good enough to build extensive megacities and suburban industries.</description>
-  <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centres will need to wear protective clothing ... or suffer the consequences.</bar>
+  <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centres will need to wear protective clothing … or suffer the consequences.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
@@ -45,4 +45,9 @@
   <item>Systems Elite</item>
   <item>Engines High</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>urban</tag>
+  <tag>industrial</tag>
+ </tags>
 </asset>

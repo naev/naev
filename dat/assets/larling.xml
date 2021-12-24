@@ -34,4 +34,8 @@
   <item>Light Civilian Combat Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+  <tag>trade</tag>
+ </tags>
 </asset>
