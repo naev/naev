@@ -1446,6 +1446,9 @@ static int opt_videoSave( unsigned int wid, const char *str )
    /* GUI. */
    conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
 
+   /* Reload background. */
+   background_load( cur_system->background );
+
    return 0;
 }
 
