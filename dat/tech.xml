@@ -231,6 +231,7 @@
   <item>Cryogenic Repair Nanobots</item>
   <item>Cloaking Device</item>
   <item>Low Radiation Sensor Modulator</item>
+  <item>Camouflage Burster</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
   <item>Milspec Impacto-Plastic Coating</item>
@@ -614,6 +615,9 @@
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
+ </tech>
+ <tech name="Criminal Outfits">
+  <item>Camouflage Burster</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
