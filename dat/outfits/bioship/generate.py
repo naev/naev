@@ -80,7 +80,6 @@ typename["hull"] = N_("Bioship Shell")
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "small",
-    "license":  "Medium Weapon",
     "mass":     6,
     "price" :   lerpr(   0, 20e3 ),
     "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
@@ -197,7 +196,6 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "medium",
-    "license":  "Medium Weapon",
     "mass":     30,
     "price" :   lerpr(   0, 20e3 ),
     "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily eat through shield and armour of opposing ships. While not an especially powerful offensive organ, it is prized for its reliability."),
@@ -347,7 +345,6 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "large",
-    "license":  "Heavy Weapon",
     "mass":     75,
     "price" :   lerpr(   0, 125e3 ),
     "desc":     N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through even the strongest of armours."),

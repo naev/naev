@@ -4,7 +4,6 @@
   <typename>{typename}</typename>
   <slot prop="bio_weapon">weapon</slot>
   <size>{size}</size>
-  <license>{license}</license>
   <mass>{mass}</mass>
   <price>{price}</price>
   <description>{desc}</description>
