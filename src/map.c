@@ -2676,10 +2676,8 @@ int map_center( int wid, const char *sys )
       return -1;
 
    /* Center on the system. */
-   if (cst != NULL) {
-      cst->xtarget = ssys->pos.x * cst->zoom;
-      cst->ytarget = ssys->pos.y * cst->zoom;
-   }
+   cst->xtarget = ssys->pos.x * cst->zoom;
+   cst->ytarget = ssys->pos.y * cst->zoom;
 
    return 0;
 }

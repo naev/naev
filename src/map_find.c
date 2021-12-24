@@ -185,7 +185,7 @@ static void map_findDisplayMark( unsigned int wid, const char* str )
 
    /* Select. */
    map_select( sys, 0 );
-   map_center( wid, sys->name );
+   map_center( window_getParent(wid), sys->name );
 
    /* Close parent. */
    window_close( window_getParent(wid), str );
@@ -912,6 +912,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
  */
 static void map_findSearch( unsigned int wid, const char* str )
 {
+   int parent = window_getParent( wid );
    int ret;
    const char *name, *searchname;
 
@@ -932,19 +933,19 @@ static void map_findSearch( unsigned int wid, const char* str )
 
    /* Handle different search cases. */
    if (map_find_systems) {
-      ret = map_findSearchSystems( wid, name );
+      ret = map_findSearchSystems( parent, name );
       searchname = _("System");
    }
    else if (map_find_planets) {
-      ret = map_findSearchPlanets( wid, name );
+      ret = map_findSearchPlanets( parent, name );
       searchname = _("Planet");
    }
    else if (map_find_outfits) {
-      ret = map_findSearchOutfits( wid, name );
+      ret = map_findSearchOutfits( parent, name );
       searchname = _("Outfit");
    }
    else if (map_find_ships) {
-      ret = map_findSearchShips( wid, name );
+      ret = map_findSearchShips( parent, name );
       searchname = _("Ship");
    }
    else
