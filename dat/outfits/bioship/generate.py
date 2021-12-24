@@ -347,7 +347,7 @@ BioOutfit( "weapon.xml.template", {
     "size":     "large",
     "mass":     75,
     "price" :   lerpr(   0, 125e3 ),
-    "desc":     N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through even the strongest of armours, seeping into and melting ships from the inside upon contact."),
+    "desc":     N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through seemingly impregnable armours, seeping into and melting ships from the inside upon contact."),
     "gfx_store":"organic_plasma_t.webp",
     "specific": "turret bolt",
     "gfx":      "plasma.png",
