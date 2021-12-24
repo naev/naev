@@ -5,13 +5,14 @@
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
   <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
+  <developer_name>Naev DevTeam</developer_name>
   <icon type="stock">org.naev.Naev</icon>
   <url type="homepage">https://naev.org</url>
   <url type="bugtracker">https://github.com/naev/naev/issues</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <update_contact>bobbens@gmail.com</update_contact>
-
+  
   <recommends>
     <control>pointing</control>
     <control>keyboard</control>
