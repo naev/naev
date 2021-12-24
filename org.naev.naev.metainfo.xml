@@ -78,28 +78,44 @@
 
   <screenshots>
     <screenshot type="default">
-      <caption>A pirate kestrel in a firefight.</caption>
-      <image>https://naev.org/imgs/screenshots/fight2.png</image>
+      <caption>A pirate kestrel in a firefight</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/fight1.webp</image>
     </screenshot>
     <screenshot>
-      <caption>The main menu.</caption>
-      <image>https://naev.org/imgs/screenshots/menu.png</image>
+      <caption>A pirate kestrel attacking a ship</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/attack.webp</image>
     </screenshot>
     <screenshot>
-      <caption>The galaxy map.</caption>
-      <image>https://naev.org/imgs/screenshots/map.png</image>
+      <caption>A Gas Giant</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/gas_giant.webp</image>
     </screenshot>
     <screenshot>
-      <caption>The outfit screen.</caption>
-      <image>https://naev.org/imgs/screenshots/equip.png</image>
+      <caption>The equipment screen</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/equipment.webp</image>
     </screenshot>
     <screenshot>
-      <caption>A jumping ship.</caption>
-      <image>https://naev.org/imgs/screenshots/jump.png</image>
+      <caption>The shipyard screen</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/shipyard.webp</image>
     </screenshot>
     <screenshot>
-      <caption>A ringed planet.</caption>
-      <image>https://naev.org/imgs/screenshots/planet.png</image>
+      <caption>The mission screen</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/missions.webp</image>
+    </screenshot>
+    <screenshot>
+      <caption>Prepare to be scanned</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/scanned.webp</image>
+    </screenshot>
+    <screenshot>
+      <caption>Flying through a nebula</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/nebula.webp</image>
+    </screenshot>
+    <screenshot>
+      <caption>Flying stealthily through a system</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/stealth.webp</image>
+    </screenshot>
+    <screenshot>
+      <caption>Beware the chicken</caption>
+      <image>https://naev.org/imgs/screenshots_0.9.0/minerva_station.webp</image>
     </screenshot>
   </screenshots>
 
