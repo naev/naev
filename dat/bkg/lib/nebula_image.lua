@@ -39,12 +39,13 @@ function nebula_image.init( filename )
       local y     = 10*r*math.sin(a)
       local scale = 1 + (prng:random()*0.5 + 0.5)*((2048+2048)/(w+h))
       local angle = prng:random()*math.pi*2
+      local col   = colour.new( 0.6, 0.6, 0.6, 1.0 )
       local md    = (w+h)/2
       if 1280 < scale * md then
          scale = 1280 / md
       end
       scale = scale * (nw*nh)/(1280*720)
-      bkg.image( img, x, y, move, scale, angle )
+      bkg.image( img, x, y, move, scale, angle, col )
 
       -- Default nebula background
       -- A bit too crowded so disabled for now
