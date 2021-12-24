@@ -212,19 +212,19 @@ function board_flashback()
    local log = vn.newCharacter( "Notebook", { color={0, 0, 0}, hidetitle=true } )
    log(_([[UST 602:1914
 
-Although my peers will likely make fun of me if they find out, I have decided to start a paper log of my upcoming travels aboard the Beagle. It was hard to find a place selling paper notebooks as everyone uses holopads, but I was able to find a small place at an antique shop at Antica. For such primitive technology it was very expensive.
+Although my peers will likely make fun of me if they find out, I have decided to start a paper log of my upcoming travels aboard the Beagle. It was hard to find a place selling paper notebooks, as everyone uses holopads, but I was able to find a small place at an antique shop on Antica. For such primitive technology, it was very expensive.
 
 I look forward to starting my travels next decaperiod! It will be my first time leaving Arcturus in ages!]]))
    log(_([[UST 602:1928
 
-I have met the crew, they seem fairly friendly except for the big silent guy. I wonder if it will all work out… I just have to stop messing things up this time.
+I have met the crew. They seem fairly friendly except for the big silent guy. I wonder if it will all work out… I just have to stop messing things up this time.
 
 My room is a bit small, but as expected. My roommate seems like a quiet person. I'm not sure if I'll be able to get used to all this floating around in zero-gravity though.]]))
    log(_([[UST 602:1971
 
 We are on route to the Delta Pavonis system.
 
-Things haven't been working too well. There was a leak in one of the radiators, we almost got fried but my roommate was able to fix it in time.]]))
+Things haven't been working too well. There was a leak in one of the radiators. We almost got fried, but my roommate was able to fix it in time.]]))
    log(_([[UST 602:1980
 
 The Captain got in a fight with the provider that was supposed to give us the cargo to take to the Qex system… I don't know what we'll do if this trip gets cancelled… It will look horrible on my Curriculum Vitae…]]))
@@ -239,10 +239,10 @@ We leave to Dune next period.]]))
 
 We have made it to Arrakis in the Dune system.
 
-The sand is awful here, it gets in everything and everywhere so I decided to cut short my visit of the local area. It's also nice to be in the ship alone. Much quieter and more peaceful.]]))
+The sand is awful here. It gets in everything and everywhere, so I decided to cut short my visit of the local area. It's also nice to be in the ship alone. Much quieter and more peaceful.]]))
    log(_([[UST (the date is blank)
 
-(This page consists of scribbled drawings of the ship and people. A person captioned Captain is drawn with horns coming out of his head.)]]))
+(This page consists of scribbled drawings of the ship and people. A person captioned "Captain" is drawn with horns coming out of his head.)]]))
    log(_([[UST 602:1999
 
 We have finished loading the cargo, which consists of some sort of bottles of something like sand? The Captain said it is very expensive and was yelling at us all the time while we were loading the cargo.
@@ -252,7 +252,7 @@ I have decided that once this is over I will try to find a new job. I don't thin
 Since it seems like the navigator has a bit of a hangover, we leave in 5 periods.]]))
    log(_([[UST 602:2008
 
-It was very hard to awake the navigator and we are behind schedule again. I hate getting yelled at.
+It was very hard to wake the navigator and we are behind schedule again. I hate getting yelled at.
 
 We are on on our way to Soromid space, but I don't think the navigator is in much condition to fly.]]))
    log(_([[UST 602:2011
@@ -277,9 +277,9 @@ There is no atmosphere and I can't take off my suit anymore. I don't see any way
 
 I have lost all notion of time.
 
-They are all around. I don't really understand what they are, they look like small ships, but they are slowly and mechanically tearing apart the ship.
+They are all around. I don't really understand what they are. They look like small ships, but they are slowly and mechanically tearing apart the ship.
 
-I'm going to die am I?]]))
+I'm going to die aren't I?]]))
    log(_([[UST (the date is blank)
 
 I'm getting cold. I think the heating unit is malfunctioning.
@@ -314,7 +314,7 @@ A---s--hm---t---
    end )
    vn.transition()
    vn.sfxEerie()
-   vn.na(_([[You tune your ship sensors to pick up the most miniscule of disturbances and focus on the area indicate by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
+   vn.na(_([[You tune your ship sensors to pick up the most miniscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
    vn.done()
    vn.run()
 end

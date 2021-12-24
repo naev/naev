@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-12-23 22:15-0500\n"
+"POT-Creation-Date: 2021-12-23 23:19-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -32025,7 +32025,7 @@ msgstr ""
 #: dat/events/sirius/preach.lua:377
 msgid ""
 "A Sirian appears on your viewscreen. He seems different than most Sirii "
-"you've met. He regards you with a neutral yet intense gaze.\n"
+"you've met. He regards you with a neutral, yet intense, gaze.\n"
 "    \"Man is cruel and deceptive,\" he says. \"You deserve more than you "
 "shall ever get from humanity. Your only hope is to follow the Holy One, "
 "Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for "
@@ -32241,9 +32241,9 @@ msgid ""
 "\n"
 "Although my peers will likely make fun of me if they find out, I have "
 "decided to start a paper log of my upcoming travels aboard the Beagle. It "
-"was hard to find a place selling paper notebooks as everyone uses holopads, "
-"but I was able to find a small place at an antique shop at Antica. For such "
-"primitive technology it was very expensive.\n"
+"was hard to find a place selling paper notebooks, as everyone uses holopads, "
+"but I was able to find a small place at an antique shop on Antica. For such "
+"primitive technology, it was very expensive.\n"
 "\n"
 "I look forward to starting my travels next decaperiod! It will be my first "
 "time leaving Arcturus in ages!"
@@ -32253,7 +32253,7 @@ msgstr ""
 msgid ""
 "UST 602:1928\n"
 "\n"
-"I have met the crew, they seem fairly friendly except for the big silent "
+"I have met the crew. They seem fairly friendly except for the big silent "
 "guy. I wonder if it will all work out… I just have to stop messing things up "
 "this time.\n"
 "\n"
@@ -32269,7 +32269,7 @@ msgid ""
 "We are on route to the Delta Pavonis system.\n"
 "\n"
 "Things haven't been working too well. There was a leak in one of the "
-"radiators, we almost got fried but my roommate was able to fix it in time."
+"radiators. We almost got fried, but my roommate was able to fix it in time."
 msgstr ""
 
 #: dat/events/taiomi/find.lua:228
@@ -32301,8 +32301,8 @@ msgid ""
 "\n"
 "We have made it to Arrakis in the Dune system.\n"
 "\n"
-"The sand is awful here, it gets in everything and everywhere so I decided to "
-"cut short my visit of the local area. It's also nice to be in the ship "
+"The sand is awful here. It gets in everything and everywhere, so I decided "
+"to cut short my visit of the local area. It's also nice to be in the ship "
 "alone. Much quieter and more peaceful."
 msgstr ""
 
@@ -32311,7 +32311,7 @@ msgid ""
 "UST (the date is blank)\n"
 "\n"
 "(This page consists of scribbled drawings of the ship and people. A person "
-"captioned Captain is drawn with horns coming out of his head.)"
+"captioned \"Captain\" is drawn with horns coming out of his head.)"
 msgstr ""
 
 #: dat/events/taiomi/find.lua:246
@@ -32333,7 +32333,7 @@ msgstr ""
 msgid ""
 "UST 602:2008\n"
 "\n"
-"It was very hard to awake the navigator and we are behind schedule again. I "
+"It was very hard to wake the navigator and we are behind schedule again. I "
 "hate getting yelled at.\n"
 "\n"
 "We are on on our way to Soromid space, but I don't think the navigator is in "
@@ -32380,10 +32380,10 @@ msgid ""
 "\n"
 "I have lost all notion of time.\n"
 "\n"
-"They are all around. I don't really understand what they are, they look like "
+"They are all around. I don't really understand what they are. They look like "
 "small ships, but they are slowly and mechanically tearing apart the ship.\n"
 "\n"
-"I'm going to die am I?"
+"I'm going to die aren't I?"
 msgstr ""
 
 #: dat/events/taiomi/find.lua:283
@@ -32428,7 +32428,7 @@ msgstr ""
 #: dat/events/taiomi/find.lua:317
 msgid ""
 "You tune your ship sensors to pick up the most miniscule of disturbances and "
-"focus on the area indicate by the notebook. You are about to give up when "
+"focus on the area indicated by the notebook. You are about to give up when "
 "you detect an anomaly. It looks like you can use this to jump, but where "
 "could it lead?"
 msgstr ""
@@ -32477,7 +32477,7 @@ msgstr ""
 #. If evt_state==1 we can finish up the event
 #: dat/events/taiomi/intro.lua:99
 msgid ""
-"You dock with the one-winged Goddard and once again get out in your "
+"You dock with the one-winged Goddard and, once again, get out in your "
 "atmospheric suit. Once you exit the narrow hallways and entire the command "
 "room, you are once again met with the Drone which is a lot more intimidating "
 "in person."
@@ -32498,14 +32498,14 @@ msgstr ""
 #: dat/events/taiomi/intro.lua:102
 msgid ""
 "\"Our encounters with humans have not been, in general, very fruitful and we "
-"have lost countless of members over time. The few that remain were able to "
-"band together and find stumble upon this quiet area, where we have been "
-"since.\""
+"have lost countless of our members over time. The few that remain were able "
+"to band together and stumble upon this quiet area, where we have been since."
+"\""
 msgstr ""
 
 #: dat/events/taiomi/intro.lua:103
 msgid ""
-"\"We scavenge and collect what we can, allowing our repairs and "
+"\"We scavenge and collect what we can, allowing for our repairs and "
 "developments, however, it does not seem like we can continue like this "
 "forever.\""
 msgstr ""
@@ -32520,15 +32520,15 @@ msgstr ""
 
 #: dat/events/taiomi/intro.lua:105
 msgid ""
-"\"We have no choice but to take a large risk and try to move on. However, "
-"with only our strength we might not be able to pull it off before we are "
-"reverted to inert debris floating eternally in space.\""
+"\"We have no choice but to take a large risk and try to move on. However, on "
+"our own we might not be able to pull it off before we are reverted to inert "
+"debris floating eternally in space.\""
 msgstr ""
 
 #: dat/events/taiomi/intro.lua:106
 msgid ""
 "\"Although I hate to ask this of you, we do not have any alternative but to "
-"push forward. If you would be willing to help your plight, we would be very "
+"push forward. If you would be willing to help our plight, we would be very "
 "grateful. We can not offer much, but we may have ways of compensating your "
 "efforts. Please take your time to think it over and get in touch with me "
 "outside the ship if you are interested.\""
@@ -32536,8 +32536,8 @@ msgstr ""
 
 #: dat/events/taiomi/intro.lua:107
 msgid ""
-"You see how the Drone elegantly and carefully is able to maneuver out of the "
-"Goddard without scratching a single wall."
+"You see how the Drone elegantly and carefully maneuvers out of the Goddard "
+"without scratching a single wall."
 msgstr ""
 
 #: dat/events/taiomi/intro.lua:111
@@ -32670,7 +32670,7 @@ msgstr ""
 msgid ""
 "\"It is quite remarkable that you made it here. As far as we know, the "
 "probability of your conventional sensors finding the jump that brought you "
-"here should be to all practical effects zero.\""
+"here should be, to all practical effects, zero.\""
 msgstr ""
 
 #: dat/events/taiomi/intro.lua:216
@@ -32776,10 +32776,10 @@ msgstr ""
 
 #: dat/events/taiomi/system.lua:115
 msgid ""
-"\"Although we exist seems to be rather intuitive. As if we did were not able "
-"to think of whether or not exist, we would certainly not exist. However, as "
-"we can ponder our own existence, it seems only logical to believe that we "
-"exist.\""
+"\"Although we exist seems to be rather intuitive. As if we were not able to "
+"think of whether or not exist, we would certainly not exist. However, as we "
+"can ponder our own existence, it seems only logical to believe that we exist."
+"\""
 msgstr ""
 
 #: dat/events/taiomi/system.lua:116
@@ -32802,7 +32802,7 @@ msgstr ""
 
 #: dat/events/taiomi/system.lua:118
 msgid ""
-"\"Perhaps the concept of thinking of individual entities us only a useful "
+"\"Perhaps the concept of thinking of individual entities is only a useful "
 "construction for our understanding of the world. It does seem like a clean "
 "definition of what we are or who we are is naught but a fleeting dream, "
 "forever outside of our grasp.\""
@@ -32868,7 +32868,7 @@ msgid ""
 "active outfits that you can only equip one of on any specific ship. You can "
 "either configure to be set to a weapon set keybinding in the Info menu "
 "(opened with {infokey}, or double tap {accelkey} to trigger it. Note that "
-"they are prone to overheating and use a lot of energy, so it is bes to use "
+"they are prone to overheating and use a lot of energy, so it is best to use "
 "afterburners only when necessary.\""
 msgstr ""
 
@@ -32910,15 +32910,15 @@ msgid ""
 "buy ammunition. By either performing a cooldown with {cooldownkey} or double-"
 "tapping {reversekey}, or landing on a planet or station you can instantly "
 "refill the ammunition when necessary. Launchers can be very useful if you "
-"master them, please try them out with different configurations!\""
+"master them. Please try them out with different configurations!\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:59
 msgid ""
 "\"Looks like you are moving up in the world with your first #oFighter Bay#0 "
 "outfit! As you can expect, fighter bays let you launch and control "
-"interceptor or fighter class escorts. They autonomously will defend your "
-"ship when deployed, and can be given particular orders. You can tell them to "
+"interceptor or fighter class escorts. They autonomously defend your ship "
+"when deployed, and can be given particular orders. You can tell them to "
 "#oattack#0 your target with {eattackkey}, #oclear orders#0 with {eclearkey}, "
 "#ohold position#0 with {eholdkey}, and #oreturn to ship#0 with {ereturnkey}."
 "\""
@@ -32927,8 +32927,8 @@ msgstr ""
 #: dat/events/tutorial/tut_land.lua:60
 msgid ""
 "\"Like ammunition in launchers, lost fighters will regenerate slowly over "
-"time, and you can restock them by either performing a cooldown operation "
-"with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or "
+"time and you can restock them either by performing a cooldown operation with "
+"{cooldownkey} or double-tapping {reversekey}, or by landing on a planet or "
 "station. You can either fly around with deployed fighters or keep them "
 "inside your ship and only deploy as necessary. You should try to see "
 "whatever works best for you!\""
@@ -32985,11 +32985,11 @@ msgstr ""
 #: dat/events/tutorial/tut_land.lua:90
 msgid ""
 "\"It looks like you can finally get your hands on combat vessels with the "
-"#oLight Combat Vessel License#0! Combat vessels differ from civilians in "
-"that they are intrinsically suited for combat. This, in general, translates "
-"to higher mobility and firepower, at the cost of cargo capacity and utility. "
-"There are mainly three classes of light combat vessels: #oFighters#0, "
-"#oBombers#0, and #oInterceptors#0.\""
+"#oLight Combat Vessel License#0! Combat vessels differ from civilian vessels "
+"in that they are intrinsically suited for combat. This, in general, "
+"translates to higher mobility and firepower, at the cost of cargo capacity "
+"and utility. There are mainly three classes of light combat vessels: "
+"#oFighters#0, #oBombers#0, and #oInterceptors#0.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:91
@@ -33003,7 +33003,7 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:92
 msgid ""
-"\"To make the most of combat ships it is recommended you look at their "
+"\"To make the most of combat ships, it is recommended you look at their "
 "strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-"
 "class ship is not going to make for an effective combat vessel. Slots also "
 "play an important role, with #oInterceptor#0-class ships being more limited "
@@ -33031,11 +33031,11 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:105
 msgid ""
-"\"Looks like you finally got your hand on the #oHeavy Combat Vessel "
+"\"Looks like you finally got your hands on the #oHeavy Combat Vessel "
 "License#0! This will allow you to pilot the largest of the combat ships, "
 "which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. "
 "These ships sacrifice size and utility for survivability and firepower, "
-"being able to lay devasting barrages to devastate enemy forces.\""
+"being able to lay devastating barrages to lay waste to enemy forces.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:106
@@ -33050,12 +33050,12 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:107
 msgid ""
-"\"Flying a heavy combat vessel is very different from other clases of ships. "
-"Given their size, usually time seems to pass at a faster rate than smaller "
-"ships which can be seen by their '#oTime dilation#0' value. Furthermore, "
-"given their size, stealth becomes difficult and they can be vulnerable to "
-"volleys of torpedoes. Escorts and fighter bays can help them deal with enemy "
-"bombers.\""
+"\"Flying a heavy combat vessel is very different from other classes of "
+"ships. Given their size, usually time seems to pass at a faster rate than "
+"smaller ships which can be seen by their '#oTime dilation#0' value. "
+"Furthermore, given their size, stealth becomes difficult and they can be "
+"vulnerable to volleys of torpedoes. Escorts and fighter bays can help them "
+"deal with enemy bombers.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:113
@@ -33063,9 +33063,9 @@ msgid ""
 "\"It looks like you got a #oMercenary License#0. This will enable bounty "
 "collection missions that should start appearing in your mission computer "
 "screens from now on. These missions are usually generally combat-oriented "
-"and will require you to have a suitable combat vessel to succeed in them. "
-"They can be fairly challenging at the beginning so make sure your ship is "
-"properly equipped for combat.\""
+"and will require you to have a suitable combat vessel to successfully "
+"complete them. They can be fairly challenging at the beginning so make sure "
+"your ship is properly equipped for combat.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:140
@@ -33116,9 +33116,9 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:164
 msgid ""
-"\"In general, due to the low maneuverability of large ships, you should "
+"\"In general, due to the low manoeuvrability of large ships, you should "
 "consider using turret weapons and/or fighter bays for self defense. They "
-"allow you to worry less about aiming, and more about getting jobs done. "
+"allow you to worry less about aiming and more about getting jobs done. "
 "Turrets rely heavily on their tracking values. '#oMinimum Tracking#0' refers "
 "to the '#oEvasion#0' value of a target ship at which the turret will not be "
 "able to track. On the other hand, if the target ship is above the '#oOptimal "
@@ -33155,7 +33155,7 @@ msgstr ""
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
 "resident in your ship controlling your Autonav and other functionality, but "
-"with new updates, I can now materializes and communicate directly to you as "
+"with new updates, I can now materialize and communicate directly with you as "
 "a hologram.\"\n"
 "They stare at you for a few seconds.\n"
 "\"Say, now that I can see you, you look very familiar. You wouldn't be "
@@ -33215,9 +33215,9 @@ msgstr ""
 
 #: dat/events/updater.lua:92
 msgid ""
-"\"With that said, would you like me to provide small in-game advice as you "
+"\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
-"familiar with, but it could help learn new things.\""
+"familiar with, but it could help you learn new things.\""
 msgstr ""
 
 #: dat/events/updater.lua:99
@@ -89037,7 +89037,7 @@ msgstr ""
 msgid "Trying to remove beam with ID 0!"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:102
+#: dat/outfits/bioship/generate.py:68
 msgid ""
 "The brain is a Soromid bioship's equivalent to core systems in synthetic "
 "ships. Possibly the most important organ, the brain provides processing "
@@ -89046,7 +89046,7 @@ msgid ""
 "improve."
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:103
+#: dat/outfits/bioship/generate.py:69
 msgid ""
 "The gene drive is a Soromid bioship's equivalent to engines in synthetic "
 "ships. It is charged with moving the organism through space and is even "
@@ -89054,7 +89054,7 @@ msgid ""
 "over time, just like the ships themselves, they grow and improve."
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:104
+#: dat/outfits/bioship/generate.py:70
 msgid ""
 "The shell is a Soromid bioship's natural protection, equivalent to hulls of "
 "synthetic ships. The shell is responsible both for protecting the organism's "
@@ -89063,255 +89063,265 @@ msgid ""
 "like the ships themselves, they grow and improve."
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:107
+#: dat/outfits/bioship/generate.py:73
 msgid "Bioship Brain"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:108
+#: dat/outfits/bioship/generate.py:74
 msgid "Bioship Gene Drive"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:109
+#: dat/outfits/bioship/generate.py:75
 msgid "Bioship Shell"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:115 dat/outfits/bioship/generate.py:232
-#: dat/outfits/bioship/generate.py:382
+#: dat/outfits/bioship/generate.py:81 dat/outfits/bioship/generate.py:197
+#: dat/outfits/bioship/generate.py:346
 msgid "Bioship Weapon Organ"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:120 dat/outfits/bioship/generate.py:237
+#: dat/outfits/bioship/generate.py:85
 msgid ""
 "The Stinger Organ is able to convert energy into hot plasma that is able to "
-"eat easily eat through shield and armour of opposing ships. While not an "
-"especially powerful offensive organ, it is prized for its reliability."
+"eat easily eat through shield and armour of opposing ships over time. While "
+"not an especially powerful offensive organ, it is prized for its reliability."
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:141
+#: dat/outfits/bioship/generate.py:106
 msgid "Stinger Organ I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:142
+#: dat/outfits/bioship/generate.py:107
 msgid "Stinger Organ II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:143
+#: dat/outfits/bioship/generate.py:108
 msgid "Stinger Organ III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:159
+#: dat/outfits/bioship/generate.py:124
 msgid "Perleve Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:160
+#: dat/outfits/bioship/generate.py:125
 msgid "Perleve Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:177
+#: dat/outfits/bioship/generate.py:142
 msgid "Perlevis Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:178
+#: dat/outfits/bioship/generate.py:143
 msgid "Perlevis Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:192
+#: dat/outfits/bioship/generate.py:157
 msgid "Perlevis Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:193
+#: dat/outfits/bioship/generate.py:158
 msgid "Perlevis Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:209
+#: dat/outfits/bioship/generate.py:174
 msgid "Laevum Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:210
+#: dat/outfits/bioship/generate.py:175
 msgid "Laevum Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:227
+#: dat/outfits/bioship/generate.py:192
 msgid "Laevis Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:228
+#: dat/outfits/bioship/generate.py:193
 msgid "Laevis Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:258
+#: dat/outfits/bioship/generate.py:201
+msgid ""
+"The Talon Organ is an enlarged and more powerful version of the Stinger "
+"Organ. Like its smaller counterpart, is able to convert energy into hot "
+"plasma that is able to eat easily eat through shield and armour of opposing "
+"ships. The hot plasma is able to cling to ship's shields and hulls dealing "
+"continuous damage after impact."
+msgstr ""
+
+#: dat/outfits/bioship/generate.py:222
 msgid "Talon Organ I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:259
+#: dat/outfits/bioship/generate.py:223
 msgid "Talon Organ II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:260
+#: dat/outfits/bioship/generate.py:224
 msgid "Talon Organ III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:261
+#: dat/outfits/bioship/generate.py:225
 msgid "Talon Organ IV"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:275
+#: dat/outfits/bioship/generate.py:239
 msgid "Laevis Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:276
+#: dat/outfits/bioship/generate.py:240
 msgid "Laevis Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:292
+#: dat/outfits/bioship/generate.py:256
 msgid "Mediocre Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:293
+#: dat/outfits/bioship/generate.py:257
 msgid "Mediocre Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:310
+#: dat/outfits/bioship/generate.py:274
 msgid "Mediocris Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:311
+#: dat/outfits/bioship/generate.py:275
 msgid "Mediocris Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:312
+#: dat/outfits/bioship/generate.py:276
 msgid "Mediocris Gene Drive III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:326
+#: dat/outfits/bioship/generate.py:290
 msgid "Mediocris Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:327
+#: dat/outfits/bioship/generate.py:291
 msgid "Mediocris Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:343
+#: dat/outfits/bioship/generate.py:307
 msgid "Largum Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:344
+#: dat/outfits/bioship/generate.py:308
 msgid "Largum Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:361
+#: dat/outfits/bioship/generate.py:325
 msgid "Largus Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:362
+#: dat/outfits/bioship/generate.py:326
 msgid "Largus Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:376
+#: dat/outfits/bioship/generate.py:340
 msgid "Largus Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:377
+#: dat/outfits/bioship/generate.py:341
 msgid "Largus Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:378
+#: dat/outfits/bioship/generate.py:342
 msgid "Largus Cortex III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:387
+#: dat/outfits/bioship/generate.py:350
 msgid ""
 "The Tentacle Organ has the distinction of being the only fully rotating "
 "organic weapon while boasting a fully developed power output that is hard to "
 "beat with conventional weaponry found throughout the galaxy. The large globs "
-"of hot plasma it launches can corrode through even the strongest of armours."
+"of hot plasma it launches can corrode through seemingly impregnable armours, "
+"seeping into and melting ships from the inside upon contact."
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:408
+#: dat/outfits/bioship/generate.py:371
 msgid "Tentacle Organ I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:409
+#: dat/outfits/bioship/generate.py:372
 msgid "Tentacle Organ II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:410
+#: dat/outfits/bioship/generate.py:373
 msgid "Tentacle Organ III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:411
+#: dat/outfits/bioship/generate.py:374
 msgid "Tentacle Organ IV"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:427
+#: dat/outfits/bioship/generate.py:390
 msgid "Ponderosum Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:428
+#: dat/outfits/bioship/generate.py:391
 msgid "Ponderosum Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:429
+#: dat/outfits/bioship/generate.py:392
 msgid "Ponderosum Cerebrum III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:446
+#: dat/outfits/bioship/generate.py:409
 msgid "Ponderosus Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:447
+#: dat/outfits/bioship/generate.py:410
 msgid "Ponderosus Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:448
+#: dat/outfits/bioship/generate.py:411
 msgid "Ponderosus Gene Drive III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:462
+#: dat/outfits/bioship/generate.py:425
 msgid "Ponderosus Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:463
+#: dat/outfits/bioship/generate.py:426
 msgid "Ponderosus Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:464
+#: dat/outfits/bioship/generate.py:427
 msgid "Ponderosus Cortex III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:480
+#: dat/outfits/bioship/generate.py:443
 msgid "Immane Cerebrum I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:481
+#: dat/outfits/bioship/generate.py:444
 msgid "Immane Cerebrum II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:482
+#: dat/outfits/bioship/generate.py:445
 msgid "Immane Cerebrum III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:499
+#: dat/outfits/bioship/generate.py:462
 msgid "Immanis Gene Drive I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:500
+#: dat/outfits/bioship/generate.py:463
 msgid "Immanis Gene Drive II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:501
+#: dat/outfits/bioship/generate.py:464
 msgid "Immanis Gene Drive III"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:515
+#: dat/outfits/bioship/generate.py:478
 msgid "Immanis Cortex I"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:516
+#: dat/outfits/bioship/generate.py:479
 msgid "Immanis Cortex II"
 msgstr ""
 
-#: dat/outfits/bioship/generate.py:517
+#: dat/outfits/bioship/generate.py:480
 msgid "Immanis Cortex III"
 msgstr ""
 
