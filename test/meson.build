@@ -12,7 +12,7 @@ test('main_menu',
     )
 
 if (ascli_exe.found())
-    metainfo_test_file = 'org.naev.naev.metainfo.xml'
+    metainfo_test_file = 'org.naev.Naev.metainfo.xml'
     test('validate_metainfo',
     ascli_exe,
     args: [

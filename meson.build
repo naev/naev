@@ -398,7 +398,7 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
-      metainfo_file = 'org.naev.naev.metainfo.xml'
+      metainfo_file = 'org.naev.Naev.metainfo.xml'
 
       if (ascli_exe.found())
          # Create desktop-entry file from metainfo
@@ -410,13 +410,13 @@ if buildExec.disabled() == false
             install_dir: join_paths (get_option ('datadir'), 'applications')
          )
       else
-         install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
+         install_data('org.naev.Naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
       endif
 
       install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
-             rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
+             rename : ['16x16/apps/org.naev.Naev.png', '32x32/apps/org.naev.Naev.png', '64x64/apps/org.naev.Naev.png', '128x128/apps/org.naev.Naev.png', '256x256/apps/org.naev.Naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
    endif
