@@ -404,7 +404,7 @@ if buildExec.disabled() == false
          # Create desktop-entry file from metainfo
          custom_target('gen-desktop-entry',
             input : [metainfo_file],
-            output : ['org.naev.naev.desktop'],
+            output : ['org.naev.Naev.desktop'],
             command : [ascli_exe, 'make-desktop-file', '@INPUT@', '@OUTPUT@'],
             install: true,
             install_dir: join_paths (get_option ('datadir'), 'applications')
