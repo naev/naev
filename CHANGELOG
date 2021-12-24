@@ -24,6 +24,7 @@
    * Fix issue with "Minerva Pirates 4" mission
    * Fix some text labels that couldn't be translated from English
    * Darkened nebulas and lowere default background darkness
+   * Improved upstream metainfo for packagers
 
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu
