@@ -40,7 +40,7 @@ float density( in vec3 pos )
    //return smoothstep(0.0,1.0,1.0-length(pos)) * (-length(pos)+1.5*nebula( pos*7.0 )-0.1);
 }
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    /* Normalize coordinates. */
    vec2 uv = texture_coords*2.0-1.0;
@@ -56,7 +56,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    /* Some initial parameters. */
    float T = 1.0;
-   color = vec4(0.0);
+   vec4 colour = vec4(0.0);
 
    float depth = znear;
    for (int i=0; i < STEPS; i++) {
@@ -89,11 +89,11 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
        * Two colours used for inside vs outside. */
       float k = OPACITY * densn * T;
       float hue = mix( HUE_INNER, HUE_OUTTER, length(p) + 0.1*snoise(10.0*p) );
-      color += k * vec4( hsv2rgb( vec3( hue, 0.8, 1.0 ) ), 1.0 );
+      colour += k * vec4( hsv2rgb( vec3( hue, 0.8, 1.0 ) ), 1.0 );
 
       /* Continue the marching. */
       depth += zstep;
    }
 
-   return color;
+   return colour * colour_in;
 }
