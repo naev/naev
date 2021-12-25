@@ -116,6 +116,7 @@ stds.AI.globals = {
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
+stds.API_loadscreen = {globals={"render"}}    -- C function: loadscreen_render()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
@@ -178,6 +179,7 @@ files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"

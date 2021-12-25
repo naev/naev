@@ -61,6 +61,9 @@
 #include "nfile.h"
 #include "nlua_misn.h"
 #include "nlua_var.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_gfx.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -92,10 +95,6 @@
 
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
-static double loading_r       = 0.; /**< Just to provide some randomness. */
-static glTexture *loading     = NULL; /**< Loading screen. */
-static glFont loading_font; /**< Loading font. */
-static char *loading_txt = NULL; /**< Loading text to display. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -113,6 +112,8 @@ static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
 const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+
+static nlua_env load_env = LUA_NOREF;
 
 /*
  * prototypes
@@ -500,57 +501,25 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   char file_path[PATH_MAX];
-   char **loadpaths, **loadscreens, *load;
-   size_t nload, nreal, nbuf;
-   const char *loading_prefix = "webp";
+   const char *LOADSCREEN_PATH = "loadscreen.lua";
 
-   /* Count the loading screens */
-   loadpaths = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+   load_env = nlua_newEnv(1);
+   nlua_loadStandard( load_env );
+   nlua_loadTex( load_env );
+   nlua_loadCol( load_env );
+   nlua_loadGFX( load_env );
 
-   for (nload=0; loadpaths[nload]!=NULL; nload++) {}
-   loadscreens = calloc( nload, sizeof(char*) );
-   nreal = 0;
-   for (nload=0; loadpaths[nload]!=NULL; nload++) {
-      if (!ndata_matchExt( loadpaths[nload], loading_prefix ))
-         continue;
-      loadscreens[nreal++] = loadpaths[nload];
-   }
-
-   /* Must have loading screens */
-   if (nreal==0) {
-      WARN( _("No loading screens found!") );
-      PHYSFS_freeList( loadpaths );
-      free( loadscreens );
-      loading = NULL;
+   size_t bufsize;
+   char *buf = ndata_read( LOADSCREEN_PATH, &bufsize );
+   if (nlua_dobufenv(load_env, buf, bufsize, LOADSCREEN_PATH) != 0) {
+      WARN( _("Error loading file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+            LOADSCREEN_PATH, lua_tostring(naevL,-1));
+      free(buf);
       return;
    }
-
-   /* Load the loading font. */
-   gl_fontInit( &loading_font, _(FONT_DEFAULT_PATH), 24, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
-
-   /* Set the zoom. */
-   cam_setZoom( conf.zoom_far );
-
-   /* Choose the screen. */
-   load = loadscreens[ RNG_BASE(0,nreal-1) ];
-
-   /* Load the texture */
-   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
-   loading = gl_newImage( file_path, 0 );
-   loading_r = RNGF();
-
-   /* Load the metadata. */
-   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
-   free( loading_txt );
-   loading_txt = ndata_read( file_path, &nbuf );
-
-   /* Create the stars. */
-   background_initStars( 1000 );
-
-   /* Clean up. */
-   PHYSFS_freeList( loadpaths );
-   free( loadscreens );
+   free(buf);
 }
 
 
@@ -562,52 +531,19 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
-   const double SHIP_IMAGE_WIDTH    = 512.;  /**< Loadscreen Ship Image Width */
-   const double SHIP_IMAGE_HEIGHT   = 512.; /**< Loadscreen Ship Image Height */
-   double bx;  /**<  Blit Image X Coord */
-   double by;  /**<  Blit Image Y Coord */
-   double x;   /**<  Progress Bar X Coord */
-   double y;   /**<  Progress Bar Y Coord */
-   double w;   /**<  Progress Bar Width Basis */
-   double h;   /**<  Progress Bar Height Basis */
-   double rh;  /**<  Loading Progress Text Relative Height */
    SDL_Event event;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   /* Draw stars. */
-   background_renderStars( 0. );
-
-   /*
-    * Dimensions.
-    */
-   /* Image. */
-   bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
-   by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
-   /* Loading bar. */
-   w  = SCREEN_W * 0.5;
-   h  = SCREEN_H * 0.025;
-   rh = h + gl_defFont.h + 4.;
-   x  = (SCREEN_W-w)/2.;
-   y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
-
-   /* Draw loading screen image. */
-   if (loading != NULL)
-      gl_renderScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
-   if (loading_txt != NULL) {
-      int tw = gl_printWidthRaw( &loading_font, loading_txt );
-      gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );
+   /* Run Lua. */
+   nlua_getenv(load_env,"render");
+   lua_pushnumber( naevL, done );
+   lua_pushstring( naevL, msg );
+   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
+      WARN( _("Loadscreen: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-
-   /* Draw progress bar. */
-   glUseProgram(shaders.progressbar.program);
-   glUniform1f( shaders.progressbar.paramf, loading_r );
-   glUniform1f( shaders.progressbar.dt, done );
-   gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
-
-   /* Draw text. */
-   gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
@@ -623,10 +559,7 @@ void loadscreen_render( double done, const char *msg )
  */
 static void loadscreen_unload (void)
 {
-   gl_freeTexture(loading);
-   loading = NULL;
-   gl_freeFont( &loading_font );
-   free( loading_txt );
+   nlua_freeEnv( load_env );
 }
 
 

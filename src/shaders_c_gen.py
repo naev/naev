@@ -320,10 +320,6 @@ SHADERS = [
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),
-   SimpleShader(
-      name = "progressbar",
-      fs_path = "progressbar.frag",
-   ),
 ]
 
 def header_chunks():
