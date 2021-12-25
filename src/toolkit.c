@@ -498,6 +498,33 @@ int window_isTop( unsigned int wid )
 }
 
 /**
+ * @brief Checks to see if a widget is covered or not.
+ */
+int widget_isCovered( unsigned int wid, const char *name, int x, int y )
+{
+   int bx, by, rx, ry;
+   Widget *wgt = window_getwgt( wid, name );
+   if (wgt==NULL)
+      return 0;
+
+   /* Undo transform. */
+   bx = x + wgt->x;
+   by = y + wgt->y;
+
+   /* Find if the point is covered. */
+   for (Widget *w=wgt->next; w!=NULL; w=w->next) {
+      if ((wgt->render==NULL) || wgt_isFlag(w, WGT_FLAG_KILL))
+         continue;
+
+      rx = bx-w->x;
+      ry = by-w->y;
+      if (!((rx < 0) || (rx >= w->w) || (ry < 0) || (ry >= w->h)))
+         return 1;
+   }
+   return 0;
+}
+
+/**
  * @brief Checks to see if a window exists.
  *
  *    @param wdwname Name of the window to check.

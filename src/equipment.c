@@ -1091,6 +1091,12 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          (event->type != SDL_MOUSEMOTION))
       return 0;
 
+   /* Is covered by something. */
+   if (widget_isCovered( wid, "cstEquipment", mx, my )) {
+      wgt->mouseover = -1;
+      return 0;
+   }
+
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
    tw = bw / (double)n;
