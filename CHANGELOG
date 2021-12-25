@@ -3,6 +3,7 @@
    * Fix broken dialogue in the "Shadow Vigil" mission
    * Fix issue with "Minerva Pirates 4" mission
    * Fix some text labels that couldn't be translated from English
+   * Fix equipment slot information displaying over filter widget
    * Darkened nebulas and lowere default background darkness
    * Improved upstream metainfo for packagers
 
