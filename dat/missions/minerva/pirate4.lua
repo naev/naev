@@ -324,7 +324,7 @@ function pir_reinforcements ()
       _("Clean up the Dvaered patrols"),
    } )
 
-   -- Detect all Dvaered dead
+   -- Detect all Dvaered deaths
    hook.timer( 3.0, "heartbeat" )
 end
 
