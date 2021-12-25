@@ -2560,7 +2560,11 @@ dat/scripts/equipopt/templates/sirius.lua
 dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
+dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
+dat/scripts/factions/frontier.lua
+dat/scripts/factions/goddard.lua
+dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua
 dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
