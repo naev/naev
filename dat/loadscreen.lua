@@ -126,7 +126,6 @@ function render( done, msg )
    lg.print( shipcaption, font, bx+shipw-tw, by+shiph-20 )
 
    -- Draw loading bar
-   --lg.rectangle( "fill", x, y+h, w, h )
    lg.setShader( progressbar )
    progressbar:send( "u_r", r )
    progressbar:send( "progress", done )
