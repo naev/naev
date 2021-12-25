@@ -2029,6 +2029,7 @@ void map_clear (void)
 {
    array_free(map_path);
    map_path = NULL;
+   map_selected = -1;
 }
 
 static void map_updateInternal( CstMapWidget *cst, double dt )
@@ -2653,9 +2654,6 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 
    /* Set zoom. */
    map_setZoom( wid, zoom );
-
-   /* Should get overwritten later. */
-   map_selectCur();
 
    map_reset( cst, MAPMODE_TRAVEL );
 }
