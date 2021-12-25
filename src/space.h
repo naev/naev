@@ -98,7 +98,7 @@ typedef struct VirtualAsset_ {
  */
 typedef struct Planet_ {
    int id;        /**< Planet ID. */
-   char* name;    /**< planet name */
+   char *name;    /**< planet name */
    Vector2d pos;  /**< position in star system */
    double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
 
@@ -121,15 +121,15 @@ typedef struct Planet_ {
    int bribed;          /**< If planet has been bribed. */
 
    /* Landed details. */
-   char* description;      /**< planet description */
-   char* bar_description;  /**< spaceport bar description */
+   char *description;      /**< planet description */
+   char *bar_description;  /**< spaceport bar description */
    unsigned int services;  /**< what services they offer */
    Commodity **commodities;/**< array: what commodities they sell */
    CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this planet */
    tech_group_t *tech;     /**< Planet tech. */
 
    /* Graphics. */
-   glTexture* gfx_space;   /**< graphic in space */
+   glTexture *gfx_space;   /**< graphic in space */
    char *gfx_spaceName;    /**< Name to load texture quickly with. */
    char *gfx_spacePath;    /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior;     /**< Don't actually load the texture */
@@ -227,9 +227,9 @@ typedef struct AsteroidType_ {
  * @TODO this should be moved to spfx and probably generated on the fly.
  */
 typedef struct Debris_ {
-   Vector2d pos; /**< Position. */
-   Vector2d vel; /**< Velocity. */
-   int gfxID; /**< ID of the asteroid gfx. */
+   Vector2d pos;  /**< Position. */
+   Vector2d vel;  /**< Velocity. */
+   int gfxID;     /**< ID of the asteroid gfx. */
    double height; /**< height vs player */
 } Debris;
 
@@ -237,15 +237,15 @@ typedef struct Debris_ {
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
-   int id; /**< ID of the asteroid, for targeting. */
-   int parent; /**< ID of the anchor parent. */
-   Vector2d pos; /**< Position. */
-   Vector2d vel; /**< Velocity. */
-   int gfxID; /**< ID of the asteroid gfx. */
-   double timer; /**< Internal timer for animations. */
+   int id;        /**< ID of the asteroid, for targeting. */
+   int parent;    /**< ID of the anchor parent. */
+   Vector2d pos;  /**< Position. */
+   Vector2d vel;  /**< Velocity. */
+   int gfxID;     /**< ID of the asteroid gfx. */
+   double timer;  /**< Internal timer for animations. */
    int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
-   int type; /**< The ID of the asteroid type */
-   int scanned; /**< Wether the player already scanned this asteroid. */
+   int type;      /**< The ID of the asteroid type */
+   int scanned;   /**< Wether the player already scanned this asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
@@ -254,25 +254,25 @@ extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
  * @brief Represents an asteroid field anchor.
  */
 typedef struct AsteroidAnchor_ {
-   char *label; /**< Label used for unidiffs. */
-   int id; /**< ID of the anchor, for targeting. */
-   Vector2d pos; /**< Position in the system (from center). */
-   double density; /**< Density of the field. */
+   char *label;   /**< Label used for unidiffs. */
+   int id;        /**< ID of the anchor, for targeting. */
+   Vector2d pos;  /**< Position in the system (from center). */
+   double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
-   int nb; /**< Number of asteroids. */
-   Debris *debris; /**< Debris belonging to the field. */
-   int ndebris; /**< Number of debris. */
+   int nb;        /**< Number of asteroids. */
+   Debris *debris;/**< Debris belonging to the field. */
+   int ndebris;   /**< Number of debris. */
    double radius; /**< Radius of the anchor. */
-   double area; /**< Field's area. */
-   int *type; /**< Types of asteroids. */
-   int ntype; /**< Number of types. */
+   double area;   /**< Field's area. */
+   int *type;     /**< Types of asteroids. */
+   int ntype;     /**< Number of types. */
 } AsteroidAnchor;
 
 /**
  * @brief Represents an asteroid exclusion zone.
  */
 typedef struct AsteroidExclusion_ {
-   Vector2d pos; /**< Position in the system (from center). */
+   Vector2d pos;  /**< Position in the system (from center). */
    double radius; /**< Radius of the exclusion zone. */
 } AsteroidExclusion;
 
@@ -318,10 +318,10 @@ struct StarSystem_ {
    double ownerpresence; /**< Amount of presence the owning faction has in a system. */
 
    /* Markers. */
-   int markers_computer; /**< Number of mission computer markers. */
-   int markers_low; /**< Number of low mission markers. */
-   int markers_high; /**< Number of high mission markers. */
-   int markers_plot; /**< Number of plot level mission markers. */
+   int markers_computer;/**< Number of mission computer markers. */
+   int markers_low;     /**< Number of low mission markers. */
+   int markers_high;    /**< Number of high mission markers. */
+   int markers_plot;    /**< Number of plot level mission markers. */
 
    /* Economy. */
    CommodityPrice *averagePrice;
