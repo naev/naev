@@ -1,6 +1,5 @@
 require 'ai.core.core'
 local scans = require 'ai.core.misc.scans'
-
 --[[
 
    Guard Mission AI. Have to set mem.guardpos to the position to guard.
@@ -18,6 +17,9 @@ mem.guardbrake    = 500
 mem.guarddodist   = 3000 -- distance at which to start activities
 mem.guardreturndist = 6000 -- distance at which to return
 mem.enemyclose    = mem.guarddodist
+mem.shield_run    = -1
+mem.armour_run    = -1
+mem.norun         = true
 
 function create ()
    local p = ai.pilot()
