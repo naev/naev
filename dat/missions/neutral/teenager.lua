@@ -56,6 +56,7 @@ function accept ()
     end
 end
 
+local hk_exploded
 function enter()
     if system.cur() == mem.cursys and mem.targetlive then
         local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
@@ -66,7 +67,7 @@ function enter()
         target:setHilight(true)
         target:setVisplayer(true)
         mem.hidle = hook.pilot(target, "idle", "targetIdle")
-        hook.pilot(target, "exploded", "targetExploded")
+        hk_exploded = hook.pilot(target, "exploded", "targetExploded")
         hook.pilot(target, "board", "targetBoard")
         targetIdle()
     end
@@ -100,6 +101,8 @@ function targetBoard()
     tk.msg(_("End of the line, boyo"), _([[You board the Gawain and find an enraged teenage boy and a disillusioned teenage girl. The boy is furious that you attacked and disabled his ship, but when you mention that his father is quite upset and wants him to come home right now, he quickly pipes down. You march the young couple onto your ship and seal the airlock behind you.]]))
     target:setHilight(false)
     target:setVisplayer(false)
+    target:disable()
+    hook.rm( hk_exploded )
     local c = commodity.new( N_("Teenagers"), N_("Disillusioned teenagers.") )
     mem.cargoID = misn.cargoAdd(c,0)
     misn.osdActive(2)
