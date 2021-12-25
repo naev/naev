@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Battleship">Battleship</class>
- <price>14000000</price>
+ <price>23000000</price>
  <time_mod>1.375</time_mod>
  <trail_generator x="-60" y="2" h="-10">soromid</trail_generator>
  <trail_generator x="-65" y="10" h="-15" always_under="1">soromid</trail_generator>

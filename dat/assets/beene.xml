@@ -38,4 +38,8 @@
   <item>Star Maps</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>industrial</tag>
+ </tags>
 </asset>

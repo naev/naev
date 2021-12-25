@@ -4,12 +4,11 @@
   <typename>{typename}</typename>
   <slot prop="bio_weapon">weapon</slot>
   <size>{size}</size>
-  <license>{license}</license>
   <mass>{mass}</mass>
   <price>{price}</price>
   <description>{desc}</description>
   <gfx_store>{gfx_store}</gfx_store>
-  <desc_extra>Plasma burns deal an extra {damage} of damage over 5 seconds on the target.</desc_extra>
+  <desc_extra>Plasma burns deal an extra {damage:.1f} of damage over 5 seconds on the target.</desc_extra>
  </general>
  <specific type="{specific}">
   <lua>outfits/bioship/skills/{lua}</lua>

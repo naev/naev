@@ -84,7 +84,7 @@ function hail ()
 
    -- Handle bribing
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and (standing > 20 or
+   if mem.found_illegal or mem.allowbribe or (mem.natural and (standing > 20 or
          (standing > 0 and mem.bribe_rng > 0.8) or
          (standing > -20 and mem.bribe_rng > 0.6) or
          (standing > -50 and mem.bribe_rng > 0.4) or

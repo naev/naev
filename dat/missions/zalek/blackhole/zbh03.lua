@@ -50,7 +50,7 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You find Zach at the bar, he seems to be staring dreamily at a photography. When he notices your presence he quickly puts it away and sobers up.]]))
-   z(_([["Damn, you nearly gave me a heart attack. I think I must be spending too much time alone on this station. By the way, how do you like it? I wrote a custom cleaning routine for all the droids and it seems to be turning out much better than expected. Almost has a warmly touch to it."
+   z(_([["Damn, you nearly gave me a heart attack. I think I must be spending too much time alone on this station. By the way, how do you like it? I wrote a custom cleaning routine for all the droids and it seems to be turning out much better than expected. Almost has a warm touch to it."
 He runs his hand on the counter top.]]))
    vn.menu{
       {_([["It's looking great!"]]), "01great"},
@@ -98,7 +98,7 @@ He chuckles slightly.]]))
    -- mission details
    misn.setTitle( _("Black Hole Scouting") )
    misn.setReward( fmt.reward(reward) )
-   misn.setDesc( _("") )
+   misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )
    mem.state = 1

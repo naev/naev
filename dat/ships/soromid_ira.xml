@@ -7,7 +7,7 @@
  <rarity>2</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
- <price>5500000</price>
+ <price>7100000</price>
  <time_mod>1.375</time_mod>
  <trail_generator x="-40" y="5" h="5">soromidS</trail_generator>
  <trail_generator x="-40" y="5" h="-5" always_under="1">soromidS</trail_generator>

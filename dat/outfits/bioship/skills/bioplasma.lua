@@ -20,9 +20,9 @@ function init( p, _po )
    end
 end
 
-function onhit( p, _po, target )
-   local ps = p:stats()
-   local dmg = damage * (1 - math.min( 1, math.max( 0, ps.absorb - penetration ) ))
+function onhit( _p, target )
+   local ts = target:stats()
+   local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
 
    if mem.corrosion_ii then
       target:effectAdd( "Plasma Burn", 10, dmg )

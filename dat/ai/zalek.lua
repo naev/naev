@@ -59,6 +59,8 @@ function create()
       local msg = _([["ACCESS DENIED.]])
       mem.refuel_no = msg
       mem.bribe_no = msg
+      mem.scan_msg = _("COMMENCING SCAN PROCEDURE.")
+      mem.scan_msg_bad = _("ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!")
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
       mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
@@ -109,7 +111,7 @@ function hail ()
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and (standing > 0 or
+   if mem.found_illegal or mem.allowbribe or (mem.natural and (standing > 0 or
          (standing > -20 and mem.bribe_rng > 0.8) or
          (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4))) then

@@ -62,7 +62,7 @@ local function updater090 ()
       -- - outfit balance
       -- - safe lanes
       vn.na("Suddenly, a hologram materializes in front of you.")
-      sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materializes and communicate directly to you as a hologram."
+      sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materialize and communicate directly with you as a hologram."
 They stare at you for a few seconds.
 "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
       sai(_([["I'm sure you have many questions about the update, but first, would you like to give me a name?"]]))
@@ -89,7 +89,7 @@ They stare at you for a few seconds.
       sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),{stealthkey=tut.getKey("stealth")}))
       sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
       sai(_([["There are also a lot of other changes, for example, there are now patrol routes in systems that are more heavily guarded by local factions, seeking missiles can be jammed, and some factions have been completely reworked. You will notice a lot of smaller differences too as you play the game."]]))
-      sai(_([["With that said, would you like me to provide small in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help learn new things."]]))
+      sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
       vn.menu{
          {_("Enable tutorial hints"), "enable"},
          {_("Disable tutorial hints"), "disable"},

@@ -277,7 +277,7 @@ function mainship_attacked ()
 
    mainship:comm(_("We are under attack!"), true)
    mem.attacked_spam = true
-   hook.time( 6e3, "attack_spam_over" )
+   hook.timer( 6e3, "attack_spam_over" )
 end
 function attack_spam_over ()
    mem.attacked_spam = false
@@ -324,7 +324,7 @@ function pir_reinforcements ()
       _("Clean up the Dvaered patrols"),
    } )
 
-   -- Detect all Dvaered dead
+   -- Detect all Dvaered deaths
    hook.timer( 3.0, "heartbeat" )
 end
 

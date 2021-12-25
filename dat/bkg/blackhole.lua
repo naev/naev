@@ -39,12 +39,12 @@ function renderfg( dt )
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.00009, -by-y*0.00009, z )
+   shader:send( "u_camera", bx+x*0.00025, -by-y*0.00025, z )
 
    lg.setCanvas( bgstars )
    starfield.render( dt )
    lg.setCanvas()
 
    shader:send( "u_bgtex", bgstars )
-   blackhole:render( dt, {0,0,0,0} )
+   blackhole:render( dt )
 end

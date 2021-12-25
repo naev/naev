@@ -27,4 +27,7 @@
   <description>Medenus Observatory is a semi-public astronomical station. Built at the edge of Soromid space as well as the outer fringe of human inhabited space, its main purpose is to learn more about the universe that lies beyond. Although hyperspace travel has made classical astronomy largely obsolete, there are still merits in being able to see the universe as it was in the distant past.</description>
   <bar>The spacedock bar is also the central communal area of the station. Researchers and astronomy enthusiasts gather here to discuss readings, comparisons of observations with real-time data, and the latest theories about the Incident.</bar>
  </general>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </asset>

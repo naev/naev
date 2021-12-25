@@ -75,6 +75,9 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    AsteroidAnchor *field;
    Asteroid *ast;
    double time;
+   int isstealth;
+
+   isstealth = pilot_isFlag( p, PILOT_STEALTH );
 
    ret = 0;
    for (int i=0; i<array_size(ws->slots); i++) {
@@ -131,7 +134,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    }
 
    /* Destealth when attacking. */
-   if (pilot_isFlag( p, PILOT_STEALTH) && (ret>0))
+   if (isstealth && (ret>0))
       pilot_destealth( p );
 
    /* Trigger onshoot after stealth gets broken. */
@@ -162,6 +165,7 @@ void pilot_weapSetAIClear( Pilot* p )
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
    int l, on, n;
+   int isstealth = pilot_isFlag( p, PILOT_STEALTH );
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    /* Case no outfits. */
    if (ws->slots == NULL)
@@ -239,7 +243,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Must recalculate stats. */
          if (n > 0) {
             /* pilot_destealth should run calcStats already. */
-            if (pilot_isFlag( p, PILOT_STEALTH ))
+            if (isstealth)
                pilot_destealth( p );
             else
                pilot_calcStats( p );

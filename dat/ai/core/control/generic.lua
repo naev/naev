@@ -755,6 +755,7 @@ function attacked( attacker )
    local p = ai.pilot()
    if not mem.attacked then
       mem.attacked = true
+      mem.found_illegal = false -- We clear here so the player can't attack and still bribe
       if ai.hasfighterbays() then
          for k,v in ipairs(p:followers()) do
             p:msg( v, "e_clear" )

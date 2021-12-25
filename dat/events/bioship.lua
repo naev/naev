@@ -13,10 +13,6 @@ local bioship = require "bioship"
 
 -- luacheck: globals update_bioship bioship_pay bioship_land (Hook functions passed by name)
 
-local function playerisbioship ()
-   return player.pilot():ship():tags().bioship
-end
-
 local function bioship_click ()
    bioship.window()
    update_bioship()
@@ -24,7 +20,7 @@ end
 
 local infobtn
 function update_bioship ()
-   local is_bioship = playerisbioship()
+   local is_bioship = bioship.playerisbioship()
 
    -- Easier to always reset
    if infobtn then
@@ -38,11 +34,9 @@ function update_bioship ()
       -- Initialize in the case stage isn't set
       if not stage then
          bioship.setstage( 1 )
-         stage = 1
       end
-      local sp = stage - bioship.skillpointsused()
       local caption = _("Bioship")
-      if sp > 0 then
+      if bioship.skillpointsfree() > 0 then
          caption = caption .. _(" #r!!#0")
       end
       infobtn = player.infoButtonRegister( caption, bioship_click )
@@ -75,7 +69,7 @@ function create ()
 end
 
 function bioship_land ()
-   if not playerisbioship() then return end
+   if not bioship.playerisbioship() then return end
 
    -- Check for stage up!
    local exp = player.shipvarPeek("bioshipexp") or 0
@@ -89,7 +83,7 @@ end
 
 function bioship_pay( amount, _reason )
    if amount < 0 then return end
-   if not playerisbioship() then return end
+   if not bioship.playerisbioship() then return end
 
    local stage = player.shipvarPeek("biostage")
    local maxstage = bioship.maxstage( player.pilot() )

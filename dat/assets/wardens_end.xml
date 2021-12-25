@@ -48,5 +48,9 @@
   <item>Hulls Medium</item>
   <item>Hulls High</item>
   <item>Pirate Elite Outfits</item>
+  <item>Criminal Outfits</item>
  </tech>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
 </asset>

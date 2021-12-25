@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>6e+09</population>
+  <population>3e+09</population>
   <hide>1.000000</hide>
   <services>
    <land>land_hiclass</land>
@@ -46,4 +46,7 @@
   <item>Hulls High</item>
   <item>Soromid Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>rich</tag>
+ </tags>
 </asset>

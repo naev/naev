@@ -475,8 +475,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             unknownPresence += sys->presence[i].value;
       }
       if (unknownPresence != 0)
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#0Unknown: #%c%.0f\n",
-                           'N', unknownPresence );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#0%s: #%c%.0f\n",
+                           _("Unknown"), 'N', unknownPresence );
       if (hasPresence == 0)
          cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
@@ -672,11 +672,11 @@ static void map_system_array_update( unsigned int wid, const char* str )
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Absorption:") );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f%% damage"), ship->dmg_absorb*100. );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Shield:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->shield, ship->shield_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->shield, ship->shield_regen );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "    #n%s#0 ", _("Armour:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->armour, ship->armour_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->armour, ship->armour_regen );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 ", _("Energy:") );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%.0f MJ (%.1f MW)", ship->energy, ship->energy_regen );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, _("%.0f MJ (%.1f MW)"), ship->energy, ship->energy_regen );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %s", _("Cargo Space:"), buf_cargo );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "\n#n%s#0 %d %s", _("Fuel:"), ship->fuel, n_( "unit", "units", ship->fuel ) );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "  #n%s#0 %d %s", _("Fuel Use:"),

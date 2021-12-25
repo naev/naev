@@ -38,7 +38,7 @@
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
-#define BG_BRIGHTNESS_DEFAULT                1.    /**< How much to darken (or lighten) the backgrounds. */
+#define BG_BRIGHTNESS_DEFAULT                0.7   /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_BRIGHTNESS_DEFAULT              1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT             1.    /**< How much gamma correction to do. */
 #define BACKGROUND_FANCY_DEFAULT             0     /**< Default fancy background. */

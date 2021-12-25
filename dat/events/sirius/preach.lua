@@ -374,7 +374,7 @@ end
 
 --when hailed back, show the message
 function hail()
-   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
+   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral, yet intense, gaze.
     "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
     You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
    player.commClose()

@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
- <price>570000</price>
+ <price>670000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-20" y="0" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>

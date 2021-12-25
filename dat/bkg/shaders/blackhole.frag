@@ -161,16 +161,16 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       /* Figure out what happened to the ray. */
       float dist2 = length(pos);
       if (dist2 < SIZE * 0.1) { /* Sucked into black hole. */
-         return vec4( col.rgb*col.a + glow.rgb*(1.0-col.a ), 1.0) ;
+         return color * vec4( col.rgb*col.a + glow.rgb*(1.0-col.a ), 1.0) ;
       }
       else if (dist2 > SIZE * 1000.0) { /* Escaped black hole. */
          /* Have to undo the deformation effect. */
          vec3 bgrd = inverse(R) * rd;
          vec2 bgc = 0.5 * 10.0 * bgrd.xy / length(vec2(1.0,0.1)) / love_ScreenSize.xy * love_ScreenSize.y + 0.5;
          bgc = mix( bgc, texture_coords, 0.8 ); /* Soften effect */
-         vec4 bg = texture( u_bgtex, bgc );
+         vec4 bg = texture( u_bgtex, bgc ) / color;
 
-         return vec4( col.rgb*col.a + (bg.rgb + glow.rgb)*(1.0-col.a), bg.a+(1.0-bg.a)*col.a );
+         return color * vec4( col.rgb*col.a + (bg.rgb + glow.rgb)*(1.0-col.a), bg.a+(1.0-bg.a)*col.a );
       }
       else if (abs(pos.y) <= SIZE * 0.002) { /* Hit accretion disk. */
          vec4 disk = raymarch_disk( pos, rd );
@@ -185,5 +185,5 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    if (outCol.r == 100.0)
       outCol = vec4( col.rgb + glow.rgb * (col.a + glow.a), 1.0 );
 
-   return outCol;
+   return color * outCol;
 }

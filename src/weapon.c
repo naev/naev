@@ -76,7 +76,8 @@ typedef struct Weapon_ {
    GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
-   double falloff; /**< Point at which damage falls off. Used to determine solwodwn for smart seekers.  */
+   int lua_mem; /**< Mem table, in case of a Pilot Outfit. */
+   double falloff; /**< Point at which damage falls off. Used to determine slowdown for smart seekers.  */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
    int sy; /**< Current Y sprite to use. */
@@ -1225,7 +1226,7 @@ static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, parent, &dmg, w->mount, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
@@ -1315,7 +1316,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, parent, &dmg, w->mount, 1 );
+   damage = pilot_hit( p, w->solid, parent, &dmg, w->outfit, w->lua_mem, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->timer2 == -1.) {
@@ -1652,7 +1653,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */
-   w->mount    = po;
+   w->lua_mem  = LUA_NOREF;
+   if (po != NULL && po->lua_mem != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      w->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   }
    if (outfit_isLauncher(outfit))
       w->outfit   = outfit->u.lau.ammo; /* non-changeable */
    else
@@ -1939,6 +1944,9 @@ static void weapon_free( Weapon* w )
 
    /* Free the trail, if any. */
    spfx_trail_remove(w->trail);
+
+   /* Free the Lua ref, if any. */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, w->lua_mem );
 
 #ifdef DEBUGGING
    memset(w, 0, sizeof(Weapon));

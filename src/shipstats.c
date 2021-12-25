@@ -160,6 +160,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("MW Armour Regeneration") ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("MW Armour Damage") ),
    A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("MW Damage") ),
+   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("MW Disable") ),
 
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
