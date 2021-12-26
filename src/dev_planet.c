@@ -50,6 +50,10 @@ int dpl_savePlanet( const Planet *p )
    /* Attributes. */
    xmlw_attr( writer, "name", "%s", p->name );
 
+   /* Some global attributes. */
+   xmlw_elem( writer, "displayname", "%s", p->displayname );
+   xmlw_elem( writer, "lua", "%s", p->lua_file );
+
    /* Position. */
    xmlw_startElem( writer, "pos" );
    xmlw_elem( writer, "x", "%f", p->pos.x );
