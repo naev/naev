@@ -2146,7 +2146,7 @@ void space_gfxUnload( StarSystem *sys )
    for (int i=0; i<array_size(sys->planets); i++) {
       Planet *planet = sys->planets[i];
 
-      if (planet->lua_unload) {
+      if (planet->lua_unload != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
          if (nlua_pcall( planet->lua_env, 1, 0 )) {
             WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_unload", lua_tostring(naevL,-1));
