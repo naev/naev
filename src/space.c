@@ -37,6 +37,8 @@
 #include "nlua.h"
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
+#include "nlua_gfx.h"
+#include "nlua_camera.h"
 #include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -2059,6 +2061,39 @@ void planet_updateLand( Planet *p )
  */
 void planet_gfxLoad( Planet *planet )
 {
+   if (planet->lua_file) {
+      if (planet->lua_env==LUA_NOREF) {
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( planet->lua_file, &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), planet->name, planet->lua_file );
+            return;
+         }
+
+         env = nlua_newEnv(1);
+         nlua_loadStandard( env );
+         nlua_loadGFX( env );
+         nlua_loadCamera( env );
+         if (nlua_dobufenv( env, dat, sz, planet->lua_file ) != 0) {
+            WARN(_("Planet '%s' Lua error:\n%s"), planet->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( env );
+            free( dat );
+            return;
+         }
+         planet->lua_env = env;
+         free( dat );
+
+         /* Grab functions as applicable. */
+         planet->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
+         planet->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
+         planet->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+         planet->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+      }
+
+      return;
+   }
    if (planet->gfx_space == NULL) {
       planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
       planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
@@ -2132,6 +2167,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    flags          = 0;
    planet->hide   = 0.01;
    comms          = array_create( Commodity* );
+   /* Lua stuff. */
+   planet->lua_env   = LUA_NOREF;
+   planet->lua_load  = LUA_NOREF;
+   planet->lua_unload= LUA_NOREF;
+   planet->lua_land  = LUA_NOREF;
+   planet->lua_render= LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", planet->name );
@@ -2140,6 +2181,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    do {
       /* Only handle nodes. */
       xml_onlyNodes(node);
+
+      xmlr_strd(node, "lua", planet->lua_file);
 
       if (xml_isNode(node,"GFX")) {
          xmlNodePtr cur = node->children;

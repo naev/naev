@@ -136,11 +136,19 @@ typedef struct Planet_ {
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 
    /* Misc. */
-   char **tags;        /**< Planet tagsg. */
-   unsigned int flags; /**< flags for planet properties */
-   MapOverlayPos mo;   /**< Overlay layout data. */
-   double map_alpha;   /**< Alpha to display on the map. */
-   int markers;        /**< Markers enabled on the planet. */
+   char **tags;         /**< Planet tagsg. */
+   unsigned int flags;  /**< flags for planet properties */
+   MapOverlayPos mo;    /**< Overlay layout data. */
+   double map_alpha;    /**< Alpha to display on the map. */
+   int markers;         /**< Markers enabled on the planet. */
+
+   /* Lua stuff. */
+   char *lua_file;   /**,< Lua File. */
+   nlua_env lua_env; /**< Lua environment. */
+   int lua_load;     /**< Run when player enters system. */
+   int lua_unload;   /**< Run when player exits system. */
+   int lua_land;     /**< Run when player "lands". */
+   int lua_render;   /**< Run when rendering. */
 } Planet;
 
 /*
