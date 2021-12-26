@@ -2005,6 +2005,23 @@ void planet_updateLand( Planet *p )
    p->bribe_ack_msg = NULL;
    p->bribe_price = 0;
 
+   /* Run custom Lua. */
+   if (p->lua_can_land != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_can_land); /* f */
+      lua_pushplanet( naevL, planet_index(p) );
+      if (nlua_pcall( p->lua_env, 2, 2 )) {
+         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "lua_can_land", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+
+      p->can_land = lua_toboolean(naevL,-2);
+      if (lua_isstring(naevL,-1))
+         p->land_msg = strdup( lua_tostring(naevL,-1) );
+      lua_pop(naevL,2);
+
+      return;
+   }
+
    /* Set up function. */
    if (p->land_func == NULL)
       str = "land";
@@ -2089,6 +2106,7 @@ void planet_gfxLoad( Planet *planet )
          planet->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
          planet->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
          planet->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+         planet->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
          planet->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
       }
 
@@ -2188,6 +2206,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    planet->lua_load  = LUA_NOREF;
    planet->lua_unload= LUA_NOREF;
    planet->lua_land  = LUA_NOREF;
+   planet->lua_can_land = LUA_NOREF;
    planet->lua_render= LUA_NOREF;
 
    /* Get the name. */
