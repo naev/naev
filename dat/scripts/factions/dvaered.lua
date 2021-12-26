@@ -10,6 +10,7 @@ return {
       --["dva_cap_ch01_med"] = { val=3, max=50 },
       --["dva_cap_ch01_lrg"] = { val=5, max=50 },
    },
+   -- Based on feudal hierarchy
    text = {
       [100] = _("Lord"),
       [90]  = _("Liege Lord"),

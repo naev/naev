@@ -7,4 +7,22 @@ return {
    cap_misn_var   = "_fcap_sirius",
    cap_tags       = {
    },
+   -- Based on Zen ranks
+   text = {
+      [100] = _("Prefect"),
+      [90]  = _("Adjunct Prefect"),
+      [75]  = _("Senior Instructor"),
+      [60]  = _("Instructor"),
+      [45]  = _("Monk"),
+      [30]  = _("Novice"),
+      [10]  = _("Enlightened"),
+      [0]   = _("Commoner"),
+      [-1]  = _("Nonbeliever"),
+      [-30] = _("Infidel"),
+      [-50] = _("Enemy"),
+   },
+   text_friendly  = _("Compassionate"),
+   text_neutral   = _("Unconcerned"),
+   text_hostile   = _("Litigious"),
+   text_bribed    = _("Subsidized"),
 }

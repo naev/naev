@@ -10,6 +10,7 @@ return {
       ["srm_cap_ch01_med"] = { val=3, max=50 },
       ["srm_cap_ch01_lrg"] = { val=5, max=50 },
    },
+   -- Based on tribal hierarchy
    text = {
       [100] = _("Elder"),
       [70]  = _("Warror"),
