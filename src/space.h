@@ -393,7 +393,7 @@ const char *jump_getSymbol( const JumpPoint *jp );
 /*
  * system adding/removing stuff.
  */
-void system_reconstructJumps (StarSystem *sys);
+void system_reconstructJumps( StarSystem *sys );
 void systems_reconstructJumps (void);
 void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
@@ -467,16 +467,16 @@ int system_hasPlanet( const StarSystem *sys );
 /*
  * Hyperspace.
  */
-int space_canHyperspace( const Pilot* p);
-int space_hyperspace( Pilot* p );
+int space_canHyperspace( const Pilot *p);
+int space_hyperspace( Pilot *p );
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p );
 
 /*
  * Asteroids
  */
 void asteroid_hit( Asteroid *a, const Damage *dmg );
-int space_isInField ( const Vector2d *p );
-const AsteroidType *space_getType ( int ID );
+int space_isInField( const Vector2d *p );
+const AsteroidType *space_getType( int ID );
 
 /*
  * Misc.
