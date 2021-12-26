@@ -2092,7 +2092,13 @@ void planet_gfxLoad( Planet *planet )
          planet->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
       }
 
-      return;
+      if (planet->lua_load) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
+         if (nlua_pcall( planet->lua_env, 1, 0 )) {
+            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_load", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
    }
    if (planet->gfx_space == NULL) {
       planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
@@ -2120,6 +2126,15 @@ void space_gfxUnload( StarSystem *sys )
 {
    for (int i=0; i<array_size(sys->planets); i++) {
       Planet *planet = sys->planets[i];
+
+      if (planet->lua_unload) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
+         if (nlua_pcall( planet->lua_env, 1, 0 )) {
+            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_unload", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+
       gl_freeTexture( planet->gfx_space );
       planet->gfx_space = NULL;
    }
