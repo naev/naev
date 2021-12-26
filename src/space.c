@@ -2008,8 +2008,7 @@ void planet_updateLand( Planet *p )
    /* Run custom Lua. */
    if (p->lua_can_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_can_land); /* f */
-      lua_pushplanet( naevL, planet_index(p) );
-      if (nlua_pcall( p->lua_env, 2, 2 )) {
+      if (nlua_pcall( p->lua_env, 0, 2 )) {
          WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "lua_can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
@@ -2113,7 +2112,7 @@ void planet_gfxLoad( Planet *planet )
       if (planet->lua_load) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
          lua_pushplanet(naevL, planet_index(planet)); /* f, p */
-         if (nlua_pcall( planet->lua_env, 2, 0 )) {
+         if (nlua_pcall( planet->lua_env, 1, 0 )) {
             WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
@@ -2148,7 +2147,7 @@ void space_gfxUnload( StarSystem *sys )
 
       if (planet->lua_unload != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
-         if (nlua_pcall( planet->lua_env, 1, 0 )) {
+         if (nlua_pcall( planet->lua_env, 0, 0 )) {
             WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_unload", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }

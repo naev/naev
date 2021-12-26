@@ -1633,7 +1633,7 @@ int player_land( int loud )
    if (planet->lua_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_land); /* f */
       lua_pushplanet( naevL, planet_index(planet) );
-      if (nlua_pcall( planet->lua_env, 2, 0 )) {
+      if (nlua_pcall( planet->lua_env, 1, 0 )) {
          WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
