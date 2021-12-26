@@ -137,17 +137,18 @@ static void cli_printCoreString( const char *s, int escape )
  */
 static int cli_printCore( lua_State *L, int cli_only )
 {
-   int n; /* number of arguments */
-   int i;
-   const char *s;
-
-   n = lua_gettop(L);
+   int n = lua_gettop(L); /* Number of arguments. */
 
    lua_getglobal(L, "tostring");
-   for (i=1; i<=n; i++) {
+   for (int i=1; i<=n; i++) {
+      const char *s;
       lua_pushvalue(L, -1);  /* function to be called */
       lua_pushvalue(L, i);   /* value to print */
-      lua_call(L, 1, 1);
+      if (lua_pcall(L, 1, 1, 0) != 0) {
+         WARN(_("Error calling 'tostring':\n%s"), lua_tostring(L,-1));
+         lua_pop(L,1);
+         continue;
+      }
       s = lua_tostring(L, -1);  /* get result */
       if (s == NULL)
          return NLUA_ERROR(L, LUA_QL("tostring") " must return a string to "
@@ -234,7 +235,11 @@ static int cli_script( lua_State *L )
    /* Return the stuff. */
    nlua_pushenv(cli_env);
    lua_setfenv(L, -2);
-   lua_call(L, 0, LUA_MULTRET);
+   if (lua_pcall(L, 0, LUA_MULTRET, 0) != 0) {
+      WARN(_("Error running 'script':\n%s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return 0;
+   }
    return lua_gettop(L) - n;
 }
 
