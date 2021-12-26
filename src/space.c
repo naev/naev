@@ -3827,6 +3827,8 @@ void space_exit (void)
       Planet *pnt = &planet_stack[i];
 
       free(pnt->name);
+      free(pnt->displayname);
+      free(pnt->lua_file);
       free(pnt->class);
       free(pnt->description);
       free(pnt->bar_description);
@@ -3858,6 +3860,10 @@ void space_exit (void)
       /* commodities */
       array_free(pnt->commodities);
       array_free(pnt->commodityPrice);
+
+      /* Lua. */
+      if (pnt->lua_env != LUA_NOREF)
+         nlua_freeEnv( pnt->lua_env );
    }
    array_free(planet_stack);
 
