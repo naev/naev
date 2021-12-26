@@ -2132,8 +2132,10 @@ void planet_gfxLoad( Planet *planet )
       }
    }
    if (planet->gfx_space == NULL) {
-      planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
-      planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
+      if (planet->gfx_spaceName != NULL)
+         planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+      if (planet->radius < 0.)
+         planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
    }
 }
 
@@ -2212,6 +2214,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Clear up memory for safe defaults. */
    flags          = 0;
    planet->hide   = 0.01;
+   planet->radius = -1.;
    comms          = array_create( Commodity* );
    /* Lua stuff. */
    planet->lua_env   = LUA_NOREF;
@@ -2231,6 +2234,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
       xmlr_strd(node, "displayname", planet->displayname);
       xmlr_strd(node, "lua", planet->lua_file);
+      xmlr_float(node, "radius", planet->radius);
 
       if (xml_isNode(node,"GFX")) {
          xmlNodePtr cur = node->children;
@@ -2241,7 +2245,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
-               planet->radius = -1.;
                continue;
             }
             if (xml_isNode(cur,"exterior")) { /* load land gfx */
@@ -3736,8 +3739,8 @@ static void space_renderPlanet( const Planet *p )
    if (p->lua_render != LUA_NOREF) {
       /* TODO do a clip test first. */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_render); /* f */
-      if (nlua_pcall( p->lua_env, 1, 0 )) {
-         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "lua_render", lua_tostring(naevL,-1));
+      if (nlua_pcall( p->lua_env, 0, 0 )) {
+         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "render", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
    }
