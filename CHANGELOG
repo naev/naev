@@ -27,6 +27,7 @@
    * Darkened nebulas and lowered default background darkness
    * Improved upstream metainfo for packagers
    * Fix crash under certain conditions when using the console
+   * Add extremely limited support for Meson 0.54 (which may help distro packagers)
 
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu
