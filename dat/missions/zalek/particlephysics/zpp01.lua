@@ -9,7 +9,7 @@
   <chance>20</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
-  <cond>planet.cur() ~= planet.get("Katar I")</cond>
+  <cond>planet.cur() ~= planet.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>

@@ -8,6 +8,7 @@
   <priority>4</priority>
   <chance>20</chance>
   <faction>Za'lek</faction>
+  <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
   <location>Bar</location>
   <done>Za'lek Particle Physics 6</done>
  </avail>
