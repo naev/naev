@@ -2564,6 +2564,7 @@ dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
 dat/scripts/factions/goddard.lua
+dat/scripts/factions/proteron.lua
 dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua
 dat/scripts/factions/zalek.lua
