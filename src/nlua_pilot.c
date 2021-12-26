@@ -2155,7 +2155,7 @@ static int pilotL_broadcast( lua_State *L )
  * @usage p:comm( _("You got this?"), true ) -- Messages the player ignoring interference
  * @usage p:comm( target, _("Heya!") ) -- Messages target
  * @usage p:comm( target, _("Got this?"), true ) -- Messages target ignoring interference
- * @usage pilot.comm( "Message Buoy", _("Important information just for you!") ) -- Messages player ignoring interference
+ * @usage pilot.comm( _("Message Buoy"), _("Important information just for you!") ) -- Messages player ignoring interference
  *
  *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of ignore_int, a colour character such as 'F' or 'H' can be passed.
  *    @luatparam Pilot target Target to send message to.
