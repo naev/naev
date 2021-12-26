@@ -49,7 +49,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( fmt.f(_("The Search for Cynthia"), _([[Approaching him, he hands you a paper. It offers a {credits} reward for the finding of a "Cynthia" person.
+   if not tk.yesno( _("The Search for Cynthia"), fmt.f(_([[Approaching him, he hands you a paper. It offers a {credits} reward for the finding of a "Cynthia" person.
     "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]),{credits=fmt.credits(reward)})) then
       misn.finish()
    end

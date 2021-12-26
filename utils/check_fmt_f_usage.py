@@ -51,13 +51,22 @@ def analyze(fn):
                     )
                 \)\s*
                 ,\s*
-                (?P<table>{[^{}]*})\s*
+                (?P<table>
+                    {[^{}]*}        # Lua table constructor
+                    | _\(.*?        # Unquestionably a screwup, not a table (no need to capture precisely, just get context)
+                    | ".*?          # Ditto
+                    | \[\[.*?       # Ditto
+                )\s*
             \)
             ''',
             f.read(),
             re.M | re.S | re.X
         )
         for m in matches:
+            if not m.group('table').startswith('{'):
+                yield '[a table]', m.group('table'), m.group(0)
+                continue
+
             keys = set(re.findall(r'{([^{}:]*)(?::[^{}]*|)}', m.group('bstr') or m.group('qstr') or ''))
             tab = m.group('table')[1:-1].strip().rstrip(',')
             l = 1 + len(tab)
