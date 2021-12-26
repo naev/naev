@@ -2011,7 +2011,7 @@ void planet_updateLand( Planet *p )
    else
       str = p->land_func;
    nlua_getenv( landing_env, str );
-   lua_pushplanet( naevL, p->id );
+   lua_pushplanet( naevL, planet_index(p) );
    if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
       WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
@@ -2094,7 +2094,8 @@ void planet_gfxLoad( Planet *planet )
 
       if (planet->lua_load) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
-         if (nlua_pcall( planet->lua_env, 1, 0 )) {
+         lua_pushplanet(naevL, planet_index(planet)); /* f, p */
+         if (nlua_pcall( planet->lua_env, 2, 0 )) {
             WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
@@ -3700,7 +3701,16 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
  */
 static void space_renderPlanet( const Planet *p )
 {
-   gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
+   if (p->lua_render != LUA_NOREF) {
+      /* TODO do a clip test first. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_render); /* f */
+      if (nlua_pcall( p->lua_env, 1, 0 )) {
+         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "lua_render", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+   }
+   if (p->gfx_space)
+      gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
 /**
