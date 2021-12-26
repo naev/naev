@@ -64,6 +64,11 @@
 #include "nlua_tex.h"
 #include "nlua_col.h"
 #include "nlua_gfx.h"
+#include "nlua_naev.h"
+#include "nlua_rnd.h"
+#include "nlua_vec2.h"
+#include "nlua_file.h"
+#include "nlua_data.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -501,21 +506,28 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   const char *LOADSCREEN_PATH = "loadscreen.lua";
+   int r = 0;
 
    load_env = nlua_newEnv(1);
    nlua_loadStandard( load_env );
-   nlua_loadTex( load_env );
-   nlua_loadCol( load_env );
-   nlua_loadGFX( load_env );
+   r |= nlua_loadNaev( load_env );
+   r |= nlua_loadRnd( load_env );
+   r |= nlua_loadVector( load_env );
+   r |= nlua_loadFile( load_env );
+   r |= nlua_loadData( load_env );
+   r |= nlua_loadTex( load_env );
+   r |= nlua_loadCol( load_env );
+   r |= nlua_loadGFX( load_env );
+   if (r)
+      WARN(_("Something went wrong when loading Lua libraries for '%s'!"), LOADSCREEN_DATA_PATH);
 
    size_t bufsize;
-   char *buf = ndata_read( LOADSCREEN_PATH, &bufsize );
-   if (nlua_dobufenv(load_env, buf, bufsize, LOADSCREEN_PATH) != 0) {
+   char *buf = ndata_read( LOADSCREEN_DATA_PATH, &bufsize );
+   if (nlua_dobufenv(load_env, buf, bufsize, LOADSCREEN_DATA_PATH) != 0) {
       WARN( _("Error loading file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check"),
-            LOADSCREEN_PATH, lua_tostring(naevL,-1));
+            LOADSCREEN_DATA_PATH, lua_tostring(naevL,-1));
       free(buf);
       return;
    }
