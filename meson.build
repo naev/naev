@@ -6,7 +6,14 @@ project('naev', 'c',
       'c_std=gnu11',
       'werror=false'
    ],
-   meson_version: '>=0.55.0')
+   meson_version: '>=0.54.0')
+
+if meson.version().startswith('0.54.')
+   warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')
+   forced_fallbacks = []
+else
+   forced_fallbacks = get_option('force_fallback_for')
+endif
 
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
@@ -91,7 +98,7 @@ if buildExec.disabled() == false
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
-   use_system_physfs = ('physfs' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
       system_physfs = dependency('physfs', required: false)
       if not system_physfs.found()
@@ -131,8 +138,8 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
-   use_system_glpk = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
-   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
+   use_system_suitesparse = ('SuiteSparse' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
