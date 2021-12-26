@@ -2391,8 +2391,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
  * Verification
  */
 #define MELEMENT(o,s)   if (o) WARN(_("Planet '%s' missing '%s' element"), planet->name, s)
-   /* Issue warnings on missing items only it the asset is real. */
-   MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
+   //MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
          planet->gfx_exterior==NULL,"GFX exterior");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
