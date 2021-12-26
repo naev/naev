@@ -685,8 +685,12 @@ int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet
    *ry -= gui_yoff;
 
    /* Compare dimensions. */
-   cw = SCREEN_W/2 + tex->sw/2;
-   ch = SCREEN_H/2 + tex->sh/2;
+   cw = SCREEN_W/2;
+   ch = SCREEN_H/2;
+   if (tex != NULL) {
+      cw += tex->sw/2;
+      ch += tex->sh/2;
+   }
 
    if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
