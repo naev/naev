@@ -374,7 +374,8 @@ static int gl_setupScaling (void)
 
    /* Combine scale factor from OS with the one in Naev's config */
    gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
-   glLineWidth(1 / gl_screen.scale);
+   glLineWidth(1. / gl_screen.scale);
+   glPointSize(1. / gl_screen.scale);
 
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
