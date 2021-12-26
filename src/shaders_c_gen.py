@@ -131,6 +131,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "points",
+      vs_path = "smooth.vert",
+      fs_path = "points.frag",
+      attributes = ["vertex", "vertex_color"],
+      uniforms = ["projection"],
+      subroutines = {},
+   ),
+   Shader(
       name = "stars",
       vs_path = "stars.vert",
       fs_path = "stars.frag",
