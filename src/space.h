@@ -193,20 +193,21 @@ typedef struct SystemPresence_ {
 typedef struct JumpPoint_ JumpPoint;
 struct JumpPoint_ {
    StarSystem *from; /**< System containing this jump point. */
-   int targetid; /**< ID of the target star system. */
+   int targetid;     /**< ID of the target star system. */
    StarSystem *target; /**< Target star system to jump to. */
    JumpPoint *returnJump; /**< How to get back. Can be NULL */
-   Vector2d pos; /**< Position in the system. */
-   double radius; /**< Radius of jump range. */
-   unsigned int flags; /**< Flags related to the jump point's status. */
-   double hide; /**< ewarfare hide value for the jump point */
-   double angle; /**< Direction the jump is facing. */
-   double cosa; /**< Cosinus of the angle. */
-   double sina; /**< Sinus of the angle. */
-   int sx; /**< X sprite to use. */
-   int sy; /**< Y sprite to use. */
-   MapOverlayPos mo; /**< Overlay layout data. */
+   Vector2d pos;     /**< Position in the system. */
+   double radius;    /**< Radius of jump range. */
+   unsigned int flags;/**< Flags related to the jump point's status. */
+   double hide;      /**< ewarfare hide value for the jump point */
+   double angle;     /**< Direction the jump is facing. */
    double map_alpha; /**< Alpha to display on the map. */
+   /* Cached stuff. */
+   double cosa;      /**< Cosinus of the angle. */
+   double sina;      /**< Sinus of the angle. */
+   int sx;           /**< X sprite to use. */
+   int sy;           /**< Y sprite to use. */
+   MapOverlayPos mo; /**< Overlay layout data. */
 };
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
@@ -214,11 +215,11 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
  * @brief Represents a type of asteroid.
  */
 typedef struct AsteroidType_ {
-   char *ID; /**< ID of the asteroid type. */
+   char *ID;         /**< ID of the asteroid type. */
    glTexture **gfxs; /**< asteroid possible gfxs. */
    Commodity **material; /**< Materials contained in the asteroid. */
-   int *quantity; /**< Quantities of materials. */
-   double armour; /**< Starting "armour" of the asteroid. */
+   int *quantity;    /**< Quantities of materials. */
+   double armour;    /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 
 /**
@@ -282,40 +283,40 @@ typedef struct AsteroidExclusion_ {
  * The star system is the basic setting in Naev.
  */
 struct StarSystem_ {
-   int id; /**< Star system index. */
+   int id;                 /**< Star system index. */
 
    /* General. */
-   char* name; /**< star system name */
-   Vector2d pos; /**< position */
-   int stars; /**< Amount of "stars" it has. */
-   double interference; /**< in % @todo implement interference. */
-   double nebu_hue; /**< Hue of the nebula (0. - 1.) */
-   double nebu_density; /**< Nebula density (0. - 1000.) */
+   char* name;             /**< star system name */
+   Vector2d pos;           /**< Position */
+   int stars;              /**< Amount of "stars" it has. */
+   double interference;    /**< in % @todo implement interference. */
+   double nebu_hue;        /**< Hue of the nebula (0. - 1.) */
+   double nebu_density;    /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Damage per second. */
-   double radius; /**< Default system radius for standard jump points. */
-   char *background; /**< Background script. */
-   char *features; /**< Extra text on the map indicating special features of the system. */
+   double radius;          /**< Default system radius for standard jump points. */
+   char *background;       /**< Background script. */
+   char *features;         /**< Extra text on the map indicating special features of the system. */
 
    /* Assets. */
-   Planet **planets; /**< Array (array.h): planets */
-   int *planetsid; /**< Array (array.h): IDs of the planets. */
-   int faction; /**< overall faction */
+   Planet **planets;       /**< Array (array.h): planets */
+   int *planetsid;         /**< Array (array.h): IDs of the planets. */
+   int faction;            /**< overall faction */
    VirtualAsset **assets_virtual; /**< Array (array.h): virtual assets. */
 
    /* Jumps. */
-   JumpPoint *jumps; /**< Array (array.h): Jump points in the system */
+   JumpPoint *jumps;       /**< Array (array.h): Jump points in the system */
 
    /* Asteroids. */
    AsteroidAnchor *asteroids; /**< Array (array.h): Asteroid fields in the system */
    AsteroidExclusion *astexclude; /**< Array (array.h): Asteroid exclusion zones in the system */
 
    /* Calculated. */
-   double *prices; /**< Handles the prices in the system. */
+   double *prices;      /**< Handles the prices in the system. */
 
    /* Presence. */
    SystemPresence *presence; /**< Array (array.h): Pointer to an array of presences in this system. */
-   int spilled; /**< If the system has been spilled to yet. */
-   double ownerpresence; /**< Amount of presence the owning faction has in a system. */
+   int spilled;         /**< If the system has been spilled to yet. */
+   double ownerpresence;/**< Amount of presence the owning faction has in a system. */
 
    /* Markers. */
    int markers_computer;/**< Number of mission computer markers. */
