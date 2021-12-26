@@ -24,6 +24,7 @@
    * Fix mission breakage in "Minerva Pirates 4" and "Runaway Search"
    * Fix some text labels that couldn't be translated from English
    * Fix equipment slot information displaying over filter widget
+   * Fix accidental reset of music volume when opening the Options dialogue
    * Darkened nebulas and lowered default background darkness
    * Improved upstream metainfo for packagers
 

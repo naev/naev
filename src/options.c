@@ -1020,7 +1020,7 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
-   window_faderValue( wid, "fadMusic", conf.engine_vol );
+   window_faderValue( wid, "fadEngine", conf.engine_vol );
 }
 
 /**
