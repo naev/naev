@@ -128,11 +128,13 @@ Without giving you time to process what she yelled, she vanishes.]]))
    misn.finish(true)
 end
 
-local pdis, phost
+local pdis, phost, stage
 function enter ()
    if mem.state~=1 or system.cur() ~= mainsys then
       return
    end
+
+   stage = 0 -- Initialize state
 
    -- Temp faction
    local fdrone = faction.dynAdd( "Za'lek", "haywire_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
@@ -163,7 +165,6 @@ function enter ()
    hook.timer( 5, "heartbeat" )
 end
 
-local stage = 0
 function heartbeat ()
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
