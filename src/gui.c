@@ -1417,7 +1417,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, &col, 1 );
 
    if (overlay) {
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), planet_name(planet) );
       gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
    }
 }

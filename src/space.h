@@ -98,7 +98,8 @@ typedef struct VirtualAsset_ {
  */
 typedef struct Planet_ {
    int id;        /**< Planet ID. */
-   char *name;    /**< planet name */
+   char *name;    /**< Planet name */
+   char *displayname; /**< Name to be displayed to the player. Defaults to name if not set. */
    Vector2d pos;  /**< position in star system */
    double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
 
@@ -357,6 +358,7 @@ void space_exit (void);
  * planet stuff
  */
 Planet *planet_new (void);
+const char *planet_name( const Planet *p );
 void planet_gfxLoad( Planet *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );

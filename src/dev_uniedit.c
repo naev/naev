@@ -880,7 +880,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-               getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
+               getValCol(base), base, getValCol(bonus), bonus, planet_name(pnt) );
       }
       for (int j=0; j<array_size(sys->assets_virtual); j++) {
          VirtualAsset *va = sys->assets_virtual[j];
@@ -900,7 +900,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
+                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, planet_name(pnt), _(cur->name) );
          }
          for (int j=0; j<array_size(cur->assets_virtual); j++) {
             VirtualAsset *va = cur->assets_virtual[j];

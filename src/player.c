@@ -1584,18 +1584,18 @@ int player_land( int loud )
       if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
          if (planet->can_land || (planet->land_override > 0))
             player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->land_msg );
+                  planet_name(planet), planet->land_msg );
          else if (planet->bribed && (planet->land_override >= 0))
             player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->bribe_ack_msg );
+                  planet_name(planet), planet->bribe_ack_msg );
          else { /* Hostile */
             player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->land_msg );
+                  planet_name(planet), planet->land_msg );
             return PLAYER_LAND_DENIED;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( _("#oReady to land on %s."), _(planet->name) );
+         player_message( _("#oReady to land on %s."), planet_name(planet) );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1605,13 +1605,13 @@ int player_land( int loud )
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
       if (loud)
-         player_message(_("#rYou are too far away to land on %s."), _(planet->name));
+         player_message(_("#rYou are too far away to land on %s."), planet_name(planet));
       return PLAYER_LAND_AGAIN;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
-         player_message(_("#rYou are going too fast to land on %s."), _(planet->name));
+         player_message(_("#rYou are going too fast to land on %s."), planet_name(planet));
       return PLAYER_LAND_AGAIN;
    }
 
@@ -1677,7 +1677,7 @@ void player_checkLandAck( void )
 
    player_rmFlag(PLAYER_LANDACK);
    player_message( _("#%c%s>#0 Landing permission revoked."),
-         planet_getColourChar(p), _(p->name) );
+         planet_getColourChar(p), planet_name(p) );
 }
 
 /**
@@ -2290,7 +2290,7 @@ static void player_checkHail (void)
 static void player_planetOutOfRangeMsg (void)
 {
    player_message( _("#r%s is out of comm range, unable to contact."),
-         _(cur_system->planets[player.p->nav_planet]->name) );
+         planet_name(cur_system->planets[player.p->nav_planet]) );
 }
 
 /**

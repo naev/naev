@@ -1774,6 +1774,19 @@ Planet *planet_new (void)
 }
 
 /**
+ * @brief Gets the translated name of a planet.
+ *
+ *    @param p Planet to get translated name of.
+ *    @return Translated name of the planet.
+ */
+const char *planet_name( const Planet *p )
+{
+   if (p->displayname)
+      return _(p->displayname);
+   return _(p->name);
+}
+
+/**
  * @brief Loads all the planets in the game.
  *
  *    @return 0 on success.
@@ -2216,6 +2229,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
+      xmlr_strd(node, "displayname", planet->displayname);
       xmlr_strd(node, "lua", planet->lua_file);
 
       if (xml_isNode(node,"GFX")) {

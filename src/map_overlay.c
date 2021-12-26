@@ -233,7 +233,7 @@ void ovr_refresh (void)
       if (!planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), planet_name(pnt) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
       mo[items]->radius = pnt->radius / 2.;  /* halved since it's awkwardly large if drawn to scale relative to the player. */

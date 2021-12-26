@@ -480,11 +480,14 @@ static int planetL_eq( lua_State *L )
 /**
  * @brief Gets the planet's translated name.
  *
- * This translated name should be used for display purposes (e.g.
- * messages). It cannot be used as an identifier for the planet; for
- * that, use planet.nameRaw() instead.
+ * This translated name should be used for display purposes (e.g.  messages).
+ * It cannot be used as an identifier for the planet; for that, use
+ * planet.nameRaw() instead.
  *
- * @usage name = p:name() -- Equivalent to `_(p:nameRaw())`
+ * Note that it can be overwritten by the planet's display name which makes it
+ * not equivalent to _(p:nameRaw()) in some cases.
+ *
+ * @usage name = p:name()
  *    @luatparam Planet p Planet to get the translated name of.
  *    @luatreturn string The translated name of the planet.
  * @luafunc name
@@ -492,7 +495,7 @@ static int planetL_eq( lua_State *L )
 static int planetL_name( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   lua_pushstring(L, _(p->name));
+   lua_pushstring(L, planet_name(p));
    return 1;
 }
 

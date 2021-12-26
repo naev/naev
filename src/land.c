@@ -826,7 +826,7 @@ void land_updateMainTab (void)
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), _(land_planet->name), _(cur_system->name) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), planet_name(land_planet), _(cur_system->name) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), planet_getClassName(land_planet->class), _(land_planet->class) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
@@ -1016,7 +1016,7 @@ void land_genWindows( int load, int changetab )
       w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
+   land_wid = window_create( "wdwLand", planet_name(p), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
@@ -1447,7 +1447,7 @@ void takeoff( int delay )
       ntime_inc( ntime_create( 0, 0, stu ) );
    }
    nt = ntime_pretty( 0, 2 );
-   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("#oTaking off from %s on %s."), planet_name(land_planet), nt);
    free(nt);
 
    /* Hooks and stuff. */

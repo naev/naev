@@ -319,7 +319,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          gl_renderScale( p->gfx_space, bx+2, by+(nshow-vis_index-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
       }
       gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-vis_index-0.5)*pitch + offset,
-            (cur_planet_sel == vis_index ? &cFontGreen : &cFontWhite), -1., _(p->name) );
+            (cur_planet_sel == vis_index ? &cFontGreen : &cFontWhite), -1., planet_name(p) );
    }
    /* draw the star */
    ih=pitch;
@@ -508,7 +508,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
      }
 
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: roughly %s\n"), _(p->name), p->class, space_populationStr( p->population ) );
+     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: roughly %s\n"), planet_name(p), p->class, space_populationStr( p->population ) );
      if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed )
@@ -746,7 +746,7 @@ void map_system_updateSelected( unsigned int wid )
    for (int i=0; i<array_size(sys->planets); i++) {
       p = sys->planets[i];
       if (planet_isKnown( p )) {
-         textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
+         textw = gl_printWidthRaw( &gl_smallFont, planet_name(p) );
          if ( textw > nameWidth )
             nameWidth = textw;
          last = p;

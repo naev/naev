@@ -205,7 +205,7 @@ int comm_openPlanet( Planet *planet )
 
    /* Must not be disabled. */
    if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
-      player_message(_("%s does not respond."), _(planet->name));
+      player_message(_("%s does not respond."), planet_name(planet));
       return 0;
    }
 
@@ -213,7 +213,7 @@ int comm_openPlanet( Planet *planet )
 
    /* Create the generic comm window. */
    wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
-         comm_planet->presence.faction, 0, planet->bribed, _(comm_planet->name) );
+         comm_planet->presence.faction, 0, planet->bribed, planet_name(comm_planet) );
 
    /* Add special buttons. */
    if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
