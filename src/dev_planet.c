@@ -53,6 +53,8 @@ int dpl_savePlanet( const Planet *p )
    /* Some global attributes. */
    xmlw_elem( writer, "displayname", "%s", p->displayname );
    xmlw_elem( writer, "lua", "%s", p->lua_file );
+   if (planet_isFlag(p,PLANET_RADIUS))
+      xmlw_elem( writer, "radius", "%f", p->radius );
 
    /* Position. */
    xmlw_startElem( writer, "pos" );

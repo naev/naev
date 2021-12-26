@@ -2385,6 +2385,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    if (planet_isFlag(planet, PLANET_UNINHABITED))
       planet->services &= ~PLANET_SERVICE_INHABITED;
 
+   if (planet->radius > 0.)
+      planet_setFlag(planet, PLANET_RADIUS);
 /*
  * Verification
  */
