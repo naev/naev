@@ -10,7 +10,7 @@
   <chance>40</chance>
   <location>Bar</location>
   <done>Empire Shipping 3</done>
-  <planet>Omega Station</planet>
+  <spob>Omega Station</spob>
  </avail>
  <notes>
   <campaign>Collective</campaign>

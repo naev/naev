@@ -4207,7 +4207,7 @@ int space_sysSave( xmlTextWriterPtr writer )
       for (int j=0; j<array_size(sys->planets); j++) {
          if (!spob_isKnown(sys->planets[j]))
             continue; /* not known */
-         xmlw_elem(writer, "planet", "%s", sys->planets[j]->name);
+         xmlw_elem(writer, "spob", "%s", sys->planets[j]->name);
       }
 
       for (int j=0; j<array_size(sys->jumps); j++) {
@@ -4275,7 +4275,7 @@ static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"planet")) {
+      if (xml_isNode(node,"spob") || xml_isNode(node,"planet")) { /* TODO remove "planet" check in 0.11.0 */
          Spob *planet = spob_get(xml_get(node));
          if (planet != NULL) /* Must exist */
             spob_setKnown(planet);

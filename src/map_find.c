@@ -24,7 +24,7 @@
 
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
-static int map_find_planets = 0; /**< Spobs checkbox value. */
+static int map_find_spobs = 0; /**< Spobs checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
@@ -122,11 +122,11 @@ static void map_find_check_update( unsigned int wid, const char* str )
 {
    (void) str;
    map_find_systems ^= window_checkboxState( wid, "chkSystem" );
-   map_find_planets ^= window_checkboxState( wid, "chkSpob" );
+   map_find_spobs ^= window_checkboxState( wid, "chkSpob" );
    map_find_outfits ^= window_checkboxState( wid, "chkOutfit" );
    map_find_ships   ^= window_checkboxState( wid, "chkShip" );
    window_checkboxSet( wid, "chkSystem", map_find_systems );
-   window_checkboxSet( wid, "chkSpob", map_find_planets );
+   window_checkboxSet( wid, "chkSpob", map_find_spobs );
    window_checkboxSet( wid, "chkOutfit", map_find_outfits );
    window_checkboxSet( wid, "chkShip",   map_find_ships );
 }
@@ -140,14 +140,14 @@ static void map_find_check_update( unsigned int wid, const char* str )
 void map_inputFindType( unsigned int parent, const char *type )
 {
    map_find_systems = 0;
-   map_find_planets = 0;
+   map_find_spobs = 0;
    map_find_outfits = 0;
    map_find_ships   = 0;
 
    if (strcmp(type,"system")==0)
       map_find_systems = 1;
-   else if (strcmp(type,"planet")==0)
-      map_find_planets = 1;
+   else if (strcmp(type,"spob")==0)
+      map_find_spobs = 1;
    else if (strcmp(type,"outfit")==0)
       map_find_outfits = 1;
    else if (strcmp(type,"ship")==0)
@@ -386,7 +386,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
 static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt )
 {
    int ret;
-   char route_info[256];
+   char route_info[STRMAX_SHORT];
 
    /* Set some values. */
    found[n].pnt      = pnt;
@@ -395,7 +395,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    /* Set more values. */
    ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
    if (ret) {
-      found[n].jumps    = 10000;
+      found[n].jumps    = 10e3;
       found[n].distance = 1e6;
       snprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
    }
@@ -579,13 +579,10 @@ static const char *map_getSpobSymbol( Spob *p )
  */
 static char **map_fuzzyOutfits( Outfit **o, const char *name )
 {
-   int i;
-   char **names;
-
-   names = array_create( char* );
+   char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (i=0; i<array_size(o); i++)
+   for (int i=0; i<array_size(o); i++)
       if (strcasestr( _(o[i]->name), name ) != NULL)
          array_push_back( &names, o[i]->name );
 
@@ -936,7 +933,7 @@ static void map_findSearch( unsigned int wid, const char* str )
       ret = map_findSearchSystems( parent, name );
       searchname = _("System");
    }
-   else if (map_find_planets) {
+   else if (map_find_spobs) {
       ret = map_findSearchSpobs( parent, name );
       searchname = _("Spob");
    }
@@ -1005,7 +1002,7 @@ void map_inputFind( unsigned int parent, const char* str )
          "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
-         "chkSpob", _("Spobs"), map_find_check_update, map_find_planets );
+         "chkSpob", _("Spobs"), map_find_check_update, map_find_spobs );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
          "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );

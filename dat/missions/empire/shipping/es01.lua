@@ -10,7 +10,7 @@
   <chance>50</chance>
   <done>Empire Shipping 1</done>
   <location>Bar</location>
-  <planet>Halir</planet>
+  <spob>Halir</spob>
  </avail>
  <notes>
   <campaign>Empire Shipping</campaign>

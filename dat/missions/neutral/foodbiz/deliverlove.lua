@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Zeo</planet>
+  <spob>Zeo</spob>
  </avail>
  <notes>
   <tier>1</tier>

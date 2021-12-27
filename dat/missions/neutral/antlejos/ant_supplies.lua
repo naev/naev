@@ -5,7 +5,7 @@
   <priority>4</priority>
   <chance>350</chance>
   <location>Computer</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 5</done>
  </avail>
  <notes>

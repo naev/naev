@@ -6,7 +6,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <planet>The Wringer</planet>
+   <spob>The Wringer</spob>
    <chance>50</chance>
    <location>Bar</location>
   </avail>

@@ -10,7 +10,7 @@
   <done>Collective Distraction</done>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Omega Station</planet>
+  <spob>Omega Station</spob>
  </avail>
  <notes>
   <campaign>Collective</campaign>

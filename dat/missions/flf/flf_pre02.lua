@@ -9,7 +9,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <cond>var.peek("flfbase_intro") == 2</cond>
-  <planet>Sindbad</planet>
+  <spob>Sindbad</spob>
  </avail>
  <notes>
   <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>

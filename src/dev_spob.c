@@ -136,7 +136,7 @@ int dpl_saveSpob( const Spob *p )
       xmlw_endElem( writer ); /* "tags" */
    }
 
-   xmlw_endElem( writer ); /* "planet" */
+   xmlw_endElem( writer ); /* "spob" */
    xmlw_done( writer );
 
    /* No need for writer anymore. */

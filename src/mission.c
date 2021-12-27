@@ -975,7 +975,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
                continue;
             }
             xmlr_int(cur,"chance",temp->avail.chance);
-            xmlr_strd(cur,"planet",temp->avail.planet);
+            xmlr_strd(cur,"spob",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
             xmlr_strd(cur,"chapter",temp->avail.chapter);
             if (xml_isNode(cur,"faction")) {

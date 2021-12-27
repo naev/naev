@@ -8,7 +8,7 @@
    <priority>4</priority>
    <chance>50</chance>
    <location>Bar</location>
-   <planet>Dvaer Prime</planet>
+   <spob>Dvaer Prime</spob>
   </avail>
   <notes>
    <tier>3</tier>

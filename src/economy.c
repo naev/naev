@@ -970,7 +970,7 @@ int economy_sysLoad( xmlNodePtr parent )
                xmlNodePtr nodeSpob = cur->xmlChildrenNode;
                do {
                   xml_onlyNodes(nodeSpob);
-                  if (xml_isNode(nodeSpob, "planet")) {
+                  if (xml_isNode(nodeSpob, "spob") || xml_isNode(nodeSpob, "planet")) { /* TODO remove "planet" check in 0.11.0 */
                      xmlr_attr_strd(nodeSpob,"name",str);
                      Spob *planet = spob_get(str);
                      if (planet==NULL)
@@ -1049,7 +1049,7 @@ int economy_sysSave( xmlTextWriterPtr writer )
                }
                if (doneSpob==0) {
                   doneSpob = 1;
-                  xmlw_startElem(writer, "planet");
+                  xmlw_startElem(writer, "spob");
                   xmlw_attr(writer,"name","%s",p->name);
                }
                xmlw_startElem(writer, "commodity");

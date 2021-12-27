@@ -9,7 +9,7 @@
   <done>Coming Out</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Durea</planet>
+  <spob>Durea</spob>
   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
  </avail>
  <notes>

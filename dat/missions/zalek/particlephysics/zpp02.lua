@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 1</done>
  </avail>

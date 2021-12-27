@@ -388,7 +388,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Only check nodes. */
       xml_onlyNodes(node);
 
-      xmlr_strd(node,"planet",temp->planet);
+      xmlr_strd(node,"spob",temp->planet);
       xmlr_strd(node,"system",temp->system);
       xmlr_strd(node,"chapter",temp->chapter);
 

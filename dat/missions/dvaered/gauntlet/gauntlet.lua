@@ -5,7 +5,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Totoran</planet>
+  <spob>Totoran</spob>
  </avail>
 </mission>
 --]]

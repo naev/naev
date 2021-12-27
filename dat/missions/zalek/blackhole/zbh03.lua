@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Research Post Sigma-13</planet>
+  <spob>Research Post Sigma-13</spob>
   <location>Bar</location>
   <done>Za'lek Black Hole 2</done>
  </avail>

@@ -9,7 +9,7 @@
   <done>Emergency of Immediate Inspiration</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Jorla</planet>
+  <spob>Jorla</spob>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>

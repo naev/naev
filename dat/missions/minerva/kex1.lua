@@ -7,7 +7,7 @@
  <avail>
   <location>Bar</location>
   <chance>100</chance>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <cond>player.evtDone("Chicken Rendezvous")</cond>
  </avail>
  <notes>

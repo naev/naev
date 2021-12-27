@@ -8,7 +8,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <cond>require('common.antlejos').unidiffLevel() &gt;= 6</cond>
   <done>Terraforming Antlejos 5</done>
  </avail>

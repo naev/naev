@@ -9,7 +9,7 @@
   <chance>50</chance>
   <done>Deliver Love</done>
   <location>Bar</location>
-  <planet>Zhiru</planet>
+  <spob>Zhiru</spob>
  </avail>
 </mission>
 --]]

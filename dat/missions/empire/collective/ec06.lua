@@ -10,7 +10,7 @@
   <done>Operation Black Trinity</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Omega Station</planet>
+  <spob>Omega Station</spob>
  </avail>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>

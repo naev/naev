@@ -10,7 +10,7 @@
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>Margot</planet>
+   <spob>Margot</spob>
   </avail>
   <notes>
    <campaign>Heretic</campaign>

@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 1</done>
  </avail>
  <notes>

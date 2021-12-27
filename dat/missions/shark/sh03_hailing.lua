@@ -9,7 +9,7 @@
   <done>Unfair Competition</done>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
  </avail>
  <notes>
   <campaign>Nexus show their teeth</campaign>

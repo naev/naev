@@ -9,7 +9,7 @@
   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
   <chance>10</chance>
   <location>Bar</location>
-  <planet>Doranthex Prime</planet>
+  <spob>Doranthex Prime</spob>
  </avail>
  <notes>
   <tier>2</tier>

@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
  </avail>
  <notes>

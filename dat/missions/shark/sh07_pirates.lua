@@ -9,7 +9,7 @@
   <done>A Journey To Arandon</done>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
  </avail>
  <notes>

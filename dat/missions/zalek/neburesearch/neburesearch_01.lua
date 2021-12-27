@@ -9,7 +9,7 @@
   <done>Novice Nebula Research</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Vilati Vilata</planet>
+  <spob>Vilati Vilata</spob>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>

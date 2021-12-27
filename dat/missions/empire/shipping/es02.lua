@@ -10,7 +10,7 @@
   <chance>50</chance>
   <done>Empire Shipping 2</done>
   <location>Bar</location>
-  <planet>Halir</planet>
+  <spob>Halir</spob>
  </avail>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
