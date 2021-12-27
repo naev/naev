@@ -2384,7 +2384,10 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
       }
       else if (xml_isNode(node, "tags")) {
          xmlNodePtr cur = node->children;
-         spob->tags = array_create( char* );
+         if (spob->tags != NULL)
+            WARN(_("Spob '%s' has duplicate '%s' node!"), spob->name, "tags");
+         else
+            spob->tags = array_create( char* );
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
