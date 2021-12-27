@@ -233,8 +233,8 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    }
    for (i=0; i<array_size(systems_stack) ; i++) {
       StarSystem *sys = &systems_stack[i];
-      for (j=0; j<array_size(sys->planets); j++) {
-         Spob *p = sys->planets[j];
+      for (j=0; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          /* and get the index on this planet */
          for ( k=0; k<array_size(p->commodities); k++) {
             if ( ( strcmp(p->commodities[k]->name, com->name) == 0 ) )
@@ -309,7 +309,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    /* Calculate production level. */
    p = 0.;
    for (i=0; i<sys->nplanets; i++) {
-      planet = sys->planets[i];
+      planet = sys->spobs[i];
       if (spob_hasService(planet, SPOB_SERVICE_INHABITED)) {
          /*
           * Calculate production.
@@ -665,8 +665,8 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
    CommodityPrice *avprice;
 
    avprice = array_create( CommodityPrice );
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Spob *planet = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *planet = sys->spobs[i];
       for (int j=0; j<array_size(planet->commodityPrice); j++) {
         /* Largest is approx 35000.  Increased radius will increase price since further to travel,
            and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
@@ -715,8 +715,8 @@ static void economy_modifySystemCommodityPrice( StarSystem *sys )
       avprice[k].sysVariation/=avprice[k].updateTime;
    }
    /* And now apply the averaging */
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Spob *planet = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *planet = sys->spobs[i];
       for (int j=0; j<array_size(planet->commodities); j++) {
          for ( k=0; k<array_size(avprice); k++ ) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
@@ -780,8 +780,8 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
       avprice[j].price=0.5*(avprice[j].price + avprice[j].sum);
    }
    /*and finally modify assets based on the means */
-   for ( i=0; i<array_size(sys->planets); i++ ) {
-      planet=sys->planets[i];
+   for ( i=0; i<array_size(sys->spobs); i++ ) {
+      planet=sys->spobs[i];
       for ( j=0; j<array_size(planet->commodities); j++ ) {
          for ( k=0; k<array_size(avprice); k++ ) {
             if ( ( strcmp(avprice[k].name, planet->commodities[j]->name) == 0 ) ) {
@@ -816,8 +816,8 @@ void economy_initialiseCommodityPrices(void)
    /* First use planet attributes to set prices and variability */
    for (k=0; k<array_size(systems_stack); k++) {
       sys = &systems_stack[k];
-      for ( j=0; j<array_size(sys->planets); j++ ) {
-         planet = sys->planets[j];
+      for ( j=0; j<array_size(sys->spobs); j++ ) {
+         planet = sys->spobs[j];
          /* Set up the commodity prices on the system, based on its attributes. */
          for ( i=0; i<array_size(planet->commodities); i++ ) {
             if (economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]))
@@ -918,8 +918,8 @@ void economy_clearKnown (void)
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Spob *p = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          for (int k=0; k<array_size(p->commodityPrice); k++) {
             CommodityPrice *cp = &p->commodityPrice[k];
             cp->cnt = 0;
@@ -1036,8 +1036,8 @@ int economy_sysSave( xmlTextWriterPtr writer )
    for (int i=0; i<array_size(systems_stack); i++) {
       int doneSys=0;
       StarSystem *sys = &systems_stack[i];
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Spob *p = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          int doneSpob=0;
          for (int k=0; k<array_size(p->commodities); k++) {
             CommodityPrice *cp = &p->commodityPrice[k];

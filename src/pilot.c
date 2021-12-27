@@ -1230,10 +1230,10 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 
    if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
       /* Check if planet is in range. */
-      for (int i=0; i<array_size(cur_system->planets); i++) {
-         if (spob_hasService(cur_system->planets[i], SPOB_SERVICE_INHABITED) &&
+      for (int i=0; i<array_size(cur_system->spobs); i++) {
+         if (spob_hasService(cur_system->spobs[i], SPOB_SERVICE_INHABITED) &&
                (!ignore_int && pilot_inRangeSpob(p, i)) &&
-               !areEnemies(p->faction, cur_system->planets[i]->presence.faction)) {
+               !areEnemies(p->faction, cur_system->spobs[i]->presence.faction)) {
             r = 1;
             break;
          }
@@ -3131,9 +3131,9 @@ void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, i
    vectnull( vp );
 
    /* Build landable planet table. */
-   ind = array_create_size( int, array_size(cur_system->planets) );
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   ind = array_create_size( int, array_size(cur_system->spobs) );
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       if (spob_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
             !areEnemies( lf, pnt->presence.faction ))
          array_push_back( &ind, i );
@@ -3187,7 +3187,7 @@ void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, i
          *jump = validJumpPoints[ RNG_BASE(0,array_size(validJumpPoints)-1) ];
       /* Random take off. */
       else if (array_size(ind) != 0)
-         *planet = cur_system->planets[ ind[ RNG_BASE(0, array_size(ind)-1) ] ];
+         *planet = cur_system->spobs[ ind[ RNG_BASE(0, array_size(ind)-1) ] ];
    }
 
    /* Free memory allocated. */

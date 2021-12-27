@@ -229,7 +229,7 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
          switch (v[j]->type) {
             case VERTEX_SPOB:
                l->point_type[j]   = SAFELANE_LOC_SPOB;
-               l->point_id[j]     = system->planets[v[j]->index]->id;
+               l->point_id[j]     = system->spobs[v[j]->index]->id;
                break;
             case VERTEX_JUMP:
                l->point_type[j]   = SAFELANE_LOC_DEST_SYS;
@@ -363,8 +363,8 @@ static void safelanes_initStacks_vertex (void)
       if (sys_isFlag( sys, SYSTEM_NOLANES ))
          continue;
 
-      for (int i=0; i<array_size(sys->planets); i++) {
-         const Spob *p = sys->planets[i];
+      for (int i=0; i<array_size(sys->spobs); i++) {
+         const Spob *p = sys->spobs[i];
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
             array_push_back( &tmp_spob_indices, array_size(vertex_stack) );
@@ -651,7 +651,7 @@ static void safelanes_initPPl (void)
    for (int i=0; i<np; i++) {
       double *Di;
       int sys = vertex_stack[tmp_spob_indices[i]].system;
-      Spob *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_spob_indices[i]].index];
+      Spob *pnt = system_getIndex( sys )->spobs[vertex_stack[tmp_spob_indices[i]].index];
       double pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
       int fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)
@@ -853,7 +853,7 @@ static int vertex_faction( int vi )
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
       case VERTEX_SPOB:
-         return sys->planets[vertex_stack[vi].index]->presence.faction;
+         return sys->spobs[vertex_stack[vi].index]->presence.faction;
       case VERTEX_JUMP:
          return -1;
       default:
@@ -869,7 +869,7 @@ static const Vector2d* vertex_pos( int vi )
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
       case VERTEX_SPOB:
-         return &sys->planets[vertex_stack[vi].index]->pos;
+         return &sys->spobs[vertex_stack[vi].index]->pos;
       case VERTEX_JUMP:
          return &sys->jumps[vertex_stack[vi].index].pos;
       default:

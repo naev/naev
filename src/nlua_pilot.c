@@ -1282,7 +1282,7 @@ static int pilotL_nav( lua_State *L )
    if (p->nav_planet < 0)
       lua_pushnil(L);
    else
-      lua_pushspob( L, cur_system->planets[ p->nav_planet ]->id );
+      lua_pushspob( L, cur_system->spobs[ p->nav_planet ]->id );
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
@@ -4728,12 +4728,12 @@ static int pilotL_land( lua_State *L )
    if (pnt != NULL) {
       int i;
       /* Find the planet. */
-      for (i=0; i < array_size(cur_system->planets); i++) {
-         if (cur_system->planets[i] == pnt) {
+      for (i=0; i < array_size(cur_system->spobs); i++) {
+         if (cur_system->spobs[i] == pnt) {
             break;
          }
       }
-      if (i >= array_size(cur_system->planets)) {
+      if (i >= array_size(cur_system->spobs)) {
          NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }

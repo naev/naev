@@ -903,7 +903,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) {
          if (player.p->nav_planet != -1) {
             if (player_land(0) == PLAYER_LAND_AGAIN) {
-               player_autonavSpob( cur_system->planets[player.p->nav_planet]->name, 1 );
+               player_autonavSpob( cur_system->spobs[player.p->nav_planet]->name, 1 );
             }
          } else
             player_land(1);
@@ -1271,7 +1271,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Spob is closer. */
-      Spob *pnt = cur_system->planets[ pntid ];
+      Spob *pnt = cur_system->spobs[ pntid ];
       r  = MAX( 1.5 * pnt->radius * zoom, minr );
    }
    else if (jpid >= 0) {
@@ -1379,7 +1379,7 @@ int input_clickedJump( int jump, int autonav )
  */
 int input_clickedSpob( int planet, int autonav )
 {
-   Spob *pnt = cur_system->planets[ planet ];
+   Spob *pnt = cur_system->spobs[ planet ];
 
    if (!spob_isKnown(pnt))
       return 0;

@@ -207,8 +207,8 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(Vector2d*));
-   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(Vector2d*));
+   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(MapOverlayPos*));
    max_x = 0.;
    max_y = 0.;
    for (int i=0; i<array_size(cur_system->jumps); i++) {
@@ -226,8 +226,8 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       if (!spob_isKnown(pnt))
@@ -521,8 +521,8 @@ void ovr_initAlpha (void)
       else
          jp->map_alpha = 1.;
    }
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       if (!spob_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
@@ -700,15 +700,15 @@ void ovr_render( double dt )
    }
 
    /* Render planets. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
       if (i != player.p->nav_planet)
          gui_renderSpob( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
    }
    if (player.p->nav_planet > -1)
-      gui_renderSpob( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
+      gui_renderSpob( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->spobs[player.p->nav_planet]->map_alpha, 1 );
 
    /* Render jump points. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {

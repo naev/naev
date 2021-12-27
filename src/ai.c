@@ -2137,11 +2137,11 @@ static int aiL_getnearestplanet( lua_State *L )
    LuaSpob planet;
 
    /* cycle through planets */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!spob_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+      if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
-      d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
+      d = vect_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid->pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;
          dist = d;
@@ -2152,7 +2152,7 @@ static int aiL_getnearestplanet( lua_State *L )
    if (j == -1) return 0;
 
    cur_pilot->nav_planet = j;
-   planet = cur_system->planets[j]->id;
+   planet = cur_system->spobs[j]->id;
    lua_pushspob(L, planet);
 
    return 1;
@@ -2175,11 +2175,11 @@ static int aiL_getplanetfrompos( lua_State *L )
    pos = luaL_checkvector(L,1);
 
    /* cycle through planets */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!spob_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+      if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
-      d = vect_dist( &cur_system->planets[i]->pos, pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
+      d = vect_dist( &cur_system->spobs[i]->pos, pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;
          dist = d;
@@ -2190,7 +2190,7 @@ static int aiL_getplanetfrompos( lua_State *L )
    if (j == -1) return 0;
 
    cur_pilot->nav_planet = j;
-   planet = cur_system->planets[j]->id;
+   planet = cur_system->spobs[j]->id;
    lua_pushspob(L, planet);
 
    return 1;
@@ -2208,14 +2208,14 @@ static int aiL_getrndplanet( lua_State *L )
    int p;
 
    /* No planets. */
-   if (array_size(cur_system->planets) == 0)
+   if (array_size(cur_system->spobs) == 0)
       return 0;
 
    /* get a random planet */
-   p = RNG(0, array_size(cur_system->planets)-1);
+   p = RNG(0, array_size(cur_system->spobs)-1);
 
    /* Copy the data into a vector */
-   planet = cur_system->planets[p]->id;
+   planet = cur_system->spobs[p]->id;
    lua_pushspob(L, planet);
 
    return 1;
@@ -2244,11 +2244,11 @@ static int aiL_getlandplanet( lua_State *L )
    only_friend = lua_toboolean(L, 1);
 
    /* Allocate memory. */
-   ind = array_create_size( int, array_size(cur_system->planets) );
+   ind = array_create_size( int, array_size(cur_system->spobs) );
 
    /* Copy friendly planet.s */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
 
       if (!spob_hasService(pnt, SPOB_SERVICE_LAND))
          continue;
@@ -2273,7 +2273,7 @@ static int aiL_getlandplanet( lua_State *L )
 
    /* we can actually get a random planet now */
    id = RNG(0,array_size(ind)-1);
-   p = cur_system->planets[ ind[ id ] ];
+   p = cur_system->spobs[ ind[ id ] ];
    planet = p->id;
    lua_pushspob( L, planet );
    cur_pilot->nav_planet = ind[ id ];
@@ -2299,12 +2299,12 @@ static int aiL_land( lua_State *L )
       Spob *pnt = luaL_validspob( L, 1 );
 
       /* Find the planet. */
-      for (i=0; i < array_size(cur_system->planets); i++) {
-         if (cur_system->planets[i] == pnt) {
+      for (i=0; i < array_size(cur_system->spobs); i++) {
+         if (cur_system->spobs[i] == pnt) {
             break;
          }
       }
-      if (i >= array_size(cur_system->planets)) {
+      if (i >= array_size(cur_system->spobs)) {
          NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
@@ -2318,7 +2318,7 @@ static int aiL_land( lua_State *L )
    }
 
    /* Get planet. */
-   planet = cur_system->planets[ cur_pilot->nav_planet ];
+   planet = cur_system->spobs[ cur_pilot->nav_planet ];
 
    /* Check landability. */
    if (!spob_hasService(planet,SPOB_SERVICE_LAND) ||

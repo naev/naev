@@ -71,7 +71,7 @@ void player_autonavStart (void)
    if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
       return;
    else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
-      player_autonavSpob( cur_system->planets[ player.p->nav_planet ]->name, 0 );
+      player_autonavSpob( cur_system->spobs[ player.p->nav_planet ]->name, 0 );
       return;
    }
 

@@ -852,8 +852,8 @@ static int systemL_planets( lua_State *L )
    StarSystem *s = luaL_validsystem(L,1);
    /* Push all planets. */
    lua_newtable(L);
-   for (int i=0; i<array_size(s->planets); i++) {
-      lua_pushspob(L,spob_index( s->planets[i] )); /* value */
+   for (int i=0; i<array_size(s->spobs); i++) {
+      lua_pushspob(L,spob_index( s->spobs[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
    return 1;
@@ -996,14 +996,14 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (int i=0; i < array_size(sys->planets); i++)
-            spob_setKnown( sys->planets[i] );
+         for (int i=0; i < array_size(sys->spobs); i++)
+            spob_setKnown( sys->spobs[i] );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (int i=0; i < array_size(sys->planets); i++)
-            spob_rmFlag( sys->planets[i], SPOB_KNOWN );
+         for (int i=0; i < array_size(sys->spobs); i++)
+            spob_rmFlag( sys->spobs[i], SPOB_KNOWN );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }

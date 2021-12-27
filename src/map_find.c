@@ -35,7 +35,7 @@ static int map_found_ncur           = 0;     /**< Number of found stuff. */
 static char **map_foundOutfitNames  = NULL; /**< Array (array.h): Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Array (array.h) of known techs. */
-static Spob **map_known_planets   = NULL;  /**< Array (array.h) of known planets with techs. */
+static Spob **map_known_spobs   = NULL;  /**< Array (array.h) of known spobs with techs. */
 
 /*
  * Prototypes.
@@ -68,22 +68,22 @@ static char **map_shipsMatch( const char *name );
  */
 static int map_knownInit (void)
 {
-   Spob **planets;
+   Spob **spobs;
    StarSystem *sys;
    tech_group_t **t;
 
    /* Allocate techs. */
-   t        = array_create( tech_group_t* );
-   planets  = array_create( Spob* );
-   sys      = system_getAll();
+   t     = array_create( tech_group_t* );
+   spobs = array_create( Spob* );
+   sys   = system_getAll();
 
    /* Get techs. */
    for (int i=0; i<array_size(sys); i++) {
       if (!sys_isKnown( &sys[i] ))
          continue;
 
-      for (int j=0; j<array_size(sys[i].planets); j++) {
-         Spob *pnt = sys[i].planets[j];
+      for (int j=0; j<array_size(sys[i].spobs); j++) {
+         Spob *pnt = sys[i].spobs[j];
 
          /* Must be known. */
          if (!spob_isKnown( pnt ))
@@ -91,7 +91,7 @@ static int map_knownInit (void)
 
          /* Must have techs. */
          if (pnt->tech != NULL) {
-            array_push_back( &planets, pnt );
+            array_push_back( &spobs, pnt );
             array_push_back( &t, pnt->tech );
          }
       }
@@ -99,7 +99,7 @@ static int map_knownInit (void)
 
    /* Pointer voodoo. */
    map_known_techs   = t;
-   map_known_planets = planets;
+   map_known_spobs = spobs;
 
    return 0;
 }
@@ -111,8 +111,8 @@ static void map_knownClean (void)
 {
    array_free( map_known_techs );
    map_known_techs = NULL;
-   array_free( map_known_planets );
-   map_known_planets = NULL;
+   array_free( map_known_spobs );
+   map_known_spobs = NULL;
 }
 
 /**
@@ -763,7 +763,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       olist = NULL;
       if (j < 0)
          continue;
-      pnt = map_known_planets[i];
+      pnt = map_known_spobs[i];
 
       /* System must be known. */
       sysname = spob_getSystem( pnt->name );
@@ -878,7 +878,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       slist = NULL;
       if (j < 0)
          continue;
-      pnt = map_known_planets[i];
+      pnt = map_known_spobs[i];
 
       /* System must be known. */
       sysname = spob_getSystem( pnt->name );

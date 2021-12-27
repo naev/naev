@@ -577,8 +577,8 @@ static void uniedit_renderTech( double x, double y, double r )
       StarSystem *sys = system_getIndex( i );
       int hastech = 0;
 
-      for (int j=0; j<array_size(sys->planets); j++) {
-         if (sys->planets[j]->tech != NULL) {
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         if (sys->spobs[j]->tech != NULL) {
             hastech = 1;
             break;
          }
@@ -812,13 +812,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       char *techlist[256];
       int ntechs = 0;
       const int len = sizeof(techlist) / sizeof(char*);
-      if (array_size(sys->planets)==0)
+      if (array_size(sys->spobs)==0)
          return;
 
       /* Count assets. */
       l = 0;
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Spob *pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *pnt = sys->spobs[j];
          int n;
          char **techs;
          if (pnt->tech==NULL)
@@ -875,8 +875,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             _(sys->name), faction_name(f) );
 
       /* Local presence sources. */
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Spob *pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *pnt = sys->spobs[j];
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
@@ -895,8 +895,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       /* Find neighbours if possible. */
       for (int k=0; k<array_size(sys->jumps); k++) {
          cur = sys->jumps[k].target;
-         for (int j=0; j<array_size(cur->planets); j++) {
-            Spob *pnt = cur->planets[j];
+         for (int j=0; j<array_size(cur->spobs); j++) {
+            Spob *pnt = cur->spobs[j];
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",

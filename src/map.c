@@ -178,8 +178,8 @@ static void map_setup (void)
 
       /* Check to see if system has landable assets. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Spob *p = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          if (!spob_isKnown(p))
             continue;
          if (!spob_hasService(p, SPOB_SERVICE_LAND))
@@ -202,8 +202,8 @@ static void map_setup (void)
       }
       if (known) {
          /* Check planets. */
-         for (int j=0; j<array_size(sys->planets); j++) {
-            Spob *p = sys->planets[j];
+         for (int j=0; j<array_size(sys->spobs); j++) {
+            Spob *p = sys->spobs[j];
             if (!spob_isKnown(p)) {
                known = 0;
                break;
@@ -404,8 +404,8 @@ static void map_update_commod_av_price (void)
             double sumPrice = 0;
             int sumCnt = 0;
             double thisPrice;
-            for (int j=0 ; j<array_size(sys->planets); j++) {
-               Spob *p = sys->planets[j];
+            for (int j=0 ; j<array_size(sys->spobs); j++) {
+               Spob *p = sys->spobs[j];
                for (int k=0; k<array_size(p->commodities); k++) {
                   if (p->commodities[k] == c) {
                      if (p->commodityPrice[k].cnt > 0) { /*commodity is known about*/
@@ -546,18 +546,18 @@ static void map_update( unsigned int wid )
 
    f = -1;
    multiple = 0;
-   for (int i=0; i<array_size(sys->planets); i++) {
-      if (!spob_isKnown(sys->planets[i]))
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      if (!spob_isKnown(sys->spobs[i]))
          continue;
-      if ((sys->planets[i]->presence.faction > 0)
-            && (!faction_isKnown(sys->planets[i]->presence.faction)) )
+      if ((sys->spobs[i]->presence.faction > 0)
+            && (!faction_isKnown(sys->spobs[i]->presence.faction)) )
          continue;
 
-      if ((f == -1) && (sys->planets[i]->presence.faction > 0)) {
-         f = sys->planets[i]->presence.faction;
+      if ((f == -1) && (sys->spobs[i]->presence.faction > 0)) {
+         f = sys->spobs[i]->presence.faction;
       }
-      else if (f != sys->planets[i]->presence.faction /** @todo more verbosity */
-               && (sys->planets[i]->presence.faction > 0)) {
+      else if (f != sys->spobs[i]->presence.faction /** @todo more verbosity */
+               && (sys->spobs[i]->presence.faction > 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
          multiple = 1;
          break;
@@ -611,21 +611,21 @@ static void map_update( unsigned int wid )
    hasSpobs = 0;
    p = 0;
    buf[0] = '\0';
-   for (int i=0; i<array_size(sys->planets); i++) {
-      if (!spob_isKnown(sys->planets[i]))
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      if (!spob_isKnown(sys->spobs[i]))
          continue;
 
       /* Colourize output. */
-      spob_updateLand(sys->planets[i]);
-      t = spob_getColourChar(sys->planets[i]);
-      sym = spob_getSymbol(sys->planets[i]);
+      spob_updateLand(sys->spobs[i]);
+      t = spob_getColourChar(sys->spobs[i]);
+      sym = spob_getSymbol(sys->spobs[i]);
 
       if (!hasSpobs)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
-               t, sym, _(sys->planets[i]->name) );
+               t, sym, _(sys->spobs[i]->name) );
       else
          p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
-               t, sym, _(sys->planets[i]->name) );
+               t, sym, _(sys->spobs[i]->name) );
       hasSpobs = 1;
    }
    if (hasSpobs == 0) {
@@ -646,8 +646,8 @@ static void map_update( unsigned int wid )
    services = 0;
    services_h = 0;
    services_u = 0;
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Spob *pnt = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *pnt = sys->spobs[i];
       if (!spob_isKnown(pnt))
          continue;
 
@@ -1441,8 +1441,8 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
-            for (j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for (j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for (k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1489,8 +1489,8 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for ( j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1552,8 +1552,8 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             double sumPrice=0;
             int sumCnt=0;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for ( j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1836,8 +1836,8 @@ static void map_genModeList(void)
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
-      for (int j=0 ; j<array_size(sys->planets); j++) {
-         Spob *p = sys->planets[j];
+      for (int j=0 ; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          for (int k=0; k<array_size(p->commodities); k++) {
             if (p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                int l;
@@ -2585,8 +2585,8 @@ int localmap_map( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *p = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
       if (!spob_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
@@ -2618,8 +2618,8 @@ int localmap_isUseless( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *p = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
       if ((mod*p->hide <= detect) && !spob_isKnown( p ))
          return 0;
    }

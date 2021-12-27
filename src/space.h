@@ -33,7 +33,7 @@ enum {
 };
 
 /*
- * planet services
+ * Spob services.
  */
 #define SPOB_SERVICE_LAND         (1<<0) /**< Can land. */
 #define SPOB_SERVICE_INHABITED    (1<<1) /**< Spob is inhabited. */
@@ -45,7 +45,7 @@ enum {
 #define SPOB_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
 #define SPOB_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
 #define SPOB_SERVICES_MAX         (SPOB_SERVICE_BLACKMARKET<<1)
-#define spob_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
+#define spob_hasService(p,s)      ((p)->services & s) /**< Checks if spob has a service. */
 
 /*
  * Spob flags.
@@ -53,14 +53,14 @@ enum {
 #define SPOB_KNOWN       (1<<0) /**< Spob is known. */
 #define SPOB_BLACKMARKET (1<<1) /**< Spob is a black market. */
 #define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
-#define SPOB_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
+#define SPOB_UNINHABITED (1<<3) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
 #define SPOB_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
-#define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
-#define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
-#define spob_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define spob_isKnown(p) spob_isFlag(p,SPOB_KNOWN) /**< Checks if planet is known. */
+#define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks spob flag. */
+#define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a spob flag. */
+#define spob_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a spob flag. */
+#define spob_isKnown(p) spob_isFlag(p,SPOB_KNOWN) /**< Checks if spob is known. */
 
 /**
  * @struct MapOverlayPos
@@ -122,7 +122,7 @@ typedef struct Spob_ {
    char *bribe_msg;     /**< Bribe message. */
    char *bribe_ack_msg; /**< Bribe ACK message. */
    credits_t bribe_price;/**< Cost of bribing. */
-   int bribed;          /**< If planet has been bribed. */
+   int bribed;          /**< If spob has been bribed. */
 
    /* Landed details. */
    char *description;      /**< Spob description. */
@@ -141,10 +141,10 @@ typedef struct Spob_ {
 
    /* Misc. */
    char **tags;         /**< Spob tagsg. */
-   unsigned int flags;  /**< flags for planet properties */
+   unsigned int flags;  /**< flags for spob properties */
    MapOverlayPos mo;    /**< Overlay layout data. */
    double map_alpha;    /**< Alpha to display on the map. */
-   int markers;         /**< Markers enabled on the planet. */
+   int markers;         /**< Markers enabled on the spob. */
 
    /* Lua stuff. */
    char *lua_file;   /**,< Lua File. */
@@ -312,8 +312,8 @@ struct StarSystem_ {
    char *features;         /**< Extra text on the map indicating special features of the system. */
 
    /* Spobs. */
-   Spob **planets;       /**< Array (array.h): planets */
-   int *planetsid;         /**< Array (array.h): IDs of the planets. */
+   Spob **spobs;       /**< Array (array.h): spobs */
+   int *spobsid;         /**< Array (array.h): IDs of the spobs. */
    int faction;            /**< overall faction */
    VirtualSpob **assets_virtual; /**< Array (array.h): virtual assets. */
 
@@ -359,21 +359,21 @@ int space_load (void);
 void space_exit (void);
 
 /*
- * planet stuff
+ * spob stuff
  */
 Spob *spob_new (void);
 const char *spob_name( const Spob *p );
 void spob_gfxLoad( Spob *p );
-int spob_hasSystem( const char* planetname );
-char* spob_getSystem( const char* planetname );
+int spob_hasSystem( const char* spobname );
+char* spob_getSystem( const char* spobname );
 Spob* spob_getAll (void);
-Spob* spob_get( const char* planetname );
+Spob* spob_get( const char* spobname );
 Spob* spob_getIndex( int ind );
 void spob_setKnown( Spob *p );
 int spob_index( const Spob *p );
-int spob_exists( const char* planetname );
-const char *spob_existsCase( const char* planetname );
-char **spob_searchFuzzyCase( const char* planetname, int *n );
+int spob_exists( const char* spobname );
+const char *spob_existsCase( const char* spobname );
+char **spob_searchFuzzyCase( const char* spobname, int *n );
 const char* spob_getServiceName( int service );
 int spob_getService( const char *name );
 const char* spob_getClassName( const char *class );
@@ -412,8 +412,8 @@ void system_reconstructJumps( StarSystem *sys );
 void systems_reconstructJumps (void);
 void systems_reconstructSpobs (void);
 StarSystem *system_new (void);
-int system_addSpob( StarSystem *sys, const char *planetname );
-int system_rmSpob( StarSystem *sys, const char *planetname );
+int system_addSpob( StarSystem *sys, const char *spobname );
+int system_rmSpob( StarSystem *sys, const char *spobname );
 int system_addVirtualSpob( StarSystem *sys, const char *assetname );
 int system_rmVirtualSpob( StarSystem *sys, const char *assetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
@@ -425,7 +425,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname );
  */
 void space_render( const double dt );
 void space_renderOverlay( const double dt );
-void planets_render (void);
+void spobs_render (void);
 
 /*
  * Presence stuff.

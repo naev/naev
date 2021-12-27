@@ -4,7 +4,7 @@
 /**
  * @file space.c
  *
- * @brief Handles all the space stuff, namely systems and planets.
+ * @brief Handles all the space stuff, namely systems and space objects (spobs).
  */
 /** @cond */
 #include <float.h>
@@ -88,7 +88,7 @@ static Spob *spob_stack = NULL; /**< Spob stack. */
 static VirtualSpob *vasset_stack = NULL; /**< Virtual asset stack. */
 #ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
-static int planetstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
+static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 #endif /* DEBUGGING */
 
 /*
@@ -317,7 +317,7 @@ int spob_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, d
 }
 
 /**
- * @brief Changes the planets faction.
+ * @brief Changes the spobs faction.
  *
  *    @param p Spob to change faction of.
  *    @param faction Faction to change to.
@@ -504,18 +504,18 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
 }
 
 /**
- * @brief Gets the name of all the planets that belong to factions.
+ * @brief Gets the name of all the spobs that belong to factions.
  *
  *    @param factions Array (array.h): Factions to check against.
- *    @param landable Whether the search is limited to landable planets.
+ *    @param landable Whether the search is limited to landable spobs.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
 char** space_getFactionSpob( int *factions, int landable )
 {
    char **tmp = array_create( char* );
    for (int i=0; i<array_size(systems_stack); i++) {
-      for (int j=0; j<array_size(systems_stack[i].planets); j++) {
-         Spob *planet = systems_stack[i].planets[j];
+      for (int j=0; j<array_size(systems_stack[i].spobs); j++) {
+         Spob *planet = systems_stack[i].spobs[j];
          int f = 0;
          for (int k=0; k<array_size(factions); k++) {
             if (planet->presence.faction == factions[k]) {
@@ -550,7 +550,7 @@ char** space_getFactionSpob( int *factions, int landable )
  *
  *    @param landable Whether the planet must let the player land normally.
  *    @param services Services the planet must have.
- *    @param filter Filter function for including planets.
+ *    @param filter Filter function for including spobs.
  *    @return The name (internal/English) of a random planet.
  */
 const char* space_getRndSpob( int landable, unsigned int services,
@@ -560,8 +560,8 @@ const char* space_getRndSpob( int landable, unsigned int services,
    Spob **tmp = array_create( Spob* );
 
    for (int i=0; i<array_size(systems_stack); i++) {
-      for (int j=0; j<array_size(systems_stack[i].planets); j++) {
-         Spob *pnt = systems_stack[i].planets[j];
+      for (int j=0; j<array_size(systems_stack[i].spobs); j++) {
+         Spob *pnt = systems_stack[i].spobs[j];
 
          if (services && spob_hasService(pnt, services) != services)
             continue;
@@ -618,9 +618,9 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    *fie = -1;
 
    /* Spobs. */
-   for (int i=0; i<array_size(sys->planets); i++) {
+   for (int i=0; i<array_size(sys->spobs); i++) {
       double td;
-      Spob *p  = sys->planets[i];
+      Spob *p  = sys->spobs[i];
       if (!spob_isKnown(p))
          continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
@@ -696,8 +696,8 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    a    = ang + M_PI;
 
    /* Spobs. */
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Spob *p = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *p = sys->spobs[i];
       double ta = atan2( y - p->pos.y, x - p->pos.x);
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          *pnt  = i;
@@ -965,7 +965,7 @@ Spob* spob_get( const char* planetname )
    }
 
 #ifdef DEBUGGING
-   if (planetstack_changed) {
+   if (spobstack_changed) {
       for (int i=0; i<array_size(spob_stack); i++)
          if (strcmp(spob_stack[i].name, planetname)==0)
             return &spob_stack[i];
@@ -1012,7 +1012,7 @@ int spob_index( const Spob *p )
 }
 
 /**
- * @brief Gets an array (array.h) of all planets.
+ * @brief Gets an array (array.h) of all spobs.
  */
 Spob* spob_getAll (void)
 {
@@ -1345,8 +1345,8 @@ void space_update( const double dt )
 
    /* Faction updates. */
    if (space_fchg) {
-      for (int i=0; i<array_size(cur_system->planets); i++)
-         spob_updateLand( cur_system->planets[i] );
+      for (int i=0; i<array_size(cur_system->spobs); i++)
+         spob_updateLand( cur_system->spobs[i] );
 
       /* Verify land authorization is still valid. */
       if (player_isFlag(PLAYER_LANDACK))
@@ -1359,9 +1359,9 @@ void space_update( const double dt )
    if (!space_simulating) {
       int found_something = 0;
       /* Spob updates */
-      for (int i=0; i<array_size(cur_system->planets); i++) {
+      for (int i=0; i<array_size(cur_system->spobs); i++) {
          HookParam hparam[3];
-         Spob *pnt = cur_system->planets[i];
+         Spob *pnt = cur_system->spobs[i];
 
          /* Must update in some cases. */
          space_updateSpob( pnt, dt );
@@ -1580,9 +1580,9 @@ void space_init( const char* sysname, int do_simulate )
          pilot_calcStats( pilot_stack[i] );
    }
 
-   /* Set up planets. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   /* Set up spobs. */
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       pnt->bribed = 0;
       pnt->land_override = 0;
       spob_updateLand( pnt );
@@ -1760,7 +1760,7 @@ Spob *spob_new (void)
 
 #if DEBUGGING
    if (!systems_loading)
-      planetstack_changed = 1;
+      spobstack_changed = 1;
 #else /* DEBUGGING */
    if (!systems_loading)
       WARN(_("Creating new planet in non-debugging mode. Things are probably going to break horribly."));
@@ -1795,11 +1795,11 @@ const char *spob_name( const Spob *p )
 }
 
 /**
- * @brief Loads all the planets in the game.
+ * @brief Loads all the spobs in the game.
  *
  *    @return 0 on success.
  */
-static int planets_load (void)
+static int spobs_load (void)
 {
    size_t bufsize;
    char *buf, **spob_files;
@@ -2163,8 +2163,8 @@ void spob_gfxLoad( Spob *planet )
  */
 void space_gfxLoad( StarSystem *sys )
 {
-   for (int i=0; i<array_size(sys->planets); i++)
-      spob_gfxLoad( sys->planets[i] );
+   for (int i=0; i<array_size(sys->spobs); i++)
+      spob_gfxLoad( sys->spobs[i] );
 }
 
 /**
@@ -2174,8 +2174,8 @@ void space_gfxLoad( StarSystem *sys )
  */
 void space_gfxUnload( StarSystem *sys )
 {
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Spob *planet = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *planet = sys->spobs[i];
 
       if (planet->lua_unload != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
@@ -2476,8 +2476,8 @@ int system_addSpob( StarSystem *sys, const char *planetname )
    planet = spob_get( planetname );
    if (planet == NULL)
       return -1;
-   array_push_back( &sys->planets, planet );
-   array_push_back( &sys->planetsid, planet->id );
+   array_push_back( &sys->spobs, planet );
+   array_push_back( &sys->spobsid, planet->id );
 
    /* add planet <-> star system to name stack */
    array_push_back( &planetname_stack, planet->name );
@@ -2513,22 +2513,22 @@ int system_rmSpob( StarSystem *sys, const char *planetname )
 
    /* Try to find planet. */
    planet = spob_get( planetname );
-   for (i=0; i<array_size(sys->planets); i++)
-      if (sys->planets[i] == planet)
+   for (i=0; i<array_size(sys->spobs); i++)
+      if (sys->spobs[i] == planet)
          break;
 
    /* Spob not found. */
-   if (i>=array_size(sys->planets)) {
+   if (i>=array_size(sys->spobs)) {
       WARN(_("Spob '%s' not found in system '%s' for removal."), planetname, sys->name);
       return -1;
    }
 
    /* Remove planet from system. */
-   array_erase( &sys->planets, &sys->planets[i], &sys->planets[i+1] );
-   array_erase( &sys->planetsid, &sys->planetsid[i], &sys->planetsid[i+1] );
+   array_erase( &sys->spobs, &sys->spobs[i], &sys->spobs[i+1] );
+   array_erase( &sys->spobsid, &sys->spobsid[i], &sys->spobsid[i+1] );
 
    /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple planets at once. */
+   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2698,9 +2698,9 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
-   sys->planets   = array_create( Spob* );
+   sys->spobs   = array_create( Spob* );
    sys->assets_virtual = array_create( VirtualSpob* );
-   sys->planetsid = array_create( int );
+   sys->spobsid = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
    sys->astexclude= array_create( AsteroidExclusion );
@@ -2796,8 +2796,8 @@ void systems_reconstructSpobs (void)
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
-      for (int j=0; j<array_size(sys->planetsid); j++)
-         sys->planets[j] = &spob_stack[ sys->planetsid[j] ];
+      for (int j=0; j<array_size(sys->spobsid); j++)
+         sys->spobs[j] = &spob_stack[ sys->spobsid[j] ];
    }
 }
 
@@ -2924,8 +2924,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    ss_sort( &sys->stats );
-   array_shrink( &sys->planets );
-   array_shrink( &sys->planetsid );
+   array_shrink( &sys->spobs );
+   array_shrink( &sys->spobsid );
 
    /* Convert hue from 0 to 359 value to 0 to 1 value. */
    sys->nebu_hue /= 360.;
@@ -2968,7 +2968,7 @@ static int sys_cmpSysFaction( const void *a, const void *b )
 }
 
 /**
- * @brief Sets the system faction based on the planets it has.
+ * @brief Sets the system faction based on the spobs it has.
  *
  *    @param sys System to set the faction of.
  *    @return Faction that controls the system.
@@ -2981,8 +2981,8 @@ void system_setFaction( StarSystem *sys )
 
    sys->faction = -1;
    for (int i=0; i<array_size(sys->presence); i++) {
-      for (int j=0; j<array_size(sys->planets); j++) { /** @todo Handle multiple different factions. */
-         Spob *pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) { /** @todo Handle multiple different factions. */
+         Spob *pnt = sys->spobs[j];
 
          if (pnt->presence.faction != sys->presence[i].faction)
             continue;
@@ -3377,8 +3377,8 @@ int space_load (void)
    jumppoint_gfx = gl_newSprite(  SPOB_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
    jumpbuoy_gfx = gl_newImage(  SPOB_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
 
-   /* Load planets. */
-   ret = planets_load();
+   /* Load spobs. */
+   ret = spobs_load();
    if (ret < 0)
       return ret;
 
@@ -3530,7 +3530,7 @@ static int asteroidTypes_load (void)
 }
 
 /**
- * @brief Loads the entire systems, needs to be called after planets_load.
+ * @brief Loads the entire systems, needs to be called after spobs_load.
  *
  * Does multiple passes to load:
  *
@@ -3678,9 +3678,9 @@ void space_renderOverlay( const double dt )
 }
 
 /**
- * @brief Renders the current systemsplanets.
+ * @brief Renders the current systems' spobs.
  */
-void planets_render (void)
+void spobs_render (void)
 {
    Pilot *pplayer;
    Solid *psolid;
@@ -3693,9 +3693,9 @@ void planets_render (void)
    for (int i=0; i < array_size(cur_system->jumps); i++)
       space_renderJumpPoint( &cur_system->jumps[i], i );
 
-   /* Render the planets. */
-   for (int i=0; i < array_size(cur_system->planets); i++)
-      space_renderSpob( cur_system->planets[i] );
+   /* Render the spobs. */
+   for (int i=0; i < array_size(cur_system->spobs); i++)
+      space_renderSpob( cur_system->spobs[i] );
 
    /* Get the player in order to compute the offset for debris. */
    pplayer = pilot_get( PLAYER_ID );
@@ -3860,7 +3860,7 @@ void space_exit (void)
    array_free(planetname_stack);
    array_free(systemname_stack);
 
-   /* Free the planets. */
+   /* Free the spobs. */
    for (int i=0; i < array_size(spob_stack); i++) {
       Spob *pnt = &spob_stack[i];
 
@@ -3921,8 +3921,8 @@ void space_exit (void)
       free(sys->features);
       array_free(sys->jumps);
       array_free(sys->presence);
-      array_free(sys->planets);
-      array_free(sys->planetsid);
+      array_free(sys->spobs);
+      array_free(sys->spobsid);
       array_free(sys->assets_virtual);
 
       for (int j=0; j<array_size(sys->tags); j++)
@@ -4204,10 +4204,10 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       sys = &systems_stack[i];
 
-      for (int j=0; j<array_size(sys->planets); j++) {
-         if (!spob_isKnown(sys->planets[j]))
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         if (!spob_isKnown(sys->spobs[j]))
             continue; /* not known */
-         xmlw_elem(writer, "spob", "%s", sys->planets[j]->name);
+         xmlw_elem(writer, "spob", "%s", sys->spobs[j]->name);
       }
 
       for (int j=0; j<array_size(sys->jumps); j++) {
@@ -4523,11 +4523,11 @@ void system_addAllSpobsPresence( StarSystem *sys )
    }
 #endif /* DEBUGGING */
 
-   /* Real planets. */
-   for (int i=0; i<array_size(sys->planets); i++)
-      system_presenceAddSpob(sys, &sys->planets[i]->presence );
+   /* Real spobs. */
+   for (int i=0; i<array_size(sys->spobs); i++)
+      system_presenceAddSpob(sys, &sys->spobs[i]->presence );
 
-   /* Virtual assets. */
+   /* Virtual spobs. */
    for (int i=0; i<array_size(sys->assets_virtual); i++)
       for (int j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
          system_presenceAddSpob(sys, &sys->assets_virtual[i]->presences[j] );
@@ -4681,7 +4681,7 @@ int system_hasSpob( const StarSystem *sys )
    }
 
    /* Go through all the assets and look for a real one. */
-   for (int i=0; i < array_size(sys->planets); i++)
+   for (int i=0; i < array_size(sys->spobs); i++)
       return 1;
 
    return 0;

@@ -286,7 +286,7 @@ int pilot_inRangeSpob( const Pilot *p, int target )
       return 0;
 
    /* Get the planet. */
-   pnt = cur_system->planets[target];
+   pnt = cur_system->spobs[target];
    sense = EW_SPOBDETECT_DIST;
 
    /* Get distance. */

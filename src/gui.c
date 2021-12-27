@@ -383,7 +383,7 @@ static void gui_renderSpobTarget (void)
       gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_planet >= 0) {
-      Spob *planet = cur_system->planets[player.p->nav_planet];
+      Spob *planet = cur_system->spobs[player.p->nav_planet];
       c = spob_getColour( planet );
 
       x = planet->pos.x;
@@ -554,8 +554,8 @@ static void gui_renderBorder( double dt )
    gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw planets. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
 
       /* Skip if unknown. */
       if (!spob_isKnown( pnt ))
@@ -907,7 +907,7 @@ void gui_radarRender( double x, double y )
    /*
     * planets
     */
-   for (int i=0; i<array_size(cur_system->planets); i++)
+   for (int i=0; i<array_size(cur_system->spobs); i++)
       if (i != player.p->nav_planet)
          gui_renderSpob( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    if (player.p->nav_planet > -1)
@@ -1269,7 +1269,7 @@ void gui_renderPlayer( double res, int overlay )
 static const glColour *gui_getSpobColour( int i )
 {
    const glColour *col;
-   Spob *planet = cur_system->planets[i];
+   Spob *planet = cur_system->spobs[i];
 
    if (i == player.p->nav_planet)
       col = &cRadar_tSpob;
@@ -1350,11 +1350,11 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
-   if (!spob_isKnown( cur_system->planets[ind] ))
+   if (!spob_isKnown( cur_system->spobs[ind] ))
       return;
 
    /* Default values. */
-   planet = cur_system->planets[ind];
+   planet = cur_system->spobs[ind];
    r     = planet->radius / res;
    vr    = overlay ? planet->mo.radius : MAX( r, 7.5 );
 

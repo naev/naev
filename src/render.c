@@ -203,7 +203,7 @@ void render_all( double game_dt, double real_dt )
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
-   planets_render();
+   spobs_render();
    spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* Middle stuff */

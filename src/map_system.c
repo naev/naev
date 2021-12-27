@@ -302,8 +302,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
    vis_index=0;
    offset = h - pitch*nshow;
-   for ( i=0; i<array_size(sys->planets); i++ ) {
-      p=sys->planets[i];
+   for ( i=0; i<array_size(sys->spobs); i++ ) {
+      p=sys->spobs[i];
       if (!spob_isKnown( p ))
          continue;
       vis_index++;
@@ -437,11 +437,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       }
       /* Faction */
       f = -1;
-      for (i=0; i<array_size(sys->planets); i++) {
-         if (spob_isKnown( sys->planets[i] )) {
-            if ((f==-1) && (sys->planets[i]->presence.faction>0) ) {
-               f = sys->planets[i]->presence.faction;
-            } else if (f != sys->planets[i]->presence.faction &&  (sys->planets[i]->presence.faction>0) ) {
+      for (i=0; i<array_size(sys->spobs); i++) {
+         if (spob_isKnown( sys->spobs[i] )) {
+            if ((f==-1) && (sys->spobs[i]->presence.faction>0) ) {
+               f = sys->spobs[i]->presence.faction;
+            } else if (f != sys->spobs[i]->presence.faction &&  (sys->spobs[i]->presence.faction>0) ) {
                cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
                break;
             }
@@ -450,7 +450,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (f == -1 ) {
          cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: N/A\n") );
       }  else {
-         if (i==array_size(sys->planets)) /* saw them all and all the same */
+         if (i==array_size(sys->spobs)) /* saw them all and all the same */
             cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
          logo = faction_logo( f );
@@ -743,8 +743,8 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest planet/star name */
    nshow=1;/* start at 1 for the sun*/
-   for (int i=0; i<array_size(sys->planets); i++) {
-      p = sys->planets[i];
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      p = sys->spobs[i];
       if (spob_isKnown( p )) {
          textw = gl_printWidthRaw( &gl_smallFont, spob_name(p) );
          if ( textw > nameWidth )

@@ -139,9 +139,9 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "pos" */
 
    /* Sort planets. */
-   sorted_planets = malloc( sizeof(Spob*) * array_size(sys->planets) );
-   memcpy( sorted_planets, sys->planets, sizeof(Spob*) * array_size(sys->planets) );
-   qsort( sorted_planets, array_size(sys->planets), sizeof(Spob*), dsys_compSpob );
+   sorted_planets = malloc( sizeof(Spob*) * array_size(sys->spobs) );
+   memcpy( sorted_planets, sys->spobs, sizeof(Spob*) * array_size(sys->spobs) );
+   qsort( sorted_planets, array_size(sys->spobs), sizeof(Spob*), dsys_compSpob );
 
    /* Sort virtual assets. */
    sorted_assets = malloc( sizeof(VirtualSpob*) * array_size(sys->assets_virtual) );
@@ -150,7 +150,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write assets and clean up. */
    xmlw_startElem( writer, "spobs" );
-   for (int i=0; i<array_size(sys->planets); i++)
+   for (int i=0; i<array_size(sys->spobs); i++)
       xmlw_elem( writer, "spob", "%s", sorted_planets[i]->name );
    for (int i=0; i<array_size(sys->assets_virtual); i++)
       xmlw_elem( writer, "spob_virtual", "%s", sorted_assets[i]->name );

@@ -146,8 +146,8 @@ void land_queueTakeoff (void)
 static int land_canSave (void)
 {
    int should_save = 0;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Spob *p = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
       spob_updateLand( p );
       if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land) {
          should_save = 1;
