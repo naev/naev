@@ -411,11 +411,11 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Rename. */
          filtered = uniedit_nameFilter(p->name);
-         asprintf(&oldName, "dat/assets/%s.xml", filtered);
+         asprintf(&oldName, "dat/spob/%s.xml", filtered);
          free(filtered);
 
          filtered = uniedit_nameFilter(name);
-         asprintf(&newName, "dat/assets/%s.xml", filtered);
+         asprintf(&newName, "dat/spob/%s.xml", filtered);
          free(filtered);
 
          rename(oldName, newName);
@@ -445,7 +445,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
          Select_t *sel = &sysedit_select[i];
          if (sel->type == SELECT_SPOB) {
             filtered = uniedit_nameFilter( sysedit_sys->spobs[ sel->u.spob ]->name );
-            asprintf(&file, "dat/assets/%s.xml", filtered);
+            asprintf(&file, "dat/spob/%s.xml", filtered);
             remove(file);
 
             free(filtered);
