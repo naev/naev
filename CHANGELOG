@@ -22,8 +22,7 @@
 
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
-   * Fix broken dialogue in the "Shadow Vigil" mission
-   * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", and "Particle Physics 3"
+   * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", and "Shadow Vigil"
    * Fix some text labels that couldn't be translated from English
    * Fix equipment slot information displaying over filter widget
    * Darkened nebulas and lowered default background darkness
