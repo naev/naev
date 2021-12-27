@@ -5,6 +5,7 @@
       * Pilots can have intrinsic outfits
       * Bioships go rawr (new skill system)
       * Plasma has a burning effect
+      * Scripting support for space objects (spob)
    * New Content
       * Added a gigantic black hole
       * More engine sounds
@@ -14,6 +15,7 @@
    * Quality of Life
       * Engine sound volume is configurable
    * Engine changes
+      * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
