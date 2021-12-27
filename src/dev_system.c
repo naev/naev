@@ -26,22 +26,22 @@
 /*
  * Prototypes.
  */
-static int dsys_compSpob( const void *planet1, const void *planet2 );
+static int dsys_compSpob( const void *spob1, const void *spob2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
 
 /**
- * @brief Compare function for planet qsort.
+ * @brief Compare function for spob qsort.
  *
- *    @param planet1 Spob 1 to sort.
- *    @param planet2 Spob 2 to sort.
+ *    @param spob1 Spob 1 to sort.
+ *    @param spob2 Spob 2 to sort.
  *    @return Order to sort.
  */
-static int dsys_compSpob( const void *planet1, const void *planet2 )
+static int dsys_compSpob( const void *spob1, const void *spob2 )
 {
    const Spob *p1, *p2;
 
-   p1 = * (const Spob**) planet1;
-   p2 = * (const Spob**) planet2;
+   p1 = * (const Spob**) spob1;
+   p2 = * (const Spob**) spob2;
 
    return strcmp( p1->name, p2->name );
 }
@@ -90,7 +90,7 @@ int dsys_saveSystem( StarSystem *sys )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   const Spob **sorted_planets;
+   const Spob **sorted_spobs;
    const VirtualSpob **sorted_assets;
    const JumpPoint **sorted_jumps;
    char *file, *cleanName;
@@ -138,10 +138,10 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_elem( writer, "y", "%f", sys->pos.y );
    xmlw_endElem( writer ); /* "pos" */
 
-   /* Sort planets. */
-   sorted_planets = malloc( sizeof(Spob*) * array_size(sys->spobs) );
-   memcpy( sorted_planets, sys->spobs, sizeof(Spob*) * array_size(sys->spobs) );
-   qsort( sorted_planets, array_size(sys->spobs), sizeof(Spob*), dsys_compSpob );
+   /* Sort spobs. */
+   sorted_spobs = malloc( sizeof(Spob*) * array_size(sys->spobs) );
+   memcpy( sorted_spobs, sys->spobs, sizeof(Spob*) * array_size(sys->spobs) );
+   qsort( sorted_spobs, array_size(sys->spobs), sizeof(Spob*), dsys_compSpob );
 
    /* Sort virtual assets. */
    sorted_assets = malloc( sizeof(VirtualSpob*) * array_size(sys->spobs_virtual) );
@@ -151,11 +151,11 @@ int dsys_saveSystem( StarSystem *sys )
    /* Write assets and clean up. */
    xmlw_startElem( writer, "spobs" );
    for (int i=0; i<array_size(sys->spobs); i++)
-      xmlw_elem( writer, "spob", "%s", sorted_planets[i]->name );
+      xmlw_elem( writer, "spob", "%s", sorted_spobs[i]->name );
    for (int i=0; i<array_size(sys->spobs_virtual); i++)
       xmlw_elem( writer, "spob_virtual", "%s", sorted_assets[i]->name );
    xmlw_endElem( writer ); /* "spobs" */
-   free(sorted_planets);
+   free(sorted_spobs);
    free(sorted_assets);
 
    /* Jumps. */
