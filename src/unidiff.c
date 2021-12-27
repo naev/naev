@@ -602,7 +602,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
          hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
-         hunk.u.data = planet_getService( xml_get(cur) );
+         hunk.u.data = spob_getService( xml_get(cur) );
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -615,7 +615,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
          hunk.type = HUNK_TYPE_SPOB_SERVICE_REMOVE;
-         hunk.u.data = planet_getService( xml_get(cur) );
+         hunk.u.data = spob_getService( xml_get(cur) );
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -890,19 +890,19 @@ static int diff_patch( xmlNodePtr parent )
                break;
             case HUNK_TYPE_SPOB_SERVICE_ADD:
                WARN(_("   [%s] spob service add: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+                     spob_getServiceName(fail->u.data) );
                break;
             case HUNK_TYPE_SPOB_SERVICE_REMOVE:
                WARN(_("   [%s] spob service remove: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+                     spob_getServiceName(fail->u.data) );
                break;
             case HUNK_TYPE_SPOB_TECH_ADD:
                WARN(_("   [%s] spob tech add: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+                     spob_getServiceName(fail->u.data) );
                break;
             case HUNK_TYPE_SPOB_TECH_REMOVE:
                WARN(_("   [%s] spob tech remove: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+                     spob_getServiceName(fail->u.data) );
                break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
@@ -957,7 +957,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding an spob. */
       case HUNK_TYPE_SPOB_ADD:
-         planet_updateLand( planet_get(hunk->u.name) );
+         spob_updateLand( spob_get(hunk->u.name) );
          diff_universe_changed = 1;
          return system_addSpob( system_get(hunk->target.u.name), hunk->u.name );
       /* Removing an spob. */
@@ -1014,7 +1014,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Changing spob faction. */
       case HUNK_TYPE_SPOB_FACTION:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          if (p->presence.faction<0)
@@ -1022,20 +1022,20 @@ static int diff_patchHunk( UniHunk_t *hunk )
          else
             hunk->o.name = faction_name( p->presence.faction );
          diff_universe_changed = 1;
-         return planet_setFaction( p, faction_get(hunk->u.name) );
+         return spob_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_SPOB_FACTION_REMOVE:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          diff_universe_changed = 1;
          if (hunk->o.name==NULL)
-            return planet_setFaction( p, -1 );
+            return spob_setFaction( p, -1 );
          else
-            return planet_setFaction( p, faction_get(hunk->o.name) );
+            return spob_setFaction( p, faction_get(hunk->o.name) );
 
       /* Changing spob population. */
       case HUNK_TYPE_SPOB_POPULATION:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.data = p->population;
@@ -1043,7 +1043,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p->population = hunk->u.data;
          return 0;
       case HUNK_TYPE_SPOB_POPULATION_REMOVE:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->population = hunk->o.data;
@@ -1051,14 +1051,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Changing spob description. */
       case HUNK_TYPE_SPOB_DESCRIPTION:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->description;
          p->description = hunk->u.name;
          return 0;
       case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->description = (char*)hunk->o.name;
@@ -1066,14 +1066,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Changing spob bar description. */
       case HUNK_TYPE_SPOB_BAR:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->bar_description;
          p->bar_description = hunk->u.name;
          return 0;
       case HUNK_TYPE_SPOB_BAR_REVERT:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->bar_description = (char*)hunk->o.name;
@@ -1081,27 +1081,27 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Modifying spob services. */
       case HUNK_TYPE_SPOB_SERVICE_ADD:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         if (planet_hasService( p, hunk->u.data ))
+         if (spob_hasService( p, hunk->u.data ))
             return -1;
-         planet_addService( p, hunk->u.data );
+         spob_addService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
       case HUNK_TYPE_SPOB_SERVICE_REMOVE:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         if (!planet_hasService( p, hunk->u.data ))
+         if (!spob_hasService( p, hunk->u.data ))
             return -1;
-         planet_rmService( p, hunk->u.data );
+         spob_rmService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
 
       /* Modifying tech stuff. */
       case HUNK_TYPE_SPOB_TECH_ADD:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          if (p->tech == NULL)
@@ -1109,7 +1109,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          tech_addItemTech( p->tech, hunk->u.name );
          return 0;
       case HUNK_TYPE_SPOB_TECH_REMOVE:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          tech_rmItemTech( p->tech, hunk->u.name );
@@ -1117,14 +1117,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Changing spob exterior graphics. */
       case HUNK_TYPE_SPOB_EXTERIOR:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->gfx_exterior;
          p->gfx_exterior = hunk->u.name;
          return 0;
       case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
-         p = planet_get( hunk->target.u.name );
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->gfx_exterior = (char*)hunk->o.name;

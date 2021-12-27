@@ -230,10 +230,10 @@ void ovr_refresh (void)
       Spob *pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
-      if (!planet_isKnown(pnt))
+      if (!spob_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), planet_name(pnt) );
+      snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(pnt), spob_name(pnt) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
       mo[items]->radius = pnt->radius / 2.;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
@@ -523,7 +523,7 @@ void ovr_initAlpha (void)
    }
    for (int i=0; i<array_size(cur_system->planets); i++) {
       Spob *pnt = cur_system->planets[i];
-      if (!planet_isKnown(pnt))
+      if (!spob_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
          pnt->map_alpha = 1.;
@@ -597,9 +597,9 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
       JumpPoint *jp;
       switch(sf->point_type[j]) {
          case SAFELANE_LOC_SPOB:
-            pnt = planet_getIndex( sf->point_id[j] );
+            pnt = spob_getIndex( sf->point_id[j] );
             posns[j] = &pnt->pos;
-            if (!planet_isKnown( pnt ))
+            if (!spob_isKnown( pnt ))
                known = 0;
             break;
          case SAFELANE_LOC_DEST_SYS:

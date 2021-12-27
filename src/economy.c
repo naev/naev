@@ -310,7 +310,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    p = 0.;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet_hasService(planet, SPOB_SERVICE_INHABITED)) {
+      if (spob_hasService(planet, SPOB_SERVICE_INHABITED)) {
          /*
           * Calculate production.
           */
@@ -576,7 +576,7 @@ static int economy_calcPrice( Spob *planet, Commodity *commodity, CommodityPrice
    const char *factionname;
 
    /* Ignore planets with no commodity stuff. */
-   if (!planet_hasService( planet, SPOB_SERVICE_COMMODITY ))
+   if (!spob_hasService( planet, SPOB_SERVICE_COMMODITY ))
       return 0;
 
    /* Check the faction is not NULL.*/
@@ -589,7 +589,7 @@ static int economy_calcPrice( Spob *planet, Commodity *commodity, CommodityPrice
    commodityPrice->price = commodity->price;
 
    /* Get the cost modifier suitable for planet type/class. */
-   cm = commodity->planet_modifier;
+   cm = commodity->spob_modifier;
    scale = 1.;
    while (cm != NULL) {
       if ((strcmp( planet->class, cm->name ) == 0)) {
@@ -631,7 +631,7 @@ static int economy_calcPrice( Spob *planet, Commodity *commodity, CommodityPrice
       Some factions place a higher value on certain goods.
       Some factions are more stable than others.*/
    scale = 1.;
-   cm = commodity->planet_modifier;
+   cm = commodity->spob_modifier;
 
    factionname = faction_name(planet->presence.faction);
    while ( cm != NULL ) {
@@ -846,8 +846,8 @@ void economy_initialiseCommodityPrices(void)
    /* And now free temporary commodity information */
    for ( i=0 ; i<array_size(commodity_stack); i++ ) {
       com = &commodity_stack[i];
-      next = com->planet_modifier;
-      com->planet_modifier = NULL;
+      next = com->spob_modifier;
+      com->spob_modifier = NULL;
       while (next != NULL) {
          this = next;
          next = this->next;
@@ -972,7 +972,7 @@ int economy_sysLoad( xmlNodePtr parent )
                   xml_onlyNodes(nodeSpob);
                   if (xml_isNode(nodeSpob, "planet")) {
                      xmlr_attr_strd(nodeSpob,"name",str);
-                     Spob *planet = planet_get(str);
+                     Spob *planet = spob_get(str);
                      if (planet==NULL)
                         WARN(_("Spob '%s' has saved economy data but doesn't exist!"), str);
                      free(str);

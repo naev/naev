@@ -186,8 +186,8 @@ static void commodity_freeOne( Commodity* com )
    free(com->description);
    gl_freeTexture(com->gfx_store);
    gl_freeTexture(com->gfx_space);
-   next = com->planet_modifier;
-   com->planet_modifier = NULL;
+   next = com->spob_modifier;
+   com->spob_modifier = NULL;
    while (next != NULL ) {
       this = next;
       next = this->next;
@@ -301,12 +301,12 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
-      if (xml_isNode(node, "planet_modifier")) {
+      if (xml_isNode(node, "spob_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
-         newdict->next = temp->planet_modifier;
+         newdict->next = temp->spob_modifier;
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
-         temp->planet_modifier = newdict;
+         temp->spob_modifier = newdict;
          continue;
       }
       if (xml_isNode(node, "faction_modifier")) {

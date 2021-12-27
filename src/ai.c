@@ -2138,7 +2138,7 @@ static int aiL_getnearestplanet( lua_State *L )
 
    /* cycle through planets */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
+      if (!spob_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
@@ -2176,7 +2176,7 @@ static int aiL_getplanetfrompos( lua_State *L )
 
    /* cycle through planets */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
+      if (!spob_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
@@ -2250,9 +2250,9 @@ static int aiL_getlandplanet( lua_State *L )
    for (int i=0; i<array_size(cur_system->planets); i++) {
       Spob *pnt = cur_system->planets[i];
 
-      if (!planet_hasService(pnt, SPOB_SERVICE_LAND))
+      if (!spob_hasService(pnt, SPOB_SERVICE_LAND))
          continue;
-      if (!planet_hasService(pnt, SPOB_SERVICE_INHABITED))
+      if (!spob_hasService(pnt, SPOB_SERVICE_INHABITED))
          continue;
 
       /* Check conditions. */
@@ -2321,9 +2321,9 @@ static int aiL_land( lua_State *L )
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
    /* Check landability. */
-   if (!planet_hasService(planet,SPOB_SERVICE_LAND) ||
+   if (!spob_hasService(planet,SPOB_SERVICE_LAND) ||
          (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-            !planet_hasService(planet,SPOB_SERVICE_INHABITED))) {
+            !spob_hasService(planet,SPOB_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
    }

@@ -766,7 +766,7 @@ static int playerL_land( lua_State *L )
    PLAYER_CHECK();
 
    Spob *pnt = luaL_validspob(L,1);
-   const char *sysname = planet_getSystem( pnt->name );
+   const char *sysname = spob_getSystem( pnt->name );
    if (sysname == NULL)
       NLUA_ERROR(L,_("Spob '%s' is not in a system!"), pnt->name);
 
@@ -1475,7 +1475,7 @@ static int playerL_teleport( lua_State *L )
    /* Get a planet. */
    else if (lua_isspob(L,1)) {
       pnt   = luaL_validspob(L,1);
-      name  = planet_getSystem( pnt->name );
+      name  = spob_getSystem( pnt->name );
       if (name == NULL) {
          NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );
          return 0;
@@ -1489,8 +1489,8 @@ static int playerL_teleport( lua_State *L )
       if (sysname == NULL) {
          /* No system found, assume destination string is the name of a planet. */
          pntname = name;
-         name = planet_getSystem( pntname );
-         pnt  = planet_get( pntname );
+         name = spob_getSystem( pntname );
+         pnt  = spob_get( pntname );
          if (pnt == NULL) {
             NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
             return 0;

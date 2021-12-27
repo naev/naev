@@ -384,7 +384,7 @@ static void gui_renderSpobTarget (void)
    }
    if (player.p->nav_planet >= 0) {
       Spob *planet = cur_system->planets[player.p->nav_planet];
-      c = planet_getColour( planet );
+      c = spob_getColour( planet );
 
       x = planet->pos.x;
       y = planet->pos.y;
@@ -558,7 +558,7 @@ static void gui_renderBorder( double dt )
       Spob *pnt = cur_system->planets[i];
 
       /* Skip if unknown. */
-      if (!planet_isKnown( pnt ))
+      if (!spob_isKnown( pnt ))
          continue;
 
       /* Check if out of range. */
@@ -1274,7 +1274,7 @@ static const glColour *gui_getSpobColour( int i )
    if (i == player.p->nav_planet)
       col = &cRadar_tSpob;
    else
-      col = planet_getColour( planet );
+      col = spob_getColour( planet );
 
    return col;
 }
@@ -1350,7 +1350,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
-   if (!planet_isKnown( cur_system->planets[ind] ))
+   if (!spob_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */
@@ -1400,7 +1400,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    }
 
    /* Is marked. */
-   if (planet_isKnown( planet ) && planet_isFlag( planet, SPOB_MARKED )) {
+   if (spob_isKnown( planet ) && spob_isFlag( planet, SPOB_MARKED )) {
       glColour highlighted = cRadar_hilight;
       highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
@@ -1417,11 +1417,11 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_planet);
 
    glUseProgram(shaders.planetmarker.program);
-   glUniform1i(shaders.planetmarker.parami, planet_hasService(planet,SPOB_SERVICE_LAND));
+   glUniform1i(shaders.planetmarker.parami, spob_hasService(planet,SPOB_SERVICE_LAND));
    gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, &col, 1 );
 
    if (overlay) {
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), planet_name(planet) );
+      snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(planet), spob_name(planet) );
       gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
    }
 }

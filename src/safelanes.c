@@ -99,7 +99,7 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_planet_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
+static int *tmp_spob_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to set up "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to set up "stiff". */
@@ -355,7 +355,7 @@ static void safelanes_initStacks_vertex (void)
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
-   tmp_planet_indices = array_create( int );
+   tmp_spob_indices = array_create( int );
    tmp_jump_edges = array_create( Edge );
    for (int system=0; system<array_size(systems_stack); system++) {
       const StarSystem *sys = &systems_stack[system];
@@ -367,7 +367,7 @@ static void safelanes_initStacks_vertex (void)
          const Spob *p = sys->planets[i];
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
-            array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
+            array_push_back( &tmp_spob_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
       }
@@ -519,8 +519,8 @@ static void safelanes_destroyStacks (void)
 static void safelanes_destroyTmp (void)
 {
    unionfind_free( &tmp_sys_uf );
-   array_free( tmp_planet_indices );
-   tmp_planet_indices = NULL;
+   array_free( tmp_spob_indices );
+   tmp_spob_indices = NULL;
    array_free( tmp_jump_edges );
    tmp_jump_edges = NULL;
    array_free( tmp_edge_conduct );
@@ -619,7 +619,7 @@ static void safelanes_initQtQ (void)
 static void safelanes_initFTilde (void)
 {
    cholmod_sparse *eye = cholmod_speye( array_size(vertex_stack), array_size(vertex_stack), CHOLMOD_REAL, &C );
-   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_planet_indices, array_size(tmp_planet_indices), 1, SORTED, &C );
+   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_spob_indices, array_size(tmp_spob_indices), 1, SORTED, &C );
    cholmod_free_dense( &ftilde, &C );
    ftilde = cholmod_sparse_to_dense( sp, &C );
    cholmod_free_sparse( &sp, &C );
@@ -632,7 +632,7 @@ static void safelanes_initFTilde (void)
 static void safelanes_initPPl (void)
 {
    int *component;
-   int np = array_size(tmp_planet_indices);
+   int np = array_size(tmp_spob_indices);
 
    for (int fi=0; fi<array_size(PPl); fi++)
       cholmod_free_dense( &PPl[fi], &C );
@@ -646,12 +646,12 @@ static void safelanes_initPPl (void)
 
    component = calloc( np, sizeof(int) );
    for (int i=0; i<np; i++)
-      component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_planet_indices[i]].system );
+      component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_spob_indices[i]].system );
 
    for (int i=0; i<np; i++) {
       double *Di;
-      int sys = vertex_stack[tmp_planet_indices[i]].system;
-      Spob *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
+      int sys = vertex_stack[tmp_spob_indices[i]].system;
+      Spob *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_spob_indices[i]].index];
       double pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
       int fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)

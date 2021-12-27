@@ -53,7 +53,7 @@ int dpl_saveSpob( const Spob *p )
    /* Some global attributes. */
    xmlw_elem( writer, "displayname", "%s", p->displayname );
    xmlw_elem( writer, "lua", "%s", p->lua_file );
-   if (planet_isFlag(p,SPOB_RADIUS))
+   if (spob_isFlag(p,SPOB_RADIUS))
       xmlw_elem( writer, "radius", "%f", p->radius );
 
    /* Position. */
@@ -84,32 +84,32 @@ int dpl_saveSpob( const Spob *p )
    xmlw_elem( writer, "population", "%g", (double)p->population );
    xmlw_elem( writer, "hide", "%f", p->hide );
    xmlw_startElem( writer, "services" );
-   if (planet_hasService( p, SPOB_SERVICE_LAND )) {
+   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
       if (p->land_func == NULL)
          xmlw_elemEmpty( writer, "land" );
       else
          xmlw_elem( writer, "land", "%s", p->land_func );
    }
-   if (planet_hasService( p, SPOB_SERVICE_REFUEL ))
+   if (spob_hasService( p, SPOB_SERVICE_REFUEL ))
       xmlw_elemEmpty( writer, "refuel" );
-   if (planet_hasService( p, SPOB_SERVICE_BAR ))
+   if (spob_hasService( p, SPOB_SERVICE_BAR ))
       xmlw_elemEmpty( writer, "bar" );
-   if (planet_hasService( p, SPOB_SERVICE_MISSIONS ))
+   if (spob_hasService( p, SPOB_SERVICE_MISSIONS ))
       xmlw_elemEmpty( writer, "missions" );
-   if (planet_hasService( p, SPOB_SERVICE_COMMODITY ))
+   if (spob_hasService( p, SPOB_SERVICE_COMMODITY ))
       xmlw_elemEmpty( writer, "commodity" );
-   if (planet_hasService( p, SPOB_SERVICE_OUTFITS ))
+   if (spob_hasService( p, SPOB_SERVICE_OUTFITS ))
       xmlw_elemEmpty( writer, "outfits" );
-   if (planet_hasService( p, SPOB_SERVICE_SHIPYARD ))
+   if (spob_hasService( p, SPOB_SERVICE_SHIPYARD ))
       xmlw_elemEmpty( writer, "shipyard" );
-   if (planet_hasService( p, SPOB_SERVICE_BLACKMARKET ))
+   if (spob_hasService( p, SPOB_SERVICE_BLACKMARKET ))
       xmlw_elemEmpty( writer, "blackmarket" );
-   if (planet_isFlag( p, SPOB_NOMISNSPAWN ))
+   if (spob_isFlag( p, SPOB_NOMISNSPAWN ))
       xmlw_elemEmpty( writer, "nomissionspawn" );
-   if (planet_isFlag( p, SPOB_UNINHABITED ))
+   if (spob_isFlag( p, SPOB_UNINHABITED ))
       xmlw_elemEmpty( writer, "uninhabited" );
    xmlw_endElem( writer ); /* "services" */
-   if (planet_hasService( p, SPOB_SERVICE_LAND )) {
+   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
       if (p->presence.faction > 0) {
          xmlw_startElem( writer, "commodities" );
          for (int i=0; i<array_size(p->commodities); i++) {
@@ -120,13 +120,13 @@ int dpl_saveSpob( const Spob *p )
       }
 
       xmlw_elem( writer, "description", "%s", p->description );
-      if (planet_hasService( p, SPOB_SERVICE_BAR ))
+      if (spob_hasService( p, SPOB_SERVICE_BAR ))
          xmlw_elem( writer, "bar", "%s", p->bar_description );
    }
    xmlw_endElem( writer ); /* "general" */
 
    /* Tech. */
-   if (planet_hasService( p, SPOB_SERVICE_LAND ))
+   if (spob_hasService( p, SPOB_SERVICE_LAND ))
       tech_groupWrite( writer, p->tech );
 
    if (array_size(p->tags)>0) {
@@ -163,7 +163,7 @@ int dpl_saveSpob( const Spob *p )
  */
 int dpl_saveAll (void)
 {
-   const Spob *p = planet_getAll();
+   const Spob *p = spob_getAll();
 
    /* Write planets. */
    for (int i=0; i<array_size(p); i++)

@@ -204,8 +204,8 @@ int comm_openSpob( Spob *planet )
    }
 
    /* Must not be disabled. */
-   if (!planet_hasService(planet, SPOB_SERVICE_INHABITED)) {
-      player_message(_("%s does not respond."), planet_name(planet));
+   if (!spob_hasService(planet, SPOB_SERVICE_INHABITED)) {
+      player_message(_("%s does not respond."), spob_name(planet));
       return 0;
    }
 
@@ -213,7 +213,7 @@ int comm_openSpob( Spob *planet )
 
    /* Create the generic comm window. */
    wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
-         comm_planet->presence.faction, 0, planet->bribed, planet_name(comm_planet) );
+         comm_planet->presence.faction, 0, planet->bribed, spob_name(comm_planet) );
 
    /* Add special buttons. */
    if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))

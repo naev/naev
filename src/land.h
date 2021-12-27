@@ -42,7 +42,7 @@ enum {
  * Landed at.
  */
 extern int landed;
-extern Spob* land_planet;
+extern Spob* land_spob;
 extern int land_takeoff;
 
 /* Tracking for which tabs have been generated. */

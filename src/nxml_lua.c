@@ -259,7 +259,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
       /* User data must be handled here. */
       case LUA_TUSERDATA:
          if (lua_isspob(L,-1)) {
-            Spob *pnt = planet_getIndex( lua_tospob(L,-1) );
+            Spob *pnt = spob_getIndex( lua_tospob(L,-1) );
             if (pnt != NULL)
                nxml_saveData( writer, SPOB_METATABLE, name, name_len, pnt->name, keynum );
             else
@@ -440,9 +440,9 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             free( data );
          }
          else if (strcmp(type,SPOB_METATABLE)==0) {
-            Spob *pnt = planet_get(xml_get(node));
+            Spob *pnt = spob_get(xml_get(node));
             if (pnt != NULL) {
-               lua_pushspob(L,planet_index(pnt));
+               lua_pushspob(L,spob_index(pnt));
             }
             else
                WARN(_("Failed to load nonexistent planet '%s'"), xml_get(node));

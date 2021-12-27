@@ -44,7 +44,7 @@ typedef struct Commodity_ {
    double price; /**< Base price of the commodity. */
    glTexture* gfx_store; /**< Store graphic. */
    glTexture* gfx_space; /**< Space graphic. */
-   CommodityModifier *planet_modifier; /**< The price modifier for different planet types. */
+   CommodityModifier *spob_modifier; /**< The price modifier for different planet types. */
    double period; /**< Period of price fluctuation. */
    double population_modifier; /**< Scale of price modification due to population. */
    CommodityModifier *faction_modifier; /**< Price modifier for different factions. */

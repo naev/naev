@@ -234,7 +234,7 @@ static int mission_meetReq( int mission, int faction,
       if ((pnt==NULL) || strcmp(misn->avail.planet,pnt->name)!=0)
          return 0;
    }
-   else if (planet_isFlag(pnt, SPOB_NOMISNSPAWN))
+   else if (spob_isFlag(pnt, SPOB_NOMISNSPAWN))
       return 0;
 
    /* If system, must match system. */
@@ -366,7 +366,7 @@ static const char* mission_markerTarget( MissionMarker *m )
       case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
       case PNTMARKER_PLOT:
-         return planet_getIndex( m->objid )->name;
+         return spob_getIndex( m->objid )->name;
       default:
          WARN(_("Unknown marker type."));
          return NULL;
@@ -463,12 +463,12 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
       case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
       case PNTMARKER_PLOT:
-         pnt = planet_get( xml_get( node ));
+         pnt = spob_get( xml_get( node ));
          if (pnt == NULL) {
             WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
             return -1;
          }
-         return mission_addMarker( misn, id, planet_index(pnt), type );
+         return mission_addMarker( misn, id, spob_index(pnt), type );
       default:
          WARN(_("Unknown marker type."));
          return -1;
@@ -557,8 +557,8 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
          case PNTMARKER_LOW:
          case PNTMARKER_HIGH:
          case PNTMARKER_PLOT:
-            pnt = planet_getIndex( m->objid );
-            sysname = planet_getSystem( pnt->name );
+            pnt = spob_getIndex( m->objid );
+            sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {
                WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
                continue;
@@ -605,8 +605,8 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
          case PNTMARKER_LOW:
          case PNTMARKER_HIGH:
          case PNTMARKER_PLOT:
-            pnt = planet_getIndex( m->objid );
-            sysname = planet_getSystem( pnt->name );
+            pnt = spob_getIndex( m->objid );
+            sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {
                WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
                continue;
@@ -1026,7 +1026,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
-   MELEMENT( ((temp->avail.planet!=NULL) && planet_get(temp->avail.planet)==NULL), "avail.planet" );
+   MELEMENT( ((temp->avail.planet!=NULL) && spob_get(temp->avail.planet)==NULL), "avail.planet" );
    MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "avail.system" );
 #undef MELEMENT
 

@@ -1231,7 +1231,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
    if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
       /* Check if planet is in range. */
       for (int i=0; i<array_size(cur_system->planets); i++) {
-         if (planet_hasService(cur_system->planets[i], SPOB_SERVICE_INHABITED) &&
+         if (spob_hasService(cur_system->planets[i], SPOB_SERVICE_INHABITED) &&
                (!ignore_int && pilot_inRangeSpob(p, i)) &&
                !areEnemies(p->faction, cur_system->planets[i]->presence.faction)) {
             r = 1;
@@ -3134,7 +3134,7 @@ void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, i
    ind = array_create_size( int, array_size(cur_system->planets) );
    for (int i=0; i<array_size(cur_system->planets); i++) {
       Spob *pnt = cur_system->planets[i];
-      if (planet_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
+      if (spob_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
             !areEnemies( lf, pnt->presence.faction ))
          array_push_back( &ind, i );
    }

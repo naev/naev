@@ -2021,7 +2021,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
             if (xml_isNode(cur,"asset")) {
                buf = xml_get(cur);
-               if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
+               if ((buf != NULL) && ((asset = spob_get(buf)) != NULL))
                   array_grow( &temp->u.map->assets ) = asset;
                else
                   WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);

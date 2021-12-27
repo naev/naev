@@ -375,7 +375,7 @@ void npc_generateMissions (void)
 
    /* Get the missions. */
    missions = missions_genList( &nmissions,
-         land_planet->presence.faction, land_planet, cur_system,
+         land_spob->presence.faction, land_spob, cur_system,
          MIS_AVAIL_BAR );
    /* Mission sshould already be generated and have had their 'create' function
     * run, so NPCs should be running wild (except givers). */

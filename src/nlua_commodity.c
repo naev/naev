@@ -319,7 +319,7 @@ static int commodityL_priceAt( lua_State *L )
 
    c = luaL_validcommodity(L,1);
    p = luaL_validspob(L,2);
-   sysname = planet_getSystem( p->name );
+   sysname = spob_getSystem( p->name );
    if (sysname == NULL) {
       NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
       return 0;
@@ -330,7 +330,7 @@ static int commodityL_priceAt( lua_State *L )
       return 0;
    }
 
-   lua_pushnumber( L, planet_commodityPrice( p, c ) );
+   lua_pushnumber( L, spob_commodityPrice( p, c ) );
    return 1;
 }
 
@@ -355,7 +355,7 @@ static int commodityL_priceAtTime( lua_State *L )
    c = luaL_validcommodity(L,1);
    p = luaL_validspob(L,2);
    t = luaL_validtime(L, 3);
-   sysname = planet_getSystem( p->name );
+   sysname = spob_getSystem( p->name );
    if (sysname == NULL) {
       NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
       return 0;
@@ -366,7 +366,7 @@ static int commodityL_priceAtTime( lua_State *L )
       return 0;
    }
 
-   lua_pushnumber( L, planet_commodityPriceAtTime( p, c, t ) );
+   lua_pushnumber( L, spob_commodityPriceAtTime( p, c, t ) );
    return 1;
 }
 

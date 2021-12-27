@@ -102,12 +102,12 @@ void commodity_exchange_open( unsigned int wid )
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* goods list */
-   if (array_size(land_planet->commodities) > 0) {
-      ngoods = array_size( land_planet->commodities );
+   if (array_size(land_spob->commodities) > 0) {
+      ngoods = array_size( land_spob->commodities );
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for (i=0; i<ngoods; i++) {
-         cgoods[i].image = gl_dupTexture(land_planet->commodities[i]->gfx_store);
-         cgoods[i].caption = strdup( _(land_planet->commodities[i]->name) );
+         cgoods[i].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
+         cgoods[i].caption = strdup( _(land_spob->commodities[i]->name) );
       }
    }
    else {
@@ -156,7 +156,7 @@ void commodity_update( unsigned int wid, const char *str )
    credits2str( buf_credits, player.p->credits, 2 );
    tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
 
-   if (i < 0 || array_size(land_planet->commodities) == 0) {
+   if (i < 0 || array_size(land_spob->commodities) == 0) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
@@ -170,12 +170,12 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com = land_planet->commodities[i];
+   com = land_spob->commodities[i];
 
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );
 
-   planet_averageSpobPrice( land_planet, com, &mean, &std);
+   spob_averageSpobPrice( land_spob, com, &mean, &std);
    credits2str( buf_mean, mean, -1 );
    snprintf( buf_std, sizeof(buf_std), _("%.1f ¤"), std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );
@@ -186,7 +186,7 @@ void commodity_update( unsigned int wid, const char *str )
    owned=pilot_cargoOwned( player.p, com );
    if ( owned > 0 )
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
-   credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
+   credits2str( buf_local_price, spob_commodityPrice( land_spob, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", buf_tonnes_owned );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_purchase_price );
@@ -223,7 +223,7 @@ int commodity_canBuy( const Commodity* com )
 
    failure = 0;
    q = commodity_getMod();
-   price = planet_commodityPrice( land_planet, com ) * q;
+   price = spob_commodityPrice( land_spob, com ) * q;
 
    if (!player_hasCredits( price )) {
       credits2str( buf, price - player.p->credits, 2 );
@@ -265,8 +265,8 @@ void commodity_buy( unsigned int wid, const char *str )
    /* Get selected. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = land_planet->commodities[i];
-   price = planet_commodityPrice( land_planet, com );
+   com   = land_spob->commodities[i];
+   price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
    if (land_errDialogue( com->name, "buyCommodity" ))
@@ -307,8 +307,8 @@ void commodity_sell( unsigned int wid, const char *str )
    /* Get parameters. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = land_planet->commodities[i];
-   price = planet_commodityPrice( land_planet, com );
+   com   = land_spob->commodities[i];
+   price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
    if (land_errDialogue( com->name, "sellCommodity" ))

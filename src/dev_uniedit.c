@@ -356,7 +356,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
 
    /* Find usable factions. */
    factions = faction_getAll();
-   planets  = planet_getAll();
+   planets  = spob_getAll();
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
       int hasfact = 0;
@@ -880,7 +880,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-               getValCol(base), base, getValCol(bonus), bonus, planet_name(pnt) );
+               getValCol(base), base, getValCol(bonus), bonus, spob_name(pnt) );
       }
       for (int j=0; j<array_size(sys->assets_virtual); j++) {
          VirtualSpob *va = sys->assets_virtual[j];
@@ -900,7 +900,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, planet_name(pnt), _(cur->name) );
+                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, spob_name(pnt), _(cur->name) );
          }
          for (int j=0; j<array_size(cur->assets_virtual); j++) {
             VirtualSpob *va = cur->assets_virtual[j];
@@ -1489,7 +1489,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    name = window_getInput( wid, "inpFind" );
 
    /* Search for names. */
-   planets = planet_searchFuzzyCase( name, &nplanets );
+   planets = spob_searchFuzzyCase( name, &nplanets );
    systems = system_searchFuzzyCase( name, &nsystems );
 
    free(found_cur);
@@ -1502,11 +1502,11 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    /* Add planets to the found table. */
    for (int i=0; i<nplanets; i++) {
       /* Spob must be real. */
-      Spob *pnt = planet_get( planets[i] );
+      Spob *pnt = spob_get( planets[i] );
       if (pnt == NULL)
          continue;
 
-      char *sysname = planet_getSystem( planets[i] );
+      char *sysname = spob_getSystem( planets[i] );
       if (sysname == NULL)
          continue;
 

@@ -348,20 +348,20 @@ static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
       return;
 
    /* Check for collision. */
-   if (planet_exists( name )) {
+   if (spob_exists( name )) {
       dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-            name, planet_getSystem( name ) );
+            name, spob_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
       return;
    }
 
    /* Create the new planet. */
-   p        = planet_new();
+   p        = spob_new();
    p->name  = name;
 
    /* Base planet data off another. */
-   b                    = planet_get( space_getRndSpob(0, 0, NULL) );
+   b                    = spob_get( space_getRndSpob(0, 0, NULL) );
    p->class             = strdup( b->class );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
@@ -402,9 +402,9 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
             continue;
 
          /* Check for collision. */
-         if (planet_exists( name )) {
+         if (spob_exists( name )) {
             dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-                  name, planet_getSystem( name ) );
+                  name, spob_getSystem( name ) );
             free(name);
             continue;
          }
@@ -642,7 +642,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       for (int j=0; j<2; j++) {
          switch(sf->point_type[j]) {
             case SAFELANE_LOC_SPOB:
-               pnt = planet_getIndex( sf->point_id[j] );
+               pnt = spob_getIndex( sf->point_id[j] );
                posns[j] = &pnt->pos;
                break;
             case SAFELANE_LOC_DEST_SYS:
@@ -1610,7 +1610,7 @@ static void sysedit_genServicesList( unsigned int wid )
    /* Get all missing services. */
    n = nservices = 0;
    for (int i=1; i<SPOB_SERVICES_MAX; i<<=1) {
-      if (!planet_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
+      if (!spob_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
          n++;
       nservices++; /* Cheaply track all service types. */
    }
@@ -1622,8 +1622,8 @@ static void sysedit_genServicesList( unsigned int wid )
       have[j++] = strdup(_("None"));
    else
       for (int i=1; i<SPOB_SERVICES_MAX; i<<=1)
-         if (planet_hasService(p, i)  && (i != SPOB_SERVICE_INHABITED))
-            have[j++] = strdup( planet_getServiceName( i ) );
+         if (spob_hasService(p, i)  && (i != SPOB_SERVICE_INHABITED))
+            have[j++] = strdup( spob_getServiceName( i ) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL, sysedit_btnRmService );
@@ -1636,8 +1636,8 @@ static void sysedit_genServicesList( unsigned int wid )
       lack[j++] = strdup( _("None") );
    else
       for (int i=1; i<SPOB_SERVICES_MAX; i<<=1)
-         if (!planet_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
-            lack[j++] = strdup( planet_getServiceName(i) );
+         if (!spob_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
+            lack[j++] = strdup( spob_getServiceName(i) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL, sysedit_btnAddService );
@@ -1664,7 +1664,7 @@ static void sysedit_btnAddService( unsigned int wid, const char *unused )
 
    /* Enable the service. All services imply landability. */
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->services |= planet_getService(selected) | SPOB_SERVICE_INHABITED | SPOB_SERVICE_LAND;
+   p->services |= spob_getService(selected) | SPOB_SERVICE_INHABITED | SPOB_SERVICE_LAND;
 
    /* Regenerate the list. */
    sysedit_genServicesList( wid );
@@ -1685,7 +1685,7 @@ static void sysedit_btnRmService( unsigned int wid, const char *unused )
 
    /* Flip the bit. Safe enough, as it's always 1 to start with. */
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->services ^= planet_getService(selected);
+   p->services ^= spob_getService(selected);
 
    /* If landability was removed, the rest must go, too. */
    if (strcmp(selected,"Land")==0)
@@ -2063,7 +2063,7 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       p->gfx_spacePath = strdup( str );
       gl_freeTexture( p->gfx_space );
       p->gfx_space = NULL;
-      planet_gfxLoad( p );
+      spob_gfxLoad( p );
    }
 
    /* For now we close. */

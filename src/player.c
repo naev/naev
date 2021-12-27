@@ -1488,14 +1488,14 @@ void player_targetSpob (void)
 
    /* Find next planet target. */
    for (id=player.p->nav_planet+1; id<array_size(cur_system->planets); id++)
-      if (planet_isKnown( cur_system->planets[id] ))
+      if (spob_isKnown( cur_system->planets[id] ))
          break;
 
    /* Try to select the lowest-indexed valid planet. */
    if (id >= array_size(cur_system->planets) ) {
       id = -1;
       for (int i=0; i<array_size(cur_system->planets); i++)
-         if (planet_isKnown( cur_system->planets[i] )) {
+         if (spob_isKnown( cur_system->planets[i] )) {
             id = i;
             break;
          }
@@ -1544,7 +1544,7 @@ int player_land( int loud )
          planet = cur_system->planets[i];
          double d = vect_dist(&player.p->solid->pos,&planet->pos);
          if (pilot_inRangeSpob( player.p, i ) &&
-               planet_hasService(planet,SPOB_SERVICE_LAND) &&
+               spob_hasService(planet,SPOB_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;
@@ -1576,26 +1576,26 @@ int player_land( int loud )
 
    /* attempt to land at selected planet */
    planet = cur_system->planets[player.p->nav_planet];
-   if (!planet_hasService(planet, SPOB_SERVICE_LAND)) {
+   if (!spob_hasService(planet, SPOB_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-      if (planet_hasService(planet,SPOB_SERVICE_INHABITED)) { /* Basic services */
+      if (spob_hasService(planet,SPOB_SERVICE_INHABITED)) { /* Basic services */
          if (planet->can_land || (planet->land_override > 0))
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  planet_name(planet), planet->land_msg );
+            player_message( "#%c%s>#0 %s", spob_getColourChar(planet),
+                  spob_name(planet), planet->land_msg );
          else if (planet->bribed && (planet->land_override >= 0))
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  planet_name(planet), planet->bribe_ack_msg );
+            player_message( "#%c%s>#0 %s", spob_getColourChar(planet),
+                  spob_name(planet), planet->bribe_ack_msg );
          else { /* Hostile */
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  planet_name(planet), planet->land_msg );
+            player_message( "#%c%s>#0 %s", spob_getColourChar(planet),
+                  spob_name(planet), planet->land_msg );
             return PLAYER_LAND_DENIED;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( _("#oReady to land on %s."), planet_name(planet) );
+         player_message( _("#oReady to land on %s."), spob_name(planet) );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1605,13 +1605,13 @@ int player_land( int loud )
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
       if (loud)
-         player_message(_("#rYou are too far away to land on %s."), planet_name(planet));
+         player_message(_("#rYou are too far away to land on %s."), spob_name(planet));
       return PLAYER_LAND_AGAIN;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
-         player_message(_("#rYou are going too fast to land on %s."), planet_name(planet));
+         player_message(_("#rYou are going too fast to land on %s."), spob_name(planet));
       return PLAYER_LAND_AGAIN;
    }
 
@@ -1632,7 +1632,7 @@ int player_land( int loud )
    /* Do whatever the asset wants to do. */
    if (planet->lua_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_land); /* f */
-      lua_pushspob( naevL, planet_index(planet) );
+      lua_pushspob( naevL, spob_index(planet) );
       if (nlua_pcall( planet->lua_env, 1, 0 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), planet->name, "lua_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
@@ -1677,7 +1677,7 @@ void player_checkLandAck( void )
 
    player_rmFlag(PLAYER_LANDACK);
    player_message( _("#%c%s>#0 Landing permission revoked."),
-         planet_getColourChar(p), planet_name(p) );
+         spob_getColourChar(p), spob_name(p) );
 }
 
 /**
@@ -2290,7 +2290,7 @@ static void player_checkHail (void)
 static void player_planetOutOfRangeMsg (void)
 {
    player_message( _("#r%s is out of comm range, unable to contact."),
-         planet_name(cur_system->planets[player.p->nav_planet]) );
+         spob_name(cur_system->planets[player.p->nav_planet]) );
 }
 
 /**
@@ -3115,7 +3115,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "time" */
 
    /* Current ship. */
-   xmlw_elem(writer, "location", "%s", land_planet->name);
+   xmlw_elem(writer, "location", "%s", land_spob->name);
    player_saveShip( writer, &player.ps ); /* current ship */
 
    /* Ships. */
@@ -3704,10 +3704,10 @@ static Spob* player_parse( xmlNodePtr parent )
    }
 
    /* set player in system */
-   pnt = planet_get( planet );
+   pnt = spob_get( planet );
    /* Get random planet if it's NULL. */
-   if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
-         !planet_hasService(pnt, SPOB_SERVICE_LAND)) {
+   if ((pnt == NULL) || (spob_getSystem(planet) == NULL) ||
+         !spob_hasService(pnt, SPOB_SERVICE_LAND)) {
       WARN(_("Player starts out in non-existent or invalid planet '%s',"
             "trying to find a suitable one instead."),
             planet );
@@ -3745,9 +3745,9 @@ static Spob* player_parse( xmlNodePtr parent )
          WARN(_("Could not find a suitable planet. Choosing a random planet."));
          found = space_getRndSpob(0, 0, NULL); /* This should never, ever fail. */
       }
-      pnt = planet_get( found );
+      pnt = spob_get( found );
    }
-   sys = system_get( planet_getSystem( pnt->name ) );
+   sys = system_get( spob_getSystem( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2.*M_PI;
    r = RNGF() * pnt->radius * 0.8;

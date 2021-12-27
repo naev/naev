@@ -321,7 +321,7 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Spob. */
-      if ((ed->planet != NULL) && (strcmp(ed->planet,land_planet->name)!=0))
+      if ((ed->planet != NULL) && (strcmp(ed->planet,land_spob->name)!=0))
          continue;
 
       /* System. */

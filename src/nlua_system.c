@@ -259,7 +259,7 @@ static int systemL_get( lua_State *L )
    /* Passing a planet */
    else if (lua_isspob(L,1)) {
       pnt = luaL_validspob(L,1);
-      ss = system_get( planet_getSystem( pnt->name ) );
+      ss = system_get( spob_getSystem( pnt->name ) );
    }
    else NLUA_INVALID_PARAMETER(L);
 
@@ -853,7 +853,7 @@ static int systemL_planets( lua_State *L )
    /* Push all planets. */
    lua_newtable(L);
    for (int i=0; i<array_size(s->planets); i++) {
-      lua_pushspob(L,planet_index( s->planets[i] )); /* value */
+      lua_pushspob(L,spob_index( s->planets[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
    return 1;
@@ -997,13 +997,13 @@ static int systemL_setknown( lua_State *L )
    if (r) {
       if (b) {
          for (int i=0; i < array_size(sys->planets); i++)
-            planet_setKnown( sys->planets[i] );
+            spob_setKnown( sys->planets[i] );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
          for (int i=0; i < array_size(sys->planets); i++)
-            planet_rmFlag( sys->planets[i], SPOB_KNOWN );
+            spob_rmFlag( sys->planets[i], SPOB_KNOWN );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }

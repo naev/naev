@@ -86,7 +86,7 @@ static int map_knownInit (void)
          Spob *pnt = sys[i].planets[j];
 
          /* Must be known. */
-         if (!planet_isKnown( pnt ))
+         if (!spob_isKnown( pnt ))
             continue;
 
          /* Must have techs. */
@@ -487,8 +487,8 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
    const char *sysname, *pntname;
 
    /* Match planet first. */
-   pntname = planet_existsCase( name );
-   names   = planet_searchFuzzyCase( name, &len );
+   pntname = spob_existsCase( name );
+   names   = spob_searchFuzzyCase( name, &len );
    if (names == NULL)
       return -1;
 
@@ -496,11 +496,11 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
    if ((pntname != NULL) && (len == 1)) {
 
       /* Check exact match. */
-      sysname = planet_getSystem( pntname );
+      sysname = spob_getSystem( pntname );
       if (sysname != NULL) {
          /* Make sure it's known. */
-         Spob *pnt = planet_get( pntname );
-         if ((pnt != NULL) && planet_isKnown(pnt)) {
+         Spob *pnt = spob_get( pntname );
+         if ((pnt != NULL) && spob_isKnown(pnt)) {
 
             /* Select and show. */
             StarSystem *sys = system_get(sysname);
@@ -521,14 +521,14 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
       StarSystem *sys;
 
       /* Spob must be real. */
-      Spob *pnt = planet_get( names[i] );
+      Spob *pnt = spob_get( names[i] );
       if (pnt == NULL)
          continue;
-      if (!planet_isKnown(pnt))
+      if (!spob_isKnown(pnt))
          continue;
 
       /* System must be known. */
-      sysname = planet_getSystem( names[i] );
+      sysname = spob_getSystem( names[i] );
       if (sysname == NULL)
          continue;
       sys = system_get( sysname );
@@ -559,8 +559,8 @@ static char map_getSpobColourChar( Spob *p )
 {
    char colcode;
 
-   planet_updateLand(p);
-   colcode = planet_getColourChar(p);
+   spob_updateLand(p);
+   colcode = spob_getColourChar(p);
 
    return colcode;
 }
@@ -570,8 +570,8 @@ static char map_getSpobColourChar( Spob *p )
  */
 static const char *map_getSpobSymbol( Spob *p )
 {
-   planet_updateLand(p);
-   return planet_getSymbol(p);
+   spob_updateLand(p);
+   return spob_getSymbol(p);
 }
 
 /**
@@ -769,7 +769,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       pnt = map_known_planets[i];
 
       /* System must be known. */
-      sysname = planet_getSystem( pnt->name );
+      sysname = spob_getSystem( pnt->name );
       if (sysname == NULL)
          continue;
       sys = system_get( sysname );
@@ -884,7 +884,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       pnt = map_known_planets[i];
 
       /* System must be known. */
-      sysname = planet_getSystem( pnt->name );
+      sysname = spob_getSystem( pnt->name );
       if (sysname == NULL)
          continue;
       sys = system_get( sysname );

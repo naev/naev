@@ -45,7 +45,7 @@ enum {
 #define SPOB_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
 #define SPOB_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
 #define SPOB_SERVICES_MAX         (SPOB_SERVICE_BLACKMARKET<<1)
-#define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
+#define spob_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 /*
  * Spob flags.
@@ -57,10 +57,10 @@ enum {
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
 #define SPOB_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
-#define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
-#define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
-#define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define planet_isKnown(p) planet_isFlag(p,SPOB_KNOWN) /**< Checks if planet is known. */
+#define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
+#define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
+#define spob_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
+#define spob_isKnown(p) spob_isFlag(p,SPOB_KNOWN) /**< Checks if planet is known. */
 
 /**
  * @struct MapOverlayPos
@@ -361,36 +361,36 @@ void space_exit (void);
 /*
  * planet stuff
  */
-Spob *planet_new (void);
-const char *planet_name( const Spob *p );
-void planet_gfxLoad( Spob *p );
-int planet_hasSystem( const char* planetname );
-char* planet_getSystem( const char* planetname );
-Spob* planet_getAll (void);
-Spob* planet_get( const char* planetname );
-Spob* planet_getIndex( int ind );
-void planet_setKnown( Spob *p );
-int planet_index( const Spob *p );
-int planet_exists( const char* planetname );
-const char *planet_existsCase( const char* planetname );
-char **planet_searchFuzzyCase( const char* planetname, int *n );
-const char* planet_getServiceName( int service );
-int planet_getService( const char *name );
-const char* planet_getClassName( const char *class );
-credits_t planet_commodityPrice( const Spob *p, const Commodity *c );
-credits_t planet_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t );
-int planet_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, double *std);
-void planet_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
+Spob *spob_new (void);
+const char *spob_name( const Spob *p );
+void spob_gfxLoad( Spob *p );
+int spob_hasSystem( const char* planetname );
+char* spob_getSystem( const char* planetname );
+Spob* spob_getAll (void);
+Spob* spob_get( const char* planetname );
+Spob* spob_getIndex( int ind );
+void spob_setKnown( Spob *p );
+int spob_index( const Spob *p );
+int spob_exists( const char* planetname );
+const char *spob_existsCase( const char* planetname );
+char **spob_searchFuzzyCase( const char* planetname, int *n );
+const char* spob_getServiceName( int service );
+int spob_getService( const char *name );
+const char* spob_getClassName( const char *class );
+credits_t spob_commodityPrice( const Spob *p, const Commodity *c );
+credits_t spob_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t );
+int spob_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, double *std);
+void spob_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
 /* Misc modification. */
-int planet_setFaction( Spob *p, int faction );
-int planet_addCommodity( Spob *p, Commodity *c );
-int planet_addService( Spob *p, int service );
-int planet_rmService( Spob *p, int service );
+int spob_setFaction( Spob *p, int faction );
+int spob_addCommodity( Spob *p, Commodity *c );
+int spob_addService( Spob *p, int service );
+int spob_rmService( Spob *p, int service );
 /* Land related stuff. */
-char planet_getColourChar( const Spob *p );
-const char *planet_getSymbol( const Spob *p );
-const glColour* planet_getColour( const Spob *p );
-void planet_updateLand( Spob *p );
+char spob_getColourChar( const Spob *p );
+const char *spob_getSymbol( const Spob *p );
+const glColour* spob_getColour( const Spob *p );
+void spob_updateLand( Spob *p );
 
 /*
  * Virtual asset stuff.

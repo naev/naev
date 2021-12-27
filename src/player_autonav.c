@@ -186,9 +186,9 @@ void player_autonavPnt( const char *name, int tryland )
 
    if (player_autonavSetup())
       return;
-   p = planet_get( name );
-   player.autonavmsg = strdup( planet_name(p) );
-   player.autonavcol = planet_getColourChar( p );
+   p = spob_get( name );
+   player.autonavmsg = strdup( spob_name(p) );
+   player.autonavcol = spob_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 
    if (tryland) {
