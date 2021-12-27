@@ -18,6 +18,6 @@
   <tech_add>Star Maps</tech_add>
   <tech_add>Engines Low</tech_add>
   <tech_add>Hulls Low</tech_add>
-  <exterior>rocky_small.webp</exterior>
+  <gfx_exterior>rocky_small.webp</gfx_exterior>
  </spob>
 </unidiff>

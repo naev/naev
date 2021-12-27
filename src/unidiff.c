@@ -33,8 +33,8 @@
  * @brief Universe diff filepath list.
  */
 typedef struct UniDiffData_ {
-   char *name; /**< Name of the diff (read from XML). */
-   char *filename; /**< Filename of the diff. */
+   char *name;       /**< Name of the diff (read from XML). */
+   char *filename;   /**< Filename of the diff. */
 } UniDiffData_t;
 static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
@@ -97,6 +97,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_SERVICE_REMOVE,
    HUNK_TYPE_SPOB_TECH_ADD,
    HUNK_TYPE_SPOB_TECH_REMOVE,
+   HUNK_TYPE_SPOB_SPACE,
+   HUNK_TYPE_SPOB_SPACE_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_EXTERIOR,
    HUNK_TYPE_SPOB_EXTERIOR_REVERT, /* For internal usage. */
    /* Target should be faction. */
@@ -650,7 +652,22 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      else if (xml_isNode(cur,"exterior")) {
+      else if (xml_isNode(cur,"gfx_space")) {
+         char str[PATH_MAX];
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_SPACE;
+         snprintf( str, sizeof(str), SPOB_GFX_SPACE_PATH"%s", xml_get(cur));
+         hunk.u.name = strdup(str);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"gfx_exterior")) {
          char str[PATH_MAX];
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -878,6 +895,14 @@ static int diff_patch( xmlNodePtr parent )
                break;
             case HUNK_TYPE_SPOB_BAR_REVERT:
                WARN(_("   [%s] spob bar revert: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_SPOB_SPACE:
+               WARN(_("   [%s] spob space: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_SPOB_SPACE_REVERT:
+               WARN(_("   [%s] spob sipace revert: '%s'"), target,
                      fail->u.name );
                break;
             case HUNK_TYPE_SPOB_EXTERIOR:
@@ -1113,6 +1138,21 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          tech_rmItemTech( p->tech, hunk->u.name );
+         return 0;
+
+      /* Changing spob space graphics. */
+      case HUNK_TYPE_SPOB_SPACE:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->gfx_spaceName;
+         p->gfx_spaceName = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_SPOB_SPACE_REVERT:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->gfx_spaceName = (char*)hunk->o.name;
          return 0;
 
       /* Changing spob exterior graphics. */
@@ -1371,6 +1411,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_SPOB_TECH_ADD;
             break;
 
+         case HUNK_TYPE_SPOB_SPACE:
+            hunk.type = HUNK_TYPE_SPOB_SPACE_REVERT;
+            break;
+
          case HUNK_TYPE_SPOB_EXTERIOR:
             hunk.type = HUNK_TYPE_SPOB_EXTERIOR_REVERT;
             break;
@@ -1452,6 +1496,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_SPOB_TECH_REMOVE:
       case HUNK_TYPE_SPOB_BAR:
       case HUNK_TYPE_SPOB_BAR_REVERT:
+      case HUNK_TYPE_SPOB_SPACE:
+      case HUNK_TYPE_SPOB_SPACE_REVERT:
       case HUNK_TYPE_SPOB_EXTERIOR:
       case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
       case HUNK_TYPE_FACTION_VISIBLE:

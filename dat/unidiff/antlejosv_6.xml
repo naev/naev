@@ -10,6 +10,6 @@
   <service_add>missions</service_add>
   <service_add>inhabited</service_add>
   <service_add>commodity</service_add>
-  <exterior>rocky_small.webp</exterior>
+  <gfx_exterior>rocky_small.webp</gfx_exterior>
  </spob>
 </unidiff>

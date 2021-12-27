@@ -22,6 +22,6 @@
   <tech_add>Systems Low</tech_add>
   <tech_add>Basic Civilian Ships</tech_add>
   <tech_add>Basic Trade Ships</tech_add>
-  <exterior>rocky_small.webp</exterior>
+  <gfx_exterior>rocky_small.webp</gfx_exterior>
  </spob>
 </unidiff>

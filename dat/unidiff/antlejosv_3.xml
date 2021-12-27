@@ -3,6 +3,6 @@
  <spob name="Antlejos V">
   <description>A barren inhospitable moon devoid of all life except for a base camp for terraforming the entire planet. You can see dust on the ground vibrating as heavy machinery operates nearby. A weak atmosphere has started to form around the surface of the planet.</description>
   <service_add>refuel</service_add>
-  <exterior>uninhabited-rocky-cyan-04.webp</exterior>
+  <gfx_exterior>uninhabited-rocky-cyan-04.webp</gfx_exterior>
  </spob>
 </unidiff>
