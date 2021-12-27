@@ -28,6 +28,7 @@
 
   <!-- Assets -->
   <its:translateRule selector="/spob/@name" translate="yes"/>
+  <its:translateRule selector="/spob/displayname" translate="yes"/>
   <its:translateRule selector="/spob/general/bar" translate="yes"/>
   <its:translateRule selector="/spob/general/description" translate="yes"/>
 
