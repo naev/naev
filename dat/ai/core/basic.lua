@@ -381,9 +381,9 @@ function __choose_land_target ( target )
 
    -- Make sure target is valid
    if target == nil then
-      local landplanet = ai.landplanet()
-      if landplanet ~= nil then
-         target = landplanet
+      local landspob = ai.landspob()
+      if landspob ~= nil then
+         target = landspob
 
       -- Bail out if no valid planet could be found.
       else
@@ -460,7 +460,7 @@ function runaway( target )
 
    -- See if there's a target to use when running
    local t = ai.nearhyptarget()
-   local p = ai.nearestplanet()
+   local p = ai.nearestspob()
 
    if p == nil and t == nil then
       ai.pushsubtask( "_run_target" )
