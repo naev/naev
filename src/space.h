@@ -56,6 +56,7 @@ enum {
 #define PLANET_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
 #define PLANET_MARKED      (1<<4) /**< Planet is marked. */
 #define PLANET_RADIUS      (1<<10) /**< Planet has radius defined. */
+#define PLANET_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */

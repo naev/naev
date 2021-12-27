@@ -39,6 +39,7 @@
 #include "nlua_planet.h"
 #include "nlua_gfx.h"
 #include "nlua_camera.h"
+#include "nlua_tex.h"
 #include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -2022,7 +2023,7 @@ void planet_updateLand( Planet *p )
    if (p->lua_can_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_can_land); /* f */
       if (nlua_pcall( p->lua_env, 0, 2 )) {
-         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "lua_can_land", lua_tostring(naevL,-1));
+         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
 
@@ -2125,18 +2126,26 @@ void planet_gfxLoad( Planet *planet )
       if (planet->lua_load) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
          lua_pushplanet(naevL, planet_index(planet)); /* f, p */
-         if (nlua_pcall( planet->lua_env, 1, 0 )) {
-            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_load", lua_tostring(naevL,-1));
+         if (nlua_pcall( planet->lua_env, 1, 1 )) {
+            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
+         if (lua_istex(naevL,-1)) {
+            planet->gfx_space = lua_totex(naevL,-1);
+            planet_setFlag( planet, PLANET_LUATEX );
+         }
+         else
+            WARN(_("Planet '%s' ran '%s' but got non-texture return value!"), planet->name, "load" );
+         lua_pop(naevL,1);
       }
    }
-   if (planet->gfx_space == NULL) {
+   if (planet->gfx_space==NULL) {
       if (planet->gfx_spaceName != NULL)
          planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
-      if (planet->radius < 0.)
-         planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
    }
+   /* Set default size if applicable. */
+   if ((planet->gfx_space!=NULL) && (planet->radius < 0.))
+      planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
 }
 
 /**
@@ -2163,12 +2172,13 @@ void space_gfxUnload( StarSystem *sys )
       if (planet->lua_unload != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
          if (nlua_pcall( planet->lua_env, 0, 0 )) {
-            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_unload", lua_tostring(naevL,-1));
+            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "unload", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
       }
 
-      gl_freeTexture( planet->gfx_space );
+      if (!planet_isFlag(planet, PLANET_LUATEX))
+         gl_freeTexture( planet->gfx_space );
       planet->gfx_space = NULL;
    }
 }
@@ -3745,7 +3755,7 @@ static void space_renderPlanet( const Planet *p )
          lua_pop(naevL,1);
       }
    }
-   if (p->gfx_space)
+   else if (p->gfx_space)
       gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
