@@ -6,18 +6,12 @@
 
 -- We use the default background too!
 local starfield = require "bkg.lib.starfield"
-local love = require 'love'
 local lg = require 'love.graphics'
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
 local nw, nh = naev.gfx.dim()
 local _z, zmax, _zmin = camera.getZoom()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
 -- some helpers to speed up computations
 local znw2, znh2 = zmax*nw/2, zmax*nh/2
 local nw2, nh2 = nw/2, nh/2

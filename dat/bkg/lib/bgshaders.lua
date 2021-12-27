@@ -2,7 +2,6 @@
    Small library to handle rendering a fullscreen background shader.
    Automatically handles scaling as necesary.
 --]]
-local love = require "love"
 local lg = require "love.graphics"
 local love_shaders = require 'love_shaders'
 
@@ -10,18 +9,15 @@ local bgshaders = {}
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
+local nw, nh
 
 local bgshader = {}
 local bgshader_mt = { __index = bgshader }
 local bgbright
 
 function bgshaders.init( shader, scale, params )
+   nw, nh = naev.gfx.dim()
+
    local shd = {
       bgshader = shader,
       bgscale  = scale or 1,

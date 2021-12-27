@@ -1,14 +1,7 @@
 --[[
    Pure Lua implementation of special effects for use with missions
 --]]
-local love = require 'love'
-local lg = require 'love.graphics'
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
+local nw, nh = gfx.dim()
 -- some helpers to speed up computations
 local nw2, nh2 = nw/2, nh/2
 

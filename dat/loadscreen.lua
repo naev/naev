@@ -1,4 +1,3 @@
-local love = require "love"
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
 local love_shaders = require 'love_shaders'
@@ -101,11 +100,6 @@ local sb = naev.conf().bg_brightness
 
 function render( done, msg )
    local nw, nh = naev.gfx.dim()
-   love.x = 0
-   love.y = 0
-   love.w = nw
-   love.h = nh
-   lg.origin()
 
    -- Draw starfield background
    lg.setColor( sb, sb, sb, 1 )

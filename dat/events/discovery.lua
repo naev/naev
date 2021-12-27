@@ -10,7 +10,6 @@
 --]]
 
 local fmt = require 'format'
-local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
 local love_math = require 'love.math'
@@ -18,15 +17,6 @@ local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
 -- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
-
--- Since we don't actually activate the Love framework we have to fake the
--- the dimensions and width, and set up the origins.
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
 
 -- These trigger at specific places
 local system_events = {
@@ -335,7 +325,9 @@ local function handle_event( event )
    return true
 end
 
+local nw, nh
 function create()
+   nw, nh = gfx.dim()
    local sc = system.cur()
    local event = system_events[ sc:nameRaw() ]
    local hasevent = false
@@ -510,8 +502,8 @@ function textfg ()
 
    lg.setColor( 1, 1, 1, 1 )
 
-   local x = (love.w-textcanvas.w)*0.5
-   local y = (love.h-textcanvas.h)*0.3
+   local x = (nw-textcanvas.w)*0.5
+   local y = (nh-textcanvas.h)*0.3
    x = math.floor(x)
    y = math.floor(y)
    lg.draw( textcanvas, x, y )
