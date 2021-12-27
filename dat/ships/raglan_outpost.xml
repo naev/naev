@@ -2,8 +2,8 @@
 <ship name="Raglan Outpost">
  <points>1000</points>
  <base_type>Raglan Outpost</base_type>
- <gfx_space sx="1" sy="1">planet/space/station-battlestation.webp</gfx_space>
- <gfx_comm>planet/exterior/station05.webp</gfx_comm>
+ <gfx_space sx="1" sy="1">spob/space/station-battlestation.webp</gfx_space>
+ <gfx_comm>spob/exterior/station05.webp</gfx_comm>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class display="Station">Battleship</class>

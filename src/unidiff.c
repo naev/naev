@@ -6,7 +6,7 @@
  *
  * @brief Handles the application and removal of 'diffs' to the universe.
  *
- * Diffs allow changing planets, factions, etc... in the universe.
+ * Diffs allow changing spobs, factions, etc... in the universe.
  *  These are meant to be applied after the player triggers them, mostly
  *  through missions.
  */
