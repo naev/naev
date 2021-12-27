@@ -248,17 +248,15 @@ function spawnSquads(highlight)
    -- Shorthand notation for the leader pilots
    leader = {}
 
-   for i, start in ipairs(squads) do
+   for i, start in ipairs(leaderstart) do
       squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
-         k:control()
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
-	 k:setNoDisable()
-         k:follow(squads[i][1]) -- Each ship in the squad follows the squad leader
+         k:setNoDisable()
       end
-      squads[i][1]:taskClear() --...except the leader himself.
+      squads[i][1]:control() -- Only need to control leader. Others will follow
       leader[i] = squads[i][1]
    end
 
@@ -297,8 +295,8 @@ function attacked()
    for _, squad in ipairs(squads) do
       for _, k in ipairs(squad) do
          k:hookClear()
-         k:control()
-         k:attack(player.pilot())
+         k:control(false)
+         k:setHostile()
       end
    end
 end
@@ -319,7 +317,7 @@ end
 
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
-   for _, patroller in ipairs(leader) do
+   for j, patroller in ipairs(leader) do
       if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
          patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
          attacked()
