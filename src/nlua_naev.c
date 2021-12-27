@@ -447,7 +447,7 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "fpu_except", conf.fpu_except );
    PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
    PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
-   PUSH_STRING( L, "dev_save_asset", conf.dev_save_asset );
+   PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
    return 1;
 }
 #undef PUSH_STRING
