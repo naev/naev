@@ -232,7 +232,7 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
 
    -- Scavenger lands (to avoid having to do more vn stuff for now)
    d_scav:taskClear()
-   d_scav:land( system.cur():planets()[1] )
+   d_scav:land( system.cur():spobs()[1] )
 
    -- Update state
    evt_state = 2

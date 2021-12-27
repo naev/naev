@@ -44,7 +44,7 @@ function create ()
 
    -- Find uninhabited planet
    local planets = {}
-   for _k,pk in ipairs(scur:planets()) do
+   for _k,pk in ipairs(scur:spobs()) do
       if not pk:services().inhabited then
          table.insert( planets, pk )
       end

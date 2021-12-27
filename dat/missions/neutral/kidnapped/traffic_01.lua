@@ -47,7 +47,7 @@ function create ()
 
    -- randomly select spawn system and planet where brother will be
    mem.brosys = mem.targetsys[math.random(3)]
-   mem.bropla = mem.brosys:planets()[math.random(#mem.brosys:planets())]
+   mem.bropla = mem.brosys:spobs()[math.random(#mem.brosys:spobs())]
 
    if not misn.claim(mem.brosys) then
       misn.finish(false)

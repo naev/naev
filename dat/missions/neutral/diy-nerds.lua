@@ -55,7 +55,7 @@ end
 function accept ()
    local cp = spob.cur()
    mem.srcPlanet = cp
-   for i,p in ipairs(system.planets(system.cur())) do
+   for i,p in ipairs(system.spobs(system.cur())) do
       if spob.services(p)["land"] and p ~= cp and p:canLand() then
          mem.destPlanet=p
          break -- atm, just take the first landable planet which is not the current one
@@ -307,7 +307,7 @@ end
 -- to check if the spobs in the current system have at least _amount_ of _service_
 function system_hasAtLeast (amount, service)
    local p = {}
-   for i,v in ipairs(system.planets(system.cur())) do
+   for i,v in ipairs(system.spobs(system.cur())) do
       if spob.services(v)[service] and v:canLand() then
          table.insert(p,v)
       end

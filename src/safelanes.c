@@ -65,11 +65,11 @@ enum {
  */
 typedef enum VertexType_ {VERTEX_SPOB, VERTEX_JUMP} VertexType;
 
-/** @brief Reference to a planet or jump point. */
+/** @brief Reference to a spob or jump point. */
 typedef struct Vertex_ {
    int system;      /**< ID of the system containing the object. */
    VertexType type; /**< Which of Naev's list contains it? */
-   int index;       /**< Index in the system's planets or jumps array. */
+   int index;       /**< Index in the system's spobs or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -99,7 +99,7 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_spob_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
+static int *tmp_spob_indices; /**< Array (array.h): The vertex IDs of spobs, to set up ftilde/PPl. Unrelated to spob IDs. */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to set up "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to set up "stiff". */

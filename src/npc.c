@@ -522,7 +522,7 @@ glTexture *npc_getBackground( int i )
    if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
 
-   /* TODO choose the background based on the planet or something. */
+   /* TODO choose the background based on the spob or something. */
    if (npc_array[i].background == NULL)
       npc_array[i].background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
    return npc_array[i].background;

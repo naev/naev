@@ -74,7 +74,7 @@ local function add_local_stars ()
 
    -- If there is an inhabited planet we'll need at least one star
    if not n then
-      for _k,v in ipairs( system.cur():planets() ) do
+      for _k,v in ipairs( system.cur():spobs() ) do
          if v:services().land then
             n = 1
             break

@@ -87,7 +87,7 @@ function create ()
       end
    end
 
-   for _i, j in ipairs( mem.missys:planets() ) do
+   for _i, j in ipairs( mem.missys:spobs() ) do
       for _k, v in pairs( j:commoditiesSold() ) do
          if v == comm then
             misn.finish(false)

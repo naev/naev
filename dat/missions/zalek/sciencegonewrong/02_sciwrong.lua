@@ -39,7 +39,7 @@ local reward = 2e6
 mem.fled = false
 mem.jumps = 0
 mem.t_sys[1] = system.get("Xavier")
-mem.t_pla[1] = mem.t_sys[1]:planets()[1]
+mem.t_pla[1] = mem.t_sys[1]:spobs()[1]
 --mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 
 function create ()

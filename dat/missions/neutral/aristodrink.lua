@@ -165,7 +165,7 @@ function getclueplanet ( mini, maxi )
 
    lmisn.getSysAtDistance( system.cur(), mini, maxi,
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then
                planets[#planets + 1] = {v, s}
             end

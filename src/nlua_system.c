@@ -52,7 +52,7 @@ static int systemL_asteroidPos( lua_State *L );
 static int systemL_asteroidDestroyed( lua_State *L );
 static int systemL_addGatherable( lua_State *L );
 static int systemL_presences( lua_State *L );
-static int systemL_planets( lua_State *L );
+static int systemL_spobs( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
@@ -86,7 +86,7 @@ static const luaL_Reg system_methods[] = {
    { "asteroidDestroyed", systemL_asteroidDestroyed },
    { "addGatherable", systemL_addGatherable },
    { "presences", systemL_presences },
-   { "planets", systemL_planets },
+   { "spobs", systemL_spobs },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "known", systemL_isknown },
@@ -238,9 +238,9 @@ static int systemL_cur( lua_State *L )
  *
  * Behaves differently depending on what you pass as param: <br/>
  *    - string : Gets the system by raw (untranslated) name. <br/>
- *    - planet : Gets the system by planet. <br/>
+ *    - spob : Gets the system by spob. <br/>
  *
- * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
+ * @usage sys = system.get( p ) -- Gets system where spob 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *
  *    @luatparam string|Spob param Read description for details.
@@ -256,7 +256,7 @@ static int systemL_get( lua_State *L )
    if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
    }
-   /* Passing a planet */
+   /* Passing a spob */
    else if (lua_isspob(L,1)) {
       pnt = luaL_validspob(L,1);
       ss = system_get( spob_getSystem( pnt->name ) );
@@ -838,19 +838,19 @@ static int systemL_presences( lua_State *L )
 }
 
 /**
- * @brief Gets the planets in a system.
+ * @brief Gets the spobs in a system.
  *
- * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
- * @usage if \#sys:planets() > 0 then -- System has planets
+ * @usage for key, spob in ipairs( sys:spobs() ) do -- Iterate over spobs in system
+ * @usage if \#sys:spobs() > 0 then -- System has spobs
  *
- *    @luatparam System s System to get planets of
- *    @luatreturn {Spob,...} A table with all the planets
- * @luafunc planets
+ *    @luatparam System s System to get spobs of
+ *    @luatreturn {Spob,...} A table with all the spobs
+ * @luafunc spobs
  */
-static int systemL_planets( lua_State *L )
+static int systemL_spobs( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-   /* Push all planets. */
+   /* Push all spobs. */
    lua_newtable(L);
    for (int i=0; i<array_size(s->spobs); i++) {
       lua_pushspob(L,spob_index( s->spobs[i] )); /* value */

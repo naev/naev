@@ -332,7 +332,7 @@ local function getPreacherTarget()
    local sirius=faction.get( "Sirius" )
 
    --look for nearby landable Sirian planet to land
-   for key, planet in ipairs( system.cur():planets() ) do
+   for key, planet in ipairs( system.cur():spobs() ) do
       if planet:faction()==sirius and planet:services()["land"]  then
          target = planet
          break

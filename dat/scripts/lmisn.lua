@@ -51,7 +51,7 @@ function lmisn.getLandablePlanets( sys, fct, fctmatch )
    sys = sys or system.cur()
    fct = fct and faction.get(fct)
    local pnt_candidates = {}
-   for _k,p in ipairs(sys:planets()) do
+   for _k,p in ipairs(sys:spobs()) do
       local s = p:services()
       if s.land and s.inhabited and not p:tags().restricted then
          if not fct then
@@ -126,7 +126,7 @@ end
 function lmisn.sysFilters.factionLandable( fct, samefact )
    fct = fct and faction.get(fct)
    return function( sys )
-      for k,p in ipairs(sys:planets()) do
+      for k,p in ipairs(sys:spobs()) do
          local s = p:services()
          if s.land and s.inhabited and not p:tags().restricted then
             local f = p:faction()
@@ -149,7 +149,7 @@ end
    local planets = {}
    lmisn.getSysAtDistance( system.cur(), 1, 6,
        function(s)
-           for i, v in ipairs(s:planets()) do
+           for i, v in ipairs(s:spobs()) do
                if v:faction() == faction.get("Sirius") and v:class() == "M" then
                    return true
                end

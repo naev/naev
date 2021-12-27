@@ -37,7 +37,7 @@ function create ()
    local planets = {}
    lmisn.getSysAtDistance( system.cur(), 2, 4,
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
                planets[#planets + 1] = {v, s}
             end
