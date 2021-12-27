@@ -82482,10 +82482,6 @@ msgstr "ボールド"
 msgid "Beautiful"
 msgstr "ビューティフル"
 
-#: dat/scripts/pilotname/pirate.lua:23
-msgid "Benevolent"
-msgstr "博愛"
-
 #: dat/scripts/pilotname/pirate.lua:24
 msgid "Bedrohliche"
 msgstr "べドローリッヒ"
