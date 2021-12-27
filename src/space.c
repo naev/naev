@@ -3640,7 +3640,6 @@ void space_render( const double dt )
 void space_renderOverlay( const double dt )
 {
    Pilot *pplayer;
-   Solid *psolid;
 
    if (cur_system == NULL)
       return;
@@ -3648,7 +3647,7 @@ void space_renderOverlay( const double dt )
    /* Render the debris. */
    pplayer = pilot_get( PLAYER_ID );
    if (pplayer != NULL) {
-      psolid  = pplayer->solid;
+      Solid *psolid  = pplayer->solid;
       for (int i=0; i < array_size(cur_system->asteroids); i++) {
          double x, y;
          AsteroidAnchor *ast = &cur_system->asteroids[i];
