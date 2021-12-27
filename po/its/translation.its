@@ -27,9 +27,10 @@
   <its:translateRule selector="/commodity/description" translate="yes"/>
 
   <!-- Assets -->
-  <its:translateRule selector="/asset/@name" translate="yes"/>
-  <its:translateRule selector="/asset/general/bar" translate="yes"/>
-  <its:translateRule selector="/asset/general/description" translate="yes"/>
+  <its:translateRule selector="/spob/@name" translate="yes"/>
+  <its:translateRule selector="/spob/displayname" translate="yes"/>
+  <its:translateRule selector="/spob/general/bar" translate="yes"/>
+  <its:translateRule selector="/spob/general/description" translate="yes"/>
 
   <!-- Ships -->
   <its:translateRule selector="/ship/@name" translate="yes"/>
@@ -55,6 +56,6 @@
 
   <!-- Unidiff -->
   <its:translateRule selector="/unidiff/system/features" translate="yes"/>
-  <its:translateRule selector="/unidiff/asset/bar" translate="yes"/>
-  <its:translateRule selector="/unidiff/asset/description" translate="yes"/>
+  <its:translateRule selector="/unidiff/spob/bar" translate="yes"/>
+  <its:translateRule selector="/unidiff/spob/description" translate="yes"/>
 </its:rules>
