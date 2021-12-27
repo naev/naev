@@ -970,7 +970,7 @@ int economy_sysLoad( xmlNodePtr parent )
                xmlNodePtr nodeSpob = cur->xmlChildrenNode;
                do {
                   xml_onlyNodes(nodeSpob);
-                  if (xml_isNode(nodeSpob, "spob") || xml_isNode(nodeSpob, "spob")) { /* TODO remove "spob" check in 0.11.0 */
+                  if (xml_isNode(nodeSpob, "spob") || xml_isNode(nodeSpob, "planet")) { /* TODO remove "planet" check in 0.11.0 */
                      xmlr_attr_strd(nodeSpob,"name",str);
                      Spob *spob = spob_get(str);
                      if (spob==NULL)
