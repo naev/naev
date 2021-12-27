@@ -529,7 +529,9 @@ static int planetL_nameRaw( lua_State *L )
 static int planetL_radius( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   planet_gfxLoad(p);  /* Ensure graphics measurements are available. */
+   /* Ensure graphics measurements are available. */
+   if (p->radius < 0.)
+      planet_gfxLoad(p);
    lua_pushnumber(L,p->radius);
    return 1;
 }
