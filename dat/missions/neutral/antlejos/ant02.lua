@@ -39,7 +39,7 @@ local returnpnt, returnsys = spob.getS("Antlejos V")
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
       -- TODO only look for industrial Dvaered planets
       --return p:tags().industrial
       return true

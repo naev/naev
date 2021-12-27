@@ -98,7 +98,7 @@ function create ()
       end
       return true
    end
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not mem.destpnt then
       misn.finish()
    end
@@ -164,7 +164,7 @@ function accept ()
       end
       return false
    end
-   local pnts = lmisn.getPlanetAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
+   local pnts = lmisn.getSpobAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
    table.sort( pnts, function( a, b )
       return a:system():jumpDist() < b:system():jumpDist()
    end )

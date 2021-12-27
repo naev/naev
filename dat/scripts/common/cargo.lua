@@ -23,7 +23,7 @@ end
 --]]
 local function selectPlanets( missdist, routepos, use_hidden )
    local pcur = spob.cur()
-   return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
+   return lmisn.getSpobAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
          if p ~= pcur
             and not (p:system() == system.cur() and (vec2.dist( p:pos(), routepos) < 2500))
             and p:canLand() and car.validDest( p ) then

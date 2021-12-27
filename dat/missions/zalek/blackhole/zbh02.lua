@@ -40,7 +40,7 @@ function create ()
       misn.finish()
    end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
       return p:tags().industrial
    end )
    if not mem.destpnt then

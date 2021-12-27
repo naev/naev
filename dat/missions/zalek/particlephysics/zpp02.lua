@@ -37,7 +37,7 @@ local cargo_amount = 50 -- Amount of cargo to take
 local retpnt, retsys = spob.getS( "Katar I" )
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
       return p:tags().research and p:services()["bar"]
    end )
    if not mem.destpnt then
