@@ -11,7 +11,7 @@ local nebula = {}
 
 function nebula.init( params )
    params = params or {}
-   local steps    = params.stops or 48
+   local steps    = params.stops or 64
    local hue_inner= params.hue_inner or 1.0
    local hue_outter= params.hue_outter or 240/360
    local opacity  = params.opacity or 60
