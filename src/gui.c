@@ -388,7 +388,7 @@ static void gui_renderPlanetTarget (void)
 
       x = planet->pos.x;
       y = planet->pos.y;
-      r = planet->gfx_space->w * 0.5;
+      r = planet->radius;
       gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
