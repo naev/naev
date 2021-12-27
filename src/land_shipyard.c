@@ -214,7 +214,7 @@ void shipyard_update( unsigned int wid, const char* str )
    if (ship->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
    else if (player_hasLicense( ship->license ) ||
-         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
+         (land_planet != NULL && planet_hasService( land_planet, SPOB_SERVICE_BLACKMARKET )))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
@@ -426,12 +426,12 @@ static void shipyard_buy( unsigned int wid, const char* str )
  *    @param shipname Ship being bought.
  *    @param planet Where the player is shopping.
  */
-int shipyard_canBuy( const char *shipname, const Planet *planet )
+int shipyard_canBuy( const char *shipname, const Spob *planet )
 {
    const Ship *ship = ship_get( shipname );
    int failure = 0;
    credits_t price = ship_buyPrice(ship);
-   int blackmarket = ((planet != NULL) && planet_hasService(planet, PLANET_SERVICE_BLACKMARKET));
+   int blackmarket = ((planet != NULL) && planet_hasService(planet, SPOB_SERVICE_BLACKMARKET));
 
    /* Must have the necessary license. */
    if (!blackmarket && !player_hasLicense(ship->license)) {
@@ -509,7 +509,7 @@ int shipyard_canTrade( const char *shipname )
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if ((!player_hasLicense(ship->license)) &&
-         ((land_planet == NULL) || (!planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))) {
+         ((land_planet == NULL) || (!planet_hasService( land_planet, SPOB_SERVICE_BLACKMARKET )))) {
       land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }

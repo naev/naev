@@ -243,14 +243,14 @@ static int systemL_cur( lua_State *L )
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *
- *    @luatparam string|Planet param Read description for details.
+ *    @luatparam string|Spob param Read description for details.
  *    @luatreturn System System matching param.
  * @luafunc get
  */
 static int systemL_get( lua_State *L )
 {
    StarSystem *ss;
-   Planet *pnt;
+   Spob *pnt;
 
    /* Passing a string (systemname) */
    if (lua_isstring(L,1)) {
@@ -844,7 +844,7 @@ static int systemL_presences( lua_State *L )
  * @usage if \#sys:planets() > 0 then -- System has planets
  *
  *    @luatparam System s System to get planets of
- *    @luatreturn {Planet,...} A table with all the planets
+ *    @luatreturn {Spob,...} A table with all the planets
  * @luafunc planets
  */
 static int systemL_planets( lua_State *L )
@@ -1003,7 +1003,7 @@ static int systemL_setknown( lua_State *L )
      }
      else {
          for (int i=0; i < array_size(sys->planets); i++)
-            planet_rmFlag( sys->planets[i], PLANET_KNOWN );
+            planet_rmFlag( sys->planets[i], SPOB_KNOWN );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }

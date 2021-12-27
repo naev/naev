@@ -89,7 +89,7 @@ const char *keybind_info[][3] = {
    { "e_clear", N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
    /* Space Navigation */
    { "autonav", N_("Autonavigation On"), N_("Initializes the autonavigation system.") },
-   { "target_planet", N_("Target Planet"), N_("Cycles through planet targets.") },
+   { "target_planet", N_("Target Spob"), N_("Cycles through planet targets.") },
    { "land", N_("Land"), N_("Attempts to land on the targeted planet or targets the nearest landable planet. Requests permission if necessary.") },
    { "thyperspace", N_("Target Jumpgate"), N_("Cycles through jump points.") },
    { "starmap", N_("Star Map"), N_("Opens the star map.") },
@@ -897,7 +897,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* target planet (cycles like target) */
    } else if (KEY("target_planet") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) player_targetPlanet();
+      if (value==KEY_PRESS) player_targetSpob();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
@@ -1211,8 +1211,8 @@ static void input_clickevent( SDL_Event* event )
          if (input_clickedPilot(pid, autonav))
             return;
       }
-      else if (pntid >= 0) { /* Planet is closest. */
-         if (input_clickedPlanet(pntid, autonav))
+      else if (pntid >= 0) { /* Spob is closest. */
+         if (input_clickedSpob(pntid, autonav))
             return;
       }
       else if (jpid >= 0) { /* Jump point is closest. */
@@ -1270,8 +1270,8 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
    rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
 
-   if (pntid >=0) { /* Planet is closer. */
-      Planet *pnt = cur_system->planets[ pntid ];
+   if (pntid >=0) { /* Spob is closer. */
+      Spob *pnt = cur_system->planets[ pntid ];
       r  = MAX( 1.5 * pnt->radius * zoom, minr );
    }
    else if (jpid >= 0) {
@@ -1297,7 +1297,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    if ((dp > pow2(rp)) || ((d < pow2(r)) && (dp >  d)))
       pid = PLAYER_ID;
 
-   if (d > pow2(r)) /* Planet or jump point is too far. */
+   if (d > pow2(r)) /* Spob or jump point is too far. */
       jpid = pntid = astid = fieid =  -1;
 
    /* Target a pilot, planet or jump, and/or perform an appropriate action. */
@@ -1305,8 +1305,8 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       if (pid != PLAYER_ID) {
          return input_clickedPilot(pid, 0);
       }
-      else if (pntid >= 0) { /* Planet is closest. */
-         return input_clickedPlanet(pntid, 0);
+      else if (pntid >= 0) { /* Spob is closest. */
+         return input_clickedSpob(pntid, 0);
       }
       else if (jpid >= 0) { /* Jump point is closest. */
          return input_clickedJump(jpid, 0);
@@ -1319,7 +1319,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    else if (event->button.button == SDL_BUTTON_RIGHT) {
       if ((pid != PLAYER_ID) && input_clickedPilot(pid, 1))
          return 1;
-      else if ((pntid >= 0) && input_clickedPlanet(pntid, 1))
+      else if ((pntid >= 0) && input_clickedSpob(pntid, 1))
          return 1;
       else if ((jpid >= 0) && input_clickedJump(jpid, 1))
          return 1;
@@ -1377,15 +1377,15 @@ int input_clickedJump( int jump, int autonav )
  *    @param autonav Whether to autonav to the target.
  *    @return Whether the click was used.
  */
-int input_clickedPlanet( int planet, int autonav )
+int input_clickedSpob( int planet, int autonav )
 {
-   Planet *pnt = cur_system->planets[ planet ];
+   Spob *pnt = cur_system->planets[ planet ];
 
    if (!planet_isKnown(pnt))
       return 0;
 
    if (autonav) {
-      player_targetPlanetSet(planet);
+      player_targetSpobSet(planet);
       player_autonavPnt(pnt->name, 0);
       return 1;
    }
@@ -1404,10 +1404,10 @@ int input_clickedPlanet( int planet, int autonav )
          }
       }
       else
-         player_hailPlanet();
+         player_hailSpob();
    }
    else
-      player_targetPlanetSet( planet );
+      player_targetSpobSet( planet );
 
    input_clicked( (void*)pnt );
    return 1;

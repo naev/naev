@@ -9,7 +9,7 @@
  * @brief Represents a found target.
  */
 typedef struct map_find_s {
-   Planet *pnt;         /**< Planet available at. */
+   Spob *pnt;         /**< Spob available at. */
    StarSystem *sys;     /**< System available at. */
    char display[STRMAX_SHORT];   /**< Name to display. */
    int jumps;           /**< Jumps to system. */

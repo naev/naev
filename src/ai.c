@@ -2127,18 +2127,18 @@ static int aiL_brake( lua_State *L )
 /**
  * @brief Get the nearest friendly planet to the pilot.
  *
- *    @luatreturn Planet|nil
+ *    @luatreturn Spob|nil
  *    @luafunc nearestplanet
  */
 static int aiL_getnearestplanet( lua_State *L )
 {
    double dist, d;
    int i, j;
-   LuaPlanet planet;
+   LuaSpob planet;
 
    /* cycle through planets */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+      if (!planet_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
@@ -2162,7 +2162,7 @@ static int aiL_getnearestplanet( lua_State *L )
  * @brief Get the nearest friendly planet to a given position.
  *
  *    @luatparam vec2 pos Position close to the planet.
- *    @luatreturn Planet|nil
+ *    @luatreturn Spob|nil
  *    @luafunc planetfrompos
  */
 static int aiL_getplanetfrompos( lua_State *L )
@@ -2170,13 +2170,13 @@ static int aiL_getplanetfrompos( lua_State *L )
    Vector2d *pos;
    double dist, d;
    int i, j;
-   LuaPlanet planet;
+   LuaSpob planet;
 
    pos = luaL_checkvector(L,1);
 
    /* cycle through planets */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+      if (!planet_hasService(cur_system->planets[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
@@ -2199,12 +2199,12 @@ static int aiL_getplanetfrompos( lua_State *L )
 /**
  * @brief Get a random planet.
  *
- *    @luatreturn Planet|nil
+ *    @luatreturn Spob|nil
  *    @luafunc rndplanet
  */
 static int aiL_getrndplanet( lua_State *L )
 {
-   LuaPlanet planet;
+   LuaSpob planet;
    int p;
 
    /* No planets. */
@@ -2225,15 +2225,15 @@ static int aiL_getrndplanet( lua_State *L )
  * @brief Get a random friendly planet.
  *
  *    @luatparam[opt=false] boolean only_friend Only check for ally planets.
- *    @luatreturn Planet|nil
+ *    @luatreturn Spob|nil
  * @luafunc landplanet
  */
 static int aiL_getlandplanet( lua_State *L )
 {
    int *ind;
    int id;
-   LuaPlanet planet;
-   Planet *p;
+   LuaSpob planet;
+   Spob *p;
    int only_friend;
 
    /* If pilot can't land ignore. */
@@ -2248,11 +2248,11 @@ static int aiL_getlandplanet( lua_State *L )
 
    /* Copy friendly planet.s */
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+      Spob *pnt = cur_system->planets[i];
 
-      if (!planet_hasService(pnt, PLANET_SERVICE_LAND))
+      if (!planet_hasService(pnt, SPOB_SERVICE_LAND))
          continue;
-      if (!planet_hasService(pnt, PLANET_SERVICE_INHABITED))
+      if (!planet_hasService(pnt, SPOB_SERVICE_INHABITED))
          continue;
 
       /* Check conditions. */
@@ -2285,18 +2285,18 @@ static int aiL_getlandplanet( lua_State *L )
 /**
  * @brief Lands on a planet.
  *
- *    @luatparam[opt] Planet pnt planet to land on
+ *    @luatparam[opt] Spob pnt planet to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
-   Planet *planet;
+   Spob *planet;
    HookParam hparam;
 
    if (!lua_isnoneornil(L,1)) {
       int i;
-      Planet *pnt = luaL_validplanet( L, 1 );
+      Spob *pnt = luaL_validplanet( L, 1 );
 
       /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {
@@ -2305,7 +2305,7 @@ static int aiL_land( lua_State *L )
          }
       }
       if (i >= array_size(cur_system->planets)) {
-         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
 
@@ -2321,9 +2321,9 @@ static int aiL_land( lua_State *L )
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
    /* Check landability. */
-   if (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
+   if (!planet_hasService(planet,SPOB_SERVICE_LAND) ||
          (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-            !planet_hasService(planet,PLANET_SERVICE_INHABITED))) {
+            !planet_hasService(planet,SPOB_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
    }

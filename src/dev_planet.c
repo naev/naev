@@ -24,10 +24,10 @@
 /**
  * @brief Saves a planet.
  *
- *    @param p Planet to save.
+ *    @param p Spob to save.
  *    @return 0 on success.
  */
-int dpl_savePlanet( const Planet *p )
+int dpl_saveSpob( const Spob *p )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
@@ -53,7 +53,7 @@ int dpl_savePlanet( const Planet *p )
    /* Some global attributes. */
    xmlw_elem( writer, "displayname", "%s", p->displayname );
    xmlw_elem( writer, "lua", "%s", p->lua_file );
-   if (planet_isFlag(p,PLANET_RADIUS))
+   if (planet_isFlag(p,SPOB_RADIUS))
       xmlw_elem( writer, "radius", "%f", p->radius );
 
    /* Position. */
@@ -84,32 +84,32 @@ int dpl_savePlanet( const Planet *p )
    xmlw_elem( writer, "population", "%g", (double)p->population );
    xmlw_elem( writer, "hide", "%f", p->hide );
    xmlw_startElem( writer, "services" );
-   if (planet_hasService( p, PLANET_SERVICE_LAND )) {
+   if (planet_hasService( p, SPOB_SERVICE_LAND )) {
       if (p->land_func == NULL)
          xmlw_elemEmpty( writer, "land" );
       else
          xmlw_elem( writer, "land", "%s", p->land_func );
    }
-   if (planet_hasService( p, PLANET_SERVICE_REFUEL ))
+   if (planet_hasService( p, SPOB_SERVICE_REFUEL ))
       xmlw_elemEmpty( writer, "refuel" );
-   if (planet_hasService( p, PLANET_SERVICE_BAR ))
+   if (planet_hasService( p, SPOB_SERVICE_BAR ))
       xmlw_elemEmpty( writer, "bar" );
-   if (planet_hasService( p, PLANET_SERVICE_MISSIONS ))
+   if (planet_hasService( p, SPOB_SERVICE_MISSIONS ))
       xmlw_elemEmpty( writer, "missions" );
-   if (planet_hasService( p, PLANET_SERVICE_COMMODITY ))
+   if (planet_hasService( p, SPOB_SERVICE_COMMODITY ))
       xmlw_elemEmpty( writer, "commodity" );
-   if (planet_hasService( p, PLANET_SERVICE_OUTFITS ))
+   if (planet_hasService( p, SPOB_SERVICE_OUTFITS ))
       xmlw_elemEmpty( writer, "outfits" );
-   if (planet_hasService( p, PLANET_SERVICE_SHIPYARD ))
+   if (planet_hasService( p, SPOB_SERVICE_SHIPYARD ))
       xmlw_elemEmpty( writer, "shipyard" );
-   if (planet_hasService( p, PLANET_SERVICE_BLACKMARKET ))
+   if (planet_hasService( p, SPOB_SERVICE_BLACKMARKET ))
       xmlw_elemEmpty( writer, "blackmarket" );
-   if (planet_isFlag( p, PLANET_NOMISNSPAWN ))
+   if (planet_isFlag( p, SPOB_NOMISNSPAWN ))
       xmlw_elemEmpty( writer, "nomissionspawn" );
-   if (planet_isFlag( p, PLANET_UNINHABITED ))
+   if (planet_isFlag( p, SPOB_UNINHABITED ))
       xmlw_elemEmpty( writer, "uninhabited" );
    xmlw_endElem( writer ); /* "services" */
-   if (planet_hasService( p, PLANET_SERVICE_LAND )) {
+   if (planet_hasService( p, SPOB_SERVICE_LAND )) {
       if (p->presence.faction > 0) {
          xmlw_startElem( writer, "commodities" );
          for (int i=0; i<array_size(p->commodities); i++) {
@@ -120,13 +120,13 @@ int dpl_savePlanet( const Planet *p )
       }
 
       xmlw_elem( writer, "description", "%s", p->description );
-      if (planet_hasService( p, PLANET_SERVICE_BAR ))
+      if (planet_hasService( p, SPOB_SERVICE_BAR ))
          xmlw_elem( writer, "bar", "%s", p->bar_description );
    }
    xmlw_endElem( writer ); /* "general" */
 
    /* Tech. */
-   if (planet_hasService( p, PLANET_SERVICE_LAND ))
+   if (planet_hasService( p, SPOB_SERVICE_LAND ))
       tech_groupWrite( writer, p->tech );
 
    if (array_size(p->tags)>0) {
@@ -163,11 +163,11 @@ int dpl_savePlanet( const Planet *p )
  */
 int dpl_saveAll (void)
 {
-   const Planet *p = planet_getAll();
+   const Spob *p = planet_getAll();
 
    /* Write planets. */
    for (int i=0; i<array_size(p); i++)
-      dpl_savePlanet( &p[i] );
+      dpl_saveSpob( &p[i] );
 
    return 0;
 }

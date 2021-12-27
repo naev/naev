@@ -1988,7 +1988,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char *buf;
    StarSystem *system_stack;
-   Planet *asset;
+   Spob *asset;
    JumpPoint *jump;
 
    node = parent->children;
@@ -1997,7 +1997,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create(StarSystem*);
-   temp->u.map->assets  = array_create(Planet*);
+   temp->u.map->assets  = array_create(Spob*);
    temp->u.map->jumps   = array_create(JumpPoint*);
 
    do {

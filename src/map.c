@@ -96,7 +96,7 @@ extern StarSystem *systems_stack;
 
 /*land.c*/
 extern int landed;
-extern Planet* land_planet;
+extern Spob* land_planet;
 
 /*
  * prototypes
@@ -179,10 +179,10 @@ static void map_setup (void)
       /* Check to see if system has landable assets. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
       for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *p = sys->planets[j];
+         Spob *p = sys->planets[j];
          if (!planet_isKnown(p))
             continue;
-         if (!planet_hasService(p, PLANET_SERVICE_LAND))
+         if (!planet_hasService(p, SPOB_SERVICE_LAND))
             continue;
          sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
          planet_updateLand( p );
@@ -203,7 +203,7 @@ static void map_setup (void)
       if (known) {
          /* Check planets. */
          for (int j=0; j<array_size(sys->planets); j++) {
-            Planet *p = sys->planets[j];
+            Spob *p = sys->planets[j];
             if (!planet_isKnown(p)) {
                known = 0;
                break;
@@ -272,8 +272,8 @@ void map_open (void)
     * Status:
     *   $Status
     *
-    * Planets:
-    *   $Planet1, $Planet2, ...
+    * Spobs:
+    *   $Spob1, $Spob2, ...
     *
     * Services:
     *   $Services
@@ -318,10 +318,10 @@ void map_open (void)
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
-   /* Planets */
-   window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cFontGrey, _("Planets:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
+   /* Spobs */
+   window_addText( wid, x, y, 90, 20, 0, "txtSSpobs",
+         &gl_smallFont, &cFontGrey, _("Spobs:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
@@ -400,12 +400,12 @@ static void map_update_commod_av_price (void)
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)))
             continue;
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             double sumPrice = 0;
             int sumCnt = 0;
             double thisPrice;
             for (int j=0 ; j<array_size(sys->planets); j++) {
-               Planet *p = sys->planets[j];
+               Spob *p = sys->planets[j];
                for (int k=0; k<array_size(p->commodities); k++) {
                   if (p->commodities[k] == c) {
                      if (p->commodityPrice[k].cnt > 0) { /*commodity is known about*/
@@ -443,7 +443,7 @@ static void map_update( unsigned int wid )
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
    unsigned int services, services_h, services_u;
-   int hasPlanets;
+   int hasSpobs;
    char t;
    const char *sym, *adj;
    char buf[STRMAX];
@@ -523,10 +523,10 @@ static void map_update( unsigned int wid )
       window_modifyText( wid, "txtPresence", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Planets */
-      window_moveWidget( wid, "txtSPlanets", x, y );
-      window_moveWidget( wid, "txtPlanets", x + indent, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPlanets", _("Unknown") );
+      /* Spobs */
+      window_moveWidget( wid, "txtSSpobs", x, y );
+      window_moveWidget( wid, "txtSpobs", x + indent, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtSpobs", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Services */
@@ -608,7 +608,7 @@ static void map_update( unsigned int wid )
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
-   hasPlanets = 0;
+   hasSpobs = 0;
    p = 0;
    buf[0] = '\0';
    for (int i=0; i<array_size(sys->planets); i++) {
@@ -620,22 +620,22 @@ static void map_update( unsigned int wid )
       t = planet_getColourChar(sys->planets[i]);
       sym = planet_getSymbol(sys->planets[i]);
 
-      if (!hasPlanets)
+      if (!hasSpobs)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       else
          p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
-      hasPlanets = 1;
+      hasSpobs = 1;
    }
-   if (hasPlanets == 0) {
+   if (hasSpobs == 0) {
       strncpy( buf, _("None"), sizeof(buf)-1 );
       buf[sizeof(buf)-1] = '\0';
    }
    /* Update text. */
-   window_modifyText( wid, "txtPlanets", buf );
-   window_moveWidget( wid, "txtSPlanets", x, y );
-   window_moveWidget( wid, "txtPlanets", x + indent, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtSpobs", buf );
+   window_moveWidget( wid, "txtSSpobs", x, y );
+   window_moveWidget( wid, "txtSpobs", x + indent, y-gl_smallFont.h-5 );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
    y -= 40 + (h - gl_smallFont.h);
@@ -647,7 +647,7 @@ static void map_update( unsigned int wid )
    services_h = 0;
    services_u = 0;
    for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *pnt = sys->planets[i];
+      Spob *pnt = sys->planets[i];
       if (!planet_isKnown(pnt))
          continue;
 
@@ -661,7 +661,7 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   for (int i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
+   for (int i=SPOB_SERVICE_MISSIONS; i<=SPOB_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(planet_getServiceName(i)) );
       else if (services_h & i)
@@ -881,10 +881,10 @@ static void map_render( double bx, double by, double w, double h, void *data )
    if (cst->mode == MAPMODE_TRADE)
       map_renderCommod(  bx, by, x, y, z, w, h, r, 0 );
 
-   /* Values from cRadar_tPlanet */
-   col.r = cRadar_tPlanet.r;
-   col.g = cRadar_tPlanet.g;
-   col.b = cRadar_tPlanet.b;
+   /* Values from cRadar_tSpob */
+   col.r = cRadar_tSpob.r;
+   col.g = cRadar_tSpob.g;
+   col.b = cRadar_tSpob.b;
 
    /* Selected system. */
    if (map_selected != -1) {
@@ -892,7 +892,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
       glUseProgram( shaders.selectplanet.program );
       glUniform1f( shaders.selectplanet.dt, map_dt ); /* good enough. */
       gl_renderShader( x + sys->pos.x * z, y + sys->pos.y * z,
-            1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tPlanet, 1 );
+            1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tSpob, 1 );
    }
 
    /* Current planet. */
@@ -1163,11 +1163,11 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE) {
-         if (!system_hasPlanet(sys))
+         if (!system_hasSpob(sys))
             continue;
          if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && mode != MAPMODE_EDITOR)
             continue;
-         /* Planet colours */
+         /* Spob colours */
          if (mode != MAPMODE_EDITOR && !sys_isKnown(sys))
             col = &cInert;
          else if (sys->faction < 0)
@@ -1391,7 +1391,7 @@ static void map_renderSysBlack( double bx, double by, double x, double y, double
          continue;
 
       /* If system is known fill it. */
-      if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+      if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
          ccol = cGrey10;
          gl_renderCircle( tx, ty , r, &ccol, 1 );
       }
@@ -1407,7 +1407,7 @@ void map_renderCommod( double bx, double by, double x, double y,
    int i,j,k;
    StarSystem *sys;
    double tx, ty;
-   Planet *p;
+   Spob *p;
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
@@ -1438,7 +1438,7 @@ void map_renderCommod( double bx, double by, double x, double y,
          }
       } else {
          /* not currently landed, so get max and min price in the selected system. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
             for (j=0 ; j<array_size(sys->planets); j++) {
@@ -1486,7 +1486,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             continue;
 
          /* If system is known fill it. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
             for ( j=0 ; j<array_size(sys->planets); j++) {
@@ -1549,7 +1549,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             continue;
 
          /* If system is known fill it. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             double sumPrice=0;
             int sumCnt=0;
             for ( j=0 ; j<array_size(sys->planets); j++) {
@@ -1837,7 +1837,7 @@ static void map_genModeList(void)
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
       for (int j=0 ; j<array_size(sys->planets); j++) {
-         Planet *p = sys->planets[j];
+         Spob *p = sys->planets[j];
          for (int k=0; k<array_size(p->commodities); k++) {
             if (p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                int l;
@@ -2549,7 +2549,7 @@ int map_isUseless( const Outfit* map )
          return 0;
 
    for (int i=0; i<array_size(map->u.map->assets);i++) {
-      Planet *p = map->u.map->assets[i];
+      Spob *p = map->u.map->assets[i];
       if (!planet_hasSystem( p->name ) )
          continue;
       if (!planet_isKnown(p))
@@ -2586,7 +2586,7 @@ int localmap_map( const Outfit *lmap )
 
    detect = lmap->u.lmap.asset_detect;
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
+      Spob *p = cur_system->planets[i];
       if (!planet_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
@@ -2619,7 +2619,7 @@ int localmap_isUseless( const Outfit *lmap )
 
    detect = lmap->u.lmap.asset_detect;
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
+      Spob *p = cur_system->planets[i];
       if ((mod*p->hide <= detect) && !planet_isKnown( p ))
          return 0;
    }

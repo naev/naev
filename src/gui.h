@@ -63,7 +63,7 @@ int gui_radarClickEvent( SDL_Event* event );
 /*
  * Render radar.
  */
-void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay );
+void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay );
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay );
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay );
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay );
@@ -72,7 +72,7 @@ void gui_renderPlayer( double res, int overlay );
 /*
  * Targeting.
  */
-void gui_targetPlanetGFX( glTexture *gfx );
+void gui_targetSpobGFX( glTexture *gfx );
 void gui_targetPilotGFX( glTexture *gfx );
 
 /*
@@ -94,4 +94,4 @@ void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
 char* gui_pick (void);
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );
-int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet *pnt );
+int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt );

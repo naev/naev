@@ -26,22 +26,22 @@
 /*
  * Prototypes.
  */
-static int dsys_compPlanet( const void *planet1, const void *planet2 );
+static int dsys_compSpob( const void *planet1, const void *planet2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
 
 /**
  * @brief Compare function for planet qsort.
  *
- *    @param planet1 Planet 1 to sort.
- *    @param planet2 Planet 2 to sort.
+ *    @param planet1 Spob 1 to sort.
+ *    @param planet2 Spob 2 to sort.
  *    @return Order to sort.
  */
-static int dsys_compPlanet( const void *planet1, const void *planet2 )
+static int dsys_compSpob( const void *planet1, const void *planet2 )
 {
-   const Planet *p1, *p2;
+   const Spob *p1, *p2;
 
-   p1 = * (const Planet**) planet1;
-   p2 = * (const Planet**) planet2;
+   p1 = * (const Spob**) planet1;
+   p2 = * (const Spob**) planet2;
 
    return strcmp( p1->name, p2->name );
 }
@@ -90,7 +90,7 @@ int dsys_saveSystem( StarSystem *sys )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   const Planet **sorted_planets;
+   const Spob **sorted_planets;
    const VirtualAsset **sorted_assets;
    const JumpPoint **sorted_jumps;
    char *file, *cleanName;
@@ -139,9 +139,9 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "pos" */
 
    /* Sort planets. */
-   sorted_planets = malloc( sizeof(Planet*) * array_size(sys->planets) );
-   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * array_size(sys->planets) );
-   qsort( sorted_planets, array_size(sys->planets), sizeof(Planet*), dsys_compPlanet );
+   sorted_planets = malloc( sizeof(Spob*) * array_size(sys->planets) );
+   memcpy( sorted_planets, sys->planets, sizeof(Spob*) * array_size(sys->planets) );
+   qsort( sorted_planets, array_size(sys->planets), sizeof(Spob*), dsys_compSpob );
 
    /* Sort virtual assets. */
    sorted_assets = malloc( sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );

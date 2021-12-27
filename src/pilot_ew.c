@@ -22,7 +22,7 @@
 
 #define EW_ASTEROID_DIST      7.5e3
 #define EW_JUMPDETECT_DIST    7.5e3
-#define EW_PLANETDETECT_DIST  20e3 /* TODO something better than this. */
+#define EW_SPOBDETECT_DIST  20e3 /* TODO something better than this. */
 
 static double ew_interference = 1.; /**< Interference factor. */
 
@@ -272,13 +272,13 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
  * @brief Check to see if a planet is in sensor range of the pilot.
  *
  *    @param p Pilot who is trying to check to see if the planet is in sensor range.
- *    @param target Planet to see if is in sensor range.
+ *    @param target Spob to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-int pilot_inRangePlanet( const Pilot *p, int target )
+int pilot_inRangeSpob( const Pilot *p, int target )
 {
    double d;
-   Planet *pnt;
+   Spob *pnt;
    double sense;
 
    /* pilot must exist */
@@ -287,7 +287,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
    /* Get the planet. */
    pnt = cur_system->planets[target];
-   sense = EW_PLANETDETECT_DIST;
+   sense = EW_SPOBDETECT_DIST;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );

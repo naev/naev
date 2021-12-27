@@ -336,7 +336,7 @@ typedef struct Pilot_ {
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
    void *ptarget;       /**< AI pilot real target. */
-   int nav_planet;      /**< Planet land target. */
+   int nav_planet;      /**< Spob land target. */
    int nav_hyperspace;  /**< Hyperspace target. */
    int nav_anchor;      /**< Asteroid anchor target. */
    int nav_asteroid;    /**< Asteroid target. */
@@ -457,7 +457,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_replacePlayer( Pilot* after );
-void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
+void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
 /*

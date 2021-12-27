@@ -34,7 +34,7 @@
 #define GRAPHIC_WIDTH  256 /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
+static Spob *comm_planet     = NULL; /**< Spob currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
@@ -46,7 +46,7 @@ static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
 static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, const char *name );
 static void comm_close( unsigned int wid, const char *unused );
-static void comm_bribePlanet( unsigned int wid, const char *unused );
+static void comm_bribeSpob( unsigned int wid, const char *unused );
 static const char* comm_getString( const Pilot *p, const char *str );
 
 /**
@@ -189,10 +189,10 @@ int comm_openPilot( unsigned int pilot )
 /**
  * @brief Opens a communication dialogue with a planet.
  *
- *    @param planet Planet to communicate with.
+ *    @param planet Spob to communicate with.
  *    @return 0 on success.
  */
-int comm_openPlanet( Planet *planet )
+int comm_openSpob( Spob *planet )
 {
    unsigned int wid;
 
@@ -204,7 +204,7 @@ int comm_openPlanet( Planet *planet )
    }
 
    /* Must not be disabled. */
-   if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
+   if (!planet_hasService(planet, SPOB_SERVICE_INHABITED)) {
       player_message(_("%s does not respond."), planet_name(planet));
       return 0;
    }
@@ -218,7 +218,7 @@ int comm_openPlanet( Planet *planet )
    /* Add special buttons. */
    if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
       window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribePlanet, SDLK_b );
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribeSpob, SDLK_b );
 
    return 0;
 }
@@ -363,7 +363,7 @@ static void comm_close( unsigned int wid, const char *unused )
  *    @param wid ID of window calling the function.
  *    @param unused Unused.
  */
-static void comm_bribePlanet( unsigned int wid, const char *unused )
+static void comm_bribeSpob( unsigned int wid, const char *unused )
 {
    (void) unused;
    int answer;
@@ -402,7 +402,7 @@ static void comm_bribePlanet( unsigned int wid, const char *unused )
 
    /* Reopen window. */
    window_destroy( wid );
-   comm_openPlanet( comm_planet );
+   comm_openSpob( comm_planet );
 }
 
 /**

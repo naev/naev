@@ -350,7 +350,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    (void) unused;
    unsigned int wid;
    int n, h, k;
-   Planet *planets;
+   Spob *planets;
    char **str;
    int *factions;
 
@@ -361,7 +361,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
       int f = factions[i];
       int hasfact = 0;
       for (int j=0; j<array_size(planets); j++) {
-         Planet *p = &planets[j];
+         Spob *p = &planets[j];
          if ((p->presence.faction != f) && !factionGenerates(p->presence.faction,f,NULL))
             continue;
          if (p->presence.base==0. && p->presence.bonus==0.)
@@ -818,7 +818,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       /* Count assets. */
       l = 0;
       for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *pnt = sys->planets[j];
+         Spob *pnt = sys->planets[j];
          int n;
          char **techs;
          if (pnt->tech==NULL)
@@ -876,7 +876,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
       /* Local presence sources. */
       for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *pnt = sys->planets[j];
+         Spob *pnt = sys->planets[j];
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
@@ -896,7 +896,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       for (int k=0; k<array_size(sys->jumps); k++) {
          cur = sys->jumps[k].target;
          for (int j=0; j<array_size(cur->planets); j++) {
-            Planet *pnt = cur->planets[j];
+            Spob *pnt = cur->planets[j];
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
@@ -1501,8 +1501,8 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 
    /* Add planets to the found table. */
    for (int i=0; i<nplanets; i++) {
-      /* Planet must be real. */
-      Planet *pnt = planet_get( planets[i] );
+      /* Spob must be real. */
+      Spob *pnt = planet_get( planets[i] );
       if (pnt == NULL)
          continue;
 

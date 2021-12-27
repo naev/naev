@@ -61,7 +61,7 @@ static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
-      const Planet *pnt, const StarSystem *sys );
+      const Spob *pnt, const StarSystem *sys );
 static int mission_matchFaction( const MissionData* misn, int faction );
 static int mission_location( const char *loc );
 /* Loading. */
@@ -218,12 +218,12 @@ int mission_alreadyRunning( const MissionData* misn )
  *
  *    @param mission ID of the mission to check.
  *    @param faction Faction of the current planet.
- *    @param pnt Planet to run on.
+ *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @return 1 if requirements are met, 0 if they aren't.
  */
 static int mission_meetReq( int mission, int faction,
-      const Planet *pnt, const StarSystem *sys )
+      const Spob *pnt, const StarSystem *sys )
 {
    const MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
@@ -234,7 +234,7 @@ static int mission_meetReq( int mission, int faction,
       if ((pnt==NULL) || strcmp(misn->avail.planet,pnt->name)!=0)
          return 0;
    }
-   else if (planet_isFlag(pnt, PLANET_NOMISNSPAWN))
+   else if (planet_isFlag(pnt, SPOB_NOMISNSPAWN))
       return 0;
 
    /* If system, must match system. */
@@ -292,10 +292,10 @@ static int mission_meetReq( int mission, int faction,
  *
  *    @param loc Location to match.
  *    @param faction Faction of the planet.
- *    @param pnt Planet to run on.
+ *    @param pnt Spob to run on.
  *    @param sys System to run on.
  */
-void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys )
+void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys )
 {
    for (int i=0; i<array_size(mission_stack); i++) {
       Mission mission;
@@ -373,7 +373,7 @@ static const char* mission_markerTarget( MissionMarker *m )
    }
 }
 
-MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t )
+MissionMarkerType mission_markerTypeSpobToSystem( MissionMarkerType t )
 {
    switch (t) {
       case SYSMARKER_COMPUTER:
@@ -395,7 +395,7 @@ MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t )
    }
 }
 
-MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t )
+MissionMarkerType mission_markerTypeSystemToSpob( MissionMarkerType t )
 {
    switch (t) {
       case SYSMARKER_COMPUTER:
@@ -443,7 +443,7 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
    int id;
    MissionMarkerType type;
    StarSystem *ssys;
-   Planet *pnt;
+   Spob *pnt;
 
    xmlr_attr_int_def( node, "id", id, -1 );
    xmlr_attr_int_def( node, "type", type, -1 );
@@ -542,7 +542,7 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
    /* Set all the markers. */
    for (int i=0; i<array_size(misn->markers); i++) {
       StarSystem *sys;
-      Planet *pnt;
+      Spob *pnt;
       const char *sysname;
       MissionMarker *m = &misn->markers[i];
 
@@ -590,7 +590,7 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
    /* Set all the markers. */
    for (int i=0; i<array_size(misn->markers); i++) {
       StarSystem *sys;
-      Planet *pnt;
+      Spob *pnt;
       const char *sysname;
       MissionMarker *m = &misn->markers[i];;
 
@@ -832,13 +832,13 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *
  *    @param[out] n Missions created.
  *    @param faction Faction of the planet.
- *    @param pnt Planet to run on.
+ *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
 Mission* missions_genList( int *n, int faction,
-      const Planet *pnt, const StarSystem *sys, MissionAvailability loc )
+      const Spob *pnt, const StarSystem *sys, MissionAvailability loc )
 {
    int m, alloced;
    int rep;

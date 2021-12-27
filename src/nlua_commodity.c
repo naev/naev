@@ -306,14 +306,14 @@ static int commodityL_price( lua_State *L )
  * @usage if c:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of a commodity at polaris prime
  *
  *    @luatparam Commodity c Commodity to get information of.
- *    @luatparam Planet p Planet to get price at.
+ *    @luatparam Spob p Spob to get price at.
  *    @luatreturn number The price of the commodity at the planet.
  * @luafunc priceAt
  */
 static int commodityL_priceAt( lua_State *L )
 {
    Commodity *c;
-   Planet *p;
+   Spob *p;
    StarSystem *sys;
    char *sysname;
 
@@ -321,12 +321,12 @@ static int commodityL_priceAt( lua_State *L )
    p = luaL_validplanet(L,2);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), p->name );
+      NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'."), p->name, sysname );
+      NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
       return 0;
    }
 
@@ -340,7 +340,7 @@ static int commodityL_priceAt( lua_State *L )
  * @usage if c:priceAtTime( planet.get("Polaris Prime"), time ) > 100 then -- Checks price of a commodity at polaris prime
  *
  *    @luatparam Commodity c Commodity to get information of.
- *    @luatparam Planet p Planet to get price at.
+ *    @luatparam Spob p Spob to get price at.
  *    @luatparam Time t Time to get the price at.
  *    @luatreturn number The price of the commodity at the planet.
  * @luafunc priceAtTime
@@ -348,7 +348,7 @@ static int commodityL_priceAt( lua_State *L )
 static int commodityL_priceAtTime( lua_State *L )
 {
    Commodity *c;
-   Planet *p;
+   Spob *p;
    StarSystem *sys;
    char *sysname;
    ntime_t t;
@@ -357,12 +357,12 @@ static int commodityL_priceAtTime( lua_State *L )
    t = luaL_validtime(L, 3);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), p->name );
+      NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
       return 0;
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, _("Planet '%s' can not find its system '%s'."), p->name, sysname );
+      NLUA_ERROR( L, _("Spob '%s' can not find its system '%s'."), p->name, sysname );
       return 0;
    }
 

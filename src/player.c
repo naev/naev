@@ -143,7 +143,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship );
 static int player_saveMetadata( xmlTextWriterPtr writer );
-static Planet* player_parse( xmlNodePtr parent );
+static Spob* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
@@ -160,7 +160,7 @@ static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
-static int player_filterSuitablePlanet( Planet *p );
+static int player_filterSuitableSpob( Spob *p );
 static void player_planetOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_thinkMouseFly(void);
@@ -170,7 +170,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
-Planet* player_load( xmlNodePtr parent ); /* save.c */
+Spob* player_load( xmlNodePtr parent ); /* save.c */
 
 /**
  * @brief Initializes player stuff.
@@ -1410,7 +1410,7 @@ void player_restoreControl( int reason, const char *str )
  *
  *    @param id Target planet or -1 if none should be selected.
  */
-void player_targetPlanetSet( int id )
+void player_targetSpobSet( int id )
 {
    int old;
 
@@ -1478,7 +1478,7 @@ void player_targetAsteroidSet( int field, int id )
 /**
  * @brief Cycle through planet targets.
  */
-void player_targetPlanet (void)
+void player_targetSpob (void)
 {
    int id;
 
@@ -1502,7 +1502,7 @@ void player_targetPlanet (void)
    }
 
    /* Untarget if out of range. */
-   player_targetPlanetSet( id );
+   player_targetSpobSet( id );
 }
 
 /**
@@ -1513,7 +1513,7 @@ void player_targetPlanet (void)
  */
 int player_land( int loud )
 {
-   Planet *planet;
+   Spob *planet;
    int silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
@@ -1543,14 +1543,14 @@ int player_land( int loud )
       for (int i=0; i<array_size(cur_system->planets); i++) {
          planet = cur_system->planets[i];
          double d = vect_dist(&player.p->solid->pos,&planet->pos);
-         if (pilot_inRangePlanet( player.p, i ) &&
-               planet_hasService(planet,PLANET_SERVICE_LAND) &&
+         if (pilot_inRangeSpob( player.p, i ) &&
+               planet_hasService(planet,SPOB_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;
          }
       }
-      player_targetPlanetSet( tp );
+      player_targetSpobSet( tp );
       player_hyperspacePreempt(0);
 
       /* no landable planet */
@@ -1560,7 +1560,7 @@ int player_land( int loud )
       silent = 1; /* Suppress further targeting noises. */
    }
    /* Check if planet is in range. */
-   else if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
+   else if (!pilot_inRangeSpob( player.p, player.p->nav_planet )) {
       player_planetOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
    }
@@ -1576,12 +1576,12 @@ int player_land( int loud )
 
    /* attempt to land at selected planet */
    planet = cur_system->planets[player.p->nav_planet];
-   if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+   if (!planet_hasService(planet, SPOB_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-      if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
+      if (planet_hasService(planet,SPOB_SERVICE_INHABITED)) { /* Basic services */
          if (planet->can_land || (planet->land_override > 0))
             player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
                   planet_name(planet), planet->land_msg );
@@ -1634,7 +1634,7 @@ int player_land( int loud )
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_land); /* f */
       lua_pushplanet( naevL, planet_index(planet) );
       if (nlua_pcall( planet->lua_env, 1, 0 )) {
-         WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "lua_land", lua_tostring(naevL,-1));
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), planet->name, "lua_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
 
@@ -1657,7 +1657,7 @@ int player_land( int loud )
  */
 void player_checkLandAck( void )
 {
-   Planet *p;
+   Spob *p;
 
    /* No authorization to revoke. */
    if ((player.p == NULL) || !player_isFlag(PLAYER_LANDACK))
@@ -1938,7 +1938,7 @@ void player_brokeHyperspace (void)
    /* Prevent targeted planet # from carrying over. */
    gui_setNav();
    gui_setTarget();
-   player_targetPlanetSet( -1 );
+   player_targetSpobSet( -1 );
    player_targetAsteroidSet( -1, -1 );
 
    /* calculates the time it takes, call before space_init */
@@ -2149,7 +2149,7 @@ void player_targetClear (void)
       map_clear();
    }
    else if (player.p->target == PLAYER_ID)
-      player_targetPlanetSet( -1 );
+      player_targetSpobSet( -1 );
    else
       player_targetSet( PLAYER_ID );
    gui_setNav();
@@ -2161,7 +2161,7 @@ void player_targetClear (void)
 void player_targetClearAll (void)
 {
    player_targetHyperspaceSet( -1 );
-   player_targetPlanetSet( -1 );
+   player_targetSpobSet( -1 );
    player_targetAsteroidSet( -1, -1 );
    player_targetSet( PLAYER_ID );
 }
@@ -2306,8 +2306,8 @@ void player_hail (void)
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
    else if (player.p->nav_planet != -1) {
-      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
-         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+      if (pilot_inRangeSpob( player.p, player.p->nav_planet ))
+         comm_openSpob( cur_system->planets[ player.p->nav_planet ] );
       else
          player_planetOutOfRangeMsg();
    }
@@ -2321,15 +2321,15 @@ void player_hail (void)
 /**
  * @brief Opens communication with the player's planet target.
  */
-void player_hailPlanet (void)
+void player_hailSpob (void)
 {
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    if (player.p->nav_planet != -1) {
-      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
-         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+      if (pilot_inRangeSpob( player.p, player.p->nav_planet ))
+         comm_openSpob( cur_system->planets[ player.p->nav_planet ] );
       else
          player_planetOutOfRangeMsg();
    }
@@ -3396,10 +3396,10 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
  *    @param parent Node where the player stuff is to be found.
  *    @return 0 on success.
  */
-Planet* player_load( xmlNodePtr parent )
+Spob* player_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
-   Planet *pnt;
+   Spob *pnt;
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
@@ -3541,13 +3541,13 @@ static void player_tryAddLicense( const char *name )
  * @brief Parses the player node.
  *
  *    @param parent The player node.
- *    @return Planet to start on on success.
+ *    @return Spob to start on on success.
  */
-static Planet* player_parse( xmlNodePtr parent )
+static Spob* player_parse( xmlNodePtr parent )
 {
    const char *planet;
    unsigned int services;
-   Planet *pnt;
+   Spob *pnt;
    xmlNodePtr node, cur;
    int map_overlay_enabled;
    StarSystem *sys;
@@ -3707,7 +3707,7 @@ static Planet* player_parse( xmlNodePtr parent )
    pnt = planet_get( planet );
    /* Get random planet if it's NULL. */
    if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
-         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+         !planet_hasService(pnt, SPOB_SERVICE_LAND)) {
       WARN(_("Player starts out in non-existent or invalid planet '%s',"
             "trying to find a suitable one instead."),
             planet );
@@ -3724,17 +3724,17 @@ static Planet* player_parse( xmlNodePtr parent )
        */
       const char *found = NULL;
       for (int i=0; i<3; i++) {
-         services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |
-               PLANET_SERVICE_REFUEL;
+         services = SPOB_SERVICE_LAND | SPOB_SERVICE_INHABITED |
+               SPOB_SERVICE_REFUEL;
 
          if (i == 0)
-            services |= PLANET_SERVICE_SHIPYARD;
+            services |= SPOB_SERVICE_SHIPYARD;
 
          if (i != 2)
-            services |= PLANET_SERVICE_OUTFITS;
+            services |= SPOB_SERVICE_OUTFITS;
 
-         found = space_getRndPlanet( 1, services,
-               (i != 2) ? player_filterSuitablePlanet : NULL );
+         found = space_getRndSpob( 1, services,
+               (i != 2) ? player_filterSuitableSpob : NULL );
          if (found != NULL)
             break;
 
@@ -3743,7 +3743,7 @@ static Planet* player_parse( xmlNodePtr parent )
 
       if (found == NULL) {
          WARN(_("Could not find a suitable planet. Choosing a random planet."));
-         found = space_getRndPlanet(0, 0, NULL); /* This should never, ever fail. */
+         found = space_getRndSpob(0, 0, NULL); /* This should never, ever fail. */
       }
       pnt = planet_get( found );
    }
@@ -3766,12 +3766,12 @@ static Planet* player_parse( xmlNodePtr parent )
 }
 
 /**
- * @brief Filter function for space_getRndPlanet
+ * @brief Filter function for space_getRndSpob
  *
- *    @param p Planet.
+ *    @param p Spob.
  *    @return Whether the planet is suitable for teleporting to.
  */
-static int player_filterSuitablePlanet( Planet *p )
+static int player_filterSuitableSpob( Spob *p )
 {
    return !areEnemies(p->presence.faction, FACTION_PLAYER);
 }

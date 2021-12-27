@@ -5,7 +5,7 @@
 
 /* Forward declarations. */
 typedef struct StarSystem_ StarSystem;
-typedef struct Planet_ Planet;
+typedef struct Spob_ Spob;
 typedef struct JumpPoint_ JumpPoint;
 
 #include "commodity.h"
@@ -35,32 +35,32 @@ enum {
 /*
  * planet services
  */
-#define PLANET_SERVICE_LAND         (1<<0) /**< Can land. */
-#define PLANET_SERVICE_INHABITED    (1<<1) /**< Planet is inhabited. */
-#define PLANET_SERVICE_REFUEL       (1<<2) /**< Has refueling. */
-#define PLANET_SERVICE_BAR          (1<<3) /**< Has bar and thus news. */
-#define PLANET_SERVICE_MISSIONS     (1<<4) /**< Has mission computer. */
-#define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
-#define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
-#define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
-#define PLANET_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
-#define PLANET_SERVICES_MAX         (PLANET_SERVICE_BLACKMARKET<<1)
+#define SPOB_SERVICE_LAND         (1<<0) /**< Can land. */
+#define SPOB_SERVICE_INHABITED    (1<<1) /**< Spob is inhabited. */
+#define SPOB_SERVICE_REFUEL       (1<<2) /**< Has refueling. */
+#define SPOB_SERVICE_BAR          (1<<3) /**< Has bar and thus news. */
+#define SPOB_SERVICE_MISSIONS     (1<<4) /**< Has mission computer. */
+#define SPOB_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
+#define SPOB_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
+#define SPOB_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
+#define SPOB_SERVICE_BLACKMARKET  (1<<8) /**< Disables license restrictions on goods. */
+#define SPOB_SERVICES_MAX         (SPOB_SERVICE_BLACKMARKET<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 /*
- * Planet flags.
+ * Spob flags.
  */
-#define PLANET_KNOWN       (1<<0) /**< Planet is known. */
-#define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
-#define PLANET_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
-#define PLANET_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
-#define PLANET_MARKED      (1<<4) /**< Planet is marked. */
-#define PLANET_RADIUS      (1<<10) /**< Planet has radius defined. */
-#define PLANET_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
+#define SPOB_KNOWN       (1<<0) /**< Spob is known. */
+#define SPOB_BLACKMARKET (1<<1) /**< Spob is a black market. */
+#define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
+#define SPOB_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
+#define SPOB_MARKED      (1<<4) /**< Spob is marked. */
+#define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
+#define SPOB_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define planet_isKnown(p) planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
+#define planet_isKnown(p) planet_isFlag(p,SPOB_KNOWN) /**< Checks if planet is known. */
 
 /**
  * @struct MapOverlayPos
@@ -94,20 +94,21 @@ typedef struct VirtualAsset_ {
 } VirtualAsset;
 
 /**
- * @struct Planet
+ * @struct Spob
  *
- * @brief Represents a planet.
+ * @brief Represents a Space Object (SPOB), including and not limited to
+ * planets, stations, wormholes, hypergates, etc...
  */
-typedef struct Planet_ {
-   int id;        /**< Planet ID. */
-   char *name;    /**< Planet name */
+typedef struct Spob_ {
+   int id;        /**< Spob ID. */
+   char *name;    /**< Spob name */
    char *displayname; /**< Name to be displayed to the player. Defaults to name if not set. */
    Vector2d pos;  /**< position in star system */
-   double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
+   double radius; /**< Radius of the space object. WARNING: lazy-loaded with gfx_space. */
 
-   /* Planet details. */
-   char *class;         /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
-   uint64_t population; /**< Population of the planet. */
+   /* Spob details. */
+   char *class;         /**< Spob type. Uses Star Trek classification system for planets (https://stexpanded.fandom.com/wiki/Spob_classifications) */
+   uint64_t population; /**< Population of the spob. */
 
    /* Asset details. */
    AssetPresence presence; /**< Presence details (faction, etc.) */
@@ -124,12 +125,12 @@ typedef struct Planet_ {
    int bribed;          /**< If planet has been bribed. */
 
    /* Landed details. */
-   char *description;      /**< planet description */
-   char *bar_description;  /**< spaceport bar description */
-   unsigned int services;  /**< what services they offer */
+   char *description;      /**< Spob description. */
+   char *bar_description;  /**< Spob spaceport bar description */
+   unsigned int services;  /**< What services they offer */
    Commodity **commodities;/**< array: what commodities they sell */
-   CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this planet */
-   tech_group_t *tech;     /**< Planet tech. */
+   CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this spob */
+   tech_group_t *tech;     /**< Spob tech. */
 
    /* Graphics. */
    glTexture *gfx_space;   /**< graphic in space */
@@ -139,7 +140,7 @@ typedef struct Planet_ {
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 
    /* Misc. */
-   char **tags;         /**< Planet tagsg. */
+   char **tags;         /**< Spob tagsg. */
    unsigned int flags;  /**< flags for planet properties */
    MapOverlayPos mo;    /**< Overlay layout data. */
    double map_alpha;    /**< Alpha to display on the map. */
@@ -154,7 +155,7 @@ typedef struct Planet_ {
    int lua_land;     /**< Run when a pilot "lands". */
    int lua_render;   /**< Run when rendering. */
    int lua_update;   /**< Run when updating. */
-} Planet;
+} Spob;
 
 /*
  * Star system flags
@@ -311,7 +312,7 @@ struct StarSystem_ {
    char *features;         /**< Extra text on the map indicating special features of the system. */
 
    /* Assets. */
-   Planet **planets;       /**< Array (array.h): planets */
+   Spob **planets;       /**< Array (array.h): planets */
    int *planetsid;         /**< Array (array.h): IDs of the planets. */
    int faction;            /**< overall faction */
    VirtualAsset **assets_virtual; /**< Array (array.h): virtual assets. */
@@ -360,36 +361,36 @@ void space_exit (void);
 /*
  * planet stuff
  */
-Planet *planet_new (void);
-const char *planet_name( const Planet *p );
-void planet_gfxLoad( Planet *p );
+Spob *planet_new (void);
+const char *planet_name( const Spob *p );
+void planet_gfxLoad( Spob *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );
-Planet* planet_getAll (void);
-Planet* planet_get( const char* planetname );
-Planet* planet_getIndex( int ind );
-void planet_setKnown( Planet *p );
-int planet_index( const Planet *p );
+Spob* planet_getAll (void);
+Spob* planet_get( const char* planetname );
+Spob* planet_getIndex( int ind );
+void planet_setKnown( Spob *p );
+int planet_index( const Spob *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 const char* planet_getServiceName( int service );
 int planet_getService( const char *name );
 const char* planet_getClassName( const char *class );
-credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
-credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t );
-int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std);
-void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
+credits_t planet_commodityPrice( const Spob *p, const Commodity *c );
+credits_t planet_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t );
+int planet_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, double *std);
+void planet_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
 /* Misc modification. */
-int planet_setFaction( Planet *p, int faction );
-int planet_addCommodity( Planet *p, Commodity *c );
-int planet_addService( Planet *p, int service );
-int planet_rmService( Planet *p, int service );
+int planet_setFaction( Spob *p, int faction );
+int planet_addCommodity( Spob *p, Commodity *c );
+int planet_addService( Spob *p, int service );
+int planet_rmService( Spob *p, int service );
 /* Land related stuff. */
-char planet_getColourChar( const Planet *p );
-const char *planet_getSymbol( const Planet *p );
-const glColour* planet_getColour( const Planet *p );
-void planet_updateLand( Planet *p );
+char planet_getColourChar( const Spob *p );
+const char *planet_getSymbol( const Spob *p );
+const glColour* planet_getColour( const Spob *p );
+void planet_updateLand( Spob *p );
 
 /*
  * Virtual asset stuff.
@@ -409,10 +410,10 @@ const char *jump_getSymbol( const JumpPoint *jp );
  */
 void system_reconstructJumps( StarSystem *sys );
 void systems_reconstructJumps (void);
-void systems_reconstructPlanets (void);
+void systems_reconstructSpobs (void);
 StarSystem *system_new (void);
-int system_addPlanet( StarSystem *sys, const char *planetname );
-int system_rmPlanet( StarSystem *sys, const char *planetname );
+int system_addSpob( StarSystem *sys, const char *planetname );
+int system_rmSpob( StarSystem *sys, const char *planetname );
 int system_addVirtualAsset( StarSystem *sys, const char *assetname );
 int system_rmVirtualAsset( StarSystem *sys, const char *assetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
@@ -433,7 +434,7 @@ void system_presenceCleanupAll (void);
 void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap );
 double system_getPresence( const StarSystem *sys, int faction );
 double system_getPresenceFull( const StarSystem *sys, int faction, double *base, double *bonus );
-void system_addAllPlanetsPresence( StarSystem *sys );
+void system_addAllSpobsPresence( StarSystem *sys );
 void space_reconstructPresences( void );
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 
@@ -462,9 +463,9 @@ int system_index( const StarSystem *sys );
 int space_sysReachable( const StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
 int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
-char** space_getFactionPlanet( int *factions, int landable );
-const char* space_getRndPlanet( int landable, unsigned int services,
-      int (*filter)(Planet *p));
+char** space_getFactionSpob( int *factions, int landable );
+const char* space_getRndSpob( int landable, unsigned int services,
+      int (*filter)(Spob *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
 
@@ -476,7 +477,7 @@ int space_rmMarker( int sys, MissionMarkerType type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-int system_hasPlanet( const StarSystem *sys );
+int system_hasSpob( const StarSystem *sys );
 
 /*
  * Hyperspace.
@@ -498,5 +499,5 @@ const AsteroidType *space_getType( int ID );
 void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
-void space_queueLand( Planet *pnt );
+void space_queueLand( Spob *pnt );
 const char *space_populationStr( uint64_t population );

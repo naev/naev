@@ -38,7 +38,7 @@ typedef struct HookParam_s {
       int b;         /**< Boolean parameter. */
       LuaPilot lp;   /**< Hook parameter pilot data. */
       LuaFaction lf; /**< Hook parameter faction data. */
-      LuaPlanet la;  /**< Hook parameter planet data. */
+      LuaSpob la;  /**< Hook parameter planet data. */
       LuaJump lj;    /**< Hook parameter jump data. */
       int ref;       /**< Hook parameter upvalue. */
    } u; /**< Hook parameter data. */

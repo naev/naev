@@ -227,7 +227,7 @@ void ovr_refresh (void)
    }
    jumpitems = items;
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+      Spob *pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       if (!planet_isKnown(pnt))
@@ -522,7 +522,7 @@ void ovr_initAlpha (void)
          jp->map_alpha = 1.;
    }
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+      Spob *pnt = cur_system->planets[i];
       if (!planet_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
@@ -593,10 +593,10 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
       * Specifically, a generic pos and isKnown test would clean this up nicely. */
    int known = 1;
    for (int j=0; j<2; j++) {
-      Planet *pnt;
+      Spob *pnt;
       JumpPoint *jp;
       switch(sf->point_type[j]) {
-         case SAFELANE_LOC_PLANET:
+         case SAFELANE_LOC_SPOB:
             pnt = planet_getIndex( sf->point_id[j] );
             posns[j] = &pnt->pos;
             if (!planet_isKnown( pnt ))
@@ -701,14 +701,14 @@ void ovr_render( double dt )
 
    /* Render planets. */
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+      Spob *pnt = cur_system->planets[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
       if (i != player.p->nav_planet)
-         gui_renderPlanet( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
+         gui_renderSpob( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
    }
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
+      gui_renderSpob( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
 
    /* Render jump points. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {

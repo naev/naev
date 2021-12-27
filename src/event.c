@@ -58,7 +58,7 @@ typedef struct EventData_ {
    unsigned int flags; /**< Bit flags. */
 
    /* For specific cases. */
-   char *planet; /**< Planet name. */
+   char *planet; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
 
@@ -320,7 +320,7 @@ void events_trigger( EventTrigger_t trigger )
       if (ed->trigger != trigger)
          continue;
 
-      /* Planet. */
+      /* Spob. */
       if ((ed->planet != NULL) && (strcmp(ed->planet,land_planet->name)!=0))
          continue;
 

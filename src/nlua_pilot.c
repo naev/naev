@@ -476,14 +476,14 @@ int lua_ispilot( lua_State *L, int ind )
  *    @luatparam Faction f Faction the pilot will belong to.
  *    @luatparam[opt=false] boolean i Whether to ignore rules.
  *    @luatparam[opt=false] boolean g Whether to behave as guerilla (spawn in deep space)
- *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
+ *    @luatreturn Spob|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint
  */
 static int pilotL_choosePoint( lua_State *L )
 {
    LuaFaction lf;
    int ignore_rules, guerilla;
-   Planet *planet = NULL;
+   Spob *planet = NULL;
    JumpPoint *jump = NULL;
    Vector2d vp;
 
@@ -523,7 +523,7 @@ static int pilotL_choosePoint( lua_State *L )
  *
  *    @luatparam string shipname Name of the ship to add.
  *    @luatparam Faction faction Faction to give the pilot.
- *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *    @luatparam System|Spob param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
  *              a planet it'll try to take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
  *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
@@ -541,7 +541,7 @@ static int pilotL_add( lua_State *L )
    Vector2d vv, vp, vn;
    LuaFaction lf;
    StarSystem *ss;
-   Planet *planet;
+   Spob *planet;
    JumpPoint *jump;
    PilotFlags flags;
    int ignore_rules;
@@ -1264,7 +1264,7 @@ static int pilotL_withPlayer( lua_State *L )
  * @usage planet, hyperspace = p:nav()
  *
  *    @luatparam Pilot p Pilot to get nav info of.
- *    @luatreturn Planet|nil The pilot's planet target.
+ *    @luatreturn Spob|nil The pilot's planet target.
  *    @luatreturn System|nil The pilot's hyperspace target.
  * @luafunc nav
  */
@@ -4511,13 +4511,13 @@ static int pilotL_attack( lua_State *L )
  * Third argument is destination: if false or nil, destination is automatically chosen.
  * If true, the pilot does not jump nor land and stays in system.
  * If Jump is given, the pilot tries to use this jump to go hyperspace.
- * If Planet is given, the pilot tries to land on it.
+ * If Spob is given, the pilot tries to land on it.
  *
  * @usage p:runaway( p_enemy ) -- Run away from p_enemy
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luatparam Pilot p Pilot to tell to runaway from another pilot.
  *    @luatparam Pilot tp Target pilot to runaway from.
- *    @luatparam[opt=false] boolean|Jump|Planet destination.
+ *    @luatparam[opt=false] boolean|Jump|Spob destination.
  * @luasee control
  * @luafunc runaway
  */
@@ -4553,7 +4553,7 @@ static int pilotL_runaway( lua_State *L )
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
       else if (lua_isplanet(L,3)) {
-         LuaPlanet lp = lua_toplanet(L,3);
+         LuaSpob lp = lua_toplanet(L,3);
          Task *t = pilotL_newtask( L, p, "runaway_land" );
          lua_newtable(L);
          lua_pushpilot(L, pt->id);
@@ -4697,7 +4697,7 @@ static int pilotL_tryStealth( lua_State *L )
  * Pilot must be under manual control for this to work.
  *
  *    @luatparam Pilot p Pilot to tell to land.
- *    @luatparam[opt] Planet planet Planet to land on, uses random if nil.
+ *    @luatparam[opt] Spob planet Spob to land on, uses random if nil.
  *    @luatparam[opt] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc land
@@ -4706,7 +4706,7 @@ static int pilotL_land( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   Planet *pnt;
+   Spob *pnt;
    int shoot;
 
    NLUA_CHECKRW(L);
@@ -4734,7 +4734,7 @@ static int pilotL_land( lua_State *L )
          }
       }
       if (i >= array_size(cur_system->planets)) {
-         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
 

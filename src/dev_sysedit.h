@@ -5,7 +5,7 @@
 
 #include "space.h"
 
-#define HIDE_DEFAULT_PLANET      1.0 /**< Default hide value for new planets. */
+#define HIDE_DEFAULT_SPOB      1.0 /**< Default hide value for new planets. */
 
 void sysedit_open( StarSystem *sys );
 void sysedit_sysScale( StarSystem *sys, double factor );

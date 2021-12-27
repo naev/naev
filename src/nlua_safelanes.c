@@ -75,7 +75,7 @@ static int safelanesL_get( lua_State *L )
    int i, j, faction, standing;
    StarSystem *sys;
    SafeLane *lanes;
-   Planet *pnt;
+   Spob *pnt;
    JumpPoint *jmp;
    const char *std;
 
@@ -112,12 +112,12 @@ static int safelanesL_get( lua_State *L )
       lua_newtable( L );
       for (j=0; j<2; j++) {
          switch (lanes[i].point_type[j]) {
-            case SAFELANE_LOC_PLANET:
+            case SAFELANE_LOC_SPOB:
                pnt = planet_getIndex( lanes[i].point_id[j] );
                //lua_pushplanet( L, lanes[i].point_id[j] );
 #ifdef DEBUGGING
                if (pnt==NULL)
-                  NLUA_ERROR(L, _("Planet is invalid"));
+                  NLUA_ERROR(L, _("Spob is invalid"));
 #endif /* DEBUGGING */
                lua_pushvector( L, pnt->pos );
                break;

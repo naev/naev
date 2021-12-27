@@ -655,7 +655,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
          hunk.type = HUNK_TYPE_ASSET_EXTERIOR;
-         snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+         snprintf( str, sizeof(str), SPOB_GFX_EXTERIOR_PATH"%s", xml_get(cur));
          hunk.u.name = strdup(str);
 
          /* Apply diff. */
@@ -949,7 +949,7 @@ static int diff_patch( xmlNodePtr parent )
  */
 static int diff_patchHunk( UniHunk_t *hunk )
 {
-   Planet *p;
+   Spob *p;
    StarSystem *ssys;
    int a, b;
 
@@ -959,11 +959,11 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_ADD:
          planet_updateLand( planet_get(hunk->u.name) );
          diff_universe_changed = 1;
-         return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
+         return system_addSpob( system_get(hunk->target.u.name), hunk->u.name );
       /* Removing an asset. */
       case HUNK_TYPE_ASSET_REMOVE:
          diff_universe_changed = 1;
-         return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
+         return system_rmSpob( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Adding an asset. */
       case HUNK_TYPE_VASSET_ADD:

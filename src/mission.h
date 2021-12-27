@@ -42,7 +42,7 @@ typedef struct MissionAvail_s {
    int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
    /* For specific cases */
-   char *planet; /**< Planet name. */
+   char *planet; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
    pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
@@ -117,9 +117,9 @@ extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * creates missions for a planet and such
  */
 Mission* missions_genList( int *n, int faction,
-      const Planet *pnt, const StarSystem *sys, MissionAvailability loc );
+      const Spob *pnt, const StarSystem *sys, MissionAvailability loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
-void missions_run( MissionAvailability loc, int faction, const Planet *pnt, const StarSystem *sys );
+void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const StarSystem *sys );
 int mission_start( const char *name, unsigned int *id );
 
 /*
@@ -133,8 +133,8 @@ int mission_addMarker( Mission *misn, int id, int sys, MissionMarkerType type );
 void mission_sysMark (void);
 const StarSystem* mission_sysComputerMark( const Mission* misn );
 const StarSystem* mission_getSystemMarker( const Mission* misn );
-MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t );
-MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t );
+MissionMarkerType mission_markerTypeSpobToSystem( MissionMarkerType t );
+MissionMarkerType mission_markerTypeSystemToSpob( MissionMarkerType t );
 void mission_toLuaTable( lua_State *L, const MissionData *m );
 
 /*

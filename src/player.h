@@ -278,9 +278,9 @@ double player_dt_default (void);
 /* Clearing. */
 void player_targetClear (void);
 void player_targetClearAll (void);
-/* Planets. */
-void player_targetPlanetSet( int id );
-void player_targetPlanet (void);
+/* Spobs. */
+void player_targetSpobSet( int id );
+void player_targetSpob (void);
 /* Asteroids. */
 void player_targetAsteroidSet( int id_field, int id );
 /* Hyperspace. */
@@ -305,7 +305,7 @@ void player_screenshot (void);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);
-void player_hailPlanet (void);
+void player_hailSpob (void);
 void player_autohail (void);
 void player_toggleMouseFly (void);
 void player_brake (void);

@@ -38,7 +38,7 @@
 
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
-static Planet *cur_planetObj_sel = NULL;
+static Spob *cur_planetObj_sel = NULL;
 static Outfit **cur_planet_sel_outfits = NULL;
 static Ship **cur_planet_sel_ships = NULL;
 static int pitch = 0; /**< pitch of planet images. */
@@ -58,7 +58,7 @@ glTexture **bgImages; /**< array (array.h) of nebula and star textures */
  */
 /*land.c*/
 //extern int landed;
-//extern Planet* land_planet;
+//extern Spob* land_planet;
 
 /*
  * prototypes
@@ -271,7 +271,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    int i, vis_index;
    double iw, ih;
    StarSystem *sys=cur_sys_sel;
-   Planet *p;
+   Spob *p;
    static int phase=0;
    glColour ccol;
    char buf[STRMAX_SHORT];
@@ -508,8 +508,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
      }
 
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: roughly %s\n"), planet_name(p), p->class, space_populationStr( p->population ) );
-     if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nSpobary class: %s    Population: roughly %s\n"), planet_name(p), p->class, space_populationStr( p->population ) );
+     if (!planet_hasService( p, SPOB_SERVICE_INHABITED ))
         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed )
         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("You can land here\n") );
@@ -527,15 +527,15 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         /* show some additional information */
         infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
               "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-              planet_hasService( p, PLANET_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-              planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
-              planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
-              planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-              planet_hasService( p,PLANET_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-              planet_hasService( p, PLANET_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
-              planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
-              planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
-        if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
+              planet_hasService( p, SPOB_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
+              planet_hasService( p, SPOB_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+              planet_hasService( p, SPOB_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
+              planet_hasService( p, SPOB_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
+              planet_hasService( p,SPOB_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
+              planet_hasService( p, SPOB_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
+              planet_hasService( p, SPOB_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
+              planet_hasService( p, SPOB_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
+        if ( p->bar_description && planet_hasService( p, SPOB_SERVICE_BAR ) ) {
            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
      }
@@ -605,7 +605,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       if (outfit->license == NULL)
          buf_license[0] = '\0';
       else if (player_hasLicense( outfit->license ) ||
-            (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_BLACKMARKET )))
+            (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, SPOB_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
@@ -648,7 +648,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       if (ship->license == NULL)
          strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
       else if (player_hasLicense( ship->license )
-            || (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_BLACKMARKET )))
+            || (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, SPOB_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
@@ -697,7 +697,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       int owned;
       com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
-      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
+      economy_getAverageSpobPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       snprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
       credits2str( buf_globalmean, globalmean, -1 );
@@ -732,10 +732,10 @@ static void map_system_array_update( unsigned int wid, const char* str )
 void map_system_updateSelected( unsigned int wid )
 {
    StarSystem *sys=cur_sys_sel;
-   Planet *last=NULL;
+   Spob *last=NULL;
    int planetObjChanged = 0;
    int w, h;
-   Planet *p;
+   Spob *p;
    int textw;
    int noutfits,nships,ngoods;
    Outfit **outfits;
@@ -803,7 +803,7 @@ void map_system_updateSelected( unsigned int wid )
          array_free( ships );
          ngoods = array_size( cur_planetObj_sel->commodities );
          /* to buy commodity info, need to be landed, and the selected system must sell them! */
-         if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ) )
+         if ( landed && planet_hasService( cur_planetObj_sel, SPOB_SERVICE_COMMODITY ) )
             window_enableButton( wid, "btnBuyCommodPrice" );
          else
             window_disableButton( wid, "btnBuyCommodPrice" );
@@ -842,7 +842,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    int w, h;
    int xpos, xw, ypos, yh;
    int iconsize;
-   static Planet *planetDone = NULL;
+   static Spob *planetDone = NULL;
 
    window_dimWindow( wid, &w, &h );
    if (planetDone == cur_planetObj_sel) {
@@ -863,7 +863,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       return;
 
    /* No outfitter. */
-   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_OUTFITS ))
+   if (!planet_hasService( cur_planetObj_sel, SPOB_SERVICE_OUTFITS ))
       return;
 
    cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech );
@@ -893,7 +893,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    ImageArrayCell *cships;
    int nships;
    int xpos, ypos, xw, yh;
-   static Planet *planetDone=NULL;
+   static Spob *planetDone=NULL;
    int i, w, h, iconsize;
    window_dimWindow( wid, &w, &h );
 
@@ -917,7 +917,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       return;
 
    /* No shipyard. */
-   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_SHIPYARD ))
+   if (!planet_hasService( cur_planetObj_sel, SPOB_SERVICE_SHIPYARD ))
       return;
 
    cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech );
@@ -948,7 +948,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
 
 static void map_system_genTradeList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
-   static Planet *planetDone=NULL;
+   static Spob *planetDone=NULL;
    int i, ngoods;
    ImageArrayCell *cgoods;
    int xpos, ypos, xw, yh, w, h, iconsize;
@@ -970,7 +970,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       return;
 
    /* No shipyard. */
-   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ))
+   if (!planet_hasService( cur_planetObj_sel, SPOB_SERVICE_COMMODITY ))
       return;
 
    planetDone = cur_planetObj_sel;

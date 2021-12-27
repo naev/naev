@@ -757,7 +757,7 @@ static int playerL_takeoff( lua_State *L )
  *
  * Note that this will teleport the player to the system in question as necessary.
  *
- *    @luatparam Planet pnt Planet to land the player on.
+ *    @luatparam Spob pnt Spob to land the player on.
  * @luafunc land
  */
 static int playerL_land( lua_State *L )
@@ -765,10 +765,10 @@ static int playerL_land( lua_State *L )
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
-   Planet *pnt = luaL_validplanet(L,1);
+   Spob *pnt = luaL_validplanet(L,1);
    const char *sysname = planet_getSystem( pnt->name );
    if (sysname == NULL)
-      NLUA_ERROR(L,_("Planet '%s' is not in a system!"), pnt->name);
+      NLUA_ERROR(L,_("Spob '%s' is not in a system!"), pnt->name);
 
    if (strcmp(sysname,cur_system->name) != 0) {
       /* Refer to playerL_teleport for the voodoo that happens here. */
@@ -1444,13 +1444,13 @@ static int playerL_evtDone( lua_State *L )
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  * @usage player.teleport( "Sol", true ) -- Teleports the player to SOL, but doesn't run any initial simulation
  *
- *    @luatparam System|Planet|string dest System or name of a system or planet or name of a planet to teleport the player to.
+ *    @luatparam System|Spob|string dest System or name of a system or planet or name of a planet to teleport the player to.
  *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
  * @luafunc teleport
  */
 static int playerL_teleport( lua_State *L )
 {
-   Planet *pnt;
+   Spob *pnt;
    StarSystem *sys;
    const char *name, *pntname;
    int no_simulate;
@@ -1477,7 +1477,7 @@ static int playerL_teleport( lua_State *L )
       pnt   = luaL_validplanet(L,1);
       name  = planet_getSystem( pnt->name );
       if (name == NULL) {
-         NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pnt->name );
+         NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );
          return 0;
       }
    }
@@ -1497,7 +1497,7 @@ static int playerL_teleport( lua_State *L )
          }
 
          if (name == NULL) {
-            NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pntname );
+            NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pntname );
             return 0;
          }
       }

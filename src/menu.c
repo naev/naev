@@ -121,7 +121,7 @@ static int menu_main_bkg_system (void)
 
       /* Get start position. */
       if (planet_exists( ns[0].planet )) {
-         Planet *pnt = planet_get( ns[0].planet );
+         Spob *pnt = planet_get( ns[0].planet );
          if (pnt != NULL) {
             sys = planet_getSystem( ns[0].planet );
             if (sys != NULL) {

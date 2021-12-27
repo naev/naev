@@ -63,7 +63,7 @@ enum {
 /** @brief Object type: like SafeLaneLocType, but with Naev stack indexing in mind.
  *  @TODO Converge these after beefing up nlua APIs (#1862 or just jump point from internal indices).
  */
-typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
+typedef enum VertexType_ {VERTEX_SPOB, VERTEX_JUMP} VertexType;
 
 /** @brief Reference to a planet or jump point. */
 typedef struct Vertex_ {
@@ -227,8 +227,8 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
       l->faction = lane_faction[i];
       for (int j=0; j<2; j++) {
          switch (v[j]->type) {
-            case VERTEX_PLANET:
-               l->point_type[j]   = SAFELANE_LOC_PLANET;
+            case VERTEX_SPOB:
+               l->point_type[j]   = SAFELANE_LOC_SPOB;
                l->point_id[j]     = system->planets[v[j]->index]->id;
                break;
             case VERTEX_JUMP:
@@ -364,9 +364,9 @@ static void safelanes_initStacks_vertex (void)
          continue;
 
       for (int i=0; i<array_size(sys->planets); i++) {
-         const Planet *p = sys->planets[i];
+         const Spob *p = sys->planets[i];
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
-            Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
+            Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
             array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
@@ -651,7 +651,7 @@ static void safelanes_initPPl (void)
    for (int i=0; i<np; i++) {
       double *Di;
       int sys = vertex_stack[tmp_planet_indices[i]].system;
-      Planet *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
+      Spob *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
       double pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
       int fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)
@@ -852,7 +852,7 @@ static int vertex_faction( int vi )
 {
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
-      case VERTEX_PLANET:
+      case VERTEX_SPOB:
          return sys->planets[vertex_stack[vi].index]->presence.faction;
       case VERTEX_JUMP:
          return -1;
@@ -868,7 +868,7 @@ static const Vector2d* vertex_pos( int vi )
 {
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
-      case VERTEX_PLANET:
+      case VERTEX_SPOB:
          return &sys->planets[vertex_stack[vi].index]->pos;
       case VERTEX_JUMP:
          return &sys->jumps[vertex_stack[vi].index].pos;

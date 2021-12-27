@@ -24,7 +24,7 @@
 
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
-static int map_find_planets = 0; /**< Planets checkbox value. */
+static int map_find_planets = 0; /**< Spobs checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
@@ -35,7 +35,7 @@ static int map_found_ncur           = 0;     /**< Number of found stuff. */
 static char **map_foundOutfitNames  = NULL; /**< Array (array.h): Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Array (array.h) of known techs. */
-static Planet **map_known_planets   = NULL;  /**< Array (array.h) of known planets with techs. */
+static Spob **map_known_planets   = NULL;  /**< Array (array.h) of known planets with techs. */
 
 /*
  * Prototypes.
@@ -47,16 +47,16 @@ static void map_knownClean (void);
 static void map_find_check_update( unsigned int wid, const char *str );
 static void map_findClose( unsigned int wid, const char* str );
 static int map_findSearchSystems( unsigned int parent, const char *name );
-static int map_findSearchPlanets( unsigned int parent, const char *name );
+static int map_findSearchSpobs( unsigned int parent, const char *name );
 static int map_findSearchOutfits( unsigned int parent, const char *name );
 static int map_findSearchShips( unsigned int parent, const char *name );
 static void map_findSearch( unsigned int wid, const char* str );
 /* Misc. */
-static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt );
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt );
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
-static char map_getPlanetColourChar( Planet *p );
-static const char *map_getPlanetSymbol( Planet *p );
+static char map_getSpobColourChar( Spob *p );
+static const char *map_getSpobSymbol( Spob *p );
 /* Fuzzy outfit/ship stuff. */
 static char **map_fuzzyOutfits( Outfit **o, const char *name );
 static char **map_outfitsMatch( const char *name );
@@ -68,13 +68,13 @@ static char **map_shipsMatch( const char *name );
  */
 static int map_knownInit (void)
 {
-   Planet **planets;
+   Spob **planets;
    StarSystem *sys;
    tech_group_t **t;
 
    /* Allocate techs. */
    t        = array_create( tech_group_t* );
-   planets  = array_create( Planet* );
+   planets  = array_create( Spob* );
    sys      = system_getAll();
 
    /* Get techs. */
@@ -83,7 +83,7 @@ static int map_knownInit (void)
          continue;
 
       for (int j=0; j<array_size(sys[i].planets); j++) {
-         Planet *pnt = sys[i].planets[j];
+         Spob *pnt = sys[i].planets[j];
 
          /* Must be known. */
          if (!planet_isKnown( pnt ))
@@ -122,11 +122,11 @@ static void map_find_check_update( unsigned int wid, const char* str )
 {
    (void) str;
    map_find_systems ^= window_checkboxState( wid, "chkSystem" );
-   map_find_planets ^= window_checkboxState( wid, "chkPlanet" );
+   map_find_planets ^= window_checkboxState( wid, "chkSpob" );
    map_find_outfits ^= window_checkboxState( wid, "chkOutfit" );
    map_find_ships   ^= window_checkboxState( wid, "chkShip" );
    window_checkboxSet( wid, "chkSystem", map_find_systems );
-   window_checkboxSet( wid, "chkPlanet", map_find_planets );
+   window_checkboxSet( wid, "chkSpob", map_find_planets );
    window_checkboxSet( wid, "chkOutfit", map_find_outfits );
    window_checkboxSet( wid, "chkShip",   map_find_ships );
 }
@@ -265,7 +265,7 @@ static void map_sortFound( map_find_t *found, int n )
 /**
  * @brief Gets the distance.
  */
-static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *distance )
+static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *distance )
 {
    int i, j;
    StarSystem **slist, *ss;
@@ -383,7 +383,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
  *    @param pnt Result's planet, or NULL to leave unspecified.
  *
  */
-static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt )
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt )
 {
    int ret;
    char route_info[256];
@@ -410,8 +410,8 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             _("%s (%s)"), _(sys->name), route_info );
    else
       snprintf( found[n].display, sizeof(found[n].display),
-            _("#%c%s%s (%s, %s)"), map_getPlanetColourChar(pnt),
-            map_getPlanetSymbol(pnt),
+            _("#%c%s%s (%s, %s)"), map_getSpobColourChar(pnt),
+            map_getSpobSymbol(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
 
@@ -479,7 +479,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
  *    @param name Name to match.
  *    @return 0 on success.
  */
-static int map_findSearchPlanets( unsigned int parent, const char *name )
+static int map_findSearchSpobs( unsigned int parent, const char *name )
 {
    char **names;
    int len, n;
@@ -499,7 +499,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       sysname = planet_getSystem( pntname );
       if (sysname != NULL) {
          /* Make sure it's known. */
-         Planet *pnt = planet_get( pntname );
+         Spob *pnt = planet_get( pntname );
          if ((pnt != NULL) && planet_isKnown(pnt)) {
 
             /* Select and show. */
@@ -520,8 +520,8 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    for (int i=0; i<len; i++) {
       StarSystem *sys;
 
-      /* Planet must be real. */
-      Planet *pnt = planet_get( names[i] );
+      /* Spob must be real. */
+      Spob *pnt = planet_get( names[i] );
       if (pnt == NULL)
          continue;
       if (!planet_isKnown(pnt))
@@ -555,7 +555,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 /**
  * @brief Gets a colour char for a planet, simplified for map use.
  */
-static char map_getPlanetColourChar( Planet *p )
+static char map_getSpobColourChar( Spob *p )
 {
    char colcode;
 
@@ -568,7 +568,7 @@ static char map_getPlanetColourChar( Planet *p )
 /**
  * @brief Gets a symbol for a planet, simplified for map use.
  */
-static const char *map_getPlanetSymbol( Planet *p )
+static const char *map_getSpobSymbol( Spob *p )
 {
    planet_updateLand(p);
    return planet_getSymbol(p);
@@ -715,7 +715,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    int i, j;
    int len, n;
    map_find_t *found;
-   Planet *pnt;
+   Spob *pnt;
    StarSystem *sys;
    const char *oname, *sysname;
    char **list;
@@ -834,7 +834,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    char **names;
    int len, n;
    map_find_t *found;
-   Planet *pnt;
+   Spob *pnt;
    StarSystem *sys;
    const char *sname, *sysname;
    char **list;
@@ -937,8 +937,8 @@ static void map_findSearch( unsigned int wid, const char* str )
       searchname = _("System");
    }
    else if (map_find_planets) {
-      ret = map_findSearchPlanets( parent, name );
-      searchname = _("Planet");
+      ret = map_findSearchSpobs( parent, name );
+      searchname = _("Spob");
    }
    else if (map_find_outfits) {
       ret = map_findSearchOutfits( parent, name );
@@ -1005,7 +1005,7 @@ void map_inputFind( unsigned int parent, const char* str )
          "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
-         "chkPlanet", _("Planets"), map_find_check_update, map_find_planets );
+         "chkSpob", _("Spobs"), map_find_check_update, map_find_planets );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
          "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );

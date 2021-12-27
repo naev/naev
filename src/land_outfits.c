@@ -350,7 +350,7 @@ void outfits_update( unsigned int wid, const char *str )
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
 
-   blackmarket = ((land_planet!=NULL) && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET ));
+   blackmarket = ((land_planet!=NULL) && planet_hasService( land_planet, SPOB_SERVICE_BLACKMARKET ));
 
    /* Set up keys. */
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Owned:") );
@@ -451,11 +451,11 @@ void outfits_update( unsigned int wid, const char *str )
 void outfits_updateEquipmentOutfits( void )
 {
    if (landed && land_doneLoading()) {
-      if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
+      if (planet_hasService(land_planet, SPOB_SERVICE_OUTFITS)) {
          int ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );
       }
-      else if (!planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      else if (!planet_hasService(land_planet, SPOB_SERVICE_SHIPYARD))
          return;
 
       int ew = land_getWid( LAND_WINDOW_EQUIPMENT );
@@ -645,7 +645,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
  *    @param name Outfit to buy.
  *    @param planet Where the player is shopping.
  */
-int outfit_canBuy( const char *name, const Planet *planet )
+int outfit_canBuy( const char *name, const Spob *planet )
 {
    int failure, blackmarket;
    credits_t price;
@@ -655,7 +655,7 @@ int outfit_canBuy( const char *name, const Planet *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
-   blackmarket = ((planet!=NULL) && planet_hasService(planet, PLANET_SERVICE_BLACKMARKET));
+   blackmarket = ((planet!=NULL) && planet_hasService(planet, SPOB_SERVICE_BLACKMARKET));
 
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {

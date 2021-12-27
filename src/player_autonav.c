@@ -182,7 +182,7 @@ void player_autonavPos( double x, double y )
  */
 void player_autonavPnt( const char *name, int tryland )
 {
-   Planet *p;
+   Spob *p;
 
    if (player_autonavSetup())
       return;

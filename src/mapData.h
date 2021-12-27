@@ -13,5 +13,5 @@
 struct OutfitMapData_s {
    StarSystem **systems; /**< systems to mark as known. */
    JumpPoint **jumps; /**< jump points to mark as known. */
-   Planet **assets; /**< assets to mark as known. */
+   Spob **assets; /**< assets to mark as known. */
 };

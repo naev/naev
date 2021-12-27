@@ -59,8 +59,8 @@
 #define XML_ASSET_TAG   "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG  "ssys" /**< Individual systems xml tag. */
 
-#define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
-#define PLANET_GFX_EXTERIOR_PATH_H 400 /**< Planet exterior graphic height. */
+#define SPOB_GFX_EXTERIOR_PATH_W 400 /**< Spob exterior graphic width. */
+#define SPOB_GFX_EXTERIOR_PATH_H 400 /**< Spob exterior graphic height. */
 
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET             (1<<0) /**< Set the X position value. */
@@ -77,14 +77,14 @@
 /*
  * planet <-> system name stack
  */
-static char** planetname_stack = NULL; /**< Planet name stack corresponding to system. */
+static char** planetname_stack = NULL; /**< Spob name stack corresponding to system. */
 static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
 
 /*
  * Arrays.
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
-static Planet *planet_stack = NULL; /**< Planet stack. */
+static Spob *planet_stack = NULL; /**< Spob stack. */
 static VirtualAsset *vasset_stack = NULL; /**< Virtual asset stack. */
 #ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
@@ -109,7 +109,7 @@ static int space_simulating = 0; /**< Are we simulating space? */
 static int space_simulating_effects = 0; /**< Are we doing special effects? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
-static Planet *space_landQueuePlanet = NULL;
+static Spob *space_landQueueSpob = NULL;
 
 /*
  * Fleet spawning.
@@ -120,7 +120,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Internal Prototypes.
  */
 /* planet load */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList );
+static int planet_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdList );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap );
 /* system load */
@@ -142,13 +142,13 @@ static void system_scheduler( double dt, int init );
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Markers. */
 static int space_addMarkerSystem( int sysid, MissionMarkerType type );
-static int space_addMarkerPlanet( int pntid, MissionMarkerType type );
+static int space_addMarkerSpob( int pntid, MissionMarkerType type );
 static int space_rmMarkerSystem( int sysid, MissionMarkerType type );
-static int space_rmMarkerPlanet( int pntid, MissionMarkerType type );
+static int space_rmMarkerSpob( int pntid, MissionMarkerType type );
 /* Render. */
 static void space_renderJumpPoint( const JumpPoint *jp, int i );
-static void space_renderPlanet( const Planet *p );
-static void space_updatePlanet( const Planet *p, double dt );
+static void space_renderSpob( const Spob *p );
+static void space_updateSpob( const Spob *p, double dt );
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
 /*
@@ -160,22 +160,22 @@ int space_sysLoad( xmlNodePtr parent );
 /**
  * @brief Gets the (English) name for a service code.
  *
- * @param service One of the \p PLANET_SERVICE_* enum values.
+ * @param service One of the \p SPOB_SERVICE_* enum values.
  * @return English name, reversible via \p planet_getService()
  * and presentable via \p _().
  */
 const char* planet_getServiceName( int service )
 {
    switch (service) {
-      case PLANET_SERVICE_LAND:        return N_("Land");
-      case PLANET_SERVICE_INHABITED:   return N_("Inhabited");
-      case PLANET_SERVICE_REFUEL:      return N_("Refuel");
-      case PLANET_SERVICE_BAR:         return N_("Bar");
-      case PLANET_SERVICE_MISSIONS:    return N_("Missions");
-      case PLANET_SERVICE_COMMODITY:   return N_("Commodity");
-      case PLANET_SERVICE_OUTFITS:     return N_("Outfits");
-      case PLANET_SERVICE_SHIPYARD:    return N_("Shipyard");
-      case PLANET_SERVICE_BLACKMARKET: return N_("Blackmarket");
+      case SPOB_SERVICE_LAND:        return N_("Land");
+      case SPOB_SERVICE_INHABITED:   return N_("Inhabited");
+      case SPOB_SERVICE_REFUEL:      return N_("Refuel");
+      case SPOB_SERVICE_BAR:         return N_("Bar");
+      case SPOB_SERVICE_MISSIONS:    return N_("Missions");
+      case SPOB_SERVICE_COMMODITY:   return N_("Commodity");
+      case SPOB_SERVICE_OUTFITS:     return N_("Outfits");
+      case SPOB_SERVICE_SHIPYARD:    return N_("Shipyard");
+      case SPOB_SERVICE_BLACKMARKET: return N_("Blackmarket");
    }
    return NULL;
 }
@@ -186,23 +186,23 @@ const char* planet_getServiceName( int service )
 int planet_getService( const char *name )
 {
    if (strcasecmp(name,"Land")==0)
-      return PLANET_SERVICE_LAND;
+      return SPOB_SERVICE_LAND;
    else if (strcasecmp(name,"Inhabited")==0)
-      return PLANET_SERVICE_INHABITED;
+      return SPOB_SERVICE_INHABITED;
    else if (strcasecmp(name,"Refuel")==0)
-      return PLANET_SERVICE_REFUEL;
+      return SPOB_SERVICE_REFUEL;
    else if (strcasecmp(name,"Bar")==0)
-      return PLANET_SERVICE_BAR;
+      return SPOB_SERVICE_BAR;
    else if (strcasecmp(name,"Missions")==0)
-      return PLANET_SERVICE_MISSIONS;
+      return SPOB_SERVICE_MISSIONS;
    else if (strcasecmp(name,"Commodity")==0)
-      return PLANET_SERVICE_COMMODITY;
+      return SPOB_SERVICE_COMMODITY;
    else if (strcasecmp(name,"Outfits")==0)
-      return PLANET_SERVICE_OUTFITS;
+      return SPOB_SERVICE_OUTFITS;
    else if (strcasecmp(name,"Shipyard")==0)
-      return PLANET_SERVICE_SHIPYARD;
+      return SPOB_SERVICE_SHIPYARD;
    else if (strcasecmp(name,"Blackmarket")==0)
-      return PLANET_SERVICE_BLACKMARKET;
+      return SPOB_SERVICE_BLACKMARKET;
    return -1;
 }
 
@@ -268,10 +268,10 @@ const char* planet_getClassName( const char *class )
 /**
  * @brief Gets the price of a commodity at a planet.
  *
- *    @param p Planet to get price at.
+ *    @param p Spob to get price at.
  *    @param c Commodity to get price of.
  */
-credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
+credits_t planet_commodityPrice( const Spob *p, const Commodity *c )
 {
    char *sysname = planet_getSystem( p->name );
    StarSystem *sys = system_get( sysname );
@@ -281,11 +281,11 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
 /**
  * @brief Gets the price of a commodity at a planet at given time.
  *
- *    @param p Planet to get price at.
+ *    @param p Spob to get price at.
  *    @param c Commodity to get price of.
  *    @param t Time to get price at.
  */
-credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t )
+credits_t planet_commodityPriceAtTime( const Spob *p, const Commodity *c, ntime_t t )
 {
    char *sysname = planet_getSystem( p->name );
    StarSystem *sys = system_get( sysname );
@@ -295,10 +295,10 @@ credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntim
 /**
  * @brief Adds cost of commodities on planet p to known statistics at time t.
  *
- *    @param p Planet to get price at
+ *    @param p Spob to get price at
  *    @param tupdate Time to get prices at
  */
-void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
+void planet_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate )
 {
    economy_averageSeenPricesAtTime( p, tupdate );
 }
@@ -306,24 +306,24 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
 /**
  * @brief Gets the average price of a commodity at a planet that has been seen so far.
  *
- *    @param p Planet to get average price at.
+ *    @param p Spob to get average price at.
  *    @param c Commodity to get average price of.
  *    @param[out] mean Sample mean, rounded to nearest credit.
  *    @param[out] std Sample standard deviation (via uncorrected population formula).
  */
-int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std)
+int planet_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, double *std)
 {
-  return economy_getAveragePlanetPrice( c, p, mean, std );
+  return economy_getAverageSpobPrice( c, p, mean, std );
 }
 
 /**
  * @brief Changes the planets faction.
  *
- *    @param p Planet to change faction of.
+ *    @param p Spob to change faction of.
  *    @param faction Faction to change to.
  *    @return 0 on success.
  */
-int planet_setFaction( Planet *p, int faction )
+int planet_setFaction( Spob *p, int faction )
 {
    p->presence.faction = faction;
    return 0;
@@ -332,11 +332,11 @@ int planet_setFaction( Planet *p, int faction )
 /**
  * @brief Adds a commodity to a planet.
  *
- *    @param p Planet to add commodity to.
+ *    @param p Spob to add commodity to.
  *    @param c Commodity to add.
  *    @return 0 on success.
  */
-int planet_addCommodity( Planet *p, Commodity *c )
+int planet_addCommodity( Spob *p, Commodity *c )
 {
    array_grow( &p->commodities ) = c;
    array_grow( &p->commodityPrice ).price = c->price;
@@ -346,15 +346,15 @@ int planet_addCommodity( Planet *p, Commodity *c )
 /**
  * @brief Removes a service from a planet.
  *
- *    @param p Planet to remove service from.
+ *    @param p Spob to remove service from.
  *    @param service Service flag to remove.
  *    @return 0 on success.
  */
-int planet_addService( Planet *p, int service )
+int planet_addService( Spob *p, int service )
 {
    p->services |= service;
 
-   if (service & PLANET_SERVICE_COMMODITY) {
+   if (service & SPOB_SERVICE_COMMODITY) {
       /* Only try to add standard commodities if there aren't any. */
       if (p->commodities!=NULL)
          return 0;
@@ -371,11 +371,11 @@ int planet_addService( Planet *p, int service )
 /**
  * @brief Removes a service from a planet.
  *
- *    @param p Planet to remove service from.
+ *    @param p Spob to remove service from.
  *    @param service Service flag to remove.
  *    @return 0 on success.
  */
-int planet_rmService( Planet *p, int service )
+int planet_rmService( Spob *p, int service )
 {
    p->services &= ~service;
    return 0;
@@ -510,12 +510,12 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
  *    @param landable Whether the search is limited to landable planets.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *factions, int landable )
+char** space_getFactionSpob( int *factions, int landable )
 {
    char **tmp = array_create( char* );
    for (int i=0; i<array_size(systems_stack); i++) {
       for (int j=0; j<array_size(systems_stack[i].planets); j++) {
-         Planet *planet = systems_stack[i].planets[j];
+         Spob *planet = systems_stack[i].planets[j];
          int f = 0;
          for (int k=0; k<array_size(factions); k++) {
             if (planet->presence.faction == factions[k]) {
@@ -553,15 +553,15 @@ char** space_getFactionPlanet( int *factions, int landable )
  *    @param filter Filter function for including planets.
  *    @return The name (internal/English) of a random planet.
  */
-const char* space_getRndPlanet( int landable, unsigned int services,
-      int (*filter)(Planet *p))
+const char* space_getRndSpob( int landable, unsigned int services,
+      int (*filter)(Spob *p))
 {
    char *res = NULL;
-   Planet **tmp = array_create( Planet* );
+   Spob **tmp = array_create( Spob* );
 
    for (int i=0; i<array_size(systems_stack); i++) {
       for (int j=0; j<array_size(systems_stack[i].planets); j++) {
-         Planet *pnt = systems_stack[i].planets[j];
+         Spob *pnt = systems_stack[i].planets[j];
 
          if (services && planet_hasService(pnt, services) != services)
             continue;
@@ -576,7 +576,7 @@ const char* space_getRndPlanet( int landable, unsigned int services,
    /* Second filter. */
    arrayShuffle( (void**)tmp );
    for (int i=0; i < array_size(tmp); i++) {
-      Planet *pnt = tmp[i];
+      Spob *pnt = tmp[i];
 
       /* We put expensive calculations here to minimize executions. */
       if (landable) {
@@ -617,10 +617,10 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    *ast = -1;
    *fie = -1;
 
-   /* Planets. */
+   /* Spobs. */
    for (int i=0; i<array_size(sys->planets); i++) {
       double td;
-      Planet *p  = sys->planets[i];
+      Spob *p  = sys->planets[i];
       if (!planet_isKnown(p))
          continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
@@ -695,9 +695,9 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    *jp  = -1;
    a    = ang + M_PI;
 
-   /* Planets. */
+   /* Spobs. */
    for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *p = sys->planets[i];
+      Spob *p = sys->planets[i];
       double ta = atan2( y - p->pos.y, x - p->pos.x);
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          *pnt  = i;
@@ -914,7 +914,7 @@ int system_index( const StarSystem *sys )
 /**
  * @brief Get whether or not a planet has a system (i.e. is on the map).
  *
- *    @param planetname Planet name to match.
+ *    @param planetname Spob name to match.
  *    @return 1 if the planet has a system, 0 otherwise.
  */
 int planet_hasSystem( const char* planetname )
@@ -928,7 +928,7 @@ int planet_hasSystem( const char* planetname )
 /**
  * @brief Get the name of a system from a planetname.
  *
- *    @param planetname Planet name to match.
+ *    @param planetname Spob name to match.
  *    @return Name of the system planet belongs to.
  */
 char* planet_getSystem( const char* planetname )
@@ -936,18 +936,18 @@ char* planet_getSystem( const char* planetname )
    for (int i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
-   LOG(_("Planet '%s' is not placed in a system"), planetname);
+   LOG(_("Spob '%s' is not placed in a system"), planetname);
    return NULL;
 }
 
 /**
- * @brief Comparison function for qsort'ing Planet by name.
+ * @brief Comparison function for qsort'ing Spob by name.
  */
 static int planet_cmp( const void *p1, const void *p2 )
 {
-   const Planet *pnt1, *pnt2;
-   pnt1 = (const Planet*) p1;
-   pnt2 = (const Planet*) p2;
+   const Spob *pnt1, *pnt2;
+   pnt1 = (const Spob*) p1;
+   pnt2 = (const Spob*) p2;
    return strcmp(pnt1->name,pnt2->name);
 }
 
@@ -955,9 +955,9 @@ static int planet_cmp( const void *p1, const void *p2 )
  * @brief Gets a planet based on its name.
  *
  *    @param planetname Name to match.
- *    @return Planet matching planetname.
+ *    @return Spob matching planetname.
  */
-Planet* planet_get( const char* planetname )
+Spob* planet_get( const char* planetname )
 {
    if (planetname==NULL) {
       WARN(_("Trying to find NULL planet…"));
@@ -969,17 +969,17 @@ Planet* planet_get( const char* planetname )
       for (int i=0; i<array_size(planet_stack); i++)
          if (strcmp(planet_stack[i].name, planetname)==0)
             return &planet_stack[i];
-      WARN(_("Planet '%s' not found in the universe"), planetname);
+      WARN(_("Spob '%s' not found in the universe"), planetname);
       return NULL;
    }
 #endif /* DEBUGGING */
 
-   const Planet p = {.name = (char*)planetname};
-   Planet *found = bsearch( &p, planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
+   const Spob p = {.name = (char*)planetname};
+   Spob *found = bsearch( &p, planet_stack, array_size(planet_stack), sizeof(Spob), planet_cmp );
    if (found != NULL)
       return found;
 
-   WARN(_("Planet '%s' not found in the universe"), planetname);
+   WARN(_("Spob '%s' not found in the universe"), planetname);
    return NULL;
 }
 
@@ -989,11 +989,11 @@ Planet* planet_get( const char* planetname )
  *    @param ind Index of the planet to get.
  *    @return The planet gotten.
  */
-Planet* planet_getIndex( int ind )
+Spob* planet_getIndex( int ind )
 {
    /* Validity check. */
    if ((ind < 0) || (ind >= array_size(planet_stack))) {
-      WARN(_("Planet index '%d' out of range (max %d)"), ind, array_size(planet_stack));
+      WARN(_("Spob index '%d' out of range (max %d)"), ind, array_size(planet_stack));
       return NULL;
    }
 
@@ -1003,10 +1003,10 @@ Planet* planet_getIndex( int ind )
 /**
  * @brief Gets the ID of a planet.
  *
- *    @param p Planet to get ID of.
+ *    @param p Spob to get ID of.
  *    @return The ID of the planet.
  */
-int planet_index( const Planet *p )
+int planet_index( const Spob *p )
 {
    return p->id;
 }
@@ -1014,7 +1014,7 @@ int planet_index( const Planet *p )
 /**
  * @brief Gets an array (array.h) of all planets.
  */
-Planet* planet_getAll (void)
+Spob* planet_getAll (void)
 {
    return planet_stack;
 }
@@ -1022,9 +1022,9 @@ Planet* planet_getAll (void)
 /**
  * @brief Sets a planet's known status, if it's real.
  */
-void planet_setKnown( Planet *p )
+void planet_setKnown( Spob *p )
 {
-   planet_setFlag(p, PLANET_KNOWN);
+   planet_setFlag(p, SPOB_KNOWN);
 }
 
 /**
@@ -1304,9 +1304,9 @@ void space_factionChange (void)
  */
 void space_checkLand (void)
 {
-   if (space_landQueuePlanet != NULL) {
-      land( space_landQueuePlanet, 0 );
-      space_landQueuePlanet = NULL;
+   if (space_landQueueSpob != NULL) {
+      land( space_landQueueSpob, 0 );
+      space_landQueueSpob = NULL;
    }
 }
 
@@ -1358,16 +1358,16 @@ void space_update( const double dt )
 
    if (!space_simulating) {
       int found_something = 0;
-      /* Planet updates */
+      /* Spob updates */
       for (int i=0; i<array_size(cur_system->planets); i++) {
          HookParam hparam[3];
-         Planet *pnt = cur_system->planets[i];
+         Spob *pnt = cur_system->planets[i];
 
          /* Must update in some cases. */
-         space_updatePlanet( pnt, dt );
+         space_updateSpob( pnt, dt );
 
          /* Handle discoveries. */
-         if (planet_isKnown( pnt ) || !pilot_inRangePlanet( player.p, i ))
+         if (planet_isKnown( pnt ) || !pilot_inRangeSpob( player.p, i ))
             continue;
 
          planet_setKnown( pnt );
@@ -1582,7 +1582,7 @@ void space_init( const char* sysname, int do_simulate )
 
    /* Set up planets. */
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+      Spob *pnt = cur_system->planets[i];
       pnt->bribed = 0;
       pnt->land_override = 0;
       planet_updateLand( pnt );
@@ -1753,9 +1753,9 @@ void debris_init( Debris *deb )
 /**
  * @brief Creates a new planet.
  */
-Planet *planet_new (void)
+Spob *planet_new (void)
 {
-   Planet *p, *old_stack;
+   Spob *p, *old_stack;
    int realloced;
 
 #if DEBUGGING
@@ -1770,13 +1770,13 @@ Planet *planet_new (void)
    old_stack   = planet_stack;
    p           = &array_grow( &planet_stack );
    realloced   = (old_stack!=planet_stack);
-   memset( p, 0, sizeof(Planet) );
+   memset( p, 0, sizeof(Spob) );
    p->id       = array_size(planet_stack)-1;
    p->presence.faction = -1;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
-      systems_reconstructPlanets();
+      systems_reconstructSpobs();
 
    return p;
 }
@@ -1784,10 +1784,10 @@ Planet *planet_new (void)
 /**
  * @brief Gets the translated name of a planet.
  *
- *    @param p Planet to get translated name of.
+ *    @param p Spob to get translated name of.
  *    @return Translated name of the planet.
  */
-const char *planet_name( const Planet *p )
+const char *planet_name( const Spob *p )
 {
    if (p->displayname)
       return _(p->displayname);
@@ -1819,13 +1819,13 @@ static int planets_load (void)
 
    /* Initialize stack if needed. */
    if (planet_stack == NULL)
-      planet_stack = array_create_size(Planet, 256);
+      planet_stack = array_create_size(Spob, 256);
 
    /* Extract the list of standard commodities. */
    stdList = standard_commodities();
 
    /* Load XML stuff. */
-   planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
+   planet_files = PHYSFS_enumerateFiles( SPOB_DATA_PATH );
    for (size_t i=0; planet_files[i]!=NULL; i++) {
       xmlNodePtr node;
       xmlDocPtr doc;
@@ -1834,7 +1834,7 @@ static int planets_load (void)
       if (!ndata_matchExt( planet_files[i], "xml" ))
          continue;
 
-      asprintf( &file, "%s%s", PLANET_DATA_PATH, planet_files[i]);
+      asprintf( &file, "%s%s", SPOB_DATA_PATH, planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
@@ -1850,7 +1850,7 @@ static int planets_load (void)
       }
 
       if (xml_isNode(node,XML_ASSET_TAG)) {
-         Planet *p = planet_new();
+         Spob *p = planet_new();
          planet_parse( p, node, stdList );
       }
 
@@ -1858,7 +1858,7 @@ static int planets_load (void)
       free(file);
       xmlFreeDoc(doc);
    }
-   qsort( planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
+   qsort( planet_stack, array_size(planet_stack), sizeof(Spob), planet_cmp );
    for (int j=0; j<array_size(planet_stack); j++)
       planet_stack[j].id = j;
 
@@ -1945,9 +1945,9 @@ static int virtualassets_load (void)
 /**
  * @brief Gets the planet colour char.
  */
-char planet_getColourChar( const Planet *p )
+char planet_getColourChar( const Spob *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, SPOB_SERVICE_INHABITED ))
       return 'I';
 
    if (p->can_land || p->bribed) {
@@ -1964,10 +1964,10 @@ char planet_getColourChar( const Planet *p )
 /**
  * @brief Gets the planet symbol.
  */
-const char *planet_getSymbol( const Planet *p )
+const char *planet_getSymbol( const Spob *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED )) {
-      if (planet_hasService( p, PLANET_SERVICE_LAND ))
+   if (!planet_hasService( p, SPOB_SERVICE_INHABITED )) {
+      if (planet_hasService( p, SPOB_SERVICE_LAND ))
          return "= ";
       return "";
    }
@@ -1986,9 +1986,9 @@ const char *planet_getSymbol( const Planet *p )
 /**
  * @brief Gets the planet colour.
  */
-const glColour* planet_getColour( const Planet *p )
+const glColour* planet_getColour( const Spob *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, SPOB_SERVICE_INHABITED ))
       return &cInert;
 
    if (p->can_land || p->bribed) {
@@ -2005,14 +2005,14 @@ const glColour* planet_getColour( const Planet *p )
 /**
  * @brief Updates the land possibilities of a planet.
  *
- *    @param p Planet to update land possibilities of.
+ *    @param p Spob to update land possibilities of.
  */
-void planet_updateLand( Planet *p )
+void planet_updateLand( Spob *p )
 {
    char *str;
 
    /* Must be inhabited. */
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
+   if (!planet_hasService( p, SPOB_SERVICE_INHABITED ) ||
          (player.p == NULL))
       return;
 
@@ -2030,7 +2030,7 @@ void planet_updateLand( Planet *p )
    if (p->lua_can_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_can_land); /* f */
       if (nlua_pcall( p->lua_env, 0, 2 )) {
-         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
 
@@ -2096,7 +2096,7 @@ void planet_updateLand( Planet *p )
 /**
  * @brief Loads a planet's graphics (and radius).
  */
-void planet_gfxLoad( Planet *planet )
+void planet_gfxLoad( Spob *planet )
 {
    if (planet->lua_file) {
       if (planet->lua_env==LUA_NOREF) {
@@ -2113,7 +2113,7 @@ void planet_gfxLoad( Planet *planet )
          nlua_loadGFX( env );
          nlua_loadCamera( env );
          if (nlua_dobufenv( env, dat, sz, planet->lua_file ) != 0) {
-            WARN(_("Planet '%s' Lua error:\n%s"), planet->name, lua_tostring(naevL,-1));
+            WARN(_("Spob '%s' Lua error:\n%s"), planet->name, lua_tostring(naevL,-1));
             lua_pop(naevL,1);
             nlua_freeEnv( env );
             free( dat );
@@ -2135,15 +2135,15 @@ void planet_gfxLoad( Planet *planet )
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
          lua_pushplanet(naevL, planet_index(planet)); /* f, p */
          if (nlua_pcall( planet->lua_env, 1, 1 )) {
-            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "load", lua_tostring(naevL,-1));
+            WARN(_("Spob '%s' failed to run '%s':\n%s"), planet->name, "load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
          if (lua_istex(naevL,-1)) {
             planet->gfx_space = lua_totex(naevL,-1);
-            planet_setFlag( planet, PLANET_LUATEX );
+            planet_setFlag( planet, SPOB_LUATEX );
          }
          else
-            WARN(_("Planet '%s' ran '%s' but got non-texture return value!"), planet->name, "load" );
+            WARN(_("Spob '%s' ran '%s' but got non-texture return value!"), planet->name, "load" );
          lua_pop(naevL,1);
       }
    }
@@ -2175,17 +2175,17 @@ void space_gfxLoad( StarSystem *sys )
 void space_gfxUnload( StarSystem *sys )
 {
    for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *planet = sys->planets[i];
+      Spob *planet = sys->planets[i];
 
       if (planet->lua_unload != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_unload); /* f */
          if (nlua_pcall( planet->lua_env, 0, 0 )) {
-            WARN(_("Planet '%s' failed to run '%s':\n%s"), planet->name, "unload", lua_tostring(naevL,-1));
+            WARN(_("Spob '%s' failed to run '%s':\n%s"), planet->name, "unload", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
       }
 
-      if (!planet_isFlag(planet, PLANET_LUATEX))
+      if (!planet_isFlag(planet, SPOB_LUATEX))
          gl_freeTexture( planet->gfx_space );
       planet->gfx_space = NULL;
    }
@@ -2218,12 +2218,12 @@ static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
 /**
  * @brief Parses a planet from an xml node.
  *
- *    @param planet Planet to fill up.
+ *    @param planet Spob to fill up.
  *    @param parent Node that contains planet data.
  *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
+static int planet_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdList )
 {
    xmlNodePtr node;
    unsigned int flags;
@@ -2261,14 +2261,14 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"space")) { /* load space gfx */
                char str[PATH_MAX];
-               snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), SPOB_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                continue;
             }
             if (xml_isNode(cur,"exterior")) { /* load land gfx */
                char str[PATH_MAX];
-               snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), SPOB_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
                continue;
@@ -2321,14 +2321,14 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
                   if (xml_isNode(ccur, "land")) {
                      char *tmp = xml_get(ccur);
-                     planet->services |= PLANET_SERVICE_LAND;
+                     planet->services |= SPOB_SERVICE_LAND;
                      if (tmp != NULL) {
                         planet->land_func = strdup(tmp);
 #ifdef DEBUGGING
                         if (landing_env != LUA_NOREF) {
                            nlua_getenv( landing_env, tmp );
                            if (lua_isnil(naevL,-1))
-                              WARN(_("Planet '%s' has landing function '%s' which is not found in '%s'."),
+                              WARN(_("Spob '%s' has landing function '%s' which is not found in '%s'."),
                                     planet->name, tmp, LANDING_DATA_PATH);
                            lua_pop(naevL,1);
                         }
@@ -2336,25 +2336,25 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      }
                   }
                   else if (xml_isNode(ccur, "refuel"))
-                     planet->services |= PLANET_SERVICE_REFUEL | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_REFUEL | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "bar"))
-                     planet->services |= PLANET_SERVICE_BAR | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_BAR | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "missions"))
-                     planet->services |= PLANET_SERVICE_MISSIONS | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_MISSIONS | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "commodity"))
-                     planet->services |= PLANET_SERVICE_COMMODITY | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_COMMODITY | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "outfits"))
-                     planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_OUTFITS | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
-                     planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
+                     planet->services |= SPOB_SERVICE_SHIPYARD | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "nomissionspawn"))
-                     planet->flags |= PLANET_NOMISNSPAWN;
+                     planet->flags |= SPOB_NOMISNSPAWN;
                   else if (xml_isNode(ccur, "uninhabited"))
-                     planet->flags |= PLANET_UNINHABITED;
+                     planet->flags |= SPOB_UNINHABITED;
                   else if (xml_isNode(ccur, "blackmarket"))
-                     planet->services |= PLANET_SERVICE_BLACKMARKET;
+                     planet->services |= SPOB_SERVICE_BLACKMARKET;
                   else
-                     WARN(_("Planet '%s' has unknown services tag '%s'"), planet->name, ccur->name);
+                     WARN(_("Spob '%s' has unknown services tag '%s'"), planet->name, ccur->name);
                } while (xml_nextNode(ccur));
             }
 
@@ -2372,7 +2372,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                } while (xml_nextNode(ccur));
             }
             else if (xml_isNode(cur, "blackmarket")) {
-               planet_addService(planet, PLANET_SERVICE_BLACKMARKET);
+               planet_addService(planet, SPOB_SERVICE_BLACKMARKET);
                continue;
             }
          } while (xml_nextNode(cur));
@@ -2393,7 +2393,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                   array_push_back( &planet->tags, strdup(tmp) );
                continue;
             }
-            WARN(_("Planet '%s' has unknown node in tags '%s'."), planet->name, cur->name );
+            WARN(_("Spob '%s' has unknown node in tags '%s'."), planet->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2401,41 +2401,41 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    } while (xml_nextNode(node));
 
    /* Allow forcing to be uninhabited. */
-   if (planet_isFlag(planet, PLANET_UNINHABITED))
-      planet->services &= ~PLANET_SERVICE_INHABITED;
+   if (planet_isFlag(planet, SPOB_UNINHABITED))
+      planet->services &= ~SPOB_SERVICE_INHABITED;
 
    if (planet->radius > 0.)
-      planet_setFlag(planet, PLANET_RADIUS);
+      planet_setFlag(planet, SPOB_RADIUS);
 /*
  * Verification
  */
-#define MELEMENT(o,s)   if (o) WARN(_("Planet '%s' missing '%s' element"), planet->name, s)
+#define MELEMENT(o,s)   if (o) WARN(_("Spob '%s' missing '%s' element"), planet->name, s)
    //MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+   MELEMENT( planet_hasService(planet,SPOB_SERVICE_LAND) &&
          planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+   MELEMENT( planet_hasService(planet,SPOB_SERVICE_INHABITED) &&
          (planet->population==0), "population");
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(planet->class==NULL,"class");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+   MELEMENT( planet_hasService(planet,SPOB_SERVICE_LAND) &&
          planet->description==NULL,"description");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
+   MELEMENT( planet_hasService(planet,SPOB_SERVICE_BAR) &&
          planet->bar_description==NULL,"bar");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+   MELEMENT( planet_hasService(planet,SPOB_SERVICE_INHABITED) &&
          (flags&FLAG_FACTIONSET)==0,"faction");
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
-            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+   MELEMENT( (planet_hasService(planet,SPOB_SERVICE_OUTFITS) ||
+            planet_hasService(planet,SPOB_SERVICE_SHIPYARD)) &&
          (planet->tech==NULL), "tech" );
-   /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+   /*MELEMENT( planet_hasService(planet,SPOB_SERVICE_COMMODITY) &&
          (array_size(planet->commodities)==0),"commodity" );*/
    /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
          "presence" );*/
 #undef MELEMENT
 
    /* Build commodities list */
-   if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
+   if (planet_hasService(planet, SPOB_SERVICE_COMMODITY)) {
       planet->commodityPrice = array_create( CommodityPrice );
       planet->commodities = array_create( Commodity* );
 
@@ -2466,9 +2466,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
  *    @param planetname Name of the planet to add.
  *    @return 0 on success.
  */
-int system_addPlanet( StarSystem *sys, const char *planetname )
+int system_addSpob( StarSystem *sys, const char *planetname )
 {
-   Planet *planet;
+   Spob *planet;
 
    if (sys == NULL)
       return -1;
@@ -2485,7 +2485,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
-   economy_clearSinglePlanet(planet);
+   economy_clearSingleSpob(planet);
 
    /* Reload graphics if necessary. */
    if (cur_system != NULL)
@@ -2501,10 +2501,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
  *    @param planetname Name of the planet to remove.
  *    @return 0 on success.
  */
-int system_rmPlanet( StarSystem *sys, const char *planetname )
+int system_rmSpob( StarSystem *sys, const char *planetname )
 {
    int i, found;
-   Planet *planet;
+   Spob *planet;
 
    if (sys == NULL) {
       WARN(_("Unable to remove planet '%s' from NULL system."), planetname);
@@ -2517,9 +2517,9 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
       if (sys->planets[i] == planet)
          break;
 
-   /* Planet not found. */
+   /* Spob not found. */
    if (i>=array_size(sys->planets)) {
-      WARN(_("Planet '%s' not found in system '%s' for removal."), planetname, sys->name);
+      WARN(_("Spob '%s' not found in system '%s' for removal."), planetname, sys->name);
       return -1;
    }
 
@@ -2675,7 +2675,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
       if (&sys->jumps[i] == jump)
          break;
 
-   /* Planet not found. */
+   /* Spob not found. */
    if (i>=array_size(sys->jumps)) {
       WARN(_("Jump point '%s' not found in system '%s' for removal."), jumpname, sys->name);
       return -1;
@@ -2698,7 +2698,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
-   sys->planets   = array_create( Planet* );
+   sys->planets   = array_create( Spob* );
    sys->assets_virtual = array_create( VirtualAsset* );
    sys->planetsid = array_create( int );
    sys->jumps     = array_create( JumpPoint );
@@ -2792,7 +2792,7 @@ void systems_reconstructJumps (void)
 /**
  * @brief Updates the system planet pointers.
  */
-void systems_reconstructPlanets (void)
+void systems_reconstructSpobs (void)
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
@@ -2873,7 +2873,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"asset")) {
-               system_addPlanet( sys, xml_get(cur) );
+               system_addSpob( sys, xml_get(cur) );
                continue;
             }
             if (xml_isNode(cur,"asset_virtual")) {
@@ -2982,7 +2982,7 @@ void system_setFaction( StarSystem *sys )
    sys->faction = -1;
    for (int i=0; i<array_size(sys->presence); i++) {
       for (int j=0; j<array_size(sys->planets); j++) { /** @todo Handle multiple different factions. */
-         Planet *pnt = sys->planets[j];
+         Spob *pnt = sys->planets[j];
 
          if (pnt->presence.faction != sys->presence[i].faction)
             continue;
@@ -3374,8 +3374,8 @@ int space_load (void)
    systemname_stack = array_create( char* );
 
    /* Load jump point graphic - must be before systems_load(). */
-   jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
-   jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
+   jumppoint_gfx = gl_newSprite(  SPOB_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage(  SPOB_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -3398,12 +3398,12 @@ int space_load (void)
       return ret;
 
    /* Load asteroid graphics. */
-   asteroid_files = PHYSFS_enumerateFiles( PLANET_GFX_SPACE_PATH"asteroid/" );
+   asteroid_files = PHYSFS_enumerateFiles( SPOB_GFX_SPACE_PATH"asteroid/" );
    for (nasterogfx=0; asteroid_files[nasterogfx]!=NULL; nasterogfx++) {}
    asteroid_gfx = malloc( sizeof(glTexture*) * nasterogfx );
 
    for (size_t i=0; asteroid_files[i]!=NULL; i++) {
-      snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
+      snprintf( file, sizeof(file), "%s%s", SPOB_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
@@ -3412,7 +3412,7 @@ int space_load (void)
 
    /* Apply all the presences. */
    for (int i=0; i<array_size(systems_stack); i++)
-      system_addAllPlanetsPresence(&systems_stack[i]);
+      system_addAllSpobsPresence(&systems_stack[i]);
 
    /* Determine dominant faction. */
    for (int i=0; i<array_size(systems_stack); i++)
@@ -3420,7 +3420,7 @@ int space_load (void)
 
    /* Reconstruction. */
    systems_reconstructJumps();
-   systems_reconstructPlanets();
+   systems_reconstructSpobs();
 
    /* Fine tuning. */
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -3485,7 +3485,7 @@ static int asteroidTypes_load (void)
          cur = node->children;
          do {
             if (xml_isNode(cur,"gfx"))
-               array_push_back( &at->gfxs, xml_parseTexture( cur, PLANET_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
+               array_push_back( &at->gfxs, xml_parseTexture( cur, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
 
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);
@@ -3615,11 +3615,11 @@ static int systems_load (void)
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
       DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-      DEBUG( n_( "       with %d Planet in %.3f s", "       with %d Planets in %.3f s", array_size(planet_stack) ), array_size(planet_stack), time/1000. );
+      DEBUG( n_( "       with %d Spob in %.3f s", "       with %d Spobs in %.3f s", array_size(planet_stack) ), array_size(planet_stack), time/1000. );
    }
    else {
       DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-      DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+      DEBUG( n_( "       with %d Spob", "       with %d Spobs", array_size(planet_stack) ), array_size(planet_stack) );
    }
 
    return 0;
@@ -3695,7 +3695,7 @@ void planets_render (void)
 
    /* Render the planets. */
    for (int i=0; i < array_size(cur_system->planets); i++)
-      space_renderPlanet( cur_system->planets[i] );
+      space_renderSpob( cur_system->planets[i] );
 
    /* Get the player in order to compute the offset for debris. */
    pplayer = pilot_get( PLAYER_ID );
@@ -3753,13 +3753,13 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
 /**
  * @brief Renders a planet.
  */
-static void space_renderPlanet( const Planet *p )
+static void space_renderSpob( const Spob *p )
 {
    if (p->lua_render != LUA_NOREF) {
       /* TODO do a clip test first. */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_render); /* f */
       if (nlua_pcall( p->lua_env, 0, 0 )) {
-         WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "render", lua_tostring(naevL,-1));
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "render", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
    }
@@ -3770,7 +3770,7 @@ static void space_renderPlanet( const Planet *p )
 /**
  * @brief Renders a planet.
  */
-static void space_updatePlanet( const Planet *p, double dt )
+static void space_updateSpob( const Spob *p, double dt )
 {
    if (p->lua_update == LUA_NOREF)
       return;
@@ -3778,7 +3778,7 @@ static void space_updatePlanet( const Planet *p, double dt )
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_update); /* f */
    lua_pushnumber(naevL, dt); /* f, dt */
    if (nlua_pcall( p->lua_env, 1, 0 )) {
-      WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "update", lua_tostring(naevL,-1));
+      WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "update", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -3862,7 +3862,7 @@ void space_exit (void)
 
    /* Free the planets. */
    for (int i=0; i < array_size(planet_stack); i++) {
-      Planet *pnt = &planet_stack[i];
+      Spob *pnt = &planet_stack[i];
 
       free(pnt->name);
       free(pnt->displayname);
@@ -3980,7 +3980,7 @@ void space_clearKnown (void)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
    for (int j=0; j<array_size(planet_stack); j++)
-      planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
+      planet_rmFlag(&planet_stack[j],SPOB_KNOWN);
 }
 
 /**
@@ -3997,8 +3997,8 @@ void space_clearMarkers (void)
       sys->markers_low   = 0;
    }
    for (int i=0; i<array_size(planet_stack); i++) {
-      Planet *pnt = &planet_stack[i];
-      planet_rmFlag( pnt, PLANET_MARKED );
+      Spob *pnt = &planet_stack[i];
+      planet_rmFlag( pnt, SPOB_MARKED );
       pnt->markers = 0;
    }
 }
@@ -4048,17 +4048,17 @@ static int space_addMarkerSystem( int sysid, MissionMarkerType type )
    return 0;
 }
 
-static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
+static int space_addMarkerSpob( int pntid, MissionMarkerType type )
 {
    const char *sys;
    MissionMarkerType stype;
-   Planet *pnt = planet_getIndex( pntid );
+   Spob *pnt = planet_getIndex( pntid );
    if (pnt==NULL)
       return -1;
 
    /* Mark planet. */
    pnt->markers++;
-   planet_setFlag( pnt, PLANET_MARKED );
+   planet_setFlag( pnt, SPOB_MARKED );
 
    /* Now try to mark system. */
    sys = planet_getSystem( pnt->name );
@@ -4066,7 +4066,7 @@ static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
       WARN(_("Marking planet '%s' that is not in any system!"), pnt->name);
       return 0;
    }
-   stype = mission_markerTypePlanetToSystem( type );
+   stype = mission_markerTypeSpobToSystem( type );
    return space_addMarkerSystem( system_index( system_get(sys) ), stype );
 }
 
@@ -4089,7 +4089,7 @@ int space_addMarker( int objid, MissionMarkerType type )
       case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
       case PNTMARKER_PLOT:
-         return space_addMarkerPlanet( objid, type );
+         return space_addMarkerSpob( objid, type );
       default:
          WARN(_("Unknown marker type."));
          return -1;
@@ -4136,23 +4136,23 @@ static int space_rmMarkerSystem( int sys, MissionMarkerType type )
    return 0;
 }
 
-static int space_rmMarkerPlanet( int pntid, MissionMarkerType type )
+static int space_rmMarkerSpob( int pntid, MissionMarkerType type )
 {
    (void) type;
    const char *sys;
    MissionMarkerType stype;
-   Planet *pnt = planet_getIndex( pntid );
+   Spob *pnt = planet_getIndex( pntid );
 
    /* Remove planet marker. */
    pnt->markers--;
    if (pnt->markers <= 0)
-      planet_rmFlag( pnt, PLANET_MARKED );
+      planet_rmFlag( pnt, SPOB_MARKED );
 
    /* Now try to remove system. */
    sys = planet_getSystem( pnt->name );
    if (sys == NULL)
       return 0;
-   stype = mission_markerTypePlanetToSystem( type );
+   stype = mission_markerTypeSpobToSystem( type );
    return space_rmMarkerSystem( system_index( system_get(sys) ), stype );
 }
 
@@ -4175,7 +4175,7 @@ int space_rmMarker( int objid, MissionMarkerType type )
       case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
       case PNTMARKER_PLOT:
-         return space_rmMarkerPlanet( objid, type );
+         return space_rmMarkerSpob( objid, type );
       default:
          WARN(_("Unknown marker type."));
          return -1;
@@ -4276,7 +4276,7 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"planet")) {
-         Planet *planet = planet_get(xml_get(node));
+         Spob *planet = planet_get(xml_get(node));
          if (planet != NULL) /* Must exist */
             planet_setKnown(planet);
       }
@@ -4513,7 +4513,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
  *
  *    @param sys Pointer to the system to process.
  */
-void system_addAllPlanetsPresence( StarSystem *sys )
+void system_addAllSpobsPresence( StarSystem *sys )
 {
    /* Check for NULL and display a warning. */
 #if DEBUGGING
@@ -4547,7 +4547,7 @@ void space_reconstructPresences( void )
 
    /* Re-add presence to each system. */
    for (int i=0; i<array_size(systems_stack); i++)
-      system_addAllPlanetsPresence(&systems_stack[i]);
+      system_addAllSpobsPresence(&systems_stack[i]);
 
    /* Determine dominant faction. */
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -4672,7 +4672,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
  *    @param sys Pointer to the system to process.
  *    @return 0 If empty; otherwise 1.
  */
-int system_hasPlanet( const StarSystem *sys )
+int system_hasSpob( const StarSystem *sys )
 {
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -4740,11 +4740,11 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
  * @brief Cues a planet to be landed on. This is not done immediately, but when
  * the engine thinks it is ok to do.
  *
- *    @param pnt Planet to land on.
+ *    @param pnt Spob to land on.
  */
-void space_queueLand( Planet *pnt )
+void space_queueLand( Spob *pnt )
 {
-   space_landQueuePlanet = pnt;
+   space_landQueueSpob = pnt;
 }
 
 /**

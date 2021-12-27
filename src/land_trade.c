@@ -175,7 +175,7 @@ void commodity_update( unsigned int wid, const char *str )
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );
 
-   planet_averagePlanetPrice( land_planet, com, &mean, &std);
+   planet_averageSpobPrice( land_planet, com, &mean, &std);
    credits2str( buf_mean, mean, -1 );
    snprintf( buf_std, sizeof(buf_std), _("%.1f ¤"), std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );

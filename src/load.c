@@ -61,7 +61,7 @@ extern int save_loaded; /**< From save.c */
  */
 /* externs */
 /* player.c */
-extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+extern Spob* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
@@ -425,7 +425,7 @@ static void load_menu_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Planet:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
@@ -626,7 +626,7 @@ static int load_gameInternal( const char* file, const char* version )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   Planet *pnt;
+   Spob *pnt;
    int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
 
    /* Make sure it exists. */
