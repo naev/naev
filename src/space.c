@@ -77,7 +77,7 @@
 /*
  * planet <-> system name stack
  */
-static char** planetname_stack = NULL; /**< Spob name stack corresponding to system. */
+static char** spobname_stack = NULL; /**< Spob name stack corresponding to system. */
 static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
 
 /*
@@ -919,8 +919,8 @@ int system_index( const StarSystem *sys )
  */
 int spob_hasSystem( const char* planetname )
 {
-   for (int i=0; i<array_size(planetname_stack); i++)
-      if (strcmp(planetname_stack[i],planetname)==0)
+   for (int i=0; i<array_size(spobname_stack); i++)
+      if (strcmp(spobname_stack[i],planetname)==0)
          return 1;
    return 0;
 }
@@ -933,8 +933,8 @@ int spob_hasSystem( const char* planetname )
  */
 char* spob_getSystem( const char* planetname )
 {
-   for (int i=0; i<array_size(planetname_stack); i++)
-      if (strcmp(planetname_stack[i],planetname)==0)
+   for (int i=0; i<array_size(spobname_stack); i++)
+      if (strcmp(spobname_stack[i],planetname)==0)
          return systemname_stack[i];
    LOG(_("Spob '%s' is not placed in a system"), planetname);
    return NULL;
@@ -1850,8 +1850,8 @@ static int spobs_load (void)
       }
 
       if (xml_isNode(node,XML_SPOB_TAG)) {
-         Spob *p = spob_new();
-         spob_parse( p, node, stdList );
+         Spob *s = spob_new();
+         spob_parse( s, node, stdList );
       }
 
       /* Clean up. */
@@ -2218,12 +2218,12 @@ static int asset_parsePresence( xmlNodePtr node, SpobPresence *ap )
 /**
  * @brief Parses a planet from an xml node.
  *
- *    @param planet Spob to fill up.
+ *    @param spob Spob to fill up.
  *    @param parent Node that contains planet data.
  *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdList )
+static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList )
 {
    xmlNodePtr node;
    unsigned int flags;
@@ -2231,29 +2231,29 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
 
    /* Clear up memory for safe defaults. */
    flags          = 0;
-   planet->hide   = 0.01;
-   planet->radius = -1.;
+   spob->hide   = 0.01;
+   spob->radius = -1.;
    comms          = array_create( Commodity* );
    /* Lua stuff. */
-   planet->lua_env   = LUA_NOREF;
-   planet->lua_load  = LUA_NOREF;
-   planet->lua_unload= LUA_NOREF;
-   planet->lua_land  = LUA_NOREF;
-   planet->lua_can_land = LUA_NOREF;
-   planet->lua_render= LUA_NOREF;
-   planet->lua_update= LUA_NOREF;
+   spob->lua_env   = LUA_NOREF;
+   spob->lua_load  = LUA_NOREF;
+   spob->lua_unload= LUA_NOREF;
+   spob->lua_land  = LUA_NOREF;
+   spob->lua_can_land = LUA_NOREF;
+   spob->lua_render= LUA_NOREF;
+   spob->lua_update= LUA_NOREF;
 
    /* Get the name. */
-   xmlr_attr_strd( parent, "name", planet->name );
+   xmlr_attr_strd( parent, "name", spob->name );
 
    node = parent->xmlChildrenNode;
    do {
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      xmlr_strd(node, "displayname", planet->displayname);
-      xmlr_strd(node, "lua", planet->lua_file);
-      xmlr_float(node, "radius", planet->radius);
+      xmlr_strd(node, "displayname", spob->displayname);
+      xmlr_strd(node, "lua", spob->lua_file);
+      xmlr_float(node, "radius", spob->radius);
 
       if (xml_isNode(node,"GFX")) {
          xmlNodePtr cur = node->children;
@@ -2262,18 +2262,18 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
             if (xml_isNode(cur,"space")) { /* load space gfx */
                char str[PATH_MAX];
                snprintf( str, sizeof(str), SPOB_GFX_SPACE_PATH"%s", xml_get(cur));
-               planet->gfx_spaceName = strdup(str);
-               planet->gfx_spacePath = xml_getStrd(cur);
+               spob->gfx_spaceName = strdup(str);
+               spob->gfx_spacePath = xml_getStrd(cur);
                continue;
             }
             if (xml_isNode(cur,"exterior")) { /* load land gfx */
                char str[PATH_MAX];
                snprintf( str, sizeof(str), SPOB_GFX_EXTERIOR_PATH"%s", xml_get(cur));
-               planet->gfx_exterior = strdup(str);
-               planet->gfx_exteriorPath = xml_getStrd(cur);
+               spob->gfx_exterior = strdup(str);
+               spob->gfx_exteriorPath = xml_getStrd(cur);
                continue;
             }
-            WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
+            WARN(_("Unknown node '%s' in spob '%s'"),node->name,spob->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2283,21 +2283,21 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
-               planet->pos.x = xml_getFloat(cur);
+               spob->pos.x = xml_getFloat(cur);
                continue;
             }
             if (xml_isNode(cur,"y")) {
                flags |= FLAG_YSET;
-               planet->pos.y = xml_getFloat(cur);
+               spob->pos.y = xml_getFloat(cur);
                continue;
             }
-            WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
+            WARN(_("Unknown node '%s' in spob '%s'"),node->name,spob->name);
          } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node, "presence")) {
-         asset_parsePresence( node, &planet->presence );
-         if (planet->presence.faction>=0)
+         asset_parsePresence( node, &spob->presence );
+         if (spob->presence.faction>=0)
             flags += FLAG_FACTIONSET;
          continue;
       }
@@ -2306,55 +2306,55 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
          do {
             xml_onlyNodes(cur);
             /* Direct reads. */
-            xmlr_strd(cur, "class", planet->class);
-            xmlr_strd(cur, "bar", planet->bar_description);
-            xmlr_strd(cur, "description", planet->description );
-            xmlr_float(cur, "population", planet->population );
-            xmlr_float(cur, "hide", planet->hide );
+            xmlr_strd(cur, "class", spob->class);
+            xmlr_strd(cur, "bar", spob->bar_description);
+            xmlr_strd(cur, "description", spob->description );
+            xmlr_float(cur, "population", spob->population );
+            xmlr_float(cur, "hide", spob->hide );
 
             if (xml_isNode(cur, "services")) {
                xmlNodePtr ccur = cur->children;
                flags |= FLAG_SERVICESSET;
-               planet->services = 0;
+               spob->services = 0;
                do {
                   xml_onlyNodes(ccur);
 
                   if (xml_isNode(ccur, "land")) {
                      char *tmp = xml_get(ccur);
-                     planet->services |= SPOB_SERVICE_LAND;
+                     spob->services |= SPOB_SERVICE_LAND;
                      if (tmp != NULL) {
-                        planet->land_func = strdup(tmp);
+                        spob->land_func = strdup(tmp);
 #ifdef DEBUGGING
                         if (landing_env != LUA_NOREF) {
                            nlua_getenv( landing_env, tmp );
                            if (lua_isnil(naevL,-1))
                               WARN(_("Spob '%s' has landing function '%s' which is not found in '%s'."),
-                                    planet->name, tmp, LANDING_DATA_PATH);
+                                    spob->name, tmp, LANDING_DATA_PATH);
                            lua_pop(naevL,1);
                         }
 #endif /* DEBUGGING */
                      }
                   }
                   else if (xml_isNode(ccur, "refuel"))
-                     planet->services |= SPOB_SERVICE_REFUEL | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_REFUEL | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "bar"))
-                     planet->services |= SPOB_SERVICE_BAR | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_BAR | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "missions"))
-                     planet->services |= SPOB_SERVICE_MISSIONS | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_MISSIONS | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "commodity"))
-                     planet->services |= SPOB_SERVICE_COMMODITY | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_COMMODITY | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "outfits"))
-                     planet->services |= SPOB_SERVICE_OUTFITS | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_OUTFITS | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
-                     planet->services |= SPOB_SERVICE_SHIPYARD | SPOB_SERVICE_INHABITED;
+                     spob->services |= SPOB_SERVICE_SHIPYARD | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "nomissionspawn"))
-                     planet->flags |= SPOB_NOMISNSPAWN;
+                     spob->flags |= SPOB_NOMISNSPAWN;
                   else if (xml_isNode(ccur, "uninhabited"))
-                     planet->flags |= SPOB_UNINHABITED;
+                     spob->flags |= SPOB_UNINHABITED;
                   else if (xml_isNode(ccur, "blackmarket"))
-                     planet->services |= SPOB_SERVICE_BLACKMARKET;
+                     spob->services |= SPOB_SERVICE_BLACKMARKET;
                   else
-                     WARN(_("Spob '%s' has unknown services tag '%s'"), planet->name, ccur->name);
+                     WARN(_("Spob '%s' has unknown services tag '%s'"), spob->name, ccur->name);
                } while (xml_nextNode(ccur));
             }
 
@@ -2372,86 +2372,86 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
                } while (xml_nextNode(ccur));
             }
             else if (xml_isNode(cur, "blackmarket")) {
-               spob_addService(planet, SPOB_SERVICE_BLACKMARKET);
+               spob_addService(spob, SPOB_SERVICE_BLACKMARKET);
                continue;
             }
          } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node, "tech")) {
-         planet->tech = tech_groupCreateXML( node );
+         spob->tech = tech_groupCreateXML( node );
          continue;
       }
       else if (xml_isNode(node, "tags")) {
          xmlNodePtr cur = node->children;
-         planet->tags = array_create( char* );
+         spob->tags = array_create( char* );
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
                char *tmp = xml_get(cur);
                if (tmp != NULL)
-                  array_push_back( &planet->tags, strdup(tmp) );
+                  array_push_back( &spob->tags, strdup(tmp) );
                continue;
             }
-            WARN(_("Spob '%s' has unknown node in tags '%s'."), planet->name, cur->name );
+            WARN(_("Spob '%s' has unknown node in tags '%s'."), spob->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
-      WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
+      WARN(_("Unknown node '%s' in spob '%s'"),node->name,spob->name);
    } while (xml_nextNode(node));
 
    /* Allow forcing to be uninhabited. */
-   if (spob_isFlag(planet, SPOB_UNINHABITED))
-      planet->services &= ~SPOB_SERVICE_INHABITED;
+   if (spob_isFlag(spob, SPOB_UNINHABITED))
+      spob->services &= ~SPOB_SERVICE_INHABITED;
 
-   if (planet->radius > 0.)
-      spob_setFlag(planet, SPOB_RADIUS);
+   if (spob->radius > 0.)
+      spob_setFlag(spob, SPOB_RADIUS);
 /*
  * Verification
  */
-#define MELEMENT(o,s)   if (o) WARN(_("Spob '%s' missing '%s' element"), planet->name, s)
-   //MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
-   MELEMENT( spob_hasService(planet,SPOB_SERVICE_LAND) &&
-         planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( spob_hasService(planet,SPOB_SERVICE_INHABITED) &&
-         (planet->population==0), "population");
+#define MELEMENT(o,s)   if (o) WARN(_("Spob '%s' missing '%s' element"), spob->name, s)
+   //MELEMENT(spob->gfx_spaceName==NULL,"GFX space");
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_LAND) &&
+         spob->gfx_exterior==NULL,"GFX exterior");
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_INHABITED) &&
+         (spob->population==0), "population");
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(planet->class==NULL,"class");
-   MELEMENT( spob_hasService(planet,SPOB_SERVICE_LAND) &&
-         planet->description==NULL,"description");
-   MELEMENT( spob_hasService(planet,SPOB_SERVICE_BAR) &&
-         planet->bar_description==NULL,"bar");
-   MELEMENT( spob_hasService(planet,SPOB_SERVICE_INHABITED) &&
+   MELEMENT(spob->class==NULL,"class");
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_LAND) &&
+         spob->description==NULL,"description");
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_BAR) &&
+         spob->bar_description==NULL,"bar");
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_INHABITED) &&
          (flags&FLAG_FACTIONSET)==0,"faction");
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (spob_hasService(planet,SPOB_SERVICE_OUTFITS) ||
-            spob_hasService(planet,SPOB_SERVICE_SHIPYARD)) &&
-         (planet->tech==NULL), "tech" );
-   /*MELEMENT( spob_hasService(planet,SPOB_SERVICE_COMMODITY) &&
-         (array_size(planet->commodities)==0),"commodity" );*/
-   /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
+   MELEMENT( (spob_hasService(spob,SPOB_SERVICE_OUTFITS) ||
+            spob_hasService(spob,SPOB_SERVICE_SHIPYARD)) &&
+         (spob->tech==NULL), "tech" );
+   /*MELEMENT( spob_hasService(spob,SPOB_SERVICE_COMMODITY) &&
+         (array_size(spob->commodities)==0),"commodity" );*/
+   /*MELEMENT( (flags&FLAG_FACTIONSET) && (spob->presenceAmount == 0.),
          "presence" );*/
 #undef MELEMENT
 
    /* Build commodities list */
-   if (spob_hasService(planet, SPOB_SERVICE_COMMODITY)) {
-      planet->commodityPrice = array_create( CommodityPrice );
-      planet->commodities = array_create( Commodity* );
+   if (spob_hasService(spob, SPOB_SERVICE_COMMODITY)) {
+      spob->commodityPrice = array_create( CommodityPrice );
+      spob->commodities = array_create( Commodity* );
 
       /* First, store all the standard commodities and prices. */
       if (array_size(stdList) > 0) {
          for (int i=0; i<array_size(stdList); i++)
-            spob_addCommodity( planet, stdList[i] );
+            spob_addCommodity( spob, stdList[i] );
       }
 
       /* Now add extra commodities */
       for (int i=0; i<array_size(comms); i++)
-         spob_addCommodity( planet, comms[i] );
+         spob_addCommodity( spob, comms[i] );
 
       /* Shrink to minimum size. */
-      array_shrink( &planet->commodities );
-      array_shrink( &planet->commodityPrice );
+      array_shrink( &spob->commodities );
+      array_shrink( &spob->commodityPrice );
    }
    /* Free temporary comms list. */
    array_free(comms);
@@ -2460,32 +2460,32 @@ static int spob_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdLis
 }
 
 /**
- * @brief Adds a planet to a star system.
+ * @brief Adds a spob to a star system.
  *
- *    @param sys Star System to add planet to. (Assumed to belong to systems_stack.)
- *    @param planetname Name of the planet to add.
+ *    @param sys Star System to add spob to. (Assumed to belong to systems_stack.)
+ *    @param spobname Name of the spob to add.
  *    @return 0 on success.
  */
-int system_addSpob( StarSystem *sys, const char *planetname )
+int system_addSpob( StarSystem *sys, const char *spobname )
 {
-   Spob *planet;
+   Spob *spob;
 
    if (sys == NULL)
       return -1;
 
-   planet = spob_get( planetname );
-   if (planet == NULL)
+   spob = spob_get( spobname );
+   if (spob == NULL)
       return -1;
-   array_push_back( &sys->spobs, planet );
-   array_push_back( &sys->spobsid, planet->id );
+   array_push_back( &sys->spobs, spob );
+   array_push_back( &sys->spobsid, spob->id );
 
-   /* add planet <-> star system to name stack */
-   array_push_back( &planetname_stack, planet->name );
+   /* add spob <-> star system to name stack */
+   array_push_back( &spobname_stack, spob->name );
    array_push_back( &systemname_stack, sys->name );
 
    economy_addQueuedUpdate();
-   /* This is required to clear the player statistics for this planet */
-   economy_clearSingleSpob(planet);
+   /* This is required to clear the player statistics for this spob */
+   economy_clearSingleSpob(spob);
 
    /* Reload graphics if necessary. */
    if (cur_system != NULL)
@@ -2495,35 +2495,35 @@ int system_addSpob( StarSystem *sys, const char *planetname )
 }
 
 /**
- * @brief Removes a planet from a star system.
+ * @brief Removes a spob from a star system.
  *
- *    @param sys Star System to remove planet from.
- *    @param planetname Name of the planet to remove.
+ *    @param sys Star System to remove spob from.
+ *    @param spobname Name of the spob to remove.
  *    @return 0 on success.
  */
-int system_rmSpob( StarSystem *sys, const char *planetname )
+int system_rmSpob( StarSystem *sys, const char *spobname )
 {
    int i, found;
-   Spob *planet;
+   Spob *spob;
 
    if (sys == NULL) {
-      WARN(_("Unable to remove planet '%s' from NULL system."), planetname);
+      WARN(_("Unable to remove spob '%s' from NULL system."), spobname);
       return -1;
    }
 
-   /* Try to find planet. */
-   planet = spob_get( planetname );
+   /* Try to find spob. */
+   spob = spob_get( spobname );
    for (i=0; i<array_size(sys->spobs); i++)
-      if (sys->spobs[i] == planet)
+      if (sys->spobs[i] == spob)
          break;
 
    /* Spob not found. */
    if (i>=array_size(sys->spobs)) {
-      WARN(_("Spob '%s' not found in system '%s' for removal."), planetname, sys->name);
+      WARN(_("Spob '%s' not found in system '%s' for removal."), spobname, sys->name);
       return -1;
    }
 
-   /* Remove planet from system. */
+   /* Remove spob from system. */
    array_erase( &sys->spobs, &sys->spobs[i], &sys->spobs[i+1] );
    array_erase( &sys->spobsid, &sys->spobsid[i], &sys->spobsid[i+1] );
 
@@ -2532,16 +2532,16 @@ int system_rmSpob( StarSystem *sys, const char *planetname )
 
    /* Remove from the name stack thingy. */
    found = 0;
-   for (i=0; i<array_size(planetname_stack); i++)
-      if (strcmp(planetname, planetname_stack[i])==0) {
-         array_erase( &planetname_stack, &planetname_stack[i], &planetname_stack[i+1] );
+   for (i=0; i<array_size(spobname_stack); i++)
+      if (strcmp(spobname, spobname_stack[i])==0) {
+         array_erase( &spobname_stack, &spobname_stack[i], &spobname_stack[i+1] );
          array_erase( &systemname_stack, &systemname_stack[i], &systemname_stack[i+1] );
          found = 1;
          break;
       }
    if (found == 0)
-      WARN(_("Unable to find planet '%s' and system '%s' in planet<->system stack."),
-            planetname, sys->name );
+      WARN(_("Unable to find spob '%s' and system '%s' in spob<->system stack."),
+            spobname, sys->name );
 
    system_setFaction(sys);
 
@@ -3370,7 +3370,7 @@ int space_load (void)
    systems_loading = 1;
 
    /* Create some arrays. */
-   planetname_stack = array_create( char* );
+   spobname_stack = array_create( char* );
    systemname_stack = array_create( char* );
 
    /* Load jump point graphic - must be before systems_load(). */
@@ -3857,7 +3857,7 @@ void space_exit (void)
    free(asteroid_gfx);
 
    /* Free the names. */
-   array_free(planetname_stack);
+   array_free(spobname_stack);
    array_free(systemname_stack);
 
    /* Free the spobs. */
