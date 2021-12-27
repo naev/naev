@@ -11,13 +11,13 @@
   <x>-662.216770</x>
   <y>-605.792752</y>
  </pos>
- <assets>
-  <asset>August</asset>
-  <asset>Olario</asset>
-  <asset>Warnecke</asset>
-  <asset>Warnecke I</asset>
-  <asset>Warnecke II</asset>
- </assets>
+ <spobs>
+  <spob>August</spob>
+  <spob>Olario</spob>
+  <spob>Warnecke</spob>
+  <spob>Warnecke I</spob>
+  <spob>Warnecke II</spob>
+ </spobs>
  <jumps>
   <jump target="Copernicus">
    <autopos/>

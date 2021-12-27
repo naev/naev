@@ -10,14 +10,14 @@
   <x>-264.000000</x>
   <y>-351.000000</y>
  </pos>
- <assets>
-  <asset>Ammu</asset>
-  <asset>Qex II</asset>
-  <asset>Qex IV</asset>
-  <asset>Qex V</asset>
-  <asset>Reidd</asset>
-  <asset>Semper</asset>
- </assets>
+ <spobs>
+  <spob>Ammu</spob>
+  <spob>Qex II</spob>
+  <spob>Qex IV</spob>
+  <spob>Qex V</spob>
+  <spob>Reidd</spob>
+  <spob>Semper</spob>
+ </spobs>
  <jumps>
   <jump target="Eneguoz">
    <pos x="12110.639237" y="-15775.854884"/>

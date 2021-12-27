@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vigil Station">
+ <pos>
+  <x>6285.850816</x>
+  <y>-3013.641952</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>5000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Vigil Station was built to honor all those who died in the ordeals of the Soromid. The system sees few visitors, and the station is primarily a ceremonial post rather than an actual defensive installation. Nonetheless, many Soromid want to be posted here, to be connected with their past.</description>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

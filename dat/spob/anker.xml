@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Anker">
+ <pos>
+  <x>15899.369441</x>
+  <y>15634.379950</y>
+ </pos>
+ <GFX>
+  <space>H02.webp</space>
+  <exterior>forest2.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

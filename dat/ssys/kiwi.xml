@@ -10,9 +10,9 @@
   <x>1103.828562</x>
   <y>-439.041609</y>
  </pos>
- <assets>
-  <asset>Forbes Station</asset>
- </assets>
+ <spobs>
+  <spob>Forbes Station</spob>
+ </spobs>
  <jumps>
   <jump target="Monogram">
    <autopos/>

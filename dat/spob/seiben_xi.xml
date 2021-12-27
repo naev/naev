@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Seiben XI">
+ <pos>
+  <x>13500.100677</x>
+  <y>-1905.688336</y>
+ </pos>
+ <GFX>
+  <space>moon-D02.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>3.000000</hide>
+  <services/>
+ </general>
+</spob>

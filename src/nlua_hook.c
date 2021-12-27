@@ -952,7 +952,7 @@ static int hookL_trigger( lua_State *L )
                p->u.lf = lua_tofaction(L,i+1);
             }
             else if (lua_isplanet(L,i+1)) {
-               p->type = HOOK_PARAM_ASSET;
+               p->type = HOOK_PARAM_SPOB;
                p->u.la = lua_toplanet(L,i+1);
             }
             else if (lua_isjump(L,i+1)) {

@@ -12,13 +12,13 @@
   <x>-17.697920</x>
   <y>790.652480</y>
  </pos>
- <assets>
-  <asset>Malebolge III</asset>
-  <asset>Malebolge IV</asset>
-  <asset>Malebolge V</asset>
-  <asset>Nocalin</asset>
-  <asset>Smaal</asset>
- </assets>
+ <spobs>
+  <spob>Malebolge III</spob>
+  <spob>Malebolge IV</spob>
+  <spob>Malebolge V</spob>
+  <spob>Nocalin</spob>
+  <spob>Smaal</spob>
+ </spobs>
  <jumps>
   <jump target="Bonanza">
    <autopos/>

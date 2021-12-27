@@ -10,12 +10,12 @@
   <x>-126.680556</x>
   <y>-1.645062</y>
  </pos>
- <assets>
-  <asset>Fortitude I</asset>
-  <asset>Fortitude II</asset>
-  <asset>Fortitude III</asset>
-  <asset>Omega Station</asset>
- </assets>
+ <spobs>
+  <spob>Fortitude I</spob>
+  <spob>Fortitude II</spob>
+  <spob>Fortitude III</spob>
+  <spob>Omega Station</spob>
+ </spobs>
  <jumps>
   <jump target="Acheron">
    <autopos/>

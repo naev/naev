@@ -10,13 +10,13 @@
   <x>729.014660</x>
   <y>337.822531</y>
  </pos>
- <assets>
-  <asset>Eryla</asset>
-  <asset>NS-144</asset>
-  <asset>SY-237</asset>
-  <asset>SY-413</asset>
-  <asset>Serria</asset>
- </assets>
+ <spobs>
+  <spob>Eryla</spob>
+  <spob>NS-144</spob>
+  <spob>SY-237</spob>
+  <spob>SY-413</spob>
+  <spob>Serria</spob>
+ </spobs>
  <jumps>
   <jump target="Adran">
    <autopos/>

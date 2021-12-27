@@ -10,13 +10,13 @@
   <x>-77.953704</x>
   <y>326.787037</y>
  </pos>
- <assets>
-  <asset>Dono</asset>
-  <asset>Raptor Station</asset>
-  <asset>Tarrum</asset>
-  <asset>Wahri III</asset>
-  <asset>Wahri IV</asset>
- </assets>
+ <spobs>
+  <spob>Dono</spob>
+  <spob>Raptor Station</spob>
+  <spob>Tarrum</spob>
+  <spob>Wahri III</spob>
+  <spob>Wahri IV</spob>
+ </spobs>
  <jumps>
   <jump target="Daled">
    <autopos/>

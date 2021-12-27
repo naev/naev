@@ -10,12 +10,12 @@
   <x>-223.800000</x>
   <y>-201.000000</y>
  </pos>
- <assets>
-  <asset>Nova Shakar</asset>
-  <asset>Shakar I</asset>
-  <asset>Shakar III</asset>
-  <asset>Zembla Shakar</asset>
- </assets>
+ <spobs>
+  <spob>Nova Shakar</spob>
+  <spob>Shakar I</spob>
+  <spob>Shakar III</spob>
+  <spob>Zembla Shakar</spob>
+ </spobs>
  <jumps>
   <jump target="Borla">
    <autopos/>

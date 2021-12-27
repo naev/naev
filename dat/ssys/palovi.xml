@@ -10,14 +10,14 @@
   <x>1015.589870</x>
   <y>-624.818459</y>
  </pos>
- <assets>
-  <asset>Aldarus</asset>
-  <asset>Palovi II</asset>
-  <asset>Palovi IV</asset>
-  <asset>Palovi V</asset>
-  <asset>Solpere</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Aldarus</spob>
+  <spob>Palovi II</spob>
+  <spob>Palovi IV</spob>
+  <spob>Palovi V</spob>
+  <spob>Solpere</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Duros">
    <autopos/>

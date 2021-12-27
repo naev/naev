@@ -12,10 +12,10 @@
   <x>-165.826389</x>
   <y>-1054.354167</y>
  </pos>
- <assets>
-  <asset>Unicorn I</asset>
-  <asset>Unicorn II</asset>
- </assets>
+ <spobs>
+  <spob>Unicorn I</spob>
+  <spob>Unicorn II</spob>
+ </spobs>
  <jumps>
   <jump target="Kretogg">
    <autopos/>

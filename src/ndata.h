@@ -40,8 +40,8 @@
 #define OUTFIT_DATA_PATH         "outfits/" /**< Path to outfits. */
 #define EFFECT_DATA_PATH         "effects/" /**< Path to effects. */
 #define MAP_DATA_PATH            "outfits/maps/" /**< Path to maps. */
-#define SPOB_DATA_PATH         "assets/" /**< Path to planets. */
-#define VIRTUALASSET_DATA_PATH   "assets_virtual/" /**< Path to planets. */
+#define SPOB_DATA_PATH           "spob/" /**< Path to planets. */
+#define VIRTUALSPOB_DATA_PATH    "spob_virtual/" /**< Path to planets. */
 #define SYSTEM_DATA_PATH         "ssys/" /**< Path to systems. */
 #define SHIP_DATA_PATH           "ships/" /**< Path to ships. */
 

@@ -562,7 +562,7 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Check if out of range. */
-      if (!gui_onScreenAsset( &rx, &ry, NULL, pnt )) {
+      if (!gui_onScreenSpob( &rx, &ry, NULL, pnt )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -581,7 +581,7 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Check if out of range. */
-      if (!gui_onScreenAsset( &rx, &ry, jp, NULL )) {
+      if (!gui_onScreenSpob( &rx, &ry, jp, NULL )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -661,7 +661,7 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
  * @param pnt Spob to determine the visibility and position of
  * @return Whether or not the given asset is on-screen.
  */
-int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt )
+int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt )
 {
    double z;
    int cw, ch;

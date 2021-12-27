@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Druss III">
+ <pos>
+  <x>-15949.696927</x>
+  <y>13.034873</y>
+ </pos>
+ <GFX>
+  <space>moon-O00.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

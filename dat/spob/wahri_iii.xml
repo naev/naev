@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wahri III">
+ <pos>
+  <x>-5869.866578</x>
+  <y>-4297.102761</y>
+ </pos>
+ <GFX>
+  <space>C01.webp</space>
+  <exterior>station02.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

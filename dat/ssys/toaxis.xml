@@ -10,7 +10,7 @@
   <x>356.000000</x>
   <y>-151.000000</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Ingot">
    <autopos/>

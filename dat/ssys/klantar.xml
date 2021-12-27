@@ -10,13 +10,13 @@
   <x>319.000000</x>
   <y>-422.000000</y>
  </pos>
- <assets>
-  <asset>Donnar</asset>
-  <asset>Klantar I</asset>
-  <asset>Klantar III</asset>
-  <asset>Nor</asset>
-  <asset>Tuur</asset>
- </assets>
+ <spobs>
+  <spob>Donnar</spob>
+  <spob>Klantar I</spob>
+  <spob>Klantar III</spob>
+  <spob>Nor</spob>
+  <spob>Tuur</spob>
+ </spobs>
  <jumps>
   <jump target="Massia">
    <autopos/>

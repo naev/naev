@@ -56,7 +56,7 @@
 #include "toolkit.h"
 #include "weapon.h"
 
-#define XML_ASSET_TAG   "asset" /**< Individual planet xml tag. */
+#define XML_SPOB_TAG   "spob" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG  "ssys" /**< Individual systems xml tag. */
 
 #define SPOB_GFX_EXTERIOR_PATH_W 400 /**< Spob exterior graphic width. */
@@ -85,7 +85,7 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to p
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Spob *planet_stack = NULL; /**< Spob stack. */
-static VirtualAsset *vasset_stack = NULL; /**< Virtual asset stack. */
+static VirtualSpob *vasset_stack = NULL; /**< Virtual asset stack. */
 #ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
 static int planetstack_changed = 0; /**< Whether or not the planet_stack was changed after loading. */
@@ -121,8 +121,8 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  */
 /* planet load */
 static int planet_parse( Spob *planet, const xmlNodePtr parent, Commodity **stdList );
-static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
-static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap );
+static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys );
+static int asset_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
@@ -1088,32 +1088,32 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
 /**
  * @brief Gets all the virtual assets.
  */
-VirtualAsset* virtualasset_getAll (void)
+VirtualSpob* virtualasset_getAll (void)
 {
    return vasset_stack;
 }
 
 /**
- * @brief Comparison function for qsort'ing VirtuaAsset by name.
+ * @brief Comparison function for qsort'ing VirtuaSpob by name.
  */
 static int virtualasset_cmp( const void *p1, const void *p2 )
 {
-   const VirtualAsset *v1, *v2;
-   v1 = (const VirtualAsset*) p1;
-   v2 = (const VirtualAsset*) p2;
+   const VirtualSpob *v1, *v2;
+   v1 = (const VirtualSpob*) p1;
+   v2 = (const VirtualSpob*) p2;
    return strcmp(v1->name,v2->name);
 }
 
 /**
  * @brief Gets a virtual asset by matching name.
  */
-VirtualAsset* virtualasset_get( const char *name )
+VirtualSpob* virtualasset_get( const char *name )
 {
-   const VirtualAsset va = {.name = (char*)name};
-   VirtualAsset *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualAsset), virtualasset_cmp );
+   const VirtualSpob va = {.name = (char*)name};
+   VirtualSpob *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualasset_cmp );
    if (found != NULL)
       return found;
-   WARN(_("Virtual Asset '%s' not found in the universe"), name);
+   WARN(_("Virtual Spob '%s' not found in the universe"), name);
    return NULL;
 }
 
@@ -1375,8 +1375,8 @@ void space_update( const double dt )
                planet_getColourChar( pnt ),
                planet_name( pnt ) );
          hparam[0].type  = HOOK_PARAM_STRING;
-         hparam[0].u.str = "asset";
-         hparam[1].type  = HOOK_PARAM_ASSET;
+         hparam[0].u.str = "spob";
+         hparam[1].type  = HOOK_PARAM_SPOB;
          hparam[1].u.la  = pnt->id;
          hparam[2].type  = HOOK_PARAM_SENTINEL;
          hooks_runParam( "discover", hparam );
@@ -1849,7 +1849,7 @@ static int planets_load (void)
          continue;
       }
 
-      if (xml_isNode(node,XML_ASSET_TAG)) {
+      if (xml_isNode(node,XML_SPOB_TAG)) {
          Spob *p = planet_new();
          planet_parse( p, node, stdList );
       }
@@ -1880,10 +1880,10 @@ static int virtualassets_load (void)
 
    /* Initialize stack if needed. */
    if (vasset_stack == NULL)
-      vasset_stack = array_create_size(VirtualAsset, 64);
+      vasset_stack = array_create_size(VirtualSpob, 64);
 
    /* Load XML stuff. */
-   asset_files = PHYSFS_enumerateFiles( VIRTUALASSET_DATA_PATH );
+   asset_files = PHYSFS_enumerateFiles( VIRTUALSPOB_DATA_PATH );
    for (size_t i=0; asset_files[i]!=NULL; i++) {
       xmlDocPtr doc;
       xmlNodePtr node;
@@ -1892,7 +1892,7 @@ static int virtualassets_load (void)
       if (!ndata_matchExt( asset_files[i], "xml" ))
          continue;
 
-      asprintf( &file, "%s%s", VIRTUALASSET_DATA_PATH, asset_files[i]);
+      asprintf( &file, "%s%s", VIRTUALSPOB_DATA_PATH, asset_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
@@ -1907,18 +1907,18 @@ static int virtualassets_load (void)
          continue;
       }
 
-      if (xml_isNode(node,XML_ASSET_TAG)) {
+      if (xml_isNode(node,XML_SPOB_TAG)) {
          xmlNodePtr cur;
-         VirtualAsset va;
+         VirtualSpob va;
          memset( &va, 0, sizeof(va) );
          xmlr_attr_strd( node, "name", va.name );
-         va.presences = array_create( AssetPresence );
+         va.presences = array_create( SpobPresence );
 
          cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"presence")) {
-               AssetPresence ap;
+               SpobPresence ap;
                asset_parsePresence( cur, &ap );
                array_push_back( &va.presences, ap );
                continue;
@@ -1934,7 +1934,7 @@ static int virtualassets_load (void)
       free(file);
       xmlFreeDoc(doc);
    }
-   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualAsset), virtualasset_cmp );
+   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualasset_cmp );
 
    /* Clean up. */
    PHYSFS_freeList( asset_files );
@@ -2195,12 +2195,12 @@ void space_gfxUnload( StarSystem *sys )
  * @brief Parsess an asset presence from xml.
  *
  *    @param node Node to process.
- *    @param[out] ap Asset presence to save to.
+ *    @param[out] ap Spob presence to save to.
  */
-static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
+static int asset_parsePresence( xmlNodePtr node, SpobPresence *ap )
 {
    xmlNodePtr cur = node->children;
-   memset( ap, 0, sizeof(AssetPresence) );
+   memset( ap, 0, sizeof(SpobPresence) );
    ap->faction = -1;
    do {
       xml_onlyNodes(cur);
@@ -2556,9 +2556,9 @@ int system_rmSpob( StarSystem *sys, const char *planetname )
  *    @param sys System to add virtual asset to.
  *    @param assetname Name of the virtual asset being added.
  */
-int system_addVirtualAsset( StarSystem *sys, const char *assetname )
+int system_addVirtualSpob( StarSystem *sys, const char *assetname )
 {
-   VirtualAsset *va;
+   VirtualSpob *va;
 
    if (sys == NULL)
       return -1;
@@ -2580,7 +2580,7 @@ int system_addVirtualAsset( StarSystem *sys, const char *assetname )
  *    @param sys System to remove virtual asset from.
  *    @param assetname Name of the virtual asset being removed.
  */
-int system_rmVirtualAsset( StarSystem *sys, const char *assetname )
+int system_rmVirtualSpob( StarSystem *sys, const char *assetname )
 {
    int i;
 
@@ -2699,7 +2699,7 @@ static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
    sys->planets   = array_create( Spob* );
-   sys->assets_virtual = array_create( VirtualAsset* );
+   sys->assets_virtual = array_create( VirtualSpob* );
    sys->planetsid = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
@@ -2868,16 +2868,16 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
       /* Loads all the assets. */
-      else if (xml_isNode(node,"assets")) {
+      else if (xml_isNode(node,"spobs")) {
          xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
-            if (xml_isNode(cur,"asset")) {
+            if (xml_isNode(cur,"spob")) {
                system_addSpob( sys, xml_get(cur) );
                continue;
             }
-            if (xml_isNode(cur,"asset_virtual")) {
-               system_addVirtualAsset( sys, xml_get(cur) );
+            if (xml_isNode(cur,"spob_virtual")) {
+               system_addVirtualSpob( sys, xml_get(cur) );
                continue;
             }
             DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
@@ -3906,7 +3906,7 @@ void space_exit (void)
    array_free(planet_stack);
 
    for (int i=0; i<array_size(vasset_stack); i++) {
-      VirtualAsset *va = &vasset_stack[i];
+      VirtualSpob *va = &vasset_stack[i];
       free( va->name );
       array_free( va->presences );
    }
@@ -4254,7 +4254,7 @@ int space_sysLoad( xmlNodePtr parent )
                   sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
-                  space_parseAssets(cur, sys);
+                  space_parseSpobs(cur, sys);
                }
             }
          } while (xml_nextNode(cur));
@@ -4271,7 +4271,7 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param sys System to populate.
  *    @return 0 on success.
  */
-static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
+static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
@@ -4325,9 +4325,9 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
- *    @param ap Asset presence to add.
+ *    @param ap Spob presence to add.
  */
-void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap )
+void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 {
    int i, x, curSpill;
    Queue q, qn;
@@ -4525,12 +4525,12 @@ void system_addAllSpobsPresence( StarSystem *sys )
 
    /* Real planets. */
    for (int i=0; i<array_size(sys->planets); i++)
-      system_presenceAddAsset(sys, &sys->planets[i]->presence );
+      system_presenceAddSpob(sys, &sys->planets[i]->presence );
 
    /* Virtual assets. */
    for (int i=0; i<array_size(sys->assets_virtual); i++)
       for (int j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
-         system_presenceAddAsset(sys, &sys->assets_virtual[i]->presences[j] );
+         system_presenceAddSpob(sys, &sys->assets_virtual[i]->presences[j] );
 }
 
 /**

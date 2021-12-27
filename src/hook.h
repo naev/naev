@@ -21,7 +21,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_BOOL,     /**< Boolean parameter. */
    HOOK_PARAM_PILOT,    /**< Pilot hook parameter. */
    HOOK_PARAM_FACTION,  /**< Faction hook parameter. */
-   HOOK_PARAM_ASSET,    /**< Asset hook parameter. */
+   HOOK_PARAM_SPOB,    /**< Spob hook parameter. */
    HOOK_PARAM_JUMP,     /**< Jump point hook parameter. */
    HOOK_PARAM_REF,      /**< Upvalue parameter. */
    HOOK_PARAM_SENTINEL  /**< Enum sentinel. */

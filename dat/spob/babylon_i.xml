@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Babylon I">
+ <pos>
+  <x>15900.000000</x>
+  <y>4620.000000</y>
+ </pos>
+ <GFX>
+  <space>M09.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

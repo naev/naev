@@ -493,7 +493,7 @@ function create()
    -- Logic to decide what to spawn, if anything.
    local cur = planet.cur()
 
-   -- Do not spawn any NPCs on restricted assets or that don't want NPC
+   -- Do not spawn any NPCs on restricted spobs or that don't want NPC
    local t = cur:tags()
    if t.restricted or t.nonpc then
       evt.finish(false)

@@ -10,12 +10,12 @@
   <x>-102.000000</x>
   <y>-90.000000</y>
  </pos>
- <assets>
-  <asset>Merisi I</asset>
-  <asset>Merisi II</asset>
-  <asset>Merisi III</asset>
-  <asset>Merisi IV</asset>
- </assets>
+ <spobs>
+  <spob>Merisi I</spob>
+  <spob>Merisi II</spob>
+  <spob>Merisi III</spob>
+  <spob>Merisi IV</spob>
+ </spobs>
  <jumps>
   <jump target="Acheron">
    <autopos/>

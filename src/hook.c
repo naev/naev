@@ -259,7 +259,7 @@ static int hook_parseParam( lua_State *L, const HookParam *param )
          case HOOK_PARAM_FACTION:
             lua_pushfaction( L, param[n].u.lf );
             break;
-         case HOOK_PARAM_ASSET:
+         case HOOK_PARAM_SPOB:
             lua_pushplanet( L, param[n].u.la );
             break;
          case HOOK_PARAM_JUMP:

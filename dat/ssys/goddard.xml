@@ -11,15 +11,15 @@
   <x>39.000000</x>
   <y>-183.000000</y>
  </pos>
- <assets>
-  <asset>Geron</asset>
-  <asset>Goddard III</asset>
-  <asset>Goddard IV</asset>
-  <asset>Imk</asset>
-  <asset>Manuel Station</asset>
-  <asset>Zhiru</asset>
-  <asset_virtual>Trade Lane</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Geron</spob>
+  <spob>Goddard III</spob>
+  <spob>Goddard IV</spob>
+  <spob>Imk</spob>
+  <spob>Manuel Station</spob>
+  <spob>Zhiru</spob>
+  <spob_virtual>Trade Lane</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Arcturus">
    <autopos/>

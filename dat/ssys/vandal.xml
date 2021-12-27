@@ -10,11 +10,11 @@
   <x>340.440528</x>
   <y>-769.093409</y>
  </pos>
- <assets>
-  <asset>Aleph</asset>
-  <asset>Beth</asset>
-  <asset>Vercingetorix</asset>
- </assets>
+ <spobs>
+  <spob>Aleph</spob>
+  <spob>Beth</spob>
+  <spob>Vercingetorix</spob>
+ </spobs>
  <jumps>
   <jump target="Farizel">
    <autopos/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Warnecke I">
+ <pos>
+  <x>1395.547217</x>
+  <y>-381.846862</y>
+ </pos>
+ <GFX>
+  <space>D07.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

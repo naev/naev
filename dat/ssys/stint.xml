@@ -10,11 +10,11 @@
   <x>445.635413</x>
   <y>697.319147</y>
  </pos>
- <assets>
-  <asset>Harnaar</asset>
-  <asset>Jeronon</asset>
-  <asset>Stint III</asset>
- </assets>
+ <spobs>
+  <spob>Harnaar</spob>
+  <spob>Jeronon</spob>
+  <spob>Stint III</spob>
+ </spobs>
  <jumps>
   <jump target="Jommel">
    <autopos/>

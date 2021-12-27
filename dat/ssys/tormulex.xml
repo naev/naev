@@ -10,9 +10,9 @@
   <x>547.000000</x>
   <y>-109.000000</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Anger">
    <autopos/>

@@ -10,10 +10,10 @@
   <x>915.892184</x>
   <y>-198.221523</y>
  </pos>
- <assets>
-  <asset>Rei II</asset>
-  <asset>Rei III</asset>
- </assets>
+ <spobs>
+  <spob>Rei II</spob>
+  <spob>Rei III</spob>
+ </spobs>
  <jumps>
   <jump target="Penn">
    <autopos/>

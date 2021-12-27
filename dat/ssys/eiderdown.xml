@@ -10,14 +10,14 @@
   <x>1098.787195</x>
   <y>-650.145111</y>
  </pos>
- <assets>
-  <asset>Adrian</asset>
-  <asset>Eiderdown I</asset>
-  <asset>Eiderdown III</asset>
-  <asset>Ember</asset>
-  <asset>Forge</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Adrian</spob>
+  <spob>Eiderdown I</spob>
+  <spob>Eiderdown III</spob>
+  <spob>Ember</spob>
+  <spob>Forge</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Churchill">
    <pos x="-12712.101440" y="-29431.191500"/>

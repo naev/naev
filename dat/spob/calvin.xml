@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Calvin">
+ <pos>
+  <x>6949.466500</x>
+  <y>-9809.439252</y>
+ </pos>
+ <GFX>
+  <space>D00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

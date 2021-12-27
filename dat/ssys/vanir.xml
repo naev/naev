@@ -10,15 +10,15 @@
   <x>1243.787195</x>
   <y>-525.112269</y>
  </pos>
- <assets>
-  <asset>Fort Sirius</asset>
-  <asset>Sinass</asset>
-  <asset>Vanir I</asset>
-  <asset>Vanir II</asset>
-  <asset>Vanir Ia</asset>
-  <asset>Yrina</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Fort Sirius</spob>
+  <spob>Sinass</spob>
+  <spob>Vanir I</spob>
+  <spob>Vanir II</spob>
+  <spob>Vanir Ia</spob>
+  <spob>Yrina</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Adraia">
    <autopos/>

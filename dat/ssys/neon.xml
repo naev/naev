@@ -10,13 +10,13 @@
   <x>1031.480309</x>
   <y>-387.783063</y>
  </pos>
- <assets>
-  <asset>Maatsu</asset>
-  <asset>Neon I</asset>
-  <asset>Neon III</asset>
-  <asset>Passir</asset>
-  <asset>Umbrella Station</asset>
- </assets>
+ <spobs>
+  <spob>Maatsu</spob>
+  <spob>Neon I</spob>
+  <spob>Neon III</spob>
+  <spob>Passir</spob>
+  <spob>Umbrella Station</spob>
+ </spobs>
  <jumps>
   <jump target="Kiwi">
    <autopos/>

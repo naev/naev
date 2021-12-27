@@ -45,7 +45,7 @@ int dpl_saveSpob( const Spob *p )
 
    /* Start writer. */
    xmlw_start(writer);
-   xmlw_startElem( writer, "asset" );
+   xmlw_startElem( writer, "spob" );
 
    /* Attributes. */
    xmlw_attr( writer, "name", "%s", p->name );

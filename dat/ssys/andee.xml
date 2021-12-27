@@ -10,14 +10,14 @@
   <x>708.194827</x>
   <y>-397.902587</y>
  </pos>
- <assets>
-  <asset>Andee II</asset>
-  <asset>Andee III</asset>
-  <asset>Andee IIIa</asset>
-  <asset>Andee IIa</asset>
-  <asset>Opal Station</asset>
-  <asset>Varaati</asset>
- </assets>
+ <spobs>
+  <spob>Andee II</spob>
+  <spob>Andee III</spob>
+  <spob>Andee IIIa</spob>
+  <spob>Andee IIa</spob>
+  <spob>Opal Station</spob>
+  <spob>Varaati</spob>
+ </spobs>
  <jumps>
   <jump target="Brimstone">
    <autopos/>

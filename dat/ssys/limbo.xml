@@ -10,14 +10,14 @@
   <x>-263.000000</x>
   <y>-707.000000</y>
  </pos>
- <assets>
-  <asset>Jugreny</asset>
-  <asset>Limbo I</asset>
-  <asset>Limbo II</asset>
-  <asset>Malebolge</asset>
-  <asset>Minerva Station</asset>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Jugreny</spob>
+  <spob>Limbo I</spob>
+  <spob>Limbo II</spob>
+  <spob>Malebolge</spob>
+  <spob>Minerva Station</spob>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Fried">
    <pos x="-5870.072165" y="-25177.969685"/>

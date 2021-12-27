@@ -94,4 +94,4 @@ void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
 char* gui_pick (void);
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );
-int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt );
+int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt );

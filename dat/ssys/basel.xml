@@ -10,11 +10,11 @@
   <x>491.731798</x>
   <y>203.640880</y>
  </pos>
- <assets>
-  <asset>Basel I</asset>
-  <asset>Sorom</asset>
-  <asset>Vigil Station</asset>
- </assets>
+ <spobs>
+  <spob>Basel I</spob>
+  <spob>Sorom</spob>
+  <spob>Vigil Station</spob>
+ </spobs>
  <jumps>
   <jump target="Percival">
    <autopos/>

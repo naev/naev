@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Claudius Mehan">
+ <pos>
+  <x>-1794.199676</x>
+  <y>-8602.957423</y>
+ </pos>
+ <GFX>
+  <space>000.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>3.000000</hide>
+  <services/>
+ </general>
+</spob>

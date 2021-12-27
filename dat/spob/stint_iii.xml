@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Stint III">
+ <pos>
+  <x>10283.064402</x>
+  <y>-9053.807598</y>
+ </pos>
+ <GFX>
+  <space>J02.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

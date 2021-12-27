@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Castellan I">
+ <pos>
+  <x>3026.629272</x>
+  <y>2588.564509</y>
+ </pos>
+ <GFX>
+  <space>D02.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

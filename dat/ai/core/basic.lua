@@ -387,7 +387,7 @@ function __choose_land_target ( target )
 
       -- Bail out if no valid planet could be found.
       else
-         warn(fmt.f(_("Pilot '{plt}' tried to land with no landable assets!"),
+         warn(fmt.f(_("Pilot '{plt}' tried to land with no landable spob!"),
                {plt=ai.pilot():name()}))
          ai.poptask()
          return

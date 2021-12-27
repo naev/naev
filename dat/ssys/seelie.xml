@@ -10,12 +10,12 @@
   <x>-455.164644</x>
   <y>-762.660637</y>
  </pos>
- <assets>
-  <asset>Fae</asset>
-  <asset>Oberon</asset>
-  <asset>Sidhe</asset>
-  <asset>Unseelie</asset>
- </assets>
+ <spobs>
+  <spob>Fae</spob>
+  <spob>Oberon</spob>
+  <spob>Sidhe</spob>
+  <spob>Unseelie</spob>
+ </spobs>
  <jumps>
   <jump target="Astana">
    <autopos/>

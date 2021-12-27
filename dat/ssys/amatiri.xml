@@ -12,13 +12,13 @@
   <x>-189.526667</x>
   <y>644.546667</y>
  </pos>
- <assets>
-  <asset>Amatiri I</asset>
-  <asset>Amatiri II</asset>
-  <asset>Amatiri Ia</asset>
-  <asset_virtual>Miner Small</asset_virtual>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Amatiri I</spob>
+  <spob>Amatiri II</spob>
+  <spob>Amatiri Ia</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Ariadus">
    <autopos/>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Opal Station">
+ <pos>
+  <x>-1838.125142</x>
+  <y>11472.033093</y>
+ </pos>
+ <GFX>
+  <space>000.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>15000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Since Varaati is located in a rather isolated corner of the galaxy, the local government decided to invest in a trade station within the system, to attract more traffic. Though the station is a far cry from commercial powerhouses like Darkshed, Opal Station must be considered a good effort by Frontier standards.</description>
+  <bar>The spacedock bar is geared towards trading. There are private booths, tables with integrated data uplinks, a ship outfitting service and charts on the walls showing nearby trade opportunities. The place is never quite packed with people, but there is enough activity in the bar to indicate that Opal Station is slowly returning on its investment.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</spob>

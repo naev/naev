@@ -10,11 +10,11 @@
   <x>591.000000</x>
   <y>242.000000</y>
  </pos>
- <assets>
-  <asset>Lirith</asset>
-  <asset_virtual>Empire Unpresence</asset_virtual>
-  <asset_virtual>Thurion Local</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Lirith</spob>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>Thurion Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Metsys">
    <autopos/>

@@ -10,10 +10,10 @@
   <x>982.278487</x>
   <y>-777.476854</y>
  </pos>
- <assets>
-  <asset>Manis</asset>
-  <asset>Modus</asset>
- </assets>
+ <spobs>
+  <spob>Manis</spob>
+  <spob>Modus</spob>
+ </spobs>
  <jumps>
   <jump target="Humdrum">
    <autopos/>

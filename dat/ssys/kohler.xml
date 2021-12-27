@@ -10,9 +10,9 @@
   <x>-620.905458</x>
   <y>-784.498725</y>
  </pos>
- <assets>
-  <asset>Curie</asset>
- </assets>
+ <spobs>
+  <spob>Curie</spob>
+ </spobs>
  <jumps>
   <jump target="Corinth">
    <pos x="15193.599356" y="13573.967466"/>

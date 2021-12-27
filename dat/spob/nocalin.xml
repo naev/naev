@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Nocalin">
+ <pos>
+  <x>7592.974652</x>
+  <y>-5092.511190</y>
+ </pos>
+ <GFX>
+  <space>K00.webp</space>
+  <exterior>desertic.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>5e+07</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Nocalin is a fairly good world for human habitation, especially if the humans in question are Soromid. The surface is stable and the native atmosphere is nitrox. Gravitational and orbital statistics are not too far from Earth Standard. There is only one problem: Nocalin is completely and utterly dry. Nothing can grow on this world without importing an ocean's worth of water, which is too costly an operation by any standard. As a result, Nocalin relies entirely on food imports.</description>
+  <bar>This spaceport bar has warning signs mounted over the doors and on the walls. The signs warn travellers of the dry climate on Nocalin. Dehydration is a real risk, and while exposing oneself to the outside air directly isn't harmful in itself, it is a good idea to protect your skin with a moisturizing lotion first.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Laser 1</item>
+  <item>Plasma 1</item>
+  <item>Beam 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Hulls High</item>
+  <item>Soromid Elite Outfits</item>
+ </tech>
+</spob>

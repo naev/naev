@@ -10,14 +10,14 @@
   <x>-288.467593</x>
   <y>116.645062</y>
  </pos>
- <assets>
-  <asset>P0125</asset>
-  <asset>S00000</asset>
-  <asset>S23001</asset>
-  <asset>S49588</asset>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Pirate All Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>P0125</spob>
+  <spob>S00000</spob>
+  <spob>S23001</spob>
+  <spob>S49588</spob>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="C-14">
    <autopos/>

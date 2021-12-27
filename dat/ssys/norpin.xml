@@ -10,13 +10,13 @@
   <x>518.840000</x>
   <y>-487.920000</y>
  </pos>
- <assets>
-  <asset>Folevo</asset>
-  <asset>New Dortmund</asset>
-  <asset>Norpin II</asset>
-  <asset>Norpin IV</asset>
-  <asset_virtual>FLF Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Folevo</spob>
+  <spob>New Dortmund</spob>
+  <spob>Norpin II</spob>
+  <spob>Norpin IV</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Slaccid">
    <autopos/>

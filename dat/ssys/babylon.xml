@@ -10,12 +10,12 @@
   <x>125.114219</x>
   <y>456.636626</y>
  </pos>
- <assets>
-  <asset>Babylon I</asset>
-  <asset>Babylon II</asset>
-  <asset>Babylon IIa</asset>
-  <asset>Scipio</asset>
- </assets>
+ <spobs>
+  <spob>Babylon I</spob>
+  <spob>Babylon II</spob>
+  <spob>Babylon IIa</spob>
+  <spob>Scipio</spob>
+ </spobs>
  <jumps>
   <jump target="Dendria">
    <autopos/>

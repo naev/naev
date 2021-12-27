@@ -2351,7 +2351,7 @@ static int aiL_land( lua_State *L )
    cur_pilot->ptimer = cur_pilot->landing_delay;
    pilot_setFlag( cur_pilot, PILOT_LANDING );
 
-   hparam.type    = HOOK_PARAM_ASSET;
+   hparam.type    = HOOK_PARAM_SPOB;
    hparam.u.la    = planet->id;
 
    pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );

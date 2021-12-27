@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ruadan J-1">
+ <pos>
+  <x>10982.124978</x>
+  <y>7565.463874</y>
+ </pos>
+ <GFX>
+  <space>J02.webp</space>
+  <exterior>mining2.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

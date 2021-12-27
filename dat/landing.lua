@@ -32,7 +32,7 @@ local fmt = require "format"
 -- Common utility functions, defined below.
 local land_civilian, land_military
 
--- Default function. Any asset that has no landing script explicitly defined will use this.
+-- Default function. Any spob that has no landing script explicitly defined will use this.
 function land( pnt )
    return land_civilian(pnt, 0, -30)
 end
@@ -50,7 +50,7 @@ function land_hiclass( pnt )
    return land_civilian(pnt, 0, 0)
 end
 
--- luacheck: globals emp_mil_restricted (Empire military assets.)
+-- luacheck: globals emp_mil_restricted (Empire military spobs.)
 function emp_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -83,7 +83,7 @@ function emp_mil_wrath( pnt )
          _("\"Don't attempt to bribe an Empire official, pilot.\""))
 end
 
--- luacheck: globals srs_mil_restricted (Sirius military assets.)
+-- luacheck: globals srs_mil_restricted (Sirius military spobs.)
 function srs_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -101,7 +101,7 @@ function srs_mil_mutris( pnt )
          _("\"The faithful will never be swayed by money.\""))
 end
 
--- luacheck: globals dv_mil_restricted (Dvaered military assets.)
+-- luacheck: globals dv_mil_restricted (Dvaered military spobs.)
 function dv_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -119,7 +119,7 @@ function dv_mil_command( pnt )
          _("\"Money won't buy you access to our restricted facilities, citizen.\""))
 end
 
--- luacheck: globals srm_mil_restricted (Soromid military assets.)
+-- luacheck: globals srm_mil_restricted (Soromid military spobs.)
 function srm_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -137,7 +137,7 @@ function srm_mil_kataka( pnt )
          _("\"We don't need your money, outsider.\""))
 end
 
--- luacheck: globals zlk_mil_restricted (Za'lek's military assets.)
+-- luacheck: globals zlk_mil_restricted (Za'lek's military spobs.)
 function zlk_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Docking sequence transmitted."),
@@ -151,7 +151,7 @@ function zlk_ruadan( _pnt )
    return false, "Permission denied. Ruadan space is off-limits to you."
 end
 
--- luacheck: globals ptn_mil_restricted (Proteron military assets.)
+-- luacheck: globals ptn_mil_restricted (Proteron military spobs.)
 function ptn_mil_restricted( pnt )
    return land_military(pnt, 50,
          _("Permission to land granted."),
@@ -160,7 +160,7 @@ function ptn_mil_restricted( pnt )
          _("We Proteron don't take kindly to bribery."))
 end
 
--- luacheck: globals thr_mil_restricted (Thurion military assets.)
+-- luacheck: globals thr_mil_restricted (Thurion military spobs.)
 function thr_mil_restricted( pnt )
    return land_military(pnt, 50,
          fmt.f(_("Welcome, friend {player}. You may dock when ready."), {player=player.name()}),

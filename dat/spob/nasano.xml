@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Nasano">
+ <pos>
+  <x>2781.895085</x>
+  <y>-3142.067592</y>
+ </pos>
+ <GFX>
+  <space>P03.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.100000</hide>
+  <services/>
+ </general>
+</spob>

@@ -10,14 +10,14 @@
   <x>-323.600000</x>
   <y>-201.200000</y>
  </pos>
- <assets>
-  <asset>Doormat</asset>
-  <asset>Rogan</asset>
-  <asset>Sirou Alpha</asset>
-  <asset>Sirou I</asset>
-  <asset>Sirou II</asset>
-  <asset>Sirou VI</asset>
- </assets>
+ <spobs>
+  <spob>Doormat</spob>
+  <spob>Rogan</spob>
+  <spob>Sirou Alpha</spob>
+  <spob>Sirou I</spob>
+  <spob>Sirou II</spob>
+  <spob>Sirou VI</spob>
+ </spobs>
  <jumps>
   <jump target="Gamma Polaris">
    <pos x="23612.088994" y="-23123.662452"/>

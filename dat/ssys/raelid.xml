@@ -10,13 +10,13 @@
   <x>269.000000</x>
   <y>-137.000000</y>
  </pos>
- <assets>
-  <asset>Marius Station</asset>
-  <asset>Raelid II</asset>
-  <asset>Raelid Outpost</asset>
-  <asset>Raelid Prime</asset>
-  <asset_virtual>FLF Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Marius Station</spob>
+  <spob>Raelid II</spob>
+  <spob>Raelid Outpost</spob>
+  <spob>Raelid Prime</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Arcanis">
    <autopos/>

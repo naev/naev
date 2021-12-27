@@ -10,12 +10,12 @@
   <x>278.808800</x>
   <y>865.858667</y>
  </pos>
- <assets>
-  <asset>Starlight End I</asset>
-  <asset>Starlight End II</asset>
-  <asset>Starlight End III</asset>
-  <asset>Tanulwa</asset>
- </assets>
+ <spobs>
+  <spob>Starlight End I</spob>
+  <spob>Starlight End II</spob>
+  <spob>Starlight End III</spob>
+  <spob>Tanulwa</spob>
+ </spobs>
  <jumps>
   <jump target="Treacle">
    <autopos/>

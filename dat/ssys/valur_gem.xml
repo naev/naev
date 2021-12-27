@@ -10,9 +10,9 @@
   <x>547.560041</x>
   <y>-789.406902</y>
  </pos>
- <assets>
-  <asset>Valur Gem I</asset>
- </assets>
+ <spobs>
+  <spob>Valur Gem I</spob>
+ </spobs>
  <jumps>
   <jump target="Druid">
    <autopos/>

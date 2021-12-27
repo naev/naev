@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vanir I">
+ <pos>
+  <x>-12550.400000</x>
+  <y>4676.800000</y>
+ </pos>
+ <GFX>
+  <space>S00.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

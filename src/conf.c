@@ -167,7 +167,7 @@ void conf_setDefaults (void)
    /* Editor. */
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
+   conf.dev_save_asset = strdup( DEV_SAVE_SPOB_DEFAULT );
 }
 
 /**

@@ -10,17 +10,17 @@
   <x>682.000000</x>
   <y>-337.000000</y>
  </pos>
- <assets>
-  <asset>Alleyway</asset>
-  <asset>Brimstone I</asset>
-  <asset>Brimstone II</asset>
-  <asset>Brimstone III</asset>
-  <asset>Brimstone Ia</asset>
-  <asset>Brimstone Ib</asset>
-  <asset>Nonuri</asset>
-  <asset_virtual>FLF Small</asset_virtual>
-  <asset_virtual>FLF Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Alleyway</spob>
+  <spob>Brimstone I</spob>
+  <spob>Brimstone II</spob>
+  <spob>Brimstone III</spob>
+  <spob>Brimstone Ia</spob>
+  <spob>Brimstone Ib</spob>
+  <spob>Nonuri</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>FLF Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Andee">
    <pos x="7451.987055" y="-21525.246705"/>

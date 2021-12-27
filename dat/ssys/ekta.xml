@@ -10,16 +10,16 @@
   <x>1249.800000</x>
   <y>402.600000</y>
  </pos>
- <assets>
-  <asset>Ekta I</asset>
-  <asset>Ekta II</asset>
-  <asset>Ekta IIa</asset>
-  <asset>Ekta IIb</asset>
-  <asset>Ekta Station</asset>
-  <asset>Karvua</asset>
-  <asset>Megala</asset>
-  <asset>Thavma</asset>
- </assets>
+ <spobs>
+  <spob>Ekta I</spob>
+  <spob>Ekta II</spob>
+  <spob>Ekta IIa</spob>
+  <spob>Ekta IIb</spob>
+  <spob>Ekta Station</spob>
+  <spob>Karvua</spob>
+  <spob>Megala</spob>
+  <spob>Thavma</spob>
+ </spobs>
  <jumps>
   <jump target="Mida">
    <autopos/>

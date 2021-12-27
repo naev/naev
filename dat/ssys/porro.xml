@@ -10,12 +10,12 @@
   <x>1204.787260</x>
   <y>-841.970013</y>
  </pos>
- <assets>
-  <asset>Porro Farming Station</asset>
-  <asset>Porro II</asset>
-  <asset>Porro III</asset>
-  <asset>Waldar</asset>
- </assets>
+ <spobs>
+  <spob>Porro Farming Station</spob>
+  <spob>Porro II</spob>
+  <spob>Porro III</spob>
+  <spob>Waldar</spob>
+ </spobs>
  <jumps>
   <jump target="Margarita">
    <autopos/>

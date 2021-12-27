@@ -10,9 +10,9 @@
   <x>370.666667</x>
   <y>212.066667</y>
  </pos>
- <assets>
-  <asset>Charred</asset>
- </assets>
+ <spobs>
+  <spob>Charred</spob>
+ </spobs>
  <jumps>
   <jump target="Oberon">
    <autopos/>

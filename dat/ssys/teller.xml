@@ -10,12 +10,12 @@
   <x>890.448775</x>
   <y>-70.202735</y>
  </pos>
- <assets>
-  <asset>Jezza</asset>
-  <asset>Killerog</asset>
-  <asset>Old King Cole</asset>
-  <asset>Sanchez</asset>
- </assets>
+ <spobs>
+  <spob>Jezza</spob>
+  <spob>Killerog</spob>
+  <spob>Old King Cole</spob>
+  <spob>Sanchez</spob>
+ </spobs>
  <jumps>
   <jump target="Penn">
    <autopos/>

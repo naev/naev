@@ -53,12 +53,12 @@ static int dsys_compSpob( const void *planet1, const void *planet2 )
  *    @param asset2 Virtual asset 2 to sort.
  *    @return Order to sort.
  */
-static int dsys_compVirtualAsset( const void *asset1, const void *asset2 )
+static int dsys_compVirtualSpob( const void *asset1, const void *asset2 )
 {
-   const VirtualAsset *va1, *va2;
+   const VirtualSpob *va1, *va2;
 
-   va1 = *(const VirtualAsset**) asset1;
-   va2 = *(const VirtualAsset**) asset2;
+   va1 = *(const VirtualSpob**) asset1;
+   va2 = *(const VirtualSpob**) asset2;
 
    return strcmp( va1->name, va2->name );
 }
@@ -91,7 +91,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Spob **sorted_planets;
-   const VirtualAsset **sorted_assets;
+   const VirtualSpob **sorted_assets;
    const JumpPoint **sorted_jumps;
    char *file, *cleanName;
 
@@ -144,17 +144,17 @@ int dsys_saveSystem( StarSystem *sys )
    qsort( sorted_planets, array_size(sys->planets), sizeof(Spob*), dsys_compSpob );
 
    /* Sort virtual assets. */
-   sorted_assets = malloc( sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
-   memcpy( sorted_assets, sys->assets_virtual, sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
-   qsort( sorted_assets, array_size(sys->assets_virtual), sizeof(VirtualAsset*), dsys_compVirtualAsset );
+   sorted_assets = malloc( sizeof(VirtualSpob*) * array_size(sys->assets_virtual) );
+   memcpy( sorted_assets, sys->assets_virtual, sizeof(VirtualSpob*) * array_size(sys->assets_virtual) );
+   qsort( sorted_assets, array_size(sys->assets_virtual), sizeof(VirtualSpob*), dsys_compVirtualSpob );
 
    /* Write assets and clean up. */
-   xmlw_startElem( writer, "assets" );
+   xmlw_startElem( writer, "spobs" );
    for (int i=0; i<array_size(sys->planets); i++)
-      xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
+      xmlw_elem( writer, "spob", "%s", sorted_planets[i]->name );
    for (int i=0; i<array_size(sys->assets_virtual); i++)
-      xmlw_elem( writer, "asset_virtual", "%s", sorted_assets[i]->name );
-   xmlw_endElem( writer ); /* "assets" */
+      xmlw_elem( writer, "spob_virtual", "%s", sorted_assets[i]->name );
+   xmlw_endElem( writer ); /* "spobs" */
    free(sorted_planets);
    free(sorted_assets);
 

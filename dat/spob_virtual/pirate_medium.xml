@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Pirate Medium">
+ <presence>
+  <faction>Pirate</faction>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
+  <range>3</range>
+ </presence>
+</spob>

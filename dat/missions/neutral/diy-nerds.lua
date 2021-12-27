@@ -44,7 +44,7 @@ local misn_cargoamount2 = 4
 local reward_outfit = "Unicorp PT-16 Core System"
 
 function create ()
-   -- the mission cannot be started with less than two landable assets in the system
+   -- the mission cannot be started with less than two landable spobs in the system
    if not system_hasAtLeast(2, "land") then
       misn.finish(false)
    end
@@ -304,7 +304,7 @@ function nerds_land3()
    end
 end
 
--- to check if the assets in the current system have at least _amount_ of _service_
+-- to check if the spobs in the current system have at least _amount_ of _service_
 function system_hasAtLeast (amount, service)
    local p = {}
    for i,v in ipairs(system.planets(system.cur())) do

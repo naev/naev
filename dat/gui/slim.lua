@@ -112,7 +112,7 @@ function create()
    cargo_light_off = tex.open( base .. "cargo_off.png" )
    cargo_light_on =  tex.open( base .. "cargo_on.png" )
    question = tex.open( base .. "question.png" )
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.

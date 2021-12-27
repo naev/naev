@@ -10,13 +10,13 @@
   <x>1312.092815</x>
   <y>-561.007050</y>
  </pos>
- <assets>
-  <asset>Socrates Military Academy</asset>
-  <asset>Ulysses III</asset>
-  <asset>Ulysses IV</asset>
-  <asset>Ummula</asset>
-  <asset>Vao Vos</asset>
- </assets>
+ <spobs>
+  <spob>Socrates Military Academy</spob>
+  <spob>Ulysses III</spob>
+  <spob>Ulysses IV</spob>
+  <spob>Ummula</spob>
+  <spob>Vao Vos</spob>
+ </spobs>
  <jumps>
   <jump target="Adraia">
    <autopos/>

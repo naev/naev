@@ -10,13 +10,13 @@
   <x>319.666667</x>
   <y>363.066667</y>
  </pos>
- <assets>
-  <asset>Arrentil</asset>
-  <asset>Beene</asset>
-  <asset>Shikima II</asset>
-  <asset>Soromid Wards Alpha</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Arrentil</spob>
+  <spob>Beene</spob>
+  <spob>Shikima II</spob>
+  <spob>Soromid Wards Alpha</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Father's Pride">
    <pos x="20114.506612" y="-123.784296"/>

@@ -10,13 +10,13 @@
   <x>-536.295529</x>
   <y>-927.777675</y>
  </pos>
- <assets>
-  <asset>Anker</asset>
-  <asset>Damien VII</asset>
-  <asset>Naga</asset>
-  <asset>Topkapi Station</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Anker</spob>
+  <spob>Damien VII</spob>
+  <spob>Naga</spob>
+  <spob>Topkapi Station</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Garten">
    <autopos/>

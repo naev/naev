@@ -10,14 +10,14 @@
   <x>180.000000</x>
   <y>-535.000000</y>
  </pos>
- <assets>
-  <asset>Darkstone IV</asset>
-  <asset>Darkstone V</asset>
-  <asset>Sheik Hall</asset>
-  <asset>Stalwart Station</asset>
-  <asset>Varia</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Darkstone IV</spob>
+  <spob>Darkstone V</spob>
+  <spob>Sheik Hall</spob>
+  <spob>Stalwart Station</spob>
+  <spob>Varia</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Beeklo">
    <autopos/>

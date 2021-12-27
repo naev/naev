@@ -10,11 +10,11 @@
   <x>1214.536678</x>
   <y>-467.701426</y>
  </pos>
- <assets>
-  <asset>Arashu</asset>
-  <asset>Botarn I</asset>
-  <asset>Dundrop Station</asset>
- </assets>
+ <spobs>
+  <spob>Arashu</spob>
+  <spob>Botarn I</spob>
+  <spob>Dundrop Station</spob>
+ </spobs>
  <jumps>
   <jump target="Monogram">
    <autopos/>

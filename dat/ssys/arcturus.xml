@@ -10,16 +10,16 @@
   <x>-58.833333</x>
   <y>-227.000000</y>
  </pos>
- <assets>
-  <asset>Antica</asset>
-  <asset>Arcturus Gamma</asset>
-  <asset>Arcturus I</asset>
-  <asset>Arcturus II</asset>
-  <asset>Brooks</asset>
-  <asset>Mouddar</asset>
-  <asset_virtual>Dvaered Unpresence</asset_virtual>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Antica</spob>
+  <spob>Arcturus Gamma</spob>
+  <spob>Arcturus I</spob>
+  <spob>Arcturus II</spob>
+  <spob>Brooks</spob>
+  <spob>Mouddar</spob>
+  <spob_virtual>Dvaered Unpresence</spob_virtual>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Borla">
    <autopos/>

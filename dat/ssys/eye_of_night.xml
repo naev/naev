@@ -11,14 +11,14 @@
   <x>662.362468</x>
   <y>-732.134085</y>
  </pos>
- <assets>
-  <asset>Eye of Night I</asset>
-  <asset>Eye of Night II</asset>
-  <asset>Eye of Night III</asset>
-  <asset>Inios Station</asset>
-  <asset>Traal</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Eye of Night I</spob>
+  <spob>Eye of Night II</spob>
+  <spob>Eye of Night III</spob>
+  <spob>Inios Station</spob>
+  <spob>Traal</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Druid">
    <pos x="-13734.045985" y="-22773.521987"/>

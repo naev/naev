@@ -10,10 +10,10 @@
   <x>320.475467</x>
   <y>724.192000</y>
  </pos>
- <assets>
-  <asset>Possum II</asset>
-  <asset>The Stinker</asset>
- </assets>
+ <spobs>
+  <spob>Possum II</spob>
+  <spob>The Stinker</spob>
+ </spobs>
  <jumps>
   <jump target="Mizar">
    <pos x="-13004.887399" y="-18441.575321"/>

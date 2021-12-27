@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="flf_dead">
  <system name="Sigur">
-  <asset_virtual name="Virtual Sindbad">remove</asset_virtual>
-  <asset_virtual name="Empire Unpresence">remove</asset_virtual>
-  <asset_virtual name="Soromid Unpresence">remove</asset_virtual>
+  <spob_virtual name="Virtual Sindbad">remove</spob_virtual>
+  <spob_virtual name="Empire Unpresence">remove</spob_virtual>
+  <spob_virtual name="Soromid Unpresence">remove</spob_virtual>
  </system>
  <system name="Raelid">
-  <asset_virtual name="FLF Small">remove</asset_virtual>
+  <spob_virtual name="FLF Small">remove</spob_virtual>
  </system>
  <system name="Tuoladis">
-  <asset_virtual name="FLF Small">remove</asset_virtual>
+  <spob_virtual name="FLF Small">remove</spob_virtual>
  </system>
  <system name="Dakron">
-  <asset_virtual name="FLF Small">remove</asset_virtual>
+  <spob_virtual name="FLF Small">remove</spob_virtual>
  </system>
  <system name="Tarsus">
-  <asset_virtual name="FLF Small">remove</asset_virtual>
+  <spob_virtual name="FLF Small">remove</spob_virtual>
  </system>
  <system name="Torg">
-  <asset_virtual name="FLF Small">remove</asset_virtual>
+  <spob_virtual name="FLF Small">remove</spob_virtual>
  </system>
 </unidiff>

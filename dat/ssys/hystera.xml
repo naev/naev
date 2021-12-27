@@ -10,12 +10,12 @@
   <x>1067.400000</x>
   <y>562.000000</y>
  </pos>
- <assets>
-  <asset>Hystera I</asset>
-  <asset>Hystera II</asset>
-  <asset>Hystera Ia</asset>
-  <asset>Hystera Outpost</asset>
- </assets>
+ <spobs>
+  <spob>Hystera I</spob>
+  <spob>Hystera II</spob>
+  <spob>Hystera Ia</spob>
+  <spob>Hystera Outpost</spob>
+ </spobs>
  <jumps>
   <jump target="Korifa">
    <autopos/>

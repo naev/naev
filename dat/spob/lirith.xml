@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Lirith">
+ <pos>
+  <x>-1500.746393</x>
+  <y>1973.038112</y>
+ </pos>
+ <GFX>
+  <space>moon-O00.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.100000</hide>
+  <services/>
+ </general>
+</spob>

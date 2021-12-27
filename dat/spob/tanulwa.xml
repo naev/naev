@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tanulwa">
+ <pos>
+  <x>-3444.863379</x>
+  <y>-1987.421180</y>
+ </pos>
+ <GFX>
+  <space>moon-L00.webp</space>
+  <exterior>mining6.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>1e+07</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Soromid are often seen by the rest of the galaxy as non-humans, and indeed they themselves tend to think of themselves as a different kind of people as well. But in many ways the Soromid and the rest of humanity are much alike. Crime, for example, exists in Soromid space just as much as elsewhere. Tanulwa is a detention world where some of the worst Soromid criminals are kept.</description>
+  <bar>Less a bar and more a waiting area, this facility is used for the rare occasions when visitors have reason to come to Tanulwa. Since Tanulwa doesn't allow personal visits to prisoners and all logistics of personnel and goods are handled strictly by the government, there's not much in the way of civilian traffic to and from the planet.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
+ <tags>
+  <tag>prison</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

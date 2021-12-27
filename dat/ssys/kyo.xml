@@ -10,14 +10,14 @@
   <x>870.674436</x>
   <y>-720.384761</y>
  </pos>
- <assets>
-  <asset>Berkhere</asset>
-  <asset>Khorin</asset>
-  <asset>Kyo III</asset>
-  <asset>Worscha</asset>
-  <asset_virtual>Dvaered Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Berkhere</spob>
+  <spob>Khorin</spob>
+  <spob>Kyo III</spob>
+  <spob>Worscha</spob>
+  <spob_virtual>Dvaered Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Druss">
    <autopos/>

@@ -11,11 +11,11 @@
   <x>-920.036415</x>
   <y>-568.555738</y>
  </pos>
- <assets>
-  <asset>Research Post Sigma-13</asset>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Za'lek Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Research Post Sigma-13</spob>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Za'lek Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-13674">
    <autopos/>

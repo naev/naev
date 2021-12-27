@@ -10,12 +10,12 @@
   <x>1221.092815</x>
   <y>-690.368162</y>
  </pos>
- <assets>
-  <asset>Brendon I</asset>
-  <asset>Margot</asset>
-  <asset>Pokyos Station</asset>
-  <asset>Zazarin</asset>
- </assets>
+ <spobs>
+  <spob>Brendon I</spob>
+  <spob>Margot</spob>
+  <spob>Pokyos Station</spob>
+  <spob>Zazarin</spob>
+ </spobs>
  <jumps>
   <jump target="Gilligan's Tomb">
    <autopos/>

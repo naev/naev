@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="An'ku II">
+ <pos>
+  <x>3570.000000</x>
+  <y>-20440.000000</y>
+ </pos>
+ <GFX>
+  <space>L00.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>L</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

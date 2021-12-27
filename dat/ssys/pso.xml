@@ -10,12 +10,12 @@
   <x>92.652554</x>
   <y>-901.081222</y>
  </pos>
- <assets>
-  <asset>PSO 1251</asset>
-  <asset>PSO 1324</asset>
-  <asset>PSO 2356</asset>
-  <asset>PSO 2434</asset>
- </assets>
+ <spobs>
+  <spob>PSO 1251</spob>
+  <spob>PSO 1324</spob>
+  <spob>PSO 2356</spob>
+  <spob>PSO 2434</spob>
+ </spobs>
  <jumps>
   <jump target="Amaroq">
    <pos x="-21607.690780" y="-15135.895743"/>

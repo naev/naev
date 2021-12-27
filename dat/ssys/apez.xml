@@ -10,15 +10,15 @@
   <x>-185.000000</x>
   <y>-299.000000</y>
  </pos>
- <assets>
-  <asset>Apez II</asset>
-  <asset>Apez V</asset>
-  <asset>Crylo</asset>
-  <asset>Dowue</asset>
-  <asset>Gem</asset>
-  <asset>Zeo</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Apez II</spob>
+  <spob>Apez V</spob>
+  <spob>Crylo</spob>
+  <spob>Dowue</spob>
+  <spob>Gem</spob>
+  <spob>Zeo</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Gamma Polaris">
    <autopos/>

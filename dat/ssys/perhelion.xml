@@ -10,14 +10,14 @@
   <x>61.000000</x>
   <y>-739.000000</y>
  </pos>
- <assets>
-  <asset>Handalier</asset>
-  <asset>Perhelion Alpha</asset>
-  <asset>Perhelion Beta</asset>
-  <asset>Perhelion Gamma</asset>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Handalier</spob>
+  <spob>Perhelion Alpha</spob>
+  <spob>Perhelion Beta</spob>
+  <spob>Perhelion Gamma</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daravon">
    <autopos/>

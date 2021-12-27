@@ -11,10 +11,10 @@
   <x>-683.293879</x>
   <y>-329.515175</y>
  </pos>
- <assets>
-  <asset_virtual>Empire Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-11935">
    <autopos/>

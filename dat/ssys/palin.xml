@@ -10,14 +10,14 @@
   <x>364.965161</x>
   <y>-829.044141</y>
  </pos>
- <assets>
-  <asset>Golem</asset>
-  <asset>Nolan</asset>
-  <asset>Palin I</asset>
-  <asset>Palin II</asset>
-  <asset>Palin III</asset>
-  <asset>Zaren</asset>
- </assets>
+ <spobs>
+  <spob>Golem</spob>
+  <spob>Nolan</spob>
+  <spob>Palin I</spob>
+  <spob>Palin II</spob>
+  <spob>Palin III</spob>
+  <spob>Zaren</spob>
+ </spobs>
  <jumps>
   <jump target="Allous">
    <autopos/>

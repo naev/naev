@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Dvaered Small">
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+</spob>

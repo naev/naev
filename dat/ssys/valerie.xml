@@ -10,13 +10,13 @@
   <x>-486.338684</x>
   <y>-422.980880</y>
  </pos>
- <assets>
-  <asset>Soros Station</asset>
-  <asset>Valerie II</asset>
-  <asset>Valerie IIX</asset>
-  <asset>Valerie IV</asset>
-  <asset>Wellen</asset>
- </assets>
+ <spobs>
+  <spob>Soros Station</spob>
+  <spob>Valerie II</spob>
+  <spob>Valerie IIX</spob>
+  <spob>Valerie IV</spob>
+  <spob>Wellen</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-4746">
    <autopos/>

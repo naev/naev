@@ -200,7 +200,7 @@ files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
-files["dat/assets/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
+files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK

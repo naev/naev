@@ -10,14 +10,14 @@
   <x>1020.096582</x>
   <y>-916.738076</y>
  </pos>
- <assets>
-  <asset>An'ku I</asset>
-  <asset>An'ku II</asset>
-  <asset>An'ku III</asset>
-  <asset>Eenerim</asset>
-  <asset>Sroolu</asset>
-  <asset>Tankard Station</asset>
- </assets>
+ <spobs>
+  <spob>An'ku I</spob>
+  <spob>An'ku II</spob>
+  <spob>An'ku III</spob>
+  <spob>Eenerim</spob>
+  <spob>Sroolu</spob>
+  <spob>Tankard Station</spob>
+ </spobs>
  <jumps>
   <jump target="Humdrum">
    <autopos/>

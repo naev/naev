@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Pirate All Unpresence">
+ <presence>
+  <faction>Pirate</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Marauder</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Wild Ones</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Raven Clan</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Black Lotus</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Dreamer Clan</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+</spob>

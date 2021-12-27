@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Rhaana">
+ <pos>
+  <x>14760.000000</x>
+  <y>-8235.000000</y>
+ </pos>
+ <GFX>
+  <space>M02.webp</space>
+  <exterior>desertic4.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>33.333333</base>
+  <bonus>16.666667</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>1.25e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Rhaana is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated containment centres. It is a poor world, with little to recommend it to the wider galaxy. Thusly, it's very quiet.</description>
+  <bar>The bar is a standard-issue model, seen in most space stations. Other than that, it is as overlarge and dingy as any Dvaered bar.</bar>
+ </general>
+</spob>

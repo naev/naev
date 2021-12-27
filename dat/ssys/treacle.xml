@@ -10,9 +10,9 @@
   <x>275.475467</x>
   <y>792.525333</y>
  </pos>
- <assets>
-  <asset>Treacle</asset>
- </assets>
+ <spobs>
+  <spob>Treacle</spob>
+ </spobs>
  <jumps>
   <jump target="Pisces Prime">
    <autopos/>

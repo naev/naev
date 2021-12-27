@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fried Ia">
+ <pos>
+  <x>-12094.025264</x>
+  <y>1795.654737</y>
+ </pos>
+ <GFX>
+  <space>moon-P01.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

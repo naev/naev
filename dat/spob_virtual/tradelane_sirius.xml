@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Trade Lane (Sirius)">
+ <presence>
+  <faction>Trader</faction>
+  <base>100.000000</base>
+ </presence>
+ <presence>
+  <faction>Trader</faction>
+  <base>50.000000</base>
+  <bonus>50.000000</bonus>
+  <range>1</range>
+ </presence>
+ <presence>
+  <faction>Independent</faction>
+  <base>50.000000</base>
+  <bonus>40.000000</bonus>
+  <range>1</range>
+ </presence>
+ <presence>
+  <faction>Sirius</faction>
+  <base>150.000000</base>
+  <range>0</range>
+ </presence>
+ <presence>
+  <faction>Sirius</faction>
+  <base>50.000000</base>
+  <bonus>50.000000</bonus>
+  <range>1</range>
+ </presence>
+</spob>

@@ -76,22 +76,22 @@ typedef struct MapOverlayPos_ {
 
 /**
  * @brief Represents the presence of an asset. */
-typedef struct AssetPresence_ {
+typedef struct SpobPresence_ {
    int faction;   /**< Faction generating presence. */
    double base;   /**< Base presence. */
    double bonus;  /**< Bonus presence. */
    int range;     /**< Range effect of the presence (in jumps). */
-} AssetPresence;
+} SpobPresence;
 
 /**
- * @struct VirtualAsset
+ * @struct VirtualSpob
  *
  * @brief Basically modifies system parameters without creating any real objects.
  */
-typedef struct VirtualAsset_ {
+typedef struct VirtualSpob_ {
    char *name;                /**< Virtual asset name. */
-   AssetPresence *presences;  /**< Virtual asset presences (Array from array.h). */
-} VirtualAsset;
+   SpobPresence *presences;  /**< Virtual asset presences (Array from array.h). */
+} VirtualSpob;
 
 /**
  * @struct Spob
@@ -110,8 +110,8 @@ typedef struct Spob_ {
    char *class;         /**< Spob type. Uses Star Trek classification system for planets (https://stexpanded.fandom.com/wiki/Spob_classifications) */
    uint64_t population; /**< Population of the spob. */
 
-   /* Asset details. */
-   AssetPresence presence; /**< Presence details (faction, etc.) */
+   /* Spob details. */
+   SpobPresence presence; /**< Presence details (faction, etc.) */
    double hide;         /**< The ewarfare hide value for an asset. */
 
    /* Landing details. */
@@ -311,11 +311,11 @@ struct StarSystem_ {
    char *background;       /**< Background script. */
    char *features;         /**< Extra text on the map indicating special features of the system. */
 
-   /* Assets. */
+   /* Spobs. */
    Spob **planets;       /**< Array (array.h): planets */
    int *planetsid;         /**< Array (array.h): IDs of the planets. */
    int faction;            /**< overall faction */
-   VirtualAsset **assets_virtual; /**< Array (array.h): virtual assets. */
+   VirtualSpob **assets_virtual; /**< Array (array.h): virtual assets. */
 
    /* Jumps. */
    JumpPoint *jumps;       /**< Array (array.h): Jump points in the system */
@@ -395,8 +395,8 @@ void planet_updateLand( Spob *p );
 /*
  * Virtual asset stuff.
  */
-VirtualAsset* virtualasset_getAll (void);
-VirtualAsset* virtualasset_get( const char *name );
+VirtualSpob* virtualasset_getAll (void);
+VirtualSpob* virtualasset_get( const char *name );
 
 /*
  * jump stuff
@@ -414,8 +414,8 @@ void systems_reconstructSpobs (void);
 StarSystem *system_new (void);
 int system_addSpob( StarSystem *sys, const char *planetname );
 int system_rmSpob( StarSystem *sys, const char *planetname );
-int system_addVirtualAsset( StarSystem *sys, const char *assetname );
-int system_rmVirtualAsset( StarSystem *sys, const char *assetname );
+int system_addVirtualSpob( StarSystem *sys, const char *assetname );
+int system_rmVirtualSpob( StarSystem *sys, const char *assetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
@@ -431,7 +431,7 @@ void planets_render (void);
  * Presence stuff.
  */
 void system_presenceCleanupAll (void);
-void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap );
+void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap );
 double system_getPresence( const StarSystem *sys, int faction );
 double system_getPresenceFull( const StarSystem *sys, int faction, double *base, double *bonus );
 void system_addAllSpobsPresence( StarSystem *sys );

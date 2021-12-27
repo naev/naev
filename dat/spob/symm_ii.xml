@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Symm II">
+ <pos>
+  <x>-1657.246162</x>
+  <y>-10680.643750</y>
+ </pos>
+ <GFX>
+  <space>X01.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

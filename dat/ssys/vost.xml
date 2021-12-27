@@ -10,13 +10,13 @@
   <x>-573.390026</x>
   <y>-686.373725</y>
  </pos>
- <assets>
-  <asset>Andors</asset>
-  <asset>Andors Refining</asset>
-  <asset>Aquilia</asset>
-  <asset>Xavier</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Andors</spob>
+  <spob>Andors Refining</spob>
+  <spob>Aquilia</spob>
+  <spob>Xavier</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Olympus">
    <autopos/>

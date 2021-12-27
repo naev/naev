@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="S38729">
+ <pos>
+  <x>10884.449588</x>
+  <y>23122.620885</y>
+ </pos>
+ <GFX>
+  <space>001.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Collective</faction>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>3</class>
+  <population>0</population>
+  <hide>3.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -55,7 +55,7 @@
 #define ENGINE_VOLUME_DEFAULT                0.8   /**< Default engine volume. */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
-#define DEV_SAVE_ASSET_DEFAULT            "../assets/"
+#define DEV_SAVE_SPOB_DEFAULT            "../assets/"
 #define DEV_SAVE_MAP_DEFAULT              "../outfits/maps/"
 
 /**

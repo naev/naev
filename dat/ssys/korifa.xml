@@ -10,15 +10,15 @@
   <x>1104.400000</x>
   <y>643.800000</y>
  </pos>
- <assets>
-  <asset>Korifa I</asset>
-  <asset>Korifa II</asset>
-  <asset>Korifa III</asset>
-  <asset>Korifa Ia</asset>
-  <asset>Luna Skona</asset>
-  <asset>Nera</asset>
-  <asset>Skona</asset>
- </assets>
+ <spobs>
+  <spob>Korifa I</spob>
+  <spob>Korifa II</spob>
+  <spob>Korifa III</spob>
+  <spob>Korifa Ia</spob>
+  <spob>Luna Skona</spob>
+  <spob>Nera</spob>
+  <spob>Skona</spob>
+ </spobs>
  <jumps>
   <jump target="Hystera">
    <autopos/>

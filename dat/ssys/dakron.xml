@@ -10,14 +10,14 @@
   <x>333.000000</x>
   <y>-365.000000</y>
  </pos>
- <assets>
-  <asset>Dakron III</asset>
-  <asset>Dakron V</asset>
-  <asset>Shariff Station</asset>
-  <asset>Thar</asset>
-  <asset_virtual>FLF Small</asset_virtual>
-  <asset_virtual>Frontier Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Dakron III</spob>
+  <spob>Dakron V</spob>
+  <spob>Shariff Station</spob>
+  <spob>Thar</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>Frontier Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Doranthex">
    <autopos/>

@@ -10,14 +10,14 @@
   <x>404.802080</x>
   <y>828.985813</y>
  </pos>
- <assets>
-  <asset>Jaxheen</asset>
-  <asset>Longbow I</asset>
-  <asset>Longbow III</asset>
-  <asset>Longbow IV</asset>
-  <asset>Solvac Crops</asset>
-  <asset>Tummalin</asset>
- </assets>
+ <spobs>
+  <spob>Jaxheen</spob>
+  <spob>Longbow I</spob>
+  <spob>Longbow III</spob>
+  <spob>Longbow IV</spob>
+  <spob>Solvac Crops</spob>
+  <spob>Tummalin</spob>
+ </spobs>
  <jumps>
   <jump target="Moor">
    <autopos/>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Miner Local">
+ <presence>
+  <faction>Miner</faction>
+  <base>46.666667</base>
+  <bonus>23.333333</bonus>
+  <range>0</range>
+ </presence>
+</spob>

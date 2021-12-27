@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Alleyway">
+ <pos>
+  <x>7683.061332</x>
+  <y>4794.949483</y>
+ </pos>
+ <GFX>
+  <space>002.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>70.000000</base>
+  <bonus>30.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Originally intended to be a trading hub and refueling stop for merchants, this station has effectively turned into a hub for both pirates and bounty hunters. Authorities have long ago given up any hope of controlling the chaos, so everyone knows to be armed and remain vigilant at all times.</description>
+  <bar>The bar is a mix of mostly pirates and bounty hunters, with a handful of merchants and gamblers. Fights often break out and it's hard to tell who to trust, so most people keep to themselves and avoid eye contact with others.</bar>
+ </general>
+ <tags>
+  <tag>criminal</tag>
+ </tags>
+</spob>

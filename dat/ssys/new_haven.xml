@@ -12,14 +12,14 @@
   <x>43.485983</x>
   <y>294.880618</y>
  </pos>
- <assets>
-  <asset>Green Eye</asset>
-  <asset>New Haven</asset>
-  <asset>Old Man Jack</asset>
-  <asset>Red Eye</asset>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
-  <asset_virtual>Soromid Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Green Eye</spob>
+  <spob>New Haven</spob>
+  <spob>Old Man Jack</spob>
+  <spob>Red Eye</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Soromid Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daled">
    <autopos/>

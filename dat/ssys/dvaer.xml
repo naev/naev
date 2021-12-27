@@ -11,18 +11,18 @@
   <x>162.000000</x>
   <y>-614.000000</y>
  </pos>
- <assets>
-  <asset>Dvaer II</asset>
-  <asset>Dvaer III</asset>
-  <asset>Dvaer IIIa</asset>
-  <asset>Dvaer IV</asset>
-  <asset>Dvaer Prime</asset>
-  <asset>Dvaered High Command</asset>
-  <asset>Eist Shipyard</asset>
-  <asset>Laarss</asset>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Dvaer II</spob>
+  <spob>Dvaer III</spob>
+  <spob>Dvaer IIIa</spob>
+  <spob>Dvaer IV</spob>
+  <spob>Dvaer Prime</spob>
+  <spob>Dvaered High Command</spob>
+  <spob>Eist Shipyard</spob>
+  <spob>Laarss</spob>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Beeklo">
    <autopos/>

@@ -61,7 +61,7 @@ typedef enum UniEditMode_ {
 
 typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
-   UNIEDIT_VIEW_VIRTUALASSETS,
+   UNIEDIT_VIEW_VIRTUALSPOBS,
    UNIEDIT_VIEW_RADIUS,
    UNIEDIT_VIEW_BACKGROUND,
    UNIEDIT_VIEW_TECH,
@@ -113,9 +113,9 @@ static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, const char *name );
 static void uniedit_editGenList( unsigned int wid );
 static void uniedit_btnEditRename( unsigned int wid, const char *unused );
-static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused );
-static void uniedit_btnEditAddAsset( unsigned int wid, const char *unused );
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused );
+static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddSpob( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused );
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
@@ -134,7 +134,7 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static void uniedit_renderFactionDisks( double x, double y, double r );
-static void uniedit_renderVirtualAssets( double x, double y, double r );
+static void uniedit_renderVirtualSpobs( double x, double y, double r );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, const char *wgt );
 static void uniedit_save( unsigned int wid_unused, const char *unused );
@@ -380,7 +380,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    /* Add virtual asset list. */
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
    str[0]= strdup(_("Default"));
-   str[1]= strdup(_("Virtual Assets"));
+   str[1]= strdup(_("Virtual Spobs"));
    str[2]= strdup(_("System Radius"));
    str[3]= strdup(_("Background"));
    str[4]= strdup(_("Tech"));
@@ -508,7 +508,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    }
 }
 
-static void uniedit_renderVirtualAssets( double x, double y, double r )
+static void uniedit_renderVirtualSpobs( double x, double y, double r )
 {
    const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
@@ -635,8 +635,8 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
          map_renderSystemEnvironment( x, y, uniedit_zoom, 1, 1. );
          break;
 
-      case UNIEDIT_VIEW_VIRTUALASSETS:
-         uniedit_renderVirtualAssets( x, y, r );
+      case UNIEDIT_VIEW_VIRTUALSPOBS:
+         uniedit_renderVirtualSpobs( x, y, r );
          break;
 
       case UNIEDIT_VIEW_RADIUS:
@@ -705,7 +705,7 @@ static char getValCol( double val )
       return 'r';
    return '0';
 }
-static int getPresenceVal( int f, AssetPresence *ap, double *base, double *bonus )
+static int getPresenceVal( int f, SpobPresence *ap, double *base, double *bonus )
 {
    int gf = 0;
    double w;
@@ -776,14 +776,14 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    sy    = sys->pos.y;
 
    /* Handle virtual asset viewer. */
-   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALASSETS) {
+   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
       if (array_size(sys->assets_virtual)==0)
          return;
 
       /* Count assets. */
       l = 0;
       for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualAsset *va = sys->assets_virtual[j];
+         VirtualSpob *va = sys->assets_virtual[j];
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
       }
 
@@ -883,7 +883,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
                getValCol(base), base, getValCol(bonus), bonus, planet_name(pnt) );
       }
       for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualAsset *va = sys->assets_virtual[j];
+         VirtualSpob *va = sys->assets_virtual[j];
          for (int p=0; p<array_size(va->presences); p++) {
             if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                continue;
@@ -903,7 +903,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
                   getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, planet_name(pnt), _(cur->name) );
          }
          for (int j=0; j<array_size(cur->assets_virtual); j++) {
-            VirtualAsset *va = cur->assets_virtual[j];
+            VirtualSpob *va = cur->assets_virtual[j];
             for (int p=0; p<array_size(va->presences); p++) {
                if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                   continue;
@@ -1450,7 +1450,7 @@ static void uniedit_findSys (void)
    x = 40;
 
    /* Create the window. */
-   wid = window_create( "wdwFindSystemsandAssets", _("Find Systems and Assets"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   wid = window_create( "wdwFindSystemsandSpobs", _("Find Systems and Spobs"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
    uniedit_widFind = wid;
 
    x = 20;
@@ -1752,13 +1752,13 @@ static void uniedit_editGenList( unsigned int wid )
 {
    int j, n;
    StarSystem *sys;
-   const VirtualAsset *va;
+   const VirtualSpob *va;
    char **str;
    int y, h, has_assets;
 
    /* Destroy if exists. */
-   if (widget_exists( wid, "lstAssets" ))
-      window_destroyWidget( wid, "lstAssets" );
+   if (widget_exists( wid, "lstSpobs" ))
+      window_destroyWidget( wid, "lstSpobs" );
 
    y = -175;
 
@@ -1783,16 +1783,16 @@ static void uniedit_editGenList( unsigned int wid )
    /* Add list. */
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
    window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, j, 0, NULL, NULL );
+         "lstSpobs", str, j, 0, NULL, NULL );
    y -= h + 20;
 
    /* Add buttons if needed. */
-   if (!widget_exists( wid, "btnRmAsset" ))
+   if (!widget_exists( wid, "btnRmSpob" ))
       window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnRmAsset", _("Remove"), uniedit_btnEditRmAsset );
-   if (!widget_exists( wid, "btnAddAsset" ))
+            "btnRmSpob", _("Remove"), uniedit_btnEditRmSpob );
+   if (!widget_exists( wid, "btnAddSpob" ))
       window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnAddAsset", _("Add"), uniedit_btnEditAddAsset );
+            "btnAddSpob", _("Add"), uniedit_btnEditAddSpob );
 }
 
 /**
@@ -1833,21 +1833,21 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 /**
  * @brief Removes a selected asset.
  */
-static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
+static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
    int ret;
 
    /* Get selection. */
-   selected = toolkit_getList( wid, "lstAssets" );
+   selected = toolkit_getList( wid, "lstSpobs" );
 
    /* Make sure it's valid. */
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    /* Remove the asset. */
-   ret = system_rmVirtualAsset( uniedit_sys[0], selected );
+   ret = system_rmVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
       dialogue_alert( _("Failed to remove virtual asset '%s'!"), selected );
       return;
@@ -1862,12 +1862,12 @@ static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
 /**
  * @brief Adds a new virtual asset.
  */
-static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
+static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 {
    (void) parent;
    (void) unused;
    unsigned int wid;
-   const VirtualAsset *va;
+   const VirtualSpob *va;
    char **str;
    int h;
 
@@ -1879,7 +1879,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
    }
 
    /* Create the window. */
-   wid = window_create( "wdwAddaVirtualAsset", _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwAddaVirtualSpob", _("Add a Virtual Spob"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
@@ -1888,7 +1888,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
       str[i] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, array_size(va), 0, NULL, NULL );
+         "lstSpobs", str, array_size(va), 0, NULL, NULL );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -1896,24 +1896,24 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
 
    /* Add button. */
    window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnAdd", _("Add"), uniedit_btnEditAddAssetAdd );
+         "btnAdd", _("Add"), uniedit_btnEditAddSpobAdd );
 }
 
 /**
  * @brief Actually adds the virtual asset.
  */
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused )
+static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 {
    const char *selected;
    int ret;
 
    /* Get selection. */
-   selected = toolkit_getList( wid, "lstAssets" );
+   selected = toolkit_getList( wid, "lstSpobs" );
    if (selected == NULL)
       return;
 
    /* Add virtual presence. */
-   ret = system_addVirtualAsset( uniedit_sys[0], selected );
+   ret = system_addVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
       dialogue_alert( _("Failed to add virtual asset '%s'!"), selected );
       return;
@@ -1965,7 +1965,7 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==1) {
-      uniedit_viewmode = UNIEDIT_VIEW_VIRTUALASSETS;
+      uniedit_viewmode = UNIEDIT_VIEW_VIRTUALSPOBS;
       window_close( wid, unused );
       return;
    }

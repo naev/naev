@@ -10,16 +10,16 @@
   <x>335.000000</x>
   <y>-478.000000</y>
  </pos>
- <assets>
-  <asset>Arck</asset>
-  <asset>Duran Shipyard</asset>
-  <asset>Haldr</asset>
-  <asset>Massia I</asset>
-  <asset>Massia IV</asset>
-  <asset>Massia IVa</asset>
-  <asset>Sinclair</asset>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Arck</spob>
+  <spob>Duran Shipyard</spob>
+  <spob>Haldr</spob>
+  <spob>Massia I</spob>
+  <spob>Massia IV</spob>
+  <spob>Massia IVa</spob>
+  <spob>Sinclair</spob>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Klantar">
    <autopos/>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Brock">
+ <pos>
+  <x>-6988.624986</x>
+  <y>-11971.255763</y>
+ </pos>
+ <GFX>
+  <space>S00.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>40.000000</base>
+  <bonus>20.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>S</class>
+  <population>25114</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>One of the Dvaered gas-mining operations is located here. The gas is refined and turned into fuel for Dvaered ships. The facilities here are built solely for this purpose and no other, comfort was the last thing on the designers' minds.</description>
+  <bar>The bar is filled with miners and garrison troops, like most Dvaered bars. Copious drinking is also most certainly on the cards, like most Dvaered bars. Unlike most Dvaered bars, this one is small and rather clean. Rather shocking, especially for outsiders.</bar>
+ </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Systems Low</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Systems Elite</item>
+ </tech>
+</spob>

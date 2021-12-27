@@ -10,9 +10,9 @@
   <x>-150.800000</x>
   <y>-663.800000</y>
  </pos>
- <assets>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daravon">
    <autopos/>

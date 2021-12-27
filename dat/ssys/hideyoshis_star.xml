@@ -11,11 +11,11 @@
   <x>-643.606486</x>
   <y>-949.496039</y>
  </pos>
- <assets>
-  <asset>HS-5</asset>
-  <asset>HS-51</asset>
-  <asset>Jurai</asset>
- </assets>
+ <spobs>
+  <spob>HS-5</spob>
+  <spob>HS-51</spob>
+  <spob>Jurai</spob>
+ </spobs>
  <jumps>
   <jump target="Armorhead">
    <autopos/>

@@ -10,12 +10,12 @@
   <x>786.631944</x>
   <y>260.608796</y>
  </pos>
- <assets>
-  <asset>Rotide I</asset>
-  <asset>Rotide II</asset>
-  <asset>SY-1025</asset>
-  <asset>SY-612</asset>
- </assets>
+ <spobs>
+  <spob>Rotide I</spob>
+  <spob>Rotide II</spob>
+  <spob>SY-1025</spob>
+  <spob>SY-612</spob>
+ </spobs>
  <jumps>
   <jump target="Antares">
    <autopos/>

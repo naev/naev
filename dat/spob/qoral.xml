@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Qoral">
+ <pos>
+  <x>17749.592764</x>
+  <y>3014.081790</y>
+ </pos>
+ <GFX>
+  <space>S01.webp</space>
+  <exterior>mining4.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>S</class>
+  <population>5e+08</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Qoral is primarily a resource-producing world. The terrain is mostly barren and unfit for human habitation, so most of the population is concentrated on a few stretches of suitable land, scattered around the globe, while the rest of the land mass is littered with strip mines.</description>
+  <bar>This is a fairly typical spaceport bar. The clientele consists mostly of merchants, though some locals come here also, if not for the drinks then for the chance to talk to people who come from more interesting places than Qoral.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Laser 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+</spob>

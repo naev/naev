@@ -12,12 +12,12 @@
   <x>-143.260000</x>
   <y>716.113333</y>
  </pos>
- <assets>
-  <asset>Medenus Observatory</asset>
-  <asset>Sleuth II</asset>
-  <asset>Thosson</asset>
-  <asset>Vinooso</asset>
- </assets>
+ <spobs>
+  <spob>Medenus Observatory</spob>
+  <spob>Sleuth II</spob>
+  <spob>Thosson</spob>
+  <spob>Vinooso</spob>
+ </spobs>
  <jumps>
   <jump target="Amatiri">
    <autopos/>

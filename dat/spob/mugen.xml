@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mugen">
+ <pos>
+  <x>1185.435648</x>
+  <y>-1382.510592</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>1.25457e+06</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>An unusually stable hot world, Mugen has become home to a wide variety of industrial processing companies. Using the planet's own heat via the stable magma streams that suffuse what passes for the planet's crust, smelting and refining operations can be carried out at significantly reduced cost.</description>
+  <bar>On Mugen there is a sharp tang of molten rock and metal in the air no matter where you go. Air scrubbers and scent masking agents can't seem to completely get rid of it despite the best efforts of environmental engineers the galaxy over. This bar is no exception.</bar>
+ </general>
+</spob>

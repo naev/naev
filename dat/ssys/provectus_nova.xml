@@ -11,11 +11,11 @@
   <x>-233.800000</x>
   <y>-644.800000</y>
  </pos>
- <assets>
-  <asset>Provectus Nova I</asset>
-  <asset>Provectus Nova Ia</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Provectus Nova I</spob>
+  <spob>Provectus Nova Ia</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daan">
    <autopos/>

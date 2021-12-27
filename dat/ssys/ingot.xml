@@ -10,12 +10,12 @@
   <x>372.605613</x>
   <y>-211.000000</y>
  </pos>
- <assets>
-  <asset>Ingot I</asset>
-  <asset>Ulios</asset>
-  <asset_virtual>Dvaered Unpresence</asset_virtual>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Ingot I</spob>
+  <spob>Ulios</spob>
+  <spob_virtual>Dvaered Unpresence</spob_virtual>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Gilligan's Light">
    <autopos/>

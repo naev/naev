@@ -10,13 +10,13 @@
   <x>-356.315926</x>
   <y>-655.064929</y>
  </pos>
- <assets>
-  <asset>Bastion Station</asset>
-  <asset>Pultatis I</asset>
-  <asset>Pultatis II</asset>
-  <asset>Pultatis III</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Bastion Station</spob>
+  <spob>Pultatis I</spob>
+  <spob>Pultatis II</spob>
+  <spob>Pultatis III</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Hargen">
    <autopos/>

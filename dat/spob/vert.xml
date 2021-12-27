@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vert">
+ <pos>
+  <x>5666.745964</x>
+  <y>7218.725573</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -12,12 +12,12 @@
   <x>-144.600678</x>
   <y>210.119696</y>
  </pos>
- <assets>
-  <asset>Mason I</asset>
-  <asset>Mason II</asset>
-  <asset>Mason IV</asset>
-  <asset>Vault</asset>
- </assets>
+ <spobs>
+  <spob>Mason I</spob>
+  <spob>Mason II</spob>
+  <spob>Mason IV</spob>
+  <spob>Vault</spob>
+ </spobs>
  <jumps>
   <jump target="C-28">
    <pos x="-6275.245619" y="-7360.922215"/>

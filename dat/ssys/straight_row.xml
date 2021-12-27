@@ -10,12 +10,12 @@
   <x>-378.077526</x>
   <y>-1032.149188</y>
  </pos>
- <assets>
-  <asset>HZNSS-2</asset>
-  <asset>Rostra</asset>
-  <asset>Straight Row II</asset>
-  <asset>Thaddius Station</asset>
- </assets>
+ <spobs>
+  <spob>HZNSS-2</spob>
+  <spob>Rostra</spob>
+  <spob>Straight Row II</spob>
+  <spob>Thaddius Station</spob>
+ </spobs>
  <jumps>
   <jump target="Nunavut">
    <autopos/>

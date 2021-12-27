@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Oberon">
+ <pos>
+  <x>-1597.399997</x>
+  <y>1131.491664</y>
+ </pos>
+ <GFX>
+  <space>moon-J02.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>13.333333</base>
+  <bonus>6.666667</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>75800</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Oberon is primarily a remote research post for various purposes deemed too minor to justify placing in more prestigious stations. Most interns and new researchers get their start here before moving on to better things, leading to a constant renewal of personnel.</description>
+  <bar>Given the large presence of young people, you would hope the bar would be an energetic and fun place. However, the overworked interns and young researchers are too stressed out and engrossed in their research leading to a fairly depressive and quiet atmosphere.</bar>
+ </general>
+ <tags>
+  <tag>research</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

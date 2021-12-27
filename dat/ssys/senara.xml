@@ -10,9 +10,9 @@
   <x>-615.056996</x>
   <y>-249.094650</y>
  </pos>
- <assets>
-  <asset>Senara I</asset>
- </assets>
+ <spobs>
+  <spob>Senara I</spob>
+ </spobs>
  <jumps>
   <jump target="Klintus">
    <autopos/>

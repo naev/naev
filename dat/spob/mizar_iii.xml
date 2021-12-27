@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mizar III">
+ <pos>
+  <x>-5723.553409</x>
+  <y>10798.490951</y>
+ </pos>
+ <GFX>
+  <space>H03.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -1205,7 +1205,7 @@ static void input_clickevent( SDL_Event* event )
             ABS(angle_diff(mouseang, ang)) < ABS(angle_diff(mouseang, angp)))
          pid = PLAYER_ID; /* Pilot angle is too great, or planet/jump is closer. */
       if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
-         jpid = pntid = astid = fieid = -1; /* Asset angle difference is too great. */
+         jpid = pntid = astid = fieid = -1; /* Spob angle difference is too great. */
 
       if (pid != PLAYER_ID) {
          if (input_clickedPilot(pid, autonav))

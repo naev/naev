@@ -10,14 +10,14 @@
   <x>-195.513889</x>
   <y>-754.439815</y>
  </pos>
- <assets>
-  <asset>Gammacron IV</asset>
-  <asset>Gammacron V</asset>
-  <asset>Gammacron Va</asset>
-  <asset>Gammacron Vb</asset>
-  <asset>Pund</asset>
-  <asset_virtual>Miner Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Gammacron IV</spob>
+  <spob>Gammacron V</spob>
+  <spob>Gammacron Va</spob>
+  <spob>Gammacron Vb</spob>
+  <spob>Pund</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daan">
    <autopos/>

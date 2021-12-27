@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Qex II">
+ <pos>
+  <x>-8211.694386</x>
+  <y>2773.849123</y>
+ </pos>
+ <GFX>
+  <space>M05.webp</space>
+  <exterior>forest2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -132,7 +132,7 @@ function create()
    button_mouseover = tex_open( "buttonHil.png" )
    button_pressed = tex_open( "buttonPre.png" )
    button_disabled = tex_open( "buttonDis.png" )
-   gui.targetPlanetGFX( tex_open( "radar_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
 

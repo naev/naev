@@ -10,15 +10,15 @@
   <x>305.666667</x>
   <y>457.066667</y>
  </pos>
- <assets>
-  <asset>Father's Pride I</asset>
-  <asset>Father's Pride II</asset>
-  <asset>Father's Pride III</asset>
-  <asset>Flach</asset>
-  <asset>Hartwell Station</asset>
-  <asset>Rudderfern</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Father's Pride I</spob>
+  <spob>Father's Pride II</spob>
+  <spob>Father's Pride III</spob>
+  <spob>Flach</spob>
+  <spob>Hartwell Station</spob>
+  <spob>Rudderfern</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Gewirn">
    <autopos/>

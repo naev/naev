@@ -10,15 +10,15 @@
   <x>1309.940038</x>
   <y>-840.114108</y>
  </pos>
- <assets>
-  <asset>Euler I</asset>
-  <asset>Euler II</asset>
-  <asset>Euler III</asset>
-  <asset>Euler IIIa</asset>
-  <asset>Euler IV</asset>
-  <asset>Euler Ia</asset>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Euler I</spob>
+  <spob>Euler II</spob>
+  <spob>Euler III</spob>
+  <spob>Euler IIIa</spob>
+  <spob>Euler IV</spob>
+  <spob>Euler Ia</spob>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Narousse">
    <autopos/>

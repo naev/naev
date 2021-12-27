@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tomas X-1">
+ <pos>
+  <x>-6402.378999</x>
+  <y>-4340.386502</y>
+ </pos>
+ <GFX>
+  <space>X01.webp</space>
+  <exterior>uninhabited-rocky-red-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

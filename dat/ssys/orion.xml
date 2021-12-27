@@ -10,13 +10,13 @@
   <x>-775.352707</x>
   <y>-727.387175</y>
  </pos>
- <assets>
-  <asset>HZMM-01</asset>
-  <asset>HZNSS-1</asset>
-  <asset>Orion's Anger</asset>
-  <asset>Orion's Fist</asset>
-  <asset>Orion's Might</asset>
- </assets>
+ <spobs>
+  <spob>HZMM-01</spob>
+  <spob>HZNSS-1</spob>
+  <spob>Orion's Anger</spob>
+  <spob>Orion's Fist</spob>
+  <spob>Orion's Might</spob>
+ </spobs>
  <jumps>
   <jump target="Bedimann">
    <autopos/>

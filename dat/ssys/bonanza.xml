@@ -12,11 +12,11 @@
   <x>51.725467</x>
   <y>833.358667</y>
  </pos>
- <assets>
-  <asset>Bonanza I</asset>
-  <asset>Bonanza II</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Bonanza I</spob>
+  <spob>Bonanza II</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Hasselt">
    <autopos/>

@@ -967,18 +967,18 @@ int economy_sysLoad( xmlNodePtr parent )
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "system")) {
                /* Ignore "name" attribute. */
-               xmlNodePtr nodeAsset = cur->xmlChildrenNode;
+               xmlNodePtr nodeSpob = cur->xmlChildrenNode;
                do {
-                  xml_onlyNodes(nodeAsset);
-                  if (xml_isNode(nodeAsset, "planet")) {
-                     xmlr_attr_strd(nodeAsset,"name",str);
+                  xml_onlyNodes(nodeSpob);
+                  if (xml_isNode(nodeSpob, "planet")) {
+                     xmlr_attr_strd(nodeSpob,"name",str);
                      Spob *planet = planet_get(str);
                      if (planet==NULL)
                         WARN(_("Spob '%s' has saved economy data but doesn't exist!"), str);
                      free(str);
                      if (planet==NULL)
                         continue;
-                     xmlNodePtr nodeCommodity = nodeAsset->xmlChildrenNode;
+                     xmlNodePtr nodeCommodity = nodeSpob->xmlChildrenNode;
                      do {
                         xml_onlyNodes(nodeCommodity);
                         if (xml_isNode(nodeCommodity, "commodity")) {
@@ -1000,7 +1000,7 @@ int economy_sysLoad( xmlNodePtr parent )
                         }
                      } while (xml_nextNode(nodeCommodity));
                   }
-               } while (xml_nextNode(nodeAsset));
+               } while (xml_nextNode(nodeSpob));
             } else if (xml_isNode(cur, "lastPurchase")) {
                xmlr_attr_strd(cur, "name", str);
                if (str) {

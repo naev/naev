@@ -10,13 +10,13 @@
   <x>1234.602075</x>
   <y>-910.742194</y>
  </pos>
- <assets>
-  <asset>Gorchenchev Shipyards</asset>
-  <asset>Lanze</asset>
-  <asset>Margarita I</asset>
-  <asset>Margarita II</asset>
-  <asset>Margarita IV</asset>
- </assets>
+ <spobs>
+  <spob>Gorchenchev Shipyards</spob>
+  <spob>Lanze</spob>
+  <spob>Margarita I</spob>
+  <spob>Margarita II</spob>
+  <spob>Margarita IV</spob>
+ </spobs>
  <jumps>
   <jump target="Porro">
    <autopos/>

@@ -12,13 +12,13 @@
   <x>-193.696759</x>
   <y>-1129.907407</y>
  </pos>
- <assets>
-  <asset>Kretogg I</asset>
-  <asset>Kretogg II</asset>
-  <asset>Kretogg III</asset>
-  <asset>Vorca</asset>
-  <asset>Warden's End</asset>
- </assets>
+ <spobs>
+  <spob>Kretogg I</spob>
+  <spob>Kretogg II</spob>
+  <spob>Kretogg III</spob>
+  <spob>Vorca</spob>
+  <spob>Warden's End</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-1098">
    <autopos/>

@@ -10,11 +10,11 @@
   <x>813.995077</x>
   <y>-976.282028</y>
  </pos>
- <assets>
-  <asset>Lapis I</asset>
-  <asset>Lapis II</asset>
-  <asset_virtual>Miner Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Lapis I</spob>
+  <spob>Lapis II</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Anarbalis">
    <autopos/>

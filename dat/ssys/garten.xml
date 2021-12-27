@@ -10,12 +10,12 @@
   <x>-498.429017</x>
   <y>-1012.171964</y>
  </pos>
- <assets>
-  <asset>Garten IV</asset>
-  <asset>Garten X</asset>
-  <asset>Kanel</asset>
-  <asset>Trinel</asset>
- </assets>
+ <spobs>
+  <spob>Garten IV</spob>
+  <spob>Garten X</spob>
+  <spob>Kanel</spob>
+  <spob>Trinel</spob>
+ </spobs>
  <jumps>
   <jump target="Damien">
    <autopos/>

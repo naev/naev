@@ -10,16 +10,16 @@
   <x>202.250000</x>
   <y>59.222222</y>
  </pos>
- <assets>
-  <asset>Draconis Alpha</asset>
-  <asset>Draconis Beta</asset>
-  <asset>Draconis Delta</asset>
-  <asset>Draconis Epsilon</asset>
-  <asset>Draconis Gamma</asset>
-  <asset>Draconis Omega</asset>
-  <asset>Zabween</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Draconis Alpha</spob>
+  <spob>Draconis Beta</spob>
+  <spob>Draconis Delta</spob>
+  <spob>Draconis Epsilon</spob>
+  <spob>Draconis Gamma</spob>
+  <spob>Draconis Omega</spob>
+  <spob>Zabween</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Eridani">
    <autopos/>

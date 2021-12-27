@@ -10,12 +10,12 @@
   <x>-660.865335</x>
   <y>-1019.302738</y>
  </pos>
- <assets>
-  <asset>Amhurst</asset>
-  <asset>HZNSS-3</asset>
-  <asset>Vauban I-1</asset>
-  <asset_virtual>Miner Local</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Amhurst</spob>
+  <spob>HZNSS-3</spob>
+  <spob>Vauban I-1</spob>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Hideyoshi's Star">
    <autopos/>

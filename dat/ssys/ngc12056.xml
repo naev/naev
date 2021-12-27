@@ -10,10 +10,10 @@
   <x>-997.122362</x>
   <y>-1070.681044</y>
  </pos>
- <assets>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
-  <asset_virtual>Za'lek Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Za'lek Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-5631">
    <autopos/>

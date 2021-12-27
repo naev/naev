@@ -10,19 +10,19 @@
   <x>-582.606486</x>
   <y>-881.496039</y>
  </pos>
- <assets>
-  <asset>Atryssa</asset>
-  <asset>House Za'lek Central Station</asset>
-  <asset>Ocata</asset>
-  <asset>PRP-1</asset>
-  <asset>PRP-2</asset>
-  <asset>PRP-3</asset>
-  <asset>PRP-4</asset>
-  <asset>Tu'halar</asset>
-  <asset>Za'lek II</asset>
-  <asset>Za'lek IV</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Atryssa</spob>
+  <spob>House Za'lek Central Station</spob>
+  <spob>Ocata</spob>
+  <spob>PRP-1</spob>
+  <spob>PRP-2</spob>
+  <spob>PRP-3</spob>
+  <spob>PRP-4</spob>
+  <spob>Tu'halar</spob>
+  <spob>Za'lek II</spob>
+  <spob>Za'lek IV</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Damien">
    <autopos/>

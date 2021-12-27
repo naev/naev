@@ -48,7 +48,7 @@ function create()
    frame    = tex.open( base .. "minimal.png" )
    energy   = tex.open( base .. "minimal_energy.png" )
    fuel     = tex.open( base .. "minimal_fuel.png" )
-   gui.targetPlanetGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
    gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png", 2, 2 ) )
 
    -- OSD
