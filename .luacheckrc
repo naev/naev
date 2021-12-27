@@ -134,6 +134,14 @@ stds.API_spawn = {globals={
    "decrease",                          -- C function: system_rmCurrentPresence()
    "spawn",                             -- C function: system_scheduler()
 }}
+stds.API_spob = {globals={
+   "load",     -- C function: planet_gfxLoad
+   "unload",   -- C function: planet_gfxUnload
+   "can_land", -- C function: planet_updateLand
+   "land",     -- C function: player_land
+   "render",   -- C function: space_renderPlanet
+   "update",   -- C function: space_updatePlanet
+}}
 stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
@@ -192,6 +200,7 @@ files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
+files["dat/assets/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
