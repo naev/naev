@@ -21,7 +21,7 @@ for mo_path in "@build_root@"/po/*/; do
 done
 
 wrapper() {
-   if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null; then
+   if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null 2>&1; then
       exec gdb -x "@source_root@/.gdbinit" --args "$@"
    else
       exec "$@"
