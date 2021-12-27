@@ -188,7 +188,7 @@ int ovr_input( SDL_Event *event )
 /**
  * @brief Refreshes the map overlay recalculating the dimensions it should have.
  *
- * This should be called if the planets or the likes change at any given time.
+ * This should be called if the spobs or the likes change at any given time.
  */
 void ovr_refresh (void)
 {
@@ -332,7 +332,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       for (int k=0; k<4; k++) {
          double val = 0.;
 
-         /* Test intersection with the planet indicators. */
+         /* Test intersection with the spob indicators. */
          for (int j=0; j<items; j++) {
             fx = fy = 0.;
             mw = 2.*mo[j]->radius;
@@ -492,7 +492,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       float mx, my, mw, mh;
       const float pb2 = ovr_text_pixbuf*2.;
 
-      /* Collisions with planet circles and jp triangles (odd indices). */
+      /* Collisions with spob circles and jp triangles (odd indices). */
       mw = 2.*mo[i]->radius;
       mh = mw;
       mx = pos[i]->x/ovr_res - mw/2.;
@@ -699,7 +699,7 @@ void ovr_render( double dt )
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 
-   /* Render planets. */
+   /* Render spobs. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *pnt = cur_system->spobs[i];
       if (pnt->map_alpha < 1.0)

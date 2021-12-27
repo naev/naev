@@ -4,7 +4,7 @@
 /**
  * @file comm.c
  *
- * @brief For communicating with planets/pilots.
+ * @brief For communicating with spobs/pilots.
  */
 
 /** @cond */
@@ -34,7 +34,7 @@
 #define GRAPHIC_WIDTH  256 /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-static Spob *comm_planet     = NULL; /**< Spob currently talking to. */
+static Spob *comm_spob     = NULL; /**< Spob currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
@@ -152,7 +152,7 @@ int comm_openPilot( unsigned int pilot )
    /* Close window if necessary. */
    if (comm_commClose) {
       p  = NULL;
-      comm_planet = NULL;
+      comm_spob = NULL;
       comm_commClose = 0;
       return 0;
    }
@@ -187,12 +187,12 @@ int comm_openPilot( unsigned int pilot )
 }
 
 /**
- * @brief Opens a communication dialogue with a planet.
+ * @brief Opens a communication dialogue with a spob.
  *
- *    @param planet Spob to communicate with.
+ *    @param spob Spob to communicate with.
  *    @return 0 on success.
  */
-int comm_openSpob( Spob *planet )
+int comm_openSpob( Spob *spob )
 {
    unsigned int wid;
 
@@ -204,19 +204,19 @@ int comm_openSpob( Spob *planet )
    }
 
    /* Must not be disabled. */
-   if (!spob_hasService(planet, SPOB_SERVICE_INHABITED)) {
-      player_message(_("%s does not respond."), spob_name(planet));
+   if (!spob_hasService(spob, SPOB_SERVICE_INHABITED)) {
+      player_message(_("%s does not respond."), spob_name(spob));
       return 0;
    }
 
-   comm_planet = planet;
+   comm_spob = spob;
 
    /* Create the generic comm window. */
-   wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
-         comm_planet->presence.faction, 0, planet->bribed, spob_name(comm_planet) );
+   wid = comm_open( gl_dupTexture( comm_spob->gfx_space ),
+         comm_spob->presence.faction, 0, spob->bribed, spob_name(comm_spob) );
 
    /* Add special buttons. */
-   if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
+   if (!spob->can_land && !spob->bribed && (spob->bribe_msg != NULL))
       window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", _("Bribe"), comm_bribeSpob, SDLK_b );
 
@@ -352,13 +352,13 @@ static void comm_close( unsigned int wid, const char *unused )
 {
    gl_freeTexture(comm_graphic);
    comm_graphic = NULL;
-   comm_planet = NULL;
+   comm_spob = NULL;
    /* Close the window. */
    window_close( wid, unused );
 }
 
 /**
- * @brief Tries to bribe the planet
+ * @brief Tries to bribe the spob
  *
  *    @param wid ID of window calling the function.
  *    @param unused Unused.
@@ -370,16 +370,16 @@ static void comm_bribeSpob( unsigned int wid, const char *unused )
    credits_t price;
 
    /* Get price. */
-   price = comm_planet->bribe_price;
+   price = comm_spob->bribe_price;
 
    /* No bribing. */
-   if (comm_planet->bribe_price <= 0.) {
-      dialogue_msgRaw( _("Bribe Starport"), comm_planet->bribe_msg );
+   if (comm_spob->bribe_price <= 0.) {
+      dialogue_msgRaw( _("Bribe Starport"), comm_spob->bribe_msg );
       return;
    }
 
    /* Yes/No input. */
-   answer = dialogue_YesNoRaw( _("Bribe Starport"), comm_planet->bribe_msg );
+   answer = dialogue_YesNoRaw( _("Bribe Starport"), comm_spob->bribe_msg );
 
    /* Said no. */
    if (answer == 0) {
@@ -398,11 +398,11 @@ static void comm_bribeSpob( unsigned int wid, const char *unused )
    dialogue_msg(_("Bribe Starport"), _("You have permission to dock."));
 
    /* Mark as bribed and don't allow bribing again. */
-   comm_planet->bribed = 1;
+   comm_spob->bribed = 1;
 
    /* Reopen window. */
    window_destroy( wid );
-   comm_openSpob( comm_planet );
+   comm_openSpob( comm_spob );
 }
 
 /**

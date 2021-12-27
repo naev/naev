@@ -424,14 +424,14 @@ static void shipyard_buy( unsigned int wid, const char* str )
 /**
  * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
- *    @param planet Where the player is shopping.
+ *    @param spob Where the player is shopping.
  */
-int shipyard_canBuy( const char *shipname, const Spob *planet )
+int shipyard_canBuy( const char *shipname, const Spob *spob )
 {
    const Ship *ship = ship_get( shipname );
    int failure = 0;
    credits_t price = ship_buyPrice(ship);
-   int blackmarket = ((planet != NULL) && spob_hasService(planet, SPOB_SERVICE_BLACKMARKET));
+   int blackmarket = ((spob != NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Must have the necessary license. */
    if (!blackmarket && !player_hasLicense(ship->license)) {
