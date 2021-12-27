@@ -318,7 +318,7 @@ static int commodityL_priceAt( lua_State *L )
    char *sysname;
 
    c = luaL_validcommodity(L,1);
-   p = luaL_validplanet(L,2);
+   p = luaL_validspob(L,2);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {
       NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), p->name );
@@ -353,7 +353,7 @@ static int commodityL_priceAtTime( lua_State *L )
    char *sysname;
    ntime_t t;
    c = luaL_validcommodity(L,1);
-   p = luaL_validplanet(L,2);
+   p = luaL_validspob(L,2);
    t = luaL_validtime(L, 3);
    sysname = planet_getSystem( p->name );
    if (sysname == NULL) {

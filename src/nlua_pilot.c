@@ -495,7 +495,7 @@ static int pilotL_choosePoint( lua_State *L )
    pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, guerilla );
 
    if (planet != NULL)
-      lua_pushplanet(L, planet->id );
+      lua_pushspob(L, planet->id );
    else if (jump != NULL)
       lua_pushsystem(L, jump->from->id);
    else
@@ -574,8 +574,8 @@ static int pilotL_add( lua_State *L )
       ss = system_getIndex( lua_tosystem(L,3) );
    else if (lua_isjump(L,3))
       ss = system_getIndex( lua_tojump(L,3)->destid );
-   else if (lua_isplanet(L,3)) {
-      planet  = luaL_validplanet(L,3);
+   else if (lua_isspob(L,3)) {
+      planet  = luaL_validspob(L,3);
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
       r = RNGF() * planet->radius;
@@ -688,7 +688,7 @@ static int pilotL_add( lua_State *L )
    else if (planet != NULL) {
       if (pplt->ai != NULL) {
          nlua_getenv( pplt->ai->env, AI_MEM );
-         lua_pushplanet(L,planet->id);
+         lua_pushspob(L,planet->id);
          lua_setfield(L,-2,"create_planet");
          lua_pop(L,1);
       }
@@ -1282,7 +1282,7 @@ static int pilotL_nav( lua_State *L )
    if (p->nav_planet < 0)
       lua_pushnil(L);
    else
-      lua_pushplanet( L, cur_system->planets[ p->nav_planet ]->id );
+      lua_pushspob( L, cur_system->planets[ p->nav_planet ]->id );
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
@@ -4552,13 +4552,13 @@ static int pilotL_runaway( lua_State *L )
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
-      else if (lua_isplanet(L,3)) {
-         LuaSpob lp = lua_toplanet(L,3);
+      else if (lua_isspob(L,3)) {
+         LuaSpob lp = lua_tospob(L,3);
          Task *t = pilotL_newtask( L, p, "runaway_land" );
          lua_newtable(L);
          lua_pushpilot(L, pt->id);
          lua_rawseti( L, -2, 1 );
-         lua_pushplanet(L, lp);
+         lua_pushspob(L, lp);
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
@@ -4716,7 +4716,7 @@ static int pilotL_land( lua_State *L )
    if (lua_isnoneornil(L,2))
       pnt = NULL;
    else
-      pnt = luaL_validplanet( L, 2 );
+      pnt = luaL_validspob( L, 2 );
    shoot = lua_toboolean(L,3);
 
    /* Set the task. */
@@ -4742,7 +4742,7 @@ static int pilotL_land( lua_State *L )
       if (p->id == PLAYER_ID)
          gui_setNav();
 
-      lua_pushplanet(L, pnt->id);
+      lua_pushspob(L, pnt->id);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 

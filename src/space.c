@@ -2048,7 +2048,7 @@ void planet_updateLand( Spob *p )
    else
       str = p->land_func;
    nlua_getenv( landing_env, str );
-   lua_pushplanet( naevL, planet_index(p) );
+   lua_pushspob( naevL, planet_index(p) );
    if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
       WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
@@ -2133,7 +2133,7 @@ void planet_gfxLoad( Spob *planet )
 
       if (planet->lua_load) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, planet->lua_load); /* f */
-         lua_pushplanet(naevL, planet_index(planet)); /* f, p */
+         lua_pushspob(naevL, planet_index(planet)); /* f, p */
          if (nlua_pcall( planet->lua_env, 1, 1 )) {
             WARN(_("Spob '%s' failed to run '%s':\n%s"), planet->name, "load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);

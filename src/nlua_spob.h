@@ -14,15 +14,15 @@
 typedef int LuaSpob;
 
 /*
- * Load the planet library.
+ * Load the Space Object (Spob) library.
  */
 int nlua_loadSpob( nlua_env env );
 
 /*
  * Spob operations.
  */
-LuaSpob lua_toplanet( lua_State *L, int ind );
-LuaSpob luaL_checkplanet( lua_State *L, int ind );
-LuaSpob* lua_pushplanet( lua_State *L, LuaSpob planet );
-Spob* luaL_validplanet( lua_State *L, int ind );
-int lua_isplanet( lua_State *L, int ind );
+LuaSpob lua_tospob( lua_State *L, int ind );
+LuaSpob luaL_checkspob( lua_State *L, int ind );
+LuaSpob* lua_pushspob( lua_State *L, LuaSpob spob );
+Spob* luaL_validspob( lua_State *L, int ind );
+int lua_isspob( lua_State *L, int ind );

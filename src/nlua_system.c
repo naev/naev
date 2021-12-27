@@ -257,8 +257,8 @@ static int systemL_get( lua_State *L )
       ss = system_get( lua_tostring(L,1) );
    }
    /* Passing a planet */
-   else if (lua_isplanet(L,1)) {
-      pnt = luaL_validplanet(L,1);
+   else if (lua_isspob(L,1)) {
+      pnt = luaL_validspob(L,1);
       ss = system_get( planet_getSystem( pnt->name ) );
    }
    else NLUA_INVALID_PARAMETER(L);
@@ -853,7 +853,7 @@ static int systemL_planets( lua_State *L )
    /* Push all planets. */
    lua_newtable(L);
    for (int i=0; i<array_size(s->planets); i++) {
-      lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
+      lua_pushspob(L,planet_index( s->planets[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
    return 1;

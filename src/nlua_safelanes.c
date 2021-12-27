@@ -114,7 +114,7 @@ static int safelanesL_get( lua_State *L )
          switch (lanes[i].point_type[j]) {
             case SAFELANE_LOC_SPOB:
                pnt = planet_getIndex( lanes[i].point_id[j] );
-               //lua_pushplanet( L, lanes[i].point_id[j] );
+               //lua_pushspob( L, lanes[i].point_id[j] );
 #ifdef DEBUGGING
                if (pnt==NULL)
                   NLUA_ERROR(L, _("Spob is invalid"));

@@ -2153,7 +2153,7 @@ static int aiL_getnearestplanet( lua_State *L )
 
    cur_pilot->nav_planet = j;
    planet = cur_system->planets[j]->id;
-   lua_pushplanet(L, planet);
+   lua_pushspob(L, planet);
 
    return 1;
 }
@@ -2191,7 +2191,7 @@ static int aiL_getplanetfrompos( lua_State *L )
 
    cur_pilot->nav_planet = j;
    planet = cur_system->planets[j]->id;
-   lua_pushplanet(L, planet);
+   lua_pushspob(L, planet);
 
    return 1;
 }
@@ -2216,7 +2216,7 @@ static int aiL_getrndplanet( lua_State *L )
 
    /* Copy the data into a vector */
    planet = cur_system->planets[p]->id;
-   lua_pushplanet(L, planet);
+   lua_pushspob(L, planet);
 
    return 1;
 }
@@ -2275,7 +2275,7 @@ static int aiL_getlandplanet( lua_State *L )
    id = RNG(0,array_size(ind)-1);
    p = cur_system->planets[ ind[ id ] ];
    planet = p->id;
-   lua_pushplanet( L, planet );
+   lua_pushspob( L, planet );
    cur_pilot->nav_planet = ind[ id ];
    array_free(ind);
 
@@ -2296,7 +2296,7 @@ static int aiL_land( lua_State *L )
 
    if (!lua_isnoneornil(L,1)) {
       int i;
-      Spob *pnt = luaL_validplanet( L, 1 );
+      Spob *pnt = luaL_validspob( L, 1 );
 
       /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {

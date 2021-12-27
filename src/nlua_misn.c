@@ -356,9 +356,9 @@ static int misn_markerAdd( lua_State *L )
    Mission *cur_mission;
 
    /* Check parameters. */
-   if (lua_isplanet(L,1)) {
+   if (lua_isspob(L,1)) {
       issys = 0;
-      objid = luaL_checkplanet(L,1);
+      objid = luaL_checkspob(L,1);
    }
    else {
       issys = 1;
@@ -414,9 +414,9 @@ static int misn_markerMove( lua_State *L )
 
    /* Handle parameters. */
    id    = luaL_checkinteger( L, 1 );
-   if (lua_isplanet(L,2)) {
+   if (lua_isspob(L,2)) {
       issys = 0;
-      objid = luaL_checkplanet(L,2);
+      objid = luaL_checkspob(L,2);
    }
    else {
       issys = 1;

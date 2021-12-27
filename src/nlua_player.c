@@ -765,7 +765,7 @@ static int playerL_land( lua_State *L )
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
-   Spob *pnt = luaL_validplanet(L,1);
+   Spob *pnt = luaL_validspob(L,1);
    const char *sysname = planet_getSystem( pnt->name );
    if (sysname == NULL)
       NLUA_ERROR(L,_("Spob '%s' is not in a system!"), pnt->name);
@@ -1473,8 +1473,8 @@ static int playerL_teleport( lua_State *L )
       name  = system_getIndex(sys->id)->name;
    }
    /* Get a planet. */
-   else if (lua_isplanet(L,1)) {
-      pnt   = luaL_validplanet(L,1);
+   else if (lua_isspob(L,1)) {
+      pnt   = luaL_validspob(L,1);
       name  = planet_getSystem( pnt->name );
       if (name == NULL) {
          NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );

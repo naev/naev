@@ -135,7 +135,7 @@ int nlua_loadSpob( nlua_env env )
  *    @param ind Index position to find the planet.
  *    @return Spob found at the index in the state.
  */
-LuaSpob lua_toplanet( lua_State *L, int ind )
+LuaSpob lua_tospob( lua_State *L, int ind )
 {
    return *((LuaSpob*) lua_touserdata(L,ind));
 }
@@ -146,10 +146,10 @@ LuaSpob lua_toplanet( lua_State *L, int ind )
  *    @param ind Index position to find the planet.
  *    @return Spob found at the index in the state.
  */
-LuaSpob luaL_checkplanet( lua_State *L, int ind )
+LuaSpob luaL_checkspob( lua_State *L, int ind )
 {
-   if (lua_isplanet(L,ind))
-      return lua_toplanet(L,ind);
+   if (lua_isspob(L,ind))
+      return lua_tospob(L,ind);
    luaL_typerror(L, ind, SPOB_METATABLE);
    return 0;
 }
@@ -160,13 +160,13 @@ LuaSpob luaL_checkplanet( lua_State *L, int ind )
  *    @param ind Index position to find the planet.
  *    @return Spob found at the index in the state.
  */
-Spob* luaL_validplanet( lua_State *L, int ind )
+Spob* luaL_validspob( lua_State *L, int ind )
 {
    LuaSpob lp;
    Spob *p;
 
-   if (lua_isplanet(L, ind)) {
-      lp = luaL_checkplanet(L, ind);
+   if (lua_isspob(L, ind)) {
+      lp = luaL_checkspob(L, ind);
       p  = planet_getIndex(lp);
    }
    else if (lua_isstring(L, ind))
@@ -188,7 +188,7 @@ Spob* luaL_validplanet( lua_State *L, int ind )
  *    @param planet Spob to push.
  *    @return Newly pushed planet.
  */
-LuaSpob* lua_pushplanet( lua_State *L, LuaSpob planet )
+LuaSpob* lua_pushspob( lua_State *L, LuaSpob planet )
 {
    LuaSpob *p;
    p = (LuaSpob*) lua_newuserdata(L, sizeof(LuaSpob));
@@ -204,7 +204,7 @@ LuaSpob* lua_pushplanet( lua_State *L, LuaSpob planet )
  *    @param ind Index position to check.
  *    @return 1 if ind is a planet.
  */
-int lua_isplanet( lua_State *L, int ind )
+int lua_isspob( lua_State *L, int ind )
 {
    int ret;
 
@@ -236,7 +236,7 @@ static int planetL_cur( lua_State *L )
       NLUA_ERROR(L,_("Attempting to get landed planet when player not landed."));
       return 0; /* Not landed. */
    }
-   lua_pushplanet(L,planet_index(land_planet));
+   lua_pushspob(L,planet_index(land_planet));
    sys = system_index( system_get( planet_getSystem(land_planet->name) ) );
    lua_pushsystem(L,sys);
    return 2;
@@ -302,8 +302,8 @@ static int planetL_getBackend( lua_State *L, int system, int landable )
    }
 
    /* Just get a planet. */
-   else if (lua_isplanet(L,1)) {
-      pnt = luaL_validplanet( L, 1 );
+   else if (lua_isspob(L,1)) {
+      pnt = luaL_validspob( L, 1 );
       if (landable) {
          /* Check if can land. */
          planet_updateLand( pnt );
@@ -348,7 +348,7 @@ static int planetL_getBackend( lua_State *L, int system, int landable )
       NLUA_ERROR(L, _("Spob '%s' not found in stack"), rndplanet);
       return 0;
    }
-   lua_pushplanet(L,planet_index( pnt ));
+   lua_pushspob(L,planet_index( pnt ));
    if (system) {
       LuaSystem sys;
       const char *sysname = planet_getSystem( rndplanet );
@@ -434,7 +434,7 @@ static int planetL_getAll( lua_State *L )
    Spob *p = planet_getAll();
    lua_newtable(L);
    for (int i=0; i<array_size(p); i++) {
-      lua_pushplanet( L, planet_index( &p[i] ) );
+      lua_pushspob( L, planet_index( &p[i] ) );
       lua_rawseti( L, -2, i+1 );
    }
    return 1;
@@ -449,7 +449,7 @@ static int planetL_getAll( lua_State *L )
 static int planetL_system( lua_State *L )
 {
    LuaSystem sys;
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    const char *sysname = planet_getSystem( p->name );
    if (sysname == NULL)
       return 0;
@@ -471,8 +471,8 @@ static int planetL_system( lua_State *L )
 static int planetL_eq( lua_State *L )
 {
    LuaSpob a, b;
-   a = luaL_checkplanet(L,1);
-   b = luaL_checkplanet(L,2);
+   a = luaL_checkspob(L,1);
+   b = luaL_checkspob(L,2);
    lua_pushboolean(L,(a == b));
    return 1;
 }
@@ -494,7 +494,7 @@ static int planetL_eq( lua_State *L )
  */
 static int planetL_name( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, planet_name(p));
    return 1;
 }
@@ -513,7 +513,7 @@ static int planetL_name( lua_State *L )
  */
 static int planetL_nameRaw( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, p->name);
    return 1;
 }
@@ -528,7 +528,7 @@ static int planetL_nameRaw( lua_State *L )
  */
 static int planetL_radius( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    /* Ensure graphics measurements are available. */
    if (p->radius < 0.)
       planet_gfxLoad(p);
@@ -546,7 +546,7 @@ static int planetL_radius( lua_State *L )
  */
 static int planetL_faction( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    if (p->presence.faction < 0)
       return 0;
    lua_pushfaction(L, p->presence.faction);
@@ -564,7 +564,7 @@ static int planetL_faction( lua_State *L )
  */
 static int planetL_colour( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    const glColour *col = planet_getColour( p );
    lua_pushcolour( L, *col );
    return 1;
@@ -583,7 +583,7 @@ static int planetL_colour( lua_State *L )
  */
 static int planetL_class(lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushstring(L,p->class);
    return 1;
 }
@@ -598,7 +598,7 @@ static int planetL_class(lua_State *L )
  */
 static int planetL_classLong(lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, planet_getClassName(p->class));
    return 1;
 }
@@ -625,7 +625,7 @@ static int planetL_classLong(lua_State *L )
  */
 static int planetL_services( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    /* Return result in table */
    lua_newtable(L);
    /* allows syntax like foo = planet.get("foo"); if foo["bar"] then ... end */
@@ -657,7 +657,7 @@ static int planetL_services( lua_State *L )
  */
 static int planetL_flags( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_newtable(L);
    if (planet_isFlag( p, SPOB_NOMISNSPAWN )) {
       lua_pushstring(L, "nomissionspawn");
@@ -678,7 +678,7 @@ static int planetL_flags( lua_State *L )
  */
 static int planetL_canland( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    planet_updateLand( p );
    lua_pushboolean( L, p->can_land );
    lua_pushboolean( L, p->bribe_price > 0 );
@@ -696,7 +696,7 @@ static int planetL_canland( lua_State *L )
 static int planetL_landOverride( lua_State *L )
 {
    NLUA_CHECKRW(L);
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    int old = p->land_override;
 
    p->land_override = !!lua_toboolean(L,2);
@@ -718,7 +718,7 @@ static int planetL_landOverride( lua_State *L )
  */
 static int planetL_getLandOverride( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, p->land_override);
    return 1;
 }
@@ -733,7 +733,7 @@ static int planetL_getLandOverride( lua_State *L )
  */
 static int planetL_position( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushvector(L, p->pos);
    return 1;
 }
@@ -750,7 +750,7 @@ static int planetL_gfxSpace( lua_State *L )
 {
    Spob *p;
    glTexture *tex;
-   p        = luaL_validplanet(L,1);
+   p        = luaL_validspob(L,1);
    if (p->gfx_space == NULL) { /* Not loaded. */
       /* If the planet has no texture, just return nothing. */
       if (p->gfx_spaceName == NULL)
@@ -773,7 +773,7 @@ static int planetL_gfxSpace( lua_State *L )
  */
 static int planetL_gfxExterior( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
 
    /* If no exterior image just return nothing instead of crashing. */
    if (p->gfx_exterior==NULL)
@@ -792,7 +792,7 @@ static int planetL_gfxExterior( lua_State *L )
  */
 static int planetL_shipsSold( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    Ship **s = tech_getShip( p->tech );
 
    /* Push results in a table. */
@@ -815,7 +815,7 @@ static int planetL_shipsSold( lua_State *L )
  */
 static int planetL_outfitsSold( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    Outfit **o = tech_getOutfit( p->tech );
 
    /* Push results in a table. */
@@ -842,7 +842,7 @@ static int planetL_commoditiesSold( lua_State *L )
    int i;
 
    /* Get result and tech. */
-   p = luaL_validplanet(L,1);
+   p = luaL_validspob(L,1);
 
    /* Push results in a table. */
    lua_newtable(L);
@@ -865,7 +865,7 @@ static int planetL_commoditiesSold( lua_State *L )
  */
 static int planetL_isBlackMarket( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, planet_hasService(p, SPOB_SERVICE_BLACKMARKET));
    return 1;
 }
@@ -881,7 +881,7 @@ static int planetL_isBlackMarket( lua_State *L )
  */
 static int planetL_isRestricted( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, p->land_func != NULL);
    return 1;
 }
@@ -897,7 +897,7 @@ static int planetL_isRestricted( lua_State *L )
  */
 static int planetL_isKnown( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, planet_isKnown(p));
    return 1;
 }
@@ -917,7 +917,7 @@ static int planetL_setKnown( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   p = luaL_validplanet(L,1);
+   p = luaL_validspob(L,1);
    b = lua_toboolean(L, 2);
 
    changed = (b != (int)planet_isKnown(p));
@@ -945,7 +945,7 @@ static int planetL_setKnown( lua_State *L )
 static int planetL_recordCommodityPriceAtTime( lua_State *L )
 {
    NLUA_CHECKRW(L);
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    ntime_t t = luaL_validtime(L, 2);
    planet_averageSeenPricesAtTime( p, t );
    return 0;
@@ -962,7 +962,7 @@ static int planetL_recordCommodityPriceAtTime( lua_State *L )
  */
 static int planetL_tags( lua_State *L )
 {
-   Spob *p = luaL_validplanet(L,1);
+   Spob *p = luaL_validspob(L,1);
    lua_newtable(L);
    for (int i=0; i<array_size(p->tags); i++) {
       lua_pushstring(L,p->tags[i]);
