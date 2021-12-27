@@ -3617,12 +3617,16 @@ static int systems_load (void)
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
-      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-      DEBUG( n_( "       with %d Spob in %.3f s", "       with %d Spobs in %.3f s", array_size(spob_stack) ), array_size(spob_stack), time/1000. );
+      DEBUG( n_( "Loaded %d Star System",
+                 "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Space Object in %.3f s",
+                 "       with %d Space Objects in %.3f s", array_size(spob_stack) ), array_size(spob_stack), time/1000. );
    }
    else {
-      DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
-      DEBUG( n_( "       with %d Spob", "       with %d Spobs", array_size(spob_stack) ), array_size(spob_stack) );
+      DEBUG( n_( "Loaded %d Star System",
+                 "Loaded %d Star Systems", array_size(systems_stack) ), array_size(systems_stack) );
+      DEBUG( n_( "       with %d Space Object",
+                 "       with %d Space Objects", array_size(spob_stack) ), array_size(spob_stack) );
    }
 
    return 0;
