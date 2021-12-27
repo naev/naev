@@ -142,7 +142,7 @@ static int load_load( nsave_t *save, const char *path )
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node, "location", save->planet);
+            xmlr_strd(node, "location", save->spob);
             xmlr_ulong(node, "credits", save->credits);
             xmlr_strd(node, "chapter", save->chapter);
 
@@ -306,7 +306,7 @@ void load_free (void)
       free(ns->name);
       free(ns->version);
       free(ns->data);
-      free(ns->planet);
+      free(ns->spob);
       free(ns->chapter);
       free(ns->shipname);
       free(ns->shipmodel);
@@ -426,7 +426,7 @@ static void load_menu_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );

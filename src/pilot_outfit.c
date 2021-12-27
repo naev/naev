@@ -1712,7 +1712,7 @@ static void outfitLOnland( const Pilot *pilot, PilotOutfitSlot *po, const void *
    }
 }
 /**
- * @brief Runs Lua outfits when pilot lands on a planet.
+ * @brief Runs Lua outfits when pilot lands on a spob.
  *
  *    @param pilot Pilot being handled.
  */
@@ -1743,7 +1743,7 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po, const voi
    }
 }
 /**
- * @brief Runs Lua outfits when pilot takes off from a planet.
+ * @brief Runs Lua outfits when pilot takes off from a spob.
  *
  *    @param pilot Pilot being handled.
  */

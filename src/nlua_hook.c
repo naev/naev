@@ -471,7 +471,7 @@ static int hookL_enter( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to the player hailing any ship (not a planet).
+ * @brief Hooks the function to the player hailing any ship (not a spob).
  *
  * The hook receives a single parameter which is the ship being hailed.
  *
@@ -1017,7 +1017,7 @@ static int hookL_trigger( lua_State *L )
  * The land and jump hooks also pass the asset or jump point the pilot is
  * landing at or jumped from, respectively:
  * <p>
- *    function land_hook( pilot, planet, arg )<br />
+ *    function land_hook( pilot, spob, arg )<br />
  *    end
  * </p>
  * <p style="margin-bottom: 0">
