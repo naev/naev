@@ -120,10 +120,10 @@ static int menu_main_bkg_system (void)
       load_gameDiff( ns[0].path );
 
       /* Get start position. */
-      if (spob_exists( ns[0].planet )) {
-         Spob *pnt = spob_get( ns[0].planet );
+      if (spob_exists( ns[0].spob )) {
+         Spob *pnt = spob_get( ns[0].spob );
          if (pnt != NULL) {
-            sys = spob_getSystem( ns[0].planet );
+            sys = spob_getSystem( ns[0].spob );
             if (sys != NULL) {
                cx = pnt->pos.x;
                cy = pnt->pos.y;

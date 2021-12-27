@@ -178,10 +178,10 @@ static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
-static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
-static int aiL_getplanetfrompos( lua_State *L ); /* Vec2 getplanetfrompos() */
-static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
-static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
+static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
+static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
+static int aiL_getrndspob( lua_State *L ); /* Vec2 getrndspob() */
+static int aiL_getlandspob( lua_State *L ); /* Vec2 getlandspob() */
 static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
@@ -269,10 +269,10 @@ static const luaL_Reg aiL_methods[] = {
    { "getgatherable", aiL_getGatherable },
    { "instantJump", aiL_instantJump },
    /* movement */
-   { "nearestplanet", aiL_getnearestplanet },
-   { "planetfrompos", aiL_getplanetfrompos },
-   { "rndplanet", aiL_getrndplanet },
-   { "landplanet", aiL_getlandplanet },
+   { "nearestspob", aiL_getnearestspob },
+   { "spobfrompos", aiL_getspobfrompos },
+   { "rndspob", aiL_getrndspob },
+   { "landspob", aiL_getlandspob },
    { "land", aiL_land },
    { "accel", aiL_accel },
    { "turn", aiL_turn },
@@ -2125,114 +2125,114 @@ static int aiL_brake( lua_State *L )
 }
 
 /**
- * @brief Get the nearest friendly planet to the pilot.
+ * @brief Get the nearest friendly spob to the pilot.
  *
  *    @luatreturn Spob|nil
- *    @luafunc nearestplanet
+ *    @luafunc nearestspob
  */
-static int aiL_getnearestplanet( lua_State *L )
+static int aiL_getnearestspob( lua_State *L )
 {
    double dist, d;
    int i, j;
-   LuaSpob planet;
+   LuaSpob spob;
 
-   /* cycle through planets */
+   /* cycle through spobs */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
       if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid->pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
-            (d < dist)) { /* closer friendly planet */
+            (d < dist)) { /* closer friendly spob */
          j = i;
          dist = d;
       }
    }
 
-   /* no friendly planet found */
+   /* no friendly spob found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
-   planet = cur_system->spobs[j]->id;
-   lua_pushspob(L, planet);
+   cur_pilot->nav_spob = j;
+   spob = cur_system->spobs[j]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get the nearest friendly planet to a given position.
+ * @brief Get the nearest friendly spob to a given position.
  *
- *    @luatparam vec2 pos Position close to the planet.
+ *    @luatparam vec2 pos Position close to the spob.
  *    @luatreturn Spob|nil
- *    @luafunc planetfrompos
+ *    @luafunc spobfrompos
  */
-static int aiL_getplanetfrompos( lua_State *L )
+static int aiL_getspobfrompos( lua_State *L )
 {
    Vector2d *pos;
    double dist, d;
    int i, j;
-   LuaSpob planet;
+   LuaSpob spob;
 
    pos = luaL_checkvector(L,1);
 
-   /* cycle through planets */
+   /* cycle through spobs */
    for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
       if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->spobs[i]->pos, pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
-            (d < dist)) { /* closer friendly planet */
+            (d < dist)) { /* closer friendly spob */
          j = i;
          dist = d;
       }
    }
 
-   /* no friendly planet found */
+   /* no friendly spob found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
-   planet = cur_system->spobs[j]->id;
-   lua_pushspob(L, planet);
+   cur_pilot->nav_spob = j;
+   spob = cur_system->spobs[j]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get a random planet.
+ * @brief Get a random spob.
  *
  *    @luatreturn Spob|nil
- *    @luafunc rndplanet
+ *    @luafunc rndspob
  */
-static int aiL_getrndplanet( lua_State *L )
+static int aiL_getrndspob( lua_State *L )
 {
-   LuaSpob planet;
+   LuaSpob spob;
    int p;
 
-   /* No planets. */
+   /* No spobs. */
    if (array_size(cur_system->spobs) == 0)
       return 0;
 
-   /* get a random planet */
+   /* get a random spob */
    p = RNG(0, array_size(cur_system->spobs)-1);
 
    /* Copy the data into a vector */
-   planet = cur_system->spobs[p]->id;
-   lua_pushspob(L, planet);
+   spob = cur_system->spobs[p]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get a random friendly planet.
+ * @brief Get a random friendly spob.
  *
- *    @luatparam[opt=false] boolean only_friend Only check for ally planets.
+ *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
  *    @luatreturn Spob|nil
- * @luafunc landplanet
+ * @luafunc landspob
  */
-static int aiL_getlandplanet( lua_State *L )
+static int aiL_getlandspob( lua_State *L )
 {
    int *ind;
    int id;
-   LuaSpob planet;
+   LuaSpob spob;
    Spob *p;
    int only_friend;
 
@@ -2246,7 +2246,7 @@ static int aiL_getlandplanet( lua_State *L )
    /* Allocate memory. */
    ind = array_create_size( int, array_size(cur_system->spobs) );
 
-   /* Copy friendly planet.s */
+   /* Copy friendly spob.s */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *pnt = cur_system->spobs[i];
 
@@ -2265,40 +2265,40 @@ static int aiL_getlandplanet( lua_State *L )
       array_push_back( &ind, i );
    }
 
-   /* no planet to land on found */
+   /* no spob to land on found */
    if (array_size(ind)==0) {
       array_free(ind);
       return 0;
    }
 
-   /* we can actually get a random planet now */
+   /* we can actually get a random spob now */
    id = RNG(0,array_size(ind)-1);
    p = cur_system->spobs[ ind[ id ] ];
-   planet = p->id;
-   lua_pushspob( L, planet );
-   cur_pilot->nav_planet = ind[ id ];
+   spob = p->id;
+   lua_pushspob( L, spob );
+   cur_pilot->nav_spob = ind[ id ];
    array_free(ind);
 
    return 1;
 }
 
 /**
- * @brief Lands on a planet.
+ * @brief Lands on a spob.
  *
- *    @luatparam[opt] Spob pnt planet to land on
+ *    @luatparam[opt] Spob pnt spob to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
-   Spob *planet;
+   Spob *spob;
    HookParam hparam;
 
    if (!lua_isnoneornil(L,1)) {
       int i;
       Spob *pnt = luaL_validspob( L, 1 );
 
-      /* Find the planet. */
+      /* Find the spob. */
       for (i=0; i < array_size(cur_system->spobs); i++) {
          if (cur_system->spobs[i] == pnt) {
             break;
@@ -2309,21 +2309,21 @@ static int aiL_land( lua_State *L )
          return 0;
       }
 
-      cur_pilot->nav_planet = i;
+      cur_pilot->nav_spob = i;
    }
 
-   if (cur_pilot->nav_planet < 0) {
+   if (cur_pilot->nav_spob < 0) {
       NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
       return 0;
    }
 
-   /* Get planet. */
-   planet = cur_system->spobs[ cur_pilot->nav_planet ];
+   /* Get spob. */
+   spob = cur_system->spobs[ cur_pilot->nav_spob ];
 
    /* Check landability. */
-   if (!spob_hasService(planet,SPOB_SERVICE_LAND) ||
+   if (!spob_hasService(spob,SPOB_SERVICE_LAND) ||
          (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-            !spob_hasService(planet,SPOB_SERVICE_INHABITED))) {
+            !spob_hasService(spob,SPOB_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2335,7 +2335,7 @@ static int aiL_land( lua_State *L )
    }
 
    /* Check distance. */
-   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius)) {
+   if (vect_dist2(&cur_pilot->solid->pos,&spob->pos) > pow2(spob->radius)) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2352,7 +2352,7 @@ static int aiL_land( lua_State *L )
    pilot_setFlag( cur_pilot, PILOT_LANDING );
 
    hparam.type    = HOOK_PARAM_SPOB;
-   hparam.u.la    = planet->id;
+   hparam.u.la    = spob->id;
 
    pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    lua_pushboolean(L,1);

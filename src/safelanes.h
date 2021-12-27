@@ -14,8 +14,8 @@
  * @brief Defines the type of object at a safe lane's end.
  */
 typedef enum SafeLaneLocType_ {
-   SAFELANE_LOC_SPOB,         /**< ID refers to a planet. */
-   SAFELANE_LOC_DEST_SYS,       /**< ID refers to a jump point in the source system, and is of the target system. */
+   SAFELANE_LOC_SPOB,      /**< ID refers to a spob. */
+   SAFELANE_LOC_DEST_SYS,  /**< ID refers to a jump point in the source system, and is of the target system. */
 } SafeLaneLocType;
 
 /**

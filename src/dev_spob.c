@@ -4,7 +4,7 @@
 /**
  * @file dev_spob.c
  *
- * @brief Handles the planet stuff.
+ * @brief Handles the spob stuff.
  */
 /** @cond */
 #include <stdlib.h>
@@ -22,7 +22,7 @@
 #include "physics.h"
 
 /**
- * @brief Saves a planet.
+ * @brief Saves a spob.
  *
  *    @param p Spob to save.
  *    @return 0 on success.
@@ -159,7 +159,7 @@ int dpl_saveSpob( const Spob *p )
 }
 
 /**
- * @brief Saves all the star planets.
+ * @brief Saves all the star spobs.
  *
  *    @return 0 on success.
  */
@@ -167,7 +167,7 @@ int dpl_saveAll (void)
 {
    const Spob *p = spob_getAll();
 
-   /* Write planets. */
+   /* Write spobs. */
    for (int i=0; i<array_size(p); i++)
       dpl_saveSpob( &p[i] );
 

@@ -37,13 +37,13 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
-static int cur_spob_sel = 0; /**< Current planet selected by user (0 = star). */
-static Spob *cur_planetObj_sel = NULL;
+static int cur_spob_sel = 0; /**< Current spob selected by user (0 = star). */
+static Spob *cur_spobObj_sel = NULL;
 static Outfit **cur_spob_sel_outfits = NULL;
 static Ship **cur_spob_sel_ships = NULL;
-static int pitch = 0; /**< pitch of planet images. */
-static int nameWidth = 0; /**< text width of planet name */
-static int nshow = 0; /**< number of planets shown. */
+static int pitch = 0; /**< pitch of spob images. */
+static int nameWidth = 0; /**< text width of spob name */
+static int nshow = 0; /**< number of spobs shown. */
 static char infobuf[STRMAX];
 static unsigned int starCnt = 1;
 glTexture **bgImages; /**< array (array.h) of nebula and star textures */
@@ -176,7 +176,7 @@ void map_system_open( int sys_selected )
       window_destroy( wid );
       return;
    }
-   cur_planetObj_sel = NULL;
+   cur_spobObj_sel = NULL;
    memset( infobuf,0,sizeof(infobuf) );
    pitch = 0;
    nameWidth = 0;
@@ -205,7 +205,7 @@ void map_system_open( int sys_selected )
                      "btnBuyCommodPrice", _("Buy commodity price info"), map_system_buyCommodPrice );
    window_disableButton( wid, "btnBuyCommodPrice");
 
-   /* Load the planet gfx if necessary */
+   /* Load the spob gfx if necessary */
    if ( cur_sys_sel != cur_system ) {
      space_gfxLoad( cur_sys_sel );
    }
@@ -376,7 +376,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth + (iw-newiw)/2, by, newiw, ih, &cWhite );
       }
    }
-   /* draw marker around currently selected planet */
+   /* draw marker around currently selected spob */
    ccol.r=0; ccol.g=0.6+0.4*sin( phase/150.*2*M_PI ); ccol.b=0; ccol.a=1;
    ih=15;
    iw=3;
@@ -495,8 +495,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
       }
    } else {
-     /* display planet info */
-     p = cur_planetObj_sel;
+     /* display spob info */
+     p = cur_spobObj_sel;
      if (p->presence.faction > 0 ) {/* show the faction */
         char factionBuf[64];
         logo = faction_logo( p->presence.faction );
@@ -605,7 +605,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       if (outfit->license == NULL)
          buf_license[0] = '\0';
       else if (player_hasLicense( outfit->license ) ||
-            (cur_planetObj_sel != NULL && spob_hasService( cur_planetObj_sel, SPOB_SERVICE_BLACKMARKET )))
+            (cur_spobObj_sel != NULL && spob_hasService( cur_spobObj_sel, SPOB_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
@@ -648,7 +648,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       if (ship->license == NULL)
          strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
       else if (player_hasLicense( ship->license )
-            || (cur_planetObj_sel != NULL && spob_hasService( cur_planetObj_sel, SPOB_SERVICE_BLACKMARKET )))
+            || (cur_spobObj_sel != NULL && spob_hasService( cur_spobObj_sel, SPOB_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
@@ -695,9 +695,9 @@ static void map_system_array_update( unsigned int wid, const char* str )
       char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
       char buf_buy_price[ECON_CRED_STRLEN];
       int owned;
-      com = cur_planetObj_sel->commodities[i];
+      com = cur_spobObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
-      economy_getAverageSpobPrice( com, cur_planetObj_sel, &mean, &std );
+      economy_getAverageSpobPrice( com, cur_spobObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       snprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
       credits2str( buf_globalmean, globalmean, -1 );
@@ -733,7 +733,7 @@ void map_system_updateSelected( unsigned int wid )
 {
    StarSystem *sys=cur_sys_sel;
    Spob *last=NULL;
-   int planetObjChanged = 0;
+   int spobObjChanged = 0;
    int w, h;
    Spob *p;
    int textw;
@@ -741,7 +741,7 @@ void map_system_updateSelected( unsigned int wid )
    Outfit **outfits;
    Ship **ships;
    float g,o,s;
-   nameWidth = 0; /* get the widest planet/star name */
+   nameWidth = 0; /* get the widest spob/star name */
    nshow=1;/* start at 1 for the sun*/
    for (int i=0; i<array_size(sys->spobs); i++) {
       p = sys->spobs[i];
@@ -751,9 +751,9 @@ void map_system_updateSelected( unsigned int wid )
             nameWidth = textw;
          last = p;
          if ( cur_spob_sel == nshow ) {
-            if ( cur_planetObj_sel != p )
-               planetObjChanged = 1;
-            cur_planetObj_sel = p;
+            if ( cur_spobObj_sel != p )
+               spobObjChanged = 1;
+            cur_spobObj_sel = p;
          }
          nshow++;
       }
@@ -771,23 +771,23 @@ void map_system_updateSelected( unsigned int wid )
 
    if ( cur_spob_sel >= nshow ) {
       cur_spob_sel = nshow-1;
-      if ( cur_planetObj_sel != last ) {
-         cur_planetObj_sel = last;
-         planetObjChanged = 1;
+      if ( cur_spobObj_sel != last ) {
+         cur_spobObj_sel = last;
+         spobObjChanged = 1;
       }
    }
    if ( cur_spob_sel <= 0 ) {
       /* star selected */
       cur_spob_sel = 0;
-      if ( cur_planetObj_sel != NULL ) {
-         cur_planetObj_sel = NULL;
-         planetObjChanged = 1;
+      if ( cur_spobObj_sel != NULL ) {
+         cur_spobObj_sel = NULL;
+         spobObjChanged = 1;
       }
    }
 
-   if ( planetObjChanged ) {
+   if ( spobObjChanged ) {
       infobuf[0]='\0';
-      if ( cur_planetObj_sel == NULL ) {
+      if ( cur_spobObj_sel == NULL ) {
          /*The star*/
          noutfits = 0;
          nships = 0;
@@ -795,15 +795,15 @@ void map_system_updateSelected( unsigned int wid )
          window_disableButton( wid, "btnBuyCommodPrice" );
       } else {
          /* get number of each to decide how much space the lists can have */
-         outfits = tech_getOutfit( cur_planetObj_sel->tech );
+         outfits = tech_getOutfit( cur_spobObj_sel->tech );
          noutfits = array_size( outfits );
          array_free( outfits );
-         ships = tech_getShip( cur_planetObj_sel->tech );
+         ships = tech_getShip( cur_spobObj_sel->tech );
          nships = array_size( ships );
          array_free( ships );
-         ngoods = array_size( cur_planetObj_sel->commodities );
+         ngoods = array_size( cur_spobObj_sel->commodities );
          /* to buy commodity info, need to be landed, and the selected system must sell them! */
-         if ( landed && spob_hasService( cur_planetObj_sel, SPOB_SERVICE_COMMODITY ) )
+         if ( landed && spob_hasService( cur_spobObj_sel, SPOB_SERVICE_COMMODITY ) )
             window_enableButton( wid, "btnBuyCommodPrice" );
          else
             window_disableButton( wid, "btnBuyCommodPrice" );
@@ -842,10 +842,10 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    int w, h;
    int xpos, xw, ypos, yh;
    int iconsize;
-   static Spob *planetDone = NULL;
+   static Spob *spobDone = NULL;
 
    window_dimWindow( wid, &w, &h );
-   if (planetDone == cur_planetObj_sel) {
+   if (spobDone == cur_spobObj_sel) {
       if (widget_exists( wid, MAPSYS_OUTFITS ))
          return;
    } else {
@@ -856,17 +856,17 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       }
       assert(cur_spob_sel_outfits == NULL);
    }
-   planetDone = cur_planetObj_sel;
+   spobDone = cur_spobObj_sel;
 
    /* set up the outfits to buy/sell */
-   if (cur_planetObj_sel == NULL)
+   if (cur_spobObj_sel == NULL)
       return;
 
    /* No outfitter. */
-   if (!spob_hasService( cur_planetObj_sel, SPOB_SERVICE_OUTFITS ))
+   if (!spob_hasService( cur_spobObj_sel, SPOB_SERVICE_OUTFITS ))
       return;
 
-   cur_spob_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech );
+   cur_spob_sel_outfits = tech_getOutfit( cur_spobObj_sel->tech );
    noutfits = array_size( cur_spob_sel_outfits );
 
    if (noutfits <= 0)
@@ -893,12 +893,12 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    ImageArrayCell *cships;
    int nships;
    int xpos, ypos, xw, yh;
-   static Spob *planetDone=NULL;
+   static Spob *spobDone=NULL;
    int i, w, h, iconsize;
    window_dimWindow( wid, &w, &h );
 
    /* set up the ships that can be bought here */
-   if (planetDone == cur_planetObj_sel) {
+   if (spobDone == cur_spobObj_sel) {
       if (widget_exists( wid, MAPSYS_SHIPS ))
          return;
    }
@@ -910,17 +910,17 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       }
       assert(cur_spob_sel_ships == NULL);
    }
-   planetDone = cur_planetObj_sel;
+   spobDone = cur_spobObj_sel;
 
    /* set up the outfits to buy/sell */
-   if (cur_planetObj_sel == NULL)
+   if (cur_spobObj_sel == NULL)
       return;
 
    /* No shipyard. */
-   if (!spob_hasService( cur_planetObj_sel, SPOB_SERVICE_SHIPYARD ))
+   if (!spob_hasService( cur_spobObj_sel, SPOB_SERVICE_SHIPYARD ))
       return;
 
-   cur_spob_sel_ships = tech_getShip( cur_planetObj_sel->tech );
+   cur_spob_sel_ships = tech_getShip( cur_spobObj_sel->tech );
    nships = array_size( cur_spob_sel_ships );
 
    if (nships <= 0)
@@ -948,14 +948,14 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
 
 static void map_system_genTradeList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
-   static Spob *planetDone=NULL;
+   static Spob *spobDone=NULL;
    int i, ngoods;
    ImageArrayCell *cgoods;
    int xpos, ypos, xw, yh, w, h, iconsize;
    window_dimWindow( wid, &w, &h );
 
    /* set up the commodities that can be bought here */
-   if ( planetDone == cur_planetObj_sel ) {
+   if ( spobDone == cur_spobObj_sel ) {
       if ( widget_exists( wid, MAPSYS_TRADE ) ) {
          return;
       }
@@ -966,23 +966,23 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
    }
 
    /* goods list */
-   if (cur_planetObj_sel == NULL)
+   if (cur_spobObj_sel == NULL)
       return;
 
    /* No shipyard. */
-   if (!spob_hasService( cur_planetObj_sel, SPOB_SERVICE_COMMODITY ))
+   if (!spob_hasService( cur_spobObj_sel, SPOB_SERVICE_COMMODITY ))
       return;
 
-   planetDone = cur_planetObj_sel;
+   spobDone = cur_spobObj_sel;
 
-   ngoods = array_size( cur_planetObj_sel->commodities );
+   ngoods = array_size( cur_spobObj_sel->commodities );
 
    if (ngoods <= 0)
       return;
    cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
    for ( i=0; i<ngoods; i++ ) {
-      cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
-      cgoods[i].caption = strdup( _(cur_planetObj_sel->commodities[i]->name) );
+      cgoods[i].image = gl_dupTexture( cur_spobObj_sel->commodities[i]->gfx_store );
+      cgoods[i].caption = strdup( _(cur_spobObj_sel->commodities[i]->name) );
    }
    /* set up the goods to buy/sell */
    xw = (w - nameWidth - pitch - 60)/2;
@@ -1022,7 +1022,7 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
       syslist=map_getJumpPath( cur_system->name, cur_sys_sel->name, 1, 0, NULL);
       if ( syslist == NULL ) {
          /* no route */
-         dialogue_msg( _("Unavailable"), _("Commodity prices for %s are not available here at the moment."), _(cur_planetObj_sel->name) );
+         dialogue_msg( _("Unavailable"), _("Commodity prices for %s are not available here at the moment."), _(cur_spobObj_sel->name) );
          return;
       } else {
          cost = 500 + 300 * array_size( syslist );
@@ -1035,16 +1035,16 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
    credits2str( coststr, cost, -1 );
    if (!player_hasCredits( cost ))
       dialogue_msg( _("Insufficient Credits"), _("You need %s to purchase this information."), coststr );
-   else if (array_size( cur_planetObj_sel->commodities ) == 0)
+   else if (array_size( cur_spobObj_sel->commodities ) == 0)
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here."));
-   else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t )
+   else if ( cur_spobObj_sel->commodityPrice[0].updateTime >= t )
       dialogue_msgRaw( _("Already Up-to-date"), _("You have newer information that what is available.") );
    else {
       int ret = dialogue_YesNo( _("Purchase commodity prices?"), _("Purchase %g period old pricing information for %s for %s?"),
-            njumps*2+0.2, _(cur_planetObj_sel->name), coststr );
+            njumps*2+0.2, _(cur_spobObj_sel->name), coststr );
       if (ret) {
          player_modCredits( -cost );
-         economy_averageSeenPricesAtTime( cur_planetObj_sel, t );
+         economy_averageSeenPricesAtTime( cur_spobObj_sel, t );
          map_system_array_update( wid,  MAPSYS_TRADE );
       }
    }

@@ -10,7 +10,7 @@
   <location>Bar</location>
   <cond>(function ()
            local count = 0
-           for i, p in pairs(system.cur():planets()) do
+           for i, p in pairs(system.cur():spobs()) do
               if p:services()["inhabited"] then
                  count=count+1
               end
@@ -57,7 +57,7 @@ function accept ()
    -- make sure there are at least 2 inhabited planets
    if (function ()
             local count = 0
-            for i, p in ipairs (system.cur():planets()) do
+            for i, p in ipairs (system.cur():spobs()) do
                if p:services()["inhabited"] then
                   count=count+1
                end

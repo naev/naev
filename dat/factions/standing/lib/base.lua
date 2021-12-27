@@ -162,7 +162,7 @@ function sbase.Standing:hit( current, amount, source, secondary )
             local has_planet
             -- Positive kill, which means an enemy of this faction got killed.
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
-            for _k, planet in ipairs(system.cur():planets()) do
+            for _k, planet in ipairs(system.cur():spobs()) do
                 if planet:faction() == self.fct then
                    -- Planet belonging to this faction found. Modify reputation.
                    f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )

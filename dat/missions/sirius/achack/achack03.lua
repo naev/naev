@@ -99,7 +99,7 @@ end
 function date()
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
-      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets())
+      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():spobs())
       for i, j in ipairs(spawnpoints) do
          if j == mem.origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.

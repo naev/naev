@@ -76,7 +76,7 @@ enum {
    /* Manual control and limits. */
    PILOT_MANUAL_CONTROL,/**< Pilot is under manual control of a mission or event. */
    PILOT_NOJUMP,        /**< Pilot cannot engage hyperspace engines. */
-   PILOT_NOLAND,        /**< Pilot cannot land on stations or planets. */
+   PILOT_NOLAND,        /**< Pilot cannot land on spobs. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_BRAKING,       /**< Pilot is braking. */
    PILOT_PERSIST,       /**< Persist pilot on jump. */

@@ -77,7 +77,7 @@ static int land_regen = 0; /**< Whether or not regenning. */
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Spob* land_spob = NULL; /**< Spob player landed at. */
-static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
+static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed spob. */
 
 /*
  * mission computer stack
@@ -844,7 +844,7 @@ void land_updateMainTab (void)
 
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
-   /* Maps are only offered if the planet provides fuel. */
+   /* Maps are only offered if the spob provides fuel. */
    if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL))
       return;
 
@@ -1002,7 +1002,7 @@ void land_genWindows( int load, int changetab )
    }
    land_loaded = 0;
 
-   /* Get planet. */
+   /* Get spob. */
    p     = land_spob;
    regen = landed;
    pntservices = p->services;
@@ -1174,7 +1174,7 @@ void land( Spob* p, int load )
    player.p->comm_msg = NULL;
 
    /* Clear some target stuff. */
-   player.p->nav_planet = -1;
+   player.p->nav_spob = -1;
    gui_setNav();
 
    /* Load stuff */
@@ -1425,7 +1425,7 @@ void takeoff( int delay )
    /* Refill ammo */
    pilot_fillAmmo( player.p );
 
-   /* Clear planet target. Allows for easier autonav out of the system. */
+   /* Clear spob target. Allows for easier autonav out of the system. */
    player_targetSpobSet( -1 );
 
    /* Clear pilots other than player. */
@@ -1437,7 +1437,7 @@ void takeoff( int delay )
    player.p->nav_hyperspace = h;
 
    /* Only save when the player shouldn't get stranded. */
-   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up planet */
+   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up spob */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */

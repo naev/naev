@@ -1229,7 +1229,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
    r = 0;
 
    if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
-      /* Check if planet is in range. */
+      /* Check if spob is in range. */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
          if (spob_hasService(cur_system->spobs[i], SPOB_SERVICE_INHABITED) &&
                (!ignore_int && pilot_inRangeSpob(p, i)) &&
@@ -2993,7 +2993,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */
-   pilot->nav_planet       = -1;
+   pilot->nav_spob       = -1;
    pilot->nav_hyperspace   = -1;
    pilot->nav_anchor       = -1;
    pilot->nav_asteroid     = -1;
@@ -3114,23 +3114,23 @@ Pilot* pilot_replacePlayer( Pilot* after )
  * @brief Finds a spawn point for a pilot
  *
  *    @param[out] vp Position.
- *    @param[out] planet Spob chosen or NULL if not.
+ *    @param[out] spob Spob chosen or NULL if not.
  *    @param[out] jump Jump chosen or NULL if not.
  *    @param lf Faction to choose point for.
  *    @param ignore_rules Whether or not to ignore all rules.
  *    @param guerilla Whether or not to spawn in deep space.
  */
-void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
+void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
    int *ind;
    JumpPoint **validJumpPoints;
 
    /* Initialize. */
-   *planet = NULL;
+   *spob = NULL;
    *jump   = NULL;
    vectnull( vp );
 
-   /* Build landable planet table. */
+   /* Build landable spob table. */
    ind = array_create_size( int, array_size(cur_system->spobs) );
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *pnt = cur_system->spobs[i];
@@ -3172,7 +3172,7 @@ void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, i
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
       }
       else {
-         WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
+         WARN(_("Creating pilot in system with no jumps nor spobs to take off from!"));
          vectnull( vp );
       }
    }
@@ -3187,7 +3187,7 @@ void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, i
          *jump = validJumpPoints[ RNG_BASE(0,array_size(validJumpPoints)-1) ];
       /* Random take off. */
       else if (array_size(ind) != 0)
-         *planet = cur_system->spobs[ ind[ RNG_BASE(0, array_size(ind)-1) ] ];
+         *spob = cur_system->spobs[ ind[ RNG_BASE(0, array_size(ind)-1) ] ];
    }
 
    /* Free memory allocated. */

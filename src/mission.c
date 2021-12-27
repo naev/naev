@@ -217,7 +217,7 @@ int mission_alreadyRunning( const MissionData* misn )
  * @brief Checks to see if a mission meets the requirements.
  *
  *    @param mission ID of the mission to check.
- *    @param faction Faction of the current planet.
+ *    @param faction Faction of the current spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @return 1 if requirements are met, 0 if they aren't.
@@ -229,9 +229,9 @@ static int mission_meetReq( int mission, int faction,
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
-   /* If planet, must match planet. */
-   if (misn->avail.planet != NULL) {
-      if ((pnt==NULL) || strcmp(misn->avail.planet,pnt->name)!=0)
+   /* If spob, must match spob. */
+   if (misn->avail.spob != NULL) {
+      if ((pnt==NULL) || strcmp(misn->avail.spob,pnt->name)!=0)
          return 0;
    }
    else if (spob_isFlag(pnt, SPOB_NOMISNSPAWN))
@@ -291,7 +291,7 @@ static int mission_meetReq( int mission, int faction,
  * @brief Runs missions matching location, all Lua side and one-shot.
  *
  *    @param loc Location to match.
- *    @param faction Faction of the planet.
+ *    @param faction Faction of the spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  */
@@ -362,10 +362,10 @@ static const char* mission_markerTarget( MissionMarker *m )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return system_getIndex( m->objid )->name;
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return spob_getIndex( m->objid )->name;
       default:
          WARN(_("Unknown marker type."));
@@ -381,13 +381,13 @@ MissionMarkerType mission_markerTypeSpobToSystem( MissionMarkerType t )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return t;
-      case PNTMARKER_COMPUTER:
+      case SPOBMARKER_COMPUTER:
          return SYSMARKER_COMPUTER;
-      case PNTMARKER_LOW:
+      case SPOBMARKER_LOW:
          return SYSMARKER_LOW;
-      case PNTMARKER_HIGH:
+      case SPOBMARKER_HIGH:
          return SYSMARKER_HIGH;
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_PLOT:
          return SYSMARKER_PLOT;
       default:
          WARN(_("Unknown marker type."));
@@ -399,17 +399,17 @@ MissionMarkerType mission_markerTypeSystemToSpob( MissionMarkerType t )
 {
    switch (t) {
       case SYSMARKER_COMPUTER:
-         return PNTMARKER_COMPUTER;
+         return SPOBMARKER_COMPUTER;
       case SYSMARKER_LOW:
-         return PNTMARKER_LOW;
+         return SPOBMARKER_LOW;
       case SYSMARKER_HIGH:
-         return PNTMARKER_HIGH;
+         return SPOBMARKER_HIGH;
       case SYSMARKER_PLOT:
-         return PNTMARKER_PLOT;
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+         return SPOBMARKER_PLOT;
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return t;
       default:
          WARN(_("Unknown marker type."));
@@ -459,13 +459,13 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
             return -1;
          }
          return mission_addMarker( misn, id, system_index(ssys), type );
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          pnt = spob_get( xml_get( node ));
          if (pnt == NULL) {
-            WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
+            WARN( _("Mission Marker to spob '%s' does not exist"), xml_get( node ) );
             return -1;
          }
          return mission_addMarker( misn, id, spob_index(pnt), type );
@@ -553,14 +553,14 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
          case SYSMARKER_PLOT:
             sys = system_getIndex( m->objid );
             break;
-         case PNTMARKER_COMPUTER:
-         case PNTMARKER_LOW:
-         case PNTMARKER_HIGH:
-         case PNTMARKER_PLOT:
+         case SPOBMARKER_COMPUTER:
+         case SPOBMARKER_LOW:
+         case SPOBMARKER_HIGH:
+         case SPOBMARKER_PLOT:
             pnt = spob_getIndex( m->objid );
             sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {
-               WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
+               WARN(_("Marked spob '%s' is not in any system!"), pnt->name);
                continue;
             }
             sys = system_get( sysname );
@@ -601,14 +601,14 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
          case SYSMARKER_PLOT:
             sys = system_getIndex( m->objid );
             break;
-         case PNTMARKER_COMPUTER:
-         case PNTMARKER_LOW:
-         case PNTMARKER_HIGH:
-         case PNTMARKER_PLOT:
+         case SPOBMARKER_COMPUTER:
+         case SPOBMARKER_LOW:
+         case SPOBMARKER_HIGH:
+         case SPOBMARKER_PLOT:
             pnt = spob_getIndex( m->objid );
             sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {
-               WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
+               WARN(_("Marked spob '%s' is not in any system!"), pnt->name);
                continue;
             }
             sys = system_get( sysname );
@@ -749,7 +749,7 @@ static void mission_freeData( MissionData* mission )
    free(mission->name);
    free(mission->lua);
    free(mission->sourcefile);
-   free(mission->avail.planet);
+   free(mission->avail.spob);
    free(mission->avail.system);
    free(mission->avail.chapter);
    array_free(mission->avail.factions);
@@ -831,7 +831,7 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *        missions.
  *
  *    @param[out] n Missions created.
- *    @param faction Faction of the planet.
+ *    @param faction Faction of the spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @param loc Location
@@ -975,7 +975,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
                continue;
             }
             xmlr_int(cur,"chance",temp->avail.chance);
-            xmlr_strd(cur,"spob",temp->avail.planet);
+            xmlr_strd(cur,"spob",temp->avail.spob);
             xmlr_strd(cur,"system",temp->avail.system);
             xmlr_strd(cur,"chapter",temp->avail.chapter);
             if (xml_isNode(cur,"faction")) {
@@ -1026,7 +1026,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
-   MELEMENT( ((temp->avail.planet!=NULL) && spob_get(temp->avail.planet)==NULL), "avail.planet" );
+   MELEMENT( ((temp->avail.spob!=NULL) && spob_get(temp->avail.spob)==NULL), "avail.spob" );
    MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "avail.system" );
 #undef MELEMENT
 

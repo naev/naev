@@ -200,7 +200,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
         local counter = 0
         local altplanets = {}
-        for key,dplanet in ipairs( mem.destsys:planets() ) do
+        for key,dplanet in ipairs( mem.destsys:spobs() ) do
             if dplanet:canLand() then
                 counter = counter + 1
                 altplanets[counter] = dplanet

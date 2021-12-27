@@ -24,7 +24,7 @@ local der = require "common.derelict"
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Independent" )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent" )
 
    -- See if we got something
    if not mem.destpnt then

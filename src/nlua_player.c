@@ -753,7 +753,7 @@ static int playerL_takeoff( lua_State *L )
 }
 
 /**
- * @brief Automagically lands the player on a planet.
+ * @brief Automagically lands the player on a spob.
  *
  * Note that this will teleport the player to the system in question as necessary.
  *
@@ -1256,7 +1256,7 @@ static int playerL_rmOutfit( lua_State *L )
 /**
  * @brief Gives the player a new ship.
  *
- * @note Should be given when landed, ideally on a planet with a shipyard. Furthermore, this invalidates all player.pilot() references.
+ * @note Should be given when landed, ideally on a spob with a shipyard. Furthermore, this invalidates all player.pilot() references.
  *
  * @usage player.addShip( "Pirate Kestrel", _("Seiryuu"), _("") ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
@@ -1434,17 +1434,17 @@ static int playerL_evtDone( lua_State *L )
 }
 
 /**
- * @brief Teleports the player to a new planet or system (only if not landed).
+ * @brief Teleports the player to a new spob or system (only if not landed).
  *
  * If the destination is a system, the coordinates of the player will not change.
- * If the destination is a planet, the player will be placed over that planet.
+ * If the destination is a spob, the player will be placed over that spob.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  * @usage player.teleport( "Sol", true ) -- Teleports the player to SOL, but doesn't run any initial simulation
  *
- *    @luatparam System|Spob|string dest System or name of a system or planet or name of a planet to teleport the player to.
+ *    @luatparam System|Spob|string dest System or name of a system or spob or name of a spob to teleport the player to.
  *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
  * @luafunc teleport
  */
@@ -1472,7 +1472,7 @@ static int playerL_teleport( lua_State *L )
       sys   = luaL_validsystem(L,1);
       name  = system_getIndex(sys->id)->name;
    }
-   /* Get a planet. */
+   /* Get a spob. */
    else if (lua_isspob(L,1)) {
       pnt   = luaL_validspob(L,1);
       name  = spob_getSystem( pnt->name );
@@ -1487,7 +1487,7 @@ static int playerL_teleport( lua_State *L )
       name = lua_tostring(L,1);
       sysname = system_existsCase( name );
       if (sysname == NULL) {
-         /* No system found, assume destination string is the name of a planet. */
+         /* No system found, assume destination string is the name of a spob. */
          pntname = name;
          name = spob_getSystem( pntname );
          pnt  = spob_get( pntname );
@@ -1532,7 +1532,7 @@ static int playerL_teleport( lua_State *L )
 
    /* Reset targets when teleporting.
     * Both of these functions invoke gui_setNav(), which updates jump and
-    * planet targets simultaneously. Thus, invalid reads may arise and the
+    * spob targets simultaneously. Thus, invalid reads may arise and the
     * target reset must be done prior to calling space_init and destroying
     * the old system.
     */
@@ -1554,7 +1554,7 @@ static int playerL_teleport( lua_State *L )
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
-   /* Move to planet. */
+   /* Move to spob. */
    if (pnt != NULL)
       player.p->solid->pos = pnt->pos;
 

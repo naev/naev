@@ -350,18 +350,18 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    (void) unused;
    unsigned int wid;
    int n, h, k;
-   Spob *planets;
+   Spob *spobs;
    char **str;
    int *factions;
 
    /* Find usable factions. */
    factions = faction_getAll();
-   planets  = spob_getAll();
+   spobs  = spob_getAll();
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
       int hasfact = 0;
-      for (int j=0; j<array_size(planets); j++) {
-         Spob *p = &planets[j];
+      for (int j=0; j<array_size(spobs); j++) {
+         Spob *p = &spobs[j];
          if ((p->presence.faction != f) && !factionGenerates(p->presence.faction,f,NULL))
             continue;
          if (p->presence.base==0. && p->presence.bonus==0.)
@@ -690,10 +690,10 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (int i=0; i<array_size(uniedit_sys); i++) {
       StarSystem *sys = uniedit_sys[i];
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, uniedit_dt );
+      glUseProgram( shaders.selectspob.program );
+      glUniform1f( shaders.selectspob.dt, uniedit_dt );
       gl_renderShader( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
-            1.5*r, 1.5*r, 0., &shaders.selectplanet, &cWhite, 1 );
+            1.5*r, 1.5*r, 0., &shaders.selectspob, &cWhite, 1 );
    }
 }
 
@@ -1476,37 +1476,37 @@ static void uniedit_findSys (void)
 }
 
 /**
- * @brief Searches for planets and systems.
+ * @brief Searches for spobs and systems.
  */
 static void uniedit_findSearch( unsigned int wid, const char *str )
 {
    (void) str;
-   int n, nplanets, nsystems;
+   int n, nspobs, nsystems;
    const char *name;
-   char **planets, **systems;
+   char **spobs, **systems;
    map_find_t *found;
 
    name = window_getInput( wid, "inpFind" );
 
    /* Search for names. */
-   planets = spob_searchFuzzyCase( name, &nplanets );
+   spobs = spob_searchFuzzyCase( name, &nspobs );
    systems = system_searchFuzzyCase( name, &nsystems );
 
    free(found_cur);
    found_cur = NULL;
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * (nplanets + nsystems) );
+   found = malloc( sizeof(map_find_t) * (nspobs + nsystems) );
    n = 0;
 
-   /* Add planets to the found table. */
-   for (int i=0; i<nplanets; i++) {
+   /* Add spobs to the found table. */
+   for (int i=0; i<nspobs; i++) {
       /* Spob must be real. */
-      Spob *pnt = spob_get( planets[i] );
+      Spob *pnt = spob_get( spobs[i] );
       if (pnt == NULL)
          continue;
 
-      char *sysname = spob_getSystem( planets[i] );
+      char *sysname = spob_getSystem( spobs[i] );
       if (sysname == NULL)
          continue;
 
@@ -1520,10 +1520,10 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 
       /* Set fancy name. */
       snprintf( found[n].display, sizeof(found[n].display),
-            _("%s (%s system)"), planets[i], sys->name );
+            _("%s (%s system)"), spobs[i], sys->name );
       n++;
    }
-   free(planets);
+   free(spobs);
 
    /* Add systems to the found table. */
    for (int i=0; i<nsystems; i++) {

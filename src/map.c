@@ -201,7 +201,7 @@ static void map_setup (void)
          }
       }
       if (known) {
-         /* Check planets. */
+         /* Check spobs. */
          for (int j=0; j<array_size(sys->spobs); j++) {
             Spob *p = sys->spobs[j];
             if (!spob_isKnown(p)) {
@@ -607,7 +607,7 @@ static void map_update( unsigned int wid )
    h = window_getTextHeight( wid, "txtPresence" );
    y -= 40 + (h - gl_smallFont.h);
 
-   /* Get planets */
+   /* Get spobs */
    hasSpobs = 0;
    p = 0;
    buf[0] = '\0';
@@ -889,13 +889,13 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, map_dt ); /* good enough. */
+      glUseProgram( shaders.selectspob.program );
+      glUniform1f( shaders.selectspob.dt, map_dt ); /* good enough. */
       gl_renderShader( x + sys->pos.x * z, y + sys->pos.y * z,
-            1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tSpob, 1 );
+            1.7*r, 1.7*r, 0., &shaders.selectspob, &cRadar_tSpob, 1 );
    }
 
-   /* Current planet. */
+   /* Current spob. */
    gl_renderCircle( x + cur_system->pos.x * z,
          y + cur_system->pos.y * z,
          1.5*r, &col, 0 );
@@ -1425,7 +1425,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       if (sys == cur_system && landed) {
          for (k=0; k<array_size(land_spob->commodities); k++) {
             if (land_spob->commodities[k] == c) {
-               /* current planet has the commodity of interest */
+               /* current spob has the commodity of interest */
                curMinPrice = land_spob->commodityPrice[k].sum / land_spob->commodityPrice[k].cnt;
                curMaxPrice = curMinPrice;
                break;
@@ -2659,7 +2659,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 }
 
 /**
- * @brief Centers the map on a planet.
+ * @brief Centers the map on a spob.
  *
  *    @param sys System to center the map on (internal name).
  *    @return 0 on success.

@@ -27,7 +27,7 @@ function create()
    end
 
    -- Must not have inhabited planets
-   for _k,p in ipairs(csys:planets()) do
+   for _k,p in ipairs(csys:spobs()) do
       local ps = p:services()
       if ps.inhabited then
          evt.finish(false)

@@ -40,18 +40,18 @@ end
 
 
 --[[--
-   Returns a complete or filtered table of landable planets (that is, landable, inhabitable, and not restricted)
+   Returns a complete or filtered table of landable spobs (that is, landable, inhabitable, and not restricted)
 
    @tparam[opt] System sys The system to search, defaulting to the current one.
-   @tparam[opt] Faction fct If nil, return all landable planets in the system meeting the landable criteria, otherwise...
+   @tparam[opt] Faction fct If nil, return all landable spobs in the system meeting the landable criteria, otherwise...
    @tparam[opt=false] boolean fctmatch If true, restrict results to the given faction; if false, restricts it to factions not hostile with fct.
-   @treturn table All matching planets in a list.
+   @treturn table All matching spobs in a list.
 --]]
-function lmisn.getLandablePlanets( sys, fct, fctmatch )
+function lmisn.getLandableSpobs( sys, fct, fctmatch )
    sys = sys or system.cur()
    fct = fct and faction.get(fct)
    local pnt_candidates = {}
-   for _k,p in ipairs(sys:planets()) do
+   for _k,p in ipairs(sys:spobs()) do
       local s = p:services()
       if s.land and s.inhabited and not p:tags().restricted then
          if not fct then
@@ -117,7 +117,7 @@ function lmisn.sysFilters.faction( fct, threshold )
    end
 end
 --[[--
-   Provides the landable system filter. Makes sure each system has at least on landable, inhabited, non-restricted planet and is landable by a certain faction.
+   Provides the landable system filter. Makes sure each system has at least on landable, inhabited, non-restricted spob and is landable by a certain faction.
 
    @tparam Faction fct Faction to make sure can land.
    @tparam[opt=false] boolean samefact Whether or not being non-hostile is sufficient, or we enforce exact match (true).
@@ -126,7 +126,7 @@ end
 function lmisn.sysFilters.factionLandable( fct, samefact )
    fct = fct and faction.get(fct)
    return function( sys )
-      for k,p in ipairs(sys:planets()) do
+      for k,p in ipairs(sys:spobs()) do
          local s = p:services()
          if s.land and s.inhabited and not p:tags().restricted then
             local f = p:faction()
@@ -143,13 +143,13 @@ end
    Fetches an array of systems from min to max jumps away from the given
          system sys.
 
-   The following example gets a random Sirius M class planet between 1 to 6 jumps away.
+   The following example gets a random Sirius M class spob between 1 to 6 jumps away.
 
    @usage
-   local planets = {}
+   local spobs = {}
    lmisn.getSysAtDistance( system.cur(), 1, 6,
        function(s)
-           for i, v in ipairs(s:planets()) do
+           for i, v in ipairs(s:spobs()) do
                if v:faction() == faction.get("Sirius") and v:class() == "M" then
                    return true
                end
@@ -157,11 +157,11 @@ end
            return false
        end )
 
-   if #planets == 0 then abort() end -- In case no suitable planets are in range.
+   if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
 
-   local index = rnd.rnd(1, #planets)
-   destplanet = planets[index][1]
-   destsys = planets[index][2]
+   local index = rnd.rnd(1, #spobs)
+   destspob = spobs[index][1]
+   destsys = spobs[index][2]
 
       @param sys System to calculate distance from or nil to use current system
       @param min Min distance to check for.
@@ -210,40 +210,40 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
 end
 
 --[[--
-   Works the same as lmisn.getSysAtDistance, but for planets.
+   Works the same as lmisn.getSysAtDistance, but for spobs.
 
-   Filter is applied on a planet level.
+   Filter is applied on a spob level.
 
    @usage
-   -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
-   local candidates = lmisn.getPlanetAtDistance( system.cur(), 3, 5, "Independent", false )
+   -- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
+   local candidates = lmisn.getSpobAtDistance( system.cur(), 3, 5, "Independent", false )
    -- Make sure there are candidates
    if #candidates==0 then
-      error("There are no planets meeting the criteria!")
+      error("There are no spobs meeting the criteria!")
    end
    -- Sort candidates by some criteria
-   table.sort( candidates, my_planet_sort_function )
+   table.sort( candidates, my_spob_sort_function )
    -- Get best by sorting criteria
    local destpnt = candidates[1]
 
    @tparam[opt=system.cur()] System sys System to base distance calculations off of.
-   @tparam number min Minimum jump distance to get planet at.
-   @tparam number max Maximum jump distance to get planet at.
+   @tparam number min Minimum jump distance to get spob at.
+   @tparam number max Maximum jump distance to get spob at.
    @tparam[opt=nil] Faction fct What faction to do landing checks with.
-   @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
-   @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+   @tparam[opt=false] boolean samefct Whether or not to only allow spobs to belong exactly to fct.
+   @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a spob being tested as a parameter.
    @param[opt=nil] data Custom data that will be passed to filter.
    @tparam[opt=false] boolean hidden Whether or not to consider hidden jumps when computing system distance.
-   @treturn table A table containing all the planets matching the criteria. Can be empty if no matches found.
+   @treturn table A table containing all the spobs matching the criteria. Can be empty if no matches found.
 --]]
-function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+function lmisn.getSpobAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    local pnts = {}
    local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
    if #candidates == 0 then
       return pnts
    end
    for _k,s in ipairs(candidates) do
-      local lp = lmisn.getLandablePlanets( s, fct, samefct )
+      local lp = lmisn.getLandableSpobs( s, fct, samefct )
       for _i,p in ipairs(lp) do
          if not filter or filter( p, data ) then
             table.insert( pnts, p )
@@ -254,22 +254,22 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, h
 end
 
 --[[--
-   Gets a random planet at a distance. Only checks for inhabited, landable, and non-restricted planets.
+   Gets a random spob at a distance. Only checks for inhabited, landable, and non-restricted spobs.
 
-   @usage destpnt = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random planet within 3 to 5 jumps of current system that is landable by independent pilots.
+   @usage destpnt = lmisn.getRandomSpobAtDistance( system.cur(), 3, 5, "Independent", false ) -- Get random spob within 3 to 5 jumps of current system that is landable by independent pilots.
 
    @tparam[opt=system.cur()] System sys System to base distance calculations off of.
-   @tparam number min Minimum jump distance to get planet at.
-   @tparam number max Maximum jump distance to get planet at.
+   @tparam number min Minimum jump distance to get spob at.
+   @tparam number max Maximum jump distance to get spob at.
    @tparam[opt=nil] Faction fct What faction to do landing checks with.
-   @tparam[opt=false] boolean samefct Whether or not to only allow planets to belong exactly to fct.
-   @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a planet being tested as a parameter.
+   @tparam[opt=false] boolean samefct Whether or not to only allow spobs to belong exactly to fct.
+   @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a spob being tested as a parameter.
    @param[opt=nil] data Custom data that will be passed to filter.
    @tparam[opt=false] boolean hidden Whether or not to consider hidden jumps when computing system distance.
-   @treturn Planet A single planet matching all the criteria.
+   @treturn Spob A single spob matching all the criteria.
 --]]
-function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
-   local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+function lmisn.getRandomSpobAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+   local candidates = lmisn.getSpobAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    if #candidates == 0 then
       return nil, nil
    end

@@ -44,7 +44,7 @@ function create ()
    -- We claim Antlejos V
    if not misn.claim(returnsys) then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Soromid", true, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Soromid", true, function( p )
       return p:tags().agriculture
    end )
    if not mem.destpnt then

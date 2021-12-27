@@ -154,8 +154,8 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  *
  * Blitting order (layers):
  *   - BG
- *     - stars and planets
- *     - background player stuff (planet targeting)
+ *     - stars and spobs
+ *     - background player stuff (spob targeting)
  *     - background particles
  *     - back layer weapons
  *   - N

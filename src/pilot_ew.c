@@ -269,9 +269,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
 }
 
 /**
- * @brief Check to see if a planet is in sensor range of the pilot.
+ * @brief Check to see if a spob is in sensor range of the pilot.
  *
- *    @param p Pilot who is trying to check to see if the planet is in sensor range.
+ *    @param p Pilot who is trying to check to see if the spob is in sensor range.
  *    @param target Spob to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
@@ -285,7 +285,7 @@ int pilot_inRangeSpob( const Pilot *p, int target )
    if (p == NULL)
       return 0;
 
-   /* Get the planet. */
+   /* Get the spob. */
    pnt = cur_system->spobs[target];
    sense = EW_SPOBDETECT_DIST;
 

@@ -643,9 +643,9 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param name Outfit to buy.
- *    @param planet Where the player is shopping.
+ *    @param spob Where the player is shopping.
  */
-int outfit_canBuy( const char *name, const Spob *planet )
+int outfit_canBuy( const char *name, const Spob *spob )
 {
    int failure, blackmarket;
    credits_t price;
@@ -655,7 +655,7 @@ int outfit_canBuy( const char *name, const Spob *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
-   blackmarket = ((planet!=NULL) && spob_hasService(planet, SPOB_SERVICE_BLACKMARKET));
+   blackmarket = ((spob!=NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {

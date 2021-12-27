@@ -100,7 +100,7 @@ function create ()
       end
       return false
    end
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not mem.destpnt then
       misn.finish()
    end

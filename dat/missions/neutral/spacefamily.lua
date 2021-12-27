@@ -82,7 +82,7 @@ end
 
 -- Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
 function getlandable(sys)
-   for a, b in pairs(sys:planets()) do
+   for a, b in pairs(sys:spobs()) do
       if b:services()["inhabited"] and b:canLand() then
          return b
       end
@@ -120,7 +120,7 @@ end
 function getlandablesystems( systems )
    local t = {}
    for _k1,v in ipairs(systems) do
-      for _k2,p in ipairs(v:planets()) do
+      for _k2,p in ipairs(v:spobs()) do
          if p:services()["inhabited"] and p:canLand() then
             t[#t+1] = v
             break

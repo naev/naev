@@ -553,7 +553,7 @@ function add_econ_article ()
          and rnd.rnd() < 0.75 then
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
-         for j, p in ipairs( s:planets() ) do
+         for j, p in ipairs( s:spobs() ) do
             if not pir.factionIsPirate( p:faction() )
                   and p:faction() ~= faction.get("FLF")
                   and #(p:commoditiesSold()) > 0 then
@@ -584,7 +584,7 @@ function add_econ_article ()
    local cur_t = time.get()
    local body = ""
    for i, sys in ipairs( lmisn.getSysAtDistance( system.cur(), 0, 1 ) ) do
-      for j, plnt in ipairs( sys:planets() ) do
+      for j, plnt in ipairs( sys:spobs() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then
             body = body .. "\n\n" .. fmt.f( _("{pnt} in {sys}"), {pnt=plnt, sys=sys} )

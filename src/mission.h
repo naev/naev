@@ -42,7 +42,7 @@ typedef struct MissionAvail_s {
    int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
    /* For specific cases */
-   char *planet; /**< Spob name. */
+   char *spob; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
    pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
@@ -114,7 +114,7 @@ typedef struct Mission_ {
 extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
 
 /*
- * creates missions for a planet and such
+ * creates missions for a spob and such
  */
 Mission* missions_genList( int *n, int faction,
       const Spob *pnt, const StarSystem *sys, MissionAvailability loc );

@@ -347,7 +347,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
       d += vect_dist( vs, ve );
    }
 
-   /* Account final travel to planet for planet targets. */
+   /* Account final travel to spob for spob targets. */
    if (pnt != NULL) {
       if (i > 0) {
          ss = slist[ i ];
@@ -380,7 +380,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
  *    @param found Results array to save into.
  *    @param n Position to use.
  *    @param sys Result's star system.
- *    @param pnt Result's planet, or NULL to leave unspecified.
+ *    @param pnt Result's spob, or NULL to leave unspecified.
  *
  */
 static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt )
@@ -474,7 +474,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
 }
 
 /**
- * @brief Searches for a planet.
+ * @brief Searches for a spob.
  *
  *    @param name Name to match.
  *    @return 0 on success.
@@ -486,7 +486,7 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
    map_find_t *found;
    const char *sysname, *pntname;
 
-   /* Match planet first. */
+   /* Match spob first. */
    pntname = spob_existsCase( name );
    names   = spob_searchFuzzyCase( name, &len );
    if (names == NULL)
@@ -553,7 +553,7 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
 }
 
 /**
- * @brief Gets a colour char for a planet, simplified for map use.
+ * @brief Gets a colour char for a spob, simplified for map use.
  */
 static char map_getSpobColourChar( Spob *p )
 {
@@ -566,7 +566,7 @@ static char map_getSpobColourChar( Spob *p )
 }
 
 /**
- * @brief Gets a symbol for a planet, simplified for map use.
+ * @brief Gets a symbol for a spob, simplified for map use.
  */
 static const char *map_getSpobSymbol( Spob *p )
 {
@@ -721,7 +721,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
    assert( "Outfit search is not reentrant!" && map_foundOutfitNames == NULL );
 
-   /* Match planet first. */
+   /* Match spob first. */
    o     = NULL;
    oname = outfit_existsCase( name );
    map_foundOutfitNames = map_outfitsMatch( name );
@@ -754,7 +754,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    n = 0;
    len = array_size(map_known_techs);
    for (i=0; i<len; i++) {
-      /* Try to find the outfit in the planet. */
+      /* Try to find the outfit in the spob. */
       olist = tech_getOutfit( map_known_techs[i] );
       for (j=array_size(olist)-1; j>=0; j--)
          if (olist[j] == o)
@@ -838,7 +838,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    const Ship *s;
    Ship **slist;
 
-   /* Match planet first. */
+   /* Match spob first. */
    s     = NULL;
    sname = ship_existsCase( name );
    names = map_shipsMatch( name );
@@ -869,7 +869,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    n = 0;
    len = array_size(map_known_techs);
    for (i=0; i<len; i++) {
-      /* Try to find the ship in the planet. */
+      /* Try to find the ship in the spob. */
       slist = tech_getShip( map_known_techs[i] );
       for (j=array_size(slist)-1; j>=0; j--)
          if (slist[j] == s)
@@ -959,7 +959,7 @@ static void map_findSearch( unsigned int wid, const char* str )
 }
 
 /**
- * @brief Opens a search input box to find a system or planet.
+ * @brief Opens a search input box to find a system or spob.
  */
 void map_inputFind( unsigned int parent, const char* str )
 {
