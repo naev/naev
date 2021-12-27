@@ -31,31 +31,31 @@
   <sys name="Flow">
    <jump>Vean</jump>
    <jump>Aesria</jump>
-   <asset>Sevlow</asset>
-   <asset>Nasano</asset>
-   <asset>Kaira</asset>
-   <asset>NS-27</asset>
-   <asset>HS-54</asset>
+   <spob>Sevlow</spob>
+   <spob>Nasano</spob>
+   <spob>Kaira</spob>
+   <spob>NS-27</spob>
+   <spob>HS-54</spob>
   </sys>
   <sys name="Vean">
    <jump>Nava</jump>
    <jump>Flow</jump>
    <jump>Aesria</jump>
-   <asset>Vean I</asset>
-   <asset>Vean II</asset>
-   <asset>HS-24</asset>
-   <asset>SY-19</asset>
-   <asset>NS-63</asset>
+   <spob>Vean I</spob>
+   <spob>Vean II</spob>
+   <spob>HS-24</spob>
+   <spob>SY-19</spob>
+   <spob>NS-63</spob>
   </sys>
   <sys name="Nava">
    <jump>Vean</jump>
-   <asset>Nava I</asset>
-   <asset>Sabe</asset>
-   <asset>Anya</asset>
-   <asset>Kaso</asset>
-   <asset>NS-1</asset>
-   <asset>HS-37</asset>
-   <asset>NS-42</asset>
+   <spob>Nava I</spob>
+   <spob>Sabe</spob>
+   <spob>Anya</spob>
+   <spob>Kaso</spob>
+   <spob>NS-1</spob>
+   <spob>HS-37</spob>
+   <spob>NS-42</spob>
   </sys>
  </specific>
 </outfit>

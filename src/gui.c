@@ -659,7 +659,7 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
  * @param[out] ry Relative Y position (factoring in viewport offset)
  * @param jp Jump point to determine the visibility and position of
  * @param pnt Spob to determine the visibility and position of
- * @return Whether or not the given asset is on-screen.
+ * @return Whether or not the given spob is on-screen.
  */
 int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt )
 {

@@ -779,7 +779,7 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
       /*Use mean price to adjust current price */
       avprice[j].price=0.5*(avprice[j].price + avprice[j].sum);
    }
-   /*and finally modify assets based on the means */
+   /*and finally modify spobs based on the means */
    for ( i=0; i<array_size(sys->spobs); i++ ) {
       spob=sys->spobs[i];
       for ( j=0; j<array_size(spob->commodities); j++ ) {

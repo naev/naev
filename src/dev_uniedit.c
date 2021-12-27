@@ -23,6 +23,7 @@
 #include "economy.h"
 #include "map.h"
 #include "map_find.h"
+#include "ndata.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -101,7 +102,7 @@ static int found_ncur         = 0;     /**< Number of found stuff. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
-/* System and asset search. */
+/* System and spob search. */
 static void uniedit_findSys (void);
 static void uniedit_findSysClose( unsigned int wid, const char *name );
 static void uniedit_findSearch( unsigned int wid, const char *str );
@@ -226,7 +227,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
          "btnOpen", _("Open"), uniedit_btnOpen, SDLK_o );
    buttonPos++;
 
-   /* Find a system or asset. */
+   /* Find a system or spob. */
    window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnFind", _("Find"), uniedit_btnFind, SDLK_f );
    buttonPos++;
@@ -377,7 +378,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    wid = window_create( "wdwUniEditView", _("Select a View Mode"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
-   /* Add virtual asset list. */
+   /* Add virtual spob list. */
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Spobs"));
@@ -775,12 +776,12 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    sx    = sys->pos.x;
    sy    = sys->pos.y;
 
-   /* Handle virtual asset viewer. */
+   /* Handle virtual spob viewer. */
    if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
       if (array_size(sys->spobs_virtual)==0)
          return;
 
-      /* Count assets. */
+      /* Count spobs. */
       l = 0;
       for (int j=0; j<array_size(sys->spobs_virtual); j++) {
          VirtualSpob *va = sys->spobs_virtual[j];
@@ -815,7 +816,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       if (array_size(sys->spobs)==0)
          return;
 
-      /* Count assets. */
+      /* Count spobs. */
       l = 0;
       for (int j=0; j<array_size(sys->spobs); j++) {
          Spob *pnt = sys->spobs[j];
@@ -850,7 +851,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       for (int j=0; j<array_size(sys->presence); j++)
          value += MAX( sys->presence[j].value, 0. );
 
-      /* Count assets. */
+      /* Count spobs. */
       l = scnprintf( buf, sizeof(buf), _("Total: %.0f"), value );
       for (int j=0; j<array_size(sys->presence); j++) {
          sp = &sys->presence[j];
@@ -1440,7 +1441,7 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str )
 }
 
 /**
- * @brief Finds systems and assets.
+ * @brief Finds systems and spobs.
  */
 static void uniedit_findSys (void)
 {
@@ -1547,7 +1548,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Generates the virtual asset list.
+ * @brief Generates the virtual spob list.
  */
 static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n )
 {
@@ -1675,7 +1676,7 @@ static void uniedit_editSys (void)
    window_addInput( wid, x += l + 7, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
    x += 80 + 12;
-   s = _("(Scales asset positions)");
+   s = _("(Scales spob positions)");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtRadiusComment",
          NULL, NULL, s );
@@ -1746,7 +1747,7 @@ static void uniedit_editSys (void)
 }
 
 /**
- * @brief Generates the virtual asset list.
+ * @brief Generates the virtual spob list.
  */
 static void uniedit_editGenList( unsigned int wid )
 {
@@ -1754,7 +1755,7 @@ static void uniedit_editGenList( unsigned int wid )
    StarSystem *sys;
    const VirtualSpob *va;
    char **str;
-   int y, h, has_assets;
+   int y, h, has_spobs;
 
    /* Destroy if exists. */
    if (widget_exists( wid, "lstSpobs" ))
@@ -1762,16 +1763,16 @@ static void uniedit_editGenList( unsigned int wid )
 
    y = -175;
 
-   /* Check to see if it actually has virtual assets. */
+   /* Check to see if it actually has virtual spobs. */
    sys   = uniedit_sys[0];
    n     = array_size( sys->spobs_virtual );
-   has_assets = !!n;
+   has_spobs = !!n;
 
    /* Generate list. */
    j     = 0;
    str   = malloc( sizeof(char*) * (n+1) );
-   if (has_assets) {
-      /* Virtual asset button. */
+   if (has_spobs) {
+      /* Virtual spob button. */
       for (int i=0; i<n; i++) {
          va    = sys->spobs_virtual[i];
          str[j++] = strdup( va->name );
@@ -1806,7 +1807,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    /* We already know the system exists because we checked when opening the dialog. */
    sys   = uniedit_sys[0];
 
-   /* Changes in radius need to scale the system asset positions. */
+   /* Changes in radius need to scale the system spob positions. */
    scale = atof(window_getInput( wid, "inpRadius" )) / sys->radius;
    sysedit_sysScale(sys, scale);
 
@@ -1831,7 +1832,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Removes a selected asset.
+ * @brief Removes a selected spob.
  */
 static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
 {
@@ -1846,10 +1847,10 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
-   /* Remove the asset. */
+   /* Remove the spob. */
    ret = system_rmVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
-      dialogue_alert( _("Failed to remove virtual asset '%s'!"), selected );
+      dialogue_alert( _("Failed to remove virtual spob '%s'!"), selected );
       return;
    }
 
@@ -1860,7 +1861,7 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Adds a new virtual asset.
+ * @brief Adds a new virtual spob.
  */
 static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 {
@@ -1871,10 +1872,10 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
    char **str;
    int h;
 
-   /* Get all assets. */
+   /* Get all spobs. */
    va  = virtualspob_getAll();
    if (array_size(va)==0) {
-      dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
+      dialogue_alert( _("No virtual spobs to add! Please add virtual spobs to the '%s' directory first."), VIRTUALSPOB_DATA_PATH );
       return;
    }
 
@@ -1882,7 +1883,7 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
    wid = window_create( "wdwAddaVirtualSpob", _("Add a Virtual Spob"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
-   /* Add virtual asset list. */
+   /* Add virtual spob list. */
    str = malloc( sizeof(char*) * array_size(va) );
    for (int i=0; i<array_size(va); i++)
       str[i] = strdup( va[i].name );
@@ -1900,7 +1901,7 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 }
 
 /**
- * @brief Actually adds the virtual asset.
+ * @brief Actually adds the virtual spob.
  */
 static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 {
@@ -1915,7 +1916,7 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
    /* Add virtual presence. */
    ret = system_addVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
-      dialogue_alert( _("Failed to add virtual asset '%s'!"), selected );
+      dialogue_alert( _("Failed to add virtual spob '%s'!"), selected );
       return;
    }
 
@@ -1949,7 +1950,7 @@ static void uniedit_btnEditRename( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Actually adds the virtual asset.
+ * @brief Actually adds the virtual spob.
  */
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 {

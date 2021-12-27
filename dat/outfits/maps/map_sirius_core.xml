@@ -10,13 +10,13 @@
  <specific type="map">
   <sys name="Eiderdown">
    <jump>Gilligan's Tomb</jump>
-   <asset>Adrian</asset>
-   <asset>Ember</asset>
+   <spob>Adrian</spob>
+   <spob>Ember</spob>
   </sys>
   <sys name="Gilligan's Tomb">
    <jump>Adraia</jump>
    <jump>Eiderdown</jump>
-   <asset>Gilligan's Tomb</asset>
+   <spob>Gilligan's Tomb</spob>
   </sys>
   <sys name="Adraia">
    <jump>Gilligan's Tomb</jump>
@@ -25,37 +25,37 @@
   </sys>
   <sys name="Ulysses">
    <jump>Adraia</jump>
-   <asset>Socrates Military Academy</asset>
-   <asset>Ummula</asset>
-   <asset>Vao Vos</asset>
+   <spob>Socrates Military Academy</spob>
+   <spob>Ummula</spob>
+   <spob>Vao Vos</spob>
   </sys>
   <sys name="Vanir">
    <jump>Adraia</jump>
    <jump>Aesir</jump>
    <jump>Botarn</jump>
-   <asset>Fort Sirius</asset>
-   <asset>Sinass</asset>
-   <asset>Yrina</asset>
+   <spob>Fort Sirius</spob>
+   <spob>Sinass</spob>
+   <spob>Yrina</spob>
   </sys>
   <sys name="Aesir">
    <jump>Vanir</jump>
-   <asset>Gayathi</asset>
-   <asset>Mutris</asset>
-   <asset>Sirius Ordnance</asset>
-   <asset>Sirius Shipyards</asset>
-   <asset>Urail</asset>
+   <spob>Gayathi</spob>
+   <spob>Mutris</spob>
+   <spob>Sirius Ordnance</spob>
+   <spob>Sirius Shipyards</spob>
+   <spob>Urail</spob>
   </sys>
   <sys name="Botarn">
    <jump>Monogram</jump>
    <jump>Vanir</jump>
-   <asset>Arashu</asset>
-   <asset>Dundrop Station</asset>
+   <spob>Arashu</spob>
+   <spob>Dundrop Station</spob>
   </sys>
   <sys name="Monogram">
    <jump>Botarn</jump>
-   <asset>Oort Farming Station</asset>
-   <asset>Saraab</asset>
-   <asset>Wikon</asset>
+   <spob>Oort Farming Station</spob>
+   <spob>Saraab</spob>
+   <spob>Wikon</spob>
   </sys>
  </specific>
 </outfit>

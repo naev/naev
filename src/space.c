@@ -85,7 +85,7 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to s
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Spob *spob_stack = NULL; /**< Spob stack. */
-static VirtualSpob *vasset_stack = NULL; /**< Virtual asset stack. */
+static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
 #ifdef DEBUGGING
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
@@ -122,7 +122,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
 /* spob load */
 static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList );
 static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys );
-static int asset_parsePresence( xmlNodePtr node, SpobPresence *ap );
+static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
@@ -1086,11 +1086,11 @@ char **spob_searchFuzzyCase( const char* spobname, int *n )
 }
 
 /**
- * @brief Gets all the virtual assets.
+ * @brief Gets all the virtual spobs.
  */
 VirtualSpob* virtualspob_getAll (void)
 {
-   return vasset_stack;
+   return vspob_stack;
 }
 
 /**
@@ -1105,12 +1105,12 @@ static int virtualspob_cmp( const void *p1, const void *p2 )
 }
 
 /**
- * @brief Gets a virtual asset by matching name.
+ * @brief Gets a virtual spob by matching name.
  */
 VirtualSpob* virtualspob_get( const char *name )
 {
    const VirtualSpob va = {.name = (char*)name};
-   VirtualSpob *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualspob_cmp );
+   VirtualSpob *found = bsearch( &va, vspob_stack, array_size(vspob_stack), sizeof(VirtualSpob), virtualspob_cmp );
    if (found != NULL)
       return found;
    WARN(_("Virtual Spob '%s' not found in the universe"), name);
@@ -1870,36 +1870,36 @@ static int spobs_load (void)
 }
 
 /**
- * @brief Loads all the virtual assets.
+ * @brief Loads all the virtual spobs.
  *
  *    @return 0 on success.
  */
 static int virtualspobs_load (void)
 {
-   char **asset_files;
+   char **spob_files;
 
    /* Initialize stack if needed. */
-   if (vasset_stack == NULL)
-      vasset_stack = array_create_size(VirtualSpob, 64);
+   if (vspob_stack == NULL)
+      vspob_stack = array_create_size(VirtualSpob, 64);
 
    /* Load XML stuff. */
-   asset_files = PHYSFS_enumerateFiles( VIRTUALSPOB_DATA_PATH );
-   for (size_t i=0; asset_files[i]!=NULL; i++) {
+   spob_files = PHYSFS_enumerateFiles( VIRTUALSPOB_DATA_PATH );
+   for (size_t i=0; spob_files[i]!=NULL; i++) {
       xmlDocPtr doc;
       xmlNodePtr node;
       char *file;
 
-      if (!ndata_matchExt( asset_files[i], "xml" ))
+      if (!ndata_matchExt( spob_files[i], "xml" ))
          continue;
 
-      asprintf( &file, "%s%s", VIRTUALSPOB_DATA_PATH, asset_files[i]);
+      asprintf( &file, "%s%s", VIRTUALSPOB_DATA_PATH, spob_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
          continue;
       }
 
-      node = doc->xmlChildrenNode; /* first asset node */
+      node = doc->xmlChildrenNode; /* first spob node */
       if (node == NULL) {
          WARN(_("Malformed %s file: does not contain elements"),file);
          free(file);
@@ -1919,25 +1919,25 @@ static int virtualspobs_load (void)
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"presence")) {
                SpobPresence ap;
-               asset_parsePresence( cur, &ap );
+               spob_parsePresence( cur, &ap );
                array_push_back( &va.presences, ap );
                continue;
             }
 
-            WARN(_("Unknown node '%s' in virtual asset '%s'"),cur->name,va.name);
+            WARN(_("Unknown node '%s' in virtual spob '%s'"),cur->name,va.name);
          } while (xml_nextNode(cur));
 
-         array_push_back( &vasset_stack, va );
+         array_push_back( &vspob_stack, va );
       }
 
       /* Clean up. */
       free(file);
       xmlFreeDoc(doc);
    }
-   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualspob_cmp );
+   qsort( vspob_stack, array_size(vspob_stack), sizeof(VirtualSpob), virtualspob_cmp );
 
    /* Clean up. */
-   PHYSFS_freeList( asset_files );
+   PHYSFS_freeList( spob_files );
 
    return 0;
 }
@@ -2192,12 +2192,12 @@ void space_gfxUnload( StarSystem *sys )
 }
 
 /**
- * @brief Parsess an asset presence from xml.
+ * @brief Parsess an spob presence from xml.
  *
  *    @param node Node to process.
  *    @param[out] ap Spob presence to save to.
  */
-static int asset_parsePresence( xmlNodePtr node, SpobPresence *ap )
+static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap )
 {
    xmlNodePtr cur = node->children;
    memset( ap, 0, sizeof(SpobPresence) );
@@ -2296,7 +2296,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
          continue;
       }
       else if (xml_isNode(node, "presence")) {
-         asset_parsePresence( node, &spob->presence );
+         spob_parsePresence( node, &spob->presence );
          if (spob->presence.faction>=0)
             flags += FLAG_FACTIONSET;
          continue;
@@ -2554,19 +2554,19 @@ int system_rmSpob( StarSystem *sys, const char *spobname )
 }
 
 /**
- * @brief Adds a virtual asset to a system.
+ * @brief Adds a virtual spob to a system.
  *
- *    @param sys System to add virtual asset to.
- *    @param assetname Name of the virtual asset being added.
+ *    @param sys System to add virtual spob to.
+ *    @param spobname Name of the virtual spob being added.
  */
-int system_addVirtualSpob( StarSystem *sys, const char *assetname )
+int system_addVirtualSpob( StarSystem *sys, const char *spobname )
 {
    VirtualSpob *va;
 
    if (sys == NULL)
       return -1;
 
-   va = virtualspob_get( assetname );
+   va = virtualspob_get( spobname );
    if (va == NULL)
       return -1;
    array_push_back( &sys->spobs_virtual, va );
@@ -2578,36 +2578,36 @@ int system_addVirtualSpob( StarSystem *sys, const char *assetname )
 }
 
 /**
- * @brief Removes a virtual asset from a system.
+ * @brief Removes a virtual spob from a system.
  *
- *    @param sys System to remove virtual asset from.
- *    @param assetname Name of the virtual asset being removed.
+ *    @param sys System to remove virtual spob from.
+ *    @param spobname Name of the virtual spob being removed.
  */
-int system_rmVirtualSpob( StarSystem *sys, const char *assetname )
+int system_rmVirtualSpob( StarSystem *sys, const char *spobname )
 {
    int i;
 
    if (sys == NULL) {
-      WARN(_("Unable to remove virtual asset '%s' from NULL system."), assetname);
+      WARN(_("Unable to remove virtual spob '%s' from NULL system."), spobname);
       return -1;
    }
 
-   /* Try to find virtual asset. */
+   /* Try to find virtual spob. */
    for (i=0; i<array_size(sys->spobs_virtual); i++)
-      if (strcmp(sys->spobs_virtual[i]->name, assetname)==0)
+      if (strcmp(sys->spobs_virtual[i]->name, spobname)==0)
          break;
 
-   /* Virtual asset not found. */
+   /* Virtual spob not found. */
    if (i>=array_size(sys->spobs_virtual)) {
-      WARN(_("Virtual asset '%s' not found in system '%s' for removal."), assetname, sys->name);
+      WARN(_("Virtual spob '%s' not found in system '%s' for removal."), spobname, sys->name);
       return -1;
    }
 
-   /* Remove virtual asset. */
+   /* Remove virtual spob. */
    array_erase( &sys->spobs_virtual, &sys->spobs_virtual[i], &sys->spobs_virtual[i+1] );
 
    /* Remove the presence. */
-   space_reconstructPresences(); /* TODO defer this if removing multiple assets at once. */
+   space_reconstructPresences(); /* TODO defer this if removing multiple spobs at once. */
    system_setFaction(sys);
 
    economy_addQueuedUpdate();
@@ -2870,7 +2870,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      /* Loads all the assets. */
+      /* Loads all the spobs. */
       else if (xml_isNode(node,"spobs")) {
          xmlNodePtr cur = node->children;
          do {
@@ -3385,7 +3385,7 @@ int space_load (void)
    if (ret < 0)
       return ret;
 
-   /* Load virtual assets. */
+   /* Load virtual spobs. */
    ret = virtualspobs_load();
    if (ret < 0)
       return ret;
@@ -3912,12 +3912,12 @@ void space_exit (void)
    }
    array_free(spob_stack);
 
-   for (int i=0; i<array_size(vasset_stack); i++) {
-      VirtualSpob *va = &vasset_stack[i];
+   for (int i=0; i<array_size(vspob_stack); i++) {
+      VirtualSpob *va = &vspob_stack[i];
       free( va->name );
       array_free( va->presences );
    }
-   array_free( vasset_stack );
+   array_free( vspob_stack );
 
    /* Free the systems. */
    for (int i=0; i < array_size(systems_stack); i++) {
@@ -4272,7 +4272,7 @@ int space_sysLoad( xmlNodePtr parent )
 }
 
 /**
- * @brief Parses assets in a system.
+ * @brief Parses spobs in a system.
  *
  *    @param parent Node of the system.
  *    @param sys System to populate.
@@ -4516,7 +4516,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 }
 
 /**
- * @brief Go through all the assets and call system_addPresence().
+ * @brief Go through all the spobs and call system_addPresence().
  *
  *    @param sys Pointer to the system to process.
  */
@@ -4687,7 +4687,7 @@ int system_hasSpob( const StarSystem *sys )
       return 0;
    }
 
-   /* Go through all the assets and look for a real one. */
+   /* Go through all the spobs and look for a real one. */
    for (int i=0; i < array_size(sys->spobs); i++)
       return 1;
 

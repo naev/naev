@@ -1293,7 +1293,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    else
       r  = 0.;
 
-   /* Reject pilot if it's too far or a valid asset is closer. */
+   /* Reject pilot if it's too far or a valid spob is closer. */
    if ((dp > pow2(rp)) || ((d < pow2(r)) && (dp >  d)))
       pid = PLAYER_ID;
 
