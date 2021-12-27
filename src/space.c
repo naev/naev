@@ -2230,18 +2230,18 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    Commodity **comms;
 
    /* Clear up memory for safe defaults. */
-   flags          = 0;
-   spob->hide   = 0.01;
-   spob->radius = -1.;
-   comms          = array_create( Commodity* );
+   flags             = 0;
+   spob->hide        = 0.01;
+   spob->radius      = -1.;
+   comms             = array_create( Commodity* );
    /* Lua stuff. */
-   spob->lua_env   = LUA_NOREF;
-   spob->lua_load  = LUA_NOREF;
-   spob->lua_unload= LUA_NOREF;
-   spob->lua_land  = LUA_NOREF;
-   spob->lua_can_land = LUA_NOREF;
-   spob->lua_render= LUA_NOREF;
-   spob->lua_update= LUA_NOREF;
+   spob->lua_env     = LUA_NOREF;
+   spob->lua_load    = LUA_NOREF;
+   spob->lua_unload  = LUA_NOREF;
+   spob->lua_land    = LUA_NOREF;
+   spob->lua_can_land= LUA_NOREF;
+   spob->lua_render  = LUA_NOREF;
+   spob->lua_update  = LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
