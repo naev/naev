@@ -1672,9 +1672,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
    w->strength = 1.;
 
    /* Inform the target. */
-   pilot_target = pilot_get(target);
-   if (pilot_target != NULL)
-      pilot_target->projectiles++;
+   if (!(outfit_isBeam(w->outfit))) {
+      pilot_target = pilot_get(target);
+      if (pilot_target != NULL)
+         pilot_target->projectiles++;
+   }
 
    switch (outfit->type) {
 
@@ -1928,13 +1930,6 @@ static void weapon_free( Weapon* w )
 {
    Pilot *pilot_target = pilot_get( w->target );
 
-   /* Decrement target lockons if needed */
-   if (pilot_target != NULL) {
-      pilot_target->projectiles--;
-      if (outfit_isSeeker(w->outfit))
-         pilot_target->lockons--;
-   }
-
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {
       sound_stop( w->voice );
@@ -1943,6 +1938,14 @@ static void weapon_free( Weapon* w )
             w->solid->pos.y,
             w->solid->vel.x,
             w->solid->vel.y);
+   }
+   else {
+      /* Decrement target lockons if needed */
+      if (pilot_target != NULL) {
+         pilot_target->projectiles--;
+         if (outfit_isSeeker(w->outfit))
+            pilot_target->lockons--;
+      }
    }
 
    /* Free the solid. */
