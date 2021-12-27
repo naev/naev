@@ -9,7 +9,7 @@
   <chance>20</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
-  <cond>planet.cur() ~= planet.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
+  <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
@@ -29,7 +29,7 @@ local zpp = require "common.zalek_physics"
 -- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp01
-local destpnt, destsys = planet.getS("Katar I")
+local destpnt, destsys = spob.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
@@ -105,7 +105,7 @@ That doesn't sound very reassuring.
 end
 
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 

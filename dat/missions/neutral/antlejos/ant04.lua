@@ -34,7 +34,7 @@ local cargo_name = _("morphogenic archaea")
 local cargo_amount = 100 -- Amount in mass
 local reward = ant.rewards.ant04
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 -- luacheck: globals enter land protest (Hook functions passed by name)
 
@@ -100,7 +100,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
@@ -117,7 +117,7 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )

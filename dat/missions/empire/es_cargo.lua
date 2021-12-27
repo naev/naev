@@ -38,7 +38,7 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 function create()
    -- Note: this mission does not make any system claims.
 
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
@@ -121,7 +121,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       tk.msg( _("Successful Delivery"), fmt.f(
          _("The Empire workers unload the {cargo} at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)

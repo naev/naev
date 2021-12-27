@@ -30,10 +30,10 @@ local baron = require "common.baron"
 
 -- Mission constants
 local baronsys = system.get("Ingot")
-local artefactplanetA = planet.get("Varaati")
-local artefactplanetB = planet.get("Sinclair")
-local artefactplanetC = planet.get("Hurada")
-local flintplanet, flintsys = planet.getS("Tau Station")
+local artefactplanetA = spob.get("Varaati")
+local artefactplanetB = spob.get("Sinclair")
+local artefactplanetC = spob.get("Hurada")
+local flintplanet, flintsys = spob.getS("Tau Station")
 local reward = baron.rewards.prince
 
 local isIn, mangle -- Forward-declared functions
@@ -124,13 +124,13 @@ end
 
 function land()
    local sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers.")
-   if planet.cur() == artefactplanetA and not mem.artifactA then
+   if spob.cur() == artefactplanetA and not mem.artifactA then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
-   elseif planet.cur() == artefactplanetB and not mem.artifactB then
+   elseif spob.cur() == artefactplanetB and not mem.artifactB then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
-   elseif planet.cur() == artefactplanetC and not mem.artifactC then
+   elseif spob.cur() == artefactplanetC and not mem.artifactC then
       mem.sellnpc = misn.npcAdd("seller", _("Artefact seller"), portrait.get("Pirate"), sellerdesc, 4)
-   elseif planet.cur() == flintplanet then
+   elseif spob.cur() == flintplanet then
       if mem.flintleyfirst then
          misn.npcAdd("flintley", _("A reedy-looking man"), "neutral/unique/flintley.webp", _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
       else
@@ -212,7 +212,7 @@ end
 function seller()
    local option_yes = fmt.f(_("Buy the artefact ({credits})"), {credits=fmt.credits(reward * 0.15)})
    local option_no = _("Don't buy the artefact")
-   if planet.cur() == artefactplanetA then
+   if spob.cur() == artefactplanetA then
       if tk.choice(_("A suspicious salesman"), _([["Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
@@ -224,7 +224,7 @@ function seller()
             tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
          end
       end
-   elseif planet.cur() == artefactplanetB then
+   elseif spob.cur() == artefactplanetB then
       if tk.choice(_("A suspicious salesman"), _([[The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
@@ -236,7 +236,7 @@ function seller()
             tk.msg(_("Not enough money!"), fmt.f(_("You can't currently afford to buy this artefact. You need {credits}."), {credits=fmt.credits(reward * 0.15)}))
          end
       end
-   elseif planet.cur() == artefactplanetC then
+   elseif spob.cur() == artefactplanetC then
       if tk.choice(_("A suspicious salesman"), _([[The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]), option_yes, option_no) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(mem.sellnpc)
@@ -253,12 +253,12 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.add("Proteron Kahan", "Independent", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add("Proteron Kahan", "Independent", spob.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
+      pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       mem.hhail = hook.pilot(pinnacle, "hail", "hail")
    elseif mem.artifactA ~= nil or mem.artifactB ~= nil or mem.artifactC ~= nil or mem.artifactReal ~= nil then
@@ -286,10 +286,10 @@ function enter()
 end
 
 function idle()
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500,  500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new(-500,  500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new(-500, -500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500, -500), false)
 end
 
 function hail()

@@ -64,7 +64,7 @@ local cancelled = false -- Whether the player opted to stop the script.
 --]]
 local function check_stranded()
    local pp = player.pilot()
-   local services = planet.cur():services()
+   local services = spob.cur():services()
 
    -- Player has no ability to fix whatever's wrong, definitely stuck.
    if not services["shipyard"] and not services["outfits"] then
@@ -79,7 +79,7 @@ local function check_stranded()
       end
 
       -- If the player can afford another ship, they're not stranded.
-      for k,v in ipairs( planet.cur():shipsSold() ) do
+      for k,v in ipairs( spob.cur():shipsSold() ) do
          if v:price() <= (player.credits() + playervalue) then
             return false
          end
@@ -113,7 +113,7 @@ local function check_stranded()
 
    -- Add outfits sold by the outfitter.
    if services["outfits"] then
-      for k,v in ipairs( planet.cur():outfitsSold() ) do
+      for k,v in ipairs( spob.cur():outfitsSold() ) do
          table.insert(inv, v)
       end
    end

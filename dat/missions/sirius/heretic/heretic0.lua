@@ -31,7 +31,7 @@ function create()
    --this mission makes no mission claims
    --set the variables
    mem.reward = 200e3 --mem.reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.
-   mem.targetasset = planet.get("Margot")
+   mem.targetasset = spob.get("Margot")
    mem.targetsystem = system.get("Brendon")
    if system.cur() == mem.targetsystem then --I didn't want the player to start the mission in the same system as it was supposed to end
       misn.finish(false)
@@ -70,7 +70,7 @@ function accept()
 end
 
 function land ()
-   if planet.cur() == mem.targetasset then
+   if spob.cur() == mem.targetasset then
       tk.msg( _("The Gauntlet"), fmt.f(_([[As you descend onto the {pnt} spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
     You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]]), {pnt=mem.targetasset} ) )
       player.pay(mem.reward)

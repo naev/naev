@@ -34,8 +34,8 @@ local emp = require "common.empire"
 local fmt = require "format"
 
 -- Mission consstants
-local misn_base, misn_base_sys = planet.getS("Omega Station")
-local misn_target, misn_target_sys = planet.getS("Eiroik")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_target, misn_target_sys = spob.getS("Eiroik")
 
 local swarm1, swarm2, swarm3 -- Non-persistent state
 local moveSwarm -- Forward-declared functions
@@ -83,12 +83,12 @@ end
 
 function land()
    -- You land on the planet, but you also immediately take off again.
-   if mem.misn_stage == 0 and planet.cur() == misn_target then
+   if mem.misn_stage == 0 and spob.cur() == misn_target then
       -- Initiate cutscene
       mem.takeoffhook = hook.takeoff("takeoff")
       player.takeoff()
    -- Return bit
-   elseif mem.misn_stage == 1 and planet.cur() == misn_base then
+   elseif mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
     "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile, give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 

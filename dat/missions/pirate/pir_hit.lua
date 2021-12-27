@@ -48,7 +48,7 @@ local hunter_hits = {}
 
 function create ()
    -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( planet.cur():faction() ) and rnd.rnd() < 0.5 then
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.5 then
       misn.finish(false)
    end
 
@@ -123,7 +123,7 @@ function create ()
    end
 
    local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
-   if not pir.factionIsPirate( planet.cur():faction() ) then
+   if not pir.factionIsPirate( spob.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
       mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")

@@ -42,7 +42,7 @@ local fmt = require "format"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
-local dest_planet, dest_sys = planet.getS("Mutris")
+local dest_planet, dest_sys = spob.getS("Mutris")
 
 -- passenger rank
 local prank = {}
@@ -83,7 +83,7 @@ ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the l
 
 -- Customization of car.calculateRoute in common.cargo
 local function ferry_calculateRoute (dplanet, dsys)
-    mem.origin_p, mem.origin_s = planet.cur()
+    mem.origin_p, mem.origin_s = spob.cur()
     local routesys = mem.origin_s
     local routepos = mem.origin_p:pos()
 
@@ -119,7 +119,7 @@ function create()
        misn.finish(false)
     end
 
-    mem.origin_p, mem.origin_s = planet.cur()
+    mem.origin_p, mem.origin_s = spob.cur()
     if mem.origin_s == dest_sys then
        misn.finish(false)
     end
@@ -296,7 +296,7 @@ end
 
 -- Land hook
 function land()
-    if planet.cur() == mem.destplanet then
+    if spob.cur() == mem.destplanet then
 
         -- Check if we're still flying a Sirian ship
         mem.has_sirian_ship = player_has_sirian_ship()

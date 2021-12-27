@@ -36,7 +36,7 @@ local emp = require "common.empire"
 local fmt = require "format"
 
 -- Mission constants
-local misn_base = planet.get("Omega Station")
+local misn_base = spob.get("Omega Station")
 local misn_target_sys1 = system.get("C-59")
 local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")
@@ -241,7 +241,7 @@ end
 -- Handles arrival back to base
 function land ()
    -- Final landing stage
-   if mem.misn_stage == 4 and planet.cur() == misn_base then
+   if mem.misn_stage == 4 and spob.cur() == misn_base then
 
       tk.msg( _("Mission Success"), fmt.f(_([[As you approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. Upon landing, you are saluted by the welcoming committee in charge of honoring all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )

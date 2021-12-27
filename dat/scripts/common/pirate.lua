@@ -95,7 +95,7 @@ end
 function pir.systemClan( sys )
    sys = sys or system.cur()
    -- Return faction of landed asset if applicable
-   local pnt = planet.cur()
+   local pnt = spob.cur()
    if pnt then
       local pfact = pnt:faction()
       if pfact and pir.factionIsPirate( pfact ) then

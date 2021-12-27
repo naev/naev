@@ -86,7 +86,7 @@ end
 
 
 function land ()
-   if planet.cur() ~= mem.destpnt then return end
+   if spob.cur() ~= mem.destpnt then return end
 
    vn.clear()
    vn.scene()

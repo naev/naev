@@ -37,8 +37,8 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local misn_target, misn_target_sys = planet.getS("Eiroik")
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_target, misn_target_sys = spob.getS("Eiroik")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
 local credits = emp.rewards.ec04
 
 local fleet1, fleet2, swarm1, swarm2, swarm3 -- Non-persistent state
@@ -220,7 +220,7 @@ end
 -- Handles arrival back to base
 function land ()
    -- Just landing
-   if mem.misn_stage == 1 and planet.cur() == misn_target then
+   if mem.misn_stage == 1 and spob.cur() == misn_target then
       player.allowSave(false) -- This prevents the player from starting on Eiroik if he dies after taking off.
       player.takeoff()
 
@@ -243,7 +243,7 @@ function land ()
       mem.misn_cargo = misn.cargoAdd( c, 0 )
       mem.misn_stage = 2
 
-   elseif mem.misn_stage == 3 and planet.cur() == misn_base then
+   elseif mem.misn_stage == 3 and spob.cur() == misn_base then
 
       tk.msg( _("Mission Accomplished"), _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
     "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )

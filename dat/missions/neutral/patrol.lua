@@ -88,7 +88,7 @@ end
 
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
@@ -198,7 +198,7 @@ function land ()
    end
 
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and planet.cur():faction() == mem.paying_faction then
+   if mem.job_done and spob.cur():faction() == mem.paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       vntk.msg( _("Mission Completed"), txt )
       player.pay( mem.credits )

@@ -28,7 +28,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local targetworld, targetworld_sys = planet.getS("The Frontier Council")
+local targetworld, targetworld_sys = spob.getS("The Frontier Council")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -65,7 +65,7 @@ end
 
 function land()
 
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc4 )
          -- More flavour text

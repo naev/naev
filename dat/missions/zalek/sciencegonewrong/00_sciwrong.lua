@@ -38,16 +38,16 @@ local spwn_police -- Forward-declared functions
 -- set mission variables
 mem.t_sys = {}
 mem.t_pla = {}
-mem.t_pla[1], mem.t_sys[1] = planet.getS("Vilati Vilata")
-mem.t_pla[2], mem.t_sys[2] = planet.getS("Waterhole's Moon")
+mem.t_pla[1], mem.t_sys[1] = spob.getS("Vilati Vilata")
+mem.t_pla[2], mem.t_sys[2] = spob.getS("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
---mem.t_pla[3], mem.t_sys[3] = planet.getS("Gastan")
+--mem.t_pla[3], mem.t_sys[3] = spob.getS("Gastan")
 local pho_mny = 50e3
 local reward = 1e6
 
 function create ()
    -- Variable set up and clean up
-   var.push( sciwrong.center_operations, planet.cur():nameRaw() )
+   var.push( sciwrong.center_operations, spob.cur():nameRaw() )
    mem.t_pla[3], mem.t_sys[3] = sciwrong.getCenterOperations()
 
    -- Spaceport bar stuff
@@ -74,15 +74,15 @@ end
 
 function land1()
    local trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
-   if planet.cur() == mem.t_pla[1] and not mem.traded1 then
+   if spob.cur() == mem.t_pla[1] and not mem.traded1 then
       mem.bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)
-   elseif planet.cur() == mem.t_pla[1] and mem.talked and mem.traded1 then
+   elseif spob.cur() == mem.t_pla[1] and mem.talked and mem.traded1 then
       mem.bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3.webp", trd1_desc)
    end
 end
 
 function land2()
-   if planet.cur() == mem.t_pla[2] and mem.talked and not mem.traded1 then
+   if spob.cur() == mem.t_pla[2] and mem.talked and not mem.traded1 then
       mem.bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.webp", _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for."))
    end
 end
@@ -154,7 +154,7 @@ end
 
 -- final land: let the player land and collect the reward
 function fnl_ld ()
-   if planet.cur() == mem.t_pla[3] and mem.traded2 then
+   if spob.cur() == mem.t_pla[3] and mem.traded2 then
       tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
       tk.msg(_([[In the bar]]),_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
       player.pay(reward)

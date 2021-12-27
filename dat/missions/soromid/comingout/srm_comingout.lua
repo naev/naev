@@ -26,7 +26,7 @@ local srm = require "common.soromid"
 -- luacheck: globals do_chatter init_chatter land (Hook functions passed by name)
 
 -- Mission constants
-local misplanet, missys = planet.getS( "Durea" )
+local misplanet, missys = spob.getS( "Durea" )
 local credits = 50e3
 
 local chatter = {}
@@ -127,7 +127,7 @@ end
 
 
 function land ()
-   if planet.cur() == misplanet then
+   if spob.cur() == misplanet then
       -- Use any remaining chatter boxes (make sure the player gets the
       -- whole story)
       while mem.chatter_index < #chatter do

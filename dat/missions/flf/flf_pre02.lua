@@ -70,7 +70,7 @@ function accept ()
       mem.marker = misn.markerAdd( mem.missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      mem.DVplanet, mem.DVsys = planet.getS("Raelid Outpost")
+      mem.DVplanet, mem.DVsys = spob.getS("Raelid Outpost")
 
       mem.reinforcements_arrived = false
       mem.dv_ships_left = 0
@@ -301,7 +301,7 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( _("Breaking the ice"), _([[When you left Sindbad Station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been.
     But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.]]) )
       tk.msg( _("Breaking the ice"), fmt.f( _([["Welcome back, {player}, and congratulations. I didn't expect the Dvaered to send reinforcements, much less a Vigilance. I certainly wouldn't have sent you alone if I did, and I might not have sent you at all. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"]]), {player=player.name()} ) )
@@ -322,7 +322,7 @@ end
 
 function land_dv ()
    leave()
-   if planet.cur() == mem.DVplanet then
+   if spob.cur() == mem.DVplanet then
       tk.msg( _("A reward for a job well botched"), _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
     "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]]) )
       tk.msg( _("A reward for a job well botched"), _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.

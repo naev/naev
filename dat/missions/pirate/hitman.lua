@@ -52,7 +52,7 @@ function accept ()
    -- Some variables for keeping track of the mission
    mem.misn_done = false
    mem.fledTraders = 0
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
 
    -- Set mission details
    misn.setTitle( _("Thug") )
@@ -122,7 +122,7 @@ end
 
 -- landed
 function landed()
-   if planet.cur() == mem.misn_base then
+   if spob.cur() == mem.misn_base then
       tk.msg(_("Mission Complete"), _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]]))
       player.pay(150e3)
       pir.modDecayFloor(2)

@@ -240,7 +240,7 @@ end
 
 
 function land ()
-   if mem.stage >= 3 and planet.cur():faction() == faction.get( "FLF" ) then
+   if mem.stage >= 3 and spob.cur():faction() == faction.get( "FLF" ) then
       tk.msg( _("Just The Edge We Need"), fmt.f( _([[You greet Benito in a friendly manner as always, sharing your story and telling her the good news before handing her a chip with the map data on it. She seems pleased. "Excellent," she says. "We'll begin sending our trading convoys out right away. We'll need lots of supplies for our next mission! Thank you for your service, {player}. Your pay has been deposited into your account. It will be a while before we'll be ready for your next big mission, so you can do some missions on the mission computer in the meantime. And don't forget to visit the Pirate worlds yourself and bring your own ship up to par!
     "Oh, one last thing. Make sure you stay on good terms with the pirates, yeah? The next thing you should probably do is buy a Skull and Bones ship; pirates tend to respect those who use their ships more than those who don't. And make sure to destroy Dvaered scum with the pirates around! That should keep your reputation up." You make a mental note to do what she suggests as she excuses herself and heads off.]]), {player=player.name()} ) )
       diff.apply( "Fury_Station" )

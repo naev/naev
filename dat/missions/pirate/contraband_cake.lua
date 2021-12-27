@@ -40,7 +40,7 @@ local receiverimage = portrait.getFullPath(portrait.get())
 function create()
    -- Note: this mission does not make any system claims.
 
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
@@ -141,7 +141,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() ~= mem.destplanet then
+   if spob.cur() ~= mem.destplanet then
       return
    end
 

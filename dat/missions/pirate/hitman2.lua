@@ -51,7 +51,7 @@ function accept ()
    mem.misn_done      = false
    mem.attackedTraders = {}
    mem.deadTraders = 0
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
 
    -- Set mission details
    misn.setTitle( _("Assassin") )
@@ -108,7 +108,7 @@ end
 
 -- landed
 function landed()
-   if planet.cur() == mem.misn_base then
+   if spob.cur() == mem.misn_base then
       tk.msg(_("Mission Complete"), _([[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]]))
       player.pay(500e3)
       pir.modDecayFloor(3)

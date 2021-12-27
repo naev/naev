@@ -110,7 +110,7 @@ local spawn_pirate -- Forward-declared functions
 
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -209,7 +209,7 @@ end
 
 function land ()
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and planet.cur():faction() == mem.paying_faction then
+   if mem.job_done and spob.cur():faction() == mem.paying_faction then
       local pay_text
       if mem.target_killed then
          pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]

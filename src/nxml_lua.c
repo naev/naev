@@ -263,7 +263,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             if (pnt != NULL)
                nxml_saveData( writer, SPOB_METATABLE, name, name_len, pnt->name, keynum );
             else
-               WARN(_("Failed to save invalid planet."));
+               WARN(_("Failed to save invalid spob."));
             /* key, value */
             break;
          }
@@ -434,18 +434,19 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushboolean(L,xml_getInt(node));
          else if (strcmp(type,"string")==0)
             lua_pushstring(L,xml_get(node));
-         else if ( strcmp( type, "string_base64" ) == 0 ) {
+         else if (strcmp( type, "string_base64" ) == 0) {
             data = base64_decode_cstr( &len, xml_get( node ) );
             lua_pushlstring( L, data, len );
             free( data );
          }
-         else if (strcmp(type,SPOB_METATABLE)==0) {
+         else if (strcmp(type,SPOB_METATABLE)==0 ||
+               (strcmp(type,"planet")==0)) { /* TODO remove eventually. */
             Spob *pnt = spob_get(xml_get(node));
             if (pnt != NULL) {
                lua_pushspob(L,spob_index(pnt));
             }
             else
-               WARN(_("Failed to load nonexistent planet '%s'"), xml_get(node));
+               WARN(_("Failed to load nonexistent spob '%s'"), xml_get(node));
          }
          else if (strcmp(type,SYSTEM_METATABLE)==0) {
             StarSystem *ss = system_get(xml_get(node));

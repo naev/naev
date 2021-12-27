@@ -29,8 +29,8 @@ local fleet = require "fleet"
 
 local reward = ant.rewards.ant07
 
-local retpnt, retsys = planet.getS("Antlejos V")
-local mainpnt, mainsys = planet.getS("Gordon's Exchange")
+local retpnt, retsys = spob.getS("Antlejos V")
+local mainpnt, mainsys = spob.getS("Gordon's Exchange")
 
 -- luacheck: globals approaching enter land (Hook functions passed by name)
 
@@ -86,7 +86,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==0 and planet.cur() == mainpnt then
+   if mem.state==0 and spob.cur() == mainpnt then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -101,7 +101,7 @@ function land ()
       misn.markerMove( mem.mrk, retpnt )
       misn.osdActive(2)
 
-   elseif mem.state==1 and planet.cur() == retpnt then
+   elseif mem.state==1 and spob.cur() == retpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )

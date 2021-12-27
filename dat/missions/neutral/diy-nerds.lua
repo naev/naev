@@ -53,10 +53,10 @@ function create ()
 end
 
 function accept ()
-   local cp = planet.cur()
+   local cp = spob.cur()
    mem.srcPlanet = cp
    for i,p in ipairs(system.planets(system.cur())) do
-      if planet.services(p)["land"] and p ~= cp and p:canLand() then
+      if spob.services(p)["land"] and p ~= cp and p:canLand() then
          mem.destPlanet=p
          break -- atm, just take the first landable planet which is not the current one
       end
@@ -83,7 +83,7 @@ function accept ()
       tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group visibly relax and you can almost feel Mia's confidence fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
     "Really? You'll do it? Um, great. Fantastic. I just knew that, eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=mem.destPlanet}))
-      local distance = vec2.dist( planet.pos(mem.srcPlanet), planet.pos(mem.destPlanet) )
+      local distance = vec2.dist( spob.pos(mem.srcPlanet), spob.pos(mem.destPlanet) )
       local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
       mem.expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
@@ -100,7 +100,7 @@ end
 
 -- invoked upon landing (stage 1: cart the nerds to mem.destPlanet)
 function nerds_land1()
-   local cp = planet.cur()
+   local cp = spob.cur()
 
    if mem.intime and cp ~= mem.destPlanet then
       return
@@ -168,7 +168,7 @@ function nerds_land2()
       return
    end
 
-   if mem.intime and planet.cur() == mem.destPlanet then
+   if mem.intime and spob.cur() == mem.destPlanet then
    -- you pickup the nerds in time
       mem.nerdswon = rnd.rnd() >= 0.6
       if mem.nerdswon then
@@ -190,7 +190,7 @@ function nerds_land2()
          mem.jhook = hook.takeoff("nerds_takeoff")
       end
 
-   elseif not mem.intime and planet.cur() == mem.destPlanet then
+   elseif not mem.intime and spob.cur() == mem.destPlanet then
    -- you're late for the pickup
       tk.msg(_("No more nerds"), fmt.f(_([[You look around, but the nerds are nowhere to be found. That is not much of a surprise, seeing that you are way too late.
     Suddenly, a guy approaches you. "Hi, are you {player}? The nerds wanted you to know that, basically, they got another transport home. One of the girls said some more, in a particularly rude language, but I don't remember the details".]]), {player=player.name()}))
@@ -278,7 +278,7 @@ end
 
 -- hooked to 'land' in the final stage (returning the nerds)
 function nerds_land3()
-   local cp = planet.cur()
+   local cp = spob.cur()
    if cp == mem.srcPlanet then
       if mem.nerdswon then
          tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), {player=player.name()}))
@@ -294,7 +294,7 @@ function nerds_land3()
     With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]), {outfit=_(reward_outfit)} ))
          time.inc(time.create(0,0,5000))
          player.outfitAdd(reward_outfit)
-         if planet.services(cp)["outfits"] then
+         if spob.services(cp)["outfits"] then
             player.landWindow("equipment")
          end
       end
@@ -308,7 +308,7 @@ end
 function system_hasAtLeast (amount, service)
    local p = {}
    for i,v in ipairs(system.planets(system.cur())) do
-      if planet.services(v)[service] and v:canLand() then
+      if spob.services(v)[service] and v:canLand() then
          table.insert(p,v)
       end
    end

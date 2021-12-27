@@ -85,7 +85,7 @@ function accept ()
 end
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if mem.misn_state == 4 then
          mem.npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
@@ -137,7 +137,7 @@ function approach_pir ()
          misn.osdCreate( _("Minerva Moles"),
                {_("Plant a listening device in a VIP room.") } )
 
-         local minsta = planet.get("Minerva Station")
+         local minsta = spob.get("Minerva Station")
          misn.markerAdd( minsta )
 
          minerva.log.pirate(_("You accepted another job from the sketchy individual to uncover moles at Minerva Station.") )
@@ -273,7 +273,7 @@ function enter ()
       -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.angle() )
+      local pos = spob.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.angle() )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )
@@ -346,7 +346,7 @@ function harper_gotattacked( _plt, attacker )
          -- Run to land at the station
          harper:setNoLand(false)
          harper:control()
-         harper:land( planet.get("Minerva Station") )
+         harper:land( spob.get("Minerva Station") )
          mem.harper_attacked = true
       end
 
@@ -388,7 +388,7 @@ function harper_hail ()
       -- He goes land now
       harper:setNoLand(false)
       harper:control()
-      harper:land( planet.get("Minerva Station") )
+      harper:land( spob.get("Minerva Station") )
    end
 
    if mem.harper_almostdied then

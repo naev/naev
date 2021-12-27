@@ -122,7 +122,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       tk.msg( _("Successful Delivery"), fmt.f(
          _("The Empire workers unload the {cargo} at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)

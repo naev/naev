@@ -72,7 +72,7 @@ function accept ()
          fmt.f(_("Escort Chelsea to {pnt} in the {sys} system."), {pnt=mem.misplanet, sys=mem.missys} ),
       } )
 
-      mem.startplanet = planet.cur()
+      mem.startplanet = spob.cur()
 
       hook.takeoff( "takeoff" )
       hook.jumpout( "jumpout" )
@@ -172,7 +172,7 @@ end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( _("Another Happy Landing"), fmt.f( _([[You successfully land and dock alongside Chelsea and she approaches the worker for the cargo delivery. The worker gives her a weird look, but collects the cargo with the help of some robotic drones and hands her a credit chip. When you get back to your ships, Chelsea transfers the sum of {credits} to your account, and you idly chat with her for a while.
     "Anyway, I should probably get going now," she says. "But I really appreciated the help there! Get in touch with me again sometime. We make a great team!" You agree, and you both go your separate ways once again.]]), {credits=fmt.credits(mem.credits)} ) )
       player.pay( mem.credits )

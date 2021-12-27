@@ -144,7 +144,7 @@ function enter ()
       if system.cur()==runawaysys then
          mem.misn_state=4
          misn.osdActive(4)
-         misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
+         misn.markerMove( mem.misnmarker, spob.get("Minerva Station") )
       else
          lmisn.fail(fmt.f(_("You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
       end

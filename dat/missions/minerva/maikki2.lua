@@ -69,7 +69,7 @@ local hintpnt = {
 }
 local hintsys = {}
 for k,v in ipairs(hintpnt) do
-   hintsys[k] = planet.get(v):system()
+   hintsys[k] = spob.get(v):system()
 end
 local eccpnt = "Strangelove Lab"
 local eccdiff = "strangelove"
@@ -111,9 +111,9 @@ function accept ()
    end
 
    -- Set up mission stuff
-   mem.markerhint1 = misn.markerAdd( planet.get(hintpnt[1]), "low")
-   mem.markerhint2 = misn.markerAdd( planet.get(hintpnt[2]), "low")
-   mem.markerhint3 = misn.markerAdd( planet.get(hintpnt[3]), "low")
+   mem.markerhint1 = misn.markerAdd( spob.get(hintpnt[1]), "low")
+   mem.markerhint2 = misn.markerAdd( spob.get(hintpnt[2]), "low")
+   mem.markerhint3 = misn.markerAdd( spob.get(hintpnt[3]), "low")
    hintosd()
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -299,22 +299,22 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
 
-   elseif planet.cur() == planet.get( hintpnt[1] ) then
+   elseif spob.cur() == spob.get( hintpnt[1] ) then
       misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif planet.cur() == planet.get( hintpnt[2] ) then
+   elseif spob.cur() == spob.get( hintpnt[2] ) then
       misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif planet.cur() == planet.get( hintpnt[3] ) then
+   elseif spob.cur() == spob.get( hintpnt[3] ) then
       misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif mem.misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
+   elseif mem.misn_state >= 1 and  spob.cur() == spob.get( hintpnt[4] ) then
       misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp floating in a nearby aquarium bowl.") )
 
-   elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and mem.misn_state < 6 then
+   elseif diff.isApplied(eccdiff) and spob.cur() == spob.get(eccpnt) and mem.misn_state < 6 then
       mem.npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
    end
 end
@@ -338,7 +338,7 @@ end
 local function visited ()
    if mem.misn_state==0 and visitedhints()==3 then
       mem.misn_state = 1
-      mem.markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
+      mem.markerhint4 = misn.markerAdd( spob.get(hintpnt[4]), "low" )
       minerva.log.maikki(_("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
@@ -867,7 +867,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       mem.misn_state = 6
       misn.npcRm( mem.npc_ecc )
       misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
-      misn.markerAdd( planet.get("Minerva Station"), "low")
+      misn.markerAdd( spob.get("Minerva Station"), "low")
       misn.markerRm( mem.marker_ecc )
       minerva.log.maikki(_("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )

@@ -27,7 +27,7 @@ local reward = 200e3
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
-local targetworld, targetworld_sys = planet.getS("Zhiru")
+local targetworld, targetworld_sys = spob.getS("Zhiru")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -74,7 +74,7 @@ end
 
 function land ()
   --If we land, check if we're at our destination
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
       misn.cargoRm( mem.cargoID )
       player.pay( reward )
 

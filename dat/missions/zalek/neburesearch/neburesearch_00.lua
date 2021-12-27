@@ -33,7 +33,7 @@ local zlk = require "common.zalek"
 
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
-local homeworld, homeworld_sys = planet.getS("Jorla")
+local homeworld, homeworld_sys = spob.getS("Jorla")
 local credits = 300e3
 
 
@@ -96,7 +96,7 @@ function accept()
 end
 
 function land()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
    if mem.misn_stage == 3 and mem.landed == homeworld then
       tk.msg( "", fmt.f(_([[The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land.
    "Once again, thank you for your help. I still have to analyse the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."

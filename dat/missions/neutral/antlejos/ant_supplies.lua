@@ -29,7 +29,7 @@ local car = require "common.cargo"
 
 local cargo_name = _("Volunteers and Equipment")
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 local levelup = {
    0,
@@ -102,7 +102,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < mem.amount then
@@ -119,7 +119,7 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       vn.transition()

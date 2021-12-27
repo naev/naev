@@ -143,7 +143,7 @@ end
 Chooses landing songs.
 --]]
 function choose_table.land ()
-   local pnt   = planet.cur()
+   local pnt   = spob.cur()
    local class = pnt:class()
    local mus
 

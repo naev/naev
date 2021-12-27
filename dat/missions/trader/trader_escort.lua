@@ -106,7 +106,7 @@ function accept()
    end
 
    mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
-   mem.origin = planet.cur() -- The place where the AI ships spawn from.
+   mem.origin = spob.cur() -- The place where the AI ships spawn from.
 
    mem.orig_alive = nil
    mem.alive = nil
@@ -151,7 +151,7 @@ end
 function land()
    mem.alive = math.min( mem.alive, mem.exited )
 
-   if planet.cur() ~= mem.destplanet then
+   if spob.cur() ~= mem.destplanet then
       vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
       misn.finish(false)
    elseif mem.alive <= 0 then

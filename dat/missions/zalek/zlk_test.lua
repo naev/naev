@@ -3,7 +3,7 @@
 <mission name="Za'lek Test">
  <avail>
   <priority>3</priority>
-  <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
+  <cond>faction.playerStanding("Za'lek") &gt; 5 and spob.cur():services()["outfits"] == "Outfits"</cond>
   <chance>450</chance>
   <location>Computer</location>
   <faction>Za'lek</faction>
@@ -57,7 +57,7 @@ znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system re
 znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
 function create()
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
@@ -111,7 +111,7 @@ function accept()
    end
 
    mem.isSlow = false     --Flag to know if the pilot has limited speed
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
 end
 
 function takeoff()  --must trigger at every takeoff to check if the player forgot the engine
@@ -157,7 +157,7 @@ function land()
       mem.isSlow = false
    end
 
-   if planet.cur() == mem.destplanet and mem.stage == 0 then
+   if spob.cur() == mem.destplanet and mem.stage == 0 then
       tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
       player.pay(mem.reward)
       player.outfitRm("Za'lek Test Engine")
@@ -168,12 +168,12 @@ function land()
       misn.finish(true)
    end
 
-   if planet.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
+   if spob.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
       tk.msg( _("Mission failed"), _("You traveled without the engine."))
       abort()
    end
 
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
 end
 
 --  Breakdowns

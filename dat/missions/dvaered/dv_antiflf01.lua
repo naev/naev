@@ -51,7 +51,7 @@ end
 
 function land()
    local mid
-   if planet.cur():faction() == faction.get("Dvaered") then
+   if spob.cur():faction() == faction.get("Dvaered") then
       if var.peek("flfbase_flfshipkilled") then
          mid = _([[In addition, you complied with your instructions and destroyed a terrorist that threatened the peace and stability of the region. You will be rewarded appropriately."]])
          player.pay(100e3)

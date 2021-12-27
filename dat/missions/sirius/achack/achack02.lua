@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+  <cond>spob.get("Violin Station"):system():jumpDist() &lt; 4</cond>
   <done>Sirian Bounty</done>
   <chance>10</chance>
   <location>Bar</location>
@@ -83,9 +83,9 @@ function accept()
 
    mem.stage = 1
 
-   mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+   mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
    mem.nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
-   mem.origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
+   mem.origin = spob.cur() -- Determines where Joanne spawns from. Can be a planet or system.
    mem.joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
    mem.mark = misn.markerAdd( mem.destsys, "low" )
    mem.warnFuel = true
@@ -105,20 +105,20 @@ end
 
 -- Land hook.
 function land()
-   if planet.cur() == mem.destplanet and mem.joannelanded and mem.stage < 4 then
+   if spob.cur() == mem.destplanet and mem.joannelanded and mem.stage < 4 then
       mem.stage = mem.stage + 1
-      mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+      mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
-      mem.origin = planet.cur()
+      mem.origin = spob.cur()
       player.refuel(200)
-      tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=planet.cur()}))
+      tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
-   elseif planet.cur() == mem.destplanet and mem.joannelanded and mem.stage == 4 then
+   elseif spob.cur() == mem.destplanet and mem.joannelanded and mem.stage == 4 then
       tk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))
       mem.stage = mem.stage + 1
-      mem.origin = planet.cur()
-      mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+      mem.origin = spob.cur()
+      mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
@@ -126,7 +126,7 @@ function land()
    elseif mem.stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
-   elseif mem.stage == 5 and planet.cur() == planet.get("Sroolu") then
+   elseif mem.stage == 5 and spob.cur() == spob.get("Sroolu") then
       misn.markerRm(mem.mark)
       tk.msg(_("One damsel, safe and sound"), fmt.f(_([[After you both land your ships, you meet Joanne in the spaceport bar.
     "Whew! That was definitely the most exciting round I've done to date! Thank you {player}, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."
@@ -249,7 +249,7 @@ end
 -- Load hook. Makes sure the player can't start on military stations.
 function on_load()
    if mem.stage > 1 and mem.stage < 5 then
-      tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=planet.cur()}))
+      tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       player.takeoff()
    elseif mem.stage == 5 then
       tk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))

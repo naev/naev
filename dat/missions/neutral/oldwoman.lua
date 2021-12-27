@@ -61,7 +61,7 @@ function create ()
    mem.destplanet = planets[index][1]
    mem.destsys = planets[index][2]
 
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
    misn.setNPC(_("An old woman"), "neutral/unique/oldwoman.webp", _("You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. She's purposefully looking around."))
 end
 
@@ -83,7 +83,7 @@ function accept ()
       })
       misn.markerAdd( mem.destplanet )
 
-      mem.dist_total = car.calculateDistance(system.cur(), planet.cur():pos(), mem.destsys, mem.destplanet)
+      mem.dist_total = car.calculateDistance(system.cur(), spob.cur():pos(), mem.destsys, mem.destplanet)
       mem.complaint = 0
 
       hook.date(time.create(0, 0, 300), "date")
@@ -106,7 +106,7 @@ end
 
 -- Land hook.
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       tk.msg(_("Delivery complete"), _([[You help the old lady to the spacedock elevator. She keeps grumbling about how spaceports these days are so inconvenient and how advertisement holograms are getting quite cheeky of late. They wouldn't allow that sort of thing in her day. But once you deliver her to the exit terminal, she smiles at you.
    "Thank you, young captain, I don't know what I would have done without you. It seems there are still decent folk out there even now. Take this, as a token of my appreciation."
    The lady hands you a credit chip. Then she disappears through the terminal. Well, that was quite a passenger!]]))

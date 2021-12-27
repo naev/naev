@@ -138,7 +138,7 @@ end
 
 local nplayed
 function create ()
-   local pnt = planet.cur()
+   local pnt = spob.cur()
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not evt.claim( system.cur(), true ) then evt.finish() end
@@ -173,7 +173,7 @@ function create ()
    -- Make sure not same system as last time
    local lastplanet = var.peek("shiplover_lastplanet")
    if lastplanet then
-      if planet.get(lastplanet):system() == system.cur() then
+      if spob.get(lastplanet):system() == system.cur() then
          evt.finish()
       end
    end
@@ -424,7 +424,7 @@ They take their leave.]]), {answer=_(question_data.answer)}))
    -- Finish event (removes npc)
    if remove_npc then
       var.push( "shiplover_lastplayed", time.get():tonumber() )
-      var.push( "shiplover_lastplanet", planet.cur():nameRaw() )
+      var.push( "shiplover_lastplanet", spob.cur():nameRaw() )
       evt.finish()
    end
 end

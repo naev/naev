@@ -5,7 +5,7 @@
   <unique/>
  </flags>
  <trigger>land</trigger>
- <cond>require("common.pirate").factionIsPirate( planet.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
+ <cond>require("common.pirate").factionIsPirate( spob.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
  <chance>50</chance>
 </event>
 --]]

@@ -157,7 +157,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       if mem.intime then
       -- Semi-random message.
       lmisn.sfxMoney()

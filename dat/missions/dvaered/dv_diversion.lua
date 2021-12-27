@@ -28,7 +28,7 @@ local portrait = require "portrait"
 
 
 local destsys = system.get("Torg")
-local destplanet = planet.get("Jorcan")
+local destplanet = spob.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions

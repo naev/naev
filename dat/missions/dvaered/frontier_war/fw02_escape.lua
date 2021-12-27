@@ -64,14 +64,14 @@ local straf_desc = _("The pilot is the only one in the group who looks like the 
 -- Mission constants
 local commMass = 4
 local fzlk = faction.get("Za'lek")
-local hampla, hamsys = planet.getS("Vilati Vilata")
-local reppla, repsys = planet.getS("Dvaer Prime")
-local pripla, prisys = planet.getS("Jorla")
-local zlkpla, zlksys = planet.getS("House Za'lek Central Station")
+local hampla, hamsys = spob.getS("Vilati Vilata")
+local reppla, repsys = spob.getS("Dvaer Prime")
+local pripla, prisys = spob.getS("Jorla")
+local zlkpla, zlksys = spob.getS("House Za'lek Central Station")
 local intsys = system.get("Poltergeist")
 
 function create()
-   if planet.cur() == hampla then
+   if spob.cur() == hampla then
       misn.finish(false)
    end
 
@@ -113,7 +113,7 @@ end
 function landBar()
 
    -- You land at the commando's planet
-   if mem.stage == 0 and planet.cur() == hampla then
+   if mem.stage == 0 and spob.cur() == hampla then
       misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
       misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
       misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
@@ -137,14 +137,14 @@ function landBar()
 end
 
 function land()
-   mem.lastPlanet = planet.cur()
+   mem.lastPlanet = spob.cur()
 
    -- You land to steal a medical machine
    if mem.stage == 3 then
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
 
    -- Land at an Imperial planet and meet the agents
-   elseif mem.stage == 5 and planet.cur():faction() == faction.get("Empire") then
+   elseif mem.stage == 5 and spob.cur():faction() == faction.get("Empire") then
       tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone is waiting for you at the spaceport. "Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. Even the paths to the secret jumps are impassable. It looks like the Empire wants to catch you at all costs, but luckily enough, I have the solution. I imagine you already have a fake transponder, but they seem to have identified it.  I bet you could use a replacement. I can sell you an genuine, fake transponder fresh from the Skulls and Bones factory."
    Clearly this is a pirate looking to make a few credits off your dire situation. But, the idea is not a bad one. The Imperial ships wouldn't be looking for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "Sounds like a lot, right? But maybe it's a bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. Maybe you don't have that many credits on you right now. That's ok.  I'll accept your word to pay me at some point. Well, your word and your DNA signature. That way I can find you if you try to cheat me."
    You know that if you agree, you will have to pay, no matter what happens, otherwise you will be hounded by hit men until the end of your, probably very short, life. However, paying {credits} might allow you to avoid the otherwise messy and compromising deal you would have to make with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]]), {number=fmt.number(fw.pirate_price), credits=fmt.credits(fw.pirate_price)}))
@@ -153,7 +153,7 @@ function land()
       mem.stage = 6
 
    -- Land to end the mission
-   elseif mem.stage >= 4 and planet.cur() == reppla then
+   elseif mem.stage >= 4 and spob.cur() == reppla then
       tk.msg(_("Finally back"), fmt.f(_([[Upon landing, you, Hamfresser, and the VIP go to the spaceport's military office, where Major Tam is waiting for you along with a few other soldiers. He warmly greets the executive and addresses Hamfresser: "Do you know that you people scared us? We learned through diplomatic channels that you almost entirely destroyed a hospital's pharmacy, along with two police tanks and half a dozen battle androids on {pnt}. At least, apparently, you did not kill anyone. But the Za'lek were really upset".
    The captain explains: "Sir, the VIP was injured during the extraction and we needed a medical device to heal him. But once in the hospital, we were spotted by a traffic cop. Then things quickly got worse and we had to escape through the pharmacy's wall. I lost a soldier in this operation." Tam answers: "Well, you will make a detailed report later. And don't worry about the soldier, I will make sure he is replaced immediately.
    "And you, {player}, anything to report?"]]), {pnt=mem.hospPlanet, player=player.name()}))
@@ -192,12 +192,12 @@ function land()
       misn.finish(true)
    end
 
-   mem.lastPla = planet.cur()
+   mem.lastPla = spob.cur()
 end
 
 -- Put the npcs back at loading
 function loading()
-   if mem.stage == 1 and planet.cur() == hampla then
+   if mem.stage == 1 and spob.cur() == hampla then
       misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
       misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
       misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
@@ -241,7 +241,7 @@ function fireSteal()
       } )
       hook.pilot(nil, "death", "killed_zlk")
 
-      mem.hospPlanet = planet.cur()
+      mem.hospPlanet = spob.cur()
       hook.takeoff("takeoff")
       player.takeoff()
       mem.firstBloc = true

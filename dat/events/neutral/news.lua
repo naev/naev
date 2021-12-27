@@ -469,7 +469,7 @@ end
 
 -- create news
 function create()
-   local p = planet.cur()
+   local p = spob.cur()
    local s = p:services()
    -- Needs to be inhabited and have a bar for there to be news
    if not s["inhabited"] or not s["bar"] then evt.finish(false) end

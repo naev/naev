@@ -152,7 +152,7 @@ end
 function land()
     if mem.landfail then
         tk.msg(_("You abandoned your charge!"), _("You have landed, but you were supposed to escort the diplomat. Your mission is a failure!"))
-    elseif planet.cur() == planet.get("Nova Shakar") and mem.stage == 2 then
+    elseif spob.cur() == spob.get("Nova Shakar") and mem.stage == 2 then
         local dist = system.cur():jumpDist(misssys[4])
         local refueltext = n_(
            "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jump worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.",
@@ -161,7 +161,7 @@ function land()
         mem.stage = 3 -- Fly to the diplomat rendezvous point.
         misn.osdActive(3)
         mem.landfail = true
-        mem.origin = planet.cur()
+        mem.origin = spob.cur()
     end
 end
 
@@ -257,7 +257,7 @@ function jumpin()
            for i, j in ipairs(escorts) do
                if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
                if j:exists() then
-                  j:land(planet.get("Nova Shakar"))
+                  j:land(spob.get("Nova Shakar"))
                end
            end
         elseif system.cur() == misssys[3] then -- case join up with diplomat

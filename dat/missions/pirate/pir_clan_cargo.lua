@@ -36,13 +36,13 @@ local portrait = require "portrait"
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed = planet.cur():nameRaw()
+   local landed = spob.cur():nameRaw()
 
    -- target destination
    local planets = {}
    for k, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
       if p ~= landed then
-         planets[#planets+1] = { planet.getS(p) }
+         planets[#planets+1] = { spob.getS(p) }
       end
    end
 
@@ -90,7 +90,7 @@ end
 
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if landed == mem.dest then
       if misn.cargoRm(mem.packages) then
          tk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.") )

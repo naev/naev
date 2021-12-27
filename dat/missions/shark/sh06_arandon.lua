@@ -33,7 +33,7 @@ local pacifier -- Non-persistent state
 
 --Change here to change the planets and the systems
 local missys = system.get("Arandon")
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    if not misn.claim(missys) then
@@ -74,7 +74,7 @@ end
 
 function land()
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       if misn.cargoRm(mem.smith) then
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))

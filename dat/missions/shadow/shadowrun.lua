@@ -27,7 +27,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 
-local pnt, sys = planet.getS("Durea") -- Where SHITMAN lives
+local pnt, sys = spob.getS("Durea") -- Where SHITMAN lives
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")
 
@@ -99,7 +99,7 @@ function accept()
 end
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if pnt == landed then
       misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
       misn.npcAdd( "officer", _("Officer at the bar"), portrait.getMaleMil("Empire"), _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...") )

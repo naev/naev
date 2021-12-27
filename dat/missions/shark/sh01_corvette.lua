@@ -42,7 +42,7 @@ local sharkboy -- Non-persistent state
 
 --Change here to change the planet and the system
 local battlesys = system.get("Toaxis")
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 --System neighbouring Toaxis with zero pirate presence due to a "Virtual Pirate Unpresence" asset
 local escapesys = system.get("Ingot")
 
@@ -93,7 +93,7 @@ function land()
    if mem.stage == 1 then --player trying to escape
       lmisn.fail( _("You ran away.") )
    end
-   if mem.stage == 2 and planet.cur() == paypla then
+   if mem.stage == 2 and spob.cur() == paypla then
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(shark.rewards.sh01)

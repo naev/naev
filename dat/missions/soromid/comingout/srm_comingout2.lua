@@ -28,7 +28,7 @@ local srm = require "common.soromid"
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
-   mem.misplanet, mem.missys = planet.getS( "Crow" )
+   mem.misplanet, mem.missys = spob.getS( "Crow" )
    -- Note: This mission does not make system claims
 
    mem.credits = 50e3
@@ -71,7 +71,7 @@ end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( "", _([[As you dock you can barely stop Chelsea from jumping out of your ship and hurting herself. She seems to know exactly where to go and before you even know what's going on, she's purchased an old Llama, possibly the most rusty and worn-down Llama you've ever seen, but in working order nonetheless. You express concern about the condition of the ship, but she assures you that she will fix it up as she gets enough money to do so. She hugs you in a friendly embrace, thanks you, and hands you a credit chip. "Catch up with me again sometime, okay? I'll be hanging out in Soromid space doing my first missions as a pilot!" As you walk away, you see her getting her first close-up look at the mission computer with a look of excitement in her eyes.]]) )
       player.pay(mem.credits)
 

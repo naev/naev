@@ -31,8 +31,8 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 -- Mission constants
-local homeworld, homeworld_sys = planet.getS("Jorla")
-local dest_planet, dest_sys = planet.getS("Neo Pomerania")
+local homeworld, homeworld_sys = spob.getS("Jorla")
+local dest_planet, dest_sys = spob.getS("Neo Pomerania")
 local lab_coat_price = 25e3
 local glasses_price = 40e3
 
@@ -80,7 +80,7 @@ end
 
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == dest_planet then
         tk.msg(
             fmt.f(_("Arriving on {pnt}"), {pnt=dest_planet}),

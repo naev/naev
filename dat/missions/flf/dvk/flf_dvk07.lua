@@ -62,7 +62,7 @@ function accept ()
 
       mem.rogue_ships_left = 0
       mem.job_done = false
-      mem.last_system = planet.cur()
+      mem.last_system = spob.cur()
 
       hook.enter( "enter" )
       hook.jumpout( "leave" )
@@ -76,7 +76,7 @@ end
 function land_flf ()
    leave()
    mem.last_system = nil
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( "", _([[Upon your return to the station, you are greeted by Benito. "Thanks once again for a job well done. I really do appreciate it. Not only have those traitors been taken care of, the others have become much more open to the idea that, hey, traitors are traitors and must be eliminated." She hands you a credit chip. "Here is your pay. Thank you again."]]) )
       player.pay( mem.credits )
       flf.setReputation( 98 )

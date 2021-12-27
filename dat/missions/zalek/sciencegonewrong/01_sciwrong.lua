@@ -10,7 +10,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
-  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
+  <cond>spob.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]
@@ -34,7 +34,7 @@ local target -- Non-persistent state
 -- mission variables
 mem.t_sys = {}
 mem.t_pla = {}
---mem.t_pla[1], mem.t_sys[1] = planet.getS("Gastan")
+--mem.t_pla[1], mem.t_sys[1] = spob.getS("Gastan")
 mem.t_sys[2] = system.get("Shikima")
 local reward = 1e6
 local shpnm = _("Tokera")
@@ -42,7 +42,7 @@ local shpnm = _("Tokera")
 function create ()
    -- Have to be at center of operations.
    mem.t_pla[1], mem.t_sys[1] = sciwrong.getCenterOperations()
-   if planet.cur() ~= mem.t_pla[1] then
+   if spob.cur() ~= mem.t_pla[1] then
       misn.finish(false)
    end
 
@@ -141,7 +141,7 @@ function targetBoard()
 end
 
 function land()
-   if planet.cur() == mem.t_pla[1] then
+   if spob.cur() == mem.t_pla[1] then
       tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
       hook.rm(mem.hland)
       player.pay(reward)

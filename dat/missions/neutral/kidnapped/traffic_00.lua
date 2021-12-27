@@ -35,9 +35,9 @@ local sys1 = system.get("Arcturus")
 local sys2 = system.get("Goddard")
 local sys3 = system.get("Ogat")
 local sys4 = system.get("Delta Pavonis")
-local pnt1 = planet.get("Praxis")
-local pnt2 = planet.get("Seanich")
-local pnthome = planet.get("Brooks")
+local pnt1 = spob.get("Praxis")
+local pnt2 = spob.get("Seanich")
+local pnthome = spob.get("Brooks")
 
 --NPCs
 local pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
@@ -83,14 +83,14 @@ function accept()
 end
 
 function land1()
-  if planet.cur() == pnt1 and not mem.eavesdropped1 and not mem.eavesdropped2 then
+  if spob.cur() == pnt1 and not mem.eavesdropped1 and not mem.eavesdropped2 then
     mem.bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), portrait.getMale("Pirate"), pir1_disc)
     mem.bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), portrait.get("Pirate"), pir1_disc)
   end
 end
 
 function land2()
-  if planet.cur() == pnt2 and mem.eavesdropped1 and not mem.eavesdropped2 then
+  if spob.cur() == pnt2 and mem.eavesdropped1 and not mem.eavesdropped2 then
     mem.bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
     mem.bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
   end
@@ -139,7 +139,7 @@ function enter()
    local fkidnappers = faction.dynAdd( "Pirate", "Kidnappers", _("Kidnappers"), { clear_allies=true, clear_enemies=true, ai="trader" } )
 
   if mem.eavesdropped1 and mem.eavesdropped2 and system.cur() == sys2 and (not mem.rescued) then
-    kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Progeny") )
+    kidnappers = pilot.add( "Koala", fkidnappers, spob.get("Zhiru"):pos() + vec2.new(-800,-800), _("Progeny") )
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
     kidnappers:memory().aggressive = true
@@ -154,10 +154,10 @@ function enter()
 end
 
 function idle()
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+  kidnappers:moveto(spob.get("Zhiru"):pos() + vec2.new( 800,  800), false)
+  kidnappers:moveto(spob.get("Zhiru"):pos() + vec2.new(-800,  800), false)
+  kidnappers:moveto(spob.get("Zhiru"):pos() + vec2.new(-800, -800), false)
+  kidnappers:moveto(spob.get("Zhiru"):pos() + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()
@@ -208,7 +208,7 @@ function boardkidnappers()
 end
 
 function land3()
-  if planet.cur() == pnthome and mem.rescued then
+  if spob.cur() == pnthome and mem.rescued then
     tk.msg(_("Reunited"), fmt.f(_([[As you step off the landing deck with a couple dozen children in tow, the two parents you spoke with over the comm run up to you. From behind you hear a few children yelling, "Mom! Dad!" Three children shove their way out to the front and the parents and children meet in a big group of hugs, kisses, tears, and smiles from ear to ear.
     You and the other children stand off to the side and watch one of the most beautiful reunions you have ever seen. After a little while the father approaches you, wiping a tear from his cheek, and takes you in an embrace. Releasing you and drying his eyes, he says, "Thank you so much, {player}. You have no idea what this means to us. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me, my friend."]]), {player=player.name()}))
     tk.msg(_("Reunited"), fmt.f(_([[You assure him that it is alright, and you will not hesitate to take him up on his offer. After a while the smile fades from his face. "You see how happy my family is? Well, look at all these other children here who are still separated from their parents. I want to return them all home. I'd also like to fight against all this human trafficking, but that will take a lot of planning. For now, I want to be with my family. Come back soon though if you're willing. I would like to get something organized."

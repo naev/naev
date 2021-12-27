@@ -3,7 +3,7 @@
 <mission name="Racing Skills 2">
  <avail>
   <priority>3</priority>
-  <cond>player.pilot():ship():class() == "Yacht" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+  <cond>player.pilot():ship():class() == "Yacht" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <done>Racing Skills 1</done>
   <chance>20</chance>
   <location>Bar</location>
@@ -32,12 +32,12 @@ chatter[3] = _("Time to Shake 'n Bake")
 target = {1,1,1,1}
 
 function create ()
-   mem.this_planet, mem.this_system = planet.cur()
+   mem.this_planet, mem.this_system = spob.cur()
    local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
    mem.credits_easy = rnd.rnd(20e3, 100e3)
    mem.credits_hard = rnd.rnd(200e3, 300e3)

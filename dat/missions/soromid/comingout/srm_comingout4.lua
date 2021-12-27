@@ -27,8 +27,8 @@ local srm = require "common.soromid"
 -- luacheck: globals ambush_timer enter land (Hook functions passed by name)
 
 -- Mission constants
-local misplanet, missys = planet.getS( "Durea" )
-local misplanet2, missys2 = planet.getS( "Crow" )
+local misplanet, missys = spob.getS( "Durea" )
+local misplanet2, missys2 = spob.getS( "Crow" )
 
 function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
@@ -85,7 +85,7 @@ end
 
 
 function land ()
-   if mem.stage == 1 and planet.cur() == misplanet then
+   if mem.stage == 1 and spob.cur() == misplanet then
       player.allowSave( false )
 
       tk.msg( "", fmt.f( _([[You land and dock on {pnt}, then meet up with both of Chelsea's parents. They welcome Chelsea and their mother gives them a warm hug, then releases them. Chelsea's father slightly waves, and the three of them start chatting.
@@ -106,7 +106,7 @@ function land ()
       mem.marker = misn.markerAdd( misplanet2, "low" )
 
       player.takeoff()
-   elseif mem.stage >= 2 and planet.cur() == misplanet2 then
+   elseif mem.stage >= 2 and spob.cur() == misplanet2 then
       tk.msg( "", _([[Having spent a large portion of the trip trying to console Chelsea, you honestly feel bad about dropping them off now. Nonetheless, Chelsea insists. "Thank you for your help," they say. "I never expected it to come to this, you know? I just... I hope my mom is OK. I just hope, you know?" They start to cry and you give them a friendly hug. As you release them, they wipe the tears away from their eyes. "Well, then, I've got some work to do I take it... it looks like I'm going to have a major fight on my hands, whatever form that takes. For now I'll keep doing missions as before. You know, save up money, build up my ship... that sort of thing. I'll find you if I need you, eh?" Chelsea forces a smile, as do you, and the two of you part ways for the time being. You hope they'll be OK.]]) )
       srm.addComingOutLog( _([[You transported Chelsea, who requests they/them pronouns now, to Durea so that they could see their parents. However, Chelsea's father turned on them because of their gender identity and acceptance of the Soromid, aiming a laser gun at Chelsea before he was tackled and held back by Chelsea's mother. You didn't see what happened, but as you and Chelsea ran away, you heard a gunshot. Chelsea's father then caught up with you as you began launch procedures, attempted to fire his laser gun at your ship, and then sent a group of thugs after you as you transported Chelsea to safety.
     Traumatized, Chelsea has set off to continue doing what they were doing, but this time, they are partly doing so to prepare for the worst. They said that they will find you if they need your help again.]]) )

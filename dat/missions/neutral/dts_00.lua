@@ -52,7 +52,7 @@ local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
-   mem.this_planet, mem.this_system = planet.cur()
+   mem.this_planet, mem.this_system = spob.cur()
    if ( pir.systemPresence(mem.this_system) > 0
          or mem.this_system:presences()["Collective"]
          or mem.this_system:presences()["FLF"] ) then

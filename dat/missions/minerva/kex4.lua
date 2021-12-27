@@ -41,7 +41,7 @@ local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
 -- luacheck: globals enter generate_npc jie_board jie_death jie_epilogue jie_takeoff load_game thug_heartbeat (Hook functions passed by name)
 -- luacheck: globals approach_jie approach_kex (NPC functions passed by name)
 
-local targetplanet, targetsys = planet.getS("Jorlan")
+local targetplanet, targetsys = spob.getS("Jorlan")
 
 -- TODO custom graphic?
 mem.jie_portrait = portrait.get()
@@ -95,10 +95,10 @@ function generate_npc ()
       lmisn.fail(_("You were supposed to take care of Jie!"))
    end
 
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif mem.misn_state==0 and planet.cur() == targetplanet then
+   elseif mem.misn_state==0 and spob.cur() == targetplanet then
       misn.npcAdd( "approach_jie", _("Jie de Luca"), mem.jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
@@ -416,7 +416,7 @@ function thug_heartbeat ()
 end
 
 function jie_death ()
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    misn.osdActive(2)
    mem.misn_state = 2
 

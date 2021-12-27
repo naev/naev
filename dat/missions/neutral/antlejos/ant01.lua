@@ -25,7 +25,7 @@ local vn = require "vn"
 local fmt = require "format"
 local ant = require "common.antlejos"
 
-local destpnt, destsys = planet.getS("Antlejos V")
+local destpnt, destsys = spob.getS("Antlejos V")
 
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
@@ -94,7 +94,7 @@ end
 
 -- Land hook.
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 

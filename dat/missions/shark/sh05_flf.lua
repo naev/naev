@@ -39,7 +39,7 @@ local shark = require "common.shark"
 -- luacheck: globals board hail land (Hook functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    --Change here to change the planets and the systems
@@ -76,7 +76,7 @@ end
 
 function land()
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       tk.msg(_("Good news"), fmt.f(_([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to {sys}. And here's your payment."]]), {sys=mem.nextsys}))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(shark.rewards.sh05)

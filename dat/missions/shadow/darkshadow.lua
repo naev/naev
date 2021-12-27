@@ -29,9 +29,9 @@ local spawnGenbu, spawnSquads -- Forward-declared functions
 -- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
-local seirplanet, seirsys = planet.getS("Edergast")
-local jorekplanet1, joreksys1 = planet.getS("Manis")
-local jorekplanet2, joreksys2 = planet.getS("The Wringer")
+local seirplanet, seirsys = spob.getS("Edergast")
+local jorekplanet1, joreksys1 = spob.getS("Manis")
+local jorekplanet2, joreksys2 = spob.getS("The Wringer")
 local ambushsys = system.get("Herakin")
 local safesys = system.get("Eiderdown")
 
@@ -388,11 +388,11 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == jorekplanet1 and mem.stage == 2 then
+   if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
       mem.barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
-   elseif planet.cur() == jorekplanet2 and mem.stage == 3 then
+   elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
       mem.joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end

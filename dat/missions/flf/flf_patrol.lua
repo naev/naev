@@ -138,7 +138,7 @@ function accept ()
 
    mem.dv_ships_left = 0
    mem.job_done = false
-   mem.last_system = planet.cur()
+   mem.last_system = spob.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -207,8 +207,8 @@ end
 
 function land_flf ()
    leave()
-   mem.last_system = planet.cur()
-   if planet.cur():faction() == faction.get("FLF") then
+   mem.last_system = spob.cur()
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
       player.pay( mem.credits )
       faction.get("FLF"):modPlayer( mem.reputation )

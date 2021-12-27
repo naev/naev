@@ -29,7 +29,7 @@ local lmisn = require "lmisn"
 
 local reward = ant.rewards.ant05
 
-local mainpnt, mainsys = planet.getS("Antlejos V")
+local mainpnt, mainsys = spob.getS("Antlejos V")
 local nextsys = system.get("Delta Polaris")
 local rearsys = system.get("Klintus")
 local entrypoint = jump.get( mainsys, nextsys )
@@ -93,7 +93,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==2 and planet.cur() == mainpnt then
+   if mem.state==2 and spob.cur() == mainpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )

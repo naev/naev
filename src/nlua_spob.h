@@ -6,7 +6,7 @@
 #include "nlua.h"
 #include "space.h"
 
-#define SPOB_METATABLE   "planet" /**< Spob metatable identifier. */
+#define SPOB_METATABLE   "spob" /**< Spob metatable identifier. */
 
 /**
  * @brief Lua Spob Wrapper.

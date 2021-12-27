@@ -72,7 +72,7 @@ local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion c
 
 function create ()
    -- Save current system to return to
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
    if not misn.claim( mem.retsys ) then
       misn.finish()
    end
@@ -192,7 +192,7 @@ function land ()
       mem.hk_info_timer = nil
    end
 
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if mem.misn_state==1 and pcur == mem.destpnt then
       local wanthelp = true
 

@@ -33,7 +33,7 @@ local portrait = require "portrait"
 local dv = require "common.dvaered"
 
 -- Mission constants
-local DVplanet, DVsys = planet.getS("Stalwart Station")
+local DVplanet, DVsys = spob.getS("Stalwart Station")
 local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
@@ -164,7 +164,7 @@ function operationStart()
 end
 
 function land()
-    if mem.victorious and planet.cur() == DVplanet then
+    if mem.victorious and spob.cur() == DVplanet then
         tk.msg(_("FLF base? What FLF base?"), fmt.f(_([[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen {player}," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.

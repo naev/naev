@@ -35,9 +35,9 @@ function create ()
    -- Note: this mission does not make any system claims.
 
    -- Planet targets
-   mem.pickup,mem.pickupsys  = planet.getLandable( "Selphod" )
-   mem.dest,mem.destsys      = planet.getLandable( "Cerberus" )
-   mem.ret,mem.retsys        = planet.getLandable( "Halir" )
+   mem.pickup,mem.pickupsys  = spob.getLandable( "Selphod" )
+   mem.dest,mem.destsys      = spob.getLandable( "Cerberus" )
+   mem.ret,mem.retsys        = spob.getLandable( "Halir" )
    if mem.pickup==nil or mem.dest==nil or mem.ret==nil then
       misn.finish(false)
    end
@@ -82,7 +82,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
 
    if mem.landed == mem.pickup and mem.misn_stage == 0 then
 

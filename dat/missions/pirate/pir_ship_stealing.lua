@@ -200,7 +200,7 @@ function accept()
 end
 
 function land()
-   local landed, landsys = planet.cur()
+   local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
       local tmp = pilot.add( mem.ship, "Independent" )

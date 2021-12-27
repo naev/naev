@@ -67,7 +67,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   mem.misplanet, mem.missys = planet.cur()
+   mem.misplanet, mem.missys = spob.cur()
 
    if commchoices == nil then
       local std = commodity.getStandard();
@@ -132,7 +132,7 @@ function land ()
    local amount = pilot.cargoHas( player.pilot(), mem.chosen_comm )
    local reward = amount * mem.price
 
-   if planet.cur() == mem.misplanet and amount > 0 then
+   if spob.cur() == mem.misplanet and amount > 0 then
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
             {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)

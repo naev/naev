@@ -84,7 +84,7 @@ end
 
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if landed == mem.dest then
       if misn.cargoRm(mem.parcels) then
          player.pay( emp.rewards.cargo00 )

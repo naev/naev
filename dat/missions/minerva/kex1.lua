@@ -59,7 +59,7 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
       if var.peek("kex_talk_ceo") then
          mem.npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )
@@ -333,7 +333,7 @@ function mainguy_board ()
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    mem.misn_state = 2
    misn.osdActive(2)
    player.unboard()
@@ -346,7 +346,7 @@ end
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
    minerva.log.kex(_("You destroyed a transport destined for the Minerva CEO, but didn't find anything in the debris."))
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    mem.misn_state = 2
    misn.osdActive(2)
 end

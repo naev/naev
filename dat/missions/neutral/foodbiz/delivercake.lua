@@ -23,7 +23,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 local fmt = require "format"
 local neu = require "common.neutral"
 
-local targetworld, targetworld_sys = planet.getS( "Zeo" )
+local targetworld, targetworld_sys = spob.getS( "Zeo" )
 
 mem.reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
 
@@ -66,7 +66,7 @@ function accept()
 end
 
 function land()
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
       if mem.amount > 0 then
          tk.msg( "", _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms your suspicion that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]]) )
          neu.addMiscLog( _([[You delivered a whole lot of the most disgusting cake you've ever tasted in your life as well as recipes for making said cake to Michal, the man who had you deliver a literal tonne of love letters before. Supposedly this is in an attempt to start a restaurant, but with food as disgusting as that cake, you're sure the business will fail.]]) )

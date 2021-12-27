@@ -52,7 +52,7 @@ stds.News = {read_globals={"news"}}
 stds.Outfit = {read_globals={"outfit"}}
 stds._Pilot = {read_globals={"pilot"}}
 stds.PilotOutfit = {read_globals={"pilotoutfit"}}
-stds.Planet = {read_globals={"planet"}}
+stds.Spob = {read_globals={"spob"}}
 stds.Player = {read_globals={"player"}}
 stds.Rnd = {read_globals={"rnd"}}
 stds.Safelanes = {read_globals={"safelanes"}}
@@ -68,7 +68,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship"
-STANDARD = "+Naev+Var+Planet+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 
@@ -139,8 +139,8 @@ stds.API_spob = {globals={
    "unload",   -- C function: planet_gfxUnload
    "can_land", -- C function: planet_updateLand
    "land",     -- C function: player_land
-   "render",   -- C function: space_renderPlanet
-   "update",   -- C function: space_updatePlanet
+   "render",   -- C function: space_renderSpob
+   "update",   -- C function: space_updateSpob
 }}
 stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}

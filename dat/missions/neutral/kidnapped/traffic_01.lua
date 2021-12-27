@@ -75,7 +75,7 @@ function accept ()
    mem.misn_done      = false
    mem.attackedTraders = {}
    mem.fledTraders = 0
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
 
    -- Set mission details
    misn.setTitle( _("The Lost Brother") )

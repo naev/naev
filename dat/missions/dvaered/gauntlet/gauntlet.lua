@@ -153,7 +153,7 @@ function leave_the_ring ()
    pp:setInvincible( false )
    pp:setInvisible( false )
    player.cinematics( false )
-   player.land( planet.get("Totoran") )
+   player.land( spob.get("Totoran") )
 end
 
 --[[

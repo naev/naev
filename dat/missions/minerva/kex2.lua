@@ -37,7 +37,7 @@ local blockade -- Non-persistent state
 -- luacheck: globals blockade_attacked enter generate_npc gotaway heartbeat loadfunc spawn_enemies (Hook functions passed by name)
 -- luacheck: globals approach_kex approach_terminal (NPC functions passed by name)
 
-local targetplanet, targetsys = planet.getS("Niflheim")
+local targetplanet, targetsys = spob.getS("Niflheim")
 
 local money_reward = minerva.rewards.kex2
 
@@ -88,9 +88,9 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
-   elseif planet.cur() == targetplanet and mem.misn_state==0 then
+   elseif spob.cur() == targetplanet and mem.misn_state==0 then
       misn.npcAdd( "approach_terminal", _("Terminal"), minerva.terminal.portrait, _("A discrete terminal in the corner of the landing bay, you should be able to use it to load the program Kex gave you.") )
    end
 end
@@ -108,7 +108,7 @@ function approach_terminal ()
    vn.run()
 
    -- Advance mission and get out of there
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    mem.misn_state = 1
    misn.osdActive(2)
    player.takeoff()

@@ -33,7 +33,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
 local targsys1 = system.get("C-43")
 local targsys2 = system.get("C-59")
 
@@ -122,7 +122,7 @@ function scantimer()
 end
 
 function land()
-   if planet.cur() == misn_base and mem.sysdone1 and mem.sysdone2 then
+   if spob.cur() == misn_base and mem.sysdone1 and mem.sysdone2 then
       tk.msg( _("Mission Accomplished"), _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]) )
       player.pay(mem.credits)

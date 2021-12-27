@@ -51,7 +51,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
 local misn_target_sys = system.get("Rockbed")
 local misn_flee_sys = system.get("Capricorn")
 
@@ -313,7 +313,7 @@ end
 
 -- Handles arrival back to base
 function land ()
-   local pnt = planet.cur()
+   local pnt = spob.cur()
    local credits = emp.rewards.ec05
 
    -- Just landing

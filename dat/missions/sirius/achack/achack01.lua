@@ -27,7 +27,7 @@ local fmt = require "format"
 
 -- Mission constants
 local misn_reward = fmt.credits(400e3)
-local destplanet, destsys = planet.getS("Racheka")
+local destplanet, destsys = spob.getS("Racheka")
 
 function create()
     -- This mission ONLY spawns if the system it's in is not claimed by another mission. Special hack to mutex with Dark Shadow.
@@ -61,7 +61,7 @@ function accept()
 end
 
 function land()
-    if planet.cur() == destplanet then
+    if spob.cur() == destplanet then
         misn.npcAdd("talkJoanne", _("A Serra military officer"), "sirius/unique/joanne.webp", _("This woman matches the description Harja gave you... But she's a military officer! This can't be right. You'd better talk to her and find out what's going on."), 4)
     end
 end

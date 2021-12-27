@@ -30,7 +30,7 @@ local reward = 300e3
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
-local targetworld = planet.get("Niflheim")
+local targetworld = spob.get("Niflheim")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -73,20 +73,20 @@ end
 
 function land ()
    -- Only proceed if at the target.
-   if planet.cur() ~= targetworld then
+   if spob.cur() ~= targetworld then
       return
    end
 
    --If we land on Niflheim, display message, reset target and carry on.
-   if planet.cur() == planet.get("Niflheim") then
-      targetworld = planet.get("Nova Shakar")
+   if spob.cur() == spob.get("Niflheim") then
+      targetworld = spob.get("Nova Shakar")
       tk.msg(_("The Search for Cynthia"), _("After thoroughly searching the spaceport, you decide that she wasn't there."))
       misn.osdActive(2)
       misn.markerMove(mem.runawayMarker, targetworld)
 
    --If we land on Nova Shakar, display message, reset target and carry on.
-   elseif planet.cur() == planet.get("Nova Shakar") then
-      targetworld = planet.get("Torloth")
+   elseif spob.cur() == spob.get("Nova Shakar") then
+      targetworld = spob.get("Torloth")
       tk.msg(_("The Search for Cynthia"), _("At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found."))
 
       --Add in the *secret* OSD text
@@ -101,8 +101,8 @@ function land ()
       misn.markerMove(mem.runawayMarker, targetworld)
 
    --If we land on Torloth, change OSD, display message, reset target and carry on.
-   elseif planet.cur() == planet.get("Torloth") then
-      targetworld = planet.get("Zhiru")
+   elseif spob.cur() == spob.get("Torloth") then
+      targetworld = spob.get("Zhiru")
 
       --If you decide to release her, speak appropriately, otherwise carry on
       if not tk.yesno(_("The Search for Cynthia"), _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])) then
@@ -122,7 +122,7 @@ function land ()
       misn.markerMove(mem.runawayMarker, targetworld)
 
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
-   elseif planet.cur() == planet.get("Zhiru") then
+   elseif spob.cur() == spob.get("Zhiru") then
 
       --Talk to the father and get the reward
       if misn.osdGetActive() == _("Return Cynthia to her father on Zhiru in the Goddard system") then

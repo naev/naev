@@ -22,7 +22,7 @@ end
    Build a set of target planets
 --]]
 local function selectPlanets( missdist, routepos, use_hidden )
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
          if p ~= pcur
             and not (p:system() == system.cur() and (vec2.dist( p:pos(), routepos) < 2500))
@@ -85,7 +85,7 @@ end
    @tparam[opt=false] use_hidden If true, allow hidden jumps to be part of the route.
 --]]
 function car.calculateRoute( missdist, always_available, use_hidden )
-   local origin_p, origin_s = planet.cur()
+   local origin_p, origin_s = spob.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
 
@@ -148,7 +148,7 @@ function car.calculateRoute( missdist, always_available, use_hidden )
 
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    local cargo
-   local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
+   local cargoes = difference(spob.cur():commoditiesSold(),destplanet:commoditiesSold())
    if #cargoes == 0 then
       if always_available then
          cargo = nil
@@ -191,7 +191,7 @@ function car.validDest( targetplanet )
    -- factions which cannot be delivered to by factions other than themselves
    local tfact = targetplanet:faction()
    for i, f in ipairs(_hidden_fact) do
-      if tfact == f and planet.cur():faction() ~= f then
+      if tfact == f and spob.cur():faction() ~= f then
          return false
       end
    end
@@ -202,7 +202,7 @@ function car.validDest( targetplanet )
       faction.get("Thurion"),
    }
    for i, f in ipairs(insular) do
-      if planet.cur():faction() == f and targetplanet:faction() ~= f then
+      if spob.cur():faction() == f and targetplanet:faction() ~= f then
          return false
       end
    end
@@ -229,7 +229,7 @@ function car.setDesc( misn_desc, cargo, amount, target, deadline, notes, use_hid
    end
 
    local numjumps   = system.cur():jumpDist( target:system(), use_hidden )
-   local dist = car.calculateDistance( system.cur(), planet.cur():pos(), target:system(), target, use_hidden )
+   local dist = car.calculateDistance( system.cur(), spob.cur():pos(), target:system(), target, use_hidden )
    table.insert( t,
       fmt.f( n_( "#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", numjumps ), {jumps=numjumps} )
       .. "\n"

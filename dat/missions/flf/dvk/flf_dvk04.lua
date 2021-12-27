@@ -75,7 +75,7 @@ end
 
 
 function land ()
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
       flf.setReputation( 75 )
