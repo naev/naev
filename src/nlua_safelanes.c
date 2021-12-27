@@ -18,7 +18,7 @@
 #include "collision.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_system.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"

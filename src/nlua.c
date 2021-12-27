@@ -32,7 +32,7 @@
 #include "nlua_news.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_player.h"
 #include "nlua_rnd.h"
 #include "nlua_safelanes.h"

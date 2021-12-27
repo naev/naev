@@ -36,7 +36,7 @@
 #include "nfile.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_gfx.h"
 #include "nlua_camera.h"
 #include "nlua_tex.h"

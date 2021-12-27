@@ -2,7 +2,7 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file dev_planet.c
+ * @file dev_spob.c
  *
  * @brief Handles the planet stuff.
  */
@@ -12,7 +12,7 @@
 #include "naev.h"
 /** @endcond */
 
-#include "dev_planet.h"
+#include "dev_spob.h"
 
 #include "conf.h"
 #include "dev_uniedit.h"

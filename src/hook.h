@@ -7,7 +7,7 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 
 #define HOOK_MAX_PARAM  5 /**< Maximum hook params, to avoid dynamic allocation. */
 

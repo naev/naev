@@ -2,7 +2,7 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file nlua_planet.c
+ * @file nlua_spob.c
  *
  * @brief Lua planet module.
  */
@@ -12,7 +12,7 @@
 #include <lauxlib.h>
 /** @endcond */
 
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 
 #include "array.h"
 #include "land.h"

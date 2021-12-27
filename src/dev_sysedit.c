@@ -17,7 +17,7 @@
 
 #include "array.h"
 #include "conf.h"
-#include "dev_planet.h"
+#include "dev_spob.h"
 #include "dev_system.h"
 #include "dev_uniedit.h"
 #include "dialogue.h"

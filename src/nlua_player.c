@@ -35,7 +35,7 @@
 #include "nlua_col.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_time.h"

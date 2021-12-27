@@ -18,7 +18,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua_faction.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_time.h"
 #include "nlua_tex.h"
 #include "nluadef.h"

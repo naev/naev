@@ -2675,8 +2675,8 @@ src/debug.h
 src/debug_fpu.c
 src/dev_mapedit.c
 src/dev_mapedit.h
-src/dev_planet.c
-src/dev_planet.h
+src/dev_spob.c
+src/dev_spob.h
 src/dev_sysedit.c
 src/dev_sysedit.h
 src/dev_system.c
@@ -2832,8 +2832,6 @@ src/nlua_pilot.c
 src/nlua_pilot.h
 src/nlua_pilotoutfit.c
 src/nlua_pilotoutfit.h
-src/nlua_planet.c
-src/nlua_planet.h
 src/nlua_player.c
 src/nlua_player.h
 src/nlua_rnd.c
@@ -2846,6 +2844,8 @@ src/nlua_ship.c
 src/nlua_ship.h
 src/nlua_shiplog.c
 src/nlua_shiplog.h
+src/nlua_spob.c
+src/nlua_spob.h
 src/nlua_system.c
 src/nlua_system.h
 src/nlua_tex.c
