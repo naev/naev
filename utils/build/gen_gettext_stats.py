@@ -12,7 +12,8 @@ def main():
     ap.add_argument('input')
     args = ap.parse_args()
     cmd = ['msgfmt', '--statistics', args.input, '-o', '/dev/null']
-    out = subprocess.check_output(cmd, env=dict(LC_ALL='C'), encoding='ascii', stderr=subprocess.STDOUT)
+    env = dict(LC_ALL='C', PATH=os.getenv('PATH', ''))
+    out = subprocess.check_output(cmd, env=env, encoding='ascii', stderr=subprocess.STDOUT)
     msgs = re.match(r'0 translated messages, (\d+) untranslated', out).group(1)
     with open(args.output, 'w', encoding='utf-8') as out:
         out.write(f'{msgs}\n')
