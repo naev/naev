@@ -241,8 +241,8 @@ SHADERS = [
       fs_path = "stealthaura.frag",
    ),
    SimpleShader(
-      name = "planetmarker",
-      fs_path = "planetmarker.frag",
+      name = "spobmarker",
+      fs_path = "spobmarker.frag",
    ),
    SimpleShader(
       name = "jumpmarker",
@@ -273,8 +273,8 @@ SHADERS = [
       fs_path = "targetship.frag",
    ),
    SimpleShader(
-      name = "targetplanet",
-      fs_path = "targetplanet.frag",
+      name = "targetspob",
+      fs_path = "targetspob.frag",
    ),
    SimpleShader(
       name = "jumplane",
@@ -297,8 +297,8 @@ SHADERS = [
       fs_path = "gear.frag",
    ),
    SimpleShader(
-      name = "selectplanet",
-      fs_path = "selectplanet.frag",
+      name = "selectspob",
+      fs_path = "selectspob.frag",
    ),
    SimpleShader(
       name = "selectposition",

@@ -380,7 +380,7 @@ static void gui_renderSpobTarget (void)
       x = jp->pos.x;
       y = jp->pos.y;
       r = jumppoint_gfx->sw * 0.5;
-      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
+      gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if (player.p->nav_spob >= 0) {
       Spob *planet = cur_system->spobs[player.p->nav_spob];
@@ -389,7 +389,7 @@ static void gui_renderSpobTarget (void)
       x = planet->pos.x;
       y = planet->pos.y;
       r = planet->radius;
-      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
+      gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
       AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
@@ -1416,9 +1416,9 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    if (ind == player.p->nav_spob)
       gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_planet);
 
-   glUseProgram(shaders.planetmarker.program);
-   glUniform1i(shaders.planetmarker.parami, spob_hasService(planet,SPOB_SERVICE_LAND));
-   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, &col, 1 );
+   glUseProgram(shaders.spobmarker.program);
+   glUniform1i(shaders.spobmarker.parami, spob_hasService(planet,SPOB_SERVICE_LAND));
+   gl_renderShader( cx, cy, vr, vr, 0., &shaders.spobmarker, &col, 1 );
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(planet), spob_name(planet) );

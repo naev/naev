@@ -457,7 +457,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_replacePlayer( Pilot* after );
-void pilot_choosePoint( Vector2d *vp, Spob **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
+void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
 /*

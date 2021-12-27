@@ -690,10 +690,10 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (int i=0; i<array_size(uniedit_sys); i++) {
       StarSystem *sys = uniedit_sys[i];
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, uniedit_dt );
+      glUseProgram( shaders.selectspob.program );
+      glUniform1f( shaders.selectspob.dt, uniedit_dt );
       gl_renderShader( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
-            1.5*r, 1.5*r, 0., &shaders.selectplanet, &cWhite, 1 );
+            1.5*r, 1.5*r, 0., &shaders.selectspob, &cWhite, 1 );
    }
 }
 
