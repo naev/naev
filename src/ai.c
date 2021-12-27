@@ -2151,7 +2151,7 @@ static int aiL_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
+   cur_pilot->nav_spob = j;
    planet = cur_system->spobs[j]->id;
    lua_pushspob(L, planet);
 
@@ -2189,7 +2189,7 @@ static int aiL_getplanetfrompos( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
+   cur_pilot->nav_spob = j;
    planet = cur_system->spobs[j]->id;
    lua_pushspob(L, planet);
 
@@ -2276,7 +2276,7 @@ static int aiL_getlandplanet( lua_State *L )
    p = cur_system->spobs[ ind[ id ] ];
    planet = p->id;
    lua_pushspob( L, planet );
-   cur_pilot->nav_planet = ind[ id ];
+   cur_pilot->nav_spob = ind[ id ];
    array_free(ind);
 
    return 1;
@@ -2309,16 +2309,16 @@ static int aiL_land( lua_State *L )
          return 0;
       }
 
-      cur_pilot->nav_planet = i;
+      cur_pilot->nav_spob = i;
    }
 
-   if (cur_pilot->nav_planet < 0) {
+   if (cur_pilot->nav_spob < 0) {
       NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
       return 0;
    }
 
    /* Get planet. */
-   planet = cur_system->spobs[ cur_pilot->nav_planet ];
+   planet = cur_system->spobs[ cur_pilot->nav_spob ];
 
    /* Check landability. */
    if (!spob_hasService(planet,SPOB_SERVICE_LAND) ||

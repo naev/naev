@@ -1279,10 +1279,10 @@ static int pilotL_nav( lua_State *L )
       return 0;
 
    /* Get planet target. */
-   if (p->nav_planet < 0)
+   if (p->nav_spob < 0)
       lua_pushnil(L);
    else
-      lua_pushspob( L, cur_system->spobs[ p->nav_planet ]->id );
+      lua_pushspob( L, cur_system->spobs[ p->nav_spob ]->id );
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
@@ -4738,7 +4738,7 @@ static int pilotL_land( lua_State *L )
          return 0;
       }
 
-      p->nav_planet = i;
+      p->nav_spob = i;
       if (p->id == PLAYER_ID)
          gui_setNav();
 

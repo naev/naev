@@ -336,7 +336,7 @@ typedef struct Pilot_ {
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
    void *ptarget;       /**< AI pilot real target. */
-   int nav_planet;      /**< Spob land target. */
+   int nav_spob;      /**< Spob land target. */
    int nav_hyperspace;  /**< Hyperspace target. */
    int nav_anchor;      /**< Asteroid anchor target. */
    int nav_asteroid;    /**< Asteroid target. */

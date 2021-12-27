@@ -359,13 +359,13 @@ static void gui_renderSpobTarget (void)
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0)
+   if ((player.p->nav_spob < 0) && (player.p->nav_hyperspace < 0)
        && (player.p->nav_asteroid < 0))
       return;
 
    /* Make sure targets are still in range. */
 #if 0
-   if (!pilot_inRangeSpob( player.p, player.p->nav_planet )) {
+   if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_targetSpobSet( -1 );
       return;
    }
@@ -382,8 +382,8 @@ static void gui_renderSpobTarget (void)
       r = jumppoint_gfx->sw * 0.5;
       gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
-   if (player.p->nav_planet >= 0) {
-      Spob *planet = cur_system->spobs[player.p->nav_planet];
+   if (player.p->nav_spob >= 0) {
+      Spob *planet = cur_system->spobs[player.p->nav_spob];
       c = spob_getColour( planet );
 
       x = planet->pos.x;
@@ -908,10 +908,10 @@ void gui_radarRender( double x, double y )
     * planets
     */
    for (int i=0; i<array_size(cur_system->spobs); i++)
-      if (i != player.p->nav_planet)
+      if (i != player.p->nav_spob)
          gui_renderSpob( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
-   if (player.p->nav_planet > -1)
-      gui_renderSpob( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
+   if (player.p->nav_spob > -1)
+      gui_renderSpob( player.p->nav_spob, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
    /*
     * Jump points.
@@ -1271,7 +1271,7 @@ static const glColour *gui_getSpobColour( int i )
    const glColour *col;
    Spob *planet = cur_system->spobs[i];
 
-   if (i == player.p->nav_planet)
+   if (i == player.p->nav_spob)
       col = &cRadar_tSpob;
    else
       col = spob_getColour( planet );
@@ -1373,7 +1373,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-2*r)) {
-         if ((player.p->nav_planet == ind) && !overlay)
+         if ((player.p->nav_spob == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tSpob );
          return;
       }
@@ -1382,7 +1382,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
       if (shape == RADAR_RECT) {
          /* Out of range. */
          if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-            if ((player.p->nav_planet == ind) && !overlay)
+            if ((player.p->nav_spob == ind) && !overlay)
                gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tSpob );
             return;
          }
@@ -1413,7 +1413,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    col.a *= alpha;
 
    /* Do the blink. */
-   if (ind == player.p->nav_planet)
+   if (ind == player.p->nav_spob)
       gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_planet);
 
    glUseProgram(shaders.planetmarker.program);
@@ -1775,7 +1775,7 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (player.p != NULL && player.p->nav_planet != -1)
+   if (player.p != NULL && player.p->nav_spob != -1)
       gui_doFunc( gui_lua_update_faction, "update_faction" );
 }
 

@@ -1174,7 +1174,7 @@ void land( Spob* p, int load )
    player.p->comm_msg = NULL;
 
    /* Clear some target stuff. */
-   player.p->nav_planet = -1;
+   player.p->nav_spob = -1;
    gui_setNav();
 
    /* Load stuff */

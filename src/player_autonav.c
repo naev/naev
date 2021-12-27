@@ -68,10 +68,10 @@ void player_autonavStart (void)
          pilot_isDisabled(player.p))
       return;
 
-   if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
+   if ((player.p->nav_hyperspace == -1) && (player.p->nav_spob== -1))
       return;
-   else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
-      player_autonavSpob( cur_system->spobs[ player.p->nav_planet ]->name, 0 );
+   else if ((player.p->nav_spob != -1) && !player_getHypPreempt()) {
+      player_autonavSpob( cur_system->spobs[ player.p->nav_spob ]->name, 0 );
       return;
    }
 
@@ -178,7 +178,7 @@ void player_autonavPos( double x, double y )
 }
 
 /**
- * @brief Starts autonav with a planet destination.
+ * @brief Starts autonav with a spob destination.
  */
 void player_autonavSpob( const char *name, int tryland )
 {
@@ -241,7 +241,7 @@ void player_autonavBoard( unsigned int p )
 }
 
 /**
- * @brief Handles common time accel ramp-down for autonav to positions and planets.
+ * @brief Handles common time accel ramp-down for autonav to positions and spobs.
  */
 static void player_autonavRampdown( double d )
 {

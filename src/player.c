@@ -579,7 +579,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Copy target info */
    ship->target = player.p->target;
-   ship->nav_planet = player.p->nav_planet;
+   ship->nav_spob = player.p->nav_spob;
    ship->nav_hyperspace = player.p->nav_hyperspace;
    ship->nav_anchor = player.p->nav_anchor;
    ship->nav_asteroid = player.p->nav_asteroid;
@@ -1182,10 +1182,10 @@ void player_think( Pilot* pplayer, const double dt )
          facing = 1;
       }
       /* If not try to face planet target. */
-      else if ((player.p->nav_planet != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
+      else if ((player.p->nav_spob != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
-                  &cur_system->spobs[ player.p->nav_planet ]->pos ));
+                  &cur_system->spobs[ player.p->nav_spob ]->pos ));
          /* Disable turning. */
          facing = 1;
       }
@@ -1422,8 +1422,8 @@ void player_targetSpobSet( int id )
    if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
       return;
 
-   old = player.p->nav_planet;
-   player.p->nav_planet = id;
+   old = player.p->nav_spob;
+   player.p->nav_spob = id;
    player_hyperspacePreempt((id < 0) ? 1 : 0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
@@ -1487,7 +1487,7 @@ void player_targetSpob (void)
       return;
 
    /* Find next planet target. */
-   for (id=player.p->nav_planet+1; id<array_size(cur_system->spobs); id++)
+   for (id=player.p->nav_spob+1; id<array_size(cur_system->spobs); id++)
       if (spob_isKnown( cur_system->spobs[id] ))
          break;
 
@@ -1537,7 +1537,7 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
 
-   if (player.p->nav_planet == -1) { /* get nearest planet target */
+   if (player.p->nav_spob == -1) { /* get nearest planet target */
       double td = -1.; /* temporary distance */
       int tp = -1; /* temporary planet */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
@@ -1554,13 +1554,13 @@ int player_land( int loud )
       player_hyperspacePreempt(0);
 
       /* no landable planet */
-      if (player.p->nav_planet < 0)
+      if (player.p->nav_spob < 0)
          return PLAYER_LAND_DENIED;
 
       silent = 1; /* Suppress further targeting noises. */
    }
    /* Check if planet is in range. */
-   else if (!pilot_inRangeSpob( player.p, player.p->nav_planet )) {
+   else if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_planetOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
    }
@@ -1575,7 +1575,7 @@ int player_land( int loud )
    }
 
    /* attempt to land at selected planet */
-   planet = cur_system->spobs[player.p->nav_planet];
+   planet = cur_system->spobs[player.p->nav_spob];
    if (!spob_hasService(planet, SPOB_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
       return PLAYER_LAND_DENIED;
@@ -1664,12 +1664,12 @@ void player_checkLandAck( void )
       return;
 
    /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
-   if (player.p->nav_planet < 0) {
+   if (player.p->nav_spob < 0) {
       WARN(_("Player has landing permission, but no valid planet targeted."));
       return;
    }
 
-   p = cur_system->spobs[ player.p->nav_planet ];
+   p = cur_system->spobs[ player.p->nav_spob ];
 
    /* Player can still land. */
    if (p->can_land || (p->land_override > 0) || p->bribed)
@@ -2141,8 +2141,8 @@ void player_targetPrev( int mode )
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if ((player.p->target == PLAYER_ID) && (player.p->nav_planet < 0)
-         && (preemption == 1 || player.p->nav_planet == -1)
+   if ((player.p->target == PLAYER_ID) && (player.p->nav_spob < 0)
+         && (preemption == 1 || player.p->nav_spob == -1)
          && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -2290,7 +2290,7 @@ static void player_checkHail (void)
 static void player_planetOutOfRangeMsg (void)
 {
    player_message( _("#r%s is out of comm range, unable to contact."),
-         spob_name(cur_system->spobs[player.p->nav_planet]) );
+         spob_name(cur_system->spobs[player.p->nav_spob]) );
 }
 
 /**
@@ -2305,9 +2305,9 @@ void player_hail (void)
 
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if (player.p->nav_planet != -1) {
-      if (pilot_inRangeSpob( player.p, player.p->nav_planet ))
-         comm_openSpob( cur_system->spobs[ player.p->nav_planet ] );
+   else if (player.p->nav_spob != -1) {
+      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
       else
          player_planetOutOfRangeMsg();
    }
@@ -2327,9 +2327,9 @@ void player_hailSpob (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_planet != -1) {
-      if (pilot_inRangeSpob( player.p, player.p->nav_planet ))
-         comm_openSpob( cur_system->spobs[ player.p->nav_planet ] );
+   if (player.p->nav_spob != -1) {
+      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
       else
          player_planetOutOfRangeMsg();
    }
@@ -2971,7 +2971,7 @@ void player_runHooks (void)
       player_rmFlag( PLAYER_HOOK_JUMPIN );
    }
    if (player_isFlag( PLAYER_HOOK_LAND )) {
-      land( cur_system->spobs[ player.p->nav_planet ], 0 );
+      land( cur_system->spobs[ player.p->nav_spob ], 0 );
       player_rmFlag( PLAYER_HOOK_LAND );
    }
 }

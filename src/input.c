@@ -901,9 +901,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
-         if (player.p->nav_planet != -1) {
+         if (player.p->nav_spob != -1) {
             if (player_land(0) == PLAYER_LAND_AGAIN) {
-               player_autonavSpob( cur_system->spobs[player.p->nav_planet]->name, 1 );
+               player_autonavSpob( cur_system->spobs[player.p->nav_spob]->name, 1 );
             }
          } else
             player_land(1);
@@ -1390,7 +1390,7 @@ int input_clickedSpob( int planet, int autonav )
       return 1;
    }
 
-   if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
+   if (planet == player.p->nav_spob && input_isDoubleClick((void*)pnt)) {
       player_hyperspacePreempt(0);
       spob_updateLand( pnt );
       if ((pnt->presence.faction < 0) || pnt->can_land || pnt->bribed ||

@@ -704,11 +704,11 @@ void ovr_render( double dt )
       Spob *pnt = cur_system->spobs[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
-      if (i != player.p->nav_planet)
+      if (i != player.p->nav_spob)
          gui_renderSpob( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
    }
-   if (player.p->nav_planet > -1)
-      gui_renderSpob( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->spobs[player.p->nav_planet]->map_alpha, 1 );
+   if (player.p->nav_spob > -1)
+      gui_renderSpob( player.p->nav_spob, RADAR_RECT, w, h, res, cur_system->spobs[player.p->nav_spob]->map_alpha, 1 );
 
    /* Render jump points. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
