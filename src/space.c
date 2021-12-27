@@ -148,6 +148,7 @@ static int space_rmMarkerPlanet( int pntid, MissionMarkerType type );
 /* Render. */
 static void space_renderJumpPoint( const JumpPoint *jp, int i );
 static void space_renderPlanet( const Planet *p );
+static void space_updatePlanet( const Planet *p, double dt );
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
 /*
@@ -1359,22 +1360,28 @@ void space_update( const double dt )
       int found_something = 0;
       /* Planet updates */
       for (int i=0; i<array_size(cur_system->planets); i++) {
-         if ((!planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
-            HookParam hparam[3];
+         HookParam hparam[3];
+         Planet *pnt = cur_system->planets[i];
 
-            planet_setKnown( cur_system->planets[i] );
-            player_message( _("You discovered #%c%s#0."),
-                  planet_getColourChar( cur_system->planets[i] ),
-                  _(cur_system->planets[i]->name) );
-            hparam[0].type  = HOOK_PARAM_STRING;
-            hparam[0].u.str = "asset";
-            hparam[1].type  = HOOK_PARAM_ASSET;
-            hparam[1].u.la  = cur_system->planets[i]->id;
-            hparam[2].type  = HOOK_PARAM_SENTINEL;
-            hooks_runParam( "discover", hparam );
-            found_something = 1;
-            cur_system->planets[i]->map_alpha = 0.;
-         }
+         /* Must update in some cases. */
+         space_updatePlanet( pnt, dt );
+
+         /* Handle discoveries. */
+         if (planet_isKnown( pnt ) || !pilot_inRangePlanet( player.p, i ))
+            continue;
+
+         planet_setKnown( pnt );
+         player_message( _("You discovered #%c%s#0."),
+               planet_getColourChar( pnt ),
+               planet_name( pnt ) );
+         hparam[0].type  = HOOK_PARAM_STRING;
+         hparam[0].u.str = "asset";
+         hparam[1].type  = HOOK_PARAM_ASSET;
+         hparam[1].u.la  = pnt->id;
+         hparam[2].type  = HOOK_PARAM_SENTINEL;
+         hooks_runParam( "discover", hparam );
+         found_something = 1;
+         pnt->map_alpha = 0.;
       }
 
       /* Jump point updates */
@@ -1468,7 +1475,7 @@ void space_update( const double dt )
       y = 0.;
       pplayer = pilot_get( PLAYER_ID );
       if (pplayer != NULL) {
-         Solid *psolid  = pplayer->solid;
+         Solid *psolid = pplayer->solid;
          x = psolid->vel.x;
          y = psolid->vel.y;
       }
@@ -2118,9 +2125,10 @@ void planet_gfxLoad( Planet *planet )
          /* Grab functions as applicable. */
          planet->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
          planet->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
-         planet->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
          planet->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
          planet->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+         planet->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+         planet->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
       }
 
       if (planet->lua_load) {
@@ -2233,6 +2241,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    planet->lua_land  = LUA_NOREF;
    planet->lua_can_land = LUA_NOREF;
    planet->lua_render= LUA_NOREF;
+   planet->lua_update= LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", planet->name );
@@ -3756,6 +3765,22 @@ static void space_renderPlanet( const Planet *p )
    }
    else if (p->gfx_space)
       gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
+}
+
+/**
+ * @brief Renders a planet.
+ */
+static void space_updatePlanet( const Planet *p, double dt )
+{
+   if (p->lua_update == LUA_NOREF)
+      return;
+   /* TODO do a clip test first. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_update); /* f */
+   lua_pushnumber(naevL, dt); /* f, dt */
+   if (nlua_pcall( p->lua_env, 1, 0 )) {
+      WARN(_("Planet '%s' failed to run '%s':\n%s"), p->name, "update", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
 }
 
 /**

@@ -153,6 +153,7 @@ typedef struct Planet_ {
    int lua_can_land; /**< Checks to see if the player can land on the asset. */
    int lua_land;     /**< Run when a pilot "lands". */
    int lua_render;   /**< Run when rendering. */
+   int lua_update;   /**< Run when updating. */
 } Planet;
 
 /*
