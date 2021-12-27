@@ -118,7 +118,7 @@ local stateinfo = {
       forced   = true,
       noattack = true,
    },
-   idle_wait = {
+   jumpin_wait = {
       noattack = true,
    },
 }
@@ -841,7 +841,7 @@ function create_post ()
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
-      ai.pushtask("idle_wait")
+      ai.pushtask("jumpin_wait")
    end
 
    -- Tune PD parameter (with a nice heuristic formula)
