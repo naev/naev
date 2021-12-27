@@ -28,10 +28,8 @@
   <bar>Less a bar and more a waiting area, this facility is used for the rare occasions when visitors have reason to come to Tanulwa. Since Tanulwa doesn't allow personal visits to prisoners and all logistics of personnel and goods are handled strictly by the government, there's not much in the way of civilian traffic to and from the planet.</bar>
  </general>
  <tags>
-  <tag>restricted</tag>
- </tags>
- <tags>
   <tag>prison</tag>
   <tag>military</tag>
+  <tag>restricted</tag>
  </tags>
 </spob>
