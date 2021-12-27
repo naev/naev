@@ -343,7 +343,7 @@ static int misn_setReward( lua_State *L )
  *  - "low": Low importance mission marker (lower than high).<br/>
  *  - "computer": Mission computer marker.<br/>
  *
- *    @luatparam System|Spob target System or planet to mark.
+ *    @luatparam System|Spob target System or spob to mark.
  *    @luatparam[opt="high"] string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd
@@ -368,19 +368,19 @@ static int misn_markerAdd( lua_State *L )
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
-      type = PNTMARKER_COMPUTER;
+      type = SPOBMARKER_COMPUTER;
    else if (strcmp(stype, "low")==0)
-      type = PNTMARKER_LOW;
+      type = SPOBMARKER_LOW;
    else if (strcmp(stype, "high")==0)
-      type = PNTMARKER_HIGH;
+      type = SPOBMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
-      type = PNTMARKER_PLOT;
+      type = SPOBMARKER_PLOT;
    else {
       NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
-   /* Convert planet -> system. */
+   /* Convert spob -> system. */
    if (issys)
       type = mission_markerTypeSpobToSystem( type );
 

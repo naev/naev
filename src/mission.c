@@ -362,10 +362,10 @@ static const char* mission_markerTarget( MissionMarker *m )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return system_getIndex( m->objid )->name;
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return spob_getIndex( m->objid )->name;
       default:
          WARN(_("Unknown marker type."));
@@ -381,13 +381,13 @@ MissionMarkerType mission_markerTypeSpobToSystem( MissionMarkerType t )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return t;
-      case PNTMARKER_COMPUTER:
+      case SPOBMARKER_COMPUTER:
          return SYSMARKER_COMPUTER;
-      case PNTMARKER_LOW:
+      case SPOBMARKER_LOW:
          return SYSMARKER_LOW;
-      case PNTMARKER_HIGH:
+      case SPOBMARKER_HIGH:
          return SYSMARKER_HIGH;
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_PLOT:
          return SYSMARKER_PLOT;
       default:
          WARN(_("Unknown marker type."));
@@ -399,17 +399,17 @@ MissionMarkerType mission_markerTypeSystemToSpob( MissionMarkerType t )
 {
    switch (t) {
       case SYSMARKER_COMPUTER:
-         return PNTMARKER_COMPUTER;
+         return SPOBMARKER_COMPUTER;
       case SYSMARKER_LOW:
-         return PNTMARKER_LOW;
+         return SPOBMARKER_LOW;
       case SYSMARKER_HIGH:
-         return PNTMARKER_HIGH;
+         return SPOBMARKER_HIGH;
       case SYSMARKER_PLOT:
-         return PNTMARKER_PLOT;
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+         return SPOBMARKER_PLOT;
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return t;
       default:
          WARN(_("Unknown marker type."));
@@ -459,10 +459,10 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
             return -1;
          }
          return mission_addMarker( misn, id, system_index(ssys), type );
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          pnt = spob_get( xml_get( node ));
          if (pnt == NULL) {
             WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
@@ -553,10 +553,10 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
          case SYSMARKER_PLOT:
             sys = system_getIndex( m->objid );
             break;
-         case PNTMARKER_COMPUTER:
-         case PNTMARKER_LOW:
-         case PNTMARKER_HIGH:
-         case PNTMARKER_PLOT:
+         case SPOBMARKER_COMPUTER:
+         case SPOBMARKER_LOW:
+         case SPOBMARKER_HIGH:
+         case SPOBMARKER_PLOT:
             pnt = spob_getIndex( m->objid );
             sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {
@@ -601,10 +601,10 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
          case SYSMARKER_PLOT:
             sys = system_getIndex( m->objid );
             break;
-         case PNTMARKER_COMPUTER:
-         case PNTMARKER_LOW:
-         case PNTMARKER_HIGH:
-         case PNTMARKER_PLOT:
+         case SPOBMARKER_COMPUTER:
+         case SPOBMARKER_LOW:
+         case SPOBMARKER_HIGH:
+         case SPOBMARKER_PLOT:
             pnt = spob_getIndex( m->objid );
             sysname = spob_getSystem( pnt->name );
             if (sysname==NULL) {

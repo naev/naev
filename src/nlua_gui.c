@@ -253,9 +253,9 @@ static int guiL_radarRender( lua_State *L )
 }
 
 /**
- * @brief Sets the Lua planet target GFX.
+ * @brief Sets the Lua spob target GFX.
  *
- *    @luatparam Tex tex Texture to set for the planet targeting.
+ *    @luatparam Tex tex Texture to set for the spob targeting.
  * @luafunc targetSpobGFX
  */
 static int guiL_targetSpobGFX( lua_State *L )

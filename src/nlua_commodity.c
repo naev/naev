@@ -301,13 +301,13 @@ static int commodityL_price( lua_State *L )
 }
 
 /**
- * @brief Gets the base price of an commodity on a certain planet.
+ * @brief Gets the base price of an commodity on a certain spob.
  *
- * @usage if c:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of a commodity at polaris prime
+ * @usage if c:priceAt( spob.get("Polaris Prime") ) > 100 then -- Checks price of a commodity at polaris prime
  *
  *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Spob p Spob to get price at.
- *    @luatreturn number The price of the commodity at the planet.
+ *    @luatreturn number The price of the commodity at the spob.
  * @luafunc priceAt
  */
 static int commodityL_priceAt( lua_State *L )
@@ -335,14 +335,14 @@ static int commodityL_priceAt( lua_State *L )
 }
 
 /**
- * @brief Gets the price of an commodity on a certain planet at a certain time.
+ * @brief Gets the price of an commodity on a certain spob at a certain time.
  *
- * @usage if c:priceAtTime( planet.get("Polaris Prime"), time ) > 100 then -- Checks price of a commodity at polaris prime
+ * @usage if c:priceAtTime( spob.get("Polaris Prime"), time ) > 100 then -- Checks price of a commodity at polaris prime
  *
  *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Spob p Spob to get price at.
  *    @luatparam Time t Time to get the price at.
- *    @luatreturn number The price of the commodity at the planet.
+ *    @luatreturn number The price of the commodity at the spob.
  * @luafunc priceAtTime
  */
 static int commodityL_priceAtTime( lua_State *L )

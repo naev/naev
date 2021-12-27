@@ -534,7 +534,7 @@ static int nlua_require( lua_State* L )
  *  - naev
  *  - var
  *  - space
- *    - planet
+ *    - spob
  *    - system
  *    - jumps
  *  - time

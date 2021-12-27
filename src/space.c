@@ -4088,10 +4088,10 @@ int space_addMarker( int objid, MissionMarkerType type )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return space_addMarkerSystem( objid, type );
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return space_addMarkerSpob( objid, type );
       default:
          WARN(_("Unknown marker type."));
@@ -4174,10 +4174,10 @@ int space_rmMarker( int objid, MissionMarkerType type )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return space_rmMarkerSystem( objid, type );
-      case PNTMARKER_COMPUTER:
-      case PNTMARKER_LOW:
-      case PNTMARKER_HIGH:
-      case PNTMARKER_PLOT:
+      case SPOBMARKER_COMPUTER:
+      case SPOBMARKER_LOW:
+      case SPOBMARKER_HIGH:
+      case SPOBMARKER_PLOT:
          return space_rmMarkerSpob( objid, type );
       default:
          WARN(_("Unknown marker type."));
