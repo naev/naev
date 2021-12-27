@@ -1088,7 +1088,7 @@ char **spob_searchFuzzyCase( const char* planetname, int *n )
 /**
  * @brief Gets all the virtual assets.
  */
-VirtualSpob* virtualasset_getAll (void)
+VirtualSpob* virtualspob_getAll (void)
 {
    return vasset_stack;
 }
@@ -1096,7 +1096,7 @@ VirtualSpob* virtualasset_getAll (void)
 /**
  * @brief Comparison function for qsort'ing VirtuaSpob by name.
  */
-static int virtualasset_cmp( const void *p1, const void *p2 )
+static int virtualspob_cmp( const void *p1, const void *p2 )
 {
    const VirtualSpob *v1, *v2;
    v1 = (const VirtualSpob*) p1;
@@ -1107,10 +1107,10 @@ static int virtualasset_cmp( const void *p1, const void *p2 )
 /**
  * @brief Gets a virtual asset by matching name.
  */
-VirtualSpob* virtualasset_get( const char *name )
+VirtualSpob* virtualspob_get( const char *name )
 {
    const VirtualSpob va = {.name = (char*)name};
-   VirtualSpob *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualasset_cmp );
+   VirtualSpob *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualspob_cmp );
    if (found != NULL)
       return found;
    WARN(_("Virtual Spob '%s' not found in the universe"), name);
@@ -1874,7 +1874,7 @@ static int spobs_load (void)
  *
  *    @return 0 on success.
  */
-static int virtualassets_load (void)
+static int virtualspobs_load (void)
 {
    char **asset_files;
 
@@ -1934,7 +1934,7 @@ static int virtualassets_load (void)
       free(file);
       xmlFreeDoc(doc);
    }
-   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualasset_cmp );
+   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualSpob), virtualspob_cmp );
 
    /* Clean up. */
    PHYSFS_freeList( asset_files );
@@ -2563,10 +2563,10 @@ int system_addVirtualSpob( StarSystem *sys, const char *assetname )
    if (sys == NULL)
       return -1;
 
-   va = virtualasset_get( assetname );
+   va = virtualspob_get( assetname );
    if (va == NULL)
       return -1;
-   array_push_back( &sys->assets_virtual, va );
+   array_push_back( &sys->spobs_virtual, va );
 
    /* Economy is affected by presence. */
    economy_addQueuedUpdate();
@@ -2590,18 +2590,18 @@ int system_rmVirtualSpob( StarSystem *sys, const char *assetname )
    }
 
    /* Try to find virtual asset. */
-   for (i=0; i<array_size(sys->assets_virtual); i++)
-      if (strcmp(sys->assets_virtual[i]->name, assetname)==0)
+   for (i=0; i<array_size(sys->spobs_virtual); i++)
+      if (strcmp(sys->spobs_virtual[i]->name, assetname)==0)
          break;
 
    /* Virtual asset not found. */
-   if (i>=array_size(sys->assets_virtual)) {
+   if (i>=array_size(sys->spobs_virtual)) {
       WARN(_("Virtual asset '%s' not found in system '%s' for removal."), assetname, sys->name);
       return -1;
    }
 
    /* Remove virtual asset. */
-   array_erase( &sys->assets_virtual, &sys->assets_virtual[i], &sys->assets_virtual[i+1] );
+   array_erase( &sys->spobs_virtual, &sys->spobs_virtual[i], &sys->spobs_virtual[i+1] );
 
    /* Remove the presence. */
    space_reconstructPresences(); /* TODO defer this if removing multiple assets at once. */
@@ -2699,7 +2699,7 @@ static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
    sys->spobs   = array_create( Spob* );
-   sys->assets_virtual = array_create( VirtualSpob* );
+   sys->spobs_virtual = array_create( VirtualSpob* );
    sys->spobsid = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
@@ -3383,7 +3383,7 @@ int space_load (void)
       return ret;
 
    /* Load virtual assets. */
-   ret = virtualassets_load();
+   ret = virtualspobs_load();
    if (ret < 0)
       return ret;
 
@@ -3923,7 +3923,7 @@ void space_exit (void)
       array_free(sys->presence);
       array_free(sys->spobs);
       array_free(sys->spobsid);
-      array_free(sys->assets_virtual);
+      array_free(sys->spobs_virtual);
 
       for (int j=0; j<array_size(sys->tags); j++)
          free( sys->tags[j] );
@@ -4528,9 +4528,9 @@ void system_addAllSpobsPresence( StarSystem *sys )
       system_presenceAddSpob(sys, &sys->spobs[i]->presence );
 
    /* Virtual spobs. */
-   for (int i=0; i<array_size(sys->assets_virtual); i++)
-      for (int j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
-         system_presenceAddSpob(sys, &sys->assets_virtual[i]->presences[j] );
+   for (int i=0; i<array_size(sys->spobs_virtual); i++)
+      for (int j=0; j<array_size(sys->spobs_virtual[i]->presences); j++)
+         system_presenceAddSpob(sys, &sys->spobs_virtual[i]->presences[j] );
 }
 
 /**

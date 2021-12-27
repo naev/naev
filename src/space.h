@@ -52,7 +52,7 @@ enum {
  */
 #define SPOB_KNOWN       (1<<0) /**< Spob is known. */
 #define SPOB_BLACKMARKET (1<<1) /**< Spob is a black market. */
-#define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
+#define SPOB_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this spob. */
 #define SPOB_UNINHABITED (1<<3) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
@@ -75,7 +75,7 @@ typedef struct MapOverlayPos_ {
 } MapOverlayPos;
 
 /**
- * @brief Represents the presence of an asset. */
+ * @brief Represents the presence of a spob. */
 typedef struct SpobPresence_ {
    int faction;   /**< Faction generating presence. */
    double base;   /**< Base presence. */
@@ -89,8 +89,8 @@ typedef struct SpobPresence_ {
  * @brief Basically modifies system parameters without creating any real objects.
  */
 typedef struct VirtualSpob_ {
-   char *name;                /**< Virtual asset name. */
-   SpobPresence *presences;  /**< Virtual asset presences (Array from array.h). */
+   char *name;                /**< Virtual spob name. */
+   SpobPresence *presences;  /**< Virtual spob presences (Array from array.h). */
 } VirtualSpob;
 
 /**
@@ -112,7 +112,7 @@ typedef struct Spob_ {
 
    /* Spob details. */
    SpobPresence presence; /**< Presence details (faction, etc.) */
-   double hide;         /**< The ewarfare hide value for an asset. */
+   double hide;         /**< The ewarfare hide value for the spob. */
 
    /* Landing details. */
    int can_land;        /**< Whether or not the player can land. */
@@ -151,7 +151,7 @@ typedef struct Spob_ {
    nlua_env lua_env; /**< Lua environment. */
    int lua_load;     /**< Run when player enters system. */
    int lua_unload;   /**< Run when player exits system. */
-   int lua_can_land; /**< Checks to see if the player can land on the asset. */
+   int lua_can_land; /**< Checks to see if the player can land on the spob. */
    int lua_land;     /**< Run when a pilot "lands". */
    int lua_render;   /**< Run when rendering. */
    int lua_update;   /**< Run when updating. */
@@ -166,8 +166,8 @@ typedef struct Spob_ {
 #define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
 #define SYSTEM_DISCOVERED  (1<<4) /**< System has been discovered. This is a temporary flag used by the map. */
 #define SYSTEM_HIDDEN      (1<<5) /**< System is temporarily hidden from view. */
-#define SYSTEM_HAS_KNOWN_LANDABLE (1<<6) /**< System has potentially landable assets that are known (temporary use by map!) */
-#define SYSTEM_HAS_LANDABLE (1<<7) /**< System has landable assets (temporary use by map!) */
+#define SYSTEM_HAS_KNOWN_LANDABLE (1<<6) /**< System has potentially landable spobs that are known (temporary use by map!) */
+#define SYSTEM_HAS_LANDABLE (1<<7) /**< System has landable spobs (temporary use by map!) */
 #define SYSTEM_NOLANES     (1<<8) /**< System should not use safe lanes at all. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
@@ -312,10 +312,10 @@ struct StarSystem_ {
    char *features;         /**< Extra text on the map indicating special features of the system. */
 
    /* Spobs. */
-   Spob **spobs;       /**< Array (array.h): spobs */
-   int *spobsid;         /**< Array (array.h): IDs of the spobs. */
+   Spob **spobs;           /**< Array (array.h): spobs */
+   int *spobsid;           /**< Array (array.h): IDs of the spobs. */
    int faction;            /**< overall faction */
-   VirtualSpob **assets_virtual; /**< Array (array.h): virtual assets. */
+   VirtualSpob **spobs_virtual; /**< Array (array.h): virtual spobs. */
 
    /* Jumps. */
    JumpPoint *jumps;       /**< Array (array.h): Jump points in the system */
@@ -393,10 +393,10 @@ const glColour* spob_getColour( const Spob *p );
 void spob_updateLand( Spob *p );
 
 /*
- * Virtual asset stuff.
+ * Virtual spob stuff.
  */
-VirtualSpob* virtualasset_getAll (void);
-VirtualSpob* virtualasset_get( const char *name );
+VirtualSpob* virtualspob_getAll (void);
+VirtualSpob* virtualspob_get( const char *name );
 
 /*
  * jump stuff
@@ -414,8 +414,8 @@ void systems_reconstructSpobs (void);
 StarSystem *system_new (void);
 int system_addSpob( StarSystem *sys, const char *spobname );
 int system_rmSpob( StarSystem *sys, const char *spobname );
-int system_addVirtualSpob( StarSystem *sys, const char *assetname );
-int system_rmVirtualSpob( StarSystem *sys, const char *assetname );
+int system_addVirtualSpob( StarSystem *sys, const char *spobname );
+int system_rmVirtualSpob( StarSystem *sys, const char *spobname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );

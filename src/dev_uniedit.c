@@ -520,7 +520,7 @@ static void uniedit_renderVirtualSpobs( double x, double y, double r )
       ty = y + sys->pos.y*uniedit_zoom;
 
       /* draws the disk representing the faction */
-      sr = 5.*M_PI*sqrt((double)array_size(sys->assets_virtual)) * uniedit_zoom;
+      sr = 5.*M_PI*sqrt((double)array_size(sys->spobs_virtual)) * uniedit_zoom;
 
       (void) r;
       gl_renderCircle( tx, ty, sr, &c, 1 );
@@ -777,13 +777,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle virtual asset viewer. */
    if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
-      if (array_size(sys->assets_virtual)==0)
+      if (array_size(sys->spobs_virtual)==0)
          return;
 
       /* Count assets. */
       l = 0;
-      for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualSpob *va = sys->assets_virtual[j];
+      for (int j=0; j<array_size(sys->spobs_virtual); j++) {
+         VirtualSpob *va = sys->spobs_virtual[j];
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
       }
 
@@ -882,8 +882,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
                getValCol(base), base, getValCol(bonus), bonus, spob_name(pnt) );
       }
-      for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualSpob *va = sys->assets_virtual[j];
+      for (int j=0; j<array_size(sys->spobs_virtual); j++) {
+         VirtualSpob *va = sys->spobs_virtual[j];
          for (int p=0; p<array_size(va->presences); p++) {
             if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                continue;
@@ -902,8 +902,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                   getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, spob_name(pnt), _(cur->name) );
          }
-         for (int j=0; j<array_size(cur->assets_virtual); j++) {
-            VirtualSpob *va = cur->assets_virtual[j];
+         for (int j=0; j<array_size(cur->spobs_virtual); j++) {
+            VirtualSpob *va = cur->spobs_virtual[j];
             for (int p=0; p<array_size(va->presences); p++) {
                if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                   continue;
@@ -1764,7 +1764,7 @@ static void uniedit_editGenList( unsigned int wid )
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
-   n     = array_size( sys->assets_virtual );
+   n     = array_size( sys->spobs_virtual );
    has_assets = !!n;
 
    /* Generate list. */
@@ -1773,7 +1773,7 @@ static void uniedit_editGenList( unsigned int wid )
    if (has_assets) {
       /* Virtual asset button. */
       for (int i=0; i<n; i++) {
-         va    = sys->assets_virtual[i];
+         va    = sys->spobs_virtual[i];
          str[j++] = strdup( va->name );
       }
    }
@@ -1872,7 +1872,7 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
    int h;
 
    /* Get all assets. */
-   va  = virtualasset_getAll();
+   va  = virtualspob_getAll();
    if (array_size(va)==0) {
       dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
       return;
