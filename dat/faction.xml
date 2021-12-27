@@ -609,7 +609,7 @@
  </faction>
  <faction>
   <name>Rogue Four Winds</name>
-  <ai>trader</ai>
+  <ai>baddie</ai>
   <display>Four Winds</display>
   <static />
   <invisible />
