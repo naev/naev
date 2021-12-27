@@ -1402,7 +1402,7 @@ void uniedit_selectText (void)
          if (sys->nebu_density<=0.)
             snprintf( buf, sizeof(buf), _("None") );
          else
-            snprintf( buf, sizeof(buf), _("%.0f Density\n%.0f Volatility"), sys->nebu_density, sys->nebu_volatility);
+            snprintf( buf, sizeof(buf), _("%.0f Density\n%.1f Volatility"), sys->nebu_density, sys->nebu_volatility);
          window_modifyText( uniedit_wid, "txtNebula", buf );
       }
       else {
