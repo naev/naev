@@ -1143,3 +1143,10 @@ function idle_wait ()
       ai.poptask()
    end
 end
+
+-- luacheck: globals jumpin_wait (AI Task functions passed by name)
+function jumpin_wait ()
+   if ai.timeup(0) then
+      ai.poptask()
+   end
+end

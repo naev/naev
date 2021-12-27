@@ -1988,7 +1988,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char *buf;
    StarSystem *system_stack;
-   Spob *asset;
+   Spob *spob;
    JumpPoint *jump;
 
    node = parent->children;
@@ -1997,7 +1997,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create(StarSystem*);
-   temp->u.map->assets  = array_create(Spob*);
+   temp->u.map->spobs  = array_create(Spob*);
    temp->u.map->jumps   = array_create(JumpPoint*);
 
    do {
@@ -2019,12 +2019,12 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
 
-            if (xml_isNode(cur,"asset")) {
+            if (xml_isNode(cur,"spob")) {
                buf = xml_get(cur);
-               if ((buf != NULL) && ((asset = spob_get(buf)) != NULL))
-                  array_grow( &temp->u.map->assets ) = asset;
+               if ((buf != NULL) && ((spob = spob_get(buf)) != NULL))
+                  array_grow( &temp->u.map->spobs ) = spob;
                else
-                  WARN(_("Map '%s' has invalid asset '%s'"), temp->name, buf);
+                  WARN(_("Map '%s' has invalid spob '%s'"), temp->name, buf);
             }
             else if (xml_isNode(cur,"jump")) {
                buf = xml_get(cur);
@@ -2047,7 +2047,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          for (int i=0;i<array_size(system_stack);i++) {
             array_grow( &temp->u.map->systems ) = &system_stack[i];
             for (int j=0;j<array_size(system_stack[i].spobs);j++)
-               array_grow( &temp->u.map->assets ) = system_stack[i].spobs[j];
+               array_grow( &temp->u.map->spobs ) = system_stack[i].spobs[j];
             for (int j=0;j<array_size(system_stack[i].jumps);j++)
                array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];
          }
@@ -2057,7 +2057,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    array_shrink( &temp->u.map->systems );
-   array_shrink( &temp->u.map->assets  );
+   array_shrink( &temp->u.map->spobs  );
    array_shrink( &temp->u.map->jumps   );
 
    if (temp->desc_short == NULL) {
@@ -2090,12 +2090,12 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xml_onlyNodes(node);
-      xmlr_float(node,"asset_detect",temp->u.lmap.asset_detect);
+      xmlr_float(node,"spob_detect",temp->u.lmap.spob_detect);
       xmlr_float(node,"jump_detect",temp->u.lmap.jump_detect);
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
-   temp->u.lmap.asset_detect = pow2( temp->u.lmap.asset_detect );
+   temp->u.lmap.spob_detect = pow2( temp->u.lmap.spob_detect );
    temp->u.lmap.jump_detect  = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
@@ -2892,7 +2892,7 @@ void outfit_free (void)
          free(o->u.lic.provides);
       else if (outfit_isMap(o)) {
          array_free( o->u.map->systems );
-         array_free( o->u.map->assets );
+         array_free( o->u.map->spobs );
          array_free( o->u.map->jumps );
          free( o->u.map );
       }

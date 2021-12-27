@@ -47,18 +47,18 @@ static int dsys_compSpob( const void *spob1, const void *spob2 )
 }
 
 /**
- * @brief Compare function for asset qsort.
+ * @brief Compare function for spob qsort.
  *
- *    @param asset1 Virtual asset 1 to sort.
- *    @param asset2 Virtual asset 2 to sort.
+ *    @param spob1 Virtual spob 1 to sort.
+ *    @param spob2 Virtual spob 2 to sort.
  *    @return Order to sort.
  */
-static int dsys_compVirtualSpob( const void *asset1, const void *asset2 )
+static int dsys_compVirtualSpob( const void *spob1, const void *spob2 )
 {
    const VirtualSpob *va1, *va2;
 
-   va1 = *(const VirtualSpob**) asset1;
-   va2 = *(const VirtualSpob**) asset2;
+   va1 = *(const VirtualSpob**) spob1;
+   va2 = *(const VirtualSpob**) spob2;
 
    return strcmp( va1->name, va2->name );
 }
@@ -91,7 +91,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Spob **sorted_spobs;
-   const VirtualSpob **sorted_assets;
+   const VirtualSpob **sorted_virtualspobs;
    const JumpPoint **sorted_jumps;
    char *file, *cleanName;
 
@@ -143,20 +143,20 @@ int dsys_saveSystem( StarSystem *sys )
    memcpy( sorted_spobs, sys->spobs, sizeof(Spob*) * array_size(sys->spobs) );
    qsort( sorted_spobs, array_size(sys->spobs), sizeof(Spob*), dsys_compSpob );
 
-   /* Sort virtual assets. */
-   sorted_assets = malloc( sizeof(VirtualSpob*) * array_size(sys->spobs_virtual) );
-   memcpy( sorted_assets, sys->spobs_virtual, sizeof(VirtualSpob*) * array_size(sys->spobs_virtual) );
-   qsort( sorted_assets, array_size(sys->spobs_virtual), sizeof(VirtualSpob*), dsys_compVirtualSpob );
+   /* Sort virtual spobs. */
+   sorted_virtualspobs = malloc( sizeof(VirtualSpob*) * array_size(sys->spobs_virtual) );
+   memcpy( sorted_virtualspobs, sys->spobs_virtual, sizeof(VirtualSpob*) * array_size(sys->spobs_virtual) );
+   qsort( sorted_virtualspobs, array_size(sys->spobs_virtual), sizeof(VirtualSpob*), dsys_compVirtualSpob );
 
-   /* Write assets and clean up. */
+   /* Write spobs and clean up. */
    xmlw_startElem( writer, "spobs" );
    for (int i=0; i<array_size(sys->spobs); i++)
       xmlw_elem( writer, "spob", "%s", sorted_spobs[i]->name );
    for (int i=0; i<array_size(sys->spobs_virtual); i++)
-      xmlw_elem( writer, "spob_virtual", "%s", sorted_assets[i]->name );
+      xmlw_elem( writer, "spob_virtual", "%s", sorted_virtualspobs[i]->name );
    xmlw_endElem( writer ); /* "spobs" */
    free(sorted_spobs);
-   free(sorted_assets);
+   free(sorted_virtualspobs);
 
    /* Jumps. */
    sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );

@@ -12,14 +12,14 @@
    <jump>Gremlin</jump>
    <jump>Radix</jump>
    <jump>Urbanus</jump>
-   <asset>Dvaer II</asset>
-   <asset>Dvaer III</asset>
-   <asset>Dvaer IIIa</asset>
-   <asset>Dvaer IV</asset>
-   <asset>Dvaer Prime</asset>
-   <asset>Dvaered High Command</asset>
-   <asset>Eist Shipyard</asset>
-   <asset>Laarss</asset>
+   <spob>Dvaer II</spob>
+   <spob>Dvaer III</spob>
+   <spob>Dvaer IIIa</spob>
+   <spob>Dvaer IV</spob>
+   <spob>Dvaer Prime</spob>
+   <spob>Dvaered High Command</spob>
+   <spob>Eist Shipyard</spob>
+   <spob>Laarss</spob>
   </sys>
   <sys name="Gremlin">
    <jump>Daravon</jump>
@@ -27,60 +27,60 @@
   </sys>
   <sys name="Radix">
    <jump>Dvaer</jump>
-   <asset>Myuirr Station</asset>
-   <asset>Radix I</asset>
-   <asset>Radix II</asset>
-   <asset>Radix III</asset>
-   <asset>Stutee</asset>
+   <spob>Myuirr Station</spob>
+   <spob>Radix I</spob>
+   <spob>Radix II</spob>
+   <spob>Radix III</spob>
+   <spob>Stutee</spob>
   </sys>
   <sys name="Beeklo">
    <jump>Awowa</jump>
    <jump>Baf</jump>
    <jump>Darkstone</jump>
    <jump>Dvaer</jump>
-   <asset>Adham</asset>
-   <asset>Beeklo II</asset>
-   <asset>Diabolos</asset>
-   <asset>Icarus</asset>
-   <asset>Totoran</asset>
+   <spob>Adham</spob>
+   <spob>Beeklo II</spob>
+   <spob>Diabolos</spob>
+   <spob>Icarus</spob>
+   <spob>Totoran</spob>
   </sys>
   <sys name="Baf">
    <jump>Beeklo</jump>
-   <asset>BGG-1356</asset>
-   <asset>Baf I</asset>
-   <asset>Baf IV</asset>
-   <asset>Dumas Station</asset>
-   <asset>MGG-1294</asset>
+   <spob>BGG-1356</spob>
+   <spob>Baf I</spob>
+   <spob>Baf IV</spob>
+   <spob>Dumas Station</spob>
+   <spob>MGG-1294</spob>
   </sys>
   <sys name="Daravon">
    <jump>Gremlin</jump>
-   <asset>Daravon I</asset>
-   <asset>Daravon III</asset>
-   <asset>Eclipse Station</asset>
-   <asset>Vilati Vilata</asset>
+   <spob>Daravon I</spob>
+   <spob>Daravon III</spob>
+   <spob>Eclipse Station</spob>
+   <spob>Vilati Vilata</spob>
   </sys>
   <sys name="Awowa">
    <jump>Beeklo</jump>
-   <asset>Awowa IV</asset>
-   <asset>Awowa V</asset>
-   <asset>Odonga</asset>
-   <asset>Odonga m1</asset>
+   <spob>Awowa IV</spob>
+   <spob>Awowa V</spob>
+   <spob>Odonga</spob>
+   <spob>Odonga m1</spob>
   </sys>
   <sys name="Urbanus">
    <jump>Dvaer</jump>
-   <asset>Onyx Shipyard</asset>
-   <asset>Trincea</asset>
-   <asset>Urbanus Crops</asset>
-   <asset>Urbanus II</asset>
-   <asset>Urbanus III</asset>
+   <spob>Onyx Shipyard</spob>
+   <spob>Trincea</spob>
+   <spob>Urbanus Crops</spob>
+   <spob>Urbanus II</spob>
+   <spob>Urbanus III</spob>
   </sys>
   <sys name="Darkstone">
    <jump>Beeklo</jump>
-   <asset>Darkstone IV</asset>
-   <asset>Darkstone V</asset>
-   <asset>Sheik Hall</asset>
-   <asset>Stalwart Station</asset>
-   <asset>Varia</asset>
+   <spob>Darkstone IV</spob>
+   <spob>Darkstone V</spob>
+   <spob>Sheik Hall</spob>
+   <spob>Stalwart Station</spob>
+   <spob>Varia</spob>
   </sys>
  </specific>
 </outfit>

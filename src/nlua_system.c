@@ -973,7 +973,7 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luatparam System  s System to set known.
  *    @luatparam[opt=false] boolean b Whether or not to set as known.
- *    @luatparam[opt=false] boolean r Whether or not to iterate over the system's assets and jump points.
+ *    @luatparam[opt=false] boolean r Whether or not to iterate over the system's spobs and jump points.
  * @luafunc setKnown
  */
 static int systemL_setknown( lua_State *L )

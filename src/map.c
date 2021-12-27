@@ -176,7 +176,7 @@ static void map_setup (void)
       StarSystem *sys = &systems_stack[i];
       sys_rmFlag( sys, SYSTEM_DISCOVERED );
 
-      /* Check to see if system has landable assets. */
+      /* Check to see if system has landable spobs. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
       for (int j=0; j<array_size(sys->spobs); j++) {
          Spob *p = sys->spobs[j];
@@ -2526,8 +2526,8 @@ int map_map( const Outfit *map )
    for (int i=0; i<array_size(map->u.map->systems);i++)
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   for (int i=0; i<array_size(map->u.map->assets);i++)
-      spob_setKnown(map->u.map->assets[i]);
+   for (int i=0; i<array_size(map->u.map->spobs);i++)
+      spob_setKnown(map->u.map->spobs[i]);
 
    for (int i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
@@ -2548,8 +2548,8 @@ int map_isUseless( const Outfit* map )
       if (!sys_isKnown(map->u.map->systems[i]))
          return 0;
 
-   for (int i=0; i<array_size(map->u.map->assets);i++) {
-      Spob *p = map->u.map->assets[i];
+   for (int i=0; i<array_size(map->u.map->spobs);i++) {
+      Spob *p = map->u.map->spobs[i];
       if (!spob_hasSystem( p->name ) )
          continue;
       if (!spob_isKnown(p))
@@ -2584,7 +2584,7 @@ int localmap_map( const Outfit *lmap )
          jp_setFlag( jp, JP_KNOWN );
    }
 
-   detect = lmap->u.lmap.asset_detect;
+   detect = lmap->u.lmap.spob_detect;
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
       if (!spob_hasSystem( p->name ) )
@@ -2617,7 +2617,7 @@ int localmap_isUseless( const Outfit *lmap )
          return 0;
    }
 
-   detect = lmap->u.lmap.asset_detect;
+   detect = lmap->u.lmap.spob_detect;
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
       if ((mod*p->hide <= detect) && !spob_isKnown( p ))

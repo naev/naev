@@ -769,12 +769,12 @@ static int hookL_standing( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to when the player discovers an asset, jump point or the likes.
+ * @brief Hooks the function to when the player discovers an spob, jump point or the likes.
  *
  * The parameters passed to the function are the type which can be one of:<br/>
- * - "asset" <br/>
+ * - "spob" <br/>
  * - "jump" <br/>
- * and the actual asset or jump point discovered with the following format: <br/>
+ * and the actual spob or jump point discovered with the following format: <br/>
  * function f( type, discovery )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
@@ -1014,7 +1014,7 @@ static int hookL_trigger( lua_State *L )
  *  indicating that it was killed by other means like for example the shockwave
  *  of a dying ship or nebula volatility.<br />
  * <br />
- * The land and jump hooks also pass the asset or jump point the pilot is
+ * The land and jump hooks also pass the spob or jump point the pilot is
  * landing at or jumped from, respectively:
  * <p>
  *    function land_hook( pilot, spob, arg )<br />

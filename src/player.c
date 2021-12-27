@@ -1629,7 +1629,7 @@ int player_land( int loud )
    if (pilot_outfitOffAll( player.p ) > 0)
       pilot_calcStats( player.p );
 
-   /* Do whatever the asset wants to do. */
+   /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
       lua_pushspob( naevL, spob_index(spob) );
