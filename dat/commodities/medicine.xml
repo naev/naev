@@ -5,7 +5,7 @@
  <price>750</price>
  <gfx_store>medicine.webp</gfx_store>
  <standard/>
- <planet_modifier type="2">1.2</planet_modifier>
+ <spob_modifier type="2">1.2</spob_modifier>
  <period>70</period>
  <population_modifier>0.75</population_modifier>
  <faction_modifier type="Dvaered">1.2</faction_modifier>

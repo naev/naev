@@ -5,14 +5,14 @@
  <price>210</price>
  <gfx_store>seaweed.webp</gfx_store>
  <standard/>
- <planet_modifier type="H">0.7</planet_modifier>
- <planet_modifier type="K">0.95</planet_modifier>
- <planet_modifier type="L">0.9</planet_modifier>
- <planet_modifier type="M">0.4</planet_modifier>
- <planet_modifier type="O">0.4</planet_modifier>
- <planet_modifier type="P">0.5</planet_modifier>
- <planet_modifier type="Q">0.8</planet_modifier>
- <planet_modifier type="R">0.8</planet_modifier>
+ <spob_modifier type="H">0.7</spob_modifier>
+ <spob_modifier type="K">0.95</spob_modifier>
+ <spob_modifier type="L">0.9</spob_modifier>
+ <spob_modifier type="M">0.4</spob_modifier>
+ <spob_modifier type="O">0.4</spob_modifier>
+ <spob_modifier type="P">0.5</spob_modifier>
+ <spob_modifier type="Q">0.8</spob_modifier>
+ <spob_modifier type="R">0.8</spob_modifier>
  <period>80</period>
  <population_modifier>0.75</population_modifier>
  <faction_modifier type="Empire">0.8</faction_modifier>

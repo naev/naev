@@ -6,12 +6,12 @@
  <gfx_store>diamonds.webp</gfx_store>
  <gfx_space>diamonds.webp</gfx_space>
  <standard/>
- <planet_modifier type="F">0.5</planet_modifier>
- <planet_modifier type="K">0.9</planet_modifier>
- <planet_modifier type="L">0.9</planet_modifier>
- <planet_modifier type="M">0.7</planet_modifier>
- <planet_modifier type="Q">0.8</planet_modifier>
- <planet_modifier type="Z">0.6</planet_modifier>
+ <spob_modifier type="F">0.5</spob_modifier>
+ <spob_modifier type="K">0.9</spob_modifier>
+ <spob_modifier type="L">0.9</spob_modifier>
+ <spob_modifier type="M">0.7</spob_modifier>
+ <spob_modifier type="Q">0.8</spob_modifier>
+ <spob_modifier type="Z">0.6</spob_modifier>
  <period>70</period>
  <population_modifier>0.25</population_modifier>
  <faction_modifier type="Dvaered">0.6</faction_modifier>

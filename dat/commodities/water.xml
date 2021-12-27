@@ -6,22 +6,22 @@
  <gfx_store>water.webp</gfx_store>
  <gfx_space>water.webp</gfx_space>
  <standard/>
- <planet_modifier type="A">1.2</planet_modifier>
- <planet_modifier type="B">1.2</planet_modifier>
- <planet_modifier type="E">1.2</planet_modifier>
- <planet_modifier type="F">1.2</planet_modifier>
- <planet_modifier type="H">1.1</planet_modifier>
- <planet_modifier type="K">0.95</planet_modifier>
- <planet_modifier type="L">0.9</planet_modifier>
- <planet_modifier type="M">0.7</planet_modifier>
- <planet_modifier type="N">0.9</planet_modifier>
- <planet_modifier type="O">0.4</planet_modifier>
- <planet_modifier type="P">0.5</planet_modifier>
- <planet_modifier type="Q">0.8</planet_modifier>
- <planet_modifier type="R">0.9</planet_modifier>
- <planet_modifier type="X">1.25</planet_modifier>
- <planet_modifier type="Y">1.25</planet_modifier>
- <planet_modifier type="Z">1.25</planet_modifier>
+ <spob_modifier type="A">1.2</spob_modifier>
+ <spob_modifier type="B">1.2</spob_modifier>
+ <spob_modifier type="E">1.2</spob_modifier>
+ <spob_modifier type="F">1.2</spob_modifier>
+ <spob_modifier type="H">1.1</spob_modifier>
+ <spob_modifier type="K">0.95</spob_modifier>
+ <spob_modifier type="L">0.9</spob_modifier>
+ <spob_modifier type="M">0.7</spob_modifier>
+ <spob_modifier type="N">0.9</spob_modifier>
+ <spob_modifier type="O">0.4</spob_modifier>
+ <spob_modifier type="P">0.5</spob_modifier>
+ <spob_modifier type="Q">0.8</spob_modifier>
+ <spob_modifier type="R">0.9</spob_modifier>
+ <spob_modifier type="X">1.25</spob_modifier>
+ <spob_modifier type="Y">1.25</spob_modifier>
+ <spob_modifier type="Z">1.25</spob_modifier>
  <period>110</period>
  <population_modifier>0.7</population_modifier>
  <faction_modifier type="FLF">1.2</faction_modifier>
