@@ -123,6 +123,6 @@ function can_land ()
 end
 
 function land ()
-   var.push( "wormhole_target", "Gamma Polaris" )
+   var.push( "wormhole_target", "NGC-1931" ) -- TODO neighbour wormhole
    naev.eventStart("Wormhole")
 end
