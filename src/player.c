@@ -1576,7 +1576,7 @@ int player_land( int loud )
 
    /* attempt to land at selected spob */
    spob = cur_system->spobs[player.p->nav_spob];
-   if (!spob_hasService(spob, SPOB_SERVICE_LAND)) {
+   if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob, SPOB_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
       return PLAYER_LAND_DENIED;
    }

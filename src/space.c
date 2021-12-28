@@ -2013,11 +2013,6 @@ void spob_updateLand( Spob *p )
 {
    char *str;
 
-   /* Must be inhabited. */
-   if (!spob_hasService( p, SPOB_SERVICE_INHABITED ) ||
-         (player.p == NULL))
-      return;
-
    /* Clean up old stuff. */
    free( p->land_msg );
    free( p->bribe_msg );
@@ -2043,6 +2038,11 @@ void spob_updateLand( Spob *p )
 
       return;
    }
+
+   /* Must be inhabited. */
+   if (!spob_hasService( p, SPOB_SERVICE_INHABITED ) ||
+         (player.p == NULL))
+      return;
 
    /* Set up function. */
    if (p->land_func == NULL)
