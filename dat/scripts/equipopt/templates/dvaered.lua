@@ -6,14 +6,12 @@ local eparams = require 'equipopt.params'
 
 local dvaered_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Railgun", "Repeating Railgun",
-   "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
+   "Railgun", "Repeating Railgun", "Railgun Turret",
    -- Medium Weapons
    "Mass Driver", "Turreted Vulcan Gun",
    "Unicorp Caesar IV Launcher", "TeraCom Imperator Launcher",
    -- Small Weapons
-   "Shredder",
-   "Vulcan Gun", "Gauss Gun",
+   "Shredder", "Vulcan Gun", "Gauss Gun",
    "Unicorp Mace Launcher", "TeraCom Mace Launcher",
    "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
    -- Utility
