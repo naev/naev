@@ -62,7 +62,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    col = mix( col, col_inner,  a_in );
 
    /* Inner stuff. */
-   col = mix( col, vec3(1.0), a_in-0.3 );
+   col = mix( col, vec3(0.0), a_in-0.3 );
 
    return vec4( col, a_out );
 }
