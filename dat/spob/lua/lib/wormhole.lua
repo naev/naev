@@ -68,8 +68,10 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
 
-local cvs, shader, pos
+local cvs, shader, pos, target
 local w, h = 256, 256
+
+local wormhole = {}
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
@@ -85,7 +87,8 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function load( p )
+function wormhole.load( p, wormhole_target )
+   target = wormhole_target
    if shader==nil then
       shader = lg.newShader( pixelcode, love_shaders.vertexcode )
       shader._dt = -1000 * rnd.rnd()
@@ -101,27 +104,29 @@ function load( p )
    return cvs.t.tex
 end
 
-function unload ()
+function wormhole.unload ()
    shader = nil
    cvs = nil
 end
 
-function update( dt )
+function wormhole.update( dt )
    shader:update( dt )
 end
 
-function render ()
+function wormhole.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( pos, true ):get()
    update_canvas()
    cvs:draw( x, y, 0, 1/z )
 end
 
-function can_land ()
+function wormhole.can_land ()
    return true, "The wormhole seems to be active."
 end
 
-function land ()
-   var.push( "wormhole_target", "NGC-1931" ) -- TODO neighbour wormhole
+function wormhole.land ()
+   var.push( "wormhole_target", target )
    naev.eventStart("Wormhole")
 end
+
+return wormhole

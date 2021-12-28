@@ -12,7 +12,9 @@
   <x>-0.495370</x>
   <y>868.995370</y>
  </pos>
- <spobs/>
+ <spobs>
+  <spob>Wormhole NGC-1931</spob>
+ </spobs>
  <jumps>
   <jump target="Malebolge">
    <autopos/>
