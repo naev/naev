@@ -116,3 +116,11 @@ function render ()
    update_canvas()
    cvs:draw( x, y, 0, 1/z )
 end
+
+function can_land ()
+   return true, "The wormhole seems to be active."
+end
+
+function land ()
+   player.teleport()
+end

@@ -1634,7 +1634,7 @@ int player_land( int loud )
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
       lua_pushspob( naevL, spob_index(spob) );
       if (nlua_pcall( spob->lua_env, 1, 0 )) {
-         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "lua_land", lua_tostring(naevL,-1));
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "land", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
 
