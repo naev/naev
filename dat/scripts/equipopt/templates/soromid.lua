@@ -21,8 +21,8 @@ local soromid_outfits = eoutfits.merge{{
    "Plasma Cluster Cannon",
    "Plasma Turret MK2",
    -- Small Weapons
-   "Plasma Cannon", "Plasma Turret MKI",
-   "Plasma Blaster MKI", "Plasma Blaster MK2",
+   "Plasma Cannon", "Plasma Turret MK1",
+   "Plasma Blaster MK1", "Plasma Blaster MK2",
    "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
    "Unicorp Mace Launcher", "TeraCom Mace Launcher",
    -- Utility
