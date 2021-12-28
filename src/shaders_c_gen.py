@@ -241,8 +241,12 @@ SHADERS = [
       fs_path = "stealthaura.frag",
    ),
    SimpleShader(
-      name = "spobmarker",
-      fs_path = "spobmarker.frag",
+      name = "spobmarker_empty",
+      fs_path = "spobmarker_empty.frag",
+   ),
+   SimpleShader(
+      name = "spobmarker_earth",
+      fs_path = "spobmarker_earth.frag",
    ),
    SimpleShader(
       name = "jumpmarker",

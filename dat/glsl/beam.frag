@@ -260,10 +260,10 @@ void main(void) {
    pos_px = pos * dimensions;
 
 #ifdef HAS_GL_ARB_shader_subroutine
-   // Use subroutines
+   /* Use subroutines */
    color_out = beam_func( color, pos_tex, pos_px );
 #else /* HAS_GL_ARB_shader_subroutine */
-   //* Just use default
+   /* Just use default */
    color_out = beam_default( color, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
 }

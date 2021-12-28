@@ -1347,6 +1347,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
    Spob *spob;
+   SimpleShader *shd;
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
@@ -1416,9 +1417,13 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    if (ind == player.p->nav_spob)
       gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_spob);
 
-   glUseProgram(shaders.spobmarker.program);
-   glUniform1i(shaders.spobmarker.parami, spob_hasService(spob,SPOB_SERVICE_LAND));
-   gl_renderShader( cx, cy, vr, vr, 0., &shaders.spobmarker, &col, 1 );
+   if (spob_hasService(spob,SPOB_SERVICE_LAND))
+      shd = &shaders.spobmarker_earth;
+   else
+      shd = &shaders.spobmarker_empty;
+
+   glUseProgram(shd->program);
+   gl_renderShader( cx, cy, vr, vr, 0., shd, &col, 1 );
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(spob), spob_name(spob) );
