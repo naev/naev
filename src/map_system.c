@@ -508,7 +508,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
      }
 
-     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nSpobary class: %s    Population: roughly %s\n"), spob_name(p), p->class, space_populationStr( p->population ) );
+     cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Spob: %s\nPlanetary class: %s    Population: roughly %s\n"), spob_name(p), p->class, space_populationStr( p->population ) );
      if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed )
