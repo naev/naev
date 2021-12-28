@@ -362,7 +362,7 @@ function update_nav()
       nav_spob = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
-         class = nav_pnt:class(),
+         class = _(nav_pnt:class()),
          col = nav_pnt:colour(),
          services = {}
       }
