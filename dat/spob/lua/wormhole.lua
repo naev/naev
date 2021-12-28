@@ -118,7 +118,6 @@ function render ()
 end
 
 function can_land ()
-   print( "can_land" )
    return true, "The wormhole seems to be active."
 end
 
