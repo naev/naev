@@ -2254,6 +2254,13 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
       xmlr_strd(node, "displayname", spob->displayname);
       xmlr_strd(node, "lua", spob->lua_file);
       xmlr_float(node, "radius", spob->radius);
+      if (xml_isNode(node, "marker")) {
+         const char *s = xml_get(node);
+         spob->marker = shaders_getSimple( s );
+         if (spob->marker == NULL)
+            WARN(_("Spob '%s' has unknown marker shader '%s'!"), spob->name, s );
+         continue;
+      }
 
       if (xml_isNode(node,"GFX")) {
          xmlNodePtr cur = node->children;

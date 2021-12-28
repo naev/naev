@@ -1417,7 +1417,9 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    if (ind == player.p->nav_spob)
       gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_spob);
 
-   if (spob_hasService(spob,SPOB_SERVICE_LAND))
+   if (spob->marker != NULL)
+      shd = spob->marker;
+   else if (spob_hasService(spob,SPOB_SERVICE_LAND))
       shd = &shaders.spobmarker_earth;
    else
       shd = &shaders.spobmarker_empty;

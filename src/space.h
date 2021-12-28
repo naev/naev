@@ -105,6 +105,7 @@ typedef struct Spob_ {
    char *displayname; /**< Name to be displayed to the player. Defaults to name if not set. */
    Vector2d pos;  /**< position in star system */
    double radius; /**< Radius of the space object. WARNING: lazy-loaded with gfx_space. */
+   SimpleShader *marker; /**< GUI marker. */
 
    /* Spob details. */
    char *class;         /**< Spob type. Uses Star Trek classification system for planets (https://stexpanded.fandom.com/wiki/Spob_classifications) */

@@ -251,6 +251,10 @@ SHADERS = [
       fs_path = "spobmarker_earth.frag",
    ),
    SimpleShader(
+      name = "spobmarker_rhombus",
+      fs_path = "spobmarker_rhombus.frag",
+   ),
+   SimpleShader(
       name = "jumpmarker",
       fs_path = "jumpmarker.frag",
    ),
@@ -392,14 +396,14 @@ static int nsimpleshaders = 0;
 
 static int shaders_cmp( const void *p1, const void *p2 )
 {
-   const SimpleShader *s1 = p1;
-   const SimpleShader *s2 = p2;
-   return strcmp( s1->name, s2->name );
+   const SimpleShader **s1 = (const SimpleShader**) p1;
+   const SimpleShader **s2 = (const SimpleShader**) p2;
+   return strcmp( (*s1)->name, (*s2)->name );
 }
 
 static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *fs_path )
 {
-   shd->name = name;
+   shd->name   = name;
    shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
    shd->projection = glGetUniformLocation( shd->program, "projection" );
@@ -419,7 +423,8 @@ static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *
 SimpleShader *shaders_getSimple( const char *name )
 {
    const SimpleShader shd = { .name=name };
-   return bsearch( &shd, &shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   const SimpleShader *shdptr = &shd;
+   return bsearch( &shdptr, shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
 }
 
 void shaders_load (void) {
@@ -429,7 +434,7 @@ void shaders_load (void) {
         if i != len(SHADERS) - 1:
             yield "\n"
     yield """
-   qsort( &shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   qsort( shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
 }
 
 void shaders_unload (void) {
