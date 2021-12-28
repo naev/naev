@@ -11,7 +11,9 @@
   <x>-841.031298</x>
   <y>-630.990848</y>
  </pos>
- <spobs/>
+ <spobs>
+  <spob>Wormhole NGC-13674</spob>
+ </spobs>
  <jumps>
   <jump target="Copernicus">
    <autopos/>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wormhole NGC-13674">
+ <lua>spob/lua/wormhole.lua</lua>
+ <displayname>Wormhole</displayname>
+ <radius>128</radius>
+ <pos>
+  <x>2622.291835</x>
+  <y>10213.136620</y>
+ </pos>
+ <general>
+  <class>Wormhole</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services/>
+ </general>
+</spob>

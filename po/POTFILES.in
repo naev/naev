@@ -1582,6 +1582,7 @@ dat/spob/wolf_ii.xml
 dat/spob/wolf_vii.xml
 dat/spob/wonclock.xml
 dat/spob/worgen.xml
+dat/spob/wormhole_ngc13674.xml
 dat/spob/worscha.xml
 dat/spob/wsthvn_d1.xml
 dat/spob/wsthvn_p1.xml
@@ -2644,6 +2645,7 @@ dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
 dat/snd/music.lua
 dat/spob/lua/example.lua
+dat/spob/lua/wormhole.lua
 src/ai.c
 src/ai.h
 src/array.c
