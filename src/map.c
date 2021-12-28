@@ -34,7 +34,7 @@
 #include "toolkit.h"
 #include "utf8.h"
 
-const double MAP_FLYTO_SPEED = 2000.; /**< Linear speeed at which the map flies to a location. */
+const double MAP_FLYTO_SPEED = 1500.; /**< Linear speeed at which the map flies to a location. */
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
