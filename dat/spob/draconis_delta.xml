@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Draconis Delta">
+ <pos>
+  <x>-4630.204796</x>
+  <y>30782.638104</y>
+ </pos>
+ <GFX>
+  <space>moon-H02.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

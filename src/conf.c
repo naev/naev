@@ -167,7 +167,7 @@ void conf_setDefaults (void)
    /* Editor. */
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
+   conf.dev_save_spob = strdup( DEV_SAVE_SPOB_DEFAULT );
 }
 
 /**
@@ -407,7 +407,7 @@ int conf_loadConfig ( const char* file )
       /* Editor. */
       conf_loadString( lEnv, "dev_save_sys", conf.dev_save_sys );
       conf_loadString( lEnv, "dev_save_map", conf.dev_save_map );
-      conf_loadString( lEnv, "dev_save_asset", conf.dev_save_asset );
+      conf_loadString( lEnv, "dev_save_spob", conf.dev_save_spob );
 
       /*
        * Keybindings.
@@ -1041,7 +1041,7 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Paths for saving different files from the editor"));
    conf_saveString("dev_save_sys",conf.dev_save_sys);
    conf_saveString("dev_save_map",conf.dev_save_map);
-   conf_saveString("dev_save_asset",conf.dev_save_asset);
+   conf_saveString("dev_save_spob",conf.dev_save_spob);
    conf_saveEmptyLine();
 
    /*
@@ -1139,7 +1139,7 @@ void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
    STRDUP(lastversion);
    STRDUP(dev_save_sys);
    STRDUP(dev_save_map);
-   STRDUP(dev_save_asset);
+   STRDUP(dev_save_spob);
 #undef STRDUP
 }
 
@@ -1155,7 +1155,7 @@ void conf_free( PlayerConf_t *config )
    free(config->lastversion);
    free(config->dev_save_sys);
    free(config->dev_save_map);
-   free(config->dev_save_asset);
+   free(config->dev_save_spob);
 
    /* Clear memory. */
    memset( config, 0, sizeof(PlayerConf_t) );

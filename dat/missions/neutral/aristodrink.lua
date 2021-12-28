@@ -56,7 +56,7 @@ function create ()
    -- creates the NPC at the bar to create the mission
    misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.webp", _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.") )
 
-   mem.startplanet, mem.startsys = planet.cur()
+   mem.startplanet, mem.startsys = spob.cur()
    mem.prevPlanets[1] = mem.startplanet
    mem.numjumps = 0
 
@@ -97,7 +97,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == mem.clueplanet then
+   if spob.cur() == mem.clueplanet then
       if mem.numclues > 0 then   -- first clue
          mem.numclues = mem.numclues - 1
          mem.numjumps = mem.numjumps + 1
@@ -145,7 +145,7 @@ function land ()
             end
          end
       end
-   elseif mem.hasDrink and planet.cur() == mem.startplanet then
+   elseif mem.hasDrink and spob.cur() == mem.startplanet then
       lmisn.sfxVictory()
       tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
@@ -165,7 +165,7 @@ function getclueplanet ( mini, maxi )
 
    lmisn.getSysAtDistance( system.cur(), mini, maxi,
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then
                planets[#planets + 1] = {v, s}
             end

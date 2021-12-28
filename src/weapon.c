@@ -277,11 +277,17 @@ void weapon_minimap( const double res, const double w,
       gl_vboSubData( weapon_vbo, offset * sizeof(GLfloat),
             sizeof(GLfloat) * 4*p, &weapon_vboData[offset] );
 
-      gl_beginSmoothProgram(gl_view_matrix);
-      gl_vboActivateAttribOffset( weapon_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateAttribOffset( weapon_vbo, shaders.smooth.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
+      glUseProgram(shaders.points.program);
+      glEnableVertexAttribArray(shaders.points.vertex);
+      glEnableVertexAttribArray(shaders.points.vertex_color);
+      gl_Matrix4_Uniform(shaders.points.projection, gl_view_matrix);
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
-      gl_endSmoothProgram();
+      glDisableVertexAttribArray(shaders.points.vertex);
+      glDisableVertexAttribArray(shaders.points.vertex_color);
+      glUseProgram(0);
+      gl_checkErr();
    }
 }
 
@@ -1666,9 +1672,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
    w->strength = 1.;
 
    /* Inform the target. */
-   pilot_target = pilot_get(target);
-   if (pilot_target != NULL)
-      pilot_target->projectiles++;
+   if (!(outfit_isBeam(w->outfit))) {
+      pilot_target = pilot_get(target);
+      if (pilot_target != NULL)
+         pilot_target->projectiles++;
+   }
 
    switch (outfit->type) {
 
@@ -1922,13 +1930,6 @@ static void weapon_free( Weapon* w )
 {
    Pilot *pilot_target = pilot_get( w->target );
 
-   /* Decrement target lockons if needed */
-   if (pilot_target != NULL) {
-      pilot_target->projectiles--;
-      if (outfit_isSeeker(w->outfit))
-         pilot_target->lockons--;
-   }
-
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {
       sound_stop( w->voice );
@@ -1937,6 +1938,14 @@ static void weapon_free( Weapon* w )
             w->solid->pos.y,
             w->solid->vel.x,
             w->solid->vel.y);
+   }
+   else {
+      /* Decrement target lockons if needed */
+      if (pilot_target != NULL) {
+         pilot_target->projectiles--;
+         if (outfit_isSeeker(w->outfit))
+            pilot_target->lockons--;
+      }
    }
 
    /* Free the solid. */

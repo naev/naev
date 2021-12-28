@@ -75,7 +75,7 @@ end
 
 function create ()
    -- Save current system to return to
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
    if not misn.claim( mem.retsys, true ) then
       misn.finish()
    end
@@ -98,7 +98,7 @@ function create ()
       end
       return true
    end
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not mem.destpnt then
       misn.finish()
    end
@@ -164,7 +164,7 @@ function accept ()
       end
       return false
    end
-   local pnts = lmisn.getPlanetAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
+   local pnts = lmisn.getSpobAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
    table.sort( pnts, function( a, b )
       return a:system():jumpDist() < b:system():jumpDist()
    end )
@@ -174,7 +174,7 @@ function accept ()
       nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
    elseif has_dis_owned then
       nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
-      local s = planet.cur():services()
+      local s = spob.cur():services()
       if not s.outfits and not s.shipyard then
          nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet}))
       end
@@ -345,7 +345,7 @@ Although the mission has been aborted, you can still repeat it from the beginnin
 end
 
 function land ()
-   local cpnt = planet.cur()
+   local cpnt = spob.cur()
    if cpnt == mem.retpnt and mem.misn_state==1 then
       mem.npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="BGG-1356">
+ <pos>
+  <x>-13644.458306</x>
+  <y>-15678.185154</y>
+ </pos>
+ <GFX>
+  <space>O01.webp</space>
+  <exterior>aquatic3.webp</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

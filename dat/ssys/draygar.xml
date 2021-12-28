@@ -10,15 +10,15 @@
   <x>147.694444</x>
   <y>-139.777778</y>
  </pos>
- <assets>
-  <asset>Anecu</asset>
-  <asset>Draygar III</asset>
-  <asset>Durumdra</asset>
-  <asset>Hikatalat</asset>
-  <asset>INSS-3</asset>
-  <asset>Varona</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Anecu</spob>
+  <spob>Draygar III</spob>
+  <spob>Durumdra</spob>
+  <spob>Hikatalat</spob>
+  <spob>INSS-3</spob>
+  <spob>Varona</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Ogat">
    <autopos/>

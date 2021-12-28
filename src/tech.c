@@ -4,7 +4,7 @@
 /**
  * @file tech.c
  *
- * @brief Handles tech groups and metagroups for populating the planet outfitter,
+ * @brief Handles tech groups and metagroups for populating the spob outfitter,
  *        shipyard and commodity exchange.
  */
 /** @cond */

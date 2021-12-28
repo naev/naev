@@ -10,14 +10,14 @@
   <x>1176.751381</x>
   <y>-411.880697</y>
  </pos>
- <assets>
-  <asset>Monogram III</asset>
-  <asset>Monogram IV</asset>
-  <asset>Monogram V</asset>
-  <asset>Oort Farming Station</asset>
-  <asset>Saraab</asset>
-  <asset>Wikon</asset>
- </assets>
+ <spobs>
+  <spob>Monogram III</spob>
+  <spob>Monogram IV</spob>
+  <spob>Monogram V</spob>
+  <spob>Oort Farming Station</spob>
+  <spob>Saraab</spob>
+  <spob>Wikon</spob>
+ </spobs>
  <jumps>
   <jump target="Botarn">
    <autopos/>

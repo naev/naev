@@ -10,15 +10,15 @@
   <x>-35.000000</x>
   <y>685.000000</y>
  </pos>
- <assets>
-  <asset>Daahrax</asset>
-  <asset>Hadosh II</asset>
-  <asset>Hadosh III</asset>
-  <asset>Hadosh IV</asset>
-  <asset>Hadosh Ia</asset>
-  <asset>Scorpion Station</asset>
-  <asset>Soromid Wards Gamma</asset>
- </assets>
+ <spobs>
+  <spob>Daahrax</spob>
+  <spob>Hadosh II</spob>
+  <spob>Hadosh III</spob>
+  <spob>Hadosh IV</spob>
+  <spob>Hadosh Ia</spob>
+  <spob>Scorpion Station</spob>
+  <spob>Soromid Wards Gamma</spob>
+ </spobs>
  <jumps>
   <jump target="Opal">
    <autopos/>

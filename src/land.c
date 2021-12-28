@@ -76,8 +76,8 @@ unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
-Planet* land_planet = NULL; /**< Planet player landed at. */
-static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
+Spob* land_spob = NULL; /**< Spob player landed at. */
+static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed spob. */
 
 /*
  * mission computer stack
@@ -146,10 +146,10 @@ void land_queueTakeoff (void)
 static int land_canSave (void)
 {
    int should_save = 0;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
-      planet_updateLand( p );
-      if (planet_hasService(p,PLANET_SERVICE_REFUEL) && p->can_land) {
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
+      spob_updateLand( p );
+      if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land) {
          should_save = 1;
          break;
       }
@@ -209,7 +209,7 @@ int land_errDialogue( const char *name, const char *type )
    if (strcmp(type,"tradeShip")==0)
       shipyard_canTrade( name );
    else if (strcmp(type,"buyShip")==0)
-      shipyard_canBuy( name, land_planet );
+      shipyard_canBuy( name, land_spob );
    else if (strcmp(type,"swapEquipment")==0)
       can_swapEquipment( name );
    else if (strcmp(type,"swap")==0)
@@ -217,7 +217,7 @@ int land_errDialogue( const char *name, const char *type )
    else if (strcmp(type,"sellShip")==0)
       can_sell( name );
    else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name, land_planet );
+      outfit_canBuy( name, land_spob );
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)
@@ -286,7 +286,7 @@ static void bar_open( unsigned int wid )
    window_onClose( wid, bar_close );
 
    /* Get dimensions. */
-   desc = (land_planet->bar_description!=NULL) ? _(land_planet->bar_description) : "(NULL)";
+   desc = (land_spob->bar_description!=NULL) ? _(land_spob->bar_description) : "(NULL)";
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
    dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, desc );
 
@@ -428,7 +428,7 @@ static void bar_update( unsigned int wid, const char *str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_spob->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -528,7 +528,7 @@ static void bar_approach( unsigned int wid, const char *str )
    n = npc_getArraySize();
    npc_approach( pos );
    /* This check is necessary if the player quits the game in the middle of an NPC approach. */
-   if (land_planet==NULL)
+   if (land_spob==NULL)
       return;
    bar_genList( wid ); /* Always just in case. */
 
@@ -550,7 +550,7 @@ static void bar_approach( unsigned int wid, const char *str )
  */
 static int news_load (void)
 {
-   generate_news(land_planet->presence.faction);
+   generate_news(land_spob->presence.faction);
    return 0;
 }
 
@@ -769,7 +769,7 @@ void land_refuel (void)
       return;
 
    /* No refuel service. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
+   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL))
       return;
 
    player.p->fuel = player.p->fuel_max;
@@ -826,26 +826,26 @@ void land_updateMainTab (void)
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), _(land_planet->name), _(cur_system->name) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s system)"), spob_name(land_spob), _(cur_system->name) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), planet_getClassName(land_planet->class), _(land_planet->class) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%s-class)"), spob_getClassName(land_spob->class), _(land_spob->class) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s",
-         land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None") );
+         land_spob->presence.faction >= 0 ? _(faction_name(land_spob->presence.faction)) : _("None") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_planet->population ) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, _("roughly %s"), space_populationStr( land_spob->population ) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", tons );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", cred );
    /* Show tags. */
    if (conf.devmode) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-      for (int i=0; i<array_size(land_planet->tags); i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), land_planet->tags[i] );
+      for (int i=0; i<array_size(land_spob->tags); i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", ((i>0) ? _(", ") : ""), land_spob->tags[i] );
    }
 
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
-   /* Maps are only offered if the planet provides fuel. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
+   /* Maps are only offered if the spob provides fuel. */
+   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL))
       return;
 
    o = outfit_get( LOCAL_MAP_NAME );
@@ -868,7 +868,7 @@ void land_updateMainTab (void)
    }
 
    /* Make sure player can click it. */
-   if (!outfit_canBuy(LOCAL_MAP_NAME, land_planet))
+   if (!outfit_canBuy(LOCAL_MAP_NAME, land_spob))
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 
@@ -945,33 +945,33 @@ static void land_setupTabs (void)
    land_windowsMap[LAND_WINDOW_MAIN] = j;
    names[j++] = _("Landing Main");
    /* Bar. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BAR)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_BAR)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
       names[j++] = _("Spaceport Bar");
    }
    /* Missions. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_MISSIONS)) {
       land_windowsMap[LAND_WINDOW_MISSION] = j;
       names[j++] = _("Missions");
    }
    /* Outfits. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_OUTFITS)) {
       land_windowsMap[LAND_WINDOW_OUTFITS] = j;
       names[j++] = _("Outfits");
    }
    /* Shipyard. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
       names[j++] = _("Shipyard");
    }
    /* Equipment. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
-         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_OUTFITS) ||
+         spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
       names[j++] = _("Equipment");
    }
    /* Commodity. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_COMMODITY)) {
       land_windowsMap[LAND_WINDOW_COMMODITY] = j;
       names[j++] = _("Commodity");
    }
@@ -988,7 +988,7 @@ static void land_setupTabs (void)
 void land_genWindows( int load, int changetab )
 {
    int w, h;
-   Planet *p;
+   Spob *p;
    int regen;
    unsigned int pntservices;
 
@@ -1002,8 +1002,8 @@ void land_genWindows( int load, int changetab )
    }
    land_loaded = 0;
 
-   /* Get planet. */
-   p     = land_planet;
+   /* Get spob. */
+   p     = land_spob;
    regen = landed;
    pntservices = p->services;
 
@@ -1016,7 +1016,7 @@ void land_genWindows( int load, int changetab )
       w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
+   land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
@@ -1048,7 +1048,7 @@ void land_genWindows( int load, int changetab )
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* Make sure services didn't change or we have to do the tab window. */
-      if (land_planet->services != pntservices) {
+      if (land_spob->services != pntservices) {
          land_setupTabs();
          land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
          land_updateMainTab();
@@ -1056,17 +1056,17 @@ void land_genWindows( int load, int changetab )
 
       /* 3) Generate computer and bar missions. */
       /* Generate bar missions first for claims. */
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+      if (spob_hasService(land_spob, SPOB_SERVICE_BAR))
          npc_generateMissions(); /* Generate bar npc. */
-      if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
+      if (spob_hasService(land_spob, SPOB_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
-               land_planet->presence.faction, land_planet, cur_system,
+               land_spob->presence.faction, land_spob, cur_system,
                MIS_AVAIL_COMPUTER );
    }
 
    /* 4) Create other tabs. */
 #define should_open(s, w) \
-   (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
+   (spob_hasService(land_spob, s) && (!land_tabGenerated(w)))
 
    /* Things get a bit hairy here. Hooks may have triggered a GUI reload via
     * e.g. player.swapShip, so the land tabs may have been generated already
@@ -1074,23 +1074,23 @@ void land_genWindows( int load, int changetab )
     */
 
    /* Basic - bar + missions */
-   if (should_open( PLANET_SERVICE_BAR, LAND_WINDOW_BAR ))
+   if (should_open( SPOB_SERVICE_BAR, LAND_WINDOW_BAR ))
       bar_open( land_getWid(LAND_WINDOW_BAR) );
-   if (should_open( PLANET_SERVICE_MISSIONS, LAND_WINDOW_MISSION ))
+   if (should_open( SPOB_SERVICE_MISSIONS, LAND_WINDOW_MISSION ))
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
-   if (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
+   if (should_open( SPOB_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL );
    /* Shipyard. */
-   if (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
+   if (should_open( SPOB_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
    /* Equipment. */
-   if ((planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
-         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) &&
+   if ((spob_hasService(land_spob, SPOB_SERVICE_OUTFITS) ||
+         spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) &&
          !land_tabGenerated( LAND_WINDOW_EQUIPMENT ))
       equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );
    /* Commodity. */
-   if (should_open( PLANET_SERVICE_COMMODITY, LAND_WINDOW_COMMODITY ))
+   if (should_open( SPOB_SERVICE_COMMODITY, LAND_WINDOW_COMMODITY ))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 #undef should_open
 
@@ -1100,8 +1100,8 @@ void land_genWindows( int load, int changetab )
 
       /* Check land missions. */
       if (!has_visited(VISITED_LAND)) {
-         missions_run(MIS_AVAIL_LAND, land_planet->presence.faction,
-               land_planet, cur_system);
+         missions_run(MIS_AVAIL_LAND, land_spob->presence.faction,
+               land_spob, cur_system);
          visited(VISITED_LAND);
       }
    }
@@ -1141,10 +1141,10 @@ int land_setWindow( int window )
 
 /**
  * @brief Opens up all the land dialogue stuff.
- *    @param p Planet to open stuff for.
+ *    @param p Spob to open stuff for.
  *    @param load Whether or not loading the game.
  */
-void land( Planet* p, int load )
+void land( Spob* p, int load )
 {
    /* Do not land twice. */
    if (landed)
@@ -1174,18 +1174,18 @@ void land( Planet* p, int load )
    player.p->comm_msg = NULL;
 
    /* Clear some target stuff. */
-   player.p->nav_planet = -1;
+   player.p->nav_spob = -1;
    gui_setNav();
 
    /* Load stuff */
-   land_planet = p;
+   land_spob = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
 
    /* Run outfits as necessary. */
    pilot_outfitLOnland( player.p );
 
    /* Generate the news. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+   if (spob_hasService(land_spob, SPOB_SERVICE_BAR))
       news_load();
 
    /* Average economy prices that player has seen */
@@ -1229,8 +1229,8 @@ static void land_createMainTab( unsigned int wid )
     * Faction logo.
     */
    offset = 20;
-   if (land_planet->presence.faction != -1) {
-      logo = faction_logo(land_planet->presence.faction);
+   if (land_spob->presence.faction != -1) {
+      logo = faction_logo(land_spob->presence.faction);
       if (logo != NULL) {
          logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
          logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
@@ -1243,10 +1243,10 @@ static void land_createMainTab( unsigned int wid )
    /*
     * Pretty display.
     */
-   window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
+   window_addImage( wid, 20, -40, 400, 400, "imgSpob", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_defFont, NULL, _(land_planet->description) );
+         "txtSpobDesc", &gl_defFont, NULL, _(land_spob->description) );
 
    /* Player stats. */
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Stationed at:") );
@@ -1272,7 +1272,7 @@ static void land_createMainTab( unsigned int wid )
          _("Take Off"), land_buttonTakeoff, SDLK_t );
 
    /* Add "no refueling" notice if needed. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
+   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL)) {
       window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
                200, gl_defFont.h, 1, "txtRefuel",
                &gl_defFont, NULL, _("No refueling services.") );
@@ -1407,14 +1407,14 @@ void takeoff( int delay )
 
    /* to randomize the takeoff a bit */
    a = RNGF() * 2. * M_PI;
-   r = RNGF() * land_planet->radius;
+   r = RNGF() * land_spob->radius;
 
    /* no longer authorized to land */
    player_rmFlag(PLAYER_LANDACK);
    pilot_rmFlag(player.p,PILOT_LANDING); /* No longer landing. */
 
    /* set player to another position with random facing direction and no vel */
-   player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );
+   player_warp( land_spob->pos.x + r * cos(a), land_spob->pos.y + r * sin(a) );
    vect_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNGF() * 2. * M_PI;
    cam_setTargetPilot( player.p->id, 0 );
@@ -1425,8 +1425,8 @@ void takeoff( int delay )
    /* Refill ammo */
    pilot_fillAmmo( player.p );
 
-   /* Clear planet target. Allows for easier autonav out of the system. */
-   player_targetPlanetSet( -1 );
+   /* Clear spob target. Allows for easier autonav out of the system. */
+   player_targetSpobSet( -1 );
 
    /* Clear pilots other than player. */
    pilots_clean(0);
@@ -1437,7 +1437,7 @@ void takeoff( int delay )
    player.p->nav_hyperspace = h;
 
    /* Only save when the player shouldn't get stranded. */
-   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up planet */
+   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up spob */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
@@ -1447,7 +1447,7 @@ void takeoff( int delay )
       ntime_inc( ntime_create( 0, 0, stu ) );
    }
    nt = ntime_pretty( 0, 2 );
-   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("#oTaking off from %s on %s."), spob_name(land_spob), nt);
    free(nt);
 
    /* Hooks and stuff. */
@@ -1526,7 +1526,7 @@ void land_cleanup (void)
 {
    /* Clean up default stuff. */
    land_regen     = 0;
-   land_planet    = NULL;
+   land_spob    = NULL;
    landed         = 0;
    land_visited   = 0;
    land_generated = 0;

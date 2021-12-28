@@ -10,13 +10,13 @@
   <x>-518.484315</x>
   <y>-812.085159</y>
  </pos>
- <assets>
-  <asset>Arcadia</asset>
-  <asset>Gastan</asset>
-  <asset>Seiben IV</asset>
-  <asset>Seiben XI</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Arcadia</spob>
+  <spob>Gastan</spob>
+  <spob>Seiben IV</spob>
+  <spob>Seiben XI</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Poltergeist">
    <autopos/>

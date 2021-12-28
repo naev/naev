@@ -31,7 +31,7 @@ mem.misn_title = _("Waste Collector")
 mem.misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
 
 function create ()
-   mem.misplanet, mem.missys = planet.getS( "The Stinker" )
+   mem.misplanet, mem.missys = spob.getS( "The Stinker" )
    if mem.misplanet == nil or mem.missys == nil or system.cur():jumpDist(mem.missys) > 4 then
       misn.finish( false )
    end
@@ -67,7 +67,7 @@ function accept ()
          fmt.f( _("Escort Chelsea to {pnt} in the {sys} system."), {pnt=mem.misplanet, sys=mem.missys} ),
       } )
 
-      mem.startplanet = planet.cur()
+      mem.startplanet = spob.cur()
 
       hook.takeoff( "takeoff" )
       hook.jumpout( "jumpout" )
@@ -149,7 +149,7 @@ end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( _("The Unbearable Smell Now Ends"), _([[As you dock, you can't help but notice the foul smell of garbage all around you. The planet really does fit the name. You grimace as you watch workers unload what must be hundreds of tonnes of garbage from Chelsea's ship, some of which is leaking. Eventually Chelsea's ship is emptied and you and Chelsea are handed your credit chips for the job. You and Chelsea part ways, vowing to take a shower immediately while Chelsea vows to scrub the cargo hold of their ship clean.]]) )
       player.pay( mem.credits )
 

@@ -10,13 +10,13 @@
   <x>851.182275</x>
   <y>-631.343280</y>
  </pos>
- <assets>
-  <asset>Gutter I</asset>
-  <asset>Gutter III</asset>
-  <asset>Hurne Station</asset>
-  <asset>Janus Farming Station</asset>
-  <asset>Vennis</asset>
- </assets>
+ <spobs>
+  <spob>Gutter I</spob>
+  <spob>Gutter III</spob>
+  <spob>Hurne Station</spob>
+  <spob>Janus Farming Station</spob>
+  <spob>Vennis</spob>
+ </spobs>
  <jumps>
   <jump target="Esker">
    <autopos/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Megala">
+ <pos>
+  <x>-10147.718927</x>
+  <y>1575.074787</y>
+ </pos>
+ <GFX>
+  <space>S01.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>S</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

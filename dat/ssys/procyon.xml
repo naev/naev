@@ -10,15 +10,15 @@
   <x>-673.352707</x>
   <y>-668.887175</y>
  </pos>
- <assets>
-  <asset>Excelcior</asset>
-  <asset>Procyon Shipyards</asset>
-  <asset>UHP-1001</asset>
-  <asset>UHP-1002</asset>
-  <asset>Vigilance Station</asset>
-  <asset_virtual>Empire Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Excelcior</spob>
+  <spob>Procyon Shipyards</spob>
+  <spob>UHP-1001</spob>
+  <spob>UHP-1002</spob>
+  <spob>Vigilance Station</spob>
+  <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Copernicus">
    <autopos/>

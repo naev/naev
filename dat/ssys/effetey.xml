@@ -10,9 +10,9 @@
   <x>-166.800000</x>
   <y>-589.800000</y>
  </pos>
- <assets>
-  <asset>Efferey</asset>
- </assets>
+ <spobs>
+  <spob>Efferey</spob>
+ </spobs>
  <jumps>
   <jump target="Fried">
    <autopos/>

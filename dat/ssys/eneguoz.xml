@@ -10,12 +10,12 @@
   <x>-191.000000</x>
   <y>-374.000000</y>
  </pos>
- <assets>
-  <asset>Eneguoz II</asset>
-  <asset>Oma</asset>
-  <asset>Opa</asset>
-  <asset>Shiarta</asset>
- </assets>
+ <spobs>
+  <spob>Eneguoz II</spob>
+  <spob>Oma</spob>
+  <spob>Opa</spob>
+  <spob>Shiarta</spob>
+ </spobs>
  <jumps>
   <jump target="Hakoi">
    <pos x="-4704.459146" y="-14095.943141"/>

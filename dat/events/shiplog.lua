@@ -51,7 +51,7 @@ end
 
 
 function land ()
-   local p = planet.cur()
+   local p = spob.cur()
    local s = p:system()
    shiplog.append( "travel", fmt.f(_("Landed on {pnt} in the {sys} system"), {pnt=p, sys=s} ) )
    evt.finish( false )

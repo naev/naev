@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Daal">
+ <pos>
+  <x>-10085.286858</x>
+  <y>-30267.838240</y>
+ </pos>
+ <GFX>
+  <space>moon-M03.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>2e+07</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The small moon orbiting Rhu IV, named Daal, is easily overlooked but, as it happens, it is quite an important piece of real estate for the Sirii. The people who live here are particularly zealous in their beliefs and most of them end up serving a lifetime in the Sirius army. The Fyrra are especially well represented on this world.</description>
+  <bar>On Daal, people like to be reminded that they are part of a large galactic faction. The tables in this spaceport bar have low-tech displays incorporated in their surfaces, each table displays one of the Sirian worlds, as well as up-to-date information about that world. Naturally, Mutris is displayed on the largest table, but Daal itself comes a good second.</bar>
+ </general>
+</spob>

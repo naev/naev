@@ -5,10 +5,10 @@
  <price>630</price>
  <gfx_store>first_class_passenger.webp</gfx_store>
  <standard/>
- <planet_modifier type="0">0.7</planet_modifier>
- <planet_modifier type="1">0.7</planet_modifier>
- <planet_modifier type="2">0.6</planet_modifier>
- <planet_modifier type="M">1.1</planet_modifier>
+ <spob_modifier type="0">0.7</spob_modifier>
+ <spob_modifier type="1">0.7</spob_modifier>
+ <spob_modifier type="2">0.6</spob_modifier>
+ <spob_modifier type="M">1.1</spob_modifier>
  <period>50</period>
  <population_modifier>0.5</population_modifier>
  <faction_modifier type="Dvaered">0.8</faction_modifier>

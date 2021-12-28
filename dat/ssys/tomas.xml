@@ -10,12 +10,12 @@
   <x>-442.043575</x>
   <y>-977.423108</y>
  </pos>
- <assets>
-  <asset>Tomas I-1</asset>
-  <asset>Tomas J-1</asset>
-  <asset>Tomas X-1</asset>
-  <asset>Wahri</asset>
- </assets>
+ <spobs>
+  <spob>Tomas I-1</spob>
+  <spob>Tomas J-1</spob>
+  <spob>Tomas X-1</spob>
+  <spob>Wahri</spob>
+ </spobs>
  <jumps>
   <jump target="Garten">
    <autopos/>

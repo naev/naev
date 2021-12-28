@@ -10,12 +10,12 @@
   <x>773.995077</x>
   <y>-1039.282028</y>
  </pos>
- <assets>
-  <asset>Brandt Station</asset>
-  <asset>Niger I</asset>
-  <asset>Niger II</asset>
-  <asset>Rionna</asset>
- </assets>
+ <spobs>
+  <spob>Brandt Station</spob>
+  <spob>Niger I</spob>
+  <spob>Niger II</spob>
+  <spob>Rionna</spob>
+ </spobs>
  <jumps>
   <jump target="Lapis">
    <autopos/>

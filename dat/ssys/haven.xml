@@ -10,10 +10,10 @@
   <x>40.300080</x>
   <y>211.372260</y>
  </pos>
- <assets>
-  <asset>Haven</asset>
-  <asset_virtual>Miner Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Haven</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Andres">
    <autopos/>

@@ -10,14 +10,14 @@
   <x>247.000000</x>
   <y>-403.000000</y>
  </pos>
- <assets>
-  <asset>Ginni</asset>
-  <asset>Tarsus II</asset>
-  <asset>Tarsus Station</asset>
-  <asset>Valt</asset>
-  <asset_virtual>FLF Small</asset_virtual>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Ginni</spob>
+  <spob>Tarsus II</spob>
+  <spob>Tarsus Station</spob>
+  <spob>Valt</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Doranthex">
    <autopos/>

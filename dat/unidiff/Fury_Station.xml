@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="Fury_Station">
  <system name="Anger">
-  <asset name="Fury Station">add</asset>
+  <spob name="Fury Station">add</spob>
  </system>
 </unidiff>

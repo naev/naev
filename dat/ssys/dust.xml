@@ -10,9 +10,9 @@
   <x>63.455512</x>
   <y>423.765998</y>
  </pos>
- <assets>
-  <asset>Dust</asset>
- </assets>
+ <spobs>
+  <spob>Dust</spob>
+ </spobs>
  <jumps>
   <jump target="Dendria">
    <autopos/>

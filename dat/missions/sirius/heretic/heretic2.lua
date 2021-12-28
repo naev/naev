@@ -10,7 +10,7 @@
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>The Wringer</planet>
+   <spob>The Wringer</spob>
   </avail>
   <notes>
    <campaign>Heretic</campaign>
@@ -33,7 +33,7 @@ local attackers, recon -- Non-persistent state
 function create()
    --this mission does make one system claim, in Suna.
    --initialize the variables
-   mem.homeasset, mem.homesys = planet.cur()
+   mem.homeasset, mem.homesys = spob.cur()
    if not misn.claim(mem.homesys) then
       misn.finish(false)
    end
@@ -113,7 +113,7 @@ function land()
       tk.msg(_("The Patrol"),_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
       faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
-   elseif planet.cur() == mem.homeasset and mem.finished == 1 then
+   elseif spob.cur() == mem.homeasset and mem.finished == 1 then
       tk.msg(_("The Patrol"),_([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]]))
       player.pay(mem.reward)
       mem.misn_tracker = mem.misn_tracker + 1

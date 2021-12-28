@@ -61,7 +61,7 @@ extern int save_loaded; /**< From save.c */
  */
 /* externs */
 /* player.c */
-extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+extern Spob* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
@@ -142,7 +142,7 @@ static int load_load( nsave_t *save, const char *path )
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node, "location", save->planet);
+            xmlr_strd(node, "location", save->spob);
             xmlr_ulong(node, "credits", save->credits);
             xmlr_strd(node, "chapter", save->chapter);
 
@@ -306,7 +306,7 @@ void load_free (void)
       free(ns->name);
       free(ns->version);
       free(ns->data);
-      free(ns->planet);
+      free(ns->spob);
       free(ns->chapter);
       free(ns->shipname);
       free(ns->shipmodel);
@@ -425,8 +425,8 @@ static void load_menu_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Planet:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
@@ -626,7 +626,7 @@ static int load_gameInternal( const char* file, const char* version )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   Planet *pnt;
+   Spob *pnt;
    int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
 
    /* Make sure it exists. */

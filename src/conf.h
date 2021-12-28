@@ -55,7 +55,7 @@
 #define ENGINE_VOLUME_DEFAULT                0.8   /**< Default engine volume. */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
-#define DEV_SAVE_ASSET_DEFAULT            "../assets/"
+#define DEV_SAVE_SPOB_DEFAULT             "../spobs/"
 #define DEV_SAVE_MAP_DEFAULT              "../outfits/maps/"
 
 /**
@@ -156,7 +156,7 @@ typedef struct PlayerConf_s {
    /* Editor. */
    char *dev_save_sys; /**< Path to save systems to. */
    char *dev_save_map; /**< Path to save maps to. */
-   char *dev_save_asset; /**< Path to save assets to. */
+   char *dev_save_spob; /**< Path to save spobs to. */
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */

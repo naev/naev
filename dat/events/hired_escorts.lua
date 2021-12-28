@@ -65,7 +65,7 @@ local function createPilotNPCs ()
    local name_func = pilotname.generic
    local portrait_arg = nil
 
-   local pf = planet.cur():faction()
+   local pf = spob.cur():faction()
    if pir.factionIsPirate( pf ) then
       ship_choices = {
          { ship = "Pirate Hyena",      royalty = 0.1 },
@@ -159,7 +159,7 @@ end
 
 
 function land ()
-   mem.lastplanet = planet.cur()
+   mem.lastplanet = spob.cur()
    npcs = {}
    hook.rm(mem.standing_hook)
    mem.standing_hook = nil
@@ -190,7 +190,7 @@ function land ()
    end
 
    -- Ignore on uninhabited and planets without bars
-   local pnt = planet.cur()
+   local pnt = spob.cur()
    local services = pnt:services()
    local flags = pnt:flags()
    if not services.inhabited or not services.bar or flags.nomissionspawn then

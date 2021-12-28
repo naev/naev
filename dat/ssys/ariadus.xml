@@ -12,17 +12,17 @@
   <x>-177.591827</x>
   <y>588.718027</y>
  </pos>
- <assets>
-  <asset>Ariadus II</asset>
-  <asset>Ariadus IV</asset>
-  <asset>Ariadus VI</asset>
-  <asset>Ariadus VIa</asset>
-  <asset>Ariadus VIb</asset>
-  <asset>Belltower Station</asset>
-  <asset>Janko</asset>
-  <asset>Magellan</asset>
-  <asset>Trichu</asset>
- </assets>
+ <spobs>
+  <spob>Ariadus II</spob>
+  <spob>Ariadus IV</spob>
+  <spob>Ariadus VI</spob>
+  <spob>Ariadus VIa</spob>
+  <spob>Ariadus VIb</spob>
+  <spob>Belltower Station</spob>
+  <spob>Janko</spob>
+  <spob>Magellan</spob>
+  <spob>Trichu</spob>
+ </spobs>
  <jumps>
   <jump target="Amatiri">
    <autopos/>

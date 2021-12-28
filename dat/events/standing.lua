@@ -16,6 +16,11 @@ local factions = {
    require("factions.empire"),
    require("factions.soromid"),
    require("factions.zalek"),
+   require("factions.dvaered"),
+   require("factions.sirius"),
+   require("factions.frontier"),
+   require("factions.goddard"),
+   require("factions.proteron"),
 }
 
 local cap_tags_list = {}

@@ -15,7 +15,7 @@
 -- Prowl Event for the Baron mission string. Only used when NOT doing any Baron missions.
 --]]
 
-local pnt = planet.get("Ulios")
+local pnt = spob.get("Ulios")
 -- luacheck: globals idle (Hook functions passed by name)
 
 function create()

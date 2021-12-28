@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Shion">
+ <pos>
+  <x>-2799.144543</x>
+  <y>-8409.932744</y>
+ </pos>
+ <GFX>
+  <space>moon-D01.webp</space>
+  <exterior>station00.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

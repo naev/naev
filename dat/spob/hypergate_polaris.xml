@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hypergate Polaris">
+ <displayname>Ruined Hypergate</displayname>
+ <marker>spobmarker_triangle</marker>
+ <pos>
+  <x>0.000000</x>
+  <y>0.000000</y>
+ </pos>
+ <GFX>
+  <space>hypergate_debris.webp</space>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Construct</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>hypergate</tag>
+  <tag>ruined</tag>
+ </tags>
+</spob>

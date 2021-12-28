@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Eneguoz II">
+ <pos>
+  <x>6851.814693</x>
+  <y>-2653.657026</y>
+ </pos>
+ <GFX>
+  <space>K02.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

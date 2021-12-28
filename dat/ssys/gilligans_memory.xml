@@ -10,12 +10,12 @@
   <x>1108.670965</x>
   <y>-875.596170</y>
  </pos>
- <assets>
-  <asset>Gilligan's Memory</asset>
-  <asset>Zero-Eleven</asset>
-  <asset>Zero-Five</asset>
-  <asset>Zero-One</asset>
- </assets>
+ <spobs>
+  <spob>Gilligan's Memory</spob>
+  <spob>Zero-Eleven</spob>
+  <spob>Zero-Five</spob>
+  <spob>Zero-One</spob>
+ </spobs>
  <jumps>
   <jump target="Tarmak">
    <autopos/>

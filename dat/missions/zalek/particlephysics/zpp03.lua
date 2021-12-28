@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 2</done>
  </avail>
@@ -32,7 +32,7 @@ local sokoban = require "minigames.sokoban"
 -- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp03
-local mainpnt, mainsys = planet.getS("Katar I")
+local mainpnt, mainsys = spob.getS("Katar I")
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -95,7 +95,7 @@ She goes back to ruminating on what to do.]]))
 end
 
 function land ()
-   if mem.state==1 or planet.cur() ~= mainpnt then
+   if mem.state==1 or spob.cur() ~= mainpnt then
       return
    end
    local getlicense = not diff.isApplied( "heavy_weapons_license" )
@@ -128,18 +128,20 @@ Without giving you time to process what she yelled, she vanishes.]]))
    misn.finish(true)
 end
 
-local pdis, phost
+local pdis, phost, stage
 function enter ()
    if mem.state~=1 or system.cur() ~= mainsys then
       return
    end
+
+   stage = 0 -- Initialize state
 
    -- Temp faction
    local fdrone = faction.dynAdd( "Za'lek", "haywire_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
 
    -- Spawn the drones
    -- TODO better location once testing center object is created
-   local pkatar = planet.get("Katar"):pos()
+   local pkatar = spob.get("Katar"):pos()
    local pkatari = mainpnt:pos()
    local pos = (pkatar - pkatari)*1.5 + pkatar
    -- Disabled drone
@@ -163,7 +165,6 @@ function enter ()
    hook.timer( 5, "heartbeat" )
 end
 
-local stage = 0
 function heartbeat ()
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))

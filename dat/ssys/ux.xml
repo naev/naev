@@ -10,14 +10,14 @@
   <x>-434.672018</x>
   <y>-482.147547</y>
  </pos>
- <assets>
-  <asset>Astana</asset>
-  <asset>Grandard</asset>
-  <asset>Regensburg</asset>
-  <asset>UX I</asset>
-  <asset>UX IIX</asset>
-  <asset>UX VII</asset>
- </assets>
+ <spobs>
+  <spob>Astana</spob>
+  <spob>Grandard</spob>
+  <spob>Regensburg</spob>
+  <spob>UX I</spob>
+  <spob>UX IIX</spob>
+  <spob>UX VII</spob>
+ </spobs>
  <jumps>
   <jump target="Valerie">
    <autopos/>

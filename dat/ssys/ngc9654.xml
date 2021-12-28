@@ -12,10 +12,10 @@
   <x>-304.634880</x>
   <y>625.210678</y>
  </pos>
- <assets>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Soromid Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Soromid Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-13798">
    <autopos/>

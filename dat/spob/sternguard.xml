@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Sternguard">
+ <pos>
+  <x>3845.007689</x>
+  <y>-2901.684261</y>
+ </pos>
+ <GFX>
+  <space>L00.webp</space>
+  <exterior>desertic3.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>2e+07</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Though a fairly unobtrusive world filled with lower-middle class Dvaered citizens, the Dvaered authorities nevertheless pay close attention to what goes on on Sternguard. Close to the Sirian border, the world is a prime candidate for conversion. At the moment the population seems to be stable, but the Dvaered know better than to relax their guard.</description>
+  <bar>Grimy. Smelly. Dank. Drinks that taste of waste products. All in all, this bar meets the galactic norm.</bar>
+ </general>
+</spob>

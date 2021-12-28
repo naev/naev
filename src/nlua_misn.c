@@ -31,7 +31,7 @@
 #include "nlua_faction.h"
 #include "nlua_hook.h"
 #include "nlua_music.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_player.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
@@ -343,7 +343,7 @@ static int misn_setReward( lua_State *L )
  *  - "low": Low importance mission marker (lower than high).<br/>
  *  - "computer": Mission computer marker.<br/>
  *
- *    @luatparam System|Planet target System or planet to mark.
+ *    @luatparam System|Spob target System or spob to mark.
  *    @luatparam[opt="high"] string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd
@@ -356,9 +356,9 @@ static int misn_markerAdd( lua_State *L )
    Mission *cur_mission;
 
    /* Check parameters. */
-   if (lua_isplanet(L,1)) {
+   if (lua_isspob(L,1)) {
       issys = 0;
-      objid = luaL_checkplanet(L,1);
+      objid = luaL_checkspob(L,1);
    }
    else {
       issys = 1;
@@ -368,21 +368,21 @@ static int misn_markerAdd( lua_State *L )
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
-      type = PNTMARKER_COMPUTER;
+      type = SPOBMARKER_COMPUTER;
    else if (strcmp(stype, "low")==0)
-      type = PNTMARKER_LOW;
+      type = SPOBMARKER_LOW;
    else if (strcmp(stype, "high")==0)
-      type = PNTMARKER_HIGH;
+      type = SPOBMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
-      type = PNTMARKER_PLOT;
+      type = SPOBMARKER_PLOT;
    else {
       NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
-   /* Convert planet -> system. */
+   /* Convert spob -> system. */
    if (issys)
-      type = mission_markerTypePlanetToSystem( type );
+      type = mission_markerTypeSpobToSystem( type );
 
    cur_mission = misn_getFromLua(L);
 
@@ -414,9 +414,9 @@ static int misn_markerMove( lua_State *L )
 
    /* Handle parameters. */
    id    = luaL_checkinteger( L, 1 );
-   if (lua_isplanet(L,2)) {
+   if (lua_isspob(L,2)) {
       issys = 0;
-      objid = luaL_checkplanet(L,2);
+      objid = luaL_checkspob(L,2);
    }
    else {
       issys = 1;
@@ -440,9 +440,9 @@ static int misn_markerMove( lua_State *L )
 
    /* Update system. */
    if (issys)
-      marker->type = mission_markerTypePlanetToSystem( marker->type );
+      marker->type = mission_markerTypeSpobToSystem( marker->type );
    else
-      marker->type = mission_markerTypeSystemToPlanet( marker->type );
+      marker->type = mission_markerTypeSystemToSpob( marker->type );
    marker->objid = objid;
 
    /* Update system markers. */

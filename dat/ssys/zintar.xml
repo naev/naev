@@ -12,16 +12,16 @@
   <x>-70.197920</x>
   <y>835.652480</y>
  </pos>
- <assets>
-  <asset>Abacus</asset>
-  <asset>Adius</asset>
-  <asset>Agino</asset>
-  <asset>Fairfax Station</asset>
-  <asset>Jermose</asset>
-  <asset>Shion</asset>
-  <asset>Zintar IV</asset>
-  <asset>Zintar V</asset>
- </assets>
+ <spobs>
+  <spob>Abacus</spob>
+  <spob>Adius</spob>
+  <spob>Agino</spob>
+  <spob>Fairfax Station</spob>
+  <spob>Jermose</spob>
+  <spob>Shion</spob>
+  <spob>Zintar IV</spob>
+  <spob>Zintar V</spob>
+ </spobs>
  <jumps>
   <jump target="Malebolge">
    <autopos/>

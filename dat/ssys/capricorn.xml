@@ -10,13 +10,13 @@
   <x>-99.202812</x>
   <y>155.459061</y>
  </pos>
- <assets>
-  <asset>Capricorn II</asset>
-  <asset>Capricorn III</asset>
-  <asset>Capricorn IIIa</asset>
-  <asset>Durea</asset>
-  <asset_virtual>Empire Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Capricorn II</spob>
+  <spob>Capricorn III</spob>
+  <spob>Capricorn IIIa</spob>
+  <spob>Durea</spob>
+  <spob_virtual>Empire Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Daled">
    <autopos/>

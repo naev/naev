@@ -131,7 +131,7 @@ function create ()
    }
 
    -- Finish mission details
-   mem.returnpnt, mem.returnsys = planet.cur()
+   mem.returnpnt, mem.returnsys = spob.cur()
    mem.cargo = cargoes[ rnd.rnd(1,#cargoes) ]
    mem.misn_cargo = commodity.new( mem.cargo[1], mem.cargo[2] )
    mem.enemyfaction = faction.get("Trader")
@@ -206,7 +206,7 @@ end
 function land ()
    local pp = player.pilot()
    local q = pp:cargoHas( mem.misn_cargo )
-   if mem.convoy_spawned and q > 0 and planet.cur()==mem.returnpnt then
+   if mem.convoy_spawned and q > 0 and spob.cur()==mem.returnpnt then
       q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
       local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()

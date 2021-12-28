@@ -10,14 +10,14 @@
   <x>380.639865</x>
   <y>-612.825383</y>
  </pos>
- <assets>
-  <asset>Maus I</asset>
-  <asset>Maus II</asset>
-  <asset>Maus III</asset>
-  <asset>Maus Station</asset>
-  <asset>Megas</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Maus I</spob>
+  <spob>Maus II</spob>
+  <spob>Maus III</spob>
+  <spob>Maus Station</spob>
+  <spob>Megas</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Awowa">
    <autopos/>

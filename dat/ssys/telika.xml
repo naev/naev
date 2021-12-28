@@ -10,13 +10,13 @@
   <x>1163.000000</x>
   <y>401.138560</y>
  </pos>
- <assets>
-  <asset>Petra</asset>
-  <asset>Telika II</asset>
-  <asset>Telika III</asset>
-  <asset>Telika Station</asset>
-  <asset>Vracha</asset>
- </assets>
+ <spobs>
+  <spob>Petra</spob>
+  <spob>Telika II</spob>
+  <spob>Telika III</spob>
+  <spob>Telika Station</spob>
+  <spob>Vracha</spob>
+ </spobs>
  <jumps>
   <jump target="Ekta">
    <autopos/>

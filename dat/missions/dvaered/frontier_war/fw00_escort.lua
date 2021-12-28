@@ -10,7 +10,7 @@
   <location>Bar</location>
   <faction>Dvaered</faction>
   <done>Destroy the FLF base!</done>
-  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (planet.cur():services().shipyard == nil)</cond>
+  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
  </avail>
  <notes>
   <campaign>Frontier Invasion</campaign>
@@ -39,10 +39,10 @@ local fmt = require "format"
 local pir = require "common.pirate"
 
 -- Mission constants
-local destpla1, destsys1 = planet.getS("Ginni")
-local destpla2, destsys2 = planet.getS(fw.wlrd_planet)
-local destpla3, destsys3 = planet.getS("Laarss")
-local fleepla, fleesys = planet.getS("Odonga m1")
+local destpla1, destsys1 = spob.getS("Ginni")
+local destpla2, destsys2 = spob.getS(fw.wlrd_planet)
+local destpla3, destsys3 = spob.getS("Laarss")
+local fleepla, fleesys = spob.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
 local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
@@ -68,7 +68,7 @@ function create()
 
    misn.setNPC(_("Dvaered officer"), fw.portrait_tam, _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?"))
 
-   mem.previous = planet:cur()
+   mem.previous = spob.cur()
 end
 
 function accept()
@@ -268,7 +268,7 @@ function land() -- The player is only allowed to land on special occasions
    end
    --hook.rm(mem.jumpingTam)
    mem.tamJumped = true
-   mem.previous = planet.cur()
+   mem.previous = spob.cur()
    misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 

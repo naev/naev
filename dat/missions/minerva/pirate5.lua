@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Minerva Pirates 4</done>
  </avail>
  <notes>
@@ -84,7 +84,7 @@ function accept ()
 end
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
@@ -454,7 +454,7 @@ function drone_control_update ()
    end
 end
 function hacking_center_dead ()
-   misn.markerMove( mem.mrk_mainsys, planet.get("Minerva Station") )
+   misn.markerMove( mem.mrk_mainsys, spob.get("Minerva Station") )
    misn.osdActive(3)
    mem.misn_state = 3
    player.msg("#gThe hacking centre has been destroyed!#0")

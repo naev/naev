@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Minerva Pirates 3</done>
  </avail>
  <notes>
@@ -69,7 +69,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   mem.sysmarker = misn.markerAdd( planet.get("Minerva Station") )
+   mem.sysmarker = misn.markerAdd( spob.get("Minerva Station") )
 
    minerva.log.pirate(_("You accepted another job from the sketchy individual to deal with a mole at Minerva Station.") )
 
@@ -83,7 +83,7 @@ end
 
 function generate_npc ()
    mem.npc_pir = nil
-   if planet.cur() == planet.get("Minerva Station") and mem.misn_state < 1 then
+   if spob.cur() == spob.get("Minerva Station") and mem.misn_state < 1 then
       mem.npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
    end
 end

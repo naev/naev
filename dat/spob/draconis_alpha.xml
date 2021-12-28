@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Draconis Alpha">
+ <pos>
+  <x>-259.396052</x>
+  <y>11636.934797</y>
+ </pos>
+ <GFX>
+  <space>K03.webp</space>
+  <exterior>desertic.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -11,14 +11,15 @@
   <x>221.000000</x>
   <y>689.000000</y>
  </pos>
- <assets>
-  <asset>Feye I</asset>
-  <asset>Feye IV</asset>
-  <asset>Kataka</asset>
-  <asset>Memory of Sorom</asset>
-  <asset>Neurri</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Feye I</spob>
+  <spob>Feye IV</spob>
+  <spob>Hypergate Feye</spob>
+  <spob>Kataka</spob>
+  <spob>Memory of Sorom</spob>
+  <spob>Neurri</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Cerberus">
    <autopos/>

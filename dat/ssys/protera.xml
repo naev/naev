@@ -10,10 +10,10 @@
   <x>1103.000000</x>
   <y>484.000000</y>
  </pos>
- <assets>
-  <asset>Protera Sigma</asset>
-  <asset>Sigma Station</asset>
- </assets>
+ <spobs>
+  <spob>Protera Sigma</spob>
+  <spob>Sigma Station</spob>
+ </spobs>
  <jumps>
   <jump target="Apik">
    <autopos/>

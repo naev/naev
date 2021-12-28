@@ -11,11 +11,11 @@
   <x>376.666667</x>
   <y>574.066667</y>
  </pos>
- <assets>
-  <asset>Point Zero 0</asset>
-  <asset>Point Zero Station</asset>
-  <asset>Warei</asset>
- </assets>
+ <spobs>
+  <spob>Point Zero 0</spob>
+  <spob>Point Zero Station</spob>
+  <spob>Warei</spob>
+ </spobs>
  <jumps>
   <jump target="Gewirn">
    <autopos/>

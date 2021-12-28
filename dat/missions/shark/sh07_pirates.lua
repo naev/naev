@@ -9,7 +9,7 @@
   <done>A Journey To Arandon</done>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
  </avail>
  <notes>
@@ -34,7 +34,7 @@ local baddie -- Non-persistent state
 -- luacheck: globals attacked enter gawain_dead generic_dead goddard_dead idle kestrel_dead1 kestrel_dead2 land (Hook functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 mem.osd_title = _("The Last Detail")
 
@@ -117,7 +117,7 @@ end
 
 function land ()
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
     He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))

@@ -10,15 +10,15 @@
   <x>-340.200000</x>
   <y>-313.800000</y>
  </pos>
- <assets>
-  <asset>Aillis</asset>
-  <asset>Fuzka</asset>
-  <asset>Koralis IV</asset>
-  <asset>Koralis VI</asset>
-  <asset>Luxsor</asset>
-  <asset>Paxsor</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Aillis</spob>
+  <spob>Fuzka</spob>
+  <spob>Koralis IV</spob>
+  <spob>Koralis VI</spob>
+  <spob>Luxsor</spob>
+  <spob>Paxsor</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Gamma Polaris">
    <autopos/>

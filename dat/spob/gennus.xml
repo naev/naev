@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gennus">
+ <pos>
+  <x>11660.739501</x>
+  <y>-1503.113254</y>
+ </pos>
+ <GFX>
+  <space>M05.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>4.70758e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Gennus is a cold world now, but it wasn't quite this harsh when it was first settled during the Second Growth. Poor climate management and rampant pollution have filled the sky with sunlight-blocking substances, and now the fragile ecosystem has collapsed. The people here only live on Gennus because they have nowhere else to go.</description>
+  <bar>It's hard to find a smiling face in this spaceport bar. Not too surprising, given how unpleasant life on this planet is.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</spob>

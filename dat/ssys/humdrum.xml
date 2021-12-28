@@ -10,11 +10,11 @@
   <x>953.536935</x>
   <y>-865.162851</y>
  </pos>
- <assets>
-  <asset>Humdrum I</asset>
-  <asset>Humdrum II</asset>
-  <asset>Humdrum III</asset>
- </assets>
+ <spobs>
+  <spob>Humdrum I</spob>
+  <spob>Humdrum II</spob>
+  <spob>Humdrum III</spob>
+ </spobs>
  <jumps>
   <jump target="An'ku">
    <autopos/>

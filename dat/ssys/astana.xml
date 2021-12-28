@@ -10,11 +10,11 @@
   <x>-427.386867</x>
   <y>-865.091193</y>
  </pos>
- <assets>
-  <asset>Akrikos</asset>
-  <asset>Astana IIV</asset>
-  <asset>Drognain</asset>
- </assets>
+ <spobs>
+  <spob>Akrikos</spob>
+  <spob>Astana IIV</spob>
+  <spob>Drognain</spob>
+ </spobs>
  <jumps>
   <jump target="Auger">
    <autopos/>

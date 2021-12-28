@@ -46,7 +46,7 @@ function create ()
    -- Note: this mission does not make any system claims.
    -- Set up mission variables
    mem.misn_stage = 0
-   mem.homeworld, mem.homeworld_sys = planet.getLandable( misn.factions() )
+   mem.homeworld, mem.homeworld_sys = spob.getLandable( misn.factions() )
    if mem.homeworld == nil then
       misn.finish(false)
    end
@@ -98,7 +98,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
    -- Mission success
    if mem.misn_stage == 1 and mem.landed == mem.homeworld then
       tk.msg( _("Mission Success"), _([[The scientists thank you for your help before going back to their home to continue their nebula research. As a keepsake, one of them gives you a mock-up of the probe you helped them launch.]]) )

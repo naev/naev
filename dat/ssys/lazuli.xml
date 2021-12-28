@@ -10,12 +10,12 @@
   <x>849.995077</x>
   <y>-1042.282028</y>
  </pos>
- <assets>
-  <asset>Chriik</asset>
-  <asset>Lazuli I</asset>
-  <asset>Lazuli III</asset>
-  <asset>Lazuli Ia</asset>
- </assets>
+ <spobs>
+  <spob>Chriik</spob>
+  <spob>Lazuli I</spob>
+  <spob>Lazuli III</spob>
+  <spob>Lazuli Ia</spob>
+ </spobs>
  <jumps>
   <jump target="Lapis">
    <autopos/>

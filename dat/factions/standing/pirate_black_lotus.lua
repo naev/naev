@@ -2,5 +2,5 @@
 local spir = require "factions.standing.lib.pirate"
 
 standing = spir.newPirateStanding{
-   fct            = faction.get("Black Lotus"),
+   fct = faction.get("Black Lotus"),
 }

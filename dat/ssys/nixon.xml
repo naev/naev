@@ -10,14 +10,14 @@
   <x>962.089799</x>
   <y>-419.070656</y>
  </pos>
- <assets>
-  <asset>Nixon I</asset>
-  <asset>Nixon II</asset>
-  <asset>Nixon III</asset>
-  <asset>Nixon IV</asset>
-  <asset>Nixon V</asset>
-  <asset>Pauldur</asset>
- </assets>
+ <spobs>
+  <spob>Nixon I</spob>
+  <spob>Nixon II</spob>
+  <spob>Nixon III</spob>
+  <spob>Nixon IV</spob>
+  <spob>Nixon V</spob>
+  <spob>Pauldur</spob>
+ </spobs>
  <jumps>
   <jump target="Neon">
    <autopos/>

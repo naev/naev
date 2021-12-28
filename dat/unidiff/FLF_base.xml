@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="FLF_base">
  <system name="Sigur">
-  <asset name="Sindbad">add</asset>
-  <asset_virtual name="Virtual Sindbad">remove</asset_virtual>
+  <spob name="Sindbad">add</spob>
+  <spob_virtual name="Virtual Sindbad">remove</spob_virtual>
  </system>
 </unidiff>

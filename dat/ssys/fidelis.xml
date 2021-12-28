@@ -10,13 +10,13 @@
   <x>562.890794</x>
   <y>-692.520202</y>
  </pos>
- <assets>
-  <asset>Fidelis III</asset>
-  <asset>Fidelis IV</asset>
-  <asset>Mannannan</asset>
-  <asset>Petaat</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Fidelis III</spob>
+  <spob>Fidelis IV</spob>
+  <spob>Mannannan</spob>
+  <spob>Petaat</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Eye of Night">
    <autopos/>

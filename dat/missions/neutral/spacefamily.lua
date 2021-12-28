@@ -82,7 +82,7 @@ end
 
 -- Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
 function getlandable(sys)
-   for a, b in pairs(sys:planets()) do
+   for a, b in pairs(sys:spobs()) do
       if b:services()["inhabited"] and b:canLand() then
          return b
       end
@@ -91,7 +91,7 @@ function getlandable(sys)
 end
 
 function land()
-   if planet.cur() == mem.destplanet then -- We've arrived!
+   if spob.cur() == mem.destplanet then -- We've arrived!
       if mem.nextstop >= 3 then -- This is the last stop
          tk.msg(_("Rid of them at last"), _([[You land at your final stop in your quest to take the space family home, and not a moment too soon, for both you and Harrus. Harrus stomps off your ship without so much as a farewell, his wife and children in tow, and you are just as happy to see them gone.
     Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.
@@ -120,7 +120,7 @@ end
 function getlandablesystems( systems )
    local t = {}
    for _k1,v in ipairs(systems) do
-      for _k2,p in ipairs(v:planets()) do
+      for _k2,p in ipairs(v:spobs()) do
          if p:services()["inhabited"] and p:canLand() then
             t[#t+1] = v
             break

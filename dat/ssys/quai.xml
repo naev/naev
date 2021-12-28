@@ -10,11 +10,11 @@
   <x>720.995077</x>
   <y>-903.282028</y>
  </pos>
- <assets>
-  <asset>Quai I</asset>
-  <asset>Quai II</asset>
-  <asset>Quai IIa</asset>
- </assets>
+ <spobs>
+  <spob>Quai I</spob>
+  <spob>Quai II</spob>
+  <spob>Quai IIa</spob>
+ </spobs>
  <jumps>
   <jump target="Lapis">
    <autopos/>

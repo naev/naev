@@ -10,12 +10,12 @@
   <x>-29.000000</x>
   <y>-767.000000</y>
  </pos>
- <assets>
-  <asset>Ambre</asset>
-  <asset>Pudas I</asset>
-  <asset>Pudas II</asset>
-  <asset>Sudra</asset>
- </assets>
+ <spobs>
+  <spob>Ambre</spob>
+  <spob>Pudas I</spob>
+  <spob>Pudas II</spob>
+  <spob>Sudra</spob>
+ </spobs>
  <jumps>
   <jump target="Daravon">
    <autopos/>

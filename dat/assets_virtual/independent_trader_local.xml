@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Independent Trader Local">
- <presence>
-  <faction>Trader</faction>
-  <base>30.000000</base>
-  <bonus>15.000000</bonus>
-  <range>0</range>
- </presence>
-</asset>

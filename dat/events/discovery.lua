@@ -10,7 +10,6 @@
 --]]
 
 local fmt = require 'format'
-local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
 local love_math = require 'love.math'
@@ -18,15 +17,6 @@ local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
 -- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
-
--- Since we don't actually activate the Love framework we have to fake the
--- the dimensions and width, and set up the origins.
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
 
 -- These trigger at specific places
 local system_events = {
@@ -42,7 +32,7 @@ local system_events = {
    ["Gamma Polaris"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Emperor's Wrath"):pos(),
+      pos  = spob.get("Emperor's Wrath"):pos(),
       name = "disc_emperorswrath",
       title = _("Emperor's Wrath"),
       subtitle = _("Human Made Divine"),
@@ -50,7 +40,7 @@ local system_events = {
    ["Za'lek"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("House Za'lek Central Station"):pos(),
+      pos  = spob.get("House Za'lek Central Station"):pos(),
       name = "disc_zalekcentral",
       title = _("House Za'lek Central Station"),
       subtitle = _("Bastion of Knowledge"),
@@ -58,7 +48,7 @@ local system_events = {
    Ruadan = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Ruadan Prime"):pos(),
+      pos  = spob.get("Ruadan Prime"):pos(),
       name = "disc_zalekruadan",
       title = _("Ruadan Prime"),
       subtitle = _("New Heart of the Za'lek"),
@@ -66,7 +56,7 @@ local system_events = {
    Dvaer = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Dvaered High Command"):pos(),
+      pos  = spob.get("Dvaered High Command"):pos(),
       name = "disc_dvaeredhigh",
       title = _("Dvaered High Command"),
       subtitle = _("Convening of the Warlords"),
@@ -80,7 +70,7 @@ local system_events = {
    Aesir = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Mutris"):pos(),
+      pos  = spob.get("Mutris"):pos(),
       name = "disc_mutris",
       title = _("Crater City"),
       subtitle = _("Touching the Universe"),
@@ -94,10 +84,10 @@ local system_events = {
    Limbo = {
       -- Discover will not work if the planet is found through maps
       --type = "discover",
-      --asset = planet.get("Minerva Station"),
+      --asset = spob.get("Minerva Station"),
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Minerva Station"):pos(),
+      pos  = spob.get("Minerva Station"):pos(),
       name = "disc_minerva",
       title = _("Minerva Station"),
       subtitle = _("Gambler's Paradise"),
@@ -105,7 +95,7 @@ local system_events = {
    Beeklo = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Totoran"):pos(),
+      pos  = spob.get("Totoran"):pos(),
       name = "disc_totoran",
       title = _("Totoran"),
       subtitle = _("Brave your Fate in the #rCrimson Gauntlet#0"),
@@ -122,7 +112,7 @@ local system_events = {
    ["New Haven"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("New Haven"):pos(),
+      pos  = spob.get("New Haven"):pos(),
       name = "disc_newhaven",
       title = _("New Haven"),
       subtitle = _("They Will Never Destroy Us"),
@@ -335,7 +325,9 @@ local function handle_event( event )
    return true
 end
 
+local nw, nh
 function create()
+   nw, nh = gfx.dim()
    local sc = system.cur()
    local event = system_events[ sc:nameRaw() ]
    local hasevent = false
@@ -510,8 +502,8 @@ function textfg ()
 
    lg.setColor( 1, 1, 1, 1 )
 
-   local x = (love.w-textcanvas.w)*0.5
-   local y = (love.h-textcanvas.h)*0.3
+   local x = (nw-textcanvas.w)*0.5
+   local y = (nh-textcanvas.h)*0.3
    x = math.floor(x)
    y = math.floor(y)
    lg.draw( textcanvas, x, y )

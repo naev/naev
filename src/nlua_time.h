@@ -6,7 +6,7 @@
 #include "nlua.h"
 #include "ntime.h"
 
-#define TIME_METATABLE   "time" /**< Planet metatable identifier. */
+#define TIME_METATABLE   "time" /**< Spob metatable identifier. */
 
 /*
  * Library stuff.

@@ -10,15 +10,15 @@
   <x>1131.097687</x>
   <y>-369.643211</y>
  </pos>
- <assets>
-  <asset>Grindstone Shipyards</asset>
-  <asset>Kraft I</asset>
-  <asset>Kraft II</asset>
-  <asset>Kraft IV</asset>
-  <asset>Kraft V</asset>
-  <asset>Kraft VI</asset>
-  <asset>Simoen</asset>
- </assets>
+ <spobs>
+  <spob>Grindstone Shipyards</spob>
+  <spob>Kraft I</spob>
+  <spob>Kraft II</spob>
+  <spob>Kraft IV</spob>
+  <spob>Kraft V</spob>
+  <spob>Kraft VI</spob>
+  <spob>Simoen</spob>
+ </spobs>
  <jumps>
   <jump target="Neon">
    <autopos/>

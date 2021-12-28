@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Research Post Sigma-13</planet>
+  <spob>Research Post Sigma-13</spob>
   <location>Bar</location>
   <done>Za'lek Black Hole 2</done>
  </avail>
@@ -31,7 +31,7 @@ local lmisn = require "lmisn"
 
 local reward = zbh.rewards.zbh03
 
-local mainpnt, mainsys = planet.getS("Research Post Sigma-13")
+local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 local jumpsys = system.get("NGC-23")
 
 function create ()
@@ -113,7 +113,7 @@ He chuckles slightly.]]))
 end
 
 function land ()
-   if mem.state~=2 or planet.cur() ~= mainpnt then
+   if mem.state~=2 or spob.cur() ~= mainpnt then
       return
    end
 

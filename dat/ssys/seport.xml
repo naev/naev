@@ -10,11 +10,11 @@
   <x>805.716049</x>
   <y>310.198302</y>
  </pos>
- <assets>
-  <asset>Coran</asset>
-  <asset>HS-224</asset>
-  <asset>SY-314</asset>
- </assets>
+ <spobs>
+  <spob>Coran</spob>
+  <spob>HS-224</spob>
+  <spob>SY-314</spob>
+ </spobs>
  <jumps>
   <jump target="Aet">
    <autopos/>

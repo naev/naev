@@ -8,7 +8,7 @@ local playerform = require "playerform"
 
 local radar_x, radar_y, screen_h, screen_w
 local bar_w, bar_h, bar_x, bar_y, buttons, margin, pp, ptarget, ta_pnt_pane_x, ta_pnt_pane_y, tbar_h, tbar_y
-local fields_w, fields_x, fields_y, nav_planet, nav_pnt, popup_right_x, popup_right_y, tbar_center_w, tbar_center_h, tbar_center_x
+local fields_w, fields_x, fields_y, nav_spob, nav_pnt, popup_right_x, popup_right_y, tbar_center_w, tbar_center_h, tbar_center_x
 local target_image_w, ta_flt_pane_x
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
@@ -132,7 +132,7 @@ function create()
    button_mouseover = tex_open( "buttonHil.png" )
    button_pressed = tex_open( "buttonPre.png" )
    button_disabled = tex_open( "buttonDis.png" )
-   gui.targetPlanetGFX( tex_open( "radar_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
 
@@ -338,7 +338,7 @@ function update_target()
 end
 
 function update_nav()
-   nav_planet = {}
+   nav_spob = {}
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp, autonav_jumps = player.autonavDest()
    if nav_pnt then
@@ -359,10 +359,10 @@ function update_nav()
          ta_pnt_faction_gfx = ta_pntfact:logo()
       end
 
-      nav_planet = { -- Table for convenience.
+      nav_spob = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
-         class = nav_pnt:class(),
+         class = _(nav_pnt:class()),
          col = nav_pnt:colour(),
          services = {}
       }
@@ -371,11 +371,11 @@ function update_nav()
          services = { "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( nav_planet.services, N_("Spaceport") )
+         table.insert( nav_spob.services, N_("Spaceport") )
          for k,v in ipairs(services) do
-            table.insert( nav_planet.services, pntflags[v] )
+            table.insert( nav_spob.services, pntflags[v] )
          end
-         nav_planet.nservices = #nav_planet.services
+         nav_spob.nservices = #nav_spob.services
       end
    end
    if nav_hyp then
@@ -896,12 +896,12 @@ function render( _dt )
 
    -- Planet pane
    if nav_pnt then
-      local ta_pnt_dist = pp:pos():dist( nav_planet.pos )
+      local ta_pnt_dist = pp:pos():dist( nav_spob.pos )
 
       -- Extend the pane depending on the services available.
       local services_h = 60
       if pntflags.land then
-         services_h = services_h + (20 * nav_planet.nservices)
+         services_h = services_h + (20 * nav_spob.nservices)
       end
 
       -- Render background images.
@@ -919,11 +919,11 @@ function render( _dt )
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
       gfx.print( true, _("TARGETED"), ta_pnt_pane_x + 14, ta_pnt_pane_y + 170, col_text )
-      gfx.print( true, nav_planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, nav_planet.col )
+      gfx.print( true, nav_spob.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, nav_spob.col )
       gfx.print( true, string.format(
             _("DISTANCE: %s"), largeNumber(ta_pnt_dist, 1) ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 20, col_text )
-      gfx.print( true, string.format( _("CLASS: %s"), nav_planet.class ),
+      gfx.print( true, string.format( _("CLASS: %s"), nav_spob.class ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 40, col_text )
 
       if ta_pnt_faction_gfx then
@@ -935,7 +935,7 @@ function render( _dt )
       -- Space out the text.
       if pntflags.land then
          gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 60, col_text )
-         for k,v in ipairs(nav_planet.services) do
+         for k,v in ipairs(nav_spob.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 40, ta_pnt_pane_y - 60 - k*20, col_text )
          end
       else

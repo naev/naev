@@ -680,6 +680,13 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
    return transform_projection * vertex_position;
 }
 ]]
+-- Have to initialize properly the dimensions here for when using the graphics
+-- API outside of the love framework
+local nw, nh = naev.gfx.dim()
+love.x = 0
+love.y = 0
+love.w = nw
+love.h = nh
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()

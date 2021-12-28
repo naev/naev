@@ -351,17 +351,6 @@ static void cam_updatePilot( Pilot *follow, double dt )
    camera_X += dx;
    camera_Y += dy;
 
-   /* DEBUG. */
-#if 0
-   glColor4d( 1., 1., 1., 1. );
-   glBegin(GL_LINES);
-   gl_gameToScreenCoords( &x, &y, x, y );
-   glVertex2d( x, y );
-   gl_gameToScreenCoords( &x, &y, camera_X, camera_Y );
-   glVertex2d( x, y );
-   glEnd(); /* GL_LINES */
-#endif
-
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
 }

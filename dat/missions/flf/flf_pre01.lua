@@ -111,7 +111,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if diff.isApplied("FLF_base") and planet.cur() == planet.get("Sindbad") then
+    if diff.isApplied("FLF_base") and spob.cur() == spob.get("Sindbad") then
         tk.msg(_("Gregar leaves the party"), fmt.f( _([[You and Gregar step out of your airlock and onto Sindbad. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with distrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
     "Alright, {player}," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]), {player=player.name()}))
         tk.msg(_("Gregar leaves the party"), _([[The moment of tension passes, and the officer leans back in his chair.
@@ -122,7 +122,7 @@ function land()
         flf.addLog( _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]]) )
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.cur():faction() == faction.get("Dvaered") and not mem.basefound then
+    elseif spob.cur():faction() == faction.get("Dvaered") and not mem.basefound then
         if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
     Would you like to do so?]])) then
             tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar, and take him away before he even comprehends what's going on.
@@ -230,7 +230,7 @@ function spawnbase()
         diff.apply("FLF_base")
 
         -- Safety measure to ensure the player can land.
-        mem.base = planet.get("Sindbad")
+        mem.base = spob.get("Sindbad")
         mem.base:landOverride()
 
         mem.basefound = true

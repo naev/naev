@@ -5,6 +5,7 @@
       * Pilots can have intrinsic outfits
       * Bioships go rawr (new skill system)
       * Plasma has a burning effect
+      * Scripting support for space objects (spob)
    * New Content
       * Added a gigantic black hole
       * More engine sounds
@@ -14,17 +15,21 @@
    * Quality of Life
       * Engine sound volume is configurable
    * Engine changes
+      * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
 
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
-   * Fix broken dialogue in the "Shadow Vigil" mission
-   * Fix issue with "Minerva Pirates 4" mission
+   * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", and "Shadow Vigil"
    * Fix some text labels that couldn't be translated from English
-   * Darkened nebulas and lowere default background darkness
+   * Fix equipment slot information displaying over filter widget
+   * Darkened nebulas and lowered default background darkness
    * Improved upstream metainfo for packagers
+   * Fix crash under certain conditions when using the console
+   * Masochists and LTS distro packagers may build with Meson 0.54 (no subproject fallbacks) or 0.53 (also no "meson compile", only "ninja")
+   * Slightly reduced rendered nebula quality to stop breakage on some intel GPUs
 
 * 0.9.0
    * Fixed glitchy appearance of the map's mode menu

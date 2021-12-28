@@ -10,15 +10,20 @@
   <x>-1.634259</x>
   <y>-986.932870</y>
  </pos>
- <assets>
-  <asset>Amaroq I</asset>
-  <asset>Amaroq III</asset>
-  <asset>PSO Monitor</asset>
-  <asset>Rhaana</asset>
- </assets>
+ <spobs>
+  <spob>Amaroq I</spob>
+  <spob>Amaroq III</spob>
+  <spob>PSO Monitor</spob>
+  <spob>Rhaana</spob>
+ </spobs>
  <jumps>
   <jump target="Marat">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-14549">
+   <autopos/>
+   <exitonly/>
    <hide>1.000000</hide>
   </jump>
   <jump target="PSO">

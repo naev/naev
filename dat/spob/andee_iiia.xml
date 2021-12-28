@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Andee IIIa">
+ <pos>
+  <x>13929.329926</x>
+  <y>-6969.106766</y>
+ </pos>
+ <GFX>
+  <space>moon-P00.webp</space>
+  <exterior>mining2.webp</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

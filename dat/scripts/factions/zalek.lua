@@ -13,6 +13,7 @@ return {
       ["zlk_cap_ch2z_med"] = { val=3, max=70 },
       ["zlk_cap_ch2z_lrg"] = { val=5, max=70 },
    },
+   -- Based on academic hierarchy
    text = {
       [100] = _("Professor Emeritus"),
       [90]  = _("Professor"),

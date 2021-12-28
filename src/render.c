@@ -154,8 +154,8 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  *
  * Blitting order (layers):
  *   - BG
- *     - stars and planets
- *     - background player stuff (planet targeting)
+ *     - stars and spobs
+ *     - background player stuff (spob targeting)
  *     - background particles
  *     - back layer weapons
  *   - N
@@ -203,7 +203,7 @@ void render_all( double game_dt, double real_dt )
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
-   planets_render();
+   spobs_render();
    spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* Middle stuff */

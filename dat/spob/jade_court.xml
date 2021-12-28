@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Jade Court">
+ <pos>
+  <x>-2507.492761</x>
+  <y>-4718.400357</y>
+ </pos>
+ <GFX>
+  <space>station-commerce.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>24000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Jade Court is a large judiciary installation. Though owned by the Empire, the station itself counts as neutral territory. Cases here come from all over the galaxy, presided over by judges who are not affiliated with any of the major factions. Typically, any large international case that local law enforcement is unable to handle on its own will be taken to Jade.</description>
+  <bar>This is just an ordinary bar. Lawyers don't come here much, as they all have their own private offices aboard the station.</bar>
+ </general>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
+</spob>

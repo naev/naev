@@ -10,15 +10,15 @@
   <x>83.000000</x>
   <y>-92.000000</y>
  </pos>
- <assets>
-  <asset>Cygnus IV</asset>
-  <asset>Hassak</asset>
-  <asset>Inca</asset>
-  <asset>Jaan</asset>
-  <asset>Maya</asset>
-  <asset>Torloth</asset>
-  <asset>Triton Station</asset>
- </assets>
+ <spobs>
+  <spob>Cygnus IV</spob>
+  <spob>Hassak</spob>
+  <spob>Inca</spob>
+  <spob>Jaan</spob>
+  <spob>Maya</spob>
+  <spob>Torloth</spob>
+  <spob>Triton Station</spob>
+ </spobs>
  <jumps>
   <jump target="Delta Pavonis">
    <autopos/>

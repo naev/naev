@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Sander">
+ <pos>
+  <x>-3259.936744</x>
+  <y>-2660.712975</y>
+ </pos>
+ <GFX>
+  <space>O01.webp</space>
+  <exterior>oceanic.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>33.333333</base>
+  <bonus>16.666667</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Griffin III's sister world is Sander. Owing to its largely aquatic surface, its population is significantly lower than Griffin III's, but its oceans provide food to many nearby planets, and Imperial mining operations are able to harvest many valuable materials from the sea floor.</description>
+  <bar>This underwater bar is quite the spectacle. Large marine creatures swim by the windows, and the main lobby is designed to enhance the aesthetic. A little overdone, but pleasant overall.</bar>
+ </general>
+</spob>

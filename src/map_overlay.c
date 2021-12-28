@@ -188,7 +188,7 @@ int ovr_input( SDL_Event *event )
 /**
  * @brief Refreshes the map overlay recalculating the dimensions it should have.
  *
- * This should be called if the planets or the likes change at any given time.
+ * This should be called if the spobs or the likes change at any given time.
  */
 void ovr_refresh (void)
 {
@@ -207,8 +207,8 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(Vector2d*));
-   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(Vector2d*));
+   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(MapOverlayPos*));
    max_x = 0.;
    max_y = 0.;
    for (int i=0; i<array_size(cur_system->jumps); i++) {
@@ -226,14 +226,14 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
-      if (!planet_isKnown(pnt))
+      if (!spob_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
+      snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(pnt), spob_name(pnt) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
       mo[items]->radius = pnt->radius / 2.;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
@@ -257,7 +257,7 @@ void ovr_refresh (void)
 }
 
 /**
- * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
+ * @brief Makes a best effort to fit the given spobs' overlay indicators and labels fit without collisions.
  */
 static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo )
 {
@@ -332,7 +332,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       for (int k=0; k<4; k++) {
          double val = 0.;
 
-         /* Test intersection with the planet indicators. */
+         /* Test intersection with the spob indicators. */
          for (int j=0; j<items; j++) {
             fx = fy = 0.;
             mw = 2.*mo[j]->radius;
@@ -492,7 +492,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       float mx, my, mw, mh;
       const float pb2 = ovr_text_pixbuf*2.;
 
-      /* Collisions with planet circles and jp triangles (odd indices). */
+      /* Collisions with spob circles and jp triangles (odd indices). */
       mw = 2.*mo[i]->radius;
       mh = mw;
       mx = pos[i]->x/ovr_res - mw/2.;
@@ -521,9 +521,9 @@ void ovr_initAlpha (void)
       else
          jp->map_alpha = 1.;
    }
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
-      if (!planet_isKnown(pnt))
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
+      if (!spob_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
          pnt->map_alpha = 1.;
@@ -593,13 +593,13 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
       * Specifically, a generic pos and isKnown test would clean this up nicely. */
    int known = 1;
    for (int j=0; j<2; j++) {
-      Planet *pnt;
+      Spob *pnt;
       JumpPoint *jp;
       switch(sf->point_type[j]) {
-         case SAFELANE_LOC_PLANET:
-            pnt = planet_getIndex( sf->point_id[j] );
+         case SAFELANE_LOC_SPOB:
+            pnt = spob_getIndex( sf->point_id[j] );
             posns[j] = &pnt->pos;
-            if (!planet_isKnown( pnt ))
+            if (!spob_isKnown( pnt ))
                known = 0;
             break;
          case SAFELANE_LOC_DEST_SYS:
@@ -699,16 +699,16 @@ void ovr_render( double dt )
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 
-   /* Render planets. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+   /* Render spobs. */
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
-      if (i != player.p->nav_planet)
-         gui_renderPlanet( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
+      if (i != player.p->nav_spob)
+         gui_renderSpob( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
    }
-   if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
+   if (player.p->nav_spob > -1)
+      gui_renderSpob( player.p->nav_spob, RADAR_RECT, w, h, res, cur_system->spobs[player.p->nav_spob]->map_alpha, 1 );
 
    /* Render jump points. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {

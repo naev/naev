@@ -8,7 +8,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <cond>require('common.antlejos').unidiffLevel() &gt;= 6</cond>
   <done>Terraforming Antlejos 5</done>
  </avail>
@@ -30,7 +30,7 @@ local lmisn = require "lmisn"
 
 local reward = ant.rewards.ant06
 
-local retpnt, retsys = planet.getS("Antlejos V")
+local retpnt, retsys = spob.getS("Antlejos V")
 local mainsys = system.get("Knave")
 
 -- luacheck: globals approaching enter land supplydeath supplyboard (Hook functions passed by name)
@@ -99,7 +99,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==2 and planet.cur() == retpnt then
+   if mem.state==2 and spob.cur() == retpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )

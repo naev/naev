@@ -10,12 +10,12 @@
   <x>-518.527315</x>
   <y>-104.214660</y>
  </pos>
- <assets>
-  <asset>Antlejos III</asset>
-  <asset>Antlejos IV</asset>
-  <asset>Antlejos Prime</asset>
-  <asset>Antlejos V</asset>
- </assets>
+ <spobs>
+  <spob>Antlejos III</spob>
+  <spob>Antlejos IV</spob>
+  <spob>Antlejos Prime</spob>
+  <spob>Antlejos V</spob>
+ </spobs>
  <jumps>
   <jump target="Delta Polaris">
    <autopos/>

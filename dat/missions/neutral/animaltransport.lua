@@ -9,7 +9,7 @@
   <chance>10</chance>
   <location>Bar</location>
   <faction>Sirius</faction>
-  <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  <cond>spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  </avail>
  <notes>
   <tier>1</tier>
@@ -37,7 +37,7 @@ function create ()
    local planets = {}
    lmisn.getSysAtDistance( system.cur(), 2, 4,
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
                planets[#planets + 1] = {v, s}
             end
@@ -73,7 +73,7 @@ function accept ()
 end
 
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       tk.msg(_("Animal transport"), fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)}))
       player.pay(money_reward)
       var.push("shipinfested", true)

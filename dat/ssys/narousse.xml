@@ -10,14 +10,14 @@
   <x>1273.730737</x>
   <y>-776.218016</y>
  </pos>
- <assets>
-  <asset>Monsoon Station</asset>
-  <asset>Narousse I</asset>
-  <asset>Narousse II</asset>
-  <asset>Narousse III</asset>
-  <asset>Narousse IIIa</asset>
-  <asset>Narousse IV</asset>
- </assets>
+ <spobs>
+  <spob>Monsoon Station</spob>
+  <spob>Narousse I</spob>
+  <spob>Narousse II</spob>
+  <spob>Narousse III</spob>
+  <spob>Narousse IIIa</spob>
+  <spob>Narousse IV</spob>
+ </spobs>
  <jumps>
   <jump target="Euler">
    <autopos/>

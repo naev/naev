@@ -32,7 +32,7 @@
 #include "nlua_news.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_player.h"
 #include "nlua_rnd.h"
 #include "nlua_safelanes.h"
@@ -534,7 +534,7 @@ static int nlua_require( lua_State* L )
  *  - naev
  *  - var
  *  - space
- *    - planet
+ *    - spob
  *    - system
  *    - jumps
  *  - time
@@ -562,7 +562,7 @@ int nlua_loadStandard( nlua_env env )
    int r = 0;
    r |= nlua_loadNaev(env);
    r |= nlua_loadVar(env);
-   r |= nlua_loadPlanet(env);
+   r |= nlua_loadSpob(env);
    r |= nlua_loadSystem(env);
    r |= nlua_loadJump(env);
    r |= nlua_loadTime(env);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Omega Station">
+ <pos>
+  <x>-10032.106791</x>
+  <y>7530.403357</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>250.000000</base>
+  <bonus>50.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>14000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>emp_mil_omega</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space.</description>
+  <bar>The Omega Canteen is a dark place that seems calm, although every time a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
+</spob>

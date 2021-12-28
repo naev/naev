@@ -10,7 +10,7 @@
   <chance>30</chance>
   <location>Bar</location>
   <faction>Empire</faction>
-  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>
@@ -34,13 +34,13 @@ local zlk = require "common.zalek"
 
 -- Mission constants
 local credits = 400e3
-local homeworld, homeworld_sys = planet.getS("Jorla")
+local homeworld, homeworld_sys = spob.getS("Jorla")
 local request_text = _([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"
     With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student.]])
 
 function create()
     -- mission variables
-    mem.origin = planet.cur()
+    mem.origin = spob.cur()
     mem.origin_sys = system.cur()
 
     local numjumps = mem.origin_sys:jumpDist(homeworld_sys, false)
@@ -78,7 +78,7 @@ function accept()
 end
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == homeworld then
         if mem.timelimit < time.get() then
             tk.msg(_("Mission accomplished"), fmt.f(_([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of {credits} for educational reasons." She hands you over a credit chip.]]), {credits=fmt.credits(credits / 2)} .. "\n\n" .. request_text))

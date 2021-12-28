@@ -10,7 +10,7 @@
   <chance>50</chance>
   <done>Empire Shipping 2</done>
   <location>Bar</location>
-  <planet>Halir</planet>
+  <spob>Halir</spob>
  </avail>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
@@ -50,7 +50,7 @@ local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Emp
 
 function create ()
    -- Target destination
-   mem.ret, mem.retsys  = planet.getLandable( "Halir" )
+   mem.ret, mem.retsys  = spob.getLandable( "Halir" )
    if mem.ret== nil then
       misn.finish(false)
    end
@@ -102,7 +102,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
    if mem.landed == mem.ret then
       -- Successfully rescued the VIP
       if mem.misn_stage == 2 then

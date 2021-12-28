@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Delta Polaris VI">
+ <pos>
+  <x>7996.915956</x>
+  <y>-16629.486629</y>
+ </pos>
+ <GFX>
+  <space>moon-K00.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

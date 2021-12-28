@@ -123,7 +123,7 @@ quotes.pay[2] = _("No one will miss this outlaw pilot! The bounty has been depos
 mem.osd_msg    = {}  -- 3-part OSD: Search a system, do the deed, get paid.
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    -- Choose the target faction among Pirate and FLF
    adm_factions = {faction.get("Pirate"), faction.get("FLF")}
@@ -519,7 +519,7 @@ function land()
       mem.mynpc = misn.npcAdd("clue_bar", _("Shifty Person"), portrait.get("Pirate"), _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information."))
 
    -- Player wants to be paid
-   elseif planet.cur():faction() == mem.paying_faction and mem.stage == 4 then
+   elseif spob.cur():faction() == mem.paying_faction and mem.stage == 4 then
       tk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)] )
       player.pay( mem.credits )
       mem.paying_faction:modPlayerSingle( rnd.rnd(1,2) )

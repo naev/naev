@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="PSO Monitor">
+ <pos>
+  <x>12918.237671</x>
+  <y>5896.016168</y>
+ </pos>
+ <GFX>
+  <space>001.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>33.333333</base>
+  <bonus>16.666667</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>PSO Monitor is a small scientific station run by an independent university, monitoring the high-interference nebula PSO. As no government actually funds the station, it only has what it absolutely needs to run. It also has a refueling depot for travelling ships in an effort to raise funding.</description>
+ </general>
+ <tags>
+  <tag>research</tag>
+ </tags>
+</spob>

@@ -6,7 +6,7 @@
  *
  * @brief Handles the Lua pilot bindings.
  *
- * These bindings control the planets and systems.
+ * These bindings control the spobs and systems.
  */
 /** @cond */
 #include "naev.h"
@@ -28,7 +28,7 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_outfit.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_vec2.h"
@@ -476,14 +476,14 @@ int lua_ispilot( lua_State *L, int ind )
  *    @luatparam Faction f Faction the pilot will belong to.
  *    @luatparam[opt=false] boolean i Whether to ignore rules.
  *    @luatparam[opt=false] boolean g Whether to behave as guerilla (spawn in deep space)
- *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
+ *    @luatreturn Spob|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint
  */
 static int pilotL_choosePoint( lua_State *L )
 {
    LuaFaction lf;
    int ignore_rules, guerilla;
-   Planet *planet = NULL;
+   Spob *spob = NULL;
    JumpPoint *jump = NULL;
    Vector2d vp;
 
@@ -492,10 +492,10 @@ static int pilotL_choosePoint( lua_State *L )
    ignore_rules   = lua_toboolean(L,2);
    guerilla       = lua_toboolean(L,3);
 
-   pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, guerilla );
+   pilot_choosePoint( &vp, &spob, &jump, lf, ignore_rules, guerilla );
 
-   if (planet != NULL)
-      lua_pushplanet(L, planet->id );
+   if (spob != NULL)
+      lua_pushspob(L, spob->id );
    else if (jump != NULL)
       lua_pushsystem(L, jump->from->id);
    else
@@ -512,19 +512,19 @@ static int pilotL_choosePoint( lua_State *L )
  * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"} ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
  * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard", "Goddard", planet.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a planet.
+ * @usage p = pilot.add( "Goddard", "Goddard", spob.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a spob.
  *
  * How param works (by type of value passed): <br/>
- *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
- *  - planet: pilot takes off from the planet <br/>
+ *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile spobs <br/>
+ *  - spob: pilot takes off from the spob <br/>
  *  - system: jumps pilot in from the system <br/>
  *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
  *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
  *
  *    @luatparam string shipname Name of the ship to add.
  *    @luatparam Faction faction Faction to give the pilot.
- *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
- *              a planet it'll try to take off from it.
+ *    @luatparam System|Spob param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a spob it'll try to take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
  *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
  *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
@@ -541,7 +541,7 @@ static int pilotL_add( lua_State *L )
    Vector2d vv, vp, vn;
    LuaFaction lf;
    StarSystem *ss;
-   Planet *planet;
+   Spob *spob;
    JumpPoint *jump;
    PilotFlags flags;
    int ignore_rules;
@@ -554,7 +554,7 @@ static int pilotL_add( lua_State *L )
    vectnull(&vn); /* Need to determine angle. */
    ss    = NULL;
    jump  = NULL;
-   planet= NULL;
+   spob= NULL;
    a     = 0.;
 
    /* Parse first argument - Ship Name */
@@ -574,14 +574,14 @@ static int pilotL_add( lua_State *L )
       ss = system_getIndex( lua_tosystem(L,3) );
    else if (lua_isjump(L,3))
       ss = system_getIndex( lua_tojump(L,3)->destid );
-   else if (lua_isplanet(L,3)) {
-      planet  = luaL_validplanet(L,3);
+   else if (lua_isspob(L,3)) {
+      spob  = luaL_validspob(L,3);
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
-      r = RNGF() * planet->radius;
+      r = RNGF() * spob->radius;
       vect_cset( &vp,
-            planet->pos.x + r * cos(a),
-            planet->pos.y + r * sin(a) );
+            spob->pos.x + r * cos(a),
+            spob->pos.y + r * sin(a) );
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
@@ -593,15 +593,15 @@ static int pilotL_add( lua_State *L )
          ignore_rules = 1;
 
       /* Choose the spawn point and act in consequence.*/
-      pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, 0 );
+      pilot_choosePoint( &vp, &spob, &jump, lf, ignore_rules, 0 );
 
-      if (planet != NULL) {
+      if (spob != NULL) {
          pilot_setFlagRaw( flags, PILOT_TAKEOFF );
          a = RNGF() * 2. * M_PI;
-         r = RNGF() * planet->radius;
+         r = RNGF() * spob->radius;
          vect_cset( &vp,
-               planet->pos.x + r * cos(a),
-               planet->pos.y + r * sin(a) );
+               spob->pos.x + r * cos(a),
+               spob->pos.y + r * sin(a) );
          a = RNGF() * 2.*M_PI;
          vectnull( &vv );
       }
@@ -685,11 +685,11 @@ static int pilotL_add( lua_State *L )
          lua_pop(L,1);
       }
    }
-   else if (planet != NULL) {
+   else if (spob != NULL) {
       if (pplt->ai != NULL) {
          nlua_getenv( pplt->ai->env, AI_MEM );
-         lua_pushplanet(L,planet->id);
-         lua_setfield(L,-2,"create_planet");
+         lua_pushspob(L,spob->id);
+         lua_setfield(L,-2,"create_spob");
          lua_pop(L,1);
       }
    }
@@ -1261,10 +1261,10 @@ static int pilotL_withPlayer( lua_State *L )
  *
  * This will only terminate when the target following pilot disappears (land, death, jump, etc...).
  *
- * @usage planet, hyperspace = p:nav()
+ * @usage spob, hyperspace = p:nav()
  *
  *    @luatparam Pilot p Pilot to get nav info of.
- *    @luatreturn Planet|nil The pilot's planet target.
+ *    @luatreturn Spob|nil The pilot's spob target.
  *    @luatreturn System|nil The pilot's hyperspace target.
  * @luafunc nav
  */
@@ -1278,11 +1278,11 @@ static int pilotL_nav( lua_State *L )
    if (p->target == 0)
       return 0;
 
-   /* Get planet target. */
-   if (p->nav_planet < 0)
+   /* Get spob target. */
+   if (p->nav_spob < 0)
       lua_pushnil(L);
    else
-      lua_pushplanet( L, cur_system->planets[ p->nav_planet ]->id );
+      lua_pushspob( L, cur_system->spobs[ p->nav_spob ]->id );
 
    /* Get hyperspace target. */
    if (p->nav_hyperspace < 0)
@@ -2206,7 +2206,7 @@ static int pilotL_broadcast( lua_State *L )
  * @usage p:comm( _("You got this?"), true ) -- Messages the player ignoring interference
  * @usage p:comm( target, _("Heya!") ) -- Messages target
  * @usage p:comm( target, _("Got this?"), true ) -- Messages target ignoring interference
- * @usage pilot.comm( "Message Buoy", _("Important information just for you!") ) -- Messages player ignoring interference
+ * @usage pilot.comm( _("Message Buoy"), _("Important information just for you!") ) -- Messages player ignoring interference
  *
  *    @luatparam Pilot|string p Pilot to message the player, or string to use as a fictional pilot name. In the case of a string, interference is always ignored, and instead of ignore_int, a colour character such as 'F' or 'H' can be passed.
  *    @luatparam Pilot target Target to send message to.
@@ -4511,13 +4511,13 @@ static int pilotL_attack( lua_State *L )
  * Third argument is destination: if false or nil, destination is automatically chosen.
  * If true, the pilot does not jump nor land and stays in system.
  * If Jump is given, the pilot tries to use this jump to go hyperspace.
- * If Planet is given, the pilot tries to land on it.
+ * If Spob is given, the pilot tries to land on it.
  *
  * @usage p:runaway( p_enemy ) -- Run away from p_enemy
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luatparam Pilot p Pilot to tell to runaway from another pilot.
  *    @luatparam Pilot tp Target pilot to runaway from.
- *    @luatparam[opt=false] boolean|Jump|Planet destination.
+ *    @luatparam[opt=false] boolean|Jump|Spob destination.
  * @luasee control
  * @luafunc runaway
  */
@@ -4552,13 +4552,13 @@ static int pilotL_runaway( lua_State *L )
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
-      else if (lua_isplanet(L,3)) {
-         LuaPlanet lp = lua_toplanet(L,3);
+      else if (lua_isspob(L,3)) {
+         LuaSpob lp = lua_tospob(L,3);
          Task *t = pilotL_newtask( L, p, "runaway_land" );
          lua_newtable(L);
          lua_pushpilot(L, pt->id);
          lua_rawseti( L, -2, 1 );
-         lua_pushplanet(L, lp);
+         lua_pushspob(L, lp);
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
@@ -4697,7 +4697,7 @@ static int pilotL_tryStealth( lua_State *L )
  * Pilot must be under manual control for this to work.
  *
  *    @luatparam Pilot p Pilot to tell to land.
- *    @luatparam[opt] Planet planet Planet to land on, uses random if nil.
+ *    @luatparam[opt] Spob spob Spob to land on, uses random if nil.
  *    @luatparam[opt] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc land
@@ -4706,7 +4706,7 @@ static int pilotL_land( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   Planet *pnt;
+   Spob *pnt;
    int shoot;
 
    NLUA_CHECKRW(L);
@@ -4716,7 +4716,7 @@ static int pilotL_land( lua_State *L )
    if (lua_isnoneornil(L,2))
       pnt = NULL;
    else
-      pnt = luaL_validplanet( L, 2 );
+      pnt = luaL_validspob( L, 2 );
    shoot = lua_toboolean(L,3);
 
    /* Set the task. */
@@ -4727,22 +4727,22 @@ static int pilotL_land( lua_State *L )
 
    if (pnt != NULL) {
       int i;
-      /* Find the planet. */
-      for (i=0; i < array_size(cur_system->planets); i++) {
-         if (cur_system->planets[i] == pnt) {
+      /* Find the spob. */
+      for (i=0; i < array_size(cur_system->spobs); i++) {
+         if (cur_system->spobs[i] == pnt) {
             break;
          }
       }
-      if (i >= array_size(cur_system->planets)) {
-         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+      if (i >= array_size(cur_system->spobs)) {
+         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
 
-      p->nav_planet = i;
+      p->nav_spob = i;
       if (p->id == PLAYER_ID)
          gui_setNav();
 
-      lua_pushplanet(L, pnt->id);
+      lua_pushspob(L, pnt->id);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 

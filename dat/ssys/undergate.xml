@@ -10,14 +10,14 @@
   <x>1313.421519</x>
   <y>-668.973290</y>
  </pos>
- <assets>
-  <asset>Cornwal Ordinance</asset>
-  <asset>Sollebor</asset>
-  <asset>Undergate II</asset>
-  <asset>Undergate III</asset>
-  <asset>Undergate V</asset>
-  <asset>Wagenni</asset>
- </assets>
+ <spobs>
+  <spob>Cornwal Ordinance</spob>
+  <spob>Sollebor</spob>
+  <spob>Undergate II</spob>
+  <spob>Undergate III</spob>
+  <spob>Undergate V</spob>
+  <spob>Wagenni</spob>
+ </spobs>
  <jumps>
   <jump target="Toxin">
    <autopos/>

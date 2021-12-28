@@ -16,13 +16,14 @@
 
 #include "array.h"
 #include "conf.h"
-#include "dev_planet.h"
+#include "dev_spob.h"
 #include "dev_sysedit.h"
 #include "dev_system.h"
 #include "dialogue.h"
 #include "economy.h"
 #include "map.h"
 #include "map_find.h"
+#include "ndata.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -61,7 +62,7 @@ typedef enum UniEditMode_ {
 
 typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
-   UNIEDIT_VIEW_VIRTUALASSETS,
+   UNIEDIT_VIEW_VIRTUALSPOBS,
    UNIEDIT_VIEW_RADIUS,
    UNIEDIT_VIEW_BACKGROUND,
    UNIEDIT_VIEW_TECH,
@@ -101,7 +102,7 @@ static int found_ncur         = 0;     /**< Number of found stuff. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
-/* System and asset search. */
+/* System and spob search. */
 static void uniedit_findSys (void);
 static void uniedit_findSysClose( unsigned int wid, const char *name );
 static void uniedit_findSearch( unsigned int wid, const char *str );
@@ -113,9 +114,9 @@ static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, const char *name );
 static void uniedit_editGenList( unsigned int wid );
 static void uniedit_btnEditRename( unsigned int wid, const char *unused );
-static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused );
-static void uniedit_btnEditAddAsset( unsigned int wid, const char *unused );
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused );
+static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddSpob( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused );
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
@@ -134,7 +135,7 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 static void uniedit_renderFactionDisks( double x, double y, double r );
-static void uniedit_renderVirtualAssets( double x, double y, double r );
+static void uniedit_renderVirtualSpobs( double x, double y, double r );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, const char *wgt );
 static void uniedit_save( unsigned int wid_unused, const char *unused );
@@ -226,7 +227,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
          "btnOpen", _("Open"), uniedit_btnOpen, SDLK_o );
    buttonPos++;
 
-   /* Find a system or asset. */
+   /* Find a system or spob. */
    window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnFind", _("Find"), uniedit_btnFind, SDLK_f );
    buttonPos++;
@@ -350,18 +351,18 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    (void) unused;
    unsigned int wid;
    int n, h, k;
-   Planet *planets;
+   Spob *spobs;
    char **str;
    int *factions;
 
    /* Find usable factions. */
    factions = faction_getAll();
-   planets  = planet_getAll();
+   spobs  = spob_getAll();
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
       int hasfact = 0;
-      for (int j=0; j<array_size(planets); j++) {
-         Planet *p = &planets[j];
+      for (int j=0; j<array_size(spobs); j++) {
+         Spob *p = &spobs[j];
          if ((p->presence.faction != f) && !factionGenerates(p->presence.faction,f,NULL))
             continue;
          if (p->presence.base==0. && p->presence.bonus==0.)
@@ -377,10 +378,10 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    wid = window_create( "wdwUniEditView", _("Select a View Mode"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
-   /* Add virtual asset list. */
+   /* Add virtual spob list. */
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
    str[0]= strdup(_("Default"));
-   str[1]= strdup(_("Virtual Assets"));
+   str[1]= strdup(_("Virtual Spobs"));
    str[2]= strdup(_("System Radius"));
    str[3]= strdup(_("Background"));
    str[4]= strdup(_("Tech"));
@@ -508,7 +509,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    }
 }
 
-static void uniedit_renderVirtualAssets( double x, double y, double r )
+static void uniedit_renderVirtualSpobs( double x, double y, double r )
 {
    const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
 
@@ -520,7 +521,7 @@ static void uniedit_renderVirtualAssets( double x, double y, double r )
       ty = y + sys->pos.y*uniedit_zoom;
 
       /* draws the disk representing the faction */
-      sr = 5.*M_PI*sqrt((double)array_size(sys->assets_virtual)) * uniedit_zoom;
+      sr = 5.*M_PI*sqrt((double)array_size(sys->spobs_virtual)) * uniedit_zoom;
 
       (void) r;
       gl_renderCircle( tx, ty, sr, &c, 1 );
@@ -577,8 +578,8 @@ static void uniedit_renderTech( double x, double y, double r )
       StarSystem *sys = system_getIndex( i );
       int hastech = 0;
 
-      for (int j=0; j<array_size(sys->planets); j++) {
-         if (sys->planets[j]->tech != NULL) {
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         if (sys->spobs[j]->tech != NULL) {
             hastech = 1;
             break;
          }
@@ -635,8 +636,8 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
          map_renderSystemEnvironment( x, y, uniedit_zoom, 1, 1. );
          break;
 
-      case UNIEDIT_VIEW_VIRTUALASSETS:
-         uniedit_renderVirtualAssets( x, y, r );
+      case UNIEDIT_VIEW_VIRTUALSPOBS:
+         uniedit_renderVirtualSpobs( x, y, r );
          break;
 
       case UNIEDIT_VIEW_RADIUS:
@@ -690,10 +691,10 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (int i=0; i<array_size(uniedit_sys); i++) {
       StarSystem *sys = uniedit_sys[i];
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, uniedit_dt );
+      glUseProgram( shaders.selectspob.program );
+      glUniform1f( shaders.selectspob.dt, uniedit_dt );
       gl_renderShader( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
-            1.5*r, 1.5*r, 0., &shaders.selectplanet, &cWhite, 1 );
+            1.5*r, 1.5*r, 0., &shaders.selectspob, &cWhite, 1 );
    }
 }
 
@@ -705,7 +706,7 @@ static char getValCol( double val )
       return 'r';
    return '0';
 }
-static int getPresenceVal( int f, AssetPresence *ap, double *base, double *bonus )
+static int getPresenceVal( int f, SpobPresence *ap, double *base, double *bonus )
 {
    int gf = 0;
    double w;
@@ -775,15 +776,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    sx    = sys->pos.x;
    sy    = sys->pos.y;
 
-   /* Handle virtual asset viewer. */
-   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALASSETS) {
-      if (array_size(sys->assets_virtual)==0)
+   /* Handle virtual spob viewer. */
+   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
+      if (array_size(sys->spobs_virtual)==0)
          return;
 
-      /* Count assets. */
+      /* Count spobs. */
       l = 0;
-      for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualAsset *va = sys->assets_virtual[j];
+      for (int j=0; j<array_size(sys->spobs_virtual); j++) {
+         VirtualSpob *va = sys->spobs_virtual[j];
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
       }
 
@@ -812,13 +813,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       char *techlist[256];
       int ntechs = 0;
       const int len = sizeof(techlist) / sizeof(char*);
-      if (array_size(sys->planets)==0)
+      if (array_size(sys->spobs)==0)
          return;
 
-      /* Count assets. */
+      /* Count spobs. */
       l = 0;
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *pnt = sys->spobs[j];
          int n;
          char **techs;
          if (pnt->tech==NULL)
@@ -850,7 +851,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       for (int j=0; j<array_size(sys->presence); j++)
          value += MAX( sys->presence[j].value, 0. );
 
-      /* Count assets. */
+      /* Count spobs. */
       l = scnprintf( buf, sizeof(buf), _("Total: %.0f"), value );
       for (int j=0; j<array_size(sys->presence); j++) {
          sp = &sys->presence[j];
@@ -875,15 +876,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             _(sys->name), faction_name(f) );
 
       /* Local presence sources. */
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *pnt = sys->planets[j];
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *pnt = sys->spobs[j];
          if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-               getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
+               getValCol(base), base, getValCol(bonus), bonus, spob_name(pnt) );
       }
-      for (int j=0; j<array_size(sys->assets_virtual); j++) {
-         VirtualAsset *va = sys->assets_virtual[j];
+      for (int j=0; j<array_size(sys->spobs_virtual); j++) {
+         VirtualSpob *va = sys->spobs_virtual[j];
          for (int p=0; p<array_size(va->presences); p++) {
             if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                continue;
@@ -895,15 +896,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       /* Find neighbours if possible. */
       for (int k=0; k<array_size(sys->jumps); k++) {
          cur = sys->jumps[k].target;
-         for (int j=0; j<array_size(cur->planets); j++) {
-            Planet *pnt = cur->planets[j];
+         for (int j=0; j<array_size(cur->spobs); j++) {
+            Spob *pnt = cur->spobs[j];
             if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
+                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, spob_name(pnt), _(cur->name) );
          }
-         for (int j=0; j<array_size(cur->assets_virtual); j++) {
-            VirtualAsset *va = cur->assets_virtual[j];
+         for (int j=0; j<array_size(cur->spobs_virtual); j++) {
+            VirtualSpob *va = cur->spobs_virtual[j];
             for (int p=0; p<array_size(va->presences); p++) {
                if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                   continue;
@@ -1401,7 +1402,7 @@ void uniedit_selectText (void)
          if (sys->nebu_density<=0.)
             snprintf( buf, sizeof(buf), _("None") );
          else
-            snprintf( buf, sizeof(buf), _("%.0f Density\n%.0fVolatility"), sys->nebu_density, sys->nebu_volatility);
+            snprintf( buf, sizeof(buf), _("%.0f Density\n%.1f Volatility"), sys->nebu_density, sys->nebu_volatility);
          window_modifyText( uniedit_wid, "txtNebula", buf );
       }
       else {
@@ -1440,7 +1441,7 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str )
 }
 
 /**
- * @brief Finds systems and assets.
+ * @brief Finds systems and spobs.
  */
 static void uniedit_findSys (void)
 {
@@ -1450,7 +1451,7 @@ static void uniedit_findSys (void)
    x = 40;
 
    /* Create the window. */
-   wid = window_create( "wdwFindSystemsandAssets", _("Find Systems and Assets"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   wid = window_create( "wdwFindSystemsandSpobs", _("Find Systems and Spobs"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
    uniedit_widFind = wid;
 
    x = 20;
@@ -1476,37 +1477,37 @@ static void uniedit_findSys (void)
 }
 
 /**
- * @brief Searches for planets and systems.
+ * @brief Searches for spobs and systems.
  */
 static void uniedit_findSearch( unsigned int wid, const char *str )
 {
    (void) str;
-   int n, nplanets, nsystems;
+   int n, nspobs, nsystems;
    const char *name;
-   char **planets, **systems;
+   char **spobs, **systems;
    map_find_t *found;
 
    name = window_getInput( wid, "inpFind" );
 
    /* Search for names. */
-   planets = planet_searchFuzzyCase( name, &nplanets );
+   spobs = spob_searchFuzzyCase( name, &nspobs );
    systems = system_searchFuzzyCase( name, &nsystems );
 
    free(found_cur);
    found_cur = NULL;
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * (nplanets + nsystems) );
+   found = malloc( sizeof(map_find_t) * (nspobs + nsystems) );
    n = 0;
 
-   /* Add planets to the found table. */
-   for (int i=0; i<nplanets; i++) {
-      /* Planet must be real. */
-      Planet *pnt = planet_get( planets[i] );
+   /* Add spobs to the found table. */
+   for (int i=0; i<nspobs; i++) {
+      /* Spob must be real. */
+      Spob *pnt = spob_get( spobs[i] );
       if (pnt == NULL)
          continue;
 
-      char *sysname = planet_getSystem( planets[i] );
+      char *sysname = spob_getSystem( spobs[i] );
       if (sysname == NULL)
          continue;
 
@@ -1520,10 +1521,10 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 
       /* Set fancy name. */
       snprintf( found[n].display, sizeof(found[n].display),
-            _("%s (%s system)"), planets[i], sys->name );
+            _("%s (%s system)"), spobs[i], sys->name );
       n++;
    }
-   free(planets);
+   free(spobs);
 
    /* Add systems to the found table. */
    for (int i=0; i<nsystems; i++) {
@@ -1547,7 +1548,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Generates the virtual asset list.
+ * @brief Generates the virtual spob list.
  */
 static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n )
 {
@@ -1675,7 +1676,7 @@ static void uniedit_editSys (void)
    window_addInput( wid, x += l + 7, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
    x += 80 + 12;
-   s = _("(Scales asset positions)");
+   s = _("(Scales spob positions)");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtRadiusComment",
          NULL, NULL, s );
@@ -1746,34 +1747,34 @@ static void uniedit_editSys (void)
 }
 
 /**
- * @brief Generates the virtual asset list.
+ * @brief Generates the virtual spob list.
  */
 static void uniedit_editGenList( unsigned int wid )
 {
    int j, n;
    StarSystem *sys;
-   const VirtualAsset *va;
+   const VirtualSpob *va;
    char **str;
-   int y, h, has_assets;
+   int y, h, has_spobs;
 
    /* Destroy if exists. */
-   if (widget_exists( wid, "lstAssets" ))
-      window_destroyWidget( wid, "lstAssets" );
+   if (widget_exists( wid, "lstSpobs" ))
+      window_destroyWidget( wid, "lstSpobs" );
 
    y = -175;
 
-   /* Check to see if it actually has virtual assets. */
+   /* Check to see if it actually has virtual spobs. */
    sys   = uniedit_sys[0];
-   n     = array_size( sys->assets_virtual );
-   has_assets = !!n;
+   n     = array_size( sys->spobs_virtual );
+   has_spobs = !!n;
 
    /* Generate list. */
    j     = 0;
    str   = malloc( sizeof(char*) * (n+1) );
-   if (has_assets) {
-      /* Virtual asset button. */
+   if (has_spobs) {
+      /* Virtual spob button. */
       for (int i=0; i<n; i++) {
-         va    = sys->assets_virtual[i];
+         va    = sys->spobs_virtual[i];
          str[j++] = strdup( va->name );
       }
    }
@@ -1783,16 +1784,16 @@ static void uniedit_editGenList( unsigned int wid )
    /* Add list. */
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
    window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, j, 0, NULL, NULL );
+         "lstSpobs", str, j, 0, NULL, NULL );
    y -= h + 20;
 
    /* Add buttons if needed. */
-   if (!widget_exists( wid, "btnRmAsset" ))
+   if (!widget_exists( wid, "btnRmSpob" ))
       window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnRmAsset", _("Remove"), uniedit_btnEditRmAsset );
-   if (!widget_exists( wid, "btnAddAsset" ))
+            "btnRmSpob", _("Remove"), uniedit_btnEditRmSpob );
+   if (!widget_exists( wid, "btnAddSpob" ))
       window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnAddAsset", _("Add"), uniedit_btnEditAddAsset );
+            "btnAddSpob", _("Add"), uniedit_btnEditAddSpob );
 }
 
 /**
@@ -1806,7 +1807,7 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    /* We already know the system exists because we checked when opening the dialog. */
    sys   = uniedit_sys[0];
 
-   /* Changes in radius need to scale the system asset positions. */
+   /* Changes in radius need to scale the system spob positions. */
    scale = atof(window_getInput( wid, "inpRadius" )) / sys->radius;
    sysedit_sysScale(sys, scale);
 
@@ -1831,25 +1832,25 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Removes a selected asset.
+ * @brief Removes a selected spob.
  */
-static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
+static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
    int ret;
 
    /* Get selection. */
-   selected = toolkit_getList( wid, "lstAssets" );
+   selected = toolkit_getList( wid, "lstSpobs" );
 
    /* Make sure it's valid. */
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
-   /* Remove the asset. */
-   ret = system_rmVirtualAsset( uniedit_sys[0], selected );
+   /* Remove the spob. */
+   ret = system_rmVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
-      dialogue_alert( _("Failed to remove virtual asset '%s'!"), selected );
+      dialogue_alert( _("Failed to remove virtual spob '%s'!"), selected );
       return;
    }
 
@@ -1860,35 +1861,35 @@ static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Adds a new virtual asset.
+ * @brief Adds a new virtual spob.
  */
-static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
+static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 {
    (void) parent;
    (void) unused;
    unsigned int wid;
-   const VirtualAsset *va;
+   const VirtualSpob *va;
    char **str;
    int h;
 
-   /* Get all assets. */
-   va  = virtualasset_getAll();
+   /* Get all spobs. */
+   va  = virtualspob_getAll();
    if (array_size(va)==0) {
-      dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
+      dialogue_alert( _("No virtual spobs to add! Please add virtual spobs to the '%s' directory first."), VIRTUALSPOB_DATA_PATH );
       return;
    }
 
    /* Create the window. */
-   wid = window_create( "wdwAddaVirtualAsset", _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwAddaVirtualSpob", _("Add a Virtual Spob"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
-   /* Add virtual asset list. */
+   /* Add virtual spob list. */
    str = malloc( sizeof(char*) * array_size(va) );
    for (int i=0; i<array_size(va); i++)
       str[i] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, array_size(va), 0, NULL, NULL );
+         "lstSpobs", str, array_size(va), 0, NULL, NULL );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -1896,26 +1897,26 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
 
    /* Add button. */
    window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnAdd", _("Add"), uniedit_btnEditAddAssetAdd );
+         "btnAdd", _("Add"), uniedit_btnEditAddSpobAdd );
 }
 
 /**
- * @brief Actually adds the virtual asset.
+ * @brief Actually adds the virtual spob.
  */
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused )
+static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 {
    const char *selected;
    int ret;
 
    /* Get selection. */
-   selected = toolkit_getList( wid, "lstAssets" );
+   selected = toolkit_getList( wid, "lstSpobs" );
    if (selected == NULL)
       return;
 
    /* Add virtual presence. */
-   ret = system_addVirtualAsset( uniedit_sys[0], selected );
+   ret = system_addVirtualSpob( uniedit_sys[0], selected );
    if (ret != 0) {
-      dialogue_alert( _("Failed to add virtual asset '%s'!"), selected );
+      dialogue_alert( _("Failed to add virtual spob '%s'!"), selected );
       return;
    }
 
@@ -1949,7 +1950,7 @@ static void uniedit_btnEditRename( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Actually adds the virtual asset.
+ * @brief Actually adds the virtual spob.
  */
 static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 {
@@ -1965,7 +1966,7 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==1) {
-      uniedit_viewmode = UNIEDIT_VIEW_VIRTUALASSETS;
+      uniedit_viewmode = UNIEDIT_VIEW_VIRTUALSPOBS;
       window_close( wid, unused );
       return;
    }

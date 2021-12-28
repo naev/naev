@@ -10,14 +10,14 @@
   <x>889.897664</x>
   <y>-931.565438</y>
  </pos>
- <assets>
-  <asset>Anarbalis II</asset>
-  <asset>Anarbalis III</asset>
-  <asset>Freshwater Station</asset>
-  <asset>Racheka</asset>
-  <asset>Racheka Secundus</asset>
-  <asset_virtual>Pirate Medium</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Anarbalis II</spob>
+  <spob>Anarbalis III</spob>
+  <spob>Freshwater Station</spob>
+  <spob>Racheka</spob>
+  <spob>Racheka Secundus</spob>
+  <spob_virtual>Pirate Medium</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Humdrum">
    <autopos/>

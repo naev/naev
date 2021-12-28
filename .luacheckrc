@@ -52,7 +52,7 @@ stds.News = {read_globals={"news"}}
 stds.Outfit = {read_globals={"outfit"}}
 stds._Pilot = {read_globals={"pilot"}}
 stds.PilotOutfit = {read_globals={"pilotoutfit"}}
-stds.Planet = {read_globals={"planet"}}
+stds.Spob = {read_globals={"spob"}}
 stds.Player = {read_globals={"player"}}
 stds.Rnd = {read_globals={"rnd"}}
 stds.Safelanes = {read_globals={"safelanes"}}
@@ -68,7 +68,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship"
-STANDARD = "+Naev+Var+Planet+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 
@@ -116,6 +116,7 @@ stds.AI.globals = {
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
+stds.API_loadscreen = {globals={"render"}}    -- C function: loadscreen_render()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
@@ -132,6 +133,14 @@ stds.API_spawn = {globals={
    "create",                            -- C function: system_scheduler()
    "decrease",                          -- C function: system_rmCurrentPresence()
    "spawn",                             -- C function: system_scheduler()
+}}
+stds.API_spob = {globals={
+   "load",     -- C function: planet_gfxLoad
+   "unload",   -- C function: planet_gfxUnload
+   "can_land", -- C function: planet_updateLand
+   "land",     -- C function: player_land
+   "render",   -- C function: space_renderSpob
+   "update",   -- C function: space_updateSpob
 }}
 stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
@@ -178,6 +187,7 @@ files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
@@ -190,6 +200,7 @@ files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
+files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK

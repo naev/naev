@@ -47,9 +47,9 @@ message = fw.message -- common hooks
 -- TODO: hooks to penalize attacking people
 
 -- Mission constants
-local destpla, destsys = planet.getS("Dvaer Prime")
-local targpla = planet.get("Dvaered High Command")
-local haltpla = planet.get("Laarss")
+local destpla, destsys = spob.getS("Dvaer Prime")
+local targpla = spob.get("Dvaered High Command")
+local haltpla = spob.get("Laarss")
 local lore_text = {}
 
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with a full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their mission will be to control medium and heavy ships and to provide heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
@@ -90,7 +90,7 @@ local occupations = { _("caterer"),
                 _("torturer"), }
 
 function create()
-   if planet.cur() == destpla then
+   if spob.cur() == destpla then
       misn.finish(false)
    end
 
@@ -124,13 +124,13 @@ function accept()
 end
 
 function loading()
-   if (mem.stage == 1 and planet.cur() == destpla) then
+   if (mem.stage == 1 and spob.cur() == destpla) then
       strNpc() -- Put Strafer back at loading TODO: test whether it works
    end
 end
 
 function land()
-   if (mem.stage == 0 and planet.cur() == destpla) then
+   if (mem.stage == 0 and spob.cur() == destpla) then
       strNpc()
       mem.takhook = hook.takeoff("takeoff")
       mem.stage = 1
@@ -141,7 +141,7 @@ function land()
       } )
 
    -- Player is running away
-   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (not planet.cur() == haltpla) )) then
+   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (not spob.cur() == haltpla) )) then
       flee()
 
    -- Landing on Laars after Hamelsen
@@ -150,7 +150,7 @@ function land()
       mem.stage = 3
 
    -- Player killed attackers, and can finally land for reward
-   elseif (mem.stage == 4 and planet.cur() == destpla) then
+   elseif (mem.stage == 4 and spob.cur() == destpla) then
       tk.msg( _("Time for a gorgeous reward?"), _([[When you step out of your ship, you see an officer alone on the dock, obviously waiting for you. As you get closer, you recognize Major Tam. The cold wind pulls the lapels of his coat, and make them whip his sad face.
    "We had better days, eh, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots, and Hamelsen escaped... Once more." Tam looks at the sky as it starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice as hard in winter, and the rain often turns to acid."
    You enter and head to the military bar. Tam looks at you: "I grew up on Nanek in Allous. For 13 years, the only part of the universe I knew was my village on Nanek, and the only people I knew were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point. Now they are corpses, drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is filled with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )

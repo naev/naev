@@ -10,11 +10,11 @@
   <x>-695.872686</x>
   <y>-726.417439</y>
  </pos>
- <assets>
-  <asset>Corinth 1</asset>
-  <asset>Corinth 2</asset>
-  <asset>Corinth Foods</asset>
- </assets>
+ <spobs>
+  <spob>Corinth 1</spob>
+  <spob>Corinth 2</spob>
+  <spob>Corinth Foods</spob>
+ </spobs>
  <jumps>
   <jump target="Kohler">
    <pos x="-20360.894424" y="-13308.977974"/>

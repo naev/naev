@@ -11,15 +11,15 @@
   <x>213.000000</x>
   <y>-346.000000</y>
  </pos>
- <assets>
-  <asset>Doranthex Prime</asset>
-  <asset>Doranthex Secundus</asset>
-  <asset>Secundus Alpha</asset>
-  <asset>Secundus Beta</asset>
-  <asset>Secundus Station</asset>
-  <asset_virtual>Frontier Unpresence</asset_virtual>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Doranthex Prime</spob>
+  <spob>Doranthex Secundus</spob>
+  <spob>Secundus Alpha</spob>
+  <spob>Secundus Beta</spob>
+  <spob>Secundus Station</spob>
+  <spob_virtual>Frontier Unpresence</spob_virtual>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Dakron">
    <autopos/>

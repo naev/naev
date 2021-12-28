@@ -10,12 +10,12 @@
   <x>-267.000000</x>
   <y>-504.000000</y>
  </pos>
- <assets>
-  <asset>Overture I</asset>
-  <asset>Overture II</asset>
-  <asset>Overture III</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Overture I</spob>
+  <spob>Overture II</spob>
+  <spob>Overture III</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Dohriabi">
    <autopos/>

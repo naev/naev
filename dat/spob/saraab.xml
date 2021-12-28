@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Saraab">
+ <pos>
+  <x>12706.429531</x>
+  <y>4420.183280</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>120000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Saraab is a small mining colony. The planet's core is comprised of valuable metals and has almost completely cooled, which makes this world one giant strip mine. The planet is slowly being dismantled and taken to various manufacturing plants elsewhere in the galaxy. In fact, since the planet was first settled around the end of the Imperial Golden Age, its gravity has decreased by 17%.</description>
+  <bar>Like on many low-gravity worlds, Saraab's spaceport bar has artificial gravity generators installed in various places. The bar is no exception. However, the generators are old and sometimes break down, which can cause serious discomfort for the patrons. The workers don't seem to mind however - they are used to gravitational shifts.</bar>
+ </general>
+</spob>

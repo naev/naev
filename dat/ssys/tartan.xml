@@ -10,9 +10,9 @@
   <x>935.098841</x>
   <y>-652.339318</y>
  </pos>
- <assets>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Gutter">
    <autopos/>

@@ -10,10 +10,10 @@
   <x>906.691246</x>
   <y>-504.043115</y>
  </pos>
- <assets>
-  <asset>Ferrungir</asset>
-  <asset>Fulcrum I</asset>
- </assets>
+ <spobs>
+  <spob>Ferrungir</spob>
+  <spob>Fulcrum I</spob>
+ </spobs>
  <jumps>
   <jump target="Duros">
    <autopos/>

@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
  </avail>
  <notes>
@@ -100,12 +100,12 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Cerberus") then
+   if spob.cur() == spob.get("Cerberus") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
-   elseif planet.cur() == planet.get("Minerva Station") then
+   elseif spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
 end
@@ -863,7 +863,7 @@ function board_wreck ()
    local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
    vn.scene()
-   vn.music( 'snd/sounds/loops/alienplanet.ogg' )
+   vn.music( 'snd/sounds/loops/alienspob.ogg' )
    vn.transition("hexagon")
    vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
    vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))
@@ -914,7 +914,7 @@ function board_wreck ()
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
          { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=mainsys}) } )
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    mem.misn_state=5
 
    -- Clear scavengers if exist

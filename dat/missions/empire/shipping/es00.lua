@@ -34,8 +34,8 @@ local emp = require "common.empire"
 
 function create ()
    -- Target destination
-   mem.dest,mem.destsys = planet.getLandable( faction.get("Frontier") )
-   mem.ret,mem.retsys   = planet.getLandable( "Halir" )
+   mem.dest,mem.destsys = spob.getLandable( faction.get("Frontier") )
+   mem.ret,mem.retsys   = spob.getLandable( "Halir" )
    if mem.dest == nil or mem.ret == nil or not misn.claim(mem.destsys) then
       misn.finish(false)
    end
@@ -83,7 +83,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
    if mem.landed == mem.dest and mem.misn_stage == 0 then
       if misn.cargoRm(mem.prisoners) then
          -- Go on to next stage

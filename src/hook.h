@@ -7,7 +7,7 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 
 #define HOOK_MAX_PARAM  5 /**< Maximum hook params, to avoid dynamic allocation. */
 
@@ -21,7 +21,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_BOOL,     /**< Boolean parameter. */
    HOOK_PARAM_PILOT,    /**< Pilot hook parameter. */
    HOOK_PARAM_FACTION,  /**< Faction hook parameter. */
-   HOOK_PARAM_ASSET,    /**< Asset hook parameter. */
+   HOOK_PARAM_SPOB,    /**< Spob hook parameter. */
    HOOK_PARAM_JUMP,     /**< Jump point hook parameter. */
    HOOK_PARAM_REF,      /**< Upvalue parameter. */
    HOOK_PARAM_SENTINEL  /**< Enum sentinel. */
@@ -38,7 +38,7 @@ typedef struct HookParam_s {
       int b;         /**< Boolean parameter. */
       LuaPilot lp;   /**< Hook parameter pilot data. */
       LuaFaction lf; /**< Hook parameter faction data. */
-      LuaPlanet la;  /**< Hook parameter planet data. */
+      LuaSpob la;  /**< Hook parameter spob data. */
       LuaJump lj;    /**< Hook parameter jump data. */
       int ref;       /**< Hook parameter upvalue. */
    } u; /**< Hook parameter data. */

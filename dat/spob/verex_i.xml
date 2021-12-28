@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Verex I">
+ <pos>
+  <x>-8578.407922</x>
+  <y>-15276.183128</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Shickhaw II">
+ <pos>
+  <x>-974.999997</x>
+  <y>18900.000000</y>
+ </pos>
+ <GFX>
+  <space>J01.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

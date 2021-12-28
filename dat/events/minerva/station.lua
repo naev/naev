@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur()==planet.get("Minerva Station")</cond>
+ <cond>spob.cur()==spob.get("Minerva Station")</cond>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -70,7 +70,7 @@ local patron_messages = {
    _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
-      {pnt=planet.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
+      {pnt=spob.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
    ) end,
    _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licenses increases piracy. I think they are all lame!"]]),
    _([["I really want to go to the VIP hot springs they have, but I don't have the tokens. How does that even work in a space station?"]]),

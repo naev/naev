@@ -471,7 +471,7 @@ static int hookL_enter( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to the player hailing any ship (not a planet).
+ * @brief Hooks the function to the player hailing any ship (not a spob).
  *
  * The hook receives a single parameter which is the ship being hailed.
  *
@@ -769,12 +769,12 @@ static int hookL_standing( lua_State *L )
 }
 
 /**
- * @brief Hooks the function to when the player discovers an asset, jump point or the likes.
+ * @brief Hooks the function to when the player discovers an spob, jump point or the likes.
  *
  * The parameters passed to the function are the type which can be one of:<br/>
- * - "asset" <br/>
+ * - "spob" <br/>
  * - "jump" <br/>
- * and the actual asset or jump point discovered with the following format: <br/>
+ * and the actual spob or jump point discovered with the following format: <br/>
  * function f( type, discovery )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
@@ -951,9 +951,9 @@ static int hookL_trigger( lua_State *L )
                p->type = HOOK_PARAM_FACTION;
                p->u.lf = lua_tofaction(L,i+1);
             }
-            else if (lua_isplanet(L,i+1)) {
-               p->type = HOOK_PARAM_ASSET;
-               p->u.la = lua_toplanet(L,i+1);
+            else if (lua_isspob(L,i+1)) {
+               p->type = HOOK_PARAM_SPOB;
+               p->u.la = lua_tospob(L,i+1);
             }
             else if (lua_isjump(L,i+1)) {
                p->type = HOOK_PARAM_JUMP;
@@ -1014,10 +1014,10 @@ static int hookL_trigger( lua_State *L )
  *  indicating that it was killed by other means like for example the shockwave
  *  of a dying ship or nebula volatility.<br />
  * <br />
- * The land and jump hooks also pass the asset or jump point the pilot is
+ * The land and jump hooks also pass the spob or jump point the pilot is
  * landing at or jumped from, respectively:
  * <p>
- *    function land_hook( pilot, planet, arg )<br />
+ *    function land_hook( pilot, spob, arg )<br />
  *    end
  * </p>
  * <p style="margin-bottom: 0">

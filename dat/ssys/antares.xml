@@ -10,9 +10,9 @@
   <x>726.181455</x>
   <y>277.780736</y>
  </pos>
- <assets>
-  <asset_virtual>Thurion Local</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Thurion Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Rauthia">
    <autopos/>

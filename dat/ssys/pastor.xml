@@ -10,15 +10,15 @@
   <x>-402.305351</x>
   <y>-352.914213</y>
  </pos>
- <assets>
-  <asset>Dolmen</asset>
-  <asset>Finn</asset>
-  <asset>Gennus</asset>
-  <asset>Pastor II</asset>
-  <asset>Pastor IIX</asset>
-  <asset>Pastor VI</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Dolmen</spob>
+  <spob>Finn</spob>
+  <spob>Gennus</spob>
+  <spob>Pastor II</spob>
+  <spob>Pastor IIX</spob>
+  <spob>Pastor VI</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Blackwell">
    <autopos/>

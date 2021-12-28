@@ -10,13 +10,13 @@
   <x>445.279656</x>
   <y>-796.683962</y>
  </pos>
- <assets>
-  <asset>Brock</asset>
-  <asset>Gruz I</asset>
-  <asset>Gruz II</asset>
-  <asset>Gruz III</asset>
-  <asset>Tora</asset>
- </assets>
+ <spobs>
+  <spob>Brock</spob>
+  <spob>Gruz I</spob>
+  <spob>Gruz II</spob>
+  <spob>Gruz III</spob>
+  <spob>Tora</spob>
+ </spobs>
  <jumps>
   <jump target="Infinity">
    <autopos/>

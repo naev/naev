@@ -10,14 +10,14 @@
   <x>-117.123098</x>
   <y>-267.114213</y>
  </pos>
- <assets>
-  <asset>Amphion</asset>
-  <asset>Hrimfaxi</asset>
-  <asset>Janus Station</asset>
-  <asset>Scinfaxi</asset>
-  <asset>Zethus</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Amphion</spob>
+  <spob>Hrimfaxi</spob>
+  <spob>Janus Station</spob>
+  <spob>Scinfaxi</spob>
+  <spob>Zethus</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Apez">
    <autopos/>

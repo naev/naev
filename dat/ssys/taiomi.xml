@@ -12,10 +12,10 @@
   <x>203.000000</x>
   <y>208.000000</y>
  </pos>
- <assets>
-  <asset>One-Wing Goddard</asset>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>One-Wing Goddard</spob>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Bastion">
    <autopos/>

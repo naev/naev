@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Pultatis II">
+ <pos>
+  <x>-8250.000000</x>
+  <y>6250.000000</y>
+ </pos>
+ <GFX>
+  <space>H01.webp</space>
+  <exterior>desertic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

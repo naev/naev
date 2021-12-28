@@ -10,14 +10,14 @@
   <x>1117.842750</x>
   <y>-723.145111</y>
  </pos>
- <assets>
-  <asset>Churchill I</asset>
-  <asset>Churchill II</asset>
-  <asset>Churchill IIa</asset>
-  <asset>Lorelei</asset>
-  <asset>Ururis</asset>
-  <asset>Violin Station</asset>
- </assets>
+ <spobs>
+  <spob>Churchill I</spob>
+  <spob>Churchill II</spob>
+  <spob>Churchill IIa</spob>
+  <spob>Lorelei</spob>
+  <spob>Ururis</spob>
+  <spob>Violin Station</spob>
+ </spobs>
  <jumps>
   <jump target="Eiderdown">
    <autopos/>

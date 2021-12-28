@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Dvaered Poster">
  <trigger>land</trigger>
- <cond>planet.cur():faction() == faction.get("Dvaered")</cond>
+ <cond>spob.cur():faction() == faction.get("Dvaered")</cond>
  <chance>50</chance>
 </event>
 --]]

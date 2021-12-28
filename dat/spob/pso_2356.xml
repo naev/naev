@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="PSO 2356">
+ <pos>
+  <x>3798.617193</x>
+  <y>15379.767170</y>
+ </pos>
+ <GFX>
+  <space>I01.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

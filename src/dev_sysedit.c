@@ -17,7 +17,7 @@
 
 #include "array.h"
 #include "conf.h"
-#include "dev_planet.h"
+#include "dev_spob.h"
 #include "dev_system.h"
 #include "dev_uniedit.h"
 #include "dialogue.h"
@@ -50,7 +50,7 @@
  * Selection types.
  */
 #define SELECT_NONE        0 /**< No selection. */
-#define SELECT_PLANET      1 /**< Selection is a planet. */
+#define SELECT_SPOB        1 /**< Selection is a spob. */
 #define SELECT_JUMPPOINT   2 /**< Selection is a jump point. */
 
 /**
@@ -59,7 +59,7 @@
 typedef struct Select_s {
    int type; /**< Type of selection. */
    union {
-      int planet;
+      int spob;
       int jump;
    } u; /**< Data itself. */
 } Select_t;
@@ -74,7 +74,7 @@ static int  sysedit_tadd         = 0; /**< Add to selection. */
  */
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
-static unsigned int sysedit_widEdit = 0; /**< Planet editor wid. */
+static unsigned int sysedit_widEdit = 0; /**< Spob editor wid. */
 static int sysedit_grid       = 1;  /**< Grid is visible. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
 static double sysedit_ypos    = 0.; /**< Viewport Y position. */
@@ -114,12 +114,12 @@ static void sysedit_btnReset( unsigned int wid_unused, const char *unused );
 static void sysedit_btnScale( unsigned int wid_unused, const char *unused );
 static void sysedit_btnGrid( unsigned int wid_unused, const char *unused );
 static void sysedit_btnEdit( unsigned int wid_unused, const char *unused );
-/* Planet editing. */
+/* Spob editing. */
 static void sysedit_editPnt( void );
 static void sysedit_editPntClose( unsigned int wid, const char *unused );
-static void sysedit_planetDesc( unsigned int wid, const char *unused );
-static void sysedit_planetDescReturn( unsigned int wid, const char *unused );
-static void sysedit_planetDescClose( unsigned int wid, const char *unused );
+static void sysedit_spobDesc( unsigned int wid, const char *unused );
+static void sysedit_spobDescReturn( unsigned int wid, const char *unused );
+static void sysedit_spobDescClose( unsigned int wid, const char *unused );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnTechEdit( unsigned int wid, const char *unused );
 static void sysedit_genTechList( unsigned int wid );
@@ -127,7 +127,7 @@ static void sysedit_btnAddTech( unsigned int wid, const char *unused );
 static void sysedit_btnRmTech( unsigned int wid, const char *unused );
 static void sysedit_btnAddService( unsigned int wid, const char *unused );
 static void sysedit_btnRmService( unsigned int wid, const char *unused );
-static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt );
+static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt );
 static void sysedit_btnGFXClose( unsigned int wid, const char *wgt );
 static void sysedit_btnGFXApply( unsigned int wid, const char *wgt );
 static void sysedit_btnFaction( unsigned int wid_unused, const char *unused );
@@ -208,9 +208,9 @@ void sysedit_open( StarSystem *sys )
          "btnRename", _("Rename"), sysedit_btnRename );
    i += 1;
 
-   /* New planet. */
+   /* New spob. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", _("New Planet"), sysedit_btnNew, SDLK_n );
+         "btnNew", _("New Spob"), sysedit_btnNew, SDLK_n );
    i += 2;
 
    /* Toggle Grid. */
@@ -286,15 +286,15 @@ static void sysedit_close( unsigned int wid, const char *wgt )
 }
 
 /**
- * @brief Closes the planet editor, saving the changes made.
+ * @brief Closes the spob editor, saving the changes made.
  */
 static void sysedit_editPntClose( unsigned int wid, const char *unused )
 {
    (void) unused;
-   Planet *p;
+   Spob *p;
    const char *inp;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
@@ -323,7 +323,7 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    space_reconstructPresences();
 
    if (conf.devautosave)
-      dpl_savePlanet( p );
+      dpl_saveSpob( p );
 
    /* Clean up presences. */
    space_reconstructPresences();
@@ -333,35 +333,35 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Enters the editor in new planet mode.
+ * @brief Enters the editor in new spob mode.
  */
 static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   Planet *p, *b;
+   Spob *p, *b;
    char *name;
 
    /* Get new name. */
-   name = dialogue_inputRaw( _("New Planet Creation"), 1, 32, _("What do you want to name the new planet?") );
+   name = dialogue_inputRaw( _("New Spob Creation"), 1, 32, _("What do you want to name the new spob?") );
    if (name == NULL)
       return;
 
    /* Check for collision. */
-   if (planet_exists( name )) {
-      dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-            name, planet_getSystem( name ) );
+   if (spob_exists( name )) {
+      dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+            name, spob_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
       return;
    }
 
-   /* Create the new planet. */
-   p        = planet_new();
+   /* Create the new spob. */
+   p        = spob_new();
    p->name  = name;
 
-   /* Base planet data off another. */
-   b                    = planet_get( space_getRndPlanet(0, 0, NULL) );
+   /* Base spob data off another. */
+   b                    = spob_get( space_getRndSpob(0, 0, NULL) );
    p->class             = strdup( b->class );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
@@ -369,17 +369,17 @@ static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
-   p->hide              = HIDE_DEFAULT_PLANET;
+   p->hide              = HIDE_DEFAULT_SPOB;
    p->radius            = b->radius;
 
-   /* Add new planet. */
-   system_addPlanet( sysedit_sys, name );
+   /* Add new spob. */
+   system_addSpob( sysedit_sys, name );
 
    /* Update economy due to galaxy modification. */
    economy_execQueued();
 
    if (conf.devautosave)
-      dpl_savePlanet( p );
+      dpl_saveSpob( p );
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -391,31 +391,31 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
    (void) unused;
    for (int i=0; i<sysedit_nselect; i++) {
       Select_t *sel = &sysedit_select[i];
-      if (sel->type == SELECT_PLANET) {
+      if (sel->type == SELECT_SPOB) {
          char *name, *oldName, *newName, *filtered;
-         Planet *p = sysedit_sys[i].planets[ sel->u.planet ];
+         Spob *p = sysedit_sys[i].spobs[ sel->u.spob ];
 
          /* Get new name. */
-         name = dialogue_input( _("New Planet Creation"), 1, 32,
-               _("What do you want to rename the planet #r%s#0?"), p->name );
+         name = dialogue_input( _("New Spob Creation"), 1, 32,
+               _("What do you want to rename the spob #r%s#0?"), p->name );
          if (name == NULL)
             continue;
 
          /* Check for collision. */
-         if (planet_exists( name )) {
-            dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
-                  name, planet_getSystem( name ) );
+         if (spob_exists( name )) {
+            dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
+                  name, spob_getSystem( name ) );
             free(name);
             continue;
          }
 
          /* Rename. */
          filtered = uniedit_nameFilter(p->name);
-         asprintf(&oldName, "dat/assets/%s.xml", filtered);
+         asprintf(&oldName, "dat/spob/%s.xml", filtered);
          free(filtered);
 
          filtered = uniedit_nameFilter(name);
-         asprintf(&newName, "dat/assets/%s.xml", filtered);
+         asprintf(&newName, "dat/spob/%s.xml", filtered);
          free(filtered);
 
          rename(oldName, newName);
@@ -426,13 +426,13 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
-         dpl_savePlanet( p );
+         dpl_saveSpob( p );
       }
    }
 }
 
 /**
- * @brief Removes planets.
+ * @brief Removes spobs.
  */
 static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
 {
@@ -440,18 +440,18 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
    (void) unused;
    char *file, *filtered;
 
-   if (dialogue_YesNo( _("Remove selected planets?"), _("This can not be undone.") )) {
+   if (dialogue_YesNo( _("Remove selected spobs?"), _("This can not be undone.") )) {
       for (int i=0; i<sysedit_nselect; i++) {
          Select_t *sel = &sysedit_select[i];
-         if (sel->type == SELECT_PLANET) {
-            filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
-            asprintf(&file, "dat/assets/%s.xml", filtered);
+         if (sel->type == SELECT_SPOB) {
+            filtered = uniedit_nameFilter( sysedit_sys->spobs[ sel->u.spob ]->name );
+            asprintf(&file, "dat/spob/%s.xml", filtered);
             remove(file);
 
             free(filtered);
             free(file);
 
-            system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+            system_rmSpob( sysedit_sys, sysedit_sys->spobs[ sel->u.spob ]->name );
          }
       }
 
@@ -521,9 +521,9 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    if (sysedit_wid > 0)
       window_modifyText( sysedit_wid, "txtSelected", buf );
 
-   /* Scale planets. */
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *p = sys->planets[i];
+   /* Scale spobs. */
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *p = sys->spobs[i];
       vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
@@ -572,13 +572,13 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* First render background with lines. */
    sysedit_renderBG( bx, by, w, h, x, y );
 
-   /* Render planets. */
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *p      = sys->planets[i];
+   /* Render spobs. */
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *p      = sys->spobs[i];
 
       /* Check if selected. */
-      sel.type       = SELECT_PLANET;
-      sel.u.planet   = i;
+      sel.type       = SELECT_SPOB;
+      sel.u.spob   = i;
       selected       = 0;
       for (int j=0; j<sysedit_nselect; j++) {
          if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
@@ -603,7 +603,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
       /* Check if selected. */
       sel.type       = SELECT_JUMPPOINT;
-      sel.u.planet   = i;
+      sel.u.spob   = i;
       selected       = 0;
       for (int j=0; j<sysedit_nselect; j++) {
          if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
@@ -635,14 +635,14 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    SafeLane* safelanes = safelanes_get( -1, 0, sys );
    for (int i=0; i<array_size(safelanes); i++) {
       Vector2d *posns[2];
-      Planet *pnt;
+      Spob *pnt;
       JumpPoint *njp;
       SafeLane *sf = &safelanes[i];
 
       for (int j=0; j<2; j++) {
          switch(sf->point_type[j]) {
-            case SAFELANE_LOC_PLANET:
-               pnt = planet_getIndex( sf->point_id[j] );
+            case SAFELANE_LOC_SPOB:
+               pnt = spob_getIndex( sf->point_id[j] );
                posns[j] = &pnt->pos;
                break;
             case SAFELANE_LOC_DEST_SYS:
@@ -798,7 +798,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
    }
 
-   /* Blit the planet. */
+   /* Blit the spob. */
    gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
 
    /* Display caption. */
@@ -845,7 +845,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    double x,y, t;
    SDL_Keymod mod;
    StarSystem *sys;
-   Planet *p;
+   Spob *p;
    JumpPoint *jp;
    Select_t sel;
 
@@ -879,17 +879,17 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          mx -= w/2 - sysedit_xpos;
          my -= h/2 - sysedit_ypos;
 
-         /* Check planets. */
-         for (i=0; i<array_size(sys->planets); i++) {
-            p = sys->planets[i];
+         /* Check spobs. */
+         for (i=0; i<array_size(sys->spobs); i++) {
+            p = sys->spobs[i];
 
             /* Position. */
             x = p->pos.x * sysedit_zoom;
             y = p->pos.y * sysedit_zoom;
 
             /* Set selection. */
-            sel.type       = SELECT_PLANET;
-            sel.u.planet   = i;
+            sel.type       = SELECT_SPOB;
+            sel.u.spob   = i;
 
             /* Threshold. */
             t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
@@ -908,7 +908,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                      if (mod & (KMOD_LCTRL | KMOD_RCTRL))
                         sysedit_tadd      = 0;
                      else {
-                        /* Detect double click to open planet editor. */
+                        /* Detect double click to open spob editor. */
                         if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
                               && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                            sysedit_editPnt();
@@ -950,7 +950,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
             /* Set selection. */
             sel.type       = SELECT_JUMPPOINT;
-            sel.u.planet   = i;
+            sel.u.spob   = i;
 
             /* Threshold. */
             t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
@@ -969,7 +969,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                      if (mod & (KMOD_LCTRL | KMOD_RCTRL))
                         sysedit_tadd      = 0;
                      else {
-                        /* Detect double click to open planet editor. */
+                        /* Detect double click to open spob editor. */
                         if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
                               && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                            sysedit_editJump();
@@ -1022,7 +1022,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
             if (conf.devautosave)
                for (i=0; i<sysedit_nselect; i++)
-                  dpl_savePlanet(sysedit_sys->planets[ sysedit_select[i].u.planet ]);
+                  dpl_saveSpob(sysedit_sys->spobs[ sysedit_select[i].u.spob ]);
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
@@ -1036,11 +1036,11 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             sysedit_dragSel   = 0;
 
-            /* Save all planets in our selection - their positions might have changed. */
+            /* Save all spobs in our selection - their positions might have changed. */
             if (conf.devautosave)
                for (i=0; i<sysedit_nselect; i++)
-                  if (sysedit_select[i].type == SELECT_PLANET)
-                     dpl_savePlanet( sys->planets[ sysedit_select[i].u.planet ] );
+                  if (sysedit_select[i].type == SELECT_SPOB)
+                     dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
          }
          break;
 
@@ -1063,9 +1063,9 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
                for (i=0; i<sysedit_nselect; i++) {
 
-                  /* Planets. */
-                  if (sysedit_select[i].type == SELECT_PLANET) {
-                     p = sys->planets[ sysedit_select[i].u.planet ];
+                  /* Spobs. */
+                  if (sysedit_select[i].type == SELECT_SPOB) {
+                     p = sys->spobs[ sysedit_select[i].u.spob ];
                      p->pos.x += xr / sysedit_zoom;
                      p->pos.y -= yr / sysedit_zoom;
                   }
@@ -1137,21 +1137,21 @@ static void sysedit_deselect (void)
  */
 static void sysedit_checkButtons (void)
 {
-   int sel_planet, sel_jump;
+   int sel_spob, sel_jump;
 
-   /* See if a planet or jump is selected. */
-   sel_planet  = 0;
+   /* See if a spob or jump is selected. */
+   sel_spob  = 0;
    sel_jump    = 0;
    for (int i=0; i<sysedit_nselect; i++) {
       Select_t *sel = &sysedit_select[i];
-      if (sel->type == SELECT_PLANET)
-         sel_planet++;
+      if (sel->type == SELECT_SPOB)
+         sel_spob++;
       else if (sel->type == SELECT_JUMPPOINT)
          sel_jump++;
    }
 
-   /* Planet dependent. */
-   if (sel_planet) {
+   /* Spob dependent. */
+   if (sel_spob) {
       window_enableButton( sysedit_wid, "btnRemove" );
       window_enableButton( sysedit_wid, "btnRename" );
    }
@@ -1166,8 +1166,8 @@ static void sysedit_checkButtons (void)
    else
       window_disableButton( sysedit_wid, "btnReset" );
 
-   /* Editor - just one planet. */
-   if (((sel_planet==1) && (sel_jump==0)) || ((sel_planet==0) && (sel_jump==1)))
+   /* Editor - just one spob. */
+   if (((sel_spob==1) && (sel_jump==0)) || ((sel_spob==0) && (sel_jump==1)))
       window_enableButton( sysedit_wid, "btnEdit" );
    else
       window_disableButton( sysedit_wid, "btnEdit" );
@@ -1224,7 +1224,7 @@ static int sysedit_selectCmp( Select_t *a, Select_t *b )
 }
 
 /**
- * @brief Edits a planet.
+ * @brief Edits a spob.
  */
 static void sysedit_editPnt( void )
 {
@@ -1232,12 +1232,12 @@ static void sysedit_editPnt( void )
    int x, y, w, l, bw;
    char buf[STRMAX_SHORT], title[128];
    const char *s;
-   Planet *p;
+   Spob *p;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Planet Property Editor - %s"), p->name);
+   snprintf(title, sizeof(title), _("Spob Property Editor - %s"), p->name);
    wid = window_create( "wdwSysEditPnt", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
@@ -1342,11 +1342,11 @@ static void sysedit_editPnt( void )
    window_addButton( wid, -20 - bw - 15, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnEditTech", _("Edit Tech"), sysedit_btnTechEdit );
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnDesc", _("Description"), sysedit_planetDesc );
+         "btnDesc", _("Description"), sysedit_spobDesc );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
-         "btnLandGFX", _("Land GFX"), sysedit_planetGFX );
+         "btnLandGFX", _("Land GFX"), sysedit_spobGFX );
    window_addButton( wid, -20 - bw - 15, 20, bw, BUTTON_HEIGHT,
-         "btnSpaceGFX", _("Space GFX"), sysedit_planetGFX );
+         "btnSpaceGFX", _("Space GFX"), sysedit_spobGFX );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
          "btnClose", _("Close"), sysedit_editPntClose );
 
@@ -1490,21 +1490,21 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Displays the planet landing description and bar description in a separate window.
+ * @brief Displays the spob landing description and bar description in a separate window.
  */
-static void sysedit_planetDesc( unsigned int wid, const char *unused )
+static void sysedit_spobDesc( unsigned int wid, const char *unused )
 {
    (void) unused;
    int x, y, h, w, bw;
-   Planet *p;
+   Spob *p;
    const char *desc, *bardesc;
    char title[128];
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
-   snprintf(title, sizeof(title), _("Planet Information - %s"), p->name);
-   wid = window_create( "wdwPlanetDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   snprintf(title, sizeof(title), _("Spob Information - %s"), p->name);
+   wid = window_create( "wdwSpobDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    x = 20;
@@ -1516,10 +1516,10 @@ static void sysedit_planetDesc( unsigned int wid, const char *unused )
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnProperties", _("Properties"), sysedit_planetDescReturn );
+         "btnProperties", _("Properties"), sysedit_spobDescReturn );
 
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", _("Close"), sysedit_planetDescClose );
+         "btnClose", _("Close"), sysedit_spobDescClose );
 
    /* Description label and text. */
    window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, NULL,
@@ -1546,14 +1546,14 @@ static void sysedit_planetDesc( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Closes the planet description window and returns to the properties window.
+ * @brief Closes the spob description window and returns to the properties window.
  */
-static void sysedit_planetDescReturn( unsigned int wid, const char *unused )
+static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
 {
-   Planet *p;
+   Spob *p;
    const char *mydesc, *mybardesc;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    mydesc    = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
@@ -1572,21 +1572,21 @@ static void sysedit_planetDescReturn( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Closes both the planet description window and the properties window.
+ * @brief Closes both the spob description window and the properties window.
  */
-static void sysedit_planetDescClose( unsigned int wid, const char *unused )
+static void sysedit_spobDescClose( unsigned int wid, const char *unused )
 {
-   sysedit_planetDescReturn( wid, unused );
+   sysedit_spobDescReturn( wid, unused );
    sysedit_editPntClose( sysedit_widEdit, unused );
 }
 
 /**
- * @brief Generates the planet services list.
+ * @brief Generates the spob services list.
  */
 static void sysedit_genServicesList( unsigned int wid )
 {
    int j, n, nservices;
-   Planet *p;
+   Spob *p;
    char **have, **lack;
    int x, y, w, h, hpos, lpos;
 
@@ -1601,7 +1601,7 @@ static void sysedit_genServicesList( unsigned int wid )
       window_destroyWidget( wid, "lstServicesLacked" );
    }
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    x = 20;
    y = 20 + BUTTON_HEIGHT * 2 + 30;
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
@@ -1609,35 +1609,35 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Get all missing services. */
    n = nservices = 0;
-   for (int i=1; i<PLANET_SERVICES_MAX; i<<=1) {
-      if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
+   for (int i=1; i<SPOB_SERVICES_MAX; i<<=1) {
+      if (!spob_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
          n++;
       nservices++; /* Cheaply track all service types. */
    }
 
-   /* Get all the services the planet has. */
+   /* Get all the services the spob has. */
    j = 0;
    have = malloc( sizeof(char*) * MAX(nservices - n, 1) );
    if (nservices == n)
       have[j++] = strdup(_("None"));
    else
-      for (int i=1; i<PLANET_SERVICES_MAX; i<<=1)
-         if (planet_hasService(p, i)  && (i != PLANET_SERVICE_INHABITED))
-            have[j++] = strdup( planet_getServiceName( i ) );
+      for (int i=1; i<SPOB_SERVICES_MAX; i<<=1)
+         if (spob_hasService(p, i)  && (i != SPOB_SERVICE_INHABITED))
+            have[j++] = strdup( spob_getServiceName( i ) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL, sysedit_btnRmService );
    x += w + 15;
 
-   /* Add list of services the planet lacks. */
+   /* Add list of services the spob lacks. */
    j = 0;
    lack = malloc( sizeof(char*) * MAX(1, n) );
    if (!n)
       lack[j++] = strdup( _("None") );
    else
-      for (int i=1; i<PLANET_SERVICES_MAX; i<<=1)
-         if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
-            lack[j++] = strdup( planet_getServiceName(i) );
+      for (int i=1; i<SPOB_SERVICES_MAX; i<<=1)
+         if (!spob_hasService(p, i) && (i != SPOB_SERVICE_INHABITED))
+            lack[j++] = strdup( spob_getServiceName(i) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL, sysedit_btnAddService );
@@ -1650,42 +1650,42 @@ static void sysedit_genServicesList( unsigned int wid )
 }
 
 /**
- * @brief Adds a service to a planet.
+ * @brief Adds a service to a spob.
  */
 static void sysedit_btnAddService( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
-   Planet *p;
+   Spob *p;
 
    selected = toolkit_getList( wid, "lstServicesLacked" );
    if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    /* Enable the service. All services imply landability. */
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->services |= planet_getService(selected) | PLANET_SERVICE_INHABITED | PLANET_SERVICE_LAND;
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   p->services |= spob_getService(selected) | SPOB_SERVICE_INHABITED | SPOB_SERVICE_LAND;
 
    /* Regenerate the list. */
    sysedit_genServicesList( wid );
 }
 
 /**
- * @brief Removes a service from a planet.
+ * @brief Removes a service from a spob.
  */
 static void sysedit_btnRmService( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
-   Planet *p;
+   Spob *p;
 
    selected = toolkit_getList( wid, "lstServicesHave" );
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    /* Flip the bit. Safe enough, as it's always 1 to start with. */
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->services ^= planet_getService(selected);
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   p->services ^= spob_getService(selected);
 
    /* If landability was removed, the rest must go, too. */
    if (strcmp(selected,"Land")==0)
@@ -1695,7 +1695,7 @@ static void sysedit_btnRmService( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Edits a planet's tech.
+ * @brief Edits a spob's tech.
  */
 static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
 {
@@ -1703,7 +1703,7 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "wdwPlanetTechEditor", _("Planet Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSpobTechEditor", _("Spob Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -1726,11 +1726,11 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Generates the planet tech list.
+ * @brief Generates the spob tech list.
  */
 static void sysedit_genTechList( unsigned int wid )
 {
-   Planet *p;
+   Spob *p;
    char **have, **lack, **tmp;
    int i, j, n, x, y, w, h, hpos, lpos;
 
@@ -1745,13 +1745,13 @@ static void sysedit_genTechList( unsigned int wid )
       window_destroyWidget( wid, "lstTechsLacked" );
    }
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
    x = -20 - w - 15;
    y = 20 + BUTTON_HEIGHT * 2 + 30;
    h = SYSEDIT_EDIT_HEIGHT - y - 30;
 
-   /* Get all the techs the planet has. */
+   /* Get all the techs the spob has. */
    n = 0;
    if (p->tech != NULL)
       have = tech_getItemNames( p->tech, &n );
@@ -1764,7 +1764,7 @@ static void sysedit_genTechList( unsigned int wid )
    window_addList( wid, x, y, w, h, "lstTechsHave", have, n, 0, NULL, sysedit_btnRmTech );
    x += w + 15;
 
-   /* Omit the techs that the planet already has from the list.  */
+   /* Omit the techs that the spob already has from the list.  */
    n = 0;
    if (p->tech != NULL) {
       tmp = tech_getAllItemNames( &j );
@@ -1804,19 +1804,19 @@ static void sysedit_genTechList( unsigned int wid )
 }
 
 /**
- * @brief Adds a tech to a planet.
+ * @brief Adds a tech to a spob.
  */
 static void sysedit_btnAddTech( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
-   Planet *p;
+   Spob *p;
 
    selected = toolkit_getList( wid, "lstTechsLacked" );
    if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    if (p->tech == NULL)
       p->tech = tech_groupCreate();
    tech_addItemTech( p->tech, selected );
@@ -1826,20 +1826,20 @@ static void sysedit_btnAddTech( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Removes a tech from a planet.
+ * @brief Removes a tech from a spob.
  */
 static void sysedit_btnRmTech( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
-   Planet *p;
+   Spob *p;
    int n;
 
    selected = toolkit_getList( wid, "lstTechsHave" );
    if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    if (tech_hasItem( p->tech, selected ))
       tech_rmItemTech( p->tech, selected );
 
@@ -1852,7 +1852,7 @@ static void sysedit_btnRmTech( unsigned int wid, const char *unused )
 }
 
 /**
- * @brief Edits a planet's faction.
+ * @brief Edits a spob's faction.
  */
 static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
 {
@@ -1862,9 +1862,9 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
    int pos, j, y, h, bw, *factions;
    char **str;
    const char *s;
-   Planet *p;
+   Spob *p;
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Create the window. */
    wid = window_create( "wdwModifyFaction", _("Modify Faction"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
@@ -1914,12 +1914,12 @@ static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
 {
    (void) unused;
    const char *selected;
-   Planet *p;
+   Spob *p;
 
    selected = toolkit_getList( wid, "lstFactions" );
    if (selected == NULL)
       return;
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* "None" case. */
    if (toolkit_getListPos( wid, "lstFactions")==0) {
@@ -1944,16 +1944,16 @@ static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel = &sysedit_select[0];
-   if (sel->type==SELECT_PLANET)
+   if (sel->type==SELECT_SPOB)
       sysedit_editPnt();
    else if (sel->type==SELECT_JUMPPOINT)
       sysedit_editJump();
 }
 
 /**
- * @brief Opens the planet landing or space graphic editor.
+ * @brief Opens the spob landing or space graphic editor.
  */
-static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
+static void sysedit_spobGFX( unsigned int wid_unused, const char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
@@ -1963,15 +1963,15 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
    glTexture *t;
    ImageArrayCell *cells;
    int w, h, land;
-   Planet *p;
+   Spob *p;
    glColour c;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
    /* Create the window. */
-   snprintf( buf, sizeof(buf), _("%s - Planet Properties"), p->name );
-   wid = window_create( "wdwPlanetGFX", buf, -1, -1, -1, -1 );
+   snprintf( buf, sizeof(buf), _("%s - Spob Properties"), p->name );
+   wid = window_create( "wdwSpobGFX", buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
    window_setCancel( wid, sysedit_btnGFXClose );
@@ -1986,7 +1986,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
          land ? "btnApplyLand" : "btnApplySpace", _("Apply"), sysedit_btnGFXApply );
 
    /* Find images first. */
-   path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
+   path           = land ? SPOB_GFX_EXTERIOR_PATH : SPOB_GFX_SPACE_PATH;
    files          = PHYSFS_enumerateFiles( path );
    for (nfiles=0; files[nfiles]; nfiles++) {}
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
@@ -2020,7 +2020,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
 }
 
 /**
- * @brief Closes the planet graphic editor.
+ * @brief Closes the spob graphic editor.
  */
 static void sysedit_btnGFXClose( unsigned int wid, const char *wgt )
 {
@@ -2032,13 +2032,13 @@ static void sysedit_btnGFXClose( unsigned int wid, const char *wgt )
  */
 static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
 {
-   Planet *p;
+   Spob *p;
    const char *str;
    char *path, buf[PATH_MAX];
    int land;
 
    land = (strcmp(wgt,"btnApplyLand") == 0);
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    /* Get output. */
    str = toolkit_getImageArray( wid, "iarGFX" );
@@ -2046,13 +2046,13 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       return;
 
    /* New path. */
-   path = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
+   path = land ? SPOB_GFX_EXTERIOR_PATH : SPOB_GFX_SPACE_PATH;
    snprintf( buf, sizeof(buf), "%s/%s", path, str );
 
    if (land) {
       free( p->gfx_exteriorPath );
       free( p->gfx_exterior );
-      snprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
+      snprintf( buf, sizeof(buf), SPOB_GFX_EXTERIOR_PATH"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );
    }
@@ -2063,7 +2063,7 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       p->gfx_spacePath = strdup( str );
       gl_freeTexture( p->gfx_space );
       p->gfx_space = NULL;
-      planet_gfxLoad( p );
+      spob_gfxLoad( p );
    }
 
    /* For now we close. */

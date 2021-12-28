@@ -10,9 +10,9 @@
   <x>0.000000</x>
   <y>-450.000000</y>
  </pos>
- <assets>
-  <asset>Qorellia</asset>
- </assets>
+ <spobs>
+  <spob>Qorellia</spob>
+ </spobs>
  <jumps>
   <jump target="Doowa">
    <autopos/>

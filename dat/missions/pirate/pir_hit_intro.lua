@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket() or planet.cur():tags().criminal ~= nil</cond>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
   <chance>100</chance>
   <location>Bar</location>
   <faction>Wild Ones</faction>
@@ -49,7 +49,7 @@ mem.giverimage = portrait.getFullPath(mem.giverportrait)
 
 function create ()
    -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( planet.cur():faction() ) and rnd.rnd() < 0.2 then
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.2 then
       misn.finish(false)
    end
 
@@ -75,7 +75,7 @@ function create ()
    end
 
    mem.name = pilotname.generic()
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
 
    misn.setNPC( givername, mem.giverportrait, _("You see a shady individual who seems to be looking for pilots to do a mission for them. You're not entirely sure you want to associate with them though.") )
 end
@@ -241,7 +241,7 @@ end
 
 
 function land ()
-   if mem.state ~= 2 or planet.cur() ~= mem.retpnt then
+   if mem.state ~= 2 or spob.cur() ~= mem.retpnt then
       return
    end
 

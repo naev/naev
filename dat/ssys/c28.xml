@@ -10,15 +10,15 @@
   <x>-253.467593</x>
   <y>184.645062</y>
  </pos>
- <assets>
-  <asset>P2020</asset>
-  <asset>P2021</asset>
-  <asset>P2022</asset>
-  <asset>S00018</asset>
-  <asset>S00522</asset>
-  <asset>S00653</asset>
-  <asset>S38729</asset>
- </assets>
+ <spobs>
+  <spob>P2020</spob>
+  <spob>P2021</spob>
+  <spob>P2022</spob>
+  <spob>S00018</spob>
+  <spob>S00522</spob>
+  <spob>S00653</spob>
+  <spob>S38729</spob>
+ </spobs>
  <jumps>
   <jump target="C-00">
    <autopos/>

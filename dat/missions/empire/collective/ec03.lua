@@ -10,7 +10,7 @@
    <done>Collective Espionage 2</done>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>Omega Station</planet>
+   <spob>Omega Station</spob>
   </avail>
   <notes>
    <campaign>Collective</campaign>
@@ -36,7 +36,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local dronequota = 5 -- The amount of drones the player must whack to win
-local misn_base = planet.get("Omega Station")
+local misn_base = spob.get("Omega Station")
 local misn_target_sys = system.get("C-59")
 
 -- luacheck: globals death jumpin land (Hook functions passed by name)
@@ -64,7 +64,7 @@ end
 
 
 function accept ()
-   mem.commando_planet = planet.get("Eiroik")
+   mem.commando_planet = spob.get("Eiroik")
    mem.credits = emp.rewards.ec03
 
    -- Intro text
@@ -122,7 +122,7 @@ end
 
 -- Handles arrival back to base
 function land()
-   if mem.misn_stage == 1 and planet.cur() == misn_base then
+   if mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg(_("Mission Accomplished"), _([[Your ship touches ground and you once again see the face of Lt. Commander Dimitri.
     "How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now when they get back, but I believe everything went well.
     "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))

@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Research Post Sigma-13</planet>
+  <spob>Research Post Sigma-13</spob>
   <location>Bar</location>
   <done>Za'lek Black Hole 1</done>
  </avail>
@@ -33,14 +33,14 @@ local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")
 local cargo_amount = 83 -- Amount of cargo to take
 
-local retpnt, retsys = planet.getS("Research Post Sigma-13")
+local retpnt, retsys = spob.getS("Research Post Sigma-13")
 
 function create ()
    if not misn.claim( retsys ) then
       misn.finish()
    end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
       return p:tags().industrial
    end )
    if not mem.destpnt then
@@ -100,7 +100,7 @@ function accept ()
 end
 
 function land ()
-   if mem.state==1 and planet.cur() == mem.destpnt then
+   if mem.state==1 and spob.cur() == mem.destpnt then
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
@@ -160,7 +160,7 @@ They walk away away as you stand there dumbstruck.]])
       mem.state = 2
       misn.markerMove( mem.mrk, retpnt )
 
-   elseif mem.state==2 and planet.cur() == retpnt then
+   elseif mem.state==2 and spob.cur() == retpnt then
 
       vn.clear()
       vn.scene()

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Sarcophagus IIb">
+ <pos>
+  <x>-13519.748039</x>
+  <y>8039.294972</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

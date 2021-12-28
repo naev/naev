@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Cetrat">
+ <pos>
+  <x>-5040.078848</x>
+  <y>-3946.220808</y>
+ </pos>
+ <GFX>
+  <space>O01.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <base>70.000000</base>
+  <bonus>30.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>9.3e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Cetrat is an aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild but, with the abundance of it throughout the planet's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
+  <bar>The bar is very large and yet has fairly few patrons. You notice the drinks list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+ </tech>
+</spob>

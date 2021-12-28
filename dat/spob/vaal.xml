@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vaal">
+ <pos>
+  <x>-186.078200</x>
+  <y>-429.722785</y>
+ </pos>
+ <GFX>
+  <space>J08.webp</space>
+  <exterior>uninhabited-rocky-red-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>This mysterious, stormy world has a rich amount of minerals and noble gasses in its atmosphere, but seems abandoned of life. It seems that a Za'lek survey once investigated this world, explaining the small landing pad, but no other sign of their presence or indeed any human presence here at all. Just the sound of the wind and distant thunder as your only companion</description>
+ </general>
+</spob>

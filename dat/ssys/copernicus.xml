@@ -11,12 +11,12 @@
   <x>-749.266142</x>
   <y>-648.067716</y>
  </pos>
- <assets>
-  <asset>Galileo</asset>
-  <asset>Ptolemy</asset>
-  <asset>Tulla</asset>
-  <asset>Tumut</asset>
- </assets>
+ <spobs>
+  <spob>Galileo</spob>
+  <spob>Ptolemy</spob>
+  <spob>Tulla</spob>
+  <spob>Tumut</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-13674">
    <autopos/>

@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 3</done>
  </avail>
@@ -34,8 +34,8 @@ local reward = zpp.rewards.zpp04
 local cargo_name = _("strange container")
 local cargo_amount = 5 -- Amount of cargo to take
 
-local destpnt, destsys = planet.getS( "Thaddius Station" )
-local retpnt, retsys = planet.getS( "Katar I" )
+local destpnt, destsys = spob.getS( "Thaddius Station" )
+local retpnt, retsys = spob.getS( "Katar I" )
 
 -- TODO redo the portrait
 mem.shady_dealer = portrait.get("Pirate")
@@ -100,7 +100,7 @@ end
 
 local npcguy
 function land ()
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if mem.state==1 and pcur==destpnt then
       npcguy = misn.npcAdd( "approach_guy", _("Shady Dealer"), mem.shady_dealer, _("A fairly shady dealer seems to be staring at you and beckoning for you to come over. Could this be the individual Noona told you to meet…?") )
 

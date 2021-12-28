@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="strangelove">
  <system name="Westhaven">
-  <asset name="Strangelove Lab">add</asset>
+  <spob name="Strangelove Lab">add</spob>
  </system>
 </unidiff>

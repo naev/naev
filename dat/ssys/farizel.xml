@@ -10,13 +10,13 @@
   <x>247.479904</x>
   <y>-744.663890</y>
  </pos>
- <assets>
-  <asset>Baba Yaga</asset>
-  <asset>Damphyr</asset>
-  <asset>Morgan Station</asset>
-  <asset>Oni</asset>
-  <asset>Worgen</asset>
- </assets>
+ <spobs>
+  <spob>Baba Yaga</spob>
+  <spob>Damphyr</spob>
+  <spob>Morgan Station</spob>
+  <spob>Oni</spob>
+  <spob>Worgen</spob>
+ </spobs>
  <jumps>
   <jump target="Castellan">
    <autopos/>

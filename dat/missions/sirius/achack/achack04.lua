@@ -45,7 +45,7 @@ mem.osd_msg[1] = _("Look for Harja in Sirian bars")
 mem.osd_msg[2] = _("Convince Harja to come with you")
 
 -- Mission constants
-local startplanet, startsys = planet.getS("Eenerim")
+local startplanet, startsys = spob.getS("Eenerim")
 local reward = 1.5e6
 local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 
@@ -68,21 +68,21 @@ end
 
 -- Land hook.
 function land()
-   mem.enter_src = planet.cur()
+   mem.enter_src = spob.cur()
    local harjadesc = _("You've found Harja. He's sourly watching the galactic news, and hasn't noticed you yet.")
 
-   if planet.cur() == startplanet and mem.stage == stages.start then
+   if spob.cur() == startplanet and mem.stage == stages.start then
       mem.joanne_npc = misn.npcAdd("talkJoanne", _("Joanne"), "sirius/unique/joanne.webp", _("Joanne the Serra military officer is here, enjoying a drink by herself."), 4)
-   elseif planet.cur() == mem.harjaplanet and mem.stage <= stages.fetchHarja then
+   elseif spob.cur() == mem.harjaplanet and mem.stage <= stages.fetchHarja then
       mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), "sirius/unique/harja.webp", harjadesc, 4)
-   elseif planet.cur() ~= startplanet and mem.stage == stages.findHarja then
+   elseif spob.cur() ~= startplanet and mem.stage == stages.findHarja then
       -- Harja appears randomly in the spaceport bar.
       -- TODO: Add checks for planet metadata. Harja must not appear on military installations and such.
       if rnd.rnd() < 0.25 then
          mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), "sirius/unique/harja.webp", harjadesc, 4)
-         mem.harjaplanet, mem.harjasys = planet.cur() -- Harja, once he spawns, stays put.
+         mem.harjaplanet, mem.harjasys = spob.cur() -- Harja, once he spawns, stays put.
       end
-   elseif planet.cur() == startplanet and mem.stage == stages.finish then
+   elseif spob.cur() == startplanet and mem.stage == stages.finish then
       tk.msg(_("Building a bridge"), fmt.f(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
     Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today." She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with {player} here, I was told that you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."
     There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]]), {player=player.name()}))

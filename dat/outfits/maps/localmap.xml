@@ -8,6 +8,6 @@
  </general>
  <specific type="localmap">
   <jump_detect>1.25</jump_detect>
-  <asset_detect>2.0</asset_detect>
+  <spob_detect>2.0</spob_detect>
  </specific>
 </outfit>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Forge">
+ <pos>
+  <x>1100.000000</x>
+  <y>-18950.000000</y>
+ </pos>
+ <GFX>
+  <space>A04.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

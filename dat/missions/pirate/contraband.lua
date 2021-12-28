@@ -34,7 +34,7 @@ local lmisn = require "lmisn"
 -- This is in common.cargo, but we need to increase the range
 function create()
    -- Note: this mission does not make any system claims.
-   local pntf = planet.cur():faction()
+   local pntf = spob.cur():faction()
    -- Lower chance of appearing to 1/3 on non-pirate planets
    if not pir.factionIsPirate( pntf ) and rnd.rnd() < 2/3 then
       misn.finish(false)
@@ -47,7 +47,7 @@ function create()
    mem.reward_faction = pir.systemClanP( system.cur() )
    local faction_text = pir.reputationMessage( mem.reward_faction )
 
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
@@ -154,7 +154,7 @@ function create()
          cargo=_(mem.cargo)} ) )
    end
    misn.markerAdd(mem.destplanet, "computer")
-   if pir.factionIsPirate( planet.cur():faction() ) then
+   if pir.factionIsPirate( spob.cur():faction() ) then
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    else
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
@@ -193,7 +193,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
          tk.msg( _("Successful Delivery"), fmt.f(
             _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)

@@ -12,10 +12,10 @@
   <x>-98.531254</x>
   <y>761.485813</y>
  </pos>
- <assets>
-  <asset>Neexi I</asset>
-  <asset>Neexi II</asset>
- </assets>
+ <spobs>
+  <spob>Neexi I</spob>
+  <spob>Neexi II</spob>
+ </spobs>
  <jumps>
   <jump target="Malebolge">
    <autopos/>

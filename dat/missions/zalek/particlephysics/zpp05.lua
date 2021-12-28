@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 4</done>
  </avail>
@@ -32,7 +32,7 @@ local audio = require 'love.audio'
 -- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
 --local reward = zpp.rewards.zpp05 -- No reward
-local mainpnt, mainsys = planet.getS("Katar I")
+local mainpnt, mainsys = spob.getS("Katar I")
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -92,7 +92,7 @@ function accept ()
 end
 
 function land ()
-   if mem.state==1 or planet.cur() ~= mainpnt then
+   if mem.state==1 or spob.cur() ~= mainpnt then
       return
    end
 
@@ -130,7 +130,7 @@ function enter ()
 
    -- Spawn the drones
    -- TODO better location once testing center object is created
-   local pkatar = planet.get("Katar"):pos()
+   local pkatar = spob.get("Katar"):pos()
    local pkatari = mainpnt:pos()
    local pos = (pkatar - pkatari) + pkatar
    -- Hostile drone

@@ -82,7 +82,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local ss, _s = planet.getS( "Sindbad" )
+   local ss, _s = spob.getS( "Sindbad" )
 
    flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, {ai="flf_norun"} )
    flf_base:outfitRm( "all" )
@@ -284,7 +284,7 @@ end
 
 
 function land ()
-   if planet.cur():faction() == faction.get("Thurion") then
+   if spob.cur():faction() == faction.get("Thurion") then
       tk.msg( _("Welcome To the Nebula"), _([[As you land on the mysterious station, armed guards immediately surround your ship and order you out into the hangar. You comply, and they take you to a room that appears to be an interrogation room, where you wait for a few nerve-wracking hectoseconds. Finally, a holoscreen flickers on, showing the figure you had seen earlier. She looks in your direction.
     "Well met," she says. "I see you have made the right choice and survived the nebula. Very good."]]) )
       tk.msg( _("Welcome To the Nebula"), _([["I'm sure you're wondering who we are. We are the Thurion, a civilization left over from one of the Empire's former secret projects. Have you met the Za'lek? The Collective? Those too were the Empire's "great projects", as were the now dead Proteron. But we were kept a lot more in the dark.

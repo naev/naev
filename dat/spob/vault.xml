@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vault">
+ <pos>
+  <x>-298.113177</x>
+  <y>607.267583</y>
+ </pos>
+ <GFX>
+  <space>O03.webp</space>
+  <exterior>snowy_cliffs.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>33.333333</base>
+  <bonus>16.666667</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>250000</population>
+  <hide>3.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Vault is a small world, with little in the way of industry to recommend it. It has respectable facilities, but is otherwise too poor for anyone to bother with the place.</description>
+  <bar>The bar is a small and dingy place, and the beer can only be called technically drinkable. The inhabitants are rather dirty, and several of them look dangerous.</bar>
+ </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Systems Medium</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Laser 1</item>
+  <item>Plasma 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+ <tags>
+  <tag>poor</tag>
+ </tags>
+</spob>

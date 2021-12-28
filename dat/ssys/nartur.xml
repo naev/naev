@@ -10,18 +10,18 @@
   <x>-326.000000</x>
   <y>-453.000000</y>
  </pos>
- <assets>
-  <asset>INSS-2</asset>
-  <asset>Ian</asset>
-  <asset>Nartur I</asset>
-  <asset>Nartur II</asset>
-  <asset>Nartur III</asset>
-  <asset>Nartur IV</asset>
-  <asset>Nartur IVa</asset>
-  <asset>Qoral</asset>
-  <asset>Vertigo</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>INSS-2</spob>
+  <spob>Ian</spob>
+  <spob>Nartur I</spob>
+  <spob>Nartur II</spob>
+  <spob>Nartur III</spob>
+  <spob>Nartur IV</spob>
+  <spob>Nartur IVa</spob>
+  <spob>Qoral</spob>
+  <spob>Vertigo</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Overture">
    <autopos/>

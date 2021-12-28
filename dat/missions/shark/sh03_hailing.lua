@@ -9,7 +9,7 @@
   <done>Unfair Competition</done>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
  </avail>
  <notes>
   <campaign>Nexus show their teeth</campaign>
@@ -32,12 +32,12 @@ local hawking -- Non-persistent state
 -- luacheck: globals enter hail land (Hook functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
-local nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
+local paypla, paysys = spob.getS("Darkshed")
+local nextpla, nextsys = spob.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
 function create ()
    --Change here to change the planets and the systems
-   mem.mispla,mem.missys = planet.getLandable(faction.get("Frontier"))  -- mem.mispla will be useful to locate the Hawking
+   mem.mispla,mem.missys = spob.getLandable(faction.get("Frontier"))  -- mem.mispla will be useful to locate the Hawking
 
    if not misn.claim(mem.missys) then
       misn.finish(false)
@@ -77,7 +77,7 @@ end
 function land()
 
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
    tk.msg(_("Good job"), fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]), {pnt=nextpla, sys=nextsys}))
       player.pay(shark.rewards.sh03)
       pir.reputationNormalMission(rnd.rnd(2,3))

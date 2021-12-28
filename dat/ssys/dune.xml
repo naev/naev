@@ -10,11 +10,11 @@
   <x>129.000000</x>
   <y>94.000000</y>
  </pos>
- <assets>
-  <asset>Arrakis</asset>
-  <asset>Nixa</asset>
-  <asset>Vert</asset>
- </assets>
+ <spobs>
+  <spob>Arrakis</spob>
+  <spob>Nixa</spob>
+  <spob>Vert</spob>
+ </spobs>
  <jumps>
   <jump target="Eridani">
    <autopos/>

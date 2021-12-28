@@ -38,7 +38,7 @@ function create ()
    local planets = {}
    lmisn.getSysAtDistance( system.cur(), 1, 6,
        function(s)
-           for i, v in ipairs(s:planets()) do
+           for i, v in ipairs(s:spobs()) do
                if v:faction() == faction.get("Empire") and v:canLand() then
                    planets[#planets + 1] = {v, s}
                end
@@ -84,7 +84,7 @@ end
 
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if landed == mem.dest then
       if misn.cargoRm(mem.parcels) then
          player.pay( emp.rewards.cargo00 )

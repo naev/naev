@@ -10,13 +10,13 @@
   <x>122.000000</x>
   <y>-681.000000</y>
  </pos>
- <assets>
-  <asset>Onyx Shipyard</asset>
-  <asset>Trincea</asset>
-  <asset>Urbanus Crops</asset>
-  <asset>Urbanus II</asset>
-  <asset>Urbanus III</asset>
- </assets>
+ <spobs>
+  <spob>Onyx Shipyard</spob>
+  <spob>Trincea</spob>
+  <spob>Urbanus Crops</spob>
+  <spob>Urbanus II</spob>
+  <spob>Urbanus III</spob>
+ </spobs>
  <jumps>
   <jump target="Dvaer">
    <autopos/>

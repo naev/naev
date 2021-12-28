@@ -9,7 +9,7 @@
   <done>Invitation</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
  </avail>
  <notes>
   <campaign>Nexus show their teeth</campaign>
@@ -36,8 +36,8 @@ local ambush -- Forward-declared functions
 -- luacheck: globals enabling enter land reveal (Hook functions passed by name)
 
 --Change here to change the planets and the systems
-local mispla, missys = planet.getS("Curie")
-local paypla, paysys = planet.getS("Darkshed")
+local mispla, missys = spob.getS("Curie")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    if not misn.claim(missys) then
@@ -80,7 +80,7 @@ end
 
 function land()
    --The player is landing on the mission planet
-   if mem.stage == 0 and planet.cur() == mispla then
+   if mem.stage == 0 and spob.cur() == mispla then
       tk.msg(_("The meeting"), _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.
     A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]))
       mem.stage = 1
@@ -90,7 +90,7 @@ function land()
    end
 
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       if misn.cargoRm(mem.smith) then
          tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
          player.pay(shark.rewards.sh04)

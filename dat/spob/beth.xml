@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Beth">
+ <pos>
+  <x>16642.352127</x>
+  <y>-10109.625100</y>
+ </pos>
+ <GFX>
+  <space>I03.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.600000</hide>
+  <services/>
+ </general>
+</spob>

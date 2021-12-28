@@ -112,7 +112,7 @@ function enter()
 end
 
 function land()
-    if mem.logsfound and planet.cur():faction() == faction.get("Dvaered") then
+    if mem.logsfound and spob.cur():faction() == faction.get("Dvaered") then
         tk.msg(_("X marks the spot"), _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty hectoseconds, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
     Colonel Urnus welcomes you. "Well met, citizen. I have received word of your accomplishment in our recent operation. It seems HQ is quite pleased with the result, and they have instructed me to reward you appropriately."
     He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the dangerous plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.

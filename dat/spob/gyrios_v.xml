@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gyrios V">
+ <pos>
+  <x>29821.651381</x>
+  <y>-16569.391308</y>
+ </pos>
+ <GFX>
+  <space>moon-C00.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -10,11 +10,11 @@
   <x>-756.541439</x>
   <y>-1041.095884</y>
  </pos>
- <assets>
-  <asset>Newmarch A-1</asset>
-  <asset>Newmarch D-3</asset>
-  <asset>Savoy</asset>
- </assets>
+ <spobs>
+  <spob>Newmarch A-1</spob>
+  <spob>Newmarch D-3</spob>
+  <spob>Savoy</spob>
+ </spobs>
  <jumps>
   <jump target="Poller">
    <autopos/>

@@ -10,14 +10,14 @@
   <x>-54.272018</x>
   <y>-312.614213</y>
  </pos>
- <assets>
-  <asset>Eiger</asset>
-  <asset>Gordon's Exchange</asset>
-  <asset>MGG-003</asset>
-  <asset>MGG-007</asset>
-  <asset>UMW-1231d</asset>
-  <asset>UMW-1345a</asset>
- </assets>
+ <spobs>
+  <spob>Eiger</spob>
+  <spob>Gordon's Exchange</spob>
+  <spob>MGG-003</spob>
+  <spob>MGG-007</spob>
+  <spob>UMW-1231d</spob>
+  <spob>UMW-1345a</spob>
+ </spobs>
  <jumps>
   <jump target="Doowa">
    <autopos/>

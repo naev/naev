@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Avoss">
+ <pos>
+  <x>-25201.083266</x>
+  <y>26782.578820</y>
+ </pos>
+ <GFX>
+  <space>A03.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <base>70.000000</base>
+  <bonus>30.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>600000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Avoss was originally a mediocre but habitable world. When the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselves fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity everywhere began escalating off the charts causing earthquakes and volcanic eruptions the world over. The world is now devastated, a mere shadow of its former self. The colonists have managed to survive, however, and the hardy remain even today.</description>
+ </general>
+</spob>

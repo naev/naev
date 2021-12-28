@@ -58,7 +58,7 @@ typedef struct EventData_ {
    unsigned int flags; /**< Bit flags. */
 
    /* For specific cases. */
-   char *planet; /**< Planet name. */
+   char *spob; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
 
@@ -320,8 +320,8 @@ void events_trigger( EventTrigger_t trigger )
       if (ed->trigger != trigger)
          continue;
 
-      /* Planet. */
-      if ((ed->planet != NULL) && (strcmp(ed->planet,land_planet->name)!=0))
+      /* Spob. */
+      if ((ed->spob != NULL) && (strcmp(ed->spob,land_spob->name)!=0))
          continue;
 
       /* System. */
@@ -388,7 +388,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Only check nodes. */
       xml_onlyNodes(node);
 
-      xmlr_strd(node,"planet",temp->planet);
+      xmlr_strd(node,"spob",temp->spob);
       xmlr_strd(node,"system",temp->system);
       xmlr_strd(node,"chapter",temp->chapter);
 
@@ -585,7 +585,7 @@ static void event_freeData( EventData *event )
    free( event->sourcefile );
    free( event->lua );
 
-   free( event->planet );
+   free( event->spob );
    free( event->system );
    free( event->chapter );
 

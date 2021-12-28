@@ -33,8 +33,8 @@ local zlk = require "common.zalek"
 
 -- Mission constants
 local credits = 500e3
-local homeworld, homeworld_sys = planet.getS("Jorla")
-local dest_planet, dest_sys = planet.getS("Jurai")
+local homeworld, homeworld_sys = spob.getS("Jorla")
+local dest_planet, dest_sys = spob.getS("Jurai")
 
 function create()
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
@@ -75,23 +75,23 @@ local function dest_updated()
 end
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == dest_planet then
         if mem.stage == 0 then
             mem.stage = 1
-            dest_planet, dest_sys = planet.getS("Neo Pomerania")
+            dest_planet, dest_sys = spob.getS("Neo Pomerania")
             tk.msg(_("No luck"), fmt.f(_([[After landing on {cur_pnt} Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.
     "This is the first time that one of my applications was rejected. That's weird, I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 2 then
             mem.stage = 3
-            dest_planet, dest_sys = planet.getS("Ruadan Prime")
+            dest_planet, dest_sys = spob.getS("Ruadan Prime")
             tk.msg(_("No luck"), fmt.f(_([["Alright, I'm sure it will work out this time!", Dr. Mensing said on arriving on {cur_pnt}. This time you have to wait even longer for her to return. The result is the same as her first try.
     "I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm… Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 4 then
             mem.stage = 5
-            dest_planet, dest_sys = planet.getS("Excelcior")
+            dest_planet, dest_sys = spob.getS("Excelcior")
             tk.msg("", fmt.f(_([["Good news! I asked around and found a clue how to contact Professor Voges. He promised one of his colleagues to show up to his party. Something about his wife, like they have gotten married or she died or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 5 or mem.stage == 6 then
@@ -173,7 +173,7 @@ end
 function cannotLand()
     local cur_planet = dest_planet
     mem.stage = 4
-    dest_planet, dest_sys = planet.getS("Ruadan Station")
+    dest_planet, dest_sys = spob.getS("Ruadan Station")
     tk.msg(_("No clearance to land"), fmt.f(_([[Apparently you are not allowed to land on {cur_pnt} and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing. "We're not allowed to? Let me try to talk with them."
     After a heated discussion Dr. Mensing gives up. "Right, they won't allow anyone to land on {cur_pnt}. That's so frustrating. Let's land on {pnt} instead."]]), {cur_pnt=cur_planet, pnt=dest_planet}))
     dest_updated()

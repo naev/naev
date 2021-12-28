@@ -10,14 +10,14 @@
   <x>1357.249837</x>
   <y>-615.671978</y>
  </pos>
- <assets>
-  <asset>Boowoy</asset>
-  <asset>Peogas II</asset>
-  <asset>Peogas III</asset>
-  <asset>Peogas IV</asset>
-  <asset>Peogas V</asset>
-  <asset>Yaroslav Farming Station</asset>
- </assets>
+ <spobs>
+  <spob>Boowoy</spob>
+  <spob>Peogas II</spob>
+  <spob>Peogas III</spob>
+  <spob>Peogas IV</spob>
+  <spob>Peogas V</spob>
+  <spob>Yaroslav Farming Station</spob>
+ </spobs>
  <jumps>
   <jump target="Ulysses">
    <autopos/>

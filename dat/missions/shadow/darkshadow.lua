@@ -29,9 +29,9 @@ local spawnGenbu, spawnSquads -- Forward-declared functions
 -- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
-local seirplanet, seirsys = planet.getS("Edergast")
-local jorekplanet1, joreksys1 = planet.getS("Manis")
-local jorekplanet2, joreksys2 = planet.getS("The Wringer")
+local seirplanet, seirsys = spob.getS("Edergast")
+local jorekplanet1, joreksys1 = spob.getS("Manis")
+local jorekplanet2, joreksys2 = spob.getS("The Wringer")
 local ambushsys = system.get("Herakin")
 local safesys = system.get("Eiderdown")
 
@@ -248,17 +248,15 @@ function spawnSquads(highlight)
    -- Shorthand notation for the leader pilots
    leader = {}
 
-   for i, start in ipairs(squads) do
+   for i, start in ipairs(leaderstart) do
       squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
-         k:control()
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
-	 k:setNoDisable()
-         k:follow(squads[i][1]) -- Each ship in the squad follows the squad leader
+         k:setNoDisable()
       end
-      squads[i][1]:taskClear() --...except the leader himself.
+      squads[i][1]:control() -- Only need to control leader. Others will follow
       leader[i] = squads[i][1]
    end
 
@@ -297,8 +295,8 @@ function attacked()
    for _, squad in ipairs(squads) do
       for _, k in ipairs(squad) do
          k:hookClear()
-         k:control()
-         k:attack(player.pilot())
+         k:control(false)
+         k:setHostile()
       end
    end
 end
@@ -319,7 +317,7 @@ end
 
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
-   for _, patroller in ipairs(leader) do
+   for j, patroller in ipairs(leader) do
       if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
          patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
          attacked()
@@ -388,11 +386,11 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == jorekplanet1 and mem.stage == 2 then
+   if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
       mem.barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
-   elseif planet.cur() == jorekplanet2 and mem.stage == 3 then
+   elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
       mem.joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end

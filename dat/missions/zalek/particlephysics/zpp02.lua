@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 1</done>
  </avail>
@@ -34,10 +34,10 @@ local reward = zpp.rewards.zpp02
 local cargo_name = _("drone interface controllers")
 local cargo_amount = 50 -- Amount of cargo to take
 
-local retpnt, retsys = planet.getS( "Katar I" )
+local retpnt, retsys = spob.getS( "Katar I" )
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
       return p:tags().research and p:services()["bar"]
    end )
    if not mem.destpnt then
@@ -101,7 +101,7 @@ end
 
 local npcguy
 function land ()
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if (mem.state==1 or mem.state==2) and pcur==mem.destpnt then
       npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("You see a Za'lek scientist who seems to fit the description of Noona's colleague.") )
 

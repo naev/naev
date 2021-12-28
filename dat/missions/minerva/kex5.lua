@@ -7,7 +7,7 @@
  <avail>
   <location>Bar</location>
   <chance>100</chance>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Kex's Freedom 4</done>
  </avail>
  <notes>
@@ -47,7 +47,7 @@ local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
 
 local landed_lab -- Forward-declared functions
 
-local targetplanet = planet.get("Strangelove Lab")
+local targetplanet = spob.get("Strangelove Lab")
 local targetsys = system.get("Westhaven") --same as targetplanet:system(), but only after the below diff gets applied
 
 local eccdiff = "strangelove"
@@ -122,11 +122,11 @@ function accept ()
 end
 
 function landed ()
-   -- Can't use planet.get() here for when the diff is removed
-   if mem.misn_state==1 and planet.cur() == targetplanet then
+   -- Can't use spob.get() here for when the diff is removed
+   if mem.misn_state==1 and spob.cur() == targetplanet then
       landed_lab()
 
-   elseif mem.misn_state==3 and planet.get("Minerva Station")==planet.cur() then
+   elseif mem.misn_state==3 and spob.get("Minerva Station")==spob.cur() then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
    end
 end
@@ -701,7 +701,7 @@ He seems to be looking at something in the distance.]]))
    -- Advance mission
    mem.misn_state = 3
    misn.osdActive(2)
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    player.unboard()
    local strangelove_death = var.peek("strangelove_death")
    if strangelove_death=="shot" then

@@ -52,7 +52,7 @@ local dest_planets = { "The Stinker", "Eiroik" }
 function create ()
    local dist = nil
    for i, j in ipairs( dest_planets ) do
-      local _p, sys = planet.getS( j )
+      local _p, sys = spob.getS( j )
       if dist == nil or system.cur():jumpDist(sys) < dist then
          dist = system.cur():jumpDist(sys)
       end
@@ -66,7 +66,7 @@ function create ()
    mem.landed = true
 
    for i, j in ipairs( dest_planets ) do
-      local p = planet.get( j )
+      local p = spob.get( j )
       misn.markerAdd( p, "computer" )
    end
 
@@ -106,7 +106,7 @@ function land ()
    mem.landed = true
 
    for i, j in ipairs( dest_planets ) do
-      if planet.get(j) == planet.cur() then
+      if spob.get(j) == spob.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))

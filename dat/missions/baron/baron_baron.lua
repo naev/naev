@@ -26,7 +26,7 @@ local neu = require "common.neutral"
 
 local sys1 = system.get("Darkstone")
 local sys2 = system.get("Ingot")
-local pnt = planet.get("Varia")
+local pnt = spob.get("Varia")
 
 local credits = baron.rewards.baron
 local pinnacle, vendetta1, vendetta2 -- Non-persistent state
@@ -85,7 +85,7 @@ function accept()
 end
 
 function land()
-   if planet.cur() == pnt and not mem.talked then
+   if spob.cur() == pnt and not mem.talked then
       local npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
       mem.thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       mem.thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
@@ -95,7 +95,7 @@ end
 
 function jumpin()
    if mem.talked and system.cur() == sys2 then
-      local homepos = planet.get("Ulios"):pos()
+      local homepos = spob.get("Ulios"):pos()
       pinnacle = pilot.add( "Proteron Kahan", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:setInvincible(true)
@@ -108,7 +108,7 @@ function jumpin()
 end
 
 function idle()
-   local homepos = planet.get("Ulios"):pos()
+   local homepos = spob.get("Ulios"):pos()
    pinnacle:moveto(homepos + vec2.new( 400,  400), false)
    pinnacle:moveto(homepos + vec2.new(-400,  400), false)
    pinnacle:moveto(homepos + vec2.new(-400, -400), false)

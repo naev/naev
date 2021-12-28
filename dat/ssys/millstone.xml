@@ -10,12 +10,12 @@
   <x>484.995077</x>
   <y>-627.282028</y>
  </pos>
- <assets>
-  <asset>Marauder Station</asset>
-  <asset>Omar</asset>
-  <asset>Sternguard</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Marauder Station</spob>
+  <spob>Omar</spob>
+  <spob>Sternguard</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Fidelis">
    <autopos/>

@@ -6,7 +6,7 @@
  *
  * @brief Handles the Lua vector handling bindings.
  *
- * These bindings control the planets and systems.
+ * These bindings control the spobs and systems.
  */
 /** @cond */
 #include <lauxlib.h>

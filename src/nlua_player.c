@@ -35,7 +35,7 @@
 #include "nlua_col.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_time.h"
@@ -753,11 +753,11 @@ static int playerL_takeoff( lua_State *L )
 }
 
 /**
- * @brief Automagically lands the player on a planet.
+ * @brief Automagically lands the player on a spob.
  *
  * Note that this will teleport the player to the system in question as necessary.
  *
- *    @luatparam Planet pnt Planet to land the player on.
+ *    @luatparam Spob pnt Spob to land the player on.
  * @luafunc land
  */
 static int playerL_land( lua_State *L )
@@ -765,10 +765,10 @@ static int playerL_land( lua_State *L )
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
-   Planet *pnt = luaL_validplanet(L,1);
-   const char *sysname = planet_getSystem( pnt->name );
+   Spob *pnt = luaL_validspob(L,1);
+   const char *sysname = spob_getSystem( pnt->name );
    if (sysname == NULL)
-      NLUA_ERROR(L,_("Planet '%s' is not in a system!"), pnt->name);
+      NLUA_ERROR(L,_("Spob '%s' is not in a system!"), pnt->name);
 
    if (strcmp(sysname,cur_system->name) != 0) {
       /* Refer to playerL_teleport for the voodoo that happens here. */
@@ -1256,7 +1256,7 @@ static int playerL_rmOutfit( lua_State *L )
 /**
  * @brief Gives the player a new ship.
  *
- * @note Should be given when landed, ideally on a planet with a shipyard. Furthermore, this invalidates all player.pilot() references.
+ * @note Should be given when landed, ideally on a spob with a shipyard. Furthermore, this invalidates all player.pilot() references.
  *
  * @usage player.addShip( "Pirate Kestrel", _("Seiryuu"), _("") ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
@@ -1434,23 +1434,23 @@ static int playerL_evtDone( lua_State *L )
 }
 
 /**
- * @brief Teleports the player to a new planet or system (only if not landed).
+ * @brief Teleports the player to a new spob or system (only if not landed).
  *
  * If the destination is a system, the coordinates of the player will not change.
- * If the destination is a planet, the player will be placed over that planet.
+ * If the destination is a spob, the player will be placed over that spob.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  * @usage player.teleport( "Sol", true ) -- Teleports the player to SOL, but doesn't run any initial simulation
  *
- *    @luatparam System|Planet|string dest System or name of a system or planet or name of a planet to teleport the player to.
+ *    @luatparam System|Spob|string dest System or name of a system or spob or name of a spob to teleport the player to.
  *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
  * @luafunc teleport
  */
 static int playerL_teleport( lua_State *L )
 {
-   Planet *pnt;
+   Spob *pnt;
    StarSystem *sys;
    const char *name, *pntname;
    int no_simulate;
@@ -1472,12 +1472,12 @@ static int playerL_teleport( lua_State *L )
       sys   = luaL_validsystem(L,1);
       name  = system_getIndex(sys->id)->name;
    }
-   /* Get a planet. */
-   else if (lua_isplanet(L,1)) {
-      pnt   = luaL_validplanet(L,1);
-      name  = planet_getSystem( pnt->name );
+   /* Get a spob. */
+   else if (lua_isspob(L,1)) {
+      pnt   = luaL_validspob(L,1);
+      name  = spob_getSystem( pnt->name );
       if (name == NULL) {
-         NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pnt->name );
+         NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pnt->name );
          return 0;
       }
    }
@@ -1487,17 +1487,17 @@ static int playerL_teleport( lua_State *L )
       name = lua_tostring(L,1);
       sysname = system_existsCase( name );
       if (sysname == NULL) {
-         /* No system found, assume destination string is the name of a planet. */
+         /* No system found, assume destination string is the name of a spob. */
          pntname = name;
-         name = planet_getSystem( pntname );
-         pnt  = planet_get( pntname );
+         name = spob_getSystem( pntname );
+         pnt  = spob_get( pntname );
          if (pnt == NULL) {
             NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
             return 0;
          }
 
          if (name == NULL) {
-            NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pntname );
+            NLUA_ERROR( L, _("Spob '%s' does not belong to a system."), pntname );
             return 0;
          }
       }
@@ -1532,7 +1532,7 @@ static int playerL_teleport( lua_State *L )
 
    /* Reset targets when teleporting.
     * Both of these functions invoke gui_setNav(), which updates jump and
-    * planet targets simultaneously. Thus, invalid reads may arise and the
+    * spob targets simultaneously. Thus, invalid reads may arise and the
     * target reset must be done prior to calling space_init and destroying
     * the old system.
     */
@@ -1554,7 +1554,7 @@ static int playerL_teleport( lua_State *L )
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
-   /* Move to planet. */
+   /* Move to spob. */
    if (pnt != NULL)
       player.p->solid->pos = pnt->pos;
 

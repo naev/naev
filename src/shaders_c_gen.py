@@ -38,14 +38,16 @@ class Shader:
                     yield f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n"
             yield "   }\n"
 
-
+num_simpleshaders = 0
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
         super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","paramf","parami","paramv"], subroutines={} )
+        global num_simpleshaders
+        num_simpleshaders += 1
     def header_chunks(self):
         yield f"   SimpleShader {self.name};\n"
     def source_chunks(self):
-        yield f"   shaders_loadSimple( &shaders.{self.name}, \"{self.fs_path}\" );"
+        yield f"   shaders_loadSimple( \"{self.name}\", &shaders.{self.name}, \"{self.fs_path}\" );"
 
 SHADERS = [
    Shader(
@@ -131,11 +133,19 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "points",
+      vs_path = "smooth.vert",
+      fs_path = "points.frag",
+      attributes = ["vertex", "vertex_color"],
+      uniforms = ["projection"],
+      subroutines = {},
+   ),
+   Shader(
       name = "stars",
       vs_path = "stars.vert",
       fs_path = "stars.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "wh", "xy", "scale"],
+      uniforms = ["projection", "star_xy", "dims", "xy", "use_lines"],
       subroutines = {},
    ),
    Shader(
@@ -233,8 +243,20 @@ SHADERS = [
       fs_path = "stealthaura.frag",
    ),
    SimpleShader(
-      name = "planetmarker",
-      fs_path = "planetmarker.frag",
+      name = "spobmarker_empty",
+      fs_path = "spobmarker_empty.frag",
+   ),
+   SimpleShader(
+      name = "spobmarker_earth",
+      fs_path = "spobmarker_earth.frag",
+   ),
+   SimpleShader(
+      name = "spobmarker_rhombus",
+      fs_path = "spobmarker_rhombus.frag",
+   ),
+   SimpleShader(
+      name = "spobmarker_triangle",
+      fs_path = "spobmarker_triangle.frag",
    ),
    SimpleShader(
       name = "jumpmarker",
@@ -265,8 +287,8 @@ SHADERS = [
       fs_path = "targetship.frag",
    ),
    SimpleShader(
-      name = "targetplanet",
-      fs_path = "targetplanet.frag",
+      name = "targetspob",
+      fs_path = "targetspob.frag",
    ),
    SimpleShader(
       name = "jumplane",
@@ -289,8 +311,8 @@ SHADERS = [
       fs_path = "gear.frag",
    ),
    SimpleShader(
-      name = "selectplanet",
-      fs_path = "selectplanet.frag",
+      name = "selectspob",
+      fs_path = "selectspob.frag",
    ),
    SimpleShader(
       name = "selectposition",
@@ -320,10 +342,6 @@ SHADERS = [
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),
-   SimpleShader(
-      name = "progressbar",
-      fs_path = "progressbar.frag",
-   ),
 ]
 
 def header_chunks():
@@ -332,36 +350,40 @@ def header_chunks():
 def generate_h_file():
     yield from header_chunks()
 
-    yield """
+    yield f"""
 #pragma once
 
 #include "glad.h"
 
-typedef struct SimpleShader_ {
-    GLuint program;
-    GLuint vertex;
-    GLuint projection;
-    GLuint color;
-    GLuint dimensions;
-    GLuint dt;
-    GLuint parami;
-    GLuint paramf;
-    GLuint paramv;
-} SimpleShader;
+#define NUM_SIMPLE_SHADERS  {num_simpleshaders}
 
-typedef struct Shaders_ {
+typedef struct SimpleShader_ {{
+   const char *name;
+   GLuint program;
+   GLuint vertex;
+   GLuint projection;
+   GLuint color;
+   GLuint dimensions;
+   GLuint dt;
+   GLuint parami;
+   GLuint paramf;
+   GLuint paramv;
+}} SimpleShader;
+
+typedef struct Shaders_ {{
 """
 
     for shader in SHADERS:
         yield from shader.header_chunks()
 
-    yield """} Shaders;
+    yield f"""   SimpleShader *simple_shaders[ NUM_SIMPLE_SHADERS ];
+}} Shaders;
 
 extern Shaders shaders;
 
-int shaders_loadSimple( SimpleShader *shd, const char *fs_path );
 void shaders_load (void);
 void shaders_unload (void);
+const SimpleShader *shaders_getSimple( const char *name );
 """
 
 def generate_c_file():
@@ -374,18 +396,42 @@ def generate_c_file():
 
 Shaders shaders;
 
-int shaders_loadSimple( SimpleShader *shd, const char *fs_path )
+static int nsimpleshaders = 0;
+
+static int shaders_cmp( const void *p1, const void *p2 )
 {
-    shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
-    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
-    shd->projection = glGetUniformLocation( shd->program, "projection" );
-    shd->color  = glGetUniformLocation( shd->program, "color" );
-    shd->dimensions = glGetUniformLocation( shd->program, "dimensions" );
-    shd->dt     = glGetUniformLocation( shd->program, "dt" );
-    shd->paramf = glGetUniformLocation( shd->program, "paramf" );
-    shd->parami = glGetUniformLocation( shd->program, "parami" );
-    shd->paramv = glGetUniformLocation( shd->program, "paramv" );
-    return 0;
+   const SimpleShader **s1 = (const SimpleShader**) p1;
+   const SimpleShader **s2 = (const SimpleShader**) p2;
+   return strcmp( (*s1)->name, (*s2)->name );
+}
+
+static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *fs_path )
+{
+   shd->name   = name;
+   shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
+   shd->vertex = glGetAttribLocation( shd->program, "vertex" );
+   shd->projection = glGetUniformLocation( shd->program, "projection" );
+   shd->color  = glGetUniformLocation( shd->program, "color" );
+   shd->dimensions = glGetUniformLocation( shd->program, "dimensions" );
+   shd->dt     = glGetUniformLocation( shd->program, "dt" );
+   shd->paramf = glGetUniformLocation( shd->program, "paramf" );
+   shd->parami = glGetUniformLocation( shd->program, "parami" );
+   shd->paramv = glGetUniformLocation( shd->program, "paramv" );
+
+   /* Add to list. */
+   shaders.simple_shaders[ nsimpleshaders++ ] = shd;
+
+   return 0;
+}
+
+const SimpleShader *shaders_getSimple( const char *name )
+{
+   const SimpleShader shd = { .name=name };
+   const SimpleShader *shdptr = &shd;
+   const SimpleShader **found = bsearch( &shdptr, shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   if (found!=NULL)
+      return *found;
+   return NULL;
 }
 
 void shaders_load (void) {
@@ -394,7 +440,9 @@ void shaders_load (void) {
         yield from shader.source_chunks()
         if i != len(SHADERS) - 1:
             yield "\n"
-    yield """}
+    yield """
+   qsort( shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+}
 
 void shaders_unload (void) {
 """

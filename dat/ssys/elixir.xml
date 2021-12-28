@@ -10,9 +10,9 @@
   <x>145.248810</x>
   <y>251.809064</y>
  </pos>
- <assets>
-  <asset>Elixir I</asset>
- </assets>
+ <spobs>
+  <spob>Elixir I</spob>
+ </spobs>
  <jumps>
   <jump target="Bastion">
    <autopos/>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hypergate Kiwi">
+ <displayname>Construction</displayname>
+ <marker>spobmarker_triangle</marker>
+ <pos>
+  <x>-470.770104</x>
+  <y>4172.735010</y>
+ </pos>
+ <GFX>
+  <space>hypergate_early_construction_stage.webp</space>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Construct</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+ <tags>
+  <tag>hypergate</tag>
+ </tags>
+</spob>

@@ -11,17 +11,18 @@
   <x>-579.523514</x>
   <y>-1044.424651</y>
  </pos>
- <assets>
-  <asset>Ruadan Bastion</asset>
-  <asset>Ruadan Gamma</asset>
-  <asset>Ruadan II</asset>
-  <asset>Ruadan J-1</asset>
-  <asset>Ruadan J-2</asset>
-  <asset>Ruadan Prime</asset>
-  <asset>Ruadan Secundus</asset>
-  <asset>Ruadan Station</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Hypergate Ruadan</spob>
+  <spob>Ruadan Bastion</spob>
+  <spob>Ruadan Gamma</spob>
+  <spob>Ruadan II</spob>
+  <spob>Ruadan J-1</spob>
+  <spob>Ruadan J-2</spob>
+  <spob>Ruadan Prime</spob>
+  <spob>Ruadan Secundus</spob>
+  <spob>Ruadan Station</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Damien">
    <autopos/>

@@ -10,13 +10,13 @@
   <x>-171.000000</x>
   <y>-442.000000</y>
  </pos>
- <assets>
-  <asset>Em 1</asset>
-  <asset>Em 2</asset>
-  <asset>Em 4</asset>
-  <asset>Em 5</asset>
-  <asset>INSS-1</asset>
- </assets>
+ <spobs>
+  <spob>Em 1</spob>
+  <spob>Em 2</spob>
+  <spob>Em 4</spob>
+  <spob>Em 5</spob>
+  <spob>INSS-1</spob>
+ </spobs>
  <jumps>
   <jump target="Eneguoz">
    <autopos/>

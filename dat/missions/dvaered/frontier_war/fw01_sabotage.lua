@@ -42,10 +42,10 @@ local pir = require "common.pirate"
 
 -- Mission constants
 local bombMass = 100
-local hampla, hamsys     = planet.getS("Stutee") --Morgan Station
-local sabotpla, sabotsys = planet.getS(fw.wlrd_planet)
-local duelpla, duelsys   = planet.getS("Dvaer Prime")
-local intpla, intsys     = planet.getS("Timu")
+local hampla, hamsys     = spob.getS("Stutee") --Morgan Station
+local sabotpla, sabotsys = spob.getS(fw.wlrd_planet)
+local duelpla, duelsys   = spob.getS("Dvaer Prime")
+local intpla, intsys     = spob.getS("Timu")
 
 -- Non-persistent state
 local p, ps -- active pilot/fleet
@@ -60,7 +60,7 @@ local equipGoddard, player_civilian, release_baddies -- Forward-declared functio
 message = fw.message
 
 function create()
-   if planet.cur() == hampla then
+   if spob.cur() == hampla then
       misn.finish(false)
    end
 
@@ -96,18 +96,18 @@ function accept()
 end
 
 function land()
-   if mem.stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
+   if mem.stage == 0 and spob.cur() == hampla then -- Meet Captain Hamfresser
       misn.npcAdd("hamfresser", _("Captain Hamfresser"), fw.portrait_hamfresser, _("A tall, and very large, cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his glare he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him."))
 
    elseif mem.stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
       misn.finish(false)
 
-   elseif mem.stage == 5 and planet.cur() == duelpla then -- Report back
+   elseif mem.stage == 5 and spob.cur() == duelpla then -- Report back
       misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
       misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
 
-   elseif mem.stage == 7 and planet.cur() == duelpla then -- Epilogue
+   elseif mem.stage == 7 and spob.cur() == duelpla then -- Epilogue
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_tam, _("Tam and Leblanc are congratulating their general."))
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
       misn.npcAdd("endMisn", _("Your employers"), fw.portrait_klank, _("Tam and Leblanc are congratulating their general."))

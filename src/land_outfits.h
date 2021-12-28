@@ -16,6 +16,6 @@ void outfits_updateEquipmentOutfits( void );
 int outfits_filter( const Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), const char *name );
 ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *n );
-int outfit_canBuy( const char *outfit, const Planet *planet );
+int outfit_canBuy( const char *outfit, const Spob *spob );
 int outfit_canSell( const char *outfit );
 void outfits_cleanup( void );

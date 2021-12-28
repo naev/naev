@@ -10,7 +10,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
-  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
+  <cond>spob.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]
@@ -39,13 +39,13 @@ local reward = 2e6
 mem.fled = false
 mem.jumps = 0
 mem.t_sys[1] = system.get("Xavier")
-mem.t_pla[1] = mem.t_sys[1]:planets()[1]
---mem.t_pla[2], mem.t_sys[2] = planet.getS("Gastan")
+mem.t_pla[1] = mem.t_sys[1]:spobs()[1]
+--mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 
 function create ()
    -- Have to be at center of operations.
    mem.t_pla[2], mem.t_sys[2] = sciwrong.getCenterOperations()
-   if planet.cur() ~= mem.t_pla[2] then
+   if spob.cur() ~= mem.t_pla[2] then
       misn.finish(false)
    end
 
@@ -299,7 +299,7 @@ function drone_disableable()
 end
 -- last hook
 function land_home()
-   if planet.cur() == mem.t_pla[2] then
+   if spob.cur() == mem.t_pla[2] then
       tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=mem.t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyse the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       player.pay(reward)
       player.outfitAdd("Toy Drone")

@@ -12,15 +12,15 @@
   <x>66.468747</x>
   <y>904.819147</y>
  </pos>
- <assets>
-  <asset>Hasselt II</asset>
-  <asset>Hasselt IV</asset>
-  <asset>Haurn</asset>
-  <asset>Phosarrus</asset>
-  <asset>Yak Station</asset>
-  <asset>Zhang Lu</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Hasselt II</spob>
+  <spob>Hasselt IV</spob>
+  <spob>Haurn</spob>
+  <spob>Phosarrus</spob>
+  <spob>Yak Station</spob>
+  <spob>Zhang Lu</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Bonanza">
    <autopos/>

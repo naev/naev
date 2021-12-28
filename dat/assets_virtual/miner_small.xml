@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Miner Small">
- <presence>
-  <faction>Miner</faction>
-  <base>53.333333</base>
-  <bonus>26.666667</bonus>
-  <range>2</range>
- </presence>
-</asset>

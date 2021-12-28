@@ -10,7 +10,7 @@
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>The Wringer</planet>
+   <spob>The Wringer</spob>
   </avail>
   <notes>
    <campaign>Heretic</campaign>
@@ -38,7 +38,7 @@ function create()
    mem.misn_tracker = var.peek("heretic_misn_tracker")
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.planding = 0
-   mem.homeasset, mem.homesys = planet.cur()
+   mem.homeasset, mem.homesys = spob.cur()
    mem.msg_checker = 0
    --set the mission stuff
    if not misn.claim(mem.homesys) then

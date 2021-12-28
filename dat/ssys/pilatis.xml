@@ -12,13 +12,13 @@
   <x>259.000000</x>
   <y>131.000000</y>
  </pos>
- <assets>
-  <asset>Pilatis I</asset>
-  <asset>Pilatis II</asset>
-  <asset>Pilatis III</asset>
-  <asset>Wildwood Station</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Pilatis I</spob>
+  <spob>Pilatis II</spob>
+  <spob>Pilatis III</spob>
+  <spob>Wildwood Station</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Defa">
    <autopos/>

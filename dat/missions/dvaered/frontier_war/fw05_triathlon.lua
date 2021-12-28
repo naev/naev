@@ -51,7 +51,7 @@ local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamSt
 message = fw.message
 
 -- Mission constants
-local destpla, destsys = planet.getS("Dvaer Prime")
+local destpla, destsys = spob.getS("Dvaer Prime")
 local radius = 4000
 local mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
@@ -189,7 +189,7 @@ local function sortPankration(i,j)
 end
 
 function spawnNpcs()
-   if (planet.cur() == destpla) then
+   if (spob.cur() == destpla) then
       -- First, compute the people's scores
       local iter = {1,2,3,4,5,6,7,8,9,10}
       table.sort( iter, sortTotal )

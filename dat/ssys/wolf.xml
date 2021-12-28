@@ -10,13 +10,13 @@
   <x>-305.505351</x>
   <y>-125.714213</y>
  </pos>
- <assets>
-  <asset>Koga</asset>
-  <asset>Mokoshotar</asset>
-  <asset>Wolf I</asset>
-  <asset>Wolf II</asset>
-  <asset>Wolf VII</asset>
- </assets>
+ <spobs>
+  <spob>Koga</spob>
+  <spob>Mokoshotar</spob>
+  <spob>Wolf I</spob>
+  <spob>Wolf II</spob>
+  <spob>Wolf VII</spob>
+ </spobs>
  <jumps>
   <jump target="Chloe">
    <autopos/>

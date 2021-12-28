@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virtual Sindbad">
+ <presence>
+  <faction>FLF</faction>
+  <base>100</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+</spob>

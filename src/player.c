@@ -143,7 +143,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship );
 static int player_saveMetadata( xmlTextWriterPtr writer );
-static Planet* player_parse( xmlNodePtr parent );
+static Spob* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
@@ -160,8 +160,8 @@ static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
-static int player_filterSuitablePlanet( Planet *p );
-static void player_planetOutOfRangeMsg (void);
+static int player_filterSuitableSpob( Spob *p );
+static void player_spobOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
@@ -170,7 +170,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
-Planet* player_load( xmlNodePtr parent ); /* save.c */
+Spob* player_load( xmlNodePtr parent ); /* save.c */
 
 /**
  * @brief Initializes player stuff.
@@ -579,7 +579,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Copy target info */
    ship->target = player.p->target;
-   ship->nav_planet = player.p->nav_planet;
+   ship->nav_spob = player.p->nav_spob;
    ship->nav_hyperspace = player.p->nav_hyperspace;
    ship->nav_anchor = player.p->nav_anchor;
    ship->nav_asteroid = player.p->nav_asteroid;
@@ -1181,11 +1181,11 @@ void player_think( Pilot* pplayer, const double dt )
          /* Disable turning. */
          facing = 1;
       }
-      /* If not try to face planet target. */
-      else if ((player.p->nav_planet != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
+      /* If not try to face spob target. */
+      else if ((player.p->nav_spob != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
-                  &cur_system->planets[ player.p->nav_planet ]->pos ));
+                  &cur_system->spobs[ player.p->nav_spob ]->pos ));
          /* Disable turning. */
          facing = 1;
       }
@@ -1406,24 +1406,24 @@ void player_restoreControl( int reason, const char *str )
 }
 
 /**
- * @brief Sets the player's target planet.
+ * @brief Sets the player's target spob.
  *
- *    @param id Target planet or -1 if none should be selected.
+ *    @param id Target spob or -1 if none should be selected.
  */
-void player_targetPlanetSet( int id )
+void player_targetSpobSet( int id )
 {
    int old;
 
-   if (id >= array_size(cur_system->planets)) {
-      WARN(_("Trying to set player's planet target to invalid ID '%d'"), id);
+   if (id >= array_size(cur_system->spobs)) {
+      WARN(_("Trying to set player's spob target to invalid ID '%d'"), id);
       return;
    }
 
    if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
       return;
 
-   old = player.p->nav_planet;
-   player.p->nav_planet = id;
+   old = player.p->nav_spob;
+   player.p->nav_spob = id;
    player_hyperspacePreempt((id < 0) ? 1 : 0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
@@ -1438,7 +1438,7 @@ void player_targetPlanetSet( int id )
  * @brief Sets the player's target asteroid.
  *
  *    @param field Index of the parent field of the asteoid.
- *    @param id Target planet or -1 if none should be selected.
+ *    @param id Target spob or -1 if none should be selected.
  */
 void player_targetAsteroidSet( int field, int id )
 {
@@ -1476,9 +1476,9 @@ void player_targetAsteroidSet( int field, int id )
 }
 
 /**
- * @brief Cycle through planet targets.
+ * @brief Cycle through spob targets.
  */
-void player_targetPlanet (void)
+void player_targetSpob (void)
 {
    int id;
 
@@ -1486,34 +1486,34 @@ void player_targetPlanet (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   /* Find next planet target. */
-   for (id=player.p->nav_planet+1; id<array_size(cur_system->planets); id++)
-      if (planet_isKnown( cur_system->planets[id] ))
+   /* Find next spob target. */
+   for (id=player.p->nav_spob+1; id<array_size(cur_system->spobs); id++)
+      if (spob_isKnown( cur_system->spobs[id] ))
          break;
 
-   /* Try to select the lowest-indexed valid planet. */
-   if (id >= array_size(cur_system->planets) ) {
+   /* Try to select the lowest-indexed valid spob. */
+   if (id >= array_size(cur_system->spobs) ) {
       id = -1;
-      for (int i=0; i<array_size(cur_system->planets); i++)
-         if (planet_isKnown( cur_system->planets[i] )) {
+      for (int i=0; i<array_size(cur_system->spobs); i++)
+         if (spob_isKnown( cur_system->spobs[i] )) {
             id = i;
             break;
          }
    }
 
    /* Untarget if out of range. */
-   player_targetPlanetSet( id );
+   player_targetSpobSet( id );
 }
 
 /**
- * @brief Try to land or target closest planet if no land target.
+ * @brief Try to land or target closest spob if no land target.
  *
  *    @param loud Whether or not to show messages irrelevant when auto-landing.
  *    @return One of PLAYER_LAND_OK, PLAYER_LAND_AGAIN, or PLAYER_LAND_DENIED.
  */
 int player_land( int loud )
 {
-   Planet *planet;
+   Spob *spob;
    int silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
@@ -1531,37 +1531,37 @@ int player_land( int loud )
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
       return PLAYER_LAND_DENIED;
 
-   /* Check if there are planets to land on. */
-   if (array_size(cur_system->planets) == 0) {
-      player_messageRaw( _("#rThere are no planets to land on.") );
+   /* Check if there are spobs to land on. */
+   if (array_size(cur_system->spobs) == 0) {
+      player_messageRaw( _("#rThere are no spobs to land on.") );
       return PLAYER_LAND_DENIED;
    }
 
-   if (player.p->nav_planet == -1) { /* get nearest planet target */
+   if (player.p->nav_spob == -1) { /* get nearest spob target */
       double td = -1.; /* temporary distance */
-      int tp = -1; /* temporary planet */
-      for (int i=0; i<array_size(cur_system->planets); i++) {
-         planet = cur_system->planets[i];
-         double d = vect_dist(&player.p->solid->pos,&planet->pos);
-         if (pilot_inRangePlanet( player.p, i ) &&
-               planet_hasService(planet,PLANET_SERVICE_LAND) &&
+      int tp = -1; /* temporary spob */
+      for (int i=0; i<array_size(cur_system->spobs); i++) {
+         spob = cur_system->spobs[i];
+         double d = vect_dist(&player.p->solid->pos,&spob->pos);
+         if (pilot_inRangeSpob( player.p, i ) &&
+               spob_hasService(spob,SPOB_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;
          }
       }
-      player_targetPlanetSet( tp );
+      player_targetSpobSet( tp );
       player_hyperspacePreempt(0);
 
-      /* no landable planet */
-      if (player.p->nav_planet < 0)
+      /* no landable spob */
+      if (player.p->nav_spob < 0)
          return PLAYER_LAND_DENIED;
 
       silent = 1; /* Suppress further targeting noises. */
    }
-   /* Check if planet is in range. */
-   else if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-      player_planetOutOfRangeMsg();
+   /* Check if spob is in range. */
+   else if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
+      player_spobOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
    }
 
@@ -1574,28 +1574,28 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
 
-   /* attempt to land at selected planet */
-   planet = cur_system->planets[player.p->nav_planet];
-   if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+   /* attempt to land at selected spob */
+   spob = cur_system->spobs[player.p->nav_spob];
+   if (!spob_hasService(spob, SPOB_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-      if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
-         if (planet->can_land || (planet->land_override > 0))
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->land_msg );
-         else if (planet->bribed && (planet->land_override >= 0))
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->bribe_ack_msg );
+      if (spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
+         if (spob->can_land || (spob->land_override > 0))
+            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+                  spob_name(spob), spob->land_msg );
+         else if (spob->bribed && (spob->land_override >= 0))
+            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+                  spob_name(spob), spob->bribe_ack_msg );
          else { /* Hostile */
-            player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
-                  _(planet->name), planet->land_msg );
+            player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+                  spob_name(spob), spob->land_msg );
             return PLAYER_LAND_DENIED;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( _("#oReady to land on %s."), _(planet->name) );
+         player_message( _("#oReady to land on %s."), spob_name(spob) );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1603,15 +1603,15 @@ int player_land( int loud )
 
       return player_land(loud);
    }
-   else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
+   else if (vect_dist2(&player.p->solid->pos,&spob->pos) > pow2(spob->radius)) {
       if (loud)
-         player_message(_("#rYou are too far away to land on %s."), _(planet->name));
+         player_message(_("#rYou are too far away to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
-         player_message(_("#rYou are going too fast to land on %s."), _(planet->name));
+         player_message(_("#rYou are going too fast to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
    }
 
@@ -1629,6 +1629,18 @@ int player_land( int loud )
    if (pilot_outfitOffAll( player.p ) > 0)
       pilot_calcStats( player.p );
 
+   /* Do whatever the spob wants to do. */
+   if (spob->lua_land != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
+      lua_pushspob( naevL, spob_index(spob) );
+      if (nlua_pcall( spob->lua_env, 1, 0 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "lua_land", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+
+      return PLAYER_LAND_OK;
+   }
+
    /* Start landing. */
    player_soundPause();
    player.p->landing_delay = PILOT_LANDING_DELAY * player_dt_default();
@@ -1645,19 +1657,19 @@ int player_land( int loud )
  */
 void player_checkLandAck( void )
 {
-   Planet *p;
+   Spob *p;
 
    /* No authorization to revoke. */
    if ((player.p == NULL) || !player_isFlag(PLAYER_LANDACK))
       return;
 
    /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
-   if (player.p->nav_planet < 0) {
-      WARN(_("Player has landing permission, but no valid planet targeted."));
+   if (player.p->nav_spob < 0) {
+      WARN(_("Player has landing permission, but no valid spob targeted."));
       return;
    }
 
-   p = cur_system->planets[ player.p->nav_planet ];
+   p = cur_system->spobs[ player.p->nav_spob ];
 
    /* Player can still land. */
    if (p->can_land || (p->land_override > 0) || p->bribed)
@@ -1665,7 +1677,7 @@ void player_checkLandAck( void )
 
    player_rmFlag(PLAYER_LANDACK);
    player_message( _("#%c%s>#0 Landing permission revoked."),
-         planet_getColourChar(p), _(p->name) );
+         spob_getColourChar(p), spob_name(p) );
 }
 
 /**
@@ -1786,9 +1798,9 @@ void player_targetHyperspace (void)
 }
 
 /**
- * @brief Enables or disables jump points preempting planets in autoface and target clearing.
+ * @brief Enables or disables jump points preempting spobs in autoface and target clearing.
  *
- *    @param preempt Boolean; 1 preempts planet target.
+ *    @param preempt Boolean; 1 preempts spob target.
  */
 void player_hyperspacePreempt( int preempt )
 {
@@ -1796,9 +1808,9 @@ void player_hyperspacePreempt( int preempt )
 }
 
 /**
- * @brief Returns whether the jump point target should preempt the planet target.
+ * @brief Returns whether the jump point target should preempt the spob target.
  *
- *    @return Boolean; 1 preempts planet target.
+ *    @return Boolean; 1 preempts spob target.
  */
 int player_getHypPreempt(void)
 {
@@ -1923,10 +1935,10 @@ void player_brokeHyperspace (void)
    /* First run jump hook. */
    hooks_run( "jumpout" );
 
-   /* Prevent targeted planet # from carrying over. */
+   /* Prevent targeted spob # from carrying over. */
    gui_setNav();
    gui_setTarget();
-   player_targetPlanetSet( -1 );
+   player_targetSpobSet( -1 );
    player_targetAsteroidSet( -1, -1 );
 
    /* calculates the time it takes, call before space_init */
@@ -2124,32 +2136,32 @@ void player_targetPrev( int mode )
 }
 
 /**
- * @brief Clears the player's ship, planet or hyperspace target, in that order.
+ * @brief Clears the player's ship, spob or hyperspace target, in that order.
  */
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if ((player.p->target == PLAYER_ID) && (player.p->nav_planet < 0)
-         && (preemption == 1 || player.p->nav_planet == -1)
+   if ((player.p->target == PLAYER_ID) && (player.p->nav_spob < 0)
+         && (preemption == 1 || player.p->nav_spob == -1)
          && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
       map_clear();
    }
    else if (player.p->target == PLAYER_ID)
-      player_targetPlanetSet( -1 );
+      player_targetSpobSet( -1 );
    else
       player_targetSet( PLAYER_ID );
    gui_setNav();
 }
 
 /**
- * @brief Clears all player targets: hyperspace, planet, asteroid, etc...
+ * @brief Clears all player targets: hyperspace, spob, asteroid, etc...
  */
 void player_targetClearAll (void)
 {
    player_targetHyperspaceSet( -1 );
-   player_targetPlanetSet( -1 );
+   player_targetSpobSet( -1 );
    player_targetAsteroidSet( -1, -1 );
    player_targetSet( PLAYER_ID );
 }
@@ -2273,12 +2285,12 @@ static void player_checkHail (void)
 }
 
 /**
- * @brief Displays an out of range message for the player's currently selected planet.
+ * @brief Displays an out of range message for the player's currently selected spob.
  */
-static void player_planetOutOfRangeMsg (void)
+static void player_spobOutOfRangeMsg (void)
 {
    player_message( _("#r%s is out of comm range, unable to contact."),
-         _(cur_system->planets[player.p->nav_planet]->name) );
+         spob_name(cur_system->spobs[player.p->nav_spob]) );
 }
 
 /**
@@ -2293,11 +2305,11 @@ void player_hail (void)
 
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if (player.p->nav_planet != -1) {
-      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
-         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   else if (player.p->nav_spob != -1) {
+      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
       else
-         player_planetOutOfRangeMsg();
+         player_spobOutOfRangeMsg();
    }
    else
       player_message(_("#rNo target selected to hail."));
@@ -2307,19 +2319,19 @@ void player_hail (void)
 }
 
 /**
- * @brief Opens communication with the player's planet target.
+ * @brief Opens communication with the player's spob target.
  */
-void player_hailPlanet (void)
+void player_hailSpob (void)
 {
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_planet != -1) {
-      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
-         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   if (player.p->nav_spob != -1) {
+      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
       else
-         player_planetOutOfRangeMsg();
+         player_spobOutOfRangeMsg();
    }
    else
       player_message(_("#rNo target selected to hail."));
@@ -2959,7 +2971,7 @@ void player_runHooks (void)
       player_rmFlag( PLAYER_HOOK_JUMPIN );
    }
    if (player_isFlag( PLAYER_HOOK_LAND )) {
-      land( cur_system->planets[ player.p->nav_planet ], 0 );
+      land( cur_system->spobs[ player.p->nav_spob ], 0 );
       player_rmFlag( PLAYER_HOOK_LAND );
    }
 }
@@ -3103,7 +3115,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "time" */
 
    /* Current ship. */
-   xmlw_elem(writer, "location", "%s", land_planet->name);
+   xmlw_elem(writer, "location", "%s", land_spob->name);
    player_saveShip( writer, &player.ps ); /* current ship */
 
    /* Ships. */
@@ -3384,10 +3396,10 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
  *    @param parent Node where the player stuff is to be found.
  *    @return 0 on success.
  */
-Planet* player_load( xmlNodePtr parent )
+Spob* player_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
-   Planet *pnt;
+   Spob *pnt;
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
@@ -3529,13 +3541,13 @@ static void player_tryAddLicense( const char *name )
  * @brief Parses the player node.
  *
  *    @param parent The player node.
- *    @return Planet to start on on success.
+ *    @return Spob to start on on success.
  */
-static Planet* player_parse( xmlNodePtr parent )
+static Spob* player_parse( xmlNodePtr parent )
 {
-   const char *planet;
+   const char *spob;
    unsigned int services;
-   Planet *pnt;
+   Spob *pnt;
    xmlNodePtr node, cur;
    int map_overlay_enabled;
    StarSystem *sys;
@@ -3551,7 +3563,7 @@ static Planet* player_parse( xmlNodePtr parent )
    pnt = NULL;
 
    /* Safe defaults. */
-   planet      = NULL;
+   spob        = NULL;
    time_set    = 0;
    map_overlay_enabled = 0;
    player_ran_updater = 0;
@@ -3559,10 +3571,10 @@ static Planet* player_parse( xmlNodePtr parent )
    player.dt_mod = 1.; /* For old saves. */
    player.radar_res = RADAR_RES_DEFAULT;
 
-   /* Must get planet first. */
+   /* Must get spob first. */
    node = parent->xmlChildrenNode;
    do {
-      xmlr_str(node,"location",planet);
+      xmlr_str(node,"location",spob);
    } while (xml_nextNode(node));
 
    /* Parse rest. */
@@ -3692,50 +3704,49 @@ static Planet* player_parse( xmlNodePtr parent )
    }
 
    /* set player in system */
-   pnt = planet_get( planet );
-   /* Get random planet if it's NULL. */
-   if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
-         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
-      WARN(_("Player starts out in non-existent or invalid planet '%s',"
+   pnt = spob_get( spob );
+   /* Get random spob if it's NULL. */
+   if ((pnt == NULL) || (spob_getSystem(spob) == NULL) ||
+         !spob_hasService(pnt, SPOB_SERVICE_LAND)) {
+      WARN(_("Player starts out in non-existent or invalid spob '%s',"
             "trying to find a suitable one instead."),
-            planet );
+            spob );
 
-      /* Find a landable, inhabited planet that's in a system, offers refueling
+      /* Find a landable, inhabited spob that's in a system, offers refueling
        * and meets the following additional criteria:
        *
        *    0: Shipyard, outfitter, non-hostile
        *    1: Outfitter, non-hostile
        *    2: None
        *
-       * If no planet meeting the current criteria can be found, the next
+       * If no spob meeting the current criteria can be found, the next
        * set of criteria is tried until none remain.
        */
       const char *found = NULL;
       for (int i=0; i<3; i++) {
-         services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |
-               PLANET_SERVICE_REFUEL;
+         services = SPOB_SERVICE_LAND | SPOB_SERVICE_INHABITED | SPOB_SERVICE_REFUEL;
 
          if (i == 0)
-            services |= PLANET_SERVICE_SHIPYARD;
+            services |= SPOB_SERVICE_SHIPYARD;
 
          if (i != 2)
-            services |= PLANET_SERVICE_OUTFITS;
+            services |= SPOB_SERVICE_OUTFITS;
 
-         found = space_getRndPlanet( 1, services,
-               (i != 2) ? player_filterSuitablePlanet : NULL );
+         found = space_getRndSpob( 1, services,
+               (i != 2) ? player_filterSuitableSpob : NULL );
          if (found != NULL)
             break;
 
-         WARN(_("Could not find a planet satisfying criteria %d."), i);
+         WARN(_("Could not find a spob satisfying criteria %d."), i);
       }
 
       if (found == NULL) {
-         WARN(_("Could not find a suitable planet. Choosing a random planet."));
-         found = space_getRndPlanet(0, 0, NULL); /* This should never, ever fail. */
+         WARN(_("Could not find a suitable spob. Choosing a random spob."));
+         found = space_getRndSpob(0, 0, NULL); /* This should never, ever fail. */
       }
-      pnt = planet_get( found );
+      pnt = spob_get( found );
    }
-   sys = system_get( planet_getSystem( pnt->name ) );
+   sys = system_get( spob_getSystem( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2.*M_PI;
    r = RNGF() * pnt->radius * 0.8;
@@ -3754,12 +3765,12 @@ static Planet* player_parse( xmlNodePtr parent )
 }
 
 /**
- * @brief Filter function for space_getRndPlanet
+ * @brief Filter function for space_getRndSpob
  *
- *    @param p Planet.
- *    @return Whether the planet is suitable for teleporting to.
+ *    @param p Spob.
+ *    @return Whether the spob is suitable for teleporting to.
  */
-static int player_filterSuitablePlanet( Planet *p )
+static int player_filterSuitableSpob( Spob *p )
 {
    return !areEnemies(p->presence.faction, FACTION_PLAYER);
 }

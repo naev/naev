@@ -10,13 +10,13 @@
   <x>-456.272018</x>
   <y>-282.614213</y>
  </pos>
- <assets>
-  <asset>Blackwell I</asset>
-  <asset>Blackwell IIX</asset>
-  <asset>Blackwell VII</asset>
-  <asset>Colley</asset>
-  <asset>Slofeldt</asset>
- </assets>
+ <spobs>
+  <spob>Blackwell I</spob>
+  <spob>Blackwell IIX</spob>
+  <spob>Blackwell VII</spob>
+  <spob>Colley</spob>
+  <spob>Slofeldt</spob>
+ </spobs>
  <jumps>
   <jump target="Jade">
    <autopos/>

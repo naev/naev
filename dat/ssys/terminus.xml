@@ -10,9 +10,9 @@
   <x>-42.680556</x>
   <y>-118.822531</y>
  </pos>
- <assets>
-  <asset>Foundation Station</asset>
- </assets>
+ <spobs>
+  <spob>Foundation Station</spob>
+ </spobs>
  <jumps>
   <jump target="Acheron">
    <autopos/>

@@ -51,10 +51,10 @@ function accept()
       misn.finish()
    end
    tk.msg(_("The hunt begins"), fmt.f(_([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's private ship into your computer. I did some digging in the military database to find them. You don't graduate from the Sinass High Academy with honors without picking up a few tricks! I know, I know, it's classified data, but it's for a good cause, wouldn't you say? You should be able to identify Harja when you pick him up on your sensors now. If you have trouble locating him, consider installing better sensors on your ship so you can pick him up from farther away. But don't spend too much effort looking for him, just keep a look out as you go about your normal business. If you just stay in Sirius space, I'm sure you'll run into him sooner or later."
-    Joanne gets up to leave, but before she goes she adds, "I'll be on {pnt} for a while longer, so come back here when you've got something. Good luck!"]]), {pnt=planet.cur()}))
+    Joanne gets up to leave, but before she goes she adds, "I'll be on {pnt} for a while longer, so come back here when you've got something. Good luck!"]]), {pnt=spob.cur()}))
 
-   mem.destplanet, mem.destsys = planet.cur() -- Keeps track of where the mission was accepted.
-   mem.origin = planet.cur() -- Keeps track of where the player enters the system from.
+   mem.destplanet, mem.destsys = spob.cur() -- Keeps track of where the mission was accepted.
+   mem.origin = spob.cur() -- Keeps track of where the player enters the system from.
 
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
@@ -99,7 +99,7 @@ end
 function date()
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
-      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets())
+      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():spobs())
       for i, j in ipairs(spawnpoints) do
          if j == mem.origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.
@@ -185,8 +185,8 @@ end
 
 -- Land hook.
 function land()
-   mem.origin = planet.cur()
-   if planet.cur() == mem.destplanet and mem.harjatalked then
+   mem.origin = spob.cur()
+   if spob.cur() == mem.destplanet and mem.harjatalked then
       player.landWindow("bar")
       tk.msg(_("Full circle"), fmt.f(_([[You meet Joanne in the spaceport bar. She listens to your account of your conversation with Harja. When you're finished, she frowns.
     "I've got to admit, I find his story a little disturbing. He genuinely seems to believe I framed him for that hack, just as I believe he tried to frame me. From what you told me, it doesn't seem like he was just putting up a self-righteous story to justify his actions, and I wouldn't expect that from him anyway. But that's impossible. Besides the two of us, there was nobody who had the slightest interest in removing either one of us from the academy. I know I didn't do it, so that means Harja must have done it. Only..." Joanne pauses. "You said he swore an oath. Whatever else I might think of him, I can't quite believe he would abuse his Sirian beliefs in such a way. We Sirii take our faith very seriously.

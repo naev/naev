@@ -31,7 +31,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local targetworld, targetworld_sys = planet.getS("Halir")
+local targetworld, targetworld_sys = spob.getS("Halir")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -39,7 +39,7 @@ function create ()
    -- Note: this mission does not make any system claims.
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
-   if targetworld == planet.cur() then --makes sure pilot is not currently on Gamma Polaris
+   if targetworld == spob.cur() then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)
     end
 end
@@ -71,7 +71,7 @@ end
 
 function land()
 
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc6 )
          -- More flavour text

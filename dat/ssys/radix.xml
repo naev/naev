@@ -10,13 +10,13 @@
   <x>226.000000</x>
   <y>-671.000000</y>
  </pos>
- <assets>
-  <asset>Myuirr Station</asset>
-  <asset>Radix I</asset>
-  <asset>Radix II</asset>
-  <asset>Radix III</asset>
-  <asset>Stutee</asset>
- </assets>
+ <spobs>
+  <spob>Myuirr Station</spob>
+  <spob>Radix I</spob>
+  <spob>Radix II</spob>
+  <spob>Radix III</spob>
+  <spob>Stutee</spob>
+ </spobs>
  <jumps>
   <jump target="Dvaer">
    <autopos/>

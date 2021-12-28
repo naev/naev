@@ -20,7 +20,7 @@ function spir.PirateStanding:init(args)
    args.mod_kill_enemy     = args.mod_kill_enemy      or 1           -- Kills of the faction's enemies
    args.mod_kill_friend    = args.mod_kill_friend     or 0           -- Kills of the faction's allies
 
-   args.friendly_at       = args.friendly_at          or 40          -- Standing value threshold between neutral and friendly.
+   args.friendly_at        = args.friendly_at          or 40          -- Standing value threshold between neutral and friendly.
 
    args.text = args.text or {
       [95] = _("Clan Legend"),

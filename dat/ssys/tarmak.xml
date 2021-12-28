@@ -10,9 +10,9 @@
   <x>1049.217299</x>
   <y>-845.393139</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="An'ku">
    <autopos/>

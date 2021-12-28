@@ -8,7 +8,7 @@
    <priority>4</priority>
    <chance>50</chance>
    <location>Bar</location>
-   <planet>Dvaer Prime</planet>
+   <spob>Dvaer Prime</spob>
   </avail>
   <notes>
    <tier>3</tier>
@@ -46,7 +46,7 @@ local usedNames = {}   --In order not to have two pilots with the same name
 local opponent, sec11, sec12, sec21, sec22, tv1, tv2
 
 --Change here to change the planet and the system
-local mispla, missys = planet.getS("Dvaer Prime")
+local mispla, missys = spob.getS("Dvaer Prime")
 
 local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
 -- luacheck: globals assault enter escort_attacked jumpout land oppo_attacked oppo_boarded oppo_dead oppo_disabled oppo_jump player_disabled (Hook functions passed by name)
@@ -347,14 +347,14 @@ end
 
 function land()
 
-   if mem.stage == 2 and planet.cur() == mispla then  --player goes to next round
+   if mem.stage == 2 and spob.cur() == mispla then  --player goes to next round
       --Manage the player's progress
       tk.msg(_("You won this round"), _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]]))
 
       populate_bar()
       mem.official = misn.npcAdd("cleanNbegin", _("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 
-      elseif mem.stage == 3 and planet.cur() == mispla then  --player will be payed
+      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be payed
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))

@@ -10,13 +10,13 @@
   <x>301.141714</x>
   <y>-879.645188</y>
  </pos>
- <assets>
-  <asset>Allous GG-3</asset>
-  <asset>Allous I</asset>
-  <asset>Allous II</asset>
-  <asset>Allous Station</asset>
-  <asset>Nanek</asset>
- </assets>
+ <spobs>
+  <spob>Allous GG-3</spob>
+  <spob>Allous I</spob>
+  <spob>Allous II</spob>
+  <spob>Allous Station</spob>
+  <spob>Nanek</spob>
+ </spobs>
  <jumps>
   <jump target="Faust">
    <autopos/>

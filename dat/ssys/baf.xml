@@ -11,14 +11,14 @@
   <x>276.584910</x>
   <y>-624.748747</y>
  </pos>
- <assets>
-  <asset>BGG-1356</asset>
-  <asset>Baf I</asset>
-  <asset>Baf IV</asset>
-  <asset>Dumas Station</asset>
-  <asset>MGG-1294</asset>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>BGG-1356</spob>
+  <spob>Baf I</spob>
+  <spob>Baf IV</spob>
+  <spob>Dumas Station</spob>
+  <spob>MGG-1294</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Beeklo">
    <autopos/>

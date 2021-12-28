@@ -89,7 +89,7 @@ local function random_planet()
       minimum_distance, maximum_distance,
 
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             local f = v:faction()
             if f and ships[f:nameRaw()] and v:services().shipyard then
                planets[#planets + 1] = v
@@ -200,7 +200,7 @@ function accept()
 end
 
 function land()
-   local landed, landsys = planet.cur()
+   local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
       local tmp = pilot.add( mem.ship, "Independent" )

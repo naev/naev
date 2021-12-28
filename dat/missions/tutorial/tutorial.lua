@@ -26,9 +26,9 @@ local msg_info, spawn_captain_tp -- Forward-declared functions
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )
-local start_planet = planet.get( "Bolero" )
+local start_planet = spob.get( "Bolero" )
 local start_planet_r = 200
-local dest_planet = planet.get( "Benteen" )
+local dest_planet = spob.get( "Benteen" )
 local dest_planet_r = 200
 
 function create ()

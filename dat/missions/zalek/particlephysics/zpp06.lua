@@ -7,7 +7,7 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 5</done>
  </avail>
@@ -32,7 +32,7 @@ local zpp = require "common.zalek_physics"
 -- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp06
-local destpnt, destsys = planet.getS("PRP-1")
+local destpnt, destsys = spob.getS("PRP-1")
 
 function create ()
    misn.setNPC( _("Noona"), zpp.noona.portrait, zpp.noona.description )
@@ -87,7 +87,7 @@ She hands you the report package, which seems a bit heavier than you expected, a
 end
 
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 

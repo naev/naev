@@ -36,12 +36,12 @@ function create ()
    misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.webp", _("You see a drunkard at the bar mumbling about how he was so close to getting his break.") )  -- creates the drunkard at the bar
 
    -- Planets
-   mem.pickupWorld, mem.pickupSys  = planet.getLandable("INSS-2")
-   mem.delivWorld, mem.delivSys    = planet.getLandable("Darkshed")
+   mem.pickupWorld, mem.pickupSys  = spob.getLandable("INSS-2")
+   mem.delivWorld, mem.delivSys    = spob.getLandable("Darkshed")
    if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
       misn.finish(false)
    end
-   mem.origWorld, mem.origSys      = planet.cur()
+   mem.origWorld, mem.origSys      = spob.cur()
 
 --   origtime = time.get()
 end
@@ -81,7 +81,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == mem.pickupWorld and not mem.pickedup then
+   if spob.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < 45 then
          tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
          misn.finish()
@@ -97,7 +97,7 @@ function land ()
 
          misn.osdActive(2)  --OSD
       end
-   elseif planet.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
+   elseif spob.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
       tk.msg( _("Success"), _([[You finally arrive at your destination, bringing your ship down to land right beside a beautiful woman with long blonde locks in a long extravagant gown. You know this must be the countess, but you're unsure how she knew you were going to arrive, to be waiting for you. When you get out of your ship, you notice there are no dock workers anywhere in sight, only a group of heavily armed private militia that weren't there when you landed.
     You gulp as she motions to them without showing a hint of emotion. In formation, they all raise their weapons. As you think your life is about to end, every other row turns and hands off their weapon, and then marches forward and quickly unloads your cargo onto a small transport carrier, and march off. The countess smirks at you and winks before walking off. You breath a sigh of relief, only to realize you haven't been paid. As you walk back onto your ship, you see a card laying on the floor with simply her name, Countess Amelia Vollana.]]) )
       misn.cargoRm (mem.cargoID)

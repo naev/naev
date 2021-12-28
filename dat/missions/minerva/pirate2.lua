@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Minerva Pirates 1</done>
  </avail>
  <notes>
@@ -119,7 +119,7 @@ end
 
 
 function land ()
-   if mem.misn_state==1 and planet.cur() == planet.get("Minerva Station") then
+   if mem.misn_state==1 and spob.cur() == spob.get("Minerva Station") then
       vn.clear()
       vn.scene()
       local pir = vn.newCharacter( minerva.vn_pirate() )
@@ -217,7 +217,7 @@ function drone_death ()
       mem.misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)
-      misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
+      misn.markerMove( mem.misnmarker, spob.get("Minerva Station") )
    end
 end
 function drone_attacked( p )

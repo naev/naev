@@ -91,7 +91,7 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro = planet.get( "Raglan Outpost" )
+         local ro = spob.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
          dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
@@ -297,7 +297,7 @@ end
 
 
 function land ()
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( _("Another Day, Another Victory"), fmt.f( _([[If your comrades were happy about your success at Raelid, they are ecstatic about your victory at Haleb. As you enter the station, you are met with cheers from what seems to be everyone. As a result, it takes you longer than usual to make it to Benito. "Congratulations," she says. "That was an astounding victory, sure to set back the Dvaered oppressors substantially! This is the first time we've pushed them out of Frontier space, and for that, we all thank you. If you haven't noticed, you've made yourself into a bit of a hero!
     "Here is your pay, {player}. May we have another daring operation later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]]), {player=player.name()} ) )
       finish()

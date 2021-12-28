@@ -10,7 +10,7 @@
   <chance>40</chance>
   <location>Bar</location>
   <done>Empire Shipping 3</done>
-  <planet>Omega Station</planet>
+  <spob>Omega Station</spob>
  </avail>
  <notes>
   <campaign>Collective</campaign>
@@ -36,7 +36,7 @@ local emp = require "common.empire"
 -- Mission constants
 local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
 
 local p -- Non-persistent state
 -- luacheck: globals enter idle jumpout kill land spotdrone (Hook functions passed by name)
@@ -133,7 +133,7 @@ function spotdrone()
 end
 
 function land()
-   local pnt = planet.cur()
+   local pnt = spob.cur()
 
    if mem.misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.

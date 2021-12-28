@@ -42,7 +42,7 @@ enum {
  * Landed at.
  */
 extern int landed;
-extern Planet* land_planet;
+extern Spob* land_spob;
 extern int land_takeoff;
 
 /* Tracking for which tabs have been generated. */
@@ -55,7 +55,7 @@ extern unsigned int land_generated;
  */
 void land_queueTakeoff (void);
 int land_doneLoading (void);
-void land( Planet* p, int load );
+void land( Spob* p, int load );
 void land_genWindows( int load, int changetab );
 void takeoff( int delay );
 void land_cleanup (void);

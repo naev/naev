@@ -10,12 +10,12 @@
   <x>106.308800</x>
   <y>780.858667</y>
  </pos>
- <assets>
-  <asset>Calvin</asset>
-  <asset>Mendez</asset>
-  <asset>Rodney</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Calvin</spob>
+  <spob>Mendez</spob>
+  <spob>Rodney</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Bonanza">
    <autopos/>

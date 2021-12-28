@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gastan">
+ <pos>
+  <x>4945.550390</x>
+  <y>3067.007994</y>
+ </pos>
+ <GFX>
+  <space>A04.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>200.000000</base>
+  <bonus>50.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>125000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Gastan is one of House Za'leks research worlds that moonlights as a mining world for valuable materials. Many of the labs here are off-limits to outsiders, but the main city and space-port is a popular hub for internal trade and commerce.</description>
+  <bar>There is nothing particularly note-worthy about this bar other than the complex machinery on display through metre-thick translucent plasteel. The bar is built underground in a long-drained mining shaft, and the equipment seems to be of interest to many of the patrons.</bar>
+ </general>
+ <tags>
+  <tag>tourism</tag>
+  <tag>mining</tag>
+  <tag>research</tag>
+  <tag>trade</tag>
+ </tags>
+</spob>

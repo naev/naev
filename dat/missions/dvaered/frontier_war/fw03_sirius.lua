@@ -47,7 +47,7 @@ local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddie
 escort_hailed = fw.escort_hailed -- common hooks
 
 -- Mission constants
-local destpla, destsys = planet.getS("Mannannan")
+local destpla, destsys = spob.getS("Mannannan")
 local lore_text = {}
 
 lore_text[1] = _([["Good question, citizen! It is likely the intelligence services of the other nations know that General Klank and I are involved in the invasion project. Though, they probably don't know how imminent it is. It's likely they hired henchmen to hound or outright stop us. We have identified some of the henchmen actually. They are the kind of independent mercenaries we find in any kind of shady operations... A bit like you in fact."]])
@@ -110,7 +110,7 @@ function accept()
 
    mem.stage = 0
 
-   mem.previous = planet.cur()
+   mem.previous = spob.cur()
    mem.enterhook = hook.enter("enter")
    mem.landhook = hook.land("land")
 
@@ -237,7 +237,7 @@ function land()
 
    -- Landing after an enemy (victory as well)
    elseif mem.stage == 6 then
-      if planet.cur() == mem.nextt then
+      if spob.cur() == mem.nextt then
          compute_reward()
          tk.msg( _("End of the hunt"), fmt.f(_([[You land and walk around the spacedock, in search of your target's ship. You finally see it. A mighty {ship}, covered in the score marks of the battle that just occurred. You hide yourself behind some crates near the ship and wait for the pilot to come back and take off in order to finish your job in space.
    When looking closer at the ship, you see both ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship. Among the ship's scars, you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They had to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
@@ -256,7 +256,7 @@ function land()
          misn.finish(false)
       end
    end
-   mem.previous = planet.cur()
+   mem.previous = spob.cur()
 end
 
 -- Spawn the escort

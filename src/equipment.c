@@ -1091,6 +1091,12 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          (event->type != SDL_MOUSEMOTION))
       return 0;
 
+   /* Is covered by something. */
+   if (widget_isCovered( wid, "cstEquipment", mx, my )) {
+      wgt->mouseover = -1;
+      return 0;
+   }
+
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
    tw = bw / (double)n;
@@ -1397,7 +1403,7 @@ static void equipment_genShipList( unsigned int wid )
       return;
 
    eq_wgt.selected = NULL;
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+   if (spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD))
       nships   = player_nships()+1;
    else
       nships   = 1;
@@ -1417,7 +1423,7 @@ static void equipment_genShipList( unsigned int wid )
       t = gl_newImage( r, 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
    }
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
       player_shipsSort();
       ps = player_getShipStack();
       for (int i=1; i<=array_size(ps); i++) {

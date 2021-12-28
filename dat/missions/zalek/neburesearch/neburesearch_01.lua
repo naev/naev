@@ -9,7 +9,7 @@
   <done>Novice Nebula Research</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Vilati Vilata</planet>
+  <spob>Vilati Vilata</spob>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>
@@ -40,8 +40,8 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system.")
 osd_msg[2] = _("Land on {pnt} in the {sys} system.")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system.")
 
-local station = planet.get("PSO Monitor")
-local homeworld = planet.get("Bastion Station")
+local station = spob.get("PSO Monitor")
+local homeworld = spob.get("Bastion Station")
 local t_sys = {
     system.get("Ksher"),
     system.get("Sultan"),
@@ -53,10 +53,10 @@ local t_sys = {
     system.get("Pultatis"),
 }
 local t_planet = {
-    [1] = planet.get("Qoman"),
+    [1] = spob.get("Qoman"),
     [5] = station,
-    [6] = planet.get("Qoman"),
-    [7] = planet.get("Vilati Vilata"),
+    [6] = spob.get("Qoman"),
+    [7] = spob.get("Vilati Vilata"),
     [8] = homeworld,
 }
 
@@ -79,7 +79,7 @@ function accept()
     mem.stage = 1
     mem.exited = false
     mem.firstTakeOff = true
-    mem.origin = planet.cur()
+    mem.origin = spob.cur()
 
     tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
     We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
@@ -167,19 +167,19 @@ function land()
     if not mem.exited then
         tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
-    elseif planet.cur() == station and not mem.station_visited then
+    elseif spob.cur() == station and not mem.station_visited then
         tk.msg(_("A short break"), fmt.f(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
     "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
     She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
         mem.station_visited = true
-    elseif planet.cur() == homeworld then
+    elseif spob.cur() == homeworld then
         tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favour today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
         player.pay(credits)
         zlk.addNebuResearchLog(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
         misn.finish(true)
     end
-    mem.origin = planet.cur()
+    mem.origin = spob.cur()
 end
 
 local function continueToDest(pilot)

@@ -10,17 +10,17 @@
   <x>1379.009482</x>
   <y>-533.312606</y>
  </pos>
- <assets>
-  <asset>Gorgate</asset>
-  <asset>Mirror I</asset>
-  <asset>Mirror IV</asset>
-  <asset>Mirror VI</asset>
-  <asset>Mirror VIa</asset>
-  <asset>Mirror VIb</asset>
-  <asset>Olljan</asset>
-  <asset>Vargo's Flint</asset>
-  <asset>Vargo's Rock</asset>
- </assets>
+ <spobs>
+  <spob>Gorgate</spob>
+  <spob>Mirror I</spob>
+  <spob>Mirror IV</spob>
+  <spob>Mirror VI</spob>
+  <spob>Mirror VIa</spob>
+  <spob>Mirror VIb</spob>
+  <spob>Olljan</spob>
+  <spob>Vargo's Flint</spob>
+  <spob>Vargo's Rock</spob>
+ </spobs>
  <jumps>
   <jump target="Ulysses">
    <autopos/>

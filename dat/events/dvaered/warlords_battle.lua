@@ -46,7 +46,7 @@ function begin ()
    end
 
    --choose 1 particular planet
-   local plan = thissystem:planets()
+   local plan = thissystem:spobs()
    local cand = {}
    local k = 1
 

@@ -13,79 +13,79 @@
    <jump>Qex</jump>
    <jump>Shakar</jump>
    <jump>Sirou</jump>
-   <asset>Emperor's Fist</asset>
-   <asset>Emperor's Wrath</asset>
-   <asset>Halir</asset>
-   <asset>New Deimos</asset>
-   <asset>New Mars</asset>
-   <asset>New Phobos</asset>
-   <asset>New Pluto</asset>
-   <asset>Polaris Prime</asset>
-   <asset>Vuere</asset>
+   <spob>Emperor's Fist</spob>
+   <spob>Emperor's Wrath</spob>
+   <spob>Halir</spob>
+   <spob>New Deimos</spob>
+   <spob>New Mars</spob>
+   <spob>New Phobos</spob>
+   <spob>New Pluto</spob>
+   <spob>Polaris Prime</spob>
+   <spob>Vuere</spob>
   </sys>
   <sys name="Qex">
    <jump>Gamma Polaris</jump>
    <jump>Koralis</jump>
-   <asset>Ammu</asset>
-   <asset>Qex II</asset>
-   <asset>Qex IV</asset>
-   <asset>Qex V</asset>
-   <asset>Reidd</asset>
-   <asset>Semper</asset>
+   <spob>Ammu</spob>
+   <spob>Qex II</spob>
+   <spob>Qex IV</spob>
+   <spob>Qex V</spob>
+   <spob>Reidd</spob>
+   <spob>Semper</spob>
   </sys>
   <sys name="Koralis">
    <jump>Gamma Polaris</jump>
    <jump>Pastor</jump>
    <jump>Qex</jump>
-   <asset>Aillis</asset>
-   <asset>Fuzka</asset>
-   <asset>Koralis IV</asset>
-   <asset>Koralis VI</asset>
-   <asset>Luxsor</asset>
-   <asset>Paxsor</asset>
+   <spob>Aillis</spob>
+   <spob>Fuzka</spob>
+   <spob>Koralis IV</spob>
+   <spob>Koralis VI</spob>
+   <spob>Luxsor</spob>
+   <spob>Paxsor</spob>
   </sys>
   <sys name="Sirou">
    <jump>Gamma Polaris</jump>
-   <asset>Doormat</asset>
-   <asset>Rogan</asset>
-   <asset>Sirou Alpha</asset>
-   <asset>Sirou I</asset>
-   <asset>Sirou II</asset>
-   <asset>Sirou VI</asset>
+   <spob>Doormat</spob>
+   <spob>Rogan</spob>
+   <spob>Sirou Alpha</spob>
+   <spob>Sirou I</spob>
+   <spob>Sirou II</spob>
+   <spob>Sirou VI</spob>
   </sys>
   <sys name="Shakar">
    <jump>Gamma Polaris</jump>
-   <asset>Nova Shakar</asset>
-   <asset>Shakar I</asset>
-   <asset>Shakar III</asset>
-   <asset>Zembla Shakar</asset>
+   <spob>Nova Shakar</spob>
+   <spob>Shakar I</spob>
+   <spob>Shakar III</spob>
+   <spob>Zembla Shakar</spob>
   </sys>
   <sys name="Apez">
    <jump>Gamma Polaris</jump>
    <jump>Mural</jump>
-   <asset>Apez II</asset>
-   <asset>Apez V</asset>
-   <asset>Crylo</asset>
-   <asset>Dowue</asset>
-   <asset>Gem</asset>
-   <asset>Zeo</asset>
+   <spob>Apez II</spob>
+   <spob>Apez V</spob>
+   <spob>Crylo</spob>
+   <spob>Dowue</spob>
+   <spob>Gem</spob>
+   <spob>Zeo</spob>
   </sys>
   <sys name="Pastor">
    <jump>Koralis</jump>
-   <asset>Dolmen</asset>
-   <asset>Finn</asset>
-   <asset>Gennus</asset>
-   <asset>Pastor II</asset>
-   <asset>Pastor IIX</asset>
-   <asset>Pastor VI</asset>
+   <spob>Dolmen</spob>
+   <spob>Finn</spob>
+   <spob>Gennus</spob>
+   <spob>Pastor II</spob>
+   <spob>Pastor IIX</spob>
+   <spob>Pastor VI</spob>
   </sys>
   <sys name="Mural">
    <jump>Apez</jump>
-   <asset>Amphion</asset>
-   <asset>Hrimfaxi</asset>
-   <asset>Janus Station</asset>
-   <asset>Scinfaxi</asset>
-   <asset>Zethus</asset>
+   <spob>Amphion</spob>
+   <spob>Hrimfaxi</spob>
+   <spob>Janus Station</spob>
+   <spob>Scinfaxi</spob>
+   <spob>Zethus</spob>
   </sys>
  </specific>
 </outfit>

@@ -68,10 +68,10 @@ void player_autonavStart (void)
          pilot_isDisabled(player.p))
       return;
 
-   if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
+   if ((player.p->nav_hyperspace == -1) && (player.p->nav_spob== -1))
       return;
-   else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
-      player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name, 0 );
+   else if ((player.p->nav_spob != -1) && !player_getHypPreempt()) {
+      player_autonavSpob( cur_system->spobs[ player.p->nav_spob ]->name, 0 );
       return;
    }
 
@@ -178,25 +178,25 @@ void player_autonavPos( double x, double y )
 }
 
 /**
- * @brief Starts autonav with a planet destination.
+ * @brief Starts autonav with a spob destination.
  */
-void player_autonavPnt( const char *name, int tryland )
+void player_autonavSpob( const char *name, int tryland )
 {
-   Planet *p;
+   Spob *p;
 
    if (player_autonavSetup())
       return;
-   p = planet_get( name );
-   player.autonavmsg = strdup( _(p->name) );
-   player.autonavcol = planet_getColourChar( p );
+   p = spob_get( name );
+   player.autonavmsg = strdup( spob_name(p) );
+   player.autonavcol = spob_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 
    if (tryland) {
-      player.autonav = AUTONAV_PNT_LAND_APPROACH;
+      player.autonav = AUTONAV_SPOB_LAND_APPROACH;
       player_message(_("#oAutonav: landing on #%c%s#0."), player.autonavcol, player.autonavmsg );
    }
    else {
-      player.autonav = AUTONAV_PNT_APPROACH;
+      player.autonav = AUTONAV_SPOB_APPROACH;
       player_message(_("#oAutonav: approaching #%c%s#0."), player.autonavcol, player.autonavmsg );
    }
 }
@@ -241,7 +241,7 @@ void player_autonavBoard( unsigned int p )
 }
 
 /**
- * @brief Handles common time accel ramp-down for autonav to positions and planets.
+ * @brief Handles common time accel ramp-down for autonav to positions and spobs.
  */
 static void player_autonavRampdown( double d )
 {
@@ -398,7 +398,7 @@ static void player_autonav (void)
             player_autonavRampdown(d);
          break;
 
-      case AUTONAV_PNT_APPROACH:
+      case AUTONAV_SPOB_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
             player_message( _("#oAutonav: arrived at #%c%s#0."),
@@ -410,15 +410,15 @@ static void player_autonav (void)
             player_autonavRampdown(d);
          break;
 
-      case AUTONAV_PNT_LAND_APPROACH:
+      case AUTONAV_SPOB_LAND_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret)
-            player.autonav = AUTONAV_PNT_LAND_BRAKE;
+            player.autonav = AUTONAV_SPOB_LAND_BRAKE;
          else if (!tc_rampdown)
             player_autonavRampdown(d);
          break;
 
-      case AUTONAV_PNT_LAND_BRAKE:
+      case AUTONAV_SPOB_LAND_BRAKE:
          ret = player_autonavBrake();
 
          /* Try to land. */
@@ -426,7 +426,7 @@ static void player_autonav (void)
             if (player_land(0) == PLAYER_LAND_DENIED)
                player_autonavAbort(NULL);
             else
-               player.autonav = AUTONAV_PNT_LAND_APPROACH;
+               player.autonav = AUTONAV_SPOB_LAND_APPROACH;
          }
 
          /* See if should ramp down. */

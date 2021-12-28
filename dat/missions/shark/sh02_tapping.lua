@@ -42,10 +42,10 @@ local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb 
 -- luacheck: globals beginrun (NPC functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
-   mem.mispla, mem.missys = planet.getLandable(faction.get("Sirius"))
+   mem.mispla, mem.missys = spob.getLandable(faction.get("Sirius"))
 
    if not misn.claim(mem.missys) or not mem.mispla:services()["bar"] then
       misn.finish(false)
@@ -87,12 +87,12 @@ end
 
 function land()
    --The player is landing on the mission planet to get the box
-   if mem.stage == 0 and planet.cur() == mem.mispla then
+   if mem.stage == 0 and spob.cur() == mem.mispla then
       mem.agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       if misn.cargoRm(mem.records) then
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))

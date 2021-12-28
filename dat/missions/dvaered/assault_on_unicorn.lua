@@ -58,7 +58,7 @@ function accept ()
       mem.pirates_killed = 0
       -- Makes sure only one copy of the mission can run.
       var.push( "assault_on_unicorn_check", true)
-      mem.planet_start = planet.cur()
+      mem.planet_start = spob.cur()
       mem.pirates_killed = 0
       mem.bounty_earned = 0
       mem.misn_stage = 0
@@ -102,7 +102,7 @@ function death(pilot,killer)
 end
 
 function land()
-   if planet.cur() == mem.planet_start and mem.pirates_killed > 0 then
+   if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
       var.pop( "assault_on_unicorn_check" )
 
       tk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."), {credits=fmt.credits(mem.bounty_earned)}))

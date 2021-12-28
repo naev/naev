@@ -10,11 +10,11 @@
   <x>689.000000</x>
   <y>-517.000000</y>
  </pos>
- <assets>
-  <asset>Nougat I</asset>
-  <asset>Nougat II</asset>
-  <asset_virtual>Miner Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Nougat I</spob>
+  <spob>Nougat II</spob>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Chraan">
    <pos x="-20569.861830" y="5797.696026"/>

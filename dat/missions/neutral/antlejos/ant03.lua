@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 2</done>
  </avail>
  <notes>
@@ -32,14 +32,14 @@ local cargo_name = _("atmosphere generator")
 local cargo_amount = 70 -- Amount in mass
 local reward = ant.rewards.ant03
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
       return p:tags().industrial
    end )
    if not mem.destpnt then
@@ -93,7 +93,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
@@ -110,7 +110,7 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )

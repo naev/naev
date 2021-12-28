@@ -3,7 +3,7 @@
 <event name="Totoran Station Events">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur()==planet.get("Totoran")</cond>
+ <cond>spob.cur()==spob.get("Totoran")</cond>
 </event>
 --]]
 
@@ -38,7 +38,7 @@ local spectator_messages = {
    _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
-      {pnt=planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )} -- No Dvaered
+      {pnt=spob.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )} -- No Dvaered
    ) end,
    _([["The Dvaered sure know how to put on a good show. I love seeing it rain Mace Rockets!"]]),
    _([["It's a shame that they require you to own the ship you want to use to enter the virtual reality competitions. I would love to try fly one of those majestic Dvaered Goddards."]]),

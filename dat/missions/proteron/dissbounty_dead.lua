@@ -79,7 +79,7 @@ mem.osd_msg = {
 
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)

@@ -10,14 +10,14 @@
   <x>-382.305351</x>
   <y>-81.514213</y>
  </pos>
- <assets>
-  <asset>Paradox II</asset>
-  <asset>Paradox III</asset>
-  <asset>Paradox III-a</asset>
-  <asset>Paradox V</asset>
-  <asset>Rockhardt</asset>
-  <asset>Stella</asset>
- </assets>
+ <spobs>
+  <spob>Paradox II</spob>
+  <spob>Paradox III</spob>
+  <spob>Paradox III-a</spob>
+  <spob>Paradox V</spob>
+  <spob>Rockhardt</spob>
+  <spob>Stella</spob>
+ </spobs>
  <jumps>
   <jump target="Knave">
    <autopos/>

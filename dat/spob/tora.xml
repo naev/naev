@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tora">
+ <pos>
+  <x>6872.147903</x>
+  <y>10793.543034</y>
+ </pos>
+ <GFX>
+  <space>M08.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>2.0014e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Tora is a residential world for the Dvaered, and one of the largest recruitment offices in Dvaered space is located here. The planet does not have enough rare materials to justify turning it into a mining world, yet.</description>
+  <bar>The bar has a large number of off-duty soldiers and workers here. It is filthy and the inhabitants smell horrendous. A typical bar.</bar>
+ </general>
+</spob>

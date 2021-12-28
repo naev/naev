@@ -3,7 +3,7 @@
 <mission name="Sightseeing">
  <avail>
   <priority>4</priority>
-  <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+  <cond>spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <chance>460</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
@@ -65,8 +65,8 @@ ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they conte
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
-   mem.startingplanet = planet.cur()
+   mem.paying_faction = spob.cur():faction()
+   mem.startingplanet = spob.cur()
    mem.startingsystem = system.cur()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2 )
    systems[ #systems + 1 ] = mem.startingsystem
@@ -78,7 +78,7 @@ function create ()
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   local planets = mem.missys:planets()
+   local planets = mem.missys:spobs()
    local numpoints = rnd.rnd( 2, #planets )
    mem.attractions = numpoints
    mem.points = {}
@@ -176,7 +176,7 @@ end
 
 function land ()
    jumpout()
-   if mem.job_done and planet.cur() == mem.startingplanet then
+   if mem.job_done and spob.cur() == mem.startingplanet then
       misn.cargoRm( mem.civs )
 
       local ttl = _("Mission Completed")

@@ -10,12 +10,12 @@
   <x>-718.889640</x>
   <y>-905.350320</y>
  </pos>
- <assets>
-  <asset>Armorhead I-1</asset>
-  <asset>Armorhead I-1 b</asset>
-  <asset>Greenberg</asset>
-  <asset>Impala</asset>
- </assets>
+ <spobs>
+  <spob>Armorhead I-1</spob>
+  <spob>Armorhead I-1 b</spob>
+  <spob>Greenberg</spob>
+  <spob>Impala</spob>
+ </spobs>
  <jumps>
   <jump target="Eiger">
    <autopos/>

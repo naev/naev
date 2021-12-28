@@ -10,13 +10,13 @@
   <x>82.000000</x>
   <y>-301.000000</y>
  </pos>
- <assets>
-  <asset>Phee</asset>
-  <asset>Ruid</asset>
-  <asset>Vlexair</asset>
-  <asset>Vlexon I</asset>
-  <asset>Vlexon II</asset>
- </assets>
+ <spobs>
+  <spob>Phee</spob>
+  <spob>Ruid</spob>
+  <spob>Vlexair</spob>
+  <spob>Vlexon I</spob>
+  <spob>Vlexon II</spob>
+ </spobs>
  <jumps>
   <jump target="Doowa">
    <autopos/>

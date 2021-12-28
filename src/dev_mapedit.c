@@ -18,7 +18,7 @@
 #include "conf.h"
 #include "array.h"
 #include "commodity.h"
-#include "dev_planet.h"
+#include "dev_spob.h"
 #include "dev_uniedit.h"
 #include "dev_sysedit.h"
 #include "dev_system.h"
@@ -1059,9 +1059,9 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
          }
       }
 
-      /* Iterate assets and add them */
-      for (int j=0; j < array_size(s->planets); j++)
-         xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
+      /* Iterate spobs and add them */
+      for (int j=0; j < array_size(s->spobs); j++)
+         xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
    }

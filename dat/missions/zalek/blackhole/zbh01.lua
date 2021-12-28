@@ -8,6 +8,7 @@
   <priority>4</priority>
   <chance>20</chance>
   <faction>Za'lek</faction>
+  <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
   <location>Bar</location>
   <done>Za'lek Particle Physics 6</done>
  </avail>
@@ -28,7 +29,7 @@ local zbh = require "common.zalek_blackhole"
 -- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh01
-local destpnt, destsys = planet.getS("Research Post Sigma-13")
+local destpnt, destsys = spob.getS("Research Post Sigma-13")
 
 function create ()
    if not var.peek("testing") then misn.finish(false) end
@@ -94,7 +95,7 @@ He seems visibly distraught and you try to soothe him.]]))
 end
 
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 

@@ -9,7 +9,7 @@
   <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 and spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  </avail>
  <notes>
   <tier>3</tier>
@@ -34,7 +34,7 @@ local target -- Non-persistent state
 
 function create ()
     mem.cursys = system.cur()
-    mem.curplanet = planet.cur()
+    mem.curplanet = spob.cur()
     misn.setNPC(_("A middle-aged man"), "neutral/unique/middleaged.webp", _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
 end
 
@@ -56,6 +56,7 @@ function accept ()
     end
 end
 
+local hk_exploded
 function enter()
     if system.cur() == mem.cursys and mem.targetlive then
         local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
@@ -66,7 +67,7 @@ function enter()
         target:setHilight(true)
         target:setVisplayer(true)
         mem.hidle = hook.pilot(target, "idle", "targetIdle")
-        hook.pilot(target, "exploded", "targetExploded")
+        hk_exploded = hook.pilot(target, "exploded", "targetExploded")
         hook.pilot(target, "board", "targetBoard")
         targetIdle()
     end
@@ -100,6 +101,8 @@ function targetBoard()
     tk.msg(_("End of the line, boyo"), _([[You board the Gawain and find an enraged teenage boy and a disillusioned teenage girl. The boy is furious that you attacked and disabled his ship, but when you mention that his father is quite upset and wants him to come home right now, he quickly pipes down. You march the young couple onto your ship and seal the airlock behind you.]]))
     target:setHilight(false)
     target:setVisplayer(false)
+    target:disable()
+    hook.rm( hk_exploded )
     local c = commodity.new( N_("Teenagers"), N_("Disillusioned teenagers.") )
     mem.cargoID = misn.cargoAdd(c,0)
     misn.osdActive(2)
@@ -107,7 +110,7 @@ function targetBoard()
 end
 
 function land()
-    if planet.cur() == mem.curplanet then
+    if spob.cur() == mem.curplanet then
         tk.msg(_("You're grounded, young man"), _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple despondently walks off, and the father turns to face you.
     "You've done me a service, Captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]]))
         player.pay( reward )

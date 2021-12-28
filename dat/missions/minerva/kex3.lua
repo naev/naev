@@ -7,7 +7,7 @@
  <avail>
   <location>Bar</location>
   <chance>100</chance>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Kex's Freedom 2</done>
  </avail>
  <notes>
@@ -42,8 +42,8 @@ local enemies, enemies_weak, enemy_faction, noise_shader, pmalik, thug_leader, t
 
 local gauntlet_start -- Forward-declared functions
 
-local targetplanet, targetsys = planet.getS("Trincea")
-local lastplanet, lastsys = planet.getS("Totoran")
+local targetplanet, targetsys = spob.getS("Trincea")
+local lastplanet, lastsys = spob.getS("Totoran")
 local gauntletsys = system.get("Crimson Gauntlet")
 
 local malik_portrait = "major_malik.webp"
@@ -88,10 +88,10 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif mem.misn_state==0 and planet.cur() == targetplanet then
+   elseif mem.misn_state==0 and spob.cur() == targetplanet then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -107,11 +107,11 @@ function generate_npc ()
          { fmt.f(_("Look for Major Malik at {pnt} in the {sys} system"), {pnt=lastplanet, sys=lastsys} ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif (mem.misn_state==2 or mem.misn_state==3) and planet.cur() == lastplanet then
+   elseif (mem.misn_state==2 or mem.misn_state==3) and spob.cur() == lastplanet then
       mem.misn_state = 3
       misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
-   elseif mem.misn_state==4 and planet.cur() == lastplanet then
+   elseif mem.misn_state==4 and spob.cur() == lastplanet then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -126,7 +126,7 @@ function generate_npc ()
 
       mem.misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
-      misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+      misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    end
 end
 
@@ -415,7 +415,7 @@ function leave_the_ring ()
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
-   player.land( planet.get("Totoran") )
+   player.land( spob.get("Totoran") )
 end
 
 --[[

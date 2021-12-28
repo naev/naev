@@ -9,7 +9,7 @@
   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
   <chance>10</chance>
   <location>Bar</location>
-  <planet>Doranthex Prime</planet>
+  <spob>Doranthex Prime</spob>
  </avail>
  <notes>
   <tier>2</tier>
@@ -28,7 +28,7 @@ local portrait = require "portrait"
 
 
 local destsys = system.get("Torg")
-local destplanet = planet.get("Jorcan")
+local destplanet = spob.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions

@@ -5,7 +5,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Totoran</planet>
+  <spob>Totoran</spob>
  </avail>
 </mission>
 --]]
@@ -153,7 +153,7 @@ function leave_the_ring ()
    pp:setInvincible( false )
    pp:setInvisible( false )
    player.cinematics( false )
-   player.land( planet.get("Totoran") )
+   player.land( spob.get("Totoran") )
 end
 
 --[[

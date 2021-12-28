@@ -10,15 +10,15 @@
   <x>770.607812</x>
   <y>-754.196225</y>
  </pos>
- <assets>
-  <asset>Druss II</asset>
-  <asset>Druss III</asset>
-  <asset>Druss IIa</asset>
-  <asset>Gath Station</asset>
-  <asset>Lora-Mor</asset>
-  <asset>Samell</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Druss II</spob>
+  <spob>Druss III</spob>
+  <spob>Druss IIa</spob>
+  <spob>Gath Station</spob>
+  <spob>Lora-Mor</spob>
+  <spob>Samell</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Eye of Night">
    <autopos/>

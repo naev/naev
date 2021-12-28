@@ -106,7 +106,7 @@ function accept()
 end
 
 function land()
-   if planet.cur() == mem.dest_planet then
+   if spob.cur() == mem.dest_planet then
       if mem.intime then
          faction.modPlayerSingle("Traders Guild", 1)
          tk.msg(_("Deliver the Goods"), _([[As you touch down at the spaceport you see the Traders Guild depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]]))
