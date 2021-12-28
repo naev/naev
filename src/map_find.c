@@ -24,7 +24,7 @@
 
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
-static int map_find_spobs = 0; /**< Spobs checkbox value. */
+static int map_find_spobs   = 0; /**< Spobs checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
@@ -122,11 +122,11 @@ static void map_find_check_update( unsigned int wid, const char* str )
 {
    (void) str;
    map_find_systems ^= window_checkboxState( wid, "chkSystem" );
-   map_find_spobs ^= window_checkboxState( wid, "chkSpob" );
+   map_find_spobs   ^= window_checkboxState( wid, "chkSpob" );
    map_find_outfits ^= window_checkboxState( wid, "chkOutfit" );
    map_find_ships   ^= window_checkboxState( wid, "chkShip" );
    window_checkboxSet( wid, "chkSystem", map_find_systems );
-   window_checkboxSet( wid, "chkSpob", map_find_spobs );
+   window_checkboxSet( wid, "chkSpob",   map_find_spobs );
    window_checkboxSet( wid, "chkOutfit", map_find_outfits );
    window_checkboxSet( wid, "chkShip",   map_find_ships );
 }
@@ -140,7 +140,7 @@ static void map_find_check_update( unsigned int wid, const char* str )
 void map_inputFindType( unsigned int parent, const char *type )
 {
    map_find_systems = 0;
-   map_find_spobs = 0;
+   map_find_spobs   = 0;
    map_find_outfits = 0;
    map_find_ships   = 0;
 
@@ -264,9 +264,9 @@ static void map_sortFound( map_find_t *found, int n )
  */
 static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *distance )
 {
-   int i, j;
-   StarSystem **slist, *ss;
+   StarSystem **slist;
    double d;
+   int i;
    Vector2d *vs, *ve;
 
    /* Defaults. */
@@ -292,7 +292,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
 
    /* Distance to first jump point. */
    vs = &player.p->solid->pos;
-   for (j=0; j < array_size(cur_system->jumps); j++) {
+   for (int j=0; j < array_size(cur_system->jumps); j++) {
       if (cur_system->jumps[j].target == slist[0]) {
          ve = &cur_system->jumps[j].pos;
          break;
@@ -307,10 +307,10 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
 
    /* Calculate distance. */
    for (i=0; i<(*jumps-1); i++) {
-      ss = slist[i];
+      StarSystem *ss = slist[i];
 
       /* Search jump points. */
-      for (j=0; j < array_size(ss->jumps); j++) {
+      for (int j=0; j < array_size(ss->jumps); j++) {
 
          /* Get previous jump. */
          if (i == 0) {
@@ -347,8 +347,8 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
    /* Account final travel to spob for spob targets. */
    if (pnt != NULL) {
       if (i > 0) {
-         ss = slist[ i ];
-         for (j=0; j < array_size(ss->jumps); j++) {
+         StarSystem *ss = slist[ i ];
+         for (int j=0; j < array_size(ss->jumps); j++) {
             if (ss->jumps[j].target == slist[i-1]) {
                vs = &ss->jumps[j].pos;
                break;
@@ -481,7 +481,7 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
    char **names;
    int len, n;
    map_find_t *found;
-   const char *sysname, *pntname;
+   const char *pntname;
 
    /* Match spob first. */
    pntname = spob_existsCase( name );
@@ -491,9 +491,8 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
 
    /* Exact match. */
    if ((pntname != NULL) && (len == 1)) {
-
       /* Check exact match. */
-      sysname = spob_getSystem( pntname );
+      const char *sysname = spob_getSystem( pntname );
       if (sysname != NULL) {
          /* Make sure it's known. */
          Spob *pnt = spob_get( pntname );
@@ -515,6 +514,7 @@ static int map_findSearchSpobs( unsigned int parent, const char *name )
    found = NULL;
    n = 0;
    for (int i=0; i<len; i++) {
+      const char *sysname;
       StarSystem *sys;
 
       /* Spob must be real. */
@@ -824,7 +824,6 @@ static char **map_shipsMatch( const char *name )
  */
 static int map_findSearchShips( unsigned int parent, const char *name )
 {
-   int i, j;
    char **names;
    int len, n;
    map_find_t *found;
@@ -844,6 +843,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       s = ship_get( sname );
    /* Handle fuzzy matching. */
    else if (len > 0) {
+      int i;
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -865,7 +865,9 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    found = NULL;
    n = 0;
    len = array_size(map_known_techs);
-   for (i=0; i<len; i++) {
+   for (int i=0; i<len; i++) {
+      int j;
+
       /* Try to find the ship in the spob. */
       slist = tech_getShip( map_known_techs[i] );
       for (j=array_size(slist)-1; j>=0; j--)
