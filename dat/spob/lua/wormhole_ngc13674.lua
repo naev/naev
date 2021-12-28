@@ -1,4 +1,4 @@
-local wormhole = require "spob/lua/lib/wormhole"
+local wormhole = require "spob.lua.lib.wormhole"
 
 function load( p )
    return wormhole.load( p, "Wormhole NGC-1931" )

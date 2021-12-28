@@ -1,11 +1,13 @@
 local lg = require "love.graphics"
 local love_shaders = require "love_shaders"
+local starfield = require "bkg.lib.starfield"
 
 local pixelcode = [[
 #include "lib/simplex.glsl"
 
 uniform float u_time = 0.0;
 uniform float u_r = 0.0;
+uniform sampler2D u_bgtex;
 
 const vec3 col_inner  = vec3( 0.2, 0.8, 1.0 );
 const vec3 col_outter = vec3( 0.0, 0.8, 1.0 );
@@ -62,7 +64,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    col = mix( col, col_inner,  a_in );
 
    /* Inner stuff. */
-   col = mix( col, vec3(0.0), a_in-0.3 );
+   vec4 bg = texture( u_bgtex, texture_coords );
+   col = mix( col, bg.rgb, a_in-0.1 );
 
    return vec4( col, a_out );
 }
@@ -88,8 +91,10 @@ local function update_canvas ()
 end
 
 function wormhole.load( p, wormhole_target )
+   local _spob, sys = spob.getS( wormhole_target )
    target = wormhole_target
    if shader==nil then
+      -- Load shader
       shader = lg.newShader( pixelcode, love_shaders.vertexcode )
       shader._dt = -1000 * rnd.rnd()
       shader.update = function( self, dt )
@@ -99,6 +104,11 @@ function wormhole.load( p, wormhole_target )
       pos = p:pos()
       pos = pos + vec2.new( -w/2, h/2 )
       cvs = lg.newCanvas( w, h, {dpiscale=1} )
+
+      -- Set up background texture
+      starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=256 }
+      shader:send( "u_bgtex", starfield.canvas() )
+
       update_canvas()
    end
    return cvs.t.tex

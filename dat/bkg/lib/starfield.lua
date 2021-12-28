@@ -96,14 +96,15 @@ local static = true
 function starfield.init( params )
    params = params or {}
    local nconf = naev.conf()
-   static = not nconf.background_fancy
+   static = params.static or not nconf.background_fancy
+   local seed = params.seed or system.cur():nameRaw()
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
    sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
    -- Per system parameters
-   prng:setSeed( system.cur():nameRaw() )
+   prng:setSeed( seed )
    local theta = prng:random() * math.pi/10.0
    local phi = prng:random() * math.pi/10.0
    local psi = prng:random() * math.pi/10.0
@@ -123,12 +124,17 @@ function starfield.init( params )
 
    if static then
       nw, nh = gfx.dim()
-      texw = nw / nconf.zoom_far
-      texh = nh / nconf.zoom_far
-      local texs = 4096 / math.max( texw, texh )
-      if texs < 1 then
-         texw = texw / texs
-         texh = texh / texs
+      if params.size then
+         texw = params.size
+         texh = params.size
+      else
+         texw = nw / nconf.zoom_far
+         texh = nh / nconf.zoom_far
+         local texs = 4096 / math.max( texw, texh )
+         if texs < 1 then
+            texw = texw / texs
+            texh = texh / texs
+         end
       end
       cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
       shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
@@ -148,6 +154,10 @@ function starfield.init( params )
    if not params.nolocalstars then
       add_local_stars()
    end
+end
+
+function starfield.canvas ()
+   return cvs
 end
 
 function starfield.render( dt )
