@@ -635,6 +635,9 @@ void ovr_render( double dt )
    if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
       return;
 
+   /* Have to clear for text. */
+   glClear(GL_DEPTH_BUFFER_BIT);
+
    /* Default values. */
    w     = ovr_bounds.w;
    h     = ovr_bounds.h;
