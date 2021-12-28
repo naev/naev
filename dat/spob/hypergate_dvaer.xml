@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Hypergate Polaris">
- <displayname>Ruined Hypergate</displayname>
+<spob name="Hypergate Dvaer">
+ <displayname>Construction</displayname>
  <marker>spobmarker_triangle</marker>
  <pos>
-  <x>0.000000</x>
-  <y>0.000000</y>
+  <x>-11138.452932</x>
+  <y>-1797.573385</y>
  </pos>
  <GFX>
-  <space>hypergate_debris.webp</space>
+  <space>hypergate_early_construction_stage.webp</space>
  </GFX>
  <presence>
-  <faction>Derelict</faction>
-  <base>0.000000</base>
-  <bonus>0.000000</bonus>
+  <faction>Dvaered</faction>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
   <range>0</range>
  </presence>
  <general>

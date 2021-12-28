@@ -24,6 +24,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-14549">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Unicorn">
    <autopos/>
    <hide>1.000000</hide>

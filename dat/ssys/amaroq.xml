@@ -21,6 +21,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-14549">
+   <autopos/>
+   <exitonly/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="PSO">
    <autopos/>
    <hide>1.000000</hide>
