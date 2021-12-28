@@ -179,13 +179,14 @@ static void map_findDisplayMark( unsigned int wid, const char* str )
    /* Get system. */
    int pos = toolkit_getListPos( wid, "lstResult" );
    StarSystem *sys = map_found_cur[ pos ].sys;
+   int parent = window_getParent(wid);
 
    /* Select. */
    map_select( sys, 0 );
-   map_center( 0, sys->name );
+   map_center( window_getParent(parent), sys->name );
 
    /* Close parent. */
-   window_close( window_getParent(wid), str );
+   window_close( parent, str );
 }
 
 /**
@@ -905,13 +906,12 @@ static int map_findSearchShips( unsigned int parent, const char *name )
  */
 static void map_findSearch( unsigned int wid, const char* str )
 {
-   int parent = window_getParent( wid );
    int ret;
    const char *name, *searchname;
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );
-   if ( name[0] == '\0' )
+   if (name[0] == '\0')
       return;
 
    /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
@@ -926,19 +926,19 @@ static void map_findSearch( unsigned int wid, const char* str )
 
    /* Handle different search cases. */
    if (map_find_systems) {
-      ret = map_findSearchSystems( parent, name );
+      ret = map_findSearchSystems( wid, name );
       searchname = _("System");
    }
    else if (map_find_spobs) {
-      ret = map_findSearchSpobs( parent, name );
-      searchname = _("Spob");
+      ret = map_findSearchSpobs( wid, name );
+      searchname = _("Planet/Station");
    }
    else if (map_find_outfits) {
-      ret = map_findSearchOutfits( parent, name );
+      ret = map_findSearchOutfits( wid, name );
       searchname = _("Outfit");
    }
    else if (map_find_ships) {
-      ret = map_findSearchShips( parent, name );
+      ret = map_findSearchShips( wid, name );
       searchname = _("Ship");
    }
    else
@@ -998,7 +998,7 @@ void map_inputFind( unsigned int parent, const char* str )
          "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
-         "chkSpob", _("Spobs"), map_find_check_update, map_find_spobs );
+         "chkSpob", _("Planets/Stations"), map_find_check_update, map_find_spobs );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
          "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );
