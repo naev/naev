@@ -832,8 +832,9 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (int i=0; i<array_size(systems_stack); i++) {
-      if (strcasestr( _(systems_stack[i].name), sysname ) != NULL) {
-         names[len] = systems_stack[i].name;
+      StarSystem *sys = &systems_stack[i];
+      if (strcasestr( _(sys->name), sysname ) != NULL) {
+         names[len] = sys->name;
          len++;
       }
    }
@@ -1056,7 +1057,7 @@ const char* spob_existsCase( const char* spobname )
 }
 
 /**
- * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
+ * @brief Does a fuzzy case matching. Searches spob_name() but returns internal names.
  */
 char **spob_searchFuzzyCase( const char* spobname, int *n )
 {
@@ -1069,8 +1070,9 @@ char **spob_searchFuzzyCase( const char* spobname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (int i=0; i<array_size(spob_stack); i++) {
-      if (strcasestr( _(spob_stack[i].name), spobname ) != NULL) {
-         names[len] = spob_stack[i].name;
+      Spob *spob = &spob_stack[i];
+      if (strcasestr( spob_name(spob), spobname ) != NULL) {
+         names[len] = spob->name;
          len++;
       }
    }
