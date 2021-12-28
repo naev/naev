@@ -7,18 +7,16 @@ local ecores = require 'equipopt.cores'
 local empire_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Empire Lancelot Fighter Bay",
-   "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
-   "Heavy Laser Turret", "Railgun",
+   "Turbolaser", "Heavy Ripper Turret",
+   "Heavy Laser Turret",
    -- Medium Weapons
-   "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam",
+   "Heavy Ripper Cannon", "Laser Turret MK2",
    "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
    "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
    "Unicorp Caesar IV Launcher", "Enygma Systems Turreted Fury Launcher",
    -- Small Weapons
    "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
-   --"Unicorp Mace Launcher", "TeraCom Mace Launcher",
-   "Laser Cannon MK1", "Plasma Blaster MK1", "Ion Cannon",
-   "Ripper Cannon",
+   "Laser Cannon MK1", "Ripper Cannon",
    -- Utility
    "Hunting Combat AI", "Photo-Voltaic Nanobot Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
