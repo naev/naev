@@ -2077,7 +2077,7 @@ else (x) = MAX( y, (x) - dt )
 
    dx = (cst->xtarget - cst->xpos);
    dy = (cst->ytarget - cst->ypos);
-   mod   = MOD(dx,dy);
+   mod = MOD(dx,dy);
    if (mod > 1e-5) {
       angle = ANGLE(dx,dy);
       /* TODO we should really do this with some nicer easing. */

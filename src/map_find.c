@@ -176,16 +176,13 @@ static void map_findClose( unsigned int wid, const char* str )
  */
 static void map_findDisplayMark( unsigned int wid, const char* str )
 {
-   int pos;
-   StarSystem *sys;
-
    /* Get system. */
-   pos = toolkit_getListPos( wid, "lstResult" );
-   sys = map_found_cur[ pos ].sys;
+   int pos = toolkit_getListPos( wid, "lstResult" );
+   StarSystem *sys = map_found_cur[ pos ].sys;
 
    /* Select. */
    map_select( sys, 0 );
-   map_center( window_getParent(wid), sys->name );
+   map_center( 0, sys->name );
 
    /* Close parent. */
    window_close( window_getParent(wid), str );
@@ -196,7 +193,6 @@ static void map_findDisplayMark( unsigned int wid, const char* str )
  */
 static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n )
 {
-   int i;
    unsigned int wid;
    char **ll;
 
@@ -208,14 +204,14 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_sortFound( found, n );
 
    /* Create window. */
-   wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
+   wid = window_create( "wdwFindResult", _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
 
    /* The list. */
    ll = malloc( sizeof(char*) * n );
-   for (i=0; i<n; i++)
+   for (int i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
    window_addList( wid, 20, -40, 460, 300,
          "lstResult", ll, n, 0, NULL, map_findDisplayMark );
@@ -973,7 +969,7 @@ void map_inputFind( unsigned int parent, const char* str )
    /* Create the window. */
    w = 400;
    h = 220;
-   wid = window_create( "wdwFind", _("Find..."), -1, -1, w, h );
+   wid = window_create( "wdwFind", _("Find…"), -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );
