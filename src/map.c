@@ -34,8 +34,6 @@
 #include "toolkit.h"
 #include "utf8.h"
 
-const double MAP_FLYTO_SPEED = 1500.; /**< Linear speeed at which the map flies to a location. */
-
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -87,6 +85,7 @@ static int listMapModeVisible = 0; /**< Whether the map mode list widget is visi
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 static double map_dt     = 0.; /**< Nebula animation stuff. */
 static int map_minimal_mode = 0; /**< Map is in minimal mode. */
+static double map_flyto_speed = 1500.; /**< Linear speeed at which the map flies to a location. */
 
 /*
  * extern
@@ -2081,7 +2080,7 @@ else (x) = MAX( y, (x) - dt )
    if (mod > 1e-5) {
       angle = ANGLE(dx,dy);
       /* TODO we should really do this with some nicer easing. */
-      mod = MIN( mod, dt*MAP_FLYTO_SPEED);
+      mod = MIN( mod, dt*map_flyto_speed);
       cst->xpos += mod * cos(angle);
       cst->ypos += mod * sin(angle);
    }
@@ -2666,6 +2665,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
  */
 int map_center( int wid, const char *sys )
 {
+   double d;
    CstMapWidget *cst = map_globalCustomData( wid );
 
    /* Get the system. */
@@ -2676,6 +2676,10 @@ int map_center( int wid, const char *sys )
    /* Center on the system. */
    cst->xtarget = ssys->pos.x * cst->zoom;
    cst->ytarget = ssys->pos.y * cst->zoom;
+
+   /* Compute flyto speed. */
+   d = MOD( cst->xtarget-cst->xpos, cst->ytarget-cst->ypos );
+   map_flyto_speed = MIN( 2000., d / 0.2 );
 
    return 0;
 }
