@@ -379,7 +379,7 @@ extern Shaders shaders;
 
 void shaders_load (void);
 void shaders_unload (void);
-SimpleShader *shaders_getSimple( const char *name );
+const SimpleShader *shaders_getSimple( const char *name );
 """
 
 def generate_c_file():
@@ -420,11 +420,14 @@ static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *
    return 0;
 }
 
-SimpleShader *shaders_getSimple( const char *name )
+const SimpleShader *shaders_getSimple( const char *name )
 {
    const SimpleShader shd = { .name=name };
    const SimpleShader *shdptr = &shd;
-   return bsearch( &shdptr, shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   const SimpleShader **found = bsearch( &shdptr, shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   if (found!=NULL)
+      return *found;
+   return NULL;
 }
 
 void shaders_load (void) {

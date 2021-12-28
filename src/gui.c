@@ -1347,7 +1347,7 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, 
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
    Spob *spob;
-   SimpleShader *shd;
+   const SimpleShader *shd;
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
