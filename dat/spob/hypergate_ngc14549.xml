@@ -21,4 +21,7 @@
   <hide>1.000000</hide>
   <services/>
  </general>
+ <tags>
+  <tag>hypergate</tag>
+ </tags>
 </spob>
