@@ -255,6 +255,10 @@ SHADERS = [
       fs_path = "spobmarker_rhombus.frag",
    ),
    SimpleShader(
+      name = "spobmarker_triangle",
+      fs_path = "spobmarker_triangle.frag",
+   ),
+   SimpleShader(
       name = "jumpmarker",
       fs_path = "jumpmarker.frag",
    ),
