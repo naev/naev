@@ -57,6 +57,8 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elem( writer, "lua", "%s", p->lua_file );
    if (spob_isFlag(p,SPOB_RADIUS))
       xmlw_elem( writer, "radius", "%f", p->radius );
+   if (p->marker != NULL)
+      xmlw_elem( writer, "marker", "%s", p->marker->name );
 
    /* Position. */
    xmlw_startElem( writer, "pos" );
