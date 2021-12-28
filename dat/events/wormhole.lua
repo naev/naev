@@ -21,5 +21,6 @@ end
 
 function wormhole ()
    player.teleport( target )
+   var.pop("wormhole_target")
    evt.finish()
 end
