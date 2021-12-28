@@ -349,11 +349,11 @@
   <!-- Init Code -->
   <script type="text/javascript">
       // - highlight all pre + code tags (CSS3 selectors)
-      // - use theme "bootstrap4"
+      // - use theme "enlighter"
       // - replace tabs with 2 spaces
       EnlighterJS.init('pre', 'code', {
               language : 'lua',
-              theme: 'bootstrap4',
+              theme: 'enlighter',
               indent : 2
       });
   </script>
