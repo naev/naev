@@ -107,7 +107,7 @@ function swapship.swap( template, acquired )
    end
 
    -- Create new ship and swap to it
-   local newship = player.addShip( template:ship(), acquired )
+   local newship = player.addShip( template:ship(), nil, acquired )
    player.swapShip( newship )
    pp = player.pilot() -- Update struct to new pilot
 

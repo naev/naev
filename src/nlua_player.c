@@ -1262,7 +1262,7 @@ static int playerL_rmOutfit( lua_State *L )
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt=ship.get(ship):name()] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt] string acquired
+ *    @luatparam[opt] string acquired A description of how the ship was acquired.
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  *    @luatreturn string The new ship's name.
  * @luafunc addShip
