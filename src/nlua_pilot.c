@@ -2928,8 +2928,7 @@ static int pilotL_outfitRm( lua_State *L )
          pilot_calcStats( p ); /* Recalculate stats. */
          matched = 1;
       }
-      else
-         NLUA_INVALID_PARAMETER(L);
+      /* Purpose fallthrough for if the outfit is passed as a string. */
    }
 
    if (!matched) {
