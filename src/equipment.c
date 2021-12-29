@@ -383,7 +383,7 @@ void equipment_open( unsigned int wid )
          _("Rename"), equipment_renameShip, SDLK_r );
    window_addButtonKey( wid, -16, -20-150-ch-2*bh-10,
          128+8, bh, "btnShipMode",
-         _("Toggle Display"), equipment_shipMode, SDLK_t );
+         _("Toggle Display"), equipment_shipMode, SDLK_d );
 
    /* Generate lists. */
    equipment_genLists( wid );
