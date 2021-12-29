@@ -66,6 +66,7 @@ function alert_meta.init( efx, _ttl, pos, vel )
    efx.sound:setPosition( px, py, 0 )
    efx.sound:setVelocity( vx, vy, 0 )
    efx.sound:setPitch( dt_mod )
+   efx.sound.setAttenuationDistances( 500, 25e3 )
    efx.sound:play( pos )
 end
 function effects.alert( params )

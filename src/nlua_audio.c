@@ -61,6 +61,8 @@ static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
 static int audioL_setAttenuationDistances( lua_State *L );
 static int audioL_getAttenuationDistances( lua_State *L );
+static int audioL_setRolloff( lua_State *L );
+static int audioL_getRolloff( lua_State *L );
 static int audioL_setEffect( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
@@ -90,6 +92,8 @@ static const luaL_Reg audioL_methods[] = {
    { "getPitch", audioL_getPitch },
    { "setAttenuationDistances", audioL_setAttenuationDistances },
    { "getAttenuationDistances", audioL_getAttenuationDistances },
+   { "setRolloff", audioL_setRolloff },
+   { "getRolloff", audioL_getRolloff },
    { "setEffect", audioL_setEffect },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
@@ -877,6 +881,47 @@ static int audioL_getAttenuationDistances( lua_State *L )
    lua_pushnumber( L, ref );
    lua_pushnumber( L, max );
    return 2;
+}
+
+/**
+ * @brief Sets the rollof factor.
+ *
+ *    @luatparam number rolloff New rolloff factor.
+ * @luafunc setRolloff
+ */
+static int audioL_setRolloff( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double rolloff = luaL_checknumber(L,2);
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcef( la->source, AL_ROLLOFF_FACTOR, rolloff );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Gets the rolloff factor.
+ *
+ *    @luatreturn number Rolloff factor or 0. if sound is disabled.
+ * @luafunc getRolloff
+ */
+static int audioL_getRolloff( lua_State *L )
+{
+   ALfloat rolloff;
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled) {
+      lua_pushnumber(L,0.);
+      return 1;
+   }
+   soundLock();
+   alGetSourcef( la->source, AL_ROLLOFF_FACTOR, &rolloff);
+   al_checkErr();
+   soundUnlock();
+   lua_pushnumber( L, rolloff );
+   return 1;
 }
 
 static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
