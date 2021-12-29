@@ -119,11 +119,11 @@ function land ()
 "Say, you wouldn't be headed to the Anubis Black Hole? Lots of scary stuff there."]]))
       vn.menu{
          {_([["Yes."]]), "01yes"},
-         {_([["No." (Lie))]]), "01no"},
+         {_([["No." (Lie)]]), "01no"},
       }
 
       vn.label("01yes")
-      pd(_([["I see. Scary place lots of things can go wrong there."
+      pd(_([["I see. Scary place, lots of things can go wrong there."
 They seem to mentally take note of something.]]))
       vn.jump("02")
 
