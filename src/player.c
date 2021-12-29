@@ -1581,7 +1581,7 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-      if (spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
+      if ((spob->lua_can_land!=LUA_NOREF) || spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
          if (spob->can_land || (spob->land_override > 0))
             player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
