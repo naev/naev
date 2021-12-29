@@ -2991,6 +2991,9 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 
+   /* Fill ammo. */
+   pilot_fillAmmo( pilot );
+
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */
    pilot->nav_spob       = -1;
