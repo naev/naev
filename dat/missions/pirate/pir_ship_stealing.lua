@@ -55,7 +55,7 @@ local faction_tags = {
 local ships = {}
 for i, ship in ipairs(ship.getAll()) do
    local tags = ship:tags()
-   if not tags["noplayer"] then
+   if not tags["noplayer"] and not tags["nosteal"] then
       for fctname, tag in pairs(faction_tags) do
          if tags[tag] then
             ships[fctname] = ships[fctname] or {}
