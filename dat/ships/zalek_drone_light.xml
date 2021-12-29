@@ -34,7 +34,7 @@
   <cpu>10</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="10" y="-1" h="-3" />
+  <weapon size="small" x="10" y="-1" h="-3">Particle Lance</weapon>
   <utility size="small" />
   <structure size="small" />
  </slots>

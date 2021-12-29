@@ -34,8 +34,8 @@
   <cpu>30</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="0" y="9" h="-2" />
-  <weapon size="small" x="0" y="-9" h="-2" />
+  <weapon size="small" x="0" y="9" h="-2">Electron Burst Cannon</weapon>
+  <weapon size="small" x="0" y="-9" h="-2">Electron Burst Cannon</weapon>
   <utility size="small" />
   <structure size="small" />
  </slots>
