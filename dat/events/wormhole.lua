@@ -96,6 +96,7 @@ function update( dt )
          jumped = true
          r = r + timer
          timer = 0
+         shader:send( "u_time", 0 ) -- avoids visual artefact
          shader:send( "u_invert", 1 )
          hook.safe( "wormhole" )
       else
