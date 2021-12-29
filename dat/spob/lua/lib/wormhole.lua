@@ -6,7 +6,6 @@ local pixelcode = [[
 #include "lib/simplex.glsl"
 
 uniform float u_time = 0.0;
-uniform float u_r = 0.0;
 uniform sampler2D u_bgtex;
 
 const vec3 col_inner  = vec3( 0.2, 0.8, 1.0 );
@@ -135,6 +134,9 @@ function wormhole.can_land ()
 end
 
 function wormhole.land ()
+   -- Avoid double landing
+   if player.evtActive("Wormhole") then return end
+
    var.push( "wormhole_target", target )
    naev.eventStart("Wormhole")
 end
