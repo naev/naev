@@ -59,6 +59,8 @@ static int audioL_setLooping( lua_State *L );
 static int audioL_isLooping( lua_State *L );
 static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
+static int audioL_setAttenuationDistances( lua_State *L );
+static int audioL_getAttenuationDistances( lua_State *L );
 static int audioL_setEffect( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
@@ -86,6 +88,8 @@ static const luaL_Reg audioL_methods[] = {
    { "isLooping", audioL_isLooping },
    { "setPitch", audioL_setPitch },
    { "getPitch", audioL_getPitch },
+   { "setAttenuationDistances", audioL_setAttenuationDistances },
+   { "getAttenuationDistances", audioL_getAttenuationDistances },
    { "setEffect", audioL_setEffect },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
@@ -720,12 +724,12 @@ static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   if (!sound_disabled) {
-      soundLock();
-      alSourcei( la->source, AL_LOOPING, b );
-      al_checkErr();
-      soundUnlock();
-   }
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcei( la->source, AL_LOOPING, b );
+   al_checkErr();
+   soundUnlock();
    return 0;
 }
 
@@ -825,6 +829,54 @@ static int audioL_soundPlay( lua_State *L )
       sound_play( sound_get(name) );
 
    return 0;
+}
+
+/**
+ * @brief Sets the attenuation distances for the audio source.
+ *
+ *    @luatparam number ref Reference distance.
+ *    @luatparam number max Maximum distance.
+ * @luafunc setAttenuationDistances
+ */
+static int audioL_setAttenuationDistances( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double ref = luaL_checknumber(L,2);
+   double max = luaL_checknumber(L,3);
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcef( la->source, AL_REFERENCE_DISTANCE, ref );
+   alSourcef( la->source, AL_MAX_DISTANCE, max );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Gets the attenuation distances for the audio source. Set to 0. if audio is disabled.
+ *
+ *    @luatreturn number Reference distance.
+ *    @luatreturn number Maximum distance.
+ * @luafunc getAttenuationDistances
+ */
+static int audioL_getAttenuationDistances( lua_State *L )
+{
+   ALfloat ref, max;
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled) {
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      return 2;
+   }
+   soundLock();
+   alGetSourcef( la->source, AL_REFERENCE_DISTANCE, &ref );
+   alGetSourcef( la->source, AL_MAX_DISTANCE, &max );
+   al_checkErr();
+   soundUnlock();
+   lua_pushnumber( L, ref );
+   lua_pushnumber( L, max );
+   return 2;
 }
 
 static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
