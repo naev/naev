@@ -202,7 +202,7 @@ static int rndL_uniform( lua_State *L )
  */
 static int rndL_angle( lua_State *L )
 {
-   lua_pushnumber( L, RNGF() * 2 * M_PI );
+   lua_pushnumber( L, RNGF() * 2. * M_PI );
    return 1;
 }
 
