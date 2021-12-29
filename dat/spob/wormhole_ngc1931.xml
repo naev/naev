@@ -2,7 +2,6 @@
 <spob name="Wormhole NGC-1931">
  <displayname>Wormhole</displayname>
  <lua>spob/lua/wormhole_ncg1931.lua</lua>
- <radius>128.000000</radius>
  <pos>
   <x>3128.348154</x>
   <y>-5152.573430</y>

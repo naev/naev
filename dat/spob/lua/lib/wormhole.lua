@@ -71,7 +71,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 ]]
 
 local cvs, shader, pos, target
-local w, h = 256, 256
+local s = 256
 
 local wormhole = {}
 
@@ -83,7 +83,7 @@ local function update_canvas ()
    lg.clear( 0, 0, 0, 0 )
    lg.setColor( 1, 1, 1, 1 )
    lg.setBlendMode( "alpha", "premultiplied" )
-   love_shaders.img:draw( 0, 0, 0, w, h )
+   love_shaders.img:draw( 0, 0, 0, s, s )
    lg.setBlendMode( "alpha" )
    lg.setShader( oldshader )
    lg.setCanvas( oldcanvas )
@@ -101,17 +101,17 @@ function wormhole.load( p, wormhole_target )
          self:send( "u_time", self._dt )
       end
       pos = p:pos()
-      pos = pos - vec2.new( w/2, h/2 )
-      cvs = lg.newCanvas( w, h, {dpiscale=1} )
+      pos = pos - vec2.new( s/2, s/2 )
+      cvs = lg.newCanvas( s, s, {dpiscale=1} )
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
-      starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=256*ns }
+      starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
       shader:send( "u_bgtex", starfield.canvas() )
 
       update_canvas()
    end
-   return cvs.t.tex
+   return cvs.t.tex, s/2
 end
 
 function wormhole.unload ()

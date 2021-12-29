@@ -2136,17 +2136,18 @@ void spob_gfxLoad( Spob *spob )
       if (spob->lua_load) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
          lua_pushspob(naevL, spob_index(spob)); /* f, p */
-         if (nlua_pcall( spob->lua_env, 1, 1 )) {
+         if (nlua_pcall( spob->lua_env, 1, 2 )) {
             WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "load", lua_tostring(naevL,-1));
             lua_pop(naevL,1);
          }
-         if (lua_istex(naevL,-1)) {
-            spob->gfx_space = lua_totex(naevL,-1);
+         if (lua_istex(naevL,-2)) {
+            spob->gfx_space = lua_totex(naevL,-2);
             spob_setFlag( spob, SPOB_LUATEX );
          }
          else
             WARN(_("Spob '%s' ran '%s' but got non-texture return value!"), spob->name, "load" );
-         lua_pop(naevL,1);
+         spob->radius = luaL_optnumber(naevL,-1,-1.);
+         lua_pop(naevL,2);
       }
    }
    if (spob->gfx_space==NULL) {
