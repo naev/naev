@@ -6,6 +6,7 @@
    * Fix equipment slot information displaying over filter widget
    * Darkened nebulas and lowered default background darkness
    * Improved upstream metainfo for packagers
+   * Can no longer steal a certain Za'lek ship
    * Fix crash under certain conditions when using the console
    * Masochists and LTS distro packagers may build with Meson 0.54 (no subproject fallbacks) or 0.53 (also no "meson compile", only "ninja")
    * Slightly reduced rendered nebula quality to stop breakage on some intel GPUs
