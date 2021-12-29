@@ -249,7 +249,7 @@ local custom_events = {
       type = "enter",
       name = "disc_blackhole",
       title = _("Anubis Black Hole"),
-      subtitle = _("Gapping Maw of the Abyss"),
+      subtitle = _("Gaping Maw of the Abyss"),
    },
    WildOnes = {
       test = function ()
