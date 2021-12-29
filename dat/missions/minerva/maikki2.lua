@@ -634,10 +634,8 @@ function ecc_dist ()
       defense_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.angle() )
-         local p = pilot.add( v, "Strangelove", pos, _("Security Drone") )
-         p:control()
+         local p = pilot.add( v, "Strangelove", pos, _("Security Drone"), {ai="baddiepos"} )
          p:setHostile()
-         p:attack( pp )
          hook.pilot( p, "death", "ecc_drone_dead" )
          table.insert( defense_systems, p )
       end
