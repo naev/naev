@@ -177,28 +177,29 @@ function attack ()
    local n = rnd.rnd(3,6)
    local name = _("Invader")
 
-   attackers = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system, name) -- Give them Dvaered equipment
+   attackers = {}
+   for i = 1, n do
+      attackers[2*i-1] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system, name )
+      attackers[2*i]   = pilot.add( "Dvaered Ancestor", "Dvaered", source_system, name )
+   end
 
    attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
    attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system, name )
    attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system, name )
    attackers[2*n+4] = pilot.add("Rhino", "Dvaered", source_system, name) --some transport ships
    attackers[2*n+5] = pilot.add("Rhino", "Dvaered", source_system, name)
-   attackers[2*n+6] = pilot.add("Rhino", "Dvaered", source_system, name)
-   attackers[2*n+7] = pilot.add("Rhino", "Dvaered", source_system, name)
+   attackers[2*n+6] = pilot.add("Dvaered Arsenal", "Dvaered", source_system, name)
    local goda       = pilot.add( "Dvaered Goddard", "Dvaered", source_system, name )
-   attackers[2*n+8] = goda
+   attackers[2*n+7] = goda
 
    -- The transport ships tend to run away
    attackers[2*n+4]:memory().shield_run = 70
    attackers[2*n+5]:memory().shield_run = 70
    attackers[2*n+6]:memory().shield_run = 70
-   attackers[2*n+7]:memory().shield_run = 70
 
    attackers[2*n+4]:memory().shield_return = 99
    attackers[2*n+5]:memory().shield_return = 99
    attackers[2*n+6]:memory().shield_return = 99
-   attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
    local form = formation.random_key()
@@ -232,7 +233,12 @@ function defense ()
    local n = rnd.rnd(3,6)
    local name = _("Local Warlord's Force")
 
-   defenders = fleet.add(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_planet, name)
+   defenders = {}
+   for i = 1, n do
+      defenders[2*i-1] = pilot.add( "Dvaered Vendetta", "Dvaered", source_planet, name )
+      defenders[2*i]   = pilot.add( "Dvaered Ancestor", "Dvaered", source_planet, name )
+   end
+
    defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
    defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet, name )
    defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet, name )
