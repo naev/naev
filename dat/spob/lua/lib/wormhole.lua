@@ -64,7 +64,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    /* Inner stuff. */
    vec4 bg = texture( u_bgtex, texture_coords );
-   col = mix( col, bg.rgb, a_in-0.05 );
+   col = mix( col, bg.rgb, a_in-0.03 );
 
    return vec4( col, a_out );
 }
