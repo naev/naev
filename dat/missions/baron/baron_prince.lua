@@ -275,11 +275,10 @@ function enter()
          count = 3
       end
       if choice <= 3 then
-         fleep = fleet.add( count, pilots, "Mercenary", nil, _("Artefact Hunter") );
+         fleep = fleet.add( count, pilots, "Mercenary", nil, _("Artefact Hunter"), {ai="baddiepos"} )
          for i, j in ipairs(fleep) do
-            j:control()
             j:setHostile(true)
-            j:attack(player.pilot())
+            j:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
          end
       end
    end
