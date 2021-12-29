@@ -103,10 +103,13 @@ function jumpout ()
 end
 
 function spawnBaddies ()
-   if mem.last_system == mem.startsystem then
-      mem.ai = "baddie"
+   local ai
+   if system.cur() ~= mem.targetsystem then
+      ai = "baddiepos"
+   elseif mem.last_system == mem.startsystem then
+      ai = "baddie"
    else
-      mem.ai = "baddie_norun"
+      ai = "baddie_norun"
    end
 
    local sp = nil
@@ -115,7 +118,7 @@ function spawnBaddies ()
    end
 
    local pp = player.pilot()
-   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=mem.ai} )
+   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
    for pilot_number, pilot_object in ipairs(thugs) do
       -- TODO Modern optimized equipping, or at least a manual equip from "naked"
       pilot_object:setHostile(true)
@@ -127,12 +130,8 @@ function spawnBaddies ()
       pilot_object:outfitAdd("Milspec Jammer")
       pilot_object:outfitAdd("Engine Reroute")
       pilot_object:outfitAdd("Shield Capacitor II")
-      if system.cur() ~= mem.targetsystem then
-         -- TODO more sophisticated way of detecting the player
-         if pilot_object:inrange( pp ) then
-            pilot_object:control()
-            pilot_object:attack( pp )
-         end
+      if ai=="baddiepos" then
+         pilot_object:memory().guardpos = pp:pos()
       else
          mem.thugs_alive = #thugs
          hook.pilot(pilot_object, "exploded", "pilotKilled")
