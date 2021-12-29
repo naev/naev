@@ -753,8 +753,8 @@ function playerHit()
       mem.duelsEnded = mem.duelsEnded + 1
       score_pankration[5] = score_pankration[5] + 7
       mem.score_total[5] = mem.score_total[5] + 7
-      competitors[5].taskClear()
-      competitors[5].land(destpla)
+      competitors[5]:taskClear()
+      competitors[5]:land(destpla)
       competitors[5]:setHostile(false)
       competitors[5]:setInvincible()
       player.msg(fmt.f(_("{1} won against {2}!"), {mem.competitors_names[5],mem.competitors_names[10]}))
