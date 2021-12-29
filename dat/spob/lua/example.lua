@@ -3,7 +3,7 @@
    be used to override different core functionality.
 --]]
 local lg = require "love.graphics"
-local tex, pos
+local tex, pos, tw, th
 
 --[[
    @brief Run when system is getting loaded. Should return a texture that will
@@ -11,15 +11,16 @@ local tex, pos
    overwritten).
 
       @luatreturn Texture A texture to be used as the planet image.
+      @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
 --]]
 function load( s )
    if tex==nil then
       tex = lg.newImage( "path/to/image.png" )
       pos = s:pos()
-      local tw, th = tex:getDimensions()
+      tw, th = tex:getDimensions()
       pos = pos + vec2.new( -tw/2, th/2 )
    end
-   return tex.tex
+   return tex.tex, (tw+th)/4
 end
 
 --[[
