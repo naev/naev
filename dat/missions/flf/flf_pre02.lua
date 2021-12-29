@@ -35,7 +35,7 @@ local fmt = require "format"
 require "missions.flf.flf_patrol"
 
 -- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
--- luacheck: globals hail land_dv returnFLFControl timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
+-- luacheck: globals hail land_dv timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
 
 local boss -- Non-persistent state
 
@@ -241,22 +241,12 @@ function timer_spawnHostileFLF ()
    spawnFLF()
    local pp = player.pilot()
    for i, j in ipairs( fleetFLF ) do
+      j:changeAI( "baddiepos" )
       j:setHostile()
-      j:control()
-      j:attack( pp )
+      j:memory().guardpos = pp:pos()
    end
 
-   hook.pilot( pp, "death", "returnFLFControl" )
    fleetFLF[1]:broadcast( fmt.f( _("{player} is selling us out! Eliminate the traitor!"), {player=player.name()} ) )
-end
-
-
-function returnFLFControl()
-   for i, j in ipairs( fleetFLF ) do
-      if j:exists() then
-         j:control( false )
-      end
-   end
 end
 
 
