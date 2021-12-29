@@ -1,4 +1,5 @@
 local lg = require "love.graphics"
+local audio = require "love.audio"
 local love_shaders = require "love_shaders"
 local starfield = require "bkg.lib.starfield"
 
@@ -70,7 +71,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
 
-local cvs, shader, pos, target
+local cvs, shader, pos, target, sfx
 local s = 256
 
 local wormhole = {}
@@ -109,14 +110,22 @@ function wormhole.load( p, wormhole_target )
       starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
       shader:send( "u_bgtex", starfield.canvas() )
 
+      sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
+      sfx:setRelative(false)
+      local px, py = p:pos():get()
+      sfx:setPosition( px, py, 0 )
+      sfx:setVelocity( 0, 0, 0 )
+      sfx:setLooping(true)
+      sfx:play()
       update_canvas()
    end
    return cvs.t.tex, s/2
 end
 
 function wormhole.unload ()
-   shader = nil
-   cvs = nil
+   shader= nil
+   cvs   = nil
+   sfx   = nil
 end
 
 function wormhole.update( dt )
