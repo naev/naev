@@ -45,7 +45,7 @@ function accept ()
    vn.transition( zbh.zach.transition )
    vn.na(_([[You approach the Za'lek scientist who looks at you nervously.]]))
    z(fmt.f(_([[He musters up courage and beigns to speak.
-"Say, yo uwouldn't happen to be a pilot that could take me to the {sys} system? My colleagues at {pnt} have gone silent during their investigations and I'm fearing maybe the worst happened to them. I would be able to pay you {credits} for the trip."]]),
+"Say, you wouldn't happen to be a pilot that could take me to the {sys} system? My colleagues at {pnt} have gone silent during their investigations and I'm fearing maybe the worst happened to them. I would be able to pay you {credits} for the trip."]]),
       {pnt=destpnt, sys=destsys, credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -120,7 +120,7 @@ He looks pale.]]))
    z(_([["Something isn't right here."
 He stops one second realizing what he just said and gives a puzzled look.
 "Well, besides the obvious, it just doesn't make sense. Why would anyone want to do this to a basic research laboratory? There is nothing over here other than the black hole…"]]))
-   z(_([[He goes silent and seems to be lost in thought. Finally, he looks up and looks around the ship, his gaze becoming determined like rocks after the snow melts away.] He then turns to you.
+   z(_([[He goes silent and seems to be lost in thought. Finally, he looks up and looks around the ship, his gaze becoming determined like rocks after the snow melts away. He then turns to you.
 "I think I'm going to stay here and try to continue the research. It shouldn't be too hard to reactivate basic station functionality. I would never forgive myself if I went back without finding out what happened to her."]]))
    z(_([[Zach goes back to your ship and brings his engineering toolkit and personal drones with him. He starts floating around scanning the hull panels of the station, apparently looking for something. Eventually, he seems to have found what he was looking for, and he rips off a panel almost as a gesture of rebelling against fate. He motions to the drones and disappears with them into the depths of the station internals.]]))
    vn.na(_([[You float close by and peer through but can't make much out in the dark tangle of cables and electronics. Only occasional flashes of light indicate the presence of Zach and his drones, with a drone occasionally coming out to drop damaged electronics and procure new supplies. Knowing you won't be of help, you wait at the docks wondering how long it'll take him, and begin to nod off.]]))
