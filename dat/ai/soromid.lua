@@ -35,9 +35,17 @@ local taunt_list_defensive= {
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
+   local price = ps:price()
 
-   -- Not too many credits.
-   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
+   -- See if it's a transport ship
+   mem.istransport = seeIfTransport()
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    -- Set how far they attack
    mem.enemyclose = 2000 + 2000 * ps:size()
