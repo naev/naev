@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-12108">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Rei">
    <autopos/>
    <hide>1.000000</hide>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wormhole NGC-4087">
+ <displayname>Wormhole</displayname>
+ <lua>spob/lua/wormhole_ngc4087.lua</lua>
+ <pos>
+  <x>7859.207985</x>
+  <y>-3354.539993</y>
+ </pos>
+ <GFX/>
+ <general>
+  <class>Wormhole</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services/>
+ </general>
+</spob>

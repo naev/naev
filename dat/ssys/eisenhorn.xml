@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-10284">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Qellan">
    <autopos/>
    <hide>1.000000</hide>

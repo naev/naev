@@ -1583,7 +1583,9 @@ dat/spob/wolf_vii.xml
 dat/spob/wonclock.xml
 dat/spob/worgen.xml
 dat/spob/wormhole_ngc13674.xml
+dat/spob/wormhole_ngc15670.xml
 dat/spob/wormhole_ngc1931.xml
+dat/spob/wormhole_ngc4087.xml
 dat/spob/worscha.xml
 dat/spob/wsthvn_d1.xml
 dat/spob/wsthvn_p1.xml
@@ -1873,6 +1875,7 @@ dat/ssys/new_haven.xml
 dat/ssys/newmarch.xml
 dat/ssys/ngc1001.xml
 dat/ssys/ngc10180.xml
+dat/ssys/ngc10284.xml
 dat/ssys/ngc10452.xml
 dat/ssys/ngc10789.xml
 dat/ssys/ngc10907.xml
@@ -1882,16 +1885,21 @@ dat/ssys/ngc11444.xml
 dat/ssys/ngc11718.xml
 dat/ssys/ngc11935.xml
 dat/ssys/ngc12056.xml
+dat/ssys/ngc12108.xml
+dat/ssys/ngc12261.xml
 dat/ssys/ngc12654.xml
 dat/ssys/ngc12882.xml
 dat/ssys/ngc1292.xml
 dat/ssys/ngc1317.xml
 dat/ssys/ngc13322.xml
+dat/ssys/ngc13564.xml
 dat/ssys/ngc13674.xml
+dat/ssys/ngc13747.xml
 dat/ssys/ngc13798.xml
 dat/ssys/ngc14479.xml
 dat/ssys/ngc14549.xml
 dat/ssys/ngc1562.xml
+dat/ssys/ngc15670.xml
 dat/ssys/ngc1872.xml
 dat/ssys/ngc1931.xml
 dat/ssys/ngc2175.xml
@@ -1903,9 +1911,11 @@ dat/ssys/ngc2948.xml
 dat/ssys/ngc2954.xml
 dat/ssys/ngc3219.xml
 dat/ssys/ngc3371.xml
+dat/ssys/ngc344.xml
 dat/ssys/ngc3858.xml
 dat/ssys/ngc4087.xml
 dat/ssys/ngc4131.xml
+dat/ssys/ngc4363.xml
 dat/ssys/ngc4637.xml
 dat/ssys/ngc4746.xml
 dat/ssys/ngc4771.xml
@@ -1914,6 +1924,7 @@ dat/ssys/ngc5483.xml
 dat/ssys/ngc5631.xml
 dat/ssys/ngc5838.xml
 dat/ssys/ngc6057.xml
+dat/ssys/ngc6901.xml
 dat/ssys/ngc7061.xml
 dat/ssys/ngc7078.xml
 dat/ssys/ngc728.xml
@@ -1926,6 +1937,7 @@ dat/ssys/ngc8468.xml
 dat/ssys/ngc9017.xml
 dat/ssys/ngc902.xml
 dat/ssys/ngc9415.xml
+dat/ssys/ngc9607.xml
 dat/ssys/ngc9654.xml
 dat/ssys/ngc9897.xml
 dat/ssys/ngcg5882.xml
@@ -2651,6 +2663,8 @@ dat/spob/lua/hypergate.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/wormhole_ncg1931.lua
 dat/spob/lua/wormhole_ngc13674.lua
+dat/spob/lua/wormhole_ngc15670.lua
+dat/spob/lua/wormhole_ngc4087.lua
 src/ai.c
 src/ai.h
 src/array.c
