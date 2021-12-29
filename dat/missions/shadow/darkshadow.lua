@@ -375,6 +375,7 @@ function spawnInterceptors()
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
       j:outfitAdd("Improved Stabilizer", 1)
+      j:setLeader( genbu )
       j:control()
       j:attack(player.pilot())
    end
