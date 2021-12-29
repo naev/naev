@@ -34,9 +34,17 @@ local taunt_list_defensive = {
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
+   local price = ps:price()
 
-   -- Not too many credits.
-   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
+   -- See if it's a transport ship
+   mem.istransport = seeIfTransport()
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    local r = rnd.rnd(0,20)

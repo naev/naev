@@ -38,7 +38,16 @@ function create ()
    -- Not too many credits.
    local p = ai.pilot()
    local price = p:ship():price()
-   ai.setcredits( rnd.rnd(price/300, price/70) )
+
+   -- See if it's a transport ship
+   mem.istransport = seeIfTransport()
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    -- Lines to annoy the player.
    local r = rnd.rnd(0,20)

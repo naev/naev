@@ -52,6 +52,7 @@ local taunt_list_defensive_drone = {
 function create()
    local p = ai.pilot()
    local ps = p:ship()
+   local price = ps:price()
 
    -- See if a drone
    mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
@@ -68,8 +69,15 @@ function create()
       return
    end
 
-   -- Not too many credits.
-   ai.setcredits( rnd.rnd( ps:price()/200, ps:price()/50) )
+   -- See if it's a transport ship
+   mem.istransport = seeIfTransport()
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/200, price/50) )
+   end
 
    -- Set how far they attack
    mem.enemyclose = 3000 + 1000 * ps:size()

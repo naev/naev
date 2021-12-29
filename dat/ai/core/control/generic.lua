@@ -862,6 +862,30 @@ function create_post ()
    end
 end
 
+-- Determine if the ship is a transport
+function seeIfTransport ()
+   local transports = {
+      ["Courier"] = true,
+      ["Armoured Transport"] = true,
+      ["Bulk Freighter"] = true,
+      ["Yacht"] = true,
+      ["Freighter"] = true,
+   }
+   return transports[ ai.pilot():ship():class() ]
+end
+
+-- Set transport ship parameters
+function transportParam ( price )
+   mem.aggressive  = false
+   mem.whiteknight = false
+   mem.loiter      = 0
+   mem.land_planet = true
+   mem.defensive   = false
+   mem.enemyclose  = 500
+   mem.careful     = true
+   ai.setcredits( rnd.rnd(price/100, price/25) )
+end
+
 -- taunts
 function taunt( _target, _offensive )
    -- Empty stub
