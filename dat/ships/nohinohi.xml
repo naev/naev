@@ -37,6 +37,8 @@
  </stats>
  <tags>
   <tag>feral</tag>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
   <!--<tag>bioship</tag>-->
  </tags>
 </ship>

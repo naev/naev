@@ -118,21 +118,6 @@ special_ships["Heavy Drone"] = function( p )
       p:outfitAdd( o, 1, true )
    end
 end
-special_ships["Za'lek Scout Drone"] = function( p )
-   p:outfitAdd( "Particle Lance")
-end
-special_ships["Za'lek Light Drone"] = function( p )
-   p:outfitAdd( "Particle Lance")
-end
-special_ships["Za'lek Bomber Drone"] = function( p )
-   p:outfitAdd( "Electron Burst Cannon" )
-   p:outfitAdd( "Electron Burst Cannon" )
-end
-special_ships["Za'lek Heavy Drone"] = function( p )
-   p:outfitAdd( "Orion Lance" )
-   p:outfitAdd( "Orion Lance" )
-   p:outfitAdd( "Electron Burst Cannon" )
-end
 
 
 --[[
@@ -243,6 +228,8 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Naked ship
    local ps = p:ship()
+   local pt = ps:tags()
+   if pt.noequip then return end -- Don't equip
    p:outfitRm( "all" )
 
    -- Special ships used fixed outfits
@@ -260,7 +247,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    end
 
    -- Specila case bioships
-   if ps:tags().bioship then
+   if pt.bioship then
       local stage = bioship.maxstage( p )
       bioship.simulate( p, rnd.rnd(1,stage) )
    end
