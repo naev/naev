@@ -59,6 +59,11 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    -- Default nebula background
    background_default()
+
+   -- Set some fancy effects
+   audio.setEffect( "haze", require("reverb_preset").forest() )
+   audio.setGlobalEffect( "haze" )
+   audio.setGlobalAirAbsorption( 3000, 1 )
 end
 
 function renderov( dt )

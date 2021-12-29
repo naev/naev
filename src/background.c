@@ -19,6 +19,7 @@
 #include "ndata.h"
 #include "nebula.h"
 #include "nlua.h"
+#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
@@ -386,6 +387,7 @@ static nlua_env background_create( const char *name )
    nlua_loadBackground(env);
    nlua_loadCamera(env);
    nlua_loadGFX(env);
+   nlua_loadAudio(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );

@@ -748,6 +748,14 @@ void sound_pitchGroup( int group, double pitch )
    sound_al_pitchGroup( group, pitch );
 }
 
+void sound_setAbsorption( double value )
+{
+   if (sound_disabled)
+      return;
+
+   sound_al_setAbsorption( value );
+}
+
 /**
  * @brief Sets up the sound environment.
  *

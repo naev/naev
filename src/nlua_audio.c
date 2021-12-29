@@ -64,6 +64,8 @@ static int audioL_getAttenuationDistances( lua_State *L );
 static int audioL_setRolloff( lua_State *L );
 static int audioL_getRolloff( lua_State *L );
 static int audioL_setEffect( lua_State *L );
+static int audioL_setGlobalEffect( lua_State *L );
+static int audioL_setGlobalAirAbsorption( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
@@ -95,6 +97,8 @@ static const luaL_Reg audioL_methods[] = {
    { "setRolloff", audioL_setRolloff },
    { "getRolloff", audioL_getRolloff },
    { "setEffect", audioL_setEffect },
+   { "setGlobalEffect", audioL_setGlobalEffect },
+   { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
@@ -1106,8 +1110,17 @@ static int audioL_setEffectGlobal( lua_State *L )
    return 0;
 }
 
+static LuaAudioEfx_t *audio_getEffectByName( const char *name )
+{
+   for (int i=0; i<array_size(lua_efx); i++)
+      if (strcmp(name,lua_efx[i].name)==0)
+         return &lua_efx[i];
+   WARN(_("Unknown audio effect '%s'!"), name);
+   return NULL;
+}
+
 /**
- * @brief Sets effect stuff, behaves different if the first paramater is a source or not.
+ * @brief Sets effect stuff, behaves different if the first parameter is a source or not.
  *
  * @usage audio.setEffect( "reverb", { type="reverb" } )
  * @usage source:setEffect( "reverb" )
@@ -1135,17 +1148,9 @@ static int audioL_setEffect( lua_State *L )
 
    soundLock();
    if (enable) {
-      lae = NULL;
-      for (int i=0; i<array_size(lua_efx); i++) {
-         if (strcmp(name,lua_efx[i].name)==0) {
-            lae = &lua_efx[i];
-            break;
-         }
-      }
-      if (lae == NULL) {
-         WARN(_("Unknown audio effect '%s'!"), name);
+      lae = audio_getEffectByName( name );
+      if (lae == NULL)
          return 0;
-      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }
@@ -1157,4 +1162,58 @@ static int audioL_setEffect( lua_State *L )
 
    lua_pushboolean(L,1);
    return 1;
+}
+
+/**
+ * @brief Sets a global effect. Will overwrite whatever was set. Does not affect sources created in Lua.
+ *
+ *    @luatparam[opt] string name Name of the effect to set or nil to disable.
+ * @luafunc setGlobalEffect
+ */
+static int audioL_setGlobalEffect( lua_State *L )
+{
+   LuaAudioEfx_t *lae;
+   const char *name = luaL_optstring(L,1,NULL);
+
+   /* Disable. */
+   if (name==NULL) {
+      soundLock();
+      nalAuxiliaryEffectSloti( sound_efx_directSlot, AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
+      al_checkErr();
+      soundUnlock();
+      return 0;
+   }
+
+   /* Try to set it. */
+   lae = audio_getEffectByName( name );
+   if (lae == NULL)
+      return 0;
+
+   /* Set the effect. */
+   soundLock();
+   nalAuxiliaryEffectSloti( sound_efx_directSlot, AL_EFFECTSLOT_EFFECT, lae->effect );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Allows setting the speed of sound and air absorption.
+ *
+ *    @luatparam[opt=3443] number speed Air speed.
+ *    @luatparam[opt=-1] number absorption Air absorptuion for all sources. Has to be a value between 0 and 10. If negative, value is ignored.
+ * @luafunc setGlobalAirAbsorption
+ */
+static int audioL_setGlobalAirAbsorption( lua_State *L )
+{
+   double speed = luaL_optnumber( L, 1, 3433. );
+   double absorption = luaL_optnumber( L, 2, -1. );
+
+   soundLock();
+   alSpeedOfSound( speed );
+   if (absorption > 0.)
+      sound_setAbsorption( absorption );
+   al_checkErr();
+   soundUnlock();
+   return 0;
 }
