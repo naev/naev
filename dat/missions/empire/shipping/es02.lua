@@ -167,7 +167,7 @@ function enter ()
       local pp = player.pilot()
       if p:inrange( pp ) then
          p:control()
-         p:attack( pp )
+         p:attack( pp ) -- On purpose attack player
       end
 
       -- Now Dvaered
