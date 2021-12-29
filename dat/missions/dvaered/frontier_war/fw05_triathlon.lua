@@ -568,9 +568,12 @@ end
 
 function startPankration()
    player.pilot():control(false)
+   -- Make dynamic factions for everyone
+   dynFact = {}
    -- Make people attack each other.
    for i = 1, 9 do
-      competitors[i]:setFaction("Warlords")
+      dynFact[i] = faction.dynAdd( "Warlords", mem.competitors_names[i], mem.competitors_names[i], {ai="dvaered"} )
+      competitors[i]:setFaction(dynFact[i])
       competitors[i]:taskClear()
       compHitHook[i] = hook.pilot( competitors[i], "attacked", "compHit" )
       competitors[i]:memory().atk = nil -- Should default to generic, a very aggressive AI
@@ -578,6 +581,7 @@ function startPankration()
    for i = 1, 4 do
       competitors[i]:attack(competitors[i+5])
       competitors[i+5]:attack(competitors[i])
+      dynFact[i]:dynEnemy( dynFact[i+5] )
    end
    competitors[5]:attack(player.pilot())
    misn.osdActive(2)
