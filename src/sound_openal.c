@@ -1080,8 +1080,6 @@ int sound_al_updateListener( double dir, double px, double py,
  */
 int sound_al_env( SoundEnv_t env, double param )
 {
-   int i;
-   ALuint s;
    ALfloat f;
 
    soundLock();
@@ -1096,8 +1094,8 @@ int sound_al_env( SoundEnv_t env, double param )
                   AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
 
             /* Set per-source parameters. */
-            for (i=0; i<source_ntotal; i++) {
-               s = source_total[i];
+            for (int i=0; i<source_ntotal; i++) {
+               ALuint s = source_total[i];
                alSourcef( s, AL_AIR_ABSORPTION_FACTOR, 0. );
             }
          }
@@ -1110,7 +1108,6 @@ int sound_al_env( SoundEnv_t env, double param )
          alSpeedOfSound( 3433./(1. + f*2.) );
 
          if (al_info.efx == AL_TRUE) {
-
             if (al_info.efx_reverb == AL_TRUE) {
                /* Tweak the reverb. */
                nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
@@ -1122,11 +1119,11 @@ int sound_al_env( SoundEnv_t env, double param )
             }
 
             /* Set per-source parameters. */
-            for (i=0; i<source_ntotal; i++) {
-               s = source_total[i];
+            for (int i=0; i<source_ntotal; i++) {
+               ALuint s = source_total[i];
                /* Value is from 0. (normal) to 10..
                 * It represents the attenuation per meter. In this case it decreases by
-                * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absoprtion factor.
+                * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absorption factor.
                 * In our case each pixel represents 5 meters.
                 */
                alSourcef( s, AL_AIR_ABSORPTION_FACTOR, 3.*f );
@@ -1148,11 +1145,8 @@ int sound_al_env( SoundEnv_t env, double param )
  */
 int sound_al_createGroup( int size )
 {
-   int id;
    alGroup_t *g;
-
-   /* Get new ID. */
-   id = ++al_groupidgen;
+   int id  = ++al_groupidgen; /* Get new ID. */
 
    /* Grow group list. */
    al_ngroups++;
