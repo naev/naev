@@ -342,6 +342,7 @@ function handle_messages( si, dopush )
                -- Clear orders
                elseif msgtype == "e_clear" then
                   p:taskClear()
+                  taskchange = true
                end
             end
          end
