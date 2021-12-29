@@ -933,7 +933,7 @@ static void map_findSearch( unsigned int wid, const char* str )
    }
    else if (map_find_spobs) {
       ret = map_findSearchSpobs( wid, name );
-      searchname = _("Planet/Station");
+      searchname = _("Space Objects");
    }
    else if (map_find_outfits) {
       ret = map_findSearchOutfits( wid, name );

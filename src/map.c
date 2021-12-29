@@ -319,7 +319,7 @@ void map_open (void)
 
    /* Spobs */
    window_addText( wid, x, y, 90, 20, 0, "txtSSpobs",
-         &gl_smallFont, &cFontGrey, _("Spobs:") );
+         &gl_smallFont, &cFontGrey, _("Space Objects:") );
    window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
