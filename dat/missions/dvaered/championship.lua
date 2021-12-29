@@ -339,7 +339,7 @@ end
 function assault()
    mem.stage = 1
    misn.osdActive(2)
-   opponent:attack(player.pilot())
+   opponent:attack(player.pilot()) -- Probably fine to just attack player
    hook.rm(mem.prox)
    hook.rm(mem.attackhook)
    system.mrkRm(mem.mark)

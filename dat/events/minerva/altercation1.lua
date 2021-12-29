@@ -186,8 +186,8 @@ end
 
 function zl_dead ()
    if player_side=="zalek" or player_side=="neither" then
-      dv:control()
-      dv:attack( player.pilot() )
+      dv:setHostile(true)
+      dv:control(false)
    else
       hook.rm( angrytimer )
       hook.rm( attacktimer )
@@ -224,8 +224,8 @@ end
 
 function dv_dead ()
    if player_side=="dvaered" or player_side=="neither" then
-      zl:control()
-      zl:attack( player.pilot() )
+      zl:setHostile(true)
+      zl:control(false)
    else
       hook.rm( angrytimer )
       hook.rm( attacktimer )

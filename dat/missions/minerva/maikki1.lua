@@ -836,8 +836,9 @@ He seems to be clutching his head. A headache perhaps?]]))
    vn.na(_("You detect they are powering up their weapon systems."))
    vn.func( function ()
       for k,p in ipairs{ pscavA, pscavB } do
-         p:taskClear()
-         p:attack( player.pilot() )
+         p:control(false)
+         p:changeAI("baddiepos")
+         p:setHostile(true)
          -- TODO add angry messages
       end
       minerva.log.maikki(_("You found a wreck and were attacked by scavengers.") )

@@ -27,7 +27,7 @@ local neu = require "common.neutral"
 
 -- TODO add some sort of reward I guess
 
-local bodyguard1, bodyguard2, bodyguard3, kidnappers -- Non-persistent state
+local kidnappers -- Non-persistent state
 -- luacheck: globals attackedkidnappers boardkidnappers enter explodedkidnappers idle kidskilled land1 land2 land3 (Hook functions passed by name)
 -- luacheck: globals firstpirates secondpirates (NPC functions passed by name)
 
@@ -161,31 +161,28 @@ function idle()
 end
 
 function attackedkidnappers()
+   if kidnappers:exists() then
+      kidnappers:runaway(player.pilot(), true)
+   end
 
-  if kidnappers:exists() then
-    kidnappers:runaway(player.pilot(), true)
-  end
-
-  if mem.needpirates then
-    bodyguard1 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(800, 700) )
-    bodyguard2 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(-900, 600) )
-    bodyguard3 = pilot.add( "Pirate Hyena", "Pirate", vec2.new(700, -500) )
-    bodyguard1:control()
-    bodyguard2:control()
-    bodyguard3:control()
-    bodyguard1:attack(player.pilot())
-    bodyguard2:attack(player.pilot())
-    bodyguard3:attack(player.pilot())
-    bodyguard1:broadcast(_([[You are damaging the goods! You are dead!]]), true)
-    mem.needpirates = false
-  end
-
+   if mem.needpirates then
+      local p = {}
+      p[1] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(800, 700) )
+      p[2] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(-900, 600) )
+      p[3] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(700, -500) )
+      for k,v in ipairs(p) do
+         v:setHostile(true)
+         v:setLeader( kidnappers )
+      end
+      p[1]:broadcast(_([[You are damaging the goods! You are dead!]]), true)
+      mem.needpirates = false
+   end
 end
 
 function explodedkidnappers()
-  if (not mem.rescued) then
-     hook.timer(1.5, "kidskilled")
-  end
+   if not mem.rescued then
+      hook.timer(1.5, "kidskilled")
+   end
 end
 
 function kidskilled()
