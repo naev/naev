@@ -287,14 +287,15 @@ function abort()
 end
 
 function rmTheOutfit( addengine )
+   local pp = player.pilot()
    if isMounted("Za'lek Test Engine") then
-      player.pilot():outfitRm("Za'lek Test Engine")
+      pp:outfitRm("Za'lek Test Engine")
    end
 
    -- Give them a bad engine just in case they are landed or on a planet
    -- where they can't equip. The bad engine is free so it shouldn't matter.
    if addengine then
-      player.pilot():outfitAdd("Beat Up Small Engine")
+      pp:outfitAdd("Beat Up Small Engine")
    end
 
    -- TODO Remove copies from all ships
