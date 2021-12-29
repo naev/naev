@@ -11,13 +11,6 @@ mem.aggressive    = true
 mem.whiteknight   = true
 mem.formation     = "circle"
 
-local drones = {
-   ["Za'lek Heavy Drone"] = true,
-   ["Za'lek Bomber Drone"] = true,
-   ["Za'lek Light Drone"] = true,
-   ["Za'lek Scout Drone"] = true,
-}
-
 local bribe_no_list = {
    _([["Keep your cash, you troglodyte."]]),
    _([["Don't make me laugh. Eat laser beam!"]]),
@@ -50,11 +43,12 @@ local taunt_list_defensive_drone = {
 }
 
 function create()
-   local p = ai.pilot()
+   local p  = ai.pilot()
    local ps = p:ship()
+   local pt = ps:tags()
 
    -- See if a drone
-   mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
+   mem.isdrone = pt.drone
    if mem.isdrone then
       local msg = _([["ACCESS DENIED.]])
       mem.refuel_no = msg
