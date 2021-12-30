@@ -2670,6 +2670,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 /**
  * @brief Centers the map on a spob.
  *
+ *    @param wid ID of the window with the map widget, or 0 for "the" map window.
  *    @param sys System to center the map on (internal name).
  *    @return 0 on success.
  */
