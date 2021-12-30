@@ -55,6 +55,7 @@ function create()
       mem.refuel_no = msg
       mem.bribe_no = msg
       mem.scan_msg = _("COMMENCING SCAN PROCEDURE.")
+      mem.scan_msg_ok = _("SCAN COMPLETED.")
       mem.scan_msg_bad = _("ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!")
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
