@@ -45,4 +45,4 @@
   <cargo_inertia>-20</cargo_inertia>
   <ew_hide>-20</ew_hide>
  </stats>
-</ship>
+<tags><tag>transport</tag></tags></ship>

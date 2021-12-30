@@ -9,8 +9,8 @@
  <class>Bulk Freighter</class>
  <price>4600000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-54" y="14" h="0" >zalek</trail_generator>
- <trail_generator x="-54" y="-14" h="0" >zalek</trail_generator>
+ <trail_generator x="-54" y="14" h="0">zalek</trail_generator>
+ <trail_generator x="-54" y="-14" h="0">zalek</trail_generator>
  <trail_generator x="-20" y="27" h="-9" always_under="1">zalek</trail_generator>
  <trail_generator x="-34" y="27" h="-9" always_under="1">zalek</trail_generator>
  <trail_generator x="-48" y="28" h="0">nebula</trail_generator>
@@ -67,5 +67,5 @@
  </stats>
  <tags>
   <tag>zalek</tag>
- </tags>
+ <tag>transport</tag></tags>
 </ship>

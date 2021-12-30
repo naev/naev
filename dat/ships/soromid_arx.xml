@@ -41,7 +41,7 @@
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="primal_yell" />
-  <utility size="large" prop="accessory"/>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive I</structure>
