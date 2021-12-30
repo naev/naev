@@ -74,7 +74,7 @@ function accept ()
    -- mission details
    misn.setTitle( _("Black Hole Mystery") )
    misn.setReward( fmt.reward(reward) )
-   misn.setDesc( _("") )
+   misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )
    mem.state = 1
@@ -89,7 +89,8 @@ function accept ()
 end
 
 function land ()
-   if mem.state~=2 or spob.cur() ~= mainpnt then
+   if mem.state~=3 or spob.cur() ~= mainpnt then
+      lmisn.fail(_("You were supposed to follow the signals!"))
       return
    end
 
@@ -106,7 +107,7 @@ function land ()
 
    faction.modPlayer("Za'lek", zbh.fctmod.zbh04)
    player.pay( reward )
-  zbh.log(fmt.f(_("{sys} {pnt}"),{sys=mainsys,pnt=mainpnt}))
+   zbh.log(fmt.f(_("{sys} {pnt}"),{sys=mainsys,pnt=mainpnt}))
    misn.finish(true)
 end
 
@@ -121,7 +122,6 @@ end
 
 local feral, points
 local function feral_map( first )
-
    system.mrkClear()
    for k,v in ipairs(points) do
       local pos = v + vec2.newP( 300+1500*rnd.rnd(), rnd.angle() )
@@ -153,6 +153,7 @@ function enter ()
    table.sort( points, function( a, b ) return ppos:dist2(a) > ppos:dist2(b) end )
 
    feral = zbh.feralkid( points[1] )
+   feral:setInvincible(true)
    feral:control(true)
    feral:stealth()
 
@@ -209,5 +210,6 @@ function feral_discovered ()
    feral:brake()
    feral:face( player.pilot() )
 
-   --hook.timer()
+   hook.timer(  3, "zach_msg", _("Zach: What the hell is that?") )
+   hook.timer( 10, "zach_msg", _("Zach: ") )
 end
