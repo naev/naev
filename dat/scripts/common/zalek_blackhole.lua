@@ -54,6 +54,14 @@ function zbh.evilpi ()
          {clear_enemies=true, clear_allies=true} )
 end
 
+function zbh.feralkid( pos )
+   local fct = faction.exists("feralbioship")
+   if not fct then
+      fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
+   end
+   return pilot.add( "Nohinohi", fct, pos )
+end
+
 function zbh.unidiff( diffname )
    for _k,d in ipairs(zbh.unidiff_list) do
       if diff.isApplied(d) then

@@ -136,7 +136,7 @@ He rubs his temples.]]))
    misn.finish(true)
 end
 
--- Set up seeing the feral bioship on the way back
+-- Set up the enemies
 local heartbeat_state = 0
 function enter ()
    if system.cur() ~= mainsys then
