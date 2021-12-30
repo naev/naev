@@ -609,9 +609,7 @@ static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel
    /* Check if velocity and position allow to board. */
    if (*dist2 > sw * PILOT_SIZE_APPROX)
       return 0;
-   if ((pow2(VX(player.p->solid->vel)-VX(*vel))
-            + pow2(VY(player.p->solid->vel)-VY(*vel)))
-         > (double)pow2(MAX_HYPERSPACE_VEL))
+   if (vect_dist2( &player.p->solid->vel, vel ) > (double)pow2(MAX_HYPERSPACE_VEL))
       return 0;
    return 1;
 }
