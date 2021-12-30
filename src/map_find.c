@@ -83,22 +83,22 @@ static int map_knownInit (void)
          continue;
 
       for (int j=0; j<array_size(sys[i].spobs); j++) {
-         Spob *pnt = sys[i].spobs[j];
+         Spob *spob = sys[i].spobs[j];
 
          /* Must be known. */
-         if (!spob_isKnown( pnt ))
+         if (!spob_isKnown( spob ))
             continue;
 
          /* Must have techs. */
-         if (pnt->tech != NULL) {
-            array_push_back( &spobs, pnt );
-            array_push_back( &t, pnt->tech );
+         if (spob->tech != NULL) {
+            array_push_back( &spobs, spob );
+            array_push_back( &t, spob->tech );
          }
       }
    }
 
    /* Pointer voodoo. */
-   map_known_techs   = t;
+   map_known_techs = t;
    map_known_spobs = spobs;
 
    return 0;
