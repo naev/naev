@@ -33,8 +33,8 @@
 #define BUTTON_HEIGHT    30 /**< Boarding button height. */
 
 static int board_stopboard = 0; /**< Whether or not to unboard. */
-static int board_boarded   = 0;
-static nlua_env board_env  = LUA_NOREF;
+static int board_boarded   = 0; /**< Whether or not the player is boarded. */
+static nlua_env board_env  = LUA_NOREF; /**< Lua environment to do the boarding. */
 
 /**
  * @brief Gets if the player is boarded.
