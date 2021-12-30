@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wormhole NGC-4087">
  <displayname>Wormhole</displayname>
+ <feature>#bWormhole#0</feature>
  <lua>spob/lua/wormhole_ngc4087.lua</lua>
  <pos>
   <x>7859.207985</x>

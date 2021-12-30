@@ -2255,6 +2255,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
       xml_onlyNodes(node);
 
       xmlr_strd(node, "displayname", spob->displayname);
+      xmlr_strd(node, "feature", spob->feature);
       xmlr_strd(node, "lua", spob->lua_file);
       xmlr_float(node, "radius", spob->radius);
       if (xml_isNode(node, "marker")) {
@@ -3883,6 +3884,7 @@ void space_exit (void)
 
       free(pnt->name);
       free(pnt->displayname);
+      free(pnt->feature);
       free(pnt->lua_file);
       free(pnt->class);
       free(pnt->description);

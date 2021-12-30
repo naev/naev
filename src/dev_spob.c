@@ -53,6 +53,8 @@ int dpl_saveSpob( const Spob *p )
    /* Some global attributes. */
    if (p->displayname!=NULL)
       xmlw_elem( writer, "displayname", "%s", p->displayname );
+   if (p->feature!=NULL)
+      xmlw_elem( writer, "feature", "%s", p->feature );
    if (p->lua_file!=NULL)
       xmlw_elem( writer, "lua", "%s", p->lua_file );
    if (spob_isFlag(p,SPOB_RADIUS))

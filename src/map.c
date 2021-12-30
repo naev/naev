@@ -683,6 +683,16 @@ static void map_update( unsigned int wid )
       if (sys->features != NULL)
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(sys->features) );
 
+      /* Mention spob features. */
+      for (int i=0; i<array_size(sys->spobs); i++) {
+         Spob *spob = sys->spobs[i];
+         if (spob->feature == NULL)
+            continue;
+         if (buf[0] != '\0')
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", spob->feature);
+      }
+
       /* Mention trade lanes if applicable. */
       found = 0;
       for (int i=0; i<array_size(sys->jumps); i++) {
