@@ -165,7 +165,7 @@ function board ()
       { "Black Cat",                "Black Cat Doll" },
    }
    -- Special case: this mission has multiple endings, and only one gives the reward.
-   if var.peek( "flfbase_intro" ) == nil then
+   if var.peek( "flfbase_intro" ) == nil and var.peek( "invasion_time" ) == nil then
       table.insert( mission_rewards, { "Disrupt a Dvaered Patrol", "Pentagram of Valor" } )
    end
    for _,r in ipairs(mission_rewards) do
