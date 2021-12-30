@@ -686,6 +686,8 @@ static void map_update( unsigned int wid )
          Spob *spob = sys->spobs[i];
          if (spob->feature == NULL)
             continue;
+         if (!spob_isKnown(spob))
+            continue;
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", spob->feature);
