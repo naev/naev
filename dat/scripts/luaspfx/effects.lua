@@ -67,12 +67,39 @@ function alert_meta.init( efx, _ttl, pos, vel )
    efx.sound:setVelocity( vx, vy, 0 )
    efx.sound:setPitch( dt_mod )
    efx.sound.setAttenuationDistances( 500, 25e3 )
-   efx.sound:play( pos )
+   efx.sound:play()
 end
 function effects.alert( params )
    local efx = {}
    setmetatable( efx, { __index = alert_meta } )
    efx.sound = alert_sound:clone()
+   efx.params = params
+   return efx
+end
+
+--[[
+   Plays a localized sound
+--]]
+local sfx_meta = {}
+function sfx_meta.func( _efx, _x, _y, _z )
+end
+function sfx_meta.init( efx, _ttl, pos, vel )
+   local dt_mod = player.dt_mod()
+   local px, py = pos:get()
+   local vx, vy = vel:get()
+   efx.sound:setRelative( false )
+   efx.sound:setPosition( px, py, 0 )
+   efx.sound:setVelocity( vx, vy, 0 )
+   efx.sound:setPitch( dt_mod )
+   efx.sound:play()
+end
+function effects.sfx( params )
+   local efx = {}
+   setmetatable( efx, { __index = sfx_meta } )
+   efx.sound = params.sfx:clone()
+   local ref = params.dist_ref or 500
+   local max = params.dist_max or 25e3
+   efx.sound.setAttenuationDistances( ref, max )
    efx.params = params
    return efx
 end
