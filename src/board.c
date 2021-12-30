@@ -166,6 +166,9 @@ int player_tryBoard( int noisy )
       return PLAYER_BOARD_OK;
    }
 
+   /* Set speed to target's speed. */
+   vect_cset(&player.p->solid->vel, VX(p->solid->vel), VY(p->solid->vel));
+
    /* Is boarded. */
    board_boarded = 1;
 
@@ -219,6 +222,9 @@ int pilot_board( Pilot *p )
       return 0;
    else if (pilot_isFlag(target,PILOT_BOARDED))
       return 0;
+
+   /* Set speed to target's speed. */
+   vect_cset(&p->solid->vel, VX(target->solid->vel), VY(target->solid->vel));
 
    /* Set the boarding flag. */
    pilot_setFlag(target, PILOT_BOARDED);
