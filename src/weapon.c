@@ -6,7 +6,7 @@
  *
  * @brief Handles all the weapons in game.
  *
- * Weapons are what gets created when a pilot shoots.  They are based
+ * Weapons are what gets created when a pilot shoots. They are based
  * on the outfit that created them.
  */
 /** @cond */
@@ -879,10 +879,6 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
    if (pilot_isFlag(p, PILOT_HIDE))
       return 0;
 
-   /* Can never hit same faction. */
-   if (p->faction == w->faction)
-      return 0;
-
    /* Must not be landing nor taking off. */
    if (pilot_isFlag(p, PILOT_LANDING) ||
          pilot_isFlag(p, PILOT_TAKEOFF))
@@ -900,6 +896,10 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
    /* Always hit target. */
    if (w->target == p->id)
       return 1;
+
+   /* Can never hit same faction, unless explicitly targetted (see above). */
+   if (p->faction == w->faction)
+      return 0;
 
    /* Player behaves differently. */
    if (w->faction == FACTION_PLAYER) {
