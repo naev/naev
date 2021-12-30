@@ -2341,8 +2341,7 @@ static int aiL_land( lua_State *L )
    }
 
    /* Check velocity. */
-   if ((pow2(VX(cur_pilot->solid->vel)) + pow2(VY(cur_pilot->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL)) {
+   if (vect_odist2( &cur_pilot->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       lua_pushboolean(L,0);
       return 1;
    }

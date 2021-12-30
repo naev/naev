@@ -2716,9 +2716,7 @@ int pilot_refuelStart( Pilot *p )
    if (vect_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
-   else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
-            pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL))
+   else if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
 
    /* Now start the boarding to refuel. */

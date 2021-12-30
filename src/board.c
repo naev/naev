@@ -147,7 +147,7 @@ int player_tryBoard( int noisy )
          player_message(_("#rYou are too far away to board your target."));
       return PLAYER_BOARD_RETRY;
    }
-   else if (vect_dist2( &player.p->solid->vel, &p->solid->vel ) > (double)pow2(MAX_HYPERSPACE_VEL)) {
+   else if (vect_dist2( &player.p->solid->vel, &p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (noisy)
          player_message(_("#rYou are going too fast to board the ship."));
       return PLAYER_BOARD_RETRY;
@@ -214,7 +214,7 @@ int pilot_board( Pilot *p )
    else if (vect_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
-   else if (vect_dist2( &player.p->solid->vel, &target->solid->vel ) > (double)pow2(MAX_HYPERSPACE_VEL))
+   else if (vect_dist2( &player.p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
    else if (pilot_isFlag(target,PILOT_BOARDED))
       return 0;

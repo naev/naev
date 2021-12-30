@@ -1608,8 +1608,7 @@ int player_land( int loud )
          player_message(_("#rYou are too far away to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
    }
-   else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL)) {
+   else if (vect_odist2( &player.p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
          player_message(_("#rYou are going too fast to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;

@@ -205,9 +205,7 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Cannot be going much faster. */
-   if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
-            pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL))
+   if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
    /* Grab dock ammo */

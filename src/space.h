@@ -19,7 +19,7 @@ typedef struct JumpPoint_ JumpPoint;
 
 #define SYSTEM_SIMULATE_TIME_PRE   25. /**< Time to simulate system before player is added, during this time special effect creation is disabled. */
 #define SYSTEM_SIMULATE_TIME_POST   5. /**< Time to simulate the system before the player is added, however, effects are added. */
-#define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
+#define MAX_HYPERSPACE_VEL    25. /**< Speed to brake to before jumping. */
 #define ASTEROID_REF_AREA     500e3/**< The "density" value in an asteroid field means 1 rock per this area. */
 
 /* Asteroid status enum */
