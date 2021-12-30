@@ -149,6 +149,8 @@ void player_autonavEnd (void)
    player_autonavResetSpeed();
    free( player.autonavmsg );
    player.autonavmsg = NULL;
+   /* Get rid of acceleration. */
+   player_accelOver();
 }
 
 /**
