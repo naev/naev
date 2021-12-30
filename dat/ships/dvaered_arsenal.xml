@@ -9,8 +9,8 @@
  <class>Bulk Freighter</class>
  <price>5400000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-53" y="7" h="-1" >fire</trail_generator>
- <trail_generator x="-53" y="-7" h="-1" >fire</trail_generator>
+ <trail_generator x="-53" y="7" h="-1">fire</trail_generator>
+ <trail_generator x="-53" y="-7" h="-1">fire</trail_generator>
  <trail_generator x="-37" y="12" h="0">nebula</trail_generator>
  <trail_generator x="-37" y="-12" h="0">nebula</trail_generator>
  <trail_generator x="-42" y="13" h="6">nebula</trail_generator>
@@ -66,5 +66,5 @@
  </stats>
  <tags>
   <tag>dvaered</tag>
- </tags>
+ <tag>transport</tag></tags>
 </ship>

@@ -37,10 +37,11 @@ local taunt_list_defensive = {
 function create ()
    -- Not too many credits.
    local p = ai.pilot()
-   local price = p:ship():price()
+   local ps = p:ship()
+   local price = ps:price()
 
    -- See if it's a transport ship
-   mem.istransport = seeIfTransport()
+   mem.istransport = ps:tags().transport
 
    -- Credits, and other transport-specific stuff
    if mem.istransport then

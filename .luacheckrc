@@ -113,6 +113,7 @@ stds.AI.globals = {
    "idle",                      -- a task, commonly called and overridden
    "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.
    "taunt",                     -- everyone has their own!
+   "transportParam",            -- initialization helper for the AIs
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()

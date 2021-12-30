@@ -34,10 +34,12 @@ end
 mem.distressmsgfunc = sos
 
 function create ()
-   local price = ai.pilot():ship():price()
+   local p = ai.pilot()
+   local ps = p:ship()
+   local price = ps:price()
 
    -- See if it's a transport ship
-   mem.istransport = seeIfTransport()
+   mem.istransport = ps:tags().transport
 
    -- Credits, and other transport-specific stuff
    if mem.istransport then

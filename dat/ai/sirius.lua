@@ -26,7 +26,7 @@ function create ()
    local price = ps:price()
 
    -- See if it's a transport ship
-   mem.istransport = seeIfTransport()
+   mem.istransport = ps:tags().transport
 
    -- Credits, and other transport-specific stuff
    if mem.istransport then
