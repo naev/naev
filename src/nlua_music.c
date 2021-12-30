@@ -199,11 +199,15 @@ static int musicL_setRepeat( lua_State* L )
 /**
  * @brief Gets the volume level of the music.
  *
+ *    @luatparam boolean log Whether or not to get the volume in log scale.
  *    @luatreturn number Volume level of the music.
  * @luafunc getVolume
  */
 static int musicL_getVolume( lua_State *L )
 {
-   lua_pushnumber(L, music_getVolume() );
+   if (lua_toboolean(L,1))
+      lua_pushnumber(L, music_getVolumeLog() );
+   else
+      lua_pushnumber(L, music_getVolume() );
    return 1;
 }
