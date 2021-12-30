@@ -363,6 +363,7 @@ function update_nav()
          col = nav_pnt:colour(),
          services = {}
       }
+      nav_spob.class_w = gfx.printDim( nil, nav_spob.class )
 
       if pntflags.land then
          local services = { "missions", "outfits", "shipyard", "commodity" }
@@ -1047,7 +1048,7 @@ function render( dt, dt_mod )
       local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, cols.txt_top )
 
-      gfx.print( true, nav_spob.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, cols.txt_top )
+      gfx.print( true, nav_spob.class, ta_pnt_pane_x + 150 - nav_spob.class_w, ta_pnt_pane_y - 34, cols.txt_top )
       gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, cols.txt_top )
 
       -- Space out the text.
