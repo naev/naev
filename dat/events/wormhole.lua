@@ -87,8 +87,8 @@ end
 
 local timer = 0
 local jumped = false
-function update( dt )
-   timer = timer + dt
+function update( _dt, real_dt )
+   timer = timer + real_dt
    shader:send( "u_time", timer+r )
    shader:send( "u_progress", math.min(timer,1.0) )
    if timer >= 1.0 then
