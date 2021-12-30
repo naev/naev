@@ -174,7 +174,7 @@ function board ()
    if var.peek( "flfbase_intro" ) == nil and var.peek( "invasion_time" ) == nil then
       table.insert( mission_rewards, { "Disrupt a Dvaered Patrol", "Pentagram of Valor" } )
    end
-   for _,r in ipairs(mission_rewards) do
+   for i,r in ipairs(mission_rewards) do
       local m = r[1]
       local o = r[2]
       if player.misnDone(m) and player.numOutfit(o)<1 then
