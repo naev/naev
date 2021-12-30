@@ -26,7 +26,7 @@ void music_exit (void);
 /*
  * music control
  */
-int music_volume( const double vol );
+int music_volume( double vol );
 double music_getVolume (void);
 double music_getVolumeLog(void);
 int music_load( const char* name );
