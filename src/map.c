@@ -619,10 +619,10 @@ static void map_update( unsigned int wid )
 
       if (!hasSpobs)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
-               t, sym, _(sys->spobs[i]->name) );
+               t, sym, spob_name(sys->spobs[i]) );
       else
          p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
-               t, sym, _(sys->spobs[i]->name) );
+               t, sym, spob_name(sys->spobs[i]) );
       hasSpobs = 1;
    }
    if (hasSpobs == 0) {
