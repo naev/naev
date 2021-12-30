@@ -1,6 +1,7 @@
 * 0.9.1 (unreleased)
    * Minor countermeasures for long player ship names
    * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", "Shadow Vigil", "Baron Prince", and "Dvaered Ballet"
+   * Fix exploit in "Travelling Merchant" event (mission prize for sale that shouldn't have been)
    * Fix many missions that explicitly attack the player overriding stealth and visibility mechanics
    * Fix some text labels that couldn't be translated from English
    * Fix equipment slot information displaying over filter widget
