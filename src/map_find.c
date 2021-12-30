@@ -1000,7 +1000,7 @@ void map_inputFind( unsigned int parent, const char* str )
          "chkSystem", _("Systems"), map_find_check_update, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
-         "chkSpob", _("Planets/Stations"), map_find_check_update, map_find_spobs );
+         "chkSpob", _("Space Objects"), map_find_check_update, map_find_spobs );
    y -= 20;
    window_addCheckbox( wid, x, y, 160, 20,
          "chkOutfit", _("Outfits"), map_find_check_update, map_find_outfits );

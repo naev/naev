@@ -227,7 +227,6 @@ void map_open (void)
    StarSystem *cur;
    int w, h, x, y, rw;
    CstMapWidget *cst;
-   const int indent = MAP_TEXT_INDENT;
 
    map_minimal_mode = player.map_minimal;
    listMapModeVisible = 0;
@@ -283,9 +282,9 @@ void map_open (void)
     * [ Close ]
     */
 
-   x  = -70; /* Right column X offset. */
+   x  = -20; /* Right column X offset. */
    y  = -20;
-   rw = ABS(x) + 60; /* Right column indented width maximum. */
+   rw = 130; /* Right column indented width maximum. */
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
@@ -297,37 +296,37 @@ void map_open (void)
    y -= 64 + 10;
 
    /* Faction */
-   window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
+   window_addText( wid, x, y, 140, 20, 0, "txtSFaction",
          &gl_smallFont, &cFontGrey, _("Faction:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
-   window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
+   window_addText( wid, x, y, 140, 20, 0, "txtSStanding",
          &gl_smallFont, &cFontGrey, _("Standing:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
-   window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
+   window_addText( wid, x, y, 140, 20, 0, "txtSPresence",
          &gl_smallFont, &cFontGrey, _("Presence:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Spobs */
-   window_addText( wid, x, y, 90, 20, 0, "txtSSpobs",
+   window_addText( wid, x, y, 140, 20, 0, "txtSSpobs",
          &gl_smallFont, &cFontGrey, _("Space Objects:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
-   window_addText( wid, x, y, 90, 20, 0, "txtSServices",
+   window_addText( wid, x, y, 140, 20, 0, "txtSServices",
          &gl_smallFont, &cFontGrey, _("Services:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
@@ -449,7 +448,6 @@ static void map_update( unsigned int wid )
    int p;
    const glTexture *logo;
    double w, dmg, itf;
-   const int indent = MAP_TEXT_INDENT;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -490,8 +488,8 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
-   x = -70; /* Side bar X offset. */
-   w = ABS(x) + 60; /* Width of the side bar. */
+   x = -20; /* Side bar X offset. */
+   w = 130; /* Width of the side bar. */
    y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
 
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
@@ -506,31 +504,31 @@ static void map_update( unsigned int wid )
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", x, y);
-      window_moveWidget( wid, "txtFaction", x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtFaction", x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtFaction", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Standing */
       window_moveWidget( wid, "txtSStanding", x, y );
-      window_moveWidget( wid, "txtStanding", x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtStanding", x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtStanding", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Presence. */
       window_moveWidget( wid, "txtSPresence", x, y );
-      window_moveWidget( wid, "txtPresence",  x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtPresence",  x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPresence", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Spobs */
       window_moveWidget( wid, "txtSSpobs", x, y );
-      window_moveWidget( wid, "txtSpobs", x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtSpobs", x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtSpobs", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Services */
       window_moveWidget( wid, "txtSServices", x, y );
-      window_moveWidget( wid, "txtServices", x + indent, y -gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtServices", x, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", _("Unknown") );
 
       /*
@@ -591,16 +589,16 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + indent, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + indent, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
-   window_moveWidget( wid, "txtPresence", x + indent, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtPresence", x, y-gl_smallFont.h-5 );
    map_updateFactionPresence( wid, "txtPresence", sys, 0 );
    /* Scroll down. */
    h = window_getTextHeight( wid, "txtPresence" );
@@ -634,14 +632,14 @@ static void map_update( unsigned int wid )
    /* Update text. */
    window_modifyText( wid, "txtSpobs", buf );
    window_moveWidget( wid, "txtSSpobs", x, y );
-   window_moveWidget( wid, "txtSpobs", x + indent, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSpobs", x, y-gl_smallFont.h-5 );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
    window_moveWidget( wid, "txtSServices", x, y );
-   window_moveWidget( wid, "txtServices", x + indent, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtServices", x, y-gl_smallFont.h-5 );
    services = 0;
    services_h = 0;
    services_u = 0;
