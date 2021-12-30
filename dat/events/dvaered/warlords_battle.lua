@@ -12,7 +12,6 @@
 </event>
 --]]
 --  A battle between two Dvaered warlords. The player can join one of them and get a reward
-local fleet = require "fleet"
 require "proximity"
 local fmt = require "format"
 local formation = require "formation"
