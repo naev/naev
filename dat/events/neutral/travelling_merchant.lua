@@ -58,8 +58,14 @@ function create ()
       spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.angle() )
    end
 
+   local fctmisi = faction.exists("fmisi")
+   if not fctmisi then
+      fctmisi = faction.dynAdd( "Independent", "fmisi", _("???"),
+            {clear_enemies=true, clear_allies=true} )
+   end
+
    -- Create pilot
-   p = pilot.add( "Mule", "Trader", spawn_pos, trader_name )
+   p = pilot.add( "Mule", fctmisi, spawn_pos, trader_name )
    p:setFriendly()
    p:setInvincible()
    p:setVisplayer()
