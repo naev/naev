@@ -569,7 +569,7 @@ end
 function startPankration()
    player.pilot():control(false)
    -- Make dynamic factions for everyone
-   dynFact = {}
+   local dynFact = {}
    -- Make people attack each other.
    for i = 1, 9 do
       dynFact[i] = faction.dynAdd( "Warlords", mem.competitors_names[i], mem.competitors_names[i], {ai="dvaered"} )
