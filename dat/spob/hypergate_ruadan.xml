@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hypergate Ruadan">
- <displayname>Construction</displayname>
+ <display>Construction</display>
  <marker>spobmarker_triangle</marker>
  <pos>
   <x>10131.451960</x>

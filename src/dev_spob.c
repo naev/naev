@@ -51,8 +51,8 @@ int dpl_saveSpob( const Spob *p )
    xmlw_attr( writer, "name", "%s", p->name );
 
    /* Some global attributes. */
-   if (p->displayname!=NULL)
-      xmlw_elem( writer, "displayname", "%s", p->displayname );
+   if (p->display!=NULL)
+      xmlw_elem( writer, "display", "%s", p->display );
    if (p->feature!=NULL)
       xmlw_elem( writer, "feature", "%s", p->feature );
    if (p->lua_file!=NULL)

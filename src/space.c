@@ -1791,8 +1791,8 @@ Spob *spob_new (void)
  */
 const char *spob_name( const Spob *p )
 {
-   if (p->displayname)
-      return _(p->displayname);
+   if (p->display)
+      return _(p->display);
    return _(p->name);
 }
 
@@ -2254,7 +2254,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      xmlr_strd(node, "displayname", spob->displayname);
+      xmlr_strd(node, "display", spob->display);
       xmlr_strd(node, "feature", spob->feature);
       xmlr_strd(node, "lua", spob->lua_file);
       xmlr_float(node, "radius", spob->radius);
@@ -3883,7 +3883,7 @@ void space_exit (void)
       Spob *pnt = &spob_stack[i];
 
       free(pnt->name);
-      free(pnt->displayname);
+      free(pnt->display);
       free(pnt->feature);
       free(pnt->lua_file);
       free(pnt->class);

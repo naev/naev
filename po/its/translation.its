@@ -28,7 +28,7 @@
 
   <!-- Spobs -->
   <its:translateRule selector="/spob/@name" translate="yes"/>
-  <its:translateRule selector="/spob/displayname" translate="yes"/>
+  <its:translateRule selector="/spob/display" translate="yes"/>
   <its:translateRule selector="/spob/feature" translate="yes"/>
   <its:translateRule selector="/spob/general/class" translate="yes"/>
   <its:translateRule selector="/spob/general/bar" translate="yes"/>

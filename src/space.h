@@ -102,7 +102,7 @@ typedef struct VirtualSpob_ {
 typedef struct Spob_ {
    int id;        /**< Spob ID. */
    char *name;    /**< Spob name */
-   char *displayname; /**< Name to be displayed to the player. Defaults to name if not set. */
+   char *display; /**< Name to be displayed to the player. Defaults to name if not set. */
    char *feature; /**< Name of the feature the spob provides if applicable. */
    Vector2d pos;  /**< position in star system */
    double radius; /**< Radius of the space object. WARNING: lazy-loaded with gfx_space. */
