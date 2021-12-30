@@ -50,4 +50,7 @@
   <ew_hide>30</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
-<tags><tag>transport</tag></tags></ship>
+ <tags>
+  <tag>transport</tag>
+ </tags>
+</ship>
