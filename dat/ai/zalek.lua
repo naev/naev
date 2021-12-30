@@ -64,7 +64,7 @@ function create()
    end
 
    -- See if it's a transport ship
-   mem.istransport = seeIfTransport()
+   mem.istransport = pt.transport
 
    -- Credits, and other transport-specific stuff
    if mem.istransport then

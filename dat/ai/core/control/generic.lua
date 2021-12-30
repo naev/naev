@@ -862,18 +862,6 @@ function create_post ()
    end
 end
 
--- Determine if the ship is a transport
-function seeIfTransport ()
-   local transports = {
-      ["Courier"] = true,
-      ["Armoured Transport"] = true,
-      ["Bulk Freighter"] = true,
-      ["Yacht"] = true,
-      ["Freighter"] = true,
-   }
-   return transports[ ai.pilot():ship():class() ]
-end
-
 -- Set transport ship parameters
 function transportParam ( price )
    mem.aggressive  = false
