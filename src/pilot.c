@@ -2659,7 +2659,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
                }
                else {
                   pilot_setTurn( p, 0. );
-                  p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
+                  p->ptimer = HYPERSPACE_ENGINE_DELAY * p->stats.jump_warmup * !p->stats.misc_instant_jump;
                   pilot_setFlag(p, PILOT_HYP_BEGIN);
                   /* Player plays sound. */
                   if ((p->id == PLAYER_ID) && !p->stats.misc_instant_jump)

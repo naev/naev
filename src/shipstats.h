@@ -93,6 +93,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
    SS_TYPE_D_COOLDOWN_TIME,   /**< Speeds up or slows down the cooldown time. */
    SS_TYPE_D_JUMP_DISTANCE,   /**< Modifies the distance from a jump point at which the pilot can jump. */
+   SS_TYPE_D_JUMP_WARMUP,     /**< Modifies the time it takes to warm up to jump. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -289,19 +290,20 @@ typedef struct ShipStats_ {
 
    /* Misc. */
    double nebu_absorb;     /**< Shield nebula resistance. */
-   int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
-   int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
-   int misc_asteroid_scan;   /**< Able to scan asteroids. */
+   int misc_instant_jump;  /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust;/**< Slows down the ship instead of turning it around. */
+   int misc_asteroid_scan; /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
-   int fuel;                  /**< Maximum fuel modifier. */
-   double fuel_regen;         /**< Absolute fuel regeneration. */
-   int cargo;                 /**< Maximum cargo modifier. */
-   int crew;                  /**< Crew modifier. */
-   double loot_mod;           /**< Boarding loot reward bonus. */
-   double time_mod;           /**< Time dilation modifier. */
-   double time_speedup;       /**< Makes the pilot operate at higher speeds. */
-   double cooldown_time;      /**< Modifies cooldown time. */
-   double jump_distance;      /**< Modifies how far the pilot can jump from the jump point. */
+   int fuel;               /**< Maximum fuel modifier. */
+   double fuel_regen;      /**< Absolute fuel regeneration. */
+   int cargo;              /**< Maximum cargo modifier. */
+   int crew;               /**< Crew modifier. */
+   double loot_mod;        /**< Boarding loot reward bonus. */
+   double time_mod;        /**< Time dilation modifier. */
+   double time_speedup;    /**< Makes the pilot operate at higher speeds. */
+   double cooldown_time;   /**< Modifies cooldown time. */
+   double jump_distance;   /**< Modifies how far the pilot can jump from the jump point. */
+   double jump_warmup;     /**< Modifies the time that is necessary to jump. */
 } ShipStats;
 
 /*

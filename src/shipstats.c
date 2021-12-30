@@ -145,6 +145,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        N_("Speed-Up") ),
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       N_("Ship Cooldown Time") ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       N_("Jump Distance") ),
+   DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
 
    A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
    A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
