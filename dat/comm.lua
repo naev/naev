@@ -455,13 +455,11 @@ function comm( plt )
       local cons = pps.fuel_consumption
       -- Only allow
       local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
-      --[[
       if maxfuel > cons then
          table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel)"),
                {cost=fmt.credits(cost*maxfuel/100), amount=maxfuel}),
                "refuel_trypay_max"})
       end
-      --]]
       if cons > 100 and maxfuel >= cons then
          table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel)"),
                {cost=fmt.credits(cost*cons/100), amount=cons}),
@@ -511,6 +509,27 @@ function comm( plt )
       player.pay( -cost, true )
       plt:credits( cost )
       plt:refuel( player.pilot(), cons )
+   end )
+   vn.jump("refuel_startmsg")
+
+   vn.label("refuel_trypay_max")
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local plts = plt:stats()
+      local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
+      local cost = mem.refuel * maxfuel / 100
+      if cost > player.credits() then
+         vn.jump("refuel_nomoney")
+      end
+   end )
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local plts = plt:stats()
+      local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
+      local cost = mem.refuel * maxfuel / 100
+      player.pay( -cost, true )
+      plt:credits( cost )
+      plt:refuel( player.pilot(), maxfuel )
    end )
    vn.jump("refuel_startmsg")
 
