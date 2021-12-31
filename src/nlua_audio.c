@@ -1175,6 +1175,12 @@ static int audioL_setGlobalEffect( lua_State *L )
    LuaAudioEfx_t *lae;
    const char *name = luaL_optstring(L,1,NULL);
 
+   if (sound_disabled)
+      return 0;
+
+   if (al_info.efx == AL_FALSE)
+      return 0;
+
    /* Disable. */
    if (name==NULL) {
       soundLock();
@@ -1208,6 +1214,9 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
 {
    double speed = luaL_optnumber( L, 1, 3433. );
    double absorption = luaL_optnumber( L, 2, -1. );
+
+   if (sound_disabled)
+      return 0;
 
    soundLock();
    alSpeedOfSound( speed );
