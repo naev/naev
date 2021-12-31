@@ -4602,7 +4602,7 @@ static int pilotL_gather( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to hyperspace.
  *    @luatparam[opt] System|Jump sys Optional System to jump to, uses random if nil.
- *    @luatparam[opt=false] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc hyperspace
  */
@@ -4623,7 +4623,10 @@ static int pilotL_hyperspace( lua_State *L )
       ss = system_getIndex( lua_tojump(L,2)->destid );
    else
       ss = (lua_isnoneornil(L,2)) ? NULL : luaL_validsystem(L,2);
-   shoot = lua_toboolean(L,3);
+   if (lua_gettop(L)>2)
+      shoot = lua_toboolean(L,3);
+   else
+      shoot = 1;
 
    /* Set the task. */
    if (shoot)
@@ -4700,7 +4703,7 @@ static int pilotL_tryStealth( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to land.
  *    @luatparam[opt] Spob spob Spob to land on, uses random if nil.
- *    @luatparam[opt] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
  * @luasee control
  * @luafunc land
  */
@@ -4719,7 +4722,10 @@ static int pilotL_land( lua_State *L )
       pnt = NULL;
    else
       pnt = luaL_validspob( L, 2 );
-   shoot = lua_toboolean(L,3);
+   if (lua_gettop(L)>2)
+      shoot = lua_toboolean(L,3);
+   else
+      shoot = 1;
 
    /* Set the task. */
    if (shoot)
