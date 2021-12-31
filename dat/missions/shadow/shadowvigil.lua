@@ -88,8 +88,8 @@ local function meeting()
     end
 
     if tk.yesno(_("Reunion with Rebina"), _([["You may not know this, but there are tensions between the Imperial and Dvaered militaries. For some time now there have been incidents on the border, conflicts about customs, pilots disrespecting each other's flight trajectories, that sort of thing. It hasn't become a public affair yet, and the respective authorities don't want it to come to that. This is why they've arranged a secret diplomatic meeting to smooth things over and make arrangements to de-escalate the situation.
-    "This is where we come in. Without going into the details, suffice to say we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
-    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your charge, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
+    "This is where we come in. Without going into the details, suffice to say, we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
+    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your charge, the Imperial representative. Once there, you will protect him from any threats you might encounter and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
     "That will be all. I offer you a suitable monetary reward should you choose to accept. Can I count on you to undertake this task?"]])) then
         accept_m()
     else
@@ -119,7 +119,7 @@ function accept_m()
     You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]), {player=player.name()}))
     shadow.addLog( _([[Captain Rebina has revealed some information about the organization she works for. "The organization I'm part of is known as the Four Winds, or rather, not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you."]]) )
 
-    misn.setDesc(_([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]]))
+    misn.setDesc(_([[Captain Rebina, of the Four Winds, has asked you to help Four Winds agents protect an Imperial diplomat.]]))
     misn.setReward(_("A sum of money."))
     mem.marker = misn.markerAdd(misssys[1], "low")
 
@@ -140,7 +140,7 @@ end
 -- Function hooked to jumpout. Used to retain information about the previously visited system.
 function jumpout()
     if mem.stage == 4 and not mem.dpjump then
-        tk.msg(_("You have left your charge behind!"), _([[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]))
+        tk.msg(_("You have left your charge behind!"), _([[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties and failed your mission.]]))
         shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
@@ -278,7 +278,7 @@ function jumpin()
                     j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
-            hook.timer(5.0, "chatter", {pilot = escorts[1], text = _("Alright folks, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")})
+            hook.timer(5.0, "chatter", {pilot = escorts[1], text = _("Alright folks, there he is. You know your orders. Stick to him. Don't let anyone touch him on the way to the rendezvous.")})
             hook.timer(12.0, "chatter", {pilot = escorts[2], text = _("Two, copy.")})
             hook.timer(14.0, "chatter", {pilot = escorts[3], text = _("Three, copy.")})
         elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
