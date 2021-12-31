@@ -33,7 +33,7 @@ local destpnt, destsys = spob.getS("Research Post Sigma-13")
 
 function create ()
    if not var.peek("testing") then misn.finish(false) end
-   misn.setNPC( _("Za'lek Scientist"), zbh.zach.portrait, _("You see a Za'lek scientist nerviously sitting at the bar. It seems like they might have a job for you.") )
+   misn.setNPC( _("Za'lek Scientist"), zbh.zach.portrait, _("You see a Za'lek scientist nervously sitting at the bar. It seems like they might have a job for you.") )
 end
 
 function accept ()
@@ -44,7 +44,7 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You approach the Za'lek scientist who looks at you nervously.]]))
-   z(fmt.f(_([[He musters up courage and beigns to speak.
+   z(fmt.f(_([[He musters up courage and begins to speak.
 "Say, you wouldn't happen to be a pilot that could take me to the {sys} system? My colleagues at {pnt} have gone silent during their investigations and I'm fearing maybe the worst happened to them. I would be able to pay you {credits} for the trip."]]),
       {pnt=destpnt, sys=destsys, credits=fmt.credits(reward)}))
    vn.menu{
@@ -59,9 +59,9 @@ He lets out a sigh and goes back to nervously looking for a pilot to take him to
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
-   z(_([[iHe lets out a long sigh of relief when you accept his task.
-"I've been asking for pilots for ages and nobody seems to want to go near the Anubis Black Hole. Too many bad rumours about the area. I was also worried when my colleague went over there. They were stubborn and decided to go for the research opportunity despite my protests. And now, no response in almost half a cycle!"]]))
-   z(_([["Even taking into account the ergosphere this is too much of a delay. Something must have happened! I knew I should have stopped her."
+   z(_([[He lets out a long sigh of relief when you accept his task.
+"I've been asking pilots for ages and nobody seems to want to go near the Anubis Black Hole. Too many bad rumours about the area. I was also worried when my colleague went over there. They were stubborn and decided to go for the research opportunity despite my protests. And now, no response in almost half a cycle!"]]))
+   z(_([["Even taking into account the ergosphere this is too much of a delay. Something must have happened! I knew I should have stopped them."
 He seems visibly distraught and you try to soothe him.]]))
    z(fmt.f(_([[He goes on in a smaller shaky voice.
 "Please take me to {pnt}, so we can see it's all fine, and they just got absorbed in their research again…"]]),
@@ -108,13 +108,13 @@ function land ()
    z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"
 He looks pale.]]))
    vn.menu{
-      {_([["She has to be around somewhere"]]), "cont01"},
+      {_([["They have to be around somewhere"]]), "cont01"},
       {_([["Let's see what happened"]]), "cont01"},
       {_([[Begin to search]]), "cont01"},
    }
    vn.label("cont01")
    vn.na(_("You and Zach don your space suits and begin to search the atmosphere-less breached station in eerie silence. A floating spoon, some dirty boots… It seems like the station had inhabitants in it until quite recently. Although the base is quite a mess, knowing the Za'lek, chances are that was the usual state of affairs at the station. As you go through all the rooms one by one, but are unable to find any signs of life. During the whole ordeal, Zach remains silent and concentrated."))
-   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot():name()} ))
+   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship, {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot():name()} ))
    z(_([["Say, doesn't that over there look like bite marks?"]]))
    vn.na(_([[You look over at where Zach is pointing, but can't really make out what he's getting at. However, after a while of staring and squinting, you seem to make out some damage that could indeed be bite marks, but what on earth would bite a station?]]))
    z(_([["Something isn't right here."
@@ -127,7 +127,7 @@ He stops one second realizing what he just said and gives a puzzled look.
    vn.na(_([[Suddenly, you are awoken by the buzz, whirs, and groans of a station coming back back to life. Alarms blaze as the station begins to generate a breathable atmosphere and weak gravitational field. While you are distracted by all the commotion, you feel a tap on your shoulder and turn around to see a grinning Zach, helmet in hand.]]))
    z(_([["The gravitational flux quantifier was bust, but I managed to hot-wire it with a reverse Fleuret capacitor. The station isn't in great shape, but it's a good starting point to get things working like they should be. You can take off your helmet now."]]))
    vn.na(_([[You unlatch your helmet, and take a breath of the new atmosphere. It smells heavily of ionization but has a weird musty tang to it which makes you grimace slightly.]]))
-   z(_([["You smell that too? I have no idea what it is, but it should go away once the filters get cycled. Here, let me pay you for your services. I'll start seeing if I can figure out what happened to this station and what exactly they were researching on. I'm afraid I'm currently in the dark and don't really know much about the details. If you want to help, you should be able to find me around the station while I finish up the repairs. I might have things for you to help with."]]))
+   z(_([["You smell that too? I have no idea what it is, but it should go away once the filters get cycled. Here, let me pay you for your services. I'll start seeing if I can figure out what happened to this station and what exactly they were researching. I'm afraid I'm currently in the dark and don't really know much about the details. If you want to help, you should be able to find me around the station while I finish up the repairs. I might have things for you to help with."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
@@ -137,7 +137,7 @@ He stops one second realizing what he just said and gives a puzzled look.
 
    faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )
-   zbh.log(fmt.f(_("You took Zach to {pnt} where he found all his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
+   zbh.log(fmt.f(_("You took Zach to {pnt} where he found that his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
    music.play()
    misn.finish(true)
 end
@@ -162,7 +162,7 @@ function heartbeat ()
       msg = 1
    elseif msg==1 and d < 10e3 then
       player.autonavReset(3)
-      pp:comm(_([[Zach: "I hope she's all right."]]))
+      pp:comm(_([[Zach: "I hope they're all right."]]))
       msg = 2
    elseif msg==2 and d < 3e3 then
       music.stop(true)
