@@ -443,7 +443,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 /*
  * update.
  */
-void space_update( const double dt );
+void space_update( double dt, double real_dt );
 int space_isSimulation (void);
 int space_isSimulationEffects (void);
 

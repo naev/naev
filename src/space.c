@@ -148,7 +148,7 @@ static int space_rmMarkerSpob( int pntid, MissionMarkerType type );
 /* Render. */
 static void space_renderJumpPoint( const JumpPoint *jp, int i );
 static void space_renderSpob( const Spob *p );
-static void space_updateSpob( const Spob *p, double dt );
+static void space_updateSpob( const Spob *p, double dt, double real_dt );
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
 /*
@@ -1316,8 +1316,9 @@ void space_checkLand (void)
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
+ *    @param real_dt Real time incrcement (in real world seconds).
  */
-void space_update( const double dt )
+void space_update( double dt, double real_dt )
 {
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1366,7 +1367,7 @@ void space_update( const double dt )
          Spob *pnt = cur_system->spobs[i];
 
          /* Must update in some cases. */
-         space_updateSpob( pnt, dt );
+         space_updateSpob( pnt, dt, real_dt );
 
          /* Handle discoveries. */
          if (spob_isKnown( pnt ) || !pilot_inRangeSpob( player.p, i ))
@@ -3788,14 +3789,15 @@ static void space_renderSpob( const Spob *p )
 /**
  * @brief Renders a spob.
  */
-static void space_updateSpob( const Spob *p, double dt )
+static void space_updateSpob( const Spob *p, double dt, double real_dt )
 {
    if (p->lua_update == LUA_NOREF)
       return;
    /* TODO do a clip test first. */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_update); /* f */
    lua_pushnumber(naevL, dt); /* f, dt */
-   if (nlua_pcall( p->lua_env, 1, 0 )) {
+   lua_pushnumber(naevL, real_dt); /* f, real_dt */
+   if (nlua_pcall( p->lua_env, 2, 0 )) {
       WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "update", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }

@@ -64,6 +64,7 @@ end
    @brief Runs updates.
 
       @luatparam number dt Time increment since last update.
+      @luatparam number real_dt Real time increment (in real world seconds).
 --]]
-function update( _dt )
+function update( _dt, _real_dt )
 end
