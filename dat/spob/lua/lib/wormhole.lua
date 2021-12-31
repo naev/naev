@@ -130,15 +130,17 @@ end
 
 function wormhole.update( dt )
    shader:update( dt )
+   update_canvas()
 end
 
+--[[
 function wormhole.render ()
    local z = camera.getZoom()
    local x, y = gfx.screencoords( pos, true ):get()
-   update_canvas()
    z = 1/z
    cvs:draw( x, y, 0, z, -z )
 end
+--]]
 
 function wormhole.can_land ()
    return true, "The wormhole seems to be active."
