@@ -414,7 +414,8 @@ function comm( plt )
       if mem.refuel_no then
          vn.jump("refuel_no")
       end
-      local pps = player.pilot():stats()
+      local pp = player.pilot()
+      local pps = pp:stats()
       if pps.fuel >= pps.fuel_max then
          vn.jump("refuel_full")
       end
