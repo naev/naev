@@ -339,12 +339,12 @@ function spawn1Wrlrd( origin )
    wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, fw.lords[mem.noWrlrd] )
    wrlrds[mem.noWrlrd]:control()
 
-   -- Decide if the Warlord will play ar shooting at the player
-   mem.shootOnMe = false
+   -- Decide if the Warlord will play at shooting at the player
+   mem.dontShoot = true
    if rnd.rnd() <= .3 then
-      mem.shootOnMe = true
+      mem.dontShoot = false
    end
-   wrlrds[mem.noWrlrd]:land( targpla, mem.shootOnMe )
+   wrlrds[mem.noWrlrd]:land( targpla, mem.dontShoot )
 
    hook.pilot( wrlrds[mem.noWrlrd], "land", "warlordTaunt", wrlrds[mem.noWrlrd] )
 end

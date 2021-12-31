@@ -347,9 +347,9 @@ function continueToDest( p )
       p:setNoLand( false )
 
       if system.cur() == mem.destsys then
-         p:land( mem.destplanet, true )
+         p:land( mem.destplanet )
       else
-         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ), true )
+         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ) )
       end
    end
 end

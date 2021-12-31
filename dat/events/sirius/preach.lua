@@ -429,7 +429,7 @@ function jumpCleanup()
       if j:exists() then
          j:taskClear()
          j:control()
-         j:hyperspace(target,true) --attack back as they move away?
+         j:hyperspace(target) --attack back as they move away?
       end
    end
    evt.finish(true)
