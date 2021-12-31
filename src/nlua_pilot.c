@@ -4269,17 +4269,20 @@ static int pilotL_poptask( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to do the refueling.
  *    @luatparam Pilot target Target pilot to give fuel to.
+ *    @luatparam[opt=100] number amount Amount to refuel.
  * @luafunc refuel
  */
 static int pilotL_refuel( lua_State *L )
 {
    Pilot *p       = luaL_validpilot(L,1);
    Pilot *target  = luaL_validpilot(L,2);
+   double amount  = luaL_optinteger(L,3,100);
    pilot_rmFlag(  p, PILOT_HYP_PREP);
    pilot_rmFlag(  p, PILOT_HYP_BRAKE );
    pilot_rmFlag(  p, PILOT_HYP_BEGIN);
    pilot_setFlag( p, PILOT_REFUELING);
    ai_refuel(     p, target->id );
+   p->refuel_amount = amount;
    return 0;
 }
 
