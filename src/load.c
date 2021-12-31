@@ -186,9 +186,10 @@ static int load_load( nsave_t *save, const char *path )
 int load_refresh (void)
 {
    char buf[PATH_MAX];
-   filedata_t *files, tmp;
+   filedata_t *files;
    int ok;
    nsave_t *ns;
+   size_t len;
 
    if (load_saves != NULL)
       load_free();
@@ -203,24 +204,6 @@ int load_refresh (void)
       return 0;
    }
 
-   /* Make sure backups are after saves. */
-   for (int i=0; i<array_size(files)-1; i++) {
-      size_t len = strlen( files[i].name );
-
-      /* Only interested in swapping backup with file after it if it's not backup. */
-      if ((len < 11) || strcmp( &files[i].name[len-10],".ns.backup" ))
-         continue;
-
-      /* Don't match. */
-      if (strncmp( files[i].name, files[i+1].name, len-10 ))
-         continue;
-
-      /* Swap around. */
-      tmp         = files[i];
-      files[i]    = files[i+1];
-      files[i+1]  = tmp;
-   }
-
    /* Allocate and parse. */
    ok = 0;
    ns = NULL;
@@ -230,6 +213,10 @@ int load_refresh (void)
          ns = &array_grow( &load_saves );
       snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
       ok = load_load( ns, buf );
+      len = MIN( strlen( files[i].name ) - 3, sizeof(buf) - 1 );
+      strncpy( buf, files[i].name, len );
+      buf[len] = '\0';
+      ns->save_name = strdup( buf );
    }
 
    /* If the save was invalid, array is 1 member too large. */
@@ -258,8 +245,8 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    dir_len = strlen( origdir );
    name_len = strlen( fname );
 
-   /* no save or backup save extension? */
-   if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" )))
+   /* no save extension? */
+   if (name_len < 4 || strcmp( &fname[name_len-3], ".ns" ))
       return PHYSFS_ENUM_OK;
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
@@ -302,6 +289,7 @@ void load_free (void)
 {
    for (int i=0; i<array_size(load_saves); i++) {
       nsave_t *ns = &load_saves[i];
+      free(ns->save_name);
       free(ns->path);
       free(ns->name);
       free(ns->version);
@@ -329,9 +317,9 @@ const nsave_t *load_getList (void)
 void load_loadGameMenu (void)
 {
    unsigned int wid;
-   char **names, buf[PATH_MAX];
+   char **names;
    nsave_t *ns;
-   int n, len;
+   int n;
 
    /* window */
    wid = window_create( "wdwLoadGameMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
@@ -347,13 +335,7 @@ void load_loadGameMenu (void)
       names = malloc( sizeof(char*)*n );
       for (int i=0; i<n; i++) {
          ns       = &load_saves[i];
-         len      = strlen(ns->path);
-         if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            snprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
-            names[i] = strdup(buf);
-         }
-         else
-            names[i] = strdup( ns->name );
+         names[i] = strdup( ns->save_name );
       }
    }
    /* case there are no files */

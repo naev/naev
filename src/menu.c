@@ -79,6 +79,7 @@ static void menu_main_new( unsigned int wid, const char *str );
 static void menu_main_credits( unsigned int wid, const char *str );
 static void menu_main_cleanBG( unsigned int wid, const char *str );
 /* small menu */
+static void menu_small_save( unsigned int wid, const char *str );
 static void menu_small_close( unsigned int wid, const char *str );
 static void menu_small_info( unsigned int wid, const char *str );
 static void menu_small_exit( unsigned int wid, const char *str );
@@ -409,7 +410,9 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
  */
 void menu_small (void)
 {
+   int can_save;
    unsigned int wid;
+   int y;
 
    /* Check if menu should be openable. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
@@ -421,23 +424,57 @@ void menu_small (void)
             menu_isOpen(MENU_DEATH) ))
       return;
 
-   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
+   can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+
+   if (can_save) {
+      y = 20 + (BUTTON_HEIGHT+20)*4;
+      wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
+   } else {
+      y = 20 + (BUTTON_HEIGHT+20)*3;
+      wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
+   }
 
    window_setCancel( wid, menu_small_close );
 
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnResume", _("Resume"), menu_small_close, SDLK_r );
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnInfo", _("Info"), menu_small_info, SDLK_i );
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT + 20,
+   y -= BUTTON_HEIGHT+20;
+   if (can_save) {
+      window_addButtonKey( wid, 20, y,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnSave", _("Save"), menu_small_save, SDLK_s );
+      y -= BUTTON_HEIGHT+20;
+   }
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
-   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
+}
+
+/**
+ * @brief Opens the custom snapshot window.
+ *    @param str Unused.
+ *    @param wid Unused.
+ */
+static void menu_small_save( unsigned int wid, const char *str )
+{
+   (void) str;
+   (void) wid;
+
+   char *save_name = dialogue_input( _("Save game"), 1, 60, _("Please write custom snapshot name:") );
+   if (save_name == NULL)
+      return;
+   if (save_all_with_name(save_name) < 0)
+      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 }
 
 /**
@@ -551,7 +588,7 @@ void menu_death (void)
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   snprintf( path, sizeof(path), "saves/%s.ns", player.name );
+   snprintf( path, sizeof(path), "saves/%s.ns", "autosave" );
    if (PHYSFS_exists( path ))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );

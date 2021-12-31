@@ -91,6 +91,17 @@ static int save_data( xmlTextWriterPtr writer )
  */
 int save_all (void)
 {
+   return save_all_with_name( "autosave" );
+}
+
+/**
+ * @brief Saves the current game.
+ *
+ *    @param name Name of custom snapshot
+ *    @return 0 on success.
+ */
+int save_all_with_name ( char *name )
+{
    char file[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
@@ -138,21 +149,21 @@ int save_all (void)
       WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       goto err_writer;
    }
-   snprintf(file, sizeof(file), "saves/%s.ns", player.name);
 
    /* Back up old saved game. */
-   if (!save_loaded) {
-      if (ndata_backupIfExists(file) < 0) {
-         WARN(_("Aborting save..."));
-         goto err_writer;
-      }
+   if (!strcmp(name, "autosave")) {
+      if (!save_loaded)
+         if (ndata_copyIfExists("saves/autosave.ns", "saves/backup.ns") < 0) {
+            WARN(_("Aborting save..."));
+            goto err_writer;
+         }
+      save_loaded = 0;
    }
-   save_loaded = 0;
 
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
-   snprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), player.name); /* TODO: write via physfs */
+   snprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), name); /* TODO: write via physfs */
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
       WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
@@ -174,6 +185,6 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, sizeof(path), "saves/%s.ns", player.name);
+   snprintf(path, sizeof(path), "saves/%s.ns", "autosave");
    load_gameFile( path );
 }
