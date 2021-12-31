@@ -157,7 +157,7 @@ end
 
 function return_to_base()
    if not mem.returnchecker then --feel like landing early? AWOL!
-      tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]]))
+      tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you duck your head and make a mental note to get out of here as soon as possible.]]))
       faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else

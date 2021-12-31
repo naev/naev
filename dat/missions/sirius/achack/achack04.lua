@@ -83,7 +83,7 @@ function land()
          mem.harjaplanet, mem.harjasys = spob.cur() -- Harja, once he spawns, stays put.
       end
    elseif spob.cur() == startplanet and mem.stage == stages.finish then
-      tk.msg(_("Building a bridge"), fmt.f(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
+      tk.msg(_("Building a bridge"), fmt.f(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this, he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
     Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today." She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with {player} here, I was told that you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."
     There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]]), {player=player.name()}))
       tk.msg(_("Building a bridge"), fmt.f(_([[There is silence again. Harja's oath sounded practiced and formal, but despite that you feel he was being very sincere when he spoke it.
@@ -113,7 +113,7 @@ function talkJoanne()
    else
       -- accepted
       mem.stage = mem.stage + 1
-      tk.msg(_("Once more, with feeling"), fmt.f(_([[You pocket the data unit and tell Joanne you will see what you can do. "Thank you {player}," she says. "I'm still pretty busy with my job, so I won't be here all the time, but just ping me on the information exchange when you've found Harja, and I'll make sure to be here when you arrive."
+      tk.msg(_("Once more, with feeling"), fmt.f(_([[You pocket the data unit and tell Joanne you will see what you can do. "Thank you, {player}," she says. "I'm still pretty busy with my job, so I won't be here all the time, but just ping me on the information exchange when you've found Harja, and I'll make sure to be here when you arrive."
     When Joanne is gone, you take a moment to reflect that you're going to have to deal with Harja again. Joanne wanted no violence, but will Harja leave room for that? You'll find out when you catch him.]]), {player=player.name()}))
       mem.osd_msg[3] = fmt.f(_("Return to {pnt} ({sys})"), {pnt=startplanet, sys=startsys})
       misn.markerRm(mem.mark)

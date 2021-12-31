@@ -110,7 +110,7 @@ end
 
 function land()
    if mem.finished ~= 1 then
-      tk.msg(_("The Patrol"),_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
+      tk.msg(_("The Patrol"),_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of relief; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
       faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
    elseif spob.cur() == mem.homeasset and mem.finished == 1 then
