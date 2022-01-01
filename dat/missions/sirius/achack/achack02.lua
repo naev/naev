@@ -39,7 +39,7 @@ local route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Sta
 
 local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
     "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"
-    They comm switches off. You prepare to take off and set a course for Sroolu.]])
+    The comm switches off. You prepare to take off and set a course for Sroolu.]])
 
 local stoptext = _("You dock with {pnt}, and the spacedock personnel immediately begin to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
