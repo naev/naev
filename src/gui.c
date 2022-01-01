@@ -723,8 +723,6 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  */
 void gui_render( double dt )
 {
-   int i;
-   gl_Matrix4 projection;
    double fade, direction;
 
    /* If player is dead just render the cinematic mode. */
@@ -786,9 +784,8 @@ void gui_render( double dt )
 
    /* Noise when getting near a jump. */
    if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
-
       /* Determine if we have to play the "enter hyperspace range" sound. */
-      i = space_canHyperspace(player.p);
+      int i = space_canHyperspace(player.p);
       if ((i != 0) && (i != can_jump))
          if (!pilot_isFlag(player.p, PILOT_HYPERSPACE))
             player_soundPlayGUI(snd_jump, 1);
@@ -809,13 +806,14 @@ void gui_render( double dt )
    }
    /* Perform the fade. */
    if (fade > 0.) {
+      gl_Matrix4 projection = gl_view_matrix;
+
       /* Set up the program. */
       glUseProgram( shaders.jump.program );
       glEnableVertexAttribArray( shaders.jump.vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
 
       /* Set up the projection. */
-      projection = gl_view_matrix;
       projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
 
       /* Pass stuff over. */
