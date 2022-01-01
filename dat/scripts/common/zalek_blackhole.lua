@@ -23,12 +23,27 @@ zbh.zach = {
    transition = "hexagon",
    description = _("Zach looks like he is idle at the bar. You wonder what he's thinking about."),
 }
+zbh.icarus = {
+   name = _("Feral Bioship"),
+   portrait = nil,
+   -- TODO change image to proper one when Nohinohi graphics are changed
+   image = 'gfx/ship/reaver/reaver_comm.webp',
+   colour = nil,
+}
 
 function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
          mt.merge_tables( {
             image=zbh.zach.image,
             color=zbh.zach.colour,
+         }, params) )
+end
+
+function zbh.vn_icarus( params )
+   return vn.Character.new( zbh.icarus.name,
+         mt.merge_tables( {
+            image=zbh.icarus.image,
+            color=zbh.icarus.colour,
          }, params) )
 end
 
@@ -54,7 +69,7 @@ function zbh.evilpi ()
          {clear_enemies=true, clear_allies=true} )
 end
 
-function zbh.feralkid( pos )
+function zbh.plt_icarus( pos )
    local fct = faction.exists("feralbioship")
    if not fct then
       fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )

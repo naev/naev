@@ -26,8 +26,10 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 local luaspfx = require "luaspfx"
+local love_shaders = require "love_shaders"
+local tut = require "common.tutorial"
 
--- luacheck: globals land enter feral_idle feral_move feral_discovered zach_msg spacewhale (Hook functions passed by name)
+-- luacheck: globals land enter feral_idle feral_move feral_discovered feral_hailstart feral_hail zach_msg spacewhale (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh04
 
@@ -152,7 +154,7 @@ function enter ()
    local ppos = player.pos()
    table.sort( points, function( a, b ) return ppos:dist2(a) > ppos:dist2(b) end )
 
-   feral = zbh.feralkid( points[1] )
+   feral = zbh.plt_icarus( points[1] )
    feral:setInvincible(true)
    feral:control(true)
    feral:stealth()
@@ -210,6 +212,59 @@ function feral_discovered ()
    feral:brake()
    feral:face( player.pilot() )
 
+   hook.pilot( feral, "hail", "feral_hail" )
+
    hook.timer(  3, "zach_msg", _("Zach: What the hell is that?") )
-   hook.timer( 10, "zach_msg", _("Zach: ") )
+   hook.timer( 10, "zach_msg", _("Zach: Try opening a communication channel with it.") )
+   hook.timer( 10, "feral_hailstart" )
+end
+
+local feral_canhail = false
+function feral_hailstart ()
+   feral_canhail = true
+end
+
+function feral_hail ()
+   if not feral_canhail then
+      feral:comm( player.pilot(), _("No response") )
+      player.commClose()
+      return
+   end
+
+   vn.clear()
+   vn.scene()
+   local f = vn.newCharacter( zbh.vn_icarus{ pos="left"} )
+   local z = vn.newCharacter( zbh.vn_zach{ pos="right", shader=love_shaders.hologram() } )
+   local ai = tut.vn_shipai()
+   vn.transition()
+   vn.na(fmt.f(_("You open a joint communication channel with the ship in front of you and Zach back at {pnt}."),{pnt=mainpnt}))
+   z(_([["Hey, this looks a lot like a Soromid Bioship. Ship AI, what is that?"]]))
+
+   vn.appear( ai, "electric" )
+   ai(fmt.f(_([[Your ship AI materializes infront of you.
+"This appears to be a {shipname}. Although they are loosely based on a Soromid Reaver Bio-Fighter, they have gone back to a more wild biological state, rejecting most synthetic components. {shipname} are the smallest of what are commonly referred to as #oferal bioships#0. I advise caution with dealing with such ships as they lack any sort of ship AI."]]),{shipname=feral:ship()}))
+   vn.disappear( ai, "electric" )
+   z(_([["I see. However, this doesn't explain how the hell it got down here, There's no way it could have made the entire trip unnoticed."]]))
+   vn.sfx( zbh.sfx[1] )
+   f(_("You can tell the ship is trying to convey something, but don't understand the meaning."))
+   z(_([["Wait wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes.]]))
+   vn.sfx( zbh.sfx[2] )
+   f(_("The feral bioship once again lets out a stream of electromagnetic radiation that your ship AI translates as a sound."))
+   z(_([["One second, I'm getting there…"
+He starts muttering to himself.
+"…do an Laplace transform, carry the s over, then compute the envelope…"]]))
+   vn.sfxBingo()
+   z(_([["I think I got it! Let us see now."
+The communication software flickers a second as it reboots.]]))
+   vn.sfx( zbh.sfx[1] )
+   f(_([[The feral bioship lets another cry and you can see whatever modification Zach made to the communication kick into action.
+"Athaen9a. Ihnatsoeu. Xllaudtohennnoaehustoa."]]))
+   z(_([["Needs some more adjustments, one second. You don't get to translate an unknown language from scratch notes every day. My minor in linguistics is finally paying off!"
+The communication software once more flickers and reboots.]]))
+   f(_([["Elders. Alone… Scared. Elders. Where."]]))
+   z(_([["I guess we won't be able to do much more than this for now."]]))
+   vn.done()
+   vn.run()
+
+   player.commClose()
 end
