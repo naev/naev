@@ -625,7 +625,7 @@ static int shipL_gfx( lua_State *L )
 }
 
 /**
- * @brief Gets the description of the ship.
+ * @brief Gets the description of the ship (translated).
  *
  * @usage description = s:description()
  *
@@ -636,7 +636,7 @@ static int shipL_gfx( lua_State *L )
 static int shipL_description( lua_State *L )
 {
    const Ship *s = luaL_validship(L,1);
-   lua_pushstring(L, s->description);
+   lua_pushstring(L, _(s->description));
    return 1;
 }
 
