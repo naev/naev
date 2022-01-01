@@ -49,8 +49,8 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[You find Zach at the bar, he seems to be staring dreamily at a photography. When he notices your presence he quickly puts it away and sobers up.]]))
-   z(_([["Damn, you nearly gave me a heart attack. I think I must be spending too much time alone on this station. By the way, how do you like it? I wrote a custom cleaning routine for all the droids and it seems to be turning out much better than expected. Almost has a warm touch to it."
+   vn.na(_([[You find Zach at the bar, he seems to be staring dreamily at a photograph. When he notices your presence he quickly puts it away and sobers up.]]))
+   z(_([["Damn, you nearly gave me a heart attack. I think I must be spending too much time alone on this station. By the way, how do you like it? I wrote a custom cleaning routine for all the droids and it seems to be turning out much better than expected. Almost has a homey touch to it."
 He runs his hand on the counter top.]]))
    vn.menu{
       {_([["It's looking great!"]]), "01great"},
@@ -122,7 +122,7 @@ function land ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[Zach is waiting for you at the docks as your ship lands. He immediately comes over to you.]]))
-   z(_([["Are you OK? What the hell were those guys? They were clearly Za'lek vessels, but who could be in charge of them? The research here was approved by Central Station, it makes no sense… They also knew I was here, this just makes it all the more confusing. What could they be after. More questions and more questions, but we aren't getting any answers."
+   z(_([["Are you OK? What the hell were those guys? They were clearly Za'lek vessels, but who could be in charge of them? The research here was approved by Central Station, it makes no sense… They also knew I was here, this just makes it all the more confusing. What could they be after? More questions and more questions, but we aren't getting any answers."
 He rubs his temples.]]))
    z(_([["I'm going to have to rethink everything from the beginning, and try to make some sense out of this. Meet me up in the spaceport, I should hopefully have some idea on our next steps."]]))
    vn.sfxVictory()
