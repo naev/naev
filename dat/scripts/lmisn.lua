@@ -103,6 +103,8 @@ end
 --[[--
    Provides the faction system filter. Makes sure each system hasa minimum amount of presence of a certain faction.
 
+   @usage sys = lmisn.getSysAtDistance( system.cur(), 1, 3, lmisn.sysFilters.faction( "Dvaered", 50 ) ) -- Gets all systems within 1 to 3 jumps that have >= 50 Dvaered presence
+
    @tparam Faction fct Faction to ensure minimum presence.
    @tparam number threshold Minimum amount of presence necessary to return true.
    @treturn function The filter function.
