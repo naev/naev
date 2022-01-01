@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-12-31 19:25-0500\n"
-"PO-Revision-Date: 2021-12-14 06:51+0000\n"
-"Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
+"PO-Revision-Date: 2022-01-01 22:53+0000\n"
+"Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: dat/intro:2
 msgid ""
@@ -999,7 +999,7 @@ msgstr ""
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:43
 msgid "Blood Lust"
-msgstr ""
+msgstr "Soif de sang"
 
 #: dat/effects/bloodlust.xml:3
 msgid "The ship has had a taste of blood and wants more!"
@@ -1009,11 +1009,11 @@ msgstr ""
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:264
 msgid "Crippling Plasma"
-msgstr ""
+msgstr "Plasma incapacitant"
 
 #: dat/effects/crippling_plasma.xml:3
 msgid "Plasma is interfering with the weapon systems!"
-msgstr ""
+msgstr "Le plasma interfère avec les systèmes de combat !"
 
 #. TODO
 #. Attack tree
@@ -1022,7 +1022,7 @@ msgstr ""
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
 #: dat/scripts/bioship/skills.lua:201
 msgid "Feral Rage I"
-msgstr ""
+msgstr "Rage sauvage I"
 
 #: dat/effects/feral_rage_i.xml:3
 #: dat/outfits/bioship/skills/adaptive_jump.xml:9
@@ -1056,15 +1056,15 @@ msgstr ""
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:256
 msgid "Paralyzing Plasma"
-msgstr ""
+msgstr "Plasma paralysant"
 
 #: dat/effects/paralyzing_plasma.xml:3
 msgid "Plasma is slowing the ship down!"
-msgstr ""
+msgstr "Le plasma est en train de ralentir le vaisseau !"
 
 #: dat/effects/plasma_burn.xml:2
 msgid "Plasma Burn"
-msgstr ""
+msgstr "Brûlure plasma"
 
 #: dat/effects/plasma_burn.xml:3 dat/effects/plasma_burn_ii.xml:3
 msgid "Plasma is burning the ship!"
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #: dat/effects/plasma_burn_ii.xml:2
 msgid "Plasma Burn II"
-msgstr ""
+msgstr "Brûlure plasma II"
 
 #: dat/faction.xml:4
 msgid "Dummy"
@@ -1123,17 +1123,19 @@ msgstr ""
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
-msgstr ""
+msgstr "Lotus noir"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "Clan pirate du Lotus noir"
 
 #: dat/faction.xml:163
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"Le Lotus noir est un clan pirate extrêmement organisé opérant entre l'espace "
+"Za'lek et l'espace Sirius. C'est un véritable modèle de crime organisé."
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
@@ -1174,13 +1176,11 @@ msgstr ""
 
 #: dat/faction.xml:257
 msgid "Marauder"
-msgstr ""
+msgstr "Maraudeur"
 
 #: dat/faction.xml:259
-#, fuzzy
-#| msgid "Packages"
 msgid "Pirate Marauders"
-msgstr "Paquets"
+msgstr "Pirates maraudeurs"
 
 #: dat/faction.xml:269
 msgid ""
@@ -1230,6 +1230,8 @@ msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"L'Alliance de la frontière est formée par des survivants des premières "
+"tentatives d'expansion humaine dans l'espace."
 
 #: dat/faction.xml:368
 msgid "Traders Guild"
@@ -1278,6 +1280,9 @@ msgid ""
 "The Collective are a hivemind of AI ships gone rogue. They seem to attack "
 "and destroy all humans on sight."
 msgstr ""
+"Le Collectif est une intelligence collective composée de vaisseaux commandés "
+"par des IA renégates. Elles sont extrêmement agressives envers les humains "
+"et attaquent à vue."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -1334,6 +1339,8 @@ msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"La Maison Dvaered est une des grandes maisons la plus ancienne de l'Empire. "
+"C'est une coalition fière de plusieurs puissants seigneurs de guerre."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -1383,6 +1390,8 @@ msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"La Maison Sirius est avant tout définie par sa religion d'État, vouée au "
+"culte d'une divinité nommée Sirichana."
 
 #: dat/faction.xml:555 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
@@ -1398,6 +1407,9 @@ msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"La Maison Goddard est une maison mineure coincée entre l'Empire d'une part "
+"et les Dvaered de l'autre. Ils sont les principaux fournisseurs de vaisseaux "
+"pour les Dvaered."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
