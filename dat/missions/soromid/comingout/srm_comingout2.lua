@@ -44,7 +44,7 @@ function accept ()
       txt = fmt.f( _([["Oh, {player}! Are you able to help me out now?"]]), {player=player.name()} )
    else
       txt = fmt.f( _([[Chelsea smiles and waves as she sees you approaching. "Hi, {player}! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
-    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at {pnt} in the {sys} system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]), {player=player.name(), pnt=mem.misplanet, sys=mem.missys} )
+    Chelsea perks up a little. "So, remember I said I had ambitions to be a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at {pnt} in the {sys} system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]), {player=player.name(), pnt=mem.misplanet, sys=mem.missys} )
    end
    mem.started = true
 
