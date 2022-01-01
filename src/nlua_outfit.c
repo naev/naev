@@ -420,18 +420,18 @@ static int outfitL_price( lua_State *L )
 }
 
 /**
- * @brief Gets the description of an outfit.
+ * @brief Gets the description of an outfit (translated).
  *
  * @usage description = o:description()
  *
  *    @luatparam String o Outfit to get the description of.
- *    @luatreturn string The description (without translating).
+ *    @luatreturn string The description (with translating).
  * @luafunc description
  */
 static int outfitL_description( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit(L,1);
-   lua_pushstring(L, o->description);
+   lua_pushstring(L, _(o->description));
    return 1;
 }
 
