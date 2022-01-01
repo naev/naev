@@ -592,6 +592,10 @@ void player_swapShip( const char *shipname, int move_cargo )
       /* Set some gui stuff. */
       gui_load( gui_pick() );
 
+      /* Reset player speed. */
+      pilot_calcStats( player.p );
+      player_resetSpeed();
+
       /* Bind camera. */
       cam_setTargetPilot( player.p->id, 0 );
       return;
