@@ -51,8 +51,10 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[You find Zach deep in thought.]]))
-   z(fmt.f(_([[""]]),{}))
+   vn.na(_([[You find Zach deep in thought, who takes a while to notice your presence.]]))
+   z(fmt.f(_([["Ah, didn't notice you. Sometimes I get lost in here. Too many things remind me of them."
+He chugs his drink and seems to sober up.
+"I've been organizing the notes I've found around the station, and it seems like there was anomalies or something going on around the station. Would you be willing to take a look for me?"]]),{}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -63,7 +65,13 @@ function accept ()
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
-   z(fmt.f(_([[""]]),{}))
+   z(_([["Thanks again. So, looking into the notes, I found mentions to some sort of object around the station. It seems like it was a ship or some sort of drone, but I haven't been able to restore all the data yet, so the initial encounters are missing. I only mainly know the codename they gave it, which is 'Icarus', although it's not clear why."]]))
+   z(_([["I have been able to recover lots of data regarding some sort of language, which is pretty strange given that all standard ship AI have universal translators, and languages haven't really been an issue outside of pure academic settings in ages. Quite a few details haven't really been recovered yet, but hopefully the data recovery drone will get something useful in a bit."]]))
+   z(fmt.f(_([["Other than that, there's still the mystery of the ships that tried to attack {pnt}. I have a feeling that they're not finished with business here. You should keep an eye out for any suspicious ships. There shouldn't be anyone here other than us."]]),{pnt=mainpnt}))
+   vn.na(fmt.f(_([[Suddenly, one of Zach's drone starts flashing and announces that movement detected in {sys}.]]),{sys=mainsys}))
+   z(_([["Shit, it looks like something is out there already! From the readings it doesn't look like it's very large. Quick, go see what is out there!"
+He gets up and starts running to the command center.
+"Looks like it's time to try the new scanner! I'll give you instructions once you're out there!"]]))
    vn.func( function () accepted = true end )
    vn.done( zbh.zach.transition )
    vn.run()
