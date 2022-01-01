@@ -1,10 +1,6 @@
 --[[
    Pure Lua implementation of special effects for use with missions
 --]]
-local nw, nh = gfx.dim()
--- some helpers to speed up computations
-local nw2, nh2 = nw/2, nh/2
-
 local luaspfx = {}
 luaspfx.effects = require 'luaspfx.effects'
 
@@ -44,14 +40,11 @@ function __luaspfx_update( dt, _realdt )
 end
 
 function __luaspfx_render( tbl )
-   local cx, cy = camera.get():get()
    local cz = camera.getZoom()
    for k,v in ipairs(tbl) do
       v.efx.time = v.time
       -- Convert coordinates to screen
-      local ox, oy = v.pos:get()
-      local x = (ox-cx) / cz + nw2
-      local y = nh2 - (oy-cy) / cz
+      local x, y = naev.gfx.screencoords( v.pos, true ):get()
       -- Run function (should render)
       v.efx:func( x, y, cz )
    end
