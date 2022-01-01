@@ -459,7 +459,11 @@ function bioship.window ()
       if not skilltxt then
          return
       end
-      skilltxt:set( fmt.f(n_("Skills ({point} point remaining)","Skills ({point} points remaining)", skillpoints),{point=skillpoints}) )
+      local msg = ""
+      if skillpoints > 0 and not player.isLanded() then
+         msg = _(", land to set skills")
+      end
+      skilltxt:set( fmt.f(n_("Skills ({point} point remaining{msg})","Skills ({point} points remaining{msg})", skillpoints),{point=skillpoints,msg=msg}) )
    end
 
    local function skill_reset ()
