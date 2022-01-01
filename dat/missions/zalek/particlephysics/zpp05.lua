@@ -28,6 +28,7 @@ local lmisn = require "lmisn"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 local audio = require 'love.audio'
+local love = require "love"
 
 -- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
@@ -252,6 +253,7 @@ function heartbeat ()
       -- CUTSCENE START
       player.cinematics( true )
       player.allowLand( false )
+      love.origin()
       music.stop(true)
       stage = 6
    elseif stage==6 then
@@ -314,6 +316,7 @@ function heartbeat ()
       music.play()
       cutscene = false
       mem.state = 2
+      love.origin()
       stage = 16
    elseif stage==16 then
       pilot.comm(_("Noona"), _("Are you alright? Communication cut off for a bit."))

@@ -90,7 +90,7 @@ function love.getVersion()
    return love._version_major, love._version_minor, love._version_patch, love._codename
 end
 function love.origin()
-   local nw, nh = naev.gfx.dim()
+   local nw, nh = naev.gfx.dim(true)
    love.x = 0
    love.y = 0
    love.w = nw
