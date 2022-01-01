@@ -71,7 +71,7 @@ end
 
 function land ()
    if spob.cur() == mem.targetasset then
-      tk.msg( _("The Gauntlet"), fmt.f(_([[As you descend onto the {pnt} spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
+      tk.msg( _("The Gauntlet"), fmt.f(_([[As you descend onto the {pnt} spaceport, you notice how deserted the place seems to be. Finally, after a search that seems to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
     You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]]), {pnt=mem.targetasset} ) )
       player.pay(mem.reward)
       misn.cargoRm(mem.small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
