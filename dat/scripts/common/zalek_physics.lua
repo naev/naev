@@ -136,7 +136,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    shader._dt = -1000 * rnd.rnd()
    shader.progress = 0
    shader.speed = 1
-   local nw, nh = gfx.dim()
+   local nw, nh = gfx.dim( true )
    shader.cw, shader.ch = nw/shader.sf, nh/shader.sf
    shader.canvas = lg.newCanvas( shader.cw, shader.ch )
 
