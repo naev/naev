@@ -66,7 +66,7 @@ function alert_meta.init( efx, _ttl, pos, vel )
    efx.sound:setPosition( px, py, 0 )
    efx.sound:setVelocity( vx, vy, 0 )
    efx.sound:setPitch( dt_mod )
-   efx.sound.setAttenuationDistances( 500, 25e3 )
+   efx.sound:setAttenuationDistances( 500, 25e3 )
    efx.sound:play()
 end
 function effects.alert( params )
@@ -99,7 +99,7 @@ function effects.sfx( params )
    efx.sound = params.sfx:clone()
    local ref = params.dist_ref or 500
    local max = params.dist_max or 25e3
-   efx.sound.setAttenuationDistances( ref, max )
+   efx.sound:setAttenuationDistances( ref, max )
    efx.params = params
    return efx
 end
