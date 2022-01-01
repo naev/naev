@@ -143,23 +143,23 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
 
    /* x pos */
    if (x == -1) { /* Center */
-      wdw->x = (SCREEN_W - wdw->w)/2.;
+      wdw->x = (gl_screen.nw - wdw->w)/2.;
       wdw->xrel = .5;
       window_setFlag( wdw, WINDOW_CENTERX );
    }
    else if (x < 0)
-      wdw->x = SCREEN_W - wdw->w + (double) x;
+      wdw->x = gl_screen.nw - wdw->w + (double) x;
    else
       wdw->x = (double) x;
 
    /* y pos */
    if (y == -1) { /* Center */
-      wdw->y = (SCREEN_H - wdw->h)/2.;
+      wdw->y = (gl_screen.nh - wdw->h)/2.;
       wdw->yrel = .5;
       window_setFlag( wdw, WINDOW_CENTERY );
    }
    else if (y < 0)
-      wdw->y = SCREEN_H - wdw->h + (double) y;
+      wdw->y = gl_screen.nh - wdw->h + (double) y;
    else
       wdw->y = (double) y;
 }
@@ -197,8 +197,8 @@ void window_resize( unsigned int wid, int w, int h )
    if (wdw == NULL)
       return;
 
-   wdw->w = (w == -1) ? SCREEN_W : (double) w;
-   wdw->h = (h == -1) ? SCREEN_H : (double) h;
+   wdw->w = (w == -1) ? gl_screen.nw : (double) w;
+   wdw->h = (h == -1) ? gl_screen.nh : (double) h;
    if ((w == -1) && (h == -1)) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -651,8 +651,8 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
 
    /* Dimensions. */
-   wdw->w            = (w == -1) ? SCREEN_W : (double) w;
-   wdw->h            = (h == -1) ? SCREEN_H : (double) h;
+   wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
+   wdw->h            = (h == -1) ? gl_screen.nh : (double) h;
    if ((w == -1) && (h == -1)) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -1316,7 +1316,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    y = by - h - gl_smallFont.h - 10.;
    if (y < 10.)
       y = 10.;
-   if (x+w+10. > SCREEN_W)
+   if (x+w+10. > gl_screen.nw)
       x -= w;
 
    /* Set colours. */
@@ -2430,8 +2430,8 @@ void toolkit_reposition (void)
       /* Fullscreen windows must always be full size, though their widgets
        * don't auto-scale. */
       if (window_isFlag( w, WINDOW_FULLSCREEN )) {
-         w->w = SCREEN_W;
-         w->h = SCREEN_H;
+         w->w = gl_screen.nw;
+         w->h = gl_screen.nh;
          continue;
       }
 
@@ -2444,13 +2444,13 @@ void toolkit_reposition (void)
 
       if (w->xrel != -1.) {
          xorig = w->x;
-         w->x = (SCREEN_W - w->w) * w->xrel;
+         w->x = (gl_screen.nw - w->w) * w->xrel;
          xdiff = w->x - xorig;
       }
 
       if (w->yrel != -1.) {
          yorig = w->y;
-         w->y = (SCREEN_H - w->h) * w->yrel;
+         w->y = (gl_screen.nh - w->h) * w->yrel;
          ydiff = w->y - yorig;
       }
 

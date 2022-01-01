@@ -200,6 +200,9 @@ void render_all( double game_dt, double real_dt )
 
    dt = (paused) ? 0. : game_dt;
 
+   /* Set up the default viewport. */
+   gl_defViewport();
+
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
@@ -228,6 +231,9 @@ void render_all( double game_dt, double real_dt )
 
    if (pp_gui)
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
+
+   /* We set the to fullscreen, ignoring the GUI modifications. */
+   gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
 
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */

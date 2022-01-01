@@ -682,7 +682,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    else
       h = MAX( 300, list_height );
 
-   h = MIN( (SCREEN_H*2)/3, h );
+   h = MIN( ((double)SCREEN_H*2.)/3., h );
    w = MAX( list_width + 60, 500 );
 
    winw = w + extrawidth;
@@ -934,7 +934,7 @@ int dialogue_customFullscreen( int enable )
 
       cd->last_w = cd->w+40;
       cd->last_h = cd->h+60;
-      window_resize( wid, gl_screen.nw, gl_screen.h );
+      window_resize( wid, -1, -1 );
       window_moveWidget( wid, "cstCustom", 0, 0 );
       window_resizeWidget( wid, "cstCustom", cd->last_w, cd->last_h );
       window_move( wid, -1, -1 );

@@ -585,9 +585,7 @@ static void cust_render( double x, double y, double w, double h, void* data )
    lua_pushnumber(L, y);
    lua_pushnumber(L, w);
    lua_pushnumber(L, h);
-   gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
    cust_pcall( L, 4, 0, cf );
-   gl_defViewport();
 }
 static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {

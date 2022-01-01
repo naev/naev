@@ -160,7 +160,7 @@ static int gfxL_screencoords( lua_State *L )
    int invert = lua_toboolean( L, 2 );
    gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
    if (invert)
-      screen.y = (SCREEN_H-screen.y) * ((double)SCREEN_H / (double)gl_screen.nh) + gl_screen.y;
+      screen.y = SCREEN_H-screen.y;
    lua_pushvector( L, screen );
    return 1;
 }
