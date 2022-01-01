@@ -189,7 +189,6 @@ int load_refresh (void)
    filedata_t *files;
    int ok;
    nsave_t *ns;
-   size_t len;
 
    if (load_saves != NULL)
       load_free();
@@ -213,10 +212,8 @@ int load_refresh (void)
          ns = &array_grow( &load_saves );
       snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
       ok = load_load( ns, buf );
-      len = MIN( strlen( files[i].name ) - 3, sizeof(buf) - 1 );
-      strncpy( buf, files[i].name, len );
-      buf[len] = '\0';
-      ns->save_name = strdup( buf );
+      ns->save_name = strdup( files[i].name );
+      ns->save_name[ strlen(ns->save_name)-3 ] = '\0';
    }
 
    /* If the save was invalid, array is 1 member too large. */
