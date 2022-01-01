@@ -614,6 +614,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Bind camera. */
    cam_setTargetPilot( player.p->id, 0 );
 
+   /* Reset player speed. */
+   player_resetSpeed();
+
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
    hparam[0].u.str   = player.p->name;
