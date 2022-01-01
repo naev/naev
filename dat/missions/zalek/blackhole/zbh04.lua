@@ -91,7 +91,7 @@ function accept ()
 end
 
 function land ()
-   if mem.state~=3 or spob.cur() ~= mainpnt then
+   if mem.state~=2 or spob.cur() ~= mainpnt then
       lmisn.fail(_("You were supposed to follow the signals!"))
       return
    end
@@ -142,7 +142,11 @@ end
 
 function enter ()
    if system.cur() ~= mainsys then
-      lmisn.fail(_("You were supposed to follow the signals!"))
+      if mem.state == 2 then
+         lmisn.fail(fmt.f(_("You were supposed to lead the feral bioship to {pnt}!"),{pnt=mainpnt}))
+      else
+         lmisn.fail(_("You were supposed to follow the signals!"))
+      end
       return
    end
 
@@ -262,9 +266,20 @@ The communication software flickers a second as it reboots.]]))
    z(_([["Needs some more adjustments, one second. You don't get to translate an unknown language from scratch notes every day. My minor in linguistics is finally paying off!"
 The communication software once more flickers and reboots.]]))
    f(_([["Elders. Alone… Scared. Elders. Where."]]))
-   z(_([["I guess we won't be able to do much more than this for now."]]))
+   z(fmt.f(_([["I guess we won't be able to do much more than this for now. Let me see if we can transmit something to get it to follow you back to {pnt}."]]),
+      {pnt=mainpnt}))
+   vn.sfx( zbh.sfx[2] )
+   z(_([[Zach hits some buttons and tramsits something similar to what you heard coming from the feral bioship.
+"Follow. Safe."]]))
+   f(_([[Eventually, it seems like necessity overcomes fear, and the feral bioship begins to follow your ship.]]))
+   z(fmt.f(_([["OK, it seems like it's following you. Try leading it back to {pnt}.]]),{pnt=mainpnt}))
    vn.done()
    vn.run()
+
+   feral:taskClear()
+   feral:follow( player.pilot() )
+   misn.osdActive(2)
+   mem.state = 2
 
    player.commClose()
 end
