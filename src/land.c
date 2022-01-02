@@ -116,7 +116,6 @@ static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
-static int land_canSave (void);
 /* spaceport bar */
 static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
@@ -143,7 +142,7 @@ void land_queueTakeoff (void)
 /**
  * @brief Whether or not the player can save.
  */
-static int land_canSave (void)
+int land_canSave (void)
 {
    /* If the current landed planet is refuelable, no need to check if can land. */
    if ((land_spob!=NULL) && spob_hasService(land_spob,SPOB_SERVICE_REFUEL))
