@@ -80,7 +80,7 @@ She furrows her brow.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
       {cargo=cargo_name, pnt=destpnt, sys=destsys, retpnt=retpnt} ))
 

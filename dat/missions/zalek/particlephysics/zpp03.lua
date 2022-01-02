@@ -77,7 +77,7 @@ She goes back to ruminating on what to do.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc(fmt.f(_("Investigate the issue with the drones near the particle physics testing site at {sys}."),
       {sys=mainsys}))
 
