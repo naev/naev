@@ -135,6 +135,7 @@ function land ()
       z(_([[He goes to a nearby container and opens it up, causing a cloud of frozen gas to come rolling out.
 "Very interesting. Let's give this a try."
 He picks up a thick glass cylindrical cannister with metallic stoppers on both end. There seems to be a thick viscous liquid in it, reminding you of some sort of primordial soup. Without much grace, he musters all his strength and flings it towards space.]]))
+      vn.sfx( zbh.sfx.bite )
       vn.na(_([[The cannister slowly rotates as it flies out the space dock. Icarus is still doing weird loops and chasing nearby drones, when suddenly it stops moving, and begins to look at the cannister. In the blink of an eye, Icarus lunges at it, opening what can only be described as a gaping maw, and crushes the cannister in a single impetuous chomp, with you and Zach staring dumbfounded.]]))
       z(_([["Holy shit! Did you just see what I did!?"
 Zach looks pale and goes stiff.]]))
