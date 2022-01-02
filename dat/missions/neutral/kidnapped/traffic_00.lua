@@ -71,7 +71,7 @@ function accept()
 
   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys3, pnt=pnt1})})
 
-  mem.misn_mark = misn.markerAdd(sys3, "low")
+  mem.misn_mark = misn.markerAdd(pnt1, "low")
 
   mem.eavesdropped1 = false
   mem.eavesdropped2 = false
@@ -109,7 +109,7 @@ function firstpirates()
 
   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys4, pnt=pnt2})})
 
-  misn.markerMove(mem.misn_mark, sys4)
+  misn.markerMove(mem.misn_mark, pnt2)
 
   hook.rm(mem.lhook)
   mem.lhook = hook.land("land2", "land")
