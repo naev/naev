@@ -212,7 +212,7 @@ function heartbeat ()
       feral:control(true)
       feral:hyperspace( system.get("NGC-2601") )
       zbh.sfx.spacewhale1:play()
-      camera.set( feral, true, 4000 )
+      camera.set( feral, false, 4000 )
 
       player.autonavAbort(_("You thought you saw something!"))
 
@@ -225,7 +225,7 @@ end
 function cutscene_done ()
    local pp = player.pilot()
    pp:control(false)
-   camera.set( nil, true )
+   camera.set()
    hook.timer( 5, "welcome_back")
 end
 

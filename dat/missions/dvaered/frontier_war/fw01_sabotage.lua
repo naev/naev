@@ -230,7 +230,7 @@ function enter()
       player.cinematics( true, { gui = true } )
       player.pilot():setInvincible()
 
-      camera.set( mypos + vec2.new(0, step/2) )
+      camera.set( mypos + vec2.new(0, step/2), true )
 
       hook.timer(5.0, "beginDuel")
       hook.timer(15.0, "disableDuel")
@@ -485,7 +485,7 @@ function fighterDuel()
    klank2:attack(battleaddict2)
    hook.pilot( battleaddict2, "exploded", "battleaddict_killed" )
 
-   --camera.set(klank2)
+   --camera.set(klank2, true)
 end
 
 function battleaddict_killed()
@@ -496,7 +496,7 @@ function battleaddict_killed()
    urnus:broadcast( _("General Klank won the duel!") )
 
    hook.timer( 2.0, "everyoneLands" )
-   camera.set()
+   camera.set( nil, true )
    player.pilot():control( false )
    player.cinematics( false )
    player.pilot():setInvincible( false )

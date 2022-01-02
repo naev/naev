@@ -589,7 +589,7 @@ function deathOfStrafer()
    player.pilot():control()
    player.pilot():brake()
    player.cinematics( true, { gui = true } )
-   camera.set( alpha[2], true, 20000 )
+   camera.set( alpha[2], false, 20000 )
 
    tk.msg( _("Something is happening at the station"), _([[You start to head to the station, but you hear a flurry of messages coming from the NightClaws squadron. A Schroedinger has managed to take off, unnoticed, from the High Command station, presumably carrying classified information. It managed to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
 
@@ -605,7 +605,7 @@ end
 
 -- Strafer just died: now, there will be action for the player
 function straferDied()
-   camera.set( )
+   camera.set( nil, true )
    player.pilot():control( false )
    player.cinematics( false )
    hook.timer( 1.0, "spawnKillers" )

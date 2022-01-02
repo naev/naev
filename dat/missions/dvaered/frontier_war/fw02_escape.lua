@@ -578,7 +578,7 @@ function scanBloc()
       player.pilot():control()
       player.pilot():brake() -- Normally, nobody should want to kill the player
       player.cinematics( true )
-      camera.set( squad[1]:pos() ) -- TODO if possible: choose the right squad
+      camera.set( squad[1]:pos(), true ) -- TODO if possible: choose the right squad
 
       rmScanHooksRaw()
       mem.firstBloc = false
@@ -593,14 +593,14 @@ function spawnStrafer()
    strafer:setVisible(true)
    strafer:control(true)
    strafer:follow( player.pilot() )
-   camera.set( strafer )
+   camera.set( strafer, true )
    mem.prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
 
 -- The player discuss with Strafer
 function straferDiscuss()
    hook.rm(mem.prox)
-   camera.set()
+   camera.set( nil, true )
    player.cinematics(false)
    player.pilot():control(false)
 

@@ -261,7 +261,7 @@ function spawn_fleet() -- spawn warlord killing fleet
       j:attack(hawk)
    end
    hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
-   camera.set(hawk)
+   camera.set( hawk, false )
    hawk:broadcast(_("All units, defend Hawk, we are under attack!"))
    broadcast_first(fleetdv, _("All units, defend Hawk, we are under attack!"))
    hawk:control()
@@ -342,7 +342,7 @@ end
 function complete()
    cleanup()
    tk.msg(_("The Dvaered official sent you a message."), _([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 800,000 credits in your account."]]))
-   camera.set(player.pilot())
+   camera.set( nil, false )
    player.pay(800e3)
    jump_fleet[6]:broadcast(fmt.f(_("I declare myself the Warlord of {pnt}!"), {pnt=destplanet}))
    jump_fleet[6]:setNoDeath(false)
@@ -351,6 +351,6 @@ end
 
 function abort()
    cleanup()
-   camera.set(player.pilot(), true)
+   camera.set( nil, true )
    misn.finish(false)
 end

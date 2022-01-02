@@ -165,7 +165,7 @@ function theFunBegins()
    hook.pilot(preacher,"jump","jumpCleanup")
    hook.jumpout("cleanup")
 
-   camera.set(preacher, true)
+   camera.set(preacher)
    player.cinematics(true,{gui=true, abort=presence[rnd.rnd(1,#presence)]})
 
    --you're hooked till you hear him out!
@@ -237,7 +237,7 @@ function theFunBegins()
 end
 
 function preacherSpeak()
-   camera.set(preacher,true)
+   camera.set(preacher)
    if rep < 0 then
       preacher:comm(fmt.f(althoughEnemy[rnd.rnd(1,#althoughEnemy)], {player=player.name()}), true)
    else
@@ -254,7 +254,7 @@ end
 
 --random praise for the Sirichana
 function praise()
-   camera.set(praiser,true)
+   camera.set(praiser)
    praiser:broadcast(praiseSirichana[rnd.rnd(1,#praiseSirichana)],true)
 end
 
@@ -269,7 +269,7 @@ function pirateSpawn()
       thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], "Pirate", curr)
       if num==curiousNumber then
          thepilot:broadcast(whatHappened[rnd.rnd(1,#whatHappened)],true)
-         camera.set(thepilot,true)
+         camera.set(thepilot)
       end
       thepilot:control()
       thepilot:attack(followers[rnd.rnd(1,#followers)])
@@ -362,7 +362,7 @@ end
 
 --releases the player after the cutscene
 function release()
-   camera.set(nil, true)
+   camera.set()
    player.cinematics(false)
    playerP:setInvincible(false)
    playerP:control(false)
@@ -386,7 +386,7 @@ function cleanup()
    local pp = player.pilot()
    pp:setInvincible(false)
    pp:control(false)
-   camera.set()
+   camera.set( nil, true )
    player.cinematics(false)
    evt.finish(true)
 end

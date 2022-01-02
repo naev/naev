@@ -231,7 +231,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
 
    player.pilot():setInvincible()
    player.cinematics()
-   camera.set( flf_base )
+   camera.set( flf_base, true )
 
    tk.msg( _("Escape and Live On"), _([[As the last shot penetrates the hull of Sindbad, a sense of dread comes over you. The FLF, Benito, your comrades... no...
     Just as you think this, the now exploding station hails you. You immediately accept, and you see Benito on your screen once again. You hear sirens and explosions in the background, but you pay them no mind.]]) )
@@ -248,7 +248,7 @@ end
 
 
 function timer_plcontrol ()
-   camera.set( player.pilot() )
+   camera.set( player.pilot(), true )
    player.cinematics( false )
    hook.timer( 2.0, "timer_end" )
 end

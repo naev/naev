@@ -435,7 +435,7 @@ end
 
 -- Capsule function for camera.set, for timer use
 function zoomTo(target)
-   camera.set(target, true, mem.zoomspeed)
+   camera.set(target, false, mem.zoomspeed)
 end
 
 -- Capsule function for player.msg, for timer use

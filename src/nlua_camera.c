@@ -70,15 +70,15 @@ int nlua_loadCamera( nlua_env env )
  * @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
  *
  *    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it follows the player.
- *    @luatparam[opt=false] boolean soft_over Indicates that the camera should fly over rather than instantly teleport.
- *    @luaparam[opt=2500] speed Speed at which to fly over if soft_over is true.
+ *    @luatparam[opt=false] boolean hard_over Indicates that the camera should instantly teleport instead of fly over.
+ *    @luaparam[opt=2500] speed Speed at which to fly over if hard_over is false.
  * @luafunc set
  */
 static int camL_set( lua_State *L )
 {
    LuaPilot lp;
    Vector2d *vec;
-   int soft_over, speed;
+   int hard_over, speed;
 
    NLUA_CHECKRW(L);
 
@@ -89,20 +89,20 @@ static int camL_set( lua_State *L )
       lp = lua_topilot(L,1);
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
-   soft_over = lua_toboolean(L,2);
+   hard_over = lua_toboolean(L,2);
    speed = luaL_optinteger(L,3,2500);
 
    /* Set the camera. */
    if (lp != 0) {
       Pilot *p = pilot_get( lp );
       if (p != NULL)
-         cam_setTargetPilot( p->id, soft_over*speed );
+         cam_setTargetPilot( p->id, hard_over*speed );
    }
    else if (vec != NULL)
-      cam_setTargetPos( vec->x, vec->y, soft_over*speed );
+      cam_setTargetPos( vec->x, vec->y, hard_over*speed );
    else {
       if (player.p != NULL)
-         cam_setTargetPilot( player.p->id, soft_over*speed );
+         cam_setTargetPilot( player.p->id, hard_over*speed );
    }
    return 0;
 }

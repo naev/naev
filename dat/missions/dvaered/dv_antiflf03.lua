@@ -206,7 +206,7 @@ end
 function deathBase()
     player.pilot():setInvincible()
     player.cinematics()
-    camera.set( base, true, 5000 )
+    camera.set( base, false, 5000 )
     hook.timer( 8.0, "timer_plcontrol" )
 
     misn.osdActive(4)
@@ -246,7 +246,7 @@ function deathBase()
 end
 
 function timer_plcontrol ()
-    camera.set( player.pilot(), true, 5000 )
+    camera.set( player.pilot(), false, 5000 )
     player.cinematics( false )
 end
 
