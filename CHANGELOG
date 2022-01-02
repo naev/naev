@@ -22,7 +22,7 @@
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
 
-* 0.9.1 (unreleased)
+* 0.9.1
    * Minor countermeasures for long player ship names
    * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", "Shadow Vigil", "Baron Prince", and "Dvaered Ballet"
    * Fix exploit in "Travelling Merchant" event (mission prize for sale that shouldn't have been)
