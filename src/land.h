@@ -54,6 +54,7 @@ extern unsigned int land_generated;
  * Main interface.
  */
 void land_queueTakeoff (void);
+int land_canSave (void);
 int land_doneLoading (void);
 void land( Planet* p, int load );
 void land_genWindows( int load, int changetab );

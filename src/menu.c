@@ -466,7 +466,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
    unsigned int info_wid;
 
    /* if landed we must save anyways */
-   if (landed) {
+   if (landed && land_canSave()) {
       save_all();
       land_cleanup();
    }
@@ -494,7 +494,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
 static void exit_game (void)
 {
    /* if landed we must save anyways */
-   if (landed) {
+   if (landed && land_canSave()) {
       save_all();
       land_cleanup();
    }
