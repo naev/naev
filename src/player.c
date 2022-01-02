@@ -2315,10 +2315,10 @@ void player_hail (void)
       comm_openPilot(player.p->target);
    else if (player.p->nav_spob != -1) {
       Spob *spob = cur_system->spobs[ player.p->nav_spob ];
-      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
-         comm_openSpob( spob );
-      else if (spob_isFlag(spob, SPOB_UNINHABITED))
+      if (spob_isFlag(spob, SPOB_UNINHABITED))
          player_message( _("#r%s does not respond."), spob_name(spob) );
+      else if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( spob );
       else
          player_spobOutOfRangeMsg();
    }
