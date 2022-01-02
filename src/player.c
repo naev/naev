@@ -1563,6 +1563,10 @@ int player_land( int loud )
 
       silent = 1; /* Suppress further targeting noises. */
    }
+   /* Uninhabited spob shouldn't give messages. */
+   else if (spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED)) {
+      return PLAYER_LAND_AGAIN;
+   }
    /* Check if spob is in range. */
    else if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_spobOutOfRangeMsg();
@@ -2292,8 +2296,9 @@ static void player_checkHail (void)
  */
 static void player_spobOutOfRangeMsg (void)
 {
-   player_message( _("#r%s is out of comm range, unable to contact."),
-         spob_name(cur_system->spobs[player.p->nav_spob]) );
+   Spob *spob = cur_system->spobs[player.p->nav_spob];
+   const char *name = spob_name(spob);
+   player_message( _("#r%s is out of comm range, unable to contact."), name );
 }
 
 /**
@@ -2309,8 +2314,11 @@ void player_hail (void)
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
    else if (player.p->nav_spob != -1) {
+      Spob *spob = cur_system->spobs[ player.p->nav_spob ];
       if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
-         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
+         comm_openSpob( spob );
+      else if (spob_isFlag(spob, SPOB_UNINHABITED))
+         player_message( _("#r%s does not respond."), spob_name(spob) );
       else
          player_spobOutOfRangeMsg();
    }
