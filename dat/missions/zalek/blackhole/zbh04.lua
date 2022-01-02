@@ -36,7 +36,6 @@ local reward = zbh.rewards.zbh04
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 
 function create ()
-   misn.finish()
    if not misn.claim( mainsys ) then
       misn.finish()
    end
@@ -119,12 +118,12 @@ function land ()
 …that shouldn't be there…  …who the hell wrote this code?…
 …oh wait, that was me wasn't it?…  …  …damn."]]))
    vn.na(_([[The muttering goes on for quite a long time, until he suddenly slams the enter key, You can see a brief flicker around the drones as the station's holographic project starts to overlay a hologram of cute cats on them. However, given the size of the drones, they seem to be more like large tigers that are rather quite intimidating. The cat hologram drones fly once again out into space, and while staying near the station begin to broadcast a message towards the feral bioship. ]]))
-   vn.sfx( zbh.sfx[1] )
+   vn.sfx( zbh.sfx.spacewhale1 )
    vn.na(_([["Friend. Peace. Play."
 The message resonates throughout the station and out into space…]]))
    vn.na(_([[After what seems like ages, the feral bioship starts approaching slowly, apparently intrigued by the holographic projections. As the drones have been programmed to keep their distance, they back away as the feral bioship approaches. This makes the bioship more intrigued and it begins to chase the cat drones around the exterior of the ship.]]))
    vn.na(_([[As you are enjoying the playful spectacle, you see Zach staring intently at all the collected data flashing on his cyberdeck screen.]]))
-   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#r, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double check with databases, but that's the only conclusion I can come to right now."]]))
+   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#0, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double check with databases, but that's the only conclusion I can come to right now."]]))
    z(_([["I'm going to continue running a more in-depth scan, while I think of our next steps. Meet up with me at the bar when you're ready to help."]]))
    vn.na(_([[You see Icarus still playing with the cat drones, although it looks more like it is trying to eat them. Are those fangs?…]]))
    vn.sfxVictory()
@@ -134,7 +133,7 @@ The message resonates throughout the station and out into space…]]))
 
    faction.modPlayer("Za'lek", zbh.fctmod.zbh04)
    player.pay( reward )
-   zbh.log(fmt.f(_("{sys} {pnt}"),{sys=mainsys,pnt=mainpnt}))
+   zbh.log(fmt.f(_("You and Zach found a feral bioship wandering around {sys}. After Zach managed to create a simple program to communicate with it, you were able to get it to follow you back to {pnt}."),{sys=mainsys, pnt=mainpnt}))
    misn.finish(true)
 end
 
@@ -142,7 +141,7 @@ local function sample_point ()
    local pos = player.pos()
    local v
    repeat
-      v = vec2.newp( system.cur():radius(), rnd.angle()  )
+      v = vec2.newP( system.cur():radius(), rnd.angle()  )
    until v:dist2( pos ) > 3000
    return v
 end
@@ -189,7 +188,7 @@ function enter ()
    feral:stealth()
 
    hook.pilot( feral, "discovered", "feral_discovered" )
-   hook.pilot( feral, "idel", "feral_idle" )
+   hook.pilot( feral, "idle", "feral_idle" )
 
    luaspfx.init()
 
@@ -204,9 +203,14 @@ function zach_msg( msg )
    pilot.comm( _("Sigma-13"), msg )
 end
 
+local sfx_spacewhale = {
+   zbh.sfx.spacewhale1,
+   zbh.sfx.spacewhale2
+}
 function spacewhale ()
-   local sfx = zbh.sfx[ rnd.rnd(1,#zbh.sfx) ]
+   local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
    luaspfx.addfg( luaspfx.effects.sfx{ sfx=sfx, dist_ref=2500, dist_max=25e3 }, 10, feral:pos() )
+   player.autonavReset(5)
 end
 
 function feral_idle ()
@@ -241,6 +245,9 @@ function feral_discovered ()
    feral:brake()
    feral:face( player.pilot() )
 
+   system.mrkClear()
+   player.autonavAbort(_("You found something!"))
+
    hook.pilot( feral, "hail", "feral_hail" )
 
    hook.timer(  3, "zach_msg", _("Zach: What the hell is that?") )
@@ -274,10 +281,10 @@ function feral_hail ()
 "This appears to be a {shipname}. Although they are loosely based on a Soromid Reaver Bio-Fighter, they have gone back to a more wild biological state, rejecting most synthetic components. {shipname} are the smallest of what are commonly referred to as #oferal bioships#0. I advise caution with dealing with such ships as they lack any sort of ship AI."]]),{shipname=feral:ship()}))
    vn.disappear( ai, "electric" )
    z(_([["I see. However, this doesn't explain how the hell it got down here, There's no way it could have made the entire trip unnoticed."]]))
-   vn.sfx( zbh.sfx[1] )
+   vn.sfx( zbh.sfx.spacewhale1 )
    f(_("You can tell the ship is trying to convey something, but don't understand the meaning."))
-   z(_([["Wait wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes.]]))
-   vn.sfx( zbh.sfx[2] )
+   z(_([["Wait wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes."]]))
+   vn.sfx( zbh.sfx.spacewhale2 )
    f(_("The feral bioship once again lets out a stream of electromagnetic radiation that your ship AI translates as a sound."))
    z(_([["One second, I'm getting there…"
 He starts muttering to himself.
@@ -285,7 +292,7 @@ He starts muttering to himself.
    vn.sfxBingo()
    z(_([["I think I got it! Let us see now."
 The communication software flickers a second as it reboots.]]))
-   vn.sfx( zbh.sfx[1] )
+   vn.sfx( zbh.sfx.spacewhale1 )
    f(_([[The feral bioship lets another cry and you can see whatever modification Zach made to the communication kick into action.
 "Athaen9a. Ihnatsoeu. Xllaudtohennnoaehustoa."]]))
    z(_([["Needs some more adjustments, one second. You don't get to translate an unknown language from scratch notes every day. My minor in linguistics is finally paying off!"
@@ -293,7 +300,7 @@ The communication software once more flickers and reboots.]]))
    f(_([["Elders. Alone… Scared. Elders. Where."]]))
    z(fmt.f(_([["I guess we won't be able to do much more than this for now. Let me see if we can transmit something to get it to follow you back to {pnt}."]]),
       {pnt=mainpnt}))
-   vn.sfx( zbh.sfx[2] )
+   vn.sfx( zbh.sfx.spacewhale2 )
    z(_([[Zach hits some buttons and tramsits something similar to what you heard coming from the feral bioship.
 "Follow. Safe."]]))
    f(_([[Eventually, it seems like necessity overcomes fear, and the feral bioship begins to follow your ship.]]))
