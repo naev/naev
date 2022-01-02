@@ -71,7 +71,7 @@ Zach pulls up a hologram of Icarus who can be seen flying outside the station.]]
 
    -- mission details
    misn.setTitle( _("Defending Sigma-13") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.f(_("The safety of {pnt}"), {pnt=mainpnt} ) )
    misn.setDesc(fmt.f(_("Defend {pnt} from hostiles inbound from {sys}."),{pnt=mainpnt,sys=jumpsys}))
 
    mem.mrk = misn.markerAdd( mainsys )
@@ -98,7 +98,7 @@ function land ()
    vn.na(_([[]]))
    z(_([[""]]))
    vn.sfxVictory()
-   vn.na( fmt.reward(reward) )
+   vn.na( fmt.credits(reward) )
    vn.done( zbh.zach.transition )
    vn.run()
 
