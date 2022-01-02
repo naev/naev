@@ -145,16 +145,18 @@ void land_queueTakeoff (void)
  */
 static int land_canSave (void)
 {
-   int should_save = 0;
+   /* If the current landed planet is refuelable, no need to check if can land. */
+   if ((land_spob!=NULL) && spob_hasService(land_spob,SPOB_SERVICE_REFUEL))
+      return 1;
+
+   /* For other places we'll have to see if can land. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
       spob_updateLand( p );
-      if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land) {
-         should_save = 1;
-         break;
-      }
+      if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land)
+         return 1;
    }
-   return should_save;
+   return 0;
 }
 
 /**
