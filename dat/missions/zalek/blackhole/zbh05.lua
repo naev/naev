@@ -38,7 +38,6 @@ local destpnt, destsys = spob.getS( "Thaddius Station" )
 local atksys = system.get( "NGC-23" )
 
 function create ()
-   misn.finish()
    if not misn.claim( {retsys, atksys} ) then
       misn.finish()
    end
@@ -109,7 +108,7 @@ You can see the glee on his face when he goes back to looking at the charts on h
 end
 
 function land ()
-   if mem.state==1 and spob.cur() == mem.destpnt then
+   if mem.state==1 and spob.cur() == destpnt then
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
@@ -152,7 +151,7 @@ He seems to be seriously considering how to modify his drones.]]))
 
       faction.modPlayer("Za'lek", zbh.fctmod.zbh05)
       player.pay( reward )
-      zbh.log(fmt.f(_(""),{}))
+      zbh.log(_("You helped Zach get some supplies to help nourish the feral bioship Icarus and prepare for surgery."))
       misn.finish(true)
    end
 end
@@ -170,6 +169,7 @@ function enter ()
       local drones = fleet.add( 1, ships, zbh.evilpi(), jump.get(atksys, retsys):pos()*0.9, nil, {ai="baddiepos"} )
       for k,p in ipairs(drones) do
          p:memory().comm_no = _("ACCESS DENIED.")
+         p:setHostile(true)
       end
    end
 
