@@ -245,8 +245,17 @@ function feral_discovered ()
    feral:brake()
    feral:face( player.pilot() )
 
-   system.mrkClear()
    player.autonavAbort(_("You found something!"))
+   player.cinematics( true, {gui=true} )
+   camera.set( feral, true )
+
+   -- Have to do this AFTER aborting autonav
+   local pp = player.pilot()
+   pp:control(true)
+   pp:brake()
+   pp:face(feral)
+
+   system.mrkClear()
 
    hook.pilot( feral, "hail", "feral_hail" )
 
@@ -258,6 +267,9 @@ end
 local feral_canhail = false
 function feral_hailstart ()
    feral_canhail = true
+   player.pilot():control(false)
+   player.cinematics(false)
+   camera.set( nil, true )
 end
 
 function feral_hail ()
