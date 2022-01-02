@@ -109,7 +109,7 @@ She gives you a not too reassuring smile.]]))
    n(_([["I have to process some data real quick, but meet me up at the spaceport bar in a bit. I should have another task for you."
 She starts to hum and skips off towards her laboratory space.]]))
    vn.sfxVictory()
-   --vn.na( fmt.reward(reward) )
+   --vn.na( fmt.credits(reward) )
    vn.done( zpp.noona.transition )
    vn.run()
 

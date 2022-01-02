@@ -22,6 +22,10 @@
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
 
+* 0.9.2 (unreleased)
+   * Fix reward messages in the Particle Physics campaign
+   * Can no longer steal a certain Soromid ship
+
 * 0.9.1
    * Minor countermeasures for long player ship names
    * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", "Shadow Vigil", "Baron Prince", and "Dvaered Ballet"
