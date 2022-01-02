@@ -419,8 +419,9 @@ function comm( plt )
       if pps.fuel >= pps.fuel_max then
          vn.jump("refuel_full")
       end
+      -- Want to have at least 100 units of fuel extra
       local ps = plt:stats()
-      if ps.fuel < ps.fuel_consumption then
+      if ps.fuel <= ps.fuel_consumption+100 then
          vn.jump("refuel_low")
       end
       local val = mem.refuel
@@ -445,24 +446,24 @@ function comm( plt )
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refueling??"), {msg=str, credits=chave} )
    end )
    vn.menu( function ()
-      local cost = mem.refuel
-      local opts = {
-         {fmt.f(_("Pay #r{cost}#0 (100 fuel)"),{cost=fmt.credits(cost)}), "refuel_trypay"},
-         {_("Refuse"), "refuel_refuse"},
-      }
       local pps = player.pilot():stats()
       local plts = plt:stats()
       local cons = pps.fuel_consumption
-      -- Only allow
+      local cost = mem.refuel
+      local opts = {
+         {fmt.f(_("Pay #r{cost}#0 (100 fuel, {jumps:.1f} jumps)"),{cost=fmt.credits(cost),jumps=100/cons}), "refuel_trypay"},
+         {_("Refuse"), "refuel_refuse"},
+      }
+      -- Only allow multiples of 100
       local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
       if maxfuel > cons then
-         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel)"),
-               {cost=fmt.credits(cost*maxfuel/100), amount=maxfuel}),
+         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel, {jumps:.1f} jumps)"),
+               {cost=fmt.credits(cost*maxfuel/100), amount=maxfuel, jumps=maxfuel/cons}),
                "refuel_trypay_max"})
       end
       if cons > 100 and maxfuel >= cons then
-         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel)"),
-               {cost=fmt.credits(cost*cons/100), amount=cons}),
+         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel, {jumps:.1f} jumps)"),
+               {cost=fmt.credits(cost*cons/100), amount=cons, jumps=1}),
                "refuel_trypay_jump"})
       end
       return opts
