@@ -139,7 +139,7 @@ function enter()
    local fkidnappers = faction.dynAdd( "Pirate", "Kidnappers", _("Kidnappers"), { clear_allies=true, clear_enemies=true, ai="trader" } )
 
   if mem.eavesdropped1 and mem.eavesdropped2 and system.cur() == sys2 and (not mem.rescued) then
-    kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Progeny") )
+    kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Progeny"), {naked=true} )
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
     kidnappers:memory().aggressive = true
@@ -154,10 +154,11 @@ function enter()
 end
 
 function idle()
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+   local homepos = planet.get("Zhiru"):pos()
+   kidnappers:moveto(homepos + vec2.new( 800,  800), false)
+   kidnappers:moveto(homepos + vec2.new(-800,  800), false)
+   kidnappers:moveto(homepos + vec2.new(-800, -800), false)
+   kidnappers:moveto(homepos + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()
@@ -167,14 +168,12 @@ function attackedkidnappers()
 
    if mem.needpirates then
       local p = {}
-      p[1] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(800, 700) )
-      p[2] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(-900, 600) )
-      p[3] = pilot.add( "Pirate Hyena", "Pirate", vec2.new(700, -500) )
-      for k,v in ipairs(p) do
-         v:setHostile(true)
-         v:setLeader( kidnappers )
+      for k = 1, 3 do
+         p[k] = pilot.add( "Pirate Hyena", "Pirate", kidnappers:pos() + vec2.newP( 1200, 2*math.pi*k/3 ) )
+         p[k]:setHostile( true )
+         p[k]:setLeader( kidnappers )
       end
-      p[1]:broadcast(_([[You are damaging the goods! You are dead!]]), true)
+      p[1]:comm(_([[You are damaging the goods! You are dead!]]), true)
       mem.needpirates = false
    end
 end
@@ -193,7 +192,7 @@ end
 function boardkidnappers()
   tk.msg(_("You did it!"), fmt.f(_([[After disabling the ship, you and your small crew go in ready for a fight! But when you get on the small Koala, you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can pilot a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to {pnt} and reunite the parents with their children.]]), {pnt=pnthome}))
   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Return the children to the {sys} system on planet {pnt}"), {sys=sys1, pnt=pnthome})})
-  misn.markerMove(mem.misn_mark, sys1)
+  misn.markerMove(mem.misn_mark, pnthome)
   kidnappers:setHilight(false)
   kidnappers:hookClear()
   local c = commodity.new( N_("Children"), N_("The rescued children.") )
