@@ -183,6 +183,7 @@ function enter ()
    table.sort( points, function( a, b ) return ppos:dist2(a) > ppos:dist2(b) end )
 
    feral = zbh.plt_icarus( points[1] )
+   feral:rename( _("Feral Bioship") )
    feral:setInvincible(true)
    feral:control(true)
    feral:stealth()

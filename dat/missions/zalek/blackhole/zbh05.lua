@@ -176,6 +176,7 @@ function enter ()
 
    if system.cur() == retsys then
       local feral = zbh.plt_icarus( retpnt:pos() + vec2.newP(300,rnd.angle()) )
+      feral:rename( _("Feral Bioship") )
       feral:setFriendly(true)
       feral:setInvincible(true)
       feral:control(true)

@@ -75,7 +75,7 @@ function zbh.plt_icarus( pos )
    if not fct then
       fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
    end
-   return pilot.add( "Nohinohi", fct, pos )
+   return pilot.add( "Nohinohi", fct, pos, _("Icarus") )
 end
 
 function zbh.unidiff( diffname )
