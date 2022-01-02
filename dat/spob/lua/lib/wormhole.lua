@@ -130,17 +130,15 @@ end
 
 function wormhole.update( dt )
    shader:update( dt )
-   update_canvas()
 end
 
---[[
 function wormhole.render ()
+   update_canvas() -- We want to do this here or it gets slow in autonav
    local z = camera.getZoom()
    local x, y = gfx.screencoords( pos, true ):get()
    z = 1/z
    cvs:draw( x, y, 0, z, -z )
 end
---]]
 
 function wormhole.can_land ()
    return true, "The wormhole seems to be active."
