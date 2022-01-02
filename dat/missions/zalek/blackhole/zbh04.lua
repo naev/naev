@@ -100,7 +100,7 @@ end
 
 function land ()
    if mem.state~=2 or spob.cur() ~= mainpnt then
-      lmisn.fail(_("You were supposed to follow the signals!"))
+      lmisn.fail(_("You were supposed to follow the detected motion!"))
       return
    end
 
@@ -108,8 +108,23 @@ function land ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[]]))
-   z(_([[""]]))
+   vn.na(_([[You land while the feral bioship waits cautiously outside the space docks. It seems like it's not entirely sure what to do.]]))
+   z(_([[Zach is peeking out of the airlock.
+"Damn, it's more impressive when it's up close. We have to be careful though, it's not clear what its intentions are, although it does not seem to be aggressive. Let me see if my drones can scan it and give us more details."]]))
+   vn.na([[A couple of drones fly past you and head towards the feral bioship, which reacts in fear and runs away until you can barely see it in the distance.]])
+   z(_([["Fear of drones? Something must have happened it to react this way. Very interesting how it seems to behave almost like a normal animal. Let's see if I can get it back here."]]))
+   z(_([[He sits cross-legged on the floor and sets his cyberdeck on his lap, spending a second to stretch, before engaging in a furious typing spree. The drones come back and hover nearby him, patiently awaiting orders.]]))
+   z(_([[He begins muttering to himself.
+"Let's see…  …  …maybe if I…  …  …not that line…
+…that shouldn't be there…  …who the hell wrote this code?…
+…oh wait, that was me wasn't it?…  …  …damn."]]))
+   vn.na(_([[The muttering goes on for quite a long time, until he suddenly slams the enter key, You can see a brief flicker around the drones as the station's holographic project starts to overlay a hologram of cute cats on them. However, given the size of the drones, they seem to be more like large tigers that are rather quite intimidating. The cat hologram drones fly once again out into space, and while staying near the station begin to broadcast a message towards the feral bioship. ]]))
+   vn.sfx( zbh.sfx[1] )
+   vn.na(_([["Friend. Peace. Play."
+The message resonates throughout the station and out into space…]]))
+   vn.na(_([[After what seems like ages, the feral bioship starts approaching slowly, apparently intrigued by the holographic projections. As the drones have been programmed to keep their distance, they back away as the feral bioship approaches. This makes the bioship more intrigued and it begins to chase the cat drones around the exterior of the ship.]]))
+   vn.na(_([[As you are enjoying the playful spectacle, you see Zach staring intently at all the collected data flashing on his cyberdeck screen.]]))
+   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#r, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double check with databases, but that's the only conclusion I can come to right now."]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
@@ -153,7 +168,7 @@ function enter ()
       if mem.state == 2 then
          lmisn.fail(fmt.f(_("You were supposed to lead the feral bioship to {pnt}!"),{pnt=mainpnt}))
       else
-         lmisn.fail(_("You were supposed to follow the signals!"))
+         lmisn.fail(_("You were supposed to follow the detected motion!"))
       end
       return
    end
