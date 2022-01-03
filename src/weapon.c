@@ -330,21 +330,21 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   //ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
+   //ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.lau.ammo.resist );
 
    /* Handle by status. */
    switch (w->status) {
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
          if (w->timer2 >= 0.)
-            weapon_setThrust( w, w->outfit->u.amm.thrust * w->outfit->mass );
+            weapon_setThrust( w, w->outfit->u.lau.ammo.thrust * w->outfit->mass );
          else
             w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
          /* Can't get jammed while locking on. */
          break;
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
-         jc = p->stats.jam_chance - w->outfit->u.amm.resist;
+         jc = p->stats.jam_chance - w->outfit->u.lau.ammo.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
             d = vect_dist( &p->solid->pos, &w->solid->pos );
@@ -357,12 +357,12 @@ static void think_seeker( Weapon* w, const double dt )
                   }
                   else if (r < 0.7) {
                      w->status = WEAPON_STATUS_JAMMED;
-                     weapon_setTurn( w, w->outfit->u.amm.turn * ((RNGF()>0.5)?-1.0:1.0) );
+                     weapon_setTurn( w, w->outfit->u.lau.ammo.turn * ((RNGF()>0.5)?-1.0:1.0) );
                   }
                   else {
                      w->status = WEAPON_STATUS_JAMMED;
                      weapon_setTurn( w, 0. );
-                     weapon_setThrust( w, w->outfit->u.amm.thrust * w->outfit->mass );
+                     weapon_setThrust( w, w->outfit->u.lau.ammo.thrust * w->outfit->mass );
                   }
                   break;
                }
@@ -374,12 +374,12 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_JAMMED_SLOWED: /* Slowed down. */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->u.amm.ai == AMMO_AI_SMART) {
+         if (w->outfit->u.lau.ammo.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
                   p->solid->pos.y - w->solid->pos.y );
-            t = vect_odist( &v ) / w->outfit->u.amm.speed_max;
+            t = vect_odist( &v ) / w->outfit->u.lau.ammo.speed_max;
 
             /* Calculate target's movement. */
             vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
@@ -395,9 +395,9 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         turn_max = w->outfit->u.amm.turn;// * ewtrack;
+         turn_max = w->outfit->u.lau.ammo.turn;// * ewtrack;
          weapon_setTurn( w, CLAMP( -turn_max, turn_max,
-                  10 * diff * w->outfit->u.amm.turn ));
+                  10 * diff * w->outfit->u.lau.ammo.turn ));
          break;
 
       case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
@@ -413,11 +413,11 @@ static void think_seeker( Weapon* w, const double dt )
    speed_mod = (w->status==WEAPON_STATUS_JAMMED_SLOWED) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * w->outfit->u.amm.speed_max, w->real_vel + w->outfit->u.amm.thrust*dt );
+   w->real_vel = MIN( speed_mod * w->outfit->u.lau.ammo.speed_max, w->real_vel + w->outfit->u.lau.ammo.thrust*dt );
    vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
-   //w->solid->speed_max = w->outfit->u.amm.speed * ewtrack;
+   //w->solid->speed_max = w->outfit->u.lau.ammo.speed * ewtrack;
 }
 
 /**
@@ -968,8 +968,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          if (array_size(w->outfit->u.blt.polygon) == 0)
             usePoly = 0;
       }
-      else if (outfit_isAmmo(w->outfit)) {
-         if (array_size(w->outfit->u.amm.polygon) == 0)
+      else if (outfit_isLauncher(w->outfit)) {
+         if (array_size(w->outfit->u.lau.ammo.polygon) == 0)
             usePoly = 0;
       }
    }
@@ -1066,7 +1066,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
 
    /* Collide with asteroids*/
-   if (outfit_isAmmo(w->outfit)) {
+   if (outfit_isLauncher(w->outfit)) {
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (int j=0; j<ast->nb; j++) {
@@ -1146,11 +1146,11 @@ static void weapon_sample_trail( Weapon* w )
 
    /* Compute the engine offset. */
    a  = w->solid->dir;
-   dx = w->outfit->u.amm.trail_x_offset * cos(a);
-   dy = w->outfit->u.amm.trail_x_offset * sin(a);
+   dx = w->outfit->u.lau.ammo.trail_x_offset * cos(a);
+   dy = w->outfit->u.lau.ammo.trail_x_offset * sin(a);
 
    /* Set the colour. */
-   if ((w->outfit->u.amm.ai == AMMO_AI_UNGUIDED) ||
+   if ((w->outfit->u.lau.ammo.ai == AMMO_AI_UNGUIDED) ||
         w->solid->vel.x*w->solid->vel.x + w->solid->vel.y*w->solid->vel.y + 1.
         < w->solid->speed_max*w->solid->speed_max)
       mode = MODE_AFTERBURN;
@@ -1548,7 +1548,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    double mass, rdir;
    Pilot *pilot_target;
    const glTexture *gfx;
-   const Outfit* ammo;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
@@ -1556,7 +1555,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
-   ammo = launcher->u.lau.ammo;
    if (w->outfit->type == OUTFIT_TYPE_AMMO &&
             launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, M_PI, time );
@@ -1578,24 +1576,24 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
-   vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
-                  sin(rdir) * w->outfit->u.amm.speed );
+   vect_cadd( &v, cos(rdir) * w->outfit->u.lau.ammo.speed,
+                  sin(rdir) * w->outfit->u.lau.ammo.speed );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
+   w->timer    = w->outfit->u.lau.ammo.duration * parent->stats.launch_range;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   if (w->outfit->u.amm.thrust > 0.) {
-      weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
+   if (w->outfit->u.lau.ammo.thrust > 0.) {
+      weapon_setThrust( w, w->outfit->u.lau.ammo.thrust * mass );
       /* Limit speed, we only relativize in the case it has thrust + initila speed. */
-      w->solid->speed_max = w->outfit->u.amm.speed_max;
-      if (w->outfit->u.amm.speed > 0.)
+      w->solid->speed_max = w->outfit->u.lau.ammo.speed_max;
+      if (w->outfit->u.lau.ammo.speed > 0.)
          w->solid->speed_max += VMOD(*vel);
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
+   if (w->outfit->u.lau.ammo.ai != AMMO_AI_UNGUIDED) {
       w->timer2   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
       w->paramf   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
       w->status   = (w->timer2 > 0.) ? WEAPON_STATUS_LOCKING : WEAPON_STATUS_OK;
@@ -1613,7 +1611,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       w->status = WEAPON_STATUS_OK;
 
    /* Play sound. */
-   w->voice    = sound_playPos(w->outfit->u.amm.sound,
+   w->voice    = sound_playPos(w->outfit->u.lau.ammo.sound,
          w->solid->pos.x,
          w->solid->pos.y,
          w->solid->vel.x,
@@ -1624,8 +1622,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
 
    /* Set up trails. */
-   if (ammo->u.amm.trail_spec != NULL)
-      w->trail = spfx_trail_create( ammo->u.amm.trail_spec );
+   if (w->outfit->u.lau.ammo.trail_spec != NULL)
+      w->trail = spfx_trail_create( w->outfit->u.lau.ammo.trail_spec );
 }
 
 /**
@@ -1664,10 +1662,7 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
       w->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
    }
-   if (outfit_isLauncher(outfit))
-      w->outfit   = outfit->u.lau.ammo; /* non-changeable */
-   else
-      w->outfit   = outfit; /* non-changeable */
+   w->outfit   = outfit; /* non-changeable */
    w->update   = weapon_update;
    w->strength = 1.;
 
@@ -2044,7 +2039,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
 
    /* Now try to destroy the weapons affected. */
    for (int i=0; i<array_size(curLayer); i++) {
-      if (((mode & EXPL_MODE_MISSILE) && outfit_isAmmo(curLayer[i]->outfit)) ||
+      if (((mode & EXPL_MODE_MISSILE) && outfit_isLauncher(curLayer[i]->outfit)) ||
             ((mode & EXPL_MODE_BOLT) && outfit_isBolt(curLayer[i]->outfit))) {
 
          double dist = pow2(curLayer[i]->solid->pos.x - x) +

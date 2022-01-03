@@ -691,8 +691,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) &&
-               ((lst[i].u.ammo.outfit == NULL) ||
-                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit)))
             subtitle = 1;
       }
       /* Draw bottom. */
@@ -1145,7 +1144,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Remove outfit. */
    if (slot->outfit != NULL) {
       int ret;
-      const Outfit *ammo;
       const Outfit *o = slot->outfit;
 
       /* Must be able to remove. */
@@ -1153,9 +1151,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if ( ammo != NULL )
-         pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
+      pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
 
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
@@ -2050,7 +2046,6 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    /* Remove all outfits. */
    for (int i=0; i<array_size(ship->outfits); i++) {
       int ret;
-      const Outfit *ammo;
       PilotOutfitSlot *s = ship->outfits[i];
       const Outfit *o = s->outfit;
 
@@ -2063,10 +2058,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
          continue;
 
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if (ammo != NULL) {
-         pilot_rmAmmo( ship, s, outfit_amount(o) );
-      }
+      pilot_rmAmmo( ship, s, outfit_amount(o) );
 
       /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, s );

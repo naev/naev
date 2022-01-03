@@ -2067,8 +2067,7 @@ void pilot_update( Pilot* pilot, double dt )
        * other timers. This helps to simplify code resetting the timer
        * elsewhere.)
        */
-      if ((outfit_isLauncher(o->outfit) || outfit_isFighterBay(o->outfit)) &&
-            (outfit_ammo(o->outfit) != NULL)) {
+      if (outfit_isLauncher(o->outfit) || outfit_isFighterBay(o->outfit)) {
 
          /* Initial (raw) ammo threshold */
          if (outfit_isLauncher(o->outfit)) {
@@ -2095,7 +2094,7 @@ void pilot_update( Pilot* pilot, double dt )
          while ((o->rtimer >= reload_time) &&
                (o->u.ammo.quantity < ammo_threshold)) {
             o->rtimer -= reload_time;
-            pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
+            pilot_addAmmo( pilot, o, 1 );
          }
 
          o->rtimer = MIN( o->rtimer, reload_time );
@@ -3630,11 +3629,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       }
       shots = 1. / (mod_shots * outfit_delay(o));
 
-      /* Special case: Ammo-based weapons. */
-      if (outfit_isLauncher(o))
-         dmg = outfit_damage(o->u.lau.ammo);
-      else
-         dmg = outfit_damage(o);
+      dmg   = outfit_damage(o);
       dps  += shots * mod_damage * dmg->damage;
       eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
    }

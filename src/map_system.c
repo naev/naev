@@ -610,10 +610,10 @@ static void map_system_array_update( unsigned int wid, const char* str )
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
 
-      if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
-          (outfit_ammo(outfit) != NULL) ) {
-         mass += outfit_amount( outfit ) * outfit_ammo( outfit )->mass;
-      }
+      if (outfit_isLauncher(outfit))
+         mass += outfit_amount( outfit ) * outfit->u.lau.ammo.mass;
+      else if (outfit_isFighterBay(outfit))
+         mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
       snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
       l += outfit_getNameWithClass( outfit, &infobuf[l], sizeof(infobuf)-l );

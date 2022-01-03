@@ -187,7 +187,6 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 int pilot_dock( Pilot *p, Pilot *target )
 {
    int i;
-   const Outfit *o = NULL;
    PilotOutfitSlot* dockslot;
 
    /* Must belong to target */
@@ -210,19 +209,14 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Grab dock ammo */
    i = p->dockslot;
-   if (p->dockslot < array_size(target->outfits))
-      o = outfit_ammo(target->outfits[i]->outfit);
 
    /* Try to add fighter. */
    dockslot->u.ammo.deployed--;
    p->dockpilot = 0;
    p->dockslot = -1;
 
-   if (o == NULL)
-      return -1;
-
    /* Add the pilot's outfit. */
-   if (pilot_addAmmo(target, target->outfits[i], o, 1) != 1)
+   if (pilot_addAmmo(target, target->outfits[i], 1) != 1)
       return -1;
 
    /* Remove from pilot's escort list. */
@@ -286,7 +280,6 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 
    /* Some per-case scenarios. */
    if (outfit_isFighterBay(outfit)) {
-      s->u.ammo.outfit   = NULL;
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0;
       pilot->nfighterbays++;
@@ -298,7 +291,6 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    else if (outfit_isAfterburner(outfit))
       pilot->nafterburners++;
    if (outfit_isLauncher(outfit)) {
-      s->u.ammo.outfit   = NULL;
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0; /* Just in case. */
    }
@@ -691,11 +683,10 @@ const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outf
  *
  *    @param pilot Pilot to add ammo to.
  *    @param s Slot to add ammo to.
- *    @param ammo Ammo to add.
  *    @param quantity Amount to add.
  *    @return Amount actually added.
  */
-int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity )
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 {
    int q, max;
 
@@ -709,30 +700,6 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int qua
             pilot->name, s->outfit->name);
       return 0;
    }
-   else if (!outfit_isAmmo(ammo) && !outfit_isFighter(ammo)) {
-      WARN( _("Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo."),
-            pilot->name, ammo->name );
-      return 0;
-   }
-   else if (outfit_isLauncher(s->outfit) && outfit_isFighter(ammo)) {
-      WARN(_("Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo"),
-            pilot->name, ammo->name, s->outfit->name );
-      return 0;
-   }
-   else if (outfit_isFighterBay(s->outfit) && outfit_isAmmo(ammo)) {
-      WARN(_("Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo"),
-            pilot->name, ammo->name, s->outfit->name );
-      return 0;
-   }
-   else if ((s->u.ammo.outfit != NULL) && (s->u.ammo.quantity > 0) &&
-         (s->u.ammo.outfit != ammo)) {
-      WARN(_("Pilot '%s': Trying to add ammo to outfit that already has ammo."),
-            pilot->name );
-      return 0;
-   }
-
-   /* Set the ammo type. */
-   s->u.ammo.outfit    = ammo;
 
    /* Add the ammo. */
    max                 = pilot_maxAmmoO(pilot,s->outfit) - s->u.ammo.deployed;
@@ -740,7 +707,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int qua
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity  = MIN( max, s->u.ammo.quantity );
    q                   = s->u.ammo.quantity - q; /* Amount actually added. */
-   pilot->mass_outfit += q * s->u.ammo.outfit->mass;
+   pilot->mass_outfit += q * outfit_ammoMass( s->outfit );
    pilot_updateMass( pilot );
 
    return q;
@@ -769,14 +736,10 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
       return 0;
    }
 
-   /* No ammo already. */
-   if (s->u.ammo.outfit == NULL)
-      return 0;
-
    /* Remove ammo. */
    q                   = MIN( quantity, s->u.ammo.quantity );
    s->u.ammo.quantity -= q;
-   pilot->mass_outfit -= q * s->u.ammo.outfit->mass;
+   pilot->mass_outfit -= q * outfit_ammoMass( s->outfit );
    pilot_updateMass( pilot );
    /* We don't set the outfit to null so it "remembers" old ammo. */
 
@@ -858,16 +821,10 @@ void pilot_fillAmmo( Pilot* pilot )
 {
    for (int i=0; i<array_size(pilot->outfits); i++) {
       int ammo_threshold;
-      const Outfit *ammo;
       const Outfit *o = pilot->outfits[i]->outfit;
 
       /* Must be valid outfit. */
       if (o == NULL)
-         continue;
-
-      /* Add ammo if able to. */
-      ammo = outfit_ammo(o);
-      if (ammo == NULL)
          continue;
 
       /* Initial (raw) ammo threshold */
@@ -878,7 +835,7 @@ void pilot_fillAmmo( Pilot* pilot )
          ammo_threshold -= pilot->outfits[i]->u.ammo.deployed;
 
       /* Add ammo. */
-      pilot_addAmmo( pilot, pilot->outfits[i], ammo,
+      pilot_addAmmo( pilot, pilot->outfits[i],
          ammo_threshold - pilot->outfits[i]->u.ammo.quantity );
    }
 }
@@ -906,9 +863,10 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
       pilot->base_mass += o->mass;
 
    /* Add ammo mass. */
-   if (outfit_ammo(o) != NULL)
-      if (slot->u.ammo.outfit != NULL)
-         pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+   if (outfit_isLauncher(o))
+      pilot->mass_outfit += slot->u.ammo.quantity * o->u.lau.ammo.mass;
+   else if (outfit_isFighterBay(o))
+      pilot->mass_outfit += slot->u.ammo.quantity * o->u.bay.ship_mass;
 
    if (outfit_isAfterburner(o)) /* Afterburner */
       pilot->afterburner = slot; /* Set afterburner */

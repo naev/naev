@@ -856,7 +856,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *
       return 0.;
 
    /* Missiles use absolute velocity while bolts and unguided rockets use relative vel */
-   if (outfit_isLauncher(o) && o->u.lau.ammo->u.amm.ai != AMMO_AI_UNGUIDED)
+   if (outfit_isLauncher(o) && o->u.lau.ammo.ai != AMMO_AI_UNGUIDED)
       vect_cset( &approach_vector, - vel->x, - vel->y );
    else
       vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
@@ -946,7 +946,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
          continue;
 
       /* Launcher only counts with ammo. */
-      if ((is_launcher || is_bay) && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
+      if ((is_launcher || is_bay) && (w->u.ammo.quantity <= 0))
          continue;
 
       /* Get coolest that can fire. */
@@ -1077,15 +1077,15 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - safety check for the player.p */
-      if ((w->outfit->u.lau.ammo->u.amm.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
+      if ((w->outfit->u.lau.ammo.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */
-      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
+      if (w->u.ammo.quantity <= 0)
          return 0;
 
       /* enough energy? */
-      if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
       /* Lua test. */
@@ -1093,7 +1093,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
             !pilot_outfitLOntoggle( p, w, 1 ))
          return 0;
 
-      energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
+      energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
       weapon_add( w, w->heat_T, p->solid->dir,
@@ -1118,7 +1118,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
    else if (outfit_isFighterBay(w->outfit)) {
 
       /* Must have ammo left. */
-      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
+      if (w->u.ammo.quantity <= 0)
          return 0;
 
       /* Lua test. */
@@ -1133,11 +1133,11 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       }
 
       /* Create the escort. */
-      escort_create( p, w->u.ammo.outfit->u.fig.ship,
+      escort_create( p, w->outfit->u.bay.ship,
             &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
-      p->mass_outfit     -= w->u.ammo.outfit->mass;
+      p->mass_outfit     -= w->outfit->u.bay.ship_mass;
       pilot_updateMass( p );
    }
    else
@@ -1263,11 +1263,11 @@ void pilot_weaponAuto( Pilot *p )
       }
       /* Bolts and beams. */
       else if (outfit_isBolt(o) || outfit_isBeam(o) ||
-            (outfit_isLauncher(o) && !outfit_isSeeker(o->u.lau.ammo))) {
+            (outfit_isLauncher(o) && !outfit_isSeeker(o))) {
          id    = outfit_isTurret(o) ? 2 : 1;
       }
       /* Seekers. */
-      else if (outfit_isLauncher(o) && outfit_isSeeker(o->u.lau.ammo)) {
+      else if (outfit_isLauncher(o) && outfit_isSeeker(o)) {
          id    = 4;
       }
       /* Fighter bays. */

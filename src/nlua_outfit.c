@@ -569,10 +569,7 @@ static int outfitL_weapStats( lua_State *L )
 
    shots = 1. / (mod_shots * outfit_delay(o));
    /* Special case: Ammo-based weapons. */
-   if (outfit_isLauncher(o))
-      dmg = outfit_damage(o->u.lau.ammo);
-   else
-      dmg = outfit_damage(o);
+   dmg = outfit_damage(o);
    if (dmg==NULL)
       return 0;
    /* Modulate the damage by average of damage types. */
@@ -592,7 +589,7 @@ static int outfitL_weapStats( lua_State *L )
    if (outfit_isLauncher(o)) {
       lua_pushnumber( L, o->u.lau.lockon );
       lua_pushnumber( L, o->u.lau.iflockon );
-      lua_pushboolean( L, o->u.lau.ammo->u.amm.ai!=AMMO_AI_UNGUIDED );
+      lua_pushboolean( L, o->u.lau.ammo.ai!=AMMO_AI_UNGUIDED );
       return 9;
    }
    return 6;
@@ -630,7 +627,7 @@ static int outfitL_specificStats( lua_State *L )
          break;
 
       case OUTFIT_TYPE_FIGHTER_BAY:
-         lua_pushship( L, ship_get( o->u.bay.ammo->u.fig.ship ) );
+         lua_pushship( L, ship_get( o->u.bay.ship ) );
          lua_setfield( L, -2, "ship" );
          SETFIELD( "delay",      o->u.bay.delay );
          SETFIELDI("amount",     o->u.bay.amount );
@@ -690,17 +687,17 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "arc",        o->u.lau.arc );
          SETFIELD( "swivel",     o->u.lau.swivel );
          /* Ammo stuff. */
-         SETFIELD( "speed",      o->u.lau.ammo->u.amm.speed );
-         SETFIELD( "speed_max",  o->u.lau.ammo->u.amm.speed_max );
-         SETFIELD( "turn",       o->u.lau.ammo->u.amm.turn );
-         SETFIELD( "thrust",     o->u.lau.ammo->u.amm.thrust );
-         SETFIELD( "energy",     o->u.lau.ammo->u.amm.energy );
-         SETFIELDB("seek",       o->u.lau.ammo->u.amm.ai!=AMMO_AI_UNGUIDED );
-         SETFIELDB("smart",      o->u.lau.ammo->u.amm.ai==AMMO_AI_SMART );
+         SETFIELD( "speed",      o->u.lau.ammo.speed );
+         SETFIELD( "speed_max",  o->u.lau.ammo.speed_max );
+         SETFIELD( "turn",       o->u.lau.ammo.turn );
+         SETFIELD( "thrust",     o->u.lau.ammo.thrust );
+         SETFIELD( "energy",     o->u.lau.ammo.energy );
+         SETFIELDB("seek",       o->u.lau.ammo.ai!=AMMO_AI_UNGUIDED );
+         SETFIELDB("smart",      o->u.lau.ammo.ai==AMMO_AI_SMART );
          /* Damage stuff. */
-         SETFIELD( "penetration",o->u.lau.ammo->u.amm.dmg.penetration );
-         SETFIELD( "damage",     o->u.lau.ammo->u.amm.dmg.damage );
-         SETFIELD( "disable",    o->u.lau.ammo->u.amm.dmg.disable );
+         SETFIELD( "penetration",o->u.lau.ammo.dmg.penetration );
+         SETFIELD( "damage",     o->u.lau.ammo.dmg.damage );
+         SETFIELD( "disable",    o->u.lau.ammo.dmg.disable );
          break;
 
       default:

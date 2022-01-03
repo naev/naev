@@ -269,7 +269,6 @@ void pilot_heatUpdateCooldown( Pilot *p )
 
    for (int i=0; i<array_size(p->outfits); i++) {
       int ammo_threshold;
-      const Outfit *ammo;
       PilotOutfitSlot *o = p->outfits[i];
       o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
             CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
@@ -277,11 +276,6 @@ void pilot_heatUpdateCooldown( Pilot *p )
       /* Refill ammo too (also part of Active Cooldown) */
       /* Must be valid outfit. */
       if (o->outfit == NULL)
-         continue;
-
-      /* Add ammo if able to. */
-      ammo = outfit_ammo( o->outfit );
-      if (ammo == NULL)
          continue;
 
       /* Initial (raw) ammo threshold */
@@ -292,7 +286,7 @@ void pilot_heatUpdateCooldown( Pilot *p )
          ammo_threshold -= o->u.ammo.deployed;
 
       if ( o->u.ammo.quantity < ammo_threshold )
-         pilot_addAmmo( p, p->outfits[i], ammo, ammo_threshold - o->u.ammo.quantity );
+         pilot_addAmmo( p, p->outfits[i], ammo_threshold - o->u.ammo.quantity );
    }
 }
 
