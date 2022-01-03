@@ -1314,6 +1314,9 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    if (po->outfit==NULL)
       return 0;
 
+   if (po->outfit->lua_env==LUA_NOREF)
+      return 0;
+
    lua_init = po->outfit->lua_init;
    lua_env = po->outfit->lua_env;
 
