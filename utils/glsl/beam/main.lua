@@ -25,7 +25,7 @@ function love.load()
    -- Set the font
    love.graphics.setNewFont( 12 )
    -- Scaling
-   love.window.setMode( 800, 900 )
+   love.window.setMode( 800, 1000 )
    scaling = 2
 
    -- Beams
@@ -148,7 +148,7 @@ function love.load()
       },
    }
    beams = beamtypes
-   love.graphics.setBackgroundColor( 0.5, 0.5, 0.5, 1.0 )
+   love.graphics.setBackgroundColor( 0.2, 0.2, 0.2, 1.0 )
 end
 
 function love.keypressed(key)
