@@ -627,13 +627,13 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   map_renderDecorators( x, y, uniedit_zoom, 1, 1. );
+   map_renderDecorators( x, y, zoom, 1, 1. );
 
    /* Render faction disks. */
    switch (uniedit_viewmode) {
       case UNIEDIT_VIEW_DEFAULT:
-         map_renderFactionDisks( x, y, uniedit_zoom, r, 1, 1. );
-         map_renderSystemEnvironment( x, y, uniedit_zoom, 1, 1. );
+         map_renderFactionDisks( x, y, zoom, r, 1, 1. );
+         map_renderSystemEnvironment( x, y, zoom, 1, 1. );
          break;
 
       case UNIEDIT_VIEW_VIRTUALSPOBS:
