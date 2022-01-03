@@ -148,7 +148,9 @@ local function skill_disable( p, s, keepvar )
          player.shipvarPop( s.shipvar )
       end
    end
-   s.enabled = false
+   if not keepvar then
+      s.enabled = false
+   end
 end
 
 local function skill_enable( p, s )
