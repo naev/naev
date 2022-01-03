@@ -146,17 +146,20 @@ local function compute_lootables ( plt )
       local ocand = {}
       for _k,o in ipairs(plt:outfits(nil,true)) do
          local _name, _size, _prop, req = o:slot()
+         local ot = o:tags()
          -- Don't allow looting required outfits
-         if not req and (not oloot or o~=oloot) then
+         if not req and not ot.nosteal and (not oloot or o~=oloot) then
             table.insert( ocand, o )
          end
       end
-      -- Get random candidate
-      -- TODO better criteria
-      local o = ocand[ rnd.rnd(1,#ocand) ]
-      local price = o:price() * (10+ps.crew) / (10+pps.crew)
-      local lo = outfit_loot( o, price )
-      table.insert( lootables, lo )
+      -- Get random candidate if available
+      if #ocand > 0 then
+         -- TODO better criteria
+         local o = ocand[ rnd.rnd(1,#ocand) ]
+         local price = o:price() * (10+ps.crew) / (10+pps.crew)
+         local lo = outfit_loot( o, price )
+         table.insert( lootables, lo )
+      end
    end
 
    -- Go over cargo

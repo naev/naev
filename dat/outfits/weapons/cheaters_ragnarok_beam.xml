@@ -28,4 +28,7 @@
   <sound_off>beam_off0</sound_off>
   <shader r="0.9" g="0.5" b="0.8" a="1." width="22.">beam_helix</shader>
  </specific>
+ <tags>
+  <tag>nosteal</tag>
+ </tags>
 </outfit>

@@ -27,4 +27,7 @@
    <physical>15</physical>
   </damage>
  </specific>
+ <tags>
+  <tag>nosteal</tag>
+ </tags>
 </outfit>
