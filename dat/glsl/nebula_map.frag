@@ -2,7 +2,6 @@
 
 uniform float hue;
 uniform float brightness = 1.0;
-uniform float eddy_scale;
 uniform float time;
 uniform vec2 globalpos;
 uniform float alpha;
@@ -16,7 +15,6 @@ const float nebu_brightness  = 0.4;
 void main(void) {
    // Calculate coordinates
    vec2 rel_pos = localpos + globalpos;
-   //rel_pos *= eddy_scale;
    color_out = nebula( vec4(0.0), rel_pos, time, hue, value, nebu_brightness );
    color_out.rgb *= brightness;
 

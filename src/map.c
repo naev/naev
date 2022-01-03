@@ -1052,7 +1052,6 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
-         glUniform1f(shaders.nebula_map.eddy_scale, zoom );
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
 
