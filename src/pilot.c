@@ -1581,17 +1581,32 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    /* On hit weapon effects. */
-   if ((outfit!=NULL) && outfit_isBolt(outfit) && (outfit->u.blt.lua_onhit != LUA_NOREF)) {
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
-      nlua_setenv(outfit->u.blt.lua_env, "mem"); /* */
+   if (outfit!=NULL) {
+      if (outfit_isBolt(outfit) && (outfit->u.blt.lua_onhit != LUA_NOREF)) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
+         nlua_setenv(outfit->u.blt.lua_env, "mem"); /* */
 
-      /* Set up the function: onhit( pshooter, p ) */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->u.blt.lua_onhit); /* f */
-      lua_pushpilot(naevL, shooter); /* f, p */
-      lua_pushpilot(naevL, p->id); /* f, p, p  */
-      if (nlua_pcall( outfit->u.blt.lua_env, 2, 0 )) {   /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onhit", lua_tostring(naevL,-1) );
-         lua_pop(naevL, 1);
+         /* Set up the function: onhit( pshooter, p ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->u.blt.lua_onhit); /* f */
+         lua_pushpilot(naevL, shooter); /* f, p */
+         lua_pushpilot(naevL, p->id); /* f, p, p  */
+         if (nlua_pcall( outfit->u.blt.lua_env, 2, 0 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onhit", lua_tostring(naevL,-1) );
+            lua_pop(naevL, 1);
+         }
+      }
+      else if (outfit_isBeam(outfit) && (outfit->u.bem.lua_onhit != LUA_NOREF)) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
+         nlua_setenv(outfit->u.bem.lua_env, "mem"); /* */
+
+         /* Set up the function: onhit( pshooter, p ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->u.bem.lua_onhit); /* f */
+         lua_pushpilot(naevL, shooter); /* f, p */
+         lua_pushpilot(naevL, p->id); /* f, p, p  */
+         if (nlua_pcall( outfit->u.bem.lua_env, 2, 0 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onhit", lua_tostring(naevL,-1) );
+            lua_pop(naevL, 1);
+         }
       }
    }
 

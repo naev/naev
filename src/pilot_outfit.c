@@ -1327,6 +1327,13 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
       lua_init = po->outfit->u.blt.lua_init;
       lua_env = po->outfit->u.blt.lua_env;
    }
+   else if (outfit_isBeam(po->outfit)) {
+      if (po->outfit->u.bem.lua_env == LUA_NOREF)
+         return 0;
+
+      lua_init = po->outfit->u.bem.lua_init;
+      lua_env = po->outfit->u.bem.lua_env;
+   }
    else
       return 0;
 

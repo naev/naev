@@ -1070,6 +1070,27 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
+      /* Need Lua check? */
+      if (w->outfit->u.bem.lua_onshoot != LUA_NOREF) {
+         int canshoot = 0;
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
+         nlua_setenv(w->outfit->u.bem.lua_env, "mem"); /* */
+
+         /* Set up the function: onshoot( p, po ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.bem.lua_onshoot); /* f */
+         lua_pushpilot(naevL, p->id); /* f, p */
+         lua_pushpilotoutfit(naevL, w);  /* f, p, po */
+         if (nlua_pcall( w->outfit->u.bem.lua_env, 2, 1 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "onshoot", lua_tostring(naevL,-1) );
+            lua_pop(naevL, 1);
+         }
+         canshoot = lua_toboolean(naevL,-1);
+         lua_pop(naevL, 1);
+
+         if (!canshoot)
+            return 0;
+      }
+
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w, p->solid->dir,

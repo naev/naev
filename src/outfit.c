@@ -1394,11 +1394,15 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    char *shader;
 
    /* Defaults. */
-   temp->u.bem.spfx_armour = -1;
-   temp->u.bem.spfx_shield = -1;
-   temp->u.bem.sound_warmup = -1;
-   temp->u.bem.sound = -1;
-   temp->u.bem.sound_off = -1;
+   temp->u.bem.spfx_armour    = -1;
+   temp->u.bem.spfx_shield    = -1;
+   temp->u.bem.sound_warmup   = -1;
+   temp->u.bem.sound          = -1;
+   temp->u.bem.sound_off      = -1;
+   temp->u.bem.lua_env        = LUA_NOREF;
+   temp->u.bem.lua_init       = LUA_NOREF;
+   temp->u.bem.lua_onshoot    = LUA_NOREF;
+   temp->u.bem.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1410,6 +1414,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
       xmlr_float(node,"swivel",temp->u.bem.swivel);
+      xmlr_strd(node,"lua",temp->u.blt.lua_file);
 
       if (xml_isNode(node, "duration")) {
          xmlr_attr_float(node, "min", temp->u.bem.min_duration);
@@ -2542,6 +2547,41 @@ int outfit_load (void)
          o->u.blt.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
          o->u.blt.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
       }
+      else if (outfit_isBeam(o)) {
+         if (o->u.bem.lua_file==NULL)
+            continue;
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( o->u.bem.lua_file, &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.bem.lua_file );
+            continue;
+         }
+
+         env = nlua_newEnv(1);
+         o->u.bem.lua_env = env;
+         /* TODO limit libraries here. */
+         nlua_loadStandard( env );
+         nlua_loadGFX( env );
+         nlua_loadPilotOutfit( env );
+         nlua_loadCamera( env );
+
+         /* Run code. */
+         if (nlua_dobufenv( env, dat, sz, o->u.bem.lua_file ) != 0) {
+            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( o->u.bem.lua_env );
+            free( dat );
+            o->u.bem.lua_env = LUA_NOREF;
+            continue;
+         }
+         free( dat );
+
+         /* Check functions as necessary. */
+         o->u.bem.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+         o->u.bem.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.bem.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+      }
       else if (outfit_isMod(o)) {
          if (o->u.mod.lua_file==NULL)
             continue;
@@ -2879,7 +2919,10 @@ void outfit_free (void)
             free(o->u.blt.polygon[j].y);
          }
          array_free(o->u.blt.polygon);
+         free(o->u.blt.lua_file);
       }
+      else if (outfit_isBolt(o))
+         free(o->u.bem.lua_file);
       else if (outfit_isLauncher(o))
          free(o->u.lau.ammo_name);
       else if (outfit_isFighterBay(o))

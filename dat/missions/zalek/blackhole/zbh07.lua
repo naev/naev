@@ -37,8 +37,8 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[]]))
-   z(_([[]]))
+   vn.na(_([[You meet with Zach who semes to be doing the last preparations for the surgery.]]))
+   z(_([["Heya. I think I got this finally figure out. "]]))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
