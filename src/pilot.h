@@ -94,7 +94,6 @@ typedef enum PilotOutfitState_ {
  * @brief Stores outfit ammo.
  */
 typedef struct PilotOutfitAmmo_ {
-   const Outfit *outfit;/**< Type of ammo. */
    int quantity;        /**< Amount of ammo. */
    int deployed;        /**< For fighter bays. */
    double lockon_timer; /**< Locking on timer. */
@@ -132,7 +131,7 @@ typedef struct PilotOutfitSlot_ {
    union {
       unsigned int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo;/**< Ammo for launchers. */
-   } u; /**< Stores type specific data. */
+   } u;
 
    /* In the case of Lua stuff. */
    int lua_mem; /**< Lua reference to the memory table of the specific outfit. */

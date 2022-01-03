@@ -404,10 +404,10 @@ void outfits_update( unsigned int wid, const char *str )
    credits2str( buf_credits, player.p->credits, 2 );
 
    mass = outfit->mass;
-   if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
-         (outfit_ammo(outfit) != NULL)) {
-      mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
-   }
+   if (outfit_isLauncher(outfit))
+      mass += outfit_amount(outfit) * outfit->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(outfit))
+      mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
    tonnes2str( buf_mass, (int)round( mass ) );
 
    outfit_getNameWithClass( outfit, buf, sizeof(buf) );
@@ -560,10 +560,10 @@ int outfit_altText( char *buf, int n, const Outfit *o )
 
    /* Compute total mass of launcher and ammo if necessary. */
    mass = o->mass;
-   if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
-         (outfit_ammo(o) != NULL)) {
-      mass += outfit_amount(o) * outfit_ammo(o)->mass;
-   }
+   if (outfit_isLauncher(o))
+      mass += outfit_amount(o) * o->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(o))
+      mass += outfit_amount(o) * o->u.bay.ship_mass;
 
    p  = outfit_getNameWithClass( o, buf, n );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))

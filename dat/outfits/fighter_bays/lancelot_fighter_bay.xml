@@ -11,9 +11,10 @@
   <cpu>-400</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Lancelot Fighter</ammo>
   <delay>6</delay>
   <reload_time>240</reload_time>
   <amount>2</amount>
+  <ship>Lancelot</ship>
+  <ship_mass>25</ship_mass>
  </specific>
 </outfit>

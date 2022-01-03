@@ -1359,7 +1359,7 @@ static int pilotL_weapset( lua_State *L )
    int k, n;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
-   const Outfit *ammo, *o;
+   const Outfit *o;
    double delay, firemod, enermod, t;
    int id, all, level;
    int is_lau, is_fb;
@@ -1406,7 +1406,7 @@ static int pilotL_weapset( lua_State *L )
       for (int i=0; i<n; i++) {
          /* Get base look ups. */
          slot = all ?  p->outfits[i] : po_list[i].slot;
-         o        = slot->outfit;
+         o    = slot->outfit;
          if (o == NULL)
             continue;
          is_lau   = outfit_isLauncher(o);
@@ -1474,17 +1474,8 @@ static int pilotL_weapset( lua_State *L )
             lua_rawset(L,-3);
          }
 
-         /* Ammo name. */
-         ammo = outfit_ammo(slot->outfit);
-         if (ammo != NULL) {
-            lua_pushstring(L,"ammo");
-            lua_pushstring(L,ammo->name);
-            lua_rawset(L,-3);
-         }
-
          /* Ammo quantity absolute. */
-         if ((is_lau || is_fb) &&
-               (slot->u.ammo.outfit != NULL)) {
+         if (is_lau || is_fb) {
             lua_pushstring(L,"left");
             lua_pushnumber( L, slot->u.ammo.quantity );
             lua_rawset(L,-3);
@@ -1527,10 +1518,7 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Damage type. */
-         if (is_lau && (slot->u.ammo.outfit != NULL))
-            dmg = outfit_damage( slot->u.ammo.outfit );
-         else
-            dmg = outfit_damage( slot->outfit );
+         dmg = outfit_damage( slot->outfit );
          if (dmg != NULL) {
             lua_pushstring(L, "dtype");
             lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
@@ -2723,8 +2711,8 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
       pilot_outfitLInit( p, s );
 
    /* Add ammo if needed. */
-   if ((ret==0) && (outfit_ammo(o) != NULL))
-      pilot_addAmmo( p, s, outfit_ammo(o), outfit_amount(o) );
+   if (ret==0)
+      pilot_addAmmo( p, s, outfit_amount(o) );
    return 1;
 }
 

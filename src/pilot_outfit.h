@@ -21,7 +21,7 @@ int pilot_addOutfitIntrinsic( Pilot *pilot, const Outfit *outfit );
 int pilot_rmOutfitIntrinsic( Pilot *pilot, PilotOutfitSlot *s );
 
 /* Ammo. */
-int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity );
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 int pilot_countAmmo( const Pilot* pilot );
 int pilot_maxAmmo( const Pilot* pilot );

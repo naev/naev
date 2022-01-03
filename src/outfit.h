@@ -53,12 +53,10 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_BOLT,/**< Rotary bolt turret. */
    OUTFIT_TYPE_TURRET_BEAM,/**< Rotary beam turret. */
    OUTFIT_TYPE_LAUNCHER,   /**< Launcher. */
-   OUTFIT_TYPE_AMMO,       /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
    OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER,/**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_FIGHTER_BAY,/**< Contains other ships. */
-   OUTFIT_TYPE_FIGHTER,    /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP,        /**< Gives the player more knowledge about systems. */
    OUTFIT_TYPE_LOCALMAP,   /**< Gives the player more knowledge about the current system. */
    OUTFIT_TYPE_GUI,        /**< GUI for the player. */
@@ -182,8 +180,6 @@ typedef struct OutfitBeamData_ {
  */
 typedef struct OutfitLauncherData_ {
    double delay;     /**< Delay between shots. */
-   char *ammo_name;  /**< Name of the ammo to use. */
-   const struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
 
@@ -194,12 +190,8 @@ typedef struct OutfitLauncherData_ {
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
-} OutfitLauncherData;
 
-/**
- * @brief Represents ammunition for a launcher.
- */
-typedef struct OutfitAmmoData_ {
+   double ammo_mass; /**< How heavy it is. */
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
    OutfitAmmoAI ai;  /**< Smartness of ammo. */
@@ -222,7 +214,7 @@ typedef struct OutfitAmmoData_ {
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
-} OutfitAmmoData;
+} OutfitLauncherData;
 
 /**
  * @brief Represents a ship modification.
@@ -261,20 +253,14 @@ typedef struct OutfitAfterburnerData_ {
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ammo_name;  /**< Name of the ships to use as ammo. */
+   char *ship;       /**< Name of the ships to use as ammo. */
+   double ship_mass; /**< Mass of a fighter. */
    const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time;/**< Time it takes to reload 1 ammo. */
+   int sound;        /**< Sound to use when launching. */
 } OutfitFighterBayData;
-
-/**
- * @brief Represents a fighter for a fighter bay.
- */
-typedef struct OutfitFighterData_ {
-   char *ship; /**< Ship to use for fighter. */
-   int sound;  /**< Sound to make when launching. */
-} OutfitFighterData;
 
 /* Forward declaration */
 struct OutfitMapData_s;
@@ -367,11 +353,9 @@ typedef struct Outfit_ {
       OutfitBoltData blt;         /**< BOLT */
       OutfitBeamData bem;         /**< BEAM */
       OutfitLauncherData lau;     /**< MISSILE */
-      OutfitAmmoData amm;         /**< AMMO */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
-      OutfitFighterData fig;      /**< FIGHTER */
       OutfitMapData_t *map;       /**< MAP */
       OutfitLocalMapData lmap;    /**< LOCALMAP */
       OutfitGUIData gui;          /**< GUI */
@@ -398,7 +382,6 @@ int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
-int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
 int outfit_isLocalMap( const Outfit* o );
 int outfit_isGUI( const Outfit* o );
@@ -441,7 +424,6 @@ int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 const Damage *outfit_damage( const Outfit* o );
 double outfit_delay( const Outfit* o );
-const Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_heat( const Outfit* o );
@@ -453,6 +435,7 @@ double outfit_trackmin( const Outfit* o );
 double outfit_trackmax( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
+double outfit_ammoMass( const Outfit *o );
 /* Active outfits. */
 double outfit_duration( const Outfit* o );
 double outfit_cooldown( const Outfit* o );

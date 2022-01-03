@@ -14,7 +14,6 @@
   <cpu>-34</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Za'lek Reaper Drone</ammo>
   <delay>10</delay>
   <reload_time>120</reload_time>
   <lockon>6</lockon>
@@ -23,5 +22,23 @@
   <trackmin>0</trackmin>
   <trackmax>25000</trackmax>
   <amount>5</amount>
+  <ammo_mass>5</ammo_mass>
+  <gfx>zalek_reaper.png</gfx>
+  <sound>1-second-detachment</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>ExpL</spfx_shield>
+  <spfx_armour>ExpL</spfx_armour>
+  <trail_generator x="-15">zalek-missileL</trail_generator>
+  <duration blowup="armour">35</duration>
+  <thrust>200</thrust>
+  <turn>60</turn>
+  <speed_max>220</speed_max>
+  <resist>100</resist>
+  <damage>
+   <type>normal</type>
+   <penetrate>80</penetrate>
+   <physical>800</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>
