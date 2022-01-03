@@ -1471,6 +1471,16 @@ void takeoff( int delay )
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
+   /* Clear effects of all surviving pilots. */
+   Pilot*const* plts = pilot_getAll();
+   for (int i=0; i<array_size(plts); i++) {
+      Pilot *p = plts[i];
+      if (!pilot_isFlag(p,PILOT_DELETE)) {
+         effect_clear( &p->effects );
+         pilot_calcStats( p );
+      }
+   }
+
    /* Update lua stuff. */
    pilot_outfitLInitAll( player.p );
    pilot_outfitLOntakeoff( player.p );
