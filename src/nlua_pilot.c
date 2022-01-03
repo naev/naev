@@ -4975,6 +4975,20 @@ static int pilotL_collisionTest( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    Pilot *t = luaL_validpilot(L,2);
 
+   /* Shouldn't be invincible. */
+   if (pilot_isFlag( t, PILOT_INVINCIBLE ))
+      return 0;
+
+   /* Shouldn't be landing or taking off. */
+   if (pilot_isFlag( t, PILOT_LANDING) ||
+         pilot_isFlag( t, PILOT_TAKEOFF ) ||
+         pilot_isFlag( t, PILOT_NONTARGETABLE))
+      return 0;
+
+   /* Must be able to target. */
+   if (!pilot_canTarget( t ))
+      return 0;
+
    int ret = CollidePolygon( getCollPoly(p), &p->solid->pos, getCollPoly(t), &t->solid->pos, &crash );
    if (!ret)
       return 0;
