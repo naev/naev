@@ -21,6 +21,7 @@
       * Support for tags in missions
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
+      * Ammunition/fighters merged into launchers/fighter bays
 
 * 0.9.2 (unreleased)
    * Fix reward messages in the Particle Physics campaign
