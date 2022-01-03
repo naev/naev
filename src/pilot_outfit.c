@@ -696,8 +696,6 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
-      WARN(_("Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'"),
-            pilot->name, s->outfit->name);
       return 0;
    }
 
@@ -864,7 +862,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
 
    /* Add ammo mass. */
    if (outfit_isLauncher(o))
-      pilot->mass_outfit += slot->u.ammo.quantity * o->u.lau.ammo.mass;
+      pilot->mass_outfit += slot->u.ammo.quantity * o->u.lau.ammo_mass;
    else if (outfit_isFighterBay(o))
       pilot->mass_outfit += slot->u.ammo.quantity * o->u.bay.ship_mass;
 

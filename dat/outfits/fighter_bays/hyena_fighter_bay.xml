@@ -11,9 +11,10 @@
   <cpu>-150</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Hyena Fighter</ammo>
   <delay>6</delay>
   <reload_time>180</reload_time>
   <amount>2</amount>
+  <ship>Hyena</ship>
+  <ship_mass>60</ship_mass>
  </specific>
 </outfit>

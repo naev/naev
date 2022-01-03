@@ -12,7 +12,6 @@
   <cpu>-8</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Convulsion Missile</ammo>
   <delay>3</delay>
   <reload_time>90</reload_time>
   <amount>20</amount>
@@ -21,5 +20,23 @@
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
+  <ammo_mass>0.2</ammo_mass>
+  <gfx>convulsion.png</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-5">missile</trail_generator>
+  <duration blowup="armour">4</duration>
+  <thrust>700</thrust>
+  <turn>55</turn>
+  <speed_max>850</speed_max>
+  <resist>50</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>12</penetrate>
+   <physical>75</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>

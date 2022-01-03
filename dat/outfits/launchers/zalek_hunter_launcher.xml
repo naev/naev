@@ -14,7 +14,6 @@
   <cpu>-19</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
-  <ammo>Za'lek Hunter-Killer</ammo>
   <delay>3.5</delay>
   <reload_time>80</reload_time>
   <amount>30</amount>
@@ -22,5 +21,23 @@
   <iflockon>0.5</iflockon>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
+  <ammo_mass>1.5</ammo_mass>
+  <gfx>empgrenade.png</gfx>
+  <sound>grenadefire</sound>
+  <sound_hit>grenade</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="0">zalek-missile</trail_generator>
+  <duration blowup="armour">7</duration>
+  <thrust>450</thrust>
+  <turn>70</turn>
+  <speed_max>550</speed_max>
+  <resist>35</resist>
+  <damage>
+   <type>normal</type>
+   <penetrate>36</penetrate>
+   <physical>100</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>

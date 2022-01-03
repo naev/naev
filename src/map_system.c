@@ -611,7 +611,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
 
       if (outfit_isLauncher(outfit))
-         mass += outfit_amount( outfit ) * outfit->u.lau.ammo.mass;
+         mass += outfit_amount( outfit ) * outfit->u.lau.ammo_mass;
       else if (outfit_isFighterBay(outfit))
          mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
       snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );

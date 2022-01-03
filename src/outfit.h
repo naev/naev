@@ -53,12 +53,10 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_BOLT,/**< Rotary bolt turret. */
    OUTFIT_TYPE_TURRET_BEAM,/**< Rotary beam turret. */
    OUTFIT_TYPE_LAUNCHER,   /**< Launcher. */
-   OUTFIT_TYPE_AMMO,       /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
    OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER,/**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_FIGHTER_BAY,/**< Contains other ships. */
-   OUTFIT_TYPE_FIGHTER,    /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP,        /**< Gives the player more knowledge about systems. */
    OUTFIT_TYPE_LOCALMAP,   /**< Gives the player more knowledge about the current system. */
    OUTFIT_TYPE_GUI,        /**< GUI for the player. */
@@ -175,8 +173,25 @@ typedef struct OutfitBeamData_ {
    int sound_off;    /**< Sound to play when turning off. */
 } OutfitBeamData;
 
-typedef struct OutfitAmmoData_ {
-   double mass; /**< How heavy it is. */
+/**
+ * @brief Represents a particular missile launcher.
+ *
+ * The properties of the weapon are highly dependent on the ammunition.
+ */
+typedef struct OutfitLauncherData_ {
+   double delay;     /**< Delay between shots. */
+   int amount;       /**< Amount of ammo it can store. */
+   double reload_time; /**< Time it takes to reload 1 ammo. */
+
+   /* Lock-on information. */
+   double lockon;    /**< Time it takes to lock on the target */
+   double iflockon;  /**< Time it takes to lock on properly after launch. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
+   double arc;       /**< Semi-angle of the arc which it will lock on in. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
+
+   double ammo_mass; /**< How heavy it is. */
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
    OutfitAmmoAI ai;  /**< Smartness of ammo. */
@@ -199,27 +214,6 @@ typedef struct OutfitAmmoData_ {
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
-} OutfitAmmoData;
-
-/**
- * @brief Represents a particular missile launcher.
- *
- * The properties of the weapon are highly dependent on the ammunition.
- */
-typedef struct OutfitLauncherData_ {
-   double delay;     /**< Delay between shots. */
-   int amount;       /**< Amount of ammo it can store. */
-   double reload_time; /**< Time it takes to reload 1 ammo. */
-
-   /* Lock-on information. */
-   double lockon;    /**< Time it takes to lock on the target */
-   double iflockon;  /**< Time it takes to lock on properly after launch. */
-   double trackmin;  /**< Ewarfare minimal tracking. */
-   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
-   double arc;       /**< Semi-angle of the arc which it will lock on in. */
-   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
-
-   OutfitAmmoData ammo;
 } OutfitLauncherData;
 
 /**

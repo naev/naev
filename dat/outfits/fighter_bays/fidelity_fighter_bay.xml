@@ -12,9 +12,10 @@
   <cpu>-450</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Fidelity Fighter</ammo>
   <delay>4</delay>
   <reload_time>180</reload_time>
   <amount>3</amount>
+  <ship>Sirius Fidelity</ship>
+  <ship_mass>50</ship_mass>
  </specific>
 </outfit>

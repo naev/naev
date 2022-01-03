@@ -856,7 +856,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *
       return 0.;
 
    /* Missiles use absolute velocity while bolts and unguided rockets use relative vel */
-   if (outfit_isLauncher(o) && o->u.lau.ammo.ai != AMMO_AI_UNGUIDED)
+   if (outfit_isLauncher(o) && o->u.lau.ai != AMMO_AI_UNGUIDED)
       vect_cset( &approach_vector, - vel->x, - vel->y );
    else
       vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
@@ -1077,7 +1077,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - safety check for the player.p */
-      if ((w->outfit->u.lau.ammo.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
+      if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */

@@ -11,10 +11,11 @@
   <cpu>-150</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Pirate Hyena Fighter</ammo>
   <delay>5</delay>
   <reload_time>180</reload_time>
   <amount>2</amount>
   <loot_mod>10</loot_mod>
+  <ship>Pirate Hyena</ship>
+  <ship_mass>55</ship_mass>
  </specific>
 </outfit>

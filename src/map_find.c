@@ -685,7 +685,7 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
    if (outfit_isLauncher(outfit))
-      mass += outfit_amount(outfit) * outfit->u.lau.ammo.mass;
+      mass += outfit_amount(outfit) * outfit->u.lau.ammo_mass;
    else if (outfit_isFighterBay(outfit))
       mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
 
