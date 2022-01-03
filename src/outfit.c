@@ -84,7 +84,6 @@ if (fabs(val) > 1e-5) { \
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
-static void outfit_launcherDesc( Outfit* o );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -1488,6 +1487,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
+   int l;
 
    temp->u.lau.trackmin    = -1.;
    temp->u.lau.trackmax    = -1.;
@@ -1626,6 +1626,50 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
 
+   /* Short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   l = 0;
+   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+         _(dtype_damageTypeToStr(temp->u.lau.dmg.type)) );
+   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+
+   if (outfit_isSeeker(temp)) {
+      SDESC_ADD(  l, temp, _("\n%.1f Second Lock-on"), temp->u.lau.lockon );
+      SDESC_ADD(  l, temp, _("\n%.1f Second In-Flight Calibration"), temp->u.lau.iflockon );
+      SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
+      SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
+   }
+   else {
+      SDESC_ADD(  l, temp, _("\nNo Seeking") );
+      if (outfit_isTurret(temp) || temp->u.lau.swivel > 0.) {
+         SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
+         SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
+         SDESC_COND( l, temp, _("\n%.1f Degree Swivel"), temp->u.lau.swivel*180./M_PI );
+      }
+   }
+
+   SDESC_ADD(  l, temp, _("\nHolds %d ammo"), temp->u.lau.amount );
+   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.lau.dmg.penetration * 100. );
+   SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
+         1. / temp->u.lau.delay * temp->u.lau.dmg.damage, temp->u.lau.dmg.damage );
+   SDESC_COND( l, temp, _("\n%.1f Disable/s [%.0f Disable]"),
+         1. / temp->u.lau.delay * temp->u.lau.dmg.disable, temp->u.lau.dmg.disable );
+   SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1. / temp->u.lau.delay );
+   SDESC_ADD(  l, temp, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(temp), 0 ), temp->u.lau.duration );
+   if (temp->u.lau.thrust > 0.) {
+      if (temp->u.lau.speed > 0.)
+         SDESC_ADD( l, temp, _("\n%.0f Initial Speed (%.0f Thrust)"), temp->u.lau.speed, temp->u.lau.thrust );
+      else
+         SDESC_ADD( l, temp, _("\n%.0f Thrust"), temp->u.lau.thrust );
+   }
+   else
+      SDESC_COND( l, temp, _("\n%.0f Speed"), temp->u.lau.speed );
+   SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
+   SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
+   SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
+   SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
+
+
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.delay==0.,"delay");
@@ -1641,6 +1685,10 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    /* Unguided missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.lau.turn==0,"turn");
+      MELEMENT(temp->u.lau.trackmin<0,"trackmin");
+      MELEMENT(temp->u.lau.trackmax<0,"trackmax");
+      MELEMENT(temp->u.lau.lockon<0,"lockon");
+      MELEMENT(!outfit_isTurret(temp) && (temp->u.lau.arc==0.),"arc");
    }
    MELEMENT(temp->u.lau.speed_max==0,"speed_max");
    MELEMENT(temp->u.lau.duration==0,"duration");
@@ -1648,7 +1696,9 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    /*MELEMENT(temp->u.lau.energy==0.,"energy");*/
 #undef MELEMENT
    if (temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
-      DEBUG(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+      WARN(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+   if (temp->u.lau.iflockon >= temp->u.lau.duration)
+      WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), temp->name);
 }
 
 /**
@@ -2377,27 +2427,6 @@ int outfit_load (void)
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
-      if (outfit_isLauncher(o)) {
-#if 0
-         o->u.lau = outfit_get( o->u.lau_name );
-         if (outfit_isSeeker(o) && /* Smart seekers. */
-               (o->u.lau.ai)) {
-            if (o->u.lau.trackmin < 0.)
-               WARN(_("Outfit '%s' missing/invalid 'trackmin' element"), o->name);
-            if (o->u.lau.trackmax < 0.)
-               WARN(_("Outfit '%s' missing/invalid 'trackmax' element"), o->name);
-            if (o->u.lau.lockon == 0.)
-               WARN(_("Outfit '%s' missing/invalid 'lockon' element"), o->name);
-            if (!outfit_isTurret(o) && (o->u.lau.arc == 0.))
-               WARN(_("Outfit '%s' missing/invalid 'arc' element"), o->name);
-         }
-#endif
-
-         if (o->u.lau.iflockon >= o->u.lau.duration)
-            WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), o->name);
-
-         outfit_launcherDesc(o);
-      }
 
       if (o->lua_file==NULL)
          continue;
@@ -2592,63 +2621,6 @@ int outfit_mapParse (void)
    PHYSFS_freeList( map_files );
 
    return 0;
-}
-
-/**
- * @brief Generates short descs for launchers, including ammo info.
- *
- *    @param o Launcher.
- */
-static void outfit_launcherDesc( Outfit* o )
-{
-   int l;
-
-   if (o->desc_short != NULL) {
-      WARN(_("Outfit '%s' already has a short description"), o->name);
-      return;
-   }
-
-   o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = 0;
-   SDESC_ADD(  l, o, _("%s [%s]"), _(outfit_getType(o)),
-         _(dtype_damageTypeToStr(o->u.lau.dmg.type)) );
-   SDESC_COND_COLOUR( l, o, _("\n%.0f CPU"), o->cpu );
-
-   if (outfit_isSeeker(o)) {
-      SDESC_ADD(  l, o, _("\n%.1f Second Lock-on"), o->u.lau.lockon );
-      SDESC_ADD(  l, o, _("\n%.1f Second In-Flight Calibration"), o->u.lau.iflockon );
-      SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
-      SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
-   }
-   else {
-      SDESC_ADD(  l, o, _("\nNo Seeking") );
-      if (outfit_isTurret(o) || o->u.lau.swivel > 0.) {
-         SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
-         SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
-         SDESC_COND( l, o, _("\n%.1f Degree Swivel"), o->u.lau.swivel*180./M_PI );
-      }
-   }
-
-   SDESC_ADD(  l, o, _("\nHolds %d ammo"), o->u.lau.amount );
-   SDESC_ADD(  l, o, _("\n%.0f%% Penetration"), o->u.lau.dmg.penetration * 100. );
-   SDESC_COND( l, o, _("\n%.2f DPS [%.0f Damage]"),
-         1. / o->u.lau.delay * o->u.lau.dmg.damage, o->u.lau.dmg.damage );
-   SDESC_COND( l, o, _("\n%.1f Disable/s [%.0f Disable]"),
-         1. / o->u.lau.delay * o->u.lau.dmg.disable, o->u.lau.dmg.disable );
-   SDESC_ADD(  l, o, _("\n%.1f Shots Per Second"), 1. / o->u.lau.delay );
-   SDESC_ADD(  l, o, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(o), 0 ), o->u.lau.duration );
-   if (o->u.lau.thrust > 0.) {
-      if (o->u.lau.speed > 0.)
-         SDESC_ADD( l, o, _("\n%.0f Initial Speed (%.0f Thrust)"), o->u.lau.speed, o->u.lau.thrust );
-      else
-         SDESC_ADD( l, o, _("\n%.0f Thrust"), o->u.lau.thrust );
-   }
-   else
-      SDESC_COND( l, o, _("\n%.0f Speed"), o->u.lau.speed );
-   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), o->u.lau.speed_max );
-   SDESC_ADD(  l, o, _("\n%.1f Seconds to Reload"), o->u.lau.reload_time );
-   SDESC_COND( l, o, _("\n%.1f EPS [%.0f Energy]"), o->u.lau.delay * o->u.lau.energy, o->u.lau.energy );
-   SDESC_COND( l, o, _("\n%.0f%% Jam Resistance"), o->u.lau.resist * 100. );
 }
 
 /**
