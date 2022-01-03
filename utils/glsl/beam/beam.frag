@@ -404,7 +404,7 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate alpha based on dispersion
    m = 3.0;
 
-   coords = pos_px + vec2( -320.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   coords = pos_px + vec2( -200.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
    p = 1.0 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
