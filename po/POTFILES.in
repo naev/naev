@@ -10,6 +10,7 @@ dat/commodities/ore.xml
 dat/commodities/water.xml
 dat/damagetype.xml
 dat/effects/ambush_hunter.xml
+dat/effects/antimatter_taint.xml
 dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
@@ -307,6 +308,7 @@ dat/outfits/utility/unicorp_medium_afterburner.xml
 dat/outfits/utility/unicorp_scrambler.xml
 dat/outfits/utility/weakness_harmonizer_ai.xml
 dat/outfits/utility/weapons_ionizer.xml
+dat/outfits/weapons/antimatter_lance.xml
 dat/outfits/weapons/base_ripper_mk2.xml
 dat/outfits/weapons/cheaters_laser_cannon.xml
 dat/outfits/weapons/cheaters_ragnarok_beam.xml
@@ -2543,6 +2545,7 @@ dat/outfits/utility/neural_accelerator_interface.lua
 dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
+dat/outfits/weapons/antimatter_lance.lua
 dat/rescue.lua
 dat/save_updater.lua
 dat/scripts/bioship.lua
