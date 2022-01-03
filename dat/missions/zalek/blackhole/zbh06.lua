@@ -124,8 +124,9 @@ function enter ()
    local jp = jump.get( system.cur(), jumpsys )
    badguys = {}
    local function create_fleet( ships )
-      local plts = fleet.add( 1, ships, fbadguys, jp, {ai="baddie"} )
+      local plts = fleet.add( 1, ships, fbadguys, jp, nil, {ai="baddie"} )
       for k,p in ipairs(plts) do
+         p:setHostile(true)
          table.insert( badguys, p )
       end
       -- Make leader head towards planet
@@ -136,13 +137,13 @@ function enter ()
 
    -- Fleets should have leaders with different speeds or they clump together
    if player.pilot():ship():size() >= 5 then
+      create_fleet{"Za'lek Demon", "Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Bomber Drone", "Za'lek Bomber Drone" }
+      create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
+   else
       create_fleet{"Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
       create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone"}
-   else
-      create_fleet{"Za'lek Mephisto", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Sting", "Za'lek Bomber Drone", "Za'lek Bomber Drone" }
-      create_fleet{"Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    end
 
    -- Main boss gets hilighted
@@ -154,7 +155,8 @@ function enter ()
    icarus:faction():dynEnemy( fbadguys )
    icarus:setFriendly(true)
    icarus:control(true)
-   icarus:moveto( vec2.newP( 1000, rnd.angle() ) )
+   icarus:moveto( mainpnt:pos() + vec2.newP( 1000*rnd.rnd(), rnd.angle() ) )
+   icarus:setHilight(true)
    hook.pilot( icarus, "idle", "icarus_idle" )
    hook.pilot( icarus, "attacked", "icarus_attacked" )
    hook.pilot( icarus, "death", "icarus_death" )
@@ -163,10 +165,16 @@ function enter ()
 end
 
 function icarus_idle ()
-   icarus:moveto( vec2.newP( 1000, rnd.angle() ) )
+   icarus:moveto( mainpnt:pos() + vec2.newP( 1000*rnd.rnd(), rnd.angle() ) )
 end
 
+local atk_timer = 0
 function icarus_attacked ()
+   local t = naev.ticks()
+   if t-atk_timer > 10 then
+      pilot.comm( _("Sigma-13"), _("Zach: Icarus is under attack! Protect Icarus!") )
+      atk_timer = t
+   end
    icarus:control(false)
 end
 
