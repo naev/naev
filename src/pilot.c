@@ -1858,7 +1858,7 @@ void pilot_render( Pilot* p, const double dt )
 
       /* TODO fix 3D rendering. */
       gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, scale, scale,
+            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, 1., 1.,
             p->tsx, p->tsy, &c );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
@@ -1874,8 +1874,8 @@ void pilot_render( Pilot* p, const double dt )
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
       projection = gl_view_matrix;
-      projection = gl_Matrix4_Translate(projection, x, y, 0);
-      projection = gl_Matrix4_Scale(projection, z*w, z*h, 1);
+      projection = gl_Matrix4_Translate(projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0);
+      projection = gl_Matrix4_Scale(projection, scale*z*w, scale*z*h, 1);
       gl_Matrix4_Uniform(ed->projection, projection);
 
       tex_mat = gl_Matrix4_Identity();
