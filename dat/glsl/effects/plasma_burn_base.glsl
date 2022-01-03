@@ -5,8 +5,8 @@ uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
 uniform float u_r = 0.0;
-uniform float u_duration = 0.0;
 uniform float u_timer = 0.0;
+uniform float u_elapsed = 0.0;
 
 const float FADE  = 0.3;
 
@@ -21,7 +21,7 @@ void main(void) {
    /* Smooth transitions from on/off. */
    float alpha = 0.75;
    alpha *= smoothstep( 0.0, FADE, u_timer );
-   alpha *= 1.0 - smoothstep( u_duration-FADE, u_duration, u_timer );
+   alpha *= smoothstep( 0.0, FADE, u_elapsed );
 
    vec3 coord = vec3( 0.01 * tex_coord * dimensions.xy / dimensions.z, u_timer + u_r );
    alpha *= 0.75 + 0.5*snoise( coord );

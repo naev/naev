@@ -71,15 +71,15 @@ static int effect_parse( EffectData *efx, const char *file )
          continue;
       }
       if (xml_isNode(node,"shader")) {
-         efx->program = gl_program_vert_frag( "texture.vert", xml_get(node) );
+         efx->program   = gl_program_vert_frag( "texture.vert", xml_get(node) );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
          efx->projection= glGetUniformLocation( efx->program, "projection" );
          efx->tex_mat   = glGetUniformLocation( efx->program, "tex_mat" );
          efx->dimensions= glGetUniformLocation( efx->program, "dimensions" );
          efx->u_r       = glGetUniformLocation( efx->program, "u_r" );
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
-         efx->u_duration     = glGetUniformLocation( efx->program, "u_duration" );
-         efx->u_timer     = glGetUniformLocation( efx->program, "u_timer" );
+         efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
+         efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
          continue;
       }
 
@@ -101,13 +101,6 @@ static int effect_parse( EffectData *efx, const char *file )
       }
       WARN(_("Effect '%s' has unknown node '%s'"),efx->name, node->name);
    } while (xml_nextNode(node));
-
-   /* Set some default safe values. */
-   if (efx->program != 0) {
-      glUseProgram( efx->program );
-      glUniform1f( efx->u_duration, efx->duration );
-      glUseProgram( 0 );
-   }
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Effect '%s' missing/invalid '%s' element"), efx->name, s) /**< Define to help check for data errors. */
@@ -211,6 +204,7 @@ int effect_update( Effect **efxlist, double dt )
    for (int i=array_size(*efxlist)-1; i>=0; i--) {
       Effect *e = &(*efxlist)[i];
       e->timer -= dt;
+      e->elapsed += dt;
       if (e->timer > 0.)
          continue;
 
@@ -250,13 +244,15 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
    }
 
    /* Add new effect if necessary. */
-   if (e==NULL)
+   if (e==NULL) {
       e = &array_grow( efxlist );
+      e->elapsed = 0.; /* Don't 0. when overwriting. */
+      e->r       = RNGF();
+   }
    e->data  = efx;
    e->duration = (duration > 0.) ? duration : efx->duration;
    e->timer = e->duration;
    e->scale = scale;
-   e->r     = RNGF();
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    gui_updateEffects();
    return 0;

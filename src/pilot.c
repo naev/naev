@@ -1884,6 +1884,7 @@ void pilot_render( Pilot* p, const double dt )
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );
+      glUniform1f( ed->u_elapsed, e->elapsed );
       glUniform1f( ed->u_r, e->r );
 
       /* Draw. */

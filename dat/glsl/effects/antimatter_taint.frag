@@ -5,9 +5,9 @@
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
 
-uniform float u_r = 0.0;
-uniform float u_duration = 0.0;
-uniform float u_timer = 0.0;
+uniform float u_r       = 0.0;
+uniform float u_timer   = 0.0;
+uniform float u_elapsed = 0.0;
 
 const float FADE  = 0.3;
 
@@ -21,7 +21,7 @@ void main(void) {
 
    float alpha = 1.0 - blur5( u_tex, tex_coord, dimensions.xy, 5.0 ).a;
    alpha *= smoothstep( 0.0, FADE, u_timer );
-   alpha *= 1.0 - smoothstep( u_duration-FADE, u_duration, u_timer );
+   alpha *= smoothstep( 0.0, FADE, u_elapsed );
 
    /* Do the effect. */
    colour_out.rgb = blendGlow( colour_out.rgb, vec3(1.0,0.0,1.0), alpha );

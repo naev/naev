@@ -26,8 +26,8 @@ typedef struct EffectData_ {
    GLuint dimensions;
    GLuint u_r;
    GLuint u_tex;
-   GLuint u_duration;
    GLuint u_timer;
+   GLuint u_elapsed;
 } EffectData;
 
 /**
@@ -39,6 +39,7 @@ typedef struct Effect_ {
    double duration;     /**< Duration of this effect. */
    double scale;        /**< Scales the effect. */
    double r;            /**< Random number. */
+   double elapsed;      /**< Total elapsed time. */
 } Effect;
 
 /*
