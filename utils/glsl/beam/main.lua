@@ -72,6 +72,12 @@ function love.load()
          colour = { 0.6, 0.6, 0.95, 1 },
          type = 4,
       },
+      {
+         name = "beam_reverse",
+         h = 16,
+         colour = { 1, 0, 1, 1 },
+         type = 7,
+      },
    }
    beamoutfits = {
       {
@@ -133,6 +139,12 @@ function love.load()
          h = 26,
          colour = { 1.0, 0.6, 0.9, 1 },
          type = 3,
+      },
+      {
+         name = "Antimatter Beam",
+         h = 16,
+         colour = { 1.0, 0.0, 1.0, 1 },
+         type = 7,
       },
    }
    beams = beamtypes

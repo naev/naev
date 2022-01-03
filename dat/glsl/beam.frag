@@ -252,6 +252,31 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
   return color;
 }
 
+BEAM_FUNC_PROTOTYPE
+vec4 beam_reverse( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   vec2 coords;
+   float m;
+   const float range = 0.3;
+
+   color.a *= beamfade( pos_px.x, pos_tex.x );
+
+   // Normal beam
+   coords = pos_px / 500.0 + vec2( 3.0*ANIM_SPEED*dt, 0 );
+   m = 1.5 + 0.5*snoise( coords );
+   float a = smoothbeam( pos_tex.y, m );
+   color.rgb = mix( color.rgb, vec3(0.0), 3.0*smoothbeam( pos_tex.y, 0.2 ) );
+   color.a *= a;
+
+   // Do fancy noise effect
+   coords = pos_px * vec2( 0.03, 5.0 ) + vec2( 10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   float v = snoise( coords );
+   v = max( 0.0, v-(1.0-range) ) * (2.0/range) - 0.1;
+   color.a += v * (1.0 - smoothstep( 0.0, 0.05, pos_tex.x-0.95 ) );
+
+   return color;
+}
+
 void main(void) {
    vec2 pos_tex, pos_px;
 
