@@ -23,6 +23,9 @@ void main(void) {
    alpha *= smoothstep( 0.0, FADE, u_timer );
    alpha *= smoothstep( 0.0, FADE, u_elapsed );
 
+   vec3 coord = vec3( 0.5 * tex_coord * dimensions.xy / dimensions.z, u_elapsed*10.0 + u_r );
+   alpha *= 0.5 + 0.5*snoise( coord );
+
    /* Do the effect. */
    colour_out.rgb = blendGlow( colour_out.rgb, vec3(1.0,0.0,1.0), alpha );
 }

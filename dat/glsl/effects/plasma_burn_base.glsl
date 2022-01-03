@@ -23,7 +23,7 @@ void main(void) {
    alpha *= smoothstep( 0.0, FADE, u_timer );
    alpha *= smoothstep( 0.0, FADE, u_elapsed );
 
-   vec3 coord = vec3( 0.01 * tex_coord * dimensions.xy / dimensions.z, u_timer + u_r );
+   vec3 coord = vec3( 0.01 * tex_coord * dimensions.xy / dimensions.z, u_elapsed + u_r );
    alpha *= 0.75 + 0.5*snoise( coord );
 
    /* Do the effect. */
