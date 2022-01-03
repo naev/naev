@@ -93,6 +93,8 @@ zbh.rewards = {
    zbh03 = 400e3,
    zbh04 = 300e3,
    zbh05 = 600e3,
+   zbh06 = 500e3,
+   zbh07 = 500e3,
 }
 
 zbh.fctmod = {
@@ -101,6 +103,8 @@ zbh.fctmod = {
    zbh03 = 2,
    zbh04 = 2,
    zbh05 = 3,
+   zbh06 = 2,
+   zbh07 = 2,
 }
 
 return zbh

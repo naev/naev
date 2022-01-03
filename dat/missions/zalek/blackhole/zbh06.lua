@@ -35,7 +35,6 @@ local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 local jumpsys = system.get("NGC-23")
 
 function create ()
-   misn.finish()
    if not misn.claim( mainsys ) then
       misn.finish()
    end
@@ -95,8 +94,10 @@ function land ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[]]))
-   z(_([[""]]))
+   vn.na(_([[You land amidst a Icarus spinning around joyfully around the station.]]))
+   z(_([["That was great flying out there! They didn't stand a chance! Icarus is also in one piece, so all is well. Not the best way to prepare for surgery, huh?"]]))
+   z(_([["What's really puzzling is that someone or something is really bent on covering up what happened here. Other than Icarus, we haven't really been able to find anything that I could imagine would be worth killing an entire Za'lek expedition for. Furthermore, we are constantly being attacked by Za'lek vessels, which makes even less sense. In-fighting should be left to the Dvaereds!"]]))
+   z(_([["I'm going to start preparations for the surgery. Once Icarus is in tiptop shape, we can try to get to the bottom of the mysteries here. Meet me up at the spaceport bar when you are ready."]]))
    vn.sfxVictory()
    vn.na( fmt.credits(reward) )
    vn.done( zbh.zach.transition )
@@ -104,7 +105,7 @@ function land ()
 
    faction.modPlayer("Za'lek", zbh.fctmod.zbh06)
    player.pay( reward )
-   zbh.log(_())
+   zbh.log(fmt.f(_([[You defended {pnt} and Icarus from a hostile attack.]]),{pnt=mainpnt}))
    misn.finish(true)
 end
 
@@ -153,7 +154,7 @@ function enter ()
    icarus:faction():dynEnemy( fbadguys )
    icarus:setFriendly(true)
    icarus:control(true)
-   icarus:moveto( vec2.newp( 1000, rnd.angle() ) )
+   icarus:moveto( vec2.newP( 1000, rnd.angle() ) )
    hook.pilot( icarus, "idle", "icarus_idle" )
    hook.pilot( icarus, "attacked", "icarus_attacked" )
    hook.pilot( icarus, "death", "icarus_death" )
@@ -162,7 +163,7 @@ function enter ()
 end
 
 function icarus_idle ()
-   icarus:moveto( vec2.newp( 1000, rnd.angle() ) )
+   icarus:moveto( vec2.newP( 1000, rnd.angle() ) )
 end
 
 function icarus_attacked ()
