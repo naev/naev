@@ -1215,7 +1215,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.trackmax       = -1.;
    temp->u.blt.lua_env        = LUA_NOREF;
    temp->u.blt.lua_init       = LUA_NOREF;
-   temp->u.blt.lua_onshoot    = LUA_NOREF;
+   temp->u.blt.lua_ontoggle   = LUA_NOREF;
    temp->u.blt.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
@@ -1401,7 +1401,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    temp->u.bem.sound_off      = -1;
    temp->u.bem.lua_env        = LUA_NOREF;
    temp->u.bem.lua_init       = LUA_NOREF;
-   temp->u.bem.lua_onshoot    = LUA_NOREF;
+   temp->u.bem.lua_ontoggle   = LUA_NOREF;
    temp->u.bem.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
@@ -2544,7 +2544,7 @@ int outfit_load (void)
 
          /* Check functions as necessary. */
          o->u.blt.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-         o->u.blt.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.blt.lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
          o->u.blt.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
       }
       else if (outfit_isBeam(o)) {
@@ -2579,7 +2579,7 @@ int outfit_load (void)
 
          /* Check functions as necessary. */
          o->u.bem.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-         o->u.bem.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.bem.lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
          o->u.bem.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
       }
       else if (outfit_isMod(o)) {

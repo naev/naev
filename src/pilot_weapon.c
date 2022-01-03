@@ -1031,17 +1031,18 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
          return 0;
 
       /* Need Lua check? */
-      if (w->outfit->u.blt.lua_onshoot != LUA_NOREF) {
+      if (w->outfit->u.blt.lua_ontoggle != LUA_NOREF) {
          int canshoot = 0;
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
          nlua_setenv(w->outfit->u.blt.lua_env, "mem"); /* */
 
-         /* Set up the function: onshoot( p, po ) */
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.blt.lua_onshoot); /* f */
+         /* Set up the function: ontoggle( p, po ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.blt.lua_ontoggle); /* f */
          lua_pushpilot(naevL, p->id); /* f, p */
          lua_pushpilotoutfit(naevL, w);  /* f, p, po */
-         if (nlua_pcall( w->outfit->u.blt.lua_env, 2, 1 )) {   /* */
-            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "onshoot", lua_tostring(naevL,-1) );
+         lua_pushboolean(naevL, 1); /* f, p, po, true */
+         if (nlua_pcall( w->outfit->u.blt.lua_env, 3, 1 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "ontoggle", lua_tostring(naevL,-1) );
             lua_pop(naevL, 1);
          }
          canshoot = lua_toboolean(naevL,-1);
@@ -1071,17 +1072,18 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
          return 0;
 
       /* Need Lua check? */
-      if (w->outfit->u.bem.lua_onshoot != LUA_NOREF) {
+      if (w->outfit->u.bem.lua_ontoggle != LUA_NOREF) {
          int canshoot = 0;
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
          nlua_setenv(w->outfit->u.bem.lua_env, "mem"); /* */
 
-         /* Set up the function: onshoot( p, po ) */
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.bem.lua_onshoot); /* f */
+         /* Set up the function: ontoggle( p, po ) */
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->u.bem.lua_ontoggle); /* f */
          lua_pushpilot(naevL, p->id); /* f, p */
          lua_pushpilotoutfit(naevL, w);  /* f, p, po */
-         if (nlua_pcall( w->outfit->u.bem.lua_env, 2, 1 )) {   /* */
-            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "onshoot", lua_tostring(naevL,-1) );
+         lua_pushboolean(naevL, 1); /* f, p, po, true */
+         if (nlua_pcall( w->outfit->u.bem.lua_env, 3, 1 )) {   /* */
+            WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, w->outfit->name, "ontoggle", lua_tostring(naevL,-1) );
             lua_pop(naevL, 1);
          }
          canshoot = lua_toboolean(naevL,-1);
