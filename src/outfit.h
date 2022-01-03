@@ -143,13 +143,6 @@ typedef struct OutfitBoltData_ {
 
    /* collision polygon */
    CollPoly *polygon;/**< Array (array.h): Collision polygons. */
-
-   /* Lua function references. Set to LUA_NOREF if not used. */
-   char *lua_file;   /**< Lua File. */
-   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
-   int lua_init;     /**< Run when outfit is initilaized. */
-   int lua_ontoggle; /**< Run when outfit is shot. */
-   int lua_onimpact; /**< Run when an enemy is hit. */
 } OutfitBoltData;
 
 /**
@@ -180,13 +173,6 @@ typedef struct OutfitBeamData_ {
    int sound_warmup; /**< Sound to play when warming up. @todo use. */
    int sound;        /**< Sound to play. */
    int sound_off;    /**< Sound to play when turning off. */
-
-   /* Lua function references. Set to LUA_NOREF if not used. */
-   char *lua_file;   /**< Lua File. */
-   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
-   int lua_init;     /**< Run when outfit is initilaized. */
-   int lua_ontoggle; /**< Run when outfit is shot. */
-   int lua_onimpact; /**< Run when an enemy is hit. */
 } OutfitBeamData;
 
 /**
@@ -249,28 +235,7 @@ typedef struct OutfitModificationData_ {
    double duration;  /**< Time the active outfit stays on (in seconds). */
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* All the modifiers are based on the outfit's ship stats, nothing here but
-    * Lua and active stuff. */
-
-   /* Lua function references. Set to LUA_NOREF if not used. */
-   char *lua_file;   /**< Lua File. */
-   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
-   int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
-   int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
-   int lua_init;     /**< Run when pilot enters a system. */
-   int lua_cleanup;  /**< Run when the pilot is erased. */
-   int lua_update;   /**< Run periodically. */
-   int lua_ontoggle; /**< Run when toggled. */
-   int lua_onhit;    /**< Run when pilot takes damage. */
-   int lua_outofenergy;/**< Run when the pilot runs out of energy. */
-   int lua_onshoot;  /**< Run when pilot shoots. */
-   int lua_onstealth;/**< Run when pilot toggles stealth. */
-   int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
-   int lua_onscan;   /**< Run when the pilot scans another pilot. */
-   int lua_cooldown; /**< Run when cooldown is started or stopped. */
-   int lua_land;     /**< Run when the player lands. */
-   int lua_takeoff;  /**< Run when the player takes off. */
-   int lua_jumpin;   /**< Run when the player jumps in. */
+   /* All the modifiers are based on the outfit's ship stats, nothing here but active stuff. */
 } OutfitModificationData;
 
 /**
@@ -373,6 +338,28 @@ typedef struct Outfit_ {
 
    /* Tags. */
    char **tags;      /**< Outfit tags. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
+   int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_ontoggle; /**< Run when toggled. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
+   int lua_outofenergy;/**< Run when the pilot runs out of energy. */
+   int lua_onshoot;  /**< Run when pilot shoots. */
+   int lua_onstealth;/**< Run when pilot toggles stealth. */
+   int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
+   int lua_onscan;   /**< Run when the pilot scans another pilot. */
+   int lua_cooldown; /**< Run when cooldown is started or stopped. */
+   int lua_land;     /**< Run when the player lands. */
+   int lua_takeoff;  /**< Run when the player takes off. */
+   int lua_jumpin;   /**< Run when the player jumps in. */
+   /* Weapons only. */
+   int lua_onimpact; /**< Run when weapon hits the enemy. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */

@@ -1749,7 +1749,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_WARMUP:
             str = "warmup";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF)
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF)
                d = 1.; /* TODO add warmup stuff to normal active outfits (not sure if necessary though. */
             else
                d = o->progress;
@@ -1759,7 +1759,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_ON:
             str = "on";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF) {
                d = outfit_duration(o->outfit);
                if (d==0.)
                   d = 1.;
@@ -1774,7 +1774,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_COOLDOWN:
             str = "cooldown";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF) {
                d = outfit_cooldown(o->outfit);
                if (d==0.)
                   d = 0.;
