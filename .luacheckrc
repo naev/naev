@@ -169,6 +169,7 @@ stds.PilotOutfit.globals={
    "land",
    "onadd",
    "onhit",
+   "onimpact",
    "onload",
    "onremove",
    "onscan",

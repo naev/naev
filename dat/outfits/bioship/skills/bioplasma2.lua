@@ -21,7 +21,7 @@ function init( p, _po )
    end
 end
 
-function onhit( p, target )
+function onimpact( p, target )
    local ts = target:stats()
    local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
 

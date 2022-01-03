@@ -149,7 +149,7 @@ typedef struct OutfitBoltData_ {
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_init;     /**< Run when outfit is initilaized. */
    int lua_ontoggle; /**< Run when outfit is shot. */
-   int lua_onhit;    /**< Run when an enemy is hit. */
+   int lua_onimpact; /**< Run when an enemy is hit. */
 } OutfitBoltData;
 
 /**
@@ -186,7 +186,7 @@ typedef struct OutfitBeamData_ {
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_init;     /**< Run when outfit is initilaized. */
    int lua_ontoggle; /**< Run when outfit is shot. */
-   int lua_onhit;    /**< Run when an enemy is hit. */
+   int lua_onimpact; /**< Run when an enemy is hit. */
 } OutfitBeamData;
 
 /**
