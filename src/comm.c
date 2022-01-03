@@ -34,7 +34,7 @@
 #define GRAPHIC_WIDTH  256 /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-static Spob *comm_spob     = NULL; /**< Spob currently talking to. */
+static Spob *comm_spob         = NULL; /**< Spob currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
@@ -121,15 +121,15 @@ int comm_openPilot( unsigned int pilot )
       return 0;
    }
 
+   /* Set up for the comm_get* functions. */
+   ai_setPilot( p );
+
    /* Check to see if pilot wants to communicate. */
    msg = comm_getString( p, "comm_no" );
    if (msg != NULL) {
       player_messageRaw( msg );
       return 0;
    }
-
-   /* Set up for the comm_get* functions. */
-   ai_setPilot( p );
 
    /* Have pilot stop hailing. */
    pilot_rmFlag( p, PILOT_HAILING );
@@ -138,7 +138,10 @@ int comm_openPilot( unsigned int pilot )
    comm_commClose = 0;
 
    /* Run specific hail hooks on hailing pilot. */
-   HookParam hparam[] = { { .type = HOOK_PARAM_PILOT, .u = { .lp = p->id } }, { .type = HOOK_PARAM_SENTINEL } };
+   HookParam hparam[] = {
+      { .type = HOOK_PARAM_PILOT,
+         .u = { .lp = p->id } },
+      { .type = HOOK_PARAM_SENTINEL } };
    if (pilot_canTarget( p )) {
       hooks_runParam( "hail", hparam );
       pilot_runHook( p, PILOT_HOOK_HAIL );
