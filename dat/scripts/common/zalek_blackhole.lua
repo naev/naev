@@ -94,7 +94,8 @@ zbh.rewards = {
    zbh04 = 300e3,
    zbh05 = 600e3,
    zbh06 = 500e3,
-   zbh07 = 500e3,
+   --zbh07 = 0, -- Just a cutscene
+   zbh08 = 500e3,
 }
 
 zbh.fctmod = {
@@ -104,7 +105,8 @@ zbh.fctmod = {
    zbh04 = 2,
    zbh05 = 3,
    zbh06 = 2,
-   zbh07 = 2,
+   --zbh07 = 0, -- Just a cutscene
+   zbh08 = 2,
 }
 
 return zbh
