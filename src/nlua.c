@@ -369,6 +369,12 @@ static int nlua_loadBasic( lua_State* L )
    lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
 
+   /* Sandbox "io" and "os". */
+   lua_newtable(L);
+   lua_setglobal(L,"io");
+   lua_newtable(L);
+   lua_setglobal(L,"os");
+
    /* Special math functions function. */
    lua_getglobal(L,"math");
    lua_pushcfunction(L, nlua_log2);
