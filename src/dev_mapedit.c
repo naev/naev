@@ -162,8 +162,6 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 350, SCREEN_H - 100,
          "cstSysEdit", 1, mapedit_render, mapedit_mouse, NULL, mapedit_focusLose, NULL );
-   /* Needed to generate faction disk. */
-   map_setZoom( wid, 1. );
 
    /* Button : reset the current map. */
    buttonHPos = 2;
@@ -581,6 +579,7 @@ void mapedit_selectText (void)
  */
 static void mapedit_buttonZoom( unsigned int wid, const char* str )
 {
+   (void) wid;
    /* Transform coords to normal. */
    mapedit_xpos /= mapedit_zoom;
    mapedit_ypos /= mapedit_zoom;
@@ -594,9 +593,6 @@ static void mapedit_buttonZoom( unsigned int wid, const char* str )
       mapedit_zoom /= MAPEDIT_ZOOM_STEP;
       mapedit_zoom = MAX(pow(MAPEDIT_ZOOM_STEP, MAPEDIT_ZOOM_MIN), mapedit_zoom);
    }
-
-   /* Hack for the circles to work. */
-   map_setZoom( wid, mapedit_zoom );
 
    /* Transform coords back. */
    mapedit_xpos *= mapedit_zoom;
