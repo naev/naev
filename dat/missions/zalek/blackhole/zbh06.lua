@@ -99,7 +99,7 @@ function land ()
    z(_([["What's really puzzling is that someone or something is really bent on covering up what happened here. Other than Icarus, we haven't really been able to find anything that I could imagine would be worth killing an entire Za'lek expedition for. Furthermore, we are constantly being attacked by Za'lek vessels, which makes even less sense. In-fighting should be left to the Dvaereds!"]]))
    z(_([["I'm going to start preparations for the surgery. Once Icarus is in tiptop shape, we can try to get to the bottom of the mysteries here. Meet me up at the spaceport bar when you are ready."]]))
    vn.sfxVictory()
-   vn.na( fmt.credits(reward) )
+   vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
    vn.run()
 
