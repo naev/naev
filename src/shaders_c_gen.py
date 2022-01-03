@@ -126,7 +126,7 @@ SHADERS = [
    ),
    Shader(
       name = "nebula_map",
-      vs_path = "nebula_map.vert",
+      vs_path = "system_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "hue", "time", "globalpos", "alpha"],

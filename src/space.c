@@ -2860,6 +2860,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             xmlr_strd( cur, "background", sys->background );
+            xmlr_strd( cur, "map_shader", sys->map_shader );
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
@@ -2944,6 +2945,15 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Convert hue from 0 to 359 value to 0 to 1 value. */
    sys->nebu_hue /= 360.;
+
+   /* Load the shader. */
+   if (sys->map_shader != NULL) {
+      sys->ms.program   = gl_program_vert_frag( "system_map.vert", sys->map_shader );
+      sys->ms.vertex    = glGetAttribLocation( sys->ms.program, "vertex" );
+      sys->ms.projection= glGetUniformLocation( sys->ms.program, "projection" );
+      sys->ms.time      = glGetUniformLocation( sys->ms.program, "time" );
+      sys->ms.globalpos = glGetUniformLocation( sys->ms.program, "globalpos" );
+   }
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
