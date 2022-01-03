@@ -5,7 +5,7 @@ uniform vec2 globalpos;
 in vec2 localpos;
 out vec4 colour_out;
 
-const int ITERATIONS    = 2;
+const int ITERATIONS    = 4;
 const float SCALAR      = 2.0;
 const float SCALE       = 3.0;
 const float TIME_SCALE  = 10.0;
@@ -24,7 +24,7 @@ void main (void)
 
    /* Calculate coordinates */
    uv.xy = (localpos + globalpos) * 2.0;
-   uv.z += time * 0.3;
+   uv.z  = time * 0.1;
 
    /* Create the noise */
    float f = 0.0;
