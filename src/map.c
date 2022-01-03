@@ -1068,7 +1068,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
       else if (sys->map_shader != NULL) {
          gl_Matrix4 projection;
          double sw, sh;
-         sw = 75.;
+         sw = 100. * zoom;
          sh = sw;
 
          /* Set the vertex. */

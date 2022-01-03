@@ -12,7 +12,8 @@ const float smoothness       = 0.5;
 const float value            = 0.6;
 const float nebu_brightness  = 0.4;
 
-void main(void) {
+void main (void)
+{
    // Calculate coordinates
    vec2 rel_pos = localpos + globalpos;
    color_out = nebula( vec4(0.0), rel_pos, time, hue, value, nebu_brightness );
