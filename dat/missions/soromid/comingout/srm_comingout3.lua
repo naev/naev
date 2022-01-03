@@ -140,9 +140,9 @@ function jumpNext ()
       chelsea:taskClear()
       chelsea:control()
       if system.cur() == mem.missys then
-         chelsea:land( mem.misplanet, true )
+         chelsea:land( mem.misplanet )
       else
-         chelsea:hyperspace( lmisn.getNextSystem( system.cur(), mem.missys ), true )
+         chelsea:hyperspace( lmisn.getNextSystem( system.cur(), mem.missys ) )
       end
    end
 end

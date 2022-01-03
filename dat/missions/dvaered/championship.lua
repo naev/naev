@@ -317,7 +317,7 @@ end
 function land_everyone()
    for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22, opponent}) do
       k:control()
-      k:land("Dvaer Prime")
+      k:land("Dvaer Prime", true)
    end
 end
 
@@ -398,7 +398,7 @@ function player_disabled()  --player has lost
    misn.osdActive(3)
    mem.stage = 3
    opponent:taskClear()
-   opponent:land("Dvaer Prime")
+   opponent:land("Dvaer Prime",true)
    hook.rm(mem.opdihook)
 end
 

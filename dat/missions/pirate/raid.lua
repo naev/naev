@@ -309,7 +309,7 @@ function spawn_convoy ()
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()
-   sconvoy[1]:hyperspace( mem.convoy_exit, true )
+   sconvoy[1]:hyperspace( mem.convoy_exit )
    hook.pilot( sconvoy[1], "death", "convoy_done" )
 end
 

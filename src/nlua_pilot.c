@@ -4590,7 +4590,7 @@ static int pilotL_gather( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to hyperspace.
  *    @luatparam[opt] System|Jump sys Optional System to jump to, uses random if nil.
- *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=false] boolean noshoot Forbids to shoot at targets with turrets while running away.
  * @luasee control
  * @luafunc hyperspace
  */
@@ -4601,7 +4601,7 @@ static int pilotL_hyperspace( lua_State *L )
    StarSystem *ss;
    JumpPoint *jp;
    LuaJump lj;
-   int shoot;
+   int noshoot;
 
    NLUA_CHECKRW(L);
 
@@ -4611,16 +4611,14 @@ static int pilotL_hyperspace( lua_State *L )
       ss = system_getIndex( lua_tojump(L,2)->destid );
    else
       ss = (lua_isnoneornil(L,2)) ? NULL : luaL_validsystem(L,2);
-   if (lua_gettop(L)>2)
-      shoot = lua_toboolean(L,3);
-   else
-      shoot = 1;
+   noshoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   if (shoot)
-      t = pilotL_newtask( L, p, "hyperspace_shoot" );
-   else
+   if (noshoot)
       t = pilotL_newtask( L, p, "hyperspace" );
+   else
+      t = pilotL_newtask( L, p, "hyperspace_shoot" );
+
    if (ss == NULL)
       return 0;
    /* Find the jump. */
@@ -4691,7 +4689,7 @@ static int pilotL_tryStealth( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to land.
  *    @luatparam[opt] Spob spob Spob to land on, uses random if nil.
- *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=false] boolean noshoot Forbids to shoot at targets with turrets while running away.
  * @luasee control
  * @luafunc land
  */
@@ -4700,7 +4698,7 @@ static int pilotL_land( lua_State *L )
    Pilot *p;
    Task *t;
    Spob *pnt;
-   int shoot;
+   int noshoot;
 
    NLUA_CHECKRW(L);
 
@@ -4710,16 +4708,13 @@ static int pilotL_land( lua_State *L )
       pnt = NULL;
    else
       pnt = luaL_validspob( L, 2 );
-   if (lua_gettop(L)>2)
-      shoot = lua_toboolean(L,3);
-   else
-      shoot = 1;
+   noshoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   if (shoot)
-      t = pilotL_newtask( L, p, "land_shoot" );
-   else
+   if (noshoot)
       t = pilotL_newtask( L, p, "land" );
+   else
+      t = pilotL_newtask( L, p, "land_shoot" );
 
    if (pnt != NULL) {
       int i;
