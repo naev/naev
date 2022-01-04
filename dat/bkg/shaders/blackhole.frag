@@ -26,6 +26,7 @@ const mat3 Rz = mat3(
    sz,  cz,  0.0,
    0.0, 0.0, 1.0 );
 const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */
+const mat3 Rinv = inverse(R);
 
 /* Uniforms. Most is hardcoded. */
 uniform float u_time = 0.0;
@@ -124,9 +125,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 ro  = vec3(u_camera.xy, -100.0 * u_camera.z);
    vec3 rd  = R*normalize( vec3(0.1*uv, 1.0));
    vec3 pos = R*ro;
-   vec3 rdo = rd;
-   //float rdw = R*normalize( vec3(0.1*love_ScreenSize.x/love_ScreenSize.y,0.0,1.0) );
-   //float rdh = R*normalize( vec3(0.0,1.0,1.0) );
 
    /* Initialize stuff. */
    vec4 col    = vec4(0.0);
@@ -164,7 +162,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       }
       else if (dist2 > SIZE * 1000.0) { /* Escaped black hole. */
          /* Have to undo the deformation effect. */
-         vec3 bgrd = inverse(R) * rd;
+         vec3 bgrd = Rinv * rd;
          vec2 bgc = 0.5 * 10.0 * bgrd.xy / length(vec2(1.0,0.1)) / love_ScreenSize.xy * love_ScreenSize.y + 0.5;
          bgc = mix( bgc, texture_coords, 0.8 ); /* Soften effect */
          vec4 bg = texture( u_bgtex, bgc ) / color;
