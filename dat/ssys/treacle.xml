@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>275.475467</x>
-  <y>792.525333</y>
+  <x>259.503245</x>
+  <y>795.303111</y>
  </pos>
  <spobs>
   <spob>Treacle</spob>
@@ -23,6 +23,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Starlight End">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Taxumi">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

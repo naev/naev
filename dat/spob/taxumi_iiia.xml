@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Taxumi IIIa">
+ <pos>
+  <x>-4290.427536</x>
+  <y>1615.597401</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>200.000000</base>
+  <bonus>100.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>8000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Taxumi IIIa has undergone extensive bioforming through bioengineered-accelerated evolution. However, unlike the tame fauna of most Soromid civilian planets, the Soromid military have decided to incorporate it as part of the recruits hand-to-hand training, and focused on evolving extremely aggressive and dangerous life forms. It is not uncommon for careless individuals to wander around the forests only to never be heard of again.</description>
+  <bar>The bar is decorated with holograms, pictures, and artwork depictin the different lifeforms found on the planet. A large Cakkak head is displayed as a centerpiece and it looks like the head only is well over a few tonnes of mass. You wouldn't want to meet that out in the wild. The bartender seems to specialize in unique drinks that are made with locally sourced ingredients, mostly animal based. Despite the allure of such drinks, your curiousity is not able to overcome names like Cakkak Brine Brew.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Soromid Elite Outfits</item>
+  <item>Soromid Ships Small</item>
+  <item>Soromid Ships Medium</item>
+ </tech>
+ <tags>
+  <tag>military</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

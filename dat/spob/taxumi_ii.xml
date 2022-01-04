@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Taxumi II">
+ <pos>
+  <x>7897.545584</x>
+  <y>-3450.383993</y>
+ </pos>
+ <GFX>
+  <space>D04.webp</space>
+  <exterior>mining5.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

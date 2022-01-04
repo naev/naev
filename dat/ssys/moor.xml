@@ -31,5 +31,9 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Taxumi">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>
