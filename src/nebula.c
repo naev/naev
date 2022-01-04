@@ -307,31 +307,31 @@ static void nebu_renderPuffs( int below_player )
       return;
 
    for (int i=0; i<nebu_npuffs; i++) {
+      glColour col;
       NebulaPuff *puff = &nebu_puffs[i];
 
       /* Separate by layers */
-      if ((below_player && (puff->height < 1.)) ||
-            (!below_player && (puff->height > 1.))) {
-         glColour col;
+      if ((!below_player && (puff->height < 1.)) ||
+            (below_player && (puff->height > 1.)))
+         continue;
 
-         /* calculate new position */
-         puff->x += puff_x * puff->height;
-         puff->y += puff_y * puff->height;
+      /* calculate new position */
+      puff->x += puff_x * puff->height;
+      puff->y += puff_y * puff->height;
 
-         /* Check boundaries */
-         puff->x = fmod( puff->x, SCREEN_W + 2.*NEBULA_PUFF_BUFFER );
-         puff->y = fmod( puff->y, SCREEN_H + 2.*NEBULA_PUFF_BUFFER );
+      /* Check boundaries */
+      puff->x = fmod( puff->x, SCREEN_W + 2.*NEBULA_PUFF_BUFFER );
+      puff->y = fmod( puff->y, SCREEN_H + 2.*NEBULA_PUFF_BUFFER );
 
-         if (puff->x < 0.)
-            puff->x += SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
-         if (puff->y < 0.)
-            puff->y += SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
+      if (puff->x < 0.)
+         puff->x += SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
+      if (puff->y < 0.)
+         puff->y += SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
 
-         /* Render */
-         col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
-         gl_renderStatic( nebu_pufftexs[puff->tex],
-               puff->x-NEBULA_PUFF_BUFFER, puff->y-NEBULA_PUFF_BUFFER, &col );
-      }
+      /* Render */
+      col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
+      gl_renderStatic( nebu_pufftexs[puff->tex],
+            puff->x-NEBULA_PUFF_BUFFER, puff->y-NEBULA_PUFF_BUFFER, &col );
    }
 }
 
