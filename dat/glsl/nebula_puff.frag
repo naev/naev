@@ -18,7 +18,7 @@ void main(void) {
       return;
    }
 
-   vec3 uv = vec3( pos+r, 0.0 );
+   vec3 uv = vec3( pos+r, time );
    float f, scale;
 
    /* Create the noise */

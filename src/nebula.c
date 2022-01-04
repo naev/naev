@@ -30,7 +30,7 @@ static double nebu_density = 0.; /**< The density. */
 static double nebu_dx   = 0.; /**< Length scale (space coords) for turbulence/eddies we draw. */
 static double nebu_view = 0.; /**< How far player can see. */
 static double nebu_dt   = 0.; /**< How fast nebula changes. */
-static double nebu_time = 0.; /**< Timer since last render. */
+static double nebu_time = 0.; /**< Elapsed time since entering system. */
 
 /* Nebula scaling stuff. */
 static double nebu_scale = 4.; /**< How much to scale nebula. */
@@ -339,6 +339,7 @@ static void nebu_renderPuffs( int below_player )
 
       /* Uniforms. */
       gl_Matrix4_Uniform( shaders.nebula_puff.projection, projection );
+      glUniform1f( shaders.nebula_puff.time, nebu_time / 1.5 );
       glUniform2f( shaders.nebula_puff.r, puff->rx, puff->ry );
 
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
