@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Voproid Prime">
+ <pos>
+  <x>-7228.974523</x>
+  <y>2329.541662</y>
+ </pos>
+ <GFX>
+  <space>K00.webp</space>
+  <exterior>mining2.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

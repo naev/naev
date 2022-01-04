@@ -743,6 +743,7 @@ dat/spob/folevo.xml
 dat/spob/forbes_station.xml
 dat/spob/forge.xml
 dat/spob/fort_sirius.xml
+dat/spob/fort_voproid.xml
 dat/spob/fortitude_i.xml
 dat/spob/fortitude_ii.xml
 dat/spob/fortitude_iii.xml
@@ -1531,6 +1532,7 @@ dat/spob/violin_station.xml
 dat/spob/vlexair.xml
 dat/spob/vlexon_i.xml
 dat/spob/vlexon_ii.xml
+dat/spob/voproid_prime.xml
 dat/spob/vorca.xml
 dat/spob/vracha.xml
 dat/spob/vuere.xml
@@ -2031,6 +2033,7 @@ dat/ssys/tarmak.xml
 dat/ssys/tarsus.xml
 dat/ssys/tartan.xml
 dat/ssys/tau_prime.xml
+dat/ssys/taxumi.xml
 dat/ssys/telika.xml
 dat/ssys/teller.xml
 dat/ssys/tempus.xml
@@ -2071,6 +2074,7 @@ dat/ssys/vega.xml
 dat/ssys/verex.xml
 dat/ssys/vlexon.xml
 dat/ssys/volus.xml
+dat/ssys/voproid.xml
 dat/ssys/vost.xml
 dat/ssys/wahri.xml
 dat/ssys/waterhole.xml
