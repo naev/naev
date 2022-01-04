@@ -14,20 +14,62 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
 
--- luacheck: globals tut_volatility (Hook functions passed by name)
+-- luacheck: globals tut_illegal tut_volatility (Hook functions passed by name)
 
 function create ()
    if tut.isDisabled() then evt.finish() end
 
    local enter_delay = 5
 
+   -- TODO we should probably allow looking at any faction not just empire
+   if not var.peek("tut_illegal") and player.pilot():hasIllegal("Empire") then
+      hook.timer( enter_delay, "tut_illegal" )
+      return
+   end
+
    local sys = system.cur()
    local _nebu_dens, nebu_volat = sys:nebula()
    if not var.peek( "tut_nebvol" ) and nebu_volat > 0 then
       hook.timer( enter_delay, "tut_volatility" )
+      return
    end
 end
 
+function tut_illegal ()
+   local pp = player.pilot()
+   local badstuff = {}
+   for k,o in ipairs(pp:outfits()) do
+      if #o:illegality() > 0 then
+         table.insert( badstuff, o )
+      end
+   end
+   for k,v in ipairs(pp:cargoList()) do
+      local c = commodity.get(v.name)
+      if #c:illegality() > 0 then
+         table.insert( badstuff, c )
+      end
+   end
+   if #badstuff<=0 then
+      warn("tut_illegal called, but can't find badstuff!")
+      return
+   end
+
+   vn.clear()
+   vn.scene()
+   local sai = vn.newCharacter( tut.vn_shipai() )
+   vn.transition( tut.shipai.transition )
+   sai(fmt.f(_([[Just as after taking off, {ainame} materializes in front of you.
+   "I don't know how to say this to you, but it seems like you have acquired some illegal items. Your {item} is on the rather dubious side of the law, and you will run into trouble if you are scanned by patrols. Sometimes, right after you are discovered, you may get away with paying a small fine in the form of a bribe, but that may not always be the case."]]),
+      {item=badstuff[ rnd.rnd(1,#badstuff) ], ainame=tut.ainame()} ))
+   sai(fmt.f(_([["If you have to deal with illegal goods, I would recommend you to try to maximize the stealth functionality of your ship, that you can enable with {stealthkey}. As ship detection in general is tied to ship mass, you will most likely have best result using small and agile ships to avoid detection. Remember to stay off patrol routes and avoid crowded systems for highest chance of success."]]),
+      {stealthkey=tut.getKey("stealth")} ))
+   vn.na(fmt.f(_([[{ainame} vanishes and you are left wondering why they are so knowledgable about illegal activities.]]),{ainame=tut.ainame()}))
+   vn.done( tut.shipai.transition )
+   vn.run()
+
+   var.push( "tut_illegal", true )
+   evt.finish()
+end
 
 function tut_volatility ()
    local sys = system.cur()
