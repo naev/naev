@@ -24,7 +24,8 @@ void main (void)
       discard;
 
    /* Coordinates. */
-   uv.xy = (localpos + globalpos) / SCALE;
+   /* TODO figure out why it hates globalpos (probably scale issue :/) */
+   uv.xy = localpos; //(localpos + globalpos) / SCALE;
    uv.z  = time;
 
    /* Generate the base noise. */
@@ -40,5 +41,5 @@ void main (void)
    float flash = max( 0.0,  snoise( uv*0.5 ) * flash_0 * flash_1 * flash_2 * flash_3 );
    colour_out += vec4( 1.5*(s+0.5*flash)*flash*(0.5+0.5*flash_2) );
    colour_out = clamp( colour_out, vec4(0.0), vec4(1.0) );
-   colour_out.a *= alpha * a;
+   colour_out.a *= alpha * a * 0.7;
 }
