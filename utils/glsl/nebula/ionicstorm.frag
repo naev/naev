@@ -1,6 +1,7 @@
 uniform float u_time;
 
 /*
+https://www.shadertoy.com/view/lscyD7
 5D wave noise
 afl_ext 2018
 public domain
