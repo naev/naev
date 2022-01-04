@@ -108,12 +108,6 @@ vec3 sample_sphere( vec2 rand )
 //vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 vec4 effect( vec2 texture_coords )
 {
-   /* Fraction of total time run. */
-   float progress = u_time * u_speed;
-
-   /* Main sphere is centered on the origin. */
-   vec3 roll_dir = sample_sphere( vec2(random(u_r), random(u_r+1.0)) );
-
    /* Normalized 0 centered coordinates. */
    vec2 uv = 2.0*texture_coords-1.0;
 
@@ -147,6 +141,12 @@ vec4 effect( vec2 texture_coords )
    h = sqrt(h); /* this term is multiplied by 2, but since a=2, we don't need to correct. */
    float inear = -b-h; /* near to camera intersection */
    float ifar  = -b+h; /* far from camera intersection */
+
+   /* Fraction of total time run. */
+   float progress = u_time * u_speed;
+
+   /* Main sphere is centered on the origin. */
+   vec3 roll_dir = sample_sphere( vec2(random(u_r), random(u_r+1.0)) );
 
    /* Base step is equally spread out through the sphere. */
    float step_base = RADIUS / float(u_steps);
