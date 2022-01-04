@@ -89,8 +89,6 @@ float getwaves3d( vec2 position, float dragmult, float timeshift) {
     return w / ws;
 }
 
-const vec2 DIR    = normalize(vec2(1.0,1.0));
-
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec3 uv = vec3( texture_coords * 2.0, u_time );
