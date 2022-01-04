@@ -3932,8 +3932,7 @@ void space_exit (void)
       array_free(pnt->commodityPrice);
 
       /* Lua. */
-      if (pnt->lua_env != LUA_NOREF)
-         nlua_freeEnv( pnt->lua_env );
+      nlua_freeEnv( pnt->lua_env );
    }
    array_free(spob_stack);
 
@@ -3994,8 +3993,7 @@ void space_exit (void)
    gatherable_free();
 
    /* Free landing lua. */
-   if (landing_env != LUA_NOREF)
-      nlua_freeEnv( landing_env );
+   nlua_freeEnv( landing_env );
    landing_env = LUA_NOREF;
 }
 

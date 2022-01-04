@@ -2708,8 +2708,7 @@ void outfit_free (void)
       }
 
       /* Lua. */
-      if (o->lua_env != LUA_NOREF)
-         nlua_freeEnv( o->lua_env );
+      nlua_freeEnv( o->lua_env );
       o->lua_env = LUA_NOREF;
       free(o->lua_file);
 

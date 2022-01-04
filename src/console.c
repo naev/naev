@@ -514,10 +514,8 @@ int cli_init (void)
 void cli_exit (void)
 {
    /* Destroy the state. */
-   if (cli_env != LUA_NOREF) {
-      nlua_freeEnv( cli_env );
-      cli_env = LUA_NOREF;
-   }
+   nlua_freeEnv( cli_env );
+   cli_env = LUA_NOREF;
 
    gl_freeFont( cli_font );
    free( cli_font );

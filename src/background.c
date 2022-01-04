@@ -471,8 +471,7 @@ int background_load( const char *name )
 static void background_clearCurrent (void)
 {
    if (bkg_cur_env != bkg_def_env) {
-      if (bkg_cur_env != LUA_NOREF)
-         nlua_freeEnv( bkg_cur_env );
+      nlua_freeEnv( bkg_cur_env );
    }
    bkg_cur_env = LUA_NOREF;
 
@@ -520,8 +519,7 @@ void background_free (void)
 {
    /* Free the Lua. */
    background_clear();
-   if (bkg_def_env != LUA_NOREF)
-      nlua_freeEnv( bkg_def_env );
+   nlua_freeEnv( bkg_def_env );
    bkg_def_env = LUA_NOREF;
 
    /* Free the images. */
@@ -531,8 +529,7 @@ void background_free (void)
    bkg_image_arr_bk = NULL;
 
    /* Free the Lua. */
-   if (bkg_cur_env != LUA_NOREF)
-      nlua_freeEnv( bkg_cur_env );
+   nlua_freeEnv( bkg_cur_env );
    bkg_cur_env = LUA_NOREF;
 
    gl_vboDestroy( star_vertexVBO );

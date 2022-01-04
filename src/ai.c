@@ -585,8 +585,7 @@ static int ai_loadEquip (void)
    const char *filename = AI_EQUIP_PATH;
 
    /* Make sure doesn't already exist. */
-   if (equip_env != LUA_NOREF)
-      nlua_freeEnv(equip_env);
+   nlua_freeEnv(equip_env);
 
    /* Create new state. */
    equip_env = nlua_newEnv(1);
@@ -708,8 +707,7 @@ void ai_exit (void)
    array_free( profiles );
 
    /* Free equipment Lua. */
-   if (equip_env != LUA_NOREF)
-      nlua_freeEnv(equip_env);
+   nlua_freeEnv(equip_env);
    equip_env = LUA_NOREF;
 }
 

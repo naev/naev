@@ -694,7 +694,7 @@ void mission_cleanup( Mission* misn )
     * Mission struct of all zeros. Looking at the implementation, luaL_ref()
     * never returns 0, but this is probably undefined behavior.
     */
-   if (misn->env != LUA_NOREF && misn->env != 0)
+   if (misn->env != 0)
       nlua_freeEnv(misn->env);
 
    /* Data. */

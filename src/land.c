@@ -1566,10 +1566,8 @@ void land_cleanup (void)
    shipyard_cleanup();
 
    /* Clean up rescue Lua. */
-   if (rescue_env != LUA_NOREF) {
-      nlua_freeEnv(rescue_env);
-      rescue_env = LUA_NOREF;
-   }
+   nlua_freeEnv(rescue_env);
+   rescue_env = LUA_NOREF;
 }
 
 /**

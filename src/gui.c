@@ -1855,10 +1855,8 @@ int gui_load( const char* name )
    }
 
    /* Clean up. */
-   if (gui_env != LUA_NOREF) {
-      nlua_freeEnv(gui_env);
-      gui_env = LUA_NOREF;
-   }
+   nlua_freeEnv(gui_env);
+   gui_env = LUA_NOREF;
 
    /* Create Lua state. */
    gui_env = nlua_newEnv(1);
@@ -1933,10 +1931,8 @@ void gui_cleanup (void)
    gui_yoff = 0.;
 
    /* Destroy lua. */
-   if (gui_env != LUA_NOREF) {
-      nlua_freeEnv( gui_env );
-      gui_env = LUA_NOREF;
-   }
+   nlua_freeEnv( gui_env );
+   gui_env = LUA_NOREF;
 
    /* OMSG */
    omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );
