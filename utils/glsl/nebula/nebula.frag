@@ -1,13 +1,11 @@
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
 
-uniform vec4 color;
 uniform mat4 projection;
 uniform float eddy_scale = 50.0;
 uniform float u_time = 0.0;
-out vec4 color_out;
 
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 col_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float f = 0.0;
    vec3 uv;
@@ -21,5 +19,17 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       float scale = pow(SCALAR, i);
       f += abs( cnoise( uv * scale ) ) / scale;
    }
-   return mix( vec4(0.0,0.0,0.0,1.0), color, .1 + f );
+
+   vec4 colour =  mix( vec4(0.0,0.0,0.0,1.0), col_in, 0.1 + f );
+
+   // Some volatility
+   float flash_0 = sin(u_time);
+   float flash_1 = sin(15.0 * u_time);
+   float flash_2 = sin(2.85 * u_time);
+   float flash_3 = sin(5.18 * u_time);
+   uv.z  *= 30.0; /* Increae time. */
+   float flash = max( 0.0,  snoise( uv*0.1 ) * flash_0 * flash_1 * flash_2 * flash_3 );
+   colour.rgb += vec3( 2.0*(f+0.5*flash)*flash*(0.5+0.5*flash_2) );
+
+   return colour;
 }
