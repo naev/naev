@@ -196,6 +196,7 @@ files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
+files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
 files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
