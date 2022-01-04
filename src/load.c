@@ -33,6 +33,7 @@
 #include "nxml.h"
 #include "outfit.h"
 #include "player.h"
+#include "save.h"
 #include "shiplog.h"
 #include "start.h"
 #include "space.h"
@@ -53,7 +54,8 @@ typedef struct filedata {
    PHYSFS_Stat stat;
 } filedata_t;
 
-static nsave_t *load_saves = NULL; /**< Array of save.s */
+static nsave_t *load_saves = NULL; /**< Array of saves */
+static char **player_names = NULL; /**< Array of player names */
 extern int save_loaded; /**< From save.c */
 
 /*
@@ -83,9 +85,17 @@ static void load_menu_update( unsigned int wid, const char *str );
 static void load_menu_close( unsigned int wdw, const char *str );
 static void load_menu_load( unsigned int wdw, const char *str );
 static void load_menu_delete( unsigned int wdw, const char *str );
+static void load_menu_snapshots( unsigned int wdw, const char *str );
+static void load_snapshot_menu_update( unsigned int wid, const char *str );
+static void load_snapshot_menu_close( unsigned int wdw, const char *str );
+static void load_snapshot_menu_load( unsigned int wdw, const char *str );
+static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
+static void load_snapshot_menu_save( unsigned int wdw, const char *str );
 static int load_load( nsave_t *save, const char *path );
+static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
+static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, const char* fname );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 
@@ -181,9 +191,38 @@ static int load_load( nsave_t *save, const char *path )
 }
 
 /**
- * @brief Loads or refreshes saved games.
+ * @brief Loads or refreshes player names.
  */
-int load_refresh (void)
+int load_refreshPlayerNames (void)
+{
+   filedata_t *dirs;
+   int n;
+
+   if (player_names != NULL)
+      load_freePlayerNames();
+
+   dirs = array_create( filedata_t );
+   PHYSFS_enumerate( "saves", load_enumeratePlayerNamesCallback, &dirs );
+   qsort( dirs, array_size(dirs), sizeof(filedata_t), load_sortCompare );
+
+   n = array_size(dirs);
+   player_names = array_create_size( char*, n );
+   for (int i=0; i<n; i++)
+      array_grow( &player_names ) = strdup( dirs[i].name );
+
+   /* Clean up memory. */
+   for (int i=0; i<array_size(dirs); i++)
+      free( dirs[i].name );
+   array_free( dirs );
+
+   return 0;
+}
+
+/**
+ * @brief Loads or refreshes saved games for the player.
+ *    @param name Player's name.
+ */
+int load_refresh ( const char *name )
 {
    char buf[PATH_MAX];
    filedata_t *files;
@@ -195,8 +234,9 @@ int load_refresh (void)
 
    /* load the saves */
    files = array_create( filedata_t );
-   PHYSFS_enumerate( "saves", load_enumerateCallback, &files );
-   qsort(files, array_size(files), sizeof(filedata_t), load_sortCompare);
+   snprintf( buf, sizeof(buf), "saves/%s", name );
+   PHYSFS_enumerate( buf, load_enumerateCallback, &files );
+   qsort( files, array_size(files), sizeof(filedata_t), load_sortCompare );
 
    if (array_size(files) == 0) {
       array_free( files );
@@ -210,7 +250,7 @@ int load_refresh (void)
    for (int i=0; i<array_size(files); i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
+      snprintf( buf, sizeof(buf), "saves/%s/%s", name, files[i].name );
       ok = load_load( ns, buf );
       ns->save_name = strdup( files[i].name );
       ns->save_name[ strlen(ns->save_name)-3 ] = '\0';
@@ -262,6 +302,39 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 }
 
 /**
+ * @brief The PHYSFS_EnumerateCallback for load_refreshPlayerNames
+ */
+static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, const char* fname )
+{
+   char *path;
+   const char *fmt;
+   size_t dir_len;
+   filedata_t *tmp;
+   PHYSFS_Stat stat;
+
+   dir_len = strlen( origdir );
+
+   fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
+   asprintf( &path, fmt, origdir, fname );
+   if (!PHYSFS_stat( path, &stat ))
+      WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
+      load_refresh( fname );
+      if (array_size( load_getList() ) == 0) {
+         free( path );
+         return PHYSFS_ENUM_OK;
+      }
+      tmp = &array_grow( (filedata_t**)data );
+      tmp->name = strdup( fname );
+      tmp->stat = stat;
+   }
+
+   free( path );
+   return PHYSFS_ENUM_OK;
+}
+
+/**
  * @brief qsort compare function for files.
  */
 static int load_sortCompare( const void *p1, const void *p2 )
@@ -301,6 +374,25 @@ void load_free (void)
 }
 
 /**
+ * @brief Frees loaded player names.
+ */
+void load_freePlayerNames (void)
+{
+   for (int i=0; i<array_size(player_names); i++)
+      free(player_names[i]);
+   array_free( player_names );
+   player_names = NULL;
+}
+
+/**
+ * @brief Gets the array (array.h) of player names.
+ */
+char **load_getPlayerNames (void)
+{
+   return player_names;
+}
+
+/**
  * @brief Gets the array (array.h) of loaded saves.
  */
 const nsave_t *load_getList (void)
@@ -315,7 +407,6 @@ void load_loadGameMenu (void)
 {
    unsigned int wid;
    char **names;
-   nsave_t *ns;
    int n;
 
    /* window */
@@ -323,8 +414,61 @@ void load_loadGameMenu (void)
    window_setAccept( wid, load_menu_load );
    window_setCancel( wid, load_menu_close );
 
+   load_refreshPlayerNames();
+
+   n = array_size( player_names );
+   if (n > 0) {
+      names = malloc( sizeof(char*)*n );
+      for (int i=0; i<n; i++)
+         names[i] = strdup( player_names[i] );
+      }
+   /* case there are no players */
+   else {
+      names = malloc(sizeof(char*));
+      names[0] = strdup(_("None"));
+      n = 1;
+   }
+
+   /* Player text. */
+   window_addText( wid, -20, -40, 240, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+         0, "txtPilot", &gl_smallFont, NULL, NULL );
+
+   window_addList( wid, 20, -50,
+         LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
+         "lstNames", names, n, 0, load_menu_update, load_menu_load );
+
+   /* Buttons */
+   window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnBack", _("Back"), load_menu_close, SDLK_b );
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+5, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSnapshots", _("Snapshots"), load_menu_snapshots, SDLK_s );
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT*2+10, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", _("Load"), load_menu_load, SDLK_l );
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDelete", _("Delete"), load_menu_delete );
+
+   /* TODO: implement deleting players */
+   window_disableButton( wid, "btnDelete" );
+}
+
+/**
+ * @brief Opens the load snapshot menu.
+ *    @param name Player's name.
+ */
+void load_loadSnapshotMenu ( const char *name )
+{
+   unsigned int wid;
+   char **names;
+   nsave_t *ns;
+   int n, can_save;
+
+   /* window */
+   wid = window_create( "wdwLoadSnapshotMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   window_setAccept( wid, load_snapshot_menu_load );
+   window_setCancel( wid, load_snapshot_menu_close );
+
    /* Load loads. */
-   load_refresh();
+   load_refresh( name );
 
    /* load the saves */
    n = array_size( load_saves );
@@ -348,15 +492,67 @@ void load_loadGameMenu (void)
 
    window_addList( wid, 20, -50,
          LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
-         "lstSaves", names, n, 0, load_menu_update, load_menu_load );
+         "lstSaves", names, n, 0, load_snapshot_menu_update, load_snapshot_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBack", _("Back"), load_menu_close, SDLK_b );
-   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", _("Load"), load_menu_load, SDLK_l );
+         "btnBack", _("Back"), load_snapshot_menu_close, SDLK_b );
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+5, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", _("Save"), load_snapshot_menu_save, SDLK_s );
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT*2+10, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", _("Load"), load_snapshot_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDelete", _("Delete"), load_menu_delete );
+         "btnDelete", _("Delete"), load_snapshot_menu_delete );
+
+   if (window_exists( "wdwLoadGameMenu" ))
+      window_disableButton( wid, "btnSave" );
+   else {
+      can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+      if (!can_save)
+         window_disableButton( wid, "btnSave" );
+   }
+}
+
+/**
+ * @brief Opens the load snapshot menu.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void load_menu_snapshots( unsigned int wdw, const char *str )
+{
+   (void)str;
+   int pos;
+
+   pos = toolkit_getListPos( wdw, "lstNames" );
+   load_loadSnapshotMenu( player_names[pos] );
+}
+
+/**
+ * @brief Creates new custom snapshot.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void load_snapshot_menu_save( unsigned int wdw, const char *str )
+{
+   char *save_name = dialogue_input( _("Save game"), 1, 60, _("Please write snapshot name:") );
+   if (save_name == NULL)
+      return;
+   char path[PATH_MAX];
+   snprintf(path, sizeof(path), "saves/%s/%s.ns", player.name, save_name);
+   if (PHYSFS_exists( path )) {
+      int r = dialogue_YesNo(_("Overwrite"),
+         _("You already have a snapshot named %s. Overwrite?"), save_name);
+      if (r==0) {
+         load_snapshot_menu_save( wdw, str );
+         return;
+      }
+   }
+   if (save_all_with_name(save_name) < 0)
+      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
+   else {
+      load_snapshot_menu_close( wdw, str );
+      load_loadSnapshotMenu( player.name );
+   }
 }
 
 /**
@@ -371,11 +567,71 @@ static void load_menu_close( unsigned int wdw, const char *str )
 }
 
 /**
+ * @brief Closes the load snapshot menu.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void load_snapshot_menu_close( unsigned int wdw, const char *str )
+{
+   (void)str;
+   window_destroy( wdw );
+}
+
+/**
  * @brief Updates the load menu.
  *    @param wid Widget triggering function.
  *    @param str Unused.
  */
 static void load_menu_update( unsigned int wid, const char *str )
+{
+   (void) str;
+   int pos;
+   char *player_name;
+   const nsave_t *ns;
+   const char *save;
+   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
+   size_t l = 0;
+
+   /* Make sure list is ok. */
+   save = toolkit_getList( wid, "lstNames" );
+   if (strcmp(save,_("None")) == 0)
+      return;
+
+   /* Get position. */
+   pos = toolkit_getListPos( wid, "lstNames" );
+   player_name = player_names[pos];
+
+   load_refresh( player_name );
+   ns = &load_getList()[0];
+
+   /* Display text. */
+   credits2str( credits, ns->credits, 2 );
+   ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->name );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->shipname );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipmodel );
+   window_modifyText( wid, "txtPilot", buf );
+}
+
+/**
+ * @brief Updates the load snapshot menu.
+ *    @param wid Widget triggering function.
+ *    @param str Unused.
+ */
+static void load_snapshot_menu_update( unsigned int wid, const char *str )
 {
    (void) str;
    int pos;
@@ -424,10 +680,56 @@ static void load_menu_load( unsigned int wdw, const char *str )
 {
    (void) str;
    const char *save;
+   int diff;
+   unsigned int wid;
+
+   wid = window_get( "wdwLoadGameMenu" );
+   save = toolkit_getList( wid, "lstNames" );
+
+   if (strcmp(save,_("None")) == 0)
+      return;
+
+   /* Check version. */
+   diff = naev_versionCompare( load_saves[0].version );
+   if (ABS(diff) >= 2) {
+      if (!dialogue_YesNo( _("Save game version mismatch"),
+            _("Save game '%s' version does not match Naev version:\n"
+            "   Save version: #r%s#0\n"
+            "   Naev version: %s\n"
+            "Are you sure you want to load this game? It may lose data."),
+            save, load_saves[0].version, VERSION ))
+         return;
+   }
+
+   /* Close menus before loading for proper rendering. */
+   load_menu_close(wdw, NULL);
+
+   if (menu_isOpen(MENU_SMALL))
+      menu_small_close();
+   else
+      menu_main_close();
+
+   /* Try to load the game. */
+   if (load_game( &load_saves[0] )) {
+      /* Failed so reopen both. */
+      menu_main();
+      load_loadGameMenu();
+   }
+}
+
+/**
+ * @brief Loads a new game.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void load_snapshot_menu_load( unsigned int wdw, const char *str )
+{
+   (void) str;
+   const char *save;
    int wid, pos;
    int diff;
 
-   wid = window_get( "wdwLoadGameMenu" );
+   wid = window_get( "wdwLoadSnapshotMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,_("None")) == 0)
@@ -448,17 +750,25 @@ static void load_menu_load( unsigned int wdw, const char *str )
    }
 
    /* Close menus before loading for proper rendering. */
-   load_menu_close(wdw, NULL);
+   load_snapshot_menu_close(wdw, NULL);
 
-   /* Close the main menu. */
-   menu_main_close();
+   if (window_exists( "wdwLoadGameMenu" )) {
+      /* Close the main and the load menu. */
+      load_menu_close( window_get( "wdwLoadGameMenu" ), NULL );
+      menu_main_close();
+   }
 
    /* Try to load the game. */
    if (load_game( &load_saves[pos] )) {
       /* Failed so reopen both. */
-      menu_main();
-      load_loadGameMenu();
+      /*menu_main();
+      load_loadGameMenu();*/
    }
+}
+
+static void load_menu_delete( unsigned int wdw, const char *str ) {
+   (void) wdw;
+   (void) str;
 }
 
 /**
@@ -466,13 +776,13 @@ static void load_menu_load( unsigned int wdw, const char *str )
  *    @param wdw Window to delete.
  *    @param str Unused.
  */
-static void load_menu_delete( unsigned int wdw, const char *str )
+static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
-   (void) str;
    const char *save;
-   int wid, pos;
+   unsigned int wid;
+   int pos;
 
-   wid = window_get( "wdwLoadGameMenu" );
+   wid = window_get( "wdwLoadSnapshotMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,"None") == 0)
@@ -487,8 +797,13 @@ static void load_menu_delete( unsigned int wdw, const char *str )
    PHYSFS_delete( load_saves[pos].path );
 
    /* need to reload the menu */
-   load_menu_close(wdw, NULL);
-   load_loadGameMenu();
+   load_snapshot_menu_close( wdw, str );
+   if (window_exists( "wdwLoadGameMenu" )) {
+      wid = window_get( "wdwLoadGameMenu" );
+      save = toolkit_getList( wid, "lstNames" );
+      load_loadSnapshotMenu( save );
+   } else
+      load_loadSnapshotMenu( player.name );
 }
 
 static void load_compatSlots (void)
@@ -589,7 +904,7 @@ int load_gameFile( const char *file )
  *    @param ns Save game to load.
  *    @return 0 on success.
  */
-int load_game( nsave_t *ns )
+static int load_game( nsave_t *ns )
 {
    return load_gameInternal( ns->path, ns->version );
 }
@@ -702,6 +1017,6 @@ err:
 static xmlDocPtr load_xml_parsePhysFS( const char* filename )
 {
    char buf[PATH_MAX];
-   snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
+   snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename );
    return xmlParseFile( buf );
 }

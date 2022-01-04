@@ -79,8 +79,8 @@ static void menu_main_new( unsigned int wid, const char *str );
 static void menu_main_credits( unsigned int wid, const char *str );
 static void menu_main_cleanBG( unsigned int wid, const char *str );
 /* small menu */
-static void menu_small_save( unsigned int wid, const char *str );
-static void menu_small_close( unsigned int wid, const char *str );
+static void menu_small_load( unsigned int wid, const char *str );
+static void menu_small_resume( unsigned int wid, const char *str );
 static void menu_small_info( unsigned int wid, const char *str );
 static void menu_small_exit( unsigned int wid, const char *str );
 static void exit_game (void);
@@ -102,6 +102,7 @@ static void menu_options_button( unsigned int wid, const char *str );
  */
 static int menu_main_bkg_system (void)
 {
+   char **pn;
    const nsave_t *ns;
    const char *sys;
    double cx, cy;
@@ -110,24 +111,28 @@ static int menu_main_bkg_system (void)
    pilots_cleanAll();
    sys = NULL;
 
-   /* Refresh saves. */
-   load_refresh();
+   load_refreshPlayerNames();
+   pn = load_getPlayerNames();
 
-   /* Load saves. */
-   ns = load_getList();
+   if (array_size( pn ) > 0) {
+      load_refresh ( pn[0] );
 
-   /* Try to apply unidiff. */
-   if (array_size( ns ) > 0) {
-      load_gameDiff( ns[0].path );
+      /* Load saves. */
+      ns = load_getList();
 
-      /* Get start position. */
-      if (spob_exists( ns[0].spob )) {
-         Spob *pnt = spob_get( ns[0].spob );
-         if (pnt != NULL) {
-            sys = spob_getSystem( ns[0].spob );
-            if (sys != NULL) {
-               cx = pnt->pos.x;
-               cy = pnt->pos.y;
+      /* Try to apply unidiff. */
+      if (array_size( ns ) > 0) {
+         load_gameDiff( ns[0].path );
+
+         /* Get start position. */
+         if (spob_exists( ns[0].spob )) {
+            Spob *pnt = spob_get( ns[0].spob );
+            if (pnt != NULL) {
+               sys = spob_getSystem( ns[0].spob );
+               if (sys != NULL) {
+                  cx = pnt->pos.x;
+                  cy = pnt->pos.y;
+               }
             }
          }
       }
@@ -245,7 +250,7 @@ void menu_main (void)
          "btnExit", _("Exit Game"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (array_size( load_getList() ) == 0) {
+   if (array_size( load_getPlayerNames() ) == 0) {
       window_disableButton( wid, "btnLoad" );
       window_setFocus( wid, "btnNew" );
    }
@@ -426,30 +431,23 @@ void menu_small (void)
 
    can_save = landed && !player_isFlag(PLAYER_NOSAVE);
 
-   if (can_save) {
-      y = 20 + (BUTTON_HEIGHT+20)*4;
-      wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
-   } else {
-      y = 20 + (BUTTON_HEIGHT+20)*3;
-      wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
-   }
+   y = 20 + (BUTTON_HEIGHT+20)*4;
+   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
 
-   window_setCancel( wid, menu_small_close );
+   window_setCancel( wid, menu_small_resume );
 
    window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnResume", _("Resume"), menu_small_close, SDLK_r );
+         "btnResume", _("Resume"), menu_small_resume, SDLK_r );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnInfo", _("Info"), menu_small_info, SDLK_i );
    y -= BUTTON_HEIGHT+20;
-   if (can_save) {
-      window_addButtonKey( wid, 20, y,
-            BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnSave", _("Save"), menu_small_save, SDLK_s );
-      y -= BUTTON_HEIGHT+20;
-   }
+   window_addButtonKey( wid, 20, y,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", can_save ? _("Load / Save") : _("Load"), menu_small_load, SDLK_l );
+   y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
@@ -461,30 +459,39 @@ void menu_small (void)
 }
 
 /**
- * @brief Opens the custom snapshot window.
- *    @param str Unused.
+ * @brief Opens the load menu.
  *    @param wid Unused.
+ *    @param str Unused.
  */
-static void menu_small_save( unsigned int wid, const char *str )
+static void menu_small_load( unsigned int wid, const char *str )
 {
-   (void) str;
    (void) wid;
+   (void) str;
 
-   char *save_name = dialogue_input( _("Save game"), 1, 60, _("Please write custom snapshot name:") );
-   if (save_name == NULL)
-      return;
-   if (save_all_with_name(save_name) < 0)
-      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
+   load_loadSnapshotMenu( player.name );
 }
 
 /**
  * @brief Closes the small in-game menu.
  *    @param str Unused.
  */
-static void menu_small_close( unsigned int wid, const char *str )
+static void menu_small_resume( unsigned int wid, const char *str )
 {
    (void)str;
    window_destroy( wid );
+   menu_Close(MENU_SMALL);
+}
+
+/**
+ * @brief Closes the small menu.
+ */
+void menu_small_close (void)
+{
+   if (window_exists( "wdwMenuSmall" ))
+      window_destroy( window_get( "wdwMenuSmall" ) );
+   else
+      WARN( _("Small menu does not exist.") );
+
    menu_Close(MENU_SMALL);
 }
 
@@ -582,14 +589,13 @@ static void menu_death_restart( unsigned int wid, const char *str )
 void menu_death (void)
 {
    unsigned int wid;
-   char path[PATH_MAX];
 
    wid = window_create( "wdwRIP", _("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   snprintf( path, sizeof(path), "saves/%s.ns", "autosave" );
-   if (PHYSFS_exists( path ))
+   load_refresh ( player.name );
+   if (array_size( load_getList() ) > 0)
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else

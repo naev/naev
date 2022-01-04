@@ -34,6 +34,7 @@
 #include "intro.h"
 #include "land.h"
 #include "land_outfits.h"
+#include "load.h"
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -231,7 +232,7 @@ static void player_newSetup()
 void player_new (void)
 {
    const char *title, *caption;
-   char *ret, buf[PATH_MAX];
+   char *ret;
 
    const char *speed_opts[] = {
       _("Normal Speed"),
@@ -254,10 +255,10 @@ void player_new (void)
       return;
    }
 
-   snprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
-   if (PHYSFS_exists( buf )) {
+   load_refresh( player.name );
+   if (array_size( load_getList() ) > 0) {
       int r = dialogue_YesNo(_("Overwrite"),
-            _("You already have a pilot named %s. Overwrite?"),player.name);
+            _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */
          player_new();
          return;

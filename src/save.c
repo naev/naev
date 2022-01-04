@@ -97,12 +97,12 @@ int save_all (void)
 /**
  * @brief Saves the current game.
  *
- *    @param name Name of custom snapshot
+ *    @param name Name of custom snapshot.
  *    @return 0 on success.
  */
 int save_all_with_name ( char *name )
 {
-   char file[PATH_MAX];
+   char file[PATH_MAX], backup[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -149,21 +149,30 @@ int save_all_with_name ( char *name )
       WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       goto err_writer;
    }
+   snprintf(file, sizeof(file), "saves/%s", player.name);
+   if (PHYSFS_mkdir(file) == 0) {
+      snprintf(file, sizeof(file), "%s/saves/%s", PHYSFS_getWriteDir(), player.name);
+      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      goto err_writer;
+   }
 
    /* Back up old saved game. */
    if (!strcmp(name, "autosave")) {
-      if (!save_loaded)
-         if (ndata_copyIfExists("saves/autosave.ns", "saves/backup.ns") < 0) {
+      if (!save_loaded) {
+         snprintf(file, sizeof(file), "saves/%s/autosave.ns", player.name);
+         snprintf(backup, sizeof(backup), "saves/%s/backup.ns", player.name);
+         if (ndata_copyIfExists(file, backup) < 0) {
             WARN(_("Aborting save..."));
             goto err_writer;
          }
+      }
       save_loaded = 0;
    }
 
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
-   snprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), name); /* TODO: write via physfs */
+   snprintf(file, sizeof(file), "%s/saves/%s/%s.ns", PHYSFS_getWriteDir(), player.name, name); /* TODO: write via physfs */
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
       WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
@@ -184,7 +193,6 @@ err:
  */
 void save_reload (void)
 {
-   char path[PATH_MAX];
-   snprintf(path, sizeof(path), "saves/%s.ns", "autosave");
-   load_gameFile( path );
+   load_refresh( player.name );
+   load_gameFile( load_getList()[0].path );
 }

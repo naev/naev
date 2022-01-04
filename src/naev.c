@@ -648,6 +648,7 @@ void unload_all (void)
    land_exit(); /* Destroys landing vbo and friends. */
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
+   load_freePlayerNames(); /* Clean up player names. */
    load_free(); /* Clean up loading game stuff stuff. */
    safelanes_destroy();
    diff_free();
