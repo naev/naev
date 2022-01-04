@@ -1,5 +1,5 @@
 --[[
-   Some sort of stellar wind type background.
+   Some sort of hazy background.
 --]]
 local graphics = require "love.graphics"
 local bgshaders = require "bkg.lib.bgshaders"
@@ -50,7 +50,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]], rnd.rnd(), rnd.rnd(), rnd.rnd() )
    shader = graphics.newShader( pixelcode, love_shaders.vertexcode )
-   shader._dt = 0
+   shader._dt = -1000*rnd.rnd()
    shader.update = function( self, dt )
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
