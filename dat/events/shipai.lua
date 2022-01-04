@@ -110,6 +110,9 @@ local function clicked ()
          {_("Stealth"), "tut_stealth"},
          {_("Nevermind"), "mainmenu"},
       }
+      if var.peek( "tut_illegal" ) then
+         table.insert( opts, #opts, {_("Illegality and Smuggling"), "tut_illegal"} )
+      end
       if var.peek( "tut_bioship" ) then
          table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
       end
@@ -145,7 +148,13 @@ local function clicked ()
 
    vn.label("tut_bioship")
    -- TODO more text
-   sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with #b{infokey}#0. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as it is not easy to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
+   sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with {infokey}. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as it is not easy to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
+   vn.jump("tutorials")
+
+   vn.label("tut_illegal")
+   sai(_([["As you explore, you'll find different commodities, oufits, and even ships themselves, can be outright banned and made illegal by different factions. Although you are able to transport, equip, or use them normally, if a pilot from a faction that considers them illegal scans you, you will be in hot water. Although sometimes you can bribe them right away to continue on your travels, it is better to not have this problem in the first place."]]))
+   sai(fmt.f(_([["The best way to avoid detection is to use stealth which you can enable with {stealthkey}. By staying away from patrol routes and using stealth as much as possible, you can minimize the amount of encounters with patrols. The most tricky parts then become jumping and landing, where lots of ships can converge in tight spaces. Other than using stealth increasing outfits, using a smaller ship will lower the overall visibility of your ship."]])
+      {stealthkey=tut.getKey("stealth")}))
    vn.jump("tutorials")
 
    vn.label("close")
