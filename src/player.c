@@ -51,7 +51,6 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "perlin.h"
 #include "pilot.h"
 #include "player_gui.h"
 #include "rng.h"

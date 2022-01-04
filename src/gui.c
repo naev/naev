@@ -49,7 +49,6 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "perlin.h"
 #include "pilot.h"
 #include "pilot.h"
 #include "player.h"

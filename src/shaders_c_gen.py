@@ -125,6 +125,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "nebula_puff",
+      vs_path = "project_pos.vert",
+      fs_path = "nebula_puff.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "nebu_col", "time", "r" ],
+      subroutines = {},
+   ),
+   Shader(
       name = "nebula_map",
       vs_path = "system_map.vert",
       fs_path = "nebula_map.frag",
