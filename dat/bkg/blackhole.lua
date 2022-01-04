@@ -29,6 +29,7 @@ function background ()
    time = -1000 * rnd.rnd()
 
    bgstars = lg.newCanvas()
+   shader:send( "u_bgtex", bgstars )
 
    starfield.init{ nolocalstars=true }
    blackhole = bgshaders.init( shader, sf )
@@ -45,6 +46,5 @@ function renderfg( dt )
    starfield.render( dt )
    lg.setCanvas()
 
-   shader:send( "u_bgtex", bgstars )
    blackhole:render( dt )
 end
