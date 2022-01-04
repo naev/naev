@@ -22,13 +22,18 @@ function filesystem.getInfo( path, filtertype )
    end
    return nil
 end
-function filesystem.newFile( filename )
+function filesystem.newFile( filename, mode )
    local ftype = naev.file.filetype( filename )
+   local f
    if ftype == "file" then
-      return naev.file.new( filename )
+      f = naev.file.new( filename )
+   else -- Fallback to love path
+      f = naev.file.new( love._basepath..filename )
    end
-   -- Fallback to love path
-   return naev.file.new( love._basepath..filename )
+   if mode ~= nil then
+      f:open(mode)
+   end
+   return f
 end
 function filesystem.read( name, size )
    local f = filesystem.newFile( name )
