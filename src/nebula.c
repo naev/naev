@@ -384,7 +384,7 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform3f( shaders.trail.nebu_col, col.r, col.g, col.b );
 
    /* Also set the hue for puffs. */
-   col_hsv2rgb( &col, nebu_hue*360., 0.7, 1.0 );
+   col_hsv2rgb( &col, nebu_hue*360., 0.95, 1.0 );
    glUseProgram(shaders.nebula_puff.program);
    glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
 
