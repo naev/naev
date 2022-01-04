@@ -11,7 +11,7 @@ const float strength = 1.0;
 const float speed    = 1.0;
 const float density  = 0.7;
 
-const float smoothness     = 0.5;
+const float smoothness     = 0.7;
 const float noiseScale     = 0.001;
 const float noiseTimeScale = 0.03;
 

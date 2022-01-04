@@ -10,7 +10,7 @@ const int ITERATIONS    = 4;
 const float SCALAR      = 2.0;
 const float SCALE       = 3.0;
 const float TIME_SCALE  = 10.0;
-const float smoothness  = 0.5;
+const float smoothness  = 0.9;
 
 void main (void)
 {
