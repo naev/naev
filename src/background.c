@@ -235,12 +235,14 @@ void background_renderStars( const double dt )
 
 /**
  * @brief Render the background.
+ *
+ *    @param dt Real delta ticks elapsed.
  */
 void background_render( double dt )
 {
    if (bkg_L_renderbg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
-      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderbg' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
@@ -253,9 +255,8 @@ void background_render( double dt )
 
    if (bkg_L_renderfg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
-      lua_pushnumber( naevL, dt );
-      lua_pushnumber( naevL, naev_getrealdt() );
-      if (nlua_pcall( bkg_cur_env, 2, 0 )) {
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderfg' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
       }
@@ -269,9 +270,8 @@ void background_renderOverlay( double dt )
 {
    if (bkg_L_renderov != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
-      lua_pushnumber( naevL, dt );
-      lua_pushnumber( naevL, naev_getrealdt() );
-      if (nlua_pcall( bkg_cur_env, 2, 0 )) {
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderov' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
       }
