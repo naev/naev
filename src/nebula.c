@@ -201,28 +201,29 @@ static void nebu_renderBackground( const double dt )
  */
 static void nebu_blitFBO (void)
 {
-   if (nebu_dofbo) {
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   if (!nebu_dofbo)
+      return;
 
-      glUseProgram(shaders.texture.program);
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
-      glBindTexture( GL_TEXTURE_2D, nebu_tex );
+   glUseProgram(shaders.texture.program);
 
-      glEnableVertexAttribArray( shaders.texture.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-            0, 2, GL_FLOAT, 0 );
+   glBindTexture( GL_TEXTURE_2D, nebu_tex );
 
-      /* Set shader uniforms. */
-      gl_uniformColor(shaders.texture.color, &cWhite);
-      gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
-      gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity());
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
 
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   /* Set shader uniforms. */
+   gl_uniformColor(shaders.texture.color, &cWhite);
+   gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+   gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity());
 
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.texture.vertex );
-   }
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.texture.vertex );
 }
 
 /**
