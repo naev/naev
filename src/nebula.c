@@ -319,19 +319,18 @@ static void nebu_renderPuffs( int below_player )
          puff->y += puff_y * puff->height;
 
          /* Check boundaries */
-         if (puff->x > SCREEN_W + NEBULA_PUFF_BUFFER)
-            puff->x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (puff->y > SCREEN_H + NEBULA_PUFF_BUFFER)
-            puff->y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
-         else if (puff->x < -NEBULA_PUFF_BUFFER)
-            puff->x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (puff->y < -NEBULA_PUFF_BUFFER)
-            puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         puff->x = fmod( puff->x, SCREEN_W + 2.*NEBULA_PUFF_BUFFER );
+         puff->y = fmod( puff->y, SCREEN_H + 2.*NEBULA_PUFF_BUFFER );
+
+         if (puff->x < 0.)
+            puff->x += SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
+         if (puff->y < 0.)
+            puff->y += SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
 
          /* Render */
          col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
          gl_renderStatic( nebu_pufftexs[puff->tex],
-               puff->x, puff->y, &col );
+               puff->x-NEBULA_PUFF_BUFFER, puff->y-NEBULA_PUFF_BUFFER, &col );
       }
    }
 }
