@@ -121,7 +121,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "brightness", "eddy_scale", "time"],
+      uniforms = ["projection", "hue", "brightness", "eddy_scale", "time", "volatility"],
       subroutines = {},
    ),
    Shader(
@@ -129,7 +129,7 @@ SHADERS = [
       vs_path = "system_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "time", "globalpos", "alpha"],
+      uniforms = ["projection", "hue", "time", "globalpos", "alpha", "volatility"],
       subroutines = {},
    ),
    Shader(

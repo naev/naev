@@ -349,12 +349,11 @@ void nebu_movePuffs( double x, double y )
  * @brief Prepares the nebualae to be rendered.
  *
  *    @param density Density of the nebula (0-1000).
- *    @param volatility Volatility of the nebula (0-1000).
+ *    @param volatility Volatility of the nebula.
  *    @param hue Hue of the nebula (0-1).
  */
 void nebu_prep( double density, double volatility, double hue )
 {
-   (void) volatility;
    float puffhue;
    glColour col;
 
@@ -364,6 +363,7 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform1f(shaders.nebula.hue, nebu_hue);
    glUseProgram(shaders.nebula_background.program);
    glUniform1f(shaders.nebula_background.hue, nebu_hue);
+   glUniform1f(shaders.nebula_background.volatility, volatility);
    glUseProgram(0);
 
    /* Also set the hue for trails */

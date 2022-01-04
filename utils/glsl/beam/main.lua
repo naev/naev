@@ -1,8 +1,6 @@
 --[[
 -- Run with `love trail`
 --]]
-
-
 local pixelcode = love.filesystem.read( "beam.frag" )
 
 local vertexcode = [[

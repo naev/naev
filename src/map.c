@@ -1054,6 +1054,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );
