@@ -1,5 +1,7 @@
 #pragma language glsl3
 
+#include "lib/math.glsl"
+
 const float SPEED = 1.0; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
 const float SIZE  = 1.5; /**< Size of the black hole relative to texture. */
@@ -30,16 +32,13 @@ uniform float u_time = 0.0;
 uniform vec3 u_camera= vec3( 0.0, 0.0, 1.0 );
 uniform sampler2D u_bgtex;
 
-float hash(float x){ return fract(sin(x)*152754.742); }
-float hash(vec2 x){  return hash(x.x + hash(x.y)); }
-
 /* Value Noise. */
 float value( vec2 p, float f )
 {
-   float bl = hash(floor(p*f + vec2(0.0,0.0)));
-   float br = hash(floor(p*f + vec2(1.0,0.0)));
-   float tl = hash(floor(p*f + vec2(0.0,1.0)));
-   float tr = hash(floor(p*f + vec2(1.0,1.0)));
+   float bl = random(floor(p*f + vec2(0.0,0.0)));
+   float br = random(floor(p*f + vec2(1.0,0.0)));
+   float tl = random(floor(p*f + vec2(0.0,1.0)));
+   float tr = random(floor(p*f + vec2(1.0,1.0)));
 
    vec2 fr = fract(p*f);
    fr = (3.0 - 2.0*fr)*fr*fr;
