@@ -20,8 +20,10 @@ void main (void)
    float dist = length(localpos);
    dist = (dist < 1.0-smoothness) ? 1.0 : (1.0 - dist) / smoothness;
    float a = smoothstep( 0.0, 1.0, dist );
-   if (a <= 0.0)
+   if (a <= 0.0) {
       discard;
+      return;
+   }
 
    /* Coordinates. */
    /* TODO figure out why it hates globalpos (probably scale issue :/) */
