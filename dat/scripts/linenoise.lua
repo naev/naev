@@ -51,7 +51,7 @@ function ln.historyload( filename )
 end
 
 --[[---
-Sets the completion callback.
+Sets the completion callback (which should call ln.addcompletion() once per suggested completion of "line").
 
 TODO This is a stub implementation that doesn't work.
 
@@ -62,16 +62,16 @@ function ln.setcompletion( callback )
 end
 
 --[[---
-Adds string to the list of completions.
+Adds string to the list of completions. (To be called by the completion callback.)
 
 TODO This is a stub implementation that doesn't work.
 
-   @param completions The object passed to the setcompletion callback.
-   @tparam string ending A completion of the line provided to the setcompletion callback.
+   @param completions The object passed to the completion callback.
+   @tparam string option A possible completion.
 --]]
-function ln.addcompletion( completions, ending )
+function ln.addcompletion( completions, option )
    local _completions = completions
-   local _ending = ending
+   local _option = option
 end
 
 return ln
