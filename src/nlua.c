@@ -113,10 +113,21 @@ static int nlua_gettext_noop( lua_State *L )
    return 1;
 }
 
+/** @brief Implements the Lua function math.log2 (base-2 logarithm). */
 static int nlua_log2( lua_State *L )
 {
    double n = luaL_checknumber(L,1);
    lua_pushnumber(L, log2(n));
+   return 1;
+}
+
+/** @brief Implements the Lua function os.getenv. In the sandbox we only make a fake $HOME visible. */
+static int nlua_os_getenv( lua_State *L )
+{
+   const char *var = luaL_checkstring(L, 1);
+   if (strcmp(var, "HOME"))
+      return 0;
+   lua_pushstring(L, "lua_home");
    return 1;
 }
 
@@ -370,9 +381,11 @@ static int nlua_loadBasic( lua_State* L )
    luaL_register(L, "gettext", gettext_methods);
 
    /* Sandbox "io" and "os". */
-   lua_newtable(L);
+   lua_newtable(L); /* io table */
    lua_setglobal(L,"io");
-   lua_newtable(L);
+   lua_newtable(L); /* os table */
+   lua_pushcfunction(L, nlua_os_getenv);
+   lua_setfield(L,-2,"getenv");
    lua_setglobal(L,"os");
 
    /* Special math functions function. */
