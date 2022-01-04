@@ -69,6 +69,8 @@ function tut_illegal ()
       {item=badstuff[ rnd.rnd(1,#badstuff) ], ainame=tut.ainame()} ))
    sai(fmt.f(_([["If you have to deal with illegal goods, I would recommend you to try to maximize the stealth functionality of your ship, that you can enable with {stealthkey}. As ship detection in general is tied to ship mass, you will most likely have best result using small and agile ships to avoid detection. Remember to stay off patrol routes and avoid crowded systems for highest chance of success."]]),
       {stealthkey=tut.getKey("stealth")} ))
+   sai(fmt.f(_([["You can check to see if your commodities or outfits are illegal from the #bInfo Menu#0 which you can open with {infokey}, and then looking at your ship outfits or commodities. Note that illegality is determined on a per-faction basis instead of globally."]])
+      {infokey=tut.getKey("info")}))
    vn.na(fmt.f(_([[{ainame} vanishes and you are left wondering why they are so knowledgable about illegal activities.]]),{ainame=tut.ainame()}))
    vn.done( tut.shipai.transition )
    vn.run()
