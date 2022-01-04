@@ -28,5 +28,5 @@ void main (void)
    vec2 rel_pos = localpos + globalpos;
    colour_out = nebula( vec4(0.0), rel_pos, time, hue, value, volatility, nebu_brightness );
    colour_out.rgb *= brightness;
-   colour_out.a = a * alpha;
+   colour_out.a *= a * alpha;
 }
