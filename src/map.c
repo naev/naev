@@ -1083,6 +1083,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          gl_Matrix4_Uniform(sys->ms.projection, projection);
          glUniform1f(sys->ms.time, map_dt);
          glUniform2f(sys->ms.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(sys->ms.alpha, alpha);
 
          /* Draw. */
          glEnableVertexAttribArray( sys->ms.vertex );

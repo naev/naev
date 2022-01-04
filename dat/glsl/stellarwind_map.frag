@@ -3,6 +3,7 @@
 uniform float brightness = 1.0;
 uniform float time;
 uniform vec2 globalpos;
+uniform float alpha;
 in vec2 localpos;
 out vec4 colour_out;
 
@@ -35,8 +36,8 @@ void main (void)
    /* Fallout */
    float dist = length(localpos);
    dist = (dist < 1.0-smoothness) ? 1.0 : (1.0 - dist) / smoothness;
-   float alpha = smoothstep( 0.0, 1.0, dist );
-   if (alpha <= 0.0)
+   float a = smoothstep( 0.0, 1.0, dist );
+   if (a <= 0.0)
       discard;
 
    /* Calculate coordinates */
@@ -49,5 +50,5 @@ void main (void)
    float noise = getNoise( uv );
    noise = pow( noise, 4.0 / density ) * 2.0;  //more contrast
    colour_out = vec4( 0.2, 0.6, 0.9, noise );
-   colour_out *= alpha;
+   colour_out *= alpha * a;
 }

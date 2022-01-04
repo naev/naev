@@ -346,9 +346,10 @@ struct StarSystem_ {
       GLuint program;   /**< Program for map shader. */
       GLuint vertex;    /**< Vertex attribute for map shader. */
       GLuint projection;/**< Projection matrix for map shader. */
+      GLuint alpha;     /**< Transparency for map shader. */
       GLuint time;      /**< Time for map shader. */
       GLuint globalpos; /**< Global position of system for map shader. */
-   } ms;
+   } ms; /**< Map shader-related variables. */
 
    /* Economy. */
    CommodityPrice *averagePrice;

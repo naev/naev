@@ -2,6 +2,7 @@
 
 uniform float time;
 uniform vec2 globalpos;
+uniform float alpha;
 in vec2 localpos;
 out vec4 colour_out;
 
@@ -18,8 +19,8 @@ void main (void)
    /* Fallout */
    float dist = length(localpos);
    dist = (dist < 1.0-smoothness) ? 1.0 : (1.0 - dist) / smoothness;
-   float alpha = smoothstep( 0.0, 1.0, dist );
-   if (alpha <= 0.0)
+   float a = smoothstep( 0.0, 1.0, dist );
+   if (a <= 0.0)
       discard;
 
    /* Calculate coordinates */
@@ -35,5 +36,5 @@ void main (void)
 
    const vec4 colour = vec4( 0.937, 0.102, 0.300, 0.8 );
    colour_out =  mix( vec4(0.0), colour, f );
-   colour_out *= alpha;
+   colour_out *= a * alpha;
 }

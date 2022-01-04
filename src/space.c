@@ -2949,10 +2949,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    /* Load the shader. */
    if (sys->map_shader != NULL) {
       sys->ms.program   = gl_program_vert_frag( "system_map.vert", sys->map_shader );
-      sys->ms.vertex    = glGetAttribLocation( sys->ms.program, "vertex" );
+      sys->ms.vertex    = glGetAttribLocation( sys->ms.program,  "vertex" );
       sys->ms.projection= glGetUniformLocation( sys->ms.program, "projection" );
       sys->ms.time      = glGetUniformLocation( sys->ms.program, "time" );
       sys->ms.globalpos = glGetUniformLocation( sys->ms.program, "globalpos" );
+      sys->ms.alpha     = glGetUniformLocation( sys->ms.program, "alpha" );
    }
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
