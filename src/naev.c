@@ -713,10 +713,12 @@ void main_loop( int update )
    /*
     * Handle render.
     */
-   /* Clear buffer. */
-   render_all( game_dt, real_dt );
-   /* Draw buffer. */
-   SDL_GL_SwapWindow( gl_screen.window );
+   if (!quit) {
+      /* Clear buffer. */
+      render_all( game_dt, real_dt );
+      /* Draw buffer. */
+      SDL_GL_SwapWindow( gl_screen.window );
+   }
 }
 
 
