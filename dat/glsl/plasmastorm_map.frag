@@ -33,7 +33,7 @@ void main (void)
    uv.z  = time;
 
    /* Generate the base noise. */
-   float s = wavenoise( uv.xy, DRAGMULT, time*0.3);
+   float s = wavenoise( uv.xy, DRAGMULT, snoise(vec3(uv.xy*1.7,uv.z/10.0))+time*0.3);
    s = s*s;
    colour_out.rgb = mix( COL_BACK, COL_FRONT, s );
    colour_out.a = s;
