@@ -77,7 +77,7 @@ float getwaves3d( vec2 position, float dragmult, float timeshift) {
     float weight = 1.0;
     float w = 0.0;
     float ws = 0.0;
-    for(int i=0;i<20;i++){
+    for(int i=0;i<20;i++) {
         vec2 p = randWaves2() * 30.0;
         float res = wave(position, p, speed, phase, 0.0 + timeshift);
         float res2 = wave(position, p, speed, phase, 0.006 + timeshift);
@@ -95,7 +95,8 @@ float getwaves3d( vec2 position, float dragmult, float timeshift) {
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec3 uv = vec3( screen_coords / 300.0, u_time );
-   float s = getwaves3d( uv.xy, 20.0, u_time*0.3);
+   //float s = getwaves3d( uv.xy, 20.0, snoise(vec3(uv.xy,uv.z/10.0))+u_time*0.3);
+   float s = getwaves3d( uv.xy, 20.0, snoise(vec3(uv.xy*1.7,uv.z/10.0))+u_time*0.3);
    s = s*s;
    vec4 colour_out;
    colour_out.rgb = mix( COL_BACK, COL_FRONT, s );

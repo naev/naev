@@ -17,7 +17,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    uv.z = u_time;
 
    /* Generate the base noise. */
-   float s = wavenoise( uv.xy, DRAGMULT, u_time*0.3);
+   float s = wavenoise( uv.xy, DRAGMULT, snoise(vec3(uv.xy*1.7,uv.z/10.0))+u_time*0.3);
    s = s*s;
    vec4 colour;
    colour.rgb = mix( COL_BACK, COL_FRONT, s );
