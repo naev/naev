@@ -8,7 +8,6 @@
  */
 /** @cond */
 #define lua_c
-#include <assert.h>
 #include <ctype.h>
 #include <lauxlib.h>
 #include <lua.h>
@@ -69,6 +68,7 @@ static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
 static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
+static int cli_firstline   = 1; /**< Original CLI: Is this the first line? */
 
 /*
  * CLI stuff.
@@ -491,33 +491,35 @@ static int cli_initLua (void)
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
-   buf = ndata_read( "rep.lua", &blen );
-   status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
-   if (status) {
-      lua_settop( naevL, 0 );
-      return status;
-   }
-   if (lua_gettop( naevL ) != 1) {
-      WARN( _("rep.lua failed to return a single coroutine.") );
-      lua_settop( naevL, 0 );
-      return -1;
-   }
-   cli_thread = lua_tothread( naevL, -1 );
-   cli_thread_ref = luaL_ref( naevL, LUA_REGISTRYINDEX );
-   if (cli_thread == NULL) {
-      WARN( _("rep.lua failed to return a single coroutine.") );
-      lua_settop( naevL, 0 );
-      return -1;
-   }
-   status = lua_resume( cli_thread, 0 );
-   cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
-   if (status == 0) {
-      WARN( _("REPL thread exited.") );
-      return 1;
-   }
-   else if (status != LUA_YIELD) {
-      WARN( "%s", cli_prompt );
-      return -1;
+   if (conf.lua_repl) {
+      buf = ndata_read( "rep.lua", &blen );
+      status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
+      if (status) {
+         lua_settop( naevL, 0 );
+         return status;
+      }
+      if (lua_gettop( naevL ) != 1) {
+         WARN( _("rep.lua failed to return a single coroutine.") );
+         lua_settop( naevL, 0 );
+         return -1;
+      }
+      cli_thread = lua_tothread( naevL, -1 );
+      cli_thread_ref = luaL_ref( naevL, LUA_REGISTRYINDEX );
+      if (cli_thread == NULL) {
+         WARN( _("rep.lua failed to return a single coroutine.") );
+         lua_settop( naevL, 0 );
+         return -1;
+      }
+      status = lua_resume( cli_thread, 0 );
+      cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+      if (status == 0) {
+         WARN( _("REPL thread exited.") );
+         return 1;
+      }
+      else if (status != LUA_YIELD) {
+         WARN( "%s", cli_prompt );
+         return -1;
+      }
    }
    return 0;
 }
@@ -573,7 +575,7 @@ static void cli_input( unsigned int wid, const char *unused )
 {
    (void) unused;
    int status, len;
-   const char *str;
+   const char *str, *prompt;
    char *escaped;
    char buf[CLI_MAX_INPUT+7];
 
@@ -581,31 +583,94 @@ static void cli_input( unsigned int wid, const char *unused )
    str = window_getInput( wid, "inpInput" );
 
    /* Ignore useless stuff. */
-   if (str == NULL || cli_thread == NULL)
+   if (str == NULL || (conf.lua_repl && cli_thread == NULL))
       return;
 
    /* Put the message in the console. */
    escaped = cli_escapeString( &len, str, strlen(str) );
-   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0", cli_prompt, escaped );
+   if (conf.lua_repl)
+      prompt = cli_prompt; /* Remembered from last time lua-repl requested input */
+   else
+      prompt = cli_firstline ? "> " : ">>";
+   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0", prompt, escaped );
    free(escaped);
    cli_printCoreString( buf, 0 );
 
-   /* Resume the REPL. */
-   lua_pushstring( cli_thread, str );
-   status = lua_resume( cli_thread, 1 );
-   if (status == 0) {
-      cli_printCoreString( _("REPL thread exited."), 0 );
-      luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
-      cli_thread = NULL;
-      cli_thread_ref = LUA_NOREF;
+   if (conf.lua_repl) {
+      /* Resume the REPL. */
+      lua_pushstring( cli_thread, str );
+      status = lua_resume( cli_thread, 1 );
+      if (status == 0) {
+         cli_printCoreString( _("REPL thread exited."), 0 );
+         luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
+         cli_thread = NULL;
+         cli_thread_ref = LUA_NOREF;
+      }
+      else {
+         free( cli_prompt );
+         cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+         lua_settop( cli_thread, 0 );
+         if (status != LUA_YIELD)
+            cli_printCoreString( cli_prompt, 0 );
+      }
    }
    else {
-      free( cli_prompt );
-      assert( lua_gettop( cli_thread ) == 1 );
-      cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
-      lua_settop( cli_thread, 0 );
-      if (status != LUA_YIELD)
-         cli_printCoreString( cli_prompt, 0 );
+      /* Set up for concat. */
+      if (!cli_firstline)               /* o */
+         lua_pushliteral(naevL, "\n");  /* o \n */
+
+      /* Load the string. */
+      lua_pushstring( naevL, str );     /* s */
+
+      /* Concat. */
+      if (!cli_firstline)               /* o \n s */
+         lua_concat(naevL, 3);          /* s */
+
+      status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
+
+      /* String isn't proper Lua yet. */
+      if (status == LUA_ERRSYNTAX) {
+         size_t lmsg;
+         const char *msg = lua_tolstring(naevL, -1, &lmsg);
+         const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
+         const char *s;
+         if (strstr(msg, LUA_QL("<eof>")) == tp) {
+            /* Pop the loaded buffer. */
+            lua_pop(naevL, 1);
+            cli_firstline = 0;
+         }
+         else {
+            /* Real error, spew message and break. */
+            s = lua_tostring(naevL, -1);
+            WARN( "%s", s );
+            cli_printCoreString( s, 1 );
+            lua_settop(naevL, 0);
+            cli_firstline = 1;
+         }
+      }
+      /* Print results - all went well. */
+      else if (status == 0) {
+         lua_remove(naevL,1);
+
+         nlua_pushenv(cli_env);
+         lua_setfenv(naevL, -2);
+
+         if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
+            cli_printCoreString( lua_tostring(naevL, -1), 1 );
+            lua_pop(naevL, 1);
+         }
+
+         if (lua_gettop(naevL) > 0) {
+            nlua_getenv(cli_env, "print");
+            lua_insert(naevL, 1);
+            if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
+               cli_addMessage( _("Error printing results.") );
+         }
+
+         /* Clear stack. */
+         lua_settop(naevL, 0);
+         cli_firstline = 1;
+      }
    }
 
    /* Clear the box now. */
@@ -668,4 +733,7 @@ void cli_open (void)
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL, NULL, NULL );
+
+   /* Reinitilaized. */
+   cli_firstline = 1;
 }

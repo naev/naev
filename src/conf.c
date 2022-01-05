@@ -146,6 +146,7 @@ void conf_setDefaults (void)
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
+   conf.lua_repl     = 0;
    conf.lastversion = strdup( "" );
    conf.translation_warning_seen = 0;
 
@@ -397,6 +398,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "lua_repl", conf.lua_repl );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
@@ -1018,6 +1020,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Automatic saving for when using the universe editor whenever an edit is done"));
    conf_saveBool("devautosave",conf.devautosave);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enable the experimental CLI based on lua-repl."));
+   conf_saveBool("lua_repl",conf.lua_repl);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Save the config every time game exits (rewriting this bit)"));
