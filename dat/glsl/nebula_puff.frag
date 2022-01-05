@@ -13,6 +13,7 @@ out vec4 colour_out;
 
 void main(void) {
    float a = 1.0-length( pos );
+   a = smoothstep( 0.0, 1.0, a );
    if (a<0.0) {
       discard;
       return;
