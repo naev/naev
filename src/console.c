@@ -213,7 +213,7 @@ static int luaB_loadstring( lua_State *L ) {
  */
 static int cli_printRaw( lua_State *L )
 {
-   return cli_printCore( L, 0, 0 );
+   return cli_printCore( L, 1, 0 );
 }
 
 /**
