@@ -7,6 +7,7 @@ local pixelcode_electric = love.filesystem.read( "electric.frag" )
 local pixelcode_starfield = love.filesystem.read( "starfiled.frag" )
 local pixelcode_haze = love.filesystem.read( "haze.frag" )
 local pixelcode_ionicstorm = love.filesystem.read( "ionicstorm.frag" )
+local pixelcode_cloud = love.filesystem.read( "cloud.frag" )
 
 local vertexcode = [[
 #pragma language glsl3
@@ -35,7 +36,8 @@ function love.load()
    --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_electric, vertexcode)
    --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_starfield, vertexcode)
    --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_haze, vertexcode)
-   shader   = love.graphics.newShader( pixelcode_noise..pixelcode_ionicstorm, vertexcode)
+   --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_ionicstorm, vertexcode)
+   shader   = love.graphics.newShader( pixelcode_noise..pixelcode_cloud, vertexcode)
    set_shader( 0 )
    -- We need an image for the shader to work so we create a 1x1 px white image.
    local idata = love.image.newImageData( 1, 1 )

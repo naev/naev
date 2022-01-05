@@ -1,5 +1,8 @@
 uniform float u_time;
 
+const vec3 COL_BACK     = vec3( 150.0, 50.0, 150.0 ) / 255.;
+const vec3 COL_FRONT    = vec3( 220.0, 80.0, 220.0 ) / 255.;
+
 /*
 https://www.shadertoy.com/view/lscyD7
 5D wave noise
@@ -94,15 +97,18 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 uv = vec3( texture_coords * 2.0, u_time );
    float s = getwaves3d( uv.xy, 20.0, u_time*0.3);
    s = s*s;
-
-   vec4 colour = vec4( vec3(1.0,0.5,1.0), s );
+   vec4 colour_out;
+   colour_out.rgb = mix( COL_BACK, COL_FRONT, s );
+   colour_out.a = s;
 
    float flash_0 = sin(u_time);
    float flash_1 = sin(15.0 * u_time);
    float flash_2 = sin(2.85 * u_time);
    float flash_3 = sin(5.18 * u_time);
    float flash = max( 0.0,  snoise( uv*0.5 ) * flash_0 * flash_1 * flash_2 * flash_3 );
-   colour += vec4( 1.5*(s+0.5*flash)*flash*(0.5+0.5*flash_2) );
+   colour_out += vec4( 1.5*(s+0.5*flash)*flash*(0.5+0.5*flash_2) );
+   colour_out = clamp( colour_out, vec4(0.0), vec4(1.0) );
+   colour_out.a *= 0.7;
 
-   return colour;
+   return colour_out;
 }
