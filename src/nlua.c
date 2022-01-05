@@ -23,7 +23,6 @@
 #include "nlua_cli.h"
 #include "nlua_commodity.h"
 #include "nlua_data.h"
-#include "nlua_debug.h"
 #include "nlua_diff.h"
 #include "nlua_faction.h"
 #include "nlua_file.h"
@@ -682,7 +681,6 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadShiplog(env);
    r |= nlua_loadFile(env);
    r |= nlua_loadData(env);
-   r |= nlua_loadDebug(env);
    r |= nlua_loadLinOpt(env);
    r |= nlua_loadSafelanes(env);
 

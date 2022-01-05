@@ -33,7 +33,6 @@
 #include "nlua_camera.h"
 #include "nlua_cli.h"
 #include "nlua_col.h"
-#include "nlua_debug.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"

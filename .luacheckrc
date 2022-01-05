@@ -35,7 +35,6 @@ stds.Canvas = {read_globals={"canvas"}}
 stds.Col = {read_globals={"colour"}}
 stds.Commodity = {read_globals={"commodity"}}
 stds.Data = {read_globals={"data"}}
-stds.Debug = {read_globals={"debug"}}
 stds.Diff = {read_globals={"diff"}}
 stds.Evt = {read_globals={"evt"}}
 stds.CLI = {read_globals={"script", "printRaw"}} -- Actually set in cli_initLua()
@@ -70,7 +69,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship"
-STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 

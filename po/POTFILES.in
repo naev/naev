@@ -2819,8 +2819,6 @@ src/nlua_commodity.c
 src/nlua_commodity.h
 src/nlua_data.c
 src/nlua_data.h
-src/nlua_debug.c
-src/nlua_debug.h
 src/nlua_diff.c
 src/nlua_diff.h
 src/nlua_evt.c

@@ -18,6 +18,7 @@
 #include "array.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "debug.h"
 #include "escort.h"
 #include "gui.h"
 #include "land_outfits.h"
@@ -189,6 +190,7 @@ static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
 static int pilotL_knockback( lua_State *L );
 static int pilotL_calcStats( lua_State *L );
+static int pilotL_showEmitters( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -333,6 +335,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "damage", pilotL_damage },
    { "knockback", pilotL_knockback },
    { "calcStats", pilotL_calcStats },
+   { "showEmitters", pilotL_showEmitters },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -5090,5 +5093,41 @@ static int pilotL_calcStats( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    pilot_calcStats( p );
+   return 0;
+}
+
+
+/**
+ * @brief Toggles the emitter marker.
+ *
+ * @usage pilot.showEmitters() -- Trail emitters are marked with crosses.
+ * @usage pilot.showEmitters(false) -- Remove the markers.
+ *
+ *    @luatparam[opt=true] boolean state Whether to set or unset markers.
+ * @luafunc showEmitters
+ */
+static int pilotL_showEmitters( lua_State *L )
+{
+   int state;
+
+   NLUA_CHECKRW(L);
+
+   /* Get state. */
+   if (lua_gettop(L) > 0)
+      state = lua_toboolean(L, 1);
+   else
+      state = 1;
+
+   /* Toggle the markers. */
+#if DEBUGGING
+   if (state)
+      debug_setFlag(DEBUG_MARK_EMITTER);
+   else
+      debug_rmFlag(DEBUG_MARK_EMITTER);
+#else /* DEBUGGING */
+   (void) state;
+   NLUA_ERROR(L, _("Requires a debug build."));
+#endif /* DEBUGGING */
+
    return 0;
 }
