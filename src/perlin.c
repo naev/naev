@@ -57,15 +57,12 @@
 #include "nstring.h"
 #include "rng.h"
 
-
 #define SIMPLEX_SCALE 0.5f
-
 
 /**
  * @brief Linearly Interpolates x between a and b.
  */
 #define LERP(a, b, x)      ( a + x * (b - a) )
-
 
 /**
  * @brief Structure used for generating noise.
@@ -80,58 +77,16 @@ struct perlin_data_s {
    float exponent[NOISE_MAX_OCTAVES]; /**< Not sure. */
 };
 
-
 /*
  * prototypes
  */
 /* normalizing. */
 static void normalize3( float f[3] );
 static void normalize2( float f[2] );
-/* noise processing. */
-static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy );
-static float lattice1( perlin_data_t *pdata, int ix, float fx );
-
-
-/**
- * @brief Not sure what it does.
- */
-static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy )
-{
-   int nIndex;
-   float value;
-
-   nIndex = 0;
-   nIndex = pdata->map[(nIndex + ix) & 0xFF];
-   nIndex = pdata->map[(nIndex + iy) & 0xFF];
-
-   value  = pdata->buffer[nIndex][0] * fx;
-   value += pdata->buffer[nIndex][1] * fy;
-
-   return value;
-}
-
-
-/**
- * @brief Not sure what it does.
- */
-static float lattice1( perlin_data_t *pdata, int ix, float fx )
-{
-   int nIndex;
-   float value;
-
-   nIndex = 0;
-   nIndex = pdata->map[(nIndex + ix) & 0xFF];
-
-   value  = pdata->buffer[nIndex][0] * fx;
-
-   return value;
-}
-
 
 #define SWAP(a, b, t)      (t) = (a); (a) = (b); (b) = (t) /**< Swaps two values. */
 #define FLOOR(a)           ((int)(a) - ((a) < 0 && (a) != (int)(a))) /**< Limits to 0. */
 #define CUBIC(a)           ( (a) * (a) * (3 - 2*(a)) ) /**< Does cubic filtering. */
-
 
 /**
  * @brief Normalizes a 3d vector.
@@ -140,14 +95,11 @@ static float lattice1( perlin_data_t *pdata, int ix, float fx )
  */
 static void normalize3( float f[3] )
 {
-   float magnitude;
-
-   magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1] + f[2]*f[2]);
+   float magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1] + f[2]*f[2]);
    f[0] *= magnitude;
    f[1] *= magnitude;
    f[2] *= magnitude;
 }
-
 
 /**
  * @brief Normalizes a 2d vector.
@@ -156,13 +108,10 @@ static void normalize3( float f[3] )
  */
 static void normalize2( float f[2] )
 {
-   float magnitude;
-
-   magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1]);
+   float magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1]);
    f[0] *= magnitude;
    f[1] *= magnitude;
 }
-
 
 /**
  * @brief Creates a new perlin noise generator.
@@ -224,109 +173,7 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
    return pdata;
 }
 
-
-/**
- * @brief Gets some 2D Perlin noise from the data.
- *
- * Somewhat optimized for speed, probably can't get optimized much more.
- *
- *    @param pdata Perlin data to use.
- *    @param f Position of the noise to get.
- */
-float noise_get2( perlin_data_t* pdata, float f[2] )
-{
-   int n[2] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
-   float r[2] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
-   float w[2] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
-   float value __attribute__ ((aligned (32)));
-   float v[4] __attribute__ ((aligned (32)));
-
-   n[0] = FLOOR(f[0]);
-   n[1] = FLOOR(f[1]);
-
-   r[0] = f[0] - n[0];
-   r[1] = f[1] - n[1];
-
-   w[0] = CUBIC(r[0]);
-   w[1] = CUBIC(r[1]);
-
-   /*
-    * Much faster in 2d.
-    */
-   v[0] = lattice2(pdata,n[0],   r[0],   n[1],   r[1]);
-   v[1] = lattice2(pdata,n[0]+1, r[0]-1, n[1],   r[1]);
-   v[2] = lattice2(pdata,n[0],   r[0],   n[1]+1, r[1]-1);
-   v[3] = lattice2(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1);
-   value = LERP(LERP(v[0], v[1], w[0]),
-         LERP(v[2], v[3], w[0]),
-         w[1]);
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
-
-/**
- * @brief Gets some 1D Perlin noise from the data.
- *
- * Somewhat optimized for speed, probably can't get optimized much more.
- *
- *    @param pdata Perlin data to use.
- *    @param f Position of the noise to get.
- */
-float noise_get1( perlin_data_t* pdata, float f[1] )
-{
-   int n[1] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
-   float r[1] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
-   float w[1] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
-   float value __attribute__ ((aligned (32)));
-   float v[2] __attribute__ ((aligned (32)));
-
-   n[0] = FLOOR(f[0]);
-
-   r[0] = f[0] - n[0];
-
-   w[0] = CUBIC(r[0]);
-
-   v[0] = lattice1(pdata,n[0],   r[0]   );
-   v[1] = lattice1(pdata,n[0]+1, r[0]-1 );
-   value = LERP( v[0], v[1], w[0] );
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
-
-/**
- * @brief Gets 2d Turbulence noise for a position.
- *
- *    @param pdata Perlin data to generate noise from.
- *    @param f Position of the noise.
- *    @param octaves Octaves to use.
- *    @return The noise level at the position.
- */
-float noise_turbulence2( perlin_data_t* pdata, float f[2], int octaves )
-{
-   float tf[2];
-   /* Initialize locals */
-   float value = 0;
-   int i;
-
-   tf[0] = f[0];
-   tf[1] = f[1];
-
-   /* Inner loop of spectral construction, where the fractal is built */
-   for (i=0; i<octaves; i++)
-   {
-      value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
-      tf[0] *= pdata->lacunarity;
-      tf[1] *= pdata->lacunarity;
-   }
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
-
 #define NOISE_SIMPLEX_GRADIENT_1D(n,h,x) { float grad; h &= 0xF; grad=1.0f+(h & 7); if ( h & 8 ) grad = -grad; n = grad * x; }
-
 
 /**
  * @brief Gets 1D simplex noise for a position.
@@ -354,9 +201,7 @@ float noise_simplex1( perlin_data_t* pdata, float f[1] )
    n1   *= t1*t1;
 
    return 0.25f * (n0+n1);
-
 }
-
 
 /**
  * @brief Frees some noise data.
@@ -366,133 +211,4 @@ float noise_simplex1( perlin_data_t* pdata, float f[1] )
 void noise_delete( perlin_data_t* pdata )
 {
    free(pdata);
-}
-
-
-/**
- * @brief Generates radar interference.
- *
- *    @param w Width to generate.
- *    @param h Height to generate.
- *    @param rug Rugosity of the interference.
- *    @return The map generated.
- */
-float* noise_genRadarInt( const int w, const int h, float rug )
-{
-   int x, y;
-   float f[2];
-   float hurst;
-   float lacunarity;
-   perlin_data_t* noise;
-   float *map;
-   float value;
-
-   /* pretty default values */
-   hurst       = NOISE_DEFAULT_HURST;
-   lacunarity  = NOISE_DEFAULT_LACUNARITY;
-
-   /* create noise and data */
-   noise       = noise_new( 2, hurst, lacunarity );
-   map         = malloc(sizeof(float)*w*h);
-   if (map == NULL) {
-      noise_delete( noise );
-      WARN(_("Out of Memory"));
-      return NULL;
-   }
-
-   /* Start to create the nebula */
-   for (y=0; y<h; y++) {
-
-      f[1] = rug * (float)y / (float)h;
-      for (x=0; x<w; x++) {
-
-         f[0] = rug * (float)x / (float)w;
-
-         /* Get the 2d noise. */
-         value = noise_get2( noise, f );
-
-         /* Set the value to [0,1]. */
-         map[y*w + x] = (value + 1.) / 2.;
-      }
-   }
-
-   /* Clean up */
-   noise_delete( noise );
-
-   /* Results */
-   return map;
-}
-
-
-/**
- * @brief Generates tiny nebula puffs
- *
- *    @param w Width of the puff to generate.
- *    @param h Height of the puff to generate.
- *    @param rug Rugosity of the puff.
- *    @return The puff generated.
- */
-float* noise_genNebulaPuffMap( const int w, const int h, float rug )
-{
-   int x,y, hw,hh;
-   float d;
-   float f[2];
-   int octaves;
-   float hurst;
-   float lacunarity;
-   perlin_data_t* noise;
-   float *nebula;
-   float value;
-   float zoom;
-   float max;
-
-   /* pretty default values */
-   octaves     = 3;
-   hurst       = NOISE_DEFAULT_HURST;
-   lacunarity  = NOISE_DEFAULT_LACUNARITY;
-   zoom        = rug;
-
-   /* create noise and data */
-   noise       = noise_new( 2, hurst, lacunarity );
-   nebula      = malloc(sizeof(float)*w*h);
-   if (nebula == NULL) {
-      noise_delete( noise );
-      WARN(_("Out of Memory"));
-      return NULL;
-   }
-
-   /* Start to create the nebula */
-   max   = 0.;
-   hw    = w/2;
-   hh    = h/2;
-   d     = (float)MIN(hw,hh);
-   for (y=0; y<h; y++) {
-
-      f[1] = zoom * (float)y / (float)h;
-      for (x=0; x<w; x++) {
-
-         f[0] = zoom * (float)x / (float)w;
-
-         /* Get the 2d noise. */
-         value = noise_turbulence2( noise, f, octaves );
-
-         /* Make value also depend on distance from center */
-         value *= (d - 1. - sqrtf( (float)((x-hw)*(x-hw) + (y-hh)*(y-hh)) )) / d;
-         if (value < 0.)
-            value = 0.;
-
-         /* Cap at maximum. */
-         if (max < value)
-            max = value;
-
-         /* Set the value. */
-         nebula[y*w + x] = value;
-      }
-   }
-
-   /* Clean up */
-   noise_delete( noise );
-
-   /* Results */
-   return nebula;
 }
