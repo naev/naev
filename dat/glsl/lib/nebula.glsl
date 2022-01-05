@@ -6,7 +6,7 @@
 #include "lib/colour.glsl"
 
 const int ITERATIONS = 3;
-const float SCALAR = pow(2., 4./3.);
+const float SCALAR = pow(2.0, 4.0/3.0);
 const float COLOUR_DISPERSION = 0.02;
 
 float nebula_hue( float hue, vec3 uv )

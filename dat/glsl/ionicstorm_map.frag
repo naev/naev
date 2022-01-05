@@ -10,7 +10,9 @@ out vec4 colour_out;
 
 const float DRAGMULT    = 10.0;
 const float SCALE       = 1.0;
-const float smoothness  = 0.9;
+const vec3 COL_BACK     = vec3( 150.0, 50.0, 150.0 ) / 255.;
+const vec3 COL_FRONT    = vec3( 220.0, 80.0, 220.0 ) / 255.;
+const float SMOOTHNESS  = 0.9;
 
 void main (void)
 {
@@ -18,7 +20,7 @@ void main (void)
 
    /* Fallout */
    float dist = length(localpos);
-   dist = (dist < 1.0-smoothness) ? 1.0 : (1.0 - dist) / smoothness;
+   dist = (dist < 1.0-SMOOTHNESS) ? 1.0 : (1.0 - dist) / SMOOTHNESS;
    float a = smoothstep( 0.0, 1.0, dist );
    if (a <= 0.0) {
       discard;
@@ -33,7 +35,8 @@ void main (void)
    /* Generate the base noise. */
    float s = wavenoise( uv.xy, DRAGMULT, time*0.3);
    s = s*s;
-   colour_out = vec4( vec3(1.0,0.5,1.0), s );
+   colour_out.rgb = mix( COL_BACK, COL_FRONT, s );
+   colour_out.a = s;
 
    /* Flashing parts. */
    float flash_0 = sin(time);
