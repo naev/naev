@@ -2188,7 +2188,6 @@ dat/bkg/blackhole.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
 dat/bkg/haze.lua
-dat/bkg/ionicstorm.lua
 dat/bkg/lib/bgshaders.lua
 dat/bkg/lib/nebula.lua
 dat/bkg/lib/nebula_image.lua
@@ -2205,6 +2204,7 @@ dat/bkg/nebu_ngc_2440.lua
 dat/bkg/nebu_ngc_2440_2.lua
 dat/bkg/nebu_ngc_5189.lua
 dat/bkg/nebu_ngc_6210.lua
+dat/bkg/plasmastorm.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua

@@ -18,7 +18,7 @@ function background ()
    sf = math.max( 1.0, sf )
 
    -- Initialize shader
-   local pixelcode = lf.read( "bkg/shaders/ionicstorm.frag" )
+   local pixelcode = lf.read( "bkg/shaders/plasmastorm.frag" )
    shader = graphics.newShader( pixelcode, love_shaders.vertexcode )
    shader._dt = -1000 * rnd.rnd()
    shader.update = function( self, dt )
