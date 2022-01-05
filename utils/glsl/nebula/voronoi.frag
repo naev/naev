@@ -48,10 +48,10 @@ const vec3 COL_FRONT    = vec3( 1.5, 0.65, 0.9 );
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec3 uv  = vec3( screen_coords / 300.0, u_time / 30.0 );
+   vec3 uv  = vec3( screen_coords / 150.0, u_time / 30.0 );
 
    float vf = voronoi_fbm( uv );
-   float v  = 1.5*vf*vf;
+   float v  = 4.0*vf*vf*vf;
 
    vec4 colour_out;
    colour_out.rgb = mix( COL_BACK, COL_FRONT, v );
