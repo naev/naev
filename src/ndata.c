@@ -71,7 +71,7 @@ static void ndata_testVersion (void)
 
    /* Parse version. */
    buf = ndata_read( "VERSION", &size );
-   for (int i=0; i<MIN(size,PATH_MAX-1); i++)
+   for (size_t i=0; i<MIN(size,PATH_MAX-1); i++)
       cbuf[i] = buf[i];
    cbuf[MIN(size-1,PATH_MAX-1)] = '\0';
    diff = naev_versionCompare( cbuf );
