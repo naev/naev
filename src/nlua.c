@@ -360,7 +360,7 @@ static int nlua_loadBasic( lua_State* L )
          "load",
          "loadfile",
          "loadstring",
-         "setfenv",
+         /*"setfenv",*/
          NULL
    };
 
