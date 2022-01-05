@@ -7,4 +7,4 @@
 	branch = main
 [submodule "dat/lua-repl"]
 	path = dat/lua-repl
-	url = https://github.com/hoelzro/lua-repl.git
+	url = //github.com/UncombedCoconut/lua-repl.git
