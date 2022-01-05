@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nfile.c
  *
@@ -9,8 +8,6 @@
  *
  * @todo Add support for Windows and macOS.
  */
-
-
 /** @cond */
 #include <dirent.h>
 #include <limits.h>
@@ -42,7 +39,6 @@
 #endif /* MACOS */
 #include "log.h"
 #include "nstring.h"
-
 
 #if HAS_UNIX && !MACOS
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
@@ -111,7 +107,6 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
 }
 #endif
 
-
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**
  * @brief Gets Naev's config path (for user preferences such as conf.lua)
@@ -155,7 +150,6 @@ const char* nfile_configPath (void)
     return naev_configPath;
 }
 
-
 static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
 /**
  * @brief Gets Naev's cache path (for cached data such as generated textures)
@@ -198,7 +192,6 @@ const char* nfile_cachePath (void)
 
     return naev_cachePath;
 }
-
 
 #if HAS_POSIX
 #define MKDIR mkdir( opath, mode )
@@ -265,7 +258,6 @@ static int mkpath( const char *path )
 }
 #undef MKDIR
 
-
 /**
  * @brief Creates a directory if it doesn't exist.
  *
@@ -295,7 +287,6 @@ int nfile_dirMakeExist( const char *path )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a directory exists.
  *
@@ -315,7 +306,6 @@ int nfile_dirExists( const char *path )
    closedir(d);
    return 1;
 }
-
 
 /**
  * @brief Checks to see if a file exists.
@@ -344,7 +334,6 @@ int nfile_fileExists( const char *path )
    return 0;
 }
 
-
 /**
  * @brief Backup a file, if it exists.
  *
@@ -365,7 +354,6 @@ int nfile_backupIfExists( const char *path )
 
    return nfile_copyIfExists( path, backup );
 }
-
 
 /**
  * @brief Copy a file, if it exists.
@@ -428,7 +416,6 @@ err:
 
    return -1;
 }
-
 
 /**
  * @brief Tries to read a file.
@@ -517,7 +504,6 @@ char *nfile_readFile( size_t *filesize, const char *path )
    return buf;
 }
 
-
 /**
  * @brief Tries to create the file if it doesn't exist.
  *
@@ -540,7 +526,6 @@ int nfile_touch( const char *path )
    fclose(f);
    return 0;
 }
-
 
 /**
  * @brief Tries to write a file.
@@ -587,7 +572,6 @@ int nfile_writeFile( const char *data, size_t len, const char *path )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a character is used to separate files in a path.
  *
@@ -604,7 +588,6 @@ int nfile_isSeparator( uint32_t c )
 #endif /* WIN32 */
    return 0;
 }
-
 
 int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... )
 {
