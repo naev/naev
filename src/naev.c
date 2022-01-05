@@ -713,7 +713,9 @@ void main_loop( int update )
    /*
     * Handle render.
     */
-   if (!quit) {
+   if (!quit) { /* So if update sets up a nested main loop, we can end up in a
+                   state where things are corrupted when trying to exit the game.
+                   Avoid rendering when quitting just in case. */
       /* Clear buffer. */
       render_all( game_dt, real_dt );
       /* Draw buffer. */
