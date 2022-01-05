@@ -51,7 +51,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 uv  = vec3( screen_coords / 300.0, u_time / 30.0 );
 
    float vf = voronoi_fbm( uv );
-   float v  = pow(1.5*vf,1.2);
+   float v  = 1.5*vf*vf;
 
    vec4 colour_out;
    colour_out.rgb = mix( COL_BACK, COL_FRONT, v );
