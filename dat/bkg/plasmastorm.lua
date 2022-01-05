@@ -31,7 +31,7 @@ function background ()
    background_default()
 end
 
-function renderfg( dt )
+function rendermg( dt )
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()

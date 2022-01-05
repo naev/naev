@@ -57,6 +57,7 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
 static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
 static int bkg_L_renderbg = LUA_NOREF; /**< Background rendering function. */
+static int bkg_L_rendermg = LUA_NOREF; /**< Middleground rendering function. */
 static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
 static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
 
@@ -250,6 +251,16 @@ void background_render( double dt )
    }
 
    background_renderImages( bkg_image_arr_bk );
+
+   if (bkg_L_rendermg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_rendermg );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'rendermg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
+
    background_renderStars(dt);
    background_renderImages( bkg_image_arr_ft );
 
@@ -459,6 +470,7 @@ int background_load( const char *name )
 
    /* See if there are render functions. */
    bkg_L_renderbg = nlua_refenv( env, "renderbg" );
+   bkg_L_rendermg = nlua_refenv( env, "rendermg" );
    bkg_L_renderfg = nlua_refenv( env, "renderfg" );
    bkg_L_renderov = nlua_refenv( env, "renderov" );
 
@@ -476,9 +488,11 @@ static void background_clearCurrent (void)
    bkg_cur_env = LUA_NOREF;
 
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_rendermg );
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
    bkg_L_renderbg = LUA_NOREF;
+   bkg_L_rendermg = LUA_NOREF;
    bkg_L_renderfg = LUA_NOREF;
    bkg_L_renderov = LUA_NOREF;
 }

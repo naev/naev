@@ -145,7 +145,7 @@ stds.API_spob = {globals={
    "render",   -- C function: space_renderSpob
    "update",   -- C function: space_updateSpob
 }}
-stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
+stds.Background.globals={"background", "renderbg", "rendermg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
    "create",
