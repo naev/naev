@@ -21,15 +21,6 @@ function bioship.playerisbioship ()
    return bioship.isbioship( player.pilot() )
 end
 
-local function inlist( lst, item )
-   for k,v in ipairs(lst) do
-      if v==item then
-         return true
-      end
-   end
-   return false
-end
-
 local _base = 300
 local _mult = 1.2
 function bioship.exptostage( stage )
