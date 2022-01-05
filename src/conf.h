@@ -64,6 +64,7 @@
  * @note Input is not handled here.
  */
 typedef struct PlayerConf_s {
+   int loaded; /**< Configuration file has been loaded. */
 
    /* ndata. */
    char *ndata; /**< Ndata path to use. */

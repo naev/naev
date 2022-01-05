@@ -66,6 +66,7 @@
 
 /* Global configuration. */
 PlayerConf_t conf = {
+   .loaded = 0,
    .ndata = NULL,
    .language=NULL,
    .joystick_nam = NULL
@@ -523,6 +524,7 @@ int conf_loadConfig ( const char* file )
    }
 
    nlua_freeEnv( lEnv );
+   conf.loaded = 1;
    return 0;
 }
 

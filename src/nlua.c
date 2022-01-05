@@ -16,6 +16,7 @@
 #include "nlua.h"
 
 #include "log.h"
+#include "conf.h"
 #include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -46,6 +47,8 @@
 
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
+static char *common_script; /**< Common script to run when creating environments. */
+static size_t common_sz; /**< Common script size. */
 
 /*
  * prototypes
@@ -137,7 +140,8 @@ static int nlua_os_getenv( lua_State *L )
 /*
  * @brief Initializes the global Lua state.
  */
-void lua_init(void) {
+void lua_init (void)
+{
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
 }
@@ -145,7 +149,9 @@ void lua_init(void) {
 /*
  * @brief Closes the global Lua state.
  */
-void lua_exit(void) {
+void lua_exit (void)
+{
+   free( common_script );
    lua_close(naevL);
    naevL = NULL;
 }
@@ -158,10 +164,10 @@ void lua_exit(void) {
  *    @param sz Size of buffer.
  *    @param name Name to use in error messages.
  */
-int nlua_dobufenv(nlua_env env,
-                  const char *buff,
-                  size_t sz,
-                  const char *name) {
+int nlua_dobufenv( nlua_env env,
+                   const char *buff,
+                   size_t sz,
+                   const char *name) {
    if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
       return -1;
    nlua_pushenv(env);
@@ -177,7 +183,7 @@ int nlua_dobufenv(nlua_env env,
  *    @param env Lua environment.
  *    @param filename Filename of Lua script.
  */
-int nlua_dofileenv(nlua_env env, const char *filename)
+int nlua_dofileenv( nlua_env env, const char *filename )
 {
    if (luaL_loadfile(naevL, filename) != 0)
       return -1;
@@ -195,7 +201,8 @@ int nlua_dofileenv(nlua_env env, const char *filename)
  *
  *    @param rw Load libraries in read/write mode.
  */
-nlua_env nlua_newEnv(int rw) {
+nlua_env nlua_newEnv( int rw )
+{
    char packagepath[STRMAX];
    nlua_env ref;
    lua_newtable(naevL);
@@ -249,6 +256,25 @@ nlua_env nlua_newEnv(int rw) {
    /* Set up naev namespace. */
    lua_newtable(naevL);
    lua_setfield(naevL, -2, "naev");
+
+   /* Run common script. */
+   if (conf.loaded && common_script==NULL) {
+      common_script = ndata_read( LUA_COMMON_PATH, &common_sz );
+      if (common_script==NULL)
+         WARN(_("Unable to load common script '%s'!"), LUA_COMMON_PATH);
+   }
+   if (common_script != NULL) {
+      if (luaL_loadbuffer(naevL, common_script, common_sz, LUA_COMMON_PATH) == 0) {
+         if (nlua_pcall( ref, 0, 0 ) != 0) {
+            WARN(_("Failed to run '%s':\n%s"), LUA_COMMON_PATH, lua_tostring(naevL,-1));
+            lua_pop(naevL, 1);
+         }
+      }
+      else {
+         WARN(_("Failed to load '%s':\n%s"), LUA_COMMON_PATH, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
 
    lua_pop(naevL, 1);
    return ref;
@@ -697,7 +723,8 @@ int nlua_errTrace( lua_State *L )
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
  */
-int nlua_pcall( nlua_env env, int nargs, int nresults ) {
+int nlua_pcall( nlua_env env, int nargs, int nresults )
+{
    int errf, ret, prev_env;
 
 #if DEBUGGING

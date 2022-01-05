@@ -23,8 +23,9 @@ stds.Basic={
          fields={"unpack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
+      "inlist",
    },
-   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn" },
+   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn"},
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
@@ -190,6 +191,7 @@ files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera+Audio" .. GFX
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/common.lua"].std = STANDARD
 files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"

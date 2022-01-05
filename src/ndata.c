@@ -62,7 +62,7 @@ static int ndata_found( void )
  */
 static void ndata_testVersion (void)
 {
-   size_t i, size;
+   size_t size;
    char *buf, cbuf[PATH_MAX];
    int diff;
 
@@ -71,7 +71,7 @@ static void ndata_testVersion (void)
 
    /* Parse version. */
    buf = ndata_read( "VERSION", &size );
-   for (i=0; i<MIN(size,PATH_MAX-1); i++)
+   for (int i=0; i<MIN(size,PATH_MAX-1); i++)
       cbuf[i] = buf[i];
    cbuf[MIN(size-1,PATH_MAX-1)] = '\0';
    diff = naev_versionCompare( cbuf );
@@ -148,7 +148,7 @@ void ndata_setupReadDirs (void)
 
 
 /**
- * @brief Reads a file from the ndata.
+ * @brief Reads a file from the ndata (will be NUL terminated).
  *
  *    @param path Path of the file to read.
  *    @param[out] filesize Stores the size of the file.
