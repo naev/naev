@@ -50,6 +50,9 @@ nlua_env __NLUA_CURENV = LUA_NOREF;
 /*
  * prototypes
  */
+static int nlua_package_loader_lua( lua_State* L );
+static int nlua_package_loader_c( lua_State* L );
+static int nlua_package_loader_croot( lua_State* L );
 static int nlua_require( lua_State* L );
 static lua_State *nlua_newState (void); /* creates a new state */
 static int nlua_loadBasic( lua_State* L );
@@ -220,7 +223,14 @@ nlua_env nlua_newEnv(int rw) {
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
    lua_setfield(naevL, -2, "cpath");
-   lua_pop(naevL,1);
+   lua_getfield(naevL, -1, "loaders");
+   lua_pushcfunction(naevL, nlua_package_loader_lua);
+   lua_rawseti(naevL, -2, 2);
+   lua_pushcfunction(naevL, nlua_package_loader_c);
+   lua_rawseti(naevL, -2, 3);
+   lua_pushcfunction(naevL, nlua_package_loader_croot);
+   lua_rawseti(naevL, -2, 4);
+   lua_pop(naevL, 2);
 
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
@@ -398,6 +408,115 @@ static int nlua_loadBasic( lua_State* L )
 }
 
 /**
+ * @brief load( string module ) -- searcher function to replace package.loaders[2] (Lua 5.1), i.e., for Lua modules.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_lua( lua_State* L )
+{
+   size_t bufsize, l = 0;
+   char *buf = NULL, *q;
+   char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
+   const char *packagepath, *start, *end;
+   const char *name = luaL_checkstring(L,1);
+   int done = 0;
+
+   /* Get paths to check. */
+   lua_getglobal(L, "package");
+   if (!lua_istable(L,-1)) {
+      lua_pop(L,1);
+      lua_pushstring(L, _(" package.path not found."));
+      return 1;
+   }
+   lua_getfield(L, -1, "path");
+   if (!lua_isstring(L,-1)) {
+      lua_pop(L,2);
+      lua_pushstring(L, _(" package.path not found."));
+      return 1;
+   }
+   packagepath = lua_tostring(L,-1);
+   lua_pop(L,2);
+
+   /* Parse path. */
+   start = packagepath;
+   while (!done) {
+      end = strchr( start, ';' );
+      if (end == NULL) {
+         done = 1;
+         end = &start[ strlen(start) ];
+      }
+      strncpy( tmpname, start, end-start );
+      tmpname[ end-start ] = '\0';
+      q = strchr( tmpname, '?' );
+      if (q==NULL) {
+         snprintf( path_filename, sizeof(path_filename), "%s%s", tmpname, name );
+      }
+      else {
+         *q = '\0';
+         snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, name, q+1 );
+      }
+      start = end+1;
+
+      /* Replace all '.' before the last '.' with '/' as they are a security risk. */
+      q = strrchr( path_filename, '.' );
+      for (int i=0; i < q-path_filename; i++)
+         if (path_filename[i]=='.')
+            path_filename[i] = '/';
+
+      /* Try to load the file. */
+      if (PHYSFS_exists( path_filename )) {
+         buf = ndata_read( path_filename, &bufsize );
+         if (buf != NULL)
+            break;
+      }
+
+      /* Didn't get to load it. */
+      l += scnprintf( &tried_paths[l], sizeof(tried_paths)-l, _("\n   no ndata path '%s'"), path_filename );
+   }
+
+   /* Must have buf by now. */
+   if (buf == NULL) {
+      lua_pushstring(L, tried_paths);
+      return 1;
+   }
+
+   /* Try to process the Lua. It will leave a function or message on the stack, as required. */
+   luaL_loadbuffer(L, buf, bufsize, path_filename);
+   free(buf);
+   return 1;
+}
+
+/**
+ * @brief load( string module ) -- searcher function to replace package.loaders[3] (Lua 5.1), i.e., for C modules.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_c( lua_State* L )
+{
+   const char *name = luaL_checkstring(L,1);
+   /* Hardcoded libraries only: we DO NOT honor package.cpath. */
+   if (strcmp( name, "utf8" ) == 0)
+      lua_pushcfunction( L, luaopen_utf8 );
+   else
+      lua_pushnil( L );
+   return 1;
+}
+
+/**
+ * @brief load( string module ) -- searcher function to replace package.loaders[4] (Lua 5.1), i.e., for C packages.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_croot( lua_State* L )
+{
+   lua_pushnil( L );
+   return 1;
+}
+
+/**
  * @brief include( string module )
  *
  * Loads a module into the current Lua state from inside the data file.
@@ -407,19 +526,11 @@ static int nlua_loadBasic( lua_State* L )
  */
 static int nlua_require( lua_State* L )
 {
-   const char *filename;
-   size_t bufsize, len_tried_paths;
+   const char *filename = luaL_checkstring(L,1);
    int envtab;
-   char *buf, *q;
-   char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
-   const char *packagepath, *start, *end;
-   int done;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
-
-   /* Get parameters. */
-   filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE );  /* t */
@@ -438,83 +549,32 @@ static int nlua_require( lua_State* L )
       lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
    }
 
-   /* Hardcoded libraries. */
-   if (strcmp(filename,"utf8")==0) {
-      luaopen_utf8(L);                          /* val */
-      lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
-      lua_pushvalue(L, -2);                     /* val, t, val */
-      lua_setfield(L, -2, filename);            /* val, t */
-      lua_pop(L, 1);                            /* val */
-      return 1;
-   }
-
-   /* Get paths to check. */
-   lua_getglobal(naevL, "package");
+   lua_getglobal(L, "package");
    if (!lua_istable(L,-1)) {
-      lua_pop(L,2);
-      NLUA_ERROR(L, _("require: package.path not found."));
-   }
-   lua_getfield(naevL, -1, "path");
-   if (!lua_isstring(L,-1)) {
-      lua_pop(L,2);
-      NLUA_ERROR(L, _("require: package.path not found."));
-   }
-   packagepath = lua_tostring(L,-1);
-   lua_pop(L,2);
-
-   /* Parse path. */
-   buf = NULL;
-   done = 0;
-   start = packagepath;
-   tried_paths[0] = '\0';
-   while (!done) {
-      end = strchr( start, ';' );
-      if (end == NULL) {
-         done = 1;
-         end = &start[ strlen(start) ];
-      }
-      strncpy( tmpname, start, end-start );
-      tmpname[ end-start ] = '\0';
-      q = strchr( tmpname, '?' );
-      if (q==NULL) {
-         snprintf( path_filename, sizeof(path_filename), "%s%s", tmpname, filename );
-      }
-      else {
-         *q = '\0';
-         snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, filename, q+1 );
-      }
-      start = end+1;
-
-      /* Replace all '.' before the last '.' with '/' as they are a security risk. */
-      q = strrchr( path_filename, '.' );
-      for (int i=0; i < q-path_filename; i++)
-         if (path_filename[i]=='.')
-            path_filename[i] = '/';
-
-      /* Try to load the file. */
-      if (PHYSFS_exists( path_filename )) {
-         buf = ndata_read( path_filename, &bufsize );
-         if (buf != NULL)
-            break;
-      }
-
-      /* Didn't get to load it. */
-      len_tried_paths = strlen( tried_paths );
-      strncat( tried_paths, "\n   ", sizeof(tried_paths)-len_tried_paths-1 );
-      strncat( tried_paths, path_filename, sizeof(tried_paths)-len_tried_paths-1 );
-   }
-
-   /* Must have buf by now. */
-   if (buf == NULL) {
-      NLUA_ERROR(L, _("require: %s not found in ndata.\nTried:%s"), filename, tried_paths);
+      lua_pop(L,1);
+      lua_pushstring(L, _("package.loaders must be a table"));
       return 1;
    }
-
-   /* Try to process the Lua. */
-   if (luaL_loadbuffer(L, buf, bufsize, path_filename) != 0) {
-      lua_error(L);
-      return 1;
+   lua_getfield(L, -1, "loaders");
+   lua_remove(L, -2);
+   if (!lua_istable(L, -1))
+      luaL_error(L, _("package.loaders must be a table"));
+   lua_pushliteral(L, "");  /* error message accumulator */
+   for (int i=1; ; i++) {
+      lua_rawgeti(L, -2, i);  /* get a loader */
+      if (lua_isnil(L, -1))
+         luaL_error(L, _("module '%s' not found:%s"), filename, lua_tostring(L, -2));
+      lua_pushstring(L, filename);
+      lua_call(L, 1, 1);  /* call it */
+      if (lua_isfunction(L, -1))  /* did it find module? */
+         break;  /* module loaded successfully */
+      else if (lua_isstring(L, -1))  /* loader returned error message? */
+         lua_concat(L, 2);  /* accumulate it */
+      else
+         lua_pop(L, 1);
    }
+   lua_remove(L, -2);
+   lua_remove(L, -2);
 
    lua_pushvalue(L, envtab);
    lua_setfenv(L, -2);
@@ -542,7 +602,6 @@ static int nlua_require( lua_State* L )
    lua_pop(L, 1);                            /* val */
 
    /* cleanup, success */
-   free(buf);
    return 1;
 }
 
