@@ -37,6 +37,7 @@ stds.Data = {read_globals={"data"}}
 stds.Debug = {read_globals={"debug"}}
 stds.Diff = {read_globals={"diff"}}
 stds.Evt = {read_globals={"evt"}}
+stds.CLI = {read_globals={"script", "printRaw"}} -- Actually set in cli_initLua()
 stds.Faction = {read_globals={"faction"}}
 stds.File = {read_globals={"file"}}
 stds.Font = {read_globals={"font"}}
@@ -200,6 +201,7 @@ files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
 files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+Audio+LinOpt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"

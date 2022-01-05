@@ -8,6 +8,7 @@
  */
 /** @cond */
 #define lua_c
+#include <assert.h>
 #include <ctype.h>
 #include <lauxlib.h>
 #include <lua.h>
@@ -49,6 +50,8 @@
  * Global stuff.
  */
 static nlua_env cli_env     = LUA_NOREF; /**< Lua CLI env. */
+static lua_State *cli_thread= NULL; /**< REPL coroutine's thread */
+static int cli_thread_ref   = LUA_NOREF; /**< Reference keeping cli_thread alive */
 static glFont *cli_font     = NULL; /**< CLI font to use. */
 
 /*
@@ -62,24 +65,21 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /** Number of lines displayed at once */
 #define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5))
 static char **cli_buffer; /**< CLI buffer. */
+static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
 static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
-
-/*
- * Input handling.
- */
-static int cli_firstline   = 1; /**< Is this the first line? */
 
 /*
  * CLI stuff.
  */
 static int cli_script( lua_State *L );
 static int luaB_loadstring( lua_State *L );
-//static int cli_printOnly( lua_State *L );
+static int cli_printRaw( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "loadstring", luaB_loadstring },
    { "print", cli_print },
+   { "printRaw", cli_printRaw },
    { "script", cli_script },
    { "warn", cli_warn },
    {NULL, NULL}
@@ -91,7 +91,7 @@ static const luaL_Reg cli_methods[] = {
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
 static void cli_printCoreString( const char *s, int escape );
-static int cli_printCore( lua_State *L, int cli_only );
+static int cli_printCore( lua_State *L, int cli_only, int escape );
 void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
 
@@ -137,7 +137,7 @@ static void cli_printCoreString( const char *s, int escape )
 /**
  * @brief Back end for the Lua print functionality.
  */
-static int cli_printCore( lua_State *L, int cli_only )
+static int cli_printCore( lua_State *L, int cli_only, int escape )
 {
    int n = lua_gettop(L); /* Number of arguments. */
 
@@ -159,7 +159,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      cli_printCoreString( s, 1 );
+      cli_printCoreString( s, escape );
 
       lua_pop(L, 1);  /* pop result */
    }
@@ -186,7 +186,7 @@ int cli_warn( lua_State *L )
  */
 int cli_print( lua_State *L )
 {
-   return cli_printCore( L, 0 );
+   return cli_printCore( L, 0, 1 );
 }
 
 /**
@@ -207,14 +207,14 @@ static int luaB_loadstring( lua_State *L ) {
 }
 
 /**
- * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ * @brief Prints raw markup to the console.
+ *
+ * @luafunc printRaw
  */
-#if 0
-static int cli_printOnly( lua_State *L )
+static int cli_printRaw( lua_State *L )
 {
-   return cli_printCore( L, 1 );
+   return cli_printCore( L, 0, 0 );
 }
-#endif
 
 /**
  * @brief Would be like "dofile" from the base Lua lib.
@@ -463,6 +463,9 @@ void cli_tabComplete( unsigned int wid )
 
 static int cli_initLua (void)
 {
+   int status;
+   char *buf;
+   size_t blen;
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
       return 0;
@@ -488,6 +491,34 @@ static int cli_initLua (void)
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
+   buf = ndata_read( "rep.lua", &blen );
+   status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
+   if (status) {
+      lua_settop( naevL, 0 );
+      return status;
+   }
+   if (lua_gettop( naevL ) != 1) {
+      WARN( _("rep.lua failed to return a single coroutine.") );
+      lua_settop( naevL, 0 );
+      return -1;
+   }
+   cli_thread = lua_tothread( naevL, -1 );
+   cli_thread_ref = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   if (cli_thread == NULL) {
+      WARN( _("rep.lua failed to return a single coroutine.") );
+      lua_settop( naevL, 0 );
+      return -1;
+   }
+   status = lua_resume( cli_thread, 0 );
+   cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+   if (status == 0) {
+      WARN( _("REPL thread exited.") );
+      return 1;
+   }
+   else if (status != LUA_YIELD) {
+      WARN( "%s", cli_prompt );
+      return -1;
+   }
    return 0;
 }
 
@@ -496,14 +527,14 @@ static int cli_initLua (void)
  */
 int cli_init (void)
 {
-   cli_initLua();
-
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, _(FONT_MONOSPACE_PATH), conf.font_size_console, FONT_PATH_PREFIX, 0 );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);
+
+   cli_initLua();
 
    return 0;
 }
@@ -514,8 +545,10 @@ int cli_init (void)
 void cli_exit (void)
 {
    /* Destroy the state. */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
    nlua_freeEnv( cli_env );
-   cli_env = LUA_NOREF;
+   cli_thread = NULL;
+   cli_env = cli_thread_ref = LUA_NOREF;
 
    gl_freeFont( cli_font );
    free( cli_font );
@@ -526,6 +559,8 @@ void cli_exit (void)
       free(cli_buffer[i]);
    array_free(cli_buffer);
    cli_buffer = NULL;
+   free(cli_prompt);
+   cli_prompt = NULL;
 }
 
 /**
@@ -546,71 +581,31 @@ static void cli_input( unsigned int wid, const char *unused )
    str = window_getInput( wid, "inpInput" );
 
    /* Ignore useless stuff. */
-   if (str == NULL)
+   if (str == NULL || cli_thread == NULL)
       return;
 
    /* Put the message in the console. */
    escaped = cli_escapeString( &len, str, strlen(str) );
-   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
-         cli_firstline ? "> " : ">>", escaped );
+   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0", cli_prompt, escaped );
    free(escaped);
    cli_printCoreString( buf, 0 );
 
-   /* Set up for concat. */
-   if (!cli_firstline)               /* o */
-      lua_pushliteral(naevL, "\n");  /* o \n */
-
-   /* Load the string. */
-   lua_pushstring( naevL, str );     /* s */
-
-   /* Concat. */
-   if (!cli_firstline)               /* o \n s */
-      lua_concat(naevL, 3);          /* s */
-
-   status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
-
-   /* String isn't proper Lua yet. */
-   if (status == LUA_ERRSYNTAX) {
-      size_t lmsg;
-      const char *msg = lua_tolstring(naevL, -1, &lmsg);
-      const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
-      const char *s;
-      if (strstr(msg, LUA_QL("<eof>")) == tp) {
-         /* Pop the loaded buffer. */
-         lua_pop(naevL, 1);
-         cli_firstline = 0;
-      }
-      else {
-         /* Real error, spew message and break. */
-         s = lua_tostring(naevL, -1);
-         WARN( "%s", s );
-         cli_printCoreString( s, 1 );
-         lua_settop(naevL, 0);
-         cli_firstline = 1;
-      }
+   /* Resume the REPL. */
+   lua_pushstring( cli_thread, str );
+   status = lua_resume( cli_thread, 1 );
+   if (status == 0) {
+      cli_printCoreString( _("REPL thread exited."), 0 );
+      luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
+      cli_thread = NULL;
+      cli_thread_ref = LUA_NOREF;
    }
-   /* Print results - all went well. */
-   else if (status == 0) {
-      lua_remove(naevL,1);
-
-      nlua_pushenv(cli_env);
-      lua_setfenv(naevL, -2);
-
-      if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
-         cli_printCoreString( lua_tostring(naevL, -1), 1 );
-         lua_pop(naevL, 1);
-      }
-
-      if (lua_gettop(naevL) > 0) {
-         nlua_getenv(cli_env, "print");
-         lua_insert(naevL, 1);
-         if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
-            cli_addMessage( _("Error printing results.") );
-      }
-
-      /* Clear stack. */
-      lua_settop(naevL, 0);
-      cli_firstline = 1;
+   else {
+      free( cli_prompt );
+      assert( lua_gettop( cli_thread ) == 1 );
+      cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+      lua_settop( cli_thread, 0 );
+      if (status != LUA_YIELD)
+         cli_printCoreString( cli_prompt, 0 );
    }
 
    /* Clear the box now. */
@@ -673,7 +668,4 @@ void cli_open (void)
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL, NULL, NULL );
-
-   /* Reinitilaized. */
-   cli_firstline = 1;
 }

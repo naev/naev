@@ -14,7 +14,7 @@ TODO This is a stub implementation that doesn't work.
    @tparam string prompt A prompt like "> " or ">> " to put in front of the line.
 --]]
 function ln.linenoise( prompt )
-   local _prompt = prompt
+   return coroutine.yield( prompt )
 end
 
 --[[---
