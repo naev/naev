@@ -6,7 +6,7 @@ uniform float u_time;
 uniform vec3 u_camera = vec3(1.0); /* xy corresponds to screen space */
 
 const float DRAGMULT    = 10.0;
-const float SCALE       = 500.0;
+const float SCALE       = 1000.0;
 const vec3 COL_BACK     = vec3( 150.0, 50.0, 150.0 ) / 255.;
 const vec3 COL_FRONT    = vec3( 220.0, 80.0, 220.0 ) / 255.;
 
