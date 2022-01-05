@@ -60,114 +60,35 @@
 #define SIMPLEX_SCALE 0.5f
 
 /**
- * @brief Linearly Interpolates x between a and b.
- */
-#define LERP(a, b, x)      ( a + x * (b - a) )
-
-/**
  * @brief Structure used for generating noise.
  */
 struct perlin_data_s {
    int ndim; /**< Dimension of the noise. */
    unsigned char map[256]; /**< Randomized map of indexes into buffer */
-   float buffer[256][3];   /**< Random 256 x 3 buffer */
-   /* fractal stuff */
-   float H; /**< Not sure. */
-   float lacunarity; /**< Not sure. */
-   float exponent[NOISE_MAX_OCTAVES]; /**< Not sure. */
 };
-
-/*
- * prototypes
- */
-/* normalizing. */
-static void normalize3( float f[3] );
-static void normalize2( float f[2] );
 
 #define SWAP(a, b, t)      (t) = (a); (a) = (b); (b) = (t) /**< Swaps two values. */
 #define FLOOR(a)           ((int)(a) - ((a) < 0 && (a) != (int)(a))) /**< Limits to 0. */
-#define CUBIC(a)           ( (a) * (a) * (3 - 2*(a)) ) /**< Does cubic filtering. */
-
-/**
- * @brief Normalizes a 3d vector.
- *
- *    @param f Vector to normalize.
- */
-static void normalize3( float f[3] )
-{
-   float magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1] + f[2]*f[2]);
-   f[0] *= magnitude;
-   f[1] *= magnitude;
-   f[2] *= magnitude;
-}
-
-/**
- * @brief Normalizes a 2d vector.
- *
- *    @param f Vector to normalize.
- */
-static void normalize2( float f[2] )
-{
-   float magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1]);
-   f[0] *= magnitude;
-   f[1] *= magnitude;
-}
 
 /**
  * @brief Creates a new perlin noise generator.
- *
- *    @param dim Dimension of the noise.
- *    @param hurst
- *    @param lacunarity
  */
-perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
+perlin_data_t* noise_new (void)
 {
    perlin_data_t *pdata;
    int i, j;
    unsigned char tmp;
-   float f;
 
    /* Create the data. */
    pdata = calloc(sizeof(perlin_data_t),1);
-   pdata->ndim = dim;
 
    /* Create the buffer and map. */
-   if (dim == 3) {
-      for (i=0; i<256; i++) {
-         pdata->map[i] = (unsigned char)i;
-         pdata->buffer[i][0] = RNGF()-0.5;
-         pdata->buffer[i][1] = RNGF()-0.5;
-         pdata->buffer[i][2] = RNGF()-0.5;
-         normalize3(pdata->buffer[i]);
-      }
-   }
-   else if (dim == 2) {
-      for (i=0; i<256; i++) {
-         pdata->map[i] = (unsigned char)i;
-         pdata->buffer[i][0] = RNGF()-0.5;
-         pdata->buffer[i][1] = RNGF()-0.5;
-         normalize2(pdata->buffer[i]);
-      }
-   }
-   else {
-      for (i=0; i<256; i++) {
-         pdata->map[i] = (unsigned char)i;
-         pdata->buffer[i][0] = 1.;
-      }
-   }
+   for (i=0; i<256; i++)
+      pdata->map[i] = (unsigned char)i;
 
    while (--i) {
       j = RNG(0, 255);
       SWAP(pdata->map[i], pdata->map[j], tmp);
-   }
-
-   f = 1.;
-   pdata->H = hurst;
-   pdata->lacunarity = lacunarity;
-   for (i=0; i<NOISE_MAX_OCTAVES; i++) {
-      /*exponent[i] = powf(f, -H); */
-      pdata->exponent[i] = 1. / f;
-      f *= lacunarity;
    }
 
    return pdata;

@@ -1,14 +1,10 @@
 #pragma once
 
-#define NOISE_MAX_OCTAVES            4 /**< Default octaves for noise. */
-#define NOISE_DEFAULT_HURST          0.5 /**< Default hurst for noise. */
-#define NOISE_DEFAULT_LACUNARITY     2. /**< Default lacunarity for noise. */
-
 struct perlin_data_s;
 typedef struct perlin_data_s perlin_data_t;
 
 /* Creation. */
-perlin_data_t* noise_new( int dim, float hurst, float lacunarity );
+perlin_data_t* noise_new (void);
 void noise_delete( perlin_data_t* pdata );
 
 /* Simplex noise. */

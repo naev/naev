@@ -381,7 +381,7 @@ int spfx_load (void)
    shake_shader.ClipSpaceFromLocal = shaders.shake.ClipSpaceFromLocal;
    shake_shader.MainTex       = shaders.shake.MainTex;
    spfx_hapticInit();
-   shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
+   shake_noise = noise_new();
 
    /*
     * Misc shaders.
