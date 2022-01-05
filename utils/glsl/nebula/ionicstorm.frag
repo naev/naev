@@ -94,7 +94,7 @@ float getwaves3d( vec2 position, float dragmult, float timeshift) {
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec3 uv = vec3( texture_coords * 2.0, u_time );
+   vec3 uv = vec3( screen_coords / 300.0, u_time );
    float s = getwaves3d( uv.xy, 20.0, u_time*0.3);
    s = s*s;
    vec4 colour_out;
