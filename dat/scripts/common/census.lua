@@ -7,16 +7,6 @@ local fmt   = require "format"
 
 local cens = {}
 
--- Test if an element is in a list
-local function elt_inlist( elt, list )
-   for i, elti in ipairs(list) do
-      if elti == elt then
-         return true
-      end
-   end
-   return false
-end
-
 -- Gets a proper target system for a census mission.
 function cens.findTarget( minrange, maxrange, fact_name, min_pres )
    local systems = lmisn.getSysAtDistance( system.cur(), minrange, maxrange, lmisn.sysFilters.faction( fact_name, min_pres ) )
@@ -62,8 +52,8 @@ function cens.testInRange( detected, fact_list )
    for i, p in ipairs(visibles) do -- Has to be visible
       local d, s = player.pilot():inrange(p)
       if s then -- Fuzzy not allowed
-         if elt_inlist( p:faction(), fact_list ) then -- Has to be in factions list
-            if not elt_inlist( p, detected ) then -- Has not to be in pilots list
+         if inlist( fact_list, p:faction() ) then -- Has to be in factions list
+            if not inlist( detected, p ) then -- Has not to be in pilots list
                detected[#detected+1] = p
                player.msg( fmt.f(_("Data on a {fact_name} ship acquired"), {fact_name=p:faction():name()} ) )
             end
