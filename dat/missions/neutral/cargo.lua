@@ -69,10 +69,10 @@ function create()
    if mem.avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
-   elseif mem.avgrisk <= 200 then
+   elseif mem.avgrisk <= 150 then
       piracyrisk = piracyrisk[2]
       riskreward = 10
-   elseif mem.avgrisk <= 400 then
+   elseif mem.avgrisk <= 300 then
       piracyrisk = piracyrisk[3]
       riskreward = 25
    else
