@@ -1738,6 +1738,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Done:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Taken:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ships Destroyed:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Intrinsic Outfits:") );
    }
    window_modifyText( wid, "txtSDesc", buf );
 
@@ -1812,6 +1813,9 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", ps->p->outfit_intrinsic[i].outfit->name );
    }
    window_modifyText( wid, "txtDDesc", buf );
 
