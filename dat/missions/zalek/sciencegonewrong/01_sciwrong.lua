@@ -142,7 +142,7 @@ end
 
 function land()
    if spob.cur() == mem.t_pla[1] then
-      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
+      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but instead of erasing, it sharpens. This is exactly what I needed. With this, I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
       hook.rm(mem.hland)
       player.pay(reward)
       sciwrong.addLog( _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]]) )

@@ -92,18 +92,18 @@ function land()
         elseif mem.stage == 4 then
             mem.stage = 5
             dest_planet, dest_sys = spob.getS("Excelcior")
-            tk.msg("", fmt.f(_([["Good news! I asked around and found a clue how to contact Professor Voges. He promised one of his colleagues to show up to his party. Something about his wife, like they have gotten married or she died or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=dest_planet, sys=dest_sys}))
+            tk.msg("", fmt.f(_([["Good news! I asked around and found a way to contact Professor Voges. He promised to show up to one of his colleague's parties. Something about his wife, like they have gotten married, or she died, or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 5 or mem.stage == 6 then
             mem.stage = 7
             dest_planet = homeworld
             dest_sys = homeworld_sys
-            tk.msg(_("Crashing a party"), _([[The two of you arrive at the party site. "Listen, this is probably your first party so let me briefly explain to you how it works. Your goal usually is to talk with all people, draw some attention, let them know you were attending the party. Efficiency is most important here. The earlier you're done with demonstrating your presence and making a good impression; the earlier you can leave and do something useful.
-    "You'll need an escape strategy to leave unnoticed though; It'd be rude when someone sees you leaving early. As you're a beginner I give you a tip: take the window of the bath room in the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
-            tk.msg(_("Crashing a party"), _([[You wonder if anything of that was meant serious. Before you can ask, Dr. Mensing runs off engaging an older looking man, probably Professor Voges. She does not waste any time and brings up the issue straight on, visibly discomforting him. It's time to explore the party.
-    You expect a Za'lek party to be much different from a regular party. In fact the first two things you notice are the classical music and the absence of any alcoholic drinks. There is however a buffet, in particular there is a small fridge with ice cream. You can spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?
-    Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour… whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you…
-    You continue your tour, as you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. Those Za'lek are indeed trying to escape the party.]]))
+            tk.msg(_("Crashing a party"), _([[The two of you arrive at the location of the party. "Listen, this is probably your first party, so let me briefly explain to you how it works. Your goal, usually, is to talk with people, draw some attention, let them know you attended the party. Efficiency is most important here. The earlier you're done with demonstrating your presence and making a good impression; the earlier you can leave and do something useful.
+    "You'll need an escape strategy to leave unnoticed though; It's gauche if someone sees you leaving early. As you're a beginner, I'll give you a tip: sneak out the window of the bathroom on the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
+            tk.msg(_("Crashing a party"), _([[You wonder if Dr. Mensing meant any of that seriously. Before you can ask, Dr. Mensing runs off, engaging an older looking man, probably Professor Voges. She does not waste any time and brings the issue straight on, visibly discomforting him. It's time to explore the party.
+    You expect a Za'lek party to be much different from a regular party. In fact, the first two things you notice are the classical music and the absence of any alcoholic drinks. There is, however, a buffet. In particular, there is a small fridge with ice cream. You spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?
+    Before you know it, you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing, which motivates him to ask the question of the hour… whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you…
+    You continue your tour. As you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. These Za'lek are indeed trying to escape the party.]]))
             tk.msg(_("Crashing a party"), fmt.f(_([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm. "We're done here. Bring me back to {pnt}!" Dr. Mensing quietly tells you. For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]), {pnt=dest_planet}))
             misn.markerMove(mem.misn_marker, dest_planet)
             misn.osdActive(2)
@@ -145,7 +145,7 @@ end
 
 function warningMessage()
     tk.msg(_("Caution!"), fmt.f(_([[You receive a system wide broadcast. It appears to be a warning. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
-    Why is this happening so frequently in Za'lek space? On a second glance you see on your radar that a drone squadron is flying right towards your ship.]]), {sys=system.cur()}))
+    Why is this happening so frequently in Za'lek space? A second glance at your radar shows that a drone squadron is flying right towards your ship.]]), {sys=system.cur()}))
 end
 
 function secondWarningMessage()

@@ -55,7 +55,7 @@ end
 
 function accept()
    -- Mission details:
-   if not tk.yesno( _([[In the bar]]), _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]) ) then
+   if not tk.yesno( _([[In the bar]]), _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]) ) then
       tk.msg(_("No Science Today"), _("Don't you care about science?..."))
       misn.finish()
    end

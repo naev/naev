@@ -59,7 +59,7 @@ function accept()
       tk.msg(_("No Science Today"), _("I guess you don't care for science…"))
       return
    end
-   tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]) )
+   tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list, you find that it contains not only a list of materials he needs, but also information where to retrieve them, as well as a list of traders to contact.]]) )
    misn.accept()
    misn.osdCreate(_("The one with the Shopping"), {
       fmt.f(_("Go to the {sys} system and talk to the trader on {pnt}"), {sys=mem.t_sys[1], pnt=mem.t_pla[1]}),
@@ -155,7 +155,7 @@ end
 -- final land: let the player land and collect the reward
 function fnl_ld ()
    if spob.cur() == mem.t_pla[3] and mem.traded2 then
-      tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
+      tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face lights up. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
       tk.msg(_([[In the bar]]),_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
       player.pay(reward)
       sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pnt} in the {sys} system to obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pnt=mem.t_pla[3], sys=mem.t_sys[3] } ) )

@@ -159,7 +159,7 @@ function land()
    end
 
    if spob.cur() == mem.destplanet and mem.stage == 0 then
-      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
+      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land.  An excited group of Za'lek scientists quickly remove the experimental engine and eagerly download your flight data before paying you your fee."))
       player.pay(mem.reward)
       player.outfitRm("Za'lek Test Engine")
 

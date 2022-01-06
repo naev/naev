@@ -65,7 +65,7 @@ She goes back to ruminating on what to do.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Thanks again. I'll give you the password to the hull so you can access the black box control panel. Depending on the damage, you may have to realign the memory to be able to retrieve the data, but I heard that you mastered that from my colleague. I've sent you the coordinates for the drones so you should be able to find them easy. Best of luck!"]]))
+   n(_([["Thanks again. I'll give you the security password so you can access the black box control panel. Depending on the damage, you may have to realign the memory to be able to retrieve the data, but I heard that you mastered that from my colleague. I've sent you the coordinates for the drones so you should be able to easily find them. Best of luck!"]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -105,7 +105,7 @@ function land ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You land and find Noona waiting outside your ship expectantly.]]))
-   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece right? Great! Let me look into it and see what happened. I have no idea how this happened."
+   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece, right? Great! Let me look into it and see what happened."
 She tosses you a credstick and runs to her room with the black box.]]))
    if getlicense then
       n(_([[Just before she disappears around the corner she turns back to you and yells.
