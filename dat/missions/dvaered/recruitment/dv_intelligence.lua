@@ -26,7 +26,7 @@
 
 local cens   = require "common.census"
 local fmt    = require "format"
-local dv     = require "common.dvaered"
+--local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
@@ -41,7 +41,7 @@ local detected
 local function travellingRisk( system )
 
    -- If there is a Spob of the faction is system, risk is 0 for the faction
-   spobs = system:spobs()
+   local spobs = system:spobs()
    for i, p in ipairs(spobs) do
       if p:faction() == faction.get("Dvaered") then
          return 0
@@ -59,9 +59,9 @@ local function travellingRisk( system )
    local jumps = system.cur():jumpPath( system, 0 )
    local risk = 0
    for k, v in ipairs(jumps) do
-      p = v:system():presences()
-      pirates = 0
-      guards  = 0
+      local p = v:system():presences()
+      local pirates = 0
+      local guards  = 0
       for i, f in ipairs( pir.factions ) do
          pirates = pirates + (p[f:nameRaw()] or 0)
       end
@@ -81,7 +81,7 @@ function create ()
    mem.nbships, credits1 = cens.calculateNb( mem.sys, pir.factions )
    local risk = travellingRisk( mem.sys )
    mem.credits = credits1*2 + risk*500
-   
+
    -- Mission details
    misn.setTitle(fmt.f(_("Monitoring of Pirate activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
@@ -114,6 +114,7 @@ function land()
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
       vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer.") )
       player.pay( mem.credits )
+      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

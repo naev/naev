@@ -2343,7 +2343,7 @@ dat/missions/dvaered/gauntlet/gui.lua
 dat/missions/dvaered/gauntlet/tables.lua
 dat/missions/dvaered/recruitment/dv_census.lua
 dat/missions/dvaered/recruitment/dv_census_00.lua
-dat/missions/dvaered/recruitment/dv_intellignece.lua
+dat/missions/dvaered/recruitment/dv_intelligence.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
 dat/missions/empire/collective/ec02.lua
