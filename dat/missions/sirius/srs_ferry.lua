@@ -36,9 +36,9 @@
 -- All missions can be made in a Fidelity with an afterburner
 --
 --]]
-
 local car = require "common.cargo"
 local fmt = require "format"
+local srs = require "common.sirius"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -158,7 +158,7 @@ function create()
     mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
     misn.markerAdd(mem.destplanet, "computer")
-    misn.setTitle( fmt.f(_("SR: {tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
+    misn.setTitle( fmt.f(srs.prefix.._("{tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
     car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
     misn.setReward(fmt.credits(mem.reward))
 

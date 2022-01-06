@@ -5,6 +5,8 @@
 --]]
 local srs = {}
 
+srs.prefix = "#b".._("SRS: ").."#0"
+
 function srs.addAcHackLog( text )
    shiplog.create( "achack", _("Academy Hack"), _("Sirius") )
    shiplog.append( "achack", text )
