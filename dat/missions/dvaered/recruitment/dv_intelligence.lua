@@ -23,7 +23,6 @@
    0) Way to system and in-system traffic
    1) Way to any Dvaered Spob to get paid
 --]]
-
 local cens   = require "common.census"
 local fmt    = require "format"
 --local dv     = require "common.dvaered"

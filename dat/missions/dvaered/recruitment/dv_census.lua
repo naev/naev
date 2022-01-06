@@ -26,7 +26,7 @@
 
 local cens   = require "common.census"
 local fmt    = require "format"
---local dv     = require "common.dvaered"
+local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
@@ -41,7 +41,7 @@ function create ()
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
 
    -- Mission details
-   misn.setTitle(fmt.f(_("#rDC:#0 Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
+   misn.setTitle(fmt.f(dv.prefix.._("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
    mem.misn_marker = misn.markerAdd( mem.sys )
