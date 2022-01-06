@@ -2130,7 +2130,7 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    }
 
    /* Run func. */
-   nlua_getenv( autoequip_env, "autoequip" );
+   nlua_getenv( naevL, autoequip_env, "autoequip" );
    if (!lua_isfunction(naevL,-1)) {
       WARN(_("'%s' doesn't have valid required 'autoequip' function!"), file);
       lua_pop(naevL,1);

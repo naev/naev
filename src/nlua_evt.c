@@ -84,10 +84,10 @@ void event_runStart( unsigned int eventid, const char *func )
    /* Set up event pointer. */
    evptr = lua_newuserdata( naevL, sizeof(Event_t*) );
    *evptr = ev->id;
-   nlua_setenv( ev->env, "__evt" );
+   nlua_setenv( naevL, ev->env, "__evt" );
 
    /* Get function. */
-   nlua_getenv(ev->env, func );
+   nlua_getenv( naevL, ev->env, func );
 }
 
 /**
@@ -114,7 +114,7 @@ Event_t *event_getFromLua( lua_State *L )
 {
    Event_t *ev;
    uintptr_t *evptr;
-   nlua_getenv(__NLUA_CURENV, "__evt");
+   nlua_getenv( L, __NLUA_CURENV, "__evt" );
    evptr = lua_touserdata( L, -1 );
    ev = evptr ? event_get( *evptr ) : NULL;
    lua_pop( L, 1 );
@@ -153,7 +153,7 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
 
    /* Time to remove the event. */
    ev = event_get( eventid );  /* The Lua call may have invalidated the pointer. */
-   nlua_getenv(ev->env, "__evt_delete");
+   nlua_getenv(naevL, ev->env, "__evt_delete");
    evt_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
    if (evt_delete) {
@@ -255,7 +255,7 @@ static int evtL_finish( lua_State *L )
    Event_t *cur_event = event_getFromLua(L);
    int b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
-   nlua_setenv(cur_event->env, "__evt_delete");
+   nlua_setenv( L, cur_event->env, "__evt_delete" );
 
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );

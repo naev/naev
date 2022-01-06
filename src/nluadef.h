@@ -56,7 +56,7 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
 
 #define NLUA_CHECKRW(L) \
 { \
-   nlua_getenv(__NLUA_CURENV, "__RW"); \
+   nlua_getenv(L, __NLUA_CURENV, "__RW"); \
    if (!lua_toboolean(L, -1)) { \
       DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
       luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \

@@ -213,7 +213,7 @@ static int event_create( int dataid, unsigned int *id )
 
    /* Create the "mem" table for persistence. */
    lua_newtable(naevL);
-   nlua_setenv(ev->env, "mem");
+   nlua_setenv(naevL, ev->env, "mem");
 
    /* Load file. */
    if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {

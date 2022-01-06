@@ -161,7 +161,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
 
    /* Create the "mem" table for persistence. */
    lua_newtable(naevL);
-   nlua_setenv(mission->env, "mem");
+   nlua_setenv(naevL, mission->env, "mem");
 
    /* load the file */
    if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {

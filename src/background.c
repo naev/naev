@@ -459,7 +459,7 @@ int background_load( const char *name )
       return -1;
 
    /* Run Lua. */
-   nlua_getenv(env,"background");
+   nlua_getenv(naevL, env,"background");
    ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
       const char *err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;

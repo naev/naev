@@ -3473,7 +3473,7 @@ static int player_runUpdaterScript( const char* type, const char* name, int q )
    }
 
    /* Try to find out equivalent. */
-   nlua_getenv( player_updater_env, type );
+   nlua_getenv( naevL, player_updater_env, type );
    lua_pushstring( naevL, name );
    if (nlua_pcall(player_updater_env, 1, 1)) { /* error has occurred */
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));

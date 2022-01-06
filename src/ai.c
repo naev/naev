@@ -397,9 +397,9 @@ Task* ai_curTask( Pilot* pilot )
 static void ai_setMemory (void)
 {
    nlua_env env = cur_pilot->ai->env;
-   nlua_getenv(env, AI_MEM); /* pm */
+   nlua_getenv(naevL, env, AI_MEM); /* pm */
    lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
-   nlua_setenv(env, "mem"); /* pm */
+   nlua_setenv(naevL, env, "mem"); /* pm */
    lua_pop(naevL, 1); /* */
 }
 
@@ -459,7 +459,7 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
 
    /* Adds a new pilot memory in the memory table. */
-   nlua_getenv(p->ai->env, AI_MEM);  /* pm */
+   nlua_getenv(naevL, p->ai->env, AI_MEM);  /* pm */
    lua_newtable(naevL);              /* pm, nt */
    lua_pushvalue(naevL, -1);         /* pm, nt, nt */
    lua_rawseti(naevL, -3, p->id);    /* pm, nt */
@@ -512,7 +512,7 @@ void ai_destroy( Pilot* p )
 
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
-      nlua_getenv(env, AI_MEM);  /* t */
+      nlua_getenv(naevL, env, AI_MEM);  /* t */
       lua_pushnil(naevL);        /* t, nil */
       lua_rawseti(naevL,-2, p->id);/* t */
       lua_pop(naevL, 1);         /* */
@@ -640,13 +640,13 @@ static int ai_loadProfile( const char* filename )
    /* Add the pilot memory table. */
    lua_newtable(naevL);              /* pm */
    lua_pushvalue(naevL, -1);         /* pm, pm */
-   nlua_setenv(env, AI_MEM);         /* pm */
+   nlua_setenv(naevL, env, AI_MEM);  /* pm */
 
    /* Set "mem" to be default template. */
    lua_newtable(naevL);              /* pm, nt */
    lua_pushvalue(naevL,-1);          /* pm, nt, nt */
-   lua_setfield(naevL,-3,AI_MEM_DEF); /* pm, nt */
-   nlua_setenv(env, "mem");          /* pm */
+   lua_setfield(naevL,-3,AI_MEM_DEF);/* pm, nt */
+   nlua_setenv(naevL, env, "mem");   /* pm */
    lua_pop(naevL, 1);                /*  */
 
    /* Now load the file since all the functions have been previously loaded */
@@ -757,7 +757,7 @@ void ai_think( Pilot* pilot, const double dt )
          ai_run(env, 0); /* run control */
       }
 
-      nlua_getenv(env, "control_rate");
+      nlua_getenv(naevL, env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
       lua_pop(naevL,1);
 
@@ -846,9 +846,9 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
-      nlua_getenv(cur_pilot->ai->env, "attacked_manual");
+      nlua_getenv(naevL, cur_pilot->ai->env, "attacked_manual");
    else
-      nlua_getenv(cur_pilot->ai->env, "attacked");
+      nlua_getenv(naevL, cur_pilot->ai->env, "attacked");
 
    lua_pushpilot(naevL, attacker);
    if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
@@ -876,7 +876,7 @@ void ai_discovered( Pilot* discovered )
    ai_setPilot( discovered ); /* Sets cur_pilot. */
 
    /* Only run if discovered function exists. */
-   nlua_getenv(cur_pilot->ai->env, "discovered");
+   nlua_getenv(naevL, cur_pilot->ai->env, "discovered");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -906,7 +906,7 @@ void ai_hail( Pilot* recipient )
    ai_setPilot( recipient ); /* Sets cur_pilot. */
 
    /* Only run if hail function exists. */
-   nlua_getenv(cur_pilot->ai->env, "hail");
+   nlua_getenv(naevL, cur_pilot->ai->env, "hail");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -969,7 +969,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    ai_setPilot(p);
 
    /* See if function exists. */
-   nlua_getenv(cur_pilot->ai->env, "distress");
+   nlua_getenv(naevL, cur_pilot->ai->env, "distress");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -1011,8 +1011,8 @@ static void ai_create( Pilot* pilot )
          env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
-      nlua_getenv(env, func);
-      nlua_pushenv(env);
+      nlua_getenv(naevL, env, func);
+      nlua_pushenv(naevL, env);
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
       if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
@@ -1032,7 +1032,7 @@ static void ai_create( Pilot* pilot )
    ai_setPilot( pilot );
 
    /* Prepare stack. */
-   nlua_getenv(cur_pilot->ai->env, "create");
+   nlua_getenv(naevL, cur_pilot->ai->env, "create");
 
    /* Run function. */
    if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
@@ -1058,7 +1058,7 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    }
 
    /* Check if the function is good. */
-   nlua_getenv( p->ai->env, func );
+   nlua_getenv( naevL, p->ai->env, func );
    luaL_checktype( naevL, -1, LUA_TFUNCTION );
 
    /* Create the new task. */

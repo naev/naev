@@ -127,7 +127,7 @@ static int music_runLua( const char *situation )
    }
 
    /* Run the choose function in Lua. */
-   nlua_getenv( music_env, "choose" );
+   nlua_getenv( naevL, music_env, "choose" );
    if (situation != NULL)
       lua_pushstring( naevL, situation );
    else

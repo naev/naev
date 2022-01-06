@@ -2542,7 +2542,7 @@ int outfit_loadPost (void)
 
       /* Handle initializing module stuff. */
       if (o->lua_env != LUA_NOREF) {
-         nlua_getenv( o->lua_env, "onload" );
+         nlua_getenv( naevL, o->lua_env, "onload" );
          if (lua_isnil(naevL,-1))
             lua_pop(naevL,1);
          else {

@@ -1583,7 +1583,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    /* On hit weapon effects. */
    if ((outfit!=NULL) && (outfit->lua_onimpact != LUA_NOREF)) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
-      nlua_setenv(outfit->lua_env, "mem"); /* */
+      nlua_setenv(naevL, outfit->lua_env, "mem"); /* */
 
       /* Set up the function: onimpact( pshooter, p ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_onimpact); /* f */
