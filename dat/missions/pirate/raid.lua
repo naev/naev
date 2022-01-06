@@ -166,7 +166,7 @@ function create ()
       faction_title = fmt.f(_(" ({fct})"), {fct=mem.reward_faction})
    end
 
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys, msg=faction_title} ))
+   misn.setTitle(fmt.f(pir.prefix.._("Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys, msg=faction_title} ))
    misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
          {cargo=mem.misn_cargo, sys=mem.targetsys, entersys=mem.convoy_enter:dest(), exitsys=mem.convoy_exit:dest(), reputation=faction_text}))
    misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(mem.reward_base), rcargo=fmt.credits(mem.reward_cargo), cargo=mem.misn_cargo}))

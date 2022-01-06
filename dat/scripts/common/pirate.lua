@@ -7,14 +7,8 @@
 local fmt = require 'format'
 local pir = {}
 
-local function _intable( t, q )
-   for k,v in ipairs(t) do
-      if v==q then
-         return true
-      end
-   end
-   return false
-end
+pir.prefix = "#r".._("PIRACY: ").."#0"
+
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
 
@@ -65,7 +59,7 @@ pir.factions_clans = {
 --]]
 function pir.factionIsPirate( f )
    if not f then return false end
-   return _intable( pir.factions, faction.get(f) )
+   return inlist( pir.factions, faction.get(f) )
 end
 
 --[[
@@ -73,7 +67,7 @@ end
 --]]
 function pir.factionIsClan( f )
    if not f then return false end
-   return _intable( pir.factions_clans, faction.get(f) )
+   return inlist( pir.factions_clans, faction.get(f) )
 end
 
 --[[

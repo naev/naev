@@ -36,12 +36,12 @@ local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared funct
 
 -- Mission details
 local misn_title = {}
-misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in {sys}{msg}")
-misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in {sys}{msg}")
-misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}")
-misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in {sys}{msg}")
-misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}")
-misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}")
+misn_title[1] = pir.prefix.._("Quick Assassination Job in {sys}{msg}")
+misn_title[2] = pir.prefix.._("Small Assassination Job in {sys}{msg}")
+misn_title[3] = pir.prefix.._("Moderate Assassination Job in {sys}{msg}")
+misn_title[4] = pir.prefix.._("Big Assassination Job in {sys}{msg}")
+misn_title[5] = pir.prefix.._("Dangerous Assassination Job in {sys}{msg}")
+misn_title[6] = pir.prefix.._("Highly Dangerous Assassination Job in {sys}{msg}")
 
 local hunters = {}
 local hunter_hits = {}

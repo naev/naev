@@ -41,7 +41,7 @@ abandon_text = {
 
 
 -- Mission details
-mem.misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fct})")
+mem.misn_title  = pir.prefix.._("Patrol of the {sys} System ({fct})")
 mem.misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages

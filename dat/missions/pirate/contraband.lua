@@ -146,11 +146,11 @@ function create()
 
    if pir.factionIsClan( mem.reward_faction ) then
       misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(mem.amount),
+         pir.prefix.._("Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(mem.amount),
          cargo=_(mem.cargo), fct=mem.reward_faction} ) )
    else
       misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(mem.amount),
+         pir.prefix.._("Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(mem.amount),
          cargo=_(mem.cargo)} ) )
    end
    misn.markerAdd(mem.destplanet, "computer")
