@@ -1058,13 +1058,13 @@ Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos
    }
 
    /* Check if the function is good. */
-   nlua_getenv( naevL, p->ai->env, func );
-   luaL_checktype( naevL, -1, LUA_TFUNCTION );
+   nlua_getenv( L, p->ai->env, func );
+   luaL_checktype( L, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
-   t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   t->func     = luaL_ref( L, LUA_REGISTRYINDEX );
    t->dat      = LUA_NOREF;
 
    /* Handle subtask and general task. */
@@ -3278,7 +3278,7 @@ static int aiL_credits( lua_State *L )
 static int aiL_messages( lua_State *L )
 {
    lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
-   lua_newtable(naevL);
+   lua_newtable(L);
    lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
    return 1;
 }
