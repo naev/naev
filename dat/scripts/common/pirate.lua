@@ -7,7 +7,7 @@
 local fmt = require 'format'
 local pir = {}
 
-pir.prefix = "#H".._("PIRACY: ").."#0"
+pir.prefix = "#H".._("PIRATE: ").."#0"
 
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")

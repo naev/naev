@@ -6,7 +6,7 @@
 --]]
 local emp = {}
 
-emp.prefix = "#g".._("EMP: ").."#0" -- Repeatable Empire mission prefix
+emp.prefix = "#g".._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
 
 function emp.addShippingLog( text )
    shiplog.create("empire_shipping", _("Empire Shipping"), _("Empire"))
