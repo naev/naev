@@ -181,7 +181,7 @@ function approach_nelly()
    vn.label("nelly_story")
    nel(_([["Ah. Long story."
 Nelly raises her eyes and lets her gaze wander on the filthy ceiling.
-"I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddenly, the incident occurred!
+"I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddenly, an accident occurred!
 "A kid shot the ball in the wrong direction, and it crashed into the side of my poor Llama, breaking through the plating!"]]))
    vn.menu{
       {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"},
