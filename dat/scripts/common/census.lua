@@ -50,7 +50,7 @@ end
 function cens.testInRange( detected, fact_list )
    local visibles = player.pilot():getVisible()
    for i, p in ipairs(visibles) do -- Has to be visible
-      local d, s = player.pilot():inrange(p)
+      local _d, s = player.pilot():inrange(p)
       if s then -- Fuzzy not allowed
          if inlist( fact_list, p:faction() ) then -- Has to be in factions list
             if not inlist( detected, p ) then -- Has not to be in pilots list
