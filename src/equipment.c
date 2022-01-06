@@ -1815,7 +1815,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", ps->p->outfit_intrinsic[i].outfit->name );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ps->p->outfit_intrinsic[i].outfit->name) );
    }
    window_modifyText( wid, "txtDDesc", buf );
 
