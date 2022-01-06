@@ -151,7 +151,7 @@ function pir.reputationMessage( f )
    if not pir.factionIsClan( f ) then
       return ""
    end
-   return fmt.f(_("This mission will increase your reputation with {fct_longname}."), {fct_longname=f:longname()})
+   return fmt.f(_(" This mission will increase your reputation with {fct_longname}."), {fct_longname=f:longname()})
 end
 
 --[[
