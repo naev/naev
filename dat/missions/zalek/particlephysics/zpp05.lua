@@ -50,7 +50,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You approach Noona who seems giddy with excitement.]]))
-   n(_([["It's almost ready! Thanks to you I finally have everything ready for the test. However, after reviewing the drone firmware, I think it would be best to perform this experiment manually. Sometimes, it's better not to rely on all the fancy technology and do things the old-fashioned way. Would you be willing to perform the experiment for me? Your ship should be sturdy enough; I don't think there's any possibility of harm."]]))
+   n(_([["It's almost ready! Thanks to you, I finally have everything ready for the test. However, after reviewing the drone firmware, I think it would be best to perform this experiment manually. Sometimes, it's better not to rely on all the fancy technology and instead do things the old-fashioned way. Would you be willing to perform the experiment for me? Your ship should be sturdy enough; I don't think there's any possibility of harm."]]))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -61,9 +61,9 @@ function accept ()
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Thanks! So what you brought back last time were some nebula crystals. Nothing is really known about them, but sometimes, they are found in old wrecks or asteroids in the nebula. We know that these crystals seem to have some weird properties, but nothing conclusive has been found about them. While most Za'lek prefer to take a theoretical approach before trying anything experimental, I am rather the opposite. It is much easier to figure out the theory after you have seen how things work."]]))
-   n(_([["The experiment plan is fairly simple, I have set up an amplifier to create an energy focal point at the particle physics testing site. The idea is pretty straightforward: you will just have to the nebula crystals to the focal point, and we can leave the rest to particle physics. I have also set up some recording drones that should capture anything and everything that happens out there."]]))
-   vn.na(_([[You are about to ask about your safety, but seeing how excited Noona is getting, you decide to bet on her word that your ship will shield you from any potential particle physics mishaps.]]))
+   n(_([["Thanks! So what you brought back last time were some nebula crystals. Nothing is really known about them, but, sometimes, they are found in old wrecks or asteroids in the nebula. We know that these crystals seem to have some weird properties, but nothing conclusive has been found about them. While most Za'lek prefer to take a theoretical approach before trying anything experimental, I am rather the opposite. It is much easier to figure out the theory after you have seen how things work."]]))
+   n(_([["The plan for the experiment is fairly simple. I have set up an amplifier to create an energy focal point at the particle physics testing site. The idea is pretty straightforward: you will just have to fly the nebula crystals to the focal point, and we can leave the rest to particle physics. I have also set up some recording drones that should capture anything and everything that happens out there."]]))
+   vn.na(_([[You are about to ask about your safety, but seeing how excited Noona is getting, you decide to rely on her word that your ship will shield you from any potential particle physics mishaps.]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -194,7 +194,7 @@ function drone_board ()
    vn.scene()
    vn.transition()
 
-   vn.na(_([[You access the amplifiers control panel and jack in.]]))
+   vn.na(_([[You access the amplifier's control panel and jack in.]]))
 
    -- TODO maybe do another minigame?
    sokoban.vn{ levels={6,7}, header="Amplifier Control Panel"}
@@ -211,7 +211,7 @@ function drone_board ()
    end )
 
    vn.label([[sokoban_done]])
-   vn.na(_([[You manage to adjust the settings and the amplifier turns on agian.]]))
+   vn.na(_([[You manage to adjust the settings and the amplifier turns on again.]]))
    vn.done()
 
    vn.label("sokoban_fail")
@@ -243,7 +243,7 @@ function heartbeat ()
       player.pilot():setTarget( pexp )
       stage = 3
    elseif stage==3 and fixed then
-      pilot.comm(_("Noona"), _("It looks everything is OK now."))
+      pilot.comm(_("Noona"), _("It looks like everything is OK now."))
       stage = 4
       delay = 6
    elseif stage==4 then
