@@ -179,7 +179,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Run Lua. */
-   nlua_getenv(comm_env,"comm");
+   nlua_getenv(naevL, comm_env,"comm");
    lua_pushpilot(naevL, p->id);
    if (nlua_pcall(comm_env, 1, 0)) { /* error has occurred */
       WARN( _("Comm: '%s'"), lua_tostring(naevL,-1));
@@ -429,7 +429,7 @@ static const char* comm_getString( const Pilot *p, const char *str )
       return NULL;
 
    /* Get memory table. */
-   nlua_getenv(p->ai->env, "mem");
+   nlua_getenv(naevL, p->ai->env, "mem");
 
    /* Get str message. */
    lua_getfield(naevL, -1, str );

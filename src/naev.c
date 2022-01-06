@@ -549,7 +549,7 @@ void loadscreen_render( double done, const char *msg )
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Run Lua. */
-   nlua_getenv(load_env,"render");
+   nlua_getenv( naevL, load_env, "render" );
    lua_pushnumber( naevL, done );
    lua_pushstring( naevL, msg );
    if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */

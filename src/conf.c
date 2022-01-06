@@ -28,7 +28,7 @@
 
 #define conf_loadInt( env, n, i )            \
    {                                         \
-      nlua_getenv( env, n );                 \
+      nlua_getenv( naevL, env, n );          \
       if ( lua_isnumber( naevL, -1 ) ) {     \
          i = (int)lua_tonumber( naevL, -1 ); \
       }                                      \
@@ -37,7 +37,7 @@
 
 #define conf_loadFloat( env, n, f )             \
    {                                            \
-      nlua_getenv( env, n );                    \
+      nlua_getenv( naevL, env, n );             \
       if ( lua_isnumber( naevL, -1 ) ) {        \
          f = (double)lua_tonumber( naevL, -1 ); \
       }                                         \
@@ -46,7 +46,7 @@
 
 #define conf_loadBool( env, n, b )                \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isnumber( naevL, -1 ) )            \
          b = ( lua_tonumber( naevL, -1 ) != 0. ); \
       else if ( !lua_isnil( naevL, -1 ) )         \
@@ -56,7 +56,7 @@
 
 #define conf_loadString( env, n, s )              \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isstring( naevL, -1 ) ) {          \
          free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
@@ -354,7 +354,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "engine_vol", conf.engine_vol );
 
       /* Joystick. */
-      nlua_getenv( lEnv, "joystick" );
+      nlua_getenv( naevL, lEnv, "joystick" );
       if (lua_isnumber(naevL, -1))
          conf.joystick_ind = (int)lua_tonumber(naevL, -1);
       else if (lua_isstring(naevL, -1))
@@ -416,7 +416,7 @@ int conf_loadConfig ( const char* file )
        * Keybindings.
        */
       for (i=0; keybind_info[i][0] != NULL; i++) {
-         nlua_getenv( lEnv, keybind_info[ i ][ 0 ] );
+         nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);

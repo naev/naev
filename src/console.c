@@ -231,7 +231,7 @@ static int cli_script( lua_State *L )
 
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
-      nlua_getenv( cli_env, "_LOADED" );
+      nlua_getenv( L, cli_env, "_LOADED" );
       if (lua_istable(L,-1)) {
          lua_pushnil(L);                     /* t, nil */
          while (lua_next(L, -2) != 0) {      /* t, key, val */
@@ -251,7 +251,7 @@ static int cli_script( lua_State *L )
    free( buf );
 
    /* Return the stuff. */
-   nlua_pushenv(cli_env);
+   nlua_pushenv(L, cli_env);
    lua_setfenv(L, -2);
    if (lua_pcall(L, 0, LUA_MULTRET, 0) != 0) {
       WARN(_("Error running 'script':\n%s"), lua_tostring(L,-1));
@@ -405,7 +405,7 @@ void cli_tabComplete( unsigned int wid )
    old = window_getInput( wid, "inpInput" );
    str = strdup(old);
 
-   nlua_pushenv(cli_env);
+   nlua_pushenv(naevL, cli_env);
    cur = str;
    for (int i=0; str[i] != '\0'; i++) {
       if (str[i] == '.' || str[i] == ':') {
@@ -433,7 +433,7 @@ void cli_tabComplete( unsigned int wid )
       /* Start over on other non-identifier character */
       } else if (!isalnum(str[i]) && str[i] != '_') {
          lua_pop(naevL, 1);
-         nlua_pushenv(cli_env);
+         nlua_pushenv(naevL, cli_env);
          cur = str + i + 1;
       }
    }
@@ -484,9 +484,9 @@ static int cli_initLua (void)
 
    /* Mark as console. */
    lua_pushboolean( naevL, 1 );
-   nlua_setenv( cli_env, "__cli" );
+   nlua_setenv( naevL, cli_env, "__cli" );
 
-   nlua_pushenv(cli_env);
+   nlua_pushenv( naevL, cli_env );
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
@@ -651,7 +651,7 @@ static void cli_input( unsigned int wid, const char *unused )
       else if (status == 0) {
          lua_remove(naevL,1);
 
-         nlua_pushenv(cli_env);
+         nlua_pushenv(naevL, cli_env);
          lua_setfenv(naevL, -2);
 
          if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
@@ -660,7 +660,7 @@ static void cli_input( unsigned int wid, const char *unused )
          }
 
          if (lua_gettop(naevL) > 0) {
-            nlua_getenv(cli_env, "print");
+            nlua_getenv(naevL, cli_env, "print");
             lua_insert(naevL, 1);
             if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
                cli_addMessage( _("Error printing results.") );

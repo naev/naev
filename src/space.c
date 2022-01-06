@@ -1199,7 +1199,7 @@ static void system_scheduler( double dt, int init )
 
       /* Run the appropriate function. */
       if (init) {
-         nlua_getenv( env, "create" ); /* f */
+         nlua_getenv( naevL, env, "create" ); /* f */
          if (lua_isnil(naevL,-1)) {
             WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'create'."),
                   faction_name( p->faction ) );
@@ -1214,7 +1214,7 @@ static void system_scheduler( double dt, int init )
          if (p->timer >= 0.)
             continue;
 
-         nlua_getenv( env, "spawn" ); /* f */
+         nlua_getenv( naevL, env, "spawn" ); /* f */
          if (lua_isnil(naevL,-1)) {
             WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."),
                   faction_name( p->faction ) );
@@ -2050,7 +2050,7 @@ void spob_updateLand( Spob *p )
       str = "land";
    else
       str = p->land_func;
-   nlua_getenv( landing_env, str );
+   nlua_getenv( naevL, landing_env, str );
    lua_pushspob( naevL, spob_index(p) );
    if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
       WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
@@ -2338,7 +2338,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
                         spob->land_func = strdup(tmp);
 #ifdef DEBUGGING
                         if (landing_env != LUA_NOREF) {
-                           nlua_getenv( landing_env, tmp );
+                           nlua_getenv( naevL, landing_env, tmp );
                            if (lua_isnil(naevL,-1))
                               WARN(_("Spob '%s' has landing function '%s' which is not found in '%s'."),
                                     spob->name, tmp, LANDING_DATA_PATH);
@@ -4738,7 +4738,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    env = faction_getScheduler( faction );
 
    /* Run decrease function if applicable. */
-   nlua_getenv( env, "decrease" ); /* f */
+   nlua_getenv( naevL, env, "decrease" ); /* f */
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;

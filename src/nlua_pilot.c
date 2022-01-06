@@ -682,7 +682,7 @@ static int pilotL_add( lua_State *L )
       lj.destid = cur_system->id;
 
       if (pplt->ai != NULL) {
-         nlua_getenv( pplt->ai->env, AI_MEM );
+         nlua_getenv( L, pplt->ai->env, AI_MEM );
          lua_pushjump(L, lj);
          lua_setfield(L,-2,"create_jump");
          lua_pop(L,1);
@@ -690,7 +690,7 @@ static int pilotL_add( lua_State *L )
    }
    else if (spob != NULL) {
       if (pplt->ai != NULL) {
-         nlua_getenv( pplt->ai->env, AI_MEM );
+         nlua_getenv( L, pplt->ai->env, AI_MEM );
          lua_pushspob(L,spob->id);
          lua_setfield(L,-2,"create_spob");
          lua_pop(L,1);
@@ -4091,9 +4091,9 @@ static int pilotL_memory( lua_State *L )
       return 0;
    }
 
-   nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
-   lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
-   lua_remove( naevL, -2 );            /* table */
+   nlua_getenv( naevL, p->ai->env, AI_MEM );    /* pilotmem */
+   lua_rawgeti( naevL, -1, p-> id );            /* pilotmem, table */
+   lua_remove( naevL, -2 );                     /* table */
 
    return 1;
 }

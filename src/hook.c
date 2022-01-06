@@ -125,7 +125,7 @@ static void hooks_purgeList (void);
 static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
 static Hook* hook_new( HookType_t type, const char *stack );
-static int hook_parseParam( lua_State *L, const HookParam *param );
+static int hook_parseParam( const HookParam *param );
 static int hook_runMisn( Hook *hook, const HookParam *param, int claims );
 static int hook_runEvent( Hook *hook, const HookParam *param, int claims );
 static int hook_run( Hook *hook, const HookParam *param, int claims );
@@ -227,11 +227,10 @@ void hook_exclusionEnd( double dt )
 /**
  * @brief Parses hook parameters.
  *
- *    @param L Lua state to feed parameters into.
  *    @param param Parameters to process.
  *    @return Parameters found.
  */
-static int hook_parseParam( lua_State *L, const HookParam *param )
+static int hook_parseParam( const HookParam *param )
 {
    int n;
 
@@ -242,28 +241,28 @@ static int hook_parseParam( lua_State *L, const HookParam *param )
    while (param[n].type != HOOK_PARAM_SENTINEL) {
       switch (param[n].type) {
          case HOOK_PARAM_NIL:
-            lua_pushnil( L );
+            lua_pushnil( naevL );
             break;
          case HOOK_PARAM_NUMBER:
-            lua_pushnumber( L, param[n].u.num );
+            lua_pushnumber( naevL, param[n].u.num );
             break;
          case HOOK_PARAM_STRING:
-            lua_pushstring( L, param[n].u.str );
+            lua_pushstring( naevL, param[n].u.str );
             break;
          case HOOK_PARAM_BOOL:
-            lua_pushboolean( L, param[n].u.b );
+            lua_pushboolean( naevL, param[n].u.b );
             break;
          case HOOK_PARAM_PILOT:
-            lua_pushpilot( L, param[n].u.lp );
+            lua_pushpilot( naevL, param[n].u.lp );
             break;
          case HOOK_PARAM_FACTION:
-            lua_pushfaction( L, param[n].u.lf );
+            lua_pushfaction( naevL, param[n].u.lf );
             break;
          case HOOK_PARAM_SPOB:
-            lua_pushspob( L, param[n].u.la );
+            lua_pushspob( naevL, param[n].u.la );
             break;
          case HOOK_PARAM_JUMP:
-            lua_pushjump( L, param[n].u.lj );
+            lua_pushjump( naevL, param[n].u.lj );
             break;
          case HOOK_PARAM_REF:
             lua_rawgeti( naevL, LUA_REGISTRYINDEX, param[n].u.ref );
@@ -272,7 +271,7 @@ static int hook_parseParam( lua_State *L, const HookParam *param )
 
          default:
             WARN( _("Unknown Lua parameter type.") );
-            lua_pushnil( L );
+            lua_pushnil( naevL );
             break;
       }
       n++;
@@ -323,7 +322,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
 
    /* Set up hook parameters. */
    misn_runStart( misn, hook->u.misn.func );
-   n = hook_parseParam( naevL, param );
+   n = hook_parseParam( param );
 
    /* Add hook parameters. */
    hookL_getarg( id );
@@ -370,7 +369,7 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
 
    event_runStart( hook->u.event.parent, hook->u.event.func );
 
-   n = hook_parseParam( naevL, param );
+   n = hook_parseParam( param );
 
    /* Add hook parameters. */
    hookL_getarg( hook->id );

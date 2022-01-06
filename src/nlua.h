@@ -26,9 +26,9 @@ void lua_init(void);
 void lua_exit(void);
 nlua_env nlua_newEnv(int rw);
 void nlua_freeEnv(nlua_env env);
-void nlua_pushenv(nlua_env env);
-void nlua_setenv(nlua_env env, const char *name);
-void nlua_getenv(nlua_env env, const char *name);
+void nlua_pushenv(lua_State* L, nlua_env env);
+void nlua_setenv(lua_State* L, nlua_env env, const char *name);
+void nlua_getenv(lua_State* L, nlua_env env, const char *name);
 void nlua_register(nlua_env env, const char *libname,
                    const luaL_Reg *l, int metatable);
 int nlua_dobufenv(nlua_env env,
