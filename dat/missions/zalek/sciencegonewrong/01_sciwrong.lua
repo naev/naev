@@ -47,7 +47,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently he has another job for you.") )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently, he has another job for you.") )
 end
 function accept()
    -- Mission details:
@@ -55,8 +55,8 @@ function accept()
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
-    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
+   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told, it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship, and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
       fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=mem.t_sys[2], plt=shpnm}),

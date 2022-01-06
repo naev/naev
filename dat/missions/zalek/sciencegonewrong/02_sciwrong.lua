@@ -235,7 +235,7 @@ end
 
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
-   tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]]))
+   tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! Now it should be much easier to catch it!"]]))
    t_drone = pilot.add(
       "Za'lek Scout Drone",
       "Za'lek",
@@ -293,7 +293,7 @@ function drone_disableable()
    tk.msg(_([[On your ship]]),_([["There you go! Get it!"]]))
    t_drone:setNoDisable(false)
    if mem.jumps == 2 then
-      tk.msg(_([[On your ship]]),_([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
+      tk.msg(_([[On your ship]]),_([["This is strange. The engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
    end
 end

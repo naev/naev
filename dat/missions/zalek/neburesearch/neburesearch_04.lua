@@ -37,12 +37,12 @@ local homeworld, homeworld_sys = spob.getS("Jorla")
 local dest_planet, dest_sys = spob.getS("Jurai")
 
 function create()
-    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
+    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("She probably has a new poor-paying job for you. Maybe she won't notice you if you leave now."))
 end
 
 function accept()
-    if not tk.yesno("", fmt.f(_([["It appears we keep running into each other {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course I can't provide you a shielding system; we scientists usually don't bother with engineering. However in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting.
-    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying…"]]), {player=player.name()})) then
+    if not tk.yesno("", fmt.f(_([["It appears we keep running into each other, {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course, I can't provide you a shielding system; we scientists usually don't bother with engineering. However, in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting.
+    "This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently, it is sometimes required to show up in person. So annoying…"]]), {player=player.name()})) then
         tk.msg(_("No science for today"), _([["Too bad. Maybe you will change your mind."]]))
         misn.finish()
     end
@@ -52,7 +52,7 @@ function accept()
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(fmt.credits(credits))
-    misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."))
+    misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
     mem.misn_marker = misn.markerAdd(dest_planet, "low")
 
     misn.accept()
@@ -80,8 +80,8 @@ function land()
         if mem.stage == 0 then
             mem.stage = 1
             dest_planet, dest_sys = spob.getS("Neo Pomerania")
-            tk.msg(_("No luck"), fmt.f(_([[After landing on {cur_pnt} Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.
-    "This is the first time that one of my applications was rejected. That's weird, I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
+            tk.msg(_("No luck"), fmt.f(_([[After landing on {cur_pnt}, Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.
+    "This is the first time that one of my applications was rejected. That's weird. I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
             dest_updated()
         elseif mem.stage == 2 then
             mem.stage = 3
@@ -174,7 +174,7 @@ function cannotLand()
     local cur_planet = dest_planet
     mem.stage = 4
     dest_planet, dest_sys = spob.getS("Ruadan Station")
-    tk.msg(_("No clearance to land"), fmt.f(_([[Apparently you are not allowed to land on {cur_pnt} and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing. "We're not allowed to? Let me try to talk with them."
+    tk.msg(_("No clearance to land"), fmt.f(_([[Apparently, you are not allowed to land on {cur_pnt} and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing. "We're not allowed to? Let me try to talk with them."
     After a heated discussion Dr. Mensing gives up. "Right, they won't allow anyone to land on {cur_pnt}. That's so frustrating. Let's land on {pnt} instead."]]), {cur_pnt=cur_planet, pnt=dest_planet}))
     dest_updated()
 end

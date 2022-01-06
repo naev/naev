@@ -72,7 +72,7 @@ end
 
 function accept()
     if not tk.yesno(_("Bar"), fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
-    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]), {player=player.name()})) then
+    Your timing is just perfect. You see, we planned an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]), {player=player.name()})) then
         misn.finish()
     end
 
@@ -81,7 +81,7 @@ function accept()
     mem.firstTakeOff = true
     mem.origin = spob.cur()
 
-    tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
+    tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality, he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate, but there are the pirate systems in between. Also, the target systems are controlled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
     We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
 
     -- Set up mission information
@@ -173,7 +173,7 @@ function land()
     She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
         mem.station_visited = true
     elseif spob.cur() == homeworld then
-        tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
+        tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship, you meet up with Dr. Mensing who hands you a chip worth {credits} and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favour today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
         player.pay(credits)
         zlk.addNebuResearchLog(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
@@ -274,20 +274,20 @@ function ambushHail()
         j:setVisible()
         j:setVisplayer()
     end
-    tk.msg(_("Trouble inbound"), _([[Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
+    tk.msg(_("Trouble inbound"), _([[Suddenly, your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
     "I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.
     The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."
     "Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."
-    The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]]))
-    tk.msg(_("Trouble inbound"), _([[Dr. Mensing  pauses, apparently choosing her words with care.
-    "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]]))
-    tk.msg(_("Trouble inbound"), fmt.f(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
-    "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I hadn't considered this point.
+    The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship to be boarded."]]))
+    tk.msg(_("Trouble inbound"), _([[Dr. Mensing pauses, apparently choosing her words with care.
+    "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transport.]]))
+    tk.msg(_("Trouble inbound"), fmt.f(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking to you.
+    "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suites to show up in Dvaered space. I hadn't considered this point.
     I'm counting on you, {player}. Please help us."]]), {player=player.name()}))
 end
 
 -- Handle the destruction of the transporter. Abort the mission.
 function transporterDeath()
-    tk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
+    tk.msg(_("The transport was destroyed!"), _("The transport was destroyed and all scientists died! Even worse, you failed science!"))
     misn.finish(false)
 end

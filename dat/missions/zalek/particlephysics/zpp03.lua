@@ -48,7 +48,7 @@ function accept ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_([[You approach Noona who doesn't seem too happy.]]))
+   vn.na(_([[You approach Noona, who doesn't seem too happy.]]))
    n(_([["I have no idea what went wrong."
 She has trouble keeping her composure.
 "I double checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
@@ -219,7 +219,7 @@ function drone_board ()
    end )
 
    vn.label([[sokoban_done]])
-   vn.na(_([[You manage recover the entire black box intact and load the information on your ship.]]))
+   vn.na(_([[You manage to recover the entire black box intact and load the information on your ship.]]))
    vn.done()
 
    vn.label("sokoban_fail")

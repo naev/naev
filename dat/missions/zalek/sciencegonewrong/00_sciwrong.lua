@@ -110,7 +110,7 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(mem.bar2pir1)
-  if not tk.yesno( _([[In the bar]]), fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}) ) then
+  if not tk.yesno( _([[In the bar]]), fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned, I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}) ) then
      tk.msg(_([[In the bar]]), _([["Then we have nothing to to discuss."]]))
      return
   end
@@ -158,7 +158,7 @@ function fnl_ld ()
       tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
       tk.msg(_([[In the bar]]),_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
       player.pay(reward)
-      sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pnt} in the {sys} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pnt=mem.t_pla[3], sys=mem.t_sys[3] } ) )
+      sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pnt} in the {sys} system to obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pnt=mem.t_pla[3], sys=mem.t_sys[3] } ) )
       misn.finish(true)
    end
 end
@@ -224,7 +224,7 @@ end
 -- display msgs and have the ships disappear and fail the mission...
 function fine_vanish ()
    local fine = 100e3
-   tk.msg(_([[On your ship]]),_([["You are accused of violating regulation on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
+   tk.msg(_([[On your ship]]),_([["You are accused of violating regulations on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
    tk.msg(_([[On your ship]]), fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you {credits}.]]), {credits=fmt.credits(fine)}))
    if player.credits() > fine then
       player.pay(-fine)
