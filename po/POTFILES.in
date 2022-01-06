@@ -2341,6 +2341,9 @@ dat/missions/dvaered/frontier_war/fw05_triathlon.lua
 dat/missions/dvaered/gauntlet/gauntlet.lua
 dat/missions/dvaered/gauntlet/gui.lua
 dat/missions/dvaered/gauntlet/tables.lua
+dat/missions/dvaered/recruitment/dv_census.lua
+dat/missions/dvaered/recruitment/dv_census_00.lua
+dat/missions/dvaered/recruitment/dv_intellignece.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
 dat/missions/empire/collective/ec02.lua
@@ -2540,6 +2543,7 @@ dat/scripts/colour.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/cargo.lua
+dat/scripts/common/census.lua
 dat/scripts/common/comm.lua
 dat/scripts/common/derelict.lua
 dat/scripts/common/dvaered.lua
