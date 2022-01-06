@@ -55,7 +55,7 @@ local znpcs = {}
 znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
 znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
-znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
+znpcs[4] = _([[A Za'lek researcher needs you to test the new propulsion system they have implemented in this engine.]])
 
 function create()
    mem.origin_p, mem.origin_s = spob.cur()
@@ -101,7 +101,7 @@ function accept()
       mem.stage = 0
       player.outfitAdd("Za'lek Test Engine")
       tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
+      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measurements during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
 
       misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
       mem.takehook = hook.takeoff( "takeoff" )
@@ -159,7 +159,7 @@ function land()
    end
 
    if spob.cur() == mem.destplanet and mem.stage == 0 then
-      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
+      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land.  An excited group of Za'lek scientists quickly remove the experimental engine and eagerly download your flight data before paying you your fee."))
       player.pay(mem.reward)
       player.outfitRm("Za'lek Test Engine")
 
