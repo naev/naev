@@ -25,6 +25,7 @@
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local zlk = require "common.zalek"
 
 local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
 -- luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
@@ -83,7 +84,7 @@ function create()
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
-   misn.setTitle( fmt.f(_("#rZLK:#0 Test of {engine}"), {engine=typeOfEng} ))
+   misn.setTitle( fmt.f( zlk.prefix.._("Test of {engine}"), {engine=typeOfEng} ))
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=mem.destplanet, sys=mem.destsys} ), nil, nil, mem.destplanet )
    misn.setReward(fmt.credits(mem.reward))

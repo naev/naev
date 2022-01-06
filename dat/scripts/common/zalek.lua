@@ -5,6 +5,8 @@
 --]]
 local zlk = {}
 
+zlk.prefix = "#r".._("ZLK: ").."#0" -- Repeatable mission prefix
+
 function zlk.addNebuResearchLog( text )
    shiplog.create( "zlk_neburesearch", _("Nebula Research"), _("Za'lek") )
    shiplog.append( "zlk_neburesearch", text )
