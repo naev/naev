@@ -7,10 +7,39 @@
 local fmt = require 'format'
 local pir = {}
 
-pir.prefix = "#H".._("PIRATE: ").."#0"
+-- List of all the pirate factions
+pir.factions = {
+   faction.get("Pirate"),
+   faction.get("Marauder"),
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
+-- List of all the pirate clan factions
+pir.factions_clans = {
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
 
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
+
+local _prefix = {
+   ["Raven Clan"] = _("RAVEN CLAN: "),
+   ["Wild Ones"] = _("WILD ONES: "),
+   ["Dreamer Clan"] = _("DREAMER CLAN: "),
+   ["Black Lotus"] = _("BLACK LOTUS: "),
+}
+function pir.prefix( fct )
+   local p = _prefix[ fct:nameRaw() ]
+   if not p then
+      p = _("PIRATE: ")
+   end
+   return "#H"..p.."#0"
+end
 
 --[[
    @brief Increases the reputation limit of the player.
@@ -36,23 +65,6 @@ function pir.addMiscLog( text )
    shiplog.create("pir_misc", _("Miscellaneous"), _("Pirate"))
    shiplog.append("pir_misc", text)
 end
-
--- List of all the pirate factions
-pir.factions = {
-   faction.get("Pirate"),
-   faction.get("Marauder"),
-   faction.get("Raven Clan"),
-   faction.get("Wild Ones"),
-   faction.get("Dreamer Clan"),
-   faction.get("Black Lotus"),
-}
--- List of all the pirate clan factions
-pir.factions_clans = {
-   faction.get("Raven Clan"),
-   faction.get("Wild Ones"),
-   faction.get("Dreamer Clan"),
-   faction.get("Black Lotus"),
-}
 
 --[[
    @brief Gets whether or not a faction is a pirate faction

@@ -36,12 +36,12 @@ local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared funct
 
 -- Mission details
 local misn_title = {}
-misn_title[1] = pir.prefix.._("Quick Assassination Job in {sys}{msg}")
-misn_title[2] = pir.prefix.._("Small Assassination Job in {sys}{msg}")
-misn_title[3] = pir.prefix.._("Moderate Assassination Job in {sys}{msg}")
-misn_title[4] = pir.prefix.._("Big Assassination Job in {sys}{msg}")
-misn_title[5] = pir.prefix.._("Dangerous Assassination Job in {sys}{msg}")
-misn_title[6] = pir.prefix.._("Highly Dangerous Assassination Job in {sys}{msg}")
+misn_title[1] = _("Quick Assassination Job in {sys}")
+misn_title[2] = _("Small Assassination Job in {sys}")
+misn_title[3] = _("Moderate Assassination Job in {sys}")
+misn_title[4] = _("Big Assassination Job in {sys}")
+misn_title[5] = _("Dangerous Assassination Job in {sys}")
+misn_title[6] = _("Highly Dangerous Assassination Job in {sys}")
 
 local hunters = {}
 local hunter_hits = {}
@@ -116,11 +116,7 @@ function create ()
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   if pir.factionIsClan( mem.paying_faction ) then
-      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=fmt.f(_(" ({fct})"), {fct=mem.paying_faction} )} ) )
-   else
-      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=""} ) )
-   end
+   misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
    local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
    if not pir.factionIsPirate( spob.cur():faction() ) then
