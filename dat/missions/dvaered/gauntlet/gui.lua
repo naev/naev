@@ -164,7 +164,7 @@ local function gauntlet_gui ()
    -- Window and top details
    local w, h = 800, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
-   local iw, ih = 100, 80
+   local iw, ih = 80, 80
    local y = 5
    luatk.newImage( wdw, (w-iw)/2, y, iw, ih, lg.newImage("gfx/misc/crimson_gauntlet.webp") )
    luatk.newText( wdw, 0, (ih-24)/2+5, (w-iw)/2-10, 24, _("CRIMSON"), {0.9, 0.1, 0.25}, "right", largefont )
