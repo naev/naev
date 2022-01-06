@@ -26,7 +26,7 @@
 
 local cens   = require "common.census"
 local fmt    = require "format"
-local dv     = require "common.dvaered"
+--local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
@@ -39,7 +39,7 @@ function create ()
    if not misn.claim(mem.sys) then misn.finish(false) end
 
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
-   
+
    -- Mission details
    misn.setTitle(fmt.f(_("#rDC:#0 Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
@@ -72,6 +72,7 @@ function land()
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
       vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer.") )
       player.pay( mem.credits )
+      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
