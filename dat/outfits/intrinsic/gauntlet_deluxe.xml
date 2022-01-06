@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Gauntlet Deluxe">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>The "Gauntlet Deluxe" service provides a full retweak and overhaul of the systems forward weapon circuitry. The optimizations are able to slightly increase the power without any significant drawback other than the high cost of the service itself. Due to the nature of the service, only one can be applied to each ship.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <fwd_damage>5</fwd_damage>
+ </specific>
+</outfit>

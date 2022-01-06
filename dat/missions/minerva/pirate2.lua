@@ -145,14 +145,6 @@ end
 
 
 local function dvaered_weapons( p )
-   local function inlist( val, list )
-      for k,v in ipairs(list) do
-         if v==val then
-            return true
-         end
-      end
-      return false
-   end
    local weapons = p:outfits( "weapon" )
    local baditems = {}
    if #weapons==0 then

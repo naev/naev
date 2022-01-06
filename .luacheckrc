@@ -23,8 +23,9 @@ stds.Basic={
          fields={"unpack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
+      "inlist",
    },
-   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn" },
+   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn"},
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
@@ -34,9 +35,9 @@ stds.Canvas = {read_globals={"canvas"}}
 stds.Col = {read_globals={"colour"}}
 stds.Commodity = {read_globals={"commodity"}}
 stds.Data = {read_globals={"data"}}
-stds.Debug = {read_globals={"debug"}}
 stds.Diff = {read_globals={"diff"}}
 stds.Evt = {read_globals={"evt"}}
+stds.CLI = {read_globals={"script", "printRaw"}} -- Actually set in cli_initLua()
 stds.Faction = {read_globals={"faction"}}
 stds.File = {read_globals={"file"}}
 stds.Font = {read_globals={"font"}}
@@ -68,7 +69,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship"
-STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 
@@ -143,7 +144,7 @@ stds.API_spob = {globals={
    "render",   -- C function: space_renderSpob
    "update",   -- C function: space_updateSpob
 }}
-stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
+stds.Background.globals={"background", "renderbg", "rendermg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
    "create",
@@ -169,6 +170,7 @@ stds.PilotOutfit.globals={
    "land",
    "onadd",
    "onhit",
+   "onimpact",
    "onload",
    "onremove",
    "onscan",
@@ -188,6 +190,7 @@ files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera+Audio" .. GFX
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/common.lua"].std = STANDARD
 files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
@@ -195,9 +198,11 @@ files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
+files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
 files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+Audio+LinOpt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"

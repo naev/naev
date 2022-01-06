@@ -691,8 +691,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) &&
-               ((lst[i].u.ammo.outfit == NULL) ||
-                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit)))
             subtitle = 1;
       }
       /* Draw bottom. */
@@ -1145,7 +1144,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Remove outfit. */
    if (slot->outfit != NULL) {
       int ret;
-      const Outfit *ammo;
       const Outfit *o = slot->outfit;
 
       /* Must be able to remove. */
@@ -1153,9 +1151,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if ( ammo != NULL )
-         pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
+      pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
 
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
@@ -1742,6 +1738,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Done:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Taken:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ships Destroyed:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Intrinsic Outfits:") );
    }
    window_modifyText( wid, "txtSDesc", buf );
 
@@ -1816,6 +1813,9 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
       l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ps->p->outfit_intrinsic[i].outfit->name) );
    }
    window_modifyText( wid, "txtDDesc", buf );
 
@@ -2050,7 +2050,6 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    /* Remove all outfits. */
    for (int i=0; i<array_size(ship->outfits); i++) {
       int ret;
-      const Outfit *ammo;
       PilotOutfitSlot *s = ship->outfits[i];
       const Outfit *o = s->outfit;
 
@@ -2063,10 +2062,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
          continue;
 
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if (ammo != NULL) {
-         pilot_rmAmmo( ship, s, outfit_amount(o) );
-      }
+      pilot_rmAmmo( ship, s, outfit_amount(o) );
 
       /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, s );
@@ -2138,7 +2134,7 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    }
 
    /* Run func. */
-   nlua_getenv( autoequip_env, "autoequip" );
+   nlua_getenv( naevL, autoequip_env, "autoequip" );
    if (!lua_isfunction(naevL,-1)) {
       WARN(_("'%s' doesn't have valid required 'autoequip' function!"), file);
       lua_pop(naevL,1);

@@ -10,6 +10,7 @@ dat/commodities/ore.xml
 dat/commodities/water.xml
 dat/damagetype.xml
 dat/effects/ambush_hunter.xml
+dat/effects/antimatter_taint.xml
 dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
@@ -147,18 +148,7 @@ dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml
 dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml
 dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml
-dat/outfits/fighters/drone_fighter.xml
-dat/outfits/fighters/empire_lancelot_fighter.xml
-dat/outfits/fighters/fidelity_fighter.xml
-dat/outfits/fighters/hyena_fighter.xml
-dat/outfits/fighters/lancelot_fighter.xml
-dat/outfits/fighters/pirate_hyena_fighter.xml
-dat/outfits/fighters/proteron_derivative_fighter.xml
-dat/outfits/fighters/soromid_brigand_fighter.xml
-dat/outfits/fighters/thurion_perspicacity_fighter.xml
-dat/outfits/fighters/zalek_bomber_drone_fighter.xml
-dat/outfits/fighters/zalek_heavy_drone_fighter.xml
-dat/outfits/fighters/zalek_light_drone_fighter.xml
+dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
 dat/outfits/launchers/emp_grenade_launcher.xml
@@ -217,22 +207,6 @@ dat/outfits/misc/light_combat_vessel_license.xml
 dat/outfits/misc/medium_combat_vessel_license.xml
 dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
-dat/outfits/rockets/banshee_rocket.xml
-dat/outfits/rockets/caesar_iv_torpedo.xml
-dat/outfits/rockets/convulsion_missile.xml
-dat/outfits/rockets/electron_energy_cell.xml
-dat/outfits/rockets/emp_grenade.xml
-dat/outfits/rockets/fury_missile.xml
-dat/outfits/rockets/headhunter_missile.xml
-dat/outfits/rockets/huntsman_torpedo.xml
-dat/outfits/rockets/imperator_torpedo.xml
-dat/outfits/rockets/mace_rocket.xml
-dat/outfits/rockets/medusa_missile.xml
-dat/outfits/rockets/shatterer_missile.xml
-dat/outfits/rockets/spearhead_missile.xml
-dat/outfits/rockets/vengeance_missile.xml
-dat/outfits/rockets/zalek_hunter.xml
-dat/outfits/rockets/zalek_reaper.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
 dat/outfits/structure/battery_i.xml
@@ -306,6 +280,7 @@ dat/outfits/utility/unicorp_medium_afterburner.xml
 dat/outfits/utility/unicorp_scrambler.xml
 dat/outfits/utility/weakness_harmonizer_ai.xml
 dat/outfits/utility/weapons_ionizer.xml
+dat/outfits/weapons/antimatter_lance.xml
 dat/outfits/weapons/base_ripper_mk2.xml
 dat/outfits/weapons/cheaters_laser_cannon.xml
 dat/outfits/weapons/cheaters_ragnarok_beam.xml
@@ -768,6 +743,7 @@ dat/spob/folevo.xml
 dat/spob/forbes_station.xml
 dat/spob/forge.xml
 dat/spob/fort_sirius.xml
+dat/spob/fort_voproid.xml
 dat/spob/fortitude_i.xml
 dat/spob/fortitude_ii.xml
 dat/spob/fortitude_iii.xml
@@ -1441,6 +1417,10 @@ dat/spob/tartarus.xml
 dat/spob/tau_prime.xml
 dat/spob/tau_secundus.xml
 dat/spob/tau_station.xml
+dat/spob/taxumi_i.xml
+dat/spob/taxumi_ii.xml
+dat/spob/taxumi_iii.xml
+dat/spob/taxumi_iiia.xml
 dat/spob/telika_ii.xml
 dat/spob/telika_iii.xml
 dat/spob/telika_station.xml
@@ -1552,6 +1532,7 @@ dat/spob/violin_station.xml
 dat/spob/vlexair.xml
 dat/spob/vlexon_i.xml
 dat/spob/vlexon_ii.xml
+dat/spob/voproid_prime.xml
 dat/spob/vorca.xml
 dat/spob/vracha.xml
 dat/spob/vuere.xml
@@ -2052,6 +2033,7 @@ dat/ssys/tarmak.xml
 dat/ssys/tarsus.xml
 dat/ssys/tartan.xml
 dat/ssys/tau_prime.xml
+dat/ssys/taxumi.xml
 dat/ssys/telika.xml
 dat/ssys/teller.xml
 dat/ssys/tempus.xml
@@ -2092,6 +2074,7 @@ dat/ssys/vega.xml
 dat/ssys/verex.xml
 dat/ssys/vlexon.xml
 dat/ssys/volus.xml
+dat/ssys/voproid.xml
 dat/ssys/vost.xml
 dat/ssys/wahri.xml
 dat/ssys/waterhole.xml
@@ -2205,6 +2188,7 @@ dat/bkg/blackhole.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
 dat/bkg/haze.lua
+dat/bkg/ionicstorm.lua
 dat/bkg/lib/bgshaders.lua
 dat/bkg/lib/nebula.lua
 dat/bkg/lib/nebula_image.lua
@@ -2221,10 +2205,12 @@ dat/bkg/nebu_ngc_2440.lua
 dat/bkg/nebu_ngc_2440_2.lua
 dat/bkg/nebu_ngc_5189.lua
 dat/bkg/nebu_ngc_6210.lua
+dat/bkg/plasmastorm.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
+dat/common.lua
 dat/events/bioship.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dev/system_tour.lua
@@ -2495,6 +2481,9 @@ dat/missions/zalek/blackhole/zbh01.lua
 dat/missions/zalek/blackhole/zbh02.lua
 dat/missions/zalek/blackhole/zbh03.lua
 dat/missions/zalek/blackhole/zbh04.lua
+dat/missions/zalek/blackhole/zbh05.lua
+dat/missions/zalek/blackhole/zbh06.lua
+dat/missions/zalek/blackhole/zbh07.lua
 dat/missions/zalek/neburesearch/neburesearch_00.lua
 dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
@@ -2539,6 +2528,8 @@ dat/outfits/utility/neural_accelerator_interface.lua
 dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
+dat/outfits/weapons/antimatter_lance.lua
+dat/rep.lua
 dat/rescue.lua
 dat/save_updater.lua
 dat/scripts/bioship.lua
@@ -2595,6 +2586,7 @@ dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
 dat/scripts/formation.lua
+dat/scripts/linenoise.lua
 dat/scripts/lmisn.lua
 dat/scripts/lmusic.lua
 dat/scripts/love.lua
@@ -2649,6 +2641,7 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
 dat/scripts/swapship.lua
+dat/scripts/term.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/core.lua
@@ -2826,8 +2819,6 @@ src/nlua_commodity.c
 src/nlua_commodity.h
 src/nlua_data.c
 src/nlua_data.h
-src/nlua_debug.c
-src/nlua_debug.h
 src/nlua_diff.c
 src/nlua_diff.h
 src/nlua_evt.c

@@ -161,7 +161,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
 
    /* Create the "mem" table for persistence. */
    lua_newtable(naevL);
-   nlua_setenv(mission->env, "mem");
+   nlua_setenv(naevL, mission->env, "mem");
 
    /* load the file */
    if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {
@@ -694,7 +694,7 @@ void mission_cleanup( Mission* misn )
     * Mission struct of all zeros. Looking at the implementation, luaL_ref()
     * never returns 0, but this is probably undefined behavior.
     */
-   if (misn->env != LUA_NOREF && misn->env != 0)
+   if (misn->env != 0)
       nlua_freeEnv(misn->env);
 
    /* Data. */

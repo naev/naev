@@ -12,7 +12,7 @@
  <general>
   <class>Wormhole</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>0.050000</hide>
   <services/>
  </general>
 </spob>

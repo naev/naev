@@ -18,6 +18,7 @@
 #include "array.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "debug.h"
 #include "escort.h"
 #include "gui.h"
 #include "land_outfits.h"
@@ -189,6 +190,7 @@ static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
 static int pilotL_knockback( lua_State *L );
 static int pilotL_calcStats( lua_State *L );
+static int pilotL_showEmitters( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add},
@@ -333,6 +335,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "damage", pilotL_damage },
    { "knockback", pilotL_knockback },
    { "calcStats", pilotL_calcStats },
+   { "showEmitters", pilotL_showEmitters },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -679,7 +682,7 @@ static int pilotL_add( lua_State *L )
       lj.destid = cur_system->id;
 
       if (pplt->ai != NULL) {
-         nlua_getenv( pplt->ai->env, AI_MEM );
+         nlua_getenv( L, pplt->ai->env, AI_MEM );
          lua_pushjump(L, lj);
          lua_setfield(L,-2,"create_jump");
          lua_pop(L,1);
@@ -687,7 +690,7 @@ static int pilotL_add( lua_State *L )
    }
    else if (spob != NULL) {
       if (pplt->ai != NULL) {
-         nlua_getenv( pplt->ai->env, AI_MEM );
+         nlua_getenv( L, pplt->ai->env, AI_MEM );
          lua_pushspob(L,spob->id);
          lua_setfield(L,-2,"create_spob");
          lua_pop(L,1);
@@ -1359,7 +1362,7 @@ static int pilotL_weapset( lua_State *L )
    int k, n;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
-   const Outfit *ammo, *o;
+   const Outfit *o;
    double delay, firemod, enermod, t;
    int id, all, level;
    int is_lau, is_fb;
@@ -1406,7 +1409,7 @@ static int pilotL_weapset( lua_State *L )
       for (int i=0; i<n; i++) {
          /* Get base look ups. */
          slot = all ?  p->outfits[i] : po_list[i].slot;
-         o        = slot->outfit;
+         o    = slot->outfit;
          if (o == NULL)
             continue;
          is_lau   = outfit_isLauncher(o);
@@ -1474,17 +1477,8 @@ static int pilotL_weapset( lua_State *L )
             lua_rawset(L,-3);
          }
 
-         /* Ammo name. */
-         ammo = outfit_ammo(slot->outfit);
-         if (ammo != NULL) {
-            lua_pushstring(L,"ammo");
-            lua_pushstring(L,ammo->name);
-            lua_rawset(L,-3);
-         }
-
          /* Ammo quantity absolute. */
-         if ((is_lau || is_fb) &&
-               (slot->u.ammo.outfit != NULL)) {
+         if (is_lau || is_fb) {
             lua_pushstring(L,"left");
             lua_pushnumber( L, slot->u.ammo.quantity );
             lua_rawset(L,-3);
@@ -1527,10 +1521,7 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Damage type. */
-         if (is_lau && (slot->u.ammo.outfit != NULL))
-            dmg = outfit_damage( slot->u.ammo.outfit );
-         else
-            dmg = outfit_damage( slot->outfit );
+         dmg = outfit_damage( slot->outfit );
          if (dmg != NULL) {
             lua_pushstring(L, "dtype");
             lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
@@ -1749,7 +1740,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_WARMUP:
             str = "warmup";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF)
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF)
                d = 1.; /* TODO add warmup stuff to normal active outfits (not sure if necessary though. */
             else
                d = o->progress;
@@ -1759,7 +1750,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_ON:
             str = "on";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF) {
                d = outfit_duration(o->outfit);
                if (d==0.)
                   d = 1.;
@@ -1774,7 +1765,7 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_COOLDOWN:
             str = "cooldown";
-            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+            if (!outfit_isMod(o->outfit) || o->outfit->lua_env == LUA_NOREF) {
                d = outfit_cooldown(o->outfit);
                if (d==0.)
                   d = 0.;
@@ -2723,8 +2714,8 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
       pilot_outfitLInit( p, s );
 
    /* Add ammo if needed. */
-   if ((ret==0) && (outfit_ammo(o) != NULL))
-      pilot_addAmmo( p, s, outfit_ammo(o), outfit_amount(o) );
+   if (ret==0)
+      pilot_addAmmo( p, s, outfit_amount(o) );
    return 1;
 }
 
@@ -4100,9 +4091,9 @@ static int pilotL_memory( lua_State *L )
       return 0;
    }
 
-   nlua_getenv( p->ai->env, AI_MEM );  /* pilotmem */
-   lua_rawgeti( naevL, -1, p-> id );   /* pilotmem, table */
-   lua_remove( naevL, -2 );            /* table */
+   nlua_getenv( L, p->ai->env, AI_MEM );    /* pilotmem */
+   lua_rawgeti( L, -1, p-> id );            /* pilotmem, table */
+   lua_remove( L, -2 );                     /* table */
 
    return 1;
 }
@@ -4602,7 +4593,7 @@ static int pilotL_gather( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to hyperspace.
  *    @luatparam[opt] System|Jump sys Optional System to jump to, uses random if nil.
- *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=false] boolean noshoot Forbids to shoot at targets with turrets while running away.
  * @luasee control
  * @luafunc hyperspace
  */
@@ -4613,7 +4604,7 @@ static int pilotL_hyperspace( lua_State *L )
    StarSystem *ss;
    JumpPoint *jp;
    LuaJump lj;
-   int shoot;
+   int noshoot;
 
    NLUA_CHECKRW(L);
 
@@ -4623,16 +4614,14 @@ static int pilotL_hyperspace( lua_State *L )
       ss = system_getIndex( lua_tojump(L,2)->destid );
    else
       ss = (lua_isnoneornil(L,2)) ? NULL : luaL_validsystem(L,2);
-   if (lua_gettop(L)>2)
-      shoot = lua_toboolean(L,3);
-   else
-      shoot = 1;
+   noshoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   if (shoot)
-      t = pilotL_newtask( L, p, "hyperspace_shoot" );
-   else
+   if (noshoot)
       t = pilotL_newtask( L, p, "hyperspace" );
+   else
+      t = pilotL_newtask( L, p, "hyperspace_shoot" );
+
    if (ss == NULL)
       return 0;
    /* Find the jump. */
@@ -4703,7 +4692,7 @@ static int pilotL_tryStealth( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to tell to land.
  *    @luatparam[opt] Spob spob Spob to land on, uses random if nil.
- *    @luatparam[opt=true] boolean shoot Whether or not to shoot at targets while running away with turrets.
+ *    @luatparam[opt=false] boolean noshoot Forbids to shoot at targets with turrets while running away.
  * @luasee control
  * @luafunc land
  */
@@ -4712,7 +4701,7 @@ static int pilotL_land( lua_State *L )
    Pilot *p;
    Task *t;
    Spob *pnt;
-   int shoot;
+   int noshoot;
 
    NLUA_CHECKRW(L);
 
@@ -4722,16 +4711,13 @@ static int pilotL_land( lua_State *L )
       pnt = NULL;
    else
       pnt = luaL_validspob( L, 2 );
-   if (lua_gettop(L)>2)
-      shoot = lua_toboolean(L,3);
-   else
-      shoot = 1;
+   noshoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   if (shoot)
-      t = pilotL_newtask( L, p, "land_shoot" );
-   else
+   if (noshoot)
       t = pilotL_newtask( L, p, "land" );
+   else
+      t = pilotL_newtask( L, p, "land_shoot" );
 
    if (pnt != NULL) {
       int i;
@@ -4975,6 +4961,20 @@ static int pilotL_collisionTest( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    Pilot *t = luaL_validpilot(L,2);
 
+   /* Shouldn't be invincible. */
+   if (pilot_isFlag( t, PILOT_INVINCIBLE ))
+      return 0;
+
+   /* Shouldn't be landing or taking off. */
+   if (pilot_isFlag( t, PILOT_LANDING) ||
+         pilot_isFlag( t, PILOT_TAKEOFF ) ||
+         pilot_isFlag( t, PILOT_NONTARGETABLE))
+      return 0;
+
+   /* Must be able to target. */
+   if (!pilot_canTarget( t ))
+      return 0;
+
    int ret = CollidePolygon( getCollPoly(p), &p->solid->pos, getCollPoly(t), &t->solid->pos, &crash );
    if (!ret)
       return 0;
@@ -5093,5 +5093,41 @@ static int pilotL_calcStats( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    pilot_calcStats( p );
+   return 0;
+}
+
+
+/**
+ * @brief Toggles the emitter marker.
+ *
+ * @usage pilot.showEmitters() -- Trail emitters are marked with crosses.
+ * @usage pilot.showEmitters(false) -- Remove the markers.
+ *
+ *    @luatparam[opt=true] boolean state Whether to set or unset markers.
+ * @luafunc showEmitters
+ */
+static int pilotL_showEmitters( lua_State *L )
+{
+   int state;
+
+   NLUA_CHECKRW(L);
+
+   /* Get state. */
+   if (lua_gettop(L) > 0)
+      state = lua_toboolean(L, 1);
+   else
+      state = 1;
+
+   /* Toggle the markers. */
+#if DEBUGGING
+   if (state)
+      debug_setFlag(DEBUG_MARK_EMITTER);
+   else
+      debug_rmFlag(DEBUG_MARK_EMITTER);
+#else /* DEBUGGING */
+   (void) state;
+   NLUA_ERROR(L, _("Requires a debug build."));
+#endif /* DEBUGGING */
+
    return 0;
 }

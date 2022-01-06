@@ -14,9 +14,10 @@
   <cpu>-135</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Za'lek Light Drone Fighter</ammo>
   <delay>2</delay>
   <reload_time>60</reload_time>
   <amount>4</amount>
+  <ship>Za'lek Light Drone</ship>
+  <ship_mass>10</ship_mass>
  </specific>
 </outfit>

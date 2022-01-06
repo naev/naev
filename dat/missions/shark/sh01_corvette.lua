@@ -159,7 +159,7 @@ function disabled(pilot, attacker)
    end
    sharkboy:control()
    --making sure the shark doesn't continue attacking the player
-   sharkboy:hyperspace(escapesys)
+   sharkboy:hyperspace(escapesys, true)
    sharkboy:setNoDeath(true)
 
    -- Clean up now unneeded hooks

@@ -1581,16 +1581,16 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    /* On hit weapon effects. */
-   if ((outfit!=NULL) && outfit_isBolt(outfit) && (outfit->u.blt.lua_onhit != LUA_NOREF)) {
+   if ((outfit!=NULL) && (outfit->lua_onimpact != LUA_NOREF)) {
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, lua_mem); /* mem */
-      nlua_setenv(outfit->u.blt.lua_env, "mem"); /* */
+      nlua_setenv(naevL, outfit->lua_env, "mem"); /* */
 
-      /* Set up the function: onhit( pshooter, p ) */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->u.blt.lua_onhit); /* f */
+      /* Set up the function: onimpact( pshooter, p ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_onimpact); /* f */
       lua_pushpilot(naevL, shooter); /* f, p */
       lua_pushpilot(naevL, p->id); /* f, p, p  */
-      if (nlua_pcall( outfit->u.blt.lua_env, 2, 0 )) {   /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onhit", lua_tostring(naevL,-1) );
+      if (nlua_pcall( outfit->lua_env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> '%s':\n%s"), p->name, outfit->name, "onimpact", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
    }
@@ -1858,7 +1858,7 @@ void pilot_render( Pilot* p, const double dt )
 
       /* TODO fix 3D rendering. */
       gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, scale, scale,
+            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, 1., 1.,
             p->tsx, p->tsy, &c );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
@@ -1874,8 +1874,8 @@ void pilot_render( Pilot* p, const double dt )
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
       projection = gl_view_matrix;
-      projection = gl_Matrix4_Translate(projection, x, y, 0);
-      projection = gl_Matrix4_Scale(projection, z*w, z*h, 1);
+      projection = gl_Matrix4_Translate(projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0);
+      projection = gl_Matrix4_Scale(projection, scale*z*w, scale*z*h, 1);
       gl_Matrix4_Uniform(ed->projection, projection);
 
       tex_mat = gl_Matrix4_Identity();
@@ -1884,6 +1884,7 @@ void pilot_render( Pilot* p, const double dt )
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );
+      glUniform1f( ed->u_elapsed, e->elapsed );
       glUniform1f( ed->u_r, e->r );
 
       /* Draw. */
@@ -2067,8 +2068,7 @@ void pilot_update( Pilot* pilot, double dt )
        * other timers. This helps to simplify code resetting the timer
        * elsewhere.)
        */
-      if ((outfit_isLauncher(o->outfit) || outfit_isFighterBay(o->outfit)) &&
-            (outfit_ammo(o->outfit) != NULL)) {
+      if (outfit_isLauncher(o->outfit) || outfit_isFighterBay(o->outfit)) {
 
          /* Initial (raw) ammo threshold */
          if (outfit_isLauncher(o->outfit)) {
@@ -2095,7 +2095,7 @@ void pilot_update( Pilot* pilot, double dt )
          while ((o->rtimer >= reload_time) &&
                (o->u.ammo.quantity < ammo_threshold)) {
             o->rtimer -= reload_time;
-            pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
+            pilot_addAmmo( pilot, o, 1 );
          }
 
          o->rtimer = MIN( o->rtimer, reload_time );
@@ -3630,11 +3630,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       }
       shots = 1. / (mod_shots * outfit_delay(o));
 
-      /* Special case: Ammo-based weapons. */
-      if (outfit_isLauncher(o))
-         dmg = outfit_damage(o->u.lau.ammo);
-      else
-         dmg = outfit_damage(o);
+      dmg   = outfit_damage(o);
       dps  += shots * mod_damage * dmg->damage;
       eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
    }

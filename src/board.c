@@ -86,7 +86,7 @@ int board_hook( void *data )
    }
 
    /* Run Lua. */
-   nlua_getenv(board_env,"board");
+   nlua_getenv(naevL, board_env,"board");
    lua_pushpilot(naevL, p->id);
    if (nlua_pcall(board_env, 1, 0)) { /* error has occurred */
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));

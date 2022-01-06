@@ -2,6 +2,7 @@
 <ssys name="NGC-4131">
  <general>
   <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>12000.000000</radius>
   <stars>400</stars>

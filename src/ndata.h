@@ -45,6 +45,7 @@
 #define SYSTEM_DATA_PATH         "ssys/" /**< Path to systems. */
 #define SHIP_DATA_PATH           "ships/" /**< Path to ships. */
 
+#define LUA_COMMON_PATH          "common.lua" /**< Common Lua functions. */
 #define LANDING_DATA_PATH        "landing.lua" /**< Lua script containing landing data. */
 #define LOADSCREEN_DATA_PATH     "loadscreen.lua" /**< Script for the load screen. */
 

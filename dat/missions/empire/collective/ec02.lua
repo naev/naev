@@ -143,7 +143,7 @@ end
 function cameraZoom(args)
     local targ = args.targ
     local speed = args.speed
-    camera.set(targ, true, speed)
+    camera.set(targ, false, speed)
 end
 
 function moveSwarm(flt, pos)

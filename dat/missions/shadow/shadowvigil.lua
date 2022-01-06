@@ -500,7 +500,7 @@ function diplomatCutscene()
     player.pilot():setInvincible(true)
     player.cinematics(true)
 
-    camera.set(dvaerplomat, true, 500)
+    camera.set(dvaerplomat, false, 500)
 
     hook.timer(1.0, "chatter", {pilot = diplomat, text = _("This is Empire zero-zero-four. Transmitting clearance code now.")})
     hook.timer(10.0, "chatter", {pilot = dvaerplomat, text = _("Empire zero-zero-four, your code checks out. Commence boarding maneuvers.")})
@@ -541,7 +541,7 @@ function diplomatKilled()
 end
 
 function escortFlee()
-    camera.set(player.pilot, true)
+    camera.set()
 
     player.pilot():setInvincible(false)
     player.pilot():control(false)

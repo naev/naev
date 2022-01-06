@@ -13,12 +13,28 @@ TeraCom's Mace launcher uses an advanced reload mechanism that allows the launch
   <cpu>-5</cpu>
  </general>
  <specific type="launcher">
-  <ammo>Mace Rocket</ammo>
   <delay>0.3</delay>
   <reload_time>12</reload_time>
   <amount>25</amount>
   <swivel>22</swivel>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
+  <ammo_mass>0.1</ammo_mass>
+  <gfx>mace.png</gfx>
+  <sound>mace</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-10">fire-missileS</trail_generator>
+  <duration blowup="armour">1.5</duration>
+  <thrust>800</thrust>
+  <speed>600</speed>
+  <speed_max>1200</speed_max>
+  <damage>
+   <type>impact</type>
+   <penetrate>12</penetrate>
+   <physical>15</physical>
+  </damage>
+  <ai>unguided</ai>
  </specific>
 </outfit>

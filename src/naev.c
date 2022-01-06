@@ -549,7 +549,7 @@ void loadscreen_render( double done, const char *msg )
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Run Lua. */
-   nlua_getenv(load_env,"render");
+   nlua_getenv( naevL, load_env, "render" );
    lua_pushnumber( naevL, done );
    lua_pushstring( naevL, msg );
    if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
@@ -713,10 +713,14 @@ void main_loop( int update )
    /*
     * Handle render.
     */
-   /* Clear buffer. */
-   render_all( game_dt, real_dt );
-   /* Draw buffer. */
-   SDL_GL_SwapWindow( gl_screen.window );
+   if (!quit) { /* So if update sets up a nested main loop, we can end up in a
+                   state where things are corrupted when trying to exit the game.
+                   Avoid rendering when quitting just in case. */
+      /* Clear buffer. */
+      render_all( game_dt, real_dt );
+      /* Draw buffer. */
+      SDL_GL_SwapWindow( gl_screen.window );
+   }
 }
 
 

@@ -1019,10 +1019,8 @@ void map_renderFactionDisks( double x, double y, double zoom, double r, int edit
 void map_renderSystemEnvironment( double x, double y, double zoom, int editor, double alpha )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
-      int sw, sh;
       double tx, ty;
       /* Fade in the disks to allow toggling between commodity and nothing */
-      gl_Matrix4 projection;
       StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
@@ -1037,6 +1035,8 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
       /* Draw background. */
       /* TODO draw asteroids too! */
       if (sys->nebu_density > 0.) {
+         gl_Matrix4 projection;
+         double sw, sh;
          sw = (50. + sys->nebu_density * 50. / 1000.) * zoom;
          sh = sw;
 
@@ -1052,9 +1052,9 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
-         glUniform1f(shaders.nebula_map.eddy_scale, zoom );
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );
@@ -1063,6 +1063,36 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
 
          /* Clean up. */
          glDisableVertexAttribArray( shaders.nebula_map.vertex );
+         glUseProgram(0);
+         gl_checkErr();
+      }
+      else if (sys->map_shader != NULL) {
+         gl_Matrix4 projection;
+         double sw, sh;
+         sw = 100. * zoom;
+         sh = sw;
+
+         /* Set the vertex. */
+         projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, tx-sw/2., ty-sh/2., 0);
+         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+
+         /* Start the program. */
+         glUseProgram( sys->ms.program );
+
+         /* Set shader uniforms. */
+         gl_Matrix4_Uniform(sys->ms.projection, projection);
+         glUniform1f(sys->ms.time, map_dt);
+         glUniform2f(sys->ms.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(sys->ms.alpha, alpha);
+
+         /* Draw. */
+         glEnableVertexAttribArray( sys->ms.vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms.vertex, 0, 2, GL_FLOAT, 0 );
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clean up. */
+         glDisableVertexAttribArray( sys->ms.vertex );
          glUseProgram(0);
          gl_checkErr();
       }

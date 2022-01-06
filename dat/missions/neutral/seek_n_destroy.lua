@@ -197,16 +197,6 @@ function create ()
    mem.marker = misn.markerAdd( mem.mysys[1], "computer" )
 end
 
--- Test if an element is in a list
-local function elt_inlist( elt, list )
-   for i, elti in ipairs(list) do
-      if elti == elt then
-         return true
-      end
-   end
-   return false
-end
-
 function accept ()
    misn.accept()
 
@@ -357,7 +347,7 @@ function hail( target )
       return
    end
 
-   if system.cur() == mem.mysys[mem.cursys] and mem.stage == 0 and not elt_inlist( target, hailed ) then
+   if system.cur() == mem.mysys[mem.cursys] and mem.stage == 0 and not inlist( hailed, target ) then
       hailed[#hailed+1] = target -- A pilot can be hailed only once
 
       if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission

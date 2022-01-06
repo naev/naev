@@ -39,10 +39,8 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 );
 static int dsys_compSpob( const void *spob1, const void *spob2 )
 {
    const Spob *p1, *p2;
-
    p1 = * (const Spob**) spob1;
    p2 = * (const Spob**) spob2;
-
    return strcmp( p1->name, p2->name );
 }
 
@@ -56,10 +54,8 @@ static int dsys_compSpob( const void *spob1, const void *spob2 )
 static int dsys_compVirtualSpob( const void *spob1, const void *spob2 )
 {
    const VirtualSpob *va1, *va2;
-
    va1 = *(const VirtualSpob**) spob1;
    va2 = *(const VirtualSpob**) spob2;
-
    return strcmp( va1->name, va2->name );
 }
 
@@ -73,10 +69,8 @@ static int dsys_compVirtualSpob( const void *spob1, const void *spob2 )
 static int dsys_compJump( const void *jmp1, const void *jmp2 )
 {
    const JumpPoint *jp1, *jp2;
-
    jp1 = * (const JumpPoint**) jmp1;
    jp2 = * (const JumpPoint**) jmp2;
-
    return strcmp( jp1->target->name, jp2->target->name );
 }
 
@@ -119,6 +113,8 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_startElem( writer, "general" );
    if (sys->background != NULL)
       xmlw_elem( writer, "background", "%s", sys->background );
+   if (sys->map_shader != NULL)
+      xmlw_elem( writer, "map_shader", "%s", sys->map_shader );
    if (sys->features != NULL)
       xmlw_elem( writer, "features", "%s", sys->features );
    xmlw_elem( writer, "radius", "%f", sys->radius );

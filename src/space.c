@@ -1199,7 +1199,7 @@ static void system_scheduler( double dt, int init )
 
       /* Run the appropriate function. */
       if (init) {
-         nlua_getenv( env, "create" ); /* f */
+         nlua_getenv( naevL, env, "create" ); /* f */
          if (lua_isnil(naevL,-1)) {
             WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'create'."),
                   faction_name( p->faction ) );
@@ -1214,7 +1214,7 @@ static void system_scheduler( double dt, int init )
          if (p->timer >= 0.)
             continue;
 
-         nlua_getenv( env, "spawn" ); /* f */
+         nlua_getenv( naevL, env, "spawn" ); /* f */
          if (lua_isnil(naevL,-1)) {
             WARN(_("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."),
                   faction_name( p->faction ) );
@@ -1352,7 +1352,7 @@ void space_update( double dt, double real_dt )
          spob_updateLand( cur_system->spobs[i] );
 
       /* Verify land authorization is still valid. */
-      if (player_isFlag(PLAYER_LANDACK))
+      if ((player.p != NULL) && (player.p->nav_spob >= 0) && player_isFlag(PLAYER_LANDACK))
          player_checkLandAck();
 
       gui_updateFaction();
@@ -2050,7 +2050,7 @@ void spob_updateLand( Spob *p )
       str = "land";
    else
       str = p->land_func;
-   nlua_getenv( landing_env, str );
+   nlua_getenv( naevL, landing_env, str );
    lua_pushspob( naevL, spob_index(p) );
    if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
       WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
@@ -2338,7 +2338,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
                         spob->land_func = strdup(tmp);
 #ifdef DEBUGGING
                         if (landing_env != LUA_NOREF) {
-                           nlua_getenv( landing_env, tmp );
+                           nlua_getenv( naevL, landing_env, tmp );
                            if (lua_isnil(naevL,-1))
                               WARN(_("Spob '%s' has landing function '%s' which is not found in '%s'."),
                                     spob->name, tmp, LANDING_DATA_PATH);
@@ -2860,6 +2860,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
             xmlr_strd( cur, "background", sys->background );
+            xmlr_strd( cur, "map_shader", sys->map_shader );
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
@@ -2944,6 +2945,16 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Convert hue from 0 to 359 value to 0 to 1 value. */
    sys->nebu_hue /= 360.;
+
+   /* Load the shader. */
+   if (sys->map_shader != NULL) {
+      sys->ms.program   = gl_program_vert_frag( "system_map.vert", sys->map_shader );
+      sys->ms.vertex    = glGetAttribLocation( sys->ms.program,  "vertex" );
+      sys->ms.projection= glGetUniformLocation( sys->ms.program, "projection" );
+      sys->ms.time      = glGetUniformLocation( sys->ms.program, "time" );
+      sys->ms.globalpos = glGetUniformLocation( sys->ms.program, "globalpos" );
+      sys->ms.alpha     = glGetUniformLocation( sys->ms.program, "alpha" );
+   }
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
@@ -3921,8 +3932,7 @@ void space_exit (void)
       array_free(pnt->commodityPrice);
 
       /* Lua. */
-      if (pnt->lua_env != LUA_NOREF)
-         nlua_freeEnv( pnt->lua_env );
+      nlua_freeEnv( pnt->lua_env );
    }
    array_free(spob_stack);
 
@@ -3983,8 +3993,7 @@ void space_exit (void)
    gatherable_free();
 
    /* Free landing lua. */
-   if (landing_env != LUA_NOREF)
-      nlua_freeEnv( landing_env );
+   nlua_freeEnv( landing_env );
    landing_env = LUA_NOREF;
 }
 
@@ -4729,7 +4738,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    env = faction_getScheduler( faction );
 
    /* Run decrease function if applicable. */
-   nlua_getenv( env, "decrease" ); /* f */
+   nlua_getenv( naevL, env, "decrease" ); /* f */
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;

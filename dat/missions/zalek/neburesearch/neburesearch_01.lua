@@ -188,10 +188,10 @@ local function continueToDest(pilot)
         pilot:setNoJump(false)
         pilot:setNoLand(false)
         if mem.destplanet ~= nil then
-            pilot:land(mem.destplanet, true)
+            pilot:land(mem.destplanet)
             misn.markerMove(mem.misn_marker, mem.destplanet)
         else
-            pilot:hyperspace(mem.nextsys, true)
+            pilot:hyperspace(mem.nextsys)
             misn.markerMove(mem.misn_marker, mem.nextsys)
         end
     end

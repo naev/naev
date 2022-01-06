@@ -340,6 +340,17 @@ struct StarSystem_ {
    int markers_high;    /**< Number of high mission markers. */
    int markers_plot;    /**< Number of plot level mission markers. */
 
+   /* Map shader. */
+   char *map_shader; /**< Name of the map shader file for saving. */
+   struct {
+      GLuint program;   /**< Program for map shader. */
+      GLuint vertex;    /**< Vertex attribute for map shader. */
+      GLuint projection;/**< Projection matrix for map shader. */
+      GLuint alpha;     /**< Transparency for map shader. */
+      GLuint time;      /**< Time for map shader. */
+      GLuint globalpos; /**< Global position of system for map shader. */
+   } ms; /**< Map shader-related variables. */
+
    /* Economy. */
    CommodityPrice *averagePrice;
 

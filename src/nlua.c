@@ -16,13 +16,13 @@
 #include "nlua.h"
 
 #include "log.h"
+#include "conf.h"
 #include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
 #include "nlua_cli.h"
 #include "nlua_commodity.h"
 #include "nlua_data.h"
-#include "nlua_debug.h"
 #include "nlua_diff.h"
 #include "nlua_faction.h"
 #include "nlua_file.h"
@@ -46,10 +46,15 @@
 
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
+static char *common_script; /**< Common script to run when creating environments. */
+static size_t common_sz; /**< Common script size. */
 
 /*
  * prototypes
  */
+static int nlua_package_loader_lua( lua_State* L );
+static int nlua_package_loader_c( lua_State* L );
+static int nlua_package_loader_croot( lua_State* L );
 static int nlua_require( lua_State* L );
 static lua_State *nlua_newState (void); /* creates a new state */
 static int nlua_loadBasic( lua_State* L );
@@ -113,6 +118,7 @@ static int nlua_gettext_noop( lua_State *L )
    return 1;
 }
 
+/** @brief Implements the Lua function math.log2 (base-2 logarithm). */
 static int nlua_log2( lua_State *L )
 {
    double n = luaL_checknumber(L,1);
@@ -120,10 +126,21 @@ static int nlua_log2( lua_State *L )
    return 1;
 }
 
+/** @brief Implements the Lua function os.getenv. In the sandbox we only make a fake $HOME visible. */
+static int nlua_os_getenv( lua_State *L )
+{
+   const char *var = luaL_checkstring(L, 1);
+   if (strcmp(var, "HOME"))
+      return 0;
+   lua_pushstring(L, "lua_home");
+   return 1;
+}
+
 /*
  * @brief Initializes the global Lua state.
  */
-void lua_init(void) {
+void lua_init (void)
+{
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
 }
@@ -131,7 +148,9 @@ void lua_init(void) {
 /*
  * @brief Closes the global Lua state.
  */
-void lua_exit(void) {
+void lua_exit (void)
+{
+   free( common_script );
    lua_close(naevL);
    naevL = NULL;
 }
@@ -144,13 +163,13 @@ void lua_exit(void) {
  *    @param sz Size of buffer.
  *    @param name Name to use in error messages.
  */
-int nlua_dobufenv(nlua_env env,
-                  const char *buff,
-                  size_t sz,
-                  const char *name) {
+int nlua_dobufenv( nlua_env env,
+                   const char *buff,
+                   size_t sz,
+                   const char *name) {
    if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
       return -1;
-   nlua_pushenv(env);
+   nlua_pushenv(naevL, env);
    lua_setfenv(naevL, -2);
    if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
       return -1;
@@ -163,11 +182,11 @@ int nlua_dobufenv(nlua_env env,
  *    @param env Lua environment.
  *    @param filename Filename of Lua script.
  */
-int nlua_dofileenv(nlua_env env, const char *filename)
+int nlua_dofileenv( nlua_env env, const char *filename )
 {
    if (luaL_loadfile(naevL, filename) != 0)
       return -1;
-   nlua_pushenv(env);
+   nlua_pushenv(naevL, env);
    lua_setfenv(naevL, -2);
    if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
       return -1;
@@ -181,7 +200,8 @@ int nlua_dofileenv(nlua_env env, const char *filename)
  *
  *    @param rw Load libraries in read/write mode.
  */
-nlua_env nlua_newEnv(int rw) {
+nlua_env nlua_newEnv( int rw )
+{
    char packagepath[STRMAX];
    nlua_env ref;
    lua_newtable(naevL);
@@ -209,7 +229,14 @@ nlua_env nlua_newEnv(int rw) {
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
    lua_setfield(naevL, -2, "cpath");
-   lua_pop(naevL,1);
+   lua_getfield(naevL, -1, "loaders");
+   lua_pushcfunction(naevL, nlua_package_loader_lua);
+   lua_rawseti(naevL, -2, 2);
+   lua_pushcfunction(naevL, nlua_package_loader_c);
+   lua_rawseti(naevL, -2, 3);
+   lua_pushcfunction(naevL, nlua_package_loader_croot);
+   lua_rawseti(naevL, -2, 4);
+   lua_pop(naevL, 2);
 
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
@@ -229,6 +256,25 @@ nlua_env nlua_newEnv(int rw) {
    lua_newtable(naevL);
    lua_setfield(naevL, -2, "naev");
 
+   /* Run common script. */
+   if (conf.loaded && common_script==NULL) {
+      common_script = ndata_read( LUA_COMMON_PATH, &common_sz );
+      if (common_script==NULL)
+         WARN(_("Unable to load common script '%s'!"), LUA_COMMON_PATH);
+   }
+   if (common_script != NULL) {
+      if (luaL_loadbuffer(naevL, common_script, common_sz, LUA_COMMON_PATH) == 0) {
+         if (nlua_pcall( ref, 0, 0 ) != 0) {
+            WARN(_("Failed to run '%s':\n%s"), LUA_COMMON_PATH, lua_tostring(naevL,-1));
+            lua_pop(naevL, 1);
+         }
+      }
+      else {
+         WARN(_("Failed to load '%s':\n%s"), LUA_COMMON_PATH, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+
    lua_pop(naevL, 1);
    return ref;
 }
@@ -239,7 +285,7 @@ nlua_env nlua_newEnv(int rw) {
  *    @param env Enviornment to free.
  */
 void nlua_freeEnv(nlua_env env) {
-   if (naevL != NULL)
+   if (naevL != NULL && env != LUA_NOREF)
       luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
@@ -248,8 +294,8 @@ void nlua_freeEnv(nlua_env env) {
  *
  *    @param env Environment.
  */
-void nlua_pushenv(nlua_env env) {
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+void nlua_pushenv(lua_State* L, nlua_env env) {
+   lua_rawgeti(L, LUA_REGISTRYINDEX, env);
 }
 
 /*
@@ -260,10 +306,10 @@ void nlua_pushenv(nlua_env env) {
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_getenv(nlua_env env, const char *name) {
-   nlua_pushenv(env);               /* env */
-   lua_getfield(naevL, -1, name);   /* env, value */
-   lua_remove(naevL, -2);           /* value */
+void nlua_getenv(lua_State* L, nlua_env env, const char *name) {
+   nlua_pushenv(L, env);            /* env */
+   lua_getfield(L, -1, name);       /* env, value */
+   lua_remove(L, -2);               /* value */
 }
 
 /*
@@ -274,12 +320,12 @@ void nlua_getenv(nlua_env env, const char *name) {
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_setenv(nlua_env env, const char *name) {
-                                    /* value */
-   nlua_pushenv(env);               /* value, env */
-   lua_insert(naevL, -2);           /* env, value */
-   lua_setfield(naevL, -2, name);   /* env */
-   lua_pop(naevL, 1);               /*  */
+void nlua_setenv(lua_State* L, nlua_env env, const char *name) {
+                                /* value */
+   nlua_pushenv(L, env);        /* value, env */
+   lua_insert(L, -2);           /* env, value */
+   lua_setfield(L, -2, name);   /* env */
+   lua_pop(L, 1);               /*  */
 }
 
 /*
@@ -301,11 +347,11 @@ void nlua_register(nlua_env env, const char *libname,
       }
       luaL_register(naevL, NULL, l);
    }                                /* lib */
-   nlua_getenv(env, "naev");        /* lib, naev */
+   nlua_getenv(naevL, env, "naev"); /* lib, naev */
    lua_pushvalue(naevL, -2);        /* lib, naev, lib */
    lua_setfield(naevL, -2, libname);/* lib, naev */
    lua_pop(naevL, 1);               /* lib  */
-   nlua_setenv(env, libname);       /* */
+   nlua_setenv(naevL, env, libname);/* */
 }
 
 /**
@@ -339,7 +385,7 @@ static int nlua_loadBasic( lua_State* L )
          "load",
          "loadfile",
          "loadstring",
-         "setfenv",
+         /*"setfenv",*/
          NULL
    };
 
@@ -369,6 +415,14 @@ static int nlua_loadBasic( lua_State* L )
    lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
 
+   /* Sandbox "io" and "os". */
+   lua_newtable(L); /* io table */
+   lua_setglobal(L,"io");
+   lua_newtable(L); /* os table */
+   lua_pushcfunction(L, nlua_os_getenv);
+   lua_setfield(L,-2,"getenv");
+   lua_setglobal(L,"os");
+
    /* Special math functions function. */
    lua_getglobal(L,"math");
    lua_pushcfunction(L, nlua_log2);
@@ -376,6 +430,115 @@ static int nlua_loadBasic( lua_State* L )
    lua_pop(L,1);
 
    return 0;
+}
+
+/**
+ * @brief load( string module ) -- searcher function to replace package.loaders[2] (Lua 5.1), i.e., for Lua modules.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_lua( lua_State* L )
+{
+   size_t bufsize, l = 0;
+   char *buf = NULL, *q;
+   char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
+   const char *packagepath, *start, *end;
+   const char *name = luaL_checkstring(L,1);
+   int done = 0;
+
+   /* Get paths to check. */
+   lua_getglobal(L, "package");
+   if (!lua_istable(L,-1)) {
+      lua_pop(L,1);
+      lua_pushstring(L, _(" package.path not found."));
+      return 1;
+   }
+   lua_getfield(L, -1, "path");
+   if (!lua_isstring(L,-1)) {
+      lua_pop(L,2);
+      lua_pushstring(L, _(" package.path not found."));
+      return 1;
+   }
+   packagepath = lua_tostring(L,-1);
+   lua_pop(L,2);
+
+   /* Parse path. */
+   start = packagepath;
+   while (!done) {
+      end = strchr( start, ';' );
+      if (end == NULL) {
+         done = 1;
+         end = &start[ strlen(start) ];
+      }
+      strncpy( tmpname, start, end-start );
+      tmpname[ end-start ] = '\0';
+      q = strchr( tmpname, '?' );
+      if (q==NULL) {
+         snprintf( path_filename, sizeof(path_filename), "%s%s", tmpname, name );
+      }
+      else {
+         *q = '\0';
+         snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, name, q+1 );
+      }
+      start = end+1;
+
+      /* Replace all '.' before the last '.' with '/' as they are a security risk. */
+      q = strrchr( path_filename, '.' );
+      for (int i=0; i < q-path_filename; i++)
+         if (path_filename[i]=='.')
+            path_filename[i] = '/';
+
+      /* Try to load the file. */
+      if (PHYSFS_exists( path_filename )) {
+         buf = ndata_read( path_filename, &bufsize );
+         if (buf != NULL)
+            break;
+      }
+
+      /* Didn't get to load it. */
+      l += scnprintf( &tried_paths[l], sizeof(tried_paths)-l, _("\n   no ndata path '%s'"), path_filename );
+   }
+
+   /* Must have buf by now. */
+   if (buf == NULL) {
+      lua_pushstring(L, tried_paths);
+      return 1;
+   }
+
+   /* Try to process the Lua. It will leave a function or message on the stack, as required. */
+   luaL_loadbuffer(L, buf, bufsize, path_filename);
+   free(buf);
+   return 1;
+}
+
+/**
+ * @brief load( string module ) -- searcher function to replace package.loaders[3] (Lua 5.1), i.e., for C modules.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_c( lua_State* L )
+{
+   const char *name = luaL_checkstring(L,1);
+   /* Hardcoded libraries only: we DO NOT honor package.cpath. */
+   if (strcmp( name, "utf8" ) == 0)
+      lua_pushcfunction( L, luaopen_utf8 );
+   else
+      lua_pushnil( L );
+   return 1;
+}
+
+/**
+ * @brief load( string module ) -- searcher function to replace package.loaders[4] (Lua 5.1), i.e., for C packages.
+ *
+ *    @param L Lua Environment.
+ *    @return Stack depth (1), and on the stack: a loader function, a string explaining there is none, or nil (no explanation).
+ */
+static int nlua_package_loader_croot( lua_State* L )
+{
+   lua_pushnil( L );
+   return 1;
 }
 
 /**
@@ -388,19 +551,11 @@ static int nlua_loadBasic( lua_State* L )
  */
 static int nlua_require( lua_State* L )
 {
-   const char *filename;
-   size_t bufsize, len_tried_paths;
+   const char *filename = luaL_checkstring(L,1);
    int envtab;
-   char *buf, *q;
-   char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
-   const char *packagepath, *start, *end;
-   int done;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
-
-   /* Get parameters. */
-   filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE );  /* t */
@@ -419,83 +574,32 @@ static int nlua_require( lua_State* L )
       lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
    }
 
-   /* Hardcoded libraries. */
-   if (strcmp(filename,"utf8")==0) {
-      luaopen_utf8(L);                          /* val */
-      lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
-      lua_pushvalue(L, -2);                     /* val, t, val */
-      lua_setfield(L, -2, filename);            /* val, t */
-      lua_pop(L, 1);                            /* val */
-      return 1;
-   }
-
-   /* Get paths to check. */
-   lua_getglobal(naevL, "package");
+   lua_getglobal(L, "package");
    if (!lua_istable(L,-1)) {
-      lua_pop(L,2);
-      NLUA_ERROR(L, _("require: package.path not found."));
-   }
-   lua_getfield(naevL, -1, "path");
-   if (!lua_isstring(L,-1)) {
-      lua_pop(L,2);
-      NLUA_ERROR(L, _("require: package.path not found."));
-   }
-   packagepath = lua_tostring(L,-1);
-   lua_pop(L,2);
-
-   /* Parse path. */
-   buf = NULL;
-   done = 0;
-   start = packagepath;
-   tried_paths[0] = '\0';
-   while (!done) {
-      end = strchr( start, ';' );
-      if (end == NULL) {
-         done = 1;
-         end = &start[ strlen(start) ];
-      }
-      strncpy( tmpname, start, end-start );
-      tmpname[ end-start ] = '\0';
-      q = strchr( tmpname, '?' );
-      if (q==NULL) {
-         snprintf( path_filename, sizeof(path_filename), "%s%s", tmpname, filename );
-      }
-      else {
-         *q = '\0';
-         snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, filename, q+1 );
-      }
-      start = end+1;
-
-      /* Replace all '.' before the last '.' with '/' as they are a security risk. */
-      q = strrchr( path_filename, '.' );
-      for (int i=0; i < q-path_filename; i++)
-         if (path_filename[i]=='.')
-            path_filename[i] = '/';
-
-      /* Try to load the file. */
-      if (PHYSFS_exists( path_filename )) {
-         buf = ndata_read( path_filename, &bufsize );
-         if (buf != NULL)
-            break;
-      }
-
-      /* Didn't get to load it. */
-      len_tried_paths = strlen( tried_paths );
-      strncat( tried_paths, "\n   ", sizeof(tried_paths)-len_tried_paths-1 );
-      strncat( tried_paths, path_filename, sizeof(tried_paths)-len_tried_paths-1 );
-   }
-
-   /* Must have buf by now. */
-   if (buf == NULL) {
-      NLUA_ERROR(L, _("require: %s not found in ndata.\nTried:%s"), filename, tried_paths);
+      lua_pop(L,1);
+      lua_pushstring(L, _("package.loaders must be a table"));
       return 1;
    }
-
-   /* Try to process the Lua. */
-   if (luaL_loadbuffer(L, buf, bufsize, path_filename) != 0) {
-      lua_error(L);
-      return 1;
+   lua_getfield(L, -1, "loaders");
+   lua_remove(L, -2);
+   if (!lua_istable(L, -1))
+      luaL_error(L, _("package.loaders must be a table"));
+   lua_pushliteral(L, "");  /* error message accumulator */
+   for (int i=1; ; i++) {
+      lua_rawgeti(L, -2, i);  /* get a loader */
+      if (lua_isnil(L, -1))
+         luaL_error(L, _("module '%s' not found:%s"), filename, lua_tostring(L, -2));
+      lua_pushstring(L, filename);
+      lua_call(L, 1, 1);  /* call it */
+      if (lua_isfunction(L, -1))  /* did it find module? */
+         break;  /* module loaded successfully */
+      else if (lua_isstring(L, -1))  /* loader returned error message? */
+         lua_concat(L, 2);  /* accumulate it */
+      else
+         lua_pop(L, 1);
    }
+   lua_remove(L, -2);
+   lua_remove(L, -2);
 
    lua_pushvalue(L, envtab);
    lua_setfenv(L, -2);
@@ -523,7 +627,6 @@ static int nlua_require( lua_State* L )
    lua_pop(L, 1);                            /* val */
 
    /* cleanup, success */
-   free(buf);
    return 1;
 }
 
@@ -578,7 +681,6 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadShiplog(env);
    r |= nlua_loadFile(env);
    r |= nlua_loadData(env);
-   r |= nlua_loadDebug(env);
    r |= nlua_loadLinOpt(env);
    r |= nlua_loadSafelanes(env);
 
@@ -619,7 +721,8 @@ int nlua_errTrace( lua_State *L )
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
  */
-int nlua_pcall( nlua_env env, int nargs, int nresults ) {
+int nlua_pcall( nlua_env env, int nargs, int nresults )
+{
    int errf, ret, prev_env;
 
 #if DEBUGGING
@@ -654,7 +757,7 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
  */
 int nlua_refenv( nlua_env env, const char *name )
 {
-   nlua_getenv( env, name );
+   nlua_getenv( naevL, env, name );
    if (!lua_isnil( naevL, -1 ))
       return luaL_ref( naevL, LUA_REGISTRYINDEX );
    lua_pop(naevL, 1);
@@ -671,7 +774,7 @@ int nlua_refenv( nlua_env env, const char *name )
  */
 int nlua_refenvtype( nlua_env env, const char *name, int type )
 {
-   nlua_getenv( env, name );
+   nlua_getenv( naevL, env, name );
    if (lua_type( naevL, -1 ) == type)
       return luaL_ref( naevL, LUA_REGISTRYINDEX );
    lua_pop(naevL, 1);

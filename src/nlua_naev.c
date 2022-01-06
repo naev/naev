@@ -272,7 +272,7 @@ static int naevL_eventStart( lua_State *L )
    ret = event_start( str, NULL );
 
    /* Get if console. */
-   nlua_getenv(__NLUA_CURENV, "__cli");
+   nlua_getenv(L, __NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);
@@ -300,7 +300,7 @@ static int naevL_missionStart( lua_State *L )
    ret = mission_start( str, NULL );
 
    /* Get if console. */
-   nlua_getenv(__NLUA_CURENV, "__cli");
+   nlua_getenv(L, __NLUA_CURENV, "__cli");
    if (lua_toboolean(L,-1) && landed)
       bar_regen();
    lua_pop(L,1);

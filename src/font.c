@@ -590,6 +590,8 @@ static uint32_t font_nextChar( const char *s, size_t *i )
       if (ch != FONT_COLOUR_CODE)
          return ch;
       ch = u8_nextchar(s, i); /* Skip the operand and try again. */
+      if (ch == FONT_COLOUR_CODE)
+         return ch; /* Doubled escape char represents the escape char itself. */
    }
    return 0;
 }

@@ -160,7 +160,7 @@ static int hookL_rm( lua_State *L )
    hook_rm( (unsigned int) h );
 
    /* Clean up hook data. */
-   nlua_getenv(__NLUA_CURENV, "mem");   /* t */
+   nlua_getenv(L, __NLUA_CURENV, "mem");/* t */
    lua_getfield(L, -1, "__hook_arg");   /* t, t */
    if (!lua_isnil(L,-1)) {
       lua_pushnumber( L, h );           /* t, t, n */
@@ -184,7 +184,7 @@ static int hookL_setarg( unsigned int hook, int ind )
    nlua_env env = hook_env(hook);
 
    /* Create if necessary the actual hook argument table. */
-   nlua_getenv(env, "mem");                  /* t */
+   nlua_getenv(naevL, env, "mem");           /* t */
    lua_getfield(naevL, -1, "__hook_arg");    /* t, t */
    if (lua_isnil(naevL,-1)) {                /* t, nil */
       lua_pop( naevL, 1 );                   /* t */
@@ -209,7 +209,7 @@ void hookL_unsetarg( unsigned int hook )
    if (env == LUA_NOREF)
        return;
 
-   nlua_getenv(env, "mem");               /* t */
+   nlua_getenv(naevL, env, "mem");        /* t */
    lua_getfield(naevL, -1, "__hook_arg"); /* t, t */
    if (!lua_isnil(naevL,-1)) {
       lua_pushnumber( naevL, hook );      /* t, h */
@@ -234,7 +234,7 @@ int hookL_getarg( unsigned int hook )
        return 0;
    }
 
-   nlua_getenv(env, "mem");              /* t */
+   nlua_getenv(naevL, env, "mem");       /* t */
    lua_getfield(naevL, -1, "__hook_arg");/* t, t */
    if (!lua_isnil(naevL,-1)) {           /* t, t */
       lua_pushnumber( naevL, hook );     /* t, t, k */

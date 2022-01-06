@@ -245,7 +245,7 @@ end
 function trinity_flee ()
    mem.tri_flee = true
    trinity:control()
-   trinity:hyperspace( misn_flee_sys, true )
+   trinity:hyperspace( misn_flee_sys )
    trinity:broadcast( _("My drones will make mincemeat of you!") )
    player.msg( _("Incoming drones from hyperspace detected!") )
    hook.timer( rnd.uniform( 3.0, 5.0 ), "call_drones_jump" )

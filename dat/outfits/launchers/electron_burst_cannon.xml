@@ -12,12 +12,27 @@
   <cpu>-10</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Electron Energy Cell</ammo>
   <delay>0.3</delay>
   <reload_time>6</reload_time>
   <amount>50</amount>
   <swivel>22</swivel>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
+  <ammo_mass>0.1</ammo_mass>
+  <gfx>electron.png</gfx>
+  <sound>neutron</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
+  <duration blowup="shield">1</duration>
+  <thrust>0</thrust>
+  <speed>1500</speed>
+  <damage>
+   <type>shieldbreaker</type>
+   <penetrate>24</penetrate>
+   <physical>13</physical>
+   <disable>3</disable>
+  </damage>
+  <ai>unguided</ai>
  </specific>
 </outfit>

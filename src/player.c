@@ -51,7 +51,6 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "perlin.h"
 #include "pilot.h"
 #include "player_gui.h"
 #include "rng.h"
@@ -1563,6 +1562,10 @@ int player_land( int loud )
 
       silent = 1; /* Suppress further targeting noises. */
    }
+   /* Uninhabited spob shouldn't give messages. */
+   else if (spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED)) {
+      return PLAYER_LAND_AGAIN;
+   }
    /* Check if spob is in range. */
    else if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_spobOutOfRangeMsg();
@@ -2292,8 +2295,9 @@ static void player_checkHail (void)
  */
 static void player_spobOutOfRangeMsg (void)
 {
-   player_message( _("#r%s is out of comm range, unable to contact."),
-         spob_name(cur_system->spobs[player.p->nav_spob]) );
+   Spob *spob = cur_system->spobs[player.p->nav_spob];
+   const char *name = spob_name(spob);
+   player_message( _("#r%s is out of comm range, unable to contact."), name );
 }
 
 /**
@@ -2309,8 +2313,11 @@ void player_hail (void)
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
    else if (player.p->nav_spob != -1) {
-      if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
-         comm_openSpob( cur_system->spobs[ player.p->nav_spob ] );
+      Spob *spob = cur_system->spobs[ player.p->nav_spob ];
+      if (spob_isFlag(spob, SPOB_UNINHABITED))
+         player_message( _("#r%s does not respond."), spob_name(spob) );
+      else if (pilot_inRangeSpob( player.p, player.p->nav_spob ))
+         comm_openSpob( spob );
       else
          player_spobOutOfRangeMsg();
    }
@@ -3025,25 +3032,19 @@ int player_addEscorts (void)
 
       for (int j=0; j<array_size(player.p->outfits); j++) {
          int q;
-         const Outfit *o;
+         const PilotOutfitSlot *po = player.p->outfits[j];
 
          /* Must have outfit. */
-         if (player.p->outfits[j]->outfit == NULL)
+         if (po->outfit == NULL)
             continue;
 
          /* Must be fighter bay. */
-         if (!outfit_isFighterBay(player.p->outfits[j]->outfit))
-            continue;
-
-         /* Ship must match. */
-         o = outfit_ammo(player.p->outfits[j]->outfit);
-         if (!outfit_isFighter(o) ||
-               (strcmp(player.p->escorts[i].ship,o->u.fig.ship)!=0))
+         if (!outfit_isFighterBay(po->outfit))
             continue;
 
          /* Must not have all deployed. */
-         q = player.p->outfits[j]->u.ammo.deployed + player.p->outfits[j]->u.ammo.quantity;
-         if (q >= outfit_amount(player.p->outfits[j]->outfit))
+         q = po->u.ammo.deployed + po->u.ammo.quantity;
+         if (q >= outfit_amount(po->outfit))
             continue;
 
          dockslot = j;
@@ -3191,11 +3192,8 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, const PilotOutfitSlot *
    const Outfit *o = slot->outfit;
    xmlw_startElem(writer,"outfit");
    xmlw_attr(writer,"slot","%d",i);
-   if ((outfit_ammo(o) != NULL) &&
-         (slot->u.ammo.outfit != NULL)) {
-      xmlw_attr(writer,"ammo","%s",slot->u.ammo.outfit->name);
+   if (outfit_isLauncher(o) || outfit_isFighterBay(o))
       xmlw_attr(writer,"quantity","%d", slot->u.ammo.quantity);
-   }
    xmlw_str(writer,"%s",o->name);
    xmlw_endElem(writer); /* "outfit" */
 
@@ -3475,7 +3473,7 @@ static int player_runUpdaterScript( const char* type, const char* name, int q )
    }
 
    /* Try to find out equivalent. */
-   nlua_getenv( player_updater_env, type );
+   nlua_getenv( naevL, player_updater_env, type );
    lua_pushstring( naevL, name );
    if (nlua_pcall(player_updater_env, 1, 1)) { /* error has occurred */
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
@@ -3962,8 +3960,7 @@ static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOu
  */
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot )
 {
-   const Outfit *o, *ammo;
-   char *buf;
+   const Outfit *o;
    int q;
 
    char *name = xml_get(node);
@@ -3979,24 +3976,13 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
    player_addOutfitToPilot( ship, o, slot );
 
    /* Doesn't have ammo. */
-   if (outfit_ammo(o)==NULL)
-      return;
-
-   /* See if has ammo. */
-   xmlr_attr_strd(node,"ammo",buf);
-   if (buf == NULL)
-      return;
-
-   /* Get the ammo. */
-   ammo = outfit_get(buf);
-   free(buf);
-   if (ammo==NULL)
+   if (!outfit_isLauncher(o) && !outfit_isFighterBay(o))
       return;
 
    /* See if has quantity. */
    xmlr_attr_int(node,"quantity",q);
    if (q > 0)
-      pilot_addAmmo( ship, slot, ammo, q );
+      pilot_addAmmo( ship, slot, q );
 }
 
 /**

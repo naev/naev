@@ -127,7 +127,7 @@ static int music_runLua( const char *situation )
    }
 
    /* Run the choose function in Lua. */
-   nlua_getenv( music_env, "choose" );
+   nlua_getenv( naevL, music_env, "choose" );
    if (situation != NULL)
       lua_pushstring( naevL, situation );
    else
@@ -442,8 +442,7 @@ static int music_luaInit (void)
 static int music_luaSetup (void)
 {
    /* Reset the environment. */
-   if (music_env != LUA_NOREF)
-      nlua_freeEnv(music_env);
+   nlua_freeEnv(music_env);
    music_env = nlua_newEnv(1);
    nlua_loadStandard(music_env);
    nlua_loadMusic(music_env); /* write it */
@@ -511,9 +510,6 @@ int music_luaString( const char *str )
 static void music_luaQuit (void)
 {
    if (music_disabled)
-      return;
-
-   if (music_env == LUA_NOREF)
       return;
 
    nlua_freeEnv(music_env);

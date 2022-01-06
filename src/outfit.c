@@ -84,7 +84,6 @@ if (fabs(val) > 1e-5) { \
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
-static void outfit_launcherDesc( Outfit* o );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -92,11 +91,9 @@ static int outfit_parse( Outfit* temp, const char* file );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
-static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
-static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
@@ -447,7 +444,7 @@ int outfit_isActive( const Outfit* o )
 {
    if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       return 1;
-   if (outfit_isMod(o) && (o->u.mod.active || o->u.mod.lua_env != LUA_NOREF))
+   if (outfit_isMod(o) && (o->u.mod.active || o->lua_env != LUA_NOREF))
       return 1;
    if (outfit_isAfterburner(o))
       return 1;
@@ -495,26 +492,15 @@ int outfit_isLauncher( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) );
 }
 /**
- * @brief Checks if outfit is ammo for a launcher.
- *    @param o Outfit to check.
- *    @return 1 if o is ammo.
- */
-int outfit_isAmmo( const Outfit* o )
-{
-   return (o->type==OUTFIT_TYPE_AMMO);
-}
-/**
  * @brief Checks if outfit is a seeking weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a seeking weapon.
  */
 int outfit_isSeeker( const Outfit* o )
 {
-   if ((o->type==OUTFIT_TYPE_AMMO) && (o->u.amm.ai > 0))
-      return 1;
    if (((o->type==OUTFIT_TYPE_TURRET_LAUNCHER) ||
             (o->type==OUTFIT_TYPE_LAUNCHER)) &&
-         (o->u.lau.ammo->u.amm.ai > 0))
+         (o->u.lau.ai > 0))
       return 1;
    return 0;
 }
@@ -555,15 +541,6 @@ int outfit_isAfterburner( const Outfit* o )
 int outfit_isFighterBay( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_FIGHTER_BAY);
-}
-/**
- * @brief Checks if outfit is a fighter.
- *    @param o Outfit to check.
- *    @return 1 if o is a Fighter.
- */
-int outfit_isFighter( const Outfit* o )
-{
-   return (o->type==OUTFIT_TYPE_FIGHTER);
 }
 /**
  * @brief Checks if outfit is a space map.
@@ -619,7 +596,7 @@ int outfit_isSecondary( const Outfit* o )
 const glTexture* outfit_gfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
-   else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
+   else if (outfit_isLauncher(o)) return o->u.lau.gfx_space;
    return NULL;
 }
 /**
@@ -629,7 +606,7 @@ const glTexture* outfit_gfx( const Outfit* o )
 const CollPoly* outfit_plg( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.polygon;
-   else if (outfit_isAmmo(o)) return o->u.amm.polygon;
+   else if (outfit_isLauncher(o)) return o->u.lau.polygon;
    return NULL;
 }
 /**
@@ -640,7 +617,7 @@ int outfit_spfxArmour( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.spfx_armour;
    else if (outfit_isBeam(o)) return o->u.bem.spfx_armour;
-   else if (outfit_isAmmo(o)) return o->u.amm.spfx_armour;
+   else if (outfit_isLauncher(o)) return o->u.lau.spfx_armour;
    return -1;
 }
 /**
@@ -651,7 +628,7 @@ int outfit_spfxShield( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.spfx_shield;
    else if (outfit_isBeam(o)) return o->u.bem.spfx_shield;
-   else if (outfit_isAmmo(o)) return o->u.amm.spfx_shield;
+   else if (outfit_isLauncher(o)) return o->u.lau.spfx_shield;
    return -1;
 }
 /**
@@ -662,7 +639,7 @@ const Damage *outfit_damage( const Outfit* o )
 {
    if (outfit_isBolt(o)) return &o->u.blt.dmg;
    else if (outfit_isBeam(o)) return &o->u.bem.dmg;
-   else if (outfit_isAmmo(o)) return &o->u.amm.dmg;
+   else if (outfit_isLauncher(o)) return &o->u.lau.dmg;
    return NULL;
 }
 /**
@@ -676,16 +653,6 @@ double outfit_delay( const Outfit* o )
    else if (outfit_isLauncher(o)) return o->u.lau.delay;
    else if (outfit_isFighterBay(o)) return o->u.bay.delay;
    return -1;
-}
-/**
- * @brief Gets the outfit's ammo.
- *    @param o Outfit to get information from.
- */
-const Outfit* outfit_ammo( const Outfit* o )
-{
-   if (outfit_isLauncher(o)) return o->u.lau.ammo;
-   else if (outfit_isFighterBay(o)) return o->u.bay.ammo;
-   return NULL;
 }
 /**
  * @brief Gets the amount an outfit can hold.
@@ -706,7 +673,7 @@ double outfit_energy( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.energy;
    else if (outfit_isBeam(o)) return o->u.bem.energy;
-   else if (outfit_isAmmo(o)) return o->u.amm.energy;
+   else if (outfit_isLauncher(o)) return o->u.lau.energy;
    return -1.;
 }
 /**
@@ -738,22 +705,17 @@ double outfit_range( const Outfit* o )
       return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
    else if (outfit_isBeam(o))
       return o->u.bem.range;
-   else if (outfit_isAmmo(o)) {
-      if (o->u.amm.thrust) {
-         double speedinc = o->u.amm.speed_max - o->u.amm.speed;
-         double at = speedinc / o->u.amm.thrust;
-         if (at < o->u.amm.duration)
-            return speedinc * (o->u.amm.duration - at / 2.) + o->u.amm.speed * o->u.amm.duration;
+   else if (outfit_isLauncher(o)) {
+      if (o->u.lau.thrust) {
+         double speedinc = o->u.lau.speed_max - o->u.lau.speed;
+         double at = speedinc / o->u.lau.thrust;
+         if (at < o->u.lau.duration)
+            return speedinc * (o->u.lau.duration - at / 2.) + o->u.lau.speed * o->u.lau.duration;
 
          /* Maximum speed will never be reached. */
-         return pow2(o->u.amm.duration) * o->u.amm.thrust / 2. + o->u.amm.duration * o->u.amm.speed;
+         return pow2(o->u.lau.duration) * o->u.lau.thrust / 2. + o->u.lau.duration * o->u.lau.speed;
       }
-      return o->u.amm.speed * o->u.amm.duration;
-   }
-   else if (outfit_isLauncher(o)) {
-      const Outfit *amm = outfit_ammo(o);
-      if (amm != NULL)
-         return outfit_range(amm);
+      return o->u.lau.speed * o->u.lau.duration;
    }
    else if (outfit_isFighterBay(o))
       return INFINITY;
@@ -768,23 +730,18 @@ double outfit_speed( const Outfit* o )
 {
    if (outfit_isBolt(o))
       return o->u.blt.speed;
-   else if (outfit_isAmmo(o)) {
-      if (o->u.amm.thrust == 0.)
-         return o->u.amm.speed;
+   else if (outfit_isLauncher(o)) {
+      if (o->u.lau.thrust == 0.)
+         return o->u.lau.speed;
       else { /* Gets the average speed. */
-         double t = (o->u.amm.speed_max - o->u.amm.speed) / o->u.amm.thrust; /* Time to reach max speed */
+         double t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.thrust; /* Time to reach max speed */
          /* Reaches max speed. */
-         if (t < o->u.amm.duration)
-            return (o->u.amm.thrust * t * t / 2. + (o->u.amm.speed_max - o->u.amm.speed) * (o->u.amm.duration - t)) / o->u.amm.duration + o->u.amm.speed;
+         if (t < o->u.lau.duration)
+            return (o->u.lau.thrust * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
          /* Doesn't reach max speed. */
          else
-            return o->u.amm.thrust * o->u.amm.duration / 2. + o->u.amm.speed;
+            return o->u.lau.thrust * o->u.lau.duration / 2. + o->u.lau.speed;
       }
-   }
-   else if (outfit_isLauncher(o)) {
-      const Outfit *amm = outfit_ammo(o);
-      if (amm != NULL)
-         return outfit_speed(amm);
    }
    return -1.;
 }
@@ -796,7 +753,7 @@ double outfit_speed( const Outfit* o )
 double outfit_spin( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.spin;
-   else if (outfit_isAmmo(o)) return o->u.amm.spin;
+   else if (outfit_isLauncher(o)) return o->u.lau.spin;
    return -1.;
 }
 /**
@@ -831,7 +788,7 @@ double outfit_trackmax( const Outfit* o )
 int outfit_sound( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.sound;
-   else if (outfit_isAmmo(o)) return o->u.amm.sound;
+   else if (outfit_isLauncher(o)) return o->u.lau.sound;
    return -1.;
 }
 /**
@@ -842,7 +799,18 @@ int outfit_sound( const Outfit* o )
 int outfit_soundHit( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.sound_hit;
-   else if (outfit_isAmmo(o)) return o->u.amm.sound_hit;
+   else if (outfit_isLauncher(o)) return o->u.lau.sound_hit;
+   return -1.;
+}
+/**
+ * @brief Gets the outfit's ammunition mass.
+ *    @param o Outfit to get ammunition mass from.
+ *    @return Outfit's ammunition's mass.
+ */
+double outfit_ammoMass( const Outfit *o )
+{
+   if (outfit_isLauncher(o)) return o->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(o)) return o->u.bay.ship_mass;
    return -1.;
 }
 /**
@@ -856,12 +824,7 @@ double outfit_duration( const Outfit* o )
    else if (outfit_isAfterburner(o)) return INFINITY;
    else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
    else if (outfit_isBeam(o)) return o->u.bem.duration;
-   else if (outfit_isAmmo(o)) return o->u.amm.duration;
-   else if (outfit_isLauncher(o)) {
-      const Outfit *amm = outfit_ammo(o);
-      if (amm != NULL)
-         return outfit_duration(amm);
-   }
+   else if (outfit_isLauncher(o)) return o->u.lau.duration;
    else if (outfit_isFighterBay(o)) return INFINITY;
    return -1.;
 }
@@ -892,12 +855,10 @@ const char* outfit_getType( const Outfit* o )
       N_("Bolt Turret"),
       N_("Beam Turret"),
       N_("Launcher"),
-      N_("Ammunition"),
       N_("Turret Launcher"),
       N_("Ship Modification"),
       N_("Afterburner"),
       N_("Fighter Bay"),
-      N_("Fighter"),
       N_("Star Map"),
       N_("Local Map"),
       N_("GUI"),
@@ -921,12 +882,10 @@ const char* outfit_getTypeBroad( const Outfit* o )
    if (outfit_isBolt(o))            return N_("Bolt Weapon");
    else if (outfit_isBeam(o))       return N_("Beam Weapon");
    else if (outfit_isLauncher(o))   return N_("Launcher");
-   else if (outfit_isAmmo(o))       return N_("Ammo");
    //else if (outfit_isTurret(o))     return N_("Turret");
    else if (outfit_isMod(o))        return N_("Modification");
    else if (outfit_isAfterburner(o)) return N_("Afterburner");
    else if (outfit_isFighterBay(o)) return N_("Fighter Bay");
-   else if (outfit_isFighter(o))    return N_("Fighter");
    else if (outfit_isMap(o))        return N_("Map");
    else if (outfit_isLocalMap(o))   return N_("Local Map");
    else if (outfit_isGUI(o))        return N_("GUI");
@@ -947,12 +906,12 @@ const char* outfit_getAmmoAI( const Outfit *o )
       N_("Smart")
    };
 
-   if (!outfit_isAmmo(o)) {
-      WARN(_("Outfit '%s' is not an ammo outfit"), o->name);
+   if (!outfit_isLauncher(o)) {
+      WARN(_("Outfit '%s' is not a launcher outfit"), o->name);
       return NULL;
    }
 
-   return ai_type[o->u.amm.ai];
+   return ai_type[o->u.lau.ai];
 }
 
 /**
@@ -1048,12 +1007,10 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("turret bolt",    OUTFIT_TYPE_TURRET_BOLT);
    O_CMP("turret beam",    OUTFIT_TYPE_TURRET_BEAM);
    O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
-   O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
    O_CMP("modification",   OUTFIT_TYPE_MODIFICATION);
    O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
-   O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
    O_CMP("map",            OUTFIT_TYPE_MAP);
    O_CMP("localmap",       OUTFIT_TYPE_LOCALMAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
@@ -1175,10 +1132,10 @@ that can be found in Naev's artwork repo."), file);
       do { /* Second case: outfit is an ammo */
          if (xml_isNode(node,"polygons")) {
             cur = node->children;
-            temp->u.amm.polygon = array_create_size( CollPoly, 36 );
+            temp->u.lau.polygon = array_create_size( CollPoly, 36 );
             do {
                if (xml_isNode(cur,"polygon")) {
-                  polygon = &array_grow( &temp->u.amm.polygon );
+                  polygon = &array_grow( &temp->u.lau.polygon );
                   LoadPolygon( polygon, cur );
                }
             } while (xml_nextNode(cur));
@@ -1213,10 +1170,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.falloff        = -1.;
    temp->u.blt.trackmin       = -1.;
    temp->u.blt.trackmax       = -1.;
-   temp->u.blt.lua_env        = LUA_NOREF;
-   temp->u.blt.lua_init       = LUA_NOREF;
-   temp->u.blt.lua_onshoot    = LUA_NOREF;
-   temp->u.blt.lua_onhit      = LUA_NOREF;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1228,7 +1181,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.blt.trackmin);
       xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
-      xmlr_strd(node,"lua",temp->u.blt.lua_file);
+      xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
@@ -1394,11 +1347,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    char *shader;
 
    /* Defaults. */
-   temp->u.bem.spfx_armour = -1;
-   temp->u.bem.spfx_shield = -1;
-   temp->u.bem.sound_warmup = -1;
-   temp->u.bem.sound = -1;
-   temp->u.bem.sound_off = -1;
+   temp->u.bem.spfx_armour    = -1;
+   temp->u.bem.spfx_shield    = -1;
+   temp->u.bem.sound_warmup   = -1;
+   temp->u.bem.sound          = -1;
+   temp->u.bem.sound_off      = -1;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1410,6 +1363,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
       xmlr_float(node,"swivel",temp->u.bem.swivel);
+      xmlr_strd(node,"lua",temp->lua_file);
 
       if (xml_isNode(node, "duration")) {
          xmlr_attr_float(node, "min", temp->u.bem.min_duration);
@@ -1533,15 +1487,22 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
+   int l;
 
-   temp->u.lau.trackmin = -1.;
-   temp->u.lau.trackmax = -1.;
+   temp->u.lau.trackmin    = -1.;
+   temp->u.lau.trackmax    = -1.;
+   temp->u.lau.spfx_armour = -1;
+   temp->u.lau.spfx_shield = -1;
+   temp->u.lau.sound       = -1;
+   temp->u.lau.sound_hit   = -1;
+   temp->u.lau.trail_spec  = NULL;
+   temp->u.lau.ai          = -1;
+   temp->u.lau.speed_max   = -1.;
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
       xmlr_float(node,"delay",temp->u.lau.delay);
-      xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
       xmlr_float(node,"reload_time",temp->u.lau.reload_time);
       xmlr_float(node,"trackmin",temp->u.lau.trackmin);
@@ -1549,8 +1510,98 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       xmlr_float(node,"iflockon",temp->u.lau.iflockon);
       xmlr_float(node,"swivel",temp->u.lau.swivel);
+      xmlr_strd(node,"lua",temp->lua_file);
+
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
+
+      /* Ammo stuff. */
+      /* Basic */
+      if (xml_isNode(node,"duration")) {
+         char *buf;
+         xmlr_attr_strd(node,"blowup",buf);
+         if (buf != NULL) {
+            if (strcmp(buf,"armour")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
+            else if (strcmp(buf,"shield")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR);
+            else
+               WARN(_("Outfit '%s' has invalid blowup property: '%s'"),
+                     temp->name, buf );
+            free(buf);
+         }
+         temp->u.lau.duration = xml_getFloat(node);
+         continue;
+      }
+      xmlr_float(node,"resist",temp->u.lau.resist);
+      /* Movement */
+      xmlr_float(node,"thrust",temp->u.lau.thrust);
+      xmlr_float(node,"turn",temp->u.lau.turn);
+      xmlr_float(node,"speed",temp->u.lau.speed);
+      xmlr_float(node,"speed_max",temp->u.lau.speed_max);
+      xmlr_float(node,"energy",temp->u.lau.energy);
+      xmlr_float(node,"ammo_mass",temp->u.lau.ammo_mass);
+      if (xml_isNode(node,"gfx")) {
+         temp->u.lau.gfx_space = xml_parseTexture( node,
+               OUTFIT_GFX_PATH"space/%s", 6, 6,
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+         xmlr_attr_float(node, "spin", temp->u.lau.spin);
+         if (temp->u.lau.spin != 0)
+            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
+         /* Load the collision polygon. */
+         char *buf = xml_get(node);
+         outfit_loadPLG( temp, buf, 0 );
+
+         /* Validity check: there must be 1 polygon per sprite. */
+         if (array_size(temp->u.lau.polygon) != 36) {
+            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
+                    npolygon = %i and sx*sy = %i"),
+                    temp->name, array_size(temp->u.lau.polygon), 36);
+         }
+         continue;
+      }
+      if (xml_isNode(node,"spfx_armour")) {
+         temp->u.lau.spfx_armour = spfx_get(xml_get(node));
+         continue;
+      }
+      if (xml_isNode(node,"spfx_shield")) {
+         temp->u.lau.spfx_shield = spfx_get(xml_get(node));
+         continue;
+      }
+      if (xml_isNode(node,"sound")) {
+         temp->u.lau.sound = sound_get( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode(node,"sound_hit")) {
+         temp->u.lau.sound_hit = sound_get( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode(node,"damage")) {
+         outfit_parseDamage( &temp->u.lau.dmg, node );
+         continue;
+      }
+      if (xml_isNode(node,"trail_generator")) {
+         xmlr_attr_float( node, "x", temp->u.lau.trail_x_offset );
+         char *buf = xml_get(node);
+         if (buf == NULL)
+            buf = "default";
+         temp->u.lau.trail_spec = trailSpec_get( buf );
+         continue;
+      }
+      if (xml_isNode(node,"ai")) {
+         char *buf = xml_get(node);
+         if (buf != NULL) {
+            if (strcmp(buf,"unguided")==0)
+               temp->u.lau.ai = AMMO_AI_UNGUIDED;
+            else if (strcmp(buf,"seek")==0)
+               temp->u.lau.ai = AMMO_AI_SEEK;
+            else if (strcmp(buf,"smart")==0)
+               temp->u.lau.ai = AMMO_AI_SMART;
+            else
+               WARN(_("Ammo '%s' has unknown ai type '%s'."), temp->name, buf);
+         }
+         continue;
+      }
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -1566,162 +1617,88 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
+   temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
+   if (temp->u.lau.speed_max < 0.)
+      temp->u.lau.speed_max = temp->u.lau.speed;
+   temp->u.lau.resist /= 100.;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
 
+   /* Short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   l = 0;
+   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+         _(dtype_damageTypeToStr(temp->u.lau.dmg.type)) );
+   SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+
+   if (outfit_isSeeker(temp)) {
+      SDESC_ADD(  l, temp, _("\n%.1f Second Lock-on"), temp->u.lau.lockon );
+      SDESC_ADD(  l, temp, _("\n%.1f Second In-Flight Calibration"), temp->u.lau.iflockon );
+      SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
+      SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
+   }
+   else {
+      SDESC_ADD(  l, temp, _("\nNo Seeking") );
+      if (outfit_isTurret(temp) || temp->u.lau.swivel > 0.) {
+         SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.lau.trackmax, 0 ) );
+         SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.lau.trackmin, 0 ) );
+         SDESC_COND( l, temp, _("\n%.1f Degree Swivel"), temp->u.lau.swivel*180./M_PI );
+      }
+   }
+
+   SDESC_ADD(  l, temp, _("\nHolds %d ammo"), temp->u.lau.amount );
+   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.lau.dmg.penetration * 100. );
+   SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
+         1. / temp->u.lau.delay * temp->u.lau.dmg.damage, temp->u.lau.dmg.damage );
+   SDESC_COND( l, temp, _("\n%.1f Disable/s [%.0f Disable]"),
+         1. / temp->u.lau.delay * temp->u.lau.dmg.disable, temp->u.lau.dmg.disable );
+   SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1. / temp->u.lau.delay );
+   SDESC_ADD(  l, temp, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(temp), 0 ), temp->u.lau.duration );
+   if (temp->u.lau.thrust > 0.) {
+      if (temp->u.lau.speed > 0.)
+         SDESC_ADD( l, temp, _("\n%.0f Initial Speed (%.0f Thrust)"), temp->u.lau.speed, temp->u.lau.thrust );
+      else
+         SDESC_ADD( l, temp, _("\n%.0f Thrust"), temp->u.lau.thrust );
+   }
+   else
+      SDESC_COND( l, temp, _("\n%.0f Speed"), temp->u.lau.speed );
+   SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
+   SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
+   SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
+   SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
+
+
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0.,"delay");
    MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.lau.amount==0.,"amount");
    MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
-#undef MELEMENT
-}
-
-/**
- * @brief Parses the specific area for a weapon and loads it into Outfit.
- *
- *    @param temp Outfit to finish loading.
- *    @param parent Outfit's parent node.
- */
-static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
-{
-   xmlNodePtr node = parent->xmlChildrenNode;
-
-   /* Defaults. */
-   temp->slot.type         = OUTFIT_SLOT_NA;
-   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
-   temp->u.amm.spfx_armour = -1;
-   temp->u.amm.spfx_shield = -1;
-   temp->u.amm.sound       = -1;
-   temp->u.amm.sound_hit   = -1;
-   temp->u.amm.trail_spec  = NULL;
-   temp->u.amm.ai          = -1;
-   temp->u.amm.speed_max   = -1.;
-
-   do { /* load all the data */
-      xml_onlyNodes(node);
-      /* Basic */
-      if (xml_isNode(node,"duration")) {
-         char *buf;
-         xmlr_attr_strd(node,"blowup",buf);
-         if (buf != NULL) {
-            if (strcmp(buf,"armour")==0)
-               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
-            else if (strcmp(buf,"shield")==0)
-               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR);
-            else
-               WARN(_("Outfit '%s' has invalid blowup property: '%s'"),
-                     temp->name, buf );
-            free(buf);
-         }
-         temp->u.amm.duration = xml_getFloat(node);
-         continue;
-      }
-      xmlr_float(node,"resist",temp->u.amm.resist);
-      /* Movement */
-      xmlr_float(node,"thrust",temp->u.amm.thrust);
-      xmlr_float(node,"turn",temp->u.amm.turn);
-      xmlr_float(node,"speed",temp->u.amm.speed);
-      xmlr_float(node,"speed_max",temp->u.amm.speed_max);
-      xmlr_float(node,"energy",temp->u.amm.energy);
-      if (xml_isNode(node,"gfx")) {
-         temp->u.amm.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         xmlr_attr_float(node, "spin", temp->u.amm.spin);
-         if (temp->u.amm.spin != 0)
-            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
-         /* Load the collision polygon. */
-         char *buf = xml_get(node);
-         outfit_loadPLG( temp, buf, 0 );
-
-         /* Validity check: there must be 1 polygon per sprite. */
-         if (array_size(temp->u.amm.polygon) != 36) {
-            WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
-                    npolygon = %i and sx*sy = %i"),
-                    temp->name, array_size(temp->u.amm.polygon), 36);
-         }
-         continue;
-      }
-      if (xml_isNode(node,"spfx_armour")) {
-         temp->u.amm.spfx_armour = spfx_get(xml_get(node));
-         continue;
-      }
-      if (xml_isNode(node,"spfx_shield")) {
-         temp->u.amm.spfx_shield = spfx_get(xml_get(node));
-         continue;
-      }
-      if (xml_isNode(node,"sound")) {
-         temp->u.amm.sound = sound_get( xml_get(node) );
-         continue;
-      }
-      if (xml_isNode(node,"sound_hit")) {
-         temp->u.amm.sound_hit = sound_get( xml_get(node) );
-         continue;
-      }
-      if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.amm.dmg, node );
-         continue;
-      }
-      if (xml_isNode(node,"trail_generator")) {
-         xmlr_attr_float( node, "x", temp->u.amm.trail_x_offset );
-         char *buf = xml_get(node);
-         if (buf == NULL)
-            buf = "default";
-         temp->u.amm.trail_spec = trailSpec_get( buf );
-         continue;
-      }
-      if (xml_isNode(node,"ai")) {
-         char *buf = xml_get(node);
-         if (buf != NULL) {
-            if (strcmp(buf,"unguided")==0)
-               temp->u.amm.ai = AMMO_AI_UNGUIDED;
-            else if (strcmp(buf,"seek")==0)
-               temp->u.amm.ai = AMMO_AI_SEEK;
-            else if (strcmp(buf,"smart")==0)
-               temp->u.amm.ai = AMMO_AI_SMART;
-            else
-               WARN(_("Ammo '%s' has unknown ai type '%s'."), temp->name, buf);
-         }
-         continue;
-      }
-      WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
-   } while (xml_nextNode(node));
-
-   /* Post-processing */
-   temp->u.amm.turn *= M_PI/180.; /* Convert to rad/s. */
-   if (temp->u.amm.speed_max < 0.)
-      temp->u.amm.speed_max = temp->u.amm.speed;
-   temp->u.amm.resist /= 100.;
-
-   /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   temp->desc_short[0]='\0';
-
-#define MELEMENT(o,s) \
-if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->mass==0.,"mass");
-   MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
-   MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
-   MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
-   MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
-   /* MELEMENT(temp->u.amm.thrust==0,"thrust"); */
+   MELEMENT(temp->u.lau.ammo_mass==0.,"mass");
+   MELEMENT(temp->u.lau.gfx_space==NULL,"gfx");
+   MELEMENT(temp->u.lau.spfx_shield==-1,"spfx_shield");
+   MELEMENT(temp->u.lau.spfx_armour==-1,"spfx_armour");
+   MELEMENT((sound_disabled!=0) && (temp->u.lau.sound<0),"sound");
+   /* MELEMENT(temp->u.lau.thrust==0,"thrust"); */
    /* Unguided missiles don't need everything */
    if (outfit_isSeeker(temp)) {
-      MELEMENT(temp->u.amm.turn==0,"turn");
+      MELEMENT(temp->u.lau.turn==0,"turn");
+      MELEMENT(temp->u.lau.trackmin<0,"trackmin");
+      MELEMENT(temp->u.lau.trackmax<0,"trackmax");
+      MELEMENT(temp->u.lau.lockon<0,"lockon");
+      MELEMENT(!outfit_isTurret(temp) && (temp->u.lau.arc==0.),"arc");
    }
-   MELEMENT(temp->u.amm.speed_max==0,"speed_max");
-   MELEMENT(temp->u.amm.duration==0,"duration");
-   MELEMENT(temp->u.amm.dmg.damage==0,"damage");
-   /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
-   MELEMENT(temp->cpu!=0.,"cpu");
+   MELEMENT(temp->u.lau.speed_max==0,"speed_max");
+   MELEMENT(temp->u.lau.duration==0,"duration");
+   MELEMENT(temp->u.lau.dmg.damage==0,"damage");
+   /*MELEMENT(temp->u.lau.energy==0.,"energy");*/
 #undef MELEMENT
-   if (temp->u.amm.speed==0. && temp->u.amm.thrust==0.)
-      DEBUG(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+   if (temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
+      WARN(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
+   if (temp->u.lau.iflockon >= temp->u.lau.duration)
+      WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), temp->name);
 }
 
 /**
@@ -1735,29 +1712,12 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node = parent->children;
 
-   /* Defaults. */
-   temp->u.mod.lua_env        = LUA_NOREF;
-   temp->u.mod.lua_onadd      = LUA_NOREF;
-   temp->u.mod.lua_onremove   = LUA_NOREF;
-   temp->u.mod.lua_init       = LUA_NOREF;
-   temp->u.mod.lua_cleanup    = LUA_NOREF;
-   temp->u.mod.lua_update     = LUA_NOREF;
-   temp->u.mod.lua_ontoggle   = LUA_NOREF;
-   temp->u.mod.lua_onhit      = LUA_NOREF;
-   temp->u.mod.lua_outofenergy = LUA_NOREF;
-   temp->u.mod.lua_onshoot    = LUA_NOREF;
-   temp->u.mod.lua_onstealth  = LUA_NOREF;
-   temp->u.mod.lua_onscanned  = LUA_NOREF;
-   temp->u.mod.lua_onscan     = LUA_NOREF;
-   temp->u.mod.lua_cooldown   = LUA_NOREF;
-   temp->u.mod.lua_land       = LUA_NOREF;
-   temp->u.mod.lua_takeoff    = LUA_NOREF;
-   temp->u.mod.lua_jumpin     = LUA_NOREF;
-
    do { /* load all the data */
       ShipStatList *ll;
 
       xml_onlyNodes(node);
+      xmlr_strd(node,"lua",temp->lua_file);
+
       if (xml_isNode(node,"active")) {
          xmlr_attr_float(node, "cooldown", temp->u.mod.cooldown);
          temp->u.mod.active   = 1;
@@ -1769,8 +1729,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
          continue;
       }
-      /* Lua stuff gets loaded later. */
-      xmlr_strd(node,"lua",temp->u.mod.lua_file);
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -1791,7 +1749,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   if (temp->u.mod.active || temp->u.mod.lua_ontoggle != LUA_NOREF)
+   if (temp->u.mod.active || temp->lua_ontoggle != LUA_NOREF)
       SDESC_ADD( l, temp, "%s", _("\n#rActivated Outfit#0") );
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
       SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
@@ -1824,6 +1782,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
       xml_onlyNodes(node);
       xmlr_float(node,"rumble",temp->u.afb.rumble);
+      xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"sound_on")) {
          temp->u.afb.sound_on = sound_get( xml_get(node) );
          continue;
@@ -1908,8 +1867,10 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"reload_time",temp->u.bay.reload_time);
-      xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
+      xmlr_strd(node,"ship",temp->u.bay.ship);
+      xmlr_float(node,"ship_mass",temp->u.bay.ship_mass);
       xmlr_int(node,"amount",temp->u.bay.amount);
+      xmlr_strd(node,"lua",temp->lua_file);
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -1931,7 +1892,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_COND( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
-   SDESC_ADD( l, temp, _("\nHolds %d %s"), temp->u.bay.amount, _(temp->u.bay.ammo_name) );
+   SDESC_ADD( l, temp, _("\nHolds %d ships"), temp->u.bay.amount );
    SDESC_COND( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
 
 #define MELEMENT(o,s) \
@@ -1939,41 +1900,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.reload_time==0.,"reload_time");
    MELEMENT(temp->cpu==0.,"cpu");
-   MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.bay.amount==0,"amount");
-#undef MELEMENT
-}
-
-/**
- * @brief Parses the fighter tidbits of the outfit.
- *
- *    @param temp Outfit to finish loading.
- *    @param parent Outfit's parent node.
- */
-static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
-{
-   xmlNodePtr node = parent->children;
-
-   temp->slot.type   = OUTFIT_SLOT_NA;
-   temp->slot.size   = OUTFIT_SLOT_SIZE_NA;
-
-   do {
-      xml_onlyNodes(node);
-      xmlr_strd(node,"ship",temp->u.fig.ship);
-      WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
-   } while (xml_nextNode(node));
-
-   /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         "%s",
-         _(outfit_getType(temp)) );
-
-#define MELEMENT(o,s) \
-if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
-/**< Define to help check for data errors. */
-   MELEMENT(temp->u.fig.ship==NULL,"ship");
-   MELEMENT(temp->cpu!=0.,"cpu");
 #undef MELEMENT
 }
 
@@ -2213,6 +2140,26 @@ static int outfit_parse( Outfit* temp, const char* file )
    memset( temp, 0, sizeof(Outfit) );
    desc_extra = NULL;
 
+   /* Defaults. */
+   temp->lua_env        = LUA_NOREF;
+   temp->lua_onadd      = LUA_NOREF;
+   temp->lua_onremove   = LUA_NOREF;
+   temp->lua_init       = LUA_NOREF;
+   temp->lua_cleanup    = LUA_NOREF;
+   temp->lua_update     = LUA_NOREF;
+   temp->lua_ontoggle   = LUA_NOREF;
+   temp->lua_onhit      = LUA_NOREF;
+   temp->lua_outofenergy = LUA_NOREF;
+   temp->lua_onshoot    = LUA_NOREF;
+   temp->lua_onstealth  = LUA_NOREF;
+   temp->lua_onscanned  = LUA_NOREF;
+   temp->lua_onscan     = LUA_NOREF;
+   temp->lua_cooldown   = LUA_NOREF;
+   temp->lua_land       = LUA_NOREF;
+   temp->lua_takeoff    = LUA_NOREF;
+   temp->lua_jumpin     = LUA_NOREF;
+   temp->lua_onimpact   = LUA_NOREF;
+
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN(_("Outfit '%s' has invalid or no name"), file);
@@ -2341,7 +2288,6 @@ static int outfit_parse( Outfit* temp, const char* file )
       }
 
       if (xml_isNode(node,"specific")) { /* has to be processed separately */
-
          /* get the type */
          xmlr_attr_strd(node, "type", prop);
          if (prop == NULL)
@@ -2379,16 +2325,12 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSBeam( temp, node );
          else if (outfit_isLauncher(temp))
             outfit_parseSLauncher( temp, node );
-         else if (outfit_isAmmo(temp))
-            outfit_parseSAmmo( temp, node );
          else if (outfit_isMod(temp))
             outfit_parseSMod( temp, node );
          else if (outfit_isAfterburner(temp))
             outfit_parseSAfterburner( temp, node );
          else if (outfit_isFighterBay(temp))
             outfit_parseSFighterBay( temp, node );
-         else if (outfit_isFighter(temp))
-            outfit_parseSFighter( temp, node );
          else if (outfit_isMap(temp)) {
             temp->u.map = malloc( sizeof(OutfitMapData_t) ); /**< deal with maps after the universe is loaded */
             temp->slot.type         = OUTFIT_SLOT_NA;
@@ -2485,111 +2427,54 @@ int outfit_load (void)
    /* Second pass. */
    for (int i=0; i<noutfits; i++) {
       Outfit *o = &outfit_stack[i];
-      if (outfit_isLauncher(o)) {
-         o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
-         if (outfit_isSeeker(o) && /* Smart seekers. */
-               (o->u.lau.ammo->u.amm.ai)) {
-            if (o->u.lau.trackmin < 0.)
-               WARN(_("Outfit '%s' missing/invalid 'trackmin' element"), o->name);
-            if (o->u.lau.trackmax < 0.)
-               WARN(_("Outfit '%s' missing/invalid 'trackmax' element"), o->name);
-            if (o->u.lau.lockon == 0.)
-               WARN(_("Outfit '%s' missing/invalid 'lockon' element"), o->name);
-            if (!outfit_isTurret(o) && (o->u.lau.arc == 0.))
-               WARN(_("Outfit '%s' missing/invalid 'arc' element"), o->name);
-         }
 
-         if (o->u.lau.iflockon >= o->u.lau.ammo->u.amm.duration)
-            WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), o->name);
-
-         outfit_launcherDesc(o);
+      if (o->lua_file==NULL)
+         continue;
+      nlua_env env;
+      size_t sz;
+      char *dat = ndata_read( o->lua_file, &sz );
+      if (dat==NULL) {
+         WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->lua_file );
+         continue;
       }
-      else if (outfit_isFighterBay(o))
-         o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
 
-      else if (outfit_isBolt(o)) {
-         if (o->u.blt.lua_file==NULL)
-            continue;
-         nlua_env env;
-         size_t sz;
-         char *dat = ndata_read( o->u.blt.lua_file, &sz );
-         if (dat==NULL) {
-            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.blt.lua_file );
-            continue;
-         }
+      env = nlua_newEnv(1);
+      o->lua_env = env;
+      /* TODO limit libraries here. */
+      nlua_loadStandard( env );
+      nlua_loadGFX( env );
+      nlua_loadPilotOutfit( env );
+      nlua_loadCamera( env );
 
-         env = nlua_newEnv(1);
-         o->u.blt.lua_env = env;
-         /* TODO limit libraries here. */
-         nlua_loadStandard( env );
-         nlua_loadGFX( env );
-         nlua_loadPilotOutfit( env );
-         nlua_loadCamera( env );
-
-         /* Run code. */
-         if (nlua_dobufenv( env, dat, sz, o->u.blt.lua_file ) != 0) {
-            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
-            nlua_freeEnv( o->u.blt.lua_env );
-            free( dat );
-            o->u.blt.lua_env = LUA_NOREF;
-            continue;
-         }
+      /* Run code. */
+      if (nlua_dobufenv( env, dat, sz, o->lua_file ) != 0) {
+         WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+         nlua_freeEnv( o->lua_env );
          free( dat );
-
-         /* Check functions as necessary. */
-         o->u.blt.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-         o->u.blt.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
-         o->u.blt.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+         o->lua_env = LUA_NOREF;
+         continue;
       }
-      else if (outfit_isMod(o)) {
-         if (o->u.mod.lua_file==NULL)
-            continue;
-         nlua_env env;
-         size_t sz;
-         char *dat = ndata_read( o->u.mod.lua_file, &sz );
-         if (dat==NULL) {
-            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.mod.lua_file );
-            continue;
-         }
+      free( dat );
 
-         env = nlua_newEnv(1);
-         o->u.mod.lua_env = env;
-         /* TODO limit libraries here. */
-         nlua_loadStandard( env );
-         nlua_loadGFX( env );
-         nlua_loadPilotOutfit( env );
-         nlua_loadCamera( env );
-
-         /* Run code. */
-         if (nlua_dobufenv( env, dat, sz, o->u.mod.lua_file ) != 0) {
-            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
-            nlua_freeEnv( o->u.mod.lua_env );
-            free( dat );
-            o->u.mod.lua_env = LUA_NOREF;
-            continue;
-         }
-         free( dat );
-
-         /* Check functions as necessary. */
-         o->u.mod.lua_onadd      = nlua_refenvtype( env, "onadd",    LUA_TFUNCTION );
-         o->u.mod.lua_onremove   = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
-         o->u.mod.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
-         o->u.mod.lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
-         o->u.mod.lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
-         o->u.mod.lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
-         o->u.mod.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
-         o->u.mod.lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
-         o->u.mod.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
-         o->u.mod.lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
-         o->u.mod.lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
-         o->u.mod.lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
-         o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
-         o->u.mod.lua_land       = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
-         o->u.mod.lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
-         o->u.mod.lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
-      }
+      /* Check functions as necessary. */
+      o->lua_onadd      = nlua_refenvtype( env, "onadd",    LUA_TFUNCTION );
+      o->lua_onremove   = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+      o->lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+      o->lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
+      o->lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+      o->lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+      o->lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+      o->lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
+      o->lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+      o->lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
+      o->lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
+      o->lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
+      o->lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
+      o->lua_land       = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+      o->lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
+      o->lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
+      o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
    }
 
 #ifdef DEBUGGING
@@ -2635,6 +2520,9 @@ int outfit_loadPost (void)
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
+      if (outfit_isFighterBay(o) && ship_get(o->u.bay.ship)==NULL)
+         WARN(_("Fighter Bay Outfit '%s' ship '%s'!"),o->name,o->u.bay.ship);
+
       /* Add illegality as necessary. */
       if (array_size(o->illegaltoS) > 0) {
          o->illegalto = array_create_size( int, array_size(o->illegaltoS) );
@@ -2653,27 +2541,13 @@ int outfit_loadPost (void)
       }
 
       /* Handle initializing module stuff. */
-      if (outfit_isBolt(o) && (o->u.blt.lua_env != LUA_NOREF)) {
-         nlua_getenv( o->u.blt.lua_env, "onload" );
+      if (o->lua_env != LUA_NOREF) {
+         nlua_getenv( naevL, o->lua_env, "onload" );
          if (lua_isnil(naevL,-1))
             lua_pop(naevL,1);
          else {
             lua_pushoutfit( naevL, o );
-            if (nlua_pcall( o->u.blt.lua_env, 1, 0 )) {
-               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
-               lua_pop(naevL,1);
-            }
-         }
-      }
-
-      /* Handle initializing module stuff. */
-      if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
-         nlua_getenv( o->u.mod.lua_env, "onload" );
-         if (lua_isnil(naevL,-1))
-            lua_pop(naevL,1);
-         else {
-            lua_pushoutfit( naevL, o );
-            if (nlua_pcall( o->u.mod.lua_env, 1, 0 )) {
+            if (nlua_pcall( o->lua_env, 1, 0 )) {
                WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
                lua_pop(naevL,1);
             }
@@ -2750,66 +2624,6 @@ int outfit_mapParse (void)
 }
 
 /**
- * @brief Generates short descs for launchers, including ammo info.
- *
- *    @param o Launcher.
- */
-static void outfit_launcherDesc( Outfit* o )
-{
-   int l;
-   const Outfit *a; /* Launcher's ammo. */
-
-   if (o->desc_short != NULL) {
-      WARN(_("Outfit '%s' already has a short description"), o->name);
-      return;
-   }
-
-   a = o->u.lau.ammo;
-
-   o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = 0;
-   SDESC_ADD(  l, o, _("%s [%s]"), _(outfit_getType(o)),
-         _(dtype_damageTypeToStr(a->u.amm.dmg.type)) );
-   SDESC_COND_COLOUR( l, o, _("\n%.0f CPU"), o->cpu );
-
-   if (outfit_isSeeker(o)) {
-      SDESC_ADD(  l, o, _("\n%.1f Second Lock-on"), o->u.lau.lockon );
-      SDESC_ADD(  l, o, _("\n%.1f Second In-Flight Calibration"), o->u.lau.iflockon );
-      SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
-      SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
-   }
-   else {
-      SDESC_ADD(  l, o, _("\nNo Seeking") );
-      if (outfit_isTurret(o) || o->u.lau.swivel > 0.) {
-         SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
-         SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
-         SDESC_COND( l, o, _("\n%.1f Degree Swivel"), o->u.lau.swivel*180./M_PI );
-      }
-   }
-
-   SDESC_ADD(  l, o, _("\nHolds %d %s"), o->u.lau.amount, _(o->u.lau.ammo_name) );
-   SDESC_ADD(  l, o, _("\n%.0f%% Penetration"), a->u.amm.dmg.penetration * 100. );
-   SDESC_COND( l, o, _("\n%.2f DPS [%.0f Damage]"),
-         1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
-   SDESC_COND( l, o, _("\n%.1f Disable/s [%.0f Disable]"),
-         1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
-   SDESC_ADD(  l, o, _("\n%.1f Shots Per Second"), 1. / o->u.lau.delay );
-   SDESC_ADD(  l, o, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(a), 0 ), a->u.amm.duration );
-   if (a->u.amm.thrust > 0.) {
-      if (a->u.amm.speed > 0.)
-         SDESC_ADD( l, o, _("\n%.0f Initial Speed (%.0f Thrust)"), a->u.amm.speed, a->u.amm.thrust );
-      else
-         SDESC_ADD( l, o, _("\n%.0f Thrust"), a->u.amm.thrust );
-   }
-   else
-      SDESC_COND( l, o, _("\n%.0f Speed"), a->u.amm.speed );
-   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed_max );
-   SDESC_ADD(  l, o, _("\n%.1f Seconds to Reload"), o->u.lau.reload_time );
-   SDESC_COND( l, o, _("\n%.1f EPS [%.0f Energy]"), o->u.lau.delay * a->u.amm.energy, a->u.amm.energy );
-   SDESC_COND( l, o, _("\n%.0f%% Jam Resistance"), a->u.amm.resist * 100. );
-}
-
-/**
  * Gets the texture associated to the rarity of an outfit/ship.
  */
 glTexture* rarity_texture( int rarity )
@@ -2862,13 +2676,13 @@ void outfit_free (void)
       /* Free illegality. */
       array_free( o->illegalto );
 
-      if (outfit_isAmmo(o)) {
+      if (outfit_isLauncher(o)) {
          /* Free collision polygons. */
-         for (int j=0; j<array_size(o->u.amm.polygon); j++) {
-            free(o->u.amm.polygon[j].x);
-            free(o->u.amm.polygon[j].y);
+         for (int j=0; j<array_size(o->u.lau.polygon); j++) {
+            free(o->u.lau.polygon[j].x);
+            free(o->u.lau.polygon[j].y);
          }
-         array_free(o->u.amm.polygon);
+         array_free(o->u.lau.polygon);
       }
       /* Type specific. */
       else if (outfit_isBolt(o)) {
@@ -2880,12 +2694,8 @@ void outfit_free (void)
          }
          array_free(o->u.blt.polygon);
       }
-      else if (outfit_isLauncher(o))
-         free(o->u.lau.ammo_name);
       else if (outfit_isFighterBay(o))
-         free(o->u.bay.ammo_name);
-      else if (outfit_isFighter(o))
-         free(o->u.fig.ship);
+         free(o->u.bay.ship);
       else if (outfit_isGUI(o))
          free(o->u.gui.gui);
       else if (outfit_isLicense(o))
@@ -2896,12 +2706,11 @@ void outfit_free (void)
          array_free( o->u.map->jumps );
          free( o->u.map );
       }
-      else if (outfit_isMod(o)) {
-         if (o->u.mod.lua_env != LUA_NOREF)
-            nlua_freeEnv( o->u.mod.lua_env );
-         o->u.mod.lua_env = LUA_NOREF;
-         free(o->u.mod.lua_file);
-      }
+
+      /* Lua. */
+      nlua_freeEnv( o->lua_env );
+      o->lua_env = LUA_NOREF;
+      free(o->lua_file);
 
       /* strings */
       free(o->typename);

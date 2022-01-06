@@ -1,8 +1,9 @@
-local damage, penetration
+local damage, penetration, isturret
 function onload( o )
-   local s = o:specificstats()
-   damage = s.damage
+   local s     = o:specificstats()
+   damage      = s.damage
    penetration = s.penetration
+   isturret    = s.isturret
 end
 
 local mapping = {
@@ -20,9 +21,20 @@ function init( p, _po )
    end
 end
 
-function onhit( _p, target )
+function onimpact( p, target )
    local ts = target:stats()
    local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
+
+   -- Modify by damage
+   if p:exists() then
+      local mod
+      if isturret then
+         mod = p:shipstat("tur_damage",true)
+      else
+         mod = p:shipstat("fwd_damage",true)
+      end
+      dmg = dmg * mod
+   end
 
    if mem.corrosion_ii then
       target:effectAdd( "Plasma Burn", 10, dmg )

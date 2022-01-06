@@ -29,6 +29,7 @@ function background ()
    time = -1000 * rnd.rnd()
 
    bgstars = lg.newCanvas()
+   shader:send( "u_bgtex", bgstars )
 
    starfield.init{ nolocalstars=true }
    blackhole = bgshaders.init( shader, sf )
@@ -39,12 +40,11 @@ function renderfg( dt )
    local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.00025, -by-y*0.00025, z )
+   shader:send( "u_camera", bx+x*0.00025, -by-y*0.00025, z*sf )
 
    lg.setCanvas( bgstars )
    starfield.render( dt )
    lg.setCanvas()
 
-   shader:send( "u_bgtex", bgstars )
    blackhole:render( dt )
 end

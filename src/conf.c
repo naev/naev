@@ -28,7 +28,7 @@
 
 #define conf_loadInt( env, n, i )            \
    {                                         \
-      nlua_getenv( env, n );                 \
+      nlua_getenv( naevL, env, n );          \
       if ( lua_isnumber( naevL, -1 ) ) {     \
          i = (int)lua_tonumber( naevL, -1 ); \
       }                                      \
@@ -37,7 +37,7 @@
 
 #define conf_loadFloat( env, n, f )             \
    {                                            \
-      nlua_getenv( env, n );                    \
+      nlua_getenv( naevL, env, n );             \
       if ( lua_isnumber( naevL, -1 ) ) {        \
          f = (double)lua_tonumber( naevL, -1 ); \
       }                                         \
@@ -46,7 +46,7 @@
 
 #define conf_loadBool( env, n, b )                \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isnumber( naevL, -1 ) )            \
          b = ( lua_tonumber( naevL, -1 ) != 0. ); \
       else if ( !lua_isnil( naevL, -1 ) )         \
@@ -56,7 +56,7 @@
 
 #define conf_loadString( env, n, s )              \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isstring( naevL, -1 ) ) {          \
          free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
@@ -66,6 +66,7 @@
 
 /* Global configuration. */
 PlayerConf_t conf = {
+   .loaded = 0,
    .ndata = NULL,
    .language=NULL,
    .joystick_nam = NULL
@@ -146,6 +147,7 @@ void conf_setDefaults (void)
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
+   conf.lua_repl     = 0;
    conf.lastversion = strdup( "" );
    conf.translation_warning_seen = 0;
 
@@ -352,7 +354,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "engine_vol", conf.engine_vol );
 
       /* Joystick. */
-      nlua_getenv( lEnv, "joystick" );
+      nlua_getenv( naevL, lEnv, "joystick" );
       if (lua_isnumber(naevL, -1))
          conf.joystick_ind = (int)lua_tonumber(naevL, -1);
       else if (lua_isstring(naevL, -1))
@@ -397,6 +399,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "lua_repl", conf.lua_repl );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
@@ -413,7 +416,7 @@ int conf_loadConfig ( const char* file )
        * Keybindings.
        */
       for (i=0; keybind_info[i][0] != NULL; i++) {
-         nlua_getenv( lEnv, keybind_info[ i ][ 0 ] );
+         nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);
@@ -521,6 +524,7 @@ int conf_loadConfig ( const char* file )
    }
 
    nlua_freeEnv( lEnv );
+   conf.loaded = 1;
    return 0;
 }
 
@@ -1018,6 +1022,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Automatic saving for when using the universe editor whenever an edit is done"));
    conf_saveBool("devautosave",conf.devautosave);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Enable the experimental CLI based on lua-repl."));
+   conf_saveBool("lua_repl",conf.lua_repl);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Save the config every time game exits (rewriting this bit)"));

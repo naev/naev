@@ -1629,11 +1629,9 @@ static void faction_freeOne( Faction *f )
    gl_freeTexture(f->logo);
    array_free(f->allies);
    array_free(f->enemies);
-   if (f->sched_env != LUA_NOREF)
-      nlua_freeEnv( f->sched_env );
-   if (f->env != LUA_NOREF)
-      nlua_freeEnv( f->env );
-   if (!faction_isFlag(f, FACTION_DYNAMIC) && (f->equip_env != LUA_NOREF))
+   nlua_freeEnv( f->sched_env );
+   nlua_freeEnv( f->env );
+   if (!faction_isFlag(f, FACTION_DYNAMIC))
       nlua_freeEnv( f->equip_env );
 }
 

@@ -684,10 +684,10 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
-   if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
-         (outfit_ammo(outfit) != NULL)) {
-      mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
-   }
+   if (outfit_isLauncher(outfit))
+      mass += outfit_amount(outfit) * outfit->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(outfit))
+      mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
 
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf_price, outfit->price, 2 );

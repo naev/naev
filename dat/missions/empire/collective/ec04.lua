@@ -193,7 +193,7 @@ function empireRetreat(flt)
         if j:exists() then
             j:control()
             j:setVisplayer()
-            j:hyperspace(lmisn.getNextSystem(system.cur(), misn_base_sys), true)
+            j:hyperspace(lmisn.getNextSystem(system.cur(), misn_base_sys))
         end
     end
 end

@@ -185,7 +185,7 @@ Mission* misn_getFromLua( lua_State *L )
 {
    Mission *misn, **misnptr;
 
-   nlua_getenv(__NLUA_CURENV, "__misn");
+   nlua_getenv( L, __NLUA_CURENV, "__misn" );
    misnptr = lua_touserdata( L, -1 );
    misn = misnptr ? *misnptr : NULL;
    lua_pop( L, 1 );
@@ -201,10 +201,10 @@ void misn_runStart( Mission *misn, const char *func )
    Mission **misnptr;
    misnptr = lua_newuserdata( naevL, sizeof(Mission*) );
    *misnptr = misn;
-   nlua_setenv( misn->env, "__misn" );
+   nlua_setenv( naevL, misn->env, "__misn" );
 
    /* Set the Lua state. */
-   nlua_getenv( misn->env, func );
+   nlua_getenv( naevL, misn->env, func );
 }
 
 /**
@@ -232,7 +232,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    ret = nlua_pcall(env, nargs, 0);
 
    /* The mission can change if accepted. */
-   nlua_getenv(env, "__misn");
+   nlua_getenv(naevL, env, "__misn");
    cur_mission = *(Mission**) lua_touserdata(naevL, -1);
    lua_pop(naevL, 1);
 
@@ -249,7 +249,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    }
 
    /* Get delete. */
-   nlua_getenv(env, "__misn_delete");
+   nlua_getenv(naevL, env, "__misn_delete");
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 
@@ -600,7 +600,7 @@ static int misn_accept( lua_State *L )
       /* Need to change pointer. */
       misnptr = lua_newuserdata( L, sizeof(Mission*) );
       *misnptr = cur_mission;
-      nlua_setenv(cur_mission->env, "__misn");
+      nlua_setenv( L, cur_mission->env, "__misn" );
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to Lua */
@@ -622,7 +622,7 @@ static int misn_finish( lua_State *L )
    Mission *cur_mission = misn_getFromLua(L);
 
    lua_pushboolean( L, 1 );
-   nlua_setenv(cur_mission->env, "__misn_delete");
+   nlua_setenv( L, cur_mission->env, "__misn_delete" );
 
    if (b)
       player_missionFinished( mission_getID( cur_mission->data->name ) );

@@ -217,7 +217,9 @@ function goodevent()
             table.insert( fcts, f )
          end
          if #fcts == 0 then
-            fcts = whitelist
+            for f,i in pairs(whitelist) do
+               table.insert( fcts, f )
+            end
          end
          local rndfact = fcts[ rnd.rnd(1, #fcts) ]
          derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {fct=rndfact}))

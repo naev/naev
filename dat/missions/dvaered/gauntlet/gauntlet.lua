@@ -23,8 +23,7 @@ local wave_end -- Forward-declared functions
 -- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
 -- luacheck: globals approach_gauntlet (NPC functions passed by name)
 
--- TODO replace portraits/images
-local npc_portrait   = "minerva_terminal.png"
+local npc_portrait   = "/gfx/misc/crimson_gauntlet.webp"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 local gauntletsys = system.get("Crimson Gauntlet")
@@ -275,7 +274,7 @@ function wave_round_setup ()
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
 
-   local function addenemies( ships )
+   local function addenemies( ships, equipfunc )
       local e = {}
       local posbase = vec2.new( -1500, 1500 )
       local boss = nil
@@ -308,7 +307,11 @@ function wave_round_setup ()
             p = ships.func( shipname, enemy_faction, pos, k )
          else
             p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
-            equipopt.generic( p, nil, "elite" )
+            if equipfunc then
+               equipfunc( p )
+            else
+               equipopt.generic( p, nil, "elite" )
+            end
          end
          p:setInvincible(true)
          p:control(true)
@@ -345,7 +348,7 @@ function wave_round_setup ()
       end
       enemies_list = doublelist
    end
-   enemies = addenemies( enemies_list )
+   enemies = addenemies( enemies_list, round_enemies.equip )
    wave_enemies = enemies_list
 
    -- Count down

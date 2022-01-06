@@ -12,9 +12,10 @@
   <cpu>-450</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
-  <ammo>Drone Fighter</ammo>
   <delay>3</delay>
   <reload_time>180</reload_time>
   <amount>3</amount>
+  <ship>Drone</ship>
+  <ship_mass>15</ship_mass>
  </specific>
 </outfit>

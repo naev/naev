@@ -116,7 +116,6 @@ static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
-static int land_canSave (void);
 /* spaceport bar */
 static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
@@ -143,18 +142,20 @@ void land_queueTakeoff (void)
 /**
  * @brief Whether or not the player can save.
  */
-static int land_canSave (void)
+int land_canSave (void)
 {
-   int should_save = 0;
+   /* If the current landed planet is refuelable, no need to check if can land. */
+   if ((land_spob!=NULL) && spob_hasService(land_spob,SPOB_SERVICE_REFUEL))
+      return 1;
+
+   /* For other places we'll have to see if can land. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *p = cur_system->spobs[i];
       spob_updateLand( p );
-      if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land) {
-         should_save = 1;
-         break;
-      }
+      if (spob_hasService(p,SPOB_SERVICE_REFUEL) && p->can_land)
+         return 1;
    }
-   return should_save;
+   return 0;
 }
 
 /**
@@ -330,8 +331,7 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   ImageArrayCell *portraits, *p;
-   glTexture *bg;
+   ImageArrayCell *portraits;
    char *focused;
    int w, h, iw, ih, bw, bh;
    int n, pos;
@@ -375,8 +375,8 @@ static int bar_genList( unsigned int wid )
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
       for (int i=0; i<npc_getArraySize(); i++) {
-         p = &portraits[i+1];
-         bg = npc_getBackground(i);
+         ImageArrayCell *p = &portraits[i+1];
+         glTexture *bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
          if (bg!=NULL) {
             p->image = gl_dupTexture( bg );
@@ -1470,6 +1470,16 @@ void takeoff( int delay )
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
+   /* Clear effects of all surviving pilots. */
+   Pilot*const* plts = pilot_getAll();
+   for (int i=0; i<array_size(plts); i++) {
+      Pilot *p = plts[i];
+      if (!pilot_isFlag(p,PILOT_DELETE)) {
+         effect_clear( &p->effects );
+         pilot_calcStats( p );
+      }
+   }
+
    /* Update lua stuff. */
    pilot_outfitLInitAll( player.p );
    pilot_outfitLOntakeoff( player.p );
@@ -1512,7 +1522,7 @@ static void land_stranded (void)
    }
 
    /* Run Lua. */
-   nlua_getenv(rescue_env,"rescue");
+   nlua_getenv(naevL,rescue_env,"rescue");
    if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
       WARN( _("Rescue: 'rescue' : '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
@@ -1555,10 +1565,8 @@ void land_cleanup (void)
    shipyard_cleanup();
 
    /* Clean up rescue Lua. */
-   if (rescue_env != LUA_NOREF) {
-      nlua_freeEnv(rescue_env);
-      rescue_env = LUA_NOREF;
-   }
+   nlua_freeEnv(rescue_env);
+   rescue_env = LUA_NOREF;
 }
 
 /**

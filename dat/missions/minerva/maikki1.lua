@@ -561,7 +561,7 @@ function stealthstart ()
    -- Start the cinematics
    mem.stealthanimation = 0
    player.cinematics( true )
-   camera.set( waypoints[1], true )
+   camera.set( waypoints[1] )
    hook.timer( 1.0, "stealthstartanimation" )
 end
 
@@ -586,7 +586,7 @@ function stealthstartanimation ()
    elseif mem.stealthanimation==6 then
       -- Back to player
       player.cinematics( false )
-      camera.set( nil, true )
+      camera.set()
       player.pilot():control(false)
       mem.stealthtarget = 0
       hook.timer( 4.0, "stealthheartbeat" )
@@ -697,7 +697,7 @@ function stealthheartbeat ()
             pp:control()
             pp:brake()
             player.cinematics( true )
-            camera.set( waypoints[ #waypoints ], true )
+            camera.set( waypoints[ #waypoints ] )
             mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
             return
@@ -756,7 +756,7 @@ function wreckcutscene ()
       local pp = player.pilot()
       pp:control( false )
       player.cinematics( false )
-      camera.set( nil, true )
+      camera.set()
       return
    end
    hook.timer( 3.0, "wreckcutscene" )

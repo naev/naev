@@ -10,7 +10,7 @@
       * Added a gigantic black hole
       * Added space anomalies
       * More engine sounds
-      * 5 New missions
+      * 8 New missions
          * More terraforming
          * Continuation of the Za'lek story
    * Quality of Life
@@ -21,8 +21,15 @@
       * Support for tags in missions
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
+      * Ammunition/fighters merged into launchers/fighter bays
 
-* 0.9.1 (unreleased)
+* 0.9.2 (unreleased)
+   * Fix reward messages in the Particle Physics campaign
+   * Can no longer steal a certain Soromid ship
+   * Enhanced the logic for deciding whether it's safe to save the game after landing
+   * Fix mission bug: "Emergency of Immediate Inspiration"
+
+* 0.9.1
    * Minor countermeasures for long player ship names
    * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", "Shadow Vigil", "Baron Prince", and "Dvaered Ballet"
    * Fix exploit in "Travelling Merchant" event (mission prize for sale that shouldn't have been)

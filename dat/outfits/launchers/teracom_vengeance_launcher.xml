@@ -13,7 +13,6 @@ TeraCom's patented launcher hardware considerably reduces the time it takes to a
   <cpu>-8</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
   <reload_time>60</reload_time>
   <amount>10</amount>
@@ -22,5 +21,23 @@ TeraCom's patented launcher hardware considerably reduces the time it takes to a
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
+  <ammo_mass>0.5</ammo_mass>
+  <gfx>headhunter.png</gfx>
+  <sound>missile</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-7">fire-missile</trail_generator>
+  <duration blowup="armour">5</duration>
+  <thrust>500</thrust>
+  <turn>40</turn>
+  <speed_max>600</speed_max>
+  <resist>20</resist>
+  <damage>
+   <type>impact</type>
+   <penetrate>24</penetrate>
+   <physical>80</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>

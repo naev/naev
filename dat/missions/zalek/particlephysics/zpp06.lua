@@ -74,7 +74,7 @@ She hands you the report package, which seems a bit heavier than you expected, a
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Deliver Noona's preliminary report to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )
@@ -104,7 +104,7 @@ function land ()
    local z1 = vn.Character.new( _("Za'lek Officer A"), {image="zalek_thug1.png", pos="left"} )
    local z2 = vn.Character.new( _("Za'lek Officer B"), {image="zalek_thug1.png", pos="right"} )
    vn.appear( { z1, z2 }, "slideleft" )
-   z1(_([["Where is Chairman Sanderaite!? We just got the signal that she submitted a report here!"]]))
+   z1(_([["Where is Chairwoman Sanderaite!? We just got the signal that she submitted a report here!"]]))
    vn.na(_([[The secretary lazily points at you.]]))
    z1(_([["Damnit, she got someone else to bring the report for her again…"]]))
    z2(_([["The council should have never passed the law permitting third parties to hand-in official reports."]]))
@@ -114,10 +114,10 @@ function land ()
    vn.na(_([[The Za'lek officers leave as fast as they got here, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
    if getlicense then
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
    else
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
@@ -127,10 +127,10 @@ function land ()
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_combat_vessel_license")
-      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairman. You also got access to the Heavy Combat Vessel license for your help."),
+      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairwoman. You also got access to the Heavy Combat Vessel license for your help."),
          {pnt=destpnt}))
    else
-      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairman."),
+      zpp.log(fmt.f(_("You delivered Noona's report to {pnt} and found out that she is the Za'lek chairwoman."),
          {pnt=destpnt}))
    end
    misn.finish(true)

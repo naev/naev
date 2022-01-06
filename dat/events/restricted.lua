@@ -27,16 +27,16 @@ function create ()
 end
 
 local msg_list = {
-   ["Za'lek"] = _("#rWARNING: Entering militarized zone. Unauthorized access will be met with force.#0"),
-   ["Dvaered"] = _("#rWARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES.#0"),
-   ["Empire"] = _("#rWARNING: This is a restricted military system. Unauthorized ships will be shot on sight.#0"),
+   ["Za'lek"] = _("WARNING: Entering militarized zone. Unauthorized access will be met with force."),
+   ["Dvaered"] = _("WARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE CONSEQUENCES."),
+   ["Empire"] = _("WARNING: This is a restricted military system. Unauthorized ships will be shot on sight."),
 }
 local msg_delay
 function msg_buoy ()
    local msg = msg_list[ sysfct:nameRaw() ]
    if not msg then
       -- Gneeric message
-      msg = _("#rWARNING: Unauthorized entry to restricted area will be met with force. Leave immediately.#0")
+      msg = _("WARNING: Unauthorized entry to restricted area will be met with force. Leave immediately.")
    end
    if not msg_delay then
       -- Probably going to die but be nice and add reset autonav the first time
@@ -51,7 +51,7 @@ function msg_buoy ()
    else
       col = "N"
    end
-   pilot.broadcast( fmt.f(_("{faction} Message Buoy"),{faction=sysfct}), msg, col )
+   pilot.broadcast( fmt.f(_("{faction} Message Buoy"),{faction=sysfct}), "#r"..msg.."#0", col )
    msg_delay = (msg_delay or 8) * 2
    hook.timer( msg_delay, "msg_buoy" )
 end

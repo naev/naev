@@ -11,7 +11,6 @@
   <cpu>-3</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Fury Missile</ammo>
   <delay>2</delay>
   <reload_time>60</reload_time>
   <amount>25</amount>
@@ -20,5 +19,23 @@
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
+  <ammo_mass>0.2</ammo_mass>
+  <gfx>fury.png</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp1</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="-7">fire-missile</trail_generator>
+  <duration blowup="armour">4</duration>
+  <thrust>600</thrust>
+  <turn>50</turn>
+  <speed_max>800</speed_max>
+  <resist>10</resist>
+  <damage>
+   <type>impact</type>
+   <penetrate>12</penetrate>
+   <physical>40</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>

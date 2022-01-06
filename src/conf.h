@@ -55,7 +55,7 @@
 #define ENGINE_VOLUME_DEFAULT          0.8   /**< Default engine volume. */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT        "../dat/ssys/"
-#define DEV_SAVE_SPOB_DEFAULT          "../dat/spobs/"
+#define DEV_SAVE_SPOB_DEFAULT          "../dat/spob/"
 #define DEV_SAVE_MAP_DEFAULT           "../dat/outfits/maps/"
 
 /**
@@ -64,6 +64,7 @@
  * @note Input is not handled here.
  */
 typedef struct PlayerConf_s {
+   int loaded; /**< Configuration file has been loaded. */
 
    /* ndata. */
    char *ndata; /**< Ndata path to use. */
@@ -147,6 +148,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
+   int lua_repl; /**< Enable the experimental CLI based on lua-repl. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
 

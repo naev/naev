@@ -499,7 +499,7 @@ local function renderWeapBar( weapon, x, y )
    local name_offset = 17
    local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
    if weapon ~= nil then
-      if weapon.ammo ~= nil then
+      if weapon.lockon ~= nil then
          width = bar_w/2
       else
           width = bar_w
@@ -563,7 +563,7 @@ local function renderWeapBar( weapon, x, y )
          end
       else
          local col = nil
-         if weapon.ammo ~= nil then
+         if weapon.lockon ~= nil then
             gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
             if weapon.left_p < 1 then
                gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
@@ -572,9 +572,7 @@ local function renderWeapBar( weapon, x, y )
                col = col_lgray
             end
 
-            if weapon.lockon ~= nil then
-               gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lock-on indicator
-            end
+            gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lock-on indicator
             gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
             --Icon
             gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )

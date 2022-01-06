@@ -12,6 +12,7 @@ local zbh = {}
 zbh.sfx = {
    spacewhale1 = audio.newSource( "snd/sounds/spacewhale1.ogg" ),
    spacewhale2 = audio.newSource( "snd/sounds/spacewhale2.ogg" ),
+   bite = audio.newSource( "snd/sounds/crash1.ogg" ),
 }
 
 -- Zach Xiao
@@ -23,12 +24,27 @@ zbh.zach = {
    transition = "hexagon",
    description = _("Zach looks like he is idle at the bar. You wonder what he's thinking about."),
 }
+zbh.icarus = {
+   name = _("Feral Bioship"),
+   portrait = nil,
+   -- TODO change image to proper one when Nohinohi graphics are changed
+   image = 'gfx/ship/reaver/reaver_comm.webp',
+   colour = nil,
+}
 
 function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
          mt.merge_tables( {
             image=zbh.zach.image,
             color=zbh.zach.colour,
+         }, params) )
+end
+
+function zbh.vn_icarus( params )
+   return vn.Character.new( zbh.icarus.name,
+         mt.merge_tables( {
+            image=zbh.icarus.image,
+            color=zbh.icarus.colour,
          }, params) )
 end
 
@@ -54,12 +70,12 @@ function zbh.evilpi ()
          {clear_enemies=true, clear_allies=true} )
 end
 
-function zbh.feralkid( pos )
+function zbh.plt_icarus( pos )
    local fct = faction.exists("feralbioship")
    if not fct then
       fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
    end
-   return pilot.add( "Nohinohi", fct, pos )
+   return pilot.add( "Nohinohi", fct, pos, _("Icarus") )
 end
 
 function zbh.unidiff( diffname )
@@ -76,6 +92,10 @@ zbh.rewards = {
    zbh02 = 300e3,
    zbh03 = 400e3,
    zbh04 = 300e3,
+   zbh05 = 600e3,
+   zbh06 = 500e3,
+   --zbh07 = 0, -- Just a cutscene
+   zbh08 = 500e3,
 }
 
 zbh.fctmod = {
@@ -83,6 +103,10 @@ zbh.fctmod = {
    zbh02 = 2,
    zbh03 = 2,
    zbh04 = 2,
+   zbh05 = 3,
+   zbh06 = 2,
+   --zbh07 = 0, -- Just a cutscene
+   zbh08 = 2,
 }
 
 return zbh

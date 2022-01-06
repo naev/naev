@@ -23,7 +23,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    float value       = 0.4*(1.0-relprog);
    float brightness  = 0.1*relprog;
 
-   colour_out = nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, value, brightness );
+   colour_out = nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, value, 0.0, brightness );
    colour_out *= 1.0 - 0.8 * relprog;
 
    const float b = 8.0;

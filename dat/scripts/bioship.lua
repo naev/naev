@@ -21,15 +21,6 @@ function bioship.playerisbioship ()
    return bioship.isbioship( player.pilot() )
 end
 
-local function inlist( lst, item )
-   for k,v in ipairs(lst) do
-      if v==item then
-         return true
-      end
-   end
-   return false
-end
-
 local _base = 300
 local _mult = 1.2
 function bioship.exptostage( stage )
@@ -148,7 +139,9 @@ local function skill_disable( p, s, keepvar )
          player.shipvarPop( s.shipvar )
       end
    end
-   s.enabled = false
+   if not keepvar then
+      s.enabled = false
+   end
 end
 
 local function skill_enable( p, s )
@@ -459,7 +452,11 @@ function bioship.window ()
       if not skilltxt then
          return
       end
-      skilltxt:set( fmt.f(n_("Skills ({point} point remaining)","Skills ({point} points remaining)", skillpoints),{point=skillpoints}) )
+      local msg = ""
+      if skillpoints > 0 and not player.isLanded() then
+         msg = _(", land to set skills")
+      end
+      skilltxt:set( fmt.f(n_("Skills ({point} point remaining{msg})","Skills ({point} points remaining{msg})", skillpoints),{point=skillpoints,msg=msg}) )
    end
 
    local function skill_reset ()

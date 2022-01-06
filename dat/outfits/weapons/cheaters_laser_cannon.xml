@@ -27,4 +27,7 @@
    <physical>15</physical>
   </damage>
  </specific>
+ <tags>
+  <tag>noplayer</tag>
+ </tags>
 </outfit>

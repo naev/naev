@@ -71,6 +71,15 @@ local pilot_messages = {
    _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
 }
 
+local function hasIntrinsic( p, o )
+   for k,v in ipairs( p:outfits("intrinsic") ) do
+      if v==o then
+         return true
+      end
+   end
+   return false
+end
+
 local guide_priority = 6
 
 function create()
@@ -174,6 +183,7 @@ function approach_guide ()
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
       {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
+      {name=("Gauntlet Deluxe"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
    }
    local tradein_item = nil
    local handler = function (idx)
@@ -194,6 +204,8 @@ function approach_guide ()
 
       if t.type == "var" then
          tradein_item.description = t.description
+      elseif t.type == "intrinsic" then
+         tradein_item.description = t.outfit:description()
       else
          error(_("unknown tradein type"))
       end
@@ -208,6 +220,9 @@ function approach_guide ()
             toadd = false
          end
          if v.type=="var" and var.peek(v.var) then
+            toadd = false
+         end
+         if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
             toadd = false
          end
          if toadd then
@@ -244,6 +259,8 @@ Is there anything else you would like to purchase?"]]), {
       gauntlet.emblems_pay( -t.cost )
       if t.type == "var" then
          var.push( t.var, true )
+      elseif t.type == "intrinsic" then
+         player.pilot():outfitAddIntrinsic( t.outfit )
       else
          error(_("unknown tradein type"))
       end
