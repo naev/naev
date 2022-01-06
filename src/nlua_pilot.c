@@ -4091,9 +4091,9 @@ static int pilotL_memory( lua_State *L )
       return 0;
    }
 
-   nlua_getenv( naevL, p->ai->env, AI_MEM );    /* pilotmem */
-   lua_rawgeti( naevL, -1, p-> id );            /* pilotmem, table */
-   lua_remove( naevL, -2 );                     /* table */
+   nlua_getenv( L, p->ai->env, AI_MEM );    /* pilotmem */
+   lua_rawgeti( L, -1, p-> id );            /* pilotmem, table */
+   lua_remove( L, -2 );                     /* table */
 
    return 1;
 }
