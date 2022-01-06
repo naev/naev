@@ -8,6 +8,8 @@ project('naev', 'c',
    ],
    meson_version: '>=0.53.0')
 
+copyright_year = 2022
+
 if meson.version().startswith('0.53.') or meson.version().startswith('0.54.')
    warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')
    forced_fallbacks = []
@@ -78,6 +80,7 @@ if buildExec.disabled() == false
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
    config_data.set('VMAJOR', meson.project_version().split('.')[0])
    config_data.set('VMINOR', meson.project_version().split('.')[1])
+   config_data.set('YEAR', copyright_year)
    config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
