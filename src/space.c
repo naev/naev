@@ -1352,7 +1352,7 @@ void space_update( double dt, double real_dt )
          spob_updateLand( cur_system->spobs[i] );
 
       /* Verify land authorization is still valid. */
-      if ((player.p->nav_spob >= 0) && player_isFlag(PLAYER_LANDACK))
+      if ((player.p != NULL) && (player.p->nav_spob >= 0) && player_isFlag(PLAYER_LANDACK))
          player_checkLandAck();
 
       gui_updateFaction();
