@@ -13,4 +13,9 @@ function dv.addAntiFLFLog( text )
    shiplog.append( "dv_antiflf", text )
 end
 
+function dv.addStandardLog( text )
+   shiplog.create("dvaered_standard", _("Dvaered Standard"), _("Dvaered"))
+   shiplog.append("dvaered_standard", text)
+end
+
 return dv
