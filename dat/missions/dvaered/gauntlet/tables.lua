@@ -60,6 +60,11 @@ tables.wave_round_enemies = {
       { "Kestrel" } -- 10
    },
    warlord = {
+      --[[
+      equip = function( p )
+         equipopt.generic( p, nil, "elite" )
+      end;
+      --]]
       { "Kestrel" }, -- 1
       { "Hawking" },
       { "Kestrel", "Lancelot", "Lancelot" },

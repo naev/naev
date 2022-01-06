@@ -275,7 +275,7 @@ function wave_round_setup ()
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
 
-   local function addenemies( ships )
+   local function addenemies( ships, equipfunc )
       local e = {}
       local posbase = vec2.new( -1500, 1500 )
       local boss = nil
@@ -308,7 +308,11 @@ function wave_round_setup ()
             p = ships.func( shipname, enemy_faction, pos, k )
          else
             p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
-            equipopt.generic( p, nil, "elite" )
+            if equipfunc then
+               equipfunc( p )
+            else
+               equipopt.generic( p, nil, "elite" )
+            end
          end
          p:setInvincible(true)
          p:control(true)
@@ -345,7 +349,7 @@ function wave_round_setup ()
       end
       enemies_list = doublelist
    end
-   enemies = addenemies( enemies_list )
+   enemies = addenemies( enemies_list, round_enemies.equip )
    wave_enemies = enemies_list
 
    -- Count down
