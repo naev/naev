@@ -331,8 +331,7 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   ImageArrayCell *portraits, *p;
-   glTexture *bg;
+   ImageArrayCell *portraits;
    char *focused;
    int w, h, iw, ih, bw, bh;
    int n, pos;
@@ -376,8 +375,8 @@ static int bar_genList( unsigned int wid )
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
       for (int i=0; i<npc_getArraySize(); i++) {
-         p = &portraits[i+1];
-         bg = npc_getBackground(i);
+         ImageArrayCell *p = &portraits[i+1];
+         glTexture *bg = npc_getBackground(i);
          p->caption = strdup( npc_getName(i) );
          if (bg!=NULL) {
             p->image = gl_dupTexture( bg );
