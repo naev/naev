@@ -225,8 +225,9 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
-   int w, h, x, y, rw;
+   int w, h, x, y, rw, jumps, th;
    CstMapWidget *cst;
+   char buf[STRMAX_SHORT];
 
    map_minimal_mode = player.map_minimal;
    listMapModeVisible = 0;
@@ -356,6 +357,13 @@ void map_open (void)
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
+
+   /* Fuel. */
+   jumps = floor(player.p->fuel_max / player.p->fuel_consumption);
+   snprintf( buf, sizeof(buf), n_("You have %d jump of fuel.","You have %d jumps of fuel.", jumps ), jumps );
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_addText( wid, -20, 50+BUTTON_HEIGHT*2, rw, th, 0, "txtFuel",
+         &gl_smallFont, NULL, buf );
 
    map_genModeList();
 
