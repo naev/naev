@@ -73,7 +73,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   z(fmt.f(_([["Great! So the {cargo} should be already ready at {pnt}, all you have to do is head there and bring it back and I should be able to upgrade Sigma-13's sensors to scan nearby systems and up to the Anubis black hole. Just make sure you keep out an eye for trouble. Losing the cargo would be a pretty major setback. Best of luck!"]])
+   z(fmt.f(_([["Great! So the {cargo} should be already ready at {pnt}, all you have to do is head there and bring it back and I should be able to upgrade Sigma-13's sensors to scan nearby systems and up to the Anubis black hole. Just make sure you keep out an eye for trouble. Losing the cargo would be a pretty major setback. Best of luck!"]]),
       {cargo=cargo_name, pnt=mem.destpnt}))
 
    vn.done( zbh.zach.transition )
@@ -125,6 +125,7 @@ function land ()
       vn.clear()
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
+      vn.transition( zbh.zach.transition )
       vn.na(fmt.f(_([[You land and find Zach has come to greet you at the space port. You explain your encounter in the {sys} system.]]),
          {sys=atksys}))
       z(_([["Damn, all effort just to blockade the station? I guess they must be preparing for another attack seeing the amount of forces deployed. They're probably taking it carefully after their previous attack failed. This is pretty worrisome. There's no way we're going to be able to defend against an onslaught like that. We're going to have to move fast. I'll start upgrading the sensors right away. Meet me up at the bar later and we can go to the next step."]]))
@@ -146,7 +147,7 @@ function enter ()
    if mem.state==1 and system.cur() == atksys then
       local j1 = jump.get( atksys, retsys )
       local j2 = jump.get( atksys, "NGC-1001" )
-      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1 + 0.8*(j2:pos()-j1:pos()) )
+      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1:pos()+(j2:pos()-j1:pos()):mul(0.8) )
       p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
       p:control(true)
       p:stealth()
@@ -204,9 +205,9 @@ function enter ()
          local l
          for k, s in ipairs( ships ) do
             local p = spawn_drone( s, pos )
+            p:setHostile(true)
             if k==1 then
                l = p
-               p:setHostile(true)
                local aimem = p:memory()
                aimem.waypoints = route
                aimem.loiter = math.huge -- patrol forever
@@ -217,14 +218,15 @@ function enter ()
       end
 
       add_patrol_group( route0, { "Za'lek Mephisto", "Za'lek Demon", "Za'lek Demon" }, 1 )
-      add_patrol_group( route1, { "Zalek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
+      add_patrol_group( route1, { "Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
       add_patrol_group( route2, { "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone" } )
-      add_patrol_group( route3, { "Zalek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
+      add_patrol_group( route3, { "Za'lek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
       add_patrol_group( route4, { "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone" } )
+
+      player.autonavAbort("#r".._("Hostiles detected!").."#0")
 
    elseif system.cur() == retsys then
       local feral = zbh.plt_icarus( retpnt:pos() + vec2.newP(300,rnd.angle()) )
-      feral:rename( _("Feral Bioship") )
       feral:setFriendly(true)
       feral:setInvincible(true)
       feral:control(true)
@@ -237,7 +239,7 @@ end
 function scout_discovered ()
    player.autonavReset(3)
    scout:taskClear()
-   scout:jump( system.get("NGC-1001") )
+   scout:hyperspace( system.get("NGC-1001") )
 end
 
 local sfx_spacewhale = {
