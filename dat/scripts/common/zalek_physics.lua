@@ -105,7 +105,7 @@ const float hue         = 300.0;
 const float view        = 300.0;
 const float sf          = %f;
 uniform float u_time    = 0.0;
-uniform vec3 u_camera   = vec3(0.0);
+uniform vec3 u_camera   = vec3(0.0, 0.0, 1.0);
 uniform float u_progress= 0.0;
 uniform float u_mode    = 0;
 
@@ -129,7 +129,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    else if (u_mode==2)
       color.a *= 1.0-smoothstep( -800.0 / sf, 0.0,  -d );
 
-   if (color.a > 0) {
+   if (color.a > 0.0) {
       vec4 nebucol = nebula_bg( uv );
       nebucol.a *= color.a;
       return nebucol;
