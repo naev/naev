@@ -145,7 +145,7 @@ function create()
    mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(
-      pir.prefixClan(mem.reward_faction).._("Smuggle {tonnes} of {cargo}"),
+      pir.prefix(mem.reward_faction).._("Smuggle {tonnes} of {cargo}"),
          {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    misn.markerAdd(mem.destplanet, "computer")
    if pir.factionIsPirate( spob.cur():faction() ) then
