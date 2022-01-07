@@ -519,7 +519,7 @@ static int tkL_customDone( lua_State *L )
    return 0;
 }
 
-static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
+static int cust_pcall( lua_State *L, int nargs, int nresults )
 {
    int errf, ret;
 
@@ -548,7 +548,7 @@ static int cust_update( double dt, void* data )
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
    lua_pushnumber(L, dt);
-   if (cust_pcall( L, 1, 0, cf )) {
+   if (cust_pcall( L, 1, 0 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);
@@ -571,7 +571,7 @@ static void cust_render( double x, double y, double w, double h, void* data )
    lua_pushnumber(L, y);
    lua_pushnumber(L, w);
    lua_pushnumber(L, h);
-   if (cust_pcall( L, 4, 0, cf )) {
+   if (cust_pcall( L, 4, 0 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);
@@ -619,7 +619,7 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functi
    lua_pushboolean(L, pressed );
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (cust_pcall( L, 3, 1, cf )) {
+   if (cust_pcall( L, 3, 1 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);
@@ -646,7 +646,7 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
       lua_pushnumber(L, button);
       nargs++;
    }
-   if (cust_pcall( L, nargs, 1, cf )) {
+   if (cust_pcall( L, nargs, 1 )) {
       cf->done = 1;
       WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
       lua_pop(L,1);
