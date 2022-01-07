@@ -28,10 +28,10 @@ local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
 
 local _prefix = {
-   ["Raven Clan"] = _("RAVEN CLAN: "),
-   ["Wild Ones"] = _("WILD ONES: "),
-   ["Dreamer Clan"] = _("DREAMER CLAN: "),
-   ["Black Lotus"] = _("BLACK LOTUS: "),
+   ["Raven Clan"]    = _("RAVEN CLAN: "),
+   ["Wild Ones"]     = _("WILD ONES: "),
+   ["Dreamer Clan"]  = _("DREAMER CLAN: "),
+   ["Black Lotus"]   = _("BLACK LOTUS: "),
 }
 function pir.prefix( fct )
    local p = _prefix[ fct:nameRaw() ]
