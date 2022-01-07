@@ -113,7 +113,7 @@ vec4 nebula_bg( vec2 screen_coords )
 {
    vec2 rel_pos = screen_coords * u_camera.z + u_camera.xy;
    rel_pos /= view;
-   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
+   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.0, 0.1 );
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
