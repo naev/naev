@@ -28,7 +28,6 @@ local zpp = require "common.zalek_physics"
 local lg = require "love.graphics"
 
 function create ()
-   misn.finish()
    misn.setNPC( _("Zach"), zbh.zach.portrait, zbh.zach.description )
 end
 
@@ -158,6 +157,12 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    icarus(_("You stand there in silence, locked in a staring contest with Icarus. Eventually, as time passes, Icarus seems to relax a bit."))
    vn.jump("menu")
 
+   vn.label("snacks")
+   icarus(_([[You grab one of the snacks that Zach had you bring over to the station. Nothing like tasty "Liquified Bioship Organic Slush Compounds"? That doesn't sound tasty… You toss the heavy cylinder over towards Icarus' direction.]]))
+   vn.sfx( zbh.sfx.bite )
+   icarus(_([[They seem to ignore it for a while, until they suddenly swoop in and devour it in an impressive bite, before continuing to float nearby.]]))
+   vn.jump("menu")
+
    vn.label("toogiddy")
    icarus(_("Icarus is too nervous to pay attention to you and keeps on eyeing you from a distance."))
    vn.jump("menu")
@@ -190,7 +195,8 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.scene()
    vn.music()
    local shd_nebula = zpp.shader_nebula()
-   shd_nebula:send("u_mode", 2)
+   shd_nebula.progress = 1
+   shd_nebula:send("u_mode", 1)
    vn.func( function ()
       vn.setBackground( function ()
          shd_nebula:render()
@@ -198,6 +204,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
       vn.setUpdateFunc( function( dt )
          shd_nebula:update( dt )
       end )
+      music.stop(true)
    end )
    vn.transition( "dreamy" )
    vn.na(_("Now suddenly the mosquito buzz fades away and you see yourself in the middle of a vortex of red, which spins you around and around, and fills up the entire space around you. You fidget and struggle, but you can't go anywhere or move, you are lost in the vastness."))
@@ -205,6 +212,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.func( function ()
       vn.setBackground()
       vn.setUpdateFunc()
+      music.play()
    end )
    vn.newCharacter( z )
    vn.transition( "circleopen" )

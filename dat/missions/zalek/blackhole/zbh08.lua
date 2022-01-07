@@ -37,7 +37,6 @@ local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local atksys = system.get( "NGC-23" )
 
 function create ()
-   misn.finish(false)
    if not misn.claim( {retsys, atksys} ) then
       misn.finish()
    end
