@@ -22,7 +22,6 @@
    Just a cut scene about the surgery, nothing fancy
 ]]--
 local vn = require "vn"
---local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local zpp = require "common.zalek_physics"
 local lg = require "love.graphics"
@@ -269,7 +268,7 @@ He skips towards the inside of the station, leaving you to recover yourself.]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
-   -- Must be accepted beyond this point
+   -- Must be completed beyond this point
    if not completed then return end
 
    misn.accept()
