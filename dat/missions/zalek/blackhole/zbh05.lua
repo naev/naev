@@ -77,7 +77,7 @@ He chuckles.]]),{pnt=destpnt}))
    vn.func( function () var.push("zach_badnoona",true) end )
 
    vn.label("cont01b")
-   z(_([["I'll be taking care of Icarus here. There isn't too much of a hurry, as I don't fear for Icarus' life, but it's probably better to try to get them back to shape sooner than later. Best of luck!"
+   z(_([["I'll be taking care of Icarus here. There isn't too much of a hurry, as I don't fear for Icarus's life, but it's probably better to try to get them back to shape sooner than later. Best of luck!"
 You can see the glee on his face when he goes back to looking at the charts on his cyberdeck. Nothing is more addictive to a Za'lek researcher than the potential of exploring and learning new things.]]))
 
    vn.func( function () accepted = true end )
@@ -144,7 +144,7 @@ Zach looks pale and goes stiff.]]))
 He points to Icarus excitedly.
 "Did you see that? Damn, I wish my drones could do that. Wait if…"
 He seems to be seriously considering how to modify his drones.]]))
-      z(_([["It looks like hopefully there will be no problem with them enjoying their treats. However, I still think we'll have to do some basic surgery to repair some of Icarus' internal damage. I think I have an idea of how to pull it off, but it's going to be tricky. Meet me at the bar when you're ready to help."]]))
+      z(_([["It looks like hopefully there will be no problem with them enjoying their treats. However, I still think we'll have to do some basic surgery to repair some of Icarus's internal damage. I think I have an idea of how to pull it off, but it's going to be tricky. Meet me at the bar when you're ready to help."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )

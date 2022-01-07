@@ -157,7 +157,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.jump("menu")
 
    vn.label("snacks")
-   icarus(_([[You grab one of the snacks that Zach had you bring over to the station. Nothing like tasty "Liquified Bioship Organic Slush Compounds"? That doesn't sound tasty… You toss the heavy cylinder over towards Icarus' direction.]]))
+   icarus(_([[You grab one of the snacks that Zach had you bring over to the station. Nothing like tasty "Liquified Bioship Organic Slush Compounds"? That doesn't sound tasty… You toss the heavy cylinder over in Icarus's direction.]]))
    vn.sfx( zbh.sfx.bite )
    icarus(_([[They seem to ignore it for a while, until they suddenly swoop in and devour it in an impressive bite, before continuing to float nearby.]]))
    vn.jump("menu")
@@ -235,7 +235,7 @@ The way he says plan B makes you feel glad plan A worked.]]))
    vn.jump("cont01")
 
    vn.label("cont01c")
-   z(_([["I get told that disturbingly often. However, I would like to point out it was all perfectly calculated and will have no long-term effects on Icarus. In fact, Icarus' response was much better than I originally anticipated!"
+   z(_([["I get told that disturbingly often. However, I would like to point out it was all perfectly calculated and will have no long-term effects on Icarus. In fact, Icarus's response was much better than I originally anticipated!"
 Zach's words are unsurprisingly non-reassuring.]]))
    vn.jump("cont01")
 
