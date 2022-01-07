@@ -535,10 +535,9 @@ static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t
    int errf, ret;
 
 #if DEBUGGING
-   int top = lua_gettop(L);
+   errf = lua_gettop(L) - nargs;
    lua_pushcfunction(L, nlua_errTrace);
-   lua_insert(L, -2-nargs);
-   errf = -2-nargs;
+   lua_insert(L, errf);
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
@@ -546,7 +545,7 @@ static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t
    ret = lua_pcall( L, nargs, nresults, errf );
 
 #if DEBUGGING
-   lua_remove(L, top-nargs);
+   lua_remove(L, errf);
 #endif /* DEBUGGING */
 
    if (ret) {

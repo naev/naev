@@ -726,10 +726,9 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    int errf, ret, prev_env;
 
 #if DEBUGGING
-   int top = lua_gettop(naevL);
+   errf = lua_gettop(naevL) - nargs;
    lua_pushcfunction(naevL, nlua_errTrace);
-   lua_insert(naevL, -2-nargs);
-   errf = -2-nargs;
+   lua_insert(naevL, errf);
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
@@ -742,7 +741,7 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    __NLUA_CURENV = prev_env;
 
 #if DEBUGGING
-   lua_remove(naevL, top-nargs);
+   lua_remove(naevL, errf);
 #endif /* DEBUGGING */
 
    return ret;
