@@ -546,7 +546,7 @@ static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t
    ret = lua_pcall( L, nargs, nresults, errf );
 
 #if DEBUGGING
-   lua_remove(naevL, top-nargs);
+   lua_remove(L, top-nargs);
 #endif /* DEBUGGING */
 
    if (ret) {
