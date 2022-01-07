@@ -72,7 +72,6 @@ typedef struct InfoButton_s {
    char button[32]; /**< Current button caption. */
    int priority;  /**< Button priority. */
    /* Lua stuff .*/
-   lua_State *L;  /**< Lua state to use. */
    nlua_env env;  /**< Runtime environment. */
    int func;      /**< Function to call. */
 } InfoButton_t;
@@ -169,12 +168,11 @@ static void info_buttonRegen (void)
 /**
  * @brief Registers a button in the info menu.
  *
- *    @param L Lua state being registered from.
  *    @param caption Caption to give the button.
  *    @param priority Button priority, lower is more important.
  *    @return Newly created button ID.
  */
-int info_buttonRegister( lua_State *L, const char *caption, int priority )
+int info_buttonRegister( const char *caption, int priority )
 {
    static int button_idgen = 0;
    int id;
@@ -188,7 +186,6 @@ int info_buttonRegister( lua_State *L, const char *caption, int priority )
    btn->caption= strdup( caption );
    btn->button[0] = '\0';
    btn->priority = priority;
-   btn->L      = L;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
@@ -251,10 +248,10 @@ static void info_buttonClick( unsigned int wid, const char *str )
       if (strcmp( btn->button, str )!=0)
          continue;
 
-      lua_rawgeti( btn->L, LUA_REGISTRYINDEX, btn->func );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, btn->func );
       if (nlua_pcall( btn->env, 0, 0 )) {
-         WARN(_("Failure to run info button with id '%d':\n%s"),btn->id, lua_tostring(btn->L,-1));
-         lua_pop(btn->L, 1);
+         WARN( _("Failure to run info button with id '%d':\n%s"), btn->id, lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
       }
       return;
    }

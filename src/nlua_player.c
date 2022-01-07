@@ -1614,8 +1614,8 @@ static int playerL_infoButtonRegister( lua_State *L )
    luaL_checktype( L, 2, LUA_TFUNCTION );
    priority = luaL_optinteger(L,3,5);
    lua_pushvalue( L, 2 );
-   id = info_buttonRegister( L, caption, priority );
-   lua_pushinteger(L,id);
+   id = info_buttonRegister( caption, priority );
+   lua_pushinteger( L, id );
    return 1;
 }
 
