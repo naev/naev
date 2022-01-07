@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the naev package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: dat/missions/zalek/blackhole/zbh07.lua:52
+#: dat/missions/zalek/blackhole/zbh08.lua:137
 msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-06 12:07-0500\n"
+"POT-Creation-Date: 2022-01-06 21:41-0500\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -5924,7 +5924,7 @@ msgstr ""
 #: src/dev_uniedit.c:1333 src/dev_uniedit.c:1334 src/land_outfits.c:368
 #: src/land_outfits.c:369 src/land_outfits.c:370 src/land_outfits.c:371
 #: src/land_trade.c:160 src/land_trade.c:162 src/land_trade.c:165
-#: src/land_trade.c:166 src/map.c:565 src/map.c:566 src/outfit.c:286
+#: src/land_trade.c:166 src/map.c:573 src/map.c:574 src/outfit.c:286
 #: src/outfit.c:305
 msgid "N/A"
 msgstr ""
@@ -19953,7 +19953,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr ""
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:707
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:715
 msgid "Trade Lane"
 msgstr ""
 
@@ -25033,7 +25033,7 @@ msgstr ""
 #: src/dev_uniedit.c:402 src/dev_uniedit.c:1461 src/dev_uniedit.c:1660
 #: src/dev_uniedit.c:1896 src/info.c:402 src/info.c:487 src/info.c:569
 #: src/info.c:705 src/info.c:897 src/info.c:1117 src/info.c:1214
-#: src/info.c:1559 src/land_outfits.c:160 src/map.c:334 src/map_find.c:1008
+#: src/info.c:1559 src/land_outfits.c:160 src/map.c:335 src/map_find.c:1008
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -25654,7 +25654,7 @@ msgid "You found #o{title}!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:377 src/map.c:1901
+#: dat/events/discovery.lua:377 src/map.c:1909
 msgid "Discovery"
 msgstr ""
 
@@ -34237,8 +34237,8 @@ msgstr ""
 #: dat/gui/legacy.lua:304 dat/gui/legacy.lua:318 dat/gui/slim.lua:386
 #: dat/gui/slim.lua:985 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/equipment.c:1752 src/gui.c:1527 src/map.c:502 src/map.c:508
-#: src/map.c:514 src/map.c:520 src/map.c:526 src/map.c:532 src/map.c:1688
+#: src/equipment.c:1752 src/gui.c:1527 src/map.c:510 src/map.c:516
+#: src/map.c:522 src/map.c:528 src/map.c:534 src/map.c:540 src/map.c:1696
 #: src/map_overlay.c:221 src/map_system.c:479 src/outfit.c:294 src/outfit.c:313
 #: src/outfit.c:893 src/player.c:2016 src/player_autonav.c:92
 #: src/player_autonav.c:217 src/player_autonav.c:458 src/ship.c:211
@@ -34704,7 +34704,7 @@ msgstr ""
 #: src/info.c:1262 src/input.c:524 src/land.c:833 src/land_outfits.c:374
 #: src/land_outfits.c:595 src/land_shipyard.c:126 src/land_shipyard.c:215
 #: src/land_trade.c:82 src/land_trade.c:84 src/land_trade.c:117 src/load.c:362
-#: src/load.c:410 src/load.c:454 src/map.c:629 src/map.c:669 src/map.c:1727
+#: src/load.c:410 src/load.c:454 src/map.c:637 src/map.c:677 src/map.c:1735
 #: src/map_find.c:702 src/map_system.c:649
 #, c-format
 msgid "None"
@@ -47778,7 +47778,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:79
 #: dat/missions/zalek/blackhole/zbh04.lua:58
 #: dat/missions/zalek/blackhole/zbh05.lua:59
-#: dat/missions/zalek/blackhole/zbh07.lua:43
+#: dat/missions/zalek/blackhole/zbh07.lua:45
+#: dat/missions/zalek/blackhole/zbh08.lua:68
 #: dat/missions/zalek/particlephysics/zpp01.lua:51
 #: dat/missions/zalek/particlephysics/zpp02.lua:63
 #: dat/missions/zalek/particlephysics/zpp03.lua:58
@@ -47804,7 +47805,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:80
 #: dat/missions/zalek/blackhole/zbh04.lua:59
 #: dat/missions/zalek/blackhole/zbh05.lua:60
-#: dat/missions/zalek/blackhole/zbh07.lua:44
+#: dat/missions/zalek/blackhole/zbh07.lua:46
+#: dat/missions/zalek/blackhole/zbh08.lua:69
 #: dat/missions/zalek/particlephysics/zpp01.lua:52
 #: dat/missions/zalek/particlephysics/zpp02.lua:64
 #: dat/missions/zalek/particlephysics/zpp03.lua:59
@@ -48306,7 +48308,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:84
 #: dat/missions/zalek/blackhole/zbh04.lua:63
 #: dat/missions/zalek/blackhole/zbh05.lua:64
-#: dat/missions/zalek/blackhole/zbh07.lua:48
+#: dat/missions/zalek/blackhole/zbh07.lua:50
+#: dat/missions/zalek/blackhole/zbh08.lua:73
 #, fuzzy
 #| msgid "\"I'll be around if you get generous again.\""
 msgid "\"OK. I'll be here if you change your mind.\""
@@ -54156,6 +54159,7 @@ msgstr "Stanice Cantina"
 #: dat/missions/neutral/antlejos/ant_supplies.lua:109
 #: dat/missions/zalek/blackhole/zbh02.lua:106
 #: dat/missions/zalek/blackhole/zbh05.lua:114
+#: dat/missions/zalek/blackhole/zbh08.lua:111
 msgid "Insufficient Space"
 msgstr ""
 
@@ -54165,6 +54169,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant_supplies.lua:109
 #: dat/missions/zalek/blackhole/zbh02.lua:106
 #: dat/missions/zalek/blackhole/zbh05.lua:114
+#: dat/missions/zalek/blackhole/zbh08.lua:111
 #: dat/missions/zalek/particlephysics/zpp02.lua:178
 #: dat/missions/zalek/particlephysics/zpp04.lua:154
 msgid ""
@@ -54177,6 +54182,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant04.lua:111
 #: dat/missions/neutral/antlejos/ant_supplies.lua:113
 #: dat/missions/zalek/blackhole/zbh05.lua:119
+#: dat/missions/zalek/blackhole/zbh08.lua:116
 msgid "Cargo Loaded"
 msgstr ""
 
@@ -54640,6 +54646,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh04.lua:93
 #: dat/missions/zalek/blackhole/zbh05.lua:103
 #: dat/missions/zalek/blackhole/zbh06.lua:81
+#: dat/missions/zalek/blackhole/zbh08.lua:100
 #, fuzzy
 #| msgid "Cantina Station"
 msgid "Return to {pnt} ({sys} system)"
@@ -54892,6 +54899,7 @@ msgstr ""
 #. This is used to calculate the reward.
 #. Guarding factions
 #. Determine amount of piracy along the route
+#. We'll compute a piracy score (units of presence) per system. Score is a power mean with this exponent.
 #. We now know where. But we don't know what yet. Randomly choose a commodity type.
 #. Return lots of stuff
 #. --
@@ -54910,12 +54918,12 @@ msgstr ""
 #. @tparam[opt=false] bool use_hidden Whether the description accounts for hidden jumps in its distances.
 #. --
 #: dat/missions/neutral/antlejos/ant_supplies.lua:75
-#: dat/scripts/common/cargo.lua:226
+#: dat/scripts/common/cargo.lua:227
 msgid "#nCargo:#0 {cargo} ({mass})"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:76
-#: dat/scripts/common/cargo.lua:234
+#: dat/scripts/common/cargo.lua:235
 msgid "#nJumps:#0 {jumps}"
 msgid_plural "#nJumps:#0 {jumps}"
 msgstr[0] ""
@@ -54923,7 +54931,7 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:77
-#: dat/scripts/common/cargo.lua:236
+#: dat/scripts/common/cargo.lua:237
 msgid "#nTravel distance:#0 {dist}"
 msgid_plural "#nTravel distance:#0 {dist}"
 msgstr[0] ""
@@ -70924,6 +70932,7 @@ msgstr ""
 #.
 #.
 #. local fmt = require "format"
+#. Amount of cargo to take
 #. Checks to see if the player has a Za'lek ship.
 #.
 #.
@@ -70938,6 +70947,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh05.lua:45
 #: dat/missions/zalek/blackhole/zbh06.lua:42
 #: dat/missions/zalek/blackhole/zbh07.lua:30
+#: dat/missions/zalek/blackhole/zbh08.lua:54
 #: dat/scripts/common/zalek_blackhole.lua:22
 msgid "Zach"
 msgstr ""
@@ -71194,6 +71204,7 @@ msgstr "Stanice Cantina"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:94
 #: dat/missions/zalek/blackhole/zbh05.lua:102
+#: dat/missions/zalek/blackhole/zbh08.lua:99
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
 #: dat/missions/zalek/particlephysics/zpp04.lua:90
 #, fuzzy
@@ -71697,6 +71708,7 @@ msgstr "Pro impérium nejsi žádná výzva!"
 #. Get random points and sort so the bioship starts furthest away
 #: dat/missions/zalek/blackhole/zbh04.lua:186
 #: dat/missions/zalek/blackhole/zbh05.lua:179
+#: dat/missions/zalek/blackhole/zbh08.lua:171
 #: dat/scripts/common/zalek_blackhole.lua:28
 #: dat/scripts/common/zalek_blackhole.lua:76
 msgid "Feral Bioship"
@@ -71928,6 +71940,7 @@ msgid "Saving Icarus"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh05.lua:95
+#: dat/missions/zalek/blackhole/zbh08.lua:92
 #, fuzzy
 #| msgid "Cantina Station"
 msgid ""
@@ -72018,7 +72031,10 @@ msgid ""
 msgstr ""
 
 #. Player will almost certainly go through these ships as shortcut isn't known yet
+#. Easier to spot
+#. Player will almost certainly go through these ships as shortcut isn't known yet
 #: dat/missions/zalek/blackhole/zbh05.lua:172
+#: dat/missions/zalek/blackhole/zbh08.lua:165
 msgid "ACCESS DENIED."
 msgstr ""
 
@@ -72156,10 +72172,98 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh07.lua:41
-msgid "\"Heya. I think I got this finally figure out. \""
+msgid ""
+"\"Heya. I think I got this finally figured out. So most of the anatomy is "
+"like that of an arthropod, however, the inner scaffolding follows ship "
+"designs. It's incredibly well thought out the entire layout, and it also "
+"guarantees that no two ships will ever be exactly alike!\"\n"
+"He seems fairly excited about the entire prospect."
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh07.lua:43
+msgid ""
+"\"There are still some rough details here and there, but I feel confident "
+"enough to try to improvise live as necessary. No matter how many simulations "
+"I run, I don't think it's going to be anything like the real thing. Although "
+"Icarus isn't really showing signs of stress, my scans indicate that it's "
+"probably better to try to operate sooner than later. Would you be willing to "
+"assist me?\""
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh07.lua:55
+msgid "\"Great! So let's get preparations started then.\""
 msgstr ""
 
 #. Must be accepted beyond this point
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Za'lek Black Hole 8">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <chance>100</chance>
+#. <spob>Research Post Sigma-13</spob>
+#. <location>Bar</location>
+#. <done>Za'lek Black Hole 7</done>
+#. </avail>
+#. <notes>
+#. <campaign>Za'lek Black Hole</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Za'lek Black Hole 08
+#.
+#. Have to bring back supplies while avoiding drones on the way back (or fighting through them)
+#.
+#.
+#. luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
+#: dat/missions/zalek/blackhole/zbh08.lua:34
+#: dat/missions/zalek/blackhole/zbh08.lua:118
+msgid "Sensor Upgrades"
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh08.lua:64
+msgid "You see Zach a bit more relaxed after the successful surgery."
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh08.lua:65
+msgid ""
+"\"So glad that Icarus seems to be out in the clear. Now we can start "
+"concentrating on the bigger picture again. We've been disrupted so many "
+"times, but as I've mentioned before, the notes indicate that there is "
+"something weird nearby. However, even though I've restored the station "
+"functionality partially, the sensor system is still a shadow of its former "
+"glory. I've been able to secure some decent supplies, but I would need you "
+"to go to {pnt} in the {sys} system and pick up {amount} of {cargo}. Would "
+"you be willing to do that for me for {creds}?\""
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh08.lua:78
+#: dat/missions/zalek/blackhole/zbh08.lua:129
+msgid "\"\""
+msgstr ""
+
+#. Must be accepted beyond this point
+#. mission details
+#: dat/missions/zalek/blackhole/zbh08.lua:89
+msgid "Sigma-13 Sensors"
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh08.lua:116
+msgid ""
+"Your ship touches ground and the loading drones identify your cargo and "
+"swiftly load the {cargo} onto your ship."
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh08.lua:118
+msgid ""
+"An assortment of different components that seem to be useful in upgrading "
+"deep-space sensorial systems."
+msgstr ""
+
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Novice Nebula Research">
@@ -76510,11 +76614,11 @@ msgstr ""
 msgid "No to destroying planets!"
 msgstr ""
 
-#: dat/scripts/common/cargo.lua:228
+#: dat/scripts/common/cargo.lua:229
 msgid "#nCargo:#0 {cargo}"
 msgstr ""
 
-#: dat/scripts/common/cargo.lua:243
+#: dat/scripts/common/cargo.lua:244
 msgid "#nTime limit:#0 {deadline}"
 msgstr ""
 
@@ -76822,7 +76926,7 @@ msgstr ""
 #. @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 #. --
 #: dat/scripts/common/pirate.lua:154
-msgid "This mission will increase your reputation with {fct_longname}."
+msgid " This mission will increase your reputation with {fct_longname}."
 msgstr ""
 
 #.
@@ -82575,7 +82679,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:694 src/map.c:764
+#: src/dev_sysedit.c:694 src/map.c:772
 msgid "Asteroid Field"
 msgstr ""
 
@@ -82600,7 +82704,7 @@ msgstr ""
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1254 src/map.c:300
+#: src/dev_sysedit.c:1262 src/land.c:1254 src/map.c:301
 msgid "Faction:"
 msgstr ""
 
@@ -82762,7 +82866,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:232 src/map.c:339 src/map_find.c:1006
+#: src/dev_uniedit.c:232 src/map.c:340 src/map_find.c:1006
 msgid "Find"
 msgstr ""
 
@@ -82770,7 +82874,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:247 src/map.c:314
+#: src/dev_uniedit.c:247 src/map.c:315
 msgid "Presence:"
 msgstr ""
 
@@ -83789,7 +83893,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:2754 src/outfit.c:1110 src/ship.c:531
+#: src/faction.c:1532 src/map.c:2762 src/outfit.c:1110 src/ship.c:531
 #: src/ship.c:1024 src/space.c:1849 src/space.c:1907 src/space.c:3597
 #: src/tech.c:113
 #, c-format
@@ -84605,7 +84709,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:95 src/map.c:257 src/outfit.c:862
+#: src/input.c:95 src/map.c:258 src/outfit.c:862
 msgid "Star Map"
 msgstr ""
 
@@ -85050,8 +85154,8 @@ msgstr ""
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:842 src/map.c:692 src/map.c:706 src/map.c:713 src/map.c:737
-#: src/map.c:752
+#: src/land.c:842 src/map.c:700 src/map.c:714 src/map.c:721 src/map.c:745
+#: src/map.c:760
 msgid ", "
 msgstr ""
 
@@ -85508,28 +85612,36 @@ msgstr ""
 msgid "Unknown var type '%s'"
 msgstr ""
 
-#: src/map.c:307
+#: src/map.c:308
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:321
+#: src/map.c:322
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:328
+#: src/map.c:329
 msgid "Services:"
 msgstr ""
 
 #. Commodity button
-#: src/map.c:336
+#: src/map.c:337
 msgid "Mode"
 msgstr ""
 
-#: src/map.c:342
+#: src/map.c:343
 msgid "Autonav"
 msgstr ""
 
-#: src/map.c:476
+#: src/map.c:363
+#, c-format
+msgid "You have %d jump of fuel."
+msgid_plural "You have %d jumps of fuel."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/map.c:484
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -85537,107 +85649,107 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:481
+#: src/map.c:489
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:558
+#: src/map.c:566
 #, c-format
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:717
+#: src/map.c:725
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:719
+#: src/map.c:727
 msgid "Light "
 msgstr ""
 
-#: src/map.c:726
+#: src/map.c:734
 #, c-format
 msgid "#rVolatile %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:728
+#: src/map.c:736
 #, c-format
 msgid "#oDangerous %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:730
+#: src/map.c:738
 #, c-format
 msgid "#yUnstable %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:732
+#: src/map.c:740
 #, c-format
 msgid "%sNebula"
 msgstr ""
 
-#: src/map.c:741
+#: src/map.c:749
 #, c-format
 msgid "#rDense Interference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:743
+#: src/map.c:751
 #, c-format
 msgid "#oLight Interference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:745
+#: src/map.c:753
 #, c-format
 msgid "#yInterference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:760
+#: src/map.c:768
 msgid "#oDense Asteroid Field#0"
 msgstr ""
 
-#: src/map.c:762
+#: src/map.c:770
 msgid "#yLight Asteroid Field"
 msgstr ""
 
-#: src/map.c:1640
+#: src/map.c:1648
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:1900
+#: src/map.c:1908
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:1903
+#: src/map.c:1911
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:1904
+#: src/map.c:1912
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:1959
+#: src/map.c:1967
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:1959
+#: src/map.c:1967
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2748
+#: src/map.c:2756
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:2766 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:2774 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:2773
+#: src/map.c:2781
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
@@ -85645,7 +85757,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/map.c:2776
+#: src/map.c:2784
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
@@ -85653,12 +85765,12 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/map.c:2803
+#: src/map.c:2811
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:2808
+#: src/map.c:2816
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
