@@ -79,7 +79,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 ]]
 
 transitions._t.dreamy = [[
-#include "lib/math.glsl"
 // Adapted from https://gl-transitions.com/editor/Dreamy
 // Author: mikolalysenko
 // License: MIT
@@ -88,7 +87,7 @@ vec2 offset( float progress, float x, float theta )
 {
    float phase = progress*progress + progress + theta;
    float shifty = 0.03*progress*cos(10.0*(progress+x));
-   return vec2(0, shifty);
+   return vec2(0.0, shifty);
 }
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
