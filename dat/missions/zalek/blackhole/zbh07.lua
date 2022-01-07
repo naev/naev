@@ -272,5 +272,6 @@ He skips towards the inside of the station, leaving you to recover yourself.]]))
    if not completed then return end
 
    misn.accept()
+   zbh.log(_("You helped Zach perform surgery on the feral bioship Icarus. The surgery was a success and Icarus is expected to make a speedy recovery."))
    misn.finish(true)
 end
