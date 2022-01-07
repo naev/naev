@@ -25,7 +25,6 @@ local vn = require "vn"
 local vntk = require "vntk"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
-local fleet = require "fleet"
 local lmisn = require  "lmisn"
 
 -- luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
@@ -152,19 +151,73 @@ function enter ()
       scout = p
 
    elseif mem.state==2 and system.cur() == atksys then
-      -- Player will almost certainly go through these ships as shortcut isn't known yet
-      local ships = {
-         "Za'lek Heavy Drone",
-         "Za'lek Heavy Drone",
-         "Za'lek Light Drone",
-         "Za'lek Light Drone",
-         "Za'lek Light Drone",
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      local j1 = jump.get( atksys, retsys )
+      local j2 = jump.get( atksys, "NGC-1001" )
+
+      local route0 = {
+         j1:pos(),
+         j2:pos(),
       }
-      local drones = fleet.add( 1, ships, zbh.evilpi(), jump.get(atksys, retsys):pos()*0.9, nil, {ai="baddiepos"} )
-      for k,p in ipairs(drones) do
-         p:memory().comm_no = _("ACCESS DENIED.")
-         p:setHostile(true)
+      local route1 = { -- Around j1
+         vec2.new( -5e3, 13e3 ),
+         vec2.new( 1e3, 9e3 ),
+         vec2.new( 8e3, 13e3 ),
+      }
+      local route2 = {
+         vec2.new( 13e3, 7e3 ),
+         vec2.new( 0, -7e3 ),
+      }
+      local route3 = { -- Around j2
+         vec2.new( 4e3, -9e3 ),
+         vec2.new( 8e3, 2e3 ),
+         vec2.new( 16e3, -5e3 ),
+      }
+      local route4 = {
+         vec2.new( 11e3, 12e3 ),
+         vec2.new( 0, 0 ),
+         vec2.new( 18e3, -4e3 ),
+      }
+
+      local fevil = zbh.evilpi()
+
+      -- Fuzzes a position a bit
+      local function fuzz_pos( pos, max_offset )
+         max_offset = max_offset or 100
+         return vec2.newP(max_offset*rnd.rnd(), rnd.angle()) + pos
       end
+      local function spawn_drone( shipname, pos )
+         local p = pilot.add( shipname, fevil, fuzz_pos(pos) )
+         -- We are nice and make the drones easier to see for this mission
+         p:intrinsicSet( "ew_hide", -50 )
+         return p
+      end
+
+      local function add_patrol_group( route, ships, start )
+         start = start or rnd.rnd(1,#route)
+         local pos = route[ start ]
+         local l
+         for k, s in ipairs( ships ) do
+            local p = spawn_drone( s, pos )
+            if k==1 then
+               l = p
+               p:setHostile(true)
+               local aimem = p:memory()
+               aimem.waypoints = route
+               aimem.loiter = math.huge -- patrol forever
+            else
+               p:setLeader( l )
+            end
+         end
+      end
+
+      add_patrol_group( route0, { "Za'lek Mephisto", "Za'lek Demon", "Za'lek Demon" }, 1 )
+      add_patrol_group( route1, { "Zalek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
+      add_patrol_group( route2, { "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone" } )
+      add_patrol_group( route3, { "Zalek Sting", "Za'lek Heavy Drone", "Za'lek Heavy Drone" } )
+      add_patrol_group( route4, { "Za'lek Heavy Drone", "Za'lek Heavy Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone" } )
 
    elseif system.cur() == retsys then
       local feral = zbh.plt_icarus( retpnt:pos() + vec2.newP(300,rnd.angle()) )
@@ -174,6 +227,7 @@ function enter ()
       feral:control(true)
       feral:follow( player.pilot() )
       hook.pilot( feral, "hail", "feral_hail" )
+
    end
 end
 
