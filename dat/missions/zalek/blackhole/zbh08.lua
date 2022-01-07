@@ -74,7 +74,8 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   z(_([[""]]))
+   z(fmt.f(_([["Great! So the {cargo} should be already ready at {pnt}, all you have to do is head there and bring it back and I should be able to upgrade Sigma-13's sensors to scan nearby systems and up to the Anubis black hole. Just make sure you keep out an eye for trouble. Losing the cargo would be a pretty major setback. Best of luck!"]])
+      {cargo=cargo_name, pnt=mem.destpnt}))
 
    vn.done( zbh.zach.transition )
    vn.run()
@@ -125,7 +126,9 @@ function land ()
       vn.clear()
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
-      z(_([[""]]))
+      vn.na(fmt.f(_([[You land and find Zach has come to greet you at the space port. You explain your encounter in the {sys} system.]]),
+         {sys=atksys}))
+      z(_([["Damn, all effort just to blockade the station? I guess they must be preparing for another attack seeing the amount of forces deployed. They're probably taking it carefully after their previous attack failed. This is pretty worrisome. There's no way we're going to be able to defend against an onslaught like that. We're going to have to move fast. I'll start upgrading the sensors right away. Meet me up at the bar later and we can go to the next step."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
@@ -133,7 +136,8 @@ function land ()
 
       faction.modPlayer("Za'lek", zbh.fctmod.zbh08)
       player.pay( reward )
-      zbh.log(_(""))
+      zbh.log(fmt.f(_("You helped Zach get cargo important to upgrading the sensors of {pnt}, despite heavy enemy patrols on the way."),
+         {pnt=retpnt}))
       misn.finish(true)
    end
 end
