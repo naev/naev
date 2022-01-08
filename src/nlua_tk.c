@@ -599,6 +599,8 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
          x = gl_screen.x;
          y = gl_screen.y;
          return cust_mouse( 3, -1, event->button.x+x, event->button.y+y, cf );
+      case SDL_MOUSEWHEEL:
+         return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
       case SDL_KEYDOWN:
          return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
