@@ -395,13 +395,9 @@ static int nlua_loadBasic( lua_State* L )
    lua_getglobal(L, "table");    /* t */
    lua_getglobal(L, "unpack");   /* t, u */
    lua_setfield(L,-2,"unpack");  /* t */
-   lua_getglobal(L, "pack");     /* t, u */
-   lua_setfield(L,-2,"pack");    /* t */
    lua_pop(L,1);                 /* */
    lua_pushnil(L);               /* nil */
    lua_setglobal(L, "unpack");   /* */
-   lua_pushnil(L);               /* nil */
-   lua_setglobal(L, "pack");     /* */
 
    /* replace non-safe functions */
    for (int i=0; override[i]!=NULL; i++) {
