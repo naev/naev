@@ -225,9 +225,8 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
-   int w, h, x, y, rw, jumps, th;
+   int w, h, x, y, rw;
    CstMapWidget *cst;
-   char buf[STRMAX_SHORT];
 
    map_minimal_mode = player.map_minimal;
    listMapModeVisible = 0;
@@ -359,11 +358,8 @@ void map_open (void)
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    /* Fuel. */
-   jumps = floor(player.p->fuel / player.p->fuel_consumption);
-   snprintf( buf, sizeof(buf), n_("You have %d jump of fuel.","You have %d jumps of fuel.", jumps ), jumps );
-   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
-   window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, th, 0, "txtFuel",
-         &gl_smallFont, NULL, buf );
+   window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, 30, 0,
+         "txtPlayerStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
 
@@ -456,6 +452,7 @@ static void map_update( unsigned int wid )
    int p;
    const glTexture *logo;
    double w, dmg, itf;
+   int jumps, autonav, rw, th;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -773,6 +770,28 @@ static void map_update( unsigned int wid )
       }
       window_modifyText( wid, "txtSystemStatus", buf );
    }
+
+   /* Player info. */
+   jumps = floor(player.p->fuel / player.p->fuel_consumption);
+   p = 0;
+   rw = 140;
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
+   sys = map_getDestination( &autonav );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("\nAutonav: ") );
+   if (sys==NULL)
+      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+   else {
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+   }
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
+   window_moveWidget( wid, "txtPlayerStatus", -20, 40+BUTTON_HEIGHT*2 );
+   window_modifyText( wid, "txtPlayerStatus", buf );
 }
 
 /**
