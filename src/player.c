@@ -1562,8 +1562,8 @@ int player_land( int loud )
 
       silent = 1; /* Suppress further targeting noises. */
    }
-   /* Uninhabited spob shouldn't give messages. */
-   else if (spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED)) {
+   /* Uninhabited spob shouldn't give messages, unless NOLAND overrides. */
+   else if (!player_isFlag(PLAYER_NOLAND) && spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED)) {
       return PLAYER_LAND_AGAIN;
    }
    /* Check if spob is in range. */
