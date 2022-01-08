@@ -352,17 +352,17 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButtonKey( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
-   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
+   window_addButtonKey( wid, -60, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, -20, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    /* Fuel. */
-   jumps = floor(player.p->fuel_max / player.p->fuel_consumption);
+   jumps = floor(player.p->fuel / player.p->fuel_consumption);
    snprintf( buf, sizeof(buf), n_("You have %d jump of fuel.","You have %d jumps of fuel.", jumps ), jumps );
    th = gl_printHeightRaw( &gl_smallFont, rw, buf );
-   window_addText( wid, -20, 50+BUTTON_HEIGHT*2, rw, th, 0, "txtFuel",
+   window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, th, 0, "txtFuel",
          &gl_smallFont, NULL, buf );
 
    map_genModeList();
