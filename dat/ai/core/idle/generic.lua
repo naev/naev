@@ -95,7 +95,7 @@ function idle ()
             end
             mem._waypoint_cur = closest
          else
-            mem._waypoint_cur = math.mod( mem._waypoint_cur, #mem.waypoints )+1
+            mem._waypoint_cur = math.fmod( mem._waypoint_cur, #mem.waypoints )+1
          end
          -- Go to the next position
          ai.pushtask( "loiter", mem.waypoints[ mem._waypoint_cur ] )
