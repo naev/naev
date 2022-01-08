@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Thurion Perspicacity Medium Bay">
+<outfit name="Thurion Perspicacity Fighter Bay">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
