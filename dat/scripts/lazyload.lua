@@ -3,6 +3,15 @@
 --]]
 local lib
 
+--[[--
+   @brief Main function that wraps a library to lazy load it.
+
+   @usage return require("lazyload")( "mylib", false )
+
+      @tparam string libname Name of library to lazy load (gets passed to require)
+      @tparam[opt=false] boolean rw Whether or not the library should be writable.
+      @treturn A library that can be used in place of the real library with lazy loading.
+--]]
 local function lazyload( libname, rw )
    local mt = {
       __index = function( self, key )
