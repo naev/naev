@@ -2,6 +2,7 @@ lua_source = files(
    'equipopt/optimize.lua',
    'fleet.lua',
    'format.lua',
+   'lazyload.lua',
    'linenoise.lua',
    'lmisn.lua',
    'lmusic.lua',
