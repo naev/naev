@@ -83,6 +83,8 @@ transitions._t.dreamy = [[
 // Author: mikolalysenko
 // License: MIT
 
+#include "lib/math.glsl"
+
 vec2 offset( float progress, float x, float theta )
 {
    float phase = progress*progress + progress + theta;
