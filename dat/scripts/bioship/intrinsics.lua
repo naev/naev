@@ -657,5 +657,4 @@ intrinsics["Soromid Arx"] = {
    },
 }
 
-
 return intrinsics
