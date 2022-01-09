@@ -4,6 +4,8 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
   <license>Light Combat Vessel</license>
+  <cond>faction.playerStanding("Thurion") &gt; 30</cond>
+  <condstr>You need at least 30 reputation with the Thurion.</condstr>
   <rarity>2</rarity>
   <mass>80</mass>
   <price>920000</price>

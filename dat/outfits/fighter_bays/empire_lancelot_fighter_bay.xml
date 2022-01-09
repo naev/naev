@@ -4,6 +4,8 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
+  <cond>faction.playerStanding("Empire") &gt; 50</cond>
+  <condstr>You need at least 50 reputation with the Empire.</condstr>
   <rarity>2</rarity>
   <mass>280</mass>
   <price>930000</price>
