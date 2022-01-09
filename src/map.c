@@ -444,7 +444,7 @@ static void map_update( unsigned int wid )
    int found, multiple;
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
-   unsigned int services, services_h, services_u;
+   unsigned int services, services_u, services_h, services_f, services_r;
    int hasSpobs;
    char t;
    const char *sym, *adj;
@@ -646,30 +646,42 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtSServices", x, y );
    window_moveWidget( wid, "txtServices", x, y-gl_smallFont.h-5 );
    services = 0;
-   services_h = 0;
    services_u = 0;
+   services_h = 0;
+   services_f = 0;
+   services_r = 0;
    for (int i=0; i<array_size(sys->spobs); i++) {
       Spob *pnt = sys->spobs[i];
       if (!spob_isKnown(pnt))
          continue;
 
-      if (pnt->can_land)
-         services |= pnt->services;
+      if (!spob_hasService( pnt, SPOB_SERVICE_INHABITED ))
+         services_u |= pnt->services;
+      else if (pnt->can_land) {
+         if (areAllies(pnt->presence.faction,FACTION_PLAYER))
+            services_f |= pnt->services;
+         else
+            services |= pnt->services;
+      }
       else if (areEnemies(pnt->presence.faction,FACTION_PLAYER))
          services_h |= pnt->services;
       else
-         services_u |= pnt->services;
+         services_r |= pnt->services;
    }
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (int i=SPOB_SERVICE_REFUEL; i<=SPOB_SERVICE_SHIPYARD; i<<=1)
-      if (services & i)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(spob_getServiceName(i)) );
+      if (services_f & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#F+ %s\n", _(spob_getServiceName(i)) );
+      else if (services & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#N~ %s\n", _(spob_getServiceName(i)) );
       else if (services_h & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#H!! %s\n", _(spob_getServiceName(i)) );
-      else if (services_u & i)
+      else if (services_r & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#R* %s\n", _(spob_getServiceName(i)) );
+      else if (services_u & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#I= %s\n", _(spob_getServiceName(i)) );
    if (buf[0] == '\0')
       p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
 
