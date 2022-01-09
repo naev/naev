@@ -254,6 +254,7 @@ int load_refresh ( const char *name )
       ok = load_load( ns, buf );
       ns->save_name = strdup( files[i].name );
       ns->save_name[ strlen(ns->save_name)-3 ] = '\0';
+      ns->modtime = files[i].stat.modtime;
    }
 
    /* If the save was invalid, array is 1 member too large. */
@@ -328,6 +329,8 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
       tmp = &array_grow( (filedata_t**)data );
       tmp->name = strdup( fname );
       tmp->stat = stat;
+      /* Fake modtime based on the last save's modtime */
+      tmp->stat.modtime = load_saves[0].modtime;
    }
 
    free( path );
@@ -460,7 +463,7 @@ void load_loadSnapshotMenu ( const char *name )
    int n, can_save;
 
    /* window */
-   wid = window_create( "wdwLoadSnapshotMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   wid = window_create( "wdwLoadSnapshotMenu", _("Load Snapshot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_snapshot_menu_load );
    window_setCancel( wid, load_snapshot_menu_close );
 
