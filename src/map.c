@@ -671,7 +671,7 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   for (int i=SPOB_SERVICE_REFUEL; i<=SPOB_SERVICE_SHIPYARD; i<<=1)
+   for (int i=SPOB_SERVICE_LAND; i<=SPOB_SERVICE_SHIPYARD; i<<=1) {
       if (services_f & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#F+ %s\n", _(spob_getServiceName(i)) );
       else if (services & i)
@@ -682,6 +682,7 @@ static void map_update( unsigned int wid )
          p += scnprintf( &buf[p], sizeof(buf)-p, "#R* %s\n", _(spob_getServiceName(i)) );
       else if (services_u & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#I= %s\n", _(spob_getServiceName(i)) );
+   }
    if (buf[0] == '\0')
       p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
 
