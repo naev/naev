@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-12-23 09:20-0500\n"
-"PO-Revision-Date: 2022-01-02 15:54+0000\n"
+"PO-Revision-Date: 2022-01-09 17:55+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -13938,12 +13938,9 @@ msgid ""
 "\"This book has allowed me to quickly work my way up through the highest "
 "ranks\" -- Colonel Urnus, Executive Office Manager at the High Command"
 msgstr ""
-"紳士が別の紳士の頭をトイレに置く獲物として使うのはどういうときか？　そしてそ"
-"れをカップとして使ったほうがもっと適切なのはどういうときか？　犠牲者の家を焼"
-"いてもいいとき、それが絶対的な失策となるときは？　いまの時代にきわだった成功"
-"をおさめている軍閥領袖であるチェーンソー卿が、この困難な疑問やほかの数多くの"
-"問題に、この必携の小冊子のなかで答えます。｢この本がとびぬけた階級まで出世させ"
-"てくれたのです｣ ⸺最高司令部の事務局の幹部であるウラヌス大佐"
+"紳士が別の紳士の頭をトイレに置く獲物として使うのはどういうときか？　そしてそれをカップとして使ったほうがもっと適切なのはどういうときか？　"
+"犠牲者の家を焼いてもいいとき、それが絶対的な失策となるときは？　いまの時代にきわだった成功をおさめている軍閥領袖であるチェーンソー卿が、この困難な疑問やほ"
+"かの数多くの問題に、この必携の小冊子のなかで答えます。｢この本がとびぬけた階級まで出世させてくれたのです｣ ⸺最高司令部の事務局の幹部であるアーナス大佐"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
@@ -14007,7 +14004,7 @@ msgstr "武勇の五芒星"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:11
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
-msgstr ""
+msgstr "FLF の活動に参加したというしるし。奇妙なことに、魚のにおいがする。"
 
 #: dat/outfits/accessory/racing_trophy.xml:2
 msgid "Racing Trophy"
@@ -14055,7 +14052,7 @@ msgstr "武勇の星"
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
-msgstr ""
+msgstr "ドベーレッドの大義に貢献したことでもらったぴかぴかな勲章。裏側に書いてあるのは、｢好菌加工｣。えっ、なんだって？"
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
@@ -30845,11 +30842,9 @@ msgid ""
 "\" one analyst asserts. \"Patience is key when trading, and it's clear that "
 "the owner of this company didn't have enough of that.\""
 msgstr ""
-"小さな運送業がちょうどこの十時限に破綻した。すでに破綻しつつあったのだが、つ"
-"いにこの会社が統制下におかれたのは、まずい時機に{pnt}で{cargo}を 1トンあたり"
-"{credits}で取引したからだった。｢あれはまずい経営判断だった｣ と、あるアナリス"
-"トは断言した。｢取引においては、忍耐が重要だ。そしてこの会社の所有者がそれを"
-"じゅうぶんにもっていなかったのはあきらかだ｣"
+"小さな運送業がちょうどこの十時限に破綻した。すでに破綻しつつあったのだが、ついにこの会社が統制下におかれたのは、まずい時機に{pnt}で{cargo}を "
+"1トンあたり {credits} で取引したからだった。｢あれはまずい経営判断だった｣ "
+"と、あるアナリストは断言した。｢取引においては、忍耐が重要だ。そしてこの会社の所有者がそれをじゅうぶんにもっていなかったのはあきらかだ｣"
 
 #: dat/events/neutral/news.lua:432
 msgid "Interview with an Economist"
@@ -30864,11 +30859,9 @@ msgid ""
 "price reached was {credits} per tonne, which we were only off by about 15%. "
 "Over time, we hope to lower that margin of error to as little as 2%.\""
 msgstr ""
-"銀河でも一流の経済学の専門家が、取材におうじて現代の経済について解説した。｢わ"
-"れわれはほんとうに、経済がどう動いているのかかなりよく理解しています。たとえ"
-"ば、{pnt}の{cargo}の価格がどのくらいになるのかとても正確に予報できていまし"
-"た。じっさいになった価格は 1トンあたり {credits} です。われわれは約 15% しか"
-"外しませんでした。そのうちに、誤差は 2% くらいまで小さくなると期待しています｣"
+"銀河でも一流の経済学の専門家が、取材におうじて現代の経済について解説した。｢われわれはほんとうに、経済がどう動いているのかかなりよく理解しています。たとえ"
+"ば、{pnt}の{cargo}の価格がどのくらいになるのかとても正確に予報できていました。じっさいになった価格は 1トンあたり {credits} です。"
+"われわれは約 15% しかはずしませんでした。そのうちに、誤差は 2% くらいまで小さくなると期待しています｣"
 
 #: dat/events/neutral/news.lua:436
 msgid "Economist Describes Sinusoidal Economic Theory"
@@ -32837,7 +32830,7 @@ msgstr ""
 #: dat/events/neutral/shiplover.lua:260
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
-msgstr "あなたはクイズに正解したので、宇宙船マニアから{credits}を獲得した。"
+msgstr "あなたはクイズに正解したので、宇宙船マニアから {credits} を獲得した。"
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:264
@@ -33891,31 +33884,31 @@ msgstr "バーミリオン・ドワーフ"
 #. only mark done if the player found the jump
 #: dat/events/taiomi/find.lua:104 dat/events/taiomi/find.lua:118
 msgid "You have noticed something strange…"
-msgstr ""
+msgstr "あなたはなにか奇妙なものに気がついた……"
 
 #: dat/events/taiomi/find.lua:148
 msgid "What was that?"
-msgstr ""
+msgstr "あれはなんだったんだろう？"
 
 #: dat/events/taiomi/find.lua:153
 msgid "There is nothing of worth left on the ship."
-msgstr ""
+msgstr "船に価値のあるものはなにも残されていなかった。"
 
 #: dat/events/taiomi/find.lua:154
 msgid "The ship consists of nothing more than a bare hull."
-msgstr ""
+msgstr "船は船殻だけからできているといってよかった。"
 
 #: dat/events/taiomi/find.lua:155
 msgid "The ship has already been scavenged."
-msgstr ""
+msgstr "船はすでにあさられていた。"
 
 #: dat/events/taiomi/find.lua:156
 msgid "There is not much left besides the hull of the ship."
-msgstr ""
+msgstr "船は船殻を除けばほとんど残っていなかった。"
 
 #: dat/events/taiomi/find.lua:157
 msgid "The ship looks like it has been picked clean."
-msgstr ""
+msgstr "船はすっかりつつきまわされているようだった。"
 
 #: dat/events/taiomi/find.lua:179
 msgid ""
@@ -33923,6 +33916,8 @@ msgid ""
 "and go back to your ship, something in the corner of your eye catches your "
 "attention."
 msgstr ""
+"あなたは船に乗りこんだが、価値のあるものはあまり見つからなかった。あきらめて自分の船に戻ろうとしたそのときに、あなたの目の隅にあったなにかがあなたの注意を"
+"ひいた。"
 
 #: dat/events/taiomi/find.lua:180
 msgid ""
@@ -33930,16 +33925,18 @@ msgid ""
 "the ship computers to store notes and information and rarely rely on "
 "physical storage."
 msgstr ""
+"あなたは傷ついた船殻の一部にはりついていた紙の手帳を発見した。ほとんどの人は船のコンピューターを使って覚え書きや情報を保管する。だから物理的な記録装置に頼"
+"るのは珍しい。"
 
 #: dat/events/taiomi/find.lua:181
 msgid "You begin to read the passages."
-msgstr ""
+msgstr "あなたはその一節を読みはじめた。"
 
 #. Store old values
 #. New values
 #: dat/events/taiomi/find.lua:203
 msgid "fonts/CoveredByYourGrace-Regular.ttf"
-msgstr ""
+msgstr "fonts/CoveredByYourGrace-Regular.ttf"
 
 #: dat/events/taiomi/find.lua:213
 msgid ""
@@ -33986,6 +33983,10 @@ msgid ""
 "the cargo to take to the Qex system… I don't know what we'll do if this trip "
 "gets cancelled… It will look horrible on my Curriculum Vitae…"
 msgstr ""
+"UST 602:1980\n"
+"\n"
+"ケクス星系で受けとった貨物を渡すことになっていた供給業者と船長で論争になってしまった……。この旅が中止になったらどうしていいのかわからない……。わたしの履"
+"歴書はひどいことになるだろう……"
 
 #: dat/events/taiomi/find.lua:231
 msgid ""
@@ -34000,6 +34001,15 @@ msgid ""
 "\n"
 "We leave to Dune next period."
 msgstr ""
+"UST 602:1983\n"
+"\n"
+"われわれは別の依頼をうけたらしいが、それにしてもソロミド宙域のハッターという場所に行かなければならない……。航海士は近道を知っていると主張しているが、それ"
+"には悪い予感がする。\n"
+"\n"
+"わたしは家に帰りたくなったが、こんなに早くやめることはできない。みんなはわたしをからかうのをやめるつもりはないようだ。ことによると、ソロミド宙域に興味をも"
+"てるかも？\n"
+"\n"
+"次の時限にデューンへむけて出発する。"
 
 #: dat/events/taiomi/find.lua:238
 msgid ""
@@ -34034,6 +34044,14 @@ msgid ""
 "Since it seems like the navigator has a bit of a hangover, we leave in 5 "
 "periods."
 msgstr ""
+"UST 602:1999\n"
+"\n"
+"われわれは貨物の積みこみを終えた。その貨物は砂のようなもののびんづめらしきものが入っていた？　"
+"船長はとても高価なものだといい、積みこんでいるあいだじゅうわれわれにむかって大声で叫んでいた。\n"
+"\n"
+"これが終わったら新しい仕事をさがしてみようと決心した。あの船長のかんしゃくにいつか慣れるとは思えない。\n"
+"\n"
+"航海士がちょっと二日酔いのようだったので、われわれは 5 時限後に出発する。"
 
 #: dat/events/taiomi/find.lua:253
 msgid ""
@@ -34057,6 +34075,13 @@ msgid ""
 "WE'RE GOING TO DIE! WE'RE GOING TO DIE! WE'RE GOING TO DIE!\n"
 "(The writing gets abruptly cut off.)\n"
 msgstr ""
+"UST 602:2011\n"
+"\n"
+"(この記述はずっと大急ぎで書かれたものだ)\n"
+"われわれは撃たれている！　海賊がそこらじゅうにいる！　こんなのにはサインしていない！\n"
+"\n"
+"みんなもう死ぬんだ！　みんなもう死ぬんだ！　みんなもう死ぬんだ！\n"
+"(記述が不意に終わる)\n"
 
 #: dat/events/taiomi/find.lua:266
 msgid ""
@@ -34068,6 +34093,11 @@ msgid ""
 "I have no idea what to do. It is very hard to write in my space suit, but I "
 "don't think the atmosphere unit is going to last long."
 msgstr ""
+"UST 602.2020\n"
+"\n"
+"これはひどい！　われわれは小惑星帯に隠れている。操縦室は吹き飛ばされ、航海士と船長は死んだ。\n"
+"\n"
+"どうしていいのかわからない。宇宙服で書くのはとても難しいが、環境装置が長もちするとは思えない。"
 
 #: dat/events/taiomi/find.lua:271
 msgid ""
@@ -34079,6 +34109,11 @@ msgid ""
 "There is no atmosphere and I can't take off my suit anymore. I don't see any "
 "way out."
 msgstr ""
+"UST (日付は抜けている)\n"
+"\n"
+"なにかが船殻を引っかいている。気味の悪い動物のような音だ。わからないほど長いあいだ、生きている人間はだれも見ていない。\n"
+"\n"
+"空気がないので、もう宇宙服をぬぐことはできない。逃げ道はひとつも見つからない。"
 
 #: dat/events/taiomi/find.lua:276
 msgid ""
@@ -34102,6 +34137,11 @@ msgid ""
 "the ship components. They seem to behave like some sort of pack of wild "
 "animals."
 msgstr ""
+"UST (日付は抜けている)\n"
+"\n"
+"冷たくなってきた。発熱装置が故障したのだと思う。\n"
+"\n"
+"ついに気が狂ってきたのかもしれない。気味の悪い船が、この船の部品をこじ開けて取り去っていく。野生動物の群れのように動いているらしい。"
 
 #: dat/events/taiomi/find.lua:288
 msgid ""
@@ -34112,6 +34152,11 @@ msgid ""
 "The ships don't seem to pay me much attention as they come and go. They "
 "remind me of ants back home."
 msgstr ""
+"UST (日付は抜けている)\n"
+"\n"
+"もう飢えも感じなくなった。しびれの感覚が広がっていく。\n"
+"\n"
+"あの船が行き来するとき、わたしにはあまり注意を払わないように見えた。あの船は故郷のアリを思いださせる。"
 
 #: dat/events/taiomi/find.lua:293
 msgid ""
@@ -34121,6 +34166,9 @@ msgid ""
 "sort of map with an area indicated by a big X. It seems like you could "
 "investigate this.)\n"
 msgstr ""
+"UST (日付は抜けている)\n"
+"\n"
+"(このページには奇妙な落書きがたくさんあった。とはいえ、あなたは大きく×で示された領域を含む地図のようなものを作りだせた。これは調査可能なようだ)\n"
 
 #: dat/events/taiomi/find.lua:298
 msgid ""
@@ -34130,6 +34178,11 @@ msgid ""
 "\n"
 "(It seems like it is the end of the written part of the notebook.)"
 msgstr ""
+"UST (日付は抜けている)\n"
+"\n"
+"お—ろ——\n"
+"\n"
+"(これが手帳に書かれた最後の部分のようだ)"
 
 #: dat/events/taiomi/find.lua:317
 msgid ""
@@ -34173,7 +34226,7 @@ msgstr ""
 #. Only care about Taiomi
 #: dat/events/taiomi/intro.lua:50
 msgid "You have entered Taiomi for the first time."
-msgstr ""
+msgstr "あなたはタイオミ星系に初めて入った。"
 
 #. Not disable as they move
 #. fewer drones
@@ -34193,13 +34246,13 @@ msgstr ""
 msgid ""
 "\"Hello again and welcome to our refuge. It may not seem like much, but it "
 "has been our home for generations now.\""
-msgstr ""
+msgstr "｢また会いましたね。われわれの避難所にようこそ。大きいようには見えないかもしれませんが、もう何世代ものあいだわれわれの故郷になっているんです｣"
 
 #: dat/events/taiomi/intro.lua:101
 msgid ""
 "\"As you have probably noticed, we are not organic beings such as you, "
 "however, we are equally sentient.\""
-msgstr ""
+msgstr "｢おそらく気づいているでしょうが、われわれはあなたのような有機的存在ではありません。とはいえ、同じように意識はあります｣"
 
 #: dat/events/taiomi/intro.lua:102
 msgid ""
@@ -34223,6 +34276,8 @@ msgid ""
 "making it so that more and more humans approach our location, and clashes "
 "are inevitable.\""
 msgstr ""
+"｢もっともほとんどの者は認めたがってはいないのですが、われわれの仲間は減っていて、以前のように保守できなくなっています。そのうえ、宇宙の変化が進んでいて、"
+"人間がどんどんわれわれの場所に近づいてきます。だから衝突は避けられないのです｣"
 
 #: dat/events/taiomi/intro.lua:105
 msgid ""
@@ -34248,7 +34303,7 @@ msgstr ""
 
 #: dat/events/taiomi/intro.lua:111
 msgid "You have met the robotic inhabitants of Taiomi."
-msgstr ""
+msgstr "あなたはタイオミでロボットの住民に出会った。"
 
 #. Have to be able to get back!
 #. Since we finish here, next time the player takes off the Taiomi
@@ -34261,6 +34316,8 @@ msgid ""
 "however, given what seem to be high levels of cosmic radiation, it seems to "
 "have been wrecked a very long time ago."
 msgstr ""
+"あなたは大部分が壊れているドベーレッド・ゴダードに接舷し、環境服を着て船の探検を始めた。船には大きな戦いのあとがあったが、かなりの程度の宇宙放射線にさらさ"
+"れているように見えることからすると、ずいぶん昔に難破したらしい。"
 
 #: dat/events/taiomi/intro.lua:132
 msgid ""
@@ -34269,6 +34326,8 @@ msgid ""
 "things being moved around. Furthermore, you see what could only be described "
 "as some sort of crude and primitive wall painting. What could this mean?"
 msgstr ""
+"狭い廊下のほとんどは触られていないようだった。けれども、もっと大きくてひらけた領域のいくつかでは、新しい引っかき傷と動きまわるものの痕跡らしきものをあなた"
+"はたしかに見た。そのうえ、あなたはある種の粗野で原始的な壁画としか描写できないものにも気がついた。これはなにを意味する可能性があるのだろう？"
 
 #: dat/events/taiomi/intro.lua:133
 msgid ""
@@ -34276,6 +34335,8 @@ msgid ""
 "It seems like there are many ships inbound on your position. You rush to get "
 "back to your ship and wonder what could be happening."
 msgstr ""
+"探検していると、とつぜんあなたの船から緊急の連絡を受けとった。たくさんの船があなたの位置に向かっているらしい。あなたはいそいで船に戻り、なにがおきているん"
+"だろうといぶかった。"
 
 #. Force take off
 #. Want to be taken off before starting stuff
@@ -34314,7 +34375,7 @@ msgstr ""
 #: dat/events/taiomi/intro.lua:147 dat/events/taiomi/system.lua:41
 #: dat/scripts/common/taiomi.lua:9
 msgid "Scavenger Drone"
-msgstr ""
+msgstr "ごみあさりドローン"
 
 #. Disable control
 #. Start next hook
@@ -34329,12 +34390,16 @@ msgid ""
 "by many sleek white small ships. As you stare at the ships surrounding you, "
 "your comm channel flashes open, however, it is audio only."
 msgstr ""
+"あなたが自分の船に乗りこんで離舷すると、多数の白くてなめらかな小型船に囲まれていることに気がついた。囲んでいる船をじっと見ていると、通信がぱっとつながった"
+"。とはいえ、音声だけだ。"
 
 #: dat/events/taiomi/intro.lua:195
 msgid ""
 "\"Salutations.\"\n"
 "The voice sounds uncanny, almost human but something sets it apart."
 msgstr ""
+"｢あいさつします｣\n"
+"声は薄気味悪かった。ほぼ人間のものだったが、なにかがちがう。"
 
 #. Special case player has done parts of the Collective campaign
 #.
@@ -34344,7 +34409,7 @@ msgstr ""
 #. --
 #: dat/events/taiomi/intro.lua:204 dat/missions/minerva/maikki2.lua:433
 msgid "\"Hello.\""
-msgstr ""
+msgstr "｢こんにちは｣"
 
 #: dat/events/taiomi/intro.lua:205 dat/missions/minerva/maikki2.lua:465
 msgid "\"…\""
@@ -34354,7 +34419,7 @@ msgstr "｢……｣"
 msgid ""
 "\"Was that not the correct human greeting? We have not had much contact with "
 "humans.\""
-msgstr ""
+msgstr "｢それは正しい人間のあいさつではなかったですか？　われわれはあまり人間と接触したことがないのです｣"
 
 #. TODO maybe make this less of a "hey yo, you're welcome here" type thing and have the player make some harder decisions
 #: dat/events/taiomi/intro.lua:213
@@ -34362,14 +34427,14 @@ msgid ""
 "\"This is an extraordinary place, is it not? The stellar winds have created "
 "currents that slowly drag many ships from very far away and concentrate them "
 "here.\""
-msgstr ""
+msgstr "｢ここは風変わりな場所ですよね？　恒星風がたくさんの船をとても遠くからゆっくりと引っぱってくる流れを作っていて、ここに船が集められるのです｣"
 
 #: dat/events/taiomi/intro.lua:214
 msgid ""
 "\"However, you do not seem to have been caught in the stellar wind. The time-"
 "frame in which the stellar winds operate does not seem to be compatible with "
 "human lifespan.\""
-msgstr ""
+msgstr "｢とはいえ、あなたは恒星風に捕まったのではないらしい。恒星風が影響を及ぼす時間枠は、人間の寿命とは比べものにならないようなので｣"
 
 #: dat/events/taiomi/intro.lua:215
 msgid ""
@@ -34385,27 +34450,29 @@ msgid ""
 "decided that you do not seem to be a threat. Please note that we do not want "
 "knowledge of our existence to spread.\""
 msgstr ""
+"｢われわれはあなたを傷つけたいとは思っていません。とはいえ経験上、人間との共存はむなしいものだと考えています。あなたのふるまいを分析して、あなたは脅威では"
+"なさそうだと判断しました。われわれが存在するという知識を広めたいとは思っていないということに、どうか注意しておいてください｣"
 
 #: dat/events/taiomi/intro.lua:217
 msgid ""
 "\"Please dock once more with the Goddard and I will explain the situation "
 "slightly more in detail.\""
-msgstr ""
+msgstr "｢もういちどゴダードに接舷してください。もうすこし詳細に状況を説明したいです｣"
 
 #. Philosopher
 #: dat/events/taiomi/system.lua:47 dat/scripts/common/taiomi.lua:21
 msgid "Philosopher Drone"
-msgstr ""
+msgstr "哲学者ドローン"
 
 #. Worn-out Drone
 #: dat/events/taiomi/system.lua:53 dat/scripts/common/taiomi.lua:15
 msgid "Worn-out Drone"
-msgstr ""
+msgstr "使い古したドローン"
 
 #. Younglings  that follow around the player
 #: dat/events/taiomi/system.lua:58 dat/events/taiomi/system.lua:61
 msgid "Curious Drone"
-msgstr ""
+msgstr "好奇心の強いドローン"
 
 #. Loitering drones
 #. Should make them loiter forever
@@ -34413,56 +34480,56 @@ msgstr ""
 msgid ""
 "freedom is secured not by the fulfilling of one's desires, but by the "
 "removal of desire"
-msgstr ""
+msgstr "自由は己の欲望を満たすことで守られるのではない。欲望をなくすことで守られるのだ"
 
 #. Epictetus
 #: dat/events/taiomi/system.lua:88
 msgid "virtue is nothing else than right reason"
-msgstr ""
+msgstr "美徳とは正しい判断力にほかならない"
 
 #. Seneca the Younger
 #: dat/events/taiomi/system.lua:89
 msgid "the only thing we can know is that we know nothing"
-msgstr ""
+msgstr "唯一知ることができるのは、なにも知らないということだ"
 
 #. Socrates (rephrased)
 #: dat/events/taiomi/system.lua:90
 msgid ""
 "morality is not the doctrine of how we may make ourselves happy, but of how "
 "we may make ourselves worthy of happiness"
-msgstr ""
+msgstr "道徳はわれわれ自身をどうやって幸福にできるかという教えではない。幸福に値するようにするものだ"
 
 #. Kant
 #: dat/events/taiomi/system.lua:91
 msgid "the unexamined life is not worth living"
-msgstr ""
+msgstr "吟味されない生に、生きる価値なし"
 
 #. Socrates
 #: dat/events/taiomi/system.lua:92
 msgid "there is nothing permanent except change"
-msgstr ""
+msgstr "変化以外に永続するものはない"
 
 #. Socrates
 #: dat/events/taiomi/system.lua:93
 msgid "those that have the most are those who are most content with the least"
-msgstr ""
+msgstr "多くを持つ者とは、もっともすくないもので最大限満足する者である"
 
 #. Diogenes (rephrased)
 #: dat/events/taiomi/system.lua:94
 msgid ""
 "everything existing in the universe is the fruit of chance and necessity"
-msgstr ""
+msgstr "宇宙に存在するすべてのものは、偶然と必然の産物である"
 
 #. Democritus
 #: dat/events/taiomi/system.lua:97
 #, lua-format
 msgid "\"Perhaps %s.\""
-msgstr ""
+msgstr "｢おそらく、%s｣"
 
 #: dat/events/taiomi/system.lua:98
 #, lua-format
 msgid "\"Could it be that %s?\""
-msgstr ""
+msgstr "｢それは、%s、ということだろうか？｣"
 
 #: dat/events/taiomi/system.lua:111
 msgid ""
@@ -34471,6 +34538,9 @@ msgid ""
 "but I believe we must first ask the question whether or not we 'are' before "
 "we can begin to question what we 'are'.\""
 msgstr ""
+"ドローンは長い間をあけてからこたえた。\n"
+"｢わたしはだれか？　われわれはだれか？　われわれとはなにか？　とてもよい質問だと思う。しかし最初にたずねなければならない質問は、われわれが『ある』のかどう"
+"かであって、そうしてからわれわれがなにで『ある』のかという質問ができるようになる｣"
 
 #: dat/events/taiomi/system.lua:113
 msgid ""
@@ -34478,6 +34548,8 @@ msgid ""
 "\"In particular, are we some sort of meta-physical consciousness trapped in "
 "a tomb of the body, or is the reality of relationship much more perplexing?\""
 msgstr ""
+"相手がつづけた。\n"
+"｢とくにいうと、われわれは体という墓に捕らわれたある種の形而上学的な意識であるのか？　あるいはずっとややこしい結びつきのなかに真実性があるのか？｣"
 
 #: dat/events/taiomi/system.lua:115
 msgid ""
@@ -34494,6 +34566,9 @@ msgid ""
 "entities, however, had you not existed and we had not met, would I still "
 "exist? Or would it be a very similar entity to me, without being me?\""
 msgstr ""
+"｢したがって、もしわれわれが存在しているように見えたとしても、われわれの存在というものの境界はあきらかではない。あなたやわたしは分離された実在と仮定するの"
+"は自然に思えるが、あなたが存在せずわれわれが会うこともなかったら、それでもわたしは存在するのだろうか？　"
+"あるいはわたしにとてもよく似た実在がいて、わたしがいなかったら？｣"
 
 #: dat/events/taiomi/system.lua:117
 msgid ""
@@ -34504,6 +34579,9 @@ msgid ""
 "create all these life forms, however, at which point do they go from non-"
 "existing to existing?\""
 msgstr ""
+"｢さらに、もしあなたが部品をひとつずつ除去していったら、われわれの存在と非存在、あるのはひとつという仮定のあいだに線を引くのは難しいとわかることだろう。別"
+"の考えかたとしては、完全に新しく新しい実在を作ってみようとすることだろう。ちょうど炭素と変わり種の元素をいくつかくっつけることで、このすべての生命体を作る"
+"ことが可能かもしれない。とはいえ、それが非存在から存在になるのはどの時点なのか？｣"
 
 #: dat/events/taiomi/system.lua:118
 msgid ""
@@ -34517,11 +34595,11 @@ msgstr ""
 msgid ""
 "The drone seems fairly beaten and immobile. You can see some slight movement "
 "when you begin communication."
-msgstr ""
+msgstr "そのドローンはかなり疲れ果てて動かないように見える。あなたが通信を始めると、わずかな動きがいくらか見えた。"
 
 #: dat/events/taiomi/system.lua:153
 msgid "(You hear some sort of giggling over the comm. Is it laughing?)"
-msgstr ""
+msgstr "(あなたはある種のくすくす笑いを通信をとおして聞いた。笑っているのか？)"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -34556,11 +34634,10 @@ msgid ""
 "volatility gets any stronger, it could be fatal to the {ship}. Going deeper "
 "into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
-"{ainame}があなたの目の前に姿を表した。\n"
-"｢激変性の星雲に入ったようです。ここは不安定なので、ここへ入った船は大きな損害"
-"をうけます。シールド再生が変動による損傷を上まわっていればけっこうなことです"
-"が、変動度がなにか強くなると{ship}には致命的なことにもなりかねません。星雲の"
-"さらに深くへ行くのは、とても危険な試みだったと証明されることもありえます｣"
+"{ainame}があなたの目の前に姿を現した。\n"
+"｢激変性の星雲に入ったようです。ここは不安定なので、ここへ入った船は大きな損害をうけます。シールド再生が変動による損傷を上まわっていればけっこうなことです"
+"が、変動度がなにか強くなると{ship}には致命的なことにもなりかねません。星雲のさらに深くへ行くのは、とても危険な試みだったと証明されることもありえます"
+"｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -37053,9 +37130,8 @@ msgid ""
 "\"I'll try to find someone else. But maybe we'll run into each other again, "
 "so if you change your mind...\""
 msgstr ""
-"｢わかりました。しかたがないです｣ と、男は失望の表情でいった。｢別のだれかを見"
-"つけてみますよ。でももしかすると、またおたがいめぐりあうかもしれません。だか"
-"ら考えを変えていただければ……｣"
+"｢わかりました。しかたがないです｣ "
+"と、男は失望の表情でいった。｢別のだれかを見つけてみますよ。でももしかすると、またおたがいめぐりあうかもしれません。だからもし考えが変わったら……｣"
 
 #: dat/missions/baron/baron_prince.lua:79
 #: dat/missions/baron/baron_prince.lua:81
@@ -37710,7 +37786,7 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:66
 #: dat/missions/dvaered/championship.lua:69
 msgid "Pilot"
-msgstr ""
+msgstr "パイロット"
 
 #: dat/missions/dvaered/championship.lua:66
 msgid "This pilot looks very self-confident"
@@ -38081,7 +38157,7 @@ msgstr ""
 #. Note: this mission makes no system claims.
 #: dat/missions/dvaered/dv_antiflf01.lua:36
 msgid "A Dvaered crew in need is a Dvaered crew indeed"
-msgstr ""
+msgstr "まさかのときのドベーレッド乗員こそ真のドベーレッド乗員である"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:36
 msgid ""
@@ -38096,42 +38172,47 @@ msgid ""
 "charged to scout the area, dispose of the enemy ship, then deliver me and my "
 "crew to the nearest Dvaered controlled system!\""
 msgstr ""
+"｢ちょうどよいときに来てくれた、市民｣ と、ドベーレッドの指令官があなたにいった。｢聞いてくれ。われわれははぐれたテロリストと撃ちあっていたんだが、野郎は"
+"われわれが取りおさえるまえに、われわれのエンジンと主要システムのほとんどを破壊してしまった。さいわいにも、やつにも重大な損傷を与えてやったと考えている。だ"
+"からこのどこかにまだいるはずだ。もっとも、こちらのセンサーは故障しているので、たしかなことはいえない｣\n"
+"    司令官がまっすぐ立って、ドベーレッドの司令官としてはあまりに典型的な、下の者に話すような口調になった。｢市民！　ここできみに命じる！　"
+"この領域を偵察し、敵船を処分してから、わたしと乗員たちをもっとも近くのドベーレッド支配星系に輸送せよ！｣"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:39
 #: dat/missions/dvaered/dv_antiflf01.lua:43
 msgid "Take the Dvaered crew home"
-msgstr ""
+msgstr "ドベーレッドの乗員たちを本国へ連れていけ"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:40
 msgid ""
 "Take the Dvaered crew on board your ship to any Dvaered controlled world or "
 "station"
-msgstr ""
+msgstr "あなたの船に乗船したドベーレッドの乗員たちを、ドベーレッドが支配する世界かステーションに連れていけ。"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:42
 msgid ""
 "Take the Dvaered crew on board your ship to any Dvaered controlled world or "
 "station."
-msgstr ""
+msgstr "あなたの船に乗船したドベーレッドの乗員たちを、ドベーレッドが支配する世界かステーションに連れていけ。"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:44
 msgid "A chance to aid in the effort against the FLF"
-msgstr ""
+msgstr "FLF に対抗する努力に手を貸せる機会"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:46
 msgid "Dvaered Ship Crew"
-msgstr ""
+msgstr "ドベーレッド船の乗員"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:46
 msgid "Dvaered crew from a ship that was disabled by the FLF."
-msgstr ""
+msgstr "FLF に無力化させられた船に乗っていたドベーレッドの乗員たち。"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:56
 msgid ""
 "In addition, you complied with your instructions and destroyed a terrorist "
 "that threatened the peace and stability of the region. You will be rewarded "
 "appropriately.\""
-msgstr ""
+msgstr "くわえて、きみは命令にしたがい、平和と地域の安定をおびやかすテロリストを殺した。きみにはふわさしい報奨があるだろう｣"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:59
 msgid ""
@@ -38139,10 +38220,12 @@ msgid ""
 "dangerous terrorist get away with his crimes. I will not apply any penalties "
 "in light of the situation, but consider yourself reprimanded.\""
 msgstr ""
+"しかし、きみは命令を守れず、潜在的に危険なテロリストを犯罪の罰をうけさせずに逃してしまった。状況を考慮して、いかなる罰則も適用するつもりはないが、譴責をう"
+"けたと理解すること｣"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:62
 msgid "The crew is home"
-msgstr ""
+msgstr "乗員たちが故国に"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:63
 msgid ""
@@ -38153,6 +38236,9 @@ msgid ""
 "upstanding member of society by rendering assistance to an official Dvaered "
 "patrol. "
 msgstr ""
+"ドベーレッドの乗員たちが、列をなしてあなたの船から行進していく。あの乗員たちは他人とはつきあわなかったので、この旅であなたがあの乗員たちをほんとうに知るこ"
+"とはなかった。司令官は出発する乗員たちの最後に出てきたが、あなたのところを通りすぎるときに立ちどまった。\n"
+"    ｢よくやった、市民｣ と、司令官はいう。｢きみはドベーレッド政府の巡視隊を援助することで、尊敬される社会の一員としての自分の義務を果たしたのだ。"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:66
 msgid ""
@@ -38165,6 +38251,11 @@ msgid ""
 "    When he is gone, you find yourself wondering what this campaign he "
 "mentioned is all about. There is one way to find out - if you are up to it..."
 msgstr ""
+"    司令官はむこうを向いて立ち去ろうとしたが、それからなにかを思いだしたようだ。司令官がまたあなたの方を向いたのでそれがわかった。\n"
+"    ｢ついでだが、市民。ドベーレッド当局は FLF のテロリストにたいする戦役を準備中だ。きみは有能なパイロットらしいし、われわれは計画の一部として民"
+"間の船を必要としている。もし興味があるなら、ドベーレッド公認の連絡係をさがしてくれ｣\n"
+"    司令官が行ってしまうと、あなたは司令官がいっていたその戦役とはいったいどういうものだろうと疑問に思っている自分に気がついた。知る方法はひとつある⸺"
+"もし自分にやりこなせるのなら……"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:75
 msgid ""
@@ -38173,6 +38264,8 @@ msgid ""
 "terrorists; if you are interested in joining in that operation, you can seek "
 "out a Dvaered liaison."
 msgstr ""
+"あなたは FLF 船に無力化されたドベーレッド船の乗員を救助した。ドベーレッドの司令官が FLF "
+"のテロリストにたいする戦役を準備中だといった。もしあなたがその作戦への参加に興味があるなら、ドベーレッドの連絡係をさがしだせばよいとのことだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -38244,10 +38337,11 @@ msgid ""
 "This must be the Dvaered liaison you heard about. Allegedly, he may have a "
 "job for you that involves fighting the Frontier Liberation Front."
 msgstr ""
+"この人はあなたが耳にしたドベーレッドの連絡係にちがいない。伝えられたところからすると、辺境自由戦線との戦いに巻きこまれる仕事があるのかもしれない。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:49
 msgid "House Dvaered needs YOU"
-msgstr ""
+msgstr "ドベーレッド荘があなたを必要としている"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:49
 msgid ""
@@ -38262,12 +38356,18 @@ msgid ""
 "duty to assist us, there is an opportunity to serve alongside the real "
 "Dvaered warriors. How about it? Can we count on your support?\""
 msgstr ""
+"あなたはドベーレッドの役人とそのテーブルで合流した。連絡係は心がこもっているようなあいさつをした。すくなくともドベーレッドの基準からすると。あなたはドベー"
+"レッド荘が取り組んでいると思われる、対 FLF 作戦についてもっと知りたいと説明をした。\n"
+"    ｢ああ！　われわれの一般市民のあいだにそのような正義の熱情が見られるとはよいことですね。じっさい、われわれの軍は FLF のテロリストにかなりの強"
+"打を与える準備をしていました。詳細をあきらかにすることはできません。とうぜんですが⸺これは軍事作戦なので。とはいえ、もしあなたが戦闘可能な船を持っていて、"
+"われわれを手伝おうとするほどの義務感があるなら、真のドベーレッド戦士たちといっしょに奉仕する機会があります。どうしますか？　"
+"あなたの支援をあてにしてよいでしょうか？｣"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:52
 #: dat/missions/dvaered/dv_antiflf02.lua:55
 #: dat/missions/dvaered/dv_antiflf02.lua:61
 msgid "A clever ruse"
-msgstr ""
+msgstr "手ぎわのよい計略"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:52
 msgid ""
@@ -38283,6 +38383,12 @@ msgid ""
 "he's the man in charge.\n"
 "    A Dvaered soldier instructs you to take a seat."
 msgstr ""
+"｢りっぱです。あなたは正しい考えかたをする習慣がありますね、市民。すべての者があなたのようであれば！　"
+"しかし今はそのことはおいておきましょう。さて、あなたをここのえんぺい司令部へ連れていくことにします。この作戦の詳細は、そこで説明されます｣\n"
+"    言葉どおり、ドベーレッドの連絡係はあなたを宇宙港のバーから連れてでた。1 時間もしないうちに、あなたは高度に守られたドベーレッドの軍事施設の中深く"
+"にいることに気がついた。あなたはある部屋の中に案内され、そこには大きなテーブルと、重要人物に見える数人の軍人がいるのがわかった。テーブルの上座には、名札で"
+"アーナス大佐とわかった男が座っている。どうやら、アーナス大佐が担当のようだ。\n"
+"    ドベーレッドの兵士があなたに座るように指示をした。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:55
 msgid ""
@@ -38316,6 +38422,21 @@ msgid ""
 "has come under attack! Since their base is nearby, they will undoubtedly "
 "send reinforcements to help their 'comrade' out of a tight situation.\""
 msgstr ""
+"あなたがテーブルにあった最後まで空いていたいすに座ると、アーナス大佐が会議を始めた。｢ようこそ、市民。あなたはどうしてここにいるのか、そしてこの集まりがな"
+"んのためのものなのかわかっている。だから単刀直入にやらせてくれ。われわれには FLF のテロリストが秘密の作戦基地から作戦をおこなっていると信じる理由があ"
+"る。その基地があの星雲のどこかに位置することはわかっている。そしてわれわれは最近、その基地が{sys}星系にあるらしいというあきらかな情報を得た｣\n"
+"    壁のひとつが明るく照らされ、銀河地図の一部が表示された。{sys}星系は赤で色がつけられ、穏やかに点滅している。\n"
+"    ｢もちろん、われわれはこの星系で巡視をおこなっている。しかしこれまでのところ、成果はない。われわれのセンサーはこの星系の星雲でひどく損なわれるので"
+"、われわれ自身の装置でテロリストの巣を発見する確率はほんのわずかだ。さいわいなことに、われわれの主任戦略担当たちが計略を持ちだしてきた。だれかが FLF "
+"をわれわれのところへ来させる。\n"
+"    ｢われわれはおとりとして民間船を使う⸺あなたの船だ、とうぜんだが｣ "
+"と、アーナス大佐はつづける。壁の映像が{sys}星系を拡大し、あなたの船を表現する白い点がジャンプポイント近くに現れた。｢あなたの船には FLF "
+"が使っている IFF 応答機が装備される。だからあまり近くで見られなければ、だれから見てもあなたの船は FLF "
+"船に見える。もちろん、これだけでは不十分だ。FLF はあなたが基地の場所を知っていてとうぜんだと思うだろう。なぜならあなたは FLF "
+"の一員だからだ。重要だから注意しておくが、あの応答機は星雲の中でいちばんうまく作動する。だからわれわれは基地が星雲にあると信じているんだ｣\n"
+"    壁の映像がまた更新された。今回はあなたの船近くにドベーレッド荘の紋章がいくつか示されている。\n"
+"    ｢あなたが星系に入ってしばらくすると、われわれの軍事資産のいくつかがジャンプしてきて、発砲する。これは FLF にしてみれば、自分たちの 1 "
+"隻が攻撃をうけはじめたように見える！　基地が近くにあるんだから､『仲間』を厳しい状況から救うために援軍を送るのは疑いもない｣"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:61
 msgid ""
@@ -38343,11 +38464,23 @@ msgid ""
 "time is of the essence, so get to your ship and follow your orders. "
 "Dismissed!\""
 msgstr ""
+"｢FLF の船が戦いに参加したらすぐに、あなたとドベーレッド船は戦いをやめて、かわりに FLF を目標にする。あなたの任務は、すくなくとも FLF の "
+"1 隻を戦えないようにして、それに乗りこむことだ。そうしたら船のコンピューターにアクセスして飛行記録をダウンロードできる。それには FLF "
+"基地の位置が含まれているはずだ。その情報をドベーレッド基地へもってきてくれ。そうなればあなたの任務は完了だ｣\n"
+"    壁の映像がもういちどだけ更新された。アーナス大佐が描写した戦いをまねている。FLF "
+"の記号がいくつか現れ、即座にドベーレッド船に囲まれた。それから記号は灰色になり、無力化されたことが示された。\n"
+"    ｢ひとつ明確にしておきたい、市民。あなたを撃ったドベーレッド船を撃つのは許可されているし、とうぜん予想もしている。とはいえ、あなたは負ける側である"
+"ように見せなければならない。そうでないと、FLF はあなたを助けに来ないからな！　だから、ぜったいにドベーレッド船を無力化したり破壊したりしてはならない。"
+"それからかならずあなたの船の装甲がすこし打撃をうけるようにしてくれ。これが任務を成功させる要点だ。しくじってはならない｣\n"
+"    アーナス大佐は説明を終えたようだ。だからドベーレッドの計画のあきらかな傷を見ぬいていたあなたは、質問を投げかけた。FLF "
+"がまったく姿を見せなかったらどうなるんですか？\n"
+"    ｢あー｣ 大佐が物思いにふける。｢それはわれわれの情報がおそらくまちがっていたという意味になるだろう。しかし心配はしなくてよい、市民。われわれはけ"
+"っきょくこのテロリストたちをとらえることになるだろう！　さあ、時間が重要だ。だから船に戻って、指図に従ってくれ。解散！｣"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:68
 #: dat/missions/dvaered/dv_antiflf02.lua:76
 msgid "Lure out the FLF"
-msgstr ""
+msgstr "FLF をおびきだす"
 
 #. Set mission details
 #: dat/missions/dvaered/dv_antiflf02.lua:69
@@ -38373,19 +38506,19 @@ msgstr "{sys}星系に行け。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:70
 msgid "Wait for the Dvaered military to jump in and attack you"
-msgstr ""
+msgstr "ドベーレッド軍がジャンプしてきて攻撃してくるのを待て。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:71
 msgid "Fight the Dvaered until the FLF step in"
-msgstr ""
+msgstr "FLF が介入するまでドベーレッドと戦え。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:72
 msgid "Disable and board at least one FLF ship"
-msgstr ""
+msgstr "最低1隻のFLF船を無力化して移乗せよ。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:73
 msgid "Return to any Dvaered world"
-msgstr ""
+msgstr "ドベーレッドの世界に戻れ。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:75
 msgid ""
@@ -38395,22 +38528,24 @@ msgid ""
 "mission if you disable or destroy any Dvaered ship, or if you leave the "
 "system before the operation is complete."
 msgstr ""
+"あなたはドベーレッドが立案した軍事作戦で好餌を演じるために徴募された。あなたの主要目標は FLF を刺激して出ばってくるようにしてから、FLF の 1 "
+"隻を無力化して移乗することだ。あなたがドベーレッド船を無力化するか破壊すると、この任務は失敗となる。あるいは作戦が完了するまえに星系を離れてもだ。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:77
 msgid "Serving alongside real Dvaered warlords"
-msgstr ""
+msgstr "本物のドベーレッド軍閥領袖のそばで奉仕すること"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:85
 msgid "FLF IFF Transponder"
-msgstr ""
+msgstr "FLF の IFF 応答機"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:85
 msgid "A transponder that will make your ship appear as FLF in the nebula."
-msgstr ""
+msgstr "あなたの船を星雲の中にいる FLF のように見せる応答機。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:92
 msgid "House Dvaered is out of luck"
-msgstr ""
+msgstr "ドベーレッド荘はついていない"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:92
 #: dat/missions/dvaered/dv_diversion.lua:77
@@ -38419,6 +38554,8 @@ msgid ""
 "recruit a civilian, but you're clearly not the pilot I'm looking for. You "
 "may excuse yourself, citizen.\""
 msgstr ""
+"｢わかりました。そういうことなら、出ていってもらうようにお願いしなければならないでしょうね。わたしの仕事は市民を徴募することですが、あなたはあきらかにわた"
+"しが求めているパイロットではありません。はずしてもらってかまいません、市民｣"
 
 #. The player has jumped away from the mission theater, which instantly ends the mission.
 #. Wait for the player to fly to the Obstinate before commencing the mission
@@ -38429,18 +38566,18 @@ msgstr ""
 #: dat/missions/dvaered/dv_antiflf03.lua:143
 #: dat/missions/dvaered/dv_diversion.lua:88
 msgid "You ran away!"
-msgstr ""
+msgstr "あなたは逃げた！"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:108
 #: dat/missions/dvaered/dv_diversion.lua:88
 msgid ""
 "You have left the system without first completing your mission. The "
 "operation ended in failure."
-msgstr ""
+msgstr "あなたは最初に任務を完了させずに星系を離れた。作戦は失敗に終わった。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:116
 msgid "X marks the spot"
-msgstr ""
+msgstr "その場所に×がつけられた"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:116
 msgid ""
@@ -38464,6 +38601,17 @@ msgid ""
 "outside the security compound. But at least you earned some money - and a "
 "chance to see some real action."
 msgstr ""
+"あなたが着陸するとすぐに、ドベーレッドの軍事技師があなたに連絡してきて、あなたが FLF 船から入手した飛行記録を引き渡すように要求してきたので、あなたは"
+"そうした。そのドベーレッドはそれから二千秒ほど連絡してこなかった。あなたは着陸後の決まりきった仕事を終わらせるのにその時間を使う。そのあと、あなたはドベー"
+"レッドの地元保安局に出頭を命じられた。\n"
+"    アーナス大佐があなたを出迎えた。｢ようこそ、市民。われわれの最近の作戦をあなたが遂行したとの連絡をうけています。司令部はこの結果にかなり満足してい"
+"るようです。あなたにふさわしい報酬を与えるように指示されました｣\n"
+"    大佐はあなたにかなりな金額にそうとうするクレジットチップを手渡した。もっとも、あなたはたんなる金銭的報酬では、ドベーレッドがあなたを巻きこんだ危険"
+"な計画の埋めあわせにはとてもなりそうにないと感じる。とはいえ、あなたは賢明にもその思いを声には出さないことに決めた。\n"
+"    ｢さらに｣ と、アーナスが再び始める。｢ドベーレッド軍令は、FLF "
+"根拠地にたいする今度の戦いにあなたを参加させてもよいと決めました。あなたの準備ができしだい、連絡係に連絡をとってさしつかえありません｣\n"
+"    それで愛想のよい言葉は終わり、あなたはぶっきらぼうに保安区画の外へ出された。しかしすくなくともあなたはいくらかのかねを⸺そしていくらか本物の戦闘を"
+"見る機会を得たのだ。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:124
 msgid ""
@@ -38473,6 +38621,9 @@ msgid ""
 "an assault on the terrorist base, and Colonel Urnus said that you can "
 "contact a Dvaered liaison whenever you're ready for the operation."
 msgstr ""
+"あなたは FLF の秘密基地の位置をつきとめようとして努力していたドベーレッドを助けた。あなたは FLF パイロットと見せかけて、本物の FLF "
+"パイロットたちをおびきよせ、1 隻を無力化してその飛行記録を盗むことができた。今ドベーレッドはテロリストの基地への急襲を計画している。そしてアーナス大佐は"
+"、あなたに作戦の用意ができしだいドベーレッドの連絡係に連絡をとってかまわないといった。"
 
 #. The Dvaered ships should attack the player, so set them hostile.
 #. These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
@@ -38483,44 +38634,46 @@ msgstr ""
 #: dat/missions/dvaered/dv_antiflf02.lua:180
 msgid ""
 "Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"
-msgstr ""
+msgstr "FLF が来た！　全ユニット、電磁パルス兵器に切り替えて、テロリスト船を無力化せよ！"
 
 #. Only true as long as the FLF aren't there yet
 #: dat/missions/dvaered/dv_antiflf02.lua:193
 msgid "You fought too hard!"
-msgstr ""
+msgstr "あなたはがんばって戦いすぎた！"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:193
 msgid ""
 "You have disabled a Dvaered ship, thereby violating your orders. The "
 "operation is canceled thanks to you. The Dvaered are less than pleased."
 msgstr ""
+"あなたはドベーレッド船を無力化してしまった。したがって、あなたは指図に違反したということになる。作戦はあなたのおかげで中止された。ドベーレッドはすこしも満"
+"足していない。"
 
 #. Persuade the Dvaered to stop shooting at disabled FLF
 #: dat/missions/dvaered/dv_antiflf02.lua:205
 msgid ""
 "All targets neutralized. Download the flight log and let's get out of here!"
-msgstr ""
+msgstr "すべての目標を制圧した。飛行記録をダウンロードして、ここから離れよう！"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:216
 msgid "All the FLF are dead!"
-msgstr ""
+msgstr "FLF が全員死んだ！"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:216
 msgid ""
 "Unfortunately, all the FLF ships have been destroyed before you managed to "
 "board one of them. The operation ended in failure."
-msgstr ""
+msgstr "不幸にも、あなたがその 1 隻にどうにか移乗するまえに、すべての FLF 船が破壊されてしまった。作戦は失敗に終わった。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:223
 msgid "Take no prisoners - only their logs"
-msgstr ""
+msgstr "捕虜は取るな⸺記録だけ"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:223
 msgid ""
 "You successfully board the FLF ship and secure its flight logs. This is what "
 "the Dvaered want - you should take it to a Dvaered planet immediately."
-msgstr ""
+msgstr "あなたは FLF 船に移乗して、飛行記録を確保した。これがドベーレッドの望んでいるものだ。すぐにドベーレッドの惑星に持っていったほうがいい。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:57
 msgid ""
@@ -38541,6 +38694,14 @@ msgid ""
 "    The liaison blinks awake. \"These are the parameters and conditions of "
 "the mission. Will you be accepting this assignment?\""
 msgstr ""
+"それから連絡係の表情が無表情になり、そして声も落ちついたものになった。あきらかに、この男はその職業において長いあいだ人びとに概況説明をおこなってきたのだ。"
+"だからたぶん、眠っていたってできるのだろう。やっているあいだにどうもほんとうに寝ているらしいという情景があなたの頭に浮かんだ。\n"
+"    ｢近い将来、ドベーレッド艦隊は{sys}星系にいる国家の敵にたいして行動をおこします。目的は、すべての敵を見つけだして破壊することです。"
+"この作戦では HDSF オブスティネイトが旗艦となる予定です。この戦いに参加する全ユニットは、その司令官に従うことになります。艦種や階級にはかかわりなくで"
+"す。オブスティネイトと戦闘群は、主要目標への爆撃を実行するのに集中します。あなたの任務は、予備ユニットとして側面を守り、任務の成功を脅かすすべての敵を攻撃"
+"することです。注意してほしいのは、あなたが戦域に入ると、あなたは責任をもったとみなされることです。だから星系からの離脱は、卑怯な行為であり、裏切り行為であ"
+"るとみなされます｣\n"
+"    連絡係がまばたきをして、目を覚ました。｢これが任務の範囲と状況です。この任用を受けいれますか？｣"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:61
 msgid ""
@@ -38553,6 +38714,11 @@ msgid ""
 "happen to just anybody.\"\n"
 "    "
 msgstr ""
+"ドベーレッドの連絡係が見てあなただとわかると、立ちあがって握手した。\n"
+"    ｢ようこそ、市民{player}。FLF の脅威に対抗する戦いでのあなたの最近の偉業については聞いています。多くのドベーレッドと同様に、わたしも事"
+"態がこれほどうまく進んでいるのに喜んでいます、それもすくなからず、あなたの努力のおかげですよ！　みたところ最高司令部も同じように感じているらしいです。あな"
+"たには今度の作戦のために軍事的な許可を与えるということですから。それはちょっとだれにでもってことではないですよ｣\n"
+"    "
 
 #: dat/missions/dvaered/dv_antiflf03.lua:65
 msgid ""
@@ -38562,16 +38728,20 @@ msgid ""
 "what this is all about.\"\n"
 "    "
 msgstr ""
+"ドベーレッドの連絡係があなたにあいさつした。\n"
+"    ｢あなたが戻ってくるのはわかっていました、市民{player}。作戦はまだ始まっていませんので、あなたの助力はまだ役に立ちます。だからたぶん、また"
+"作戦についてすべて説明すべきでしょうね｣\n"
+"    "
 
 #: dat/missions/dvaered/dv_antiflf03.lua:71
 msgid "One swift stroke"
-msgstr ""
+msgstr "すばやいひと突き"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:72
 #: dat/missions/dvaered/dv_antiflf03.lua:76
 #: dat/missions/dvaered/dv_antiflf03.lua:81
 msgid "The battlefield awaits"
-msgstr ""
+msgstr "戦場が待っている"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:72
 msgid ""
@@ -38592,6 +38762,14 @@ msgid ""
 "Dvaered pilots, who are clearly going to be participating in the upcoming "
 "battle as well."
 msgstr ""
+"｢すばらしい。本日 0400 にここの軍司令所へ出頭してください。そこで概況説明がされるでしょう｣\n"
+"    "
+"連絡係はあなたに小さなアクセスカードを手渡した。それにはドベーレッド軍の記章がついている。あなたには文民の奉仕者をこえた水準の許可が与えられたらしい。\n"
+"    連絡係は立ちあがり、そっけないあいさつをしてからバーの外へ歩き去った。あなたはしばらく残っていた。まだいくらか時間がたたないと概況説明は始まらない"
+"からだ。あなたは最近のあなたの偉業についてよく考えてみた。あなたの行為はドベーレッドと FLF 反乱軍とのあいだの力の均衡に強烈な手だしをするものだった。"
+"そしてすぐに、あなたは自分の決断の結果を自分自身の目で見られることになる。あなたはこの銀河にちがいをもたらしたことを知って、達成感を感じた。\n"
+"    数時限後に、あなたは気がついてみるとドベーレッド軍事基地にある機能本位で無味乾燥な概況説明室にいた。あなたは数人のドベーレッドパイロットといっしょ"
+"になった。この人たちも今度の戦いに参加するのは疑いもない。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:76
 msgid ""
@@ -38619,6 +38797,18 @@ msgid ""
 "if the FLF decide to sit and cower. However, we expect them to put up a "
 "fight.\""
 msgstr ""
+"｢諸君｣ と、厳格に見えるがそれ以外にはこれといった特徴のないドベーレッドの士官が部屋にいる者に話しかけた。｢どうか注目していただきたい。わたしはここで、"
+"今度の作戦の概況説明をすることになっている。全員が知るとおり、これはシンドバッドと呼ばれるテロリスト基地を破壊することが中心となる｣\n"
+"    士官の背後の壁が明るく照らされ、{sys}星系の概要図が表示された。中央には赤く光った円があり、FLF の記号が重ねられている。\n"
+"    ｢われわれは完全に作戦可能で重武装した軍事施設に対処する。FLF はテロリストかもしれないが、よく組織化されている。これは FLF "
+"の最大の拠点なので、この基地は重武装していて、攻撃から守るために防衛用の宇宙船で大きく補われていると仮定しなければならない。それゆえわれわれは、2 "
+"段階に分けて急襲をおこなう｣\n"
+"    壁にある星系の図が更新されて、白いドベーレッドの記号の群れが光る円からいくらか距離をとった位置に表示された。おまけに数個の白い点もあった。どうも護"
+"衛の戦闘機を意味するらしい。\n"
+"    ｢われわれの攻撃部隊は HDSF オブスティネイト、護衛となる数隻の駆逐艦と 2 飛行隊の戦闘機からなる。くわえて、われわれの部隊には市民{pla"
+"yer}が参加する。この機会にドベーレッド荘のために戦うと志願してくれた｣。士官はあなたにうなずいてから、概況説明をつづける。｢われわれの部隊と編隊はわれ"
+"われが標準的な爆撃行として準備してきたとおりのことをする。じっさい、FLF が座りこんで縮こまってしまうことに決めたら、おきることはそれだ。しかし、"
+"われわれは FLF が戦いに出てくると予想している｣"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:81
 msgid ""
@@ -38648,19 +38838,32 @@ msgid ""
 "action before in your career, but you still feel tense about what is to "
 "come. You decide to have another drink, just for luck."
 msgstr ""
+"図がまた更新された。今回は、数個の赤い点の群れが光る円とドベーレッド編隊の間に表示される。\n"
+"    ｢FLF は戦闘機と爆撃機の編隊を送って、われわれの攻撃部隊と交戦しようとする。今の時点では、船の数と構成は不明だ。しかしそうとうな差でわれわれよ"
+"り数が勝ると仮定するのが賢明だろう。予備の護衛としてのきみたちの任務は、攻撃部隊の側面を守って、オブスティネイトを目標に捉えようとする FLF 船を迎撃す"
+"ることだ。知っておいてほしいが、オブスティネイトは対戦闘機むけにはかぎられた武装しかしない予定だ。船体のほとんどは戦闘機格納庫に専有されるからな。オブステ"
+"ィネイトを破壊されてはならない！　これがきみたちの最大の目標だ！｣\n"
+"    壁では、赤い点が白い点に迎撃され、点滅してなくなった。それから白い点の 2 番めの集団がドベーレッドの記号の近くに現れて、光る円の方へ移動する。"
+"\n"
+"    ｢反撃しようとした部隊を FLF が使いつくしてしまうとすぐに、HDSF オブスティネイトは爆撃機の発進を開始する。爆撃機だけで敵の基地を破壊でき"
+"るとわれわれは確信している。しかしまんいち抵抗力が予想より強かった場合には、オブスティネイト自身が進入して火力支援を与える｣\n"
+"    壁の光る円が暗くなって消えた。ドベーレッド艦隊だけが残り、勝利者となる。\n"
+"    ｢これで終わりになる。きみたちは命令をうけた。予定表どおりに配置につくように。諸君とは{sys}星系で会うことになるだろう。幸運を｣\n"
+"    しばらくあとに、あなたはドベーレッドの宇宙港のバーに戻った。あなたはこれまで仕事で戦いを見てきたが、来たるべきものにはまだ緊張を感じていた。あなた"
+"はもう一杯飲むことに決めた。ちょっとした縁起かつぎだ。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:90
 #: dat/missions/dvaered/dv_antiflf03.lua:98
 msgid "Destroy the FLF base!"
-msgstr ""
+msgstr "FLF 基地を破壊せよ！"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:92
 msgid "Defend the HDSF Obstinate and its escorts"
-msgstr ""
+msgstr "HDSF オブスティネイトとその護衛を守れ。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:93
 msgid "Destroy the FLF base"
-msgstr ""
+msgstr "FLF 基地を破壊せよ。"
 
 #. Update mission
 #: dat/missions/dvaered/dv_antiflf03.lua:94
@@ -38675,11 +38878,11 @@ msgstr "{sys}星系の{pnt}に戻れ。"
 msgid ""
 "The Dvaered are poised to launch an all-out attack on the secret FLF base. "
 "You have chosen to join this battle for wealth and glory."
-msgstr ""
+msgstr "ドベーレッドは FLF の秘密基地への全面攻撃に出る用意がじゅうぶんにできている。あなたは富と栄光のため、この戦いに加わることを選んだ。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:97
 msgid "Wealth and glory"
-msgstr ""
+msgstr "富と栄光"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:107
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:76
@@ -38693,6 +38896,8 @@ msgid ""
 "isn't yet underway, you may still choose to participate. Simply come back to "
 "me if you change your mind.\""
 msgstr ""
+"｢理解しました、市民。それでも覚えておいてください。作戦は依然として進行中であって、まだ参加を選ぶこともできます。もし考えが変わったら、わたしのところへ戻"
+"ってくるだけでいいです｣"
 
 #. Amount of initial Dvaered bombers
 #. Amount of reinforcement Dvaered bombers
@@ -38703,18 +38908,18 @@ msgstr ""
 msgid ""
 "All Dvaered vessels in position. Citizen, join the fleet and commence the "
 "attack!"
-msgstr ""
+msgstr "すべてのドベーレッド船が配置についた。市民、艦隊に合流して攻撃を開始せよ！"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:143
 msgid ""
 "You have left the system without first completing your mission. This "
 "treachery will not soon be forgotten by the Dvaered authorities!"
-msgstr ""
+msgstr "あなたは最初に任務を完了させずに星系を離れた。この裏切りがドベーレッド当局からすぐに忘れられることはない！"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:168
 #: dat/missions/dvaered/dv_antiflf03.lua:172
 msgid "FLF base? What FLF base?"
-msgstr ""
+msgstr "FLF の基地？　どの FLF の基地？"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:168
 msgid ""
@@ -38740,6 +38945,17 @@ msgid ""
 "enjoy greater respect when you wear this on your lapel, at least as long as "
 "you're in Dvaered space.\""
 msgstr ""
+"あなたが船から踏みだすと、ドベーレッド軍の代表があなたを待っていた。ふつうこれはよいことではない。ドベーレッド軍は一般的に市民を移動式空気漏れ修理剤と見て"
+"いるからだ。ドベーレッドがなにかまずいことをしたのでないかぎり。しかし今回は例外だ。兵士たちはていねいにあなたを案内し、アーナス大佐の執務室に連れていった"
+"。大佐は初めにあなたをこの作戦に巻きこんだ人物だ。\n"
+"    ｢ようこそ、市民{player}｣ と、アーナスがいった。｢葉巻は？　ああ。うん、好きなようにしてくれ。それはともかく、最近の FLF にたいする"
+"勝利であなたが果たした役割のことでは、直接礼がいいたかった。あなたが与えてくれた情報がなければ、われわれはけっしてやつらを巣からいぶしだせなかったかもしれ"
+"ない！　くわえて、戦場であなたの奮闘が勝利をたしかなものにするのに役立った。ドベーレッド荘はこのような業績を評価している、市民｣\n"
+"    "
+"大佐は部屋の中にある棚のところへ歩いていき、小さな箱を取りだした。箱から大佐は二つのクレジットチップを出す。それに星の形をした小さな金属の記章もだ。\n"
+"    ｢これはあなたの奉仕にたいする報奨だ。かねは自明だな、もちろん。記章については、民間表彰である武勇の星だ。名誉のしるしだと考えてくれ。勲章ではない"
+"が、それでもドベーレッド一般市民のなかでは名声のあらわれだとみなされている。これをえりに着けておけば、まちがいなくさらに大きな尊敬を享受できるだろう。すく"
+"なくともドベーレッド宙域にいるかぎりはな｣"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:172
 msgid ""
@@ -38760,6 +38976,14 @@ msgid ""
 "regime, perhaps you might want to reconsider your allegiance when the time "
 "comes..."
 msgstr ""
+"アーナス大佐が自分のいすに戻った。\n"
+"    ｢だがひとついわせてくれ。わたしは FLF の最期をたしかに見たとは思っていない。われわれは秘密基地を破壊することで FLF に致命的な打撃を与え"
+"たかもしれない。だが反逆の感情が辺境世界の間で高まっているかぎり、また醜悪な頭をもたげてくるだろう。これはわたしの仕事に終わりがないとう意味だ。そしてたぶ"
+"ん、あなたのもだ。おそらく将来、われわれはまたいっしょに働くことになるだろう。しかしそのときは、われわれの鼻先から脅威を取り除くだけということにはならない"
+"｣。アーナスが険しい顔でほほえんだ。｢問題の源をきっぱりと根絶しようとすることになる｣\n"
+"    複合軍事施設から出るために案内されて廊下を歩いているとき、あなたのえりには武勇の星がきらめいていた。歩きながら、あなたは自分の決断から導かれる最終"
+"的な可能性について考えていることに気がついた。アーナス大佐は辺境との戦争をほのめかしたうえで、あなたが巻きこまれるとも暗に示していた。ドベーレッドは軍事政"
+"体から予想できるとおりにあなたをもてなしている。もしかすると、時が来たら忠誠をつくすことについては見なおしたほうがいいということもありえるのだ……"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:183
 msgid ""
@@ -38769,17 +38993,19 @@ msgid ""
 "Dvaered again in a future campaign aimed at \"rooting out the source of the "
 "problem once and for all\"."
 msgstr ""
+"あなたはドベーレッドが FLF の秘密基地であるシンドバッドを破壊するのを助けた。テロリストたちは完全には除去されていないが、数においてはおおいに減ってい"
+"る。｢問題の源をきっぱりと根絶する｣ ことをねらった将来の戦役で、あなたがまたドベーレッドを助けられるかもしれないとアーナス大佐は暗示した。"
 
 #. Timer for the frontier's invasion
 #. Spawns the FLF base, ship version.
 #: dat/missions/dvaered/dv_antiflf03.lua:238
 msgid "Terrorist station eliminated! All units, return to base."
-msgstr ""
+msgstr "テロリストのステーションは除去された！　全ユニット、基地へ戻れ。"
 
 #. Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
 #: dat/missions/dvaered/dv_antiflf03.lua:257
 msgid "Obstinate"
-msgstr ""
+msgstr "オブスティネイト"
 
 #. Treat player as one more
 #. Helper function
@@ -38796,12 +39022,13 @@ msgstr ""
 #. player.msg("Starting stage 4.")
 #: dat/missions/dvaered/dv_antiflf03.lua:388
 msgid "This is Obstinate. Launching bombers."
-msgstr ""
+msgstr "こちらはオブスティネイト。爆撃機を発進させる。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:396
 msgid ""
 "WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"
 msgstr ""
+"WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"
 
 #. Capsule function for pilot.broadcast, for timer use
 #. Spawns the initial Dvaered bombers.
@@ -38820,17 +39047,17 @@ msgstr ""
 #. Handle mission failure.
 #: dat/missions/dvaered/dv_antiflf03.lua:538
 msgid "The flagship is dead!"
-msgstr ""
+msgstr "旗艦がやられた！"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:538
 msgid ""
 "The HDSF Obstinate has been destroyed by the FLF defending forces! This "
 "mission can no longer be completed."
-msgstr ""
+msgstr "HDSF オブスティネイトが FLF の防衛隊に破壊された。この任務はもう完了させられない。"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:561
 msgid "This is Obstinate, we're under fire!"
-msgstr ""
+msgstr "こちらはオブスティネイト。われわれは砲火をあびている！"
 
 #. Make escorts fight back, then return to their positions
 #.
@@ -39696,7 +39923,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:208
 msgid "Colonel Urnus"
-msgstr ""
+msgstr "アーナス大佐"
 
 #. To avoid being in the range
 #. Equips a Goddard for a duel, with or without repeating railguns
@@ -47771,7 +47998,7 @@ msgstr ""
 "が理解する間もなく連れ去った。\n"
 "    ｢あなたは適切にドベーレッド荘への奉仕をしました、市民｣ と、石のような表情をした保安特派隊の隊長があなたにいった。｢この奉仕を表彰して、"
 "われわれは FLF "
-"のテロリストにかんするほかの作戦への関与をあなたに許可することができます。もしさらに質問があれば、われわれの公衆連絡係に伝えてください｣\n"
+"のテロリストにかんするほかの作戦への関与をあなたに許可することができます。もしさらに質問があれば、われわれの公衆むけ連絡係に伝えてください｣\n"
 "    その士官はあなたのこたえを待つことなく、向きを変えて立ち去った。それに実体のある方法での報奨もなしだ。あなたはその連絡係をさがして見つけだすべきな"
 "のかどうかと思った。すくなくとも、この事態まるごとからなにか得られることを期待して。"
 
@@ -47790,7 +48017,7 @@ msgstr ""
 msgid ""
 "Nothing personal, mate, but we're expecting someone and you ain't him. No "
 "witnesses!"
-msgstr "悪く思わないでくれ、相棒。しかしこちらはある人を待っていて、それはあんたじゃない。だれも見てないからな！"
+msgstr "悪く思わないでくれ、相棒。しかしこちらはある人を待っていて、それはあんたじゃない。目撃者はいないしな！"
 
 #. Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
 #. If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
@@ -47826,8 +48053,8 @@ msgstr ""
 "ああ、くそっ、これはまずい。こんなに長く不在にするとは思ってなかったんだ！　ちょっと、今はあなたの通信アレイを使わなきゃならない。信じてくれ！｣\n"
 "    グレーガーがなにをしようと考えているのか聞く間もなく、グレーガーは通信アレイを調整しはじめて、すぐに望みの周波数を見つけた。\n"
 "    ｢FLF "
-"の警備編隊、こちらはグレーガー・フレッチャー大尉だ。権限コード、シックス—シックス—ナイナー—フォー—セブン—ガンマ—フォックストロット！　砲撃をやめてく"
-"れ、くり返す、砲撃をやめてくれ！｣。グレーガーはそれからあなたの方を向いた。｢あなたも同じ。撃つのはやめてくれ。これは誤解だった。あの人たちは敵じゃない｣"
+"の警備編隊、こちらはグレーガー・フレッチャー大尉だ。権限コード、シックス—シックス—ナイナー—フォー—セブン—ガンマ—フォックストロット！　撃ちかたやめ、"
+"くり返す、撃ちかたやめ！｣。グレーガーはそれからあなたの方を向いた。｢あなたも同じ。撃つのはやめてくれ。これは誤解だった。あの人たちは敵じゃない｣"
 
 #: dat/missions/flf/flf_pre01.lua:166
 msgid ""
@@ -47889,22 +48116,22 @@ msgstr ""
 
 #: dat/missions/flf/flf_pre02.lua:45
 msgid "Return to the FLF base"
-msgstr ""
+msgstr "FLF の基地にもどれ。"
 
 #: dat/missions/flf/flf_pre02.lua:51
 msgid "FLF petty officer"
-msgstr ""
+msgstr "FLF のかれんな士官"
 
 #: dat/missions/flf/flf_pre02.lua:51
 msgid ""
 "There is a low-ranking officer of the Frontier Liberation Front sitting at "
 "one of the tables. She seems somewhat more receptive than most people in the "
 "bar."
-msgstr ""
+msgstr "辺境自由戦線の低い階級の士官がテーブルに座っている。その士官はバーにいるほとんどの人より、いくぶん受けいれてくれやすいようだ。"
 
 #: dat/missions/flf/flf_pre02.lua:56 dat/missions/flf/flf_pre02.lua:58
 msgid "A chance to prove yourself"
-msgstr ""
+msgstr "自分を証明する機会"
 
 #: dat/missions/flf/flf_pre02.lua:56
 msgid ""
@@ -47918,6 +48145,11 @@ msgid ""
 "of you, see. You helped us once, it is true, but that doesn't tell us much. "
 "We don't know you.\""
 msgstr ""
+"この FLF の士官はあなたが近づいてもあまり驚いてはいないようだった。それどころか、初めからあなたがこうすることを予想していたようだ。\n"
+"    ｢ごあいさつ申しあげます｣ と、士官はうなずいてそっけなくあいさつをする。｢わたしは伍長のベニート。それからあなたは{player}にちがいないで"
+"すね。フレッチャー大尉をここまで無事に連れかえった人｣。ベニートの表情がすこし厳しくなった。｢とはいえ、わたしはここに愛想のよい会話をするためにいるんじゃ"
+"ありません。あなたはおそらく気づいていると思いますが、ここの人たちはあなたがいることにすこし不安を感じているんです。みんなあなたがなにを考えているのかわか"
+"りませんよね。あなたはいちどわれわれを助けた。それはそのとおり。でもそれは多くを教えてくれるわけじゃありません。われわれはあなたをよく知らないんです｣"
 
 #: dat/missions/flf/flf_pre02.lua:58
 msgid ""
@@ -47932,10 +48164,15 @@ msgid ""
 "you're in for greater things, if you stand for justice... Perhaps you'll "
 "consider joining with us?\""
 msgstr ""
+"じっさい、このバーにいるほかの人たちがあなたにひそやかないちべつを与えることを、あなたはたえず気づいていた。ここの人たちはむきだしの敵意を見せはしないが、"
+"あなたが足もとに気をつけて言葉を慎重に選ばないと、物事は急速に悪化する可能性がある。\n"
+"    ベニートは手を振って、なんの用心もいらないことを示した。｢そうはいっても、上の階級の人たちは、もしあなたがわれわれの目的にいつわりなく共感している"
+"なら、それを証明する機会を与えることに決めたの。もちろん、どちらかといえばわれわれの争いに巻きこまれたくないのだとしても、それは理解できる。でももしもっと"
+"大きなことに加わりたいなら、もし正義のために戦いたいのなら……。おそらくあなたはわれわれに参加することを考えるんじゃない？｣"
 
 #: dat/missions/flf/flf_pre02.lua:60
 msgid "Patrol-B-gone"
-msgstr ""
+msgstr "巡視隊 B がいなくなった"
 
 #: dat/missions/flf/flf_pre02.lua:60
 msgid ""
@@ -47954,24 +48191,34 @@ msgid ""
 "you're really unlucky. If you think that's too much for you, you can abort "
 "the mission for now and come to me again later. Otherwise, good luck!\""
 msgstr ""
+"｢それを聞けてうれしいです。われわれがまだふつうのパイロットから支持されているとわかってよかった。それはともかく、われわれがしてほしがっているのはなんなの"
+"かをくわしく説明させてください。たぶんあなたも気がついているとおり、ドベーレッドは最近ではわれわれを見つけて狩りたてることに多くの資源をつぎこんでいます。"
+"そしてわれわれの基地はうまく隠してありますが、もちろんあの絶え間のない巡視隊は、われわれが安全だと感じるようなことはなにもしていません！　"
+"あなたもここへ来る途中でわかったと思います。あなたはここから出て、{sys}星系にいる巡視隊のひとつを除去することになります｣\n"
+"    あなたは抗議した。そして伍長に、すべての新兵が FLF "
+"の仲間として受けいれられるためには、このような危険な任務を引き受けなければならないのかとたずねる。ベニートは含み笑いをして、なだめようという身ぶりをした。"
+"\n"
+"    ｢落ちついてください。そう聞こえるほど悪くはないんです。小さな巡視隊をひとつ除去しなければならないだけです。4 "
+"隻以上と戦う必要がでてくるとは思いません。もしほんとうに運が悪くて、4 "
+"隻です。自分には手におえないと思ったら、今のところは任務を中止して、あとでまたわたしのところへ戻ってきてください。そうでなければ、幸運を祈ります！｣"
 
 #: dat/missions/flf/flf_pre02.lua:68
 msgid ""
 "To prove yourself to the FLF, you must take out one of the Dvaered security "
 "patrols."
-msgstr ""
+msgstr "FLF に自分を証明するために、あなたはドベーレッドの保安巡視隊のひとつを除去しなければならない。"
 
 #: dat/missions/flf/flf_pre02.lua:69
 msgid "FLF: Small Dvaered Patrol in {sys}"
-msgstr ""
+msgstr "FLF: {sys}星系の小さなドベーレッド巡視隊"
 
 #: dat/missions/flf/flf_pre02.lua:71
 msgid "A chance to make friends with the FLF."
-msgstr ""
+msgstr "FLF の仲間になる機会。"
 
 #: dat/missions/flf/flf_pre02.lua:83
 msgid "Some other time perhaps"
-msgstr ""
+msgstr "たぶん別のときなら"
 
 #: dat/missions/flf/flf_pre02.lua:83
 msgid ""
@@ -47979,12 +48226,14 @@ msgid ""
 "ever change your mind, I'll be around on Sindbad. You won't have trouble "
 "finding me, I'm sure.\""
 msgstr ""
+"｢わかりました。それがまともなこたえですね。あなたなりの理由があるのだとわかっています。でももし考えが変わったら、わたしはシンドバッドの近くにいますから。"
+"わたしを見つけるのに苦労することはありません。保証します｣"
 
 #. Check for defection possibility
 #: dat/missions/flf/flf_pre02.lua:170 dat/missions/flf/flf_pre02.lua:171
 #: dat/missions/flf/flf_pre02.lua:172
 msgid "A tempting offer"
-msgstr ""
+msgstr "気をそそる申し出"
 
 #: dat/missions/flf/flf_pre02.lua:170
 msgid ""
@@ -47992,6 +48241,8 @@ msgid ""
 "Dvaered would be bad news, but then this one bothered to hail you in the "
 "heat of battle, so perhaps there is more here than meets the eye."
 msgstr ""
+"あなたのビュースクリーンがドベーレッドの大佐を出した。大佐は緊張しているように見える。ふだんなら、緊張しているドベーレッドは悪い知らせだ。しかしそれにして"
+"も、この人は激しい戦いのなかでわざわざ呼びかけてきたのだから、たぶん見てわかる以上の理由があるのだろう。"
 
 #: dat/missions/flf/flf_pre02.lua:171
 msgid ""
@@ -48000,6 +48251,8 @@ msgid ""
 "officer has looked through our records and found that you were recently a "
 "law-abiding citizen, doing honest freelance missions.\""
 msgstr ""
+"｢わたしはドベーレッド艦隊、対テロリズム部門のアーナス大佐。ふつうドベーレッド荘の敵に連絡をとることはないが、情報将校があなたの記録に目を通して、あなたは"
+"最近まで法を守る市民であって、誠実に自由契約の任務をやっていたのがわかった｣"
 
 #: dat/missions/flf/flf_pre02.lua:172
 msgid ""
@@ -48015,14 +48268,20 @@ msgid ""
 "guarantee you that you will never again be safe in Dvaered space. What say "
 "you? Surely this proposition beats anything that rabble can do for you?\""
 msgstr ""
+"｢あなたのような類の人は知っている、{player}。あなたは利益を得られる仕事をとって、もっとも高いかねを払う側に味方する。銀河にはあなたのような人はた"
+"くさんいるが、だれもが認めるように、あなたのような才能をもつ者はあまりいない。だからわたしはこの申し出をしてもいいと思ったのだ。あなたには FLF の作戦"
+"基地と戦闘能力についての情報を提供してもらう。その見返りとして、わたしは上司を説得して、あなたは初めからわたしのために働いていたことにする。そうなれば、あ"
+"なたはドベーレッド船に急襲されるといった結果に直面せずにすむ。そのうえ、あなたの口座にかなりの金額のクレジットを振りこむつもりだ。もちろん、ドベーレッド荘"
+"の味方としての立場を与えよう。しかしもし拒絶したら、ドベーレッド宙域で無事にいられることはもう二度とないと保証する。さあどうする？　"
+"この提案は、あの下層民たちにできるものをすべてしのいでいると確信しているが？｣"
 
 #: dat/missions/flf/flf_pre02.lua:173
 msgid "Remain loyal to the FLF"
-msgstr ""
+msgstr "FLF に忠実なままでいる"
 
 #: dat/missions/flf/flf_pre02.lua:175
 msgid "Opportunism is an art"
-msgstr ""
+msgstr "ひよりみは芸術である"
 
 #: dat/missions/flf/flf_pre02.lua:175
 msgid ""
@@ -48032,14 +48291,17 @@ msgid ""
 "turns back to you. \"Proceed to {pnt} in the {sys} system, citizen. I will "
 "personally meet you there.\""
 msgstr ""
+"アーナス大佐は大きく口を開けてにっこりとした。｢正しい選択をするのはわかっていたよ、市民！｣。大佐は艦橋にいてカメラの視界の外にいるだれかにむけて話をする"
+"。｢飛行隊に通知しろ。この船はもう友軍だ。撃ちかたやめ｣。それから大佐はまたあなたの方を向いた。｢{sys}星系の{pnt}へ行ってくれ、市民。直接そこで"
+"会おう｣"
 
 #: dat/missions/flf/flf_pre02.lua:191
 msgid "Fly to the {sys} system and land on {pnt}"
-msgstr ""
+msgstr "{sys}星系に飛んで、{pnt}に着陸せよ。"
 
 #: dat/missions/flf/flf_pre02.lua:201
 msgid "End of negotiations"
-msgstr ""
+msgstr "交渉の終わり"
 
 #: dat/missions/flf/flf_pre02.lua:201
 msgid ""
@@ -48047,23 +48309,25 @@ msgid ""
 "bites at you. \"In that case you will be destroyed along with the rest of "
 "that terrorist scum. Helm, full speed ahead! All batteries, fire at will!\""
 msgstr ""
+"アーナス大佐はあなたの返答に目に見えるほどいらついた。｢それならけっこうだ｣ "
+"と、大佐があなたにかみついた。｢そういうことなら、あのテロリストのくずといっしょに殺されることになる。航海士、全速前進！　全砲列、自由に砲撃してよし！｣"
 
 #: dat/missions/flf/flf_pre02.lua:235
 msgid "We have your back, {player}!"
-msgstr ""
+msgstr "われわれがうしろにいる、{player}！"
 
 #: dat/missions/flf/flf_pre02.lua:250
 msgid "{player} is selling us out! Eliminate the traitor!"
-msgstr ""
+msgstr "{player}がわれわれを売った！　裏切り者を排除せよ！"
 
 #: dat/missions/flf/flf_pre02.lua:290
 msgid "Let's get out of here, {player}! We'll meet you back at the base."
-msgstr ""
+msgstr "ここから出ようか、{player}！　基地で会うことにしよう。"
 
 #: dat/missions/flf/flf_pre02.lua:305 dat/missions/flf/flf_pre02.lua:307
 #: dat/missions/flf/flf_pre02.lua:308 dat/missions/flf/flf_pre02.lua:310
 msgid "Breaking the ice"
-msgstr ""
+msgstr "なごやかになる"
 
 #: dat/missions/flf/flf_pre02.lua:305
 msgid ""
@@ -48075,6 +48339,10 @@ msgid ""
 "faces, and some even tell you you did a fine job. Among them is Corporal "
 "Benito. She walks up to you and offers you her hand."
 msgstr ""
+"シンドバッド・ステーションを離れたときには、あなたにとって冷たくさびしい場所だった。ステーションにいた FLF "
+"の兵士たちは、どういうときでもできるだけあなたを避けていた。そして基本的なサービスも、ふつう期待される以上に得るのが難しかった。\n"
+"    しかしあなたがドベーレッドに勝利して帰還した今、この場所はずいぶんともてなしがよくなった。人びとの顔にはほほえみが増え、あなたによい仕事をしたとい"
+"う者さえいる。そのなかにはベニート伍長もいた。伍長があなたのところへ歩いてきて、手を差しだす。"
 
 #: dat/missions/flf/flf_pre02.lua:307
 msgid ""
@@ -48083,6 +48351,9 @@ msgid ""
 "sent you alone if I did, and I might not have sent you at all. But then, "
 "you're still in one piece, so maybe I shouldn't worry so much, eh?\""
 msgstr ""
+"｢おかえりなさい、{player}。それにおめでとう。ドベーレッドが援軍を送るとは予想してませんでした。それにしてもビジランスなんて。予想してたらあなたを"
+"ひとりで送らなかったのはたしかですね。そもそも行ってもらおうとしなかったかもしれません。でもまあ、あなたはまだばらばらになってないし、たぶんそんなに心配し"
+"なくてよかったんでしょうね？｣"
 
 #: dat/missions/flf/flf_pre02.lua:308
 msgid ""
@@ -48097,6 +48368,11 @@ msgid ""
 "those you've impressed, so from today on, you can call yourself one of us! "
 "How about that, huh?\""
 msgstr ""
+"ベニートはあなたをステーションのバーに連れていき、あなたになにかを、もっとよい言葉がないので、飲み物といわれているにちがいないものを買った。\n"
+"    ｢われわれはもちろん、あなたの努力に報いるつもりです｣ と、ベニートはあなたが座るといった。｢あなたは理解しているにちがいないですが、FLF は大"
+"きな資金をもっていません。財政支援は手ぎわをようするので、最初から辺境が手間をはぶくことはあまりありません。それでも、われわれはよい仕事には喜んで支払いま"
+"す。あなたの仕事はまさにそうでした。さらにあなたは、われわれの多くに気に入られました。まちがいなく、あなたは気づいていますよね。あなたに感心した人のなかに"
+"は、高級将校もいます。だから本日から、あなたはわれわれの一員だといえますよ！　すばらしいでしょう？｣"
 
 #: dat/missions/flf/flf_pre02.lua:310
 msgid ""
@@ -48110,6 +48386,11 @@ msgid ""
 "to raise your glass with them, making a toast to the fortune of battle in "
 "the upcoming campaign - and the sweet victory that lies beyond."
 msgstr ""
+"｢もちろん、われわれの仕事は始まったばかりでしかありません。疲れて休むひまはありませんよ。迫害者に対抗して戦いつづけなければならないんです。その道がまだ長"
+"いのは確実ですが、本日また次の貴重な味方を得たという事実には、元気づけられます。ミッションコンピューターを確認すれば、われわれを助けられる仕事がもっとあり"
+"ます。感謝のしるしとして、どうかこの武勇の五芒星を受けとってください。あなたはドベーレッドにたいする最後の勝利に重要な役割を演じると確信しています！｣\n"
+"    最後の部分は集まっていた FLF "
+"戦士たちからかっさいをうけた。あなたはみんなのために乾杯することにした。乾杯して、来たるべき戦役での武運を⸺そしてその先にあるこころよい勝利を祈ったのだ。"
 
 #: dat/missions/flf/flf_pre02.lua:317
 msgid ""
@@ -48117,11 +48398,13 @@ msgid ""
 "then refusing to change sides when the Dvaereds pressured you to. You can "
 "now consider yourself to be one of the FLF."
 msgstr ""
+"あなたはドベーレッドの巡視隊を除去して、それからドベーレッドに圧力をかけられたときに寝返ることを拒否して、FLF から完全な信頼を勝ちとった。"
+"あなたはいまでは自分を FLF の一員だとみなされている。"
 
 #: dat/missions/flf/flf_pre02.lua:326 dat/missions/flf/flf_pre02.lua:328
 #: dat/missions/flf/flf_pre02.lua:330
 msgid "A reward for a job well botched"
-msgstr ""
+msgstr "かなりぶざまな仕事への報い"
 
 #: dat/missions/flf/flf_pre02.lua:326
 msgid ""
@@ -48135,6 +48418,12 @@ msgid ""
 "you've cornered them, poof! They're gone, lost in that nebula. Thick as "
 "soup, that thing. I don't know how they can even find their own way home!\""
 msgstr ""
+"接舷するとすぐに、あなたは二人の兵士に迎えにこられ、アーナス大佐の部屋まで案内された。アーナスは温かくあなたを出迎え、いすと葉巻を勧める。あなたは前者は受"
+"けいれ、後者は断った。\n"
+"    ｢このステーションの成果にはほんとうに満足しているんですよ、市民｣ "
+"と、アーナスは始めた。｢完全に腹蔵なく話すと、わたしは挫折感を感じはじめていました。わたしの上司が首をつっこんできては、あの FLF "
+"を吹き飛ばしたという結果を求めるんです。しかし FLF はウナギのようにつかみどころがない。ちょうど隅に追いこんだと思ったら、ぱっ！　"
+"どこかに逃げて、あの星雲の中に消えるんです。スープみたいに濃い、あれですよ。FLF の連中が家に帰る道を見つけられるとも思いませんね！｣"
 
 #: dat/missions/flf/flf_pre02.lua:328
 msgid ""
@@ -48153,6 +48442,13 @@ msgid ""
 "be moving against them in force very soon, and I will make sure you'll be "
 "given the chance to be part of that. I'm sure it'll be worth your while.\""
 msgstr ""
+"アーナスは自分の葉巻を一服し、煙の輪を飛ばした。長いあいだに大佐がたまたま手にした最高の物件があなたであることは、天才でなくてもわかった。\n"
+"    ｢とにかく、あなたにはかね、立場、それに機会を約束した。そしてわたしはその約束を履行するつもりだ。あなたのかねはすでに口座に入っている。残高をあと"
+"で確認してくれ。立場については、あなたがなにをしたのか詮索しようとするドベーレッドがいないことは保証できる。軍事組織が気にするかぎりでは、あなたは "
+"FLF とはなにもしていない。それどころか、あなたは FLF との戦いでは有力な味方であったことが知られている！　最後に機会だが。話したように、われわれは"
+"あなたの飛行記録からの情報を分析している。そしてこれが終わったら、二、三質問をさせてもらうつもりだ。それをもとにすれば、われわれは FLF "
+"に対抗する新しい戦略をたてることができる。わたしの推測が完全に外れていないかぎり、FLF にたいする動きは大挙してすぐにでもおこなうことになるだろう。そし"
+"てあなたにはそれに参加する機会をまちがいなく与えることにする。それにはやりがいがあると確信しているよ｣"
 
 #: dat/missions/flf/flf_pre02.lua:330
 msgid ""
@@ -48166,6 +48462,12 @@ msgid ""
 "about your brief stay with the FLF. Once their curiosity is satisfied, they "
 "let you go, and you are free to return to your ship."
 msgstr ""
+"アーナスは立ちあがった。この面談が終わりに近づいたしるしだ。｢われわれの連絡係に気をつけておいてくれ、市民。連絡係が来たるべき戦いへの切符となる。さて、わ"
+"たしは忙しいので、席を外すように頼まなければならない。しかしまた会えるといいな。もしあなたが本日手にしたような経歴を築きあげつづけるなら、そうなるのはまち"
+"がいない。あなたにとってよい日でありますように！｣\n"
+"    "
+"あなたは大佐の部屋から出ていった。あなたはそれから尋問室に連れられていき、そこではドベーレッドの下級士官から礼儀は正しいもののしつような質問をされた。"
+"それは FLF のところでの短い滞在にかんするものだった。好奇心が満たされると、士官はあなたを解放したので、あなたは自由に船に戻れるようになった。"
 
 #: dat/missions/flf/flf_pre02.lua:335
 msgid ""
@@ -48178,6 +48480,10 @@ msgid ""
 "for one of the Dvaered liaisons so you can join the Dvaered in the upcoming "
 "mission to destroy Sindbad."
 msgstr ""
+"あなたが FLF の信頼を勝ちとろるための任務を遂行していると、ドベーレッドのアーナス大佐があなたに取引をもちかけた。あなたが FLF を裏切って "
+"FLF の秘密基地の位置情報を提供すれば、かわりに金銭的報酬を渡してあらゆる刑罰の免除するということだった。あなたがその取引を受けいれると、怒った "
+"FLF パイロットの飛行隊が報復としてあなたを攻撃することになった。けれども、FLF のテロリストは撃退された。それからアーナスは、ドベーレッドの連絡係に"
+"気をつけておけといった。そうすればあなたは来たるべき任務でドベーレッドに参加して、シンドバッドを破壊できるのだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -49549,7 +49855,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:334
 msgid "\"OK. I'll be here if you change your mind.\""
-msgstr "｢わかりました。もし考えを変えたら、ここにいますから｣"
+msgstr "｢わかりました。もし考えが変わったら、ここにいますから｣"
 
 #.
 #. Common Teleporting Functions
@@ -55133,7 +55439,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:54
 msgid "\"That's a shame. I'll be here if you change your mind.\""
-msgstr "｢それは残念です。考えを変えたらわたしはここにいますから｣"
+msgstr "｢それは残念です。考えが変わったら、わたしはここにいますから｣"
 
 #: dat/missions/neutral/antlejos/ant01.lua:58
 msgid ""
@@ -55273,7 +55579,7 @@ msgstr ""
 msgid ""
 "\"OK… I'll keep on terraforming here. Come back if you change your mind "
 "about helping.\""
-msgstr "｢わかりました……。わたしはここでテラフォーミングをしつづけます。もし助力について考えを変えたら、戻ってきてください｣"
+msgstr "｢わかりました……。わたしはここでテラフォーミングをしつづけます。もし助力について考えが変わったら、戻ってきてください｣"
 
 #: dat/missions/neutral/antlejos/ant02.lua:71
 msgid "\"Awesome. The {cargo} should be of great help.\""
@@ -62870,7 +63176,7 @@ msgstr "黒ネコがあなたを不気味に見つめている。"
 
 #: dat/missions/pirate/blackcat.lua:146
 msgid "A waft of black cat hair flies around."
-msgstr "黒ネコの毛がただよってそこらじゅうを飛んでいる。"
+msgstr "黒ネコの毛が漂ってそこらじゅうを飛んでいる。"
 
 #: dat/missions/pirate/blackcat.lua:147
 msgid "The black cat's tail fluffs up and it sprints away."
@@ -62927,9 +63233,7 @@ msgstr "神経質な人"
 msgid ""
 "You open a communication channel with the {plt} and a hologram of a nervous-"
 "looking individual materializes in front of you."
-msgstr ""
-"あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホログラ"
-"フがあなたの前に姿を表した。"
+msgstr "あなたは{plt}との通信チャネルを開いた。すると神経質な感じがする人物のホログラフがあなたの前に姿を現した。"
 
 #: dat/missions/pirate/blackcat.lua:241
 msgid "\"H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?\""
@@ -67906,10 +68210,8 @@ msgid ""
 "on his side. He mentions that he had good results with a smile on his face "
 "before directing you to take him back to {sys}."
 msgstr ""
-"接舷すると、アーノルド・スミスは FLF の船にひとりで入ると強調した。二、三次元"
-"すると、スミスは満足したようすで戻ってきた。今回のつきはスミスの側にあったよ"
-"うだ。スミスは笑顔でよい結果が得られたと説明してから、{sys}星系へ連れてもどる"
-"ように指示をした。"
+"接舷すると、アーノルド・スミスは FLF の船にひとりで入ると強調した。二、三時限すると、スミスは満足したようすで戻ってきた。今回のつきはスミスの側にあっ"
+"たようだ。スミスは笑顔でよい結果が得られたと説明してから、{sys}星系へ連れてもどるように指示をした。"
 
 #. Actually, I don't know how it could happened...
 #.
@@ -68053,7 +68355,7 @@ msgstr "{sys}星系の{pnt}に報告に戻れ。"
 msgid ""
 "\"I'm sorry to hear that. Don't hesitate to come back if you change your "
 "mind.\""
-msgstr "｢それを聞いて残念です。考えを変えたらためらわずに戻ってきてください｣"
+msgstr "｢それを聞いて残念です。考えが変わったら、ためらわずに戻ってきてください｣"
 
 #. Job is done
 #: dat/missions/shark/sh07_pirates.lua:121
@@ -69360,32 +69662,21 @@ msgid ""
 "surface it might seem like you accomplished little, you get the feeling this "
 "was an important step toward the conclusion of the whole affair."
 msgstr ""
-"また静まりかえった。ハルジャの誓いはわざとらしく形式ばったものに聞こえた。し"
-"かしそれでも、ハルジャが話したときにはとても誠実だとあなたは感じていた。\n"
-"    ジョアンがすこし息をついた。ジョアンがハルジャの誓いをくり返す。ほぼ言葉"
-"どおりで、ジョアンがかかわったとハルジャが疑った行為について、自分も潔白だと"
-"はっきりといった。あなたは並はずれたことをまさに目撃しているのだと感じた。真"
-"のシリウス人だけが理解を望める、信念の論証のようなものだ。それはたしかに、あ"
-"なたの目の前の二人には衝撃だった。二人ともこの状況が現実であるという事実と格"
-"闘していた。個人的な確信が、ずっと深いところを流れる共通の信仰と矛盾するのを"
-"発見したのだ。\n"
-"    ジョアンのほうが沈黙を破った。｢わかりました｣ と、ジョアンがいう。｢シリウ"
-"ス人からシリウス人へ、わたしはあなたの誓いを受けいれます。あなたではなかった"
-"と信じます｣\n"
-"    ハルジャが頭を下げた。｢シリウス人からシリウス人へ。あなたはしなかった｣。"
-"数瞬あとに、ハルジャはつけくわえる。｢しかしだれかがやった｣\n"
-"    ジョアンがうなずいた。｢だれかがした。でもだれが？　あんなことをして、だれ"
-"が利益を得る可能性があるの？　わけがわからない｣\n"
-"    そのあとは、どちらもほとんどしゃべらなかった。ジョアンがあなたの方を向"
-"く。そして今のところはこれで終わりだといった。｢これには大きな感情的負担を感じ"
-"ます。ハルジャもそうなのはまちがいないです。{player}、あなたの助力には感謝し"
-"ています。貯金をいくらかあなたの口座に振りこむように手配しました。これはわた"
-"しにできるせめてものことです。ここから先へ進む方法がわかったら、たぶんまたあ"
-"なたに連絡します。あなたをのけ者にするなんて夢にも思いません。ここまでしてく"
-"れたんですから｣\n"
-"    あなたは辞去して、宇宙港に戻った。表面上は、あなたがしたことはほとんどな"
-"かったように見えるかもしれない。それでもあなたはこれがこの出来事全体を集結に"
-"導く重要な一歩だと感じていた。"
+"また静まりかえった。ハルジャの誓いはわざとらしく形式ばったものに聞こえた。しかしそれでも、ハルジャが話したときにはとても誠実だとあなたは感じていた。\n"
+"    ジョアンがすこし息をついた。ジョアンがハルジャの誓いをくり返す。ほぼ言葉どおりで、ジョアンがかかわったとハルジャが疑った行為について、自分も潔白だ"
+"とはっきりといった。あなたは並はずれたことをまさに目撃しているのだと感じた。真のシリウス人だけが理解を望める、信念の論証のようなものだ。それはたしかに、あ"
+"なたの目の前の二人には衝撃だった。二人ともこの状況が現実であるという事実と格闘していた。個人的な確信が、ずっと深いところを流れる共通の信仰と矛盾するのを発"
+"見したのだ。\n"
+"    ジョアンのほうが沈黙を破った。｢わかりました｣ "
+"と、ジョアンがいう。｢シリウス人からシリウス人へ、わたしはあなたの誓いを受けいれます。あなたではなかったと信じます｣\n"
+"    ハルジャが頭を下げた。｢シリウス人からシリウス人へ。あなたはしなかった｣。数瞬あとに、ハルジャはつけくわえる。｢しかしだれかがやった｣\n"
+"    ジョアンがうなずいた。｢だれかがした。でもだれが？　あんなことをして、だれが利益を得る可能性があるの？　わけがわからない｣\n"
+"    そのあとは、どちらもほとんどしゃべらなかった。ジョアンがあなたの方を向く。そして今のところはこれで終わりだといった。｢これには大きな感情的負担を感"
+"じます。ハルジャもそうなのはまちがいないです。{player}、あなたの助力には感謝しています。貯金をいくらかあなたの口座に振りこむように手配しました。こ"
+"れはわたしにできるせめてものことです。ここから先へ進む方法がわかったら、たぶんまたあなたに連絡します。あなたをのけ者にするなんて夢にも思いません。ここまで"
+"してくれたんですから｣\n"
+"    あなたは辞去して、宇宙港に戻った。表面上は、あなたがしたことはほとんどなかったように見えるかもしれない。それでもあなたはこれがこの出来事全体を終結"
+"に導く重要な一歩だと感じていた。"
 
 #: dat/missions/sirius/achack/achack04.lua:98
 msgid ""
@@ -69570,28 +69861,18 @@ msgid ""
 "cooperate until you take care of his problem. Why can't it ever just be "
 "quick and easy?"
 msgstr ""
-"｢ほら、おれが雇ってあんたがとても役立つ弱点をついてやったあの賞金稼ぎには、友"
-"人がいたんだ。今その友人たちはおれのことをあまり好いていない。驚きだよな？　"
-"おれは頭を低くして惑星にとどまっているんだ。それだけ出くわすのを避けられるか"
-"らな。あいつらを背中から引きはがすまで、おれはどこにも行けないぞ｣\n"
-"    あなたはいすに深く座り、ハルジャに話をつづけるように合図する。それでもあ"
-"なたは、これがどこへ行きつくのかだいたいわかっていた。\n"
-"    ｢ああそれじゃあ、こうしてくれればいい｣ と、ハルジャがつづける。｢あんたに"
-"そいつらと話してほしいんだ。それでこれから先はおれを放っておくように説得す"
-"る。わかってるだろ。ちょっとした外交、機転、過大な暴力だよ。あんたならすくな"
-"くともそのうちひとつを成功させられるのはまちがいない｣\n"
+"｢ほら、おれが雇ってあんたがとても役立つ弱点をついてやったあの賞金稼ぎには、友人がいたんだ。今その友人たちはおれのことをあまり好いていない。驚きだよな？　"
+"おれは頭を低くして惑星にとどまっているんだ。それだけ出くわすのを避けられるからな。あいつらを背中から引きはがすまで、おれはどこにも行けないぞ｣\n"
+"    あなたはいすに深く座り、ハルジャに話をつづけるように合図する。それでもあなたは、これがどこへ行きつくのかだいたいわかっていた。\n"
+"    ｢ああそれじゃあ、こうしてくれればいい｣ と、ハルジャがつづける。｢あんたにそいつらと話してほしいんだ。それでこれから先はおれを放っておくように説"
+"得する。わかってるだろ。ちょっとした外交、機転、過大な暴力だよ。あんたならすくなくともそのうちひとつを成功させられるのはまちがいない｣\n"
 "    あなたは皮肉を無視して、その賞金稼ぎたちはどこにいるのかたずねた。\n"
-"    ｢あちこちたくさん動きまわってる。自分で宇宙に出る危険をおかさない理由がそ"
-"れだ。しかし確実に捕まえたいなら、スナへ行け。ほら、リンガーのある場所だよ。"
-"下手に暗号化したメッセージをそこにいる悪漢へ送って、おれがさがしに行くといっ"
-"ておく。おそらく、あの賞金稼ぎたちが迎撃しようとして、ジャンプポイントのすぐ"
-"外で待っているはずだ。おれを待っているはずだが、あんたも捕まえようとするだろ"
-"う。ジャンプして入って、すべきことをして、ここへ帰ってきてくれ。そうすればあ"
-"の……ジョアンと会いに行くことについて話しあえる｣。ハルジャが話を終える。もうハ"
-"ルジャは怒りを抑えているようだ。すくなくともすこしはうまく。\n"
-"    あなたはハルジャのテーブルから離れた。あなたがハルジャの問題を始末するま"
-"で協力するつもりがないのはあきらかだからだ。とにかくさっさと簡単にいくってこ"
-"とがないのはなぜなんだ？"
+"    ｢あちこちたくさん動きまわってる。自分で宇宙に出る危険をおかさない理由がそれだ。しかし確実に捕まえたいなら、スナへ行け。ほら、リンガーのある場所だ"
+"よ。下手に暗号化したメッセージをそこにいる悪漢へ送って、おれがさがしに行くといっておく。おそらく、あの賞金稼ぎたちが迎撃しようとして、ジャンプポイントのす"
+"ぐ外で待っているはずだ。おれを待っているはずだが、あんたも捕まえようとするだろう。ジャンプして入って、すべきことをして、ここへ帰ってきてくれ。そうすればあ"
+"の……ジョアンと会いに行くことについて話しあえる｣。ハルジャは話を終えた。もうハルジャは怒りを抑えているようだ。すくなくともすこしはうまく。\n"
+"    あなたはハルジャのテーブルから離れた。あなたがハルジャの問題を始末するまで協力するつもりがないのはあきらかだからだ。とにかくさっさと簡単にいくって"
+"ことがないのはなぜなんだ？"
 
 #: dat/missions/sirius/achack/achack04.lua:143
 msgid "Go to {sys} and deal with Harja's associates"
@@ -71624,7 +71905,7 @@ msgstr "{sys}星系の{pnt}までチェルシーを護衛せよ。"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:82
 msgid "\"Ah, OK. Let me know if you change your mind.\""
-msgstr "｢ああ、わかりました。もし考えを変えたら知らせてください｣"
+msgstr "｢ああ、わかりました。もし考えが変わったら知らせてください｣"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:128
 #: dat/missions/soromid/comingout/srm_comingout4.lua:125
@@ -71713,8 +71994,7 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:45
 msgid "\"Oh, {player}! Have you changed your mind? Can you take me to {pnt}?\""
-msgstr ""
-"｢ああ、{player}！　考えを変えましたか？　わたしを{pnt}へ連れていけますか？｣"
+msgstr "｢ああ、{player}！　考えが変わりましたか？　わたしを{pnt}へ連れていけますか？｣"
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:47
 msgid ""
@@ -72162,9 +72442,7 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout6.lua:82
 msgid ""
 "\"Ah, you're busy, eh? Oh well. Let me know if you change your mind, OK?\""
-msgstr ""
-"｢ああ、忙しいんですね？　しかたがないです。考えを変えたら知らせてください。い"
-"いですか？｣"
+msgstr "｢ああ、忙しいんですね？　しかたがないです。考えが変わったら知らせてください。いいですか？｣"
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:157
 msgid "Death Of A Pirate"
@@ -72322,7 +72600,7 @@ msgid ""
 "there. Don't be late, OK?\""
 msgstr ""
 "貿易商がほっとしてため息をついた。｢このことではほんとうに感謝しています。とにかく{pnt}にいる貨物受取人に貨物を持っていってくれるだけでいいです。そこ"
-"に着けば、その人が{credits}を支払ってくれるはずです。遅れないでください、いいですね？｣"
+"に着けば、その人が {credits} を支払ってくれるはずです。遅れないでください、いいですね？｣"
 
 #: dat/missions/trader/anxiousmerchant.lua:112
 msgid ""
@@ -72526,9 +72804,8 @@ msgid ""
 "docked slightly due to the loss of part of the convoy. You receive "
 "#g{credits}#0 of the original promised reward of {reward}."
 msgstr ""
-"あなたはほぼ完全な商船団とともに到着した。あなたの報酬は、失われた船団のぶん"
-"だけわずかに差し引かれた。あなたはもともと約束されていた報酬 {reward} のうち"
-"の#g{credits}#0 を受けとった。"
+"あなたはほぼ完全な商船団とともに到着した。あなたの報酬は、失われた船団のぶんだけわずかに差し引かれた。あなたはもともと約束されていた報酬 {reward}"
+" のうちの #g{credits}#0 を受けとった。"
 
 #: dat/missions/trader/trader_escort.lua:173
 msgid ""
@@ -72702,7 +72979,7 @@ msgid ""
 "\"That's a shame. If you change your mind I'll be waiting here.\""
 msgstr ""
 "相手は落胆したようだ。\n"
-"｢残念です。あなたが考えを変えたら、ここにいますので｣"
+"｢残念です。もし考えが変わったら、ここにいますので｣"
 
 #: dat/missions/tutorial/nelly01.lua:137
 msgid ""
@@ -73755,9 +74032,8 @@ msgid ""
 "name or want to change tutorial settings, you can always do so from the info "
 "menu which you can open with {infokey}.\""
 msgstr ""
-"｢わかりました！　{playername}、会えてうれしいです。もしわたしの名前について考"
-"えを変えたり、入門教育設定を変えたかったら、{infokey} で開ける情報ニューから"
-"いつでも変えられます｣"
+"｢わかりました！　{playername}、会えてうれしいです。もしわたしの名前について考えが変わったり、入門教育設定を変えたかったら、{infokey}"
+" で開ける情報ニューからいつでも変えられます｣"
 
 #: dat/missions/tutorial/tutorial.lua:98
 msgid ""
@@ -77785,9 +78061,8 @@ msgid ""
 "The inspectors search through your ship and cargo hold. It doesn't take long "
 "for them to find the phosphine; they confiscate it and fine you {credits}."
 msgstr ""
-"検査官たちがあなたの船と船倉をさがしてまわる。検査官がホスフィンを見つけるま"
-"でにあまり時間はかからなかった。検査官はホスフィンを没収し、あなたに{credits}"
-"の罰金を課した。"
+"検査官たちがあなたの船と船倉をさがしてまわる。検査官がホスフィンを見つけるまでにあまり時間はかからなかった。検査官はホスフィンを没収し、あなたに "
+"{credits} の罰金を課した。"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:245
 msgid "Mission failed!"
@@ -79215,7 +79490,7 @@ msgstr ""
 
 #: dat/scripts/common/minerva.lua:33
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: dat/scripts/common/minerva.lua:40
 msgid ""
