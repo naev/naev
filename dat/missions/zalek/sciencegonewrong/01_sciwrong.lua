@@ -47,7 +47,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently he has another job for you.") )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently, he has another job for you.") )
 end
 function accept()
    -- Mission details:
@@ -55,8 +55,8 @@ function accept()
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
-    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
+   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told, it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship, and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
       fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=mem.t_sys[2], plt=shpnm}),
@@ -127,7 +127,7 @@ end
 function targetBoard()
    player.unboard()
    tk.msg(_([[In the ship]]), _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumours that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
-    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]]))
+    You manage to locate a box on a table in the crews' chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]]))
    target:setHilight(false)
    target:setVisplayer(false)
    local c = commodity.new(N_("Secret Technology"), N_("A mysterious box of stolen Soromid technology."))
@@ -142,7 +142,7 @@ end
 
 function land()
    if spob.cur() == mem.t_pla[1] then
-      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
+      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but instead of erasing, it sharpens. This is exactly what I needed. With this, I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
       hook.rm(mem.hland)
       player.pay(reward)
       sciwrong.addLog( _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]]) )

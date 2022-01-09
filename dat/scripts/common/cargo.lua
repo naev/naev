@@ -135,16 +135,17 @@ function car.calculateRoute( missdist, always_available, use_hidden )
    end
 
    --Determine amount of piracy along the route
+   local exp = 2.0 -- We'll compute a piracy score (units of presence) per system. Score is a power mean with this exponent.
    local cursys = system.cur()
    local jumps = system.jumpPath( cursys, destsys )
-   local risk = calc_risk( cursys )
+   local risk = calc_risk( cursys ) ^ exp
    if risk == nil then risk = 0 end
    if jumps then
       for k, v in ipairs(jumps) do
-         risk = risk + calc_risk( v:system() )
+         risk = risk + calc_risk( v:system() ) ^ exp
       end
    end
-   risk = risk/(numjumps + 1)
+   risk = (risk/(numjumps + 1))^(1/exp)
 
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    local cargo

@@ -65,15 +65,17 @@ local function recalculate( domsg )
    end
 
    -- Set the caps
+   local scaps = {}
    for k, v in pairs(caps) do
+      scaps[k] = var.peek( k ) or ocaps[k]
       var.push( k, v )
    end
 
    -- Do message if increased
    if domsg then
       for k, n in pairs(caps) do
-         local o = ocaps[ k ]
-         if o ~= n then
+         local s = scaps[ k ]
+         if s ~= n then
             local fct
             for i, f in ipairs(factions) do
                if f.cap_misn_var==k then
@@ -81,7 +83,7 @@ local function recalculate( domsg )
                   break
                end
             end
-            player.msg(fmt.f(_("#gReputation limit with {fct} increased to {val}!#0"),{fct=fct, val=n}))
+            player.msg(fmt.f("#g".._("Reputation limit with {fct} increased to {val}!").."#0",{fct=fct, val=n}))
          end
       end
    end

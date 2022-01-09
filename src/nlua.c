@@ -391,7 +391,7 @@ static int nlua_loadBasic( lua_State* L )
 
    luaL_openlibs(L);
 
-   /* move unpack to table.unpack as in Lua5.2 */
+   /* move [un]pack to table.[un]pack as in Lua5.2 */
    lua_getglobal(L, "table");    /* t */
    lua_getglobal(L, "unpack");   /* t, u */
    lua_setfield(L,-2,"unpack");  /* t */
@@ -427,6 +427,8 @@ static int nlua_loadBasic( lua_State* L )
    lua_getglobal(L,"math");
    lua_pushcfunction(L, nlua_log2);
    lua_setfield(L,-2,"log2");
+   lua_pushnil(L);
+   lua_setfield(L,-2,"mod"); /* Get rid of math.mod */
    lua_pop(L,1);
 
    return 0;
@@ -726,10 +728,9 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    int errf, ret, prev_env;
 
 #if DEBUGGING
-   int top = lua_gettop(naevL);
+   errf = lua_gettop(naevL) - nargs;
    lua_pushcfunction(naevL, nlua_errTrace);
-   lua_insert(naevL, -2-nargs);
-   errf = -2-nargs;
+   lua_insert(naevL, errf);
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
@@ -742,7 +743,7 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
    __NLUA_CURENV = prev_env;
 
 #if DEBUGGING
-   lua_remove(naevL, top-nargs);
+   lua_remove(naevL, errf);
 #endif /* DEBUGGING */
 
    return ret;

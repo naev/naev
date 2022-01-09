@@ -39,9 +39,9 @@ function create ()
    if not misn.claim(mem.sys) then misn.finish(false) end
 
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
-   
+
    -- Mission details
-   misn.setTitle(fmt.f(_("#rDC:#0 Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
+   misn.setTitle(fmt.f(dv.prefix.._("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
    mem.misn_marker = misn.markerAdd( mem.sys )
@@ -72,6 +72,7 @@ function land()
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
       vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer.") )
       player.pay( mem.credits )
+      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

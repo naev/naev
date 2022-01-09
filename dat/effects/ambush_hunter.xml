@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <effect name="Ambush Hunter">
- <description>The ship has caught other ships by surprised!</description>
+ <description>The ship has caught other ships by surprise!</description>
  <duration>10</duration>
  <icon>/gfx/misc/icons/hidden.webp</icon>
  <overwrite>ambush_hunter</overwrite>

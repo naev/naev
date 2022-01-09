@@ -1897,6 +1897,8 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
+   MELEMENT(temp->u.bay.ship==NULL,"ship");
+   MELEMENT(temp->u.bay.ship_mass<=0.,"ship_mass");
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.reload_time==0.,"reload_time");
    MELEMENT(temp->cpu==0.,"cpu");
@@ -2520,8 +2522,8 @@ int outfit_loadPost (void)
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
-      if (outfit_isFighterBay(o) && ship_get(o->u.bay.ship)==NULL)
-         WARN(_("Fighter Bay Outfit '%s' ship '%s'!"),o->name,o->u.bay.ship);
+      if (outfit_isFighterBay(o) && (o->u.bay.ship!=NULL) && ship_get(o->u.bay.ship)==NULL)
+         WARN(_("Fighter Bay Outfit '%s' has not found ship '%s'!"),o->name,o->u.bay.ship);
 
       /* Add illegality as necessary. */
       if (array_size(o->illegaltoS) > 0) {

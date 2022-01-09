@@ -40,6 +40,66 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
+transitions._t.circleopen = [[
+#include "lib/math.glsl"
+// Adapted from https://gl-transitions.com/editor/circleopen
+// author: gre
+// License: MIT
+
+const float SMOOTHNESS = 0.3;
+const vec2 CENTER = vec2(0.5, 0.5);
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float x = progress;
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix( c1, c2, 1.0-m );
+}
+]]
+
+transitions._t.circleclose = [[
+#include "lib/math.glsl"
+// Adapted from https://gl-transitions.com/editor/circleopen
+// author: gre
+// License: MIT
+
+const float SMOOTHNESS = 0.3;
+const vec2 CENTER = vec2(0.5, 0.5);
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float x = 1.0-progress;
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix( c1, c2, m );
+}
+]]
+
+transitions._t.dreamy = [[
+// Adapted from https://gl-transitions.com/editor/Dreamy
+// Author: mikolalysenko
+// License: MIT
+
+#include "lib/math.glsl"
+
+vec2 offset( float progress, float x, float theta )
+{
+   float phase = progress*progress + progress + theta;
+   float shifty = 0.03*progress*cos(10.0*(progress+x));
+   return vec2(0.0, shifty);
+}
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec4 c1 = Texel( texprev, uv + offset( progress, uv.x, 0.0 ) );
+   vec4 c2 = Texel( MainTex, uv + offset( 1.0-progress, uv.x, M_PI ) );
+   return mix( c1, c2, progress);
+}
+]]
+
 transitions._t.ripple = [[
 // Adapted from https://gl-transitions.com/editor/ripple
 // Author: gre
@@ -128,9 +188,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 rp = uv*2.0-1.0;
    vec4 c1 = Texel( MainTex, uv );
-   vec4 c2 = Texel( texprev, uv ),
+   vec4 c2 = Texel( texprev, uv );
    return mix( c1, c2,
-         smoothstep(0., smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
+         smoothstep(0.0, smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
          );
 }
 ]]

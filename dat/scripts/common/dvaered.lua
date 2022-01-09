@@ -1,5 +1,7 @@
 local dv = {}
 
+dv.prefix = "#o".._("DVAERED: ").."#0" -- Repeatable mission prefix
+
 --[[
    @brief Increases the reputation limit of the player.
 --]]

@@ -19,10 +19,11 @@
    Handles the randomly generated Empire long-distance cargo missions.
 
 ]]--
-
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local emp = require "common.empire"
+local pir = require "common.pirate"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -84,8 +85,7 @@ function create()
    local distreward = math.log(300*commodity.price(mem.cargo))/80
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
-   -- TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
-   misn.setTitle( fmt.f( _("#gES:#0 Long distance cargo transport ({tonnes} of {cargo})"),
+   misn.setTitle( fmt.f( emp.prefix.._("Long distance cargo transport ({tonnes} of {cargo})"),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("Official Empire long distance cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
@@ -134,7 +134,9 @@ function land()
       end
 
       -- increase faction
-      faction.modPlayerSingle("Empire", rnd.rnd(4, 6))
+      local reputation = rnd.rnd(4, 6)
+      faction.modPlayerSingle("Empire", reputation)
+      pir.reputationNormalMission(reputation)
       misn.finish(true)
    end
 end

@@ -16,6 +16,8 @@
  <trail_generator x="-20" y="20" h="10">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel</license>
+ <cond>faction.playerStanding("Thurion") &gt; 50</cond>
+ <condstr>You need at least 50 reputation with the Thurion.</condstr>
  <description>...</description>
  <health>
   <armour>550</armour>

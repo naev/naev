@@ -519,26 +519,14 @@ static int tkL_customDone( lua_State *L )
    return 0;
 }
 
-static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
+static int cust_pcall( lua_State *L, int nargs, int nresults )
 {
-   /* I would like to propagate the error to the original function calling the
-    * dialogue, however, that causes the game to segfault. Code is disabled
-    * for now. TODO Fix the error propagation. */
-#if 0
-   if (lua_pcall(L, nargs, nresults, 0)) {
-      DEBUG("ERROR");
-      cf->done = 1;
-      lua_error(L); /* propagate error */
-   }
-   return 0;
-#endif
    int errf, ret;
 
 #if DEBUGGING
-   int top = lua_gettop(L);
+   errf = lua_gettop(L) - nargs;
    lua_pushcfunction(L, nlua_errTrace);
-   lua_insert(L, -2-nargs);
-   errf = -2-nargs;
+   lua_insert(L, errf);
 #else /* DEBUGGING */
    errf = 0;
 #endif /* DEBUGGING */
@@ -546,14 +534,8 @@ static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t
    ret = lua_pcall( L, nargs, nresults, errf );
 
 #if DEBUGGING
-   lua_remove(naevL, top-nargs);
+   lua_remove(L, errf);
 #endif /* DEBUGGING */
-
-   if (ret) {
-      cf->done = 1;
-      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
-      lua_pop(L,1);
-   }
 
    return ret;
 }
@@ -566,8 +548,12 @@ static int cust_update( double dt, void* data )
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
    lua_pushnumber(L, dt);
-   if (cust_pcall( L, 1, 0, cf ))
+   if (cust_pcall( L, 1, 0 )) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
       return 1;
+   }
    /* Check if done. */
    lua_getglobal(L, TK_CUSTOMDONE );
    ret = lua_toboolean(L, -1);
@@ -585,7 +571,11 @@ static void cust_render( double x, double y, double w, double h, void* data )
    lua_pushnumber(L, y);
    lua_pushnumber(L, w);
    lua_pushnumber(L, h);
-   cust_pcall( L, 4, 0, cf );
+   if (cust_pcall( L, 4, 0 )) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
 }
 static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {
@@ -609,6 +599,8 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
          x = gl_screen.x;
          y = gl_screen.y;
          return cust_mouse( 3, -1, event->button.x+x, event->button.y+y, cf );
+      case SDL_MOUSEWHEEL:
+         return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
       case SDL_KEYDOWN:
          return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
@@ -629,15 +621,19 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functi
    lua_pushboolean(L, pressed );
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (cust_pcall( L, 3, 1, cf ))
+   if (cust_pcall( L, 3, 1 )) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
       return 0;
+   }
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
 }
 static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf )
 {
-   int b;
+   int b, nargs = 3;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->mouse);
    lua_pushnumber(L, x);
@@ -650,12 +646,14 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
          default:               button=3; break;
       }
       lua_pushnumber(L, button);
-      if (cust_pcall( L, 4, 1, cf ))
-         return 0;
+      nargs++;
    }
-   else
-      if (cust_pcall( L, 3, 1, cf ))
-         return 0;
+   if (cust_pcall( L, nargs, 1 )) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return 0;
+   }
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;

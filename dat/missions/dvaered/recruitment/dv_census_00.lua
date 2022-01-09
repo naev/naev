@@ -18,9 +18,9 @@
 --]]
 --[[
 -- Dvaered Census 0
--- This is the first mission of the Dvaered Recruitment arc 
--- (facultative missions that make the player close to the Dvaered 
--- and end up allowing them to pruchase heavy weapons and ships licenses).
+-- This is the first mission of the Dvaered Recruitment arc
+-- (facultative missions that make the player close to the Dvaered
+-- and end up allowing them to purchase heavy weapons and ships licenses).
 -- The player has to get in range of a given amount of Dvaered Ships in a given system.
 
    Stages :
@@ -46,7 +46,7 @@ function create ()
    if not misn.claim(mem.sys) then misn.finish(false) end
 
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
-   
+
    if player.misnDone( 'Helping Nelly Out 1' ) then
       misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly has noticed you. Wait? Is she trying to have a sausage infuse in her Vodka?") )
    else
@@ -83,12 +83,12 @@ function accept()
 
    vn.label("details")
    nel(_([["I will tell you what I have understood.
-"Most of the Dvaered warships you see out there do belong to private armies, that obey to generals, called the 'Warlords'. Those Warlords have many privileges, but they also have some obligations. One of those obligations is to patrol traderoutes around the worlds they own.
-But as the Dvaered are a bit... primitive, their administration is not able to control that they actually protect the traderoutes. That is why they need private pilots, like us, to count Dvaered ships."]]))
-   nel(_([["Here is how it works: You simply have to browse a given stellar system, and to get in sensor range of a given number of dvaered ships. The data is automatically acquired and processed.
-The dvaered authorities can then deduce from the transponder IDs what ship belongs to which warlord.
+"Most of the Dvaered warships you see out there do belong to private armies, that obey to generals, called the 'Warlords'. Those Warlords have many privileges, but they also have some obligations. One of those obligations is to patrol routes around the worlds they own.
+But as the Dvaered are a bit… primitive, their administration is not able to control that they actually protect the trade lanes. That is why they need private pilots, like us, to count Dvaered ships."]]))
+   nel(_([["Here is how it works: You simply have to browse a given stellar system, and to get in sensor range of a given number of Dvaered ships. The data is automatically acquired and processed.
+The Dvaered authorities can then deduce from the transponder IDs what ship belongs to which warlord.
 Once you have seen enough ships, you can land on any Dvaered-controlled planet to transmit your data and collect your pay."]]))
-   nel(fmt.f(_([["The last one I choosed happends in {system}, you have to get in range of {nb} ships, and the pay is {credits}. Those missions appear at the mission computer to pilots who have required so to the authorities. But, you know what? I can transfer mine to you. I needed to abort it anyways because this freaking sausage has not finished to infuse yet!"]]), {system=mem.sys, nb=mem.nbships, credits=fmt.credits( mem.credits )}))
+   nel(fmt.f(_([["The last one I chose happened in {system}, you have to get in range of {nb} ships, and the pay is {credits}. Those missions appear at the mission computer to pilots who have required so to the authorities. But, you know what? I can transfer mine to you. I needed to abort it anyways because this freaking sausage has not finished to infuse yet!"]]), {system=mem.sys, nb=mem.nbships, credits=fmt.credits( mem.credits )}))
    vn.menu{
       {_("Accept the mission"), "start"},
       {_("Refuse the mission"), "decline"},
@@ -178,31 +178,26 @@ function approach_nelly()
    nel(_([["How do you do?"]]))
    vn.menu{ dvaered, warlord, sausage, leave }
 
-   vn.label("start")
-   vn.func( function () doaccept = true end )
-   nel(_([["Good luck with that mission, then!"]]))
-   vn.done( tutnel.nelly.transition )
-
    vn.label("nelly_story")
    nel(_([["Ah. Long story."
 Nelly raises her eyes and lets her gaze wander on the filthy ceiling.
-"I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddently, the accident occured!
+"I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddenly, an accident occurred!
 "A kid shot the ball in the wrong direction, and it crashed into the side of my poor Llama, breaking through the plating!"]]))
    vn.menu{
-      {_("If a soccer ball can break through your ship, what will happend with a blaster?"), "blaster"},
+      {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"},
       {_("Was it easy to repair?"), "repair"},
    }
 
    vn.label("blaster")
    nel(_([[Nelly looks at you, surprised.
-"That's exactly what that cyber-grandpa told me. And then, he said the problem was that my ship's absorbtion was not high enough. He spoke about a coating that is only used by dvaered pilots, the 'Impacto-Plastic Coating', that can make your ship's armor much more resilient.
-"So, after the repairations were completed, I went to Dvaered space. But I didn't find anybody who could install this coating on my ship yet. And what is more, I suspect this will cost much more that I can afford. So I do missions for the Dvaered in order to make money and explore a bit."]]))
+"That's exactly what that cyber-grandpa told me. And then, he said the problem was that my ship's absorption was not high enough. He spoke about a coating that is only used by Dvaered pilots, the 'Impacto-Plastic Coating', that can make your ship's armor much more resilient.
+"So, after the reparations were completed, I went to Dvaered space. But I didn't find anybody who could install this coating on my ship yet. And what is more, I suspect this will cost much more that I can afford. So I do missions for the Dvaered in order to make money and explore a bit."]]))
    vn.menu{ warlord, sausage, leave }
 
    vn.label("warlords")
    nel(_([["Of course it is. But you know, they are not as advanced administratively as we at the core Empire are.
 The Dvaered don't have an administrative procedure to follow in every situation of life, as we do in the core Imperial systems. So instead they obey the strongest of them, the Warlords. They exist because the administration here is not advanced enough to prevent violence in the society.
-It is actually sad, but I guess it is like that. They chose independance after all..."]]))
+It is actually sad, but I guess it is like that. They chose independence after all…"]]))
    vn.menu{ dvaered, sausage, leave }
 
    vn.label("sausage")

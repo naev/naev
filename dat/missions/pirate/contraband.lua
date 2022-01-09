@@ -144,15 +144,9 @@ function create()
    local distreward = 0.50
    mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
 
-   if pir.factionIsClan( mem.reward_faction ) then
-      misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(mem.amount),
-         cargo=_(mem.cargo), fct=mem.reward_faction} ) )
-   else
-      misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(mem.amount),
-         cargo=_(mem.cargo)} ) )
-   end
+   misn.setTitle( fmt.f(
+      pir.prefix(mem.reward_faction).._("Smuggle {tonnes} of {cargo}"),
+         {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    misn.markerAdd(mem.destplanet, "computer")
    if pir.factionIsPirate( spob.cur():faction() ) then
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )

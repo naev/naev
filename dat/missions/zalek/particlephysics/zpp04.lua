@@ -55,7 +55,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You once again meet up with Noona.]]))
-   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're pretty hard to get usually, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
+   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're usually pretty hard to get, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black market route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -112,7 +112,7 @@ function land ()
       vn.na(_([[You land and the lone cargo drone begins to unload the container. It seems to have trouble balancing it and you amuse yourself by looking at its antics until you are startled by Noona.]]))
       n(_([["The drones sure are cute. I like to call that one Laboriosi."
 She points at the lone cargo drone.
-"Thanks a lot for bringing me my materials. I don't know what I would do without them. I was able to go over the drones, and I think it might be best to not rely on them for the final experiment. I think the electromagnetic radiation from Katar doesn't work too well with them. If you could help me do the experiments, I would be very grateful. Meet me up at the bar, I have to do some small preparations."]]))
+"Thanks a lot for bringing me my materials. I don't know what I would do without them. I was able to go over the drones, and I think it might be best to not rely on them for the final experiment. I think the electromagnetic radiation from Katar doesn't agree too well with them. If you could help me do the experiments, I would be very grateful. Meet me up at the bar, I have to do some small preparations."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zpp.noona.transition )
@@ -140,9 +140,9 @@ Their grin makes your feel uneasy.]]))
    else
       vn.na(_([[As you approach the shady dealer, you can barely make out some movement in the background.]]))
       d(_([[They start to grin and begin to speak with an almost serpent-like accent.
-"Ah, pleasure to meet you. Your must be the one in charge of the delivery. Your friend has quite a refined taste too. It's not often we get a sample as good as this one."
+"Ah, pleasure to meet you. You must be the one in charge of the delivery. Your friend has quite a refined taste, too. It's not often we get a sample as good as this one."
 They lick their lips.]]))
-      d(_([["The arrangements have all been made, and you'll soon have it aboard your ship. If I were you, I would put it as far away from the any personnel as possible."
+      d(_([["The arrangements have all been made, and you'll soon have it aboard your ship. If I were you, I would put it as far away from any personnel as possible."
 They then lean it to whisper to you.
 "You might want to watch your back, your friend is not the only one that wants it."]]))
       talked_once = true
@@ -165,7 +165,7 @@ They then lean it to whisper to you.
       return
    end
 
-   local crg = commodity.new( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird signs coming from inside it, almost like some sort of running river.") )
+   local crg = commodity.new( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird sounds coming from inside it, almost like some sort of running river.") )
    misn.cargoAdd( crg, cargo_amount )
 
    misn.osdActive(2)

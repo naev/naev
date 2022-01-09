@@ -14,6 +14,7 @@ local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, 
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
+local fps_y = 32
 
 -- Namespaces
 local bgs = {}
@@ -281,7 +282,7 @@ function create()
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
    -- Set FPS
-   gui.fpsPos( 20, screen_h - 48 - deffont_h )
+   gui.fpsPos( 15, screen_h - fps_y )
 
    -- Set OSD
    gui.osdInit( 23, screen_h - 63, 150, 500 )
@@ -339,7 +340,7 @@ function update_nav()
    if nav_pnt then
       pntflags = nav_pnt:services()
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
-      gui.fpsPos( ta_pnt_pane_x + ta_pnt_pane_w + 3, screen_h - 28 - 15 - deffont_h )
+      gui.fpsPos( ta_pnt_pane_x+ta_pnt_pane_w+3, screen_h - fps_y )
 
       ta_pnt_gfx = nav_pnt:gfxSpace()
       ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
@@ -377,7 +378,7 @@ function update_nav()
       end
    else
       gui.osdInit( 23, screen_h - 63, 150, 500 )
-      gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
+      gui.fpsPos( 15, screen_h - fps_y )
    end
    if nav_hyp then
       if nav_hyp:known() then

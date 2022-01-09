@@ -351,11 +351,15 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButtonKey( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
-   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
+   window_addButtonKey( wid, -60, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, -20, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
+
+   /* Fuel. */
+   window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, 30, 0,
+         "txtPlayerStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
 
@@ -448,6 +452,7 @@ static void map_update( unsigned int wid )
    int p;
    const glTexture *logo;
    double w, dmg, itf;
+   int jumps, autonav, rw, th;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -765,6 +770,28 @@ static void map_update( unsigned int wid )
       }
       window_modifyText( wid, "txtSystemStatus", buf );
    }
+
+   /* Player info. */
+   jumps = floor(player.p->fuel / player.p->fuel_consumption);
+   p = 0;
+   rw = 140;
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
+   sys = map_getDestination( &autonav );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("\nAutonav: ") );
+   if (sys==NULL)
+      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+   else {
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+   }
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
+   window_moveWidget( wid, "txtPlayerStatus", -20, 40+BUTTON_HEIGHT*2 );
+   window_modifyText( wid, "txtPlayerStatus", buf );
 }
 
 /**

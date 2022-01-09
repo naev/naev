@@ -54,10 +54,10 @@ function accept()
       return
    end
 
-   if not tk.yesno(bar_title, fmt.f(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
-   "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), {credits=fmt.credits(50e3)})) then
-      if not tk.yesno(bar_title, _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
-   "Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]) ) then
+   if not tk.yesno(bar_title, fmt.f(_([["Hello there! You are a pilot, right? For my project, I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony?
+   "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}. But, rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), {credits=fmt.credits(50e3)})) then
+      if not tk.yesno(bar_title, _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student, they completely underestimate my abilities!
+   "Now I've spent all my credits on this sensor suite without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]) ) then
          return
       else
          tk.msg( bar_title,
@@ -66,7 +66,7 @@ function accept()
       end
    else
       tk.msg( bar_title,
-         _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
+         _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suite. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
          )
    end
 
@@ -112,7 +112,7 @@ end
 function takeoff()
    local title = _("A Mess On Your Ship")
    tk.msg(title, fmt.f(_([[As you enter your ship you notice dozens of cables of various colours stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
-   "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is {sys}." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
+   "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight, so there is no need to rush. Our first destination is {sys}." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
    "A mess, you say? Haven't you noticed the colour coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]), {sys=t_sys[1]}))
    hook.rm(mem.thook)
 end
@@ -162,10 +162,10 @@ function stopProblems()
    ps:control(false)
    ps:setEnergy(100)
    if zlk.hasZalekShip() then
-     tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
+     tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful, considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
     "I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    else
-     tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
+     tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful, considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
    "I should investigate the damage it caused to the armour once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
    end
    mem.misn_stage = 1

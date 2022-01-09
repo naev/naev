@@ -46,7 +46,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You meet Noona who seems to be a bit more calm than usually.]]))
-   n(fmt.f(_([["Thanks for all you've done for me. I've got a ton of data from the experiment that will take me a long time to process. In the meantime, I've written up a preliminary report that I would need taken to {pnt} in the {sys} system. I would go myself, except, I'm… a bit busy. Would you be willing to me this favour and deliver my report to {pnt}?"]]),
+   n(fmt.f(_([["Thanks for all you've done for me. I've got a ton of data from the experiment that will take me a long time to process. In the meantime, I've written up a preliminary report that I need to send to {pnt} in the {sys} system. I would go myself, except, I'm… a bit busy. Would you be willing to do me this favour and deliver my report to {pnt}?"]]),
       {pnt=destpnt, sys=destsys}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -58,7 +58,7 @@ function accept ()
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Great! I can't thank you enough for all you've helped me."
+   n(_([["Great! I can't thank you enough for all you've done for me."
 She hands you the report package, which seems a bit heavier than you expected, and waves you off.]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
@@ -97,8 +97,8 @@ function land ()
    vn.scene()
    local n = vn.newCharacter( zpp.noona.name, {color=zpp.noona.colour} ) -- Just for the letter
    vn.transition()
-   vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerous looking experiments, and Za'lek scientists engaged in heated arguments who don't detect your presence.]]))
-   vn.na(_([[Eventually you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a non-enthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you back an envelope that was with the report mentioning that it is not part of the report.]]))
+   vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerous looking experiments, and Za'lek scientists engaged in heated arguments who don't notice your presence.]]))
+   vn.na(_([[Eventually, you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
    vn.na(_([[As you wonder about what is in the envelope, suddenly two Za'lek Military officers bust in to the room.]]))
    -- TODO proper graphics
    local z1 = vn.Character.new( _("Za'lek Officer A"), {image="zalek_thug1.png", pos="left"} )
@@ -111,13 +111,13 @@ function land ()
    z1(_([["They're trying to revoke it, but last time the meeting ended in fisticuffs."]]))
    z2(_([["Oh well, at least we have a hint to where she is now. On to Katar I!"]]))
    vn.disappear( { z1, z2 }, "slideleft" ) -- Played in reverse
-   vn.na(_([[The Za'lek officers leave as fast as they got here, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
+   vn.na(_([[The Za'lek officers leave as fast as they got there, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
    if getlicense then
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By now you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
    else
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By know you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By now you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

@@ -7,16 +7,39 @@
 local fmt = require 'format'
 local pir = {}
 
-local function _intable( t, q )
-   for k,v in ipairs(t) do
-      if v==q then
-         return true
-      end
-   end
-   return false
-end
+-- List of all the pirate factions
+pir.factions = {
+   faction.get("Pirate"),
+   faction.get("Marauder"),
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
+-- List of all the pirate clan factions
+pir.factions_clans = {
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
+
 local fpir = faction.get("Pirate")
 local fmar = faction.get("Marauder")
+
+local _prefix = {
+   ["Raven Clan"]    = _("RAVEN CLAN: "),
+   ["Wild Ones"]     = _("WILD ONES: "),
+   ["Dreamer Clan"]  = _("DREAMER CLAN: "),
+   ["Black Lotus"]   = _("BLACK LOTUS: "),
+}
+function pir.prefix( fct )
+   local p = _prefix[ fct:nameRaw() ]
+   if not p then
+      p = _("PIRATE: ")
+   end
+   return "#H"..p.."#0"
+end
 
 --[[
    @brief Increases the reputation limit of the player.
@@ -43,29 +66,12 @@ function pir.addMiscLog( text )
    shiplog.append("pir_misc", text)
 end
 
--- List of all the pirate factions
-pir.factions = {
-   faction.get("Pirate"),
-   faction.get("Marauder"),
-   faction.get("Raven Clan"),
-   faction.get("Wild Ones"),
-   faction.get("Dreamer Clan"),
-   faction.get("Black Lotus"),
-}
--- List of all the pirate clan factions
-pir.factions_clans = {
-   faction.get("Raven Clan"),
-   faction.get("Wild Ones"),
-   faction.get("Dreamer Clan"),
-   faction.get("Black Lotus"),
-}
-
 --[[
    @brief Gets whether or not a faction is a pirate faction
 --]]
 function pir.factionIsPirate( f )
    if not f then return false end
-   return _intable( pir.factions, faction.get(f) )
+   return inlist( pir.factions, faction.get(f) )
 end
 
 --[[
@@ -73,7 +79,7 @@ end
 --]]
 function pir.factionIsClan( f )
    if not f then return false end
-   return _intable( pir.factions_clans, faction.get(f) )
+   return inlist( pir.factions_clans, faction.get(f) )
 end
 
 --[[
@@ -145,7 +151,7 @@ function pir.reputationMessage( f )
    if not pir.factionIsClan( f ) then
       return ""
    end
-   return fmt.f(_("This mission will increase your reputation with {fct_longname}."), {fct_longname=f:longname()})
+   return fmt.f(_(" This mission will increase your reputation with {fct_longname}."), {fct_longname=f:longname()})
 end
 
 --[[
