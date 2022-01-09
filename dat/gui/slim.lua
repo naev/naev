@@ -367,7 +367,7 @@ function update_nav()
       nav_spob.class_w = gfx.printDim( nil, nav_spob.class )
 
       if pntflags.land then
-         local services = { "missions", "outfits", "shipyard", "commodity" }
+         local services = { "refuel", "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
          table.insert( nav_spob.services, N_("Spaceport") )
@@ -1014,7 +1014,7 @@ function render( dt, dt_mod )
       local ta_pnt_dist = pp:pos():dist( nav_spob.pos )
 
       -- Extend the pane depending on the services available.
-      services_h = 44
+      services_h = 46
       if pntflags.land then
          services_h = services_h + (14 * nav_spob.nservices)
       end
@@ -1050,17 +1050,17 @@ function render( dt, dt_mod )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, cols.txt_top )
 
       gfx.print( true, nav_spob.class, ta_pnt_pane_x + 150 - nav_spob.class_w, ta_pnt_pane_y - 34, cols.txt_top )
-      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, cols.txt_top )
+      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 48, cols.txt_top )
 
       -- Space out the text.
       if pntflags.land then
-         services_h = 60
+         services_h = 62
          for k,v in ipairs(nav_spob.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, cols.txt_top )
             services_h = services_h + 14
          end
       else
-         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, cols.txt_una )
+         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 48, cols.txt_una )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, cols.txt_std, 63, false )

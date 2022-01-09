@@ -368,7 +368,7 @@ function update_nav()
       }
 
       if pntflags.land then
-         services = { "bar", "missions", "outfits", "shipyard", "commodity" }
+         services = { "refuel", "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
          table.insert( nav_spob.services, N_("Spaceport") )
