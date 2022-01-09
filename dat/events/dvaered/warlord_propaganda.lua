@@ -19,7 +19,6 @@
 
 local fmt      = require "format"
 local portrait = require "portrait"
-local mt       = require 'merge_tables'
 local vn       = require 'vn'
 
 -- luacheck: globals takeoff (Hook functions passed by name)
