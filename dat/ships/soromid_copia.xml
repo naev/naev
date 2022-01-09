@@ -21,7 +21,7 @@
  <license>Large Civilian Vessel</license>
  <cond>faction.playerStanding("Soromid") &gt; 60</cond>
  <condstr>You need at least 60 reputation with the Soromid.</condstr>
- <description>The Copia is a bulk freighter that is usually employed to supply Soromid fleets or military installations as acces to bio-ships is restricted for most civilians.</description>
+ <description>The Copia is a bulk freighter that is usually employed to supply Soromid fleets or military installations as acces to bioships is restricted for most civilians.</description>
  <health>
   <armour>900</armour>
   <armour_regen>0</armour_regen>
@@ -34,12 +34,13 @@
  </characteristics>
  <slots>
   <weapon size="large" prop="bio_weapon" name="weap1" x="24" y="15" h="4">Tentacle Organ I</weapon>
-  <weapon size="large" prop="bio_weapon" name="weap1" x="24" y="-15" h="4">Tentacle Organ I</weapon>
+  <weapon size="large" prop="bio_weapon" name="weap2" x="24" y="-15" h="4">Tentacle Organ I</weapon>
   <weapon size="medium" x="36" y="16" h="-4" />
   <weapon size="medium" x="36" y="-16" h="-4" />
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
+  <utility size="large" prop="bio_organ" name="primal_yell" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
@@ -58,6 +59,7 @@
  </stats>
  <tags>
   <tag>soromid</tag>
+  <tag>bioship</tag>
   <tag>transport</tag>
  </tags>
 </ship>

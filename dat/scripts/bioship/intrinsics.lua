@@ -314,6 +314,80 @@ intrinsics["Soromid Nyx"] = {
    },
 }
 
+-- Copia (Bulk Freighter) intrinsics
+-- TODO differenciate cores from Ira
+intrinsics["Soromid Ira"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Ponderosus Gene Drive I",
+         "Ponderosus Cortex I",
+         "Ponderosum Cerebrum I",
+         "Tentacle Organ I",
+         "Tentacle Organ I",
+      },
+      slot = {
+         "genedrive",
+         "shell",
+         "brain",
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Ponderosus Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Ponderosus Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Tentacle Organ II",
+         "Tentacle Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Ponderosum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Cortex Growth II"),
+      outfit = "Ponderosus Cortex III",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth II"),
+      outfit = "Ponderosus Gene Drive III",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Tentacle Organ III",
+         "Tentacle Organ III",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cerebrum Growth II"),
+      outfit = "Ponderosum Cerebrum III",
+      slot = "brain",
+   },
+}
+
 -- Ira (Cruiser) intrinsics
 intrinsics["Soromid Ira"] = {
    {
@@ -582,5 +656,6 @@ intrinsics["Soromid Arx"] = {
       },
    },
 }
+
 
 return intrinsics
