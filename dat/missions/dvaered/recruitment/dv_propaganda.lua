@@ -3,7 +3,7 @@
 <mission name="Dvaered Propaganda">
  <avail>
   <priority>3</priority>
-  <chance>950</chance>
+  <chance>150</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
   <cond>var.peek("dp_available") == true</cond>
@@ -28,17 +28,28 @@ local fmt    = require "format"
 local dv     = require "common.dvaered"
 local vntk   = require 'vntk'
 local lmisn  = require "lmisn"
+local pir    = require "common.pirate"
 require "proximity"
 
 -- luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
+
+-- Define the flyers commodity
+local cargo_flyers
+local function _flyers()
+   if not cargo_flyers then
+      cargo_flyers = commodity.new( N_("Propaganda Posters"), N_("Heaps of posters representing big-nose characters hitting each other."), {gfx_space="flyers.webp"} )
+   end
+   return cargo_flyers
+end
 
 -- Remove the misn cargo or accidentally-scooped posters
 local function finish( state )
    if mem.misn_state == 0 then
       misn.cargoRm( mem.cid )
    else -- mem.misn_state == 1
-      local q = player.pilot():cargoHas( mem.dynCargo )
-      player.pilot():cargoRm( mem.dynCargo, q )
+      local cflyers = _flyers()
+      local q = player.pilot():cargoHas( cflyers )
+      player.pilot():cargoRm( cflyers, q )
    end
    misn.finish( state )
 end
@@ -54,7 +65,7 @@ function create ()
    mem.sys = mem.pnt:system()
    if not misn.claim(mem.sys) then misn.finish(false) end -- Claim
 
-   mem.credits = 3e3*(1+rnd.rnd()) -- (per ton) TODO: see if the amount is enough
+   mem.credits = 3e3*(1+rnd.rnd()) -- (per ton)
 
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Warlords Propaganda spreading on {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
@@ -74,17 +85,21 @@ function accept()
    hook.land("land")
 
    -- Add the Cargo
-   mem.dynCargo = commodity.new( N_("Propaganda Posters"), N_("Heaps of posters representing big-nose characters hitting each other."), {gfx_space="flyers.webp"} )
+   local cflyers = _flyers()
    mem.qtt = player.pilot():cargoFree()
    mem.pay = mem.credits * mem.qtt
-   mem.cid = misn.cargoAdd( mem.dynCargo, mem.qtt )
-   misn.setReward( fmt.credits( mem.pay ) )  -- Compute exact reward. TODO: see what happends if one changes ship...
+   mem.cid = misn.cargoAdd( cflyers, mem.qtt )
+   misn.setReward( fmt.credits( mem.pay ) )
 end
 
 function enter()
    if system.cur() == mem.sys and mem.misn_state == 0 then
       if not faction.exists( "Dvaered_Warlords" ) then
          mem.dynFact  = faction.dynAdd( faction.get("Dvaered"), "Dvaered_Warlords", _("Dvaered") )
+         local allies = mem.dynFact:allies()
+         for i, a in ipairs(allies) do -- remove their allies for them not to chase the player
+            mem.dynFact:dynAlly( a, true )
+         end
       end
       -- Add a few hostile-to-be patrol ships
       for i = 1, 3 do
@@ -114,31 +129,39 @@ function beginSpread()
    for i = (r+1), 10 do
       hook.timer( time_incr*i, "spreadFlyers", d )
    end
-   -- TODO: if needed, recompute the reward (if shit switching does not as intended)
    misn.cargoRm( mem.cid ) -- Remove all at once for simplicity
    hook.timer( 5, "spawnHostiles" ) -- Prepare hostiles
    mem.misn_state = 1
+   misn.markerRm(mem.misn_marker)
+   misn.osdActive(2)
 end
 
 -- Spreads some Flyers
 function spreadFlyers( qtt )
    local pos = player.pilot():pos()
    local vel = player.pilot():vel()
-   --local mod, vdi = vel:polar()
-   local poC = pos - vel * 100 -- TODO: see if the range is right
+   local poC = pos - vel/vel:mod() * 100
 
+   local cflyers = _flyers()
    for i = 1, qtt do
-      local ppos = pos + vec2.newP( 5*rnd.sigma(), rnd.rnd(0,2*math.pi) )
-      system.addGatherable( mem.dynCargo, 1, ppos, vel / (.65+.1*rnd.sigma()), rnd.rnd(1,5) )
+      local ppos = poC + vec2.newP( 10*rnd.sigma(), 2*math.pi*rnd.rnd() )
+      system.addGatherable( cflyers, 1, ppos, vel * (.4+.2*rnd.sigma()), .3 + .7*rnd.rnd() )
    end
 end
 
 -- Activates hostility
 function spawnHostiles()
-   mem.dynFact:dynEnemy(player.pilot():faction()) -- Custom faction becomes hostile to the player
-   for i = 1, 3 do
+   mem.dynFact:setPlayerStanding( -100 )
+   for i = 1, 2 do
       pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
    end
+   local a = pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
+   local msg = { _("That is an insult to our Lord's honour!"),
+                 _("Hey! Smart ass! Did you think about the environmental consequences of what you just did?"),
+                 _("Everyone! Get that ship!"),
+                 _("Come back! I have got candies for you... and MACE ROCKETS!"),
+                 _("You spread posters on my planet. My turn to spread rockets on your face!") }
+   a:comm( player.pilot(), msg[rnd.rnd(1,#msg)] )
 end
 
 function abort()
@@ -148,12 +171,12 @@ end
 function land()
    if mem.misn_state == 1 then
 
-      if planet.cur() == mem.pnt then -- Should not have landed here!
+      if spob.cur() == mem.pnt then -- Should not have landed here!
          vntk.msg( _("What are you doing here?"), fmt.f(_([[As you step out of your ship, your eye is catched by a flying poster, carried away by the wind. And suddentry, you remember there was written on your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A group of angry-looking Dvaered soldiers comes at you: maybe you will discover soon why you were told not to land there...
 Your mission is a FAILURE!]]),{pnt=mem.pnt}) ) -- That's not realistic the player doesn't get killed, but that's not realistic either anyone would land here anyways...
          finish( false )
-      elseif planet.cur():faction() == faction.get("Dvaered") then -- Pay the player
-         vntk.msg( _("Reward"), fmt.f(_("For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}"),{pay=fmt.credits( mem.pay )}) )
+      elseif spob.cur():faction() == faction.get("Dvaered") then -- Pay the player
+         vntk.msg( _("Reward"), fmt.f(_("For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}."),{pay=fmt.credits( mem.pay )}) )
          player.pay( mem.pay )
          faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
          pir.reputationNormalMission(rnd.rnd(2,3))
