@@ -112,6 +112,7 @@ static void land_stranded (void);
 /*
  * prototypes
  */
+static int land_hasLocalMap (void);
 static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
 static void land_cleanupWindow( unsigned int wid, const char *name );
@@ -139,11 +140,23 @@ void land_queueTakeoff (void)
    land_takeoff = 1;
 }
 
+/* Maps are only offered if the spob provides fuel. */
+static int land_hasLocalMap (void)
+{
+   if (!spob_hasService( land_spob, SPOB_SERVICE_REFUEL ))
+      return 0;
+   return 1;
+}
+
 /**
  * @brief Whether or not the player can save.
  */
 int land_canSave (void)
 {
+   /* Overrided case. */
+   if (!player_isFlag( PLAYER_NOSAVE ))
+      return 0;
+
    /* If the current landed planet is refuelable, no need to check if can land. */
    if ((land_spob!=NULL) && spob_hasService(land_spob,SPOB_SERVICE_REFUEL))
       return 1;
@@ -844,8 +857,8 @@ void land_updateMainTab (void)
 
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
-   /* Maps are only offered if the spob provides fuel. */
-   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL))
+   /* Make sure maps are available. */
+   if (!land_hasLocalMap())
       return;
 
    o = outfit_get( LOCAL_MAP_NAME );
@@ -1218,7 +1231,7 @@ static void land_createMainTab( unsigned int wid )
 {
    const glTexture *logo;
    int offset;
-   int w, h, logow, logoh, th;
+   int w, h, y, logow, logoh, th;
    char buf[STRMAX_SHORT];
    size_t l = 0;
 
@@ -1271,11 +1284,24 @@ static void land_createMainTab( unsigned int wid )
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
          _("Take Off"), land_buttonTakeoff, SDLK_t );
 
+   /* Additional notices if necessary. */
+   l = 0;
+   buf[0] = '\0';
+   y = 20 + (LAND_BUTTON_HEIGHT + 20) + 20;
+   if (land_hasLocalMap())
+      y += LAND_BUTTON_HEIGHT + 20;
    /* Add "no refueling" notice if needed. */
-   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL)) {
-      window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
-               200, gl_defFont.h, 1, "txtRefuel",
-               &gl_defFont, NULL, _("No refueling services.") );
+   if (!spob_hasService(land_spob, SPOB_SERVICE_REFUEL))
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("No refueling services.") );
+   if (!land_canSave()) {
+      if (l > 0)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "#r%s#0", _("Game will not be saved.") );
+   }
+   if (l>0) {
+      th = gl_printHeightRaw( &gl_defFont, 200, buf );
+      window_addText( land_windows[0], -20, y, 200, th, 0,
+            "txtPlayer", &gl_defFont, NULL, buf );
    }
 }
 
