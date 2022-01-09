@@ -13,6 +13,8 @@
  <trail_generator x="-50" y="0" h="-5" always_under="1">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Sirius") &gt; 70</cond>
+ <condstr>You need at least 70 reputation with House Sirius.</condstr>
  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
  <health>
   <armour>1800</armour>
