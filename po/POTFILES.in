@@ -413,6 +413,7 @@ dat/ships/zalek_hephaestus.xml
 dat/ships/zalek_mammon.xml
 dat/ships/zalek_mephisto.xml
 dat/ships/zalek_sting.xml
+dat/ships/zebra.xml
 dat/slots.xml
 dat/spfx/EmpM.xml
 dat/spfx/EmpS.xml
@@ -2222,6 +2223,7 @@ dat/events/dvaered/fwC_ceremony.lua
 dat/events/dvaered/fwD_hitman.lua
 dat/events/dvaered/poster.lua
 dat/events/dvaered/totoran.lua
+dat/events/dvaered/warlord_propaganda.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
@@ -2345,6 +2347,7 @@ dat/missions/dvaered/gauntlet/tables.lua
 dat/missions/dvaered/recruitment/dv_census.lua
 dat/missions/dvaered/recruitment/dv_census_00.lua
 dat/missions/dvaered/recruitment/dv_intelligence.lua
+dat/missions/dvaered/recruitment/dv_propaganda.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
 dat/missions/empire/collective/ec02.lua
