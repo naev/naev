@@ -583,4 +583,77 @@ intrinsics["Soromid Arx"] = {
    },
 }
 
+-- Copia (Bulk Freighter) intrinsics
+intrinsics["Soromid Copia"] = {
+   {
+      name = _("Innate"),
+      outfit = {
+         "Ponderosus Gene Drive I",
+         "Ponderosus Cortex I",
+         "Ponderosum Cerebrum I",
+         "Talon Organ I",
+         "Talon Organ I",
+      },
+      slot = {
+         "genedrive",
+         "shell",
+         "brain",
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cortex Growth I"),
+      outfit = "Ponderosus Cortex II",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth I"),
+      outfit = "Ponderosus Gene Drive II",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth I"),
+      outfit = {
+         "Talon Organ II",
+         "Talon Organ II",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cerebrum Growth I"),
+      outfit = "Ponderosum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Cortex Growth II"),
+      outfit = "Ponderosus Cortex III",
+      slot = "shell",
+   },
+   {
+      name = _("Gene Drive Growth II"),
+      outfit = "Ponderosus Gene Drive III",
+      slot = "genedrive",
+   },
+   {
+      name = _("Weapon Organ Growth II"),
+      outfit = {
+         "Talon Organ III",
+         "Talon Organ III",
+      },
+      slot = {
+         "weap1",
+         "weap2",
+      },
+   },
+   {
+      name = _("Cerebrum Growth II"),
+      outfit = "Ponderosum Cerebrum III",
+      slot = "brain",
+   },
+}
+
 return intrinsics
