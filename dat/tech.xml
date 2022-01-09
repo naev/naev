@@ -304,6 +304,7 @@
   <item>Rhino</item>
   <item>Pirate Rhino</item>
   <item>Mule</item>
+  <item>Zebra</item>
   <item>Empire Rainmaker</item>
   <item>Dvaered Arsenal</item>
   <item>Za'lek Mammon</item>
@@ -735,6 +736,7 @@
   <item>Quicksilver</item>
   <item>Rhino</item>
   <item>Mule</item>
+  <item>Zebra</item>
  </tech>
  <tech name="Light Civilian Combat Ships">
   <item>Ancestor</item>
