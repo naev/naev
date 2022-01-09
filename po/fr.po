@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-09 09:38-0500\n"
+"POT-Creation-Date: 2022-01-09 09:43-0500\n"
 "PO-Revision-Date: 2022-01-01 22:53+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -6278,9 +6278,10 @@ msgstr ""
 
 #: dat/ships/soromid_copia.xml:24
 msgid ""
-"The Copia is a bulk freighter that is usually employed to supply Soromid "
-"fleets or military installations as access to bioships is restricted for "
-"most civilians."
+"The Copia is a bio-freighter is the backbone of Soromid convoys and is "
+"frequently used to supply Soromid fleets or military installations with "
+"critical supplies. Unlike most cargo ships, the Copia is designed to not shy "
+"away from combat, and can be a very deadly ship in the right hands."
 msgstr ""
 
 #: dat/ships/soromid_ira.xml:2
@@ -6625,9 +6626,10 @@ msgstr ""
 
 #: dat/ships/zebra.xml:21
 msgid ""
-"The aptly named Zebra is the largest freighter produced by Melendez and one "
-"of the largest available civilian ships. The Zebra offers a large cargo "
-"density and reasonable protection."
+"The Zebra bulk freighter is the largest of all the freighters produced by "
+"Melendez, and one of the most desired ship by all independent civilian "
+"traders. The Zebra offers an unmatched cargo density with reasonable "
+"protection."
 msgstr ""
 
 #: dat/slots.xml:5
