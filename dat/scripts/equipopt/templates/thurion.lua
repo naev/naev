@@ -8,6 +8,7 @@ local thurion_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Heavy Laser Turret", "Ragnarok Beam",
    "Thurion Perspicacity Fighter Bay",
+   "Thurion Perspicacity Fighter Dock",
    "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
    "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
