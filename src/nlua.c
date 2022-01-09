@@ -391,7 +391,7 @@ static int nlua_loadBasic( lua_State* L )
 
    luaL_openlibs(L);
 
-   /* move unpack to table.unpack as in Lua5.2 */
+   /* move [un]pack to table.[un]pack as in Lua5.2 */
    lua_getglobal(L, "table");    /* t */
    lua_getglobal(L, "unpack");   /* t, u */
    lua_setfield(L,-2,"unpack");  /* t */
@@ -427,6 +427,8 @@ static int nlua_loadBasic( lua_State* L )
    lua_getglobal(L,"math");
    lua_pushcfunction(L, nlua_log2);
    lua_setfield(L,-2,"log2");
+   lua_pushnil(L);
+   lua_setfield(L,-2,"mod"); /* Get rid of math.mod */
    lua_pop(L,1);
 
    return 0;

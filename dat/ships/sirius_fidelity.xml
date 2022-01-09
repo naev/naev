@@ -12,7 +12,9 @@
  <trail_generator x="-13" y="0" h="0">sirius</trail_generator>
  <license>Light Combat Vessel</license>
  <fabricator>Sirius Systems</fabricator>
- <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
+ <cond>faction.playerStanding("Sirius") &gt; 20</cond>
+ <condstr>You need at least 20 reputation with House Sirius.</condstr>
+ <description>The Fidelity is the interceptor of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
  <health>
   <armour>45</armour>
   <armour_regen>0</armour_regen>

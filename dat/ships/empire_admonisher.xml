@@ -17,6 +17,8 @@
  <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel</license>
+ <cond>faction.playerStanding("Empire") &gt; 40</cond>
+ <condstr>You need at least 40 reputation with the Empire.</condstr>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <armour>240</armour>

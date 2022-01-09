@@ -15,6 +15,8 @@
  <time_mod>1.25</time_mod>
  <fabricator>Thurion shipyards</fabricator>
  <license>Large Civilian Vessel</license>
+ <cond>faction.playerStanding("Thurion") &gt; 50</cond>
+ <condstr>You need at least 50 reputation with the Thurion.</condstr>
  <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
  <health>
   <armour>500</armour>

@@ -134,9 +134,11 @@ local function _update( dt )
 end
 local function _mouse( x, y, mtype, button )
    if not love.mouse then return false end
-   y = love.h-y-1
-   love.mouse.x = x
-   love.mouse.y = y
+   if mtype ~= 4 then -- if not a mouse-wheel event
+      y = love.h-y-1
+      love.mouse.x = x
+      love.mouse.y = y
+   end
    if mtype==1 then
       love.mouse.down[button] = true
       return love.mousepressed( x, y, button, false )
@@ -149,6 +151,8 @@ local function _mouse( x, y, mtype, button )
       love.mouse.lx = x
       love.mouse.ly = y
       return love.mousemoved( x, y, dx, dy, false )
+   elseif mtype==4 then
+      return love.wheelmoved( x, y )
    end
 end
 local function _keyboard( pressed, key, _mod )
