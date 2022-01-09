@@ -33,17 +33,9 @@ function create()
 end
 
 function approach()
---   local soldier = {
---                      portrait = port,
---                      image = port,
---                      name = _("Dvaered soldier"),
---                      color = nil,
---                      transition = nil, -- Use default
---   }
 
    vn.clear()
    vn.scene()
-   --local sol = vn.Character.new( _("Dvaered soldier"), mt.merge_tables( { image=portrait.getFullPath(port), portrait=port }, nil) )
    local sol = vn.newCharacter( _("Dvaered soldier"), { image=portrait.getFullPath(port) } )
    local doaccept = false
 
@@ -83,14 +75,6 @@ function approach()
    sol(_([["Also note that only the ships of the 'wrong' Warlords will be chasing you, and only in the system where you executed the mission. What is more, it is totally allowed to destroy those ships as it is done in the framework of a loyal war between honourable Warlords.
 "Once you get out of the system, you have nothing to fear from Dvaered patrol ships anymore, even if you go back to the afterwards."]]))
    vn.jump( "menu" )
-
---   sol(_([["What do you want to know?"]])) -- TODO: remove (or not)
---   vn.menu{
---      {_("What do those missions consist in?"), "explain"},
---      {_("How dangerous is it actually?"), "decline"},
---      {_("I have taken my decision."), "menu"},
---      {_("What happened to your face?"), "bruises"},
---   }
 
    vn.run()
 
