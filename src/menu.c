@@ -112,6 +112,7 @@ static int menu_main_bkg_system (void)
    sys = NULL;
 
    load_refreshPlayerNames();
+   load_refreshPlayerNames();
    pn = load_getPlayerNames();
 
    if (array_size( pn ) > 0) {

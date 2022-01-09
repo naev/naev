@@ -56,6 +56,7 @@ typedef struct filedata {
 
 static nsave_t *load_saves = NULL; /**< Array of saves */
 static char **player_names = NULL; /**< Array of player names */
+static int old_saves_detected = 0, player_warned = 0;
 extern int save_loaded; /**< From save.c */
 
 /*
@@ -203,6 +204,12 @@ int load_refreshPlayerNames (void)
 
    dirs = array_create( filedata_t );
    PHYSFS_enumerate( "saves", load_enumeratePlayerNamesCallback, &dirs );
+
+   if (old_saves_detected && !player_warned) {
+      dialogue_alert( _("Old saves have been backed up into saves-pre-0.10.0 directory.") );
+      player_warned = 1;
+   }
+
    qsort( dirs, array_size(dirs), sizeof(filedata_t), load_sortCompare );
 
    n = array_size(dirs);
@@ -307,20 +314,62 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
  */
 static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, const char* fname )
 {
-   char *path;
+   char *path, *backup_path;
    const char *fmt;
-   size_t dir_len;
+   size_t dir_len, name_len;
    filedata_t *tmp;
    PHYSFS_Stat stat;
 
    dir_len = strlen( origdir );
+   name_len = strlen( fname );
 
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
-   else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
+   else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
+      if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" ))) {
+         free( path );
+         return PHYSFS_ENUM_OK;
+      }
+      if (!PHYSFS_exists( "saves-pre-0.10.0" ))
+         PHYSFS_mkdir( "saves-pre-0.10.0" );
+      asprintf( &backup_path, "saves-pre-0.10.0/%s", fname );
+      if (!ndata_copyIfExists( path, backup_path ))
+         old_saves_detected = 1;
+      free( backup_path );
+      if (name_len >= 4 && !strcmp( &fname[name_len-3], ".ns" )) {
+         char *dirname = strdup( fname );
+         dirname[strlen(dirname) - 3] = '\0';
+         char *new_path;
+         asprintf( &new_path, "saves/%s", dirname );
+         if (!PHYSFS_exists( new_path ))
+            PHYSFS_mkdir( new_path );
+         free( new_path );
+         asprintf( &new_path, "saves/%s/autosave.ns", dirname );
+         if (!ndata_copyIfExists( path, new_path ))
+            if (!PHYSFS_delete( path ))
+               dialogue_alert( _("Unable to delete %s"), path );
+         free( new_path );
+         free( dirname );
+      }
+      if (name_len >= 11 && !strcmp( &fname[name_len-10], ".ns.backup" )) {
+         char *dirname = strdup( fname );
+         dirname[strlen(dirname) - 10] = '\0';
+         char *new_path;
+         asprintf( &new_path, "saves/%s", dirname );
+         if (!PHYSFS_exists( new_path ))
+            PHYSFS_mkdir( new_path );
+         free( new_path );
+         asprintf( &new_path, "saves/%s/backup.ns", dirname );
+         if (!ndata_copyIfExists( path, new_path ))
+            if (!PHYSFS_delete( path ))
+               dialogue_alert( _("Unable to delete %s"), path );
+         free( new_path );
+         free( dirname );
+      }
+   } else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
       load_refresh( fname );
       if (array_size( load_getList() ) == 0) {
          free( path );
