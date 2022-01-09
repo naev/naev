@@ -740,14 +740,21 @@ static void map_update( unsigned int wid )
 
          /* Volatility */
          dmg = sys->nebu_volatility;
-         if (sys->nebu_volatility > 50.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rVolatile %sNebula (%.1f MW)#0"), adj, dmg);
-         else if (sys->nebu_volatility > 20.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDangerous %sNebula (%.1f MW)#0"), adj, dmg);
-         else if (sys->nebu_volatility > 0.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yUnstable %sNebula (%.1f MW)#0"), adj, dmg);
+         if (sys->nebu_volatility > 50.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula (%.1f MW)"), adj, dmg);
+         }
+         else if (sys->nebu_volatility > 20.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula (%.1f MW)"), adj, dmg);
+         }
+         else if (sys->nebu_volatility > 0.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula (%.1f MW)"), adj, dmg);
+         }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("%sNebula"), adj);
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Interference. */
       if (sys->interference > 0.) {
@@ -755,12 +762,19 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          itf = sys->interference;
-         if (sys->interference > 700.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rDense Interference (%.0f%%)#0"), itf);
-         else if (sys->interference < 300.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oLight Interference (%.0f%%)#0"), itf);
-         else
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yInterference (%.0f%%)#0"), itf);
+         if (sys->interference > 700.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Interference (%.0f%%)"), itf);
+         }
+         else if (sys->interference < 300.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference (%.0f%%)"), itf);
+         }
+         else {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Interference (%.0f%%)"), itf);
+         }
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
@@ -774,12 +788,17 @@ static void map_update( unsigned int wid )
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
 
-         if (density >= 1.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDense Asteroid Field#0"));
-         else if (density <= 0.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yLight Asteroid Field"));
+         if (density >= 1.5) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
+         }
+         else if (density <= 0.5) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
+         }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       window_modifyText( wid, "txtSystemStatus", buf );
    }
@@ -791,7 +810,7 @@ static void map_update( unsigned int wid )
    p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
    p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
    sys = map_getDestination( &autonav );
-   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("\nAutonav: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
    if (sys==NULL)
       p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
    else {
