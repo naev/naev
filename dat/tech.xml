@@ -308,6 +308,7 @@
   <item>Empire Rainmaker</item>
   <item>Dvaered Arsenal</item>
   <item>Za'lek Mammon</item>
+  <item>Soromid Copia</item>
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
@@ -814,6 +815,7 @@
   <item>Soromid Nyx</item>
  </tech>
  <tech name="Soromid Ships Large">
+  <item>Soromid Copia</item>
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
  </tech>
