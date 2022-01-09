@@ -18,10 +18,9 @@
  <trail_generator x="16" y="-27" h="-4" always_under="1">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel</license>
- <description>The aptly named Zebra is the largest freighter produced by Melendez and one of the largest available civilian ships. The Zebra offers a large cargo density and reasonable protection.</description>
+ <description>The Zebra bulk freighter is the largest of all the freighters produced by Melendez, and one of the most desired ship by all independent civilian traders. The Zebra offers an unmatched cargo density with reasonable protection.</description>
  <health>
   <armour>600</armour>
-  <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>20</crew>
