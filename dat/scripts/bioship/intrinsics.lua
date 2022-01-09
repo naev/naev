@@ -316,7 +316,7 @@ intrinsics["Soromid Nyx"] = {
 
 -- Copia (Bulk Freighter) intrinsics
 -- TODO differenciate cores from Ira
-intrinsics["Soromid Ira"] = {
+intrinsics["Soromid Copia"] = {
    {
       name = _("Innate"),
       outfit = {
