@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-07 10:07-0500\n"
+"POT-Creation-Date: 2022-01-09 09:38-0500\n"
 "PO-Revision-Date: 2022-01-01 22:53+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -1254,10 +1254,11 @@ msgstr ""
 
 #: dat/faction.xml:390 dat/ships/kauweke.xml:20 dat/ships/nohinohi.xml:13
 #: dat/ships/soromid_arx.xml:20 dat/ships/soromid_brigand.xml:13
-#: dat/ships/soromid_ira.xml:18 dat/ships/soromid_marauder.xml:14
-#: dat/ships/soromid_nyx.xml:14 dat/ships/soromid_odium.xml:15
-#: dat/ships/soromid_reaver.xml:13 dat/ships/soromid_vox.xml:17
-#: dat/ships/taitamariki.xml:15 dat/scripts/common/soromid.lua:11
+#: dat/ships/soromid_copia.xml:20 dat/ships/soromid_ira.xml:18
+#: dat/ships/soromid_marauder.xml:14 dat/ships/soromid_nyx.xml:14
+#: dat/ships/soromid_odium.xml:15 dat/ships/soromid_reaver.xml:13
+#: dat/ships/soromid_vox.xml:17 dat/ships/taitamariki.xml:15
+#: dat/scripts/common/soromid.lua:11
 msgid "Soromid"
 msgstr "Soromid"
 
@@ -1319,6 +1320,7 @@ msgid ""
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
 
+#. Add the Cargo
 #. Ship to go back to
 #. Set up Major Malik
 #: dat/faction.xml:472 dat/events/dvaered/fwA_treason.lua:117
@@ -1329,6 +1331,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:604
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:264
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:98
 #: dat/missions/minerva/kex3.lua:389 dat/scripts/common/dvaered.lua:14
 #: dat/scripts/common/dvaered.lua:19
 msgid "Dvaered"
@@ -1650,9 +1653,7 @@ msgstr ""
 msgid "Dvaered High Command"
 msgstr "Haut commandement Dvaered"
 
-#.
-#. -- Event is over when player takes off.
-#. --
+#. Manage acceptance and refusal
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Warlords Battle">
@@ -2955,7 +2956,12 @@ msgstr ""
 msgid "Empire Lancelot Fighter Bay"
 msgstr ""
 
-#: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:11
+#: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:8
+#: dat/ships/empire_pacifier.xml:19
+msgid "You need at least 50 reputation with the Empire."
+msgstr ""
+
+#: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:13
 msgid ""
 "This fighter bay allows your ship to carry a pair of Empire Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
@@ -2966,7 +2972,11 @@ msgstr ""
 msgid "Fidelity Fighter Bay"
 msgstr ""
 
-#: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:11
+#: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:8
+msgid "You need at least 50 reputation with House Sirius."
+msgstr ""
+
+#: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:13
 msgid ""
 "This bay launches three Sirius Fidelity fighters. Weak individually, they "
 "are stronger when working together in groups. Quite apropos, given Sirian "
@@ -3045,7 +3055,12 @@ msgstr ""
 msgid "Soromid Brigand Fighter Bay"
 msgstr ""
 
-#: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:11
+#: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:8
+#: dat/ships/soromid_nyx.xml:17
+msgid "You need at least 50 reputation with the Soromid."
+msgstr ""
+
+#: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:13
 msgid ""
 "This fighter bay allows your ship to carry a triplet of Soromid Brigand "
 "class fighters. It comes with all the devices required for the maintenance "
@@ -3056,7 +3071,28 @@ msgstr ""
 msgid "Thurion Perspicacity Fighter Bay"
 msgstr ""
 
-#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:11
+#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:8
+#: dat/ships/thurion_ingenuity.xml:19 dat/ships/thurion_scintillation.xml:20
+msgid "You need at least 30 reputation with the Thurion."
+msgstr ""
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:13
+msgid ""
+"This fighter bay allows your ship to carry two Thurion Perspicacity class "
+"fighters. It comes with all the devices required for the maintenance and "
+"flight of the fighters."
+msgstr ""
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_dock.xml:2
+msgid "Thurion Perspicacity Fighter Dock"
+msgstr ""
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_dock.xml:8
+#: dat/ships/thurion_apprehension.xml:20 dat/ships/thurion_taciturnity.xml:19
+msgid "You need at least 50 reputation with the Thurion."
+msgstr ""
+
+#: dat/outfits/fighter_bays/thurion_perspicacity_fighter_dock.xml:13
 msgid ""
 "This fighter bay allows your ship to carry four Thurion Perspicacity class "
 "fighters. It comes with all the devices required for the maintenance and "
@@ -5504,7 +5540,11 @@ msgstr ""
 msgid "Dvaered Ancestor"
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:17
+#: dat/ships/dvaered_ancestor.xml:18 dat/ships/dvaered_vendetta.xml:19
+msgid "You need at least 30 reputation with House Dvaered."
+msgstr ""
+
+#: dat/ships/dvaered_ancestor.xml:19
 msgid ""
 "This military grade version of the Ancestor is equipped with slightly more "
 "armour than its standard counterpart, which improves the integrity of its "
@@ -5517,7 +5557,11 @@ msgstr ""
 msgid "Dvaered Arsenal"
 msgstr "Équipage du vaisseau Dvaered"
 
-#: dat/ships/dvaered_arsenal.xml:20
+#: dat/ships/dvaered_arsenal.xml:21
+msgid "You need at least 60 reputation with House Dvaered."
+msgstr ""
+
+#: dat/ships/dvaered_arsenal.xml:22
 msgid ""
 "The Arsenal is a heavily armed bulk freighter used by House Dvaered to "
 "transport large amount of supplies and troops whenever such a task would be "
@@ -5532,7 +5576,11 @@ msgstr ""
 msgid "Dvaered Goddard"
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:20
+#: dat/ships/dvaered_goddard.xml:21
+msgid "You need at least 70 reputation with House Dvaered."
+msgstr ""
+
+#: dat/ships/dvaered_goddard.xml:22
 msgid ""
 "Once, the Goddard Battlecruiser was commissioned by the Empire for military "
 "service. However, during the Dvaered Revolts most Goddard captains sided "
@@ -5547,7 +5595,11 @@ msgstr ""
 msgid "Dvaered Phalanx"
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:18
+#: dat/ships/dvaered_phalanx.xml:19
+msgid "You need at least 40 reputation with House Dvaered."
+msgstr ""
+
+#: dat/ships/dvaered_phalanx.xml:20
 msgid ""
 "This military grade version of the Phalanx has slightly stronger armour "
 "compared to its standard counterpart, and it also features a special cooling "
@@ -5560,7 +5612,7 @@ msgstr ""
 msgid "Dvaered Vendetta"
 msgstr ""
 
-#: dat/ships/dvaered_vendetta.xml:18
+#: dat/ships/dvaered_vendetta.xml:20
 msgid ""
 "This military grade version of the Vendetta has stronger armour and better "
 "weapon cooling facilities than the standard Vendetta, but its turning "
@@ -5573,7 +5625,11 @@ msgstr ""
 msgid "Dvaered Vigilance"
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:17
+#: dat/ships/dvaered_vigilance.xml:18
+msgid "You need at least 50 reputation with House Dvaered."
+msgstr ""
+
+#: dat/ships/dvaered_vigilance.xml:19
 msgid ""
 "This military grade version of the Vigilance has stronger armour and diverts "
 "more of its energy to its forward-mounted weapons than its standard "
@@ -5585,7 +5641,11 @@ msgstr ""
 msgid "Empire Admonisher"
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:20
+#: dat/ships/empire_admonisher.xml:21
+msgid "You need at least 40 reputation with the Empire."
+msgstr ""
+
+#: dat/ships/empire_admonisher.xml:22
 msgid ""
 "This military grade version of the Admonisher is mostly identical in "
 "function to a standard Admonisher, but with slightly better armour, shields, "
@@ -5596,7 +5656,11 @@ msgstr ""
 msgid "Empire Hawking"
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:21
+#: dat/ships/empire_hawking.xml:22 dat/ships/empire_rainmaker.xml:23
+msgid "You need at least 60 reputation with the Empire."
+msgstr ""
+
+#: dat/ships/empire_hawking.xml:23
 msgid ""
 "This military grade version of the Hawking is mostly identical in function "
 "to a standard Hawking, but with slightly better armour, shields, and heat "
@@ -5607,7 +5671,11 @@ msgstr ""
 msgid "Empire Lancelot"
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:18
+#: dat/ships/empire_lancelot.xml:19
+msgid "You need at least 30 reputation with the Empire."
+msgstr ""
+
+#: dat/ships/empire_lancelot.xml:20
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
@@ -5618,7 +5686,7 @@ msgstr ""
 msgid "Empire Pacifier"
 msgstr ""
 
-#: dat/ships/empire_pacifier.xml:18
+#: dat/ships/empire_pacifier.xml:20
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
@@ -5629,7 +5697,11 @@ msgstr ""
 msgid "Empire Peacemaker"
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:20
+#: dat/ships/empire_peacemaker.xml:21
+msgid "You need at least 70 reputation with the Empire."
+msgstr ""
+
+#: dat/ships/empire_peacemaker.xml:22
 msgid ""
 "Built under contract for the Empire by Nexus Shipyards, the Peacemaker is "
 "one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. "
@@ -5644,7 +5716,7 @@ msgstr ""
 msgid "Empire Rainmaker"
 msgstr "Empire"
 
-#: dat/ships/empire_rainmaker.xml:22
+#: dat/ships/empire_rainmaker.xml:24
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
 "transporting extensive amounts of material through dangerous territory as "
@@ -5660,7 +5732,11 @@ msgstr ""
 msgid "Empire Shark"
 msgstr ""
 
-#: dat/ships/empire_shark.xml:19
+#: dat/ships/empire_shark.xml:20
+msgid "You need at least 20 reputation with the Empire."
+msgstr ""
+
+#: dat/ships/empire_shark.xml:21
 msgid ""
 "The Empire military grade version of the Shark is mostly identical in "
 "function to a standard Shark, but with slightly better armour, shields, and "
@@ -5749,7 +5825,7 @@ msgid "Koala"
 msgstr ""
 
 #: dat/ships/koala.xml:14 dat/ships/llama.xml:16 dat/ships/mule.xml:15
-#: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16
+#: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16 dat/ships/zebra.xml:19
 msgid "Melendez Corp."
 msgstr ""
 
@@ -6022,7 +6098,7 @@ msgstr ""
 #: src/dev_uniedit.c:1333 src/dev_uniedit.c:1334 src/land_outfits.c:368
 #: src/land_outfits.c:369 src/land_outfits.c:370 src/land_outfits.c:371
 #: src/land_trade.c:160 src/land_trade.c:162 src/land_trade.c:165
-#: src/land_trade.c:166 src/map.c:573 src/map.c:574 src/outfit.c:286
+#: src/land_trade.c:166 src/map.c:570 src/map.c:571 src/outfit.c:286
 #: src/outfit.c:305
 msgid "N/A"
 msgstr ""
@@ -6088,7 +6164,11 @@ msgstr ""
 msgid "Sirius Divinity"
 msgstr ""
 
-#: dat/ships/sirius_divinity.xml:16
+#: dat/ships/sirius_divinity.xml:17 dat/ships/sirius_dogma.xml:17
+msgid "You need at least 70 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius_divinity.xml:18
 msgid ""
 "Whilst the Dogma is said to form the core of any Sirian fleet, few combat "
 "pilots would dismiss the significance of the Divinity. Though not "
@@ -6101,7 +6181,7 @@ msgstr ""
 msgid "Sirius Dogma"
 msgstr ""
 
-#: dat/ships/sirius_dogma.xml:16
+#: dat/ships/sirius_dogma.xml:18
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -6112,9 +6192,13 @@ msgstr ""
 msgid "Sirius Fidelity"
 msgstr ""
 
-#: dat/ships/sirius_fidelity.xml:15
+#: dat/ships/sirius_fidelity.xml:16
+msgid "You need at least 20 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius_fidelity.xml:17
 msgid ""
-"The Fidelity is the light fighter of House Sirius. While not particularly "
+"The Fidelity is the interceptor of House Sirius. While not particularly "
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
@@ -6123,7 +6207,11 @@ msgstr ""
 msgid "Sirius Preacher"
 msgstr ""
 
-#: dat/ships/sirius_preacher.xml:15
+#: dat/ships/sirius_preacher.xml:16
+msgid "You need at least 40 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius_preacher.xml:17
 msgid ""
 "The Preacher, as its name implies, is the primary vessel by which House "
 "Sirius projects its message and will. Fielding a large array of weaponry, "
@@ -6134,7 +6222,11 @@ msgstr ""
 msgid "Sirius Shaman"
 msgstr ""
 
-#: dat/ships/sirius_shaman.xml:15
+#: dat/ships/sirius_shaman.xml:16
+msgid "You need at least 30 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius_shaman.xml:17
 msgid ""
 "Though its relatively sleek form may cause it to be mistaken for a light "
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
@@ -6174,12 +6266,25 @@ msgid ""
 "expendable."
 msgstr ""
 
-#: dat/ships/soromid_ira.xml:2
-msgid "Soromid Ira"
+#: dat/ships/soromid_copia.xml:2
+#, fuzzy
+#| msgid "Soromid"
+msgid "Soromid Copia"
+msgstr "Soromid"
+
+#: dat/ships/soromid_copia.xml:23 dat/ships/soromid_ira.xml:21
+msgid "You need at least 60 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_ira.xml:21
-msgid "You need at least 60 reputation with the Soromid."
+#: dat/ships/soromid_copia.xml:24
+msgid ""
+"The Copia is a bulk freighter that is usually employed to supply Soromid "
+"fleets or military installations as access to bioships is restricted for "
+"most civilians."
+msgstr ""
+
+#: dat/ships/soromid_ira.xml:2
+msgid "Soromid Ira"
 msgstr ""
 
 #: dat/ships/soromid_ira.xml:22
@@ -6207,10 +6312,6 @@ msgstr ""
 
 #: dat/ships/soromid_nyx.xml:2
 msgid "Soromid Nyx"
-msgstr ""
-
-#: dat/ships/soromid_nyx.xml:17
-msgid "You need at least 50 reputation with the Soromid."
 msgstr ""
 
 #: dat/ships/soromid_nyx.xml:18
@@ -6284,7 +6385,7 @@ msgstr ""
 msgid "Thurion shipyards"
 msgstr ""
 
-#: dat/ships/thurion_apprehension.xml:19 dat/ships/thurion_certitude.xml:20
+#: dat/ships/thurion_apprehension.xml:21 dat/ships/thurion_certitude.xml:22
 msgid "..."
 msgstr ""
 
@@ -6292,11 +6393,15 @@ msgstr ""
 msgid "Thurion Certitude"
 msgstr ""
 
+#: dat/ships/thurion_certitude.xml:21
+msgid "You need at least 70 reputation with the Thurion."
+msgstr ""
+
 #: dat/ships/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
 msgstr ""
 
-#: dat/ships/thurion_ingenuity.xml:18
+#: dat/ships/thurion_ingenuity.xml:20
 msgid ""
 "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
 "ships, it puts defensive capabilities first, and offensive capabilities "
@@ -6310,7 +6415,11 @@ msgstr ""
 msgid "Thurion Perspicacity"
 msgstr ""
 
-#: dat/ships/thurion_perspicacity.xml:20
+#: dat/ships/thurion_perspicacity.xml:21
+msgid "You need at least 20 reputation with the Thurion."
+msgstr ""
+
+#: dat/ships/thurion_perspicacity.xml:22
 msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
@@ -6320,7 +6429,7 @@ msgstr ""
 msgid "Thurion Scintillation"
 msgstr ""
 
-#: dat/ships/thurion_scintillation.xml:19
+#: dat/ships/thurion_scintillation.xml:21
 msgid ""
 "The Thurion Scintillation is a bomber designed to attack from a large "
 "distance. It is better armed than any other Thurion ship of comparable size, "
@@ -6331,7 +6440,7 @@ msgstr ""
 msgid "Thurion Taciturnity"
 msgstr ""
 
-#: dat/ships/thurion_taciturnity.xml:18
+#: dat/ships/thurion_taciturnity.xml:20
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
@@ -6341,7 +6450,11 @@ msgstr ""
 msgid "Thurion Virtuosity"
 msgstr ""
 
-#: dat/ships/thurion_virtuosity.xml:20
+#: dat/ships/thurion_virtuosity.xml:21
+msgid "You need at least 40 reputation with the Thurion."
+msgstr ""
+
+#: dat/ships/thurion_virtuosity.xml:22
 msgid ""
 "The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal "
 "assaults. While weapon space is less than stellar, the vessel's superior "
@@ -6504,6 +6617,17 @@ msgid ""
 "The Sting Corvette is rather large for its size, but its advanced sensor "
 "suite, impressive weapons loadout, and tough shields makes it a good "
 "backbone to the fleet of House Za'lek."
+msgstr ""
+
+#: dat/ships/zebra.xml:2
+msgid "Zebra"
+msgstr ""
+
+#: dat/ships/zebra.xml:21
+msgid ""
+"The aptly named Zebra is the largest freighter produced by Melendez and one "
+"of the largest available civilian ships. The Zebra offers a large cargo "
+"density and reasonable protection."
 msgstr ""
 
 #: dat/slots.xml:5
@@ -19856,7 +19980,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr "Thurion"
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:715
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:712
 #, fuzzy
 #| msgid "Trader"
 msgid "Trade Lane"
@@ -24911,9 +25035,9 @@ msgstr ""
 #: src/dev_sysedit.c:1351 src/dev_sysedit.c:1461 src/dev_sysedit.c:1522
 #: src/dev_sysedit.c:1714 src/dev_sysedit.c:1901 src/dev_sysedit.c:1982
 #: src/dev_uniedit.c:402 src/dev_uniedit.c:1461 src/dev_uniedit.c:1660
-#: src/dev_uniedit.c:1896 src/info.c:402 src/info.c:487 src/info.c:569
-#: src/info.c:705 src/info.c:897 src/info.c:1117 src/info.c:1214
-#: src/info.c:1559 src/land_outfits.c:160 src/map.c:335 src/map_find.c:1008
+#: src/dev_uniedit.c:1896 src/info.c:399 src/info.c:484 src/info.c:566
+#: src/info.c:702 src/info.c:894 src/info.c:1114 src/info.c:1211
+#: src/info.c:1556 src/land_outfits.c:160 src/map.c:334 src/map_find.c:1008
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -25489,7 +25613,7 @@ msgid "You found #o{title}!"
 msgstr "Vous avez viré '%s' (%s)."
 
 #. Log and message
-#: dat/events/discovery.lua:377 src/map.c:1909
+#: dat/events/discovery.lua:377 src/map.c:1928
 msgid "Discovery"
 msgstr ""
 
@@ -26373,6 +26497,139 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:265 dat/missions/minerva/pirate4.lua:140
 #: dat/missions/minerva/pirate5.lua:180
 msgid "You take your leave."
+msgstr ""
+
+#.
+#. -- Event is over when player takes off.
+#. --
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Deliver Flyers">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <trigger>land</trigger>
+#. <chance>30</chance>
+#. <cond>var.peek("dc_misn") ~= nil and var.peek("dc_misn") &gt;= 2</cond>
+#. <notes>
+#. <campaign>Dvaered Recruitment</campaign>
+#. <done_misn name="Dvaered Census">2 times or more</done_misn>
+#. </notes>
+#. </event>
+#. --
+#.
+#. --Event for Dvaered Recruitment arc: the player meets a Dvaered soldier at a bar, who unlocks for them the Dvaered Propaganda missions.
+#. --
+#. luacheck: globals takeoff (Hook functions passed by name)
+#. luacheck: globals approach (NPC functions passed by name)
+#: dat/events/dvaered/warlord_propaganda.lua:31
+#: dat/events/dvaered/warlord_propaganda.lua:39
+#, fuzzy
+#| msgid "Dvaered"
+msgid "Dvaered soldier"
+msgstr "Dvaered"
+
+#: dat/events/dvaered/warlord_propaganda.lua:31
+msgid "A Dvaered soldier with many bruises on their face is looking at you."
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:43
+msgid ""
+"\"Hello, citizen {player}, I am a member of the Warlords Affairs Office at "
+"the Dvaered High Command. We have remarked that you have completed missions "
+"for the Office before. I have been charged to propose you to get registered "
+"as a potential pilot for more challenging and dangerous missions. If you "
+"accept, the missions will be available at your mission computer from now on."
+"\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:47
+#, fuzzy
+#| msgid "\"What do you want from me!?\""
+msgid "\"So, what do you say?\""
+msgstr "\"Mais que me voulez vous !?\""
+
+#: dat/events/dvaered/warlord_propaganda.lua:49
+msgid "Please add those missions to my computer."
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:50
+#, fuzzy
+#| msgid "\"I'm not interested in your blood money!\""
+msgid "I'm not interested"
+msgstr "\"Votre argent sale ne m'intéresse pas !\""
+
+#: dat/events/dvaered/warlord_propaganda.lua:51
+msgid "What is it about?"
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:52
+msgid "What happened to your face?"
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:56
+msgid ""
+"\"Ah! I knew it! you refuse because I said it is dangerous! You're a coward, "
+"as shown by the disturbing absence of bruises on your face!\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:61
+msgid "\"Very well, citizen. I am sure you will help us at the office a lot.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:66
+msgid "\"I simply got hit multiple times by someone. Isn't that obvious?\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:70
+msgid ""
+"\"Warlords, as you know, are successful generals who have been entrusted "
+"with regalian sovereignty on Dvaered planets. Warlords are allowed to "
+"declare war to their rivals if they were offended or in order to conquer "
+"their planets.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:71
+msgid ""
+"\"I will not explain in detail how the Dvaered internal wars work, but you "
+"have ot know that they are often divided into a space campaign and a ground "
+"campaign. The space campaign usually takes only a few periods, while ground "
+"campaign can take an entire cycle. And during ground campaigns, for many "
+"strategic reasons, it is necessary for each warlord to keep the support of "
+"the planet's population.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:72
+msgid ""
+"\"This is where private pilots are used: a Warlord can require to the "
+"Warlords Affairs Office to hire a private pilot for him to spread a few "
+"tonnes of propaganda flyers in the atmosphere of a given planet. And the "
+"more tonnes of flyers you can carry, the more you will get paid.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:73
+msgid ""
+"\"On the technical point of view, all you have to do is to fly over the "
+"planet, and the posters will be automatically dropped.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:74
+msgid ""
+"\"However, you have to be aware that after that, the rival of the Warlord "
+"who ordered the operation, and maybe also their allies will probably send "
+"ships after you. So you have to be ready to dodge Vendettas attacks if you "
+"take one of these missions. What is more, landing on the planet where you "
+"just dropped your posters is not an option.\""
+msgstr ""
+
+#: dat/events/dvaered/warlord_propaganda.lua:75
+msgid ""
+"\"Also note that only the ships of the 'wrong' Warlords will be chasing you, "
+"and only in the system where you executed the mission. What is more, it is "
+"totally allowed to destroy those ships as it is done in the framework of a "
+"loyal war between honourable Warlords.\n"
+"\"Once you get out of the system, you have nothing to fear from Dvaered "
+"patrol ships anymore, even if you go back to the afterwards.\""
 msgstr ""
 
 #. Spawns a merchant ship that explains what happens
@@ -27399,8 +27656,8 @@ msgstr ""
 #: dat/missions/minerva/kex4.lua:158 dat/missions/minerva/kex5.lua:521
 #: dat/missions/minerva/kex5.lua:537 dat/missions/minerva/kex5.lua:564
 #: dat/missions/minerva/kex5.lua:607 dat/missions/minerva/kex5.lua:662
-#: dat/missions/minerva/kex5.lua:687 dat/missions/zalek/blackhole/zbh07.lua:191
-#: dat/missions/zalek/blackhole/zbh07.lua:194
+#: dat/missions/minerva/kex5.lua:687 dat/missions/zalek/blackhole/zbh07.lua:190
+#: dat/missions/zalek/blackhole/zbh07.lua:193
 msgid "…"
 msgstr ""
 
@@ -32526,8 +32783,8 @@ msgstr ""
 #. Now run over and apply within limit
 #. Set the caps
 #. Do message if increased
-#: dat/events/standing.lua:84
-msgid "#gReputation limit with {fct} increased to {val}!#0"
+#: dat/events/standing.lua:86
+msgid "Reputation limit with {fct} increased to {val}!"
 msgstr ""
 
 #. Only update if there's a tag we care about
@@ -34002,8 +34259,8 @@ msgstr ""
 #: dat/gui/legacy.lua:304 dat/gui/legacy.lua:318 dat/gui/slim.lua:387
 #: dat/gui/slim.lua:986 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/shadow/darkshadow.lua:62 dat/missions/shadow/shadowvigil.lua:63
-#: src/equipment.c:1752 src/gui.c:1527 src/map.c:510 src/map.c:516
-#: src/map.c:522 src/map.c:528 src/map.c:534 src/map.c:540 src/map.c:1696
+#: src/equipment.c:1752 src/gui.c:1527 src/map.c:507 src/map.c:513
+#: src/map.c:519 src/map.c:525 src/map.c:531 src/map.c:537 src/map.c:1715
 #: src/map_overlay.c:221 src/map_system.c:479 src/outfit.c:294 src/outfit.c:313
 #: src/outfit.c:893 src/player.c:2016 src/player_autonav.c:92
 #: src/player_autonav.c:217 src/player_autonav.c:458 src/ship.c:211
@@ -34089,34 +34346,40 @@ msgstr "Mineur"
 #. Actually spawn the pilots
 #. Calculate spawn data
 #. Case no ship was actually spawned, just create an arbitrary delay
-#: dat/factions/spawn/trader.lua:11 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/factions/spawn/trader.lua:12 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Trader Llama"
 msgstr ""
 
 #. hook an abstract deciding function to player entering a system when not part of defense
 #. Decides what to do when player either takes off starting planet or jumps into another system
-#: dat/factions/spawn/trader.lua:14 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/factions/spawn/trader.lua:15 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:108
 msgid "Trader Koala"
 msgstr ""
 
-#: dat/factions/spawn/trader.lua:17
+#: dat/factions/spawn/trader.lua:18
 msgid "Trader Quicksilver"
 msgstr ""
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
-#: dat/factions/spawn/trader.lua:20 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/factions/spawn/trader.lua:21 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_00.lua:210
 msgid "Trader Mule"
 msgstr ""
 
-#: dat/factions/spawn/trader.lua:23
+#: dat/factions/spawn/trader.lua:24
+#, fuzzy
+#| msgid "Trader"
+msgid "Trader Zebra"
+msgstr "Marchand"
+
+#: dat/factions/spawn/trader.lua:27
 msgid "Trader Rhino"
 msgstr ""
 
-#: dat/factions/spawn/trader.lua:26
+#: dat/factions/spawn/trader.lua:30
 #, fuzzy
 #| msgid "Trader"
 msgid "Trader Shark"
@@ -34180,7 +34443,7 @@ msgstr "Marchand"
 #. Missions done for the faction's allies
 #. Standing value threshold between neutral and friendly.
 #. Text stuff
-#: dat/factions/standing/lib/base.lua:37 src/info.c:868
+#: dat/factions/standing/lib/base.lua:37 src/info.c:865
 msgid "Legend"
 msgstr ""
 
@@ -34469,11 +34732,11 @@ msgstr ""
 #: src/dev_sysedit.c:1760 src/dev_sysedit.c:1777 src/dev_sysedit.c:1816
 #: src/dev_sysedit.c:1839 src/dev_sysedit.c:1876 src/dev_sysedit.c:1934
 #: src/dev_uniedit.c:1403 src/dev_uniedit.c:1566 src/dev_uniedit.c:1782
-#: src/dev_uniedit.c:1847 src/info.c:420 src/info.c:513 src/info.c:931
-#: src/info.c:1262 src/input.c:524 src/land.c:833 src/land_outfits.c:374
+#: src/dev_uniedit.c:1847 src/info.c:417 src/info.c:510 src/info.c:928
+#: src/info.c:1259 src/input.c:524 src/land.c:846 src/land_outfits.c:374
 #: src/land_outfits.c:595 src/land_shipyard.c:126 src/land_shipyard.c:215
 #: src/land_trade.c:82 src/land_trade.c:84 src/land_trade.c:117 src/load.c:362
-#: src/load.c:410 src/load.c:454 src/map.c:637 src/map.c:677 src/map.c:1735
+#: src/load.c:410 src/load.c:454 src/map.c:634 src/map.c:674 src/map.c:1754
 #: src/map_find.c:702 src/map_system.c:649
 #, c-format
 msgid "None"
@@ -34609,6 +34872,7 @@ msgid "Landing"
 msgstr ""
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
+#: src/map.c:783
 msgid "Off"
 msgstr ""
 
@@ -34811,7 +35075,7 @@ msgstr ""
 msgid "CLASS:"
 msgstr ""
 
-#: dat/gui/slim.lua:1084 src/info.c:364
+#: dat/gui/slim.lua:1084 src/info.c:361
 #, fuzzy
 #| msgid "Pilot: "
 msgid "Pilot:"
@@ -34839,7 +35103,7 @@ msgstr "Crédits : "
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1085 src/equipment.c:1730 src/info.c:368 src/info.c:589
+#: dat/gui/slim.lua:1085 src/equipment.c:1730 src/info.c:365 src/info.c:586
 #: src/land_shipyard.c:290 src/map_system.c:681
 #, fuzzy
 #| msgid "Fuel: "
@@ -35655,6 +35919,7 @@ msgstr ""
 #. Enter after a fleeing enemy
 #. Illegitimate landing
 #. More illegitimate landings
+#. Should not have landed here!
 #: dat/missions/baron/baron_prince.lua:105
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:98
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:266
@@ -35667,6 +35932,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:232
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:235
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:255
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:175
 msgid "What are you doing here?"
 msgstr ""
 
@@ -41681,7 +41947,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_census.lua:53
-#: dat/missions/dvaered/recruitment/dv_census.lua:95
+#: dat/missions/dvaered/recruitment/dv_census.lua:104
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:118
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:162
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:136
@@ -41694,9 +41960,12 @@ msgstr "Dvaered"
 #. Note: there is no test on the player leaving the system before having scanned enough ships.
 #. This behaviour is totally allowed.
 #. Pay the player
+#. That's not realistic the player doesn't get killed, but that's not realistic either anyone would land here anyways...
+#. Pay the player
 #: dat/missions/dvaered/recruitment/dv_census.lua:73
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:139
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:114
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:179
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid "Reward"
 msgstr ""
@@ -41706,6 +41975,7 @@ msgstr ""
 msgid "You land and transmit a datapad to the local Dvaered liaison officer."
 msgstr ""
 
+#. Manage counting of missions
 #. Test pilots in range.
 #. Wrong system: abort
 #. Test if mission is complete
@@ -41713,7 +41983,7 @@ msgstr ""
 #. Test pilots in range.
 #. Wrong system: abort
 #. Test if mission is complete
-#: dat/missions/dvaered/recruitment/dv_census.lua:92
+#: dat/missions/dvaered/recruitment/dv_census.lua:101
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:159
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:133
 msgid "You have acquired data on enough Dvaered ships"
@@ -42026,6 +42296,121 @@ msgid "Dvaered Intelligence"
 msgstr "Équipage du vaisseau Dvaered"
 
 #. Recursivity 1 s
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Dvaered Propaganda">
+#. <avail>
+#. <priority>3</priority>
+#. <chance>150</chance>
+#. <location>Computer</location>
+#. <faction>Dvaered</faction>
+#. <cond>var.peek("dp_available") == true</cond>
+#. </avail>
+#. <notes>
+#. <tier>1</tier>
+#. <campaign>Dvaered Recruitment</campaign>
+#. <done_evt name="Deliver Flyers">If you accept</done_evt>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. -- Dvaered Propaganda
+#. -- The player has to overfly a planet and escpae ships pursuing them.
+#.
+#. Stages :
+#. 0) Way to target planet
+#. 1) Way back
+#. --
+#. luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
+#. Define the flyers commodity
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:40
+msgid "Propaganda Posters"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:40
+msgid "Heaps of posters representing big-nose characters hitting each other."
+msgstr ""
+
+#. Remove the misn cargo or accidentally-scooped posters
+#. mem.misn_state == 1
+#. Select a random Dvaered planet at 4 distance. Stations not allowed.
+#. No planet: abort
+#. Claim
+#. (per ton)
+#. Mission details
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:71
+msgid "Warlords Propaganda spreading on {pnt} in {sys}"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:72
+msgid "{credits} per ton"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:73
+msgid ""
+"The Warlords Affairs Office requires a pilot to spread as much posters as "
+"possible in the atmosphere of {pnt} in {sys}"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:80
+msgid "Warlords Propaganda"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:81
+msgid "Go to {sys} and overfly {pnt} to spread your posters"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:82
+msgid "Land on any Dvaered planet or station (except {pnt})"
+msgstr ""
+
+#. remove their allies for them not to chase the player
+#. Add a few hostile-to-be patrol ships
+#. Proximity of the planet
+#. Sets timers for flyers spread
+#. We'll drop them in 10 times. Compute how long it will be
+#. We'll drop r times d+1 flyers, and 10-r times d flyers. The total is equal to mem.qtt
+#. Remove all at once for simplicity
+#. Prepare hostiles
+#. Spreads some Flyers
+#. Activates hostility
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:159
+msgid "That is an insult to our Lord's honour!"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:160
+msgid ""
+"Hey! Smart ass! Did you think about the environmental consequences of what "
+"you just did?"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:161
+msgid "Everyone! Get that ship!"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:162
+msgid "Come back! I have got candies for you... and MACE ROCKETS!"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:163
+msgid ""
+"You spread posters on my planet. My turn to spread rockets on your face!"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:175
+msgid ""
+"As you step out of your ship, your eye is catched by a flying poster, "
+"carried away by the wind. And suddentry, you remember there was written on "
+"your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A "
+"group of angry-looking Dvaered soldiers comes at you: maybe you will "
+"discover soon why you were told not to land there...\n"
+"Your mission is a FAILURE!"
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:179
+msgid "For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}."
+msgstr ""
+
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Collective Scouting">
@@ -43562,7 +43947,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:72
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:950
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:963
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -47303,7 +47688,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:110
-#: src/land.c:645 src/npc.c:586
+#: src/land.c:658 src/npc.c:586
 msgid "You have too many active missions."
 msgstr ""
 
@@ -47633,7 +48018,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:79
 #: dat/missions/zalek/blackhole/zbh04.lua:58
 #: dat/missions/zalek/blackhole/zbh05.lua:59
-#: dat/missions/zalek/blackhole/zbh07.lua:49
+#: dat/missions/zalek/blackhole/zbh07.lua:48
 #: dat/missions/zalek/blackhole/zbh08.lua:66
 #: dat/missions/zalek/particlephysics/zpp01.lua:51
 #: dat/missions/zalek/particlephysics/zpp02.lua:63
@@ -47660,7 +48045,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:80
 #: dat/missions/zalek/blackhole/zbh04.lua:59
 #: dat/missions/zalek/blackhole/zbh05.lua:60
-#: dat/missions/zalek/blackhole/zbh07.lua:50
+#: dat/missions/zalek/blackhole/zbh07.lua:49
 #: dat/missions/zalek/blackhole/zbh08.lua:67
 #: dat/missions/zalek/particlephysics/zpp01.lua:52
 #: dat/missions/zalek/particlephysics/zpp02.lua:64
@@ -48165,7 +48550,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh03.lua:84
 #: dat/missions/zalek/blackhole/zbh04.lua:63
 #: dat/missions/zalek/blackhole/zbh05.lua:64
-#: dat/missions/zalek/blackhole/zbh07.lua:54
+#: dat/missions/zalek/blackhole/zbh07.lua:53
 #: dat/missions/zalek/blackhole/zbh08.lua:71
 msgid "\"OK. I'll be here if you change your mind.\""
 msgstr ""
@@ -53871,7 +54256,7 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:971
+#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:984
 msgid "Equipment"
 msgstr "Équipement"
 
@@ -70921,7 +71306,6 @@ msgstr ""
 #. Just a cut scene about the surgery, nothing fancy
 #.
 #.
-#. local fmt = require "format"
 #. Amount of cargo to take
 #. Checks to see if the player has a Za'lek ship.
 #.
@@ -70936,7 +71320,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh04.lua:43
 #: dat/missions/zalek/blackhole/zbh05.lua:45
 #: dat/missions/zalek/blackhole/zbh06.lua:42
-#: dat/missions/zalek/blackhole/zbh07.lua:31
+#: dat/missions/zalek/blackhole/zbh07.lua:30
 #: dat/missions/zalek/blackhole/zbh08.lua:52
 #: dat/scripts/common/zalek_blackhole.lua:22
 msgid "Zach"
@@ -72152,13 +72536,13 @@ msgstr ""
 msgid "Zach: Icarus is still out there! Protect Icarus!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:44
+#: dat/missions/zalek/blackhole/zbh07.lua:43
 msgid ""
 "You meet with Zach who seems to be doing the last preparations for the "
 "surgery."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:45
+#: dat/missions/zalek/blackhole/zbh07.lua:44
 msgid ""
 "\"Heya. I think I got this finally figured out. So most of the anatomy is "
 "like that of an arthropod, however, the inner scaffolding follows ship "
@@ -72167,7 +72551,7 @@ msgid ""
 "He seems fairly excited about the entire prospect."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:47
+#: dat/missions/zalek/blackhole/zbh07.lua:46
 msgid ""
 "\"There are still some rough details here and there, but I feel confident "
 "enough to try to improvise live as necessary. No matter how many simulations "
@@ -72177,7 +72561,7 @@ msgid ""
 "assist me?\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:58
+#: dat/missions/zalek/blackhole/zbh07.lua:57
 msgid ""
 "\"Great! So let's get preparations started then. The tricky part will be "
 "getting Icarus all set up. I think it is more trusting of us, so hopefully "
@@ -72189,79 +72573,79 @@ msgid ""
 "preparations."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:62
+#: dat/missions/zalek/blackhole/zbh07.lua:61
 msgid ""
 "You head to the docks, where you can see Icarus lazily floating around at a "
 "distance. Now the hard part begins, how to get Icarus to come inside and be "
 "docile enough for getting ready for surgery. What do you do?"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:66
+#: dat/missions/zalek/blackhole/zbh07.lua:65
 msgid "Send drones to get Icarus"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:67
+#: dat/missions/zalek/blackhole/zbh07.lua:66
 msgid "Use snacks to attract Icarus"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:68
+#: dat/missions/zalek/blackhole/zbh07.lua:67
 msgid "Send a translated 'Come.' message"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:69
+#: dat/missions/zalek/blackhole/zbh07.lua:68
 msgid "Wait for Icarus"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:70
+#: dat/missions/zalek/blackhole/zbh07.lua:69
 msgid "Give up (#rFails Mission#0)"
 msgstr ""
 
 #. Two routes to beat this
 #. come -> wait -> wait
 #. snacks -> come -> wait
-#: dat/missions/zalek/blackhole/zbh07.lua:149
+#: dat/missions/zalek/blackhole/zbh07.lua:148
 msgid ""
 "Icarus keeps on lazily floating at a distance without a care in the world."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:153
+#: dat/missions/zalek/blackhole/zbh07.lua:152
 msgid ""
 "Icarus keeps on floating at a distance. However, you could swear they are "
 "starting to get closer."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:157
+#: dat/missions/zalek/blackhole/zbh07.lua:156
 msgid ""
 "You stand there in silence, locked in a staring contest with Icarus. "
 "Eventually, as time passes, Icarus seems to relax a bit."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:161
+#: dat/missions/zalek/blackhole/zbh07.lua:160
 msgid ""
 "You grab one of the snacks that Zach had you bring over to the station. "
 "Nothing like tasty \"Liquified Bioship Organic Slush Compounds\"? That "
 "doesn't sound tasty… You toss the heavy cylinder over in Icarus's direction."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:163
+#: dat/missions/zalek/blackhole/zbh07.lua:162
 msgid ""
 "They seem to ignore it for a while, until they suddenly swoop in and devour "
 "it in an impressive bite, before continuing to float nearby."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:167
+#: dat/missions/zalek/blackhole/zbh07.lua:166
 msgid ""
 "Icarus is too nervous to pay attention to you and keeps on eyeing you from a "
 "distance."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:171
+#: dat/missions/zalek/blackhole/zbh07.lua:170
 msgid ""
 "The moment Icarus sees the drones he runs away to a safe distance from the "
 "station, eyeing you warily. It looks they will need to be calmed down first."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:176
+#: dat/missions/zalek/blackhole/zbh07.lua:175
 msgid ""
 "Finally, Icarus seems to respond to your request and they slowly float into "
 "the space docks. This is the first time Icarus has come so close and they "
@@ -72269,7 +72653,7 @@ msgid ""
 "Icarus."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:177
+#: dat/missions/zalek/blackhole/zbh07.lua:176
 msgid ""
 "While you are sharing your tender moment with Icarus, you suddenly notice "
 "movement out of the corner of your eye. It seems like Zach is staring down "
@@ -72277,14 +72661,14 @@ msgid ""
 "up a bit and you do."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:189
+#: dat/missions/zalek/blackhole/zbh07.lua:188
 msgid ""
 "Suddenly, you hear a high pitch drone of an energy capacitor draining. "
 "Icarus who hears that to and scrambles to get out of the docks, however, "
 "before he can, you are blinded by a flash and knocked off to the side."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:190
+#: dat/missions/zalek/blackhole/zbh07.lua:189
 msgid ""
 "You struggle to stand groggily as your eyes start recovering and colour "
 "returns to the world. You find yourself amidst a flurry of drones led by "
@@ -72294,7 +72678,7 @@ msgid ""
 "you close your eyes."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:193
+#: dat/missions/zalek/blackhole/zbh07.lua:192
 msgid ""
 "You nod off and begin to have concussion-induced dreams where you are "
 "surrounded by mosquitoes that are buzzing around and making lots of noise. "
@@ -72302,7 +72686,7 @@ msgid ""
 "float around with them."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:210
+#: dat/missions/zalek/blackhole/zbh07.lua:209
 msgid ""
 "Now suddenly the mosquito buzz fades away and you see yourself in the middle "
 "of a vortex of red, which spins you around and around, and fills up the "
@@ -72310,7 +72694,7 @@ msgid ""
 "or move, you are lost in the vastness."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:219
+#: dat/missions/zalek/blackhole/zbh07.lua:218
 msgid ""
 "You are awoken by a pat on your shoulder and you open your eyes to a "
 "triumphant Zach you lends you his hand, and pulls you up.\n"
@@ -72322,33 +72706,33 @@ msgid ""
 "better than ever!\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:222
+#: dat/missions/zalek/blackhole/zbh07.lua:221
 msgid "\"Glad to hear that!\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:223
+#: dat/missions/zalek/blackhole/zbh07.lua:222
 msgid "\"Next time warn me.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:224
+#: dat/missions/zalek/blackhole/zbh07.lua:223
 #, fuzzy
 #| msgid "You are a parasite!"
 msgid "\"You're an asshole!\""
 msgstr "Parasite !"
 
-#: dat/missions/zalek/blackhole/zbh07.lua:225
+#: dat/missions/zalek/blackhole/zbh07.lua:224
 #, fuzzy
 #| msgid "You should have picked easier prey!"
 msgid "\"You could have killed Icarus!\""
 msgstr "Nous ne sommes pas une proie facile."
 
-#: dat/missions/zalek/blackhole/zbh07.lua:229
+#: dat/missions/zalek/blackhole/zbh07.lua:228
 msgid ""
 "\"Nothing like a plan well executed!\"\n"
 "He grins happily."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:234
+#: dat/missions/zalek/blackhole/zbh07.lua:233
 msgid ""
 "\"Well the entirely plan relied on your natural reactions. If I had warned "
 "you, Icarus would have likely sensed that and we would have had to gone with "
@@ -72356,7 +72740,7 @@ msgid ""
 "The way he says plan B makes you feel glad plan A worked."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:239
+#: dat/missions/zalek/blackhole/zbh07.lua:238
 msgid ""
 "\"I get told that disturbingly often. However, I would like to point out it "
 "was all perfectly calculated and will have no long-term effects on Icarus. "
@@ -72364,7 +72748,7 @@ msgid ""
 "Zach's words are unsurprisingly non-reassuring."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:244
+#: dat/missions/zalek/blackhole/zbh07.lua:243
 msgid ""
 "\"It's impossible, I had computed and simulated all the possible outcomes "
 "even considering a 100% error in all parameters! There was no way anything… "
@@ -72374,7 +72758,7 @@ msgid ""
 "\"Well, damn. All's well that ends well?\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:250
+#: dat/missions/zalek/blackhole/zbh07.lua:249
 msgid ""
 "\"Anyway, my drones were able to realign the internal support beams with "
 "minimal damage to the organic tissue. My simulation of Icarus indicates "
@@ -72386,7 +72770,7 @@ msgid ""
 "He seems overly pleased with himself."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:252
+#: dat/missions/zalek/blackhole/zbh07.lua:251
 msgid ""
 "You languorously look towards Icarus, which seems to be tucked away in the "
 "corner of the docks. You can see some simple monitoring drones camouflaged "
@@ -72395,7 +72779,7 @@ msgid ""
 "parts of their body."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:253
+#: dat/missions/zalek/blackhole/zbh07.lua:252
 msgid ""
 "\"I'll be keeping an eye on Icarus. It might be a bit confused, so I'll try "
 "to make sure it can't hurt itself. Once you feel a bit better, come meet me "
@@ -72403,7 +72787,7 @@ msgid ""
 "He skips towards the inside of the station, leaving you to recover yourself."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:258
+#: dat/missions/zalek/blackhole/zbh07.lua:257
 msgid ""
 "You see Icarus seems to get fed up with the drones chasing it around and "
 "flies away.\n"
@@ -72411,7 +72795,7 @@ msgid ""
 "#rMISSION FAILED\"0"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh07.lua:264
+#: dat/missions/zalek/blackhole/zbh07.lua:263
 msgid ""
 "You lower your head in resignation and give up. This is worse than cat "
 "herding.\n"
@@ -72419,7 +72803,13 @@ msgid ""
 "#rMISSION FAILED\"0"
 msgstr ""
 
-#. Must be accepted beyond this point
+#. Must be completed beyond this point
+#: dat/missions/zalek/blackhole/zbh07.lua:275
+msgid ""
+"You helped Zach perform surgery on the feral bioship Icarus. The surgery was "
+"a success and Icarus is expected to make a speedy recovery."
+msgstr ""
+
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Za'lek Black Hole 8">
@@ -76571,6 +76961,8 @@ msgstr ""
 #. Reaver (Fighter) intrinsics
 #. Odium (Corvette) intrinsics
 #. Nyx (Destroyer) intrinsics
+#. Copia (Bulk Freighter) intrinsics
+#. TODO differenciate cores from Ira
 #. Ira (Cruiser) intrinsics
 #. Vox (Battleship) Intrinsics
 #. Arx (Carrier) Intrinsics
@@ -76578,9 +76970,10 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:111
 #: dat/scripts/bioship/intrinsics.lua:169
 #: dat/scripts/bioship/intrinsics.lua:238
-#: dat/scripts/bioship/intrinsics.lua:320
-#: dat/scripts/bioship/intrinsics.lua:405
-#: dat/scripts/bioship/intrinsics.lua:505
+#: dat/scripts/bioship/intrinsics.lua:321
+#: dat/scripts/bioship/intrinsics.lua:394
+#: dat/scripts/bioship/intrinsics.lua:479
+#: dat/scripts/bioship/intrinsics.lua:579
 msgid "Innate"
 msgstr ""
 
@@ -76588,9 +76981,10 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:128
 #: dat/scripts/bioship/intrinsics.lua:188
 #: dat/scripts/bioship/intrinsics.lua:257
-#: dat/scripts/bioship/intrinsics.lua:341
-#: dat/scripts/bioship/intrinsics.lua:426
-#: dat/scripts/bioship/intrinsics.lua:522
+#: dat/scripts/bioship/intrinsics.lua:338
+#: dat/scripts/bioship/intrinsics.lua:415
+#: dat/scripts/bioship/intrinsics.lua:500
+#: dat/scripts/bioship/intrinsics.lua:596
 msgid "Cortex Growth I"
 msgstr ""
 
@@ -76599,9 +76993,10 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:193
 #: dat/scripts/bioship/intrinsics.lua:262
 #: dat/scripts/bioship/intrinsics.lua:298
-#: dat/scripts/bioship/intrinsics.lua:346
-#: dat/scripts/bioship/intrinsics.lua:431
-#: dat/scripts/bioship/intrinsics.lua:527
+#: dat/scripts/bioship/intrinsics.lua:343
+#: dat/scripts/bioship/intrinsics.lua:420
+#: dat/scripts/bioship/intrinsics.lua:505
+#: dat/scripts/bioship/intrinsics.lua:601
 msgid "Gene Drive Growth I"
 msgstr ""
 
@@ -76609,9 +77004,10 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:138
 #: dat/scripts/bioship/intrinsics.lua:198
 #: dat/scripts/bioship/intrinsics.lua:267
-#: dat/scripts/bioship/intrinsics.lua:351
-#: dat/scripts/bioship/intrinsics.lua:436
-#: dat/scripts/bioship/intrinsics.lua:532
+#: dat/scripts/bioship/intrinsics.lua:348
+#: dat/scripts/bioship/intrinsics.lua:425
+#: dat/scripts/bioship/intrinsics.lua:510
+#: dat/scripts/bioship/intrinsics.lua:606
 msgid "Weapon Organ Growth I"
 msgstr ""
 
@@ -76619,9 +77015,10 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:149
 #: dat/scripts/bioship/intrinsics.lua:211
 #: dat/scripts/bioship/intrinsics.lua:280
-#: dat/scripts/bioship/intrinsics.lua:366
-#: dat/scripts/bioship/intrinsics.lua:451
-#: dat/scripts/bioship/intrinsics.lua:543
+#: dat/scripts/bioship/intrinsics.lua:359
+#: dat/scripts/bioship/intrinsics.lua:440
+#: dat/scripts/bioship/intrinsics.lua:525
+#: dat/scripts/bioship/intrinsics.lua:617
 msgid "Cerebrum Growth I"
 msgstr ""
 
@@ -76629,33 +77026,37 @@ msgstr ""
 #: dat/scripts/bioship/intrinsics.lua:216
 #: dat/scripts/bioship/intrinsics.lua:285
 #: dat/scripts/bioship/intrinsics.lua:303
-#: dat/scripts/bioship/intrinsics.lua:381
-#: dat/scripts/bioship/intrinsics.lua:461
-#: dat/scripts/bioship/intrinsics.lua:553
+#: dat/scripts/bioship/intrinsics.lua:374
+#: dat/scripts/bioship/intrinsics.lua:455
+#: dat/scripts/bioship/intrinsics.lua:535
+#: dat/scripts/bioship/intrinsics.lua:627
 msgid "Weapon Organ Growth II"
 msgstr ""
 
 #: dat/scripts/bioship/intrinsics.lua:229
-#: dat/scripts/bioship/intrinsics.lua:376
-#: dat/scripts/bioship/intrinsics.lua:476
-#: dat/scripts/bioship/intrinsics.lua:564
+#: dat/scripts/bioship/intrinsics.lua:369
+#: dat/scripts/bioship/intrinsics.lua:450
+#: dat/scripts/bioship/intrinsics.lua:550
+#: dat/scripts/bioship/intrinsics.lua:638
 msgid "Gene Drive Growth II"
 msgstr ""
 
-#: dat/scripts/bioship/intrinsics.lua:371
-#: dat/scripts/bioship/intrinsics.lua:456
-#: dat/scripts/bioship/intrinsics.lua:548
+#: dat/scripts/bioship/intrinsics.lua:364
+#: dat/scripts/bioship/intrinsics.lua:445
+#: dat/scripts/bioship/intrinsics.lua:530
+#: dat/scripts/bioship/intrinsics.lua:622
 msgid "Cortex Growth II"
 msgstr ""
 
-#: dat/scripts/bioship/intrinsics.lua:396
-#: dat/scripts/bioship/intrinsics.lua:481
-#: dat/scripts/bioship/intrinsics.lua:569
+#: dat/scripts/bioship/intrinsics.lua:385
+#: dat/scripts/bioship/intrinsics.lua:470
+#: dat/scripts/bioship/intrinsics.lua:555
+#: dat/scripts/bioship/intrinsics.lua:643
 msgid "Cerebrum Growth II"
 msgstr ""
 
-#: dat/scripts/bioship/intrinsics.lua:486
-#: dat/scripts/bioship/intrinsics.lua:574
+#: dat/scripts/bioship/intrinsics.lua:560
+#: dat/scripts/bioship/intrinsics.lua:648
 msgid "Weapon Organ Growth III"
 msgstr ""
 
@@ -77368,11 +77769,8 @@ msgstr ""
 #. TODO we should actually downscale this...
 #. Render to screen
 #.
-#.
 #. Equips pilots based on mixed integer linear programming
-#.
 #. --
-#. Main equipment functions
 #. We assume standard cargo doesn't change over time
 #: dat/scripts/equipopt/cargo.lua:8
 msgid "No standard commodities!"
@@ -77829,6 +78227,7 @@ msgstr ""
 #. See cores
 #. Set some meta-data
 #. Try to equip
+#. Main equipment functions
 #. Maximum change constraints
 #. Maximum change constraints
 #. ["dva_cap_ch01_sml"] = { val=1, max=50 },
@@ -78262,6 +78661,20 @@ msgstr ""
 #. Custom formation, used only in missions go there
 #. Custom large circle
 #. The angle between each ship, in radians.
+#. --
+#. Laziest lib there is.
+#. @module lazyload
+#. --
+#. If you write "local function lazyload", LDoc is too lazy to document it.
+#. --
+#. Main function that wraps a library to lazy load it.
+#.
+#. @usage return require("lazyload")( "mylib", false )
+#.
+#. @tparam string libname Name of library to lazy load (gets passed to require)
+#. @tparam[opt=false] boolean rw Whether or not the library should be writable.
+#. @treturn table A library that can be used in place of the real library with lazy loading.
+#. --
 #. ---
 #. Command-line library. See https://github.com/hoelzro/lua-linenoise.
 #.
@@ -78512,6 +78925,7 @@ msgstr ""
 #.
 #. -- Internal function that connects to Naev
 #. --
+#. if not a mouse-wheel event
 #.
 #. -- Initialize
 #. --
@@ -78525,7 +78939,7 @@ msgstr ""
 #. Doesn't actually get here until the dialogue is closed
 #. Reset libraries that were potentially crushed
 #. Restore the package.path
-#: dat/scripts/love.lua:171 dat/scripts/love.lua:269
+#: dat/scripts/love.lua:175 dat/scripts/love.lua:273
 msgid "can only run one Love2D instance at a time!"
 msgstr ""
 
@@ -78533,12 +78947,12 @@ msgstr ""
 #. only add to path if not there, saves path pollution if crashing
 #. Allows loading files relatively
 #. Run conf if exists
-#: dat/scripts/love.lua:204
+#: dat/scripts/love.lua:208
 #, lua-format
 msgid "'%s' is an unknown filetype '%s'"
 msgstr ""
 
-#: dat/scripts/love.lua:212
+#: dat/scripts/love.lua:216
 #, lua-format
 msgid "'%s' is not a valid love2d game!"
 msgstr ""
@@ -81735,7 +82149,7 @@ msgstr ""
 #. @submodule vn
 #. --
 #. Sane defaults
-#: dat/scripts/vn/transitions.lua:485
+#: dat/scripts/vn/transitions.lua:487
 #, lua-format
 msgid "vn: unknown transition type'%s'"
 msgstr ""
@@ -81882,7 +82296,7 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "Loaded %d AI Profile"
 msgstr[1] "Loaded %d AI Profiles"
 
-#: src/ai.c:597 src/board.c:77 src/comm.c:171 src/land.c:1514 src/naev.c:527
+#: src/ai.c:597 src/board.c:77 src/comm.c:171 src/land.c:1540 src/naev.c:527
 #: src/player.c:3465
 #, c-format
 msgid ""
@@ -82974,7 +83388,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:694 src/map.c:772
+#: src/dev_sysedit.c:694 src/map.c:769
 msgid "Asteroid Field"
 msgstr ""
 
@@ -82991,7 +83405,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1250 src/dev_uniedit.c:1664 src/dev_uniedit.c:1948
-#: src/equipment.c:1704 src/info.c:572 src/load.c:420
+#: src/equipment.c:1704 src/info.c:569 src/load.c:420
 #, fuzzy
 #| msgid "Name: "
 msgid "Name:"
@@ -83001,7 +83415,7 @@ msgstr "Nom : "
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1254 src/map.c:301
+#: src/dev_sysedit.c:1262 src/land.c:1267 src/map.c:300
 msgid "Faction:"
 msgstr "Faction :"
 
@@ -83037,7 +83451,7 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1332 src/land.c:1259
+#: src/dev_sysedit.c:1332 src/land.c:1272
 msgid "Tags:"
 msgstr ""
 
@@ -83169,7 +83583,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:232 src/map.c:340 src/map_find.c:1006
+#: src/dev_uniedit.c:232 src/map.c:339 src/map_find.c:1006
 msgid "Find"
 msgstr ""
 
@@ -83177,7 +83591,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:247 src/map.c:315
+#: src/dev_uniedit.c:247 src/map.c:314
 msgid "Presence:"
 msgstr "Présence :"
 
@@ -83297,7 +83711,7 @@ msgstr ""
 msgid "Find Systems and Spobs"
 msgstr ""
 
-#: src/dev_uniedit.c:1524 src/land.c:829
+#: src/dev_uniedit.c:1524 src/land.c:842
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -83476,7 +83890,7 @@ msgstr[1] "Loaded %d Events"
 msgid "Trying to get unknown effect data '%s'!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:300 src/land.c:577 src/land.c:1272
+#: src/equipment.c:323 src/land.c:313 src/land.c:590 src/land.c:1285
 #: src/land_outfits.c:155 src/land_shipyard.c:92 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
@@ -83596,12 +84010,12 @@ msgstr ""
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1707 src/info.c:573 src/land_shipyard.c:222
+#: src/equipment.c:1707 src/info.c:570 src/land_shipyard.c:222
 #: src/map_system.c:656
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1708 src/info.c:574 src/land.c:1253 src/land_shipyard.c:224
+#: src/equipment.c:1708 src/info.c:571 src/land.c:1266 src/land_shipyard.c:224
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -83614,39 +84028,39 @@ msgstr ""
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1714 src/info.c:575 src/land_shipyard.c:228
+#: src/equipment.c:1714 src/info.c:572 src/land_shipyard.c:228
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1715 src/info.c:577 src/land_outfits.c:187
+#: src/equipment.c:1715 src/info.c:574 src/land_outfits.c:187
 #: src/land_outfits.c:357 src/land_shipyard.c:240 src/map_find.c:642
 #: src/map_system.c:636 src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1716 src/info.c:578
+#: src/equipment.c:1716 src/info.c:575
 #, fuzzy
 #| msgid "Time: "
 msgid "Jump Time:"
 msgstr "Heure : "
 
-#: src/equipment.c:1717 src/info.c:579 src/land_shipyard.c:244
+#: src/equipment.c:1717 src/info.c:576 src/land_shipyard.c:244
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1718 src/info.c:580 src/land_shipyard.c:249
+#: src/equipment.c:1718 src/info.c:577 src/land_shipyard.c:249
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1719 src/info.c:581 src/land_shipyard.c:254
+#: src/equipment.c:1719 src/info.c:578 src/land_shipyard.c:254
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1720 src/info.c:582 src/land_shipyard.c:259
+#: src/equipment.c:1720 src/info.c:579 src/land_shipyard.c:259
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
@@ -83666,27 +84080,27 @@ msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1725 src/info.c:584 src/land_shipyard.c:264
+#: src/equipment.c:1725 src/info.c:581 src/land_shipyard.c:264
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1726 src/info.c:585 src/land_shipyard.c:269
+#: src/equipment.c:1726 src/info.c:582 src/land_shipyard.c:269
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1727 src/info.c:586 src/land_shipyard.c:274
+#: src/equipment.c:1727 src/info.c:583 src/land_shipyard.c:274
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1728 src/info.c:587 src/land_shipyard.c:279
+#: src/equipment.c:1728 src/info.c:584 src/land_shipyard.c:279
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1729 src/info.c:588 src/land_shipyard.c:286
+#: src/equipment.c:1729 src/info.c:585 src/land_shipyard.c:286
 #: src/map_system.c:680
 #, fuzzy
 #| msgid "Spaceworthy"
@@ -83729,13 +84143,13 @@ msgstr ""
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1767 src/equipment.c:1796 src/info.c:622 src/info.c:642
+#: src/equipment.c:1767 src/equipment.c:1796 src/info.c:619 src/info.c:639
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1769 src/info.c:624
+#: src/equipment.c:1769 src/info.c:621
 #, c-format
 msgid "%s average"
 msgstr ""
@@ -83796,25 +84210,25 @@ msgstr ""
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1799 src/info.c:644 src/land_shipyard.c:291
+#: src/equipment.c:1799 src/info.c:641 src/land_shipyard.c:291
 #: src/land_shipyard.c:295 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1799 src/info.c:384 src/info.c:645
+#: src/equipment.c:1799 src/info.c:381 src/info.c:642
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1808 src/info.c:386
+#: src/equipment.c:1808 src/info.c:383
 #, c-format
 msgid "%.1f hours"
 msgstr ""
 
-#: src/equipment.c:1812 src/equipment.c:1814 src/info.c:390 src/info.c:392
+#: src/equipment.c:1812 src/equipment.c:1814 src/info.c:387 src/info.c:389
 #, c-format
 msgid "%s MJ"
 msgstr ""
@@ -83862,15 +84276,15 @@ msgstr "Déséquiper le vaisseau"
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2044 src/land.c:194
+#: src/equipment.c:2044 src/land.c:207
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:2044 src/land.c:194
+#: src/equipment.c:2044 src/land.c:207
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2119 src/land.c:1510
+#: src/equipment.c:2119 src/land.c:1536
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
@@ -84235,7 +84649,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:2762 src/outfit.c:1110 src/ship.c:531
+#: src/faction.c:1532 src/map.c:2781 src/outfit.c:1110 src/ship.c:531
 #: src/ship.c:1024 src/space.c:1849 src/space.c:1907 src/space.c:3597
 #: src/tech.c:113
 #, c-format
@@ -84449,7 +84863,7 @@ msgstr "Armes"
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:61 src/land.c:955 src/space.c:174
+#: src/info.c:61 src/land.c:968 src/space.c:174
 msgid "Missions"
 msgstr ""
 
@@ -84461,7 +84875,7 @@ msgstr ""
 msgid "Ship log"
 msgstr ""
 
-#: src/info.c:256
+#: src/info.c:253
 #, c-format
 msgid ""
 "Failure to run info button with id '%d':\n"
@@ -84469,103 +84883,103 @@ msgid ""
 msgstr ""
 
 #. Create the window.
-#: src/info.c:288 src/menu.c:425
+#: src/info.c:285 src/menu.c:425
 msgid "Info"
 msgstr ""
 
-#: src/info.c:365 src/load.c:424
+#: src/info.c:362 src/load.c:424
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:366 src/land.c:1257 src/land_outfits.c:189 src/land_outfits.c:359
+#: src/info.c:363 src/land.c:1270 src/land_outfits.c:189 src/land_outfits.c:359
 #: src/land_shipyard.c:300 src/land_trade.c:90 src/map_find.c:644
 msgid "Money:"
 msgstr ""
 
-#: src/info.c:367
+#: src/info.c:364
 msgid "Current Ship:"
 msgstr ""
 
-#: src/info.c:369
+#: src/info.c:366
 #, fuzzy
 #| msgid "Gameplay"
 msgid "Time played:"
 msgstr "Gameplay"
 
-#: src/info.c:370
+#: src/info.c:367
 #, fuzzy
 #| msgid "Time Over"
 msgid "Times died:"
 msgstr "Temps écoulé"
 
-#: src/info.c:371
+#: src/info.c:368
 #, fuzzy
 #| msgid "%s jump"
 #| msgid_plural "%s jumps"
 msgid "Times jumped:"
 msgstr "%s jump"
 
-#: src/info.c:372
+#: src/info.c:369
 msgid "Times landed:"
 msgstr ""
 
-#: src/info.c:373
+#: src/info.c:370
 msgid "Damage done:"
 msgstr ""
 
-#: src/info.c:374
+#: src/info.c:371
 msgid "Damage taken:"
 msgstr ""
 
-#: src/info.c:375
+#: src/info.c:372
 msgid "Ships destroyed:"
 msgstr ""
 
-#: src/info.c:405
+#: src/info.c:402
 msgid "Set GUI"
 msgstr ""
 
-#: src/info.c:428
+#: src/info.c:425
 msgid "Licenses"
 msgstr ""
 
-#: src/info.c:465
+#: src/info.c:462
 msgid "No GUI available."
 msgstr ""
 
-#: src/info.c:466
+#: src/info.c:463
 msgid ""
 "There are no GUI available, this means something went wrong somewhere. "
 "Inform the Naev maintainer."
 msgstr ""
 
 #. window
-#: src/info.c:471
+#: src/info.c:468
 msgid "Select GUI"
 msgstr ""
 
-#: src/info.c:489 src/load.c:378
+#: src/info.c:486 src/load.c:378
 msgid "Load"
 msgstr ""
 
-#: src/info.c:493
+#: src/info.c:490
 msgid "Override GUI"
 msgstr ""
 
-#: src/info.c:517
+#: src/info.c:514
 msgid "GUI Override is not set."
 msgstr ""
 
-#: src/info.c:518
+#: src/info.c:515
 #, c-format
 msgid "Enable GUI Override and change GUI to '%s'?"
 msgstr ""
 
-#: src/info.c:591
+#: src/info.c:588
 msgid "Stats:"
 msgstr ""
 
-#: src/info.c:626 src/land_shipyard.c:246 src/map_system.c:665
+#: src/info.c:623 src/land_shipyard.c:246 src/map_system.c:665
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -84578,198 +84992,198 @@ msgstr ""
 "\n"
 "%.0f Tonne"
 
-#: src/info.c:628
+#: src/info.c:625
 #, c-format
 msgid "%.0f m/s (max %.0f m/s)"
 msgstr ""
 
-#: src/info.c:631 src/land_shipyard.c:256 src/map_system.c:669
+#: src/info.c:628 src/land_shipyard.c:256 src/map_system.c:669
 #, c-format
 msgid "%.0f deg/s"
 msgstr ""
 
-#: src/info.c:637 src/info.c:639 src/info.c:641
+#: src/info.c:634 src/info.c:636 src/info.c:638
 #, c-format
 msgid "%.0f / %.0f MJ (%.1f MW)"
 msgstr ""
 
-#: src/info.c:679
+#: src/info.c:676
 msgid "Current Weapon Set Settings"
 msgstr ""
 
-#: src/info.c:682
+#: src/info.c:679
 msgid "Enable instant Mode"
 msgstr ""
 
-#: src/info.c:685
+#: src/info.c:682
 msgid "(Weapons fire when this weapon set key is pressed)"
 msgstr ""
 
-#: src/info.c:688
+#: src/info.c:685
 msgid "Only shoot weapons that are in range"
 msgstr ""
 
-#: src/info.c:692
+#: src/info.c:689
 msgid "Global Settings"
 msgstr ""
 
-#: src/info.c:695
+#: src/info.c:692
 msgid "Automatically handle weapons"
 msgstr ""
 
-#: src/info.c:698
+#: src/info.c:695
 msgid "Dogfight aiming helper"
 msgstr ""
 
-#: src/info.c:784
+#: src/info.c:781
 msgid "Enable autoweapons?"
 msgstr ""
 
-#: src/info.c:785
+#: src/info.c:782
 msgid ""
 "Are you sure you want to enable automatic weapon groups for the ship?\n"
 "\n"
 "This will overwrite all manually-tweaked weapons groups."
 msgstr ""
 
-#: src/info.c:827
+#: src/info.c:824
 msgid "You can not set all your weapon sets to fire groups!"
 msgstr ""
 
-#: src/info.c:872
+#: src/info.c:869
 msgid "Outfit that can be activated"
 msgstr ""
 
-#: src/info.c:876
+#: src/info.c:873
 msgid "Secondary Weapon (Right click toggles)"
 msgstr ""
 
-#: src/info.c:880
+#: src/info.c:877
 msgid "Primary Weapon (Left click toggles)"
 msgstr ""
 
-#: src/info.c:899
+#: src/info.c:896
 msgid "Jettison"
 msgstr ""
 
-#: src/info.c:942
+#: src/info.c:939
 msgid " (#rillegal#0)"
 msgstr ""
 
-#: src/info.c:982
+#: src/info.c:979
 msgid "Illegalized by the following factions:\n"
 msgstr ""
 
-#: src/info.c:988
+#: src/info.c:985
 #, c-format
 msgid ""
 "\n"
 "   - %s"
 msgstr ""
 
-#: src/info.c:1012 src/info.c:1309
+#: src/info.c:1009 src/info.c:1306
 msgid "Abort Mission"
 msgstr ""
 
-#: src/info.c:1013 src/info.c:1310
+#: src/info.c:1010 src/info.c:1307
 msgid "Are you sure you want to abort this mission?"
 msgstr ""
 
-#: src/info.c:1029
+#: src/info.c:1026
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
 msgstr ""
 
-#: src/info.c:1194
+#: src/info.c:1191
 #, c-format
 msgid "You can have a maximum reputation of %.0f%% with this faction."
 msgstr ""
 
-#: src/info.c:1216
+#: src/info.c:1213
 msgid "Abort"
 msgstr ""
 
-#: src/info.c:1222
+#: src/info.c:1219
 msgid "#nReward:#0"
 msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1261 src/land.c:638 src/land.c:705 src/land.c:742
+#: src/info.c:1258 src/land.c:651 src/land.c:718 src/land.c:755
 msgid "No Missions"
 msgstr ""
 
-#: src/info.c:1263
+#: src/info.c:1260
 msgid "You currently have no active missions."
 msgstr ""
 
-#: src/info.c:1463
+#: src/info.c:1460
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
 "log title to delete."
 msgstr ""
 
-#: src/info.c:1468
+#: src/info.c:1465
 #, c-format
 msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
 
-#: src/info.c:1498
+#: src/info.c:1495
 msgid "Log message"
 msgstr ""
 
-#: src/info.c:1521 src/info.c:1529
+#: src/info.c:1518 src/info.c:1526
 msgid "Add a log entry"
 msgstr ""
 
-#: src/info.c:1521
+#: src/info.c:1518
 msgid "Add an entry to your diary:"
 msgstr ""
 
-#: src/info.c:1524
+#: src/info.c:1521
 msgid "Your Diary"
 msgstr ""
 
-#: src/info.c:1529
+#: src/info.c:1526
 #, c-format
 msgid "Add an entry to the log titled '%s':"
 msgstr ""
 
-#: src/info.c:1535
+#: src/info.c:1532
 msgid "Cannot add log"
 msgstr ""
 
-#: src/info.c:1535
+#: src/info.c:1532
 msgid "Cannot find this log!  Something went wrong here!"
 msgstr ""
 
-#: src/info.c:1561 src/load.c:380
+#: src/info.c:1558 src/load.c:380
 msgid "Delete"
 msgstr ""
 
-#: src/info.c:1564
+#: src/info.c:1561
 msgid "View Entry"
 msgstr ""
 
-#: src/info.c:1567
+#: src/info.c:1564
 msgid "Add Entry"
 msgstr ""
 
-#: src/info.c:1573
+#: src/info.c:1570
 msgid "Select log type:"
 msgstr ""
 
-#: src/info.c:1577
+#: src/info.c:1574
 msgid "Select log title:"
 msgstr ""
 
-#: src/info.c:1581
+#: src/info.c:1578
 msgid "Log entries:"
 msgstr ""
 
-#: src/info.c:1605
+#: src/info.c:1602
 #, c-format
 msgid "Invalid info tab ID: %d"
 msgstr ""
@@ -85072,7 +85486,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:95 src/map.c:258 src/outfit.c:862
+#: src/input.c:95 src/map.c:257 src/outfit.c:862
 msgid "Star Map"
 msgstr "Carte des étoiles"
 
@@ -85437,51 +85851,51 @@ msgid "Unable to initialize the joystick subsystem"
 msgstr ""
 
 #. Already onboard.
-#: src/land.c:181
+#: src/land.c:194
 #, c-format
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/land.c:187
+#: src/land.c:200
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] "You have %d tonne more cargo than the new ship can hold."
 msgstr[1] "You have %d tonnes more cargo than the new ship can hold."
 
-#: src/land.c:195
+#: src/land.c:208
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You have deployed fighters."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/land.c:303
+#: src/land.c:316
 msgid "Approach"
 msgstr ""
 
-#: src/land.c:370 src/land.c:376
+#: src/land.c:383 src/land.c:389
 msgid "News"
 msgstr ""
 
-#: src/land.c:580 src/land.c:649
+#: src/land.c:593 src/land.c:662
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:587
+#: src/land.c:600
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
 
-#: src/land.c:595 src/land.c:743
+#: src/land.c:608 src/land.c:756
 msgid "#nReward:#0 None"
 msgstr ""
 
-#: src/land.c:650
+#: src/land.c:663
 msgid "Are you sure you want to accept this mission?"
 msgstr ""
 
-#: src/land.c:736
+#: src/land.c:749
 #, c-format
 msgid ""
 "%s\n"
@@ -85496,96 +85910,100 @@ msgstr[1] ""
 "%s\n"
 "%d Tonnes"
 
-#: src/land.c:745
+#: src/land.c:758
 msgid "There are no missions available here."
 msgstr ""
 
-#: src/land.c:754
+#: src/land.c:767
 #, c-format
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:798 src/land.c:853
+#: src/land.c:811 src/land.c:866
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:831
+#: src/land.c:844
 #, c-format
 msgid "%s (%s-class)"
 msgstr ""
 
-#: src/land.c:835
+#: src/land.c:848
 #, c-format
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:842 src/map.c:700 src/map.c:714 src/map.c:721 src/map.c:745
-#: src/map.c:760
+#: src/land.c:855 src/map.c:697 src/map.c:711 src/map.c:718 src/map.c:742
+#: src/map.c:757
 msgid ", "
 msgstr ""
 
-#: src/land.c:864
+#: src/land.c:877
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:946
+#: src/land.c:959
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:960 src/map_find.c:1019 src/space.c:176
+#: src/land.c:973 src/map_find.c:1019 src/space.c:176
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:965 src/space.c:177
+#: src/land.c:978 src/space.c:177
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:976 src/space.c:175
+#: src/land.c:989 src/space.c:175
 msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1252
+#: src/land.c:1265
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1255
+#: src/land.c:1268
 #, fuzzy
 #| msgid "Faction:"
 msgid "Population:"
 msgstr "Faction :"
 
-#: src/land.c:1256 src/land_trade.c:89
+#: src/land.c:1269 src/land_trade.c:89
 #, fuzzy
 #| msgid "Spaceworthy"
 msgid "Free Space:"
 msgstr "Capable d'aller dans l'espace"
 
-#: src/land.c:1278
+#: src/land.c:1295
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1388
+#: src/land.c:1299
+msgid "Game will not be saved."
+msgstr ""
+
+#: src/land.c:1414
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up spob
-#: src/land.c:1441
+#: src/land.c:1467
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1450
+#: src/land.c:1476
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1527
+#: src/land.c:1553
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -85990,36 +86408,28 @@ msgstr ""
 msgid "Unknown var type '%s'"
 msgstr ""
 
-#: src/map.c:308
+#: src/map.c:307
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:322
+#: src/map.c:321
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:329
+#: src/map.c:328
 msgid "Services:"
 msgstr "Services :"
 
 #. Commodity button
-#: src/map.c:337
+#: src/map.c:336
 msgid "Mode"
 msgstr ""
 
-#: src/map.c:343
+#: src/map.c:342
 msgid "Autonav"
 msgstr "Pilote automatique"
 
-#: src/map.c:363
-#, fuzzy, c-format
-#| msgid "You discovered #%c%s#0."
-msgid "You have %d jump of fuel."
-msgid_plural "You have %d jumps of fuel."
-msgstr[0] "Vous avez découvert #%c%s#0."
-msgstr[1] "Vous avez découvert #%c%s#0."
-
-#: src/map.c:484
+#: src/map.c:481
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -86027,107 +86437,128 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:489
+#: src/map.c:486
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:566
+#: src/map.c:563
 #, c-format
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:725
+#: src/map.c:722
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:727
+#: src/map.c:724
 msgid "Light "
 msgstr ""
 
-#: src/map.c:734
+#: src/map.c:731
 #, c-format
 msgid "#rVolatile %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:736
+#: src/map.c:733
 #, c-format
 msgid "#oDangerous %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:738
+#: src/map.c:735
 #, c-format
 msgid "#yUnstable %sNebula (%.1f MW)#0"
 msgstr ""
 
-#: src/map.c:740
+#: src/map.c:737
 #, c-format
 msgid "%sNebula"
 msgstr ""
 
-#: src/map.c:749
+#: src/map.c:746
 #, c-format
 msgid "#rDense Interference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:751
+#: src/map.c:748
 #, c-format
 msgid "#oLight Interference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:753
+#: src/map.c:750
 #, c-format
 msgid "#yInterference (%.0f%%)#0"
 msgstr ""
 
-#: src/map.c:768
+#: src/map.c:765
 msgid "#oDense Asteroid Field#0"
 msgstr ""
 
-#: src/map.c:770
+#: src/map.c:767
 msgid "#yLight Asteroid Field"
 msgstr ""
 
-#: src/map.c:1648
+#: src/map.c:778
+msgid "Fuel: "
+msgstr "Carburant : "
+
+#: src/map.c:779 src/map.c:787
+#, fuzzy, c-format
+#| msgid "%s jump"
+#| msgid_plural "%s jumps"
+msgid "%d jump"
+msgid_plural "%d jumps"
+msgstr[0] "%s jump"
+msgstr[1] "%s jumps"
+
+#: src/map.c:781
+#, fuzzy
+#| msgid "Autonav"
+msgid ""
+"\n"
+"Autonav: "
+msgstr "Pilote automatique"
+
+#: src/map.c:1667
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:1908
+#: src/map.c:1927
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:1911
+#: src/map.c:1930
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:1912
+#: src/map.c:1931
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:1967
+#: src/map.c:1986
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:1967
+#: src/map.c:1986
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2756
+#: src/map.c:2775
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:2774 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:2793 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:2781
+#: src/map.c:2800
 #, fuzzy, c-format
 #| msgid "Loaded %d map decorator"
 #| msgid_plural "Loaded %d map decorators"
@@ -86136,19 +86567,19 @@ msgid_plural "Loaded %d map decorators in %.3f s"
 msgstr[0] "Loaded %d map decorator"
 msgstr[1] "Loaded %d map decorators"
 
-#: src/map.c:2784
+#: src/map.c:2803
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] "Loaded %d map decorator"
 msgstr[1] "Loaded %d map decorators"
 
-#: src/map.c:2811
+#: src/map.c:2830
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:2816
+#: src/map.c:2835
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
@@ -87233,23 +87664,23 @@ msgstr ""
 msgid "Failed to create new Lua state."
 msgstr ""
 
-#: src/nlua.c:454 src/nlua.c:460
+#: src/nlua.c:456 src/nlua.c:462
 msgid " package.path not found."
 msgstr ""
 
 #. Didn't get to load it.
-#: src/nlua.c:500
+#: src/nlua.c:502
 #, c-format
 msgid ""
 "\n"
 "   no ndata path '%s'"
 msgstr ""
 
-#: src/nlua.c:580 src/nlua.c:586
+#: src/nlua.c:582 src/nlua.c:588
 msgid "package.loaders must be a table"
 msgstr ""
 
-#: src/nlua.c:591
+#: src/nlua.c:593
 #, fuzzy, c-format
 #| msgid "Trying to destroy weapon not found in stack!"
 msgid "module '%s' not found:%s"
@@ -87812,7 +88243,7 @@ msgstr ""
 msgid "custom dialogue not open"
 msgstr ""
 
-#: src/nlua_tk.c:554
+#: src/nlua_tk.c:553 src/nlua_tk.c:576 src/nlua_tk.c:626 src/nlua_tk.c:653
 #, c-format
 msgid "Custom dialogue internal error: %s"
 msgstr ""
@@ -92081,6 +92512,13 @@ msgstr ""
 msgid "Immanis Cortex III"
 msgstr ""
 
+#, fuzzy, c-format
+#~| msgid "You discovered #%c%s#0."
+#~ msgid "You have %d jump of fuel."
+#~ msgid_plural "You have %d jumps of fuel."
+#~ msgstr[0] "Vous avez découvert #%c%s#0."
+#~ msgstr[1] "Vous avez découvert #%c%s#0."
+
 #, fuzzy
 #~| msgid "Proteron Dissident"
 #~ msgid "Pirate Hyena Fighter"
@@ -92152,9 +92590,6 @@ msgstr ""
 
 #~ msgid "Credits: "
 #~ msgstr "Crédits : "
-
-#~ msgid "Fuel: "
-#~ msgstr "Carburant : "
 
 #, c-format
 #~ msgid "Name: "
