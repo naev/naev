@@ -102,7 +102,7 @@ static void menu_options_button( unsigned int wid, const char *str );
  */
 static int menu_main_bkg_system (void)
 {
-   char **pn;
+   const char **pn;
    const nsave_t *ns;
    const char *sys;
    double cx, cy;

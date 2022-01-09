@@ -45,4 +45,4 @@ const nsave_t *load_getList (void);
 
 int load_refreshPlayerNames (void);
 void load_freePlayerNames (void);
-char **load_getPlayerNames (void);
+const char **load_getPlayerNames (void);

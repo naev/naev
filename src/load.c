@@ -387,9 +387,9 @@ void load_freePlayerNames (void)
 /**
  * @brief Gets the array (array.h) of player names.
  */
-char **load_getPlayerNames (void)
+const char **load_getPlayerNames (void)
 {
-   return player_names;
+   return (const char **) player_names;
 }
 
 /**
@@ -410,7 +410,7 @@ void load_loadGameMenu (void)
    int n;
 
    /* window */
-   wid = window_create( "wdwLoadGameMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   wid = window_create( "wdwLoadGameMenu", _("Load Pilot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_menu_load );
    window_setCancel( wid, load_menu_close );
 
@@ -446,9 +446,6 @@ void load_loadGameMenu (void)
          "btnLoad", _("Load"), load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_menu_delete );
-
-   /* TODO: implement deleting players */
-   window_disableButton( wid, "btnDelete" );
 }
 
 /**
@@ -522,8 +519,12 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
 {
    (void)str;
    int pos;
+   const char *name;
 
    pos = toolkit_getListPos( wdw, "lstNames" );
+   name = toolkit_getList( wdw, "lstNames" );
+   if (strcmp(name,_("None")) == 0)
+      return;
    load_loadSnapshotMenu( player_names[pos] );
 }
 
@@ -686,7 +687,7 @@ static void load_menu_load( unsigned int wdw, const char *str )
    wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstNames" );
 
-   if (strcmp(save,_("None")) == 0)
+   if (strcmp(save,_("None")) == 0 || array_size(load_saves) == 0)
       return;
 
    /* Check version. */
@@ -704,10 +705,8 @@ static void load_menu_load( unsigned int wdw, const char *str )
    /* Close menus before loading for proper rendering. */
    load_menu_close(wdw, NULL);
 
-   if (menu_isOpen(MENU_SMALL))
-      menu_small_close();
-   else
-      menu_main_close();
+   /* Close the main menu. */
+   menu_main_close();
 
    /* Try to load the game. */
    if (load_game( &load_saves[0] )) {
@@ -767,8 +766,33 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
 }
 
 static void load_menu_delete( unsigned int wdw, const char *str ) {
-   (void) wdw;
-   (void) str;
+   const char *name;
+   unsigned int wid;
+   int n;
+   char path[PATH_MAX];
+
+   wid = window_get( "wdwLoadGameMenu" );
+   name = toolkit_getList( wid, "lstNames" );
+
+   if (strcmp(name,"None") == 0)
+      return;
+
+   if (dialogue_YesNo( _("Permanently Delete?"),
+      _("Are you sure you want to permanently delete '%s'?"), name) == 0)
+      return;
+
+   /* Remove it. */
+   n = array_size( load_saves );
+   for (int i = 0; i < n; i++)
+      if (!PHYSFS_delete( load_saves[i].path ))
+         dialogue_alert( _("Unable to delete %s"), load_saves[i].path );
+   snprintf(path, sizeof(path), "saves/%s", name);
+   if (!PHYSFS_delete( path ))
+      dialogue_alert( _("Unable to delete '%s' directory"), name );
+
+   /* need to reload the menu */
+   load_menu_close( wdw, str );
+   load_loadGameMenu();
 }
 
 /**

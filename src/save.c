@@ -193,6 +193,5 @@ err:
  */
 void save_reload (void)
 {
-   load_refresh( player.name );
    load_gameFile( load_getList()[0].path );
 }
