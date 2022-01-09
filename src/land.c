@@ -154,7 +154,7 @@ static int land_hasLocalMap (void)
 int land_canSave (void)
 {
    /* Overrided case. */
-   if (!player_isFlag( PLAYER_NOSAVE ))
+   if (player_isFlag( PLAYER_NOSAVE ))
       return 0;
 
    /* If the current landed planet is refuelable, no need to check if can land. */
