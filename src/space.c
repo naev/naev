@@ -2847,7 +2847,6 @@ static int sys_cmpSysFaction( const void *a, const void *b )
  * @brief Sets the system faction based on the planets it has.
  *
  *    @param sys System to set the faction of.
- *    @return Faction that controls the system.
  */
 void system_setFaction( StarSystem *sys )
 {
