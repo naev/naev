@@ -929,7 +929,6 @@ void window_close( unsigned int wid, const char *str )
  * @brief Kills the window.
  *
  *    @param wid ID of window to destroy.
- *    @return 1 if windows still need killing.
  */
 void window_destroy( unsigned int wid )
 {
