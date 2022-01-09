@@ -21,7 +21,7 @@
  <license>Large Civilian Vessel</license>
  <cond>faction.playerStanding("Soromid") &gt; 60</cond>
  <condstr>You need at least 60 reputation with the Soromid.</condstr>
- <description>The Copia is a bulk freighter that is usually employed to supply Soromid fleets or military installations as acces to bioships is restricted for most civilians.</description>
+ <description>The Copia is a bulk freighter that is usually employed to supply Soromid fleets or military installations as access to bioships is restricted for most civilians.</description>
  <health>
   <armour>900</armour>
   <armour_regen>0</armour_regen>
