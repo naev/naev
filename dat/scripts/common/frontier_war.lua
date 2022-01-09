@@ -34,12 +34,12 @@ fw.lords = {
 }
 
 -- Character's portraits. TODO: create unique portraits for them
-fw.portrait_tam     = "dvaered/dv_military_m3.webp" -- Major Tam: main mission giver of this campaign
+fw.portrait_tam     = "major_tam.webp" -- Major Tam: main mission giver of this campaign
 fw.portrait_leblanc = "dvaered/dv_military_f8.webp" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
 fw.portrait_klank   = "dvaered/dv_general1.webp"    -- Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
 fw.portrait_hamfresser = "dvaered/dv_military_m7.webp" -- Captain Hamfresser: player's sidekick for some of the missions
-fw.portrait_strafer = "dvaered/dv_military_m1.webp" -- Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
-fw.portrait_nikolov = "dvaered/dv_military_f7.webp" -- Sergeant Nikolov: second in command of Captain Hamfresser
+fw.portrait_strafer = "lieutenant_stafner.webp" -- Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
+fw.portrait_nikolov = "sergeant_nikolov.webp" -- Sergeant Nikolov: second in command of Captain Hamfresser
 fw.portrait_therus  = "dvaered/dv_military_f1.webp" -- Caporal Therus: subordinate of Captain Hamfresser
 fw.portrait_tronk   = "dvaered/dv_military_m5.webp" -- Private Tronk: subordinate of Captain Hamfresser
 
