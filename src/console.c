@@ -116,11 +116,6 @@ static void cli_printCoreString( const char *s, int escape )
    int len;
    glPrintLineIterator iter;
 
-   if (s[0] == '\0') {
-      cli_addMessageMax( NULL, 0 );
-      return;
-   }
-
    gl_printLineIteratorInit( &iter, cli_font, s, CLI_WIDTH-40 );
    while (gl_printLineIteratorNext( &iter )) {
       if (escape) {
