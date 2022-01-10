@@ -1377,7 +1377,7 @@ static void window_renderBorder( Window* w )
  */
 void window_render( Window *w )
 {
-   double x, y, wid, hei;
+   double x, y;
 
    /* Do not render dead windows. */
    if (window_isFlag( w, WINDOW_KILL ))
@@ -1397,22 +1397,16 @@ void window_render( Window *w )
    /*
     * widgets
     */
-   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
-      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL)) {
          wgt->render( wgt, x, y );
 
-   /*
-    * focused widget
-    */
-   if (w->focus != -1){
-      Widget *wgt = toolkit_getFocus( w );
-      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
-         return;
-      x  += wgt->x-2;
-      y  += wgt->y-2;
-      wid = wgt->w+4;
-      hei = wgt->h+4;
-      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
+         if (wgt->id == w->focus) {
+            double wx  = x + wgt->x - 2;
+            double wy  = y + wgt->y - 2;
+            toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
+         }
+      }
    }
 }
 
