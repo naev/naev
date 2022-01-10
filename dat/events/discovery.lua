@@ -258,8 +258,8 @@ local custom_events = {
       end,
       type = "enter",
       name = "disc_wildones",
-      title = _("#HWild Ones Territory#0"),
-      subtitle = _("#HUncontrolled and Raging Pirate Fury#0"),
+      title = "#H".._("Wild Ones Territory").."#0",
+      subtitle = "#H".._("Uncontrolled and Raging Pirate Fury").."#0",
       func = function() faction.get("Wild Ones"):setKnown( true ) end
    },
    RavenClan = {
@@ -269,8 +269,8 @@ local custom_events = {
       end,
       type = "enter",
       name = "disc_ravenclan",
-      title = _("#HRaven Clan Territory#0"),
-      subtitle = _("#HDark Hand of the Black Market#0"),
+      title = "#H".._("Raven Clan Territory").."#0",
+      subtitle = "#H".._("Dark Hand of the Black Market").."#0",
       func = function() faction.get("Raven Clan"):setKnown( true ) end
    },
    BlackLotus = {
@@ -280,8 +280,8 @@ local custom_events = {
       end,
       type = "enter",
       name = "disc_blacklotus",
-      title = _("#HBlack Lotus Territory#0"),
-      subtitle = _("#HPiracy has never been Snazzier#0"),
+      title = "#H".._("Black Lotus Territory").."#0",
+      subtitle = "#H".._("Piracy has never been Snazzier").."#0",
       func = function() faction.get("Black Lotus"):setKnown( true ) end
    },
    DreamerClan = {
@@ -291,8 +291,8 @@ local custom_events = {
       end,
       type = "enter",
       name = "disc_dreamerclan",
-      title = _("#HDreamer Clan Territory#0"),
-      subtitle = _("#HPiracy to Rebel against Reality#0"),
+      title = "#H".._("Dreamer Clan Territory").."#0",
+      subtitle = "#H".._("Piracy to Rebel against Reality").."#0",
       func = function() faction.get("Dreamer Clan"):setKnown( true ) end
    },
 }
@@ -370,7 +370,7 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
-   local template = (event.subtitle and _("You found #o{title} - {subtitle}!")) or _("You found #o{title}!")
+   local template = (event.subtitle and _("You found #o{title} - {subtitle}#0!")) or _("You found #o{title}#0!")
    local msg = fmt.f(template, event)
    -- Log and message
    player.msg( msg )
