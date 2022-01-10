@@ -199,7 +199,11 @@ local function pir_discovery( fname, disc, subtitle )
       title = "#H"..fmt.f(_("{fname} Territory"),{fname=fname}).."#0",
       subtitle = "#H"..subtitle.."#0",
       func = function()
-         faction.get(fname):setKnown( true )
+         local fpir = faction.get(fname)
+         fpir:setKnown( true )
+         for k,p in pilot.get( {fpir}, true ) do
+            p:rename( p:ship():name() )
+         end
       end,
    }
 end
