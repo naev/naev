@@ -482,10 +482,6 @@ static int cli_initLua (void)
    nlua_loadTk( cli_env );
    nlua_loadLinOpt( cli_env );
 
-   /* Mark as console. */
-   lua_pushboolean( naevL, 1 );
-   nlua_setenv( naevL, cli_env, "__cli" );
-
    nlua_pushenv( naevL, cli_env );
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
@@ -691,12 +687,7 @@ void cli_open (void)
       if (cli_init())
          return;
 
-   /* Make sure main menu isn't open. */
-   if (menu_isOpen(MENU_MAIN))
-      return;
-
-   /* Must not be already open. */
-   if (window_exists( "wdwLuaConsole" ))
+   if (menu_isOpen(MENU_MAIN) || cli_isOpen())
       return;
 
    /* Put a friendly message at first. */
@@ -735,4 +726,9 @@ void cli_open (void)
 
    /* Reinitilaized. */
    cli_firstline = 1;
+}
+
+int cli_isOpen (void)
+{
+   return window_exists( "wdwLuaConsole" );
 }

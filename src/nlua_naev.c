@@ -14,6 +14,7 @@
 
 #include "nlua_naev.h"
 
+#include "console.h"
 #include "input.h"
 #include "land.h"
 #include "log.h"
@@ -267,15 +268,11 @@ static int naevL_eventStart( lua_State *L )
    const char *str;
 
    NLUA_CHECKRW(L);
-
    str = luaL_checkstring(L, 1);
    ret = event_start( str, NULL );
 
-   /* Get if console. */
-   nlua_getenv(L, __NLUA_CURENV, "__cli");
-   if (lua_toboolean(L,-1) && landed)
+   if (cli_isOpen() && landed)
       bar_regen();
-   lua_pop(L,1);
 
    lua_pushboolean( L, !ret );
    return 1;
@@ -295,15 +292,11 @@ static int naevL_missionStart( lua_State *L )
    const char *str;
 
    NLUA_CHECKRW(L);
-
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, NULL );
 
-   /* Get if console. */
-   nlua_getenv(L, __NLUA_CURENV, "__cli");
-   if (lua_toboolean(L,-1) && landed)
+   if (cli_isOpen() && landed)
       bar_regen();
-   lua_pop(L,1);
 
    lua_pushboolean( L, !ret );
    return 1;
@@ -324,7 +317,6 @@ static int naevL_eventReload( lua_State *L )
    const char *str;
 
    NLUA_CHECKRW(L);
-
    str = luaL_checkstring(L, 1);
    ret = event_reload( str );
 
