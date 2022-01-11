@@ -1382,6 +1382,10 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 
    /* Set the scan timer. */
    pilot_ewScanStart( p );
+
+   /* Untarget asteroid (if any). */
+   p->nav_anchor   = -1;
+   p->nav_asteroid = -1;
 }
 
 /**
