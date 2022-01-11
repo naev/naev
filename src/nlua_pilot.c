@@ -138,6 +138,7 @@ static int pilotL_effectGet( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
+static int pilotL_addHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_fillAmmo( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
@@ -245,6 +246,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "changeAI", pilotL_changeAI },
    { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
+   { "addHealth", pilotL_addHealth },
    { "setEnergy", pilotL_setEnergy },
    { "fillAmmo", pilotL_fillAmmo },
    { "setNoboard", pilotL_setNoboard },
@@ -3322,6 +3324,38 @@ static int pilotL_setHealth( lua_State *L )
          player_rmFlag( PLAYER_DESTROYED );
    }
    pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
+
+   /* Update disable status. */
+   pilot_updateDisable(p, 0);
+
+   return 0;
+}
+
+/**
+ * @brief Adds health to a pilot.
+ *
+ * Does not revive dead pilots, use setHealth for that.
+ *
+ *    @luatparam Pilot p Pilot to add health to.
+ *    @luatparam[opt=0.] number armour Armour to add.
+ *    @luatparam[opt=0.] number shield Shield to add.
+ * @luafunc addHealth
+ */
+static int pilotL_addHealth( lua_State *L )
+{
+   Pilot *p;
+   double a, s;
+
+   NLUA_CHECKRW(L);
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   a  = luaL_optnumber(L, 2, 0.);
+   s  = luaL_optnumber(L, 3, 0.);
+
+   /* Set health. */
+   p->armour = CLAMP( 0., p->armour_max, p->armour + a );
+   p->shield = CLAMP( 0., p->shield_max, p->shield + s );
 
    /* Update disable status. */
    pilot_updateDisable(p, 0);
