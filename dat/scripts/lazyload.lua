@@ -4,7 +4,7 @@
 --]]
 local lazyload -- If you write "local function lazyload", LDoc is too lazy to document it.
 
-local lib -- Has to be here so subsequent calls to lazyload work happy
+local lib = {} -- Has to be here so subsequent calls to lazyload work happy
 
 --[[--
    Main function that wraps a library to lazy load it.
@@ -16,22 +16,29 @@ local lib -- Has to be here so subsequent calls to lazyload work happy
       @treturn table A library that can be used in place of the real library with lazy loading.
 --]]
 function lazyload( libname, rw )
+   local locallib
    local mt = {
       __index = function( self, key )
-         if not lib then
-            lib = require(libname)
-            self.__index = lib
+         if not locallib then
+            if not lib[libname] then
+               lib[libname] = require(libname)
+            end
+            locallib = lib[libname]
+            self.__index = locallib
          end
-         return lib[key]
+         return locallib[key]
       end
    }
    if rw then
       mt.__newindex = function( self, key, value )
-         if not lib then
-            lib = require(libname)
-            self.__index = lib
+         if not locallib then
+            if not lib[libname] then
+               lib[libname] = require(libname)
+            end
+            locallib = lib[libname]
+            self.__index = locallib
          end
-         lib[key] = value
+         locallib[key] = value
       end
    end
    return setmetatable( {}, mt )
