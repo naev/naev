@@ -4,6 +4,8 @@
 --]]
 local lazyload -- If you write "local function lazyload", LDoc is too lazy to document it.
 
+local lib -- Has to be here so subsequent calls to lazyload work happy
+
 --[[--
    Main function that wraps a library to lazy load it.
 
@@ -14,7 +16,6 @@ local lazyload -- If you write "local function lazyload", LDoc is too lazy to do
       @treturn table A library that can be used in place of the real library with lazy loading.
 --]]
 function lazyload( libname, rw )
-   local lib
    local mt = {
       __index = function( self, key )
          if not lib then
