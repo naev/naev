@@ -7,9 +7,7 @@ Command-line library. See https://github.com/hoelzro/lua-linenoise.
 local ln = {}
 
 --[[---
-Return a line of user input (generally after yielding to Naev's event loop), or nil if no more is available.
-
-TODO This is a stub implementation that doesn't work.
+Return a line of user input. (Actually, just awaits it.)
 
    @tparam string prompt A prompt like "> " or ">> " to put in front of the line.
 --]]

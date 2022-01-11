@@ -851,7 +851,7 @@ static int pilotL_getPilots( lua_State *L )
          factions = array_create_size( int, lua_objlen(L,1) );
          /* Load up the table. */
          lua_pushnil(L);
-         while (lua_next(L, -2) != 0) {
+         while (lua_next(L, 1) != 0) {
             if (lua_isfaction(L,-1))
                array_push_back( &factions, lua_tofaction(L, -1) );
             lua_pop(L,1);

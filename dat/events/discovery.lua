@@ -201,7 +201,7 @@ local function pir_discovery( fname, disc, subtitle )
       func = function()
          local fpir = faction.get(fname)
          fpir:setKnown( true )
-         for k,p in pilot.get( {fpir}, true ) do
+         for k,p in ipairs( pilot.get( {fpir}, true ) ) do
             if p:name() == _("Unknown") then
                p:rename( p:ship():name() )
             end
