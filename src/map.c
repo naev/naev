@@ -2008,6 +2008,7 @@ static void map_modeUpdate( unsigned int wid, const char* str )
 static void map_modeActivate( unsigned int wid, const char* str )
 {
    map_modeUpdate( wid, str );
+   listMapModeVisible = 0;
    window_destroyWidget( wid, str );
 }
 
