@@ -14,14 +14,14 @@
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel</license>
- <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
+ <description>The Phalanx is, by Dvaered standards, a fast but poorly manoevrable corvette that can be used as a missile platform. Its high armor makes it a capable corvette provided one equips it with turrets.</description>
  <health>
-  <armour>210</armour>
+  <armour>250</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>190</mass>
+  <mass>210</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>20</cargo>
  </characteristics>
@@ -44,10 +44,14 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
+  <cpu_mod>-15</cpu_mod>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>-20</thrust_mod>
+  <turn_mod>-20</turn_mod>
   <armour_mod>15</armour_mod>
-  <energy_mod>20</energy_mod>
-  <energy_regen_mod>-10</energy_regen_mod>
+  <energy_regen_mod>-15</energy_regen_mod>
+  <launch_range>20</launch_range>
+  <ammo_capacity>10</ammo_capacity>
  </stats>
  <tags>
   <tag>frontier</tag>

@@ -58,6 +58,7 @@
   <item>TeraCom Mace Launcher</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
+  <item>Repeating Banshee Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
   <item>TeraCom Imperator Launcher</item>
@@ -645,6 +646,7 @@
   <item>Empire Lancelot Fighter Bay</item>
  </tech>
  <tech name="Dvaered Elite Outfits">
+  <item>Repeating Banshee Launcher</item>
   <item>Milspec Impacto-Plastic Coating</item>
   <item>Cyclic Combat AI</item>
  </tech>

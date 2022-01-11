@@ -17,16 +17,16 @@
  <license>Medium Combat Vessel</license>
  <cond>faction.playerStanding("Dvaered") &gt; 40</cond>
  <condstr>You need at least 40 reputation with House Dvaered.</condstr>
- <description>This military grade version of the Phalanx has slightly stronger armour compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>
+ <description>On this military grade version of the Phalanx, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
-  <armour>220</armour>
+  <armour>250</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>190</mass>
+  <mass>210</mass>
   <fuel_consumption>200</fuel_consumption>
-  <cargo>25</cargo>
+  <cargo>20</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" x="8" y="0" h="2" />
@@ -47,11 +47,15 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
-  <armour_mod>20</armour_mod>
-  <energy_mod>20</energy_mod>
-  <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>-10</fwd_heat>
+  <cpu_mod>-15</cpu_mod>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>-20</thrust_mod>
+  <turn_mod>-20</turn_mod>
+  <armour_mod>15</armour_mod>
+  <energy_regen_mod>-15</energy_regen_mod>
+  <launch_range>20</launch_range>
+  <ammo_capacity>10</ammo_capacity>
+  <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>
