@@ -3096,6 +3096,17 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
 }
 
 /**
+ * @brief Resets the trails for a pilot.
+ */
+void pilot_clearTrails( Pilot *p )
+{
+   for (int j=0; j<array_size(p->trail); j++)
+      spfx_trail_remove( p->trail[j] );
+   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+   pilot_init_trails( p );
+}
+
+/**
  * @brief Replaces the player's pilot with an alternate ship with the same ID.
  *
  *    @return The new pilot.
