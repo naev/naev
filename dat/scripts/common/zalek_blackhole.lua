@@ -62,20 +62,26 @@ zbh.unidiff_list = {
    Evil Principal Investigator (PI) Faction
 --]]
 function zbh.evilpi ()
-   local f = faction.exists("evilpi")
+   local id = "zbh_evilpi"
+   local f = faction.exists( id )
    if f then
       return f
    end
-   return faction.dynAdd( "Za'lek", "evilpi", _("Evil PI"),
+   return faction.dynAdd( "Za'lek", id, _("Evil PI"),
          {clear_enemies=true, clear_allies=true} )
 end
 
-function zbh.plt_icarus( pos )
-   local fct = faction.exists("feralbioship")
-   if not fct then
-      fct = faction.dynAdd( nil, "feralbioship", _("Feral Bioship"), {ai="dummy"} )
+function zbh.feralbioship ()
+   local id = "zbh_feralbioship"
+   local f = faction.exists( id )
+   if f then
+      return f
    end
-   return pilot.add( "Nohinohi", fct, pos, _("Icarus") )
+   return faction.dynAdd( nil, id, _("Feral Bioship"), {ai="dummy"} )
+end
+
+function zbh.plt_icarus( pos )
+   return pilot.add( "Nohinohi", zbh.feralbioship, pos, _("Icarus"), {ai="dummy"} )
 end
 
 function zbh.unidiff( diffname )
