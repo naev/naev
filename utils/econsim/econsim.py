@@ -13,7 +13,7 @@ config = dict({
 
 def planet_filter( p ):
    details = assetsObj.getPlanetDetails( p )
-   return details and int(details['population']) > 0
+   return details and float(details['population']) > 0
 
 
 if __name__ == "__main__":

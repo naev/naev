@@ -2,32 +2,34 @@
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
 import os,sys
+import glob
 from ._Readers import readers
 
 class unidiff(readers):
 
     def __init__(self, **config):
-        uXml = os.path.join(config['datpath'], 'unidiff.xml')
+        uXml = glob.glob(os.path.join(config['datpath'], 'unidiff/*.xml'))
         readers.__init__(self, uXml, config['verbose'])
         self._componentName = 'unidiff'
         self.used = list()
         self.unknown = list()
 
         self.nameList = list()
-        print('Compiling unidiff ...',end='      ')
-        for diff in self.xmlData.findall('unidiff'):
-            self.nameList.append(diff.attrib['name'])
         self.techList = list()
-        for diff in self.xmlData.findall('unidiff/tech/add'):
-            self.techList.append(diff.text)
         self.assetList = list()
-        for diff in self.xmlData.findall('unidiff/system/asset'):
-            self.assetList.append(diff.attrib['name'])
+        print('Compiling unidiff ...',end='      ')
+        for diff in self.xmlData:
+            diff = diff.getroot()
+            self.nameList.append(diff.attrib['name'])
+            for add in diff.findall('tech/add'):
+                self.techList.append(add.text)
+            for asset in diff.findall('system/asset'):
+                self.assetList.append(asset.attrib['name'])
         print("DONE")
 
     def find(self, name):
         """
-        return True if name is found in unidiff.xml
+        return True if name is found in unidiff/*.xml
         And if so, add name in the used list.
         """
         if name in self.nameList:
