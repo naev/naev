@@ -602,7 +602,7 @@ double pilot_weapSetRange( Pilot* p, int id, int level )
    double range;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    if (level < 0) {
-      range = 0;
+      range = 0.;
       for (int i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
          range += ws->range[i];
    }
@@ -624,7 +624,7 @@ double pilot_weapSetSpeed( Pilot* p, int id, int level )
    double speed;
    PilotWeaponSet *ws = pilot_weapSet(p,id);
    if (level < 0) {
-      speed = 0;
+      speed = 0.;
       for (int i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
          speed += ws->speed[i];
    }
