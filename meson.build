@@ -153,7 +153,7 @@ if buildExec.disabled() == false
    if use_system_suitesparse
       message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
               'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
-      foreach csparse_name : ['csparse', 'cxsparse']
+      foreach csparse_name : ['cxsparse', 'csparse']
          system_csparse = cc.find_library(csparse_name, required: false)
          if system_csparse.found()
             break
