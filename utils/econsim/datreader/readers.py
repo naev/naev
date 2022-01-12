@@ -1,6 +1,7 @@
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
 import os
+import glob
 try:
     from lxml import etree as ET
 except ImportError:
@@ -22,9 +23,8 @@ class readers:
         self._verbose = verbose
         if self.xmlData is None:
             self.xmlData = ET.Element('directory')
-            for path, _, fnames in os.walk(os.path.join(xmlPath, subdir)):
-                self.xmlData.extend(ET.parse(os.path.join(path, fn)).getroot()
-                                    for fn in fnames)
+            for fn in glob.glob(os.path.join(xmlPath, subdir, '*.xml')):
+                self.xmlData.append(ET.parse(fn).getroot())
 
 class ssys(readers):
     def __init__(self, datPath, verbose=False):
@@ -37,7 +37,7 @@ class ssys(readers):
             ssysName = system.get('name')
             jumps = [self._processJump(jump) for jump in system.find('jumps')]
             self.jumpsList.update({ssysName: jumps})
-            planets = system.find('assets').getchildren()
+            planets = system.find('spobs').getchildren()
             assets = [planet.text for planet in planets]
             self.assetsList.update({ssysName: assets})
 
@@ -70,10 +70,10 @@ class assets(readers):
     tagWhiteList = ('class','population')
 
     def __init__(self, datPath, verbose=False):
-        readers.__init__(self, datPath, 'assets', verbose)
+        readers.__init__(self, datPath, 'spob', verbose)
 
         # we loads all the assets
-        tmp = self.xmlData.findall('asset')
+        tmp = self.xmlData.findall('spob')
         self.assets = dict()
 
         for asset in tmp:

@@ -37,7 +37,7 @@ DATA_ROOT = 'dat'
 # Locations for each type of data. Values in this mapping are 2-tuples, holding
 # the directory and a filename pattern.
 DATA_LOCS = {'SSystems': ('ssys', '*.xml'),
-			 'Assets': ('assets', '*.xml')}
+			 'Assets': ('spob', '*.xml')}
 
 def naev_version(naevroot=None):
 	'''Get the currently declared Naev version.'''

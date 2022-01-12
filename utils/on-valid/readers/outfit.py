@@ -8,7 +8,8 @@ from ._Readers import readers
 class outfit(readers):
 
     def __init__(self, **config):
-        outfitXml = glob.glob(os.path.join(config['datpath'], 'outfits/*/*.xml'))
+        outfitXml = glob.glob(os.path.join(config['datpath'],
+            'outfits/**/*.xml'), recursive=True)
         readers.__init__(self, outfitXml, config['verbose'])
         self._componentName = 'outfit'
         self._tech = config['tech']

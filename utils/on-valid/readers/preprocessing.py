@@ -109,7 +109,7 @@ class tech(items):
 
 class assets(items):
     def __init__(self, techItem, **config):
-        config['xml_file'] = 'assets/*.xml'
+        config['xml_file'] = 'spob/*.xml'
         config['item'] = 'asset'
         items.__init__(self, **config)
         self.ssys = ssys(**config)
@@ -130,7 +130,7 @@ class assets(items):
             if self.techItem(tech):
                 continue
             if tech not in techList and not self._unidiff.findTech(tech):
-                print("Warning: tech ''{0}`` not present in the assets xml".format(tech))
+                print("Warning: tech ''{0}`` not present among spob/*.xml".format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
@@ -142,7 +142,7 @@ class ssys(readers):
         # TODO check for empty assets[/asset] <- return '\n  ' if empty
         assetList = list()
         for assets in self.xmlData:
-            for asset in assets.findall('ssys/assets/asset/'):
+            for asset in assets.findall('ssys/spobs/spob/'):
                 assetList.append(asset.text)
 
         for asset in assetNames:

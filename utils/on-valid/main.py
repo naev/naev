@@ -133,7 +133,7 @@ class sanitizer:
                 errors = list()
 
             try:
-                line[file] = open(file, 'rU').read()
+                line[file] = open(file, 'r').read()
                 haserror=False
                 for match in search_cobj.finditer(line[file]):
                     lineno, offset = lineNumber(line[file], match.start())

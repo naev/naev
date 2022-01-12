@@ -388,7 +388,7 @@ class SSystem(object):
 			with open(filename) as f:
 				# Grab the elements we want.
 				doc = xml.dom.minidom.parse(f)
-				assets = doc.getElementsByTagName('asset')
+				assets = doc.getElementsByTagName('spob')
 				general = doc.getElementsByTagName('general')[0]
 				jumps = doc.getElementsByTagName('jump')
 				pos = doc.getElementsByTagName('pos')[0]
@@ -442,7 +442,7 @@ class SSystem(object):
 						# The <nebula> tag has a couple of bits of info.
 						self.nebula = Nebula(content,
 											 child.getAttribute('volatility'))
-					elif child.tagName in ('background', 'features'):
+					elif child.tagName in ('background', 'features', 'map_shader'):
 						pass  # Ignore these string attributes for now.
 					else:
 						# Everything else is just a single piece of content.

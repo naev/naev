@@ -313,7 +313,7 @@ def main():
 			raise
 	sys.stderr.write("\t\t" + str(len(ssystems)) + " systems loaded\n")
 
-	sys.stderr.write("\tLoading assets\n")
+	sys.stderr.write("\tLoading spobs\n")
 	for assetfile in datafiles('Assets', naevRoot):
 		# Parse each XML file into a Asset object.
 		try:
@@ -321,7 +321,7 @@ def main():
 		except:
 			print("Choked on '{}'".format(assetfile), file=sys.stderr)
 			raise
-	sys.stderr.write("\t\t" + str(len(assets)) + " assets loaded\n")
+	sys.stderr.write("\t\t" + str(len(assets)) + " spobs loaded\n")
 
 	sys.stderr.write("\tBuilding map\n")
 	makemap(ssystems, assets)
