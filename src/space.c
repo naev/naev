@@ -1579,8 +1579,12 @@ void space_init( const char* sysname, int do_simulate )
    /* Update after setting cur_system. */
    if ((oldsys != NULL && oldsys->stats != NULL) || cur_system->stats != NULL) {
       Pilot *const* pilot_stack = pilot_getAll();
-      for (int i=0; i<array_size(pilot_stack); i++)
-         pilot_calcStats( pilot_stack[i] );
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         Pilot *p = pilot_stack[i];
+         pilot_calcStats( p );
+         if (p->parent == PLAYER_ID)
+            pilot_setFlag( p, PILOT_HIDE );
+      }
    }
 
    /* Set up spobs. */
@@ -1665,8 +1669,15 @@ void space_init( const char* sysname, int do_simulate )
       */
    }
    player_messageToggle( 1 );
-   if (player.p != NULL)
+   if (player.p != NULL) {
+      Pilot *const* pilot_stack = pilot_getAll();
       pilot_rmFlag( player.p, PILOT_HIDE );
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         Pilot *p = pilot_stack[i];
+         if (p->parent == PLAYER_ID)
+            pilot_rmFlag( p, PILOT_HIDE );
+      }
+   }
    space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */
