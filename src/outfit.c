@@ -707,7 +707,11 @@ double outfit_range( const Outfit* o )
       return o->u.bem.range;
    else if (outfit_isLauncher(o)) {
       if (o->u.lau.thrust) {
-         double speedinc = o->u.lau.speed_max - o->u.lau.speed;
+         double speedinc;
+         if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
+            speedinc = INFINITY;
+         else
+            speedinc = o->u.lau.speed_max - o->u.lau.speed;
          double at = speedinc / o->u.lau.thrust;
          if (at < o->u.lau.duration)
             return speedinc * (o->u.lau.duration - at / 2.) + o->u.lau.speed * o->u.lau.duration;
@@ -734,7 +738,12 @@ double outfit_speed( const Outfit* o )
       if (o->u.lau.thrust == 0.)
          return o->u.lau.speed;
       else { /* Gets the average speed. */
-         double t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.thrust; /* Time to reach max speed */
+         double t;
+         if (o->u.lau.speed > 0.) /* Ammo that don't start stopped don't have max speed. */
+            t = INFINITY;
+         else
+            t = (o->u.lau.speed_max - o->u.lau.speed) / o->u.lau.thrust; /* Time to reach max speed */
+
          /* Reaches max speed. */
          if (t < o->u.lau.duration)
             return (o->u.lau.thrust * t * t / 2. + (o->u.lau.speed_max - o->u.lau.speed) * (o->u.lau.duration - t)) / o->u.lau.duration + o->u.lau.speed;
@@ -1666,7 +1675,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    }
    else
       SDESC_COND( l, temp, _("\n%.0f Speed"), temp->u.lau.speed );
-   SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
+   if (!(temp->u.lau.thrust > 0. && temp->u.lau.speed > 0.))
+      SDESC_ADD(  l, temp, _("\n%.0f Maximum Speed"), temp->u.lau.speed_max );
    SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
    SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
