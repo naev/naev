@@ -1454,7 +1454,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    rdir     = ANGLE(x,y);
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
-   if (outfit_isLauncher(outfit) && outfit->u.lau.ai == AMMO_AI_UNGUIDED) {
+   if (outfit_isLauncher(outfit) && outfit->u.lau.thrust > 0.) {
       vmin  = outfit->u.lau.speed;
 
       if ( vmin > 0. ) {
@@ -1670,7 +1670,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       /* Limit speed, we only relativize in the case it has thrust + initila speed. */
       w->solid->speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
-         w->solid->speed_max += VMOD(*vel); /* TODO: this is odd. */
+         w->solid->speed_max = -1; /* No limit. */
    }
 
    /* Handle seekers. */

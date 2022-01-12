@@ -1620,6 +1620,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
    if (temp->u.lau.speed_max < 0.)
       temp->u.lau.speed_max = temp->u.lau.speed;
+   else if (temp->u.lau.speed > 0. && temp->u.lau.thrust > 0.) /* Condition for not taking max_speed into account. */
+      WARN(_("Max speed of ammo '%s' will be ignored."), temp->name);
    temp->u.lau.resist /= 100.;
 
    /* Set default outfit size if necessary. */
