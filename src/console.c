@@ -65,7 +65,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 static char **cli_buffer; /**< CLI buffer. */
 static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
-static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
+static int cli_scroll_pos  = -1; /**< Position in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
 static int cli_firstline   = 1; /**< Original CLI: Is this the first line? */
 
@@ -314,17 +314,15 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
-   int i, pos;
-   char *str;
 
    switch (key) {
 
       /* Go up in history. */
       case SDLK_UP:
-         for (i=cli_history; i>=0; i--) {
+         for (int i=cli_history; i>=0; i--) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                /* Strip escape codes from beginning and end */
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
                   strcmp(window_getInput(wid, "inpInput"), str) == 0) {
                   free(str);
@@ -347,25 +345,23 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          }
 
          /* Find next buffer. */
-         for (i=cli_history+1; i<array_size(cli_buffer); i++) {
+         for (int i=cli_history+1; i<array_size(cli_buffer); i++) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
-               cli_history = i;
                return 1;
             }
          }
-         cli_history = i-1;
+         cli_history = array_size(cli_buffer)-1;
          window_setInput( wid, "inpInput", NULL );
          return 1;
 
       /* Scroll up */
       case SDLK_PAGEUP:
-         pos = cli_scroll_pos;
-         if (pos == -1)
-            pos = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
-         cli_scroll_pos = MAX(0, pos - CLI_MAX_LINES);
+         if (cli_scroll_pos == -1)
+            cli_scroll_pos = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
+         cli_scroll_pos = MAX(0, cli_scroll_pos - CLI_MAX_LINES);
          return 1;
 
       /* Scroll down */
