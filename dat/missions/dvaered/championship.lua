@@ -31,6 +31,7 @@
 local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
+local bioship = require "bioship"
 
 -- NPC
 mem.npc_portrait = {}
@@ -194,22 +195,17 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie"} )
-
-      opponent:outfitRm("all")
-      opponent:outfitRm("cores")
+      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
       --The core systems
-      if oppotype == ship.get("Hyena") or  oppotype == ship.get("Shark") then
+      if oppotype == ship.get("Hyena") or oppotype == ship.get("Shark") then
          opponent:outfitAdd("Tricon Zephyr Engine")
          opponent:outfitAdd("Milspec Orion 2301 Core System")
          opponent:outfitAdd("S&K Ultralight Combat Plating")
       elseif oppotype == ship.get("Soromid Reaver") then
-         opponent:outfitAdd("Light Brain Stage X")
-         opponent:outfitAdd("Light Fast Gene Drive Stage X")
-         opponent:outfitAdd("Light Shell Stage X")
+         bioship.simulate( opponent, bioship.maxstage( opponent ) )
       else
          opponent:outfitAdd("Tricon Zephyr II Engine")
          opponent:outfitAdd("Milspec Orion 3701 Core System")
