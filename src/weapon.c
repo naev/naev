@@ -116,6 +116,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 static Weapon* weapon_create( PilotOutfitSlot* po, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target, double time );
+static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
+      double vmin, double acc, double *tt );
 /* Updating. */
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
@@ -1406,7 +1408,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Vector2d *target_vel;
    double rdir;
    double rx, ry, x, y, t;
-   double off;
+   double off, dvx, dvy;
+   double vmin;
+   int i, niter;
+   double tt, ddir, dtdd, acc, pxv, ang, d, dd;
 
    if (pilot_target != NULL) {
       target_pos = &pilot_target->solid->pos;
@@ -1448,6 +1453,49 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    }
    rdir     = ANGLE(x,y);
 
+   /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
+   if (outfit_isLauncher(outfit) && outfit->u.lau.thrust > 0.) {
+      vmin  = outfit->u.lau.speed;
+
+      if ( vmin > 0. ) {
+         /* Get various details. */
+         acc   = outfit->u.lau.thrust;
+         niter = 5;
+
+         /* Get the relative velocity. */
+         dvx = target_vel->x - vel->x;
+         dvy = target_vel->y - vel->y;
+
+         /* Cross product between position and vel. */
+         /* For having a better conditionning, ddir is adapted to the angular difference. */
+         pxv = rx*dvy - ry*dvx;
+         ang = atan2( pxv, rx*dvx+ry*dvy ); /*Angle between position and velocity. */         
+         if (fabs(ang + M_PI) < fabs(ang)) ang = ang + M_PI; /* Periodicity tricks. */
+         else if (fabs(ang - M_PI) < fabs(ang)) ang = ang-+ M_PI;
+         ddir = -ang/1000;
+
+         /* Iterate to correct the initial guess rdir. */
+         /* We compute more precisely ta and tt. */
+         /* (times for the ammo and the target to get to intersection point) */
+         /* The aim is to nullify ta-tt. */
+         if (fabs(ang) > 1e-7) { /* No need to iterate if it's already nearly aligned. */
+            for (i=0; i<niter; i++) {
+               d  = weapon_computeTimes( rdir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
+               dd = weapon_computeTimes( rdir+ddir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
+
+               /* Manage an exception (tt<0), and regular stopping condition. */
+               /* TODO: this stopping criterion is too restrictive. */
+               /* (for example when pos and vel are nearly aligned). */
+               if ( tt < 0. || fabs(d) < 5. )
+                  break;
+
+               dtdd = (dd-d)/ddir; /* Derivative of the criterion wrt. rdir. */
+               rdir = rdir - d/dtdd; /* Update. */
+            }
+         }
+      }
+   }
+
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );
    if (FABS(off) > swivel) {
@@ -1461,14 +1509,47 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 }
 
 /**
+ * @brief Computes precisely interception times for propelled weapons (rockets).
+ *
+ *    @param rdir tried shooting angle.
+ *    @param rx Relative position x.
+ *    @param ry Relative position y.
+ *    @param dvx Relative velocity x.
+ *    @param dvy Relative velocity y.
+ *    @param pxv Cross product between relative position and relative velocity
+ *    @param vmin min ammo velocity.
+ *    @param acc ammo acceleration.
+ *    @param[out] tt Time for the target to reach the interception point.
+ */
+static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
+      double vmin, double acc, double *tt )
+{
+   double l, dxv, dxp, ct, st, d;
+
+   /* Trigonometry. */
+   ct = cos(rdir); st = sin(rdir);
+   
+   /* Two extra cross products. */
+   dxv = ct*dvy - st*dvx;
+   dxp = ct*ry  - st*rx;
+
+   /* Compute criterion. */
+   *tt = -dxp/dxv; /* Time to interception for target. Because triangle aera. */
+   l = pxv/dxv; /* Length to interception for shooter. Because triangle aera. */
+   d = .5*acc*(*tt)*(*tt) + vmin*(*tt); /* Estimate how far the projectile went. */
+
+   return (d-l); /* Criterion is distance of projectile to intersection when target is there. */
+}
+
+/**
  * @brief Creates the bolt specific properties of a weapon.
  *
  *    @param w Weapon to create bolt specific properties of.
  *    @param outfit Outfit which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
- *    @param pos Position of the shooter.
- *    @param vel Velocity of the shooter.
+ *    @param pos Position of the slot (absolute).
+ *    @param vel Velocity of the slot (absolute).
  *    @param parent Shooter.
  *    @param time Expected flight time.
  */
@@ -1536,8 +1617,8 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param launcher Outfit which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
- *    @param pos Position of the shooter.
- *    @param vel Velocity of the shooter.
+ *    @param pos Position of the slot (absolute).
+ *    @param vel Velocity of the slot (absolute).
  *    @param parent Shooter.
  *    @param time Expected flight time.
  */
@@ -1589,7 +1670,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       /* Limit speed, we only relativize in the case it has thrust + initila speed. */
       w->solid->speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
-         w->solid->speed_max += VMOD(*vel);
+         w->solid->speed_max = -1; /* No limit. */
    }
 
    /* Handle seekers. */
@@ -1632,8 +1713,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
  *    @param po Outfit slot which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
- *    @param pos Position of the shooter.
- *    @param vel Velocity of the shooter.
+ *    @param pos Position of the slot (absolute).
+ *    @param vel Velocity of the slot (absolute).
  *    @param parent Shooter.
  *    @param target Target ID of the shooter.
  *    @param time Expected flight time.
@@ -1749,8 +1830,8 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
  *    @param po Outfit slot which spawns the weapon.
  *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
- *    @param pos Position of the shooter.
- *    @param vel Velocity of the shooter.
+ *    @param pos Position of the slot (absolute).
+ *    @param vel Velocity of the slot (absolute).
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  *    @param time Expected flight time.
@@ -1805,8 +1886,8 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
  *
  *    @param po Outfit slot which spawns the weapon.
  *    @param dir Direction of the shooter.
- *    @param pos Position of the shooter.
- *    @param vel Velocity of the shooter.
+ *    @param pos Position of the slot (absolute).
+ *    @param vel Velocity of the slot (absolute).
  *    @param parent Pilot shooter.
  *    @param target Target ID that is getting shot.
  *    @return The identifier of the beam weapon.

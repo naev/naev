@@ -12,7 +12,7 @@
  <trail_generator x="-13" y="0" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Sirius") &gt; 30</cond>
+ <cond>faction.playerStanding("Sirius") &gt;= 30</cond>
  <condstr>You need at least 30 reputation with House Sirius.</condstr>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
  <health>

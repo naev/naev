@@ -15,7 +15,7 @@
  <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt; 30</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 30</cond>
  <condstr>You need at least 30 reputation with House Dvaered.</condstr>
  <description>On this military grade version of the Vendetta, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>

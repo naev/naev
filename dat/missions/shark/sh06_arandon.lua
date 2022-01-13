@@ -5,7 +5,7 @@
   <unique />
  </flags>
  <avail>
-  <priority>30</priority>
+  <priority>3</priority>
   <done>The FLF Contact</done>
   <chance>100</chance>
   <location>Bar</location>

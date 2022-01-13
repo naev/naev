@@ -6,7 +6,7 @@
   <size>medium</size>
   <rarity>1</rarity>
   <license>Heavy Weapon</license>
-  <cond>faction.playerStanding("Za'lek") &gt; 10</cond>
+  <cond>faction.playerStanding("Za'lek") &gt;= 10</cond>
   <condstr>You need at least 10 reputation with House Za'lek.</condstr>
   <mass>0</mass>
   <price>850000</price>

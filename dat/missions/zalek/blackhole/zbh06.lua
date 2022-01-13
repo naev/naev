@@ -50,7 +50,7 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[You find Zach analyzing what seems to be a blueprint of Icarus, likely preparing for surgery.]]))
-   z(_([["It looks like deep down inside, bioships are that different from your standard ship. I've looked carefully over Icarus, and it seems like they have what you could call a 'fracture' on the left module, that has healed poorly. I'll have to cut through most of the armoured flesh to reach it and do some welding to set the injury. Other than that, it seems like bioships are really resiliant, as most old wounds are just scars now."]]))
+   z(_([["It looks like deep down inside, bioships are not that different from your standard ship. I've looked carefully over Icarus, and it seems like they have what you could call a 'fracture' on the left module, that has healed poorly. I'll have to cut through most of the armoured flesh to reach it and do some welding to set the injury. Other than that, it seems like bioships are really resiliant, as most old wounds are just scars now."]]))
    z(_([["What's curious is that most of the scars seem to be from Za'lek weaponry. The fracture is also likely the result of a ferromagnetohydraulic explosion, likely a hunter drone. However, I can not fathom who would want to kill a bioship instead of take the opportunity to study and examine it. It's like a crime against science itself!"]]))
    z(_([["The main thing I'm not clear about is how to get Icarus to understand the procedure and getting it prepped up. Since I don't have a brain mapping, I can't manipulate the pain receptors either, however, I do have a rough idea that might work."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
@@ -201,7 +201,7 @@ function heartbeat ()
          end
       end
 
-      if not alive then
+      if not alive and icarus:exists() then
          -- All gone
          pilot.comm( _("Sigma-13"), fmt.f(_("Zach: It looks like the coast is clear. Come back to {pnt}."),{pnt=mainpnt} ))
          misn.osdActive(2)

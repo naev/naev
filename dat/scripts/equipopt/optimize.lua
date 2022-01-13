@@ -246,7 +246,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       return true
    end
 
-   -- Specila case bioships
+   -- Special case bioships
    if pt.bioship then
       local stage = bioship.maxstage( p )
       bioship.simulate( p, rnd.rnd(1,stage) )

@@ -4,7 +4,7 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
-  <cond>faction.playerStanding("Za'lek") &gt; 50</cond>
+  <cond>faction.playerStanding("Za'lek") &gt;= 50</cond>
   <condstr>You need at least 50 reputation with House Za'lek.</condstr>
   <rarity>2</rarity>
   <mass>400</mass>

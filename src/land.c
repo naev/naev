@@ -1217,6 +1217,9 @@ void land( Spob* p, int load )
    /* Just in case? */
    bar_regen();
 
+   /* Do a lua collection pass. */
+   lua_gc( naevL, LUA_GCCOLLECT, 0 );
+
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);

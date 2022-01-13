@@ -15,7 +15,7 @@
  <trail_generator x="-25" y="-7" h="-7" always_under="1">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Za'lek") &gt; 40</cond>
+ <cond>faction.playerStanding("Za'lek") &gt;= 40</cond>
  <condstr>You need at least 40 reputation with House Za'lek.</condstr>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>
  <health>

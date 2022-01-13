@@ -17,7 +17,7 @@
  <trail_generator x="5" y="-5" h="-45" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Empire") &gt; 70</cond>
+ <cond>faction.playerStanding("Empire") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with the Empire.</condstr>
  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>
  <health>

@@ -19,7 +19,7 @@
  <trail_generator x="18" y="-25" h="-6" always_under="1">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Za'lek") &gt; 60</cond>
+ <cond>faction.playerStanding("Za'lek") &gt;= 60</cond>
  <condstr>You need at least 60 reputation with House Za'lek.</condstr>
  <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centres inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
  <health>

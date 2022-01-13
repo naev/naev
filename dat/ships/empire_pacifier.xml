@@ -15,7 +15,7 @@
  <trail_generator x="-25" y="-8" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Empire") &gt; 50</cond>
+ <cond>faction.playerStanding("Empire") &gt;= 50</cond>
  <condstr>You need at least 50 reputation with the Empire.</condstr>
  <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, shields, and heat dissipation.</description>
  <health>

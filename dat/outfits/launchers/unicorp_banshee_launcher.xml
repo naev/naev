@@ -27,7 +27,6 @@
   <duration blowup="shield">7</duration>
   <thrust>150</thrust>
   <speed>200</speed>
-  <speed_max>300</speed_max>
   <damage>
    <type>impact</type>
    <penetrate>60</penetrate>

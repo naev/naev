@@ -19,7 +19,7 @@
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt; 70</cond>
+ <cond>faction.playerStanding("Soromid") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with the Soromid.</condstr>
  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amply the strentgh of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>

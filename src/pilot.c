@@ -1382,6 +1382,10 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 
    /* Set the scan timer. */
    pilot_ewScanStart( p );
+
+   /* Untarget asteroid (if any). */
+   p->nav_anchor   = -1;
+   p->nav_asteroid = -1;
 }
 
 /**
@@ -3093,6 +3097,17 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
    pilot_setFlagRaw( flags, PILOT_EMPTY );
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
+}
+
+/**
+ * @brief Resets the trails for a pilot.
+ */
+void pilot_clearTrails( Pilot *p )
+{
+   for (int j=0; j<array_size(p->trail); j++)
+      spfx_trail_remove( p->trail[j] );
+   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+   pilot_init_trails( p );
 }
 
 /**

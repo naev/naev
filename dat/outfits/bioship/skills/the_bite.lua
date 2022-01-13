@@ -106,9 +106,10 @@ function update( p, po, dt )
          else
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())
-            local ta = t:health(true)
+            local ta
             if mem.improved then
                dmg = dmg*1.5
+               ta = t:health(true)
             end
             if mem.lust then
                p:effectAdd( "Blood Lust" )
@@ -118,9 +119,7 @@ function update( p, po, dt )
             -- Do the healing
             if mem.improved then
                local heal = 0.25 * (ta - t:health(true))
-               local pa = p:health()
-               local ps = p:stats()
-               p:setHealth( math.min(100, pa+100*heal/ps.armour) )
+               p:addHealth( heal )
             end
             -- Player effects
             if mem.isp then
