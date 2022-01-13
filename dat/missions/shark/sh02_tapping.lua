@@ -244,7 +244,7 @@ function corvette()
       badguys[i]:outfitAdd("Unicorp PT-200 Core System")
       badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
-      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
       badguys[i]:outfitAdd("Razor Turret MK2")
       badguys[i]:outfitAdd("Razor Turret MK1",2)
 
@@ -274,7 +274,7 @@ function cruiser()
       badguy:outfitAdd("Krain Remige Engine")
 
       badguy:outfitAdd("Heavy Laser Turret",2)
-      badguy:outfitAdd("Unicorp Headhunter Launcher",4)
+      badguy:outfitAdd("TeraCom Headhunter Launcher",4)
 
       badguy:outfitAdd("Pinpoint Combat AI")
       badguy:outfitAdd("Photo-Voltaic Nanobot Coating")

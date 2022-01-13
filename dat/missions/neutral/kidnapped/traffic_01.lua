@@ -275,7 +275,7 @@ function spawn_baddies(sp)
       badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
       badguys[i]:outfitAdd("Razor Turret MK2",2)
-      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
