@@ -27,7 +27,6 @@
   <duration blowup="armour">1.5</duration>
   <thrust>800</thrust>
   <speed>600</speed>
-  <speed_max>1200</speed_max>
   <damage>
    <type>impact</type>
    <penetrate>12</penetrate>

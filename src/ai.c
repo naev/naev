@@ -2749,6 +2749,9 @@ static int aiL_setasterotarget( lua_State *L )
    cur_pilot->nav_anchor = field;
    cur_pilot->nav_asteroid = ast;
 
+   /* Untarget pilot. */
+   cur_pilot->target = cur_pilot->id;
+
    return 0;
 }
 
