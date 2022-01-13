@@ -11,8 +11,8 @@ local empire_outfits = eoutfits.merge{{
    "Heavy Laser Turret",
    -- Medium Weapons
    "Heavy Ripper Cannon", "Laser Turret MK2",
-   "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
+   "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+   "TeraCom Vengeance Launcher", "Enygma Systems Spearhead Launcher",
    "Unicorp Caesar IV Launcher", "Enygma Systems Turreted Fury Launcher",
    -- Small Weapons
    "TeraCom Banshee Launcher",
