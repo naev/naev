@@ -3,6 +3,9 @@
 --]]
 
 local outfit_list = {
+   -- Below is a list of changes from 0.9.0 to 0.10.0
+   ["Unicorp Banshee Launcher"] = 35000,
+   ["Unicorp Mace Launcher"] = 19000,
    -- Below is a list of changes from 0.8.2 to 0.9.0
    ["Unicorp PT-900 Core System"] = "Unicorp PT-500 Core System",
    ["Unicorp PT-600 Core System"] = "Unicorp PT-310 Core System",
