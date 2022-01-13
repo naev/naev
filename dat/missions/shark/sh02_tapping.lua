@@ -6,7 +6,6 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>diff.isApplied("collective_dead")</cond>
   <done>Sharkman Is Back</done>
   <chance>5</chance>
   <location>Bar</location>
@@ -20,7 +19,6 @@
   <faction>Za'lek</faction>
  </avail>
  <notes>
-  <requires name="The Collective is dead and no one will miss them"/>
   <campaign>Nexus show their teeth</campaign>
  </notes>
 </mission>
