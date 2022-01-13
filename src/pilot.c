@@ -3608,7 +3608,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          case OUTFIT_TYPE_BOLT:
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
-            mod_shots  = 1. / p->stats.fwd_firerate;
+            mod_shots  = 1. / p->stats.fwd_firerate * (double)o->u.blt.shots;
             break;
          case OUTFIT_TYPE_TURRET_BOLT:
             mod_energy = p->stats.tur_energy;

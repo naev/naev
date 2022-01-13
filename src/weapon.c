@@ -1469,7 +1469,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          /* Cross product between position and vel. */
          /* For having a better conditionning, ddir is adapted to the angular difference. */
          pxv = rx*dvy - ry*dvx;
-         ang = atan2( pxv, rx*dvx+ry*dvy ); /*Angle between position and velocity. */         
+         ang = atan2( pxv, rx*dvx+ry*dvy ); /*Angle between position and velocity. */
          if (fabs(ang + M_PI) < fabs(ang)) ang = ang + M_PI; /* Periodicity tricks. */
          else if (fabs(ang - M_PI) < fabs(ang)) ang = ang-+ M_PI;
          ddir = -ang/1000;
@@ -1528,7 +1528,7 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
 
    /* Trigonometry. */
    ct = cos(rdir); st = sin(rdir);
-   
+
    /* Two extra cross products. */
    dxv = ct*dvy - st*dvx;
    dxp = ct*ry  - st*rx;
@@ -1569,6 +1569,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel, time );
 
+   /* Disperse as necessary. */
+   if (outfit->u.blt.dispersion > 0.)
+      rdir += (2.*RNGF()-1.) * outfit->u.blt.dispersion;
+
    /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
@@ -1593,7 +1597,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    else if (rdir >= 2.*M_PI)
       rdir -= 2.*M_PI;
 
-   mass = 1; /* Lasers are presumed to have unitary mass */
+   mass = 1.; /* Lasers are presumed to have unitary mass, just like the real world. */
    v = *vel;
    vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;

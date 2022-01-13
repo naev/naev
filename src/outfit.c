@@ -1179,6 +1179,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.falloff        = -1.;
    temp->u.blt.trackmin       = -1.;
    temp->u.blt.trackmax       = -1.;
+   temp->u.blt.shots          = 1;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1190,6 +1191,9 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.blt.trackmin);
       xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
+      xmlr_float(node,"dispersion",temp->u.blt.dispersion);
+      xmlr_float(node,"stagger",temp->u.blt.stagger);
+      xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
@@ -1278,6 +1282,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.blt.swivel  *= M_PI/180.;
+   temp->u.blt.dispersion *= M_PI/100.;
    if (outfit_isTurret(temp))
       temp->u.blt.swivel = M_PI;
    /*
@@ -1307,7 +1312,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration*100. );
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
-         1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
+         1./temp->u.blt.delay * temp->u.blt.dmg.damage * (double)temp->u.blt.shots, temp->u.blt.dmg.damage * (double)temp->u.blt.shots );
    SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
@@ -1316,6 +1321,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
    SDESC_ADD(  l, temp, _("\n%.0f Speed"), temp->u.blt.speed );
    SDESC_COND( l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
+   SDESC_COND( l, temp, _("\n%.1f Degree Dispersion"), temp->u.blt.dispersion*180./M_PI );
    if (!outfit_isTurret(temp))
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
    SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.blt.trackmax, 0 ) );
