@@ -225,12 +225,42 @@ function heartbeat_wormhole ()
    hook.timer( 5 / player.dt_mod(), "heartbeat_wormhole" )
 end
 
---local fstate = 0
+local fstate = 0
 function heartbeat_ferals ()
    local nexttime = 5
-   --local l = pack[1]
-   --if fstate == 0 then
-   --end
+   local l = pack[1]
+
+   if fstate == 0 then
+      player.cinematics( true )
+      camera.set( l )
+      l:taskClear()
+      l:moveto( l:pos() + (player.pos()-l:pos()):normalize() * 1000 )
+      nexttime = 10
+      fstate = 1
+
+   elseif fstate == 1 then
+      nexttime = 10
+      fstate = 2
+
+   elseif fstate == 2 then
+      player.cinematics( false )
+      camera.set()
+      nexttime = 3
+      fstate = 3
+
+   elseif fstate == 3 then
+      zach_say( _("What are those ships over there? They look a lot like Icarus!") )
+      l:setHighlight()
+      l:setVisplayer()
+      fstate = 4
+
+   elseif fstate == 4 then
+      zach_say( _("We should go greet them.") )
+      fstate = 5
+
+   --elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
+
+   end
 
    hook.timer( nexttime / player.dt_mod(), "heartbeat_ferals" )
 end
