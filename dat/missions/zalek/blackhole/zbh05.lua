@@ -65,7 +65,7 @@ function accept ()
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
-   z(fmt.f(_([["Great! {pnt} is not really one of the best places, but they do tend to have access to pretty rare stuff, and more often than not it's easier to go through the providers there than official channels. I wouldn't be surprised if the Za'lek Chairwoman herself!"
+   z(fmt.f(_([["Great! {pnt} is not really one of the best places, but they do tend to have access to pretty rare stuff, and more often than not it's easier to go through the providers there than official channels. I wouldn't be surprised if the Za'lek Chairwoman herself would want to avoid doing all the ridiculous bureaucracy!"
 He chuckles.]]),{pnt=destpnt}))
    vn.menu{
       {_([["Well actually…"]]), "cont01a"},
