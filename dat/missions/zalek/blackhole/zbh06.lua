@@ -201,7 +201,7 @@ function heartbeat ()
          end
       end
 
-      if not alive then
+      if not alive and icarus:exists() then
          -- All gone
          pilot.comm( _("Sigma-13"), fmt.f(_("Zach: It looks like the coast is clear. Come back to {pnt}."),{pnt=mainpnt} ))
          misn.osdActive(2)
