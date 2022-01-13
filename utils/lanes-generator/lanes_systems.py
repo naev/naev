@@ -1,5 +1,6 @@
 from collections import namedtuple
 from dataclasses import dataclass
+import glob
 import math
 import numpy as np
 import os
@@ -61,7 +62,7 @@ def readAssets(path):
     '''Returns a dictionary of Asset values by name. '''
     assets = {}
 
-    for fileName in os.listdir(path):
+    for fileName in glob.glob(os.path.join(path, '*.xml')):
         tree = ET.parse((path+fileName))
         root = tree.getroot()
         name = root.attrib['name']
@@ -86,8 +87,8 @@ class Systems:
     '''Readable representation of the systems.'''
     def __init__( self ):
         path = '../../dat/ssys/'
-        assets  = readAssets( '../../dat/assets/' )
-        vassets  = readAssets( '../../dat/assets_virtual/' )
+        assets  = readAssets( '../../dat/spob/' )
+        vassets  = readAssets( '../../dat/spob_virtual/' )
         facinfo = readFactions( '../../dat/faction.xml' )
 
         self.facnames = list(facinfo)
@@ -144,7 +145,7 @@ class Systems:
             sysvas = []
             nass = 0
 
-            for pnt in root.findall('assets/asset'):
+            for pnt in root.findall('spobs/spob'):
                 asname = pnt.text
                 info = assets[asname]
                 assert len(info.presences) <= 1, f'Real asset {asname} unexpectedly has multiple presence elements.'
@@ -162,7 +163,7 @@ class Systems:
                     nglob += 1
                     nass += 1
                     nasg += 1
-            for virt in root.findall('assets/asset_virtual'):
+            for virt in root.findall('spobs/spob_virtual'):
                 sysvas.append(virt.text)
 
             presence = [Presence() for _ in factions]

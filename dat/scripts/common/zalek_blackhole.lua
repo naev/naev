@@ -81,7 +81,7 @@ function zbh.feralbioship ()
 end
 
 function zbh.plt_icarus( pos )
-   return pilot.add( "Nohinohi", zbh.feralbioship, pos, _("Icarus"), {ai="dummy"} )
+   return pilot.add( "Nohinohi", zbh.feralbioship(), pos, _("Icarus"), {ai="dummy"} )
 end
 
 function zbh.unidiff( diffname )

@@ -75,7 +75,7 @@ are portions that will be filled in later by the mission via the
 -- There are two ways to set values usable from outside the create() function:
 -- - Define them at file scope in a statement like "local credits = 250e3" (good for constants)
 -- - Define them as fields of a special "mem" table: "mem.credits = 250e3" (will persist across games in the player's save file)
-local misplanet, missys = planet.getS("Ulios")
+local misplanet, missys = spob.getS("Ulios")
 local credits = 250e3
 
 -- Here we use the `fmt.credits()` function to convert our credits
@@ -189,7 +189,7 @@ end
 -- this function will be called any time the player lands.
 function land ()
    -- First check to see if we're on our target planet.
-   if planet.cur() == misplanet then
+   if spob.cur() == misplanet then
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.
