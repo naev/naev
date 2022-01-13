@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @mainpage Naev
  *
@@ -12,7 +11,6 @@
  *
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
-
 /** @cond */
 #include "linebreak.h"
 #include "physfsrwops.h"
@@ -112,11 +110,12 @@ static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 static double fps_dt    = 1.; /**< Display fps accumulator. */
 static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt   = 0.; /**< Real deltatick. */
-static double fps     = 0.; /**< FPS to finally display. */
-static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
+static double fps       = 0.; /**< FPS to finally display. */
+static double fps_cur   = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
 const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
 static nlua_env load_env = LUA_NOREF;
 
@@ -139,7 +138,6 @@ static void update_all (void);
 static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
-
 /**
  * @brief Flags naev to quit.
  */
@@ -148,7 +146,6 @@ void naev_quit (void)
    quit = 1;
 }
 
-
 /**
  * @brief Get if Naev is trying to quit.
  */
@@ -156,7 +153,6 @@ int naev_isQuit (void)
 {
    return quit;
 }
-
 
 /**
  * @brief The entry point of Naev.
@@ -378,7 +374,6 @@ int main( int argc, char** argv )
 
    fps_init(); /* initializes the time_ms */
 
-
    /*
     * main loop
     */
@@ -500,7 +495,6 @@ int main( int argc, char** argv )
    exit(EXIT_SUCCESS);
 }
 
-
 /**
  * @brief Loads a loading screen.
  */
@@ -534,7 +528,6 @@ void loadscreen_load (void)
    free(buf);
 }
 
-
 /**
  * @brief Renders the load screen with message.
  *
@@ -565,7 +558,6 @@ void loadscreen_render( double done, const char *msg )
    naev_resize();
 }
 
-
 /**
  * @brief Frees the loading screen.
  */
@@ -573,7 +565,6 @@ static void loadscreen_unload (void)
 {
    nlua_freeEnv( load_env );
 }
-
 
 /**
  * @brief Loads all the data, makes main() simpler.
@@ -676,7 +667,6 @@ void unload_all (void)
    sp_cleanup();
 }
 
-
 /**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
@@ -723,7 +713,6 @@ void main_loop( int update )
    }
 }
 
-
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
@@ -769,7 +758,6 @@ void naev_toggleFullscreen (void)
 {
    opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
-
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
@@ -824,7 +812,6 @@ static double fps_elapsed (void)
    return dt;
 }
 
-
 /**
  * @brief Controls the FPS.
  */
@@ -857,7 +844,6 @@ static void fps_control (void)
    }
 }
 
-
 /**
  * @brief Sets the position to display the FPS.
  */
@@ -866,7 +852,6 @@ void fps_setPos( double x, double y )
    fps_x = x;
    fps_y = y;
 }
-
 
 /**
  * @brief Displays FPS on the screen.
@@ -906,7 +891,6 @@ void display_fps( const double dt )
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
          &cFontWhite, -1., _("PAUSED") );
 }
-
 
 /**
  * @brief Updates the game itself (player flying around and friends).
@@ -951,7 +935,6 @@ static void update_all (void)
    fps_skipped = 0;
 }
 
-
 /**
  * @brief Actually runs the updates
  *
@@ -976,6 +959,9 @@ void update_routine( double dt, int enter_sys )
    /* Update camera. */
    cam_update( dt );
 
+   /* Update the elapsed time, should be with all the modifications and such. */
+   elapsed_time_mod += dt;
+
    if (!enter_sys) {
       HookParam h[3];
       hook_exclusionEnd( dt );
@@ -989,7 +975,6 @@ void update_routine( double dt, int enter_sys )
       hooks_runParam( "update", h );
    }
 }
-
 
 /**
  * @brief Sets the window caption.
@@ -1018,7 +1003,6 @@ static void window_caption (void)
    free( buf );
 }
 
-
 /**
  * @brief Returns the version in a human readable string.
  *
@@ -1043,7 +1027,6 @@ char *naev_version( int long_version )
 
    return VERSION;
 }
-
 
 static int binary_comparison( int x, int y )
 {
