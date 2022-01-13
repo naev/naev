@@ -80,6 +80,7 @@ function approach()
    -- Manage acceptance and refusal
    if doaccept then
       var.push("dp_available", true)
+      evt.finish(true)
    end
    evt.finish(false)
 end
