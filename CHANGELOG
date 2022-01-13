@@ -6,6 +6,9 @@
       * Bioships go rawr (new skill system)
       * Plasma has a burning effect
       * Scripting support for space objects (spob)
+   * Gameplay Changes
+      * Weapon types are more differenciated
+      * Removed nearly redundant launchers
    * New Content
       * Added a gigantic black hole
       * Added space anomalies
@@ -24,6 +27,7 @@
       * Player ships can store their own variables now
       * Weapon outfits support some Lua scripting
       * Ammunition/fighters merged into launchers/fighter bays
+      * Support for "shotgun"-type weapons
 
 * 0.9.2 (unreleased)
    * Fix reward messages in the Particle Physics campaign
