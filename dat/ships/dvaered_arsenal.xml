@@ -17,7 +17,7 @@
  <trail_generator x="-42" y="-13" h="6">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt; 60</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 60</cond>
  <condstr>You need at least 60 reputation with House Dvaered.</condstr>
  <description>The Arsenal is a heavily armed bulk freighter used by House Dvaered to transport large amount of supplies and troops whenever such a task would be too dangerous for lighter armoured freighters. The name derives from the fact that House Dvaered transport ships are usually focused on distributing and deploying weapons and troops in preference over raw materials, goods, or even basic necessities. Colloquially they have been also been known to be called Dvaered Gunboxes.</description>
  <health>

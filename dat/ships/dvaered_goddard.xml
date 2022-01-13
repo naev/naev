@@ -17,7 +17,7 @@
  <trail_generator x="-24" y="60" h="0">nebula</trail_generator>
  <fabricator>House Goddard</fabricator>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt; 70</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with House Dvaered.</condstr>
  <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client, and this military grade version has been developed which features better armour and weapon damage at the cost of increased mass and energy consumption.</description>
  <health>

@@ -15,7 +15,7 @@
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt; 40</cond>
+ <cond>faction.playerStanding("Dvaered") &gt;= 40</cond>
  <condstr>You need at least 40 reputation with House Dvaered.</condstr>
  <description>This military grade version of the Phalanx has slightly stronger armour compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>
  <health>

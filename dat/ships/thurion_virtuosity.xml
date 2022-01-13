@@ -17,7 +17,7 @@
  <trail_generator x="-11" y="11" h="8">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt; 40</cond>
+ <cond>faction.playerStanding("Thurion") &gt;= 40</cond>
  <condstr>You need at least 40 reputation with the Thurion.</condstr>
  <description>The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
  <health>

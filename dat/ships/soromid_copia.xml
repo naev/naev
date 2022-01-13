@@ -19,7 +19,7 @@
  <trail_generator x="27" y="-17" h="-12" always_under="1">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt; 60</cond>
+ <cond>faction.playerStanding("Soromid") &gt;= 60</cond>
  <condstr>You need at least 60 reputation with the Soromid.</condstr>
  <description>The Copia bio-freighter is the backbone of Soromid convoys and is frequently used to supply Soromid fleets or military installations with critical supplies. Unlike most cargo ships, the Copia is designed to not shy away from combat, and can be a very deadly ship in the right hands.</description>
  <health>

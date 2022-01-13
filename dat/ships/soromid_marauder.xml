@@ -13,7 +13,7 @@
  <trail_generator x="7" y="-8" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt; 30</cond>
+ <cond>faction.playerStanding("Soromid") &gt;= 30</cond>
  <condstr>You need at least 30 reputation with the Soromid.</condstr>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>

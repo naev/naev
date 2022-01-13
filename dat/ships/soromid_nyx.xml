@@ -13,7 +13,7 @@
  <trail_generator x="-25" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt; 50</cond>
+ <cond>faction.playerStanding("Soromid") &gt;= 50</cond>
  <condstr>You need at least 50 reputation with the Soromid.</condstr>
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>
  <health>
