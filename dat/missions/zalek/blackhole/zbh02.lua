@@ -176,7 +176,7 @@ He trembles slightly with barely contained anger.]]))
       z(_([[He closes his eyes, mutters something you can't make out, and lets out a deep breath.
 "I must not let myself get carried away in rage. We must analyse this and proceed methodologically. There is no room for emotion-caused errors. Science guides to glory."
 He looks more determined than ever.]]))
-      z(_([["We must proceed carefully. It is clear that someone or something does not want us to be here. We also don't know what is going on around here with more questions than answers, however, to find answers you must first ask the right questions. I will analyse our options, meet me up at the bar once you are ready for the next steps."]]))
+      z(_([["We must proceed carefully. It is clear that someone or something does not want us to be here. We also don't know what is going on around here and we're finding more questions than answers. However, as I was told by my first supervisor, to find answers you must first ask the right questions. I will analyse our options, meet me up at the bar once you are ready for the next steps."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
