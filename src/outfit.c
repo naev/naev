@@ -1314,7 +1314,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.damage * (double)temp->u.blt.shots, temp->u.blt.dmg.damage * (double)temp->u.blt.shots );
    SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
-         1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
+         1./temp->u.blt.delay * temp->u.blt.dmg.disable * (double)temp->u.blt.shots, temp->u.blt.dmg.disable * (double)temp->u.blt.shots );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
@@ -1513,6 +1513,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.trail_spec  = NULL;
    temp->u.lau.ai          = -1;
    temp->u.lau.speed_max   = -1.;
+   temp->u.lau.shots       = 1;
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -1525,6 +1526,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       xmlr_float(node,"iflockon",temp->u.lau.iflockon);
       xmlr_float(node,"swivel",temp->u.lau.swivel);
+      xmlr_float(node,"dispersion",temp->u.blt.dispersion);
+      xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
+      xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_strd(node,"lua",temp->lua_file);
 
       if (!outfit_isTurret(temp))
@@ -1632,6 +1636,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
+   temp->u.lau.dispersion *= M_PI/180.;
    temp->u.lau.turn *= M_PI/180.; /* Convert to rad/s. */
    if (temp->u.lau.speed_max < 0.)
       temp->u.lau.speed_max = temp->u.lau.speed;
@@ -1668,9 +1673,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("\nHolds %d ammo"), temp->u.lau.amount );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.lau.dmg.penetration * 100. );
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
-         1. / temp->u.lau.delay * temp->u.lau.dmg.damage, temp->u.lau.dmg.damage );
+         1. / temp->u.lau.delay * temp->u.lau.dmg.damage * (double)temp->u.lau.shots, temp->u.lau.dmg.damage * (double)temp->u.lau.shots );
    SDESC_COND( l, temp, _("\n%.1f Disable/s [%.0f Disable]"),
-         1. / temp->u.lau.delay * temp->u.lau.dmg.disable, temp->u.lau.dmg.disable );
+         1. / temp->u.lau.delay * temp->u.lau.dmg.disable * (double)temp->u.lau.shots, temp->u.lau.dmg.disable * (double)temp->u.lau.shots );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1. / temp->u.lau.delay );
    SDESC_ADD(  l, temp, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(temp), 0 ), temp->u.lau.duration );
    if (temp->u.lau.thrust > 0.) {

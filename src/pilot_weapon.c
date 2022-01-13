@@ -1099,8 +1099,9 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      weapon_add( w, w->heat_T, p->solid->dir,
-            &vp, &vv, p, p->target, time );
+      for (int i=0; i<w->outfit->u.lau.shots; i++)
+         weapon_add( w, w->heat_T, p->solid->dir,
+               &vp, &vv, p, p->target, time );
 
       pilot_rmAmmo( p, w, 1 );
 

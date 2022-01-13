@@ -1621,7 +1621,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  * @brief Creates the ammo specific properties of a weapon.
  *
  *    @param w Weapon to create ammo specific properties of.
- *    @param launcher Outfit which spawned the weapon.
+ *    @param outfit Outfit which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the slot (absolute).
@@ -1629,12 +1629,12 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param parent Shooter.
  *    @param time Expected flight time.
  */
-static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
+static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    (void) T;
    Vector2d v;
-   double mass, rdir;
+   double mass, rdir, m;
    Pilot *pilot_target;
    const glTexture *gfx;
 
@@ -1644,16 +1644,17 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    else /* fire straight or at asteroid */
       pilot_target = NULL;
 
-   if (launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
-      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, M_PI, time );
-   }
-   else if (launcher->u.lau.swivel > 0.) {
-      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, launcher->u.lau.swivel, time );
-   }
-   else {
+   if (outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)
+      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, M_PI, time );
+   else if (outfit->u.lau.swivel > 0.)
+      rdir = weapon_aimTurret( outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.swivel, time );
+   else
       rdir = dir;
-   }
-   /* TODO is this check needed? */
+
+   /* Disperse as necessary. */
+   if (outfit->u.blt.dispersion > 0.)
+      rdir += RNG_1SIGMA() * outfit->u.lau.dispersion;
+
    if (rdir < 0.)
       rdir += 2.*M_PI;
    else if (rdir >= 2.*M_PI)
@@ -1664,8 +1665,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
-   vect_cadd( &v, cos(rdir) * w->outfit->u.lau.speed,
-                  sin(rdir) * w->outfit->u.lau.speed );
+   m = outfit->u.lau.speed;
+   if (outfit->u.lau.speed_dispersion > 0.)
+      m += RNG_1SIGMA() * outfit->u.lau.speed_dispersion;
+   vect_cadd( &v, m * cos(rdir), m * sin(rdir) );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
@@ -1682,8 +1685,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* Handle seekers. */
    if (w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) {
-      w->timer2   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
-      w->paramf   = launcher->u.lau.iflockon * parent->stats.launch_calibration;
+      w->timer2   = outfit->u.lau.iflockon * parent->stats.launch_calibration;
+      w->paramf   = outfit->u.lau.iflockon * parent->stats.launch_calibration;
       w->status   = (w->timer2 > 0.) ? WEAPON_STATUS_LOCKING : WEAPON_STATUS_OK;
 
       w->think = think_seeker; /* AI is the same atm. */

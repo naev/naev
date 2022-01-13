@@ -3613,13 +3613,13 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          case OUTFIT_TYPE_TURRET_BOLT:
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
-            mod_shots  = 1. / p->stats.tur_firerate;
+            mod_shots  = 1. / p->stats.tur_firerate * (double)o->u.blt.shots;
             break;
          case OUTFIT_TYPE_LAUNCHER:
          case OUTFIT_TYPE_TURRET_LAUNCHER:
             mod_energy = 1.;
             mod_damage = p->stats.launch_damage;
-            mod_shots  = 1. / p->stats.launch_rate;
+            mod_shots  = 1. / p->stats.launch_rate * (double)o->u.lau.shots;
             break;
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:

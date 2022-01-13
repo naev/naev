@@ -193,6 +193,9 @@ typedef struct OutfitLauncherData_ {
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
+   double dispersion;/**< Angle amount to spread particles around independent of heat. */
+   double speed_dispersion;/**< Dispersion, but for speed. */
+   int shots;        /**< Number of particles shot when fired. */
 
    double ammo_mass; /**< How heavy it is. */
    double duration;  /**< How long the ammo lives. */
