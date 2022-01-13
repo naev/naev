@@ -30,7 +30,7 @@ local pirate_outfits = eoutfits.merge{{
    "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
    "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
    "Plasma Turret MK1", "Particle Beam",
-   "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Unicorp Scrambler", "Unicorp Light Afterburner",
    "Sensor Array", "Hellburner", "Emergency Shield Booster",

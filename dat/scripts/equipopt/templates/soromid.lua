@@ -23,8 +23,7 @@ local soromid_outfits = eoutfits.merge{{
    -- Small Weapons
    "Plasma Cannon", "Plasma Turret MK1",
    "Plasma Blaster MK1", "Plasma Blaster MK2",
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
-   "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+   "TeraCom Banshee Launcher", "TeraCom Mace Launcher",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",

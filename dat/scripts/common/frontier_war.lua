@@ -86,7 +86,7 @@ function fw.equipVendettaMace( pilot )
    pilot:outfitAdd("Milspec Orion 3701 Core System")
    pilot:outfitAdd("Shield Capacitor I")
    pilot:outfitAdd("Milspec Impacto-Plastic Coating")
-   pilot:outfitAdd("Unicorp Mace Launcher", 6)
+   pilot:outfitAdd("TeraCom Mace Launcher", 6)
 
    pilot:setHealth(100,100)
    pilot:setEnergy(100)

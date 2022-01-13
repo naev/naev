@@ -12,8 +12,7 @@ local dvaered_outfits = eoutfits.merge{{
    "Unicorp Caesar IV Launcher", "TeraCom Imperator Launcher",
    -- Small Weapons
    "Shredder", "Vulcan Gun", "Gauss Gun",
-   "Unicorp Mace Launcher", "TeraCom Mace Launcher",
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",

@@ -79,7 +79,6 @@ local goodness_override = {
 local goodness_special = {
    ["Unicorp Medusa Launcher"] = 0.5,
    ["TeraCom Mace Launcher"] = 0.5,
-   ["Unicorp Mace Launcher"] = 0.5,
    ["Enygma Systems Huntsman Launcher"] = 0.5,
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable

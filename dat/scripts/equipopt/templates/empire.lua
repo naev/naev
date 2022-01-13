@@ -15,7 +15,7 @@ local empire_outfits = eoutfits.merge{{
    "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
    "Unicorp Caesar IV Launcher", "Enygma Systems Turreted Fury Launcher",
    -- Small Weapons
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+   "TeraCom Banshee Launcher",
    "Laser Cannon MK1", "Ripper Cannon",
    -- Utility
    "Hunting Combat AI", "Photo-Voltaic Nanobot Coating",

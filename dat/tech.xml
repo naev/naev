@@ -54,9 +54,7 @@
   <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
-  <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
@@ -447,7 +445,6 @@
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor I</item>
   <item>Plasteel Plating</item>
@@ -598,16 +595,15 @@
   <item>Neural Accelerator Interface</item>
  </tech>
  <tech name="Missiles 1">
-  <item>Unicorp Banshee Launcher</item>
+  <item>TeraCom Mace Launcher</item>
   <item>Unicorp Fury Launcher</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Unicorp Headhunter Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
  </tech>
  <tech name="Missiles 2">
+  <item>TeraCom Banshee Launcher</item>
   <item>Unicorp Headhunter Launcher</item>
-  <item>Unicorp Mace Launcher</item>
-  <item>TeraCom Mace Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>TeraCom Imperator Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
