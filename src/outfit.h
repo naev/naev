@@ -130,7 +130,7 @@ typedef struct OutfitBoltData_ {
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
    double dispersion;/**< Angle amount to spread particles around independent of heat. */
-   double stagger;   /**< Pixels to stagger in y direction when shooting to give less uniformity. */
+   double speed_dispersion;/**< Dispersion, but for speed. */
    int shots;        /**< Number of particles shot when fired. */
 
    /* Sound and graphics. */

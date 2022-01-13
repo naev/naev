@@ -1040,16 +1040,9 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      for (int i=0; i<w->outfit->u.blt.shots; i++) {
-         Vector2d wp = {.x=vp.x, .y=vp.y};
-         if (w->outfit->u.blt.stagger > 0.) {
-            double m = RNGF() * w->outfit->u.blt.stagger;
-            wp.x += m * cos( p->solid->dir );
-            wp.y += m * sin( p->solid->dir );
-         }
+      for (int i=0; i<w->outfit->u.blt.shots; i++)
          weapon_add( w, w->heat_T, p->solid->dir,
-               &wp, &vv, p, p->target, time );
-      }
+               &vp, &vv, p, p->target, time );
    }
 
    /*

@@ -1557,7 +1557,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
 {
    Vector2d v;
-   double mass, rdir, acc;
+   double mass, rdir, acc, m;
    Pilot *pilot_target;
    const glTexture *gfx;
 
@@ -1571,7 +1571,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    /* Disperse as necessary. */
    if (outfit->u.blt.dispersion > 0.)
-      rdir += (2.*RNGF()-1.) * outfit->u.blt.dispersion;
+      rdir += RNG_1SIGMA() * outfit->u.blt.dispersion;
 
    /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
@@ -1599,7 +1599,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real world. */
    v = *vel;
-   vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
+   m = outfit->u.blt.speed;
+   if (outfit->u.blt.speed_dispersion > 0.)
+      m += RNG_1SIGMA() * outfit->u.blt.speed_dispersion;
+   vect_cadd( &v, m*cos(rdir), m*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
    w->solid = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );

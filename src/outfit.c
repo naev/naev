@@ -1192,7 +1192,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
-      xmlr_float(node,"stagger",temp->u.blt.stagger);
+      xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
       xmlr_int(node,"shots",temp->u.blt.shots);
       xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"range")) {
