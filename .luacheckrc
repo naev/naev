@@ -1,6 +1,6 @@
 -- vim: set expandtab shiftwidth=3 syntax=lua:
 
-std = "lua51c+love+Basic"
+std = "lua51+love+Basic"
 
 -- It would be nice to enforce a ~120 char limit for regular lines of code, but missions etc. have inline text of considerable size.
 -- Note: there's a `max_string_line_length` option, but that only applies when the line ending is inside a string. Useless.

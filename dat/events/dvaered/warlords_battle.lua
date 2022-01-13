@@ -219,7 +219,7 @@ function attack ()
       hook.pilot(j, "land", "attackerDeath")
    end
 
-   attnum = table.getn(attackers)
+   attnum = #attackers
    attdeath = 0
    attkilled = 0  --mass of the player's victims
 
@@ -263,7 +263,7 @@ function defense ()
       hook.pilot(j, "land", "defenderDeath")
    end
 
-   defnum = table.getn(defenders)
+   defnum = #defenders
    defdeath = 0
    defkilled = 0 --mass of the player's victims
 
