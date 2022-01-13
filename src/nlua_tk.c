@@ -432,6 +432,7 @@ static int tkL_custom( lua_State *L )
    luaL_unref(L, LUA_REGISTRYINDEX, cf.draw);
    luaL_unref(L, LUA_REGISTRYINDEX, cf.keyboard);
    luaL_unref(L, LUA_REGISTRYINDEX, cf.mouse);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.resize);
 
    return 0;
 }
