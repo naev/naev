@@ -15,7 +15,7 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.8</delay>
-  <speed>1400</speed>
+  <speed>1100</speed>
   <range>900</range>
   <falloff>750</falloff>
   <energy>4</energy>
