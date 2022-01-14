@@ -109,6 +109,12 @@ else
     exit 1
 fi
 
+if [[ "$NIGHTLY" =~ "true" ]]; then
+    TAG="nightly"
+else
+    TAG="$VERSION"
+fi
+
 if [[ "$BUILDTYPE" =~ "debug" ]]; then
     export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
@@ -131,11 +137,19 @@ mv "$WORKPATH/AppDir/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$WORKPATH/A
 # Disable appstream test
 export NO_APPSTREAM=1
 
+export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
+
 # Run linuxdeploy and generate an AppDir, then generate an AppImage
+
+pushd "$WORKPATH"
 
 "$linuxdeploy" \
     --appdir "$DESTDIR" \
     --output appimage
 
-# Mark as executable
+# Move zsync file to dist directory
+mv ./*.zsync "$WORKPATH"/dist
+popd
+
+# Mark AppImage as executable
 chmod +x "$OUTPUT"
