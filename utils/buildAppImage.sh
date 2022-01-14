@@ -115,7 +115,7 @@ fi
 if [[ "$NIGHTLY" =~ "true" ]]; then
     TAG="nightly"
 else
-    TAG="$VERSION"
+    TAG="latest"
 fi
 
 if [[ "$BUILDTYPE" =~ "debug" ]]; then
