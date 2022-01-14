@@ -864,7 +864,7 @@ function board_wreck ()
    local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
    vn.scene()
-   vn.music( 'snd/sounds/loops/alienspob.ogg' )
+   vn.music( 'snd/sounds/loops/alienplanet.ogg' )
    vn.transition("hexagon")
    vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
    vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))
