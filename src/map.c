@@ -2139,7 +2139,7 @@ void map_jump (void)
    if (array_size(map_path) != 0) {
       array_erase( &map_path, &map_path[0], &map_path[1] );
       if (array_size(map_path) == 0)
-         player_targetHyperspaceSet( -1 );
+         player_targetHyperspaceSet( -1, 0 );
       else { /* get rid of bottom of the path */
          int j;
          /* set the next jump to be to the next in path */
@@ -2148,17 +2148,17 @@ void map_jump (void)
                /* Restore selected system. */
                map_selected = array_back( map_path ) - systems_stack;
 
-               player_targetHyperspaceSet( j );
+               player_targetHyperspaceSet( j, 1 );
                break;
             }
          }
          /* Overrode jump route manually, must clear target. */
          if (j>=array_size(cur_system->jumps))
-            player_targetHyperspaceSet( -1 );
+            player_targetHyperspaceSet( -1, 0 );
       }
    }
    else
-      player_targetHyperspaceSet( -1 );
+      player_targetHyperspaceSet( -1, 0 );
 
    gui_setNav();
 }
@@ -2195,7 +2195,7 @@ void map_select( const StarSystem *sys, char shifted )
 
          if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
-            player_targetHyperspaceSet( -1 );
+            player_targetHyperspaceSet( -1, 0 );
             player_autonavAbortJump(NULL);
             autonav = 0;
          }
@@ -2204,7 +2204,7 @@ void map_select( const StarSystem *sys, char shifted )
             for (int i=0; i<array_size(cur_system->jumps); i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
-                  player_targetHyperspaceSet( i );
+                  player_targetHyperspaceSet( i, 0 );
                   break;
                }
             }
@@ -2212,7 +2212,7 @@ void map_select( const StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         player_targetHyperspaceSet( -1 );
+         player_targetHyperspaceSet( -1, 0 );
          player_autonavAbortJump(NULL);
          autonav = 0;
       }
