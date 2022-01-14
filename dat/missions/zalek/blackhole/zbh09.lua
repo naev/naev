@@ -229,7 +229,7 @@ function heartbeat_wormhole ()
 end
 
 local fstate = 0
-local waitzone, fightstart, icarus
+local waitzone, icaruszone, fightstart, icarus
 function heartbeat_ferals ()
    local nexttime = 5
    local l = pack[1]
@@ -302,6 +302,7 @@ function heartbeat_ferals ()
 
       -- Where the defeated ships will wait
       waitzone = l:pos() + (l:pos() - pp:pos()):normalize()*1000
+      icaruszone = l:pos()
       fightstart = naev.ticksGame()
 
       for k,p in ipairs(pack) do
@@ -356,11 +357,26 @@ function heartbeat_ferals ()
       fstate = 11
 
    elseif fstate == 11 and icarus:pos():dist( player.pos() ) < 3000 then
-
-      -- It's over
-      player.allowLand()
       local pp = player.pilot()
+      player.allowLand()
       pp:setNoJump(false)
+
+      pp:control()
+      pp:brake()
+      pp:face( icarus )
+
+      for k,p in ipairs(pack) do
+         if not p:flags("invincible") then
+            p:setInvincible(true)
+            p:setHostile(false)
+            p:setInvisible(true)
+            p:control()
+            p:moveto( waitzone + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
+         end
+      end
+
+      icarus:taskClear()
+      icarus:moveto( icaruszone )
 
    end
 
