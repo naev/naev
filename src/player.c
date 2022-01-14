@@ -1544,10 +1544,11 @@ int player_land( int loud )
 
    /* Check if there are spobs to land on. */
    if (array_size(cur_system->spobs) == 0) {
-      player_messageRaw( _("#rThere are no spobs to land on.") );
+      player_message( "#r%s", _("There are no spobs to land on.") );
       return PLAYER_LAND_DENIED;
    }
 
+   /* Find new target. */
    if (player.p->nav_spob == -1) { /* get nearest spob target */
       double td = -1.; /* temporary distance */
       int tp = -1; /* temporary spob */
@@ -1570,12 +1571,8 @@ int player_land( int loud )
 
       silent = 1; /* Suppress further targeting noises. */
    }
-   /* Uninhabited spob shouldn't give messages, unless NOLAND overrides. */
-   else if (!player_isFlag(PLAYER_NOLAND) && spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED)) {
-      return PLAYER_LAND_AGAIN;
-   }
-   /* Check if spob is in range. */
-   else if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
+   /* Check if spob is in range when not uninhabited. */
+   else if (!spob_isFlag(cur_system->spobs[ player.p->nav_spob ], SPOB_UNINHABITED) && !pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_spobOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
    }
