@@ -13,7 +13,6 @@ set -e
 # Defaults
 NIGHTLY="false"
 PRERELEASE="false"
-REPO="naev/naev"
 TEMPPATH="$(pwd)"
 OUTDIR="$(pwd)/dist"
 DRYRUN="false"
@@ -45,23 +44,25 @@ while getopts dnpct:o:r:g: OPTION "$@"; do
     g)
         REPONAME="${OPTARG}"
         ;;
+    *)
+        ;;
     esac
 done
 
 if [[ -z "$TAGNAME" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
-    exit -1
+    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
+    exit 1
 fi
 
 if ! [ -x "$(command -v github-assets-uploader)" ]; then
     echo "You don't have github-assets-uploader in PATH"
-    exit -1
+    exit 1
 else
     GH="github-assets-uploader"
 fi
 
 run_gau () {
-    $GH -retry 5 -logtostderr $@
+    $GH -retry 5 -logtostderr "$@"
 }
 
 # Collect date and assemble the VERSION suffix
@@ -84,24 +85,26 @@ mkdir -p "$OUTDIR"/win64
 mkdir -p "$OUTDIR"/soundtrack
 
 # Move all build artefacts to deployment locations
-# Move Linux binary and set as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-chmod +x "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+# Move Linux AppImage, zsync files and set AppImage as executable
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync
+
+chmod +x "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
 
 # Move macOS bundle to deployment location
-cp "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos/naev-$SUFFIX-macos.zip
+cp "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos/naev-"$SUFFIX"-macos.zip
 
 # Move Windows installer to deployment location
-cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-$SUFFIX-win64.exe
+cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe
 
 # Move Dist to deployment location
-cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-$SUFFIX-source.tar.xz
+cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz
 
 # Move Soundtrack to deployment location if this is a release.
 if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
     echo "not preparing soundtrack"
 else
-    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-$SUFFIX-soundtrack.zip
+    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip
 fi
 
 # Push builds to github via gh
@@ -112,6 +115,7 @@ fi
 if [ "$DRYRUN" == "false" ]; then
     run_gau -version
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.zip -mediatype "application/zip" -overwrite
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
