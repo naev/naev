@@ -1394,7 +1394,7 @@ void player_restoreControl( int reason, const char *str )
 
    if (reason != PINPUT_AUTONAV) {
       /* Autonav should be harder to abort when paused. */
-      if (!paused || reason != PINPUT_MOVEMENT)
+      if ((!paused || reason != PINPUT_MOVEMENT))
          player_autonavAbort(str);
    }
 
