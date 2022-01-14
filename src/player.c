@@ -1747,8 +1747,9 @@ void player_board (void)
  * @brief Sets the player's hyperspace target.
  *
  *    @param id ID of the hyperspace target.
+ *    @param autonavcont Whether or not autonav is continuing.
  */
-void player_targetHyperspaceSet( int id )
+void player_targetHyperspaceSet( int id, int autonavcont )
 {
    int old;
 
@@ -1769,8 +1770,8 @@ void player_targetHyperspaceSet( int id )
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
 
-   if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
-         (player.autonav == AUTONAV_JUMP_BRAKE))
+   if (!autonavcont && (old != id) && ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+         (player.autonav == AUTONAV_JUMP_BRAKE)))
       player_autonavAbort(NULL);
 
    hooks_run( "target_hyperspace" );
@@ -1803,7 +1804,7 @@ void player_targetHyperspace (void)
          }
    }
 
-   player_targetHyperspaceSet( id );
+   player_targetHyperspaceSet( id, 0 );
 
    /* Map gets special treatment if open. */
    if (id == -1)
@@ -2176,7 +2177,7 @@ void player_targetClear (void)
 void player_targetClearAll (void)
 {
    player_targetSpobSet( -1 );
-   player_targetHyperspaceSet( -1 );
+   player_targetHyperspaceSet( -1, 0 );
    player_targetAsteroidSet( -1, -1 );
    player_targetSet( PLAYER_ID );
 }

@@ -1354,7 +1354,7 @@ int input_clickedJump( int jump, int autonav )
       map_select( jp->target, 0 );
 
    if (autonav) {
-      player_targetHyperspaceSet( jump );
+      player_targetHyperspaceSet( jump, 0 );
       player_autonavStart();
       return 1;
    }
@@ -1364,7 +1364,7 @@ int input_clickedJump( int jump, int autonav )
          player_jump();
    }
    else
-      player_targetHyperspaceSet( jump );
+      player_targetHyperspaceSet( jump, 0 );
 
    input_clicked( (void*)jp );
    return 1;
