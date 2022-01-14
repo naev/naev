@@ -3,7 +3,7 @@
 # AppImage BUILD SCRIPT FOR NAEV
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) -s <SOURCEPATH> (Sets location of source) -b <WORKPATH> (Sets location of build directory)
+# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) -s <SOURCEPATH> (Sets location of source) -b <BUILDPATH> (Sets location of build directory)
 
 # Output destination is ${WORKPATH}/dist
 
@@ -30,7 +30,7 @@ while getopts dcns:b: OPTION "$@"; do
         SOURCEPATH="${OPTARG}"
         ;;
     b)
-        WORKPATH="${OPTARG}"
+        BUILDPATH="${OPTARG}"
         ;;
     *)
         ;;
@@ -38,8 +38,10 @@ while getopts dcns:b: OPTION "$@"; do
 done
 
 # Creates temp dir if needed
-if [ -z "$WORKPATH" ]; then
-    WORKPATH="$(mktemp -d)"
+if [ -z "$BUILDPATH" ]; then
+    BUILDPATH="$(mktemp -d)"
+else
+    WORKPATH=$(readlink -mf "$BUILDPATH")
 fi
 
 BUILD_DATE="$(date +%Y%m%d)"
@@ -63,7 +65,7 @@ echo "MESON WRAPPER PATH:  $MESON"
 # Make temp directories
 mkdir -p "$WORKPATH"/{dist,utils,AppDir}
 
-DESTDIR="$(readlink -mf "$WORKPATH")/AppDir"
+DESTDIR="$WORKPATH/AppDir"
 export DESTDIR
 
 # Get linuxdeploy's AppImage
