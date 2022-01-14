@@ -1437,8 +1437,9 @@ void player_targetSpobSet( int id )
    gui_setNav();
 
    if ((player.autonav == AUTONAV_SPOB_LAND_APPROACH) ||
-         (player.autonav == AUTONAV_SPOB_APPROACH))
-      player_autonavAbort(_("Switched targets"));
+         (player.autonav == AUTONAV_SPOB_APPROACH) ||
+         (player.autonav == AUTONAV_SPOB_LAND_BRAKE))
+      player_autonavAbort(NULL);
 }
 
 /**
@@ -1770,6 +1771,10 @@ void player_targetHyperspaceSet( int id )
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
+
+   if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+         (player.autonav == AUTONAV_JUMP_BRAKE))
+      player_autonavAbort(NULL);
 
    hooks_run( "target_hyperspace" );
 }
