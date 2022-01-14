@@ -40,6 +40,7 @@ done
 # Creates temp dir if needed
 if [ -z "$BUILDPATH" ]; then
     BUILDPATH="$(mktemp -d)"
+    WORKPATH=$(readlink -mf "$BUILDPATH")
 else
     WORKPATH=$(readlink -mf "$BUILDPATH")
 fi
