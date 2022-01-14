@@ -1386,6 +1386,10 @@ void player_targetPlanetSet( int id )
    }
    gui_forceBlink();
    gui_setNav();
+
+   if ((player.autonav == AUTONAV_PNT_LAND_APPROACH) ||
+         (player.autonav == AUTONAV_PNT_APPROACH))
+      player_autonavAbort(_("Switched targets"));
 }
 
 /**
