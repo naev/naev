@@ -35,8 +35,10 @@ local fleet = require "fleet"
 local reward = zbh.rewards.zbh09
 
 local inwormhole, insys = spob.getS( "Wormhole NGC-13674" )
-local outsys = system.get( "NGC-1931" )
+local outwormhole, outsys = spob.getS( "Wormhole NGC-1931" )
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
+
+local title = _("Black Hole Mystery")
 
 function create ()
    misn.finish()
@@ -88,7 +90,6 @@ function accept ()
    misn.accept()
 
    -- mission details
-   local title = _("Black Hole Mystery")
    misn.setTitle( title )
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( _("") )
@@ -162,6 +163,7 @@ function enter ()
          p:rename(_("Feral Bioship"))
          p:setNoDeath()
          p:setInvincible() -- in case the player does something silly like preemptively shoot torpedoes
+         hook.pilot( p, "hail", feral_hail )
       end
       local l = pack[1]
       l:control()
@@ -226,6 +228,7 @@ function heartbeat_wormhole ()
 end
 
 local fstate = 0
+local waitzone, fightstart, icarus
 function heartbeat_ferals ()
    local nexttime = 5
    local l = pack[1]
@@ -256,9 +259,105 @@ function heartbeat_ferals ()
 
    elseif fstate == 4 then
       zach_say( _("We should go greet them.") )
+      misn.osdCreate( title, { _("Get near the feral bioships") } )
       fstate = 5
 
-   --elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
+   elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
+
+      zbh.sfx.spacewhale1:play()
+      local pp = player.pilot()
+      l:taskClear()
+      l:brake()
+      l:face( pp )
+      pp:control()
+      pp:brake()
+      pp:face( l )
+
+      player.cinematics( true )
+      camera.set( (l:pos()+pp:pos())/2 )
+      camera.setZoom( 3 )
+      fstate = 6
+
+   elseif fstate == 6 then
+      zach_say( _("Look at the size of that thing!") )
+      fstate = 7
+
+   elseif fstate == 7 then
+      zach_say( _("Wait, it looks like it's picking up some signal on us.") )
+      fstate = 8
+
+   elseif fstate == 8 then
+      zbh.sfx.spacewhale2:play()
+      l:broadcast(_("Son. Revenge. Die."))
+      misn.osdCreate( title, { _("Survive!") } )
+
+      zach_say( _("Watch out!") )
+      local pp = player.pilot()
+      l:control(false)
+      pp:control(false)
+      player.cinematics( false )
+      camera.set()
+      camera.setZoom()
+
+      -- Where the defeated ships will wait
+      waitzone = l:pos() + (l:pos() - pp:pos()):normalize()*1000
+      fightstart = naev.ticksGame()
+
+      for k,p in ipairs(pack) do
+         p:setInvincible(false)
+         p:setHostile(true)
+      end
+      fstate = 9
+
+   elseif fstate == 9 then
+      local defeated, total = 0, 0
+      -- Check ending criteria
+      for k,p in ipairs(pack) do
+         local ps = p:ship():size()
+         if not p:flags("invincible") then
+            local pa = p:health()
+            if pa < 30 then
+               p:setInvincible(true)
+               p:setHostile(false)
+               p:setInvisible(true)
+               p:control()
+               p:moveto( waitzone + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
+               defeated = defeated + ps
+            end
+         else
+            defeated = defeated + ps
+         end
+         total = total + ps
+      end
+      nexttime = 0.1
+
+      -- End criteria
+      if (naev.ticksGame() - fightstart > 90) or (defeated > 0.5*total) or l:flags("invincible") then
+         fstate = 10
+      end
+
+   elseif fstate == 10 then
+      zbh.sfx.spacewhale1:play()
+      local pp = player.pilot()
+
+      zach_say(_("Wait, is that Icarus? Run to him!"))
+
+      icarus = zbh.plt_icarus( outwormhole )
+      icarus:setInvincible(true)
+      icarus:setHighlight(true)
+      icarus:setFriendly(true)
+      icarus:control()
+      icarus:moveto( pp:pos() )
+      hook.pilot( icarus, "hail", feral_hail )
+
+      misn.osdCreate( title, { _("Go to Icarus!") } )
+
+      fstate = 11
+
+   elseif fstate == 11 and icarus:pos():dist( player.pos() ) < 3000 then
+
+      -- It's over
+      player.allowLand()
 
    end
 
