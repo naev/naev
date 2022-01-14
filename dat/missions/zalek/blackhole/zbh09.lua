@@ -149,6 +149,7 @@ function enter ()
 
       --local j = jump.get( outsys, "NGC-4771" )
       local pp = player.pilot()
+      pp:setNoJump(true)
 
       -- nohinohi, taitamariki, kauweke,
       local ships
@@ -358,6 +359,8 @@ function heartbeat_ferals ()
 
       -- It's over
       player.allowLand()
+      local pp = player.pilot()
+      pp:setNoJump(false)
 
    end
 
