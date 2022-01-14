@@ -1435,6 +1435,10 @@ void player_targetSpobSet( int id )
    }
    gui_forceBlink();
    gui_setNav();
+
+   if ((player.autonav == AUTONAV_SPOB_LAND_APPROACH) ||
+         (player.autonav == AUTONAV_SPOB_APPROACH))
+      player_autonavAbort(_("Switched targets"));
 }
 
 /**
