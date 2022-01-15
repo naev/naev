@@ -18,8 +18,6 @@ local pirate_outfits = eoutfits.merge{{
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
@@ -30,7 +28,7 @@ local pirate_outfits = eoutfits.merge{{
    "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
    "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
    "Plasma Turret MK1", "Particle Beam",
-   "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Unicorp Scrambler", "Unicorp Light Afterburner",
    "Sensor Array", "Hellburner", "Emergency Shield Booster",

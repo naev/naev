@@ -284,7 +284,7 @@ void player_targetSpob (void);
 /* Asteroids. */
 void player_targetAsteroidSet( int id_field, int id );
 /* Hyperspace. */
-void player_targetHyperspaceSet( int id );
+void player_targetHyperspaceSet( int id, int autonavcont );
 void player_targetHyperspace (void);
 /* Pilots. */
 void player_targetSet( unsigned int id );

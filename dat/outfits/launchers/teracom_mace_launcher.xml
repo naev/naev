@@ -27,7 +27,7 @@ TeraCom's Mace launcher uses an advanced reload mechanism that allows the launch
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="-10">fire-missileS</trail_generator>
   <duration blowup="armour">1.5</duration>
-  <thrust>800</thrust>
+  <thrust>600</thrust>
   <speed>600</speed>
   <damage>
    <type>impact</type>

@@ -126,7 +126,7 @@ function land ()
    -- Small event
    vn.clear()
    vn.scene()
-   vn.music( 'snd/sounds/loops/alienspob.ogg' )
+   vn.music( 'snd/sounds/loops/alienplanet.ogg' )
    vn.transition()
    vn.na(_("You dock with the mostly destroyed Dvaered Goddard and begin to explore the ship in your atmospheric suit. The ship shows heavy signs of fighting, however, given what seem to be high levels of cosmic radiation, it seems to have been wrecked a very long time ago."))
    vn.na(_("Most of the narrow hallways seem untouched, however, in some of the large more open areas you do see what appear to be fresh scratches and signs of things being moved around. Furthermore, you see what could only be described as some sort of crude and primitive wall painting. What could this mean?"))

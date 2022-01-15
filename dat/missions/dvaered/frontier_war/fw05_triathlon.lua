@@ -342,7 +342,7 @@ function tamCommon()
    end
 end
 function tamStage1()
-   tk.msg( "", _([[The first event is the "Mace Throw". There is a series of targets (old Llamas) and you have to hit them in the shortest time. The quickest pilot wins. Are you ready? Make sure you only have Unicorp Mace Launchers equipped.]]) )
+   tk.msg( "", _([[The first event is the "Mace Throw". There is a series of targets (old Llamas) and you have to hit them in the shortest time. The quickest pilot wins. Are you ready? Make sure you only have TeraCom Mace Launchers equipped.]]) )
    mem.stage = 2
 end
 function tamStage2()
@@ -350,7 +350,7 @@ function tamStage2()
    mem.stage = 4
 end
 function tamStage3()
-   tk.msg( "", fmt.f(_([[The third and last event is the "Mace Pankration". Each competitor must fight against another competitor, and disable their shields. Winners receive 7 points. Your adversary is {name}. Killing is, of course, not allowed. Are you ready? Make sure you only have Unicorp Mace Launchers equipped.]]), {name=mem.competitors_names[5]}) )
+   tk.msg( "", fmt.f(_([[The third and last event is the "Mace Pankration". Each competitor must fight against another competitor, and disable their shields. Winners receive 7 points. Your adversary is {name}. Killing is, of course, not allowed. Are you ready? Make sure you only have TeraCom Mace Launchers equipped.]]), {name=mem.competitors_names[5]}) )
    mem.stage = 6
 end
 
@@ -503,7 +503,7 @@ end
 function checkMace()
    local weap = player.pilot():outfits("weapon")
    for i, w in ipairs(weap) do
-      if not (w == outfit.get("Unicorp Mace Launcher")) then
+      if not (w == outfit.get("TeraCom Mace Launcher")) then
          return false
       end
    end

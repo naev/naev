@@ -28,8 +28,6 @@ outfits.standard.weapons = {
    "Hyena Fighter Bay",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",

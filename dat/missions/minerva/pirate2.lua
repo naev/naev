@@ -44,8 +44,8 @@ local badweaps, drone1, drone2 -- Non-persistent state
 local allowed = {
    "Vulcan Gun",
    "Gauss Gun",
-   "Unicorp Mace Launcher",
    "TeraCom Mace Launcher",
+   "TeraCom Banshee Launcher",
    "Shredder",
    "Railgun",
    "Mass Driver",

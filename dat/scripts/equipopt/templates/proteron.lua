@@ -14,7 +14,7 @@ local proteron_outfits = eoutfits.merge{{
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    -- Small Weapons
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+   "TeraCom Banshee Launcher",
    "Laser Cannon MK1", "Plasma Blaster MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",

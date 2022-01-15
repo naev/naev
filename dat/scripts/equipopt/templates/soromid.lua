@@ -12,8 +12,6 @@ local soromid_outfits = eoutfits.merge{{
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
@@ -23,8 +21,7 @@ local soromid_outfits = eoutfits.merge{{
    -- Small Weapons
    "Plasma Cannon", "Plasma Turret MK1",
    "Plasma Blaster MK1", "Plasma Blaster MK2",
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
-   "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+   "TeraCom Banshee Launcher", "TeraCom Mace Launcher",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",

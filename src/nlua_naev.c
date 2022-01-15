@@ -32,6 +32,7 @@ static int naevL_version( lua_State *L );
 static int naevL_versionTest( lua_State *L);
 static int naevL_lastplayed( lua_State *L );
 static int naevL_ticks( lua_State *L );
+static int naevL_ticksGame( lua_State *L );
 static int naevL_clock( lua_State *L );
 static int naevL_keyGet( lua_State *L );
 static int naevL_keyEnable( lua_State *L );
@@ -50,6 +51,7 @@ static const luaL_Reg naev_methods[] = {
    { "versionTest", naevL_versionTest },
    { "lastplayed", naevL_lastplayed },
    { "ticks", naevL_ticks },
+   { "ticksGame", naevL_ticksGame },
    { "clock", naevL_clock },
    { "keyGet", naevL_keyGet },
    { "keyEnable", naevL_keyEnable },
@@ -152,6 +154,20 @@ static int naevL_lastplayed( lua_State *L )
 {
    double d = difftime( time(NULL), player.last_played );
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
+   return 1;
+}
+
+/**
+ * @brief Gets the game seconds since the program started running.
+ *
+ * These are modified by whatever speed up the player has.
+ *
+ *    @luatreturn number The seconds since the application started running.
+ * @luafunc ticksGame
+ */
+static int naevL_ticksGame( lua_State *L )
+{
+   lua_pushnumber(L, elapsed_time_mod );
    return 1;
 }
 

@@ -174,7 +174,7 @@ function countdown_done ()
    -- TODO play sound and cooler text
    player.omsgChange( mem.omsg_id, _("FIGHT!"), 3 )
    mem.wave_started = true
-   mem.wave_started_time = naev.ticks()
+   mem.wave_started_time = naev.ticksGame()
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
@@ -363,7 +363,7 @@ local function wave_compute_score ()
    local bonus = 100
    local str = {}
 
-   local elapsed = (naev.ticks()-mem.wave_started_time)
+   local elapsed = (naev.ticksGame()-mem.wave_started_time)
    table.insert( str, string.format(_("%.1f seconds"), elapsed) )
 
    wave_killed = wave_killed or {}

@@ -14,6 +14,10 @@ repos:
     - id: check-shebang-scripts-are-executable
     - id: mixed-line-ending
     - id: pretty-format-json
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.8.0.3
+  hooks:
+    - id: shellcheck
 - repo: local
   hooks:
     - id: luacheck

@@ -46,17 +46,12 @@
   <item>Heavy Neutron Disruptor</item>
   <item>Electron Burst Cannon</item>
   <item>Tesla Cannon</item>
-  <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
-  <item>Unicorp Headhunter Launcher</item>
   <item>TeraCom Headhunter Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
-  <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
-  <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>Super-Fast Charge Launcher</item>
   <item>Repeating Banshee Launcher</item>
@@ -65,7 +60,6 @@
   <item>TeraCom Imperator Launcher</item>
   <item>EMP Grenade Launcher</item>
   <item>Shatterer Launcher</item>
-  <item>Unicorp Medusa Launcher</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Convulsion Launcher</item>
@@ -413,7 +407,6 @@
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
-  <item>Unicorp Fury Launcher</item>
   <item>Battery I</item>
   <item>Small Fuel Pod</item>
   <item>Large Civilian Vessel License</item>
@@ -449,7 +442,6 @@
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor I</item>
   <item>Plasteel Plating</item>
@@ -462,7 +454,6 @@
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
-  <item>Unicorp Medusa Launcher</item>
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Local System Map</item>
@@ -600,26 +591,19 @@
   <item>Neural Accelerator Interface</item>
  </tech>
  <tech name="Missiles 1">
-  <item>Unicorp Banshee Launcher</item>
-  <item>Unicorp Fury Launcher</item>
-  <item>Unicorp Medusa Launcher</item>
-  <item>Unicorp Headhunter Launcher</item>
+  <item>TeraCom Mace Launcher</item>
+  <item>TeraCom Fury Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
+  <item>Enygma Systems Spearhead Launcher</item>
  </tech>
  <tech name="Missiles 2">
-  <item>Unicorp Headhunter Launcher</item>
-  <item>Unicorp Mace Launcher</item>
-  <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Caesar IV Launcher</item>
+  <item>TeraCom Banshee Launcher</item>
   <item>TeraCom Imperator Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
-  <item>Enygma Systems Spearhead Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>TeraCom Medusa Launcher</item>
-  <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
-  <item>Unicorp Vengeance Launcher</item>
  </tech>
  <tech name="Criminal Outfits">
   <item>Camouflage Burster</item>
