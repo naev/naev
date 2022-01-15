@@ -9,7 +9,9 @@ local dvaered_outfits = eoutfits.merge{{
    "Railgun", "Repeating Railgun", "Railgun Turret",
    -- Medium Weapons
    "Mass Driver", "Turreted Vulcan Gun",
-   "Unicorp Caesar IV Launcher", "TeraCom Imperator Launcher",
+   "Repeating Banshee Launcher",
+   "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+   "Enygma Systems Turreted Fury Launcher", "Enygma Systems Turreted Headhunter Launcher",
    -- Small Weapons
    "Shredder", "Vulcan Gun", "Gauss Gun",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
@@ -33,6 +35,12 @@ local dvaered_params = {
    ["Dvaered Vendetta"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,4) },
+         }
+      } end,
+   ["Dvaered Phalanx"] = function () return {
+         turret = 1.25,
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(2,3) },
          }
       } end,
    ["Dvaered Vigilance"] = function () return {
@@ -112,7 +120,7 @@ local function equip_dvaered( p, opt_params )
    -- Set some pilot meta-data
    local mem = p:memory()
    mem.equip = { type="dvaered", level="elite" }
-
+print(params.turret)
    -- Try to equip
    return optimize.optimize( p, cores, dvaered_outfits, params )
 end
