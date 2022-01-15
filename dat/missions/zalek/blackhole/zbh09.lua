@@ -368,6 +368,7 @@ function heartbeat_ferals ()
       icarus = zbh.plt_icarus( outwormhole )
       icarus:setInvincible(true)
       icarus:setHilight(true)
+      icarus:setVisplayer(true)
       icarus:setFriendly(true)
       icarus:control()
       icarus:moveto( pp:pos() )
@@ -454,7 +455,7 @@ function heartbeat_ferals ()
       camera.setZoom()
 
       misn.osdCreate( title, { fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=mainpnt,sys=mainsys}) } )
-      misn.markerAdd( mem.mrk, mainpnt )
+      misn.markerAdd( mainpnt )
 
       mem.state = 2
       return
