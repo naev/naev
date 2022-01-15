@@ -399,7 +399,7 @@ function heartbeat_ferals ()
          end
       end
 
-      l:clearTask()
+      l:taskClear()
       l:brake()
 
       icaruszone = l:pos() + (icarus:pos() - l:pos()):normalize()*1000
@@ -447,6 +447,7 @@ function heartbeat_ferals ()
       icarus_talk ()
 
       icarus:setLeader( l )
+      icarus:control(false)
       for k,p in ipairs(pack) do
          p:control( false )
       end
