@@ -387,6 +387,9 @@ function heartbeat_ferals ()
       pp:brake()
       pp:face( icarus )
 
+      camera.set( icarus )
+      camera.setZoom( 2 )
+
       for k,p in ipairs(pack) do
          if not p:flags("invincible") then
             p:setInvincible(true)
@@ -413,9 +416,6 @@ function heartbeat_ferals ()
             p:brake()
             p:face( icarus )
          end
-
-         camera.set( icarus )
-         camera.setZoom( 2 )
 
          nexttime = 3
          fstate = 13
@@ -467,7 +467,7 @@ end
 
 local sfx_spacewhale = {
    zbh.sfx.spacewhale1,
-   zbh.sfx.spacewhale2
+   zbh.sfx.spacewhale2,
 }
 function feral_hail ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
