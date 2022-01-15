@@ -89,7 +89,7 @@ static int camL_set( lua_State *L )
       lp = lua_topilot(L,1);
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
-   hard_over = lua_toboolean(L,2);
+   hard_over = !lua_toboolean(L,2);
    speed = luaL_optinteger(L,3,2500);
 
    /* Set the camera. */
