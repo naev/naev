@@ -296,7 +296,7 @@ void player_autonavAbort( const char *reason )
    /* Cooldown (handled later) may be script-initiated and we don't
     * want to make it player-abortable while under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL )) {
-      WARN(_("Trying to abort autonav while player is under manual control!"));
+      //WARN(_("Trying to abort autonav while player is under manual control!"));
       return;
    }
 
