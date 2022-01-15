@@ -323,7 +323,6 @@ function heartbeat_ferals ()
 
       -- Where the defeated ships will wait
       waitzone = l:pos() + (l:pos() - pp:pos()):normalize()*1000
-      icaruszone = l:pos()
       fightstart = naev.ticksGame()
 
       for k,p in ipairs(pack) do
@@ -399,6 +398,11 @@ function heartbeat_ferals ()
             p:moveto( waitzone + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
          end
       end
+
+      l:clearTask()
+      l:brake()
+
+      icaruszone = l:pos() + (icarus:pos() - l:pos()):normalize()*1000
 
       icarus:taskClear()
       icarus:moveto( icaruszone )
