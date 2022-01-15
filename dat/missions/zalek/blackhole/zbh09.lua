@@ -41,7 +41,6 @@ local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 local title = _("Black Hole Mystery")
 
 function create ()
-   misn.finish()
    if not misn.claim( {mainsys, insys, outsys} ) then
       misn.finish()
    end
@@ -49,9 +48,8 @@ function create ()
    misn.setNPC( _("Zach"), zbh.zach.portrait, zbh.zach.description )
 end
 
-local wormholeknown = false
+local wormholeknown = inwormhole:known() -- Reloaded every time, since we don't save it
 function accept ()
-   wormholeknown = inwormhole:isKnown()
    local accepted = false
 
    vn.clear()
@@ -59,8 +57,7 @@ function accept ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
    vn.na(_([[TODO]]))
-   z(fmt.f(_([["TODO"]])
-      {}))
+   z(fmt.f(_([["TODO"]]),{}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -75,7 +72,7 @@ function accept ()
    z(_([["TODO"]]))
 
    -- Change text a bit depending if known
-   if inwormhole:isKnown() then
+   if wormholeknown then
       z(_([["TODO"]]))
    else
       z(_([["TODO"]]))
@@ -158,8 +155,8 @@ function enter ()
          system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
       end
 
-      hook.timer( 5, zach_say, _("Weird that Icarus didn't follow us through the jump…") )
-      hook.timer( 12, zach_say, _("I've marked the location on your system map.") )
+      hook.timer( 5, "zach_say", _("Weird that Icarus didn't follow us through the jump…") )
+      hook.timer( 12, "zach_say", _("I've marked the location on your system map.") )
       hook.timer( 1, "heartbeat_wormhole" )
 
    elseif mem.state==1 and system.cur() == outsys then
@@ -179,7 +176,7 @@ function enter ()
       else
          ships = { "Kauweke", "Taitamariki", "Taitamariki", "Taitamariki" }
       end
-      local pos = vec2.pos( -6000, 3000 ) -- Halfway towards NGC-4771
+      local pos = vec2.new( -6000, 3000 ) -- Halfway towards NGC-4771
       pack = fleet.add( 1, ships, zbh.feralbioships(), pos )
       for k,p in ipairs(pack) do
          p:rename(_("Feral Bioship"))
@@ -193,8 +190,8 @@ function enter ()
 
       misn.markerRm( mem.mrk )
 
-      hook.timer( 5, zach_say, _("Hot damn that was weird. Ugh, I feel sick.") )
-      hook.timer( 12, zach_say, _("I'm getting some ship readings. Whait, what is that?") )
+      hook.timer( 5, "zach_say", _("Hot damn that was weird. Ugh, I feel sick.") )
+      hook.timer( 12, "zach_say", _("I'm getting some ship readings. Whait, what is that?") )
       hook.timer( 18, "heartbeat_ferals" )
 
    elseif mem.state == 2 and system.cur() == mainsys then
@@ -238,11 +235,12 @@ function heartbeat_wormhole ()
    elseif wstate==2 and d < 500 then
       wstate = 3
       zach_say( msglist[wstate-2] )
-   else
+   elseif wstate >= 3 then
       wstate = wstate+1
       local msg = msglist[ wstate-2 ]
       if msg==nil then -- Out of messages
          player.allowLand()
+         misn.osdCreate( title, { _("Go through the wormhole") } )
          return
       end
       zach_say( msg )
