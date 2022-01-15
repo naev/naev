@@ -493,6 +493,7 @@
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
+  <item>TeraCom Vengeance Launcher</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
@@ -593,6 +594,7 @@
   <item>TeraCom Fury Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
+  <item>TeraCom Vengeance Launcher</item>
  </tech>
  <tech name="Missiles 2">
   <item>TeraCom Banshee Launcher</item>
