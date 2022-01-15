@@ -13,6 +13,8 @@
   <class>Wormhole</class>
   <population>0</population>
   <hide>0.050000</hide>
-  <services/>
+  <services>
+   <uninhabited/>
+  </services>
  </general>
 </spob>
