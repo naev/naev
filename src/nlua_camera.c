@@ -84,6 +84,8 @@ static int camL_set( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Handle arguments. */
+   p = NULL;
+   vec = NULL;
    if (lua_ispilot(L,1)) {
       LuaPilot lp = lua_topilot(L,1);
       p = pilot_get( lp );
@@ -93,15 +95,23 @@ static int camL_set( lua_State *L )
    }
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
+   else if (lua_isnoneornil(L,1)) {
+      if (player.p != NULL)
+         vec = &player.p->solid->pos;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
    hard_over = !lua_toboolean(L,2);
    cam_getPos( &x, &y );
-   d = MOD( vec->x-x, vec->y-y );
+   if (vec != NULL)
+      d = MOD( vec->x-x, vec->y-y );
+   else
+      d = 5000.;
    speed = luaL_optinteger(L,3,d/2.);
 
    /* Set the camera. */
-   if (p != NULL) {
+   if (p != NULL)
       cam_setTargetPilot( p->id, hard_over*speed );
-   }
    else if (vec != NULL)
       cam_setTargetPos( vec->x, vec->y, hard_over*speed );
    else {
