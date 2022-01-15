@@ -666,12 +666,12 @@ static int load_gameInternal( const char* file, const char* version )
    }
 
    /* Load more stuff. */
+   space_sysLoad(node);
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
    news_loadArticles( node );
    hook_load(node);
-   space_sysLoad(node);
 
    /* Initialize the economy. */
    economy_init();

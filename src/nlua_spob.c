@@ -881,8 +881,8 @@ static int spobL_isBlackMarket( lua_State *L )
  */
 static int spobL_isRestricted( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
-   lua_pushboolean(L, p->land_func != NULL);
+   Spob *s = luaL_validspob(L,1);
+   lua_pushboolean(L, s->land_func != NULL);
    return 1;
 }
 
@@ -897,8 +897,8 @@ static int spobL_isRestricted( lua_State *L )
  */
 static int spobL_isKnown( lua_State *L )
 {
-   Spob *p = luaL_validspob(L,1);
-   lua_pushboolean(L, spob_isKnown(p));
+   Spob *s = luaL_validspob(L,1);
+   lua_pushboolean(L, spob_isKnown(s));
    return 1;
 }
 
