@@ -58,8 +58,8 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[]]))
-   z(fmt.f(_([[""]])
+   vn.na(_([[TODO]]))
+   z(fmt.f(_([["TODO"]])
       {}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -72,14 +72,14 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   z(_([[""]]))
+   z(_([["TODO"]]))
 
    -- Change text a bit depending if known
-   --[[
    if inwormhole:isKnown() then
+      z(_([["TODO"]]))
    else
+      z(_([["TODO"]]))
    end
-   --]]
 
    vn.done( zbh.zach.transition )
    vn.run()
@@ -92,7 +92,7 @@ function accept ()
    -- mission details
    misn.setTitle( title )
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( _("") )
+   misn.setDesc(fmt.f(_("Investigate the mysterious signal coming from the {sys} system with Zach."),{sys=insys}))
 
    mem.mrk = misn.markerAdd( insys )
    mem.state = 1
@@ -106,14 +106,14 @@ function accept ()
 end
 
 function land ()
-   if mem.state==3 and spob.cur() == mainpnt then
+   if mem.state==2 and spob.cur() == mainpnt then
 
       vn.clear()
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
-      vn.na(_(""))
-      z(_([[""]]))
+      vn.na(_("TODO"))
+      z(_([["TODO"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
@@ -121,14 +121,35 @@ function land ()
 
       faction.modPlayer("Za'lek", zbh.fctmod.zbh09)
       player.pay( reward )
-      zbh.log(_(""))
+      zbh.log(_("You travelled through a wormhole with Zach and met a family of feral bioships. After a brief and intense exchange, Icarus came to make peace and decided to return to their family."))
       misn.finish(true)
    end
 end
 
+local function icarus_talk ()
+   vn.clear()
+   vn.scene()
+   local i = vn.newCharacter( zbh.vn_icarus{ pos="left"} )
+   local z = vn.newCharacter( zbh.vn_zach{ pos="right" } )
+   vn.transition()
+   vn.na(_([[TODO]]))
+   z(_([["TODO"]]))
+   i(_([["TODO"]]))
+   vn.done()
+   vn.run()
+end
+
 local pack
 function enter ()
-   if mem.state==1 and system.cur() == insys then
+   if mem.state==1 and system.cur() == mainsys then
+      local feral = zbh.plt_icarus( mainpnt:pos() + vec2.newP(300,rnd.angle()) )
+      feral:setFriendly(true)
+      feral:setInvincible(true)
+      feral:control(true)
+      feral:follow( player.pilot() )
+      hook.pilot( feral, "hail", "feral_hail" )
+
+   elseif mem.state==1 and system.cur() == insys then
       player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
 
       if wormholeknown then
@@ -170,11 +191,14 @@ function enter ()
       l:control()
       l:brake()
 
+      misn.markerRm( mem.mrk )
+
       hook.timer( 5, zach_say, _("Hot damn that was weird. Ugh, I feel sick.") )
       hook.timer( 12, zach_say, _("I'm getting some ship readings. Whait, what is that?") )
       hook.timer( 18, "heartbeat_ferals" )
 
-   --elseif system.cur() == mainsys then
+   elseif mem.state == 2 and system.cur() == mainsys then
+      hook.timer( 15, "zach_say", _("It's a bit quiet without Icarus around anymore…") )
 
    end
 end
@@ -377,6 +401,66 @@ function heartbeat_ferals ()
 
       icarus:taskClear()
       icarus:moveto( icaruszone )
+      fstate = 12
+
+   elseif fstate == 12 then
+      if icarus:pos():dist( icaruszone ) < 500 then
+         icarus:taskClear()
+         icarus:brake()
+         icarus:face( l )
+
+         for k,p in ipairs(pack) do
+            p:setInvisible(false)
+            p:taskClear()
+            p:brake()
+            p:face( icarus )
+         end
+
+         camera.set( icarus )
+         camera.setZoom( 2 )
+
+         nexttime = 3
+         fstate = 13
+
+      else
+         nexttime = 0.1
+      end
+
+   elseif fstate == 13 then
+      zbh.sfx.spacewhale1:play()
+      fstate = 14
+
+   elseif fstate == 14 then
+      camera.set( l )
+      zbh.sfx.spacewhale2:play()
+      fstate = 15
+
+   elseif fstate == 15 then
+      camera.set( icarus )
+      zbh.sfx.spacewhale1:play()
+      fstate = 16
+
+   elseif fstate == 16 then
+
+      icarus_talk ()
+
+      icarus:setLeader( l )
+      for k,p in ipairs(pack) do
+         p:control( false )
+      end
+      l:control()
+      l:hyperspace()
+
+      local pp = player.pilot()
+      pp:control(false)
+      camera.set( pp )
+      camera.setZoom()
+
+      misn.osdCreate( title, { fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=mainpnt,sys=mainsys}) } )
+      misn.markerAdd( mem.mrk, mainpnt )
+
+      mem.state = 2
+      return
 
    end
 
