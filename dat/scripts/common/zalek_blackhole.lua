@@ -77,11 +77,11 @@ function zbh.feralbioship ()
    if f then
       return f
    end
-   return faction.dynAdd( nil, id, _("Feral Bioship"), {ai="dummy"} )
+   return faction.dynAdd( nil, id, _("Feral Bioship"), {ai="feralbioship"} )
 end
 
 function zbh.plt_icarus( pos )
-   return pilot.add( "Nohinohi", zbh.feralbioship(), pos, _("Icarus"), {ai="dummy"} )
+   return pilot.add( "Nohinohi", zbh.feralbioship(), pos, _("Icarus") )
 end
 
 function zbh.unidiff( diffname )

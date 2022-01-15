@@ -48,7 +48,6 @@ function create ()
    misn.setNPC( _("Zach"), zbh.zach.portrait, zbh.zach.description )
 end
 
-local wormholeknown = inwormhole:known() -- Reloaded every time, since we don't save it
 function accept ()
    local accepted = false
 
@@ -72,7 +71,7 @@ function accept ()
    z(_([["TODO"]]))
 
    -- Change text a bit depending if known
-   if wormholeknown then
+   if inwormhole:known() then
       z(_([["TODO"]]))
    else
       z(_([["TODO"]]))
@@ -149,7 +148,7 @@ function enter ()
    elseif mem.state==1 and system.cur() == insys then
       player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
 
-      if wormholeknown then
+      if inwormhole:known() then
          system.mrkAdd( inwormhole:pos(), _("Wormhole") )
       else
          system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
@@ -191,7 +190,7 @@ function enter ()
       misn.markerRm( mem.mrk )
 
       hook.timer( 5, "zach_say", _("Hot damn that was weird. Ugh, I feel sick.") )
-      hook.timer( 12, "zach_say", _("I'm getting some ship readings. Whait, what is that?") )
+      hook.timer( 12, "zach_say", _("I'm getting some ship readings. Wait, what is that?") )
       hook.timer( 18, "heartbeat_ferals" )
 
    elseif mem.state == 2 and system.cur() == mainsys then
@@ -223,7 +222,7 @@ local zach_msg_unknown = {
 
 local wstate = 0
 function heartbeat_wormhole ()
-   local msglist = (wormholeknown and zach_msg_known) or zach_msg_unknown
+   local msglist = (inwormhole:known() and zach_msg_known) or zach_msg_unknown
    local pp = player.pilot()
    local d = pp:pos():dist( inwormhole:pos() )
    if wstate==0 and d < 5000 then
@@ -276,7 +275,7 @@ function heartbeat_ferals ()
 
    elseif fstate == 3 then
       zach_say( _("What are those ships over there? They look a lot like Icarus!") )
-      l:setHighlight()
+      l:setHilight()
       l:setVisplayer()
       fstate = 4
 
@@ -368,7 +367,7 @@ function heartbeat_ferals ()
 
       icarus = zbh.plt_icarus( outwormhole )
       icarus:setInvincible(true)
-      icarus:setHighlight(true)
+      icarus:setHilight(true)
       icarus:setFriendly(true)
       icarus:control()
       icarus:moveto( pp:pos() )
