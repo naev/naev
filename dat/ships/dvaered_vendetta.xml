@@ -43,14 +43,10 @@
   <structure size="small" />
  </slots>
  <stats>
-  <speed_mod>-5</speed_mod>
-  <thrust_mod>-15</thrust_mod>
+  <speed_mod>-10</speed_mod>
   <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_damage>10</fwd_damage>
-  <fwd_heat>5</fwd_heat>
-  <fwd_energy>5</fwd_energy>
   <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>

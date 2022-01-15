@@ -8,7 +8,7 @@
   <mass>40</mass>
   <price>70000</price>
   <gfx_store>bansheelauncher.webp</gfx_store>
-  <description>Designed by House Dvaered to equip their Ancestors, this launcher features an advanced, but very heavy reloading system that allows for an unparalleled fire rate. The ammo storage is short, but it can be anticipated that either the bomber or its target will be destroyed before it is empty.</description>
+  <description>Designed by House Dvaered to equip their Ancestors, this launcher features an advanced, but very heavy reloading system that allows for an unparalleled fire rate. The ammo storage is short, but it can be anticipated that either the bomber or its target will have been destroyed before it is empty.</description>
   <cpu>-10</cpu>
  </general>
  <specific type="launcher" secondary="1">
@@ -28,7 +28,6 @@
   <duration blowup="shield">7</duration>
   <thrust>150</thrust>
   <speed>200</speed>
-  <speed_max>300</speed_max>
   <damage>
    <type>impact</type>
    <penetrate>60</penetrate>

@@ -58,6 +58,7 @@
   <item>TeraCom Mace Launcher</item>
   <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
+  <item>Super-Fast Charge Launcher</item>
   <item>Repeating Banshee Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
@@ -651,6 +652,7 @@
   <item>Cyclic Combat AI</item>
  </tech>
  <tech name="Dvaered Military Outfits">
+  <item>Super-Fast Charge Launcher</item>
   <item>Repeating Railgun</item>
   <item>Active Plating</item>
  </tech>
