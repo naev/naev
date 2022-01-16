@@ -60,7 +60,7 @@ He lets out a sigh and goes back to nervously looking for a pilot to take him to
 
    vn.label("accept")
    z(_([[He lets out a long sigh of relief when you accept his task.
-"I've been asking pilots for ages and nobody seems to want to go near the Anubis Black Hole. Too many bad rumours about the area. I was also worried when my colleague went over there. They were stubborn and decided to go for the research opportunity despite my protests. And now, no response in almost half a cycle!"]]))
+"Thanks, my name is Zack Xiao. I've been asking pilots for ages and nobody seems to want to go near the Anubis Black Hole. Too many bad rumours about the area. I was also worried when my colleague went over there. They were stubborn and decided to go for the research opportunity despite my protests. And now, no response in almost half a cycle!"]]))
    z(_([["Even taking into account the ergosphere this is too much of a delay. Something must have happened! I knew I should have stopped them."
 He seems visibly distraught and you try to soothe him.]]))
    z(fmt.f(_([[He goes on in a smaller shaky voice.
