@@ -120,7 +120,7 @@ local function equip_dvaered( p, opt_params )
    -- Set some pilot meta-data
    local mem = p:memory()
    mem.equip = { type="dvaered", level="elite" }
-print(params.turret)
+
    -- Try to equip
    return optimize.optimize( p, cores, dvaered_outfits, params )
 end
