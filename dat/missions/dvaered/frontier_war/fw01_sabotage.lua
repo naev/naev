@@ -304,8 +304,10 @@ end
 
 -- Test civilian ships
 function player_civilian()
-   local playerclass = player.pilot():ship():class()
-   return (playerclass == "Yacht" or playerclass == "Courier" or playerclass == "Freighter" or playerclass == "Armoured Transport")
+   local pps = player.pilot():ship()
+   local tags = pps:tags()
+   local playerclass = pps:class()
+   return (playerclass == "Yacht" or playerclass == "Courier" or tags.transport or playerclass == "Armoured Transport")
 end
 
 -- Spawn the Phalanx to disable
