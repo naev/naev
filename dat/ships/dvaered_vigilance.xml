@@ -16,14 +16,14 @@
  <license>Medium Combat Vessel</license>
  <cond>faction.playerStanding("Dvaered") &gt;= 50</cond>
  <condstr>You need at least 50 reputation with House Dvaered.</condstr>
- <description>This military grade version of the Vigilance has stronger armour and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>
+ <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
  <health>
-  <armour>650</armour>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>410</mass>
+  <mass>430</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>
@@ -48,12 +48,13 @@
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <armour_mod>20</armour_mod>
+  <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>10</fwd_heat>
-  <fwd_damage>20</fwd_damage>
-  <fwd_energy>10</fwd_energy>
+  <fwd_heat>5</fwd_heat>
+  <fwd_damage>10</fwd_damage>
+  <fwd_energy>5</fwd_energy>
+  <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>

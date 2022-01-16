@@ -15,12 +15,12 @@
  <license>Light Combat Vessel</license>
  <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
  <health>
-  <armour>70</armour>
+  <armour>110</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>6</crew>
-  <mass>70</mass>
+  <mass>80</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>10</cargo>
  </characteristics>
@@ -46,6 +46,7 @@
   <launch_rate>15</launch_rate>
   <launch_range>10</launch_range>
   <ammo_capacity>50</ammo_capacity>
+  <energy_regen_mod>-15</energy_regen_mod>
  </stats>
  <tags>
   <tag>frontier</tag>

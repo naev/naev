@@ -19,9 +19,9 @@
  <license>Heavy Combat Vessel</license>
  <cond>faction.playerStanding("Dvaered") &gt;= 70</cond>
  <condstr>You need at least 70 reputation with House Dvaered.</condstr>
- <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client, and this military grade version has been developed which features better armour and weapon damage at the cost of increased mass and energy consumption.</description>
+ <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client, and this Dvaered military grade version has been adapted to the needs of the Dvaered Warlords, which means better armour and forwards weapon damage at the cost of increased mass.</description>
  <health>
-  <armour>2000</armour>
+  <armour>2100</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
@@ -55,7 +55,8 @@
   <structure size="large" />
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
+  <speed_mod>-15</speed_mod>
+  <turn_mod>5</turn_mod>
   <armour_mod>20</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>

@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
- <price>400000</price>
+ <price>450000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="3" y="18" h="0">nebula</trail_generator>
  <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
@@ -17,14 +17,14 @@
  <license>Light Combat Vessel</license>
  <cond>faction.playerStanding("Dvaered") &gt;= 30</cond>
  <condstr>You need at least 30 reputation with House Dvaered.</condstr>
- <description>This military grade version of the Vendetta has stronger armour and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>
+ <description>On this military grade version of the Vendetta, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
-  <armour>110</armour>
+  <armour>100</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>80</mass>
+  <mass>100</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
@@ -44,11 +44,10 @@
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <turn_mod>-5</turn_mod>
-  <armour_mod>20</armour_mod>
+  <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>-15</fwd_heat>
+  <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>

@@ -53,12 +53,8 @@
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <armour_mod>15</armour_mod>
-  <energy_mod>20</energy_mod>
-  <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>10</fwd_heat>
-  <fwd_damage>20</fwd_damage>
-  <fwd_energy>10</fwd_energy>
+  <armour_mod>10</armour_mod>
+  <energy_mod>10</energy_mod>
  </stats>
  <tags>
   <tag>goddard</tag>
