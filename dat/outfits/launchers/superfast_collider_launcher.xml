@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Super-Fast Charge Launcher">
+<outfit name="Super-Fast Collider Launcher">
  <general>
   <slot>weapon</slot>
   <size>large</size>
-  <license>Medium Weapon</license>
+  <license>Heavy Weapon</license>
+  <rarity>2</rarity>
   <mass>40</mass>
   <price>110000</price>
-  <description>Mostly referred by its initials SFC, the Super-Fast Charge is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>
+  <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>
   <gfx_store>macelauncher.webp</gfx_store>
   <cpu>-15</cpu>
  </general>
