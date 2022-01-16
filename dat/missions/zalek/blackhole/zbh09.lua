@@ -30,7 +30,7 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 
--- luacheck: globals land enter zach_say heartbeat_wormhole heartbeat_ferals feral_hail (Hook functions passed by name)
+-- luacheck: globals land enter scout_discovered zach_say heartbeat_wormhole heartbeat_ferals feral_hail (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh09
 
@@ -55,8 +55,8 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[TODO]]))
-   z(fmt.f(_([["TODO"]]),{}))
+   vn.na(_([[You once again approach Zach at the bar.]]))
+   z(fmt.f(_([["Hey. I've finally set up the new sensors you brought back. The station was running on the damaged back-up sensor system that I patched up to have some minimal functionality. The new sensors basically change everything, and are a strict upgrade to the standard functionality in these research posts. Anyway, I was trying out the sensors and looking at the readings of the black hole, when I noticed there seems to be an anomalous amount of tachyon readings nearby. I haven't seen anything like this before, and I think we should go check it out. Will you help me investigate the signal? "]]),{}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -68,14 +68,32 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   z(_([["TODO"]]))
+   z(fmt.f(_([["Great! The anomaly has been detected in the nearby system of {sys}, It seems to be almost like some sort of ship jumping signal, but unlike jump signals, it's much more… how do I say this… consistent? It seems to just flow constantly like a river or something like that. I've never seen anything like this."]]),
+      {sys=insys}))
 
    -- Change text a bit depending if known
-   if inwormhole:known() then
-      z(_([["TODO"]]))
-   else
-      z(_([["TODO"]]))
-   end
+   vn.func( function ()
+      if not inwormhole:known() then
+         vn.jump("unknown")
+      end
+   end )
+   vn.menu{
+      {_("Tell them about the wormhole"),""},
+      {_("Stay silent"),""},
+   }
+   z(_([["Wait, you knew about this incredible space phenomena outside our doorstep already!? Why didn't you tell me about it! We should have published a peer-reviewed paper on this instead of all the shenanigans we did! Oh well, I still want to see it with my own eyes."]]))
+   vn.func( function ()
+      mem.wormholeknown = true
+   end )
+   vn.jump("cont")
+
+   vn.label("unknown")
+   z(fmt.f(_([["I've run some standard tests and tried to match it with existing known space objects, but it doesn't seem to be anything like them. We could be on the edge of an amazing discovery! I can imagine it now, the Xiao-{name} space phenomena! I might even get tenure!"]]),
+      {name=player.name()}))
+
+   vn.label("cont")
+   z(_([["Normally I would stay behind and monitor, but I'm a bit worried about my safety here and will accompany you this time. It's not like I want to see the what's out there with my own eyes…
+OK, maybe a little. Let's get going!"]]))
 
    vn.done( zbh.zach.transition )
    vn.run()
@@ -89,6 +107,9 @@ function accept ()
    misn.setTitle( title )
    misn.setReward( fmt.credits(reward) )
    misn.setDesc(fmt.f(_("Investigate the mysterious signal coming from the {sys} system with Zach."),{sys=insys}))
+
+   local c = commodity.new( N_("Zach"), N_("A Za'lek scientist.") )
+   misn.cargoAdd(c, 0)
 
    mem.mrk = misn.markerAdd( insys )
    mem.state = 1
@@ -128,9 +149,39 @@ local function icarus_talk ()
    local i = vn.newCharacter( zbh.vn_icarus{ pos="left"} )
    local z = vn.newCharacter( zbh.vn_zach{ pos="right" } )
    vn.transition()
-   vn.na(_([[TODO]]))
-   z(_([["TODO"]]))
-   i(_([["TODO"]]))
+   vn.na(_([[Icarus opens up a communication channel with you. It seems like he figure out how to do that by himself.]]))
+   i(_([["Peace. Friend."]]))
+   z(_([["It looks like there's been a misunderstanding. Could this be from where Icarus came from? I have no idea where we are, but the rough coordinates seem to indicate we are near Soromid space."]]))
+   i(_([["Elders. Ahaeosrc."
+The translation system struggles with what Icarus is saying.]]))
+   z(_([["Mmmm, this seems to be a word that wasn't in the original notes. I'm not sure we're going to be able to translate it."]]))
+   i(_([["Ahaeosrc. Zach."]]))
+   z(_([["Wait, what? How did my name get picked up in the translation system?… Does this mean that…"
+He goes silent, lost in thought.]]))
+   i(_([["Leave. Elders."
+Icarus slightly motions to the other feral bioships. Does this mean he won't be coming back?]]))
+   vn.menu{
+      {_("Try to convince Icarus to stay."),"stay"},
+      {_("Wave good by to Icarus"),"wave"},
+   }
+
+   vn.label("stay")
+   i(_([[Icarus seems to shake its head. Where did it learn to do that?
+"Elders. Leave."]]))
+   vn.jump("cont")
+
+   vn.label("wave")
+   i(_([[Icarus seems to do a motion that can only be interpreted as waving back at you.]]))
+   vn.jump("cont")
+
+   vn.label("cont")
+   vn.na(_([[Icarus turns around to leave when suddenly Zach seems to break out of his trance.]]))
+   z(_([["What did they tell you Icarus? What happened out there!?]]))
+   i(_([[Icarus sends a last message before joining the pack of feral ships.
+"Dark. Wet. Eye."]]))
+   vn.disappear( i )
+   z(_([[Zach slumps down as if all the energy left his body leaving a shrivelled husk behind. In a small voice he mumbles
+"What could this mean…"]]))
    vn.done()
    vn.run()
 end
@@ -145,10 +196,17 @@ function enter ()
       feral:follow( player.pilot() )
       hook.pilot( feral, "hail", "feral_hail" )
 
+   elseif mem.state==2 and system.cur() == mainsys then
+      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), mainpnt:pos() )
+      p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
+      p:control(true)
+      p:stealth()
+      hook.pilot( p, "discovered", "scout_discovered" )
+
    elseif mem.state==1 and system.cur() == insys then
       player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
 
-      if inwormhole:known() then
+      if mem.wormholeknown then
          system.mrkAdd( inwormhole:pos(), _("Wormhole") )
       else
          system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
@@ -199,6 +257,12 @@ function enter ()
    end
 end
 
+function scout_discovered( scout )
+   player.autonavReset(3)
+   scout:taskClear()
+   scout:hyperspace( system.get("NGC-23") )
+end
+
 function zach_say( msg )
    player.autonavReset( 3 )
    player.pilot():comm(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}))
@@ -222,7 +286,7 @@ local zach_msg_unknown = {
 
 local wstate = 0
 function heartbeat_wormhole ()
-   local msglist = (inwormhole:known() and zach_msg_known) or zach_msg_unknown
+   local msglist = (mem.wormholeknown and zach_msg_known) or zach_msg_unknown
    local pp = player.pilot()
    local d = pp:pos():dist( inwormhole:pos() )
    if wstate==0 and d < 5000 then
@@ -295,6 +359,15 @@ function heartbeat_ferals ()
       pp:brake()
       pp:face( l )
 
+      local lp = l:pos()
+      for k,p in ipairs(pack) do
+         if k > 1 then
+            p:control(true)
+            p:moveto( lp + vec2.newP( 200+300*rnd.rnd(), rnd.angle() ) )
+            p:face( pp )
+         end
+      end
+
       player.cinematics( true )
       camera.set( (l:pos()+pp:pos())/2 )
       camera.setZoom( 3 )
@@ -310,7 +383,7 @@ function heartbeat_ferals ()
 
    elseif fstate == 8 then
       zbh.sfx.spacewhale2:play()
-      l:broadcast(_("Son. Revenge. Die."))
+      l:broadcast(_("Son. Revenge. Die."), true)
       misn.osdCreate( title, { _("Survive!") } )
 
       zach_say( _("Watch out!") )
@@ -328,6 +401,7 @@ function heartbeat_ferals ()
       for k,p in ipairs(pack) do
          p:setInvincible(false)
          p:setHostile(true)
+         p:control(false)
       end
       fstate = 9
 
