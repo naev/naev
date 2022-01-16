@@ -129,8 +129,9 @@ function land ()
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
-      vn.na(_("TODO"))
-      z(_([["TODO"]]))
+      vn.na(_("Zach remains silent as you land, completely engrossed in thought. You make your ship replay the land completed announcement to get him out of his stupor."))
+      z(_([[He seems fairly concentrated on something, as he stumbles out of the ship without really paying attention where he is going, you can hear him mumble something to you.
+"…meet me up at the bar later. I have to think…"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
@@ -182,6 +183,7 @@ Icarus slightly motions to the other feral bioships. Does this mean he won't be 
    vn.disappear( i )
    z(_([[Zach slumps down as if all the energy left his body leaving a shrivelled husk behind. In a small voice he mumbles
 "What could this mean…"]]))
+   vn.na(fmt.f(_([[You should probably get Zach back to {pnt}.]]),{pnt=mainsys}))
    vn.done()
    vn.run()
 end
@@ -247,7 +249,7 @@ function enter ()
 
       misn.markerRm( mem.mrk )
 
-      hook.timer( 5, "zach_say", _("Hot damn that was weird. Ugh, I feel sick.") )
+      hook.timer( 5, "zach_say", _("Hot damn, that was weird. Ugh, I feel sick.") )
       hook.timer( 12, "zach_say", _("I'm getting some ship readings. Wait, what is that?") )
       hook.timer( 18, "heartbeat_ferals" )
 
@@ -301,12 +303,12 @@ function heartbeat_wormhole ()
    elseif wstate >= 3 then
       wstate = wstate+1
       local msg = msglist[ wstate-2 ]
-      if msg==nil then -- Out of messages
+      zach_say( msg )
+      if msglist[ wstate-1 ]==nil then -- Was the last message
          player.allowLand()
          misn.osdCreate( title, { _("Go through the wormhole") } )
          return
       end
-      zach_say( msg )
    end
 
    -- Normalize time so it's independent of ship
@@ -324,6 +326,9 @@ function heartbeat_ferals ()
       camera.set( l )
       l:taskClear()
       l:moveto( l:pos() + (player.pos()-l:pos()):normalize() * 1000 )
+      local pp = player.pilot()
+      pp:control()
+      pp:brake()
       nexttime = 10
       fstate = 1
 
@@ -334,6 +339,8 @@ function heartbeat_ferals ()
    elseif fstate == 2 then
       player.cinematics( false )
       camera.set()
+      local pp = player.pilot()
+      pp:control(false)
       nexttime = 3
       fstate = 3
 
@@ -350,8 +357,12 @@ function heartbeat_ferals ()
 
    elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
 
-      zbh.sfx.spacewhale1:play()
       local pp = player.pilot()
+      player.cinematics( true )
+      camera.set( (l:pos()+pp:pos())/2 )
+      camera.setZoom( 3 )
+
+      zbh.sfx.spacewhale1:play()
       l:taskClear()
       l:brake()
       l:face( pp )
@@ -367,10 +378,6 @@ function heartbeat_ferals ()
             p:face( pp )
          end
       end
-
-      player.cinematics( true )
-      camera.set( (l:pos()+pp:pos())/2 )
-      camera.setZoom( 3 )
       fstate = 6
 
    elseif fstate == 6 then
@@ -386,13 +393,14 @@ function heartbeat_ferals ()
       l:broadcast(_("Son. Revenge. Die."), true)
       misn.osdCreate( title, { _("Survive!") } )
 
+      player.cinematics( false )
+      camera.set()
+      camera.setZoom()
+
       zach_say( _("Watch out!") )
       local pp = player.pilot()
       l:control(false)
       pp:control(false)
-      player.cinematics( false )
-      camera.set()
-      camera.setZoom()
 
       -- Where the defeated ships will wait
       waitzone = l:pos() + (l:pos() - pp:pos()):normalize()*1000
@@ -469,7 +477,7 @@ function heartbeat_ferals ()
             p:setHostile(false)
             p:setInvisible(true)
             p:control()
-            p:moveto( waitzone + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
+            p:moveto( l:pos() + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
          end
       end
 
@@ -522,11 +530,13 @@ function heartbeat_ferals ()
 
       icarus:setLeader( l )
       icarus:control(false)
+      icarus:setHilight(false)
       for k,p in ipairs(pack) do
          p:control( false )
       end
       l:control()
       l:hyperspace()
+      l:setHilight(false)
 
       local pp = player.pilot()
       pp:control(false)
