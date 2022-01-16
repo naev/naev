@@ -142,7 +142,6 @@ function land ()
    end
 end
 
-local scout
 function enter ()
    if mem.state==1 and system.cur() == atksys then
       local j1 = jump.get( atksys, retsys )
@@ -152,7 +151,6 @@ function enter ()
       p:control(true)
       p:stealth()
       hook.pilot( p, "discovered", "scout_discovered" )
-      scout = p
 
    elseif mem.state==2 and system.cur() == atksys then
       pilot.clear()
@@ -236,7 +234,7 @@ function enter ()
    end
 end
 
-function scout_discovered ()
+function scout_discovered( scout )
    player.autonavReset(3)
    scout:taskClear()
    scout:hyperspace( system.get("NGC-1001") )
