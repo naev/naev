@@ -31,6 +31,12 @@ zbh.icarus = {
    image = 'gfx/ship/reaver/reaver_comm.webp',
    colour = nil,
 }
+zbh.pi = {
+   portrait = "zalek_thug1.png",
+   image = "zalek_thug1.png",
+   name = _("Za'lek PI"),
+   colour = nil,
+}
 
 function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
@@ -45,6 +51,14 @@ function zbh.vn_icarus( params )
          mt.merge_tables( {
             image=zbh.icarus.image,
             color=zbh.icarus.colour,
+         }, params) )
+end
+
+function zbh.vn_pi( params )
+   return vn.Character.new( zbh.pi.name,
+         mt.merge_tables( {
+            image=zbh.pi.image,
+            color=zbh.pi.colour,
          }, params) )
 end
 
