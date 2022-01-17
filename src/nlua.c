@@ -58,6 +58,7 @@ static int nlua_package_loader_croot( lua_State* L );
 static int nlua_require( lua_State* L );
 static lua_State *nlua_newState (void); /* creates a new state */
 static int nlua_loadBasic( lua_State* L );
+static int luaB_loadstring( lua_State *L );
 /* gettext */
 static int nlua_gettext( lua_State *L );
 static int nlua_ngettext( lua_State *L );
@@ -145,6 +146,23 @@ void lua_init (void)
    nlua_loadBasic(naevL);
 }
 
+/**
+ * @brief Replacement for the internal Lua loadstring().
+ */
+static int luaB_loadstring( lua_State *L ) {
+   size_t l;
+   const char *s = luaL_checklstring(L, 1, &l);
+   const char *chunkname = luaL_optstring(L, 2, s);
+   int status = luaL_loadbuffer(L, s, l, chunkname);
+   if (status == 0)  /* OK? */
+      return 1;
+   else {
+      lua_pushnil(L);
+      lua_insert(L, -2);  /* put before error message */
+      return 2;  /* return nil plus error message */
+   }
+}
+
 /*
  * @brief Closes the global Lua state.
  */
@@ -202,7 +220,6 @@ int nlua_dofileenv( nlua_env env, const char *filename )
  */
 nlua_env nlua_newEnv( int rw )
 {
-   char packagepath[STRMAX];
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -223,9 +240,7 @@ nlua_env nlua_newEnv( int rw )
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal(naevL, "package");
-   snprintf( packagepath, sizeof(packagepath),
-         "?.lua;"LUA_INCLUDE_PATH"?.lua" );
-   lua_pushstring(naevL, packagepath);
+   lua_pushstring(naevL, "?.lua;"LUA_INCLUDE_PATH"?.lua");
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
    lua_setfield(naevL, -2, "cpath");
@@ -238,7 +253,7 @@ nlua_env nlua_newEnv( int rw )
    lua_rawseti(naevL, -2, 4);
    lua_pop(naevL, 2);
 
-   /* Some code expect _G to be it's global state, so don't inherit it */
+   /* The global table _G should refer back to the environment. */
    lua_pushvalue(naevL, -1);
    lua_setfield(naevL, -2, "_G");
 
@@ -384,8 +399,6 @@ static int nlua_loadBasic( lua_State* L )
          "getfenv",
          "load",
          "loadfile",
-         "loadstring",
-         /*"setfenv",*/
          NULL
    };
 
@@ -405,8 +418,10 @@ static int nlua_loadBasic( lua_State* L )
       lua_setglobal(L, override[i]);
    }
 
-   /* Override print to print in the console. */
+   /* Override built-ins to use Naev for I/O. */
+   lua_register(L, "loadstring", luaB_loadstring);
    lua_register(L, "print", cli_print);
+   lua_register(L, "printRaw", cli_printRaw);
    lua_register(L, "warn",  cli_warn);
 
    /* Gettext functionality. */

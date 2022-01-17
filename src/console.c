@@ -73,12 +73,7 @@ static int cli_firstline   = 1; /**< Original CLI: Is this the first line? */
  * CLI stuff.
  */
 static int cli_script( lua_State *L );
-static int luaB_loadstring( lua_State *L );
-static int cli_printRaw( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "loadstring", luaB_loadstring },
-   { "print", cli_print },
-   { "printRaw", cli_printRaw },
    { "script", cli_script },
    { "warn", cli_warn },
    {NULL, NULL}
@@ -184,28 +179,11 @@ int cli_print( lua_State *L )
 }
 
 /**
- * @brief Replacement for the internal Lua loadstring().
- */
-static int luaB_loadstring( lua_State *L ) {
-   size_t l;
-   const char *s = luaL_checklstring(L, 1, &l);
-   const char *chunkname = luaL_optstring(L, 2, s);
-   int status = luaL_loadbuffer(L, s, l, chunkname);
-   if (status == 0)  /* OK? */
-      return 1;
-   else {
-      lua_pushnil(L);
-      lua_insert(L, -2);  /* put before error message */
-      return 2;  /* return nil plus error message */
-   }
-}
-
-/**
  * @brief Prints raw markup to the console.
  *
  * @luafunc printRaw
  */
-static int cli_printRaw( lua_State *L )
+int cli_printRaw( lua_State *L )
 {
    return cli_printCore( L, 1, 0 );
 }
