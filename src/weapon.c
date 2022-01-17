@@ -1404,11 +1404,8 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel, double time )
 {
-   Vector2d *target_pos;
-   Vector2d *target_vel;
-   double rdir;
-   double rx, ry, x, y, t;
-   double off, dvx, dvy;
+   Vector2d *target_pos, *target_vel;
+   double rx, ry, x, y, t, lead, rdir, off;
 
    if (pilot_target != NULL) {
       target_pos = &pilot_target->solid->pos;
@@ -1444,10 +1441,12 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       /* Lead angle is determined from ewarfare. */
       double trackmin = outfit_trackmin(outfit);
       double trackmax = outfit_trackmax(outfit);
-      double lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
+      lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
       x        = lead * x + (1.-lead) * rx;
       y        = lead * y + (1.-lead) * ry;
    }
+   else
+      lead     = 1.;
    rdir     = ANGLE(x,y);
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
@@ -1456,13 +1455,13 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
       if (vmin > 0.) {
          /* Get various details. */
-         double tt, ddir, dtdd, acc, pxv, ang;
+         double tt, ddir, dtdd, acc, pxv, ang, dvx, dvy;
          int niter = 5;
          acc = outfit->u.lau.thrust;
 
          /* Get the relative velocity. */
-         dvx = target_vel->x - vel->x;
-         dvy = target_vel->y - vel->y;
+         dvx = lead * (target_vel->x - vel->x);
+         dvy = lead * (target_vel->y - vel->y);
 
          /* Cross product between position and vel. */
          /* For having a better conditionning, ddir is adapted to the angular difference. */
