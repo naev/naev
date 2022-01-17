@@ -139,8 +139,8 @@ end
 function enter()
    -- Spawn Battleaddict and his team
    if mem.stage == 1 and system.cur() == sabotsys then
-      pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
-      pilot.clearSelect("FLF") --
+      pilot.toggleSpawn("FLF") -- This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
+      pilot.clearSelect("FLF")
       for k,f in ipairs(pir.factions) do
          pilot.toggleSpawn(f)
          pilot.clearSelect(f)
