@@ -152,7 +152,7 @@ local function icarus_talk ()
    local i = vn.newCharacter( zbh.vn_icarus{ pos="left"} )
    local z = vn.newCharacter( zbh.vn_zach{ pos="right" } )
    vn.transition()
-   vn.na(_([[Icarus opens up a communication channel with you. It seems like he figure out how to do that by himself.]]))
+   vn.na(_([[Icarus opens up a communication channel with you. It seems like he figured out how to do that by himself.]]))
    i(_([["Peace. Friend."]]))
    z(_([["It looks like there's been a misunderstanding. Could this be from where Icarus came from? I have no idea where we are, but the rough coordinates seem to indicate we are near Soromid space."]]))
    i(_([["Elders. Ahaeosrc."
@@ -165,9 +165,9 @@ He goes silent, lost in thought.]]))
 Icarus slightly motions to the other feral bioships. Does this mean he won't be coming back?]]))
    vn.menu{
       {_("Try to convince Icarus to stay."),"stay"},
-      {_("Wave good by to Icarus"),"wave"},
+      {_("Wave goodbye to Icarus"),"wave"},
    }
-
+ 
    vn.label("stay")
    i(_([[Icarus seems to shake its head. Where did it learn to do that?
 "Elders. Leave."]]))
