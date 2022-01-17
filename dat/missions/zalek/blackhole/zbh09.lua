@@ -167,7 +167,7 @@ Icarus slightly motions to the other feral bioships. Does this mean he won't be 
       {_("Try to convince Icarus to stay."),"stay"},
       {_("Wave goodbye to Icarus"),"wave"},
    }
-Ic
+ 
    vn.label("stay")
    i(_([[Icarus seems to shake its head. Where did it learn to do that?
 "Elders. Leave."]]))
