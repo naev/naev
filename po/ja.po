@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-16 19:02-0500\n"
+"POT-Creation-Date: 2022-01-17 12:17-0500\n"
 "PO-Revision-Date: 2022-01-16 17:55+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -3453,10 +3453,15 @@ msgid "Za'lek Light Drone Fighter Dock"
 msgstr "ザレク・軽ドローン戦闘機ドック"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:13
+#, fuzzy
+#| msgid ""
+#| "This large in-ship facility is built to maintain and launch a swarm of "
+#| "Za'lek light drones. The drones are expendable, but in numbers they excel "
+#| "at clearing eney light craft."
 msgid ""
 "This large in-ship facility is built to maintain and launch a swarm of "
 "Za'lek light drones. The drones are expendable, but in numbers they excel at "
-"clearing eney light craft."
+"clearing enemy light craft."
 msgstr ""
 "船に内蔵させるこの大きな施設は、ザレク・軽ドローンの群れの整備と発進をさせる"
 "ために作られた。このドローンは消耗品だが、数があれば敵の小型船を排除するのに"
@@ -20245,7 +20250,7 @@ msgstr "#bワームホール#0"
 
 #: dat/spob/wormhole_ngc13674.xml:13 dat/spob/wormhole_ngc15670.xml:13
 #: dat/spob/wormhole_ngc1931.xml:13 dat/spob/wormhole_ngc4087.xml:13
-#: dat/missions/zalek/blackhole/zbh09.lua:212
+#: dat/missions/zalek/blackhole/zbh09.lua:214
 msgid "Wormhole"
 msgstr "ワームホール"
 
@@ -26475,7 +26480,7 @@ msgstr "#Hドリーマー一味の領域#0"
 #: src/map.c:507 src/map.c:513 src/map.c:519 src/map.c:525 src/map.c:531
 #: src/map.c:537 src/map.c:1747 src/map_overlay.c:221 src/map_system.c:479
 #: src/outfit.c:294 src/outfit.c:313 src/outfit.c:902 src/player.c:2026
-#: src/player_autonav.c:92 src/player_autonav.c:217 src/player_autonav.c:462
+#: src/player_autonav.c:92 src/player_autonav.c:217 src/player_autonav.c:460
 #: src/ship.c:211
 #, c-format
 msgid "Unknown"
@@ -58325,7 +58330,7 @@ msgstr "PUAAA の補給船を破壊せよ。"
 #: dat/missions/zalek/blackhole/zbh05.lua:103
 #: dat/missions/zalek/blackhole/zbh06.lua:81
 #: dat/missions/zalek/blackhole/zbh08.lua:99
-#: dat/missions/zalek/blackhole/zbh09.lua:546
+#: dat/missions/zalek/blackhole/zbh09.lua:552
 msgid "Return to {pnt} ({sys} system)"
 msgstr "{pnt}に戻れ。({sys}星系)"
 
@@ -70909,11 +70914,11 @@ msgid "Air Force One"
 msgstr "エアフォースワン"
 
 #. The player takes contact with the Hawking
-#: dat/missions/shark/sh03_hailing.lua:104
+#: dat/missions/shark/sh03_hailing.lua:105
 msgid "Time to go back to {pnt}"
 msgstr "{pnt}へ戻るころあい"
 
-#: dat/missions/shark/sh03_hailing.lua:104
+#: dat/missions/shark/sh03_hailing.lua:105
 msgid ""
 "The captain of the Hawking answers you. When you say that you have a message "
 "from Donald Ulnish, he redirects you to one of his officers who takes the "
@@ -78328,7 +78333,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh07.lua:30
 #: dat/missions/zalek/blackhole/zbh08.lua:52
 #: dat/missions/zalek/blackhole/zbh09.lua:48
-#: dat/missions/zalek/blackhole/zbh09.lua:111
+#: dat/missions/zalek/blackhole/zbh09.lua:113
 #: dat/scripts/common/zalek_blackhole.lua:22
 msgid "Zach"
 msgstr "ザック"
@@ -79358,7 +79363,7 @@ msgstr "あなたは野生の生体船を{pnt}へ導くことになっていた�
 #. Halfway towards NGC-4771
 #: dat/missions/zalek/blackhole/zbh04.lua:186
 #: dat/missions/zalek/blackhole/zbh05.lua:179
-#: dat/missions/zalek/blackhole/zbh09.lua:241
+#: dat/missions/zalek/blackhole/zbh09.lua:243
 #: dat/scripts/common/zalek_blackhole.lua:28
 #: dat/scripts/common/zalek_blackhole.lua:94
 msgid "Feral Bioship"
@@ -80243,7 +80248,7 @@ msgstr ""
 msgid "Stay silent"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:84
+#: dat/missions/zalek/blackhole/zbh09.lua:86
 msgid ""
 "\"Wait, you knew about this incredible space phenomena outside our doorstep "
 "already!? Why didn't you tell me about it! We should have published a peer-"
@@ -80251,7 +80256,7 @@ msgid ""
 "still want to see it with my own eyes.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:91
+#: dat/missions/zalek/blackhole/zbh09.lua:93
 msgid ""
 "\"I've run some standard tests and tried to match it with existing known "
 "space objects, but it doesn't seem to be anything like them. We could be on "
@@ -80259,7 +80264,7 @@ msgid ""
 "space phenomena! I might even get tenure!\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:95
+#: dat/missions/zalek/blackhole/zbh09.lua:97
 msgid ""
 "\"Normally I would stay behind and monitor, but I'm a bit worried about my "
 "safety here and will accompany you this time. It's not like I want to see "
@@ -80269,31 +80274,31 @@ msgstr ""
 
 #. Must be accepted beyond this point
 #. mission details
-#: dat/missions/zalek/blackhole/zbh09.lua:109
+#: dat/missions/zalek/blackhole/zbh09.lua:111
 msgid ""
 "Investigate the mysterious signal coming from the {sys} system with Zach."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:111
+#: dat/missions/zalek/blackhole/zbh09.lua:113
 #, fuzzy
 #| msgid "Za'lek Scientist"
 msgid "A Za'lek scientist."
 msgstr "ザレクの科学者"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:118
+#: dat/missions/zalek/blackhole/zbh09.lua:120
 #, fuzzy
 #| msgid "Go to draw the Collective's attention in the {sys} system"
 msgid "Go track down the signal in the {sys} system"
 msgstr "{sys}星系へ行って集合体の注意をひけ"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:132
+#: dat/missions/zalek/blackhole/zbh09.lua:134
 msgid ""
 "Zach remains silent as you land, completely engrossed in thought. You make "
 "your ship replay the land completed announcement to get him out of his "
 "stupor."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:133
+#: dat/missions/zalek/blackhole/zbh09.lua:135
 msgid ""
 "He seems fairly concentrated on something, as he stumbles out of the ship "
 "without really paying attention where he is going, you can hear him mumble "
@@ -80301,234 +80306,240 @@ msgid ""
 "\"…meet me up at the bar later. I have to think…\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:142
+#: dat/missions/zalek/blackhole/zbh09.lua:144
 msgid ""
 "You travelled through a wormhole with Zach and met a family of feral "
 "bioships. After a brief and intense exchange, Icarus came to make peace and "
 "decided to return to their family."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:153
+#: dat/missions/zalek/blackhole/zbh09.lua:155
 msgid ""
-"Icarus opens up a communication channel with you. It seems like he figure "
+"Icarus opens up a communication channel with you. It seems like he figured "
 "out how to do that by himself."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:154
+#: dat/missions/zalek/blackhole/zbh09.lua:156
 msgid "\"Peace. Friend.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:155
+#: dat/missions/zalek/blackhole/zbh09.lua:157
 msgid ""
 "\"It looks like there's been a misunderstanding. Could this be from where "
 "Icarus came from? I have no idea where we are, but the rough coordinates "
 "seem to indicate we are near Soromid space.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:156
+#: dat/missions/zalek/blackhole/zbh09.lua:158
 msgid ""
 "\"Elders. Ahaeosrc.\"\n"
 "The translation system struggles with what Icarus is saying."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:158
+#: dat/missions/zalek/blackhole/zbh09.lua:160
 msgid ""
 "\"Mmmm, this seems to be a word that wasn't in the original notes. I'm not "
 "sure we're going to be able to translate it.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:159
+#: dat/missions/zalek/blackhole/zbh09.lua:161
 msgid "\"Ahaeosrc. Zach.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:160
+#: dat/missions/zalek/blackhole/zbh09.lua:162
 msgid ""
 "\"Wait, what? How did my name get picked up in the translation system?… Does "
 "this mean that…\"\n"
 "He goes silent, lost in thought."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:162
+#: dat/missions/zalek/blackhole/zbh09.lua:164
 msgid ""
 "\"Leave. Elders.\"\n"
 "Icarus slightly motions to the other feral bioships. Does this mean he won't "
 "be coming back?"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:165
+#: dat/missions/zalek/blackhole/zbh09.lua:167
 msgid "Try to convince Icarus to stay."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:166
-msgid "Wave good by to Icarus"
-msgstr ""
+#: dat/missions/zalek/blackhole/zbh09.lua:168
+#, fuzzy
+#| msgid "Icarus"
+msgid "Wave goodbye to Icarus"
+msgstr "イカロス"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:170
+#: dat/missions/zalek/blackhole/zbh09.lua:172
 msgid ""
 "Icarus seems to shake its head. Where did it learn to do that?\n"
 "\"Elders. Leave.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:175
+#: dat/missions/zalek/blackhole/zbh09.lua:177
 msgid ""
 "Icarus seems to do a motion that can only be interpreted as waving back at "
 "you."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:179
+#: dat/missions/zalek/blackhole/zbh09.lua:181
 msgid ""
 "Icarus turns around to leave when suddenly Zach seems to break out of his "
 "trance."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:180
+#: dat/missions/zalek/blackhole/zbh09.lua:182
 msgid "\"What did they tell you Icarus? What happened out there!?"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:181
+#: dat/missions/zalek/blackhole/zbh09.lua:183
 msgid ""
 "Icarus sends a last message before joining the pack of feral ships.\n"
 "\"Dark. Wet. Eye.\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:184
+#: dat/missions/zalek/blackhole/zbh09.lua:186
 msgid ""
 "Zach slumps down as if all the energy left his body leaving a shrivelled "
 "husk behind. In a small voice he mumbles\n"
 "\"What could this mean…\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:186
+#: dat/missions/zalek/blackhole/zbh09.lua:188
 msgid "You should probably get Zach back to {pnt}."
 msgstr ""
 
 #. Easier to spot
-#: dat/missions/zalek/blackhole/zbh09.lua:209
+#: dat/missions/zalek/blackhole/zbh09.lua:211
 msgid "Zach is analyzing the wormhole signal."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:214
+#: dat/missions/zalek/blackhole/zbh09.lua:216
 #, fuzzy
 #| msgid "A suspicious salesman"
 msgid "Suspicious Signal"
 msgstr "怪しげな外交販売員"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:217
+#: dat/missions/zalek/blackhole/zbh09.lua:219
 msgid "Weird that Icarus didn't follow us through the jump…"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:218
+#: dat/missions/zalek/blackhole/zbh09.lua:220
 msgid "I've marked the location on your system map."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:225
+#: dat/missions/zalek/blackhole/zbh09.lua:227
 msgid "The wormhole seems to have become too weak to go through."
 msgstr ""
 
 #. in case the player does something silly like preemptively shoot torpedoes
-#: dat/missions/zalek/blackhole/zbh09.lua:252
+#: dat/missions/zalek/blackhole/zbh09.lua:254
 msgid "Hot damn, that was weird. Ugh, I feel sick."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:253
+#: dat/missions/zalek/blackhole/zbh09.lua:255
 msgid "I'm getting some ship readings. Wait, what is that?"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:257
+#: dat/missions/zalek/blackhole/zbh09.lua:259
 msgid "It's a bit quiet without Icarus around anymore…"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:270
+#: dat/missions/zalek/blackhole/zbh09.lua:272
 msgid "Zach: \"{msg}\""
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:274
+#: dat/missions/zalek/blackhole/zbh09.lua:276
 msgid "It's… mesmerizing!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:275
+#: dat/missions/zalek/blackhole/zbh09.lua:277
 msgid "It's safe right? Maybe we should send a drone first."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:276
-#: dat/missions/zalek/blackhole/zbh09.lua:285
+#: dat/missions/zalek/blackhole/zbh09.lua:278
+#: dat/missions/zalek/blackhole/zbh09.lua:287
 msgid "I guess we might as well try it. Experimental physics at it's finest."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:277
-#: dat/missions/zalek/blackhole/zbh09.lua:286
+#: dat/missions/zalek/blackhole/zbh09.lua:279
+#: dat/missions/zalek/blackhole/zbh09.lua:288
 msgid "Try to go through it carefully!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:280
+#: dat/missions/zalek/blackhole/zbh09.lua:282
 #, fuzzy
 #| msgid "Zach: What the hell is that?"
 msgid "Damn, that the hell is that?"
 msgstr "ザック : あれはいったいなんなんだ？"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:281
+#: dat/missions/zalek/blackhole/zbh09.lua:283
 #, fuzzy
 #| msgid "Zach: One second, let me calibrate the instruments."
 msgid "One second, let me analyze the data."
 msgstr "ザック : すこしのあいだ、計器の調整をさせてください。"
 
-#: dat/missions/zalek/blackhole/zbh09.lua:282
+#: dat/missions/zalek/blackhole/zbh09.lua:284
 msgid "I can't make much sense out of this, but…"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:283
+#: dat/missions/zalek/blackhole/zbh09.lua:285
 msgid "It seems like some sort of space-time discontinuity…"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:284
+#: dat/missions/zalek/blackhole/zbh09.lua:286
 msgid "It doesn't seem dangerous, at least the readings seem strangely fine."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:296
+#: dat/missions/zalek/blackhole/zbh09.lua:298
 msgid "The sensor readings are off the charts!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:299
+#: dat/missions/zalek/blackhole/zbh09.lua:301
 #, fuzzy
 #| msgid "You thought you saw something!"
 msgid "I think I see something!"
 msgstr "なにか見たと思う！"
 
 #. Was the last message
-#: dat/missions/zalek/blackhole/zbh09.lua:309
+#: dat/missions/zalek/blackhole/zbh09.lua:311
 msgid "Go through the wormhole"
 msgstr ""
 
 #. Normalize time so it's independent of ship
-#: dat/missions/zalek/blackhole/zbh09.lua:348
+#: dat/missions/zalek/blackhole/zbh09.lua:350
 msgid "What are those ships over there? They look a lot like Icarus!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:354
+#: dat/missions/zalek/blackhole/zbh09.lua:356
 msgid "We should go greet them."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:355
+#: dat/missions/zalek/blackhole/zbh09.lua:357
 msgid "Get near the feral bioships"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:384
+#: dat/missions/zalek/blackhole/zbh09.lua:386
 msgid "Look at the size of that thing!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:388
+#: dat/missions/zalek/blackhole/zbh09.lua:390
 msgid "Wait, it looks like it's picking up some signal on us."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:393
+#: dat/missions/zalek/blackhole/zbh09.lua:397
+msgid "Son. Revenge. Imposter. Die."
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh09.lua:399
 msgid "Son. Revenge. Die."
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:394
+#: dat/missions/zalek/blackhole/zbh09.lua:401
 msgid "Survive!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:400
+#: dat/missions/zalek/blackhole/zbh09.lua:407
 #: dat/missions/zalek/particlephysics/zpp03.lua:178
 msgid "Watch out!"
 msgstr "注意して！"
@@ -80536,11 +80547,11 @@ msgstr "注意して！"
 #. Where the defeated ships will wait
 #. Check ending criteria
 #. End criteria
-#: dat/missions/zalek/blackhole/zbh09.lua:447
+#: dat/missions/zalek/blackhole/zbh09.lua:453
 msgid "Wait, is that Icarus? Run to him!"
 msgstr ""
 
-#: dat/missions/zalek/blackhole/zbh09.lua:458
+#: dat/missions/zalek/blackhole/zbh09.lua:464
 #, fuzzy
 #| msgid "Icarus"
 msgid "Go to Icarus!"
@@ -98913,39 +98924,39 @@ msgstr "#o自動操縦装置 : %sにつづきます。"
 msgid "#oAutonav: boarding %s."
 msgstr "#o自動操縦装置 : %sに接舷します。"
 
-#: src/player_autonav.c:305
+#: src/player_autonav.c:303
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr "#r自動操縦装置 : %sので中止します！"
 
-#: src/player_autonav.c:307
+#: src/player_autonav.c:305
 msgid "#rAutonav: aborted!"
 msgstr "#r自動操縦装置 : 中止します！"
 
-#: src/player_autonav.c:316
+#: src/player_autonav.c:314
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr "#o自動操縦装置 : 超空間突入手順を中断しました。"
 
-#: src/player_autonav.c:402
+#: src/player_autonav.c:400
 msgid "#oAutonav: arrived at position."
 msgstr "#o自動操縦装置 : 所定の位置に到着しました。"
 
-#: src/player_autonav.c:412
+#: src/player_autonav.c:410
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:461
+#: src/player_autonav.c:459
 #, c-format
 msgid "#oAutonav: following target %s has been lost."
 msgstr "#o自動操縦装置 : 追跡していた%sを見失いました。"
 
-#: src/player_autonav.c:749
+#: src/player_autonav.c:747
 msgid "Target changed to current system"
 msgstr "現在の星系に目標が変わった"
 
-#: src/player_autonav.c:753
+#: src/player_autonav.c:751
 msgid "Not enough fuel for autonav to continue"
 msgstr "自動操縦をつづけるための燃料が不足している"
 
