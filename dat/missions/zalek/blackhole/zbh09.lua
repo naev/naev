@@ -78,9 +78,11 @@ function accept ()
       end
    end )
    vn.menu{
-      {_("Tell them about the wormhole"),""},
-      {_("Stay silent"),""},
+      {_("Tell them about the wormhole"),"known"},
+      {_("Stay silent"),"unknown"},
    }
+
+   vn.label("known")
    z(_([["Wait, you knew about this incredible space phenomena outside our doorstep already!? Why didn't you tell me about it! We should have published a peer-reviewed paper on this instead of all the shenanigans we did! Oh well, I still want to see it with my own eyes."]]))
    vn.func( function ()
       mem.wormholeknown = true
@@ -389,8 +391,13 @@ function heartbeat_ferals ()
       fstate = 8
 
    elseif fstate == 8 then
+      local pp = player.pilot()
       zbh.sfx.spacewhale2:play()
-      l:broadcast(_("Son. Revenge. Die."), true)
+      if pp:ship():tags().bioship then
+         l:broadcast(_("Son. Revenge. Imposter. Die."), true)
+      else
+         l:broadcast(_("Son. Revenge. Die."), true)
+      end
       misn.osdCreate( title, { _("Survive!") } )
 
       player.cinematics( false )
@@ -398,7 +405,6 @@ function heartbeat_ferals ()
       camera.setZoom()
 
       zach_say( _("Watch out!") )
-      local pp = player.pilot()
       l:control(false)
       pp:control(false)
 
