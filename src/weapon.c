@@ -1409,9 +1409,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    double rdir;
    double rx, ry, x, y, t;
    double off, dvx, dvy;
-   double vmin;
-   int i, niter;
-   double tt, ddir, dtdd, acc, pxv, ang, d, dd;
 
    if (pilot_target != NULL) {
       target_pos = &pilot_target->solid->pos;
@@ -1455,12 +1452,13 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
    if (outfit_isLauncher(outfit) && outfit->u.lau.thrust > 0.) {
-      vmin  = outfit->u.lau.speed;
+      double vmin  = outfit->u.lau.speed;
 
-      if ( vmin > 0. ) {
+      if (vmin > 0.) {
          /* Get various details. */
-         acc   = outfit->u.lau.thrust;
-         niter = 5;
+         double tt, ddir, dtdd, acc, pxv, ang;
+         int niter = 5;
+         acc = outfit->u.lau.thrust;
 
          /* Get the relative velocity. */
          dvx = target_vel->x - vel->x;
@@ -1469,24 +1467,26 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
          /* Cross product between position and vel. */
          /* For having a better conditionning, ddir is adapted to the angular difference. */
          pxv = rx*dvy - ry*dvx;
-         ang = atan2( pxv, rx*dvx+ry*dvy ); /*Angle between position and velocity. */
-         if (fabs(ang + M_PI) < fabs(ang)) ang = ang + M_PI; /* Periodicity tricks. */
-         else if (fabs(ang - M_PI) < fabs(ang)) ang = ang-+ M_PI;
-         ddir = -ang/1000;
+         ang = atan2( pxv, rx*dvx+ry*dvy ); /* Angle between position and velocity. */
+         if (fabs(ang + M_PI) < fabs(ang))
+            ang += M_PI; /* Periodicity tricks. */
+         else if (fabs(ang - M_PI) < fabs(ang))
+            ang -= M_PI;
+         ddir = -ang/1000.;
 
          /* Iterate to correct the initial guess rdir. */
          /* We compute more precisely ta and tt. */
          /* (times for the ammo and the target to get to intersection point) */
          /* The aim is to nullify ta-tt. */
          if (fabs(ang) > 1e-7) { /* No need to iterate if it's already nearly aligned. */
-            for (i=0; i<niter; i++) {
-               d  = weapon_computeTimes( rdir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
-               dd = weapon_computeTimes( rdir+ddir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
+            for (int i=0; i<niter; i++) {
+               double d  = weapon_computeTimes( rdir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
+               double dd = weapon_computeTimes( rdir+ddir, rx, ry, dvx, dvy, pxv, vmin, acc, &tt );
 
                /* Manage an exception (tt<0), and regular stopping condition. */
                /* TODO: this stopping criterion is too restrictive. */
                /* (for example when pos and vel are nearly aligned). */
-               if ( tt < 0. || fabs(d) < 5. )
+               if (tt < 0. || fabs(d) < 5.)
                   break;
 
                dtdd = (dd-d)/ddir; /* Derivative of the criterion wrt. rdir. */
@@ -1677,7 +1677,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if (w->outfit->u.lau.thrust > 0.) {
       weapon_setThrust( w, w->outfit->u.lau.thrust * mass );
-      /* Limit speed, we only relativize in the case it has thrust + initila speed. */
+      /* Limit speed, we only relativize in the case it has thrust + initial speed. */
       w->solid->speed_max = w->outfit->u.lau.speed_max;
       if (w->outfit->u.lau.speed > 0.)
          w->solid->speed_max = -1; /* No limit. */
