@@ -25,8 +25,10 @@ end
 function love.load()
    local w = 800
    local h = 450
-   love.window.setTitle( "Naev Overlay Demo" )
-   love.window.setMode( w, h )
+   local prog_name = "Naev Overlay Demo"
+   love.window.setTitle( prog_name )
+   love.filesystem.setIdentity( prog_name );
+   love.window.setMode( w, h, {resizable = true} )
    --love.window.setMode( 0, 0, {fullscreen = true} )
    -- Set up the shader
    shader   = love.graphics.newShader( pixelcode_noise..pixelcode_nebula, vertexcode)
@@ -54,6 +56,10 @@ end
 function love.keypressed(key)
    if key=="q" or key=="escape" then
       love.event.quit()
+   elseif key=="s" then
+      local scr_name = ( "Screenshot_" .. os.time() .. ".png" )
+      love.graphics.captureScreenshot( scr_name )
+      print( "Captured screenshot " .. scr_name )
    end
 end
 
