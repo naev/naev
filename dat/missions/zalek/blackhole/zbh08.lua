@@ -146,7 +146,7 @@ function enter ()
    if mem.state==1 and system.cur() == atksys then
       local j1 = jump.get( atksys, retsys )
       local j2 = jump.get( atksys, "NGC-1001" )
-      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1:pos()+(j2:pos()-j1:pos()):mul(0.8) )
+      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1:pos()+(j2:pos()-j1:pos()):mul(0.8), nil, {ai="baddie"} )
       p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
       p:control(true)
       p:stealth()

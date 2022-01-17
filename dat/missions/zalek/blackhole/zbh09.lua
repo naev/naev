@@ -201,7 +201,7 @@ function enter ()
       hook.pilot( feral, "hail", "feral_hail" )
 
    elseif mem.state==2 and system.cur() == mainsys then
-      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), mainpnt:pos() )
+      local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), mainpnt:pos(), nil, {ai="baddie"} )
       p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
       p:control(true)
       p:stealth()
