@@ -16,7 +16,6 @@
  </tags>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
-  <tier>1</tier>
  </notes>
 </mission>
 --]]

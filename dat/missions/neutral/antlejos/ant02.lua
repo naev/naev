@@ -12,7 +12,6 @@
   <done>Terraforming Antlejos 1</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>

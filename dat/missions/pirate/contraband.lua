@@ -8,9 +8,7 @@
   <location>Computer</location>
   <done>Pirate Smuggle Cake</done>
  </avail>
- <notes>
-  <tier>1</tier>
- </notes>
+ <notes/>
 </mission>
 --]]
 --[[

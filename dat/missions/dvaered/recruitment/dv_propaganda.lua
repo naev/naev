@@ -9,7 +9,6 @@
   <cond>var.peek("dp_available") == true</cond>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>
   <done_evt name="Deliver Flyers">If you accept</done_evt>
  </notes>

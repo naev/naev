@@ -9,7 +9,6 @@
   <done>Dvaered Census 0</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>
  </notes>
 </mission>
