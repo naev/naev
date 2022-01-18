@@ -72,7 +72,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more use of your services. That is why I propose to you now a simple escort mission. All that you need is a fast combat ship that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
+   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Sigur. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more use of your services. That is why I propose to you now a simple escort mission. All that you need is a fast combat ship that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
       tk.msg(_("Too bad"), _([[Tam seems disappointed by your answer. "Well, then, maybe we will meet again later, who knows?"]]))
       misn.finish(false)
    end
