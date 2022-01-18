@@ -3458,8 +3458,9 @@ msgid ""
 "Za'lek light drones. The drones are expendable, but in numbers they excel at "
 "clearing enemy light craft."
 msgstr ""
-"船に内蔵させるこの大きな施設は、ザレク・軽ドローンの群れの整備と発進をさせるために作られた。このドローンは消耗品だが、数があれば敵の小型船を排除するのに秀"
-"でている。"
+"船に内蔵させるこの大きな施設は、ザレク・軽ドローンの群れの整備と発進をさせる"
+"ために作られた。このドローンは消耗品だが、数があれば敵の小型船を排除するのに"
+"秀でている。"
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:2
 msgid "Gauntlet Deluxe"
