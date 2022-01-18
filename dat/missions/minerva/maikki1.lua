@@ -665,6 +665,7 @@ function stealthheartbeat ()
             wreck:rm()
          end
          player.msg( _("#rYou lost track of the scavengers! Stealth failed!"), true )
+         hook.rm( stealthbroadcasthook )
          return
       end
    else

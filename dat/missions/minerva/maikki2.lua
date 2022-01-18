@@ -88,7 +88,7 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 mem.misn_state = nil
 local defense_systems, feral_drone_boss -- Non-persistent state
 local hintosd -- Forward-declared functions
--- luacheck: globals ecc_dist ecc_drone_dead ecc_feral_boss_attacked ecc_feral_boss_dead ecc_feral_boss_msg ecc_timer ecc_timer_dead enter generate_npc (Hook functions passed by name)
+-- luacheck: globals ecc_dist ecc_drone_dead_check ecc_feral_boss_attacked ecc_feral_boss_dead ecc_feral_boss_msg ecc_timer ecc_timer_dead enter generate_npc (Hook functions passed by name)
 -- luacheck: globals approach_eccentric approach_hint1 approach_hint2 approach_hint3 approach_hint4 approach_maikki (NPC functions passed by name)
 
 function create ()
@@ -636,28 +636,31 @@ function ecc_dist ()
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.angle() )
          local p = pilot.add( v, "Strangelove", pos, _("Security Drone"), {ai="baddiepos"} )
          p:setHostile()
-         hook.pilot( p, "death", "ecc_drone_dead" )
          table.insert( defense_systems, p )
       end
       player.autonavAbort(_("Hostiles detected!"))
       defense_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
+      hook.timer( 1.0, "ecc_drone_dead_check" )
       return
    end
    hook.timer( 0.5, "ecc_dist" )
 end
 
 
-function ecc_drone_dead( p )
-   for k,v in ipairs(defense_systems) do
-      if v==p then
-         table.remove( defense_systems, k )
-         break
+function ecc_drone_dead_check ()
+   local new_defense = {}
+   for k,p in ipairs(defense_systems) do
+      if p:exists() then
+         table.insert( new_defense, p )
       end
    end
+   defense_systems = new_defense
 
    -- All dead
    if #defense_systems==0 then
       hook.timer( 5.0, "ecc_timer_dead" )
+   else
+      hook.timer( 1.0, "ecc_drone_dead_check" )
    end
 end
 
