@@ -151,7 +151,7 @@ pushd "$WORKPATH"
     --output appimage
 
 # Move zsync file to dist directory
-# mv ./*.zsync "$WORKPATH"/dist
+mv ./*.zsync "$WORKPATH"/dist
 popd
 
 # Mark AppImage as executable
