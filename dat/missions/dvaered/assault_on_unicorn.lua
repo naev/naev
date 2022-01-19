@@ -21,6 +21,7 @@
 --]]
 local pir = require 'common.pirate'
 local fmt = require "format"
+local dv  = require "common.dvaered"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
@@ -37,14 +38,14 @@ local function update_osd()
       osd_msg[2] = fmt.f(_("Destroy some pirates! You have killed {n} and have earned {credits}. If finished, return to {pnt}."),
                          {n=mem.pirates_killed, credits=fmt.credits(mem.bounty_earned), pnt=mem.planet_start})
    end
-   misn.osdCreate(_("DV: Assault on Unicorn"), osd_msg)
+   misn.osdCreate(_("Assault on Unicorn"), osd_msg)
 end
 
 function create ()
    local rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
    mem.max_payment = rep * 50e3
-   misn.setTitle(_("DV: Assault on Unicorn"))
+   misn.setTitle(dv.prefix.._("Assault on Unicorn"))
    misn.setReward(_("Variable"))
    misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."), {credits=fmt.credits(mem.max_payment)} ))
 
