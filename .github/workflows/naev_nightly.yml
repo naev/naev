@@ -185,14 +185,13 @@ jobs:
           ./source/extras/macos/createDMG.sh -s source -b build
           cd build/dist
           zip -r naev-macos.zip Naev.app/*
+          rm -rf Naev.app
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: |
-            ${{ github.workspace }}/build/dist/*.zip
-            ${{ github.workspace }}/build/dist/*.dmg
+          path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
   "Steam_Naev_Release":
