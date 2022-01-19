@@ -83,9 +83,9 @@ function death(pilot,killer)
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
 
-      mem.reward_earned = pilot:ship():price()/10
+      local reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
-      mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + mem.reward_earned )
+      mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + reward_earned )
       update_osd()
       misn.osdActive(2)
    end
