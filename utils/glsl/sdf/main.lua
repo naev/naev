@@ -1,5 +1,5 @@
 local pixelcode_sdf = love.filesystem.read( "frag.glsl" )
-local pixelcode = [[
+local _pixelcode = [[
 #pragma language glsl3
 uniform float u_time = 0.0;
 
@@ -57,19 +57,21 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-function set_shader( num )
-   shader_type = num
+local global_dt, img, shader
+
+--local function set_shader( num )
+   --shader_type = num
    --shader:send( "type", shader_type )
-end
+--end
 
 function love.load()
-   ww, wh = 1200, 600
+   local ww, wh = 1200, 600
    love.window.setTitle( "Naev Overlay Demo" )
    love.window.setMode( ww, wh )
    --love.window.setMode( 0, 0, {fullscreen = true} )
    -- Set up the shader
    shader   = love.graphics.newShader( pixelcode_sdf, vertexcode)
-   set_shader( 0 )
+   --set_shader( 0 )
    -- We need an image for the shader to work so we create a 1x1 px white image.
    local idata = love.image.newImageData( 1, 1 )
    idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
@@ -86,9 +88,9 @@ end
 
 function love.draw ()
    local lg = love.graphics
-   local w, h = love.graphics.getDimensions()
+   local ww, wh = love.graphics.getDimensions()
    lg.setColor( 0, 0, 0, 1 )
-   lg.rectangle( "fill", 0, 0, w, h )
+   lg.rectangle( "fill", 0, 0, ww, wh )
 
    local x, y = 0, 0
    local parami = 0

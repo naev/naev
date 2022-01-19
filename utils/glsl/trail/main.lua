@@ -444,7 +444,9 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-function set_shader( num )
+local img, scaling, shader, shader_color, shader_type
+
+local function set_shader( num )
    shader_type = num
    shader:send( "type", shader_type )
 
@@ -516,8 +518,9 @@ function love.draw ()
    end
 end
 
+local global_dt = 0
 function love.update( dt )
-   global_dt = (global_dt or 0) + dt
+   global_dt = global_dt + dt
    if shader:hasUniform("dt") then
       shader:send( "dt", global_dt )
    end

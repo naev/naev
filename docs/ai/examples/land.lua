@@ -12,10 +12,10 @@
 
 -- flies to the target planet
 function moveto ()
-   target = ai.target()
-   dir = ai.face(target)
-   dist = ai.dist( target )
-   bdist = ai.minbrakedist()
+   local target = ai.target()
+   local dir = ai.face(target)
+   local dist = ai.dist( target )
+   local bdist = ai.minbrakedist()
    if math.abs(dir) < math.rad(10) and dist > bdist then
       ai.accel()
    elseif math.abs(dir) < math.rad(10) and dist < bdist then
@@ -36,10 +36,10 @@ function land ()
    end
 end
 
--- waits
+-- luacheck: globals landed (A hook which waits)
 function landed ()
    if ai.timeup(0) then
-      -- Run X task (usually hyperspace
+      -- Run X task (usually hyperspace)
       ai.pushtask("hyperspace")
    end
 end

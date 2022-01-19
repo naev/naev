@@ -22,10 +22,10 @@ function runaway( target )
       return
    end
 
-   dir = ai.face( target, 1 )
+   ai.face( target, 1 )
    ai.accel()
    if ai.hasturrets() then
-      dist = ai.dist( target:pos() )
+      local dist = ai.dist( target:pos() )
       if dist < 300 then
          ai.settarget(target)
          ai.shoot()

@@ -2,8 +2,7 @@
    Some small autotests meant to be used
 --]]
 
-function test_vec2()
-   local v, v2
+local function test_vec2()
    local fail = 0
 
    local function vcheck( v, x, y, s )
@@ -16,8 +15,8 @@ function test_vec2()
    end
 
    -- Add test
-   v  = vec2.new( 1, 2 )
-   v2 = v + vec2.new( 2, 3 )
+   local v  = vec2.new( 1, 2 )
+   local v2 = v + vec2.new( 2, 3 )
    v:add( 3, 4 )
    fail = fail + vcheck( v,  1+3, 2+4, 'add: v' )
    fail = fail + vcheck( v2, 1+2, 2+3, 'add: v2' )
@@ -46,7 +45,7 @@ function test_vec2()
    return fail
 end
 
-function run_test( failed, str )
+local function run_test( failed, str )
    if failed > 0 then
       print( string.format( "Test '%s' failed %d testcases", str, failed ) )
       return 1
@@ -54,7 +53,7 @@ function run_test( failed, str )
    return 0
 end
 
-fail = 0
+local fail = 0
 fail = fail+run_test( test_vec2(), 'vec2' )
 if fail==0 then
    print( 'All tests completed successfully!' )

@@ -12,6 +12,8 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+local beamoutfits, beams, beamtypes, global_dt, img, scaling, shader
+
 function love.load()
    love.window.setTitle( "Naev Beam Demo" )
    -- Set up the shader
