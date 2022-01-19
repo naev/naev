@@ -9,8 +9,8 @@ for mo_path in "@build_root@"/po/*.gmo; do
    if [ -f "$mo_path" ]; then
       mo_name="$(basename "$mo_path")"
       lang=${mo_name%.gmo}
-      mkdir -p "@build_root@"/dat/gettext/$lang/LC_MESSAGES
-      cp -v "$mo_path" "@build_root@"/dat/gettext/$lang/LC_MESSAGES/naev.mo
+      mkdir -p "@build_root@/dat/gettext/$lang/LC_MESSAGES"
+      cp -v "$mo_path" "@build_root@/dat/gettext/$lang/LC_MESSAGES/naev.mo"
    fi
 done
 # Meson >= 0.60

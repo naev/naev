@@ -1,9 +1,13 @@
 #!/bin/bash
-# Manually runs the nightly workflow when sent.
-
-# Pass in -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)> -g <github repo name e.g. (naev/naev)>
 
 set -e
+
+usage() {
+    echo "usage: $(basename "$0") [-d] -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)>"
+    echo "Manually runs the nightly workflow when sent."
+    echo "Pass in -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)> -g <github repo name e.g. (naev/naev)>"
+    exit 1
+}
 
 # Defaults
 REPO="naev/naev"
@@ -22,15 +26,14 @@ while getopts d:t:r:g: OPTION "$@"; do
     g)
         REPO="${OPTARG}"
         ;;
+    *)
+        usage
+        ;;
     esac
 done
 
-if [[ -z "$TOKEN" ]]; then
-    echo "usage: `basename $0` [-d] -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)>"
-    exit 1
-elif [[ -z "$RELEASETYPE" ]]; then
-    echo "usage: `basename $0` [-d] -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)>"
-    exit 1
+if [[ -z "$TOKEN" ]] || [[ -z "$RELEASETYPE" ]]; then
+    usage
 fi
 
 if [[ "$RELEASETYPE" == "nightly" ]]; then

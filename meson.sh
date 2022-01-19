@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script will download and wrap meson if the current installed version
 # is not at least version 0.55.0 (which meson.build currently requires)
@@ -46,11 +46,11 @@ else
 fi
 
 run_meson () {
-    if [ "$MESON" = *"$MESONDIR"* ]; then
-        ./$MESON $@
+    if [[ "$MESON" = *"$MESONDIR"* ]]; then
+        ./$MESON "$@"
     else
-        $MESON $@
+        $MESON "$@"
     fi
 }
 
-run_meson $@
+run_meson "$@"

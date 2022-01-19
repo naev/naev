@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # ============================= Enter source root =============================
 if [ -n "$1" ]; then
    cd "$1"
@@ -9,7 +11,7 @@ fi
 
 if [[ ! -f naev.6 ]]; then
    echo "Please run from the source root dir, or pass it as an argument." >&2
-   exit -1
+   exit 1
 fi
 
 # ============================== Helper commands ==============================
@@ -24,7 +26,7 @@ else
    }
 fi
 # And some pipeline commands:
-filter_skipped() { egrep -v '/((space|ship)_polygon)/.*\.xml'; }
+filter_skipped() { grep -vE '/((space|ship)_polygon)/.*\.xml'; }
 deterministic_sort() { LC_ALL=C sort; }
 
 # =================================== Main ===================================
@@ -35,6 +37,7 @@ deterministic_sort() { LC_ALL=C sort; }
 # The text strings must come first, or else gettext "remembers" its most recent
 # language detection and gives them unwanted "c-format" or "lua-format" tags.
 
+# shellcheck disable=SC2046
 po/credits_pot.py \
    dat/intro \
    dat/AUTHORS \
