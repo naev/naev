@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Thurion Perspicacity Fighter Bay">
+<outfit name="Thurion Perspicacity Dock">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
@@ -10,7 +10,7 @@
   <mass>80</mass>
   <price>920000</price>
   <gfx_store>thurion_perspicacity_fighter.webp</gfx_store>
-  <description>This fighter bay allows your ship to carry two Thurion Perspicacity class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
+  <description>This dock allows your ship to carry two Thurion Perspicacity fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-250</cpu>
  </general>
  <specific type="fighter bay" secondary="1">

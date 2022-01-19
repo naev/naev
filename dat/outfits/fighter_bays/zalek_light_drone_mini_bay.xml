@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Za'lek Light Drone Fighter Bay">
+<outfit name="Za'lek Light Drone Mini Bay">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
@@ -10,7 +10,7 @@
   <mass>120</mass>
   <price>800000</price>
   <gfx_store>zalek_drone_light_fighter.webp</gfx_store>
-  <description>A quartet of light drones are maintained and launched from this bay. The Drones themselves are frail, but very cheap.</description>
+  <description>This bay is built to launch a quartet Za'lek Light Drones. The drones are expendable, but in numbers they excel at clearing enemy light craft. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-135</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
