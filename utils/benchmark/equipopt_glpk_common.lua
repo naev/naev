@@ -1,5 +1,6 @@
 local equipopt = require 'equipopt'
-local function benchmark( testname, reps, sparams )
+local benchmark = {}
+function benchmark.run( _testname, reps, sparams )
    local ships = {
       "Llama",
       "Hyena",
@@ -32,7 +33,7 @@ local function benchmark( testname, reps, sparams )
       collectgarbage('stop')
       local rstart = naev.clock()
       for k,s in ipairs(ships) do
-         for k,f in ipairs(factions) do
+         for k2,f in ipairs(factions) do
             local p = pilot.add( s, "Dummy", pos, nil, {naked=true} )
             if sparams then
                equipopt.optimize.sparams = sparams
@@ -59,4 +60,42 @@ local function benchmark( testname, reps, sparams )
 
    return mean, stddev, vals
 end
+
+function benchmark.csv_open( header, reps )
+   local csvfile = file.new("benchmark.csv")
+   csvfile:open("w")
+   csvfile:write( header )
+   for i=1,reps do
+      csvfile:write(string.format(",rep%d",i))
+   end
+   csvfile:write("\n")
+   return csvfile
+end
+
+function benchmark.csv_writereps( csvfile, vals )
+   for i,v in ipairs(vals) do
+      csvfile:write(string.format(",%f",v))
+   end
+   csvfile:write("\n")
+end
+
+function benchmark.product( ... )
+   local sets = { ... }
+   local tuple = {}
+   local function descend( i )
+      if i == #sets then
+         for k,v in pairs(sets[i]) do
+            tuple[i] = v
+            coroutine.yield( tuple )
+         end
+      else
+         for k,v in pairs(sets[i]) do
+            tuple[i] = v
+            descend( i + 1 )
+         end
+      end
+   end
+   return coroutine.wrap(function() descend(1) end)
+end
+
 return benchmark

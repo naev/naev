@@ -2,49 +2,34 @@ local benchmark = require "utils.benchmark.equipopt_glpk_common"
 
 local reps = 100
 
-local csvfile = file.new("benchmark.csv")
-csvfile:open("w")
-csvfile:write( "mean,stddev,meth,pricing,r_test,presolve" )
-for i=1,reps do
-   csvfile:write(string.format(",rep%d",i))
-end
-csvfile:write("\n")
-
-function csv_writereps( vals )
-   for i,v in ipairs(vals) do
-      csvfile:write(string.format(",%f",v))
-   end
-   csvfile:write("\n")
-end
+local csvfile = benchmark.csv_open( "mean,stddev,meth,pricing,r_test,presolve", reps )
 
 local tstart = naev.clock()
 print("====== BENCHMARK START ======")
-local bl_mean, bl_stddev, bl_vals = benchmark( "Baseline", reps )
-local def_mean, def_stddev, def_vals = benchmark( "Defaults", reps, {} )
+local bl_mean, bl_stddev, bl_vals = benchmark.run( "Baseline", reps )
+local def_mean, def_stddev, def_vals = benchmark.run( "Defaults", reps, {} )
 csvfile:write(string.format("%f,%f,-,-,-,-", bl_mean, bl_stddev ) )
-csv_writereps( bl_vals )
+benchmark.csv_writereps( csvfile, bl_vals )
 csvfile:write(string.format("%f,%f,def,def,def,def", def_mean, def_stddev ) )
-csv_writereps( def_vals )
+benchmark.csv_writereps( csvfile, def_vals )
 local curbest = def_mean
 local trials = {}
-for i,meth in ipairs{"primal","dual","dualp"} do
-   for i,pricing in ipairs{"std","pse"} do
-      for i,r_test in ipairs{"std","har"} do
-         for i,presolve in ipairs{"on","off"} do
-            -- Randomize in the hope of getting "close" in the search space earlier.
-            -- May help data quality *a little* if the machine's speed varies over time too.
-            table.insert(trials, 1+rnd.rnd(#trials), {meth, pricing, r_test, presolve} )
-         end
-      end
-   end
+for  row in benchmark.product(
+      {"primal","dual","dualp"},
+      {"std","pse"},
+      {"std","har"},
+      {"on","off"} ) do
+   -- Randomize in the hope of getting "close" in the search space earlier.
+   -- May help data quality *a little* if the machine's speed varies over time too.
+   table.insert( trials, 1+rnd.rnd(#trials), row )
 end
 for n, trial in ipairs(trials) do
    local meth, pricing, r_test, presolve = table.unpack(trial)
    local s = string.format("meth=%s,pricing=%s,r_test=%s,presolve=%s",
       meth, pricing, r_test, presolve )
-   local mean, stddev, vals = benchmark( s, reps, {meth=meth, pricing=pricing, r_test=r_test, presolve=presolve} )
+   local mean, stddev, vals = benchmark.run( s, reps, {meth=meth, pricing=pricing, r_test=r_test, presolve=presolve} )
    csvfile:write( string.format("%f,%f,%s,%s,%s,%s", mean, stddev, meth, pricing, r_test, presolve ) )
-   csv_writereps( vals )
+   benchmark.csv_writereps( csvfile, vals )
    if mean < curbest then
       curbest = mean
    end
