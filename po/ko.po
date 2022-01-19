@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-19 00:15-0500\n"
+"POT-Creation-Date: 2022-01-19 13:47-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -1326,7 +1326,7 @@ msgstr ""
 #. luacheck: globals ambusher baddieBoard baddieDead begin leave playerAttacked (Hook functions passed by name)
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Spawn the ambusher, depending on the player's max velocity
-#. TODO: ajust requirements, use equipopt instead of manually equipping
+#. TODO: adjust requirements, use equipopt instead of manually equipping
 #. hyenas
 #. Their outfits must be quite good
 #. Just try to avoid fight with these fellas
@@ -36720,31 +36720,31 @@ msgstr ""
 #. --
 #. Mission constants
 #. luacheck: globals death jumpin land (Hook functions passed by name)
-#: dat/missions/dvaered/assault_on_unicorn.lua:33
+#: dat/missions/dvaered/assault_on_unicorn.lua:34
 msgid "Fly to the Unicorn system."
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:35
+#: dat/missions/dvaered/assault_on_unicorn.lua:36
 msgid "You have reached your maximum payment. Return to {pnt}."
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:37
+#: dat/missions/dvaered/assault_on_unicorn.lua:38
 msgid ""
 "Destroy some pirates! You have killed {n} and have earned {credits}. If "
 "finished, return to {pnt}."
 msgstr ""
 
 #. Round the payment to the nearest thousand.
-#: dat/missions/dvaered/assault_on_unicorn.lua:40
-#: dat/missions/dvaered/assault_on_unicorn.lua:47
-msgid "DV: Assault on Unicorn"
+#: dat/missions/dvaered/assault_on_unicorn.lua:41
+#: dat/missions/dvaered/assault_on_unicorn.lua:48
+msgid "Assault on Unicorn"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:48 src/space.c:258
+#: dat/missions/dvaered/assault_on_unicorn.lua:49 src/space.c:258
 msgid "Variable"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:49
+#: dat/missions/dvaered/assault_on_unicorn.lua:50
 msgid ""
 "It is time to put a dent in the pirates' forces. We have detected a strong "
 "pirate presence in the system of Unicorn. We are offering a small sum for "
@@ -36766,7 +36766,7 @@ msgstr ""
 #. the Gawain is going away
 #. Are there still other pirates to kill ?
 #. She "jumped" into the current system by taking off.
-#: dat/missions/dvaered/assault_on_unicorn.lua:108
+#: dat/missions/dvaered/assault_on_unicorn.lua:98
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:227
 #: dat/missions/shark/sh07_pirates.lua:271
 #: dat/missions/sirius/achack/achack02.lua:118
@@ -36777,7 +36777,7 @@ msgstr ""
 msgid "Mission accomplished"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:108
+#: dat/missions/dvaered/assault_on_unicorn.lua:98
 msgid ""
 "As you land, you see a Dvaered military official approaching. Thanking you "
 "for your hard and diligent work, he hands you the bounty you've earned, a "
@@ -51108,7 +51108,7 @@ msgid "Mayday! Requesting assistance. Wait, what was that?"
 msgstr "지원을 요청한다. 공격 받고 있다!"
 
 #. Get rid of the timeout hook
-#: dat/missions/minerva/maikki1.lua:499 dat/missions/minerva/maikki2.lua:615
+#: dat/missions/minerva/maikki1.lua:499
 msgid ""
 "#pYour ship has detected a curious signal originating from inside the system."
 "#0"
@@ -52456,6 +52456,11 @@ msgstr ""
 #. Spawn the drones
 #: dat/missions/minerva/maikki2.lua:597
 msgid "Feral Alpha Drone"
+msgstr ""
+
+#: dat/missions/minerva/maikki2.lua:615
+msgid ""
+"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:637
