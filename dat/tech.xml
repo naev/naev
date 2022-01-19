@@ -127,24 +127,24 @@
   <item>Milspec Jammer</item>
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
-  <item>Lancelot Fighter Bay</item>
-  <item>Hyena Fighter Bay</item>
-  <item>Hyena Fighter Dock</item>
-  <item>Pirate Hyena Fighter Bay</item>
-  <item>Pirate Hyena Fighter Dock</item>
-  <item>Empire Lancelot Fighter Bay</item>
-  <item>Fidelity Fighter Bay</item>
-  <item>Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter Bay</item>
-  <item>Za'lek Heavy Drone Fighter Bay</item>
-  <item>Za'lek Bomber Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter Dock</item>
-  <item>Za'lek Heavy Drone Fighter Dock</item>
-  <item>Za'lek Bomber Drone Fighter Dock</item>
-  <item>Thurion Perspicacity Fighter Dock</item>
-  <item>Thurion Perspicacity Fighter Bay</item>
-  <item>Proteron Derivative Fighter Bay</item>
-  <item>Soromid Brigand Fighter Bay</item>
+  <item>Lancelot Bay</item>
+  <item>Hyena Dock</item>
+  <item>Hyena Bay</item>
+  <item>Pirate Hyena Dock</item>
+  <item>Pirate Hyena Bay</item>
+  <item>Empire Lancelot Bay</item>
+  <item>Fidelity Bay</item>
+  <item>Drone Bay</item>
+  <item>Za'lek Light Drone Mini Bay</item>
+  <item>Za'lek Heavy Drone Mini Bay</item>
+  <item>Za'lek Bomber Drone Mini Bay</item>
+  <item>Za'lek Light Drone Bay</item>
+  <item>Za'lek Heavy Drone Bay</item>
+  <item>Za'lek Bomber Drone Bay</item>
+  <item>Thurion Perspicacity Bay</item>
+  <item>Thurion Perspicacity Dock</item>
+  <item>Proteron Derivative Bay</item>
+  <item>Soromid Brigand Bay</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -501,8 +501,8 @@
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Weapons Ionizer</item>
-  <item>Hyena Fighter Bay</item>
-  <item>Hyena Fighter Dock</item>
+  <item>Hyena Dock</item>
+  <item>Hyena Bay</item>
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
@@ -514,7 +514,7 @@
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
-  <item>Lancelot Fighter Bay</item>
+  <item>Lancelot Bay</item>
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery I</item>
@@ -631,7 +631,7 @@
  </tech>
  <tech name="Empire Military Outfits">
   <item>Turbolaser</item>
-  <item>Empire Lancelot Fighter Bay</item>
+  <item>Empire Lancelot Bay</item>
  </tech>
  <tech name="Dvaered Elite Outfits">
   <item>Repeating Banshee Launcher</item>
@@ -649,7 +649,7 @@
  </tech>
  <tech name="Sirius Military Outfits">
   <item>Heavy Razor Turret</item>
-  <item>Fidelity Fighter Bay</item>
+  <item>Fidelity Bay</item>
  </tech>
  <tech name="Za'lek Outfits Low">
   <item>Faraday Tempest Coating</item>
@@ -657,15 +657,15 @@
  </tech>
  <tech name="Za'lek Outfits Medium">
   <item>Hive Combat AI</item>
-  <item>Za'lek Light Drone Fighter Bay</item>
-  <item>Za'lek Heavy Drone Fighter Bay</item>
-  <item>Za'lek Bomber Drone Fighter Bay</item>
+  <item>Za'lek Light Drone Mini Bay</item>
+  <item>Za'lek Heavy Drone Mini Bay</item>
+  <item>Za'lek Bomber Drone Mini Bay</item>
  </tech>
  <tech name="Za'lek Outfits High">
   <item>Za'lek Reaper Launcher</item>
-  <item>Za'lek Light Drone Fighter Dock</item>
-  <item>Za'lek Heavy Drone Fighter Dock</item>
-  <item>Za'lek Bomber Drone Fighter Dock</item>
+  <item>Za'lek Light Drone Bay</item>
+  <item>Za'lek Heavy Drone Bay</item>
+  <item>Za'lek Bomber Drone Bay</item>
  </tech>
  <tech name="Soromid Elite Outfits">
   <item>Nexus Stealth Coating</item>
@@ -678,8 +678,8 @@
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
   <item>Adaptive Stealth Plating</item>
-  <item>Thurion Perspicacity Fighter Dock</item>
-  <item>Thurion Perspicacity Fighter Bay</item>
+  <item>Thurion Perspicacity Bay</item>
+  <item>Thurion Perspicacity Dock</item>
   <item>Map: Thurion Core</item>
  </tech>
  <tech name="Thurion Military Outfits">
@@ -691,7 +691,7 @@
   <item>Local System Map</item>
  </tech>
  <tech name="Proteron Military Outfits">
-  <item>Proteron Derivative Fighter Bay</item>
+  <item>Proteron Derivative Bay</item>
  </tech>
  <tech name="Proteron Maps">
   <item>Map: Sol</item>
@@ -700,15 +700,15 @@
  <tech name="Pirate Elite Outfits">
   <item>Low Radiation Sensor Modulator</item>
   <item>Scanning Combat AI</item>
-  <item>Pirate Hyena Fighter Bay</item>
-  <item>Pirate Hyena Fighter Dock</item>
+  <item>Pirate Hyena Dock</item>
+  <item>Pirate Hyena Bay</item>
   <item>Counterfeit Heavy Weapon License</item>
   <item>Counterfeit Heavy Combat Vessel License</item>
  </tech>
 
  <!-- outfits -->
  <tech name="Bioship Outfits">
-  <item>Soromid Brigand Fighter Bay</item>
+  <item>Soromid Brigand Bay</item>
  </tech>
 
  <!-- Ships -->
@@ -855,7 +855,7 @@
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Shatterer Launcher</item>
-  <item>Drone Fighter Bay</item>
+  <item>Drone Bay</item>
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>

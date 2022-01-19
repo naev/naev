@@ -37,7 +37,7 @@ local empire_outfits = eoutfits.merge{{
 }}
 local empire_outfits_collective = eoutfits.merge{
    empire_outfits,
-   { "Drone Fighter Bay" },
+   { "Drone Bay" },
 }
 
 
