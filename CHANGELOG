@@ -29,11 +29,12 @@
       * Ammunition/fighters merged into launchers/fighter bays
       * Support for "shotgun"-type weapons
 
-* 0.9.2 (unreleased)
+* 0.9.2
    * Fix reward messages in the Particle Physics campaign
    * Can no longer steal a certain Soromid ship
    * Enhanced the logic for deciding whether it's safe to save the game after landing
-   * Fix mission bug: "Emergency of Immediate Inspiration"
+   * Fix mission bugs: "Emergency of Immediate Inspiration", "The Search for Cynthia"
+   * Fix zombie autonav toward deselected targets
 
 * 0.9.1
    * Minor countermeasures for long player ship names

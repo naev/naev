@@ -50,7 +50,7 @@ end
 function ambusher()
    local vel = player.pilot():stats().speed_max
 
-   -- TODO: ajust requirements, use equipopt instead of manually equipping
+   -- TODO: adjust requirements, use equipopt instead of manually equipping
    if vel >= 350 then
       baddie = pilot.add( "Hyena", "Mercenary", source_system, _("Mercenary") )
    elseif vel >= 210 then
