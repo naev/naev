@@ -140,7 +140,7 @@ mv "$WORKPATH/AppDir/usr/share/metainfo/org.naev.Naev.metainfo.xml" "$WORKPATH/A
 # Disable appstream test
 export NO_APPSTREAM=1
 
-# export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
+export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
 
 # Run linuxdeploy and generate an AppDir, then generate an AppImage
 
