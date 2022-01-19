@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-17 12:17-0500\n"
+"POT-Creation-Date: 2022-01-19 00:15-0500\n"
 "PO-Revision-Date: 2022-01-17 21:53+0000\n"
 "Last-Translator: Justin Blanchard <UncombedCoconut@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -1293,7 +1293,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:604
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:264
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:98
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:97
 #: dat/missions/minerva/kex3.lua:389 dat/scripts/common/dvaered.lua:14
 #: dat/scripts/common/dvaered.lua:19
 msgid "Dvaered"
@@ -1331,7 +1331,7 @@ msgstr ""
 #: dat/faction.xml:500 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:185 dat/missions/minerva/pirate5.lua:248
 #: dat/missions/zalek/blackhole/zbh03.lua:159
-#: dat/missions/zalek/particlephysics/zpp03.lua:140
+#: dat/missions/zalek/particlephysics/zpp03.lua:139
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:95
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:11
 #: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:66
@@ -1590,8 +1590,8 @@ msgstr "仲間"
 #: dat/faction.xml:674 dat/faction.xml:703
 #: dat/missions/soromid/comingout/srm_comingout3.lua:123
 #: dat/missions/soromid/comingout/srm_comingout5.lua:126
-#: dat/missions/zalek/particlephysics/zpp04.lua:184
-#: dat/missions/zalek/particlephysics/zpp04.lua:187
+#: dat/missions/zalek/particlephysics/zpp04.lua:183
+#: dat/missions/zalek/particlephysics/zpp04.lua:186
 msgid "Thugs"
 msgstr "乱暴者"
 
@@ -27245,9 +27245,9 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:132 dat/missions/minerva/kex2.lua:154
 #: dat/missions/minerva/kex3.lua:195 dat/missions/minerva/kex4.lua:192
 #: dat/missions/minerva/maikki1.lua:191 dat/missions/minerva/maikki1.lua:278
-#: dat/missions/minerva/maikki1.lua:518 dat/missions/minerva/maikki1.lua:885
+#: dat/missions/minerva/maikki1.lua:518 dat/missions/minerva/maikki1.lua:886
 #: dat/missions/minerva/maikki2.lua:233 dat/missions/minerva/maikki2.lua:497
-#: dat/missions/minerva/maikki2.lua:763 dat/missions/minerva/pirate3.lua:179
+#: dat/missions/minerva/maikki2.lua:766 dat/missions/minerva/pirate3.lua:179
 #: dat/missions/minerva/pirate4.lua:132 dat/missions/minerva/pirate5.lua:150
 msgid "Leave"
 msgstr "離れる"
@@ -37551,7 +37551,7 @@ msgstr ""
 "える。どうするか？"
 
 #. skip back to message if already accepted job
-#: dat/missions/baron/baron_baron.lua:46 dat/missions/minerva/maikki2.lua:790
+#: dat/missions/baron/baron_baron.lua:46 dat/missions/minerva/maikki2.lua:793
 #: dat/missions/minerva/pirate1.lua:71 dat/missions/minerva/pirate2.lua:85
 #: dat/missions/minerva/pirate3.lua:124 dat/missions/minerva/pirate4.lua:104
 #: dat/missions/minerva/pirate5.lua:122
@@ -38204,7 +38204,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:232
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:235
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:255
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:175
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:174
 msgid "What are you doing here?"
 msgstr "ここでなにをしている？"
 
@@ -40489,8 +40489,7 @@ msgstr ""
 #. Travel to second rendezvous
 #. Spawn the Baddies
 #. Spawn Battleaddict and his team
-#. TODO : It's only for testing. It can be removed once FLF is dead
-#.
+#. This helps when testing the mission using the Lua console. Normally, the FLF should be dead.
 #. Klank's superior equipment should ensure victory
 #. Klank's superior equipment should ensure victory once more
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:120
@@ -44519,7 +44518,6 @@ msgstr "闘技場に入る"
 #. <done>Dvaered Census 0</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Dvaered Recruitment</campaign>
 #. </notes>
 #. </mission>
@@ -44535,12 +44533,12 @@ msgstr "闘技場に入る"
 #. --
 #. luacheck: globals enter land testInRange (Hook functions passed by name)
 #. Mission details
-#: dat/missions/dvaered/recruitment/dv_census.lua:44
+#: dat/missions/dvaered/recruitment/dv_census.lua:43
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:115
 msgid "Monitoring of Warlords activity in {sys}"
 msgstr "{sys}星系の軍閥領袖の活動の監視"
 
-#: dat/missions/dvaered/recruitment/dv_census.lua:46
+#: dat/missions/dvaered/recruitment/dv_census.lua:45
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:117
 msgid ""
 "Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered "
@@ -44549,8 +44547,8 @@ msgstr ""
 "ドベーレッド最高司令部があるパイロットに、{sys}星系へ行って {nb} 隻のドベー"
 "レッド船を探知することを求めている。"
 
-#: dat/missions/dvaered/recruitment/dv_census.lua:53
-#: dat/missions/dvaered/recruitment/dv_census.lua:104
+#: dat/missions/dvaered/recruitment/dv_census.lua:52
+#: dat/missions/dvaered/recruitment/dv_census.lua:103
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:118
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:162
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:136
@@ -44563,15 +44561,15 @@ msgstr "ドベーレッドの国勢調査"
 #. Pay the player
 #. That's not realistic the player doesn't get killed, but that's not realistic either anyone would land here anyways...
 #. Pay the player
-#: dat/missions/dvaered/recruitment/dv_census.lua:73
+#: dat/missions/dvaered/recruitment/dv_census.lua:72
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:139
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:114
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:179
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:178
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid "Reward"
 msgstr "報酬"
 
-#: dat/missions/dvaered/recruitment/dv_census.lua:73
+#: dat/missions/dvaered/recruitment/dv_census.lua:72
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:114
 msgid "You land and transmit a datapad to the local Dvaered liaison officer."
 msgstr ""
@@ -44586,7 +44584,7 @@ msgstr ""
 #. Test pilots in range.
 #. Wrong system: abort
 #. Test if mission is complete
-#: dat/missions/dvaered/recruitment/dv_census.lua:101
+#: dat/missions/dvaered/recruitment/dv_census.lua:100
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:159
 #: dat/missions/dvaered/recruitment/dv_intelligence.lua:133
 msgid "You have acquired data on enough Dvaered ships"
@@ -44976,7 +44974,6 @@ msgstr "ドベーレッド情報部"
 #. <cond>var.peek("dp_available") == true</cond>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Dvaered Recruitment</campaign>
 #. <done_evt name="Deliver Flyers">If you accept</done_evt>
 #. </notes>
@@ -44992,11 +44989,11 @@ msgstr "ドベーレッド情報部"
 #. --
 #. luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
 #. Define the flyers commodity
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:40
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:39
 msgid "Propaganda Posters"
 msgstr "プロパガンダの宣伝ビラ"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:40
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:39
 msgid "Heaps of posters representing big-nose characters hitting each other."
 msgstr "鼻の大きな人物がおたがいに殴りあっているところを描写した宣伝ビラの山。"
 
@@ -45007,15 +45004,15 @@ msgstr "鼻の大きな人物がおたがいに殴りあっているところを
 #. Claim
 #. (per ton)
 #. Mission details
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:71
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:70
 msgid "Warlords Propaganda spreading on {pnt} in {sys}"
 msgstr "軍閥領袖のプロパガンダを{sys}星系の{pnt}に広める"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:72
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:71
 msgid "{credits} per ton"
 msgstr "トンあたり {credits}"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:73
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:72
 msgid ""
 "The Warlords Affairs Office requires a pilot to spread as much posters as "
 "possible in the atmosphere of {pnt} in {sys}"
@@ -45023,15 +45020,15 @@ msgstr ""
 "閥務省は、{sys}星系の{pnt}の大気圏内でできるだけ多くの宣伝ビラをばらまくパイ"
 "ロットを求めている"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:80
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:79
 msgid "Warlords Propaganda"
 msgstr "軍閥領袖のプロパガンダ"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:81
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:80
 msgid "Go to {sys} and overfly {pnt} to spread your posters"
 msgstr "{sys}星系へ生き、{pnt}の上空を飛んで宣伝ビラをばらまけ。"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:82
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:81
 msgid "Land on any Dvaered planet or station (except {pnt})"
 msgstr "ドベーレッドの惑星かステーションに着陸せよ。({pnt}を除く)"
 
@@ -45045,11 +45042,11 @@ msgstr "ドベーレッドの惑星かステーションに着陸せよ。({pnt}
 #. Prepare hostiles
 #. Spreads some Flyers
 #. Activates hostility
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:159
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:158
 msgid "That is an insult to our Lord's honour!"
 msgstr "われらが領袖の名誉にたいする侮辱だ！"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:160
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:159
 msgid ""
 "Hey! Smart ass! Did you think about the environmental consequences of what "
 "you just did?"
@@ -45057,22 +45054,22 @@ msgstr ""
 "おい、悪賢いそったれ！　ちょうどいまやったことの環境にたいする結果をどう考え"
 "てる？"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:161
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:160
 msgid "Everyone! Get that ship!"
 msgstr "みんな！　あの船をやっちまえ！"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:162
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:161
 msgid "Come back! I have got candies for you... and MACE ROCKETS!"
 msgstr "戻ってこい！　アメをやるぞ……それからメイスロケットも！"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:163
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:162
 msgid ""
 "You spread posters on my planet. My turn to spread rockets on your face!"
 msgstr ""
 "おまえはわたしの惑星に宣伝ビラをばらまいた。おまえの顔にロケットをばらまく番"
 "だ！"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:175
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:174
 msgid ""
 "As you step out of your ship, your eye is catched by a flying poster, "
 "carried away by the wind. And suddentry, you remember there was written on "
@@ -45088,7 +45085,7 @@ msgstr ""
 "ないようにいわれているのか、たぶんあなたはすぐに知ることになるだろう……\n"
 "あなたの任務は失敗した！"
 
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:179
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:178
 msgid "For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}."
 msgstr ""
 "軍閥領袖のプロパガンダ任務を達成したことで、あなたは {pay} の報酬をもらった。"
@@ -45749,7 +45746,7 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec03.lua:91
 #: dat/missions/empire/collective/ec04.lua:70
-#: dat/missions/neutral/antlejos/ant05.lua:85
+#: dat/missions/neutral/antlejos/ant05.lua:84
 #: dat/missions/sirius/heretic/heretic3.lua:63
 #: dat/missions/tutorial/nelly02.lua:323
 msgid "Return to {pnt}"
@@ -47071,7 +47068,7 @@ msgstr "{sys}星系の{pnt}への、帝国の公式な貨物輸送。"
 #: dat/missions/empire/es_cargo.lua:98
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:99
 #: dat/missions/neutral/cargo_rush.lua:138
-#: dat/missions/pirate/contraband.lua:164 dat/missions/sirius/srs_ferry.lua:188
+#: dat/missions/pirate/contraband.lua:162 dat/missions/sirius/srs_ferry.lua:188
 #: dat/missions/trader/anxiousmerchant.lua:85
 msgid "Too slow"
 msgstr "遅すぎる"
@@ -47079,7 +47076,7 @@ msgstr "遅すぎる"
 #: dat/missions/empire/es_cargo.lua:99
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:100
 #: dat/missions/neutral/cargo_rush.lua:139
-#: dat/missions/pirate/contraband.lua:165
+#: dat/missions/pirate/contraband.lua:163
 msgid ""
 "This shipment must arrive within {time_limit}, but it will take at least "
 "{time} for your ship to reach {pnt}, missing the deadline. Accept the "
@@ -47103,14 +47100,14 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:105
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:106
 #: dat/missions/neutral/cargo.lua:102 dat/missions/neutral/cargo_rush.lua:129
-#: dat/missions/pirate/contraband.lua:171
+#: dat/missions/pirate/contraband.lua:169
 msgid "No room in ship"
 msgstr "船に空きがない"
 
 #: dat/missions/empire/es_cargo.lua:106
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:107
 #: dat/missions/neutral/cargo.lua:103 dat/missions/neutral/cargo_rush.lua:130
-#: dat/missions/pirate/contraband.lua:172
+#: dat/missions/pirate/contraband.lua:170
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
 "{tonnes_free} of free space ({tonnes_short} more than you have)."
@@ -47121,7 +47118,7 @@ msgstr ""
 #. able to accept the mission
 #: dat/missions/empire/es_cargo.lua:114
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:115
-#: dat/missions/pirate/contraband.lua:180 dat/missions/zalek/zlk_test.lua:103
+#: dat/missions/pirate/contraband.lua:178 dat/missions/zalek/zlk_test.lua:103
 #: dat/missions/zalek/zlk_test.lua:104
 msgid "Mission Accepted"
 msgstr "任務を受諾"
@@ -47148,7 +47145,7 @@ msgstr "帝国の労働者たちがあなたの船に {tonnes}の{cargo}を積
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:126
 #: dat/missions/neutral/cargo_rush.lua:164
 #: dat/missions/neutral/cargo_rush.lua:168
-#: dat/missions/pirate/contraband.lua:191
+#: dat/missions/pirate/contraband.lua:189
 msgid "Successful Delivery"
 msgstr "配達に成功"
 
@@ -47163,7 +47160,7 @@ msgstr "帝国の労働者たちが着岸所に{cargo}を降ろした。"
 #: dat/missions/empire/es_cargo.lua:148
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 #: dat/missions/neutral/cargo_rush.lua:183
-#: dat/missions/pirate/contraband.lua:208
+#: dat/missions/pirate/contraband.lua:206
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:214
 msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
@@ -51358,10 +51355,10 @@ msgstr ""
 #: dat/missions/minerva/kex2.lua:171 dat/missions/minerva/kex3.lua:170
 #: dat/missions/minerva/kex3.lua:318 dat/missions/minerva/kex4.lua:168
 #: dat/missions/minerva/kex5.lua:85 dat/missions/neutral/antlejos/ant01.lua:49
-#: dat/missions/neutral/antlejos/ant02.lua:62
-#: dat/missions/neutral/antlejos/ant03.lua:60
-#: dat/missions/neutral/antlejos/ant04.lua:66
-#: dat/missions/neutral/antlejos/ant05.lua:58
+#: dat/missions/neutral/antlejos/ant02.lua:61
+#: dat/missions/neutral/antlejos/ant03.lua:59
+#: dat/missions/neutral/antlejos/ant04.lua:65
+#: dat/missions/neutral/antlejos/ant05.lua:57
 #: dat/missions/neutral/antlejos/ant06.lua:63
 #: dat/missions/neutral/antlejos/ant07.lua:52
 #: dat/missions/pirate/contraband_cake.lua:86
@@ -51375,21 +51372,21 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh08.lua:66
 #: dat/missions/zalek/blackhole/zbh09.lua:61
 #: dat/missions/zalek/particlephysics/zpp01.lua:51
-#: dat/missions/zalek/particlephysics/zpp02.lua:63
-#: dat/missions/zalek/particlephysics/zpp03.lua:58
-#: dat/missions/zalek/particlephysics/zpp04.lua:61
-#: dat/missions/zalek/particlephysics/zpp05.lua:55
-#: dat/missions/zalek/particlephysics/zpp06.lua:52
+#: dat/missions/zalek/particlephysics/zpp02.lua:62
+#: dat/missions/zalek/particlephysics/zpp03.lua:57
+#: dat/missions/zalek/particlephysics/zpp04.lua:60
+#: dat/missions/zalek/particlephysics/zpp05.lua:54
+#: dat/missions/zalek/particlephysics/zpp06.lua:51
 msgid "Accept"
 msgstr "受けいれる"
 
 #: dat/missions/minerva/kex2.lua:172 dat/missions/minerva/kex3.lua:171
 #: dat/missions/minerva/kex3.lua:319 dat/missions/minerva/kex4.lua:169
 #: dat/missions/minerva/kex5.lua:86 dat/missions/neutral/antlejos/ant01.lua:50
-#: dat/missions/neutral/antlejos/ant02.lua:63
-#: dat/missions/neutral/antlejos/ant03.lua:61
-#: dat/missions/neutral/antlejos/ant04.lua:67
-#: dat/missions/neutral/antlejos/ant05.lua:59
+#: dat/missions/neutral/antlejos/ant02.lua:62
+#: dat/missions/neutral/antlejos/ant03.lua:60
+#: dat/missions/neutral/antlejos/ant04.lua:66
+#: dat/missions/neutral/antlejos/ant05.lua:58
 #: dat/missions/neutral/antlejos/ant06.lua:64
 #: dat/missions/neutral/antlejos/ant07.lua:53
 #: dat/missions/pirate/contraband_cake.lua:87
@@ -51403,11 +51400,11 @@ msgstr "受けいれる"
 #: dat/missions/zalek/blackhole/zbh08.lua:67
 #: dat/missions/zalek/blackhole/zbh09.lua:62
 #: dat/missions/zalek/particlephysics/zpp01.lua:52
-#: dat/missions/zalek/particlephysics/zpp02.lua:64
-#: dat/missions/zalek/particlephysics/zpp03.lua:59
-#: dat/missions/zalek/particlephysics/zpp04.lua:62
-#: dat/missions/zalek/particlephysics/zpp05.lua:56
-#: dat/missions/zalek/particlephysics/zpp06.lua:53
+#: dat/missions/zalek/particlephysics/zpp02.lua:63
+#: dat/missions/zalek/particlephysics/zpp03.lua:58
+#: dat/missions/zalek/particlephysics/zpp04.lua:61
+#: dat/missions/zalek/particlephysics/zpp05.lua:55
+#: dat/missions/zalek/particlephysics/zpp06.lua:52
 msgid "Decline"
 msgstr "辞退する"
 
@@ -51832,7 +51829,7 @@ msgid "You approach Major Malik who seems to be enjoying a drink."
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:312 dat/missions/minerva/maikki2.lua:479
-#: dat/missions/minerva/maikki2.lua:757
+#: dat/missions/minerva/maikki2.lua:760
 msgid "\"What do you want?\""
 msgstr ""
 
@@ -53353,10 +53350,10 @@ msgstr ""
 
 #. Move target back to origin
 #: dat/missions/minerva/maikki1.lua:77 dat/missions/minerva/maikki1.lua:215
-#: dat/missions/minerva/maikki1.lua:398 dat/missions/minerva/maikki1.lua:916
+#: dat/missions/minerva/maikki1.lua:398 dat/missions/minerva/maikki1.lua:917
 #: dat/missions/minerva/maikki2.lua:101 dat/missions/minerva/maikki2.lua:151
-#: dat/missions/minerva/maikki2.lua:557 dat/missions/minerva/maikki2.lua:699
-#: dat/missions/minerva/maikki2.lua:803 dat/missions/minerva/maikki2.lua:867
+#: dat/missions/minerva/maikki2.lua:557 dat/missions/minerva/maikki2.lua:702
+#: dat/missions/minerva/maikki2.lua:806 dat/missions/minerva/maikki2.lua:870
 #: dat/scripts/common/minerva.lua:105
 msgid "Finding Maikki's Father"
 msgstr ""
@@ -53369,9 +53366,8 @@ msgstr ""
 #. Clear just in case
 #. Re-add Maikki if accepted
 #. Can't run it in the VN or it causes an error
-#. Can't let them see what's coming up, can I?
 #: dat/missions/minerva/maikki1.lua:104 dat/missions/minerva/maikki1.lua:268
-#: dat/missions/neutral/runaway/runaway_search.lua:47
+#: dat/missions/neutral/runaway/runaway_search.lua:48
 msgid "Old Man"
 msgstr "老人"
 
@@ -54098,7 +54094,7 @@ msgid "#rYou lost track of the scavengers! Stealth failed!"
 msgstr ""
 
 #. Starting out
-#: dat/missions/minerva/maikki1.lua:676
+#: dat/missions/minerva/maikki1.lua:677
 msgid "Let's get going."
 msgstr ""
 
@@ -54106,52 +54102,52 @@ msgstr ""
 #. Finished current target, go to next
 #. Made it to target
 #. pscavA is following pscavB
-#: dat/missions/minerva/maikki1.lua:710
+#: dat/missions/minerva/maikki1.lua:711
 msgid "Did you see something?"
 msgstr ""
 
 #. Should trigger another catch
-#: dat/missions/minerva/maikki1.lua:716
+#: dat/missions/minerva/maikki1.lua:717
 msgid "It's your imagination. Let's get this over with."
 msgstr ""
 
 #. Spawn the wreck
-#: dat/missions/minerva/maikki1.lua:730
+#: dat/missions/minerva/maikki1.lua:731
 msgid "Ship Wreck"
 msgstr ""
 
 #. Else, still travelling to target
-#: dat/missions/minerva/maikki1.lua:746
+#: dat/missions/minerva/maikki1.lua:747
 msgid "Looks like we made it!"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:748
+#: dat/missions/minerva/maikki1.lua:749
 msgid "We came all the way for this wreck? It better be worth it…"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:750
+#: dat/missions/minerva/maikki1.lua:751
 msgid "They said it was whatshisname… Xex? Vex? Some famous guy's wreck."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:752
+#: dat/missions/minerva/maikki1.lua:753
 msgid "Wait, someone is there!"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:779
+#: dat/missions/minerva/maikki1.lua:780
 msgid "Two angry scavengers appear on your screen."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:780
+#: dat/missions/minerva/maikki1.lua:781
 msgid "\"You better beat it, punk. We are doing business here.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:781
+#: dat/missions/minerva/maikki1.lua:782
 msgid ""
 "\"Yeah, the Za'lek wouldn't like it if we weren't able to deliver the goods "
 "they want.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:782
+#: dat/missions/minerva/maikki1.lua:783
 msgid ""
 "He scowls at his partner before staring you down again.\n"
 "\"This ain't no place for people like you. Get lost or we'll leave you in a "
@@ -54159,172 +54155,172 @@ msgid ""
 "He points at the wreck nearby."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:786
+#: dat/missions/minerva/maikki1.lua:787
 msgid "\"What is that about the Za'lek?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:787
+#: dat/missions/minerva/maikki1.lua:788
 msgid "Lock your weapon systems on their ships"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:791
+#: dat/missions/minerva/maikki1.lua:792
 msgid ""
 "He glares at his partner.\n"
 "\"This is why I always tell you to keep your mouth shut!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:793
+#: dat/missions/minerva/maikki1.lua:794
 msgid ""
 "\"Damnit, why can't shit go right for a change?\"\n"
 "He seems to be clutching his head. A headache perhaps?"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:796
+#: dat/missions/minerva/maikki1.lua:797
 msgid "\"Look I just want to talk\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:797
+#: dat/missions/minerva/maikki1.lua:798
 msgid "Try to bribe them (#r{credits}#0)"
 msgstr ""
 
 #. TODO possibly add a pacifist option here too
-#: dat/missions/minerva/maikki1.lua:802
+#: dat/missions/minerva/maikki1.lua:803
 msgid "\"What do you want to talk about asshole? This is our job.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:817
+#: dat/missions/minerva/maikki1.lua:818
 msgid "You found a wreck and bribed scavengers so that they left."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:821
+#: dat/missions/minerva/maikki1.lua:822
 msgid "You wire them {credits}."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:822
+#: dat/missions/minerva/maikki1.lua:823
 msgid ""
 "\"I guess this isn't worth our trouble. We already got enough stuff for the "
 "Za'leks already.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:823
+#: dat/missions/minerva/maikki1.lua:824
 msgid ""
 "\"C'mon, let's get out of here. This place gives me the creeps. Feel like a "
 "ghost is going to pop out any minute.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:824
+#: dat/missions/minerva/maikki1.lua:825
 msgid "\"Next round in Doeston is on me.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:825
+#: dat/missions/minerva/maikki1.lua:826
 msgid ""
 "The scavengers disappear from your screen as you see their ships start to "
 "head back to Arandon."
 msgstr ""
 
 #. Fight to the death :D
-#: dat/missions/minerva/maikki1.lua:830
+#: dat/missions/minerva/maikki1.lua:831
 msgid "You don't have enough money to bribe them and fumble with words."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:832
+#: dat/missions/minerva/maikki1.lua:833
 msgid "\"He's stalling for time! He must have reinforcements coming!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:834
+#: dat/missions/minerva/maikki1.lua:835
 msgid "\"Shit man! I knew we shouldn't have come here.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:835
+#: dat/missions/minerva/maikki1.lua:836
 msgid "\"Shut up and follow my lead!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:836
+#: dat/missions/minerva/maikki1.lua:837
 msgid "You detect they are powering up their weapon systems."
 msgstr ""
 
 #. TODO add angry messages
-#: dat/missions/minerva/maikki1.lua:844
+#: dat/missions/minerva/maikki1.lua:845
 msgid "You found a wreck and were attacked by scavengers."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:859
+#: dat/missions/minerva/maikki1.lua:860
 msgid "Scavenger attacked."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:869
+#: dat/missions/minerva/maikki1.lua:870
 msgid ""
 "You can see clear laser burns on the hull of the wreck as you approach the "
 "ship and prepare to board. This doesn't look like it was an accident."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:870
+#: dat/missions/minerva/maikki1.lua:871
 msgid ""
 "You board the wreck in your space suit and begin to investigate the insides "
 "of the ship."
 msgstr ""
 
 #. Give player the illusion of choice
-#: dat/missions/minerva/maikki1.lua:876
+#: dat/missions/minerva/maikki1.lua:877
 msgid "Investigate the bridge"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:879
+#: dat/missions/minerva/maikki1.lua:880
 msgid "Investigate the dormitories"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:882
+#: dat/missions/minerva/maikki1.lua:883
 msgid "Investigate the engine room"
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:891
+#: dat/missions/minerva/maikki1.lua:892
 msgid ""
 "You make your way to what is left of the bridge. You can see what appears to "
 "be very old space-weathered bloodstains over most of the controls. However, "
 "there are no bodies to be seen."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:896
+#: dat/missions/minerva/maikki1.lua:897
 msgid ""
 "The dormitories are the part of the ship that appear to have been kept in "
 "best shape, if you don't count all the damage that seems to have been done "
 "by scavengers trying to find parts to sell."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:897
+#: dat/missions/minerva/maikki1.lua:898
 msgid ""
 "Although there seems to be nothing of value left, a small piece of paper "
 "catches your eye. You grab what appears to be a picture of two adults and a "
 "child. The child looks very familiar."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:899
+#: dat/missions/minerva/maikki1.lua:900
 msgid ""
 "You turn the picture around and you see that 'Maikki 596:0928' is written in "
 "the corner. You should probably bring this back to Maikki."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:904
+#: dat/missions/minerva/maikki1.lua:905
 msgid ""
 "The engine room seems to be the part that took most of the beating. It seems "
 "like most of it was sliced off by some powerful beam weapon. Someone really "
 "didn't want this ship getting away."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:909
+#: dat/missions/minerva/maikki1.lua:910
 msgid ""
 "After your thorough investigation, you leave the wreck behind and get back "
 "into your ship."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:913
+#: dat/missions/minerva/maikki1.lua:914
 msgid ""
 "You boarded the wreck which seems to be Kex's ship. You found a picture of "
 "his family and signs that this was not an accident with possible Za'lek "
 "involvement."
 msgstr ""
 
-#: dat/missions/minerva/maikki1.lua:917
+#: dat/missions/minerva/maikki1.lua:918
 msgid "Return to {name} in the {sys} system"
 msgstr ""
 
@@ -54397,7 +54393,7 @@ msgstr ""
 #. 6: Going back to Minerva Station
 #. Non-persistent state
 #. Forward-declared functions
-#. luacheck: globals ecc_dist ecc_drone_dead ecc_feral_boss_attacked ecc_feral_boss_dead ecc_feral_boss_msg ecc_timer ecc_timer_dead enter generate_npc (Hook functions passed by name)
+#. luacheck: globals ecc_dist ecc_drone_dead_check ecc_feral_boss_attacked ecc_feral_boss_dead ecc_feral_boss_msg ecc_timer ecc_timer_dead enter generate_npc (Hook functions passed by name)
 #. luacheck: globals approach_eccentric approach_hint1 approach_hint2 approach_hint3 approach_hint4 approach_maikki (NPC functions passed by name)
 #: dat/missions/minerva/maikki2.lua:99
 msgid "Maikki wants you to help her find out what happened to her father."
@@ -55242,119 +55238,119 @@ msgstr ""
 #. Fuzzes a position a bit
 #. We are nice and make the drones easier to see for this mission
 #. patrol forever
-#: dat/missions/minerva/maikki2.lua:642
+#: dat/missions/minerva/maikki2.lua:641
 #: dat/missions/zalek/blackhole/zbh08.lua:224
 msgid "Hostiles detected!"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:643
+#: dat/missions/minerva/maikki2.lua:642
 msgid "UNAUTHORIZED VESSEL DETECTED. ELIMINATING."
 msgstr ""
 
 #. All dead
-#: dat/missions/minerva/maikki2.lua:666
+#: dat/missions/minerva/maikki2.lua:669
 msgid "Your ship detects that one of the asteroids isn't what it seems…"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:670
+#: dat/missions/minerva/maikki2.lua:673
 msgid ""
 "You were attacked by a Za'lek security system and found a laboratory "
 "disguised as an asteroid in Westhaven."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:686
+#: dat/missions/minerva/maikki2.lua:689
 msgid "Unknown Voice"
 msgstr ""
 
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
-#: dat/missions/minerva/maikki2.lua:688
+#: dat/missions/minerva/maikki2.lua:691
 msgid ""
 "While the drone is blowing up, you receive a faint, audio-only transmission."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:690
+#: dat/missions/minerva/maikki2.lua:693
 msgid "\"Thank you for setting me free…\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:691
+#: dat/missions/minerva/maikki2.lua:694
 msgid ""
 "You wonder what that was about as you watch the drone thrash as it blows up. "
 "Westhaven is a really weird place."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:692
+#: dat/missions/minerva/maikki2.lua:695
 msgid ""
 "From the ship scraps you are able to find a very damaged… thing… You guess "
 "this is what Dr. Strangelove was referring to as a nebula artefact. "
 "Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:696
+#: dat/missions/minerva/maikki2.lua:699
 msgid "Nebula Artefact?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:696
+#: dat/missions/minerva/maikki2.lua:699
 msgid ""
 "A very damaged thing that seems to be mainly biological. I guess this is the "
 "nebula artefact?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:699
+#: dat/missions/minerva/maikki2.lua:702
 msgid "Go back to Dr. Strangelove"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:700
+#: dat/missions/minerva/maikki2.lua:703
 msgid ""
 "You recovered a nebula artefact that Dr. Strangelove wanted from feral "
 "drones."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:704
+#: dat/missions/minerva/maikki2.lua:707
 msgid "Just destroy me and put me out of my misery."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:705
+#: dat/missions/minerva/maikki2.lua:708
 msgid "Why am I still alive?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:706
+#: dat/missions/minerva/maikki2.lua:709
 msgid "I can't deal with this anymore."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:707
+#: dat/missions/minerva/maikki2.lua:710
 msgid "Please end me!"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:708
+#: dat/missions/minerva/maikki2.lua:711
 msgid "Living is suffering."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:709
+#: dat/missions/minerva/maikki2.lua:712
 msgid "It all hurts."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:710
+#: dat/missions/minerva/maikki2.lua:713
 msgid "Please kill me!"
 msgstr ""
 
 #. We go with nebula music
-#: dat/missions/minerva/maikki2.lua:743
+#: dat/missions/minerva/maikki2.lua:746
 msgid ""
 "The hologram projector flickers and what appears to be a grumpy old man "
 "appears into view. He doesn't look very pleased to be disturbed."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:744
+#: dat/missions/minerva/maikki2.lua:747
 msgid "\"How did you get in there? Who are you!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:745
+#: dat/missions/minerva/maikki2.lua:748
 msgid ""
 "You explain to him that you are looking for information about nebula "
 "artefacts."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:746
+#: dat/missions/minerva/maikki2.lua:749
 msgid ""
 "\"Who sent you here? Was it Dr. Bob? That weasel was always after my "
 "precious artefacts. Well, he can't have them! I got all this with my hard "
@@ -55362,7 +55358,7 @@ msgid ""
 "He cackles manically."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:748
+#: dat/missions/minerva/maikki2.lua:751
 msgid ""
 "\"I have hidden them very well. Even though you somehow got past my security "
 "system and made it into my laboratory, you'll never find them!\"\n"
@@ -55370,40 +55366,40 @@ msgid ""
 "room."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:750
+#: dat/missions/minerva/maikki2.lua:753
 msgid ""
 "\"Anyway, I am very busy now, yes? All this science won't do itself. Almost "
 "have a new specimen ready and it will be better than ever! The old ones were "
 "fairly inadequate.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:752
+#: dat/missions/minerva/maikki2.lua:755
 msgid "You met an eccentric researcher named Dr. Strangelove in Westhaven."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:754
+#: dat/missions/minerva/maikki2.lua:757
 msgid ""
 "The hologram projector flickers and Dr. Strangelove comes into view. He "
 "doesn't look very happy to see you again."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:761
+#: dat/missions/minerva/maikki2.lua:764
 msgid "Ask about the nebula"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:762
+#: dat/missions/minerva/maikki2.lua:765
 msgid "Ask about this place"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:766
+#: dat/missions/minerva/maikki2.lua:769
 msgid "Hand over the artefact"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:768
+#: dat/missions/minerva/maikki2.lua:771
 msgid "Ask about job"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:774
+#: dat/missions/minerva/maikki2.lua:777
 msgid ""
 "\"Ah yes, the nebula. The pinnacle of human creation! Isn't it just "
 "mesmerizing and beautiful to look at? I've always been attracted to it ever "
@@ -55411,7 +55407,7 @@ msgid ""
 "not?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:775
+#: dat/missions/minerva/maikki2.lua:778
 msgid ""
 "\"I recently had the great opportunity to work directly on nebula research. "
 "It was a fabulous project with hundreds of the brightest Za'lek minds "
@@ -55420,7 +55416,7 @@ msgid ""
 "He grins as nostalgia takes him over."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:777
+#: dat/missions/minerva/maikki2.lua:780
 msgid ""
 "\"We were able to have dedicated teams recovering all sorts of incredible "
 "items! We even found the remains of a Proteron replicator! It was only able "
@@ -55431,7 +55427,7 @@ msgid ""
 "liquid. Is that… cheese?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:779
+#: dat/missions/minerva/maikki2.lua:782
 msgid ""
 "\"Anyway, it is a real shame that the bureaucrats in central station killed "
 "the project in its prime. At least I was able to bring most of the devices "
@@ -55440,30 +55436,30 @@ msgid ""
 "He coughs, wracking his body."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:782
+#: dat/missions/minerva/maikki2.lua:785
 msgid "\"Bodies…?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:783
+#: dat/missions/minerva/maikki2.lua:786
 msgid "\"What devices?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:786
+#: dat/missions/minerva/maikki2.lua:789
 msgid ""
 "\"Ahaha. You are interested, no? That information won't come cheap. I have a "
 "job that I would like you to do, and, in exchange, I might give you the "
 "information you seek.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:791
+#: dat/missions/minerva/maikki2.lua:794
 msgid "Refuse the job"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:794
+#: dat/missions/minerva/maikki2.lua:797
 msgid "\"You don't scratch my back and I don't scratch yours.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:798
+#: dat/missions/minerva/maikki2.lua:801
 msgid ""
 "\"I see you are braver than you look. I have a bit of an issue. You see, I "
 "was upgrading some of my drones with some nebula artefacts to test to see if "
@@ -55471,7 +55467,7 @@ msgid ""
 "the drones going… ahem… feral.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:799
+#: dat/missions/minerva/maikki2.lua:802
 msgid ""
 "\"I was going to try to deal with them with my security drones, but as you "
 "can guess, that is no longer an option since you smashed them to smithereens."
@@ -55479,7 +55475,7 @@ msgid ""
 "He glares at you."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:801
+#: dat/missions/minerva/maikki2.lua:804
 msgid ""
 "\"While the drones themselves are dispensable, I need you to recover the "
 "nebula artefacts used in their upgrading. They should be roaming around the "
@@ -55487,17 +55483,17 @@ msgid ""
 "parts in one piece!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:804
+#: dat/missions/minerva/maikki2.lua:807
 msgid "Recover nebula artefacts from the {sys} asteroid field"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:807
+#: dat/missions/minerva/maikki2.lua:810
 msgid ""
 "You accepted Dr. Strangelove's request to recover nebula artefacts from "
 "feral drones in Westhaven."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:812
+#: dat/missions/minerva/maikki2.lua:815
 msgid ""
 "\"It should be an easy job. All you have to do is recover the nebula "
 "artefacts from the feral drones. They may put up a fight or not be easy to "
@@ -55507,7 +55503,7 @@ msgid ""
 "He glares at you."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:817
+#: dat/missions/minerva/maikki2.lua:820
 msgid ""
 "\"How do you like it? Cutting edge Za'lek research! I had to borrow a lot of "
 "things from my past jobs, but they can't have it back. It's all mine now! I "
@@ -55516,7 +55512,7 @@ msgid ""
 "He smiles mischievously."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:819
+#: dat/missions/minerva/maikki2.lua:822
 msgid ""
 "\"My drones dug it out and it's the cosiest place I have ever lived in, but "
 "I don't get many guests. In fact, you are my…\"\n"
@@ -55526,7 +55522,7 @@ msgid ""
 "You don't like how he puts emphasis on 'living biological'…"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:823
+#: dat/missions/minerva/maikki2.lua:826
 msgid ""
 "\"Feel free to use the facilities as you please, but stay out of the "
 "backroom.\"\n"
@@ -55535,42 +55531,42 @@ msgid ""
 "your own safety."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:828
+#: dat/missions/minerva/maikki2.lua:831
 msgid ""
 "You show him the nebula artefact and suddenly a couple of small drones whirl "
 "into the room and start to perform a deeper inspection."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:829
+#: dat/missions/minerva/maikki2.lua:832
 msgid ""
 "\"Energy levels 7%… I see, I see… minor flux instability… not that bad…\n"
 "no vitals… not very good… mmmm… nebula radiation at minimum… can't be helped "
 "I guess…\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:831
+#: dat/missions/minerva/maikki2.lua:834
 msgid ""
 "He goes on for what seems like an eternity before finally remembering that "
 "you are there.\n"
 "\"Why are you still here? Go back to wherever the hell you came from!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:834
+#: dat/missions/minerva/maikki2.lua:837
 msgid "\"What about my information?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:835
+#: dat/missions/minerva/maikki2.lua:838
 msgid "\"What the hell is this thing?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:838
+#: dat/missions/minerva/maikki2.lua:841
 msgid ""
 "\"I see… You don't grasp the importance of this artefact. I guess it can't "
 "be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:840
+#: dat/missions/minerva/maikki2.lua:843
 msgid ""
 "\"This is my latest creation, an amalgamate of ancient nebula technology and "
 "life. Think of this as something that not only surpasses any of the Soromid "
@@ -55578,7 +55574,7 @@ msgid ""
 "technological advancement!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:841
+#: dat/missions/minerva/maikki2.lua:844
 msgid ""
 "\"While it has an incredible potential, there are… some complications still. "
 "The mental faculties tend to lack stability. While this one is a very "
@@ -55586,15 +55582,15 @@ msgid ""
 "creations have had much more success.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:842
+#: dat/missions/minerva/maikki2.lua:845
 msgid "\"What was it you wanted?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:843
+#: dat/missions/minerva/maikki2.lua:846
 msgid "You ask him if he knows anything about Kex's ship in the nebula."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:844
+#: dat/missions/minerva/maikki2.lua:847
 msgid ""
 "\"Ah yes! I remember that wreck. A very, very curious one indeed. At that "
 "time I was exploring the nebula myself, and we came upon this most curious "
@@ -55605,7 +55601,7 @@ msgid ""
 "He coughs."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:846
+#: dat/missions/minerva/maikki2.lua:849
 msgid ""
 "\"While it was not a pre-incident ship nor had any interesting "
 "characteristics, what was inside was surprising. There were two bodies still "
@@ -55615,7 +55611,7 @@ msgid ""
 "He starts to get excited."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:848
+#: dat/missions/minerva/maikki2.lua:851
 msgid ""
 "\"That's when I realized it, humankind and the nebula are one and the same. "
 "Our futures are intertwined! By absorbing the nebula into the body, one can "
@@ -55624,7 +55620,7 @@ msgid ""
 "up to this!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:849
+#: dat/missions/minerva/maikki2.lua:852
 msgid ""
 "\"And that's when it hit me, by amalgamating nebula and flesh, we can "
 "transcend ourselves! I had to do it; it had to be done! And it worked, oh "
@@ -55633,7 +55629,7 @@ msgid ""
 "He laughs manically."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:851
+#: dat/missions/minerva/maikki2.lua:854
 msgid ""
 "\"They were oh so perfect, like Adam and Eve, ready to create a new perfect "
 "humanity. However, it isn't as simple as that. The man, an ungrateful fool, "
@@ -55644,7 +55640,7 @@ msgid ""
 "He seems delirious."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:853
+#: dat/missions/minerva/maikki2.lua:856
 msgid ""
 "\"So I did it. I tried to upgrade myself. But it isn't so simple, you see, "
 "it's the near-death experience that is necessary. On healthy flesh it just "
@@ -55652,18 +55648,18 @@ msgid ""
 "He coughs, convulsing."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:855
+#: dat/missions/minerva/maikki2.lua:858
 msgid ""
 "\"The mind was good enough, but not my body. No, and I don't have much time. "
 "I'm wasting away. So close and here wasting away. What uselessness.\"\n"
 "He lowers his gaze."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:857
+#: dat/missions/minerva/maikki2.lua:860
 msgid "You ask what happened to the 'individuals' in the experiments."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:858
+#: dat/missions/minerva/maikki2.lua:861
 msgid ""
 "\"I did try to track him down, last I checked he got caught by thugs at "
 "Minerva Station. Nasty place in the Limbo system. No nebula and very stale "
@@ -55671,7 +55667,7 @@ msgid ""
 "He coughs softly."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:860
+#: dat/missions/minerva/maikki2.lua:863
 msgid ""
 "\"She tried to help me, but she too was weak of mind, and one day left for "
 "the stars. I couldn't stop her, but I thought I was close enough. I just "
@@ -55679,31 +55675,31 @@ msgid ""
 "His voice gets softer and softer as he keeps on mumbling."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:862
+#: dat/missions/minerva/maikki2.lua:865
 msgid ""
 "You try to get his attention again, but it doesn't seem to work. He seems to "
 "have fallen into a stupor. You feel you have enough information to report to "
 "Maikki again."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:867
+#: dat/missions/minerva/maikki2.lua:870
 msgid "Report back to Maikki in the Limbo system"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:870
+#: dat/missions/minerva/maikki2.lua:873
 msgid ""
 "You learned that Dr. Strangelove saved what appears to be Kex and another "
 "individual from a wreck in the nebula. Kex appears to have run away and is "
 "likely held by thugs at Minerva station."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:872
+#: dat/missions/minerva/maikki2.lua:875
 msgid ""
 "You leave behind the hologram projection and hope you won't have to deal "
 "with Dr. Strangelove in the future."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:876
+#: dat/missions/minerva/maikki2.lua:879
 msgid ""
 "You turn off the hologram projector and Dr. Strangelove's image flickers and "
 "disappears."
@@ -57646,7 +57642,6 @@ msgstr ""
 #. <done>Terraforming Antlejos 1</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Terraforming Antlejos</campaign>
 #. </notes>
 #. </mission>
@@ -57656,7 +57651,7 @@ msgstr ""
 #.
 #. Verner needs you to bring in heavy machinery from the Dvaered.
 #. --
-#: dat/missions/neutral/antlejos/ant02.lua:31
+#: dat/missions/neutral/antlejos/ant02.lua:30
 msgid "heavy machinery"
 msgstr "大型機械類"
 
@@ -57664,11 +57659,11 @@ msgstr "大型機械類"
 #. luacheck: globals land (Hook functions passed by name)
 #. TODO only look for industrial Dvaered planets
 #. return p:tags().industrial
-#: dat/missions/neutral/antlejos/ant02.lua:58
+#: dat/missions/neutral/antlejos/ant02.lua:57
 msgid "You land and are immediately greeted by Verner."
 msgstr "あなたが着陸すると、すぐにバーナーに出迎えられた。"
 
-#: dat/missions/neutral/antlejos/ant02.lua:59
+#: dat/missions/neutral/antlejos/ant02.lua:58
 msgid ""
 "\"The camp has been set up and terraforming is underway! However, it seems "
 "like we'll need much heavier machinery to be able to penetrate the thick "
@@ -57682,10 +57677,10 @@ msgstr ""
 "もらう必要があります。ご面倒をおかけするぶん、{creds} を支払うつもりです。ど"
 "うでしょうか？｣"
 
-#: dat/missions/neutral/antlejos/ant02.lua:67
-#: dat/missions/neutral/antlejos/ant03.lua:65
-#: dat/missions/neutral/antlejos/ant04.lua:71
-#: dat/missions/neutral/antlejos/ant05.lua:63
+#: dat/missions/neutral/antlejos/ant02.lua:66
+#: dat/missions/neutral/antlejos/ant03.lua:64
+#: dat/missions/neutral/antlejos/ant04.lua:70
+#: dat/missions/neutral/antlejos/ant05.lua:62
 #: dat/missions/neutral/antlejos/ant06.lua:68
 #: dat/missions/neutral/antlejos/ant07.lua:57
 msgid ""
@@ -57695,66 +57690,66 @@ msgstr ""
 "｢わかりました……。わたしはここでテラフォーミングをしつづけます。もし助力につい"
 "て考えが変わったら、戻ってきてください｣"
 
-#: dat/missions/neutral/antlejos/ant02.lua:71
+#: dat/missions/neutral/antlejos/ant02.lua:70
 msgid "\"Awesome. The {cargo} should be of great help.\""
 msgstr "｢すばらしい。{cargo}は大きな助けになるはずです｣"
 
 #. Not accepted
-#: dat/missions/neutral/antlejos/ant02.lua:82
-#: dat/missions/neutral/antlejos/ant03.lua:80
-#: dat/missions/neutral/antlejos/ant04.lua:86
-#: dat/missions/neutral/antlejos/ant05.lua:79
+#: dat/missions/neutral/antlejos/ant02.lua:81
+#: dat/missions/neutral/antlejos/ant03.lua:79
+#: dat/missions/neutral/antlejos/ant04.lua:85
+#: dat/missions/neutral/antlejos/ant05.lua:78
 msgid "Terraforming Antlejos"
 msgstr "アントレジョスのテラフォーミング"
 
-#: dat/missions/neutral/antlejos/ant02.lua:83
-#: dat/missions/neutral/antlejos/ant03.lua:81
-#: dat/missions/neutral/antlejos/ant04.lua:87
+#: dat/missions/neutral/antlejos/ant02.lua:82
+#: dat/missions/neutral/antlejos/ant03.lua:80
+#: dat/missions/neutral/antlejos/ant04.lua:86
 msgid ""
 "Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."
 msgstr "{sys}星系の{pnt}で{cargo}を引き取り、{retpnt}へ届けろ。"
 
+#: dat/missions/neutral/antlejos/ant02.lua:85
+#: dat/missions/neutral/antlejos/ant03.lua:83
+#: dat/missions/neutral/antlejos/ant04.lua:89
+#: dat/missions/neutral/antlejos/ant05.lua:81
+msgid "Terraforming Antlejos V"
+msgstr "アントレジョス V のテラフォーミング"
+
 #: dat/missions/neutral/antlejos/ant02.lua:86
 #: dat/missions/neutral/antlejos/ant03.lua:84
 #: dat/missions/neutral/antlejos/ant04.lua:90
-#: dat/missions/neutral/antlejos/ant05.lua:82
-msgid "Terraforming Antlejos V"
-msgstr "アントレジョス V のテラフォーミング"
+#: dat/missions/neutral/antlejos/ant_supplies.lua:93
+msgid "Pick up the {cargo} at {pnt} ({sys} system)"
+msgstr "{pnt}で{cargo}を引き取れ。({sys}星系)"
 
 #: dat/missions/neutral/antlejos/ant02.lua:87
 #: dat/missions/neutral/antlejos/ant03.lua:85
 #: dat/missions/neutral/antlejos/ant04.lua:91
 #: dat/missions/neutral/antlejos/ant_supplies.lua:94
-msgid "Pick up the {cargo} at {pnt} ({sys} system)"
-msgstr "{pnt}で{cargo}を引き取れ。({sys}星系)"
-
-#: dat/missions/neutral/antlejos/ant02.lua:88
-#: dat/missions/neutral/antlejos/ant03.lua:86
-#: dat/missions/neutral/antlejos/ant04.lua:92
-#: dat/missions/neutral/antlejos/ant_supplies.lua:95
 msgid "Deliver the cargo to {pnt} ({sys} system)"
 msgstr "{pnt}へ貨物を届けろ。({sys}星系)"
 
 #. Land hook.
-#: dat/missions/neutral/antlejos/ant02.lua:102
-#: dat/missions/neutral/antlejos/ant03.lua:100
-#: dat/missions/neutral/antlejos/ant04.lua:107
-#: dat/missions/neutral/antlejos/ant_supplies.lua:109
+#: dat/missions/neutral/antlejos/ant02.lua:101
+#: dat/missions/neutral/antlejos/ant03.lua:99
+#: dat/missions/neutral/antlejos/ant04.lua:106
+#: dat/missions/neutral/antlejos/ant_supplies.lua:108
 #: dat/missions/zalek/blackhole/zbh02.lua:106
 #: dat/missions/zalek/blackhole/zbh05.lua:114
 #: dat/missions/zalek/blackhole/zbh08.lua:110
 msgid "Insufficient Space"
 msgstr "空きがじゅうぶんでない"
 
-#: dat/missions/neutral/antlejos/ant02.lua:102
-#: dat/missions/neutral/antlejos/ant03.lua:100
-#: dat/missions/neutral/antlejos/ant04.lua:107
-#: dat/missions/neutral/antlejos/ant_supplies.lua:109
+#: dat/missions/neutral/antlejos/ant02.lua:101
+#: dat/missions/neutral/antlejos/ant03.lua:99
+#: dat/missions/neutral/antlejos/ant04.lua:106
+#: dat/missions/neutral/antlejos/ant_supplies.lua:108
 #: dat/missions/zalek/blackhole/zbh02.lua:106
 #: dat/missions/zalek/blackhole/zbh05.lua:114
 #: dat/missions/zalek/blackhole/zbh08.lua:110
-#: dat/missions/zalek/particlephysics/zpp02.lua:178
-#: dat/missions/zalek/particlephysics/zpp04.lua:154
+#: dat/missions/zalek/particlephysics/zpp02.lua:177
+#: dat/missions/zalek/particlephysics/zpp04.lua:153
 msgid ""
 "You have insufficient free cargo space for the {cargo}. You only have "
 "{freespace} of free space, but you need at least {neededspace}."
@@ -57762,25 +57757,25 @@ msgstr ""
 "あなたには{cargo}を積むための空いた船倉がない。{freespace}の空きしかないが、"
 "すくなくとも {neededspace}必要だ。"
 
-#: dat/missions/neutral/antlejos/ant02.lua:106
-#: dat/missions/neutral/antlejos/ant03.lua:104
-#: dat/missions/neutral/antlejos/ant04.lua:111
-#: dat/missions/neutral/antlejos/ant_supplies.lua:113
+#: dat/missions/neutral/antlejos/ant02.lua:105
+#: dat/missions/neutral/antlejos/ant03.lua:103
+#: dat/missions/neutral/antlejos/ant04.lua:110
+#: dat/missions/neutral/antlejos/ant_supplies.lua:112
 #: dat/missions/zalek/blackhole/zbh05.lua:119
 #: dat/missions/zalek/blackhole/zbh08.lua:115
 msgid "Cargo Loaded"
 msgstr "貨物の積みこみ"
 
-#: dat/missions/neutral/antlejos/ant02.lua:106
-#: dat/missions/neutral/antlejos/ant04.lua:111
+#: dat/missions/neutral/antlejos/ant02.lua:105
+#: dat/missions/neutral/antlejos/ant04.lua:110
 msgid "The dock workers load the {amount} of {cargo} onto your ship."
 msgstr "港湾労働者たちが {amount}の{cargo}をあなたの船に積みこんだ。"
 
-#: dat/missions/neutral/antlejos/ant02.lua:108
+#: dat/missions/neutral/antlejos/ant02.lua:107
 msgid "Heavy Machinery"
 msgstr "大型機械類"
 
-#: dat/missions/neutral/antlejos/ant02.lua:108
+#: dat/missions/neutral/antlejos/ant02.lua:107
 msgid ""
 "Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful "
 "for terraforming."
@@ -57788,7 +57783,7 @@ msgstr ""
 "ドベーレッドが製造する大型機械類。テラフォーミングにはかなり便利なのかもしれ"
 "ないように見える。"
 
-#: dat/missions/neutral/antlejos/ant02.lua:120
+#: dat/missions/neutral/antlejos/ant02.lua:119
 msgid ""
 "You land and Verner, who now seems to be accompanied by a small team, "
 "quickly unloads the {cargo} and starts putting it to use."
@@ -57796,7 +57791,7 @@ msgstr ""
 "あなたが着陸すると、今では小さなチームを引きつれているらしいバーナーが、"
 "{cargo}をすばやく荷降ろしして、設置して使えるようにしはじめていた。"
 
-#: dat/missions/neutral/antlejos/ant02.lua:121
+#: dat/missions/neutral/antlejos/ant02.lua:120
 msgid ""
 "\"That was faster than expected.\"\n"
 "He slaps the hull of a heavy machine.\n"
@@ -57813,7 +57808,7 @@ msgstr ""
 "い｣"
 
 #. Apply first diff
-#: dat/missions/neutral/antlejos/ant02.lua:132
+#: dat/missions/neutral/antlejos/ant02.lua:131
 msgid ""
 "You brought heavy Dvaered machinery to {pnt} to help Verner terraform it."
 msgstr ""
@@ -57834,7 +57829,6 @@ msgstr ""
 #. <done>Terraforming Antlejos 2</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Terraforming Antlejos</campaign>
 #. </notes>
 #. </mission>
@@ -57844,17 +57838,17 @@ msgstr ""
 #.
 #. Verner needs you to bring in an atmospheric generator from the Za'lek.
 #. --
-#: dat/missions/neutral/antlejos/ant03.lua:31
+#: dat/missions/neutral/antlejos/ant03.lua:30
 msgid "atmosphere generator"
 msgstr "大気生成機"
 
 #. Amount in mass
 #. luacheck: globals land (Hook functions passed by name)
-#: dat/missions/neutral/antlejos/ant03.lua:56
+#: dat/missions/neutral/antlejos/ant03.lua:55
 msgid "As soon as you land, Verner comes bouncing up to you."
 msgstr "着陸するとすぐに、バーナーがはずみながらあなたのところへやってきた。"
 
-#: dat/missions/neutral/antlejos/ant03.lua:57
+#: dat/missions/neutral/antlejos/ant03.lua:56
 msgid ""
 "\"Everything is going great, thanks to you! However, the debris we are "
 "creating is getting very abrasive and we need to start setting up an "
@@ -57870,19 +57864,19 @@ msgstr ""
 "そいつは {amount}のはずです。もしご親切にもそうしていたければ、{creds} 支払う"
 "つもりです。どうでしょうか？｣"
 
-#: dat/missions/neutral/antlejos/ant03.lua:69
+#: dat/missions/neutral/antlejos/ant03.lua:68
 msgid "\"Perfect! We're starting to make true progress!\""
 msgstr "｢完璧だ！　これでほんとうに進みはじめますよ！｣"
 
-#: dat/missions/neutral/antlejos/ant03.lua:104
+#: dat/missions/neutral/antlejos/ant03.lua:103
 msgid "The automated cargo drones load the {amount} of {cargo} onto your ship."
 msgstr "自動化貨物ドローンが {amount}の{cargo}をあなたの船に積みこんだ。"
 
-#: dat/missions/neutral/antlejos/ant03.lua:106
+#: dat/missions/neutral/antlejos/ant03.lua:105
 msgid "Atmosphere Generator"
 msgstr "大気生成器"
 
-#: dat/missions/neutral/antlejos/ant03.lua:106
+#: dat/missions/neutral/antlejos/ant03.lua:105
 msgid ""
 "A large industrial device used for generating atmospheric conditions on "
 "barren planets of Za'lek origin."
@@ -57890,7 +57884,7 @@ msgstr ""
 "大きな工業用装置で、ザレクの起源となる不毛な惑星群に、大気のある環境を生みだ"
 "すために使われた。"
 
-#: dat/missions/neutral/antlejos/ant03.lua:118
+#: dat/missions/neutral/antlejos/ant03.lua:117
 msgid ""
 "As soon as your ship alights, Verner and his gang scramble to carefully "
 "unload the {cargo} and start setting it up."
@@ -57898,7 +57892,7 @@ msgstr ""
 "あなたの船が降りるとすぐに、バーナーとその一団が先を争うようにやってきて、"
 "{cargo}を注意深く荷降ろしすると、設置を始めた。"
 
-#: dat/missions/neutral/antlejos/ant03.lua:120
+#: dat/missions/neutral/antlejos/ant03.lua:119
 msgid ""
 "\"Wow, great work! You sure are proving to be invaluable to the project. "
 "Once we start getting an atmosphere we should almost be there. It seems like "
@@ -57913,7 +57907,7 @@ msgstr ""
 "｢まだご興味がおありでしたら、ほかにもあなたむきの重要な仕事があります｣"
 
 #. Apply first diff
-#: dat/missions/neutral/antlejos/ant03.lua:131
+#: dat/missions/neutral/antlejos/ant03.lua:130
 msgid ""
 "You brought a Za'lek atmosphere generator to {pnt} to help Verner further "
 "terraform it."
@@ -57935,7 +57929,6 @@ msgstr ""
 #. <done>Terraforming Antlejos 3</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Terraforming Antlejos</campaign>
 #. </notes>
 #. </mission>
@@ -57946,18 +57939,18 @@ msgstr ""
 #. Verner needs you to bring in morphogenic archaea
 #. Introduces the Pilots United Against Atmosphere Anthropocentrism (PUAAA)
 #. --
-#: dat/missions/neutral/antlejos/ant04.lua:33
+#: dat/missions/neutral/antlejos/ant04.lua:32
 msgid "morphogenic archaea"
 msgstr "形態形成古細菌"
 
 #. Amount in mass
 #. luacheck: globals enter land protest (Hook functions passed by name)
 #. We claim Antlejos V
-#: dat/missions/neutral/antlejos/ant04.lua:61
+#: dat/missions/neutral/antlejos/ant04.lua:60
 msgid "Your ship touches ground and Verner comes to greet you."
 msgstr "あなたの船が着地すると、バーナーがあなたを出迎えに来た。"
 
-#: dat/missions/neutral/antlejos/ant04.lua:62
+#: dat/missions/neutral/antlejos/ant04.lua:61
 msgid ""
 "He beams a smile at you.\n"
 "\"The atmosphere is starting to take shape. We're almost ready for the next "
@@ -57975,21 +57968,21 @@ msgstr ""
 "ないでしょうか？　お手間をとらせるのに {creds} 支払うつもりです。興味はありま"
 "すか？｣"
 
-#: dat/missions/neutral/antlejos/ant04.lua:75
+#: dat/missions/neutral/antlejos/ant04.lua:74
 msgid "\"Awesome! We're so close!\""
 msgstr "｢すばらしい！　ほんとうに息があいますね！｣"
 
-#: dat/missions/neutral/antlejos/ant04.lua:113
+#: dat/missions/neutral/antlejos/ant04.lua:112
 msgid "Morphogenic Archaea"
 msgstr "形態形成古細菌"
 
-#: dat/missions/neutral/antlejos/ant04.lua:113
+#: dat/missions/neutral/antlejos/ant04.lua:112
 msgid ""
 "Containers filled to the brim with organisms that are suitable for creating "
 "life from scratch."
 msgstr "最初から生命を作るのにむいた有機体がいっぱいに詰まったコンテナ。"
 
-#: dat/missions/neutral/antlejos/ant04.lua:125
+#: dat/missions/neutral/antlejos/ant04.lua:124
 msgid ""
 "You land your planet after all the commotion going on outside, and find "
 "Verner waiting for you. His gang unloads the {cargo} while he talks to you."
@@ -57998,7 +57991,7 @@ msgstr ""
 "るとバーナーがあなたを待っていたことがわかった。バーナーの一団が{cargo}を荷降"
 "ろしするなか、バーナーはあなたと話した。"
 
-#: dat/missions/neutral/antlejos/ant04.lua:127
+#: dat/missions/neutral/antlejos/ant04.lua:126
 msgid ""
 "\"I see you met them. They are part of the #oPilots United Against "
 "Atmosphere Anthropocentrism#0 or #oPUAAA#0 for short. What they are is a "
@@ -58010,7 +58003,7 @@ msgstr ""
 "と、くそ野郎の群れで、進歩やこのような不毛な月を人間が生きるのにむいた場所に"
 "テラフォームすることを拒絶してるんです｣"
 
-#: dat/missions/neutral/antlejos/ant04.lua:128
+#: dat/missions/neutral/antlejos/ant04.lua:127
 msgid ""
 "\"They must have noticed when the paperwork I filed at the Empire for "
 "terraforming permission was made public. I thought we would have a lot more "
@@ -58024,7 +58017,7 @@ msgstr ""
 "いようです。われわれのすばらしい進捗を見たら、連中はもっと攻撃的になるだけで"
 "すからね｣"
 
-#: dat/missions/neutral/antlejos/ant04.lua:129
+#: dat/missions/neutral/antlejos/ant04.lua:128
 msgid ""
 "\"The archaea look like they're in tip-top shape. We'll get to spreading "
 "them around right away. Things should start looking much better now that "
@@ -58033,7 +58026,7 @@ msgstr ""
 "｢古細菌は最高の状態のようです。すぐに周囲にまくことにします。生命がこの月に定"
 "着しはじめてしまえば、状況はずっとよく見えはじめるはずです｣"
 
-#: dat/missions/neutral/antlejos/ant04.lua:130
+#: dat/missions/neutral/antlejos/ant04.lua:129
 msgid ""
 "\"We still have a ton of things for you to do. If you are interested, please "
 "meet me up here again after I organize things a bit.\""
@@ -58042,7 +58035,7 @@ msgstr ""
 "たしがちょっと事態をしずめてから、どうかまたわたしと会ってください｣"
 
 #. Apply first diff
-#: dat/missions/neutral/antlejos/ant04.lua:139
+#: dat/missions/neutral/antlejos/ant04.lua:138
 msgid ""
 "You delivered some Soromid morphogenic archaea to {pnt} to help Verner "
 "further terraform it."
@@ -58051,15 +58044,15 @@ msgstr ""
 "進めるのに手を貸した。"
 
 #. They will just go to Antlejos V and attack any hostiles on their way, including the player.
-#: dat/missions/neutral/antlejos/ant04.lua:155
-#: dat/missions/neutral/antlejos/ant05.lua:133
-#: dat/missions/neutral/antlejos/ant_supplies.lua:173
+#: dat/missions/neutral/antlejos/ant04.lua:154
+#: dat/missions/neutral/antlejos/ant05.lua:132
+#: dat/missions/neutral/antlejos/ant_supplies.lua:172
 msgid "Protestor"
 msgstr "抗議者"
 
 #. See surviving pilots
-#: dat/missions/neutral/antlejos/ant04.lua:189
-#: dat/missions/neutral/antlejos/ant_supplies.lua:205
+#: dat/missions/neutral/antlejos/ant04.lua:188
+#: dat/missions/neutral/antlejos/ant_supplies.lua:204
 msgid "Hey! That ship is helping to terraform {pnt}! Get them!"
 msgstr "おい！　あの船は{pnt}のテラフォームを助けているんだ！　やってしまえ！"
 
@@ -58079,7 +58072,6 @@ msgstr "おい！　あの船は{pnt}のテラフォームを助けているん�
 #. <done>Terraforming Antlejos 4</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Terraforming Antlejos</campaign>
 #. </notes>
 #. </mission>
@@ -58090,11 +58082,11 @@ msgstr "おい！　あの船は{pnt}のテラフォームを助けているん�
 #. Defend ships bringing volunteers from the PUAAA
 #. --
 #. luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
-#: dat/missions/neutral/antlejos/ant05.lua:54
+#: dat/missions/neutral/antlejos/ant05.lua:53
 msgid "Verner is waiting for you as your ship touches ground."
 msgstr "あなたの船が着地すると、バーナーがあなたを待っていた。"
 
-#: dat/missions/neutral/antlejos/ant05.lua:55
+#: dat/missions/neutral/antlejos/ant05.lua:54
 msgid ""
 "\"It seems like the PUAAA have started to get brave and are going to make "
 "things hard for us. I have some supply ships coming in from {sys}, and it "
@@ -58107,7 +58099,7 @@ msgstr ""
 "に敵対するものに出会うことになりそうです。{cursys}まで護衛していただけないで"
 "しょうか？　ご面倒をおかけするのに、{creds} 支払えると思います｣"
 
-#: dat/missions/neutral/antlejos/ant05.lua:67
+#: dat/missions/neutral/antlejos/ant05.lua:66
 msgid ""
 "\"Great! The supply ships will be jumping in from {jumpsys}. Make sure to "
 "guard them and try to ensure they all make it safe and sound here. Best of "
@@ -58117,20 +58109,20 @@ msgstr ""
 "して、ここまでずっと無事に着くようにしてください。幸運を祈ります。あなたが頼"
 "りなんです！｣"
 
-#: dat/missions/neutral/antlejos/ant05.lua:80
+#: dat/missions/neutral/antlejos/ant05.lua:79
 msgid "Defend the supply ships coming to {pnt} from the PUAAA."
 msgstr "{pnt}へ来る補給船を PUAAA から守れ。"
 
-#: dat/missions/neutral/antlejos/ant05.lua:83
+#: dat/missions/neutral/antlejos/ant05.lua:82
 msgid "Go to the jump point from {sys} and wait for the supply ships"
 msgstr "{sys}からのジャンプポイントへ行き、補給船を待て。"
 
-#: dat/missions/neutral/antlejos/ant05.lua:84
+#: dat/missions/neutral/antlejos/ant05.lua:83
 msgid "Guard the supply ships from the PUAAA"
 msgstr "補給船を PUAAA から守れ。"
 
 #. Land hook.
-#: dat/missions/neutral/antlejos/ant05.lua:102
+#: dat/missions/neutral/antlejos/ant05.lua:101
 msgid ""
 "\"That was incredible! All the ships made it through in one piece. You're a "
 "real life saver!\""
@@ -58138,7 +58130,7 @@ msgstr ""
 "｢信じられないです！　すべての船を無事に通りぬけさせた。あなたはほんとうの救い"
 "主ですよ！｣"
 
-#: dat/missions/neutral/antlejos/ant05.lua:104
+#: dat/missions/neutral/antlejos/ant05.lua:103
 msgid ""
 "\"Almost all the ships made it! Against those odds I think we did very good."
 "\""
@@ -58146,7 +58138,7 @@ msgstr ""
 "｢ほぼすべての船がやりとげた！　あれだけ分が悪かったのに、とてもうまくやったと"
 "思いますね｣"
 
-#: dat/missions/neutral/antlejos/ant05.lua:106
+#: dat/missions/neutral/antlejos/ant05.lua:105
 msgid ""
 "\"I guess that was better than nothing. With so few supplies making it "
 "through it seems like terraforming will take longer than I was hoping for.\""
@@ -58154,7 +58146,7 @@ msgstr ""
 "｢ないよりはましだと思います。通りぬけられた補給がこれだけ少ないと、テラフォー"
 "ミングはわたしの希望よりもっと長くかかりそうです｣"
 
-#: dat/missions/neutral/antlejos/ant05.lua:108
+#: dat/missions/neutral/antlejos/ant05.lua:107
 msgid ""
 "\"With these supplies, I think we will be able to start the next important "
 "step on scaling up the terraforming operation. We're almost there, but we'll "
@@ -58171,46 +58163,46 @@ msgstr ""
 #. Apply first diff
 #. Give supplies based on how many ships were able to land
 #. Should get just 1000 if all make it
-#: dat/missions/neutral/antlejos/ant05.lua:120
+#: dat/missions/neutral/antlejos/ant05.lua:119
 msgid "You guarded supply ships from the PUAAA delivering cargo to {pnt}."
 msgstr "あなたは{pnt}へ貨物を届ける補給船を PUAAA から守った。"
 
-#: dat/missions/neutral/antlejos/ant05.lua:124
+#: dat/missions/neutral/antlejos/ant05.lua:123
 msgid "You were supposed to guard the supply ships!"
 msgstr "あなたは補給船を護衛することになっていた！"
 
-#: dat/missions/neutral/antlejos/ant05.lua:142
+#: dat/missions/neutral/antlejos/ant05.lua:141
 msgid "Supply Ship"
 msgstr "補給船"
 
-#: dat/missions/neutral/antlejos/ant05.lua:168
+#: dat/missions/neutral/antlejos/ant05.lua:167
 msgid "Supply ship under attack! Help requested!"
 msgstr "補給船が攻撃をうけている！　助力を要請する！"
 
 #. Nothing to do here
 #. Wrong system
-#: dat/missions/neutral/antlejos/ant05.lua:180
+#: dat/missions/neutral/antlejos/ant05.lua:179
 #: dat/missions/neutral/antlejos/ant06.lua:130
 msgid "You were not supposed to leave {sys}!"
 msgstr "あなたは{sys}星系を離れないことになっていた！"
 
-#: dat/missions/neutral/antlejos/ant05.lua:186
+#: dat/missions/neutral/antlejos/ant05.lua:185
 msgid "Supply Ship Entry Point"
 msgstr "補給船の進入地点"
 
-#: dat/missions/neutral/antlejos/ant05.lua:198
+#: dat/missions/neutral/antlejos/ant05.lua:197
 msgid "The supply ships will be incoming shortly!"
 msgstr "補給船がすぐにやってくる！"
 
 #. Initialize ship stuff
-#: dat/missions/neutral/antlejos/ant05.lua:204
+#: dat/missions/neutral/antlejos/ant05.lua:203
 msgid "Supplier"
 msgstr "供給業者"
 
 #. See surviving pilots
 #. Say some protest slogan
 #. Protest again
-#: dat/missions/neutral/antlejos/ant05.lua:303
+#: dat/missions/neutral/antlejos/ant05.lua:302
 msgid "No supply ships made it through!"
 msgstr "補給船は 1 隻も通りぬけられなかった！"
 
@@ -58539,7 +58531,6 @@ msgstr "PUAAA の戦士たち"
 #. <done>Terraforming Antlejos 5</done>
 #. </avail>
 #. <notes>
-#. <tier>1</tier>
 #. <campaign>Terraforming Antlejos</campaign>
 #. </notes>
 #. </mission>
@@ -58550,8 +58541,8 @@ msgstr "PUAAA の戦士たち"
 #. Bring in more volunteers and materials to Verner.
 #. Have encounters with the PUAAA
 #. --
-#: dat/missions/neutral/antlejos/ant_supplies.lua:30
-#: dat/missions/neutral/antlejos/ant_supplies.lua:115
+#: dat/missions/neutral/antlejos/ant_supplies.lua:29
+#: dat/missions/neutral/antlejos/ant_supplies.lua:114
 msgid "Volunteers and Equipment"
 msgstr "志願者と設備"
 
@@ -58564,23 +58555,23 @@ msgstr "志願者と設備"
 #. luacheck: globals land enter protest (Hook functions passed by name)
 #. TODO we probably want to claim antlejos but in such a way multiple of
 #. these missions can be done at once
-#: dat/missions/neutral/antlejos/ant_supplies.lua:63 src/outfit.c:307
+#: dat/missions/neutral/antlejos/ant_supplies.lua:62 src/outfit.c:307
 msgid "Small"
 msgstr "小"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:65 src/outfit.c:309
+#: dat/missions/neutral/antlejos/ant_supplies.lua:64 src/outfit.c:309
 msgid "Medium"
 msgstr "中"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:67 src/outfit.c:311
+#: dat/missions/neutral/antlejos/ant_supplies.lua:66 src/outfit.c:311
 msgid "Large"
 msgstr "大"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:69
+#: dat/missions/neutral/antlejos/ant_supplies.lua:68
 msgid "#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"
 msgstr "#oアントレジョス :#0 {pnt}からの物資の{adj}規模配達 ({sys}星系)"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:73
+#: dat/missions/neutral/antlejos/ant_supplies.lua:72
 msgid ""
 "Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to "
 "further accelerate the terraforming. Note that protestors from the PUAAA are "
@@ -58639,44 +58630,44 @@ msgstr ""
 #. @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
 #. @tparam[opt=false] bool use_hidden Whether the description accounts for hidden jumps in its distances.
 #. --
-#: dat/missions/neutral/antlejos/ant_supplies.lua:75
+#: dat/missions/neutral/antlejos/ant_supplies.lua:74
 #: dat/scripts/common/cargo.lua:227
 msgid "#nCargo:#0 {cargo} ({mass})"
 msgstr "#n積み荷 :#0 {cargo} ({mass})"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:76
+#: dat/missions/neutral/antlejos/ant_supplies.lua:75
 #: dat/scripts/common/cargo.lua:235
 msgid "#nJumps:#0 {jumps}"
 msgid_plural "#nJumps:#0 {jumps}"
 msgstr[0] "#nジャンプ回数 :#0 {jumps}"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:77
+#: dat/missions/neutral/antlejos/ant_supplies.lua:76
 #: dat/scripts/common/cargo.lua:237
 msgid "#nTravel distance:#0 {dist}"
 msgid_plural "#nTravel distance:#0 {dist}"
 msgstr[0] "#n移動距離 :#0 {dist}"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:79
+#: dat/missions/neutral/antlejos/ant_supplies.lua:78
 msgid "#nSupplies at Antlejos V:#0 {total}"
 msgstr "#nアントレジョス V への物資 :#0 {total}"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:84
+#: dat/missions/neutral/antlejos/ant_supplies.lua:83
 msgid "#nSupplies until next upgrade:#0 {needed}"
 msgstr "#n次の増加までの物資の量 :#0 {needed}"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:93
+#: dat/missions/neutral/antlejos/ant_supplies.lua:92
 msgid "Supplies for Antlejos"
 msgstr "アントレジョスへの補給"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:113
+#: dat/missions/neutral/antlejos/ant_supplies.lua:112
 msgid "The volunteers load the equipment onto your ship and get onboard."
 msgstr "志願者たちが、あなたの船に設備を積みこんでから乗船した。"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:115
+#: dat/missions/neutral/antlejos/ant_supplies.lua:114
 msgid "Volunteers and equipment meant for terraforming Antlejos V."
 msgstr "志願者と、アントレジョス V をテラフォーミングするための設備。"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:126
+#: dat/missions/neutral/antlejos/ant_supplies.lua:125
 msgid ""
 "The volunteers unload the equipment and get off your ship. It looks like "
 "they are eager to get started."
@@ -58684,17 +58675,17 @@ msgstr ""
 "志願者たちが設備を荷降ろししてから、あなたの船から降りていった。志願者たちは"
 "始めたくてうずうずしているようだ。"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:134
+#: dat/missions/neutral/antlejos/ant_supplies.lua:133
 msgid "You delivered {amount} of {cargo} to {pnt} for terraforming."
 msgstr "あなたはテラフォーミング用の {amount}の{cargo}を{pnt}に届けた。"
 
 #. Level up antlejos as necessary
 #. TODO better messages
-#: dat/missions/neutral/antlejos/ant_supplies.lua:142
+#: dat/missions/neutral/antlejos/ant_supplies.lua:141
 msgid "Terraforming Progress"
 msgstr "テラフォーミングの進捗"
 
-#: dat/missions/neutral/antlejos/ant_supplies.lua:142
+#: dat/missions/neutral/antlejos/ant_supplies.lua:141
 msgid ""
 "Through the new supplies and volunteers, Antlejos V has been able to expand "
 "its facilities."
@@ -63867,15 +63858,20 @@ msgstr ""
 #. It is alluded to that Cynthia ran away due to her abusive mother.
 #. The father has been named after me, Old T. Man.
 #. I'm joking about the last line a little. If you want to name him, feel free.
+#.
+#. [JEB] split mission into stages as follows:
+#. 1. Search "targetworlds" for clues. (Unchecked locations are kept in mem.search_pnts.)
+#. 2. Follow a clear lead to "catchworld".
+#. 3. Return to "homeworld".
 #. --
 #. Mission constants
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:28
-#: dat/missions/neutral/runaway/runaway_search.lua:31
+#: dat/missions/neutral/runaway/runaway_search.lua:36
 msgid "Cynthia"
 msgstr "シンシア"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:29
-#: dat/missions/neutral/runaway/runaway_search.lua:32
+#: dat/missions/neutral/runaway/runaway_search.lua:37
 msgid "A young teenager."
 msgstr "ティーンエイジャーの若者。"
 
@@ -63930,7 +63926,7 @@ msgid "Deliver Cynthia to Zhiru in the Goddard system"
 msgstr "シンシアをゴダード星系のチルーへ輸送せよ。"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:65
-#: dat/missions/neutral/runaway/runaway_search.lua:64
+#: dat/missions/neutral/runaway/runaway_search.lua:94
 msgid "{credits} on delivery."
 msgstr "輸送に {credits}。"
 
@@ -63962,42 +63958,41 @@ msgstr ""
 "と、シンシアはとつぜん消え去った。そしてかなりのクレジットの山と価値のないペ"
 "ンダントが残されていた。"
 
-#. luacheck: globals land (Hook functions passed by name)
-#. Here are stored the fake texts for the OSD
-#: dat/missions/neutral/runaway/runaway_search.lua:39
-msgid "Search for Cynthia on {pnt} in {sys}"
-msgstr "{sys}星系の{pnt}でシンシアをさがせ。"
-
-#: dat/missions/neutral/runaway/runaway_search.lua:47
+#: dat/missions/neutral/runaway/runaway_search.lua:48
 msgid "An old man sits at a table with some missing person papers."
 msgstr "老人がたずね人の紙をもってテーブルに座っている。"
 
+#. Migrate an old mission in progress
+#: dat/missions/neutral/runaway/runaway_search.lua:67
+msgid "Search for Cynthia on {pnt} in {sys}"
+msgstr "{sys}星系の{pnt}でシンシアをさがせ。"
+
 #. This mission does not make any system claims
-#. Set up the OSD
-#. Only proceed if at the target.
-#. If we land on Niflheim, display message, reset target and carry on.
+#. luacheck: globals land (Hook functions passed by name)
+#. to rescue naev-0.9.1 games, which weren't saving the progress
 #. If we land on Nova Shakar, display message, reset target and carry on.
-#. Update the OSD
+#. Set up the *secret* OSD text
+#. If we land on Niflheim, display message, reset target and carry on.
 #. If we land on Torloth, change OSD, display message, reset target and carry on.
 #. If you decide to release her, speak appropriately, otherwise carry on
-#. Update the OSD
-#: dat/missions/neutral/runaway/runaway_search.lua:52
-#: dat/missions/neutral/runaway/runaway_search.lua:59
-#: dat/missions/neutral/runaway/runaway_search.lua:63
-#: dat/missions/neutral/runaway/runaway_search.lua:69
-#: dat/missions/neutral/runaway/runaway_search.lua:83
-#: dat/missions/neutral/runaway/runaway_search.lua:90
-#: dat/missions/neutral/runaway/runaway_search.lua:98
-#: dat/missions/neutral/runaway/runaway_search.lua:108
-#: dat/missions/neutral/runaway/runaway_search.lua:110
-#: dat/missions/neutral/runaway/runaway_search.lua:112
-#: dat/missions/neutral/runaway/runaway_search.lua:119
-#: dat/missions/neutral/runaway/runaway_search.lua:129
-#: dat/missions/neutral/runaway/runaway_search.lua:134
+#: dat/missions/neutral/runaway/runaway_search.lua:70
+#: dat/missions/neutral/runaway/runaway_search.lua:84
+#: dat/missions/neutral/runaway/runaway_search.lua:93
+#: dat/missions/neutral/runaway/runaway_search.lua:99
+#: dat/missions/neutral/runaway/runaway_search.lua:111
+#: dat/missions/neutral/runaway/runaway_search.lua:114
+#: dat/missions/neutral/runaway/runaway_search.lua:130
+#: dat/missions/neutral/runaway/runaway_search.lua:135
+#: dat/missions/neutral/runaway/runaway_search.lua:142
+#: dat/missions/neutral/runaway/runaway_search.lua:143
+#: dat/missions/neutral/runaway/runaway_search.lua:147
+#: dat/missions/neutral/runaway/runaway_search.lua:149
+#: dat/missions/neutral/runaway/runaway_search.lua:161
+#: dat/missions/neutral/runaway/runaway_search.lua:166
 msgid "The Search for Cynthia"
 msgstr "シンシアの捜索"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:52
+#: dat/missions/neutral/runaway/runaway_search.lua:84
 msgid ""
 "Approaching him, he hands you a paper. It offers a {credits} reward for the "
 "finding of a \"Cynthia\" person.\n"
@@ -64013,11 +64008,11 @@ msgstr ""
 "ことはわかっていますが、もしなにか知っていれば……｣。その男は泣きはじめた。｢な"
 "にかシンシアがいた形跡を見かけたことはありませんか？｣"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:66
+#: dat/missions/neutral/runaway/runaway_search.lua:95
 msgid "Search for Cynthia."
 msgstr "シンシアの捜索。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:69
+#: dat/missions/neutral/runaway/runaway_search.lua:99
 msgid ""
 "Looking at the picture, you see that the locket matches the one that Cynthia "
 "wore, so you hand it to her father. \"I believe that this was hers.\" "
@@ -64029,13 +64024,7 @@ msgstr ""
 "ものだと思います｣。衝撃をうけた男は、あなたに惑星の一覧を手渡した。シンシアを"
 "さがそうとした惑星だ。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:83
-msgid ""
-"After thoroughly searching the spaceport, you decide that she wasn't there."
-msgstr ""
-"宇宙港を徹底的にさがしてから、シンシアはここにいなかったとあなたは判断した。"
-
-#: dat/missions/neutral/runaway/runaway_search.lua:90
+#: dat/missions/neutral/runaway/runaway_search.lua:111
 msgid ""
 "At last! You find her, but she ducks into a tour bus when she sees you. The "
 "schedule says it's destined for Torloth. You begin to wonder if she'll want "
@@ -64045,19 +64034,25 @@ msgstr ""
 "観光旅行船に乗りこむときだった。予定では、トーロスに向かうことになっている。"
 "あなたはシンシアが見つけられて喜ぶのか疑問に思いはじめた。"
 
-#. Add in the *secret* OSD text
-#: dat/missions/neutral/runaway/runaway_search.lua:93
+#: dat/missions/neutral/runaway/runaway_search.lua:115
+#: dat/missions/neutral/runaway/runaway_search.lua:144
 msgid "Catch Cynthia on Torloth in Cygnus"
 msgstr "シンシアをシグナス星系のトーロスでつかまえろ。"
 
 #. If we land on Zhiru to finish the mission, clean up, reward, and leave.
 #. Talk to the father and get the reward
-#: dat/missions/neutral/runaway/runaway_search.lua:94
-#: dat/missions/neutral/runaway/runaway_search.lua:128
+#: dat/missions/neutral/runaway/runaway_search.lua:116
+#: dat/missions/neutral/runaway/runaway_search.lua:160
 msgid "Return Cynthia to her father on Zhiru in the Goddard system"
 msgstr "シンシアをゴダード星系のチルーにいる父親のもとへ返せ。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:108
+#: dat/missions/neutral/runaway/runaway_search.lua:130
+msgid ""
+"After thoroughly searching the spaceport, you decide that she wasn't there."
+msgstr ""
+"宇宙港を徹底的にさがしてから、シンシアはここにいなかったとあなたは判断した。"
+
+#: dat/missions/neutral/runaway/runaway_search.lua:142
 msgid ""
 "After chasing Cynthia through most of the station, you find her curled up at "
 "the end of a hall, crying. As you approach, she screams, \"Why can't you "
@@ -64069,11 +64064,11 @@ msgstr ""
 "と、シンシアは悲鳴をあげた。｢なんで放っておいてくれないの？　あのひどい両親の"
 "ところへは帰りたくない！｣。やはりシンシアを連れていくか？"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:109
+#: dat/missions/neutral/runaway/runaway_search.lua:145
 msgid "Go to Zhiru in Goddard to lie to Cynthia's father"
 msgstr "ゴダード星系のチルーに行って、シンシアの父親にうそをつけ。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:110
+#: dat/missions/neutral/runaway/runaway_search.lua:147
 msgid ""
 "\"Please, please, please don't ever come looking for me again, I beg of you!"
 "\""
@@ -64081,7 +64076,7 @@ msgstr ""
 "｢お願いです、お願いです、どうかもう二度とさがしに来ないでください。お願いしま"
 "す！｣"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:112
+#: dat/missions/neutral/runaway/runaway_search.lua:149
 msgid ""
 "Cynthia stops crying and proceeds to hide in the farthest corner of your "
 "ship. Attempts to talk to her end up fruitless."
@@ -64089,7 +64084,7 @@ msgstr ""
 "シンシアは泣き叫ぶのをやめて、あなたの船のいちばん遠くの隅に隠れつづけた。シ"
 "ンシアと話そうと試みたが、無益に終わった。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:129
+#: dat/missions/neutral/runaway/runaway_search.lua:161
 msgid ""
 "As Cynthia sees her father, she begins her crying anew. You overhear the "
 "father talking about how her abusive mother died. Cynthia becomes visibly "
@@ -64099,7 +64094,7 @@ msgstr ""
 "父親が話しているのをあなたはふと耳にする。シンシアは目に見えるほどあかるく"
 "なった。だからあなたは報酬をもらって出発した。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:132
+#: dat/missions/neutral/runaway/runaway_search.lua:164
 msgid ""
 "The father of Cynthia, who you had given a lift before, asked you to find "
 "her and bring her back to him, thinking that she was kidnapped. Cynthia "
@@ -64114,7 +64109,7 @@ msgstr ""
 "た。シンシアは父を見ると泣き叫びはじめたが、虐待的な母が死んだと父親から聞か"
 "されると、目に見えてあかるくなったように見えた。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:134
+#: dat/missions/neutral/runaway/runaway_search.lua:166
 msgid ""
 "You tell the father that you checked every place on the list, and then some, "
 "but his daughter was nowhere to be found. You buy the old man a drink, then "
@@ -64126,7 +64121,7 @@ msgstr ""
 "戻った。あなたが出ていくまえに、老人はあなたに少額のクレジットを手渡した。｢ご"
 "迷惑をおかけしたことに｣ だ。"
 
-#: dat/missions/neutral/runaway/runaway_search.lua:136
+#: dat/missions/neutral/runaway/runaway_search.lua:168
 msgid ""
 "The father of Cynthia, who you had given a lift before, asked you to find "
 "her and bring her back to him, thinking that she was kidnapped. Cynthia "
@@ -66014,9 +66009,7 @@ msgstr ""
 #. <location>Computer</location>
 #. <done>Pirate Smuggle Cake</done>
 #. </avail>
-#. <notes>
-#. <tier>1</tier>
-#. </notes>
+#. <notes/>
 #. </mission>
 #. --
 #.
@@ -66038,205 +66031,205 @@ msgstr ""
 #. target destination. Override "always_available" to true.
 #. We’re redefining the cargo
 #. Serious stuff here
-#: dat/missions/pirate/contraband.lua:61
+#: dat/missions/pirate/contraband.lua:59
 msgid "Stolen Goods"
 msgstr "盗品"
 
-#: dat/missions/pirate/contraband.lua:61
+#: dat/missions/pirate/contraband.lua:59
 msgid "A lot of goods obtained by illicit and illegal means."
 msgstr "許可なく違法な手段で手に入れたたくさんの品物。"
 
-#: dat/missions/pirate/contraband.lua:62
+#: dat/missions/pirate/contraband.lua:60
 msgid "Hacked Electronics"
 msgstr "違法改造電子機器"
 
-#: dat/missions/pirate/contraband.lua:62
+#: dat/missions/pirate/contraband.lua:60
 msgid "An assortment of illegally modified electronic goods."
 msgstr "違法に改造した電子機器の詰めあわせ。"
 
-#: dat/missions/pirate/contraband.lua:63
+#: dat/missions/pirate/contraband.lua:61
 msgid "Illegal Waste"
 msgstr "違法な投棄物"
 
-#: dat/missions/pirate/contraband.lua:63
+#: dat/missions/pirate/contraband.lua:61
 msgid "A melange of highly illegal waste."
 msgstr "高度に違法な廃棄物の寄せ集め。"
 
-#: dat/missions/pirate/contraband.lua:64
+#: dat/missions/pirate/contraband.lua:62
 msgid "Powerful Stimulants"
 msgstr "強力な刺激物"
 
-#: dat/missions/pirate/contraband.lua:64
+#: dat/missions/pirate/contraband.lua:62
 msgid "A bunch of illegal stimulants."
 msgstr "違法な刺激物の束。"
 
-#: dat/missions/pirate/contraband.lua:65
+#: dat/missions/pirate/contraband.lua:63
 msgid "Unmarked Boxes"
 msgstr "しるしのついていない箱"
 
-#: dat/missions/pirate/contraband.lua:65
+#: dat/missions/pirate/contraband.lua:63
 msgid ""
 "A multitude of unmarked boxes containing what you can only assume to be "
 "highly illegal items."
 msgstr ""
 "しるしのついていない大量の箱で、高度に違法な品物が入っているとしか思えない。"
 
-#: dat/missions/pirate/contraband.lua:66
+#: dat/missions/pirate/contraband.lua:64
 msgid "Exotic Animals"
 msgstr "外来の動物"
 
-#: dat/missions/pirate/contraband.lua:66
+#: dat/missions/pirate/contraband.lua:64
 msgid "A collection of exotic animals that can not be legally traded."
 msgstr "外来の動物の集まりで、合法的には取引できないものだ。"
 
-#: dat/missions/pirate/contraband.lua:67
+#: dat/missions/pirate/contraband.lua:65
 msgid "Radioactive Materials"
 msgstr "放射性物質"
 
-#: dat/missions/pirate/contraband.lua:67
+#: dat/missions/pirate/contraband.lua:65
 msgid "Highly dangerous and illegal radioactive materials."
 msgstr "とても危険で違法な放射性物質。"
 
-#: dat/missions/pirate/contraband.lua:68
+#: dat/missions/pirate/contraband.lua:66
 msgid "Illegal Drugs"
 msgstr "違法薬物"
 
-#: dat/missions/pirate/contraband.lua:68
+#: dat/missions/pirate/contraband.lua:66
 msgid "A batch of drugs made illegal in most systems."
 msgstr "一山の薬物で、ほとんどの星系では違法だ。"
 
-#: dat/missions/pirate/contraband.lua:69
+#: dat/missions/pirate/contraband.lua:67
 msgid "Illegal Body Mods"
 msgstr "違法な身体改造用品"
 
-#: dat/missions/pirate/contraband.lua:69
+#: dat/missions/pirate/contraband.lua:67
 msgid "An array of illegal body modifications."
 msgstr "ずらりと並んだ違法な身体改造用品。"
 
-#: dat/missions/pirate/contraband.lua:70
+#: dat/missions/pirate/contraband.lua:68
 msgid "Unauthorized Weapons"
 msgstr "無許可の武器"
 
-#: dat/missions/pirate/contraband.lua:70
+#: dat/missions/pirate/contraband.lua:68
 msgid "An assemblage of illegal weapons."
 msgstr "違法な武器の組みあわせ。"
 
-#: dat/missions/pirate/contraband.lua:71
+#: dat/missions/pirate/contraband.lua:69
 msgid "Contraband"
 msgstr "禁制品"
 
-#: dat/missions/pirate/contraband.lua:71
+#: dat/missions/pirate/contraband.lua:69
 msgid "A diverse assortment of illegal contraband goods."
 msgstr "違法な禁制品の多様な詰めあわせ。"
 
-#: dat/missions/pirate/contraband.lua:72
+#: dat/missions/pirate/contraband.lua:70
 msgid "Counterfeit Goods"
 msgstr "模造品"
 
-#: dat/missions/pirate/contraband.lua:72
+#: dat/missions/pirate/contraband.lua:70
 msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgstr "多数の有名ブランドの違法な模造品の詰めあわせ。"
 
-#: dat/missions/pirate/contraband.lua:73
+#: dat/missions/pirate/contraband.lua:71
 msgid "Stolen Art"
 msgstr "盗難芸術品"
 
-#: dat/missions/pirate/contraband.lua:73
+#: dat/missions/pirate/contraband.lua:71
 msgid "Artwork that was illegally seized from a collector or gallery."
 msgstr "収集家や画廊から不法に奪われた芸術品。"
 
 #. Below less serious stuff
-#: dat/missions/pirate/contraband.lua:75
+#: dat/missions/pirate/contraband.lua:73
 msgid "User Databases"
 msgstr "ユーザーのデータベース"
 
-#: dat/missions/pirate/contraband.lua:75
+#: dat/missions/pirate/contraband.lua:73
 msgid ""
 "Stolen user databases with lots of personal information obtained illegally."
 msgstr ""
 "盗みとられたユーザーデータベースで、違法に取得されたたくさんの個人情報が含ま"
 "れる。"
 
-#: dat/missions/pirate/contraband.lua:76
+#: dat/missions/pirate/contraband.lua:74
 msgid "Smelly Fruits"
 msgstr "強いにおいのするフルーツ"
 
-#: dat/missions/pirate/contraband.lua:76
+#: dat/missions/pirate/contraband.lua:74
 msgid ""
 "Illegal fruits that have a strong smell that can stink up entire stations in "
 "minutes."
 msgstr ""
 "強くにおう違法なフルーツで、数分でステーション全体を悪臭でいっぱいにできる。"
 
-#: dat/missions/pirate/contraband.lua:77
+#: dat/missions/pirate/contraband.lua:75
 msgid "Catnip"
 msgstr "ねこじゃらし"
 
-#: dat/missions/pirate/contraband.lua:77
+#: dat/missions/pirate/contraband.lua:75
 msgid "Highly illegal drug that is very attractive to cats."
 msgstr "重罪薬物で、ネコをとてもひきつける。"
 
-#: dat/missions/pirate/contraband.lua:78
+#: dat/missions/pirate/contraband.lua:76
 msgid "Hypnotoads"
 msgstr "ヒプノトーズ"
 
-#: dat/missions/pirate/contraband.lua:78
+#: dat/missions/pirate/contraband.lua:76
 msgid "Illegal amphibian with some mind-control abilities."
 msgstr "違法な両生類で、いくらか精神支配能力がある。"
 
-#: dat/missions/pirate/contraband.lua:79
+#: dat/missions/pirate/contraband.lua:77
 msgid "Extra Spicy Burritos"
 msgstr "エクストラ・スパイシー・ブリトー"
 
-#: dat/missions/pirate/contraband.lua:79
+#: dat/missions/pirate/contraband.lua:77
 msgid "Burritos that are so spicy, they are illegal."
 msgstr "とてもスパイシーなブリトーで、違法である。"
 
-#: dat/missions/pirate/contraband.lua:80
+#: dat/missions/pirate/contraband.lua:78
 msgid "Pineapple Pizza"
 msgstr "パイナップル・ピザ"
 
-#: dat/missions/pirate/contraband.lua:80
+#: dat/missions/pirate/contraband.lua:78
 msgid "Pizza with pineapple on it. There is no way this is legal."
 msgstr "パイナップルが乗ったピザ。これが合法なわけがない。"
 
-#: dat/missions/pirate/contraband.lua:81
+#: dat/missions/pirate/contraband.lua:79
 msgid "Illicit Shader Code"
 msgstr "不正なシェーダーコード"
 
-#: dat/missions/pirate/contraband.lua:81
+#: dat/missions/pirate/contraband.lua:79
 msgid "Program used for rendering images with nefarious and illegal purposes."
 msgstr "極悪で違法な目的で画像を描画するのに使われるプログラム。"
 
-#: dat/missions/pirate/contraband.lua:85
+#: dat/missions/pirate/contraband.lua:83
 msgid "Tax-evasion Documents"
 msgstr "脱税用文書"
 
-#: dat/missions/pirate/contraband.lua:85
+#: dat/missions/pirate/contraband.lua:83
 msgid "Illegal documents detailing tax evasion by high empire officials."
 msgstr "帝国政府高官によって書かれた、脱税を詳しく解説した違法文書。"
 
-#: dat/missions/pirate/contraband.lua:86
+#: dat/missions/pirate/contraband.lua:84
 msgid "Leaked Documents"
 msgstr "暴露された文書"
 
-#: dat/missions/pirate/contraband.lua:86
+#: dat/missions/pirate/contraband.lua:84
 msgid "Documents illegally leaked from governmental entities."
 msgstr "政府自体から違法に流出した文書。"
 
-#: dat/missions/pirate/contraband.lua:87
+#: dat/missions/pirate/contraband.lua:85
 msgid "Incriminating Evidence"
 msgstr "罪証"
 
-#: dat/missions/pirate/contraband.lua:87
+#: dat/missions/pirate/contraband.lua:85
 msgid "Illegally obtained evidence that incriminates high empire officials."
 msgstr "帝国政府高官を有罪とする違法に取得された証拠。"
 
-#: dat/missions/pirate/contraband.lua:88
+#: dat/missions/pirate/contraband.lua:86
 msgid "Unauthorized Office Supplies"
 msgstr "無許可の事務用品"
 
-#: dat/missions/pirate/contraband.lua:88
+#: dat/missions/pirate/contraband.lua:86
 msgid ""
 "Office supplies that don't meet the standards of the Empire bureaucracy, "
 "including flimsy red staplers."
@@ -66244,39 +66237,39 @@ msgstr ""
 "帝国の官僚的手つづきの基準にあっていない事務用品で、たとえば薄っぺらくて赤い"
 "ホッチキスなどがある。"
 
-#: dat/missions/pirate/contraband.lua:89
+#: dat/missions/pirate/contraband.lua:87
 msgid "Paper Deshredders"
 msgstr "ペーパーデシュレッダー"
 
-#: dat/missions/pirate/contraband.lua:89
+#: dat/missions/pirate/contraband.lua:87
 msgid ""
 "Devices that are able to reconstruct original documents from their shredded "
 "remains."
 msgstr "裁断されたものの残りから、もとの文書を復元できる装置。"
 
-#: dat/missions/pirate/contraband.lua:92
+#: dat/missions/pirate/contraband.lua:90
 msgid "Self-help Books"
 msgstr "自習書"
 
-#: dat/missions/pirate/contraband.lua:92
+#: dat/missions/pirate/contraband.lua:90
 msgid "Books for self-betterment made illegal by the Dvaered authorities."
 msgstr "自己改善のための本で、ドベーレッド当局に違法とされた。"
 
-#: dat/missions/pirate/contraband.lua:93
+#: dat/missions/pirate/contraband.lua:91
 msgid "Pacifist Manifestos"
 msgstr "平和主義者宣言"
 
-#: dat/missions/pirate/contraband.lua:93
+#: dat/missions/pirate/contraband.lua:91
 msgid ""
 "Documents making the case for pacifism, made illegal by the Dvaered "
 "authorities."
 msgstr "平和主義を唱える本で、ドベーレッド当局に違法とされた。"
 
-#: dat/missions/pirate/contraband.lua:94
+#: dat/missions/pirate/contraband.lua:92
 msgid "Zen Rock Gardens"
 msgstr "禅岩石庭園"
 
-#: dat/missions/pirate/contraband.lua:94
+#: dat/missions/pirate/contraband.lua:92
 msgid ""
 "Sand and rock gardens with special rakes you can use for meditative "
 "purposes. Made illegal by the Dvaered authorities."
@@ -66284,46 +66277,46 @@ msgstr ""
 "砂と小石の庭園で、瞑想のために使用できるとくべつな熊手がある。ドベーレッド当"
 "局に違法とされた。"
 
-#: dat/missions/pirate/contraband.lua:95
+#: dat/missions/pirate/contraband.lua:93
 msgid "Scented Soap"
 msgstr "香水入り石けん"
 
-#: dat/missions/pirate/contraband.lua:95
+#: dat/missions/pirate/contraband.lua:93
 msgid ""
 "Fragrant soaps that can lead you to have a peace of mind. Made illegal by "
 "the Dvaered authorities."
 msgstr "安らぎを与えてくれる香りのよい石けん。ドベーレッド当局に違法とされた。"
 
-#: dat/missions/pirate/contraband.lua:98
+#: dat/missions/pirate/contraband.lua:96
 msgid "Unstable DNA"
 msgstr "不安定 DNA "
 
-#: dat/missions/pirate/contraband.lua:98
+#: dat/missions/pirate/contraband.lua:96
 msgid "Illegal DNA with strong reactive properties."
 msgstr "強い反応性の性質をもつ違法な DNA。"
 
-#: dat/missions/pirate/contraband.lua:99
+#: dat/missions/pirate/contraband.lua:97
 msgid "Bio-weapons"
 msgstr "生物兵器"
 
-#: dat/missions/pirate/contraband.lua:99
+#: dat/missions/pirate/contraband.lua:97
 msgid "Highly dangerous, illegal biological weapons."
 msgstr "とても危険で違法な生物学的兵器。"
 
-#: dat/missions/pirate/contraband.lua:100
+#: dat/missions/pirate/contraband.lua:98
 msgid "Abducted Drosophila"
 msgstr "拉致されたショウジョウバエ"
 
-#: dat/missions/pirate/contraband.lua:100
+#: dat/missions/pirate/contraband.lua:98
 msgid ""
 "Genetically modified small fruit flies illegally stolen from a laboratory."
 msgstr "遺伝子改変された小さなミバエで、研究所から違法に盗まれたものだ。"
 
-#: dat/missions/pirate/contraband.lua:101
+#: dat/missions/pirate/contraband.lua:99
 msgid "Mislabeled Plasmids"
 msgstr "ラベルをまちがえたプラスミド"
 
-#: dat/missions/pirate/contraband.lua:101
+#: dat/missions/pirate/contraband.lua:99
 msgid ""
 "Independently replicating DNA that has been mislabeled and is no longer "
 "clear what exactly it does. Illegal for its uncertain and dangerous nature."
@@ -66331,27 +66324,27 @@ msgstr ""
 "個別に複写された DNA で、ラベルをまちがえて、もう正確にはなにをするのかはっき"
 "りしなくなったもの。不確かで危険な性質であるため、違法である。"
 
-#: dat/missions/pirate/contraband.lua:104
+#: dat/missions/pirate/contraband.lua:102
 msgid "Heretical Documents"
 msgstr "異端文書"
 
-#: dat/missions/pirate/contraband.lua:104
+#: dat/missions/pirate/contraband.lua:102
 msgid "Illegal documents referring to heresy."
 msgstr "異説に言及する違法な文書。"
 
-#: dat/missions/pirate/contraband.lua:105
+#: dat/missions/pirate/contraband.lua:103
 msgid "Itch Powder"
 msgstr "かゆみ粉"
 
-#: dat/missions/pirate/contraband.lua:105
+#: dat/missions/pirate/contraband.lua:103
 msgid "A banned substance with a history of disrupting robed processions."
 msgstr "ローブを着た行列を混乱させた歴史があるため禁止された物質。"
 
-#: dat/missions/pirate/contraband.lua:106
+#: dat/missions/pirate/contraband.lua:104
 msgid "Unauthorized Sirichana Merchandise"
 msgstr "無許可のシリチャナ商品"
 
-#: dat/missions/pirate/contraband.lua:106
+#: dat/missions/pirate/contraband.lua:104
 msgid ""
 "Horribly tacky and outright bad merchandise with Sirichana pasted all over "
 "it. Sirichana toenail clipper anyone?"
@@ -66359,27 +66352,27 @@ msgstr ""
 "ひどく安っぽく、徹底的に粗悪な商品で、シリチャナがそこらじゅうに貼りつけられ"
 "ている。シリチャナの足用爪切りとかだれが欲しがるの？"
 
-#: dat/missions/pirate/contraband.lua:109
+#: dat/missions/pirate/contraband.lua:107
 msgid "Scientific Preprints"
 msgstr "科学的論文の前刷り"
 
-#: dat/missions/pirate/contraband.lua:109
+#: dat/missions/pirate/contraband.lua:107
 msgid "Non-paywalled illegal scientific papers."
 msgstr "有料でなくても見られる違法な科学論文。"
 
-#: dat/missions/pirate/contraband.lua:110
+#: dat/missions/pirate/contraband.lua:108
 msgid "Sentient AI"
 msgstr "感覚のある AI "
 
-#: dat/missions/pirate/contraband.lua:110
+#: dat/missions/pirate/contraband.lua:108
 msgid "Highly illegal AI that is assumed to be sentient."
 msgstr "感覚をもつと推定される高度に違法な AI。"
 
-#: dat/missions/pirate/contraband.lua:111
+#: dat/missions/pirate/contraband.lua:109
 msgid "Bogus Proofs"
 msgstr "偽の証明"
 
-#: dat/missions/pirate/contraband.lua:111
+#: dat/missions/pirate/contraband.lua:109
 msgid ""
 "Mathematical proofs with almost imperceptible modifications to make them "
 "illegally false."
@@ -66387,11 +66380,11 @@ msgstr ""
 "ほとんど気づかれないほどの修正をくわえた数学的証明で、違法なほどまちがってい"
 "る。"
 
-#: dat/missions/pirate/contraband.lua:112
+#: dat/missions/pirate/contraband.lua:110
 msgid "p-Hacked Results"
 msgstr " P 値ハッキングした結果"
 
-#: dat/missions/pirate/contraband.lua:112
+#: dat/missions/pirate/contraband.lua:110
 msgid ""
 "Scientific trial results obtained through unreliable and illegal uses of "
 "statistics."
@@ -66404,16 +66397,16 @@ msgstr "当てにならないものと違法な統計の使用によって得ら
 #. mission generics
 #. Allow extra time for refuelling stops.
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
-#: dat/missions/pirate/contraband.lua:148
+#: dat/missions/pirate/contraband.lua:146
 msgid "Smuggle {tonnes} of {cargo}"
 msgstr "{tonnes}の{cargo}の密輸"
 
+#: dat/missions/pirate/contraband.lua:150
 #: dat/missions/pirate/contraband.lua:152
-#: dat/missions/pirate/contraband.lua:154
 msgid "Smuggling contraband goods to {pnt} in the {sys} system.{msg}"
 msgstr "{sys}星系の{pnt}への禁制品の密輸。{msg}"
 
-#: dat/missions/pirate/contraband.lua:154
+#: dat/missions/pirate/contraband.lua:152
 msgid ""
 "#rWARNING:#0 Contraband is illegal in most systems and you will face "
 "consequences if caught by patrols."
@@ -66421,23 +66414,23 @@ msgstr ""
 "#r注意 :#0 禁制品はほとんどの星系で違法であり、巡視隊に見つかると重大な結果に"
 "直面することになる。"
 
-#: dat/missions/pirate/contraband.lua:181
+#: dat/missions/pirate/contraband.lua:179
 msgid "{tonnes} of {cargo} are loaded onto your ship."
 msgstr "{tonnes}の{cargo}があなたの船に積みこまれた。"
 
-#: dat/missions/pirate/contraband.lua:192
+#: dat/missions/pirate/contraband.lua:190
 msgid "The containers of {cargo} are unloaded at the docks."
 msgstr "{cargo}のコンテナが着岸所に降ろされた。"
 
 #. increase faction
 #. Date hook
 #. Case still in time
-#: dat/missions/pirate/contraband.lua:207
+#: dat/missions/pirate/contraband.lua:205
 msgid "Smuggling {cargo}"
 msgstr "{cargo}の密輸"
 
 #. Case missed deadline
-#: dat/missions/pirate/contraband.lua:213
+#: dat/missions/pirate/contraband.lua:211
 msgid "You have failed to deliver the goods on time!"
 msgstr "制限時間内に品物を配達できなかった！"
 
@@ -78650,8 +78643,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh02.lua:94
 #: dat/missions/zalek/blackhole/zbh05.lua:102
 #: dat/missions/zalek/blackhole/zbh08.lua:98
-#: dat/missions/zalek/particlephysics/zpp02.lua:92
-#: dat/missions/zalek/particlephysics/zpp04.lua:90
+#: dat/missions/zalek/particlephysics/zpp02.lua:91
+#: dat/missions/zalek/particlephysics/zpp04.lua:89
 msgid "Pick up cargo at {pnt} ({sys} system)"
 msgstr "{pnt}で貨物を引き取れ。({sys}星系)"
 
@@ -80523,7 +80516,7 @@ msgid "Survive!"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:407
-#: dat/missions/zalek/particlephysics/zpp03.lua:178
+#: dat/missions/zalek/particlephysics/zpp03.lua:177
 msgid "Watch out!"
 msgstr "注意して！"
 
@@ -82150,16 +82143,16 @@ msgstr "ザレクの科学者であるヌーナと、素粒子物理学関係の
 #. mission details
 #: dat/missions/zalek/particlephysics/zpp01.lua:94
 #: dat/missions/zalek/particlephysics/zpp01.lua:100
-#: dat/missions/zalek/particlephysics/zpp02.lua:84
-#: dat/missions/zalek/particlephysics/zpp02.lua:91
-#: dat/missions/zalek/particlephysics/zpp03.lua:79
-#: dat/missions/zalek/particlephysics/zpp03.lua:86
-#: dat/missions/zalek/particlephysics/zpp04.lua:82
-#: dat/missions/zalek/particlephysics/zpp04.lua:89
-#: dat/missions/zalek/particlephysics/zpp05.lua:77
-#: dat/missions/zalek/particlephysics/zpp05.lua:84
-#: dat/missions/zalek/particlephysics/zpp06.lua:76
-#: dat/missions/zalek/particlephysics/zpp06.lua:82
+#: dat/missions/zalek/particlephysics/zpp02.lua:83
+#: dat/missions/zalek/particlephysics/zpp02.lua:90
+#: dat/missions/zalek/particlephysics/zpp03.lua:78
+#: dat/missions/zalek/particlephysics/zpp03.lua:85
+#: dat/missions/zalek/particlephysics/zpp04.lua:81
+#: dat/missions/zalek/particlephysics/zpp04.lua:88
+#: dat/missions/zalek/particlephysics/zpp05.lua:76
+#: dat/missions/zalek/particlephysics/zpp05.lua:83
+#: dat/missions/zalek/particlephysics/zpp06.lua:75
+#: dat/missions/zalek/particlephysics/zpp06.lua:81
 #: dat/scripts/common/zalek_physics.lua:33
 msgid "Particle Physics"
 msgstr "素粒子物理学"
@@ -82237,7 +82230,6 @@ msgstr ""
 #. </avail>
 #. <notes>
 #. <campaign>Za'lek Particle Physics</campaign>
-#. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
@@ -82248,7 +82240,7 @@ msgstr ""
 #.
 #.
 #. luacheck: globals land approach_guy (Hook functions passed by name)
-#: dat/missions/zalek/particlephysics/zpp02.lua:34
+#: dat/missions/zalek/particlephysics/zpp02.lua:33
 msgid "drone interface controllers"
 msgstr "ドローンのインターフェース制御器"
 
@@ -82268,7 +82260,6 @@ msgstr "ドローンのインターフェース制御器"
 #. </avail>
 #. <notes>
 #. <campaign>Za'lek Particle Physics</campaign>
-#. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
@@ -82298,7 +82289,6 @@ msgstr "ドローンのインターフェース制御器"
 #. </avail>
 #. <notes>
 #. <campaign>Za'lek Particle Physics</campaign>
-#. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
@@ -82337,7 +82327,6 @@ msgstr "ドローンのインターフェース制御器"
 #. </tags>
 #. <notes>
 #. <campaign>Za'lek Particle Physics</campaign>
-#. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
@@ -82356,31 +82345,31 @@ msgstr "ドローンのインターフェース制御器"
 #.
 #. --
 #. Fullname: Noona Sanderaite
-#: dat/missions/zalek/particlephysics/zpp02.lua:48
-#: dat/missions/zalek/particlephysics/zpp03.lua:41
-#: dat/missions/zalek/particlephysics/zpp03.lua:170
-#: dat/missions/zalek/particlephysics/zpp03.lua:173
-#: dat/missions/zalek/particlephysics/zpp03.lua:178
-#: dat/missions/zalek/particlephysics/zpp03.lua:186
-#: dat/missions/zalek/particlephysics/zpp04.lua:47
-#: dat/missions/zalek/particlephysics/zpp05.lua:42
-#: dat/missions/zalek/particlephysics/zpp05.lua:233
-#: dat/missions/zalek/particlephysics/zpp05.lua:236
-#: dat/missions/zalek/particlephysics/zpp05.lua:239
-#: dat/missions/zalek/particlephysics/zpp05.lua:246
-#: dat/missions/zalek/particlephysics/zpp05.lua:250
-#: dat/missions/zalek/particlephysics/zpp05.lua:322
-#: dat/missions/zalek/particlephysics/zpp05.lua:326
-#: dat/missions/zalek/particlephysics/zpp06.lua:38
+#: dat/missions/zalek/particlephysics/zpp02.lua:47
+#: dat/missions/zalek/particlephysics/zpp03.lua:40
+#: dat/missions/zalek/particlephysics/zpp03.lua:169
+#: dat/missions/zalek/particlephysics/zpp03.lua:172
+#: dat/missions/zalek/particlephysics/zpp03.lua:177
+#: dat/missions/zalek/particlephysics/zpp03.lua:185
+#: dat/missions/zalek/particlephysics/zpp04.lua:46
+#: dat/missions/zalek/particlephysics/zpp05.lua:41
+#: dat/missions/zalek/particlephysics/zpp05.lua:232
+#: dat/missions/zalek/particlephysics/zpp05.lua:235
+#: dat/missions/zalek/particlephysics/zpp05.lua:238
+#: dat/missions/zalek/particlephysics/zpp05.lua:245
+#: dat/missions/zalek/particlephysics/zpp05.lua:249
+#: dat/missions/zalek/particlephysics/zpp05.lua:321
+#: dat/missions/zalek/particlephysics/zpp05.lua:325
+#: dat/missions/zalek/particlephysics/zpp06.lua:37
 #: dat/scripts/common/zalek_physics.lua:18
 msgid "Noona"
 msgstr "ヌーナ"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:58
+#: dat/missions/zalek/particlephysics/zpp02.lua:57
 msgid "You approach Noona, who seems to have a slight frown on her face."
 msgstr "あなたはヌーナに近づいた。わずかに顔をしかめているようだ。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:59
+#: dat/missions/zalek/particlephysics/zpp02.lua:58
 msgid ""
 "\"It seems I overestimated the facilities here. I was hoping they would have "
 "the XR-578 drone controller interfaces, but it seems like they are still on "
@@ -82397,7 +82386,7 @@ msgstr ""
 "きてもらえないでしょうか？　お時間をとっていただくのに、{credits} 払えると思"
 "います｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:68
+#: dat/missions/zalek/particlephysics/zpp02.lua:67
 msgid ""
 "\"I see. I'll have to figure out some way to get it over here…\"\n"
 "She furrows her brow."
@@ -82405,7 +82394,7 @@ msgstr ""
 "｢わかりました。ここへ持ってくるのになにか方法を考えなきゃなりませんね……｣\n"
 "ヌーナは顔をしかめた。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:73
+#: dat/missions/zalek/particlephysics/zpp02.lua:72
 msgid ""
 "\"Thanks! Once I get the interface up and working, I should be able to start "
 "my particle physics experiments. I'm so excited. While you're gone, I guess "
@@ -82416,29 +82405,29 @@ msgstr ""
 "ドをぜんぶ二度確認してとにかく落ちついていようと思います。すばらしいことにな"
 "りますよ！｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:86
+#: dat/missions/zalek/particlephysics/zpp02.lua:85
 msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
 msgstr "{cargo}を{sys}星系の{pnt}で引き取ってから、{retpnt}に届けろ。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:93
-#: dat/missions/zalek/particlephysics/zpp04.lua:91
+#: dat/missions/zalek/particlephysics/zpp02.lua:92
+#: dat/missions/zalek/particlephysics/zpp04.lua:90
 msgid "Deliver to {pnt} ({sys} system)"
 msgstr "{pnt}に届けろ。({sys}星系)"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:106
-#: dat/missions/zalek/particlephysics/zpp02.lua:138
+#: dat/missions/zalek/particlephysics/zpp02.lua:105
+#: dat/missions/zalek/particlephysics/zpp02.lua:137
 msgid "Noona's Colleague"
 msgstr "ヌーナの同僚"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:106
+#: dat/missions/zalek/particlephysics/zpp02.lua:105
 msgid ""
 "You see a Za'lek scientist who seems to fit the description of Noona's "
 "colleague."
 msgstr "ヌーナの同僚についての描写にあうザレクの科学者が見えた。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:113
+#: dat/missions/zalek/particlephysics/zpp02.lua:112
 msgid ""
 "You land and the lone loading drone starts to slowly remove the cargo from "
 "your ship. While waiting, you decide to look for Noona, who you quickly find "
@@ -82448,7 +82437,7 @@ msgstr ""
 "待つあいだ、あなたはヌーナをさがすことに決めた。あなたはすぐに施設の展望台か"
 "ら試験場を見つめているヌーナを見つけた。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:114
+#: dat/missions/zalek/particlephysics/zpp02.lua:113
 msgid ""
 "\"Look at it! Isn't it breathtaking?\"\n"
 "She motions towards the testing site.\n"
@@ -82463,7 +82452,7 @@ msgstr ""
 "べてあの台の上でおこなわれました。まとめていえば、人類の進歩がです！　どんな"
 "新しい技術的驚異が、素粒子物理学の難問のむこうで待っているんでしょう？｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:117
+#: dat/missions/zalek/particlephysics/zpp02.lua:116
 msgid ""
 "She breathes deeply and turns to you.\n"
 "\"Did you get the interface controllers? That's great! Let me try to get "
@@ -82481,7 +82470,7 @@ msgstr ""
 "レジットスティックを放った。\n"
 "｢忘れるところだった。また会いましょう！｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:128
+#: dat/missions/zalek/particlephysics/zpp02.lua:127
 msgid ""
 "You brought some drone interface controllers to Noona so that she can begin "
 "her particle physics experiments."
@@ -82489,17 +82478,17 @@ msgstr ""
 "あなたがドローンインターフェース制御器をヌーナのところへ持っていったので、"
 "ヌーナは自分の素粒子物理学の実験を始められるようになった。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:143
+#: dat/missions/zalek/particlephysics/zpp02.lua:142
 msgid "\"Ready to try again? Let me activate the memory interface for you.\""
 msgstr "｢また試す用意はできましたか？　メモリーインターフェースを起動させます｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:145
+#: dat/missions/zalek/particlephysics/zpp02.lua:144
 msgid ""
 "You approach an individual that matches the contact information that Noona "
 "gave you."
 msgstr "ヌーナがあなたに教えた、連絡相手の情報にあう人に近づいた。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:146
+#: dat/missions/zalek/particlephysics/zpp02.lua:145
 msgid ""
 "They raise an eyebrow as you approach.\n"
 "\"You must be Dr. Sanderaite's acquaintance. I have the drone interface "
@@ -82512,7 +82501,7 @@ msgstr ""
 "んです｣\n"
 "相手はあたまをかいた。"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:149
+#: dat/missions/zalek/particlephysics/zpp02.lua:148
 msgid ""
 "\"I tried to take a look at it, but wasn't able to figure out a damn thing, "
 "and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with "
@@ -82527,7 +82516,7 @@ msgstr ""
 "すよ。する必要があるのは、データボックスにデータソケットを押しこんで、メモ"
 "リーを一直線にすることだけです。やってみてください｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:164
+#: dat/missions/zalek/particlephysics/zpp02.lua:163
 msgid ""
 "\"It seems like the interface hasn't been unlocked. Talk to me if you want "
 "to try again.\""
@@ -82535,7 +82524,7 @@ msgstr ""
 "｢インターフェースははずれなかったみたいですね。また試したければ、声をかけてく"
 "ださい｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:168
+#: dat/missions/zalek/particlephysics/zpp02.lua:167
 msgid ""
 "After you unlock the memory, they are able to quickly release the interface "
 "controller which falls to the ground with a resounding clunk.\n"
@@ -82547,21 +82536,21 @@ msgstr ""
 "｢やった、完璧だ！　船積みドローンを用意させてください。これを船に乗せれば、あ"
 "なたは出発できますよ。｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:172
+#: dat/missions/zalek/particlephysics/zpp02.lua:171
 msgid "\"Are you ready to take the cargo now?\""
 msgstr "｢貨物を持っていく用意はもうできましたか？｣"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:185
+#: dat/missions/zalek/particlephysics/zpp02.lua:184
 msgid "The automated dock drones load the {amount} of {cargo} onto your ship."
 msgstr ""
 "自動化された着岸所のドローンが {amount}の{cargo}をあなたの船に積みこんだ。"
 
 #. Failed to do the Sokoban
-#: dat/missions/zalek/particlephysics/zpp02.lua:193
+#: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid "Drone Interface Controllers"
 msgstr "ドローンインターフェース制御器"
 
-#: dat/missions/zalek/particlephysics/zpp02.lua:193
+#: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid ""
 "Special adapters that are able to connect modern drone controllers with "
 "older drone connectors."
@@ -82569,11 +82558,11 @@ msgstr ""
 "最新のドローン制御器をもっと古いドローンのコネクターにつなげられるようにする"
 "とくべつなアダプター。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:51
+#: dat/missions/zalek/particlephysics/zpp03.lua:50
 msgid "You approach Noona, who doesn't seem too happy."
 msgstr "あなたはヌーナに近づいた。あまりうれしそうではない。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:52
+#: dat/missions/zalek/particlephysics/zpp03.lua:51
 msgid ""
 "\"I have no idea what went wrong.\"\n"
 "She has trouble keeping her composure.\n"
@@ -82585,7 +82574,7 @@ msgstr ""
 "｢ぜんぶ二重に確認したのに、まだドローンは手順を実行できないみたい。公園を歩い"
 "ているはずなのに！｣"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:55
+#: dat/missions/zalek/particlephysics/zpp03.lua:54
 msgid ""
 "She looks at you with hope gleaming in her eyes.\n"
 "\"Say, could you fly out and see what happened? The drones shouldn't be far "
@@ -82598,7 +82587,7 @@ msgstr ""
 "できるなら、外殻部品を開けてブラックボックスにアクセスしてみてください。調べ"
 "てもらえますか？｣"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:63
+#: dat/missions/zalek/particlephysics/zpp03.lua:62
 msgid ""
 "\"I see. You must be busy with other things.\"\n"
 "She goes back to ruminating on what to do."
@@ -82606,7 +82595,7 @@ msgstr ""
 "｢わかりました。ほかのことで忙しいにちがいないですよね｣\n"
 "ヌーナはすべきことを熟考するのに戻った。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:68
+#: dat/missions/zalek/particlephysics/zpp03.lua:67
 msgid ""
 "\"Thanks again. I'll give you the security password so you can access the "
 "black box control panel. Depending on the damage, you may have to realign "
@@ -82619,26 +82608,26 @@ msgstr ""
 "なければならないかもしれません。でもあなたはそれに熟達しているって同僚から聞"
 "きました。ドローンの座標を送るので、簡単に見つかるはずです。幸運を！｣"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:81
+#: dat/missions/zalek/particlephysics/zpp03.lua:80
 msgid ""
 "Investigate the issue with the drones near the particle physics testing site "
 "at {sys}."
 msgstr "{sys}星系にある素粒子物理学試験場近くのドローンの問題を調査せよ。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:87
+#: dat/missions/zalek/particlephysics/zpp03.lua:86
 msgid "Investigate the drones"
 msgstr "ドローンを調査せよ。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:88
-#: dat/missions/zalek/particlephysics/zpp05.lua:86
+#: dat/missions/zalek/particlephysics/zpp03.lua:87
+#: dat/missions/zalek/particlephysics/zpp05.lua:85
 msgid "Return to Katar I"
 msgstr "カタール I へ戻れ。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:107
+#: dat/missions/zalek/particlephysics/zpp03.lua:106
 msgid "You land and find Noona waiting outside your ship expectantly."
 msgstr "あなたは着陸して、期待して船の外で待っていたヌーナを見つけた。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:108
+#: dat/missions/zalek/particlephysics/zpp03.lua:107
 msgid ""
 "\"That was scary! I have no idea what happened with the drone powering up "
 "and attacking you. I'm glad I sent you, I would have been fried with my "
@@ -82653,7 +82642,7 @@ msgstr ""
 "ヌーナはあなたにクレジットスティックを放ってから、ブラックボックスを持って部"
 "屋にかけこんでいった。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:111
+#: dat/missions/zalek/particlephysics/zpp03.lua:110
 msgid ""
 "Just before she disappears around the corner she turns back to you and "
 "yells.\n"
@@ -82668,7 +82657,7 @@ msgstr ""
 "すから、もっと大きな大砲があれば役に立ちますよね｣\n"
 "なにを叫んでいるのかあなたが飲みこむ間もなく、ヌーナは消え去った。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:124
+#: dat/missions/zalek/particlephysics/zpp03.lua:123
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned. You're not exactly sure how, but she also managed to get you "
@@ -82678,7 +82667,7 @@ msgstr ""
 "やったのか正確にはわからなかったが、ヌーナはあなたに大型武器免許が許可される"
 "ように手はずを整えてもいた。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:126
+#: dat/missions/zalek/particlephysics/zpp03.lua:125
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned."
@@ -82688,38 +82677,38 @@ msgstr "ヌーナを助けて故障したドローンからブラックボック
 #. TODO better location once testing center object is created
 #. Disabled drone
 #. Hostile drone
-#: dat/missions/zalek/particlephysics/zpp03.lua:148
-#: dat/missions/zalek/particlephysics/zpp03.lua:158
+#: dat/missions/zalek/particlephysics/zpp03.lua:147
+#: dat/missions/zalek/particlephysics/zpp03.lua:157
 msgid "Malfunctioned Drone"
 msgstr "故障したドローン"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:170
+#: dat/missions/zalek/particlephysics/zpp03.lua:169
 msgid "I've sent you the drone positions, please get close to investigate."
 msgstr "ドローンの位置を送りました。近づいて調べてみてください。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:173
+#: dat/missions/zalek/particlephysics/zpp03.lua:172
 msgid ""
 "That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"
 msgstr ""
 "妙ですね。たぶんファームウェアのバグ？　待って……電力変動を検知しました！"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:183
+#: dat/missions/zalek/particlephysics/zpp03.lua:182
 msgid "Haywire Drone"
 msgstr "狂ったドローン"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:186
+#: dat/missions/zalek/particlephysics/zpp03.lua:185
 msgid "That was close. Can you try boarding the other drone?"
 msgstr "危なかった。ほかのドローンに接舷を試みられますか？"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:199
+#: dat/missions/zalek/particlephysics/zpp03.lua:198
 msgid "The drone's black box has already been extracted."
 msgstr "ドローンのブラックボックスはすでに取りだされている。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:208
+#: dat/missions/zalek/particlephysics/zpp03.lua:207
 msgid "You access the drone control panel and jack into the black box."
 msgstr "あなたはドローンの制御盤に近づいて、ブラックボックスに配線をつないだ。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:222
+#: dat/missions/zalek/particlephysics/zpp03.lua:221
 msgid ""
 "You manage to recover the entire black box intact and load the information "
 "on your ship."
@@ -82727,15 +82716,15 @@ msgstr ""
 "あなたはどうにか無傷のブラックボックスをまるごと回収して、あなたの船で情報を"
 "読みこめた。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:226
+#: dat/missions/zalek/particlephysics/zpp03.lua:225
 msgid "You failed to access the black box."
 msgstr "ブラックボックスへのアクセスに失敗した。"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:231
+#: dat/missions/zalek/particlephysics/zpp03.lua:230
 msgid "Drone Black Box"
 msgstr "ドローンのブラックボックス"
 
-#: dat/missions/zalek/particlephysics/zpp03.lua:231
+#: dat/missions/zalek/particlephysics/zpp03.lua:230
 msgid "The recovered black box of a Za'lek drone."
 msgstr "ザレクのドローンから回収したブラックボックス。"
 
@@ -82754,7 +82743,6 @@ msgstr "ザレクのドローンから回収したブラックボックス。"
 #. </avail>
 #. <notes>
 #. <campaign>Za'lek Particle Physics</campaign>
-#. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
@@ -82765,15 +82753,15 @@ msgstr "ザレクのドローンから回収したブラックボックス。"
 #.
 #.
 #. luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
-#: dat/missions/zalek/particlephysics/zpp04.lua:34
+#: dat/missions/zalek/particlephysics/zpp04.lua:33
 msgid "strange container"
 msgstr "奇妙なコンテナ"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:57
+#: dat/missions/zalek/particlephysics/zpp04.lua:56
 msgid "You once again meet up with Noona."
 msgstr "あなたはまたヌーナに会った。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:58
+#: dat/missions/zalek/particlephysics/zpp04.lua:57
 msgid ""
 "\"It's a worse setback than expected. I'm going to have to get new materials "
 "to be able to do the experiments. Since they're usually pretty hard to get, "
@@ -82790,7 +82778,7 @@ msgstr ""
 "はたった {amount}しかないはずなので、あなたの船に乗せるのに問題はないはずで"
 "す。今回のやっかいごとには {credits} 支払えると思ってます｣"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:66
+#: dat/missions/zalek/particlephysics/zpp04.lua:65
 msgid ""
 "\"OK. I'll try to figure something out…\"\n"
 "She furrows her brow."
@@ -82798,7 +82786,7 @@ msgstr ""
 "｢わかりました。解決してみるつもりです……｣\n"
 "ヌーナは顔をしかめた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:71
+#: dat/missions/zalek/particlephysics/zpp04.lua:70
 msgid ""
 "\"Thanks again! I know {pnt} is not really a place you want to go, but there "
 "really was no option this time around. By the time you get back I should "
@@ -82810,18 +82798,18 @@ msgstr ""
 "の準備はぜんぶ終わっているはずです。これでこんどこそやっと実験を終わらせられ"
 "ますよ！　……だといいんだけど｣"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:84
+#: dat/missions/zalek/particlephysics/zpp04.lua:83
 msgid ""
 "Pick up some cargo from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
 msgstr "貨物を{sys}星系の{pnt}で引き取ってから、{retpnt}に届けろ。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:105
-#: dat/missions/zalek/particlephysics/zpp04.lua:133
+#: dat/missions/zalek/particlephysics/zpp04.lua:104
+#: dat/missions/zalek/particlephysics/zpp04.lua:132
 msgid "Shady Dealer"
 msgstr "いかがわしい販売業者"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:105
+#: dat/missions/zalek/particlephysics/zpp04.lua:104
 msgid ""
 "A fairly shady dealer seems to be staring at you and beckoning for you to "
 "come over. Could this be the individual Noona told you to meet…?"
@@ -82829,7 +82817,7 @@ msgstr ""
 "かなりいかがわしく見える販売業者は、あなたをじっと見て近くへ来るように手で合"
 "図しているようだ。ヌーナが会うようにいった人があの人だなんてありえるのか……？"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:112
+#: dat/missions/zalek/particlephysics/zpp04.lua:111
 msgid ""
 "You land and the lone cargo drone begins to unload the container. It seems "
 "to have trouble balancing it and you amuse yourself by looking at its antics "
@@ -82839,7 +82827,7 @@ msgstr ""
 "には釣りあいに問題があるらしく、そのこっけいなしぐさを見てあなたは楽しんだ。"
 "そのとき、あなたはヌーナに気づいて驚いた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:113
+#: dat/missions/zalek/particlephysics/zpp04.lua:112
 msgid ""
 "\"The drones sure are cute. I like to call that one Laboriosi.\"\n"
 "She points at the lone cargo drone.\n"
@@ -82860,7 +82848,7 @@ msgstr ""
 "いんですが。バーで待っていてください。わたしのほうはちょっと準備することがあ"
 "ります｣"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:123
+#: dat/missions/zalek/particlephysics/zpp04.lua:122
 msgid ""
 "You helped Noona get some materials from a shady dealer in order for her to "
 "pursue her research and perform experiments."
@@ -82868,11 +82856,11 @@ msgstr ""
 "あなたはヌーナを助けて、いかがわしい販売業者から材料をいくらか手に入れた。こ"
 "れでヌーナは研究をつづけて実験ができるようになる。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:136
+#: dat/missions/zalek/particlephysics/zpp04.lua:135
 msgid "You once again approach the shady dealer."
 msgstr "またあなたはあのいかがわしい販売業者に近づいた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:137
+#: dat/missions/zalek/particlephysics/zpp04.lua:136
 msgid ""
 "\"Have you made preparations for the cargo?\"\n"
 "Their grin makes your feel uneasy."
@@ -82880,7 +82868,7 @@ msgstr ""
 "｢船積みの用意はできたか？｣\n"
 "商人はにやっと笑い、あなたは不安を感じた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:141
+#: dat/missions/zalek/particlephysics/zpp04.lua:140
 msgid ""
 "As you approach the shady dealer, you can barely make out some movement in "
 "the background."
@@ -82888,7 +82876,7 @@ msgstr ""
 "あなたがあのいかがわしい販売業者に近づいたときに、背後に動きがあるのをかろう"
 "じて見わけられた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:142
+#: dat/missions/zalek/particlephysics/zpp04.lua:141
 msgid ""
 "They start to grin and begin to speak with an almost serpent-like accent.\n"
 "\"Ah, pleasure to meet you. You must be the one in charge of the delivery. "
@@ -82903,7 +82891,7 @@ msgstr ""
 "じゃない｣\n"
 "業者がくちびるをなめた。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:145
+#: dat/missions/zalek/particlephysics/zpp04.lua:144
 msgid ""
 "\"The arrangements have all been made, and you'll soon have it aboard your "
 "ship. If I were you, I would put it as far away from any personnel as "
@@ -82918,7 +82906,7 @@ msgstr ""
 "｢背中に気をつけたほうがいいかもしれないね。あなたの友人だけがあれを欲しがって"
 "るわけじゃないんだ｣"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:161
+#: dat/missions/zalek/particlephysics/zpp04.lua:160
 msgid ""
 "When you get back to your ship, the cargo has already been taken care of and "
 "is properly secured on your ship. As you get close to it, you hear a weird "
@@ -82929,11 +82917,11 @@ msgstr ""
 "されていた。近づいてみると、貨物コンテナと思われる場所から異様な川の流れる音"
 "が聞こえた。どんなことにかかわりあったんだろう？"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:168
+#: dat/missions/zalek/particlephysics/zpp04.lua:167
 msgid "Strange Container"
 msgstr "奇妙なコンテナ"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:168
+#: dat/missions/zalek/particlephysics/zpp04.lua:167
 msgid ""
 "A large strange container that seems oddly warm to the touch. You can swear "
 "you hear weird sounds coming from inside it, almost like some sort of "
@@ -82942,15 +82930,15 @@ msgstr ""
 "大きくて奇妙なコンテナで、触ると妙に温かい気がする。あなたは誓っていえたが、"
 "その中から異様な音が聞こえる。川が流れるような音でまずまちがいはない。"
 
-#: dat/missions/zalek/particlephysics/zpp04.lua:204
+#: dat/missions/zalek/particlephysics/zpp04.lua:203
 msgid "That's the one! Get 'em!"
 msgstr "あれだ！　いただいてしまえ！"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:52
+#: dat/missions/zalek/particlephysics/zpp05.lua:51
 msgid "You approach Noona who seems giddy with excitement."
 msgstr "あなたはヌーナに近づいた。興奮してうわついているように見える。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:53
+#: dat/missions/zalek/particlephysics/zpp05.lua:52
 msgid ""
 "\"It's almost ready! Thanks to you, I finally have everything ready for the "
 "test. However, after reviewing the drone firmware, I think it would be best "
@@ -82966,12 +82954,12 @@ msgstr ""
 "あるでしょうか？　あなたの船はじゅうぶん頑丈なはずです。傷つく可能性はなにも"
 "ないと思っています｣"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:60
-#: dat/missions/zalek/particlephysics/zpp06.lua:57
+#: dat/missions/zalek/particlephysics/zpp05.lua:59
+#: dat/missions/zalek/particlephysics/zpp06.lua:56
 msgid "\"I see. You must be busy with other things.\""
 msgstr "｢わかりました。ほかのことで忙しいにちがいないですよね｣"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:64
+#: dat/missions/zalek/particlephysics/zpp05.lua:63
 msgid ""
 "\"Thanks! So what you brought back last time were some nebula crystals. "
 "Nothing is really known about them, but, sometimes, they are found in old "
@@ -82989,7 +82977,7 @@ msgstr ""
 "たしはどちらかというと逆なんです。物事がどう作用しているか確認してしまえば、"
 "理論を理解するのはずっと簡単です｣"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:65
+#: dat/missions/zalek/particlephysics/zpp05.lua:64
 msgid ""
 "\"The plan for the experiment is fairly simple. I have set up an amplifier "
 "to create an energy focal point at the particle physics testing site. The "
@@ -83004,7 +82992,7 @@ msgstr ""
 "記録用のドローンも用意します。それがそこでおきたことを、なにからなにまでとら"
 "えるんです｣"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:66
+#: dat/missions/zalek/particlephysics/zpp05.lua:65
 msgid ""
 "You are about to ask about your safety, but seeing how excited Noona is "
 "getting, you decide to rely on her word that your ship will shield you from "
@@ -83014,34 +83002,34 @@ msgstr ""
 "ヌーナの言葉を信頼することに決めた。あなたの船なら、可能性があるどんな素粒子"
 "物理学上の事故でも防御できるだろうという言葉に。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:78
+#: dat/missions/zalek/particlephysics/zpp05.lua:77
 msgid "Science!"
 msgstr "科学！"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:79
+#: dat/missions/zalek/particlephysics/zpp05.lua:78
 msgid "Perform the particle physics experiment at {sys}."
 msgstr "{sys}星系で素粒子物理学の実験をせよ。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:85
+#: dat/missions/zalek/particlephysics/zpp05.lua:84
 msgid "Perform the experiment"
 msgstr "実験をせよ。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:104
+#: dat/missions/zalek/particlephysics/zpp05.lua:103
 msgid "You land after the dizzying event. What was that about?"
 msgstr "目がくらむような出来事のあと、あなたは着陸した。あれはなんだったんだ？"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:105
+#: dat/missions/zalek/particlephysics/zpp05.lua:104
 msgid "\"You don't look so good. Did something happen?\""
 msgstr "｢あまりよさそうに見えないですね。なにがおきたんです？｣"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:106
+#: dat/missions/zalek/particlephysics/zpp05.lua:105
 msgid ""
 "You don't know how to start explaining and give up on mentioning anything."
 msgstr ""
 "あなたはどのように説明を始めたらいいのかわからなかったので、なにかいうのをあ"
 "きらめた。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:107
+#: dat/missions/zalek/particlephysics/zpp05.lua:106
 msgid ""
 "\"The experiment looks like it collected a ton of data I'll need to process "
 "and analyse. I was sort of expecting a more violent reaction, but you're "
@@ -83055,7 +83043,7 @@ msgstr ""
 "らないですよね｣\n"
 "ヌーナはあなたがあまり安心できないようなほほえみをうかべた。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:109
+#: dat/missions/zalek/particlephysics/zpp05.lua:108
 msgid ""
 "\"I have to process some data real quick, but meet me up at the spaceport "
 "bar in a bit. I should have another task for you.\"\n"
@@ -83068,7 +83056,7 @@ msgstr ""
 
 #. vn.na( fmt.credits(reward) )
 #. player.pay( reward )
-#: dat/missions/zalek/particlephysics/zpp05.lua:118
+#: dat/missions/zalek/particlephysics/zpp05.lua:117
 msgid ""
 "You helped Noona conduct her particle physics experiment. However, you saw "
 "something you couldn't really make out during the experiments."
@@ -83076,69 +83064,69 @@ msgstr ""
 "あなたはヌーナを助けて、素粒子物理学実験をおこなった。とはいえ、あなたは実験"
 "のあいだにまったく理解できないなにかを見ることになった。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:129
+#: dat/missions/zalek/particlephysics/zpp05.lua:128
 msgid "You were supposed to perform the experiment!"
 msgstr "あなたは実験を行なうことになっていた！"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
 #. Hostile drone
-#: dat/missions/zalek/particlephysics/zpp05.lua:138
+#: dat/missions/zalek/particlephysics/zpp05.lua:137
 msgid "Amplifier"
 msgstr "増幅器"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:159
+#: dat/missions/zalek/particlephysics/zpp05.lua:158
 msgid "Experiment Site"
 msgstr "実験場"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:197
+#: dat/missions/zalek/particlephysics/zpp05.lua:196
 msgid "You access the amplifier's control panel and jack in."
 msgstr "あなたは増幅器制御盤に手を伸ばし、配線をつないだ。"
 
 #. TODO maybe do another minigame?
-#: dat/missions/zalek/particlephysics/zpp05.lua:214
+#: dat/missions/zalek/particlephysics/zpp05.lua:213
 msgid "You manage to adjust the settings and the amplifier turns on again."
 msgstr "あなたはどうにか設定値を修正して、増幅器をまた起動することができた。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:218
+#: dat/missions/zalek/particlephysics/zpp05.lua:217
 msgid "You failed to turn the amplifier on."
 msgstr "あなたは増幅器を起動できなかった。"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:233
+#: dat/missions/zalek/particlephysics/zpp05.lua:232
 msgid "Get close to the experiment site!"
 msgstr "実験場に近づいて！"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:236
+#: dat/missions/zalek/particlephysics/zpp05.lua:235
 msgid "Carefully push the crystals into the beam."
 msgstr "注意しながら結晶をビームに押しこんでください"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:239
+#: dat/missions/zalek/particlephysics/zpp05.lua:238
 msgid ""
 "Hmmm. It looks like the amplifier needs some adjustments. Could you try to "
 "fix it?"
 msgstr "うーん。増幅器は調整が必要なようです。修正してもらえますか？"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:246
+#: dat/missions/zalek/particlephysics/zpp05.lua:245
 msgid "It looks like everything is OK now."
 msgstr "もうすべて問題ないようです"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:250
+#: dat/missions/zalek/particlephysics/zpp05.lua:249
 msgid "Now push the crystals into the beam."
 msgstr "もう結晶をビームに押しこんでいいですよ"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:322
+#: dat/missions/zalek/particlephysics/zpp05.lua:321
 msgid "Are you alright? Communication cut off for a bit."
 msgstr "だいじょうぶですか？　通信がちょっと切れました"
 
-#: dat/missions/zalek/particlephysics/zpp05.lua:326
+#: dat/missions/zalek/particlephysics/zpp05.lua:325
 msgid "Come back to Katar I."
 msgstr "カタール I に戻ってください"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:48
+#: dat/missions/zalek/particlephysics/zpp06.lua:47
 msgid "You meet Noona who seems to be a bit more calm than usually."
 msgstr "あなたはヌーナと会った。いつもよりちょっと落ちついているように見える。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:49
+#: dat/missions/zalek/particlephysics/zpp06.lua:48
 msgid ""
 "\"Thanks for all you've done for me. I've got a ton of data from the "
 "experiment that will take me a long time to process. In the meantime, I've "
@@ -83152,7 +83140,7 @@ msgstr ""
 "たんですが、ただわたしは……ちょっと忙しいんです。お願いですが、報告を{pnt}まで"
 "配達してもらえないでしょうか？｣"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:61
+#: dat/missions/zalek/particlephysics/zpp06.lua:60
 msgid ""
 "\"Great! I can't thank you enough for all you've done for me.\"\n"
 "She hands you the report package, which seems a bit heavier than you "
@@ -83164,27 +83152,27 @@ msgstr ""
 "ちょっと重いようだった。そしてあなたは手を振って送りだされた。"
 
 #. Must be accepted beyond this point
-#: dat/missions/zalek/particlephysics/zpp06.lua:72
+#: dat/missions/zalek/particlephysics/zpp06.lua:71
 msgid "Za'lek Report"
 msgstr "ザレクの報告書"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:72
+#: dat/missions/zalek/particlephysics/zpp06.lua:71
 msgid ""
 "A in-depth report filled with jargon and technical details you can't "
 "comprehend."
 msgstr ""
 "詳細な報告書で、あなたには理解できない専門用語や技術的詳細でいっぱいだ。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:78
+#: dat/missions/zalek/particlephysics/zpp06.lua:77
 msgid "Deliver Noona's preliminary report to {pnt} in the {sys} system."
 msgstr "ヌーナの予備報告を{sys}星系の{pnt}に届けろ。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:83
+#: dat/missions/zalek/particlephysics/zpp06.lua:82
 msgid "Deliver a report to {pnt} ({sys} system)"
 msgstr "報告書を{pnt}に届けろ。({sys}星系)"
 
 #. Just for the letter
-#: dat/missions/zalek/particlephysics/zpp06.lua:100
+#: dat/missions/zalek/particlephysics/zpp06.lua:99
 msgid ""
 "You land and head to where Noona told you to drop off the package. On the "
 "way you get lost in the maze of research laboratories, coffee machines, "
@@ -83196,7 +83184,7 @@ msgstr ""
 "る実験、それからあなたがいることに気づかず熱く議論をかわすザレクの科学者た"
 "ち。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:101
+#: dat/missions/zalek/particlephysics/zpp06.lua:100
 msgid ""
 "Eventually, you find the hidden away room labeled \"Particle Physics "
 "Experiments Registration Department\", and enter to meet a unenthusiastic "
@@ -83211,7 +83199,7 @@ msgstr ""
 "イト博士がまたなにかやっているといったことをいい、あなたに封筒を渡した。それ"
 "は小包に入っていたが、報告書の一部ではないとのことだった。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:102
+#: dat/missions/zalek/particlephysics/zpp06.lua:101
 msgid ""
 "As you wonder about what is in the envelope, suddenly two Za'lek Military "
 "officers bust in to the room."
@@ -83220,15 +83208,15 @@ msgstr ""
 "レク軍士官が部屋に押しいってきた。"
 
 #. TODO proper graphics
-#: dat/missions/zalek/particlephysics/zpp06.lua:104
+#: dat/missions/zalek/particlephysics/zpp06.lua:103
 msgid "Za'lek Officer A"
 msgstr "ザレク士官 A"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:105
+#: dat/missions/zalek/particlephysics/zpp06.lua:104
 msgid "Za'lek Officer B"
 msgstr "ザレク士官 B"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:107
+#: dat/missions/zalek/particlephysics/zpp06.lua:106
 msgid ""
 "\"Where is Chairwoman Sanderaite!? We just got the signal that she submitted "
 "a report here!\""
@@ -83236,15 +83224,15 @@ msgstr ""
 "｢サンダーレイト議長はどこだ !?　ちょうど議長の報告書がここに提出されたという"
 "知らせをうけたところなんだ！｣"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:108
+#: dat/missions/zalek/particlephysics/zpp06.lua:107
 msgid "The secretary lazily points at you."
 msgstr "秘書がめんどくさそうにあなたを指差す。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:109
+#: dat/missions/zalek/particlephysics/zpp06.lua:108
 msgid "\"Damnit, she got someone else to bring the report for her again…\""
 msgstr "｢くそっ、またほかの者に報告書を持ってこさせた……｣"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:110
+#: dat/missions/zalek/particlephysics/zpp06.lua:109
 msgid ""
 "\"The council should have never passed the law permitting third parties to "
 "hand-in official reports.\""
@@ -83252,20 +83240,20 @@ msgstr ""
 "｢評議会は公式報告書の提出を第三者に許可するなんて法律を、ぜったいに通すべき"
 "じゃなかったんだ｣"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:111
+#: dat/missions/zalek/particlephysics/zpp06.lua:110
 msgid ""
 "\"They're trying to revoke it, but last time the meeting ended in fisticuffs."
 "\""
 msgstr "｢廃止しようとはしているが、前回の会合は殴りあいになって終わった｣"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:112
+#: dat/missions/zalek/particlephysics/zpp06.lua:111
 msgid ""
 "\"Oh well, at least we have a hint to where she is now. On to Katar I!\""
 msgstr ""
 "｢しかたがないな。すくなくとも今どこにいるのか糸口はつかめた。カタール I だ！｣"
 
 #. Played in reverse
-#: dat/missions/zalek/particlephysics/zpp06.lua:114
+#: dat/missions/zalek/particlephysics/zpp06.lua:113
 msgid ""
 "The Za'lek officers leave as fast as they got there, barely acknowledging "
 "your presence. Pondering how House Za'lek manages to get anything done, you "
@@ -83277,7 +83265,7 @@ msgstr ""
 "うしてだろうと思案しながら、あなたは外へ出て返された封筒を開ける。これには"
 "ヌーナからの手紙が入っていた。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:116
+#: dat/missions/zalek/particlephysics/zpp06.lua:115
 msgid ""
 "You read the letter:\n"
 "   Thanks for all your help at Katar I. By now you've probably realized I "
@@ -83295,7 +83283,7 @@ msgstr ""
 "す。それから大型戦闘艦免許の許可を与えます。あなたの手助けはとても貴重でし"
 "た。また会うのを楽しみにしています。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:119
+#: dat/missions/zalek/particlephysics/zpp06.lua:118
 msgid ""
 "You read the letter:\n"
 "   Thanks for all your help at Katar I. By now you've probably realized I "
@@ -83311,7 +83299,7 @@ msgstr ""
 "して研究に集中することがあるんです。報酬のクレジットスティックをつけておきま"
 "す。あなたの手助けはとても貴重でした。また会うのを楽しみにしています。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:130
+#: dat/missions/zalek/particlephysics/zpp06.lua:129
 msgid ""
 "You delivered Noona's report to {pnt} and found out that she is the Za'lek "
 "chairwoman. You also got access to the Heavy Combat Vessel license for your "
@@ -83321,7 +83309,7 @@ msgstr ""
 "あなたはそのうえ、助力への礼として大型戦闘艦免許を手に入れられるようになっ"
 "た。"
 
-#: dat/missions/zalek/particlephysics/zpp06.lua:133
+#: dat/missions/zalek/particlephysics/zpp06.lua:132
 msgid ""
 "You delivered Noona's report to {pnt} and found out that she is the Za'lek "
 "chairwoman."
@@ -100731,7 +100719,7 @@ msgstr "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgid "Unknown weapon status for '%s'"
 msgstr "Unknown weapon status for '%s'"
 
-#: src/weapon.c:571 src/weapon.c:720 src/weapon.c:1876
+#: src/weapon.c:571 src/weapon.c:720 src/weapon.c:1875
 msgid "Unknown weapon layer!"
 msgstr "Unknown weapon layer!"
 
@@ -100745,24 +100733,24 @@ msgstr "Weapon of type '%s' has no update implemented yet!"
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr "Weapon of type '%s' has no render implemented yet!"
 
-#: src/weapon.c:1825
+#: src/weapon.c:1824
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr "Weapon of type '%s' has no create implemented yet!"
 
-#: src/weapon.c:1859
+#: src/weapon.c:1858
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr "Trying to create a Weapon from a non-Weapon type Outfit"
 
-#: src/weapon.c:1917
+#: src/weapon.c:1916
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr "Trying to create a Beam Weapon from a non-beam outfit."
 
-#: src/weapon.c:1937 src/weapon.c:1979 src/weapon.c:2125
+#: src/weapon.c:1936 src/weapon.c:1978 src/weapon.c:2124
 msgid "Invalid WEAPON_LAYER specified"
 msgstr "Invalid WEAPON_LAYER specified"
 
-#: src/weapon.c:1985
+#: src/weapon.c:1984
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
 
