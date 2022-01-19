@@ -44,14 +44,14 @@ fi
 # Creates temp directory
 WORKPATH=$(readlink -mf "$(mktemp -d)")
 
-# Make temp directories
-mkdir -p "$WORKPATH/{BundleDir}"
+# Make temp directory
+mkdir -p "$WORKPATH"
 
 # Copy all DMG assets to BundleDir
-cp -r "$SOURCEPATH"/extras/macos/dmg_assets/* "$WORKPATH"/BundleDir
+cp -r "$SOURCEPATH"/extras/macos/dmg_assets/. "$WORKPATH"
 
 # Extract Naev app bundle to BundleDir
-cp -r "$BUILDPATH"/dist/Naev.app "$WORKPATH"/BundleDir
+cp -r "$BUILDPATH"/dist/Naev.app "$WORKPATH"
 
 # Generate DMG image
-genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/dist/naev.dmg "$WORKPATH"/BundleDir
+genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/dist/naev.dmg "$WORKPATH"
