@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Za'lek Bomber Drone Fighter Bay">
+<outfit name="Za'lek Bomber Drone Mini Bay">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
@@ -10,7 +10,7 @@
   <mass>120</mass>
   <price>1700000</price>
   <gfx_store>zalek_drone_bomber_fighter.webp</gfx_store>
-  <description>This docking facility can launch a wing of bomber drones capable of bombarding enemy capital ships into submission without the mothership ever coming into danger.</description>
+  <description>This bay can launch a wing of bomber drones capable of bombarding enemy capital ships into submission without the mothership ever coming into danger. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-135</cpu>
  </general>
  <specific type="fighter bay" secondary="1">

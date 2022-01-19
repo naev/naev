@@ -7,7 +7,7 @@ local bioship = require 'bioship'
 
 local soromid_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Soromid Brigand Fighter Bay",
+   "Soromid Brigand Bay",
    "Heavy Laser Turret", "Grave Beam",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",

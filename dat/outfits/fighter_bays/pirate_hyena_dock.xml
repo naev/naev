@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Pirate Hyena Fighter Bay">
+<outfit name="Pirate Hyena Dock">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
@@ -7,7 +7,7 @@
   <mass>50</mass>
   <price>600000</price>
   <gfx_store>pirate_hyena_fighter.webp</gfx_store>
-  <description>This fighter bay allows your ship to carry a pair of Pirate Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can assist in ship scavenging and looting.</description>
+  <description>This dock allows your ship to carry a pair of Pirate Hyena interceptors. It comes with all the amenities necessary for the maintenance and operation of the interceptors. The Pirate Hyenas can assist in ship scavenging and looting.</description>
   <cpu>-150</cpu>
  </general>
  <specific type="fighter bay" secondary="1">

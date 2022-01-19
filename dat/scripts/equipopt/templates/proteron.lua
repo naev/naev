@@ -6,7 +6,7 @@ local eparams = require 'equipopt.params'
 
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Proteron Derivative Fighter Bay",
+   "Proteron Derivative Bay",
    "Heavy Razor Turret", "Grave Beam", "Railgun",
    "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
    "Heavy Ripper Turret",

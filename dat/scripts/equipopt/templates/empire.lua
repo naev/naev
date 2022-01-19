@@ -6,7 +6,7 @@ local ecores = require 'equipopt.cores'
 
 local empire_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Empire Lancelot Fighter Bay",
+   "Empire Lancelot Bay",
    "Turbolaser", "Heavy Ripper Turret",
    "Heavy Laser Turret",
    -- Medium Weapons
@@ -37,7 +37,7 @@ local empire_outfits = eoutfits.merge{{
 }}
 local empire_outfits_collective = eoutfits.merge{
    empire_outfits,
-   { "Drone Fighter Bay" },
+   { "Drone Bay" },
 }
 
 

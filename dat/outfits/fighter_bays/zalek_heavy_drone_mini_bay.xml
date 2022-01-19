@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Za'lek Heavy Drone Fighter Bay">
+<outfit name="Za'lek Heavy Drone Mini Bay">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>medium</size>
@@ -10,7 +10,7 @@
   <mass>160</mass>
   <price>1100000</price>
   <gfx_store>zalek_drone_heavy_fighter.webp</gfx_store>
-  <description>The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. Three heavy drones can be operated from this bay, giving the mothership a good deal of punch.</description>
+  <description>This bay can launch three heavy drones, giving the mothership a good deal of punch. It comes with all the devices required for the maintenance and flight of the drones.</description>
   <cpu>-200</cpu>
  </general>
  <specific type="fighter bay" secondary="1">

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Lancelot Fighter Bay">
+<outfit name="Lancelot Bay">
  <general>
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
