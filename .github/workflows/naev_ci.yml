@@ -281,7 +281,7 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-  "Lua_Lint":
+  "Luacheck":
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-linux-latest:latest"
@@ -320,7 +320,7 @@ jobs:
       - name: Meson Test
         id: test
         run: |
-          meson test lua_lint -C build
+          meson test luacheck -C build
 
       - name: Upload Test Log
         uses: actions/upload-artifact@v2
@@ -333,7 +333,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-docs:latest"
-    needs: Lua_Lint
+    needs: Luacheck
 
     steps:
       - name: Get Source

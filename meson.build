@@ -217,7 +217,7 @@ if buildExec.disabled() == false
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
    # Luacheck (linter) wrapper
-   luacheckIfInstalled = find_program('utils/luacheckIfInstalled.sh')
+   luacheck = find_program('luacheck', required: false)
 
    # Audio
    openal    = dependency('openal', required: true)
