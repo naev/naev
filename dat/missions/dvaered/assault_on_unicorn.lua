@@ -81,19 +81,8 @@ function death(pilot,killer)
    if pir.factionIsPirate( pilot:faction() )
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
-      local reward_table = {
-         ["Pirate Hyena"]      =  10e3,
-         ["Pirate Shark"]      =  30e3,
-         ["Pirate Vendetta"]   =  80e3,
-         ["Pirate Ancestor"]   = 100e3,
-         ["Pirate Rhino"]      = 120e3,
-         ["Pirate Phalanx"]    = 140e3,
-         ["Pirate Admonisher"] = 150e3,
-         ["Pirate Kestrel"]    = 600e3,
-      }
 
-      mem.killed_ship = pilot:ship():nameRaw()
-      mem.reward_earned = reward_table[mem.killed_ship]
+      mem.reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
       mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + mem.reward_earned )
       update_osd()
