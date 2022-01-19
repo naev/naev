@@ -58726,20 +58726,10 @@ msgstr ""
 #. luacheck: globals land (Hook functions passed by name)
 #. Here are stored the fake texts for the OSD
 #: dat/missions/neutral/runaway/runaway_search.lua:39
-msgid "Search for Cynthia on Niflheim in Dohriabi"
-msgstr ""
-
-#: dat/missions/neutral/runaway/runaway_search.lua:40
-msgid "Search for Cynthia on Nova Shakar in Shakar"
-msgstr ""
-
-#: dat/missions/neutral/runaway/runaway_search.lua:41
-msgid "Search for Cynthia on Selphod in Eridani"
-msgstr ""
-
-#: dat/missions/neutral/runaway/runaway_search.lua:42
-msgid "Search for Cynthia on Emperor's Fist in Gamma Polaris"
-msgstr ""
+#, fuzzy
+#| msgid "Frontier systems"
+msgid "Search for Cynthia on {pnt} in {sys}"
+msgstr "프론티어 시스템"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:47
 msgid "An old man sits at a table with some missing person papers."
