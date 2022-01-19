@@ -33,7 +33,7 @@
    4) Runaway
    5) Player has been hailed by Captain HewHew
    6) Player has met the Empire and Pirate agent, but did not accept any of their offers
-   7) Accepted Empire solution: can cross blockade of Alteris->Goddard
+   7) Accepted Empire solution: can cross blockade of Arcturus->Goddard
    8) Accepted Pirate solution: can cross any blockade
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
 --]]
@@ -689,15 +689,15 @@ function pirateDealer()
    end
 end
 function imperialAgent()
-   if tk.yesno(_("Deal with the Empire"), fmt.f(_([[As you approach, the agent seems to recognize you immediately. "Hello, {player}. I guess they told you that I may have a solution to your little... problem." You look suspiciously at the agent and ask: "What do you want in exchange?" The agent smiles: "Simple. I want to speak with the Dvaered captain. Give me 10 hecotseconds on the spacedock alone with him, not more, and the commander of the fleet in Alteris will forget to scan your ship when you jump to Goddard."
+   if tk.yesno(_("Deal with the Empire"), fmt.f(_([[As you approach, the agent seems to recognize you immediately. "Hello, {player}. I guess they told you that I may have a solution to your little... problem." You look suspiciously at the agent and ask: "What do you want in exchange?" The agent smiles: "Simple. I want to speak with the Dvaered captain. Give me 10 hecotseconds on the spacedock alone with him, not more, and the commander of the fleet in Arcturus will forget to scan your ship when you jump to Goddard."
    This is certainly an unusual request. You think of all the state secrets a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. But, Hamfresser is a professional after all, trained avoid revealing any valuable information. But, probably the Imperial agent is a professional as well, trained to recover valuable information. And the pirate proposition still holds. So you answer:]]), {player=player.name()})) then
       tk.msg(_("You made the only good choice"),_([[After accepting, you invite the agent to follow you to the dock. You enter your ship, where the commandos are waiting for you, and inform Hamfresser about the situation. He anxiously looks at the two other remaining members of his team. Nikolov grimaces and Therus nervously hits the wall. "If you think we have no other choice..." says the captain. After removing his uniform jacket (where his name and rank are written), Hamfresser takes a deep breath and joins the Imperial agent outside, in front of the ship. From a window, you see them having what looks like a peaceful conversation.
    After a while, Hamfresser returns to the ship and the agent waves to indicate that you're allowed to take off. Nikolov asks her captain: "And?" "Who knows what these Imperial weirdos wanted to know? I tried to dodge all the questions, but... well... You never know."]]))
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
-         fmt.f(_("Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard"), {pnt=reppla, sys=repsys}),
+         fmt.f(_("Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron in Arcturus won't prevent you from jumping to Goddard"), {pnt=reppla, sys=repsys}),
       } )
-      misn.markerAdd( system.get("Alteris"), "plot" )
+      misn.markerAdd( system.get("Arcturus"), "plot" )
       misn.npcRm(mem.impag)
       mem.stage = 7
    else
