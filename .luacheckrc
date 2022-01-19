@@ -118,6 +118,7 @@ stds.AI.globals = {
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
+stds.API_datapath = {globals={"datapath"}} -- C functon: conf_loadConfigPath
 stds.API_loadscreen = {globals={"render"}}    -- C function: loadscreen_render()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
@@ -210,3 +211,11 @@ files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+
+files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
+files["docs/missions/**/*.lua"].std = files["dat/missions/**/*.lua"].std
+
+files["extras/autotests.lua"].std = STANDARD
+files["utils/**/*.lua"].std = STANDARD
+
+files["**/datapath.lua"].std = "API_datapath"
