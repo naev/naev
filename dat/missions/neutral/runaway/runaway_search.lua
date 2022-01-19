@@ -19,6 +19,11 @@
    It is alluded to that Cynthia ran away due to her abusive mother.
    The father has been named after me, Old T. Man.
    I'm joking about the last line a little. If you want to name him, feel free.
+
+   [JEB] split mission into stages as follows:
+      1. Search "targetworlds" for clues. (Unchecked locations are kept in mem.search_pnts.)
+      2. Follow a clear lead to "catchworld".
+      3. Return to "homeworld".
 --]]
 
 local fmt = require "format"
@@ -30,21 +35,48 @@ local reward = 300e3
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
-local targetworld = planet.get("Niflheim")
-
--- luacheck: globals land (Hook functions passed by name)
-
--- Here are stored the fake texts for the OSD
-mem.osd_text = {}
-mem.osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
-mem.osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
-mem.osd_text[3] = _("Search for Cynthia on Selphod in Eridani")
-mem.osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
-
--- Can't let them see what's coming up, can I?
+local targetworlds = {
+  planet.get("Niflheim"),
+  planet.get("Nova Shakar"),
+  planet.get("Selphod"),
+  planet.get("Emperor's Fist")
+}
+local catchworld = planet.get("Torloth")
+local homeworld = planet.get("Zhiru")
 
 function create ()
    misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
+end
+
+local function init_search()
+   if mem.search_pnts ~= nil then
+      return
+   end
+   -- Migrate an old mission in progress
+   if mem.runawayMarker ~= nil then
+      misn.markerRm( mem.runawayMarker )
+      mem.runawayMarker = nil
+   end
+
+   mem.stage = 1
+   mem.search_pnts = {}
+   mem.search_markers = {}
+   mem.search_osds = {}
+   for i,pnt in ipairs(targetworlds) do
+      mem.search_pnts[i] = pnt
+      mem.search_osds[i] = fmt.f( _("Search for Cynthia on {pnt} in {sys}"), {pnt=pnt, sys=pnt:system()} )
+      mem.search_markers[i] = misn.markerAdd( pnt, "low" )
+   end
+   misn.osdCreate( _("The Search for Cynthia"), mem.search_osds )
+end
+
+local function tbl_index( tbl, elm )
+   for k,v in ipairs(tbl) do
+      if v==elm then
+         return k
+      end
+   end
+   return nil
 end
 
 function accept ()
@@ -54,59 +86,64 @@ function accept ()
       misn.finish()
    end
 
-   --Set up the OSD
-   if misn.accept() then
-      misn.osdCreate(_("The Search for Cynthia"), mem.osd_text)
-      misn.osdActive(1)
+   if not misn.accept() then
+      return
    end
 
    misn.setTitle( _("The Search for Cynthia") )
    misn.setReward( fmt.f( _("{credits} on delivery."), {credits=fmt.credits(reward)} ) )
-
    misn.setDesc( _("Search for Cynthia.") )
-   mem.runawayMarker = misn.markerAdd( targetworld, "low" )
+
+   init_search()
 
    tk.msg( _("The Search for Cynthia"), _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]) )
 
    hook.land("land")
 end
 
+-- luacheck: globals land (Hook functions passed by name)
 function land ()
-   -- Only proceed if at the target.
-   if planet.cur() ~= targetworld then
-      return
-   end
-
-   --If we land on Niflheim, display message, reset target and carry on.
-   if planet.cur() == planet.get("Niflheim") then
-      targetworld = planet.get("Nova Shakar")
-      tk.msg(_("The Search for Cynthia"), _("After thoroughly searching the spaceport, you decide that she wasn't there."))
-      misn.osdActive(2)
-      misn.markerMove(mem.runawayMarker, targetworld)
+   init_search() -- to rescue naev-0.9.1 games, which weren't saving the progress
 
    --If we land on Nova Shakar, display message, reset target and carry on.
-   elseif planet.cur() == planet.get("Nova Shakar") then
-      targetworld = planet.get("Torloth")
+   if mem.stage == 1 and planet.cur() == targetworlds[2] then
+      mem.stage = 2
       tk.msg(_("The Search for Cynthia"), _("At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found."))
 
-      --Add in the *secret* OSD text
-      mem.osd_text[3] = _("Catch Cynthia on Torloth in Cygnus")
-      mem.osd_text[4] = _("Return Cynthia to her father on Zhiru in the Goddard system")
+      --Set up the *secret* OSD text
+      misn.osdCreate( _("The Search for Cynthia"), {
+         _("Catch Cynthia on Torloth in Cygnus"),
+         _("Return Cynthia to her father on Zhiru in the Goddard system"),
+      } )
 
-      --Update the OSD
-      misn.osdDestroy()
-      misn.osdCreate(_("The Search for Cynthia"), mem.osd_text)
-      misn.osdActive(3)
+      for i,marker in ipairs(mem.search_markers) do
+         misn.markerRm( marker )
+      end
+      mem.search_markers = { misn.markerAdd( catchworld ) }
 
-      misn.markerMove(mem.runawayMarker, targetworld)
+   --If we land on Niflheim, display message, reset target and carry on.
+   elseif mem.stage == 1 then
+      local i = tbl_index( mem.search_pnts, planet.cur() )
+      if i == nil then
+         return
+      end
+      tk.msg(_("The Search for Cynthia"), _("After thoroughly searching the spaceport, you decide that she wasn't there."))
+      misn.markerRm( mem.search_markers[i] )
+      table.remove( mem.search_pnts, i )
+      table.remove( mem.search_markers, i )
+      table.remove( mem.search_osds, i )
+      misn.osdCreate( _("The Search for Cynthia"), mem.search_osds )
 
    --If we land on Torloth, change OSD, display message, reset target and carry on.
-   elseif planet.cur() == planet.get("Torloth") then
-      targetworld = planet.get("Zhiru")
+   elseif mem.stage == 2 and planet.cur() == catchworld then
+      mem.stage = 3
 
       --If you decide to release her, speak appropriately, otherwise carry on
       if not tk.yesno(_("The Search for Cynthia"), _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])) then
-         mem.osd_text[4] = _("Go to Zhiru in Goddard to lie to Cynthia's father")
+         misn.osdCreate( _("The Search for Cynthia"), {
+            _("Catch Cynthia on Torloth in Cygnus"),
+            _("Go to Zhiru in Goddard to lie to Cynthia's father"),
+         } )
          tk.msg(_("The Search for Cynthia"), _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
       else
          tk.msg(_("The Search for Cynthia"), _([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attempts to talk to her end up fruitless.]]))
@@ -114,16 +151,11 @@ function land ()
          mem.cargoID = misn.cargoAdd( c, 0 )
       end
 
-      --Update the OSD
-      misn.osdDestroy()
-      misn.osdCreate(_("The Search for Cynthia"), mem.osd_text)
-      misn.osdActive(4)
-
-      misn.markerMove(mem.runawayMarker, targetworld)
+      misn.osdActive( 2 )
+      misn.markerMove( mem.search_markers[1], homeworld )
 
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
-   elseif planet.cur() == planet.get("Zhiru") then
-
+   elseif mem.stage == 3 and planet.cur() == homeworld then
       --Talk to the father and get the reward
       if misn.osdGetActive() == _("Return Cynthia to her father on Zhiru in the Goddard system") then
          tk.msg(_("The Search for Cynthia"), _("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."))
