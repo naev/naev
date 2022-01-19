@@ -1,14 +1,19 @@
 #!/bin/bash
 
-# ITCHIO DEPLOYMENT SCRIPT FOR NAEV
-#
-# This script should be run after downloading all build artefacts
-# If -n is passed to the script, a nightly build will be generated
-# and uploaded to Itch.io
-#
-# Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (itch.io build artefact location) -o <OUTDIR> (itch.io dist output directory)
-
 set -e
+
+usage() {
+    cat <<EOF
+ITCHIO DEPLOYMENT SCRIPT FOR NAEV
+
+This script should be run after downloading all build artefacts
+If -n is passed to the script, a nightly build will be generated
+and uploaded to Itch.io
+
+Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (itch.io build artefact location) -o <OUTDIR> (itch.io dist output directory)
+EOF
+    exit 1
+}
 
 # Defaults
 NIGHTLY="false"
@@ -36,6 +41,9 @@ while getopts dnpct:o: OPTION "$@"; do
         ;;
     o)
         OUTDIR="${OPTARG}"
+        ;;
+    *)
+        usage
         ;;
     esac
 done
@@ -85,10 +93,10 @@ else
 fi
 
 run_butler () {
-    if [ "$BUTLER" = *"$BUTLERDIR"* ]; then
-        retry 5 ./$BUTLER $@
+    if [[ "$BUTLER" = *"$BUTLERDIR"* ]]; then
+        retry 5 "./$BUTLER" "$@"
     else
-        retry 5 $BUTLER $@
+        retry 5 "$BUTLER" "$@"
     fi
 }
 
@@ -113,8 +121,8 @@ mkdir -p "$OUTDIR"/win64
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-chmod +x "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR/lin64/naev-$SUFFIX-linux-x86-64.AppImage"
+chmod +x "$OUTDIR/lin64/naev-$SUFFIX-linux-x86-64.AppImage"
 
 # Move macOS bundle to deployment location
 unzip "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos
@@ -142,7 +150,7 @@ sed -i "s/%EXECNAME%/naev-$SUFFIX-win64.exe/" "$OUTDIR"/win64/.itch.toml
 sed -i 's/%PLATFORM%/windows/' "$OUTDIR"/win64/.itch.toml
 
 # Prepare soundtrack
-if [ "$NIGHTLY" == "false" && "$PRERELEASE" == "false" ]; then
+if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
     mkdir -p "$OUTDIR"/soundtrack
     unzip "$TEMPPATH"/naev-soundtrack/*.zip -d "$OUTDIR"/soundtrack
 fi
