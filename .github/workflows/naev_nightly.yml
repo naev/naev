@@ -183,6 +183,7 @@ jobs:
       - name: Meson Install
         run: |
           meson install -C build
+          ./source/extras/macos/createDMG.sh -s source -b build
           cd build/dist
           zip -r naev-macos.zip Naev.app/*
 
@@ -190,7 +191,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/build/dist/*.zip
+          path: |
+            ${{ github.workspace }}/build/dist/*.zip
+            ${{ github.workspace }}/build/dist/*.dmg
           if-no-files-found: error
 
   "Steam_Naev_Release":

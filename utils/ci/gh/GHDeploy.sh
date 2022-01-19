@@ -91,8 +91,8 @@ cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x8
 
 chmod +x "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
 
-# Move macOS bundle to deployment location
-cp "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos/naev-"$SUFFIX"-macos.zip
+# Move macOS dmg image to deployment location
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg
 
 # Move Windows installer to deployment location
 cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe
@@ -116,7 +116,7 @@ if [ "$DRYRUN" == "false" ]; then
     run_gau -version
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.zip -mediatype "application/zip" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg -mediatype "application/octet-stream" -overwrite
     run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
         run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip -mediatype "application/zip" -overwrite
