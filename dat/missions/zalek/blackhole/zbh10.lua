@@ -143,8 +143,8 @@ function enter ()
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    else
       create_fleet{"Za'lek Mephisto", "Za'lek Demon", "Za'lek Demon" }
-      create_fleet{"Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Sting", "Za'lek Light Drone", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Demon", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Light Drone"}
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    end
 
@@ -159,7 +159,8 @@ function enter ()
 end
 
 local drones_deployed = false
-local feralpack, defense_drones
+local feralpack
+local defense_drones = {}
 function heartbeat ()
    heartbeat_state = heartbeat_state + 1
    if heartbeat_state == 1 then
@@ -167,10 +168,11 @@ function heartbeat ()
       vn.scene()
       local pi = vn.newCharacter( zbh.vn_pi{ pos="left", shader=love_shaders.hologram() } )
       local z = vn.newCharacter( zbh.vn_zach{ pos="right", shader=love_shaders.hologram() } )
+      vn.transition("electric")
       vn.na(_([[TODO]]))
       pi(_([["TODO"]]))
       z(_([["TODO"]]))
-      vn.transition()
+      vn.done("electric")
       vn.run()
 
       -- TODO have Zach deploy friendly drones
@@ -184,26 +186,32 @@ function heartbeat ()
          end
       end
 
-      if alive and not drones_deployed then
-         -- Get nearest enemy
-         local d = math.huge
-         for k,p in ipairs(badguys) do
-            if p:exists() then
-               d = math.min( d, p:pos():dist( mainpnt:pos() ) )
+      if alive then
+         if not drones_deployed then
+            -- Get nearest enemy
+            local d = math.huge
+            for k,p in ipairs(badguys) do
+               if p:exists() then
+                  d = math.min( d, p:pos():dist( mainpnt:pos() ) )
+               end
+            end
+
+            -- Deploy drones if close to the planet
+            if d < 3000 then
+               player.autonavReset( 6 )
+               zach_say( _("Deploying defense drones!") )
+               local fgoodguys = zbh.fzach()
+               local fbadguys = zbh.evilpi()
+               fgoodguys:dynEnemy( fbadguys )
+               defense_drones = fleet.add( 3, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
+               for k,p in ipairs(defense_drones) do
+                  p:setFriendly(true)
+               end
+               drones_deployed = true
             end
          end
 
-         -- Deploy drones if close to the planet
-         if d < 3000 then
-            player.autonavReset( 6 )
-            zach_say( _("Deploying defense drones!") )
-            local fgoodguys = zbh.fzach()
-            local fbadguys = zbh.evilpi()
-            fgoodguys:dynEnemy( fbadguys )
-            defense_drones = fleet.add( 3, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
-            drones_deployed = true
-
-         elseif badguys[1]:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 90 then
+         if not feralpack and (badguys[1]:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 300) then
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()
             fferals:dynEnemy( fbadguys )
