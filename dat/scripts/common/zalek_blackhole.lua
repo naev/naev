@@ -85,6 +85,16 @@ function zbh.evilpi ()
          {clear_enemies=true, clear_allies=true} )
 end
 
+function zbh.fzach ()
+   local id = "zbh_zach"
+   local f = faction.exists( id )
+   if f then
+      return f
+   end
+   return faction.dynAdd( "Za'lek", id, _("Za'lek"),
+         {clear_enemies=true, clear_allies=true} )
+end
+
 function zbh.feralbioship ()
    local id = "zbh_feralbioship"
    local f = faction.exists( id )
