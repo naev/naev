@@ -203,15 +203,18 @@ function heartbeat ()
                local fgoodguys = zbh.fzach()
                local fbadguys = zbh.evilpi()
                fgoodguys:dynEnemy( fbadguys )
-               defense_drones = fleet.add( 3, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
+               defense_drones = fleet.add( 5, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
                for k,p in ipairs(defense_drones) do
                   p:setFriendly(true)
+                  p:memory().guardpos = mainpnt:pos() + vec2.newP(200*rnd.rnd(), rnd.angle() )
                end
                drones_deployed = true
             end
          end
 
-         if not feralpack and (badguys[1]:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 300) then
+         local bl = badguys[1]
+         local ba = bl:health()
+         if not feralpack and (ba < 90 or bl:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 300) then
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()
             fferals:dynEnemy( fbadguys )
@@ -222,14 +225,23 @@ function heartbeat ()
             local jp = jump.get( system.cur(), feraljumpsys )
             feralpack = fleet.add( 2, ships, fferals, jp )
             for k,p in ipairs(feralpack) do
-               p:changeAI("guard")
                p:rename(_("Feral Bioship"))
                p:setNoDeath()
                p:setFriendly(true)
                hook.pilot( p, "hail", "feral_hail" )
             end
-            feralpack[1]:memory().guardpos = mainpnt:pos() + vec2.newP(200+200*rnd.rnd(), rnd.angle() )
-            feralpack[1]:setVisplayer(true)
+            local l = feralpack[1]
+            l:changeAI("guard")
+            l:memory().guardpos = mainpnt:pos() + vec2.newP(200+200*rnd.rnd(), rnd.angle() )
+
+            local icarus = zbh.plt_icarus( jp )
+            icarus:setVisplayer(true)
+            icarus:setInvincible(true)
+            icarus:setFriendly(true)
+            icarus:control(true)
+            icarus:follow( l )
+            table.insert( feralpack, icarus )
+
             hook.timer( 0.3, "feral_check" )
          end
 
@@ -283,7 +295,7 @@ function feral_check ()
             p:setInvincible(true)
             p:setInvisible(true)
             p:control(true)
-            p:moveto( 0.9*jp:pos() + vec2.newP( 300*rnd.rnd(), rnd.angle() ) )
+            p:moveto( jp:pos() + vec2.newP( 300*rnd.rnd(), rnd.angle() ) )
          end
       end
    end
