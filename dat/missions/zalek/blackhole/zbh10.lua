@@ -31,7 +31,7 @@ local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat feral_hail (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat feral_hail feral_check (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")
@@ -185,14 +185,15 @@ function heartbeat ()
       end
 
       if alive and not drones_deployed then
+         -- Get nearest enemy
          local d = math.huge
-         local ppos = player.pos()
          for k,p in ipairs(badguys) do
             if p:exists() then
-               d = math.min( d, p:pos():dist( ppos ) )
+               d = math.min( d, p:pos():dist( mainpnt:pos() ) )
             end
          end
 
+         -- Deploy drones if close to the planet
          if d < 3000 then
             player.autonavReset( 6 )
             zach_say( _("Deploying defense drones!") )
@@ -201,10 +202,13 @@ function heartbeat ()
             fgoodguys:dynEnemy( fbadguys )
             defense_drones = fleet.add( 3, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
             drones_deployed = true
-         elseif badguys[1]:pos():dist( ppos ) < 3000 or naev.ticksGame()-fightstart > 90 then
+
+         elseif badguys[1]:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 90 then
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()
             fferals:dynEnemy( fbadguys )
+
+            zach_say( _("I'm detecting incoming ships… Wait, are those Icarus' kin?") )
 
             local ships = { "Kauweke", "Taitamariki", "Taitamariki" }
             local jp = jump.get( system.cur(), feraljumpsys )
@@ -213,15 +217,25 @@ function heartbeat ()
                p:changeAI("guard")
                p:rename(_("Feral Bioship"))
                p:setNoDeath()
+               p:setFriendly(true)
                hook.pilot( p, "hail", "feral_hail" )
             end
             feralpack[1]:memory().guardpos = mainpnt:pos() + vec2.newP(200+200*rnd.rnd(), rnd.angle() )
+            feralpack[1]:setVisplayer(true)
+            hook.timer( 0.3, "feral_check" )
          end
 
       else
-         -- TODO cutscene where ferals go away again
+         for k,p in ipairs(feralpack) do
+            if p:exists() then
+               p:setInvincible(true)
+               p:setInvisible(false)
+               p:control(true, true)
+               p:moveto( mainpnt:pos() + vec2.newP( 200+200*rnd.rnd(), rnd.angle() ) )
+            end
+         end
 
-         for d in ipairs(defense_drones) do
+         for k,d in ipairs(defense_drones) do
             if d:exists() then
                d:control(true)
                d:land( mainpnt )
@@ -249,4 +263,21 @@ function feral_hail ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
    sfx:play()
    player.commClose()
+end
+
+function feral_check ()
+   if mem.state==2 then return end
+   local jp = jump.get( system.cur(), feraljumpsys )
+   for k,p in ipairs(feralpack) do
+      if not p:flags("invincible") then
+         local pa = p:health()
+         if pa < 70 then
+            p:setInvincible(true)
+            p:setInvisible(true)
+            p:control(true)
+            p:moveto( 0.9*jp:pos() + vec2.newP( 300*rnd.rnd(), rnd.angle() ) )
+         end
+      end
+   end
+   hook.timer( 0.3, "feral_check" )
 end
