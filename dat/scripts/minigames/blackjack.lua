@@ -329,7 +329,7 @@ end
 
 local function trybet( betamount )
    if player.credits() < betamount then
-      bj.msg = fmt.f(_("#rNot enough credits! You only have {credits}!#0"), {credits=fmt.credits(player.credits())})
+      bj.msg = fmt.f("#r".._("Not enough credits! You only have {credits}!").."#0", {credits=fmt.credits(player.credits())})
    else
       player.pay(-betamount)
       bj.betamount = betamount
@@ -373,9 +373,9 @@ function bj.mousepressed( mx, my, _button )
       if _inbox( mx, my, x, y, w+2*b, h+2*b ) then
          if bj.betting then
             if k==1 then
-               trybet( 10000 )
+               trybet( 10e3 )
             elseif k==2 then
-               trybet( 100000 )
+               trybet( 100e3 )
             else
                bj.donefunc()
             end
