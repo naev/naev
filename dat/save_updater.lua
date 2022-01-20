@@ -2,6 +2,11 @@
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
 
+--[[
+   The format is ["oldname"] = newvalue where newvalue can either take a string
+   for the new name of the outfit (if there is a direct equivalent) or a number
+   value indicating the amount of credits to refund the player.
+--]]
 local outfit_list = {
    -- Below is a list of changes from 0.9.0 to 0.10.0
    ["Drone Fighter Bay"] = "Drone Bay",
@@ -22,12 +27,12 @@ local outfit_list = {
    ["Za'lek Heavy Drone Fighter Bay"] = "Za'lek Heavy Drone Mini Bay",
    ["Za'lek Light Drone Fighter Dock"] = "Za'lek Light Drone Bay",
    ["Za'lek Light Drone Fighter Bay"] = "Za'lek Light Drone Mini Bay",
-   ["Unicorp Banshee Launcher"] = 35000,
-   ["Unicorp Mace Launcher"] = 19000,
-   ["Unicorp Fury Launcher"] = 65000,
-   ["Unicorp Headhunter Launcher"] = 70000,
-   ["Unicorp Medusa Launcher"] = 73000,
-   ["Unicorp Vengeance Launcher"] = 78000,
+   ["Unicorp Banshee Launcher"] = 35e3,
+   ["Unicorp Mace Launcher"] = 19e3,
+   ["Unicorp Fury Launcher"] = 65e3,
+   ["Unicorp Headhunter Launcher"] = 70e3,
+   ["Unicorp Medusa Launcher"] = 73e3,
+   ["Unicorp Vengeance Launcher"] = 78e3,
    -- Below is a list of changes from 0.8.2 to 0.9.0
    ["Unicorp PT-900 Core System"] = "Unicorp PT-500 Core System",
    ["Unicorp PT-600 Core System"] = "Unicorp PT-310 Core System",
