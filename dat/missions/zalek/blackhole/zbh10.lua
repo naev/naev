@@ -175,8 +175,6 @@ function heartbeat ()
       vn.done("electric")
       vn.run()
 
-      -- TODO have Zach deploy friendly drones
-
    else
       local alive = false
       for k,p in ipairs(badguys) do
