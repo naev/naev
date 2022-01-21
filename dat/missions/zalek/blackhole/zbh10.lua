@@ -113,7 +113,7 @@ He laughs nervously.
    z(_([["So, this is just my working hypothesis, but they must have found something when doing research that casts doubts on Dr. Slorn's research, and probably submitted it to the Journal on Advanced Physics, and I wouldn't be surprised if someone in Dr. Slorn's group caught a whiff of it and tracked them down. This all happens more than you would wish it did."]]))
    z(_([["What still is weird is how they went through all the effort to destroy the research station, instead of a more indirect approach."
 He lets out a sigh.
-"If it weren't for Icarus we would have also joined my late colleagues as research martyrs…"]]))
+"If it weren't for Icarus, we would have also joined my late colleagues as research martyrs…"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
@@ -170,6 +170,7 @@ function enter ()
 
    -- Main boss gets hilighted
    local l = badguys[1]
+   l:rename(_("Godheart"))
    l:setVisplayer(true)
    l:setHilight(true)
 
