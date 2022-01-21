@@ -128,6 +128,7 @@ static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
 static void misn_close( unsigned int wid, const char *name );
+static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, const char *str );
@@ -591,6 +592,9 @@ static void misn_open( unsigned int wid )
    window_addButtonKey( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
          _("Accept Mission"), misn_accept, SDLK_a );
+   window_addButtonKey( wid, -20, 60+2*LAND_BUTTON_HEIGHT,
+         LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAutonavMission",
+         _("Autonav"), misn_autonav, SDLK_n );
 
    /* text */
    y = -60;
@@ -631,6 +635,30 @@ static void misn_close( unsigned int wid, const char *name )
 
    /* Remove computer markers just in case. */
    space_clearComputerMarkers();
+}
+/**
+ * @brief Autonav to selected mission.
+ *    @param wid Window of the mission computer.
+ *    @param str Unused.
+ */
+static void misn_autonav( unsigned int wid, const char *str )
+{
+   Mission* misn;
+   const StarSystem *sys;
+   (void) str;
+
+   /* Makes sure current mission has system */
+   misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
+   sys = mission_sysComputerMark( misn );
+   if (sys==NULL)
+      return;
+
+   /* Select mission's target system */
+   map_select( sys,0 );
+
+   /* Autonav to target system */
+   player_hyperspacePreempt( 1 );
+   player_autonavStart();
 }
 /**
  * @brief Accepts the selected mission.
@@ -757,6 +785,7 @@ static void misn_update( unsigned int wid, const char *str )
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
+      window_disableButton( wid, "btnAutonavMission" );
       return;
    }
 
@@ -768,6 +797,7 @@ static void misn_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
+   window_enableButton( wid, "btnAutonavMission" );
 }
 
 /**
