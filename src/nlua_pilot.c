@@ -4044,7 +4044,7 @@ static int pilotL_idle( lua_State *L )
 /**
  * @brief Sets manual control of the pilot.
  *
- * Note that this will reset the pilot's current task when the state changes.
+ * Note that this will reset the pilot's current task when the state changes. In the case of the player, it will also clear autonav.
  *
  * @usage p:control() -- Same as p:control(true), enables manual control of the pilot
  * @usage p:control(false) -- Restarts AI control of the pilot
@@ -4081,8 +4081,11 @@ static int pilotL_control( lua_State *L )
       cleartasks = lua_toboolean(L, 3);
 
    if (enable) {
+      int isp = pilot_isPlayer(p);
+      if (isp)
+         player_autonavAbort(NULL); /* Has to be run before setting the flag. */
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
-      if (pilot_isPlayer(p))
+      if (isp)
          ai_pinit( p, "player" );
    }
    else {
