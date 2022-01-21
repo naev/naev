@@ -348,6 +348,7 @@ jobs:
         Windows_Naev_Release,
         Darwin_Naev_Release,
         Steam_Naev_Release,
+        Steam_Naev_Soundtrack_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
 
