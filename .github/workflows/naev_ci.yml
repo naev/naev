@@ -366,8 +366,10 @@ jobs:
 
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-        run: |
-          curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
-          --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+        uses: convictional/trigger-workflow-and-wait@v1.5.0
+        with:
+          owner: naev
+          repo: naev.github.io
+          github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+          workflow_file_name: website_publish.yml
+          inputs: '{ "publish_type": "api" }'
