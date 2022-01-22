@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "conf.h"
 #include "log.h"
+#include "gui.h"
 #include "ndata.h"
 #include "nebula.h"
 #include "nlua.h"
@@ -359,23 +360,23 @@ static void background_renderImages( background_image_t *bkg_arr )
 
    /* Render images in order. */
    for (int i=0; i<array_size(bkg_arr); i++) {
-      double px,py, x,y, xs,ys, z;
+      double cx,cy, x,y, gx,gy, z, m;
       glColour col;
       background_image_t *bkg = &bkg_arr[i];
 
-      cam_getPos( &px, &py );
-      x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
-      y  = py + (bkg->y - py) * bkg->move - bkg->scale*bkg->image->sh/2.;
-      gl_gameToScreenCoords( &xs, &ys, x, y );
-      z = cam_getZoom();
-      z *= bkg->scale;
+      cam_getPos( &cx, &cy );
+      gui_getOffset( &gx, &gy );
+      m = bkg->move;
+      z = bkg->scale;
+      x  = (bkg->x - cx) * m - z*bkg->image->sw/2. + gx + SCREEN_W/2.;
+      y  = (bkg->y - cy) * m - z*bkg->image->sh/2. + gy + SCREEN_H/2.;
 
       col.r = bkg->col.r * conf.bg_brightness;
       col.g = bkg->col.g * conf.bg_brightness;
       col.b = bkg->col.b * conf.bg_brightness;
       col.a = bkg->col.a;
 
-      gl_renderTexture( bkg->image, xs, ys, z*bkg->image->sw, z*bkg->image->sh, 0., 0., bkg->image->srw, bkg->image->srh, &col, bkg->angle );
+      gl_renderTexture( bkg->image, x, y, z*bkg->image->sw, z*bkg->image->sh, 0., 0., bkg->image->srw, bkg->image->srh, &col, bkg->angle );
    }
 }
 
