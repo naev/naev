@@ -128,8 +128,8 @@ function starfield.init( params )
          texw = params.size
          texh = params.size
       else
-         texw = nw / nconf.zoom_far
-         texh = nh / nconf.zoom_far
+         texw = nw
+         texh = nh
          local texs = 4096 / math.max( texw, texh )
          if texs < 1 then
             texw = texw / texs
@@ -162,9 +162,8 @@ end
 
 function starfield.render( dt )
    if static then
-      local z = 1/camera.getZoom()
       lg.setColor( {sb,sb,sb,1} )
-      cvs:draw( (nw-texw*z)/2, (nh-texh*z)/2, 0, z, z )
+      cvs:draw( 0, 0 )
       return
    end
    -- Get camera properties
