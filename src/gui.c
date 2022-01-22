@@ -374,17 +374,17 @@ static void gui_renderSpobTarget (void)
    if (player.p->nav_hyperspace >= 0) {
       JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
 
-      c = &cGreen;
-
-      x = jp->pos.x;
-      y = jp->pos.y;
-      r = jumppoint_gfx->sw * 0.5;
-      gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
+      if (jp_isKnown(jp)) {
+         c = &cGreen;
+         x = jp->pos.x;
+         y = jp->pos.y;
+         r = jumppoint_gfx->sw * 0.5;
+         gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
+      }
    }
    if (player.p->nav_spob >= 0) {
       Spob *spob = cur_system->spobs[player.p->nav_spob];
       c = spob_getColour( spob );
-
       x = spob->pos.x;
       y = spob->pos.y;
       r = spob->radius;
@@ -913,9 +913,11 @@ void gui_radarRender( double x, double y )
    /*
     * Jump points.
     */
-   for (int i=0; i<array_size(cur_system->jumps); i++)
-      if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
+      if (i != player.p->nav_hyperspace && jp_isUsable(jp))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
+   }
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
