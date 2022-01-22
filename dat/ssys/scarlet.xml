@@ -10,14 +10,14 @@
   <x>727.820779</x>
   <y>-663.089989</y>
  </pos>
- <assets>
-  <asset>Burnan</asset>
-  <asset>Burnan's moon</asset>
-  <asset>Obelisk Station</asset>
-  <asset>Scarlet II</asset>
-  <asset>Scarlett III</asset>
-  <asset_virtual>Dvaered Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Burnan</spob>
+  <spob>Burnan's moon</spob>
+  <spob>Obelisk Station</spob>
+  <spob>Scarlet II</spob>
+  <spob>Scarlett III</spob>
+  <spob_virtual>Dvaered Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Druss">
    <autopos/>

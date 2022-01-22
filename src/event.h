@@ -10,22 +10,22 @@
  * @brief Activated event structure.
  */
 typedef struct Event_s {
-   unsigned int id; /**< Event ID. */
-   int data; /**< EventData parent. */
-   nlua_env env; /**< The environment of the running Lua code. */
-   int save; /**< Whether or not it should be saved. */
-   Claim_t *claims; /**< Event claims. */
+   unsigned int id;  /**< Event ID. */
+   int data;         /**< EventData parent. */
+   nlua_env env;     /**< The environment of the running Lua code. */
+   int save;         /**< Whether or not it should be saved. */
+   Claim_t *claims;  /**< Event claims. */
 } Event_t;
 
 /**
  * @brief Possibly event triggers.
  */
 typedef enum EventTrigger_s {
-   EVENT_TRIGGER_NULL,  /**< Invalid trigger. */
-   EVENT_TRIGGER_NONE,  /**< No enter trigger. */
-   EVENT_TRIGGER_ENTER, /**< Entering a system (jump/takeoff). */
-   EVENT_TRIGGER_LAND,  /**< Landing on a system. */
-   EVENT_TRIGGER_LOAD   /**< Loading or starting a new save game. */
+   EVENT_TRIGGER_NULL=-1,  /**< Invalid trigger. */
+   EVENT_TRIGGER_NONE=0,   /**< No enter trigger. */
+   EVENT_TRIGGER_ENTER,    /**< Entering a system (jump/takeoff). */
+   EVENT_TRIGGER_LAND,     /**< Landing on a system. */
+   EVENT_TRIGGER_LOAD      /**< Loading or starting a new save game. */
 } EventTrigger_t;
 
 /*
@@ -35,6 +35,7 @@ int events_load (void);
 void events_exit (void);
 void events_cleanup (void);
 void event_checkValidity (void);
+int event_reload( const char *name );
 
 /*
  * Triggering.

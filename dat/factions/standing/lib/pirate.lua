@@ -20,7 +20,7 @@ function spir.PirateStanding:init(args)
    args.mod_kill_enemy     = args.mod_kill_enemy      or 1           -- Kills of the faction's enemies
    args.mod_kill_friend    = args.mod_kill_friend     or 0           -- Kills of the faction's allies
 
-   args.friendly_at       = args.friendly_at          or 40          -- Standing value threshold between neutral and friendly.
+   args.friendly_at        = args.friendly_at          or 40          -- Standing value threshold between neutral and friendly.
 
    args.text = args.text or {
       [95] = _("Clan Legend"),
@@ -31,19 +31,11 @@ function spir.PirateStanding:init(args)
       [0]  = _("Common Thief"),
       [-1] = _("Normie"),
    }
+   args.text_bribed  = _("Paid Off")
    return sbase.Standing.init( self, args )
 end
 
-local text_bribed = _("Paid Off")
-
-function spir.PirateStanding:text_broad( value, bribed, override )
-   if bribed then
-      return text_bribed
-   else
-      return sbase.Standing.text_broad( self, value, bribed, override )
-   end
-end
-
+-- Override hit function
 function spir.PirateStanding:hit( current, amount, source, secondary )
    local value = math.max( -50, sbase.Standing.hit( self, current, amount, source, secondary ) )
 

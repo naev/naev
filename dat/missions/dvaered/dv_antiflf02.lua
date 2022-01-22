@@ -42,7 +42,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
+    misn.setNPC(_("Dvaered liaison"), portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
 end
 
 function accept()
@@ -53,14 +53,14 @@ function accept()
     True to his word, the Dvaered liaison escorts you out of the spaceport bar, and within the hour you find yourself deep inside a highly secured Dvaered military complex. You are ushered into a room, in which you find a large table and several important-looking military men. At the head of the table sits a man whose name tag identifies him as Colonel Urnus. Evidently he's the man in charge.
     A Dvaered soldier instructs you to take a seat.]]))
         tk.msg(_("A clever ruse"), fmt.f(_([[As you take the last empty seat at the table, Colonel Urnus starts the meeting. "Welcome, citizen. You know why you are here and you know what this meeting is about, so let me get right to the point. We have reason to believe the FLF terrorists are operating from a secret base of operations. We know this base is located somewhere in the nebula, and we have recently uncovered intel that indicates the base is likely to be in the {sys} system."
-    One of the walls lights up, showing part of the galaxy map. The {sys} system is colored red, and it's pulsating gently.
+    One of the walls lights up, showing part of the galaxy map. The {sys} system is coloured red, and it's pulsating gently.
     "Of course, we have conducted patrols in this system, but so far without result. Our sensors are severely impaired by the nebula in this system, so the chances of us finding the terrorist hive by our own devices are slim. Fortunately, our top strategists have come up with a ruse, one that will make the FLF come to us."
     "We will use a civilian ship - your ship, naturally - as a decoy," Urnus continues. The image on the wall zooms up to the {sys} system, and a white blip representing your ship appears near the jump point. "Your ship will be equipped with an IFF transponder in use by the FLF, so to anyone who isn't looking too closely you will appear as an FLF ship. Of course, this alone is not enough. The FLF will assume you know where their base is, since you look like one of them. It is important to note that the transponder will work best in the Nebula, which we believe is where the base should be located."
     The image on the wall updates again, this time showing several House Dvaered crests near your ship.
     "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), {sys=mem.destsys}))
         tk.msg(_("A clever ruse"), _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which should contain the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
     The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
-    "Let me make one thing clear, citizen. You are allowed, even expected to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armor takes a bit of a beating. This is vital to the success of the mission. Do not fail."
+    "Let me make one thing clear, citizen. You are allowed, even expected, to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armour takes a bit of a beating. This is vital to the success of the mission. Do not fail."
     Colonel Urnus seems to have concluded his explanation, so you, having spotted the obvious flaw in the Dvaereds' plan, pop the question of what happens if the FLF never show up.
     "Well," the Colonel muses, "That will mean our intel was probably wrong. But don't worry, citizen, we'll get those terrorists eventually! Now, time is of the essence, so get to your ship and follow your orders. Dismissed!"]]))
 
@@ -89,7 +89,7 @@ function accept()
         hook.enter("enter")
         hook.land("land")
     else
-        tk.msg(_("House Dvaered is out of luck"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]))
+        tk.msg(_("House Dvaered is out of luck"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the pilot I'm looking for. You may excuse yourself, citizen."]]))
         misn.finish()
     end
 end
@@ -112,7 +112,7 @@ function enter()
 end
 
 function land()
-    if mem.logsfound and planet.cur():faction() == faction.get("Dvaered") then
+    if mem.logsfound and spob.cur():faction() == faction.get("Dvaered") then
         tk.msg(_("X marks the spot"), _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty hectoseconds, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
     Colonel Urnus welcomes you. "Well met, citizen. I have received word of your accomplishment in our recent operation. It seems HQ is quite pleased with the result, and they have instructed me to reward you appropriately."
     He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the dangerous plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.

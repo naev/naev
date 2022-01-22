@@ -47,7 +47,7 @@ function create ()
 
    -- randomly select spawn system and planet where brother will be
    mem.brosys = mem.targetsys[math.random(3)]
-   mem.bropla = mem.brosys:planets()[math.random(#mem.brosys:planets())]
+   mem.bropla = mem.brosys:spobs()[math.random(#mem.brosys:spobs())]
 
    if not misn.claim(mem.brosys) then
       misn.finish(false)
@@ -75,7 +75,7 @@ function accept ()
    mem.misn_done      = false
    mem.attackedTraders = {}
    mem.fledTraders = 0
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
 
    -- Set mission details
    misn.setTitle( _("The Lost Brother") )
@@ -275,7 +275,7 @@ function spawn_baddies(sp)
       badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
       badguys[i]:outfitAdd("Razor Turret MK2",2)
-      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)

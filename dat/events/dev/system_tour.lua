@@ -23,7 +23,7 @@ function create()
 end
 
 function teleport()
-   player.teleport(systems[idx])
+   player.teleport( systems[idx], true )
    pilot.clear()
    hook.safe("screenshot")
 end

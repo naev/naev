@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @mainpage Naev
  *
@@ -12,7 +11,6 @@
  *
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
-
 /** @cond */
 #include "linebreak.h"
 #include "physfsrwops.h"
@@ -61,6 +59,14 @@
 #include "nfile.h"
 #include "nlua_misn.h"
 #include "nlua_var.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_gfx.h"
+#include "nlua_naev.h"
+#include "nlua_rnd.h"
+#include "nlua_vec2.h"
+#include "nlua_file.h"
+#include "nlua_data.h"
 #include "npc.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -92,10 +98,6 @@
 
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
-static double loading_r       = 0.; /**< Just to provide some randomness. */
-static glTexture *loading     = NULL; /**< Loading screen. */
-static glFont loading_font; /**< Loading font. */
-static char *loading_txt = NULL; /**< Loading text to display. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -108,11 +110,14 @@ static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 static double fps_dt    = 1.; /**< Display fps accumulator. */
 static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt   = 0.; /**< Real deltatick. */
-static double fps     = 0.; /**< FPS to finally display. */
-static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
+static double fps       = 0.; /**< FPS to finally display. */
+static double fps_cur   = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
 const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+double elapsed_time_mod = 0.; /**< Elapsed modified time. */
+
+static nlua_env load_env = LUA_NOREF;
 
 /*
  * prototypes
@@ -133,7 +138,6 @@ static void update_all (void);
 static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
-
 /**
  * @brief Flags naev to quit.
  */
@@ -142,7 +146,6 @@ void naev_quit (void)
    quit = 1;
 }
 
-
 /**
  * @brief Get if Naev is trying to quit.
  */
@@ -150,7 +153,6 @@ int naev_isQuit (void)
 {
    return quit;
 }
-
 
 /**
  * @brief The entry point of Naev.
@@ -162,6 +164,7 @@ int naev_isQuit (void)
 int main( int argc, char** argv )
 {
    char conf_file_path[PATH_MAX], **search_path;
+   Uint32 starttime;
 
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -173,7 +176,7 @@ int main( int argc, char** argv )
    log_init();
 
    /* Set up PhysicsFS. */
-   if( PHYSFS_init( env.argv0 ) == 0 ) {
+   if (PHYSFS_init( env.argv0 ) == 0) {
       ERR( "PhysicsFS initialization failed: %s",
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return -1;
@@ -190,16 +193,17 @@ int main( int argc, char** argv )
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
 
-   if ( env.isAppImage )
+   if (env.isAppImage)
       LOG( "AppImage detected. Running from: %s", env.appdir );
    else
       DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   if ( SDL_Init( 0 ) ) {
+   if (SDL_Init( 0 )) {
       ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
       return -1;
    }
+   starttime = SDL_GetTicks();
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -335,7 +339,7 @@ int main( int argc, char** argv )
    music_choose("load");
 
    /* FPS stuff. */
-   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFontMono.h) );
 
    /* Misc graphics init */
    render_init();
@@ -363,10 +367,12 @@ int main( int argc, char** argv )
    /* Start menu. */
    menu_main();
 
-   LOG( _( "Reached main menu" ) );
+   if (conf.devmode)
+      LOG( _( "Reached main menu in %.3f s" ), (SDL_GetTicks()-starttime)/1000. );
+   else
+      LOG( _( "Reached main menu" ) );
 
    fps_init(); /* initializes the time_ms */
-
 
    /*
     * main loop
@@ -489,65 +495,38 @@ int main( int argc, char** argv )
    exit(EXIT_SUCCESS);
 }
 
-
 /**
  * @brief Loads a loading screen.
  */
 void loadscreen_load (void)
 {
-   char file_path[PATH_MAX];
-   char **loadpaths, **loadscreens, *load;
-   size_t nload, nreal, nbuf;
-   const char *loading_prefix = "webp";
+   int r = 0;
 
-   /* Count the loading screens */
-   loadpaths = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+   load_env = nlua_newEnv(1);
+   nlua_loadStandard( load_env );
+   r |= nlua_loadNaev( load_env );
+   r |= nlua_loadRnd( load_env );
+   r |= nlua_loadVector( load_env );
+   r |= nlua_loadFile( load_env );
+   r |= nlua_loadData( load_env );
+   r |= nlua_loadTex( load_env );
+   r |= nlua_loadCol( load_env );
+   r |= nlua_loadGFX( load_env );
+   if (r)
+      WARN(_("Something went wrong when loading Lua libraries for '%s'!"), LOADSCREEN_DATA_PATH);
 
-   for (nload=0; loadpaths[nload]!=NULL; nload++) {}
-   loadscreens = calloc( nload, sizeof(char*) );
-   nreal = 0;
-   for (nload=0; loadpaths[nload]!=NULL; nload++) {
-      if (!ndata_matchExt( loadpaths[nload], loading_prefix ))
-         continue;
-      loadscreens[nreal++] = loadpaths[nload];
-   }
-
-   /* Must have loading screens */
-   if (nreal==0) {
-      WARN( _("No loading screens found!") );
-      PHYSFS_freeList( loadpaths );
-      free( loadscreens );
-      loading = NULL;
+   size_t bufsize;
+   char *buf = ndata_read( LOADSCREEN_DATA_PATH, &bufsize );
+   if (nlua_dobufenv(load_env, buf, bufsize, LOADSCREEN_DATA_PATH) != 0) {
+      WARN( _("Error loading file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+            LOADSCREEN_DATA_PATH, lua_tostring(naevL,-1));
+      free(buf);
       return;
    }
-
-   /* Load the loading font. */
-   gl_fontInit( &loading_font, _(FONT_DEFAULT_PATH), 24, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
-
-   /* Set the zoom. */
-   cam_setZoom( conf.zoom_far );
-
-   /* Choose the screen. */
-   load = loadscreens[ RNG_BASE(0,nreal-1) ];
-
-   /* Load the texture */
-   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
-   loading = gl_newImage( file_path, 0 );
-   loading_r = RNGF();
-
-   /* Load the metadata. */
-   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
-   free( loading_txt );
-   loading_txt = ndata_read( file_path, &nbuf );
-
-   /* Create the stars. */
-   background_initStars( 1000 );
-
-   /* Clean up. */
-   PHYSFS_freeList( loadpaths );
-   free( loadscreens );
+   free(buf);
 }
-
 
 /**
  * @brief Renders the load screen with message.
@@ -557,52 +536,19 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
-   const double SHIP_IMAGE_WIDTH    = 512.;  /**< Loadscreen Ship Image Width */
-   const double SHIP_IMAGE_HEIGHT   = 512.; /**< Loadscreen Ship Image Height */
-   double bx;  /**<  Blit Image X Coord */
-   double by;  /**<  Blit Image Y Coord */
-   double x;   /**<  Progress Bar X Coord */
-   double y;   /**<  Progress Bar Y Coord */
-   double w;   /**<  Progress Bar Width Basis */
-   double h;   /**<  Progress Bar Height Basis */
-   double rh;  /**<  Loading Progress Text Relative Height */
    SDL_Event event;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   /* Draw stars. */
-   background_renderStars( 0. );
-
-   /*
-    * Dimensions.
-    */
-   /* Image. */
-   bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
-   by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
-   /* Loading bar. */
-   w  = SCREEN_W * 0.5;
-   h  = SCREEN_H * 0.025;
-   rh = h + gl_defFont.h + 4.;
-   x  = (SCREEN_W-w)/2.;
-   y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
-
-   /* Draw loading screen image. */
-   if (loading != NULL)
-      gl_renderScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
-   if (loading_txt != NULL) {
-      int tw = gl_printWidthRaw( &loading_font, loading_txt );
-      gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );
+   /* Run Lua. */
+   nlua_getenv( naevL, load_env, "render" );
+   lua_pushnumber( naevL, done );
+   lua_pushstring( naevL, msg );
+   if (nlua_pcall(load_env, 2, 0)) { /* error has occurred */
+      WARN( _("Loadscreen: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-
-   /* Draw progress bar. */
-   glUseProgram(shaders.progressbar.program);
-   glUniform1f( shaders.progressbar.paramf, loading_r );
-   glUniform1f( shaders.progressbar.dt, done );
-   gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
-
-   /* Draw text. */
-   gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
@@ -612,23 +558,18 @@ void loadscreen_render( double done, const char *msg )
    naev_resize();
 }
 
-
 /**
  * @brief Frees the loading screen.
  */
 static void loadscreen_unload (void)
 {
-   gl_freeTexture(loading);
-   loading = NULL;
-   gl_freeFont( &loading_font );
-   free( loading_txt );
+   nlua_freeEnv( load_env );
 }
-
 
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     16. /**< Amount of loading stages. */
+#define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
    int stage = 0;
@@ -641,6 +582,9 @@ void load_all (void)
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects...") );
+   effect_load(); /* no dep */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types...") );
    dtype_load(); /* dep for outfits */
@@ -657,12 +601,6 @@ void load_all (void)
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
-   events_load(); /* no dep */
-
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
-   missions_load(); /* no dep */
-
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI...") );
    ai_load(); /* dep for fleets */
 
@@ -670,7 +608,13 @@ void load_all (void)
    tech_load(); /* dep for space */
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe...") );
-   space_load();
+   space_load(); /* dep for events/missions */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
+   events_load();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
+   missions_load();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs...") );
    diff_loadAvailable();
@@ -713,6 +657,7 @@ void unload_all (void)
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
+   effect_exit();
    dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_exit(); /* Clean up events. */
@@ -721,7 +666,6 @@ void unload_all (void)
    var_cleanup(); /* cleans up mission variables */
    sp_cleanup();
 }
-
 
 /**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
@@ -759,12 +703,15 @@ void main_loop( int update )
    /*
     * Handle render.
     */
-   /* Clear buffer. */
-   render_all( game_dt, real_dt );
-   /* Draw buffer. */
-   SDL_GL_SwapWindow( gl_screen.window );
+   if (!quit) { /* So if update sets up a nested main loop, we can end up in a
+                   state where things are corrupted when trying to exit the game.
+                   Avoid rendering when quitting just in case. */
+      /* Clear buffer. */
+      render_all( game_dt, real_dt );
+      /* Draw buffer. */
+      SDL_GL_SwapWindow( gl_screen.window );
+   }
 }
-
 
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
@@ -792,7 +739,7 @@ void naev_resize (void)
       background_initStars( 1000. ); /* from loadscreen_load */
 
    /* Must be before gui_reload */
-   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(SCREEN_H-15-gl_defFontMono.h) );
 
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
@@ -811,7 +758,6 @@ void naev_toggleFullscreen (void)
 {
    opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
-
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
@@ -866,7 +812,6 @@ static double fps_elapsed (void)
    return dt;
 }
 
-
 /**
  * @brief Controls the FPS.
  */
@@ -899,7 +844,6 @@ static void fps_control (void)
    }
 }
 
-
 /**
  * @brief Sets the position to display the FPS.
  */
@@ -908,7 +852,6 @@ void fps_setPos( double x, double y )
    fps_x = x;
    fps_y = y;
 }
-
 
 /**
  * @brief Displays FPS on the screen.
@@ -930,8 +873,8 @@ void display_fps( const double dt )
    x = fps_x;
    y = fps_y;
    if (conf.fps_show) {
-      gl_print( NULL, x, y, &cFontWhite, "%3.2f", fps );
-      y -= gl_defFont.h + 5.;
+      gl_print( &gl_defFontMono, x, y, &cFontWhite, "%3.2f", fps );
+      y -= gl_defFontMono.h + 5.;
    }
 
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -939,7 +882,7 @@ void display_fps( const double dt )
       dt_mod_base = player_dt_default();
    }
    if (dt_mod != dt_mod_base)
-      gl_print( NULL, x, y, &cFontWhite, "%3.1fx", dt_mod / dt_mod_base);
+      gl_print( &gl_defFontMono, x, y, &cFontWhite, "%3.1fx", dt_mod / dt_mod_base);
 
    if (!paused || !player_paused || !conf.pause_show)
       return;
@@ -948,7 +891,6 @@ void display_fps( const double dt )
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
          &cFontWhite, -1., _("PAUSED") );
 }
-
 
 /**
  * @brief Updates the game itself (player flying around and friends).
@@ -993,7 +935,6 @@ static void update_all (void)
    fps_skipped = 0;
 }
 
-
 /**
  * @brief Actually runs the updates
  *
@@ -1010,13 +951,16 @@ void update_routine( double dt, int enter_sys )
    }
 
    /* Update engine stuff. */
-   space_update(dt);
+   space_update(dt, real_dt);
    weapons_update(dt);
    spfx_update(dt, real_dt);
    pilots_update(dt);
 
    /* Update camera. */
    cam_update( dt );
+
+   /* Update the elapsed time, should be with all the modifications and such. */
+   elapsed_time_mod += dt;
 
    if (!enter_sys) {
       HookParam h[3];
@@ -1031,7 +975,6 @@ void update_routine( double dt, int enter_sys )
       hooks_runParam( "update", h );
    }
 }
-
 
 /**
  * @brief Sets the window caption.
@@ -1060,7 +1003,6 @@ static void window_caption (void)
    free( buf );
 }
 
-
 /**
  * @brief Returns the version in a human readable string.
  *
@@ -1085,7 +1027,6 @@ char *naev_version( int long_version )
 
    return VERSION;
 }
-
 
 static int binary_comparison( int x, int y )
 {

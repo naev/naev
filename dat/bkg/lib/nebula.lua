@@ -11,7 +11,7 @@ local nebula = {}
 
 function nebula.init( params )
    params = params or {}
-   local steps    = params.stops or 48
+   local steps    = params.stops or 64
    local hue_inner= params.hue_inner or 1.0
    local hue_outter= params.hue_outter or 240/360
    local opacity  = params.opacity or 60
@@ -47,7 +47,7 @@ function nebula.init( params )
    lg.setCanvas( cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setShader( shader )
-   lg.setColor( {1,1,1,1} )
+   lg.setColor( {0.6,0.6,0.6,1} )
    love_shaders.img:draw( 0, 0, 0, w, h )
    lg.setShader()
    lg.setCanvas( oldcanvas )

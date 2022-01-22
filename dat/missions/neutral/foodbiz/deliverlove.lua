@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Zeo</planet>
+  <spob>Zeo</spob>
  </avail>
  <notes>
   <tier>1</tier>
@@ -27,7 +27,7 @@ local neu = require "common.neutral"
 
 local cargoname = N_("Love Letters")
 local cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
-local targetworld, targetworld_sys = planet.getS( "Zhiru" )
+local targetworld, targetworld_sys = spob.getS( "Zhiru" )
 
 mem.reward = 50e3 -- Can get doubled, must be global!
 
@@ -54,7 +54,7 @@ function accept ()
          end
       end
       if player.pilot():cargoFree() <  1 then
-         tk.msg( _("Absence Makes The Heart Grow Fonder"), _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]]) )
+         tk.msg( _("Absence Makes The Heart Grow Fonder"), _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free up some space." You didn't expect him to have a LITERAL tonne of letters...]]) )
          misn.finish()
       end
    else
@@ -71,7 +71,7 @@ function accept ()
 
    misn.setTitle( _([[Deliver Love]]) )
    misn.setReward( fmt.credits( mem.reward ) )
-   misn.setDesc( fmt.f(_([[Deliver the love letters to {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
+   misn.setDesc( fmt.f(_([[Deliver love letters to {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _([[Deliver Love]]), {
       fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=targetworld, sys=targetworld_sys} ),
@@ -84,7 +84,7 @@ function accept ()
 end
 
 function land()
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
       player.pay( mem.reward )
       tk.msg( "", fmt.f(_([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that {credits} have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]]), {credits=fmt.credits(mem.reward)} ) )
       player.outfitAdd("Love Letter")

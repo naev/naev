@@ -8,11 +8,10 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 1</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
@@ -32,14 +31,14 @@ local cargo_name = _("heavy machinery")
 local cargo_amount = 50 -- Amount in mass
 local reward = ant.rewards.ant02
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
       -- TODO only look for industrial Dvaered planets
       --return p:tags().industrial
       return true
@@ -56,7 +55,7 @@ function create ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("You land and are immediately greeted by Verner."))
-   v(fmt.f(_([["The camp has been set up and terraforming is underway! However, it seems like we'll need much heavier machinery to be able to penetrate the thick surface and accelerate the terraforming. I would need you to go to {pnt} in the {sys} system to pick up {amount} of {cargo}. I'll pay you {creds} for your troubles. What do you say?"]]),
+   v(fmt.f(_([["The camp has been set up and terraforming is underway! However, it seems like we'll need much heavier machinery to be able to penetrate the thick surface and accelerate the terraforming. I need you to go to {pnt} in the {sys} system to pick up {amount} of {cargo}. I'll pay you {creds} for your troubles. What do you say?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, cargo=cargo_name, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -95,7 +94,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
@@ -112,12 +111,12 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
-      vn.na(fmt.f(_([[You land and quickly Verner, who now seems to be accompanied by a small team, quickly unload the {cargo} and start putting it to use.]]),{cargo=cargo_name}))
+      vn.na(fmt.f(_([[You land and Verner, who now seems to be accompanied by a small team, quickly unloads the {cargo} and starts putting it to use.]]),{cargo=cargo_name}))
       v(fmt.f(_([["That was faster than expected."
 He slaps the hull of a heavy machine.
 "With these beauties we'll be able to make progress ten times faster now. That said, it does seem like this might not be enough. Come back to me once I get the {cargo} set up and I should have another task for you if you are interested."]]),{cargo=cargo_name}))

@@ -194,18 +194,20 @@ static int fileL_new( lua_State *L )
  * @brief Opens a File object.
  *
  *    @luatparam File File object to open.
- *    @luatparam mode Mode to open the file in (should be 'r', 'w', or 'a').
+ *    @luatparam[opt="r"] mode Mode to open the file in (should be 'r', 'w', or 'a').
  *    @luatreturn boolean true on success, false and an error string on failure.
  * @luafunc open
  */
 static int fileL_open( lua_State *L )
 {
    LuaFile_t *lf = luaL_checkfile(L,1);
-   const char *mode = luaL_checkstring(L,2);
+   const char *mode = luaL_optstring(L,2,"r");
 
    /* TODO handle mode. */
    if (strcmp(mode,"w")==0)
       lf->rw = PHYSFSRWOPS_openWrite( lf->path );
+   else if (strcmp(mode,"a")==0)
+      lf->rw = PHYSFSRWOPS_openAppend( lf->path );
    else
       lf->rw = PHYSFSRWOPS_openRead( lf->path );
    if (lf->rw == NULL) {

@@ -10,13 +10,13 @@
   <x>148.000000</x>
   <y>-747.000000</y>
  </pos>
- <assets>
-  <asset>Ksher I</asset>
-  <asset>Ksher II</asset>
-  <asset>Ksher III</asset>
-  <asset>Qoman</asset>
-  <asset>Sola</asset>
- </assets>
+ <spobs>
+  <spob>Ksher I</spob>
+  <spob>Ksher II</spob>
+  <spob>Ksher III</spob>
+  <spob>Qoman</spob>
+  <spob>Sola</spob>
+ </spobs>
  <jumps>
   <jump target="Farizel">
    <pos x="16389.466085" y="19308.290733"/>

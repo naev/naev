@@ -7,16 +7,20 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>278.808800</x>
-  <y>865.858667</y>
+  <x>284.824103</x>
+  <y>872.362653</y>
  </pos>
- <assets>
-  <asset>Starlight End I</asset>
-  <asset>Starlight End II</asset>
-  <asset>Starlight End III</asset>
-  <asset>Tanulwa</asset>
- </assets>
+ <spobs>
+  <spob>Starlight End I</spob>
+  <spob>Starlight End II</spob>
+  <spob>Starlight End III</spob>
+  <spob>Tanulwa</spob>
+ </spobs>
  <jumps>
+  <jump target="Taxumi">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Treacle">
    <autopos/>
    <hide>1.000000</hide>

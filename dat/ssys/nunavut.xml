@@ -10,9 +10,9 @@
   <x>-288.486323</x>
   <y>-1012.833806</y>
  </pos>
- <assets>
-  <asset_virtual>Miner Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Miner Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Straight Row">
    <autopos/>

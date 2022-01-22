@@ -6,7 +6,7 @@
  *
  * @brief Handles the application and removal of 'diffs' to the universe.
  *
- * Diffs allow changing planets, factions, etc... in the universe.
+ * Diffs allow changing spobs, factions, etc... in the universe.
  *  These are meant to be applied after the player triggers them, mostly
  *  through missions.
  */
@@ -18,6 +18,7 @@
 
 #include "unidiff.h"
 
+#include "conf.h"
 #include "array.h"
 #include "economy.h"
 #include "log.h"
@@ -32,8 +33,8 @@
  * @brief Universe diff filepath list.
  */
 typedef struct UniDiffData_ {
-   char *name; /**< Name of the diff (read from XML). */
-   char *filename; /**< Filename of the diff. */
+   char *name;       /**< Name of the diff (read from XML). */
+   char *filename;   /**< Filename of the diff. */
 } UniDiffData_t;
 static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
@@ -45,7 +46,7 @@ static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 typedef enum UniHunkTargetType_ {
    HUNK_TARGET_NONE,
    HUNK_TARGET_SYSTEM,
-   HUNK_TARGET_ASSET,
+   HUNK_TARGET_SPOB,
    HUNK_TARGET_TECH,
    HUNK_TARGET_FACTION,
 } UniHunkTargetType_t;
@@ -70,12 +71,10 @@ typedef struct UniHunkTarget_ {
 typedef enum UniHunkType_ {
    HUNK_TYPE_NONE,
    /* Target should be system. */
-   HUNK_TYPE_ASSET_ADD,
-   HUNK_TYPE_ASSET_REMOVE,
-   HUNK_TYPE_ASSET_BLACKMARKET,
-   HUNK_TYPE_ASSET_LEGALMARKET,
-   HUNK_TYPE_VASSET_ADD,
-   HUNK_TYPE_VASSET_REMOVE,
+   HUNK_TYPE_SPOB_ADD,
+   HUNK_TYPE_SPOB_REMOVE,
+   HUNK_TYPE_VSPOB_ADD,
+   HUNK_TYPE_VSPOB_REMOVE,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
    HUNK_TYPE_SSYS_BACKGROUND,
@@ -85,21 +84,23 @@ typedef enum UniHunkType_ {
    /* Target should be tech. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
-   /* Target should be asset. */
-   HUNK_TYPE_ASSET_FACTION,
-   HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
-   HUNK_TYPE_ASSET_POPULATION,
-   HUNK_TYPE_ASSET_POPULATION_REMOVE, /* For internal usage. */
-   HUNK_TYPE_ASSET_DESCRIPTION,
-   HUNK_TYPE_ASSET_DESCRIPTION_REVERT, /* For internal usage. */
-   HUNK_TYPE_ASSET_BAR,
-   HUNK_TYPE_ASSET_BAR_REVERT, /* For internal usage. */
-   HUNK_TYPE_ASSET_SERVICE_ADD,
-   HUNK_TYPE_ASSET_SERVICE_REMOVE,
-   HUNK_TYPE_ASSET_TECH_ADD,
-   HUNK_TYPE_ASSET_TECH_REMOVE,
-   HUNK_TYPE_ASSET_EXTERIOR,
-   HUNK_TYPE_ASSET_EXTERIOR_REVERT, /* For internal usage. */
+   /* Target should be spob. */
+   HUNK_TYPE_SPOB_FACTION,
+   HUNK_TYPE_SPOB_FACTION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_SPOB_POPULATION,
+   HUNK_TYPE_SPOB_POPULATION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_SPOB_DESCRIPTION,
+   HUNK_TYPE_SPOB_DESCRIPTION_REVERT, /* For internal usage. */
+   HUNK_TYPE_SPOB_BAR,
+   HUNK_TYPE_SPOB_BAR_REVERT, /* For internal usage. */
+   HUNK_TYPE_SPOB_SERVICE_ADD,
+   HUNK_TYPE_SPOB_SERVICE_REMOVE,
+   HUNK_TYPE_SPOB_TECH_ADD,
+   HUNK_TYPE_SPOB_TECH_REMOVE,
+   HUNK_TYPE_SPOB_SPACE,
+   HUNK_TYPE_SPOB_SPACE_REVERT, /* For internal usage. */
+   HUNK_TYPE_SPOB_EXTERIOR,
+   HUNK_TYPE_SPOB_EXTERIOR_REVERT, /* For internal usage. */
    /* Target should be faction. */
    HUNK_TYPE_FACTION_VISIBLE,
    HUNK_TYPE_FACTION_INVISIBLE,
@@ -177,9 +178,10 @@ int diff_load( xmlNodePtr parent ); /**< Used in save.c */
  */
 int diff_loadAvailable (void)
 {
+   Uint32 time = SDL_GetTicks();
    char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available    = array_create_size( UniDiffData_t, array_size( diff_files ) );
-   for (int i=0; i < array_size( diff_files ); i++ ) {
+   for (int i=0; i<array_size(diff_files); i++ ) {
       xmlDocPtr doc;
       xmlNodePtr node;
       UniDiffData_t *diff;
@@ -203,7 +205,12 @@ int diff_loadAvailable (void)
    array_free( diff_files );
    array_shrink(&diff_available);
 
-   DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d UniDiff in %.3f s", "Loaded %d UniDiffs in %.3f s", array_size(diff_available) ), array_size(diff_available), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
 
    return 0;
 }
@@ -292,10 +299,6 @@ static int diff_applyInternal( const char *name, int oneshot )
 
    xmlFreeDoc(doc);
 
-   /* Re-compute the economy. */
-   economy_execQueued();
-   economy_initialiseCommodityPrices();
-
    /* Update universe. */
    if (oneshot)
       diff_checkUpdateUniverse();
@@ -329,7 +332,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes(cur);
-      if (xml_isNode(cur,"asset")) {
+      if (xml_isNode(cur,"spob")) {
          buf = xml_get( cur );
          if ( buf == NULL ) {
             WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
@@ -339,20 +342,16 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
-         /* Get the asset to modify. */
+         /* Get the spob to modify. */
          xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
          if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_ASSET_ADD;
+            hunk.type = HUNK_TYPE_SPOB_ADD;
          else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_ASSET_REMOVE;
-         else if (strcmp(buf,"blackmarket")==0)
-            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
-         else if (strcmp(buf,"legalmarket")==0)
-            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+            hunk.type = HUNK_TYPE_SPOB_REMOVE;
          else
-            WARN(_("Unidiff '%s': Unknown hunk type '%s' for asset '%s'."), diff->name, buf, hunk.u.name);
+            WARN(_("Unidiff '%s': Unknown hunk type '%s' for spob '%s'."), diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -361,7 +360,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      else if (xml_isNode(cur,"asset_virtual")) {
+      else if (xml_isNode(cur,"spob_virtual")) {
          buf = xml_get( cur );
          if ( buf == NULL ) {
             WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
@@ -371,16 +370,16 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
-         /* Get the asset to modify. */
+         /* Get the spob to modify. */
          xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
          if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_VASSET_ADD;
+            hunk.type = HUNK_TYPE_VSPOB_ADD;
          else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_VASSET_REMOVE;
+            hunk.type = HUNK_TYPE_VSPOB_REMOVE;
          else
-            WARN(_("Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."), diff->name, buf, hunk.u.name);
+            WARN(_("Unidiff '%s': Unknown hunk type '%s' for virtual spob '%s'."), diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -525,20 +524,20 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
 }
 
 /**
- * @brief Patches a asset.
+ * @brief Patches a spob.
  *
  *    @param diff Diff that is doing the patching.
- *    @param node Node containing the asset.
+ *    @param node Node containing the spob.
  *    @return 0 on success.
  */
-static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
+static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
 {
    UniHunk_t base, hunk;
    xmlNodePtr cur;
 
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
-   base.target.type = HUNK_TARGET_ASSET;
+   base.target.type = HUNK_TARGET_SPOB;
    xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
@@ -552,7 +551,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       if (xml_isNode(cur,"faction")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_FACTION;
+         hunk.type = HUNK_TYPE_SPOB_FACTION;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -565,7 +564,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"population")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_POPULATION;
+         hunk.type = HUNK_TYPE_SPOB_POPULATION;
          hunk.u.data = xml_getUInt(cur);
 
          /* Apply diff. */
@@ -578,7 +577,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"description")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_DESCRIPTION;
+         hunk.type = HUNK_TYPE_SPOB_DESCRIPTION;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -591,7 +590,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"bar")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_BAR;
+         hunk.type = HUNK_TYPE_SPOB_BAR;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -604,8 +603,8 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"service_add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_SERVICE_ADD;
-         hunk.u.data = planet_getService( xml_get(cur) );
+         hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
+         hunk.u.data = spob_getService( xml_get(cur) );
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -617,8 +616,8 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"service_remove")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_SERVICE_REMOVE;
-         hunk.u.data = planet_getService( xml_get(cur) );
+         hunk.type = HUNK_TYPE_SPOB_SERVICE_REMOVE;
+         hunk.u.data = spob_getService( xml_get(cur) );
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -630,7 +629,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"tech_add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_TECH_ADD;
+         hunk.type = HUNK_TYPE_SPOB_TECH_ADD;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -643,7 +642,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur,"tech_remove")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_TECH_REMOVE;
+         hunk.type = HUNK_TYPE_SPOB_TECH_REMOVE;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -653,12 +652,27 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      else if (xml_isNode(cur,"exterior")) {
+      else if (xml_isNode(cur,"gfx_space")) {
          char str[PATH_MAX];
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-         hunk.type = HUNK_TYPE_ASSET_EXTERIOR;
-         snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+         hunk.type = HUNK_TYPE_SPOB_SPACE;
+         snprintf( str, sizeof(str), SPOB_GFX_SPACE_PATH"%s", xml_get(cur));
+         hunk.u.name = strdup(str);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"gfx_exterior")) {
+         char str[PATH_MAX];
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_EXTERIOR;
+         snprintf( str, sizeof(str), SPOB_GFX_EXTERIOR_PATH"%s", xml_get(cur));
          hunk.u.name = strdup(str);
 
          /* Apply diff. */
@@ -682,7 +696,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
  * @brief Patches a faction.
  *
  *    @param diff Diff that is doing the patching.
- *    @param node Node containing the asset.
+ *    @param node Node containing the spob.
  *    @return 0 on success.
  */
 static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
@@ -804,9 +818,9 @@ static int diff_patch( xmlNodePtr parent )
       }
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
-      else if (xml_isNode(node, "asset")) {
+      else if (xml_isNode(node, "spob")) {
          diff_universe_changed = 1;
-         diff_patchAsset( diff, node );
+         diff_patchSpob( diff, node );
       }
       else if (xml_isNode(node, "faction")) {
          diff_universe_changed = 1;
@@ -825,23 +839,17 @@ static int diff_patch( xmlNodePtr parent )
          UniHunk_t *fail = &diff->failed[i];
          char *target = fail->target.u.name;
          switch (fail->type) {
-            case HUNK_TYPE_ASSET_ADD:
-               WARN(_("   [%s] asset add: '%s'"), target, fail->u.name);
+            case HUNK_TYPE_SPOB_ADD:
+               WARN(_("   [%s] spob add: '%s'"), target, fail->u.name);
                break;
-            case HUNK_TYPE_ASSET_REMOVE:
-               WARN(_("   [%s] asset remove: '%s'"), target, fail->u.name);
+            case HUNK_TYPE_SPOB_REMOVE:
+               WARN(_("   [%s] spob remove: '%s'"), target, fail->u.name);
                break;
-            case HUNK_TYPE_ASSET_BLACKMARKET:
-               WARN(_("   [%s] asset blackmarket: '%s'"), target, fail->u.name);
+            case HUNK_TYPE_VSPOB_ADD:
+               WARN(_("   [%s] virtual spob add: '%s'"), target, fail->u.name);
                break;
-            case HUNK_TYPE_ASSET_LEGALMARKET:
-               WARN(_("   [%s] asset legalmarket: '%s'"), target, fail->u.name);
-               break;
-            case HUNK_TYPE_VASSET_ADD:
-               WARN(_("   [%s] virtual asset add: '%s'"), target, fail->u.name);
-               break;
-            case HUNK_TYPE_VASSET_REMOVE:
-               WARN(_("   [%s] virtual asset remove: '%s'"), target, fail->u.name);
+            case HUNK_TYPE_VSPOB_REMOVE:
+               WARN(_("   [%s] virtual spob remove: '%s'"), target, fail->u.name);
                break;
             case HUNK_TYPE_JUMP_ADD:
                WARN(_("   [%s] jump add: '%s'"), target, fail->u.name);
@@ -857,61 +865,69 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] tech remove: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_FACTION:
-               WARN(_("   [%s] asset faction: '%s'"), target,
+            case HUNK_TYPE_SPOB_FACTION:
+               WARN(_("   [%s] spob faction: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_FACTION_REMOVE:
-               WARN(_("   [%s] asset faction removal: '%s'"), target,
+            case HUNK_TYPE_SPOB_FACTION_REMOVE:
+               WARN(_("   [%s] spob faction removal: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_POPULATION:
-               WARN(_("   [%s] asset population: '%s'"), target,
+            case HUNK_TYPE_SPOB_POPULATION:
+               WARN(_("   [%s] spob population: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_POPULATION_REMOVE:
-               WARN(_("   [%s] asset population removal: '%s'"), target,
+            case HUNK_TYPE_SPOB_POPULATION_REMOVE:
+               WARN(_("   [%s] spob population removal: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_DESCRIPTION:
-               WARN(_("   [%s] asset description: '%s'"), target,
+            case HUNK_TYPE_SPOB_DESCRIPTION:
+               WARN(_("   [%s] spob description: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
-               WARN(_("   [%s] asset description revert: '%s'"), target,
+            case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
+               WARN(_("   [%s] spob description revert: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_BAR:
-               WARN(_("   [%s] asset bar: '%s'"), target,
+            case HUNK_TYPE_SPOB_BAR:
+               WARN(_("   [%s] spob bar: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_BAR_REVERT:
-               WARN(_("   [%s] asset bar revert: '%s'"), target,
+            case HUNK_TYPE_SPOB_BAR_REVERT:
+               WARN(_("   [%s] spob bar revert: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_EXTERIOR:
-               WARN(_("   [%s] asset exterior: '%s'"), target,
+            case HUNK_TYPE_SPOB_SPACE:
+               WARN(_("   [%s] spob space: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_EXTERIOR_REVERT:
-               WARN(_("   [%s] asset exterior revert: '%s'"), target,
+            case HUNK_TYPE_SPOB_SPACE_REVERT:
+               WARN(_("   [%s] spob sipace revert: '%s'"), target,
                      fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_SERVICE_ADD:
-               WARN(_("   [%s] asset service add: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+            case HUNK_TYPE_SPOB_EXTERIOR:
+               WARN(_("   [%s] spob exterior: '%s'"), target,
+                     fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_SERVICE_REMOVE:
-               WARN(_("   [%s] asset service remove: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+            case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
+               WARN(_("   [%s] spob exterior revert: '%s'"), target,
+                     fail->u.name );
                break;
-            case HUNK_TYPE_ASSET_TECH_ADD:
-               WARN(_("   [%s] asset tech add: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+            case HUNK_TYPE_SPOB_SERVICE_ADD:
+               WARN(_("   [%s] spob service add: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
                break;
-            case HUNK_TYPE_ASSET_TECH_REMOVE:
-               WARN(_("   [%s] asset tech remove: '%s'"), target,
-                     planet_getServiceName(fail->u.data) );
+            case HUNK_TYPE_SPOB_SERVICE_REMOVE:
+               WARN(_("   [%s] spob service remove: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
+               break;
+            case HUNK_TYPE_SPOB_TECH_ADD:
+               WARN(_("   [%s] spob tech add: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
+               break;
+            case HUNK_TYPE_SPOB_TECH_REMOVE:
+               WARN(_("   [%s] spob tech remove: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
                break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
@@ -958,38 +974,30 @@ static int diff_patch( xmlNodePtr parent )
  */
 static int diff_patchHunk( UniHunk_t *hunk )
 {
-   Planet *p;
+   Spob *p;
    StarSystem *ssys;
    int a, b;
 
    switch (hunk->type) {
 
-      /* Adding an asset. */
-      case HUNK_TYPE_ASSET_ADD:
-         planet_updateLand( planet_get(hunk->u.name) );
+      /* Adding an spob. */
+      case HUNK_TYPE_SPOB_ADD:
+         spob_updateLand( spob_get(hunk->u.name) );
          diff_universe_changed = 1;
-         return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
-      /* Removing an asset. */
-      case HUNK_TYPE_ASSET_REMOVE:
+         return system_addSpob( system_get(hunk->target.u.name), hunk->u.name );
+      /* Removing an spob. */
+      case HUNK_TYPE_SPOB_REMOVE:
          diff_universe_changed = 1;
-         return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
-      /* Making an asset a black market. */
-      case HUNK_TYPE_ASSET_BLACKMARKET:
-         planet_addService( planet_get(hunk->u.name), PLANET_SERVICE_BLACKMARKET );
-         return 0;
-      /* Making an asset a legal market. */
-      case HUNK_TYPE_ASSET_LEGALMARKET:
-         planet_rmService( planet_get(hunk->u.name), PLANET_SERVICE_BLACKMARKET );
-         return 0;
+         return system_rmSpob( system_get(hunk->target.u.name), hunk->u.name );
 
-      /* Adding an asset. */
-      case HUNK_TYPE_VASSET_ADD:
+      /* Adding an spob. */
+      case HUNK_TYPE_VSPOB_ADD:
          diff_universe_changed = 1;
-         return system_addVirtualAsset( system_get(hunk->target.u.name), hunk->u.name );
-      /* Removing an asset. */
-      case HUNK_TYPE_VASSET_REMOVE:
+         return system_addVirtualSpob( system_get(hunk->target.u.name), hunk->u.name );
+      /* Removing an spob. */
+      case HUNK_TYPE_VSPOB_REMOVE:
          diff_universe_changed = 1;
-         return system_rmVirtualAsset( system_get(hunk->target.u.name), hunk->u.name );
+         return system_rmVirtualSpob( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
@@ -1029,9 +1037,9 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_TECH_REMOVE:
          return tech_rmItem( hunk->target.u.name, hunk->u.name );
 
-      /* Changing asset faction. */
-      case HUNK_TYPE_ASSET_FACTION:
-         p = planet_get( hunk->target.u.name );
+      /* Changing spob faction. */
+      case HUNK_TYPE_SPOB_FACTION:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          if (p->presence.faction<0)
@@ -1039,107 +1047,124 @@ static int diff_patchHunk( UniHunk_t *hunk )
          else
             hunk->o.name = faction_name( p->presence.faction );
          diff_universe_changed = 1;
-         return planet_setFaction( p, faction_get(hunk->u.name) );
-      case HUNK_TYPE_ASSET_FACTION_REMOVE:
-         p = planet_get( hunk->target.u.name );
+         return spob_setFaction( p, faction_get(hunk->u.name) );
+      case HUNK_TYPE_SPOB_FACTION_REMOVE:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          diff_universe_changed = 1;
          if (hunk->o.name==NULL)
-            return planet_setFaction( p, -1 );
+            return spob_setFaction( p, -1 );
          else
-            return planet_setFaction( p, faction_get(hunk->o.name) );
+            return spob_setFaction( p, faction_get(hunk->o.name) );
 
-      /* Changing asset population. */
-      case HUNK_TYPE_ASSET_POPULATION:
-         p = planet_get( hunk->target.u.name );
+      /* Changing spob population. */
+      case HUNK_TYPE_SPOB_POPULATION:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.data = p->population;
          diff_universe_changed = 1;
          p->population = hunk->u.data;
          return 0;
-      case HUNK_TYPE_ASSET_POPULATION_REMOVE:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_POPULATION_REMOVE:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->population = hunk->o.data;
          return 0;
 
-      /* Changing asset description. */
-      case HUNK_TYPE_ASSET_DESCRIPTION:
-         p = planet_get( hunk->target.u.name );
+      /* Changing spob description. */
+      case HUNK_TYPE_SPOB_DESCRIPTION:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->description;
          p->description = hunk->u.name;
          return 0;
-      case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->description = (char*)hunk->o.name;
          return 0;
 
-      /* Changing asset bar description. */
-      case HUNK_TYPE_ASSET_BAR:
-         p = planet_get( hunk->target.u.name );
+      /* Changing spob bar description. */
+      case HUNK_TYPE_SPOB_BAR:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->bar_description;
          p->bar_description = hunk->u.name;
          return 0;
-      case HUNK_TYPE_ASSET_BAR_REVERT:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_BAR_REVERT:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->bar_description = (char*)hunk->o.name;
          return 0;
 
-      /* Modifying asset services. */
-      case HUNK_TYPE_ASSET_SERVICE_ADD:
-         p = planet_get( hunk->target.u.name );
+      /* Modifying spob services. */
+      case HUNK_TYPE_SPOB_SERVICE_ADD:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         if (planet_hasService( p, hunk->u.data ))
+         if (spob_hasService( p, hunk->u.data ))
             return -1;
-         planet_addService( p, hunk->u.data );
+         spob_addService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
-      case HUNK_TYPE_ASSET_SERVICE_REMOVE:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_SERVICE_REMOVE:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         if (!planet_hasService( p, hunk->u.data ))
+         if (!spob_hasService( p, hunk->u.data ))
             return -1;
-         planet_rmService( p, hunk->u.data );
+         spob_rmService( p, hunk->u.data );
          diff_universe_changed = 1;
          return 0;
 
       /* Modifying tech stuff. */
-      case HUNK_TYPE_ASSET_TECH_ADD:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_TECH_ADD:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
+         if (p->tech == NULL)
+            p->tech = tech_groupCreate();
          tech_addItemTech( p->tech, hunk->u.name );
          return 0;
-      case HUNK_TYPE_ASSET_TECH_REMOVE:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_TECH_REMOVE:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          tech_rmItemTech( p->tech, hunk->u.name );
          return 0;
 
-      /* Changing asset exterior graphics. */
-      case HUNK_TYPE_ASSET_EXTERIOR:
-         p = planet_get( hunk->target.u.name );
+      /* Changing spob space graphics. */
+      case HUNK_TYPE_SPOB_SPACE:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->gfx_spaceName;
+         p->gfx_spaceName = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_SPOB_SPACE_REVERT:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->gfx_spaceName = (char*)hunk->o.name;
+         return 0;
+
+      /* Changing spob exterior graphics. */
+      case HUNK_TYPE_SPOB_EXTERIOR:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          hunk->o.name = p->gfx_exterior;
          p->gfx_exterior = hunk->u.name;
          return 0;
-      case HUNK_TYPE_ASSET_EXTERIOR_REVERT:
-         p = planet_get( hunk->target.u.name );
+      case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
+         p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->gfx_exterior = (char*)hunk->o.name;
@@ -1268,7 +1293,6 @@ void diff_remove( const char *name )
 
    diff_removeDiff(diff);
 
-   economy_execQueued();
    diff_checkUpdateUniverse();
 }
 
@@ -1280,7 +1304,6 @@ void diff_clear (void)
    while (array_size(diff_stack) > 0)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
-   economy_execQueued();
    diff_checkUpdateUniverse();
 }
 
@@ -1323,25 +1346,18 @@ static int diff_removeDiff( UniDiff_t *diff )
       UniHunk_t hunk = diff->applied[i];
       /* Invert the type for reverting. */
       switch (hunk.type) {
-         case HUNK_TYPE_ASSET_ADD:
-            hunk.type = HUNK_TYPE_ASSET_REMOVE;
+         case HUNK_TYPE_SPOB_ADD:
+            hunk.type = HUNK_TYPE_SPOB_REMOVE;
             break;
-         case HUNK_TYPE_ASSET_REMOVE:
-            hunk.type = HUNK_TYPE_ASSET_ADD;
-            break;
-
-         case HUNK_TYPE_ASSET_BLACKMARKET:
-            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
-            break;
-         case HUNK_TYPE_ASSET_LEGALMARKET:
-            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
+         case HUNK_TYPE_SPOB_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_ADD;
             break;
 
-         case HUNK_TYPE_VASSET_ADD:
-            hunk.type = HUNK_TYPE_VASSET_REMOVE;
+         case HUNK_TYPE_VSPOB_ADD:
+            hunk.type = HUNK_TYPE_VSPOB_REMOVE;
             break;
-         case HUNK_TYPE_VASSET_REMOVE:
-            hunk.type = HUNK_TYPE_VASSET_ADD;
+         case HUNK_TYPE_VSPOB_REMOVE:
+            hunk.type = HUNK_TYPE_VSPOB_ADD;
             break;
 
          case HUNK_TYPE_JUMP_ADD:
@@ -1365,38 +1381,42 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_TECH_ADD;
             break;
 
-         case HUNK_TYPE_ASSET_FACTION:
-            hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
+         case HUNK_TYPE_SPOB_FACTION:
+            hunk.type = HUNK_TYPE_SPOB_FACTION_REMOVE;
             break;
 
-         case HUNK_TYPE_ASSET_POPULATION:
-            hunk.type = HUNK_TYPE_ASSET_POPULATION_REMOVE;
+         case HUNK_TYPE_SPOB_POPULATION:
+            hunk.type = HUNK_TYPE_SPOB_POPULATION_REMOVE;
             break;
 
-         case HUNK_TYPE_ASSET_DESCRIPTION:
-            hunk.type = HUNK_TYPE_ASSET_DESCRIPTION_REVERT;
+         case HUNK_TYPE_SPOB_DESCRIPTION:
+            hunk.type = HUNK_TYPE_SPOB_DESCRIPTION_REVERT;
             break;
 
-         case HUNK_TYPE_ASSET_BAR:
-            hunk.type = HUNK_TYPE_ASSET_BAR_REVERT;
+         case HUNK_TYPE_SPOB_BAR:
+            hunk.type = HUNK_TYPE_SPOB_BAR_REVERT;
             break;
 
-         case HUNK_TYPE_ASSET_SERVICE_ADD:
-            hunk.type = HUNK_TYPE_ASSET_SERVICE_REMOVE;
+         case HUNK_TYPE_SPOB_SERVICE_ADD:
+            hunk.type = HUNK_TYPE_SPOB_SERVICE_REMOVE;
             break;
-         case HUNK_TYPE_ASSET_SERVICE_REMOVE:
-            hunk.type = HUNK_TYPE_ASSET_SERVICE_ADD;
-            break;
-
-         case HUNK_TYPE_ASSET_TECH_ADD:
-            hunk.type = HUNK_TYPE_ASSET_TECH_REMOVE;
-            break;
-         case HUNK_TYPE_ASSET_TECH_REMOVE:
-            hunk.type = HUNK_TYPE_ASSET_TECH_ADD;
+         case HUNK_TYPE_SPOB_SERVICE_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_SERVICE_ADD;
             break;
 
-         case HUNK_TYPE_ASSET_EXTERIOR:
-            hunk.type = HUNK_TYPE_ASSET_EXTERIOR_REVERT;
+         case HUNK_TYPE_SPOB_TECH_ADD:
+            hunk.type = HUNK_TYPE_SPOB_TECH_REMOVE;
+            break;
+         case HUNK_TYPE_SPOB_TECH_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_TECH_ADD;
+            break;
+
+         case HUNK_TYPE_SPOB_SPACE:
+            hunk.type = HUNK_TYPE_SPOB_SPACE_REVERT;
+            break;
+
+         case HUNK_TYPE_SPOB_EXTERIOR:
+            hunk.type = HUNK_TYPE_SPOB_EXTERIOR_REVERT;
             break;
 
          case HUNK_TYPE_FACTION_VISIBLE:
@@ -1458,28 +1478,28 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
    hunk->target.u.name = NULL;
 
    switch (hunk->type) { /* TODO: Does it really matter? */
-      case HUNK_TYPE_ASSET_ADD:
-      case HUNK_TYPE_ASSET_REMOVE:
-      case HUNK_TYPE_ASSET_BLACKMARKET:
-      case HUNK_TYPE_ASSET_LEGALMARKET:
-      case HUNK_TYPE_VASSET_ADD:
-      case HUNK_TYPE_VASSET_REMOVE:
+      case HUNK_TYPE_SPOB_ADD:
+      case HUNK_TYPE_SPOB_REMOVE:
+      case HUNK_TYPE_VSPOB_ADD:
+      case HUNK_TYPE_VSPOB_REMOVE:
       case HUNK_TYPE_JUMP_ADD:
       case HUNK_TYPE_JUMP_REMOVE:
       case HUNK_TYPE_SSYS_BACKGROUND:
       case HUNK_TYPE_SSYS_FEATURES:
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
-      case HUNK_TYPE_ASSET_FACTION:
-      case HUNK_TYPE_ASSET_FACTION_REMOVE:
-      case HUNK_TYPE_ASSET_DESCRIPTION:
-      case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
-      case HUNK_TYPE_ASSET_TECH_ADD:
-      case HUNK_TYPE_ASSET_TECH_REMOVE:
-      case HUNK_TYPE_ASSET_BAR:
-      case HUNK_TYPE_ASSET_BAR_REVERT:
-      case HUNK_TYPE_ASSET_EXTERIOR:
-      case HUNK_TYPE_ASSET_EXTERIOR_REVERT:
+      case HUNK_TYPE_SPOB_FACTION:
+      case HUNK_TYPE_SPOB_FACTION_REMOVE:
+      case HUNK_TYPE_SPOB_DESCRIPTION:
+      case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
+      case HUNK_TYPE_SPOB_TECH_ADD:
+      case HUNK_TYPE_SPOB_TECH_REMOVE:
+      case HUNK_TYPE_SPOB_BAR:
+      case HUNK_TYPE_SPOB_BAR_REVERT:
+      case HUNK_TYPE_SPOB_SPACE:
+      case HUNK_TYPE_SPOB_SPACE_REVERT:
+      case HUNK_TYPE_SPOB_EXTERIOR:
+      case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
       case HUNK_TYPE_FACTION_VISIBLE:
       case HUNK_TYPE_FACTION_INVISIBLE:
       case HUNK_TYPE_FACTION_ALLY:
@@ -1566,6 +1586,11 @@ static int diff_checkUpdateUniverse (void)
       return 0;
    space_reconstructPresences();
    safelanes_recalculate();
+
+   /* Re-compute the economy. */
+   economy_execQueued();
+   economy_initialiseCommodityPrices();
+
    diff_universe_changed = 0;
    return 1;
 }

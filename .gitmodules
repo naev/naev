@@ -5,3 +5,6 @@
 	path = artwork
 	url = https://github.com/naev/naev-artwork-production.git
 	branch = main
+[submodule "dat/lua-repl"]
+	path = dat/lua-repl
+	url = https://github.com/hoelzro/lua-repl.git

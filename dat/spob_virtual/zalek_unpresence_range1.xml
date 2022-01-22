@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Za'lek Unpresence (Range 1)">
+ <presence>
+  <faction>Za'lek</faction>
+  <base>0.000000</base>
+  <bonus>-100000.000000</bonus>
+  <range>1</range>
+ </presence>
+</spob>

@@ -16,13 +16,13 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.8</delay>
-  <speed>700</speed>
+  <speed>1050</speed>
   <range>900</range>
   <falloff>750</falloff>
   <energy>8</energy>
   <heatup>35</heatup>
   <trackmin>0</trackmin>
-  <trackmax>3000</trackmax>
+  <trackmax>3600</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>6</penetrate>

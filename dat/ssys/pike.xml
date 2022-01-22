@@ -10,11 +10,11 @@
   <x>941.000000</x>
   <y>-352.000000</y>
  </pos>
- <assets>
-  <asset>Coral Station</asset>
-  <asset>Ohon</asset>
-  <asset>Pike I</asset>
- </assets>
+ <spobs>
+  <spob>Coral Station</spob>
+  <spob>Ohon</spob>
+  <spob>Pike I</spob>
+ </spobs>
  <jumps>
   <jump target="Atlantis">
    <autopos/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Apik II">
+ <pos>
+  <x>-5706.526190</x>
+  <y>7721.039274</y>
+ </pos>
+ <GFX>
+  <space>C00.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

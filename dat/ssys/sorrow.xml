@@ -10,7 +10,7 @@
   <x>1114.012930</x>
   <y>-297.043903</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Eisenhorn">
    <autopos/>
@@ -18,6 +18,11 @@
   </jump>
   <jump target="Kraft">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-15670">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

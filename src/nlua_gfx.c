@@ -39,6 +39,7 @@ static int gfxL_renderRect( lua_State *L );
 static int gfxL_renderRectH( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
 static int gfxL_renderCircleH( lua_State *L );
+static int gfxL_clearDepth( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
@@ -67,6 +68,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderCircle", gfxL_renderCircle },
    { "renderCircleH", gfxL_renderCircleH },
    /* Printing. */
+   { "clearDepth", gfxL_clearDepth },
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
    { "printfWrap", gfxL_printfWrap },
@@ -123,6 +125,7 @@ int nlua_loadGFX( nlua_env env )
  *
  * @usage screen_w, screen_h = gfx.dim()
  *
+ *    @luatparam[opt=false] boolean internalsize Whether or not to consider the GUI modifications to the screen size.
  *    @luatreturn number The width of the Naev window.
  *    @luatreturn number The height of the Naev window.
  *    @luatreturn scale The scaling factor.
@@ -130,8 +133,14 @@ int nlua_loadGFX( nlua_env env )
  */
 static int gfxL_dim( lua_State *L )
 {
-   lua_pushnumber( L, SCREEN_W );
-   lua_pushnumber( L, SCREEN_H );
+   if (lua_isboolean(L,1)) {
+      lua_pushnumber( L, SCREEN_W );
+      lua_pushnumber( L, SCREEN_H );
+   }
+   else {
+      lua_pushnumber( L, gl_screen.nw );
+      lua_pushnumber( L, gl_screen.nh );
+   }
    lua_pushnumber( L, gl_screen.scale );
    return 3;
 }
@@ -289,12 +298,12 @@ static int gfxL_renderTexScale( lua_State *L )
  *    @luatparam number pos_y Y position to render texture at.
  *    @luatparam number pos_w Width of the image on screen.
  *    @luatparam number pos_h Height of the image on screen.
- *    @luatparam number sprite_x X sprite to render.
- *    @luatparam number sprite_y Y sprite to render.
- *    @luatparam number tex_x X sprite texture offset as [0.:1.].
- *    @luatparam number tex_y Y sprite texture offset as [0.:1.].
- *    @luatparam number tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
- *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
+ *    @luatparam[opt=1] number sprite_x X sprite to render.
+ *    @luatparam[opt=1] number sprite_y Y sprite to render.
+ *    @luatparam[opt=0.] number tex_x X sprite texture offset as [0.:1.].
+ *    @luatparam[opt=0.] number tex_y Y sprite texture offset as [0.:1.].
+ *    @luatparam[opt=1.] number tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+ *    @luatparam[opt=1.] number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
  *    @luatparam[opt] number angle Angle to rotate in radians.
  * @luafunc renderTexRaw
@@ -315,12 +324,12 @@ static int gfxL_renderTexRaw( lua_State *L )
    py = luaL_checknumber( L, 3 );
    pw = luaL_checknumber( L, 4 );
    ph = luaL_checknumber( L, 5 );
-   sx = luaL_checkinteger( L, 6 ) - 1;
-   sy = luaL_checkinteger( L, 7 ) - 1;
-   tx = luaL_checknumber( L, 8 );
-   ty = luaL_checknumber( L, 9 );
-   tw = luaL_checknumber( L, 10 );
-   th = luaL_checknumber( L, 11 );
+   sx = luaL_optinteger( L, 6, 1 ) - 1;
+   sy = luaL_optinteger( L, 7, 1 ) - 1;
+   tx = luaL_optnumber( L, 8, 0. );
+   ty = luaL_optnumber( L, 9, 0. );
+   tw = luaL_optnumber( L, 10, 1. );
+   th = luaL_optnumber( L, 11, 1. );
    col = luaL_optcolour(L, 12, &cWhite );
    angle = luaL_optnumber(L,13,0.);
 
@@ -534,6 +543,16 @@ static int gfxL_renderCircleH( lua_State *L )
    /* Render. */
    gl_renderCircleH( H, col, !empty );
 
+   return 0;
+}
+
+/**
+ * @brief Clears the depth buffer.
+ */
+static int gfxL_clearDepth( lua_State *L )
+{
+   (void) L;
+   glClear( GL_DEPTH_BUFFER_BIT );
    return 0;
 }
 

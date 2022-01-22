@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   push:
     tags:
       - "!v*.*.*"
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-release:latest"
+      image: "ghcr.io/naev/naev-release:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -24,13 +25,13 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dnightly=true -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
-          cp -r source/utils/ci/itch source/utils/ci/steam build/dist/
+          cp -r source/utils/ci/itch source/utils/ci/steam source/utils/ci/gh build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/CHANGELOG build/dist
           cp source/dat/VERSION build/dist
@@ -42,6 +43,13 @@ jobs:
           path: ${{ github.workspace }}/build/dist/source.tar.xz
           if-no-files-found: error
 
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/build/dist/CHANGELOG
+          if-no-files-found: error
+
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -49,11 +57,11 @@ jobs:
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
-      - name: Upload Changelog Artifact
+      - name: Upload GitHub Deployment Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: naev-changelog
-          path: ${{ github.workspace }}/build/dist/CHANGELOG
+          name: naev-github-deployment
+          path: ${{ github.workspace }}/build/dist/gh/*
           if-no-files-found: error
 
       - name: Upload Steam Deployment Script Artifact
@@ -75,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/naev/naev-linux-lts:latest"
 
     steps:
       - name: Get Source
@@ -96,14 +104,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-linux-x86-64
-          path: "${{ github.workspace }}/build/dist/*.AppImage"
+          path: "${{ github.workspace }}/build/dist/*"
 
   "Windows_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-windows:latest"
+      image: "ghcr.io/naev/naev-windows:latest"
 
     steps:
       - name: Get Source
@@ -123,9 +131,9 @@ jobs:
               --bindir=bin \
               -Dndata_path=bin \
               --cross-file='source/utils/build/windows_cross_mingw.ini' \
-              --buildtype=debug \
+              --buildtype=debugoptimized \
               --force-fallback-for=glpk,SuiteSparse \
-              -Dnightly=true \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -150,7 +158,7 @@ jobs:
     needs: "Package_Source"
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-macos:latest"
+      image: "ghcr.io/naev/naev-macos:latest"
 
     steps:
       - name: Get Source
@@ -170,8 +178,8 @@ jobs:
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
-              --buildtype=debug \
-              -Dnightly=true \
+              --buildtype=debugoptimized \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -184,14 +192,16 @@ jobs:
       - name: Meson Install
         run: |
           meson install -C build
+          ./source/extras/macos/createDMG.sh -s source -b build
           cd build/dist
           zip -r naev-macos.zip Naev.app/*
+          rm -rf Naev.app
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/build/dist/*.zip
+          path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
   "Steam_Naev_Release":
@@ -199,7 +209,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
+      image: "ghcr.io/naev/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
@@ -216,10 +226,10 @@ jobs:
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
-              --buildtype=debug \
+              --buildtype=debugoptimized \
               --force-fallback-for=SuiteSparse,sdl2_image \
               -Dprefix="/usr" \
-              -Dnightly=true \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -268,7 +278,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-release:latest"
+      image: "ghcr.io/naev/naev-release:latest"
 
     needs:
       [
@@ -281,9 +291,14 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        if: ${{ matrix.releasetype == 'github' }}
+
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
+        working-directory: ${{ github.workspace }}
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2

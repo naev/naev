@@ -7,11 +7,11 @@ local vn = require "vn"
 local vntk = {}
 
 --[[--
-Creates a series of message boxes to be displayed.
+Creates a series of message boxes to be displayed. Works similar to tk.msg but is more configurable and can handle chaining messages.
 
    @tparam[opt] string title Title of the message boxes.
    @tparam string|table text String or table of strings for the text of each consecutive text box.
-   @tparam table params Table of parameters
+   @tparam table params Table of parameters. Currently supports the transition field which sets up parameters passed to vn.transition.
 --]]
 function vntk.msg( title, text, params )
    params = params or {}
@@ -40,6 +40,8 @@ end
 
 --[[--
 Creates a series of message boxes with a yes or no prompt to be displayed.
+
+Note that due to internally using the vn library inside, this can not be used while the vn library is running.
 
    @tparam[opt] string title Title of the message boxes.
    @tparam string|table text String or table of strings for the text of each consecutive text box.

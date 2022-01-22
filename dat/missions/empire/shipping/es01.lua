@@ -10,7 +10,7 @@
   <chance>50</chance>
   <done>Empire Shipping 1</done>
   <location>Bar</location>
-  <planet>Halir</planet>
+  <spob>Halir</spob>
  </avail>
  <notes>
   <campaign>Empire Shipping</campaign>
@@ -35,29 +35,29 @@ function create ()
    -- Note: this mission does not make any system claims.
 
    -- Planet targets
-   mem.pickup,mem.pickupsys  = planet.getLandable( "Selphod" )
-   mem.dest,mem.destsys      = planet.getLandable( "Cerberus" )
-   mem.ret,mem.retsys        = planet.getLandable( "Halir" )
+   mem.pickup,mem.pickupsys  = spob.getLandable( "Selphod" )
+   mem.dest,mem.destsys      = spob.getLandable( "Cerberus" )
+   mem.ret,mem.retsys        = spob.getLandable( "Halir" )
    if mem.pickup==nil or mem.dest==nil or mem.ret==nil then
       misn.finish(false)
    end
 
    -- Bar NPC
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", _("You see Commander Soldner who is expecting you.") )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", _("You see Commander Soldner. He is expecting you.") )
 end
 
 function accept ()
 
    -- See if accept mission
    if not tk.yesno( _("Commander Soldner"), _([[You approach Commander Soldner, who seems to be waiting for you.
-"Hello, ready for your next mission?"]]) ) then
+"Ready for your next mission?"]]) ) then
       misn.finish()
    end
 
    misn.accept()
 
    -- target destination
-   mem.misn_marker       = misn.markerAdd( mem.pickupsys, "low" )
+   mem.misn_marker       = misn.markerAdd( mem.pickup, "low" )
 
    -- Mission details
    mem.misn_stage = 0
@@ -66,14 +66,14 @@ function accept ()
    misn.setDesc( fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=mem.pickup, sys=mem.pickupsys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner begins, "We have an important package that we must take from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.
+   tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner begins, "We have an important package that must get from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.
     "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]), {pickup_pnt=mem.pickup, pickup_sys=mem.pickupsys, dropoff_pnt=mem.dest, dropoff_sys=mem.destsys, credits=fmt.credits(emp.rewards.es01)} ) )
    misn.osdCreate(_("Empire Shipping Delivery"), {
       fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=mem.pickup, sys=mem.pickupsys}),
    })
 
    -- Set up the goal
-   tk.msg( _("Commander Soldner"), _([["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]) )
+   tk.msg( _("Commander Soldner"), _([["Avoid hostilities at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]) )
 
    -- Set hooks
    hook.land("land")
@@ -82,7 +82,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
 
    if mem.landed == mem.pickup and mem.misn_stage == 0 then
 
@@ -102,7 +102,7 @@ function land ()
       mem.misn_stage = 1
       mem.jumped = 0
       misn.setDesc( fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=mem.dest, sys=mem.destsys}) )
-      misn.markerMove( mem.misn_marker, mem.destsys )
+      misn.markerMove( mem.misn_marker, mem.dest )
       misn.osdCreate(_("Empire Shipping Delivery"), {
          fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=mem.dest, sys=mem.destsys}),
       })
@@ -115,11 +115,11 @@ function land ()
          -- Update mission
          mem.misn_stage = 2
          misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=mem.ret, sys=mem.retsys}) )
-         misn.markerMove( mem.misn_marker, mem.retsys )
+         misn.markerMove( mem.misn_marker, mem.ret )
          misn.osdCreate(_("Empire Shipping Delivery"), {fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=mem.ret, sys=mem.retsys})})
 
          -- Some text
-         tk.msg( _("Cargo Delivery"), fmt.f(_([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to {pnt} in the {sys} system to report to Commander Soldner.]]), {pnt=mem.ret, sys=mem.retsys}) )
+         tk.msg( _("Cargo Delivery"), fmt.f(_([[Workers quickly unload the package as discreetly as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to {pnt} in the {sys} system to report to Commander Soldner.]]), {pnt=mem.ret, sys=mem.retsys}) )
       end
    elseif mem.landed == mem.ret and mem.misn_stage == 2 then
 
@@ -130,7 +130,7 @@ function land ()
 
       -- Flavour text
       if getlicense then
-         tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
+         tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you were able to deliver the package. Great work there. I've managed to get you cleared for a Heavy Weapon License. You'll still have to pay the fee for getting it, though.
     "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), {pnt=mem.ret}) )
       else
          tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package."
@@ -140,7 +140,7 @@ function land ()
       -- The goods
       if getlicense then
          diff.apply("heavy_weapons_license")
-         emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
+         emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for a Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
       else
          emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
       end

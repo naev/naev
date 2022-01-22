@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Corax">
+ <pos>
+  <x>-11052.025114</x>
+  <y>-1285.227681</y>
+ </pos>
+ <GFX>
+  <space>C01.webp</space>
+  <exterior>mining5.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>33.333333</base>
+  <bonus>16.666667</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>150000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Though the world of Corax might, in the distant future, become a semi-inhabitable world there will be precious few ores and minerals left (barring iron) by that point. The Soromid's ability to withstand unusual levels of environmental discomfort has given them a head start on this world in terms of resource extraction. Other life, it seems, will have to wait its turn.</description>
+  <bar>Given the relative stability of this world the bar looks rather more Empire standard-issue than on many Soromid worlds. There are tables, chairs, dispensers, a barman and, most importantly, drinks. These there are in profusion, though, this being a smaller world, not in any great variety. If you ask for a cocktail though, you'll likely be directed to one of the local sulphurous hot-water geysers.</bar>
+ </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Hulls High</item>
+  <item>Soromid Ships Small</item>
+  <item>Soromid Ships Medium</item>
+ </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

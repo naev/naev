@@ -215,7 +215,7 @@ msg_lore["Pirate"] = {
    _([["Just caught an old mate ferrying tourists for credits. Nearly puked out my grog! Your reputation won't survive for long working for our victims."]]),
    _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
    _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
-   _([["One of my favorite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
+   _([["One of my favourite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
    _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
    _([["Flying a real big ship is impressive, but it's still no pirate ship. I mean, I respect ya more if you're flying a Goddard than if you're flying a civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!"]]),
 }
@@ -238,7 +238,7 @@ local msg_tip = {
    _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
    _([["Are you trading commodities? You can hold down #bctrl#0 to buy 50 of them at a time, and #bshift#0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?"]]),
    _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
-   _([["Some weapons have a different effect on shields than they do on armor. Keep that in mind when equipping your ship."]]),
+   _([["Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship."]]),
    _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
    _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
    _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
@@ -259,7 +259,7 @@ local msg_tip = {
    _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
    _([["The '¤' symbol is the official galactic symbol for credits. Supposedly it comes from the currency symbol of an ancient Earth civilization. It's sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' for millions of credits, and so on."]]),
    _([["If you're piloting a medium ship, I'd recommend you invest in at least one turreted missile launcher. I had a close call a few decaperiods ago where a bomber nearly blew me to bits outside the range of my Laser Turrets. Luckily I just barely managed to escape to a nearby planet so I could escape the pilot. I've not had that problem ever since I equipped a turreted missile launcher."]]),
-   _([["I've heard rumors that a pirate's reputations depends on flying pirate ships, but I think they only loathe peaceful honest work."]]),
+   _([["I've heard rumours that a pirate's reputations depends on flying pirate ships, but I think they only loathe peaceful honest work."]]),
    fmt.f(_([["These computer symbols can be confusing sometimes! I've figured it out, though: '{F}' means friendly, '{N}' means neutral, '{H}' means hostile, '{R}' means restricted, and '{U}' means uninhabited but landable. I wish someone had told me that!"]]), {F="#F+#0", N="#N~#0", H="#H!!#0", R="#R*#0", U="#I=#0"} ),
    _([["Trade Lanes are the safest bet to travel around the universe. They have many patrols to keep you safe from pirates."]]),
 }
@@ -284,7 +284,7 @@ local msg_mhint = {
    {"Shadowrun", _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
    {"Collective Espionage 1", _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
    {"Hitman", _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
-   {"Za'lek Shipping Delivery", _([["So there's some Za'lek scientist looking for a cargo monkey out on Niflheim in the Dohriabi system. I hear it's pretty good money."]])},
+   {"Za'lek Shipping Delivery", _([["So there's some Za'lek scientist looking for a cargo jockey out on Niflheim in the Dohriabi system. I hear it's pretty good money."]])},
 }
 
 -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
@@ -430,7 +430,7 @@ local function spawnNPC()
    local nongeneric = false
 
    -- Choose faction, overriding if necessary
-   local f  = planet.cur():faction()
+   local f  = spob.cur():faction()
    if not f then evt.finish() end
    local of = override_list[f:nameRaw()]
    if of then f = faction.get(of) end
@@ -491,9 +491,9 @@ end
 
 function create()
    -- Logic to decide what to spawn, if anything.
-   local cur = planet.cur()
+   local cur = spob.cur()
 
-   -- Do not spawn any NPCs on restricted assets or that don't want NPC
+   -- Do not spawn any NPCs on restricted spobs or that don't want NPC
    local t = cur:tags()
    if t.restricted or t.nonpc then
       evt.finish(false)

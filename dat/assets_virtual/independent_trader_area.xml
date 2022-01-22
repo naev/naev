@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Independent Trader Area">
- <presence>
-  <faction>Trader</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
-  <range>1</range>
- </presence>
-</asset>

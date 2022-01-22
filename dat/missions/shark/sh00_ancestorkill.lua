@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>planet.cur() ~= planet.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
   <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
@@ -38,6 +38,7 @@
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local shark = require "common.shark"
 
 -- luacheck: globals enter jumpout land pirate_dead pirate_jump (Hook functions passed by name)
@@ -45,7 +46,7 @@ local shark = require "common.shark"
 
 --Change here to change the planet and the system
 local missys = system.get("Ingot")
-local mispla = planet.get("Ulios")
+local mispla = spob.get("Ulios")
 local battlesys = system.get("Toaxis")
 
 function create ()
@@ -75,7 +76,7 @@ function accept()
       })
       misn.osdActive(1)
 
-      mem.markeri = misn.markerAdd(missys, "low")
+      mem.markeri = misn.markerAdd(mispla, "low")
 
       mem.jumpouthook = hook.jumpout("jumpout")
       mem.landhook = hook.land("land")
@@ -90,12 +91,12 @@ end
 function land()
 
    -- Did the player reach Ulios ?
-   if planet.cur() == mispla and mem.stage == 0 then
+   if spob.cur() == mispla and mem.stage == 0 then
       misn.npcAdd("beginbattle", _("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
    end
 
    -- Did the player land again on Ulios after having killed the pirate
-   if planet.cur() == mispla and mem.stage == 4 then
+   if spob.cur() == mispla and mem.stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
       player.pay(shark.rewards.sh00)
       misn.osdDestroy()
@@ -111,8 +112,7 @@ end
 --jumping out the system
 function jumpout()
    if mem.stage == 2 then   --You were supposed to kill him, not to go away !
-      player.msg( "#r" .. _("MISSION FAILED: You left the pirate.") .. "#0" )
-      misn.finish(false)
+      lmisn.fail( _("You left the pirate.") )
    end
 end
 
@@ -124,8 +124,7 @@ function enter()
       local playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
-         player.msg( "#r" .. _("MISSION FAILED: You were supposed to use a Shark.") .. "#0" )
-         misn.finish(false)
+         lmisn.fail( _("You were supposed to use a Shark.") )
       end
 
       --Be sure that nobody unexpected will take part in our epic battle
@@ -133,8 +132,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid") )
-      badboy:rename(mem.piratename)
+      local badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid"), mem.piratename )
       badboy:setHostile()
       badboy:setVisplayer()
       badboy:setHilight()
@@ -160,13 +158,12 @@ function beginbattle()
 end
 
 function pirate_jump()  --he went away
-   player.msg( "#r" .. _("MISSION FAILED: The pirate ran away.") .. "#0" )
-   misn.finish( false )
+   lmisn.fail( _("The pirate ran away.") )
 end
 
 function pirate_dead()  --wou win
    mem.stage = 4
    misn.markerRm(mem.marker1)
-   mem.marker2 = misn.markerAdd(missys, "low")
+   mem.marker2 = misn.markerAdd(mispla, "low")
    misn.osdActive(3)
 end

@@ -70,40 +70,52 @@ int nlua_loadCamera( nlua_env env )
  * @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
  *
  *    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it follows the player.
- *    @luatparam[opt=false] boolean soft_over Indicates that the camera should fly over rather than instantly teleport.
- *    @luaparam[opt=2500] speed Speed at which to fly over if soft_over is true.
+ *    @luatparam[opt=false] boolean hard_over Indicates that the camera should instantly teleport instead of fly over.
+ *    @luaparam[opt=math.max(1000,distance/2)] speed Speed at which to fly over if hard_over is false.
  * @luafunc set
  */
 static int camL_set( lua_State *L )
 {
-   LuaPilot lp;
+   Pilot *p;
    Vector2d *vec;
-   int soft_over, speed;
+   double x, y, d;
+   int hard_over, speed;
 
    NLUA_CHECKRW(L);
 
    /* Handle arguments. */
-   lp = 0;
+   p = NULL;
    vec = NULL;
-   if (lua_ispilot(L,1))
-      lp = lua_topilot(L,1);
+   if (lua_ispilot(L,1)) {
+      LuaPilot lp = lua_topilot(L,1);
+      p = pilot_get( lp );
+      if (p==NULL)
+         return 0;
+      vec = &p->solid->pos;
+   }
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
-   soft_over = lua_toboolean(L,2);
-   speed = luaL_optinteger(L,3,2500);
+   else if (lua_isnoneornil(L,1)) {
+      if (player.p != NULL) {
+         p = player.p;
+         vec = &player.p->solid->pos;
+      }
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+   hard_over = !lua_toboolean(L,2);
+   cam_getPos( &x, &y );
+   if (vec != NULL)
+      d = MOD( vec->x-x, vec->y-y );
+   else
+      d = 5000.;
+   speed = luaL_optinteger(L,3,MAX(1000.,d/2.));
 
    /* Set the camera. */
-   if (lp != 0) {
-      Pilot *p = pilot_get( lp );
-      if (p != NULL)
-         cam_setTargetPilot( p->id, soft_over*speed );
-   }
+   if (p != NULL)
+      cam_setTargetPilot( p->id, hard_over*speed );
    else if (vec != NULL)
-      cam_setTargetPos( vec->x, vec->y, soft_over*speed );
-   else {
-      if (player.p != NULL)
-         cam_setTargetPilot( player.p->id, soft_over*speed );
-   }
+      cam_setTargetPos( vec->x, vec->y, hard_over*speed );
    return 0;
 }
 
@@ -175,7 +187,7 @@ static int camL_getZoom( lua_State *L )
  * @brief Makes the camera shake.
  *
  * @usage camera.shake() -- Shakes the camera with amplitude 1.
- * @usage camera.shake( .5 ) -- Shakes the camera with amplitude .5
+ * @usage camera.shake( 0.5 ) -- Shakes the camera with amplitude .5
  *
  *    @luatparam float amplitude: amplitude of the shaking
  * @luafunc shake

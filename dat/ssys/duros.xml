@@ -10,11 +10,11 @@
   <x>943.474515</x>
   <y>-572.953627</y>
  </pos>
- <assets>
-  <asset>Duros I</asset>
-  <asset>Duros Ia</asset>
-  <asset>Trevis Station</asset>
- </assets>
+ <spobs>
+  <spob>Duros I</spob>
+  <spob>Duros Ia</spob>
+  <spob>Trevis Station</spob>
+ </spobs>
  <jumps>
   <jump target="Fulcrum">
    <autopos/>

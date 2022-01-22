@@ -18,6 +18,7 @@
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
   <done>Helping Nelly Out 1</done>
+  <chapter>[01]</chapter>
  </avail>
  <notes>
   <campaign>Tutorial Nelly</campaign>
@@ -57,7 +58,8 @@ local lmisn = require "lmisn"
    2: Going to pick up repair pirate
    3. Dealt with pirate
    4: Got part
-   5: Flying back
+   5: Past nosy pacifier
+   6: Flying back
 --]]
 mem.misn_state = nil
 local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
@@ -73,7 +75,7 @@ end
 
 function create ()
    -- Save current system to return to
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
    if not misn.claim( mem.retsys, true ) then
       misn.finish()
    end
@@ -96,7 +98,7 @@ function create ()
       end
       return true
    end
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not mem.destpnt then
       misn.finish()
    end
@@ -162,7 +164,7 @@ function accept ()
       end
       return false
    end
-   local pnts = lmisn.getPlanetAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
+   local pnts = lmisn.getSpobAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
    table.sort( pnts, function( a, b )
       return a:system():jumpDist() < b:system():jumpDist()
    end )
@@ -171,13 +173,13 @@ function accept ()
    if has_dis then
       nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
    elseif has_dis_owned then
-      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname} before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]:name()}))
-      local s = planet.cur():services()
+      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
+      local s = spob.cur():services()
       if not s.outfits and not s.shipyard then
-         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet:name()}))
+         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet}))
       end
    else
-      nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet:name(), outfit_tobuy:name()}))
+      nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet, outfitname=outfit_tobuy}))
    end
 
    vn.done( tutnel.nelly.transition )
@@ -199,7 +201,7 @@ function accept ()
       table.insert( osdtxt, _("Buy and equip a weapon with disable damage") )
       mem.misn_state = -2
    end
-   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=mem.destsys}) )
+   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=mem.retsys}) )
    misn.osdCreate( _("Helping Nelly Out"), osdtxt )
 
    if mem.misn_state < 0 then
@@ -217,7 +219,7 @@ function equip ()
    local pp = player.pilot()
    for k,o in ipairs(pp:outfits()) do
       if has_disable(o) then
-         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o:name()}))
+         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
          mem.misn_state = 0
          misn.osdActive(2)
          hook.rm( mem.hk_equip )
@@ -227,16 +229,27 @@ function equip ()
    end
 end
 
+local function reset_osd ()
+   misn.osdCreate( _("Helping Nelly Out"), {
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
+   } )
+   if mem.misn_state >= 4 then
+      misn.osdActive(2)
+   end
+end
+
 function enter ()
    local scur = system.cur()
    if mem.misn_state <= 0  and scur == mem.retsys then
-      rampant_pos = player.pos() + vec2.newP( 2000, rnd.angle() )
+      rampant_pos = mem.retpnt:pos() + vec2.newP( 2000, rnd.angle() )
       rampant = pilot.add( "Llama", "Dummy", rampant_pos, _("Llaminator MK2") )
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
       rampant:intrinsicSet( "turn", -50 )
       rampant:intrinsicSet( "shield_regen_mod", -90 )
       rampant:intrinsicSet( "stress_dissipation", -90 )
+      rampant:setVisplayer()
       rampant:setHilight()
       local aimem = rampant:memory()
       aimem.comm_no = _("No response.")
@@ -250,8 +263,8 @@ function enter ()
 
    elseif mem.misn_state == 2 and scur == mem.retsys then
       mem.jump_dest = jump.get( mem.retsys, mem.destsys )
-      mem.fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
-      hook.timer( 1, "timer_pirate" )
+      local fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
+      hook.timer( 1, "timer_pirate", fpir )
       if not mem.hk_reset_osd then
          mem.hk_reset_osd = hook.enter( "reset_osd_hook" )
       end
@@ -262,8 +275,7 @@ function enter ()
       local s = player.pilot():stats().ew_stealth
       local m, a = mem.jump_dest:pos():polar()
       spotter_pos = vec2.newP( m - 1.5 * s, a )
-      spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos )
-      spotter:rename(_("Noisy Pacifier"))
+      spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos, _("Noisy Pacifier") )
       spotter:setVisplayer()
       spotter:setHilight()
       spotter:setInvincible()
@@ -272,6 +284,9 @@ function enter ()
 
       mem.hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
+      mem.misn_state = 5
+   elseif mem.misn_state==5 then
+      reset_osd()
    end
 end
 
@@ -330,7 +345,7 @@ Although the mission has been aborted, you can still repeat it from the beginnin
 end
 
 function land ()
-   local cpnt = planet.cur()
+   local cpnt = spob.cur()
    if cpnt == mem.retpnt and mem.misn_state==1 then
       mem.npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
 
@@ -396,14 +411,14 @@ function approach_nelly ()
    mem.misn_state = 2
 end
 
-function timer_pirate ()
+function timer_pirate( fpir )
    local pp = player.pilot()
    local d = mem.jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
       -- Spawn pirates
       enemies = {}
       for i=1,3 do
-         local p = pilot.add( "Pirate Hyena", mem.fpir, mem.jump_dest )
+         local p = pilot.add( "Pirate Hyena", fpir, mem.jump_dest )
          if i>1 then
             p:setLeader( enemies[1] )
          end
@@ -424,7 +439,7 @@ function timer_pirate ()
       mem.nelly_spam = 2
       return
    end
-   hook.timer( 1, "timer_pirate" )
+   hook.timer( 1, "timer_pirate", fpir )
 end
 
 function timer_pirate_nelly ()
@@ -484,16 +499,6 @@ function timer_pirate_checkbribe ()
    hook.timer( 3, "timer_pirate_checkbribe" )
 end
 
-local function reset_osd ()
-   misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
-      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
-   } )
-   if mem.misn_state >= 4 then
-      misn.osdActive(2)
-   end
-end
-
 function reset_osd_hook ()
    reset_osd()
    hook.rm( mem.hk_reset_osd )
@@ -542,7 +547,7 @@ She frowns.
    nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
    nel(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, I recommend you to rely on stealth as much as possible."]]))
-   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),shipname=spotter:name()}))
+   nel(fmt.f(_([["To avoid getting spotted by {plt}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {plt} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),plt=spotter}))
    vn.done( tutnel.nelly.transition )
 
    vn.label("nolearn")

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Pirate Small">
- <presence>
-  <faction>Pirate</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
-  <range>3</range>
- </presence>
-</asset>

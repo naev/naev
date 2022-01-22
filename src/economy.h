@@ -20,20 +20,20 @@ int economy_update( unsigned int dt );
 int economy_refresh (void);
 void economy_destroy (void);
 void economy_clearKnown (void);
-void economy_clearSinglePlanet(Planet *p);
+void economy_clearSingleSpob(Spob *p);
 
 /*
  * Price stuff.
  */
-int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std);
-void economy_averageSeenPrices( const Planet *p );
-void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
-credits_t economy_getPrice( const Commodity *com, const StarSystem *sys, const Planet *p );
-credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Planet *p, ntime_t t );
+int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t *mean, double *std);
+void economy_averageSeenPrices( const Spob *p );
+void economy_averageSeenPricesAtTime( const Spob *p, const ntime_t tupdate );
+credits_t economy_getPrice( const Commodity *com, const StarSystem *sys, const Spob *p );
+credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, const Spob *p, ntime_t t );
 
 /*
  * Calculating the sinusoidal economy values
  */
 void economy_initialiseCommodityPrices(void);
 int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std );
-void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet );
+void economy_initialiseSingleSystem( StarSystem *sys, Spob *spob );

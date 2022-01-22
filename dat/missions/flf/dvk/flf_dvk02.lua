@@ -58,7 +58,7 @@ end
 function accept ()
    tk.msg( _("The enemy of my enemy..."), fmt.f( _([[Benito motions for you to sit. She doesn't seem quite as calm and relaxed as she usually is.
     "Hello again, {player}. Look: we have a pretty bad situation here. As you may have guessed, we rely on... unconventional sources for supplies. Unfortunately, we seem to have hit a bit of a snag. See, one of our important sources has stopped supplying us, and I fear we may be cut off and no longer able to carry out our operations before long if we don't do something.
-    "But that being said, I think I may have found a solution. See, we have reason to believe that we are actually neighboring a pirate stronghold. We're not entirely sure, but we have detected some evidence of occasional pirate activity in the nearby {sys} system."]]), {player=player.name(), sys=mem.missys} ) )
+    "But that being said, I think I may have found a solution. See, we have reason to believe that we are actually neighbouring a pirate stronghold. We're not entirely sure, but we have detected some evidence of occasional pirate activity in the nearby {sys} system."]]), {player=player.name(), sys=mem.missys} ) )
    if tk.yesno( _("The enemy of my enemy..."), fmt.f( _([[You raise an eyebrow. It seems rather odd that pirates would be in such a remote system. Perhaps it could be a gateway of some sort?
     "You must be thinking the same thing," Benito pipes up. "Yes, that is a very strange system to see pirates in, even occasionally. That's why we think there is a secret pirate stronghold nearby. It may even be the one associated with piracy in the Frontier.
     "We must establish trading relations with that stronghold at once. This could give us just the edge we need against the Dvaereds. I honestly don't know how you can go about doing it, but my recommendation would be to go to the {sys} system and see if you find any pirates. Tell them you're on official FLF business, and that we're seeking to become trade partners with them. Are you in?"]]), {sys=mem.missys} ) ) then
@@ -162,7 +162,7 @@ function pilot_hail_boss ()
       end
    elseif player.pilot():cargoHas( "Ore" ) >= mem.ore_needed then
       tk.msg( _("I knew we could work something out"), _([["Ha, you came back after all! Wonderful. I'll just take that ore, then." You hesitate for a moment, but considering the number of pirates around, they'll probably take it from you by force if you refuse at this point. You jettison the cargo into space, which the Kestrel promptly picks up with a tractor beam. "Excellent! Well, it's been a pleasure doing business with you. Send your mates over to the new station whenever you're ready. It should be up and running in just a couple periods or so. And in the meantime, you can consider yourselves one of us! Bwa ha ha!"
-    You exchange what must for lack of a better word be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]]) )
+    You exchange what must, for lack of a better word, be called pleasantries with the pirate, with him telling a story about a pitifully armed Mule he recently plundered and you sharing stories of your victories against Dvaered scum. You seem to get along well. You then part ways. Now to report to Benito....]]) )
       mem.stage = 3
       player.pilot():cargoRm( "Ore", mem.ore_needed )
       hook.rm( mem.boss_hook )
@@ -240,7 +240,7 @@ end
 
 
 function land ()
-   if mem.stage >= 3 and planet.cur():faction() == faction.get( "FLF" ) then
+   if mem.stage >= 3 and spob.cur():faction() == faction.get( "FLF" ) then
       tk.msg( _("Just The Edge We Need"), fmt.f( _([[You greet Benito in a friendly manner as always, sharing your story and telling her the good news before handing her a chip with the map data on it. She seems pleased. "Excellent," she says. "We'll begin sending our trading convoys out right away. We'll need lots of supplies for our next mission! Thank you for your service, {player}. Your pay has been deposited into your account. It will be a while before we'll be ready for your next big mission, so you can do some missions on the mission computer in the meantime. And don't forget to visit the Pirate worlds yourself and bring your own ship up to par!
     "Oh, one last thing. Make sure you stay on good terms with the pirates, yeah? The next thing you should probably do is buy a Skull and Bones ship; pirates tend to respect those who use their ships more than those who don't. And make sure to destroy Dvaered scum with the pirates around! That should keep your reputation up." You make a mental note to do what she suggests as she excuses herself and heads off.]]), {player=player.name()} ) )
       diff.apply( "Fury_Station" )

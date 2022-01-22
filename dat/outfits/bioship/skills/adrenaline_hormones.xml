@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Adrenaline Hormones">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>/gfx/misc/icons/internal-organ.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <fwd_firerate>8</fwd_firerate>
+  <tur_firerate>8</tur_firerate>
+ </specific>
+</outfit>

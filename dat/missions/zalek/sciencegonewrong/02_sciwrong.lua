@@ -10,7 +10,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
-  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
+  <cond>spob.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]
@@ -39,13 +39,13 @@ local reward = 2e6
 mem.fled = false
 mem.jumps = 0
 mem.t_sys[1] = system.get("Xavier")
-mem.t_pla[1] = mem.t_sys[1]:planets()[1]
---mem.t_pla[2], mem.t_sys[2] = planet.getS("Gastan")
+mem.t_pla[1] = mem.t_sys[1]:spobs()[1]
+--mem.t_pla[2], mem.t_sys[2] = spob.getS("Gastan")
 
 function create ()
    -- Have to be at center of operations.
    mem.t_pla[2], mem.t_sys[2] = sciwrong.getCenterOperations()
-   if planet.cur() ~= mem.t_pla[2] then
+   if spob.cur() ~= mem.t_pla[2] then
       misn.finish(false)
    end
 
@@ -55,7 +55,7 @@ end
 
 function accept()
    -- Mission details:
-   if not tk.yesno( _([[In the bar]]), _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]) ) then
+   if not tk.yesno( _([[In the bar]]), _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]) ) then
       tk.msg(_("No Science Today"), _("Don't you care about science?..."))
       misn.finish()
    end
@@ -92,17 +92,19 @@ local function get_nearest_jump(pil)
 end
 --- create enemy ships
 local function spawn_baddies(sp)
+   local fdrone = faction.dynAdd( "Za'lek", "bad_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
+
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
-   scom[4] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[5] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[6] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
---   scom[7] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+   scom[1] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[2] = pilot.add("Za'lek Light Drone", fdrone, sp )
+   scom[3] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+   scom[4] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+--   scom[5] = pilot.add("Za'lek Heavy Drone", fdrone, sp )
+--   scom[6] = pilot.add("Za'lek Light Drone", fdrone, sp )
+--   scom[7] = pilot.add("Za'lek Light Drone", fdrone, sp )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end
@@ -130,11 +132,10 @@ function game_of_drones ()
    tk.msg(_([[On the intercom]]), fmt.f(_([["There! The tracker shows it must be here! It is right next to {pnt}! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]), {pnt=mem.t_pla[1]}))
    -- spawn drones
 
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], nil, {ai="trader"} ) -- prototype is a scout drone
+   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", mem.t_pla[1], _("Prototype Drone"), {ai="trader"} ) -- prototype is a scout drone
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
-   t_drone:rename(_("Prototype Drone"))
    t_drone:setInvincible(true)
    t_drone:control()
    t_drone:setHilight(true)
@@ -192,21 +193,19 @@ function failed ()
 end
 
 function targetBoard()
-   player.unboard()
    tk.msg(_([[On your ship]]), _([["Excellent work! Now load it up and let's get out of here!"]]))
-   t_drone:setHilight(false)
-   t_drone:setVisplayer(false)
    mem.captured = true
-   t_drone:rm()
    local c = commodity.new(N_("Prototype"), N_("A disabled prototype drone."))
    mem.cargoID = misn.cargoAdd(c, 10)
    misn.osdActive(3)
-   misn.markerRm(mem.mmarker)
-   mem.mmarker = misn.markerAdd(mem.t_sys[2], "high")
+   misn.markerMove( mem.mmarker, mem.t_pla[2], "high" )
    if mem.jumps == 0 then
       hook.timer(2.0, "drones_flee")
    end
    hook.land("land_home")
+
+   player.unboard()
+   t_drone:rm()
 end
 
 function drone_jumped ()
@@ -236,12 +235,17 @@ end
 
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
-   tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]]))
-   t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()), nil, {ai="dummy"} ) -- prototype is a scout drone
+   tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! Now it should be much easier to catch it!"]]))
+   t_drone = pilot.add(
+      "Za'lek Scout Drone",
+      "Za'lek",
+      vec2.newP(rnd.rnd(0,system.cur():radius()/5), rnd.angle()),
+      _("Prototype Drone"),
+      {ai="dummy"}
+   )
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Independent")
-   t_drone:rename(_("Prototype Drone"))
    t_drone:control()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
@@ -289,14 +293,14 @@ function drone_disableable()
    tk.msg(_([[On your ship]]),_([["There you go! Get it!"]]))
    t_drone:setNoDisable(false)
    if mem.jumps == 2 then
-      tk.msg(_([[On your ship]]),_([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
+      tk.msg(_([[On your ship]]),_([["This is strange. The engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
    end
 end
 -- last hook
 function land_home()
-   if planet.cur() == mem.t_pla[2] then
-      tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=mem.t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
+   if spob.cur() == mem.t_pla[2] then
+      tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=mem.t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyse the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       player.pay(reward)
       player.outfitAdd("Toy Drone")
       sciwrong.addLog( _([[You helped Dr. Geller retrieve his lost prototype drone.]]) )

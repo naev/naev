@@ -10,13 +10,13 @@
   <x>264.252112</x>
   <y>-813.142676</y>
  </pos>
- <assets>
-  <asset>Allan</asset>
-  <asset>Cristen</asset>
-  <asset>Suk II</asset>
-  <asset>Suk IV</asset>
-  <asset_virtual>Dvaered Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Allan</spob>
+  <spob>Cristen</spob>
+  <spob>Suk II</spob>
+  <spob>Suk IV</spob>
+  <spob_virtual>Dvaered Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Allous">
    <autopos/>

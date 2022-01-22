@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Klantar III">
+ <pos>
+  <x>2862.000000</x>
+  <y>-5508.000000</y>
+ </pos>
+ <GFX>
+  <space>J01.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -1,6 +1,5 @@
 on:
-  repository_dispatch:
-    types: manual-nightly
+  workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
 
@@ -11,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-release:latest"
+      image: "ghcr.io/naev/naev-release:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -73,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/naev/naev-linux-lts:latest"
 
     steps:
       - name: Get Source
@@ -94,14 +93,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-linux-x86-64
-          path: "${{ github.workspace }}/build/dist/*.AppImage"
+          path: "${{ github.workspace }}/build/dist/*"
 
   "Windows_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-windows:latest"
+      image: "ghcr.io/naev/naev-windows:latest"
 
     steps:
       - name: Get Source
@@ -148,7 +147,7 @@ jobs:
     needs: "Package_Source"
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-macos:latest"
+      image: "ghcr.io/naev/naev-macos:latest"
 
     steps:
       - name: Get Source
@@ -182,14 +181,16 @@ jobs:
       - name: Meson Install
         run: |
           meson install -C build
+          ./source/extras/macos/createDMG.sh -s source -b build
           cd build/dist
           zip -r naev-macos.zip Naev.app/*
+          rm -rf Naev.app
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/build/dist/*.zip
+          path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
   "Steam_Naev_Release":
@@ -197,7 +198,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
+      image: "ghcr.io/naev/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
@@ -266,7 +267,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: "ghcr.io/projectsynchro/naev-release:latest"
+      image: "ghcr.io/naev/naev-release:latest"
 
     needs:
       [

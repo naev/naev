@@ -10,13 +10,13 @@
   <x>-408.705351</x>
   <y>-414.314213</y>
  </pos>
- <assets>
-  <asset>Behemoth</asset>
-  <asset>Leviathan</asset>
-  <asset>Tartarus</asset>
-  <asset>Ziz</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Behemoth</spob>
+  <spob>Leviathan</spob>
+  <spob>Tartarus</spob>
+  <spob>Ziz</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Nartur">
    <autopos/>

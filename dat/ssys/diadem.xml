@@ -10,12 +10,12 @@
   <x>179.666667</x>
   <y>420.066667</y>
  </pos>
- <assets>
-  <asset>Diadem I</asset>
-  <asset>Diadem II</asset>
-  <asset>Leo</asset>
-  <asset>Riun</asset>
- </assets>
+ <spobs>
+  <spob>Diadem I</spob>
+  <spob>Diadem II</spob>
+  <spob>Leo</spob>
+  <spob>Riun</spob>
+ </spobs>
  <jumps>
   <jump target="Dendria">
    <autopos/>

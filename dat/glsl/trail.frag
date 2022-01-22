@@ -191,11 +191,11 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Create three beams with varying parameters
    ncoord = vec2( 0.03 * pos_px.x, 7.0*dt ) + 1000.0 * r;
    s =  0.6 * smoothstep(0.0, 0.2, 1.0-pos_tex.x);
-   p = pos_tex.y + s * snoise( ncoord );
+   p = clamp( pos_tex.y + s * snoise( ncoord ), -1.0, 1.0 );
    v = sharpbeam( p, m );
-   p = pos_tex.y + s * snoise( 1.5*ncoord );
+   p = clamp( pos_tex.y + s * snoise( 1.5*ncoord ), -1.0, 1.0 );
    v += sharpbeam( p, 2.0*m );
-   p = pos_tex.y + s * snoise( 2.0*ncoord );
+   p = clamp( pos_tex.y + s * snoise( 2.0*ncoord ), -1.0, 1.0 );
    v += sharpbeam( p, 4.0*m );
 
    v = abs(v);

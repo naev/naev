@@ -143,23 +143,23 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
 
    /* x pos */
    if (x == -1) { /* Center */
-      wdw->x = (SCREEN_W - wdw->w)/2.;
+      wdw->x = (gl_screen.nw - wdw->w)/2.;
       wdw->xrel = .5;
       window_setFlag( wdw, WINDOW_CENTERX );
    }
    else if (x < 0)
-      wdw->x = SCREEN_W - wdw->w + (double) x;
+      wdw->x = gl_screen.nw - wdw->w + (double) x;
    else
       wdw->x = (double) x;
 
    /* y pos */
    if (y == -1) { /* Center */
-      wdw->y = (SCREEN_H - wdw->h)/2.;
+      wdw->y = (gl_screen.nh - wdw->h)/2.;
       wdw->yrel = .5;
       window_setFlag( wdw, WINDOW_CENTERY );
    }
    else if (y < 0)
-      wdw->y = SCREEN_H - wdw->h + (double) y;
+      wdw->y = gl_screen.nh - wdw->h + (double) y;
    else
       wdw->y = (double) y;
 }
@@ -197,8 +197,8 @@ void window_resize( unsigned int wid, int w, int h )
    if (wdw == NULL)
       return;
 
-   wdw->w = (w == -1) ? SCREEN_W : (double) w;
-   wdw->h = (h == -1) ? SCREEN_H : (double) h;
+   wdw->w = (w == -1) ? gl_screen.nw : (double) w;
+   wdw->h = (h == -1) ? gl_screen.nh : (double) h;
    if ((w == -1) && (h == -1)) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -498,6 +498,33 @@ int window_isTop( unsigned int wid )
 }
 
 /**
+ * @brief Checks to see if a widget is covered or not.
+ */
+int widget_isCovered( unsigned int wid, const char *name, int x, int y )
+{
+   int bx, by, rx, ry;
+   Widget *wgt = window_getwgt( wid, name );
+   if (wgt==NULL)
+      return 0;
+
+   /* Undo transform. */
+   bx = x + wgt->x;
+   by = y + wgt->y;
+
+   /* Find if the point is covered. */
+   for (Widget *w=wgt->next; w!=NULL; w=w->next) {
+      if ((wgt->render==NULL) || wgt_isFlag(w, WGT_FLAG_KILL))
+         continue;
+
+      rx = bx-w->x;
+      ry = by-w->y;
+      if (!((rx < 0) || (rx >= w->w) || (ry < 0) || (ry >= w->h)))
+         return 1;
+   }
+   return 0;
+}
+
+/**
  * @brief Checks to see if a window exists.
  *
  *    @param wdwname Name of the window to check.
@@ -624,8 +651,8 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
 
    /* Dimensions. */
-   wdw->w            = (w == -1) ? SCREEN_W : (double) w;
-   wdw->h            = (h == -1) ? SCREEN_H : (double) h;
+   wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
+   wdw->h            = (h == -1) ? gl_screen.nh : (double) h;
    if ((w == -1) && (h == -1)) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
       wdw->x = 0.;
@@ -902,7 +929,6 @@ void window_close( unsigned int wid, const char *str )
  * @brief Kills the window.
  *
  *    @param wid ID of window to destroy.
- *    @return 1 if windows still need killing.
  */
 void window_destroy( unsigned int wid )
 {
@@ -1281,7 +1307,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Get dimensions. */
-   w = 250;
+   w = MIN( gl_printWidthRaw( &gl_smallFont, alt ), 400 );
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
 
    /* Choose position. */
@@ -1289,7 +1315,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    y = by - h - gl_smallFont.h - 10.;
    if (y < 10.)
       y = 10.;
-   if (x+w+10. > SCREEN_W)
+   if (x+w+10. > gl_screen.nw)
       x -= w;
 
    /* Set colours. */
@@ -1351,7 +1377,7 @@ static void window_renderBorder( Window* w )
  */
 void window_render( Window *w )
 {
-   double x, y, wid, hei;
+   double x, y;
 
    /* Do not render dead windows. */
    if (window_isFlag( w, WINDOW_KILL ))
@@ -1371,22 +1397,16 @@ void window_render( Window *w )
    /*
     * widgets
     */
-   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
-      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL)) {
          wgt->render( wgt, x, y );
 
-   /*
-    * focused widget
-    */
-   if (w->focus != -1){
-      Widget *wgt = toolkit_getFocus( w );
-      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
-         return;
-      x  += wgt->x-2;
-      y  += wgt->y-2;
-      wid = wgt->w+4;
-      hei = wgt->h+4;
-      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
+         if (wgt->id == w->focus) {
+            double wx  = x + wgt->x - 2;
+            double wy  = y + wgt->y - 2;
+            toolkit_drawOutlineThick( wx, wy, wgt->w+4, wgt->h+4, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
+         }
+      }
    }
 }
 
@@ -2403,8 +2423,8 @@ void toolkit_reposition (void)
       /* Fullscreen windows must always be full size, though their widgets
        * don't auto-scale. */
       if (window_isFlag( w, WINDOW_FULLSCREEN )) {
-         w->w = SCREEN_W;
-         w->h = SCREEN_H;
+         w->w = gl_screen.nw;
+         w->h = gl_screen.nh;
          continue;
       }
 
@@ -2417,13 +2437,13 @@ void toolkit_reposition (void)
 
       if (w->xrel != -1.) {
          xorig = w->x;
-         w->x = (SCREEN_W - w->w) * w->xrel;
+         w->x = (gl_screen.nw - w->w) * w->xrel;
          xdiff = w->x - xorig;
       }
 
       if (w->yrel != -1.) {
          yorig = w->y;
-         w->y = (SCREEN_H - w->h) * w->yrel;
+         w->y = (gl_screen.nh - w->h) * w->yrel;
          ydiff = w->y - yorig;
       }
 

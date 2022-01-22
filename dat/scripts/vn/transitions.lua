@@ -29,14 +29,74 @@ vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 transitions._t.blur = [[
 #include "lib/blur.glsl"
 
-const float intensity = 3.0;
+const float INTENSITY = 3.0;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
-   float disp = intensity*(0.5-distance(0.5, progress));
+   float disp = INTENSITY*(0.5-distance(0.5, progress));
    vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
    vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
    return mix(c1, c2, progress);
+}
+]]
+
+transitions._t.circleopen = [[
+#include "lib/math.glsl"
+// Adapted from https://gl-transitions.com/editor/circleopen
+// author: gre
+// License: MIT
+
+const float SMOOTHNESS = 0.3;
+const vec2 CENTER = vec2(0.5, 0.5);
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float x = progress;
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix( c1, c2, 1.0-m );
+}
+]]
+
+transitions._t.circleclose = [[
+#include "lib/math.glsl"
+// Adapted from https://gl-transitions.com/editor/circleopen
+// author: gre
+// License: MIT
+
+const float SMOOTHNESS = 0.3;
+const vec2 CENTER = vec2(0.5, 0.5);
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float x = 1.0-progress;
+   float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix( c1, c2, m );
+}
+]]
+
+transitions._t.dreamy = [[
+// Adapted from https://gl-transitions.com/editor/Dreamy
+// Author: mikolalysenko
+// License: MIT
+
+#include "lib/math.glsl"
+
+vec2 offset( float progress, float x, float theta )
+{
+   float phase = progress*progress + progress + theta;
+   float shifty = 0.03*progress*cos(10.0*(progress+x));
+   return vec2(0.0, shifty);
+}
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec4 c1 = Texel( texprev, uv + offset( progress, uv.x, 0.0 ) );
+   vec4 c2 = Texel( MainTex, uv + offset( 1.0-progress, uv.x, M_PI ) );
+   return mix( c1, c2, progress);
 }
 ]]
 
@@ -128,9 +188,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 rp = uv*2.0-1.0;
    vec4 c1 = Texel( MainTex, uv );
-   vec4 c2 = Texel( texprev, uv ),
+   vec4 c2 = Texel( texprev, uv );
    return mix( c1, c2,
-         smoothstep(0., smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
+         smoothstep(0.0, smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
          );
 }
 ]]
@@ -233,6 +293,26 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 }
 ]]
 
+transitions._t.crosshatch = [[
+/* Loosely based on https://gl-transitions.com/editor/crosshatch
+ * Author: pthrasher
+ * License: MIT
+ */
+#include "lib/math.glsl"
+
+const float THRESHOLD   = 3.0;
+const float FADE_EDGE   = 0.1;
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+
+   float dist = distance(vec2(0.5), uv) / THRESHOLD;
+   float r = progress - min(random(vec2(uv.y, 0.0)), random(vec2(0.0, uv.x)));
+   return mix( c1, c2, mix(0.0, mix(step(dist, r), 1.0, smoothstep(1.0-FADE_EDGE, 1.0, progress)), smoothstep(0.0, FADE_EDGE, progress)));
+}
+]]
+
 transitions._t.burn = [[
 uniform Image noisetex;
 
@@ -289,16 +369,16 @@ end
 
 transitions._t.electric = [[
 #include "lib/simplex.glsl"
-uniform float u_time;
+uniform float u_time = 0.0;
 
 const float height = 10.0;
 //const vec3 bluetint = vec3( 0.132, 0.319, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
 const vec3 bluetint = vec3( 0.2, 0.5, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
 
 /* Similar to smoothbeam, but more k == sharper. */
-float sharpbeam( float x, float k )
+float bump( float x )
 {
-   return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
+   return min( cos( M_PI_2 * x ), 1.0 - abs(x) );
 }
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
@@ -308,18 +388,18 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    const float m = 1.0;
    float ybase, y, yoff, v;
-   vec2 ncoord = vec2( 0.03 * px.x, 5.0*u_time ) + 1000.0 * u_r;
+   vec2 ncoord = vec2( 0.03 * px.x, 5.0*u_time ) + 100.0 * u_r;
    // Base arcs
    yoff = (1.0-p)*love_ScreenSize.y;
    ybase = yoff + height*snoise( ncoord );
-   v = max( 0.0, sharpbeam( 0.3*distance(ybase,px.y), m ) );
+   v = max( 0.0, bump( 0.3*distance(ybase,px.y) ) );
 
    // Extra arcs
-   ncoord = vec2( 0.03 * px.x, 10.0*u_time ) + 1000.0 * u_r;
+   ncoord += vec2( 0.0, 5.0*u_time );
    y = yoff + height*snoise( 1.5*ncoord );
-   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+   v += max( 0.0, bump( 0.5*distance(y,px.y) ) );
    y = yoff + height*snoise( 2.0*ncoord );
-   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+   v += max( 0.0, bump( 0.5*distance(y,px.y) ) );
 
    // Create colour
    vec4 arcs = vec4( bluetint, v );
@@ -398,7 +478,7 @@ function transitions.get( name, seconds, transition )
 
    local prefix = string.format( [[
 uniform Image texprev;
-uniform float progress;
+uniform float progress = 0.0;
 const float u_r = %f;
    ]], love_math.random() )
 
@@ -413,7 +493,7 @@ const float u_r = %f;
       shader:send( "noisetex", shader._noisetex )
    end
    if shader:hasUniform("u_time") then
-      shader._dt = 1000 * love_math.random()
+      shader._dt = -100 * love_math.random()
       shader.update = function( self, dt )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )

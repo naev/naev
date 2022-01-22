@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>player.pilot():ship():class() == "Yacht" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+  <cond>player.pilot():ship():class() == "Yacht" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <chance>10</chance>
   <location>Bar</location>
  </avail>
@@ -31,19 +31,19 @@ chatter[3] = _("Time to Shake 'n Bake")
 target = {1,1,1,1}
 
 function create ()
-   mem.this_planet, mem.this_system = planet.cur()
+   mem.this_planet, mem.this_system = spob.cur()
    local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
    mem.credits = rnd.rnd(20e3, 100e3)
 end
 
 
 function accept ()
-   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
+   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
       misn.accept()
       misn.setDesc(_("You're participating in a race!"))
       misn.setReward(fmt.credits(mem.credits))
@@ -53,7 +53,7 @@ function accept ()
          _("Board checkpoint 3"),
          fmt.f(_("Land at {pnt}"), {pnt=mem.curplanet}),
       })
-      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=mem.curplanet}))
+      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in Yacht class ships. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=mem.curplanet}))
       hook.takeoff("takeoff")
    else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))

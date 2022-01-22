@@ -10,12 +10,12 @@
   <x>80.000000</x>
   <y>676.000000</y>
  </pos>
- <assets>
-  <asset>Jervis V</asset>
-  <asset>Jervis VII</asset>
-  <asset>Little Rock</asset>
-  <asset>Long Rock</asset>
- </assets>
+ <spobs>
+  <spob>Jervis V</spob>
+  <spob>Jervis VII</spob>
+  <spob>Little Rock</spob>
+  <spob>Long Rock</spob>
+ </spobs>
  <jumps>
   <jump target="Cerberus">
    <autopos/>

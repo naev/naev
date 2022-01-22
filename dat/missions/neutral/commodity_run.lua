@@ -38,7 +38,7 @@ mem.misn_title = _("{cargo} Delivery")
 mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land = {
-   _("The containers of {cargo} are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid {credits} and summarily dismissed."),
+   _("The containers of {cargo} are carried out of your ship and tallied. After several different workers double-check the register to confirm the amount, you are paid {credits} and summarily dismissed."),
    _("The containers of {cargo} are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}."),
    _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined."),
    _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish."),
@@ -67,7 +67,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   mem.misplanet, mem.missys = planet.cur()
+   mem.misplanet, mem.missys = spob.cur()
 
    if commchoices == nil then
       local std = commodity.getStandard();
@@ -87,7 +87,7 @@ function create ()
       end
    end
 
-   for _i, j in ipairs( mem.missys:planets() ) do
+   for _i, j in ipairs( mem.missys:spobs() ) do
       for _k, v in pairs( j:commoditiesSold() ) do
          if v == comm then
             misn.finish(false)
@@ -132,7 +132,7 @@ function land ()
    local amount = pilot.cargoHas( player.pilot(), mem.chosen_comm )
    local reward = amount * mem.price
 
-   if planet.cur() == mem.misplanet and amount > 0 then
+   if spob.cur() == mem.misplanet and amount > 0 then
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
             {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)

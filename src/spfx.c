@@ -16,6 +16,7 @@
 
 #include "spfx.h"
 
+#include "conf.h"
 #include "array.h"
 #include "camera.h"
 #include "debris.h"
@@ -24,8 +25,8 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "perlin.h"
 #include "physics.h"
+#include "perlin.h"
 #include "render.h"
 #include "rng.h"
 #include "space.h"
@@ -160,8 +161,6 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
    xmlNodePtr node, cur, uniforms;
    char *shadervert, *shaderfrag;
    const char *name;
-   double x, y, z, w;
-   int ix, iy, iz, iw;
    int isint;
    GLint loc, dim;
    xmlDocPtr doc;
@@ -247,47 +246,48 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
             else if (xmlHasProp(node,(xmlChar*)"z"))  dim = 3;
             else if (xmlHasProp(node,(xmlChar*)"y"))  dim = 2;
             else                                      dim = 1;
-            /* Float values default to 0. */
+            /* Values default to 0. */
             if (isint) {
+               int ix, iy, iz, iw;
                xmlr_attr_int(node, "x", ix );
                xmlr_attr_int(node, "y", iy );
                xmlr_attr_int(node, "z", iz );
                xmlr_attr_int(node, "w", iw );
+               switch (dim) {
+                  case 1:
+                     glUniform1i( loc, ix );
+                     break;
+                  case 2:
+                     glUniform2i( loc, ix, iy );
+                     break;
+                  case 3:
+                     glUniform3i( loc, ix, iy, iz );
+                     break;
+                  case 4:
+                     glUniform4i( loc, ix, iy, iz, iw );
+                     break;
+               }
             }
             else {
+               double x, y, z, w;
                xmlr_attr_float(node, "x", x );
                xmlr_attr_float(node, "y", y );
                xmlr_attr_float(node, "z", z );
                xmlr_attr_float(node, "w", w );
-            }
-            switch (dim) {
-               case 1:
-                  if (isint)
-                     glUniform1i( loc, ix );
-                  else
+               switch (dim) {
+                  case 1:
                      glUniform1f( loc, x );
-                  break;
-               case 2:
-                  if (isint)
-                     glUniform2i( loc, ix, iy );
-                  else
+                     break;
+                  case 2:
                      glUniform2f( loc, x, y );
-                  break;
-               case 3:
-                  if (isint)
-                     glUniform3i( loc, ix, iy, iz );
-                  else
+                     break;
+                  case 3:
                      glUniform3f( loc, x, y, z );
-                  break;
-               case 4:
-                  if (isint)
-                     glUniform4i( loc, ix, iy, iz, iw );
-                  else
+                     break;
+                  case 4:
                      glUniform4f( loc, x, y, z, w );
-                  break;
-               default:
-                  WARN(_("SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"), temp->name, name, dim );
-                  continue;
+                     break;
+               }
             }
          } while (xml_nextNode(node));
          glUseProgram( 0 );
@@ -348,6 +348,7 @@ int spfx_load (void)
 {
    int n, ret;
    char **spfx_files;
+   Uint32 time = SDL_GetTicks();
 
    spfx_effects = array_create(SPFX_Base);
 
@@ -380,7 +381,7 @@ int spfx_load (void)
    shake_shader.ClipSpaceFromLocal = shaders.shake.ClipSpaceFromLocal;
    shake_shader.MainTex       = shaders.shake.MainTex;
    spfx_hapticInit();
-   shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
+   shake_noise = noise_new();
 
    /*
     * Misc shaders.
@@ -396,7 +397,12 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
-   DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Special Effect in %.3f s", "Loaded %d Special Effects in %.3f s", array_size(spfx_effects) ), array_size(spfx_effects), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
 
    return 0;
 }

@@ -31,24 +31,24 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
-local bounty_setup, fail, level_setup, spawn_target, succeed -- Forward-declared functions
+local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared functions
 -- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
 local misn_title = {}
-misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in {sys}{msg}")
-misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in {sys}{msg}")
-misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}")
-misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in {sys}{msg}")
-misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}")
-misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}")
+misn_title[1] = _("Quick Assassination Job in {sys}")
+misn_title[2] = _("Small Assassination Job in {sys}")
+misn_title[3] = _("Moderate Assassination Job in {sys}")
+misn_title[4] = _("Big Assassination Job in {sys}")
+misn_title[5] = _("Dangerous Assassination Job in {sys}")
+misn_title[6] = _("Highly Dangerous Assassination Job in {sys}")
 
 local hunters = {}
 local hunter_hits = {}
 
 function create ()
    -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( planet.cur():faction() ) and rnd.rnd() < 0.5 then
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.5 then
       misn.finish(false)
    end
 
@@ -116,14 +116,10 @@ function create ()
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   if pir.factionIsClan( mem.paying_faction ) then
-      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys:name(), msg=fmt.f(_(" ({fct})"), {fct=mem.paying_faction} )} ) )
-   else
-      misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys, msg=""} ) )
-   end
+   misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
    local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
-   if not pir.factionIsPirate( planet.cur():faction() ) then
+   if not pir.factionIsPirate( spob.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
       mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
@@ -170,7 +166,7 @@ function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
-      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
+      lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
 
@@ -230,14 +226,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         fail( _("MISSION FAILURE! Another pilot eliminated your target.") )
+         lmisn.fail( _("Another pilot eliminated your target.") )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( _("MISSION FAILURE! Target got away.") )
+   lmisn.fail( _("Target got away.") )
 end
 
 
@@ -537,7 +533,7 @@ end
 local _target_faction
 function spawn_target( param )
    if mem.jumps_permitted < 0 then
-      fail( _("MISSION FAILURE! Target got away.") )
+      lmisn.fail( _("Target got away.") )
       return
    end
 
@@ -589,19 +585,4 @@ function succeed ()
 
    mem.paying_faction:modPlayerSingle( mem.reputation )
    misn.finish( true )
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

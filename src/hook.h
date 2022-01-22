@@ -7,23 +7,24 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 
-#define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
+#define HOOK_MAX_PARAM  5 /**< Maximum hook params, to avoid dynamic allocation. */
 
 /**
  * @brief The hook parameter types.
  */
 typedef enum HookParamType_e {
-   HOOK_PARAM_NIL, /**< No hook parameter. */
-   HOOK_PARAM_NUMBER, /**< Number parameter. */
-   HOOK_PARAM_STRING, /**< String parameter. */
-   HOOK_PARAM_BOOL, /**< Boolean parameter. */
-   HOOK_PARAM_PILOT, /**< Pilot hook parameter. */
-   HOOK_PARAM_FACTION, /**< Faction hook parameter. */
-   HOOK_PARAM_ASSET, /**< Asset hook parameter. */
-   HOOK_PARAM_JUMP, /**< Jump point hook parameter. */
-   HOOK_PARAM_SENTINEL /**< Enum sentinel. */
+   HOOK_PARAM_NIL,      /**< No hook parameter. */
+   HOOK_PARAM_NUMBER,   /**< Number parameter. */
+   HOOK_PARAM_STRING,   /**< String parameter. */
+   HOOK_PARAM_BOOL,     /**< Boolean parameter. */
+   HOOK_PARAM_PILOT,    /**< Pilot hook parameter. */
+   HOOK_PARAM_FACTION,  /**< Faction hook parameter. */
+   HOOK_PARAM_SPOB,    /**< Spob hook parameter. */
+   HOOK_PARAM_JUMP,     /**< Jump point hook parameter. */
+   HOOK_PARAM_REF,      /**< Upvalue parameter. */
+   HOOK_PARAM_SENTINEL  /**< Enum sentinel. */
 } HookParamType;
 
 /**
@@ -32,13 +33,14 @@ typedef enum HookParamType_e {
 typedef struct HookParam_s {
    HookParamType type; /**< Type of parameter. */
    union {
-      double num; /**< Number parameter. */
+      double num;    /**< Number parameter. */
       const char *str; /**< String parameter. */
-      int b; /**< Boolean parameter. */
-      LuaPilot lp; /**< Hook parameter pilot data. */
+      int b;         /**< Boolean parameter. */
+      LuaPilot lp;   /**< Hook parameter pilot data. */
       LuaFaction lf; /**< Hook parameter faction data. */
-      LuaPlanet la; /**< Hook parameter planet data. */
-      LuaJump lj; /**< Hook parameter jump data. */
+      LuaSpob la;  /**< Hook parameter spob data. */
+      LuaJump lj;    /**< Hook parameter jump data. */
+      int ref;       /**< Hook parameter upvalue. */
    } u; /**< Hook parameter data. */
 } HookParam;
 
@@ -51,7 +53,7 @@ void hook_exclusionEnd( double dt );
 /* add/run hooks */
 unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack );
 unsigned int hook_addEvent( unsigned int parent, const char *func, const char *stack );
-unsigned int hook_addFunc( int (*func)(void*), void* data, const char *stack );
+unsigned int hook_addFunc( int (*func)(void*), void *data, const char *stack );
 void hook_rm( unsigned int id );
 void hook_rmMisnParent( unsigned int parent );
 void hook_rmEventParent( unsigned int parent );

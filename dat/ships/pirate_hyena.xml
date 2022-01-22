@@ -14,7 +14,7 @@
  <trail_generator x="-15" y="-6" h="0">pirateS</trail_generator>
  <trail_generator x="-15" y="6" h="0">pirateS</trail_generator>
  <fabricator>Skull and Bones</fabricator>
- <description>The Pirate Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. Skull and Bones has added modifications to make them even more efficient as scavengers and harder to hit than their Aerosys counterparts.</description>
+ <description>The Pirate Hyena quickly has become a favourite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. Skull and Bones has added modifications to make them even more efficient as scavengers and harder to hit than their Aerosys counterparts.</description>
  <health>
   <armour>25</armour>
   <armour_regen>0</armour_regen>
@@ -29,11 +29,11 @@
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="0" y="0" h="0" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+  <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small" prop="engines">Beat Up Small Engine</structure>
+  <structure size="small" prop="hull">Patchwork Light Plating</structure>
   <structure size="small" />
  </slots>
  <stats>

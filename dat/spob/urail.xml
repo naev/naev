@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Urail">
+ <pos>
+  <x>-14578.000000</x>
+  <y>24198.000000</y>
+ </pos>
+ <GFX>
+  <space>M00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.670000</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1.5e+09</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Urail is a halfway decently habitable planet. Its proximity to Mutris makes it a very popular place to live for Sirii, which has driven the price of real estate to almost ridiculous heights. Many Sirii believe that living on Urail gives them a better chance of meeting a Touched, or even being called to Crater City themselves. There is no indication that this is indeed the case, however.</description>
+  <bar>Every spaceport needs a spaceport bar. That is probably the only reason why Urail has one, since the population would much prefer to use the space so build housing for upper echelon Sirii. Nevertheless, the bar is comfortable enough, despite the pricey drinks.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+ </tech>
+</spob>

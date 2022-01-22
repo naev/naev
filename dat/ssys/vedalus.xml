@@ -2,6 +2,7 @@
 <ssys name="Vedalus">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>10000.000000</radius>
   <stars>400</stars>
@@ -12,7 +13,7 @@
   <x>238.584571</x>
   <y>280.786538</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Defa">
    <autopos/>
@@ -30,6 +31,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

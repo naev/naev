@@ -93,7 +93,7 @@ COLOURS = [
     # Radar
     Colour( "Radar_player",     0.9, 0.1, 0.9 ),
     Colour( "Radar_tPilot",     1.0, 1.0, 1.0 ),
-    Colour( "Radar_tPlanet",    1.0, 1.0, 1.0 ),
+    Colour( "Radar_tSpob",      1.0, 1.0, 1.0 ),
     Colour( "Radar_weap",       0.8, 0.2, 0.2 ),
     Colour( "Radar_hilight",    0.6, 1.0, 1.0 ),
     # Health

@@ -10,14 +10,14 @@
   <x>238.666667</x>
   <y>528.066667</y>
  </pos>
- <assets>
-  <asset>Facett Outpost</asset>
-  <asset>Gaula</asset>
-  <asset>Gaula Foods</asset>
-  <asset>Hatter I</asset>
-  <asset>Hatter II</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Facett Outpost</spob>
+  <spob>Gaula</spob>
+  <spob>Gaula Foods</spob>
+  <spob>Hatter I</spob>
+  <spob>Hatter II</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Father's Pride">
    <pos x="12476.717946" y="-12440.153048"/>

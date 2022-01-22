@@ -10,13 +10,13 @@
   <x>1116.434754</x>
   <y>-513.399178</y>
  </pos>
- <assets>
-  <asset>Anifta</asset>
-  <asset>Suna I</asset>
-  <asset>Suna II</asset>
-  <asset>The Wringer</asset>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Anifta</spob>
+  <spob>Suna I</spob>
+  <spob>Suna II</spob>
+  <spob>The Wringer</spob>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Herakin">
    <autopos/>

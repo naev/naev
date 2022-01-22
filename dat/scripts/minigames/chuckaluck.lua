@@ -115,6 +115,7 @@ local function _inbox( mx, my, x, y, w, h )
 end
 
 function cl.draw( bx, by, bw, _bh )
+   naev.gfx.clearDepth()
    local sep = 25
    local w = 50
    local h = 50
@@ -218,7 +219,7 @@ function cl.play( value )
    local msg = nil
    if matches==0 then
       won = won*0
-      msg = _("#rYou lost!#0")
+      msg = "#r".._("You lost!").."#0"
    elseif matches==1 then
       won = won*1
       msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched one)!#0", won), {n=won})
@@ -245,9 +246,9 @@ function cl.keypressed( key )
       end
    else
       if key=="1" then
-         trybet( 10000 )
+         trybet( 10e3 )
       elseif key=="2" then
-         trybet( 100000 )
+         trybet( 100e3 )
       elseif key=="3" then
          cl.donefunc()
       end

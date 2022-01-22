@@ -5,12 +5,12 @@
  <GFX size="128" sx="12" sy="12">mammon_zalek</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound pitch="0.5">engine_zalek</sound>
  <class>Bulk Freighter</class>
  <price>4600000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-54" y="14" h="0" >zalek</trail_generator>
- <trail_generator x="-54" y="-14" h="0" >zalek</trail_generator>
+ <trail_generator x="-54" y="14" h="0">zalek</trail_generator>
+ <trail_generator x="-54" y="-14" h="0">zalek</trail_generator>
  <trail_generator x="-20" y="27" h="-9" always_under="1">zalek</trail_generator>
  <trail_generator x="-34" y="27" h="-9" always_under="1">zalek</trail_generator>
  <trail_generator x="-48" y="28" h="0">nebula</trail_generator>
@@ -19,7 +19,9 @@
  <trail_generator x="18" y="-25" h="-6" always_under="1">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Large Civilian Vessel</license>
- <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centers inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
+ <cond>faction.playerStanding("Za'lek") &gt;= 60</cond>
+ <condstr>You need at least 60 reputation with House Za'lek.</condstr>
+ <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centres inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
  <health>
   <armour>400</armour>
   <armour_regen>0</armour_regen>
@@ -36,16 +38,16 @@
   <weapon size="medium" prop="fighter_bay" x="51" y="-14" h="0" />
   <weapon size="medium" x="56" y="8" h="0" />
   <weapon size="medium" x="56" y="20" h="0" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -65,5 +67,6 @@
  </stats>
  <tags>
   <tag>zalek</tag>
+  <tag>transport</tag>
  </tags>
 </ship>

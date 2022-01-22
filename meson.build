@@ -1,12 +1,21 @@
 project('naev', 'c',
-   version : '0.9.0-alpha.1',
+   version : '0.10.0-alpha.1',
    default_options : [
       'warning_level=2',
       'optimization=g',
       'c_std=gnu11',
       'werror=false'
    ],
-   meson_version: '>=0.55.0')
+   meson_version: '>=0.53.0')
+
+copyright_year = 2022
+
+if meson.version().startswith('0.53.') or meson.version().startswith('0.54.')
+   warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')
+   forced_fallbacks = []
+else
+   forced_fallbacks = get_option('force_fallback_for')
+endif
 
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
@@ -50,6 +59,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/outfits/bioship')
 subdir('dat/scripts')
 subdir('docs')
 subdir('po')
@@ -70,6 +80,7 @@ if buildExec.disabled() == false
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
    config_data.set('VMAJOR', meson.project_version().split('.')[0])
    config_data.set('VMINOR', meson.project_version().split('.')[1])
+   config_data.set('YEAR', copyright_year)
    config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
@@ -82,6 +93,7 @@ if buildExec.disabled() == false
 
    naev_deps += cc.find_library('m', required : false)
 
+   pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl2', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
@@ -91,7 +103,7 @@ if buildExec.disabled() == false
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
-   use_system_physfs = ('physfs' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
       system_physfs = dependency('physfs', required: false)
       if not system_physfs.found()
@@ -105,6 +117,7 @@ if buildExec.disabled() == false
       dependency('freetype2', required: true),
       libunibreak,
       libxml2,
+      pcre2,
       sdl,
       sdl_image,
       declare_dependency(
@@ -113,11 +126,7 @@ if buildExec.disabled() == false
          link_args: '-DNOLOGPRINTFCONSOLE')
    ]
 
-   if get_option('steamruntime') == true
-      # Avoid checking for libwebp since we kind of hacked that away..
-   else
-      naev_deps += dependency('libwebp', required: true)
-   endif
+   naev_deps += dependency('libwebp', required: true, static: get_option('steamruntime'))
 
    # Lua
    useLuaJIT = get_option('luajit')
@@ -135,8 +144,8 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
-   use_system_glpk = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
-   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
+   use_system_suitesparse = ('SuiteSparse' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
@@ -147,7 +156,7 @@ if buildExec.disabled() == false
    if use_system_suitesparse
       message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
               'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
-      foreach csparse_name : ['csparse', 'cxsparse']
+      foreach csparse_name : ['cxsparse', 'csparse']
          system_csparse = cc.find_library(csparse_name, required: false)
          if system_csparse.found()
             break
@@ -208,7 +217,7 @@ if buildExec.disabled() == false
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
    # Luacheck (linter) wrapper
-   luacheckIfInstalled = find_program('utils/luacheckIfInstalled.sh')
+   luacheck = find_program('luacheck', required: false)
 
    # Audio
    openal    = dependency('openal', required: true)
@@ -332,7 +341,7 @@ if buildExec.disabled() == false
       input: files('dat/AUTHORS', 'artwork/gfx/ARTWORK_LICENSE.yaml', 'artwork/snd/SOUND_LICENSE.yaml'),
       output: 'AUTHORS',
       install: true,
-      install_dir: ndata_path,
+      install_dir: ndata_path / 'dat',
    )
 
    gen_gettext_stats = find_program('utils/build/gen_gettext_stats.py')
@@ -342,7 +351,24 @@ if buildExec.disabled() == false
       input: files('po/' + meson.project_name() + '.pot'),
       output: meson.project_name() + '.txt',
       install: true,
-      install_dir: ndata_path / 'gettext_stats',
+      install_dir: ndata_path / 'dat/gettext_stats',
+   )
+
+   gen_zip_overlay = find_program('utils/build/gen_zip_overlay.py')
+   gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
+   gen_zip_command += ['--cd', 'outfits/bioship']
+   foreach target: bio_outfits
+     # Meson 0.60 supports "gen_zip_command += target.to_list()", but until then...
+     foreach output: target.to_list()
+       gen_zip_command += output.full_path()
+     endforeach
+   endforeach
+   zip_overlay = custom_target(
+      'zip_overlay',
+      command: gen_zip_command,
+      output: 'meson_overlay.zip',
+      depends: [authors, gettext_stats] + bio_outfits,
+      build_by_default: true
    )
 
    naev_sh = configure_file(
@@ -352,8 +378,7 @@ if buildExec.disabled() == false
          'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path(),
-         'authors' : authors.full_path(),
-         'gettext_stats' : gettext_stats.full_path(),
+         'zip_overlay' : zip_overlay.full_path(),
       }
    )
 
@@ -370,7 +395,9 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
-      exclude_files: 'AUTHORS',  # In favor of the above "authors" target.
+      # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build'],
+      exclude_directories: 'outfits/bioship/templates',
    )
 
    install_subdir(
@@ -381,25 +408,25 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
-      metainfo_file = 'org.naev.naev.metainfo.xml'
+      metainfo_file = 'org.naev.Naev.metainfo.xml'
 
       if (ascli_exe.found())
          # Create desktop-entry file from metainfo
          custom_target('gen-desktop-entry',
             input : [metainfo_file],
-            output : ['org.naev.naev.desktop'],
+            output : ['org.naev.Naev.desktop'],
             command : [ascli_exe, 'make-desktop-file', '@INPUT@', '@OUTPUT@'],
             install: true,
             install_dir: join_paths (get_option ('datadir'), 'applications')
          )
       else
-         install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
+         install_data('org.naev.Naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
       endif
 
       install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
-             rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
+             rename : ['16x16/apps/org.naev.Naev.png', '32x32/apps/org.naev.Naev.png', '64x64/apps/org.naev.Naev.png', '128x128/apps/org.naev.Naev.png', '256x256/apps/org.naev.Naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
    endif

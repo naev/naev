@@ -4,7 +4,7 @@
  <base_type>Za'lek Heavy Drone</base_type>
  <GFX size="45">zalek_drone_heavy</GFX>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class display="Robotic Fighter">Fighter</class>
  <price>350000</price>
  <time_mod>0.75</time_mod>
@@ -34,9 +34,9 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="15" y="-5" h="2" />
-  <weapon size="small" x="15" y="-4" h="2" />
-  <weapon size="small" x="-12" y="6" h="0" />
+  <weapon size="small" x="15" y="-5" h="2">Orion Lance</weapon>
+  <weapon size="small" x="15" y="-4" h="2">Orion Lance</weapon>
+  <weapon size="small" x="-12" y="6" h="0">Electron Burst Cannon</weapon>
   <utility size="small" />
   <utility size="small" />
   <structure size="small" />
@@ -49,6 +49,8 @@
  </stats>
  <tags>
   <tag>noplayer</tag>
+  <tag>noequip</tag>
   <tag>zalek</tag>
+  <tag>drone</tag>
  </tags>
 </ship>

@@ -1,3 +1,5 @@
+local equipopt = require 'equipopt'
+
 local tables = {}
 
 tables.wave_score = {
@@ -58,6 +60,11 @@ tables.wave_round_enemies = {
       { "Kestrel" } -- 10
    },
    warlord = {
+      --[[
+      equip = function( p )
+         equipopt.generic( p, nil, "elite" )
+      end;
+      --]]
       { "Kestrel" }, -- 1
       { "Hawking" },
       { "Kestrel", "Lancelot", "Lancelot" },
@@ -67,7 +74,16 @@ tables.wave_round_enemies = {
       { layout="circle"; "Pacifier", "Admonisher", "Admonisher", "Ancestor", "Ancestor", "Ancestor", "Lancelot", "Lancelot" },
       { "Kestrel", "Kestrel" },
       { "Hawking", "Pacifier", "Pacifier" },
-      { "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance" },
+      { func = function( shipname, fct, pos, id )
+         local name
+         if id==1 then -- Indicates boss or main enemy (note that in the case of double enemies there may be another)
+            name = _("Lady Sainte-Beuverie")
+         end
+         -- This is the same as the main script, except we equip them as Dvaered
+         local p = pilot.add( shipname, fct, pos, name, {ai="baddie_norun", naked=true} )
+         equipopt.dvaered( p )
+         return p
+      end, "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance" },
    }
 }
 

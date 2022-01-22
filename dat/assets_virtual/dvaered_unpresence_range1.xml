@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Dvaered Unpresence (Range 1)">
- <presence>
-  <faction>Dvaered</faction>
-  <bonus>-100000.000000</bonus>
-  <range>1</range>
- </presence>
-</asset>

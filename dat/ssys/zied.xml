@@ -11,11 +11,11 @@
   <x>-67.166667</x>
   <y>-872.166667</y>
  </pos>
- <assets>
-  <asset>Bon Sebb</asset>
-  <asset>Sixbat Station</asset>
-  <asset_virtual>Miner Local</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Bon Sebb</spob>
+  <spob>Sixbat Station</spob>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Amaroq">
    <autopos/>

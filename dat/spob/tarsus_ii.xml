@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tarsus II">
+ <pos>
+  <x>7214.700991</x>
+  <y>-6928.427760</y>
+ </pos>
+ <GFX>
+  <space>G01.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

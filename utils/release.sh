@@ -1,14 +1,21 @@
 #!/bin/bash
-# RELEASE SCRIPT FOR NAEV Soon (tm)
-#
-# This script attempts to compile and build different parts of Naev
-# automatically in order to prepare for a new release.
-#
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)
-
-# Output destination is ${BUILDPATH}/dist
 
 set -e
+
+usage() {
+    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)"
+    cat <<EOF
+RELEASE SCRIPT FOR NAEV Soon (tm)
+
+This script attempts to compile and build different parts of Naev
+automatically in order to prepare for a new release.
+
+Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)
+
+Output destination is ${BUILDPATH}/dist
+EOF
+    exit 1
+}
 
 # Defaults
 NIGHTLY="false"
@@ -30,21 +37,25 @@ while getopts dns:b:o:r: OPTION "$@"; do
     r)
         RUNNER="${OPTARG}"
         ;;
+    *)
+        usage
+        ;;
     esac
 done
 
-if [[ -z "$SOURCEROOT" || -z "$BUILDPATH" || -z "$RUNNER" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)"
+if [ -z "$SOURCEROOT" ] || [ -z "$BUILDPATH" ] || [ -z "$RUNNER" ]; then
+    usage
     exit 1
 fi
 
 
 function get_version {
    if [ -f "$SOURCEROOT/dat/VERSION" ]; then
-       export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
+       VERSION="$(<"$SOURCEROOT/dat/VERSION")"
+       export VERSION
    else
        echo "The VERSION file is missing from $SOURCEROOT."
-       exit -1
+       exit 1
    fi
 
    return 0

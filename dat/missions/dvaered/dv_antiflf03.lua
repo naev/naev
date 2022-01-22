@@ -33,7 +33,7 @@ local portrait = require "portrait"
 local dv = require "common.dvaered"
 
 -- Mission constants
-local DVplanet, DVsys = planet.getS("Stalwart Station")
+local DVplanet, DVsys = spob.getS("Stalwart Station")
 local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
@@ -46,7 +46,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
+    misn.setNPC(_("Dvaered liaison"), portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
 end
 
 function accept()
@@ -55,7 +55,7 @@ function accept()
 
     local briefing, txt
     briefing = fmt.f(_([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
-    "In the near future, the Dvaered fleet will move against enemies of the state in the {sys} system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
+    "In the near future, the Dvaered fleet will move against enemies of the state in the {sys} system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theatre, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
     The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]]), {sys=mem.destsys})
     if first then
         txt = fmt.f(_([[The Dvaered liaison spots you, and stands up to shake your hand.
@@ -69,7 +69,7 @@ function accept()
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
-        tk.msg(_("The battlefield awaits"), _([["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
+        tk.msg(_("The battlefield awaits"), _([["Excellent. Please report to the local military command centre at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
     Several periods later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]]))
@@ -79,7 +79,7 @@ function accept()
     The system schematic on the wall updates with a cluster of white Dvaered logos, positioned some distance away from the glowing disc. There are also several white dots which apparently represent the fighter escorts.
     "Our strike force will consist out of the HDSF Obstinate, several destroyer escorts and two wings of fighter escorts. In addition, our forces will be joined by citizen {player}, who has volunteered to fight on behalf of House Dvaered on this occasion." The officer nods at you, then continues his briefing. "Our forces and formation will be such that it appears we are preparing for a standard strafing run, and indeed this is what will happen if the FLF decide to sit and cower. However, we expect them to put up a fight."]]), {sys=mem.destsys, player=player.name()}))
         tk.msg(_("The battlefield awaits"), fmt.f(_([[The schematic updates again, this time showing several small clusters of red dots between the glowing disc and the Dvaered formation.
-   "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paradigm objective!"
+   "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paramount objective!"
     On the wall, the red dots are intercepted by the white dots, and blink out of existence. Then a second group of white dots appears near the Dvaered logos, and moves towards the glowing disc.
     "As soon as the FLF have exhausted their forces trying to counterattack, the HDSF Obstinate will begin launching bombers. It is our belief that the bombers alone will be able to take out the enemy base, but in the event that resistance is heavier than expected, the Obstinate herself will move in to provide fire support."
     The glowing disc on the wall fades out, leaving the Dvaered fleet alone and victorious.
@@ -164,7 +164,7 @@ function operationStart()
 end
 
 function land()
-    if mem.victorious and planet.cur() == DVplanet then
+    if mem.victorious and spob.cur() == DVplanet then
         tk.msg(_("FLF base? What FLF base?"), fmt.f(_([[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen {player}," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.
@@ -206,7 +206,7 @@ end
 function deathBase()
     player.pilot():setInvincible()
     player.cinematics()
-    camera.set( base, true, 5000 )
+    camera.set( base, false, 5000 )
     hook.timer( 8.0, "timer_plcontrol" )
 
     misn.osdActive(4)
@@ -246,7 +246,7 @@ function deathBase()
 end
 
 function timer_plcontrol ()
-    camera.set( player.pilot(), true, 5000 )
+    camera.set( player.pilot(), false, 5000 )
     player.cinematics( false )
 end
 
@@ -254,8 +254,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], nil, {ai="dvaered_norun"} )
-    obstinate:rename(_("Obstinate"))
+    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], _("Obstinate"), {ai="dvaered_norun"} )
     obstinate:setDir(math.pi/2)
     obstinate:setFriendly()
     obstinate:setNoDisable(true)

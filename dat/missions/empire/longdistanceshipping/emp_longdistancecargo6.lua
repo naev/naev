@@ -12,6 +12,9 @@
   <location>Bar</location>
   <faction>Empire</faction>
  </avail>
+ <tags>
+  <tag>emp_cap_ch01_lrg</tag>
+ </tags>
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>
@@ -28,25 +31,24 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local targetworld, targetworld_sys = planet.getS("Halir")
+local targetworld, targetworld_sys = spob.getS("Halir")
 
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
-   if targetworld == planet.cur() then --makes sure pilot is not currently on Gamma Polaris
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
+   if targetworld == spob.cur() then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)
     end
 end
 
 
 function accept ()
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.markerAdd( targetworld_sys, "low")
+   misn.markerAdd( targetworld, "low" )
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favor to ask. I need transport back to Halir in the Gamma Polaris system. Once there I can authorize you to help out with the long-distance shipping missions. Can I count on you?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), fmt.f( _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favour to ask. I need transport back to {pnt} in the {sys} system. Once there, I can authorize you to help out with the long-distance shipping missions. Can I count on you?"]]), {pnt=targetworld, sys=targetworld_sys} ) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
@@ -57,8 +59,9 @@ function accept ()
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setTitle(_("Empire Long Distance Recruitment"))
    misn.setReward( fmt.credits( emp.rewards.ldc6 ) )
-   misn.setDesc( _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system") )
-   misn.osdCreate(_("Empire Long Distance Recruitment"), {_("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")})
+   local misn_desc = fmt.f(_("Deliver Lieutenant Czesc to {pnt} in the {sys} system"), {pnt=targetworld, sys=targetworld_sys})
+   misn.setDesc( misn_desc )
+   misn.osdCreate(_("Empire Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
    hook.land("land")
    local c = commodity.new( N_("Diplomat"), N_("An Imperial trade representative.") )
@@ -68,13 +71,13 @@ end
 
 function land()
 
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc6 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[Lieutenant Czesc exits your ship and takes a deep breath of air. "I love the smell of bureaucracy in the morning." He shakes your hand. "Thanks for all your help, Captain! Follow me to headquarters and we can do some paperwork to get you all set up. After that you should start to receive long-distance shipping missions. They pay better than our regular shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions. Again, I can't thank you enough! The Empire does not quickly forget such dedication."]]) )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( _([[You transported Lieutenant Czesc to Halir for some paperwork. You can now do long-distance cargo missions for the Empire. They pay better than regular Empire shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions.]]) )
+         emp.addShippingLog( fmt.f( _([[You transported Lieutenant Czesc to {pnt} for some paperwork. You can now do long-distance cargo missions for the Empire. They pay better than regular Empire shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions.]]), {pnt=targetworld} ) )
          misn.finish(true)
    end
 end

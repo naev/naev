@@ -9,7 +9,7 @@
   <done>Coming Out</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Durea</planet>
+  <spob>Durea</spob>
   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
  </avail>
  <notes>
@@ -28,7 +28,7 @@ local srm = require "common.soromid"
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
-   mem.misplanet, mem.missys = planet.getS( "Crow" )
+   mem.misplanet, mem.missys = spob.getS( "Crow" )
    -- Note: This mission does not make system claims
 
    mem.credits = 50e3
@@ -44,7 +44,7 @@ function accept ()
       txt = fmt.f( _([["Oh, {player}! Are you able to help me out now?"]]), {player=player.name()} )
    else
       txt = fmt.f( _([[Chelsea smiles and waves as she sees you approaching. "Hi, {player}! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
-    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at {pnt} in the {sys} system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]), {player=player.name(), pnt=mem.misplanet, sys=mem.missys} )
+    Chelsea perks up a little. "So, remember I said I had ambitions to be a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at {pnt} in the {sys} system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]), {player=player.name(), pnt=mem.misplanet, sys=mem.missys} )
    end
    mem.started = true
 
@@ -56,7 +56,7 @@ function accept ()
       misn.setTitle( _("Coming of Age") )
       misn.setDesc( fmt.f( _("Chelsea needs you to take her to {pnt} so she can buy her first ship and kick off her piloting career."), {pnt=mem.misplanet} ) )
       misn.setReward( fmt.credits( mem.credits ) )
-      mem.marker = misn.markerAdd( mem.missys, "low" )
+      mem.marker = misn.markerAdd( mem.misplanet, "low" )
 
       misn.osdCreate( _("Coming of Age"), {
          fmt.f( _("Go to the {sys} system and land on the planet {pnt}."), {sys=mem.missys, pnt=mem.misplanet} ),
@@ -71,7 +71,7 @@ end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( "", _([[As you dock you can barely stop Chelsea from jumping out of your ship and hurting herself. She seems to know exactly where to go and before you even know what's going on, she's purchased an old Llama, possibly the most rusty and worn-down Llama you've ever seen, but in working order nonetheless. You express concern about the condition of the ship, but she assures you that she will fix it up as she gets enough money to do so. She hugs you in a friendly embrace, thanks you, and hands you a credit chip. "Catch up with me again sometime, okay? I'll be hanging out in Soromid space doing my first missions as a pilot!" As you walk away, you see her getting her first close-up look at the mission computer with a look of excitement in her eyes.]]) )
       player.pay(mem.credits)
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ahmed">
+ <pos>
+  <x>-7128.458366</x>
+  <y>-3384.438830</y>
+ </pos>
+ <GFX>
+  <space>moon-H02.webp</space>
+  <exterior>mining.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>100000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>The moon of Ahmed is a small colony of serious minded people, but then given that they are mostly miners that's not too much of a surprise. The few people not mining are doing administration or come here as traders and businessmen looking for turn a credit or two.</description>
+  <bar>A very utilitarian bar with a rather lax attitude to comfort, at least by Empire standards. People come here to do business and talk ore, mineral and gas extraction. The Soromid might understand comfort and how to have a good time but this is clearly not the place where they are doing it.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Engines Low</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

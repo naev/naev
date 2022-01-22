@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Jackson II">
+ <pos>
+  <x>-1858.444974</x>
+  <y>9043.669433</y>
+ </pos>
+ <GFX>
+  <space>K00.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

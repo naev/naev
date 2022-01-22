@@ -59,7 +59,13 @@ static int audioL_setLooping( lua_State *L );
 static int audioL_isLooping( lua_State *L );
 static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
+static int audioL_setAttenuationDistances( lua_State *L );
+static int audioL_getAttenuationDistances( lua_State *L );
+static int audioL_setRolloff( lua_State *L );
+static int audioL_getRolloff( lua_State *L );
 static int audioL_setEffect( lua_State *L );
+static int audioL_setGlobalEffect( lua_State *L );
+static int audioL_setGlobalAirAbsorption( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
@@ -86,7 +92,13 @@ static const luaL_Reg audioL_methods[] = {
    { "isLooping", audioL_isLooping },
    { "setPitch", audioL_setPitch },
    { "getPitch", audioL_getPitch },
+   { "setAttenuationDistances", audioL_setAttenuationDistances },
+   { "getAttenuationDistances", audioL_getAttenuationDistances },
+   { "setRolloff", audioL_setRolloff },
+   { "getRolloff", audioL_getRolloff },
    { "setEffect", audioL_setEffect },
+   { "setGlobalEffect", audioL_setGlobalEffect },
+   { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
@@ -720,12 +732,12 @@ static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   if (!sound_disabled) {
-      soundLock();
-      alSourcei( la->source, AL_LOOPING, b );
-      al_checkErr();
-      soundUnlock();
-   }
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcei( la->source, AL_LOOPING, b );
+   al_checkErr();
+   soundUnlock();
    return 0;
 }
 
@@ -825,6 +837,95 @@ static int audioL_soundPlay( lua_State *L )
       sound_play( sound_get(name) );
 
    return 0;
+}
+
+/**
+ * @brief Sets the attenuation distances for the audio source.
+ *
+ *    @luatparam number ref Reference distance.
+ *    @luatparam number max Maximum distance.
+ * @luafunc setAttenuationDistances
+ */
+static int audioL_setAttenuationDistances( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double ref = luaL_checknumber(L,2);
+   double max = luaL_checknumber(L,3);
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcef( la->source, AL_REFERENCE_DISTANCE, ref );
+   alSourcef( la->source, AL_MAX_DISTANCE, max );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Gets the attenuation distances for the audio source. Set to 0. if audio is disabled.
+ *
+ *    @luatreturn number Reference distance.
+ *    @luatreturn number Maximum distance.
+ * @luafunc getAttenuationDistances
+ */
+static int audioL_getAttenuationDistances( lua_State *L )
+{
+   ALfloat ref, max;
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled) {
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      return 2;
+   }
+   soundLock();
+   alGetSourcef( la->source, AL_REFERENCE_DISTANCE, &ref );
+   alGetSourcef( la->source, AL_MAX_DISTANCE, &max );
+   al_checkErr();
+   soundUnlock();
+   lua_pushnumber( L, ref );
+   lua_pushnumber( L, max );
+   return 2;
+}
+
+/**
+ * @brief Sets the rollof factor.
+ *
+ *    @luatparam number rolloff New rolloff factor.
+ * @luafunc setRolloff
+ */
+static int audioL_setRolloff( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double rolloff = luaL_checknumber(L,2);
+   if (sound_disabled)
+      return 0;
+   soundLock();
+   alSourcef( la->source, AL_ROLLOFF_FACTOR, rolloff );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Gets the rolloff factor.
+ *
+ *    @luatreturn number Rolloff factor or 0. if sound is disabled.
+ * @luafunc getRolloff
+ */
+static int audioL_getRolloff( lua_State *L )
+{
+   ALfloat rolloff;
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (sound_disabled) {
+      lua_pushnumber(L,0.);
+      return 1;
+   }
+   soundLock();
+   alGetSourcef( la->source, AL_ROLLOFF_FACTOR, &rolloff);
+   al_checkErr();
+   soundUnlock();
+   lua_pushnumber( L, rolloff );
+   return 1;
 }
 
 static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
@@ -1009,8 +1110,17 @@ static int audioL_setEffectGlobal( lua_State *L )
    return 0;
 }
 
+static LuaAudioEfx_t *audio_getEffectByName( const char *name )
+{
+   for (int i=0; i<array_size(lua_efx); i++)
+      if (strcmp(name,lua_efx[i].name)==0)
+         return &lua_efx[i];
+   WARN(_("Unknown audio effect '%s'!"), name);
+   return NULL;
+}
+
 /**
- * @brief Sets effect stuff, behaves different if the first paramater is a source or not.
+ * @brief Sets effect stuff, behaves different if the first parameter is a source or not.
  *
  * @usage audio.setEffect( "reverb", { type="reverb" } )
  * @usage source:setEffect( "reverb" )
@@ -1038,17 +1148,9 @@ static int audioL_setEffect( lua_State *L )
 
    soundLock();
    if (enable) {
-      lae = NULL;
-      for (int i=0; i<array_size(lua_efx); i++) {
-         if (strcmp(name,lua_efx[i].name)==0) {
-            lae = &lua_efx[i];
-            break;
-         }
-      }
-      if (lae == NULL) {
-         WARN(_("Unknown audio effect '%s'!"), name);
+      lae = audio_getEffectByName( name );
+      if (lae == NULL)
          return 0;
-      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }
@@ -1060,4 +1162,67 @@ static int audioL_setEffect( lua_State *L )
 
    lua_pushboolean(L,1);
    return 1;
+}
+
+/**
+ * @brief Sets a global effect. Will overwrite whatever was set. Does not affect sources created in Lua.
+ *
+ *    @luatparam[opt] string name Name of the effect to set or nil to disable.
+ * @luafunc setGlobalEffect
+ */
+static int audioL_setGlobalEffect( lua_State *L )
+{
+   LuaAudioEfx_t *lae;
+   const char *name = luaL_optstring(L,1,NULL);
+
+   if (sound_disabled)
+      return 0;
+
+   if (al_info.efx == AL_FALSE)
+      return 0;
+
+   /* Disable. */
+   if (name==NULL) {
+      soundLock();
+      nalAuxiliaryEffectSloti( sound_efx_directSlot, AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
+      al_checkErr();
+      soundUnlock();
+      return 0;
+   }
+
+   /* Try to set it. */
+   lae = audio_getEffectByName( name );
+   if (lae == NULL)
+      return 0;
+
+   /* Set the effect. */
+   soundLock();
+   nalAuxiliaryEffectSloti( sound_efx_directSlot, AL_EFFECTSLOT_EFFECT, lae->effect );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Allows setting the speed of sound and air absorption.
+ *
+ *    @luatparam[opt=3443] number speed Air speed.
+ *    @luatparam[opt=-1] number absorption Air absorptuion for all sources. Has to be a value between 0 and 10. If negative, value is ignored.
+ * @luafunc setGlobalAirAbsorption
+ */
+static int audioL_setGlobalAirAbsorption( lua_State *L )
+{
+   double speed = luaL_optnumber( L, 1, 3433. );
+   double absorption = luaL_optnumber( L, 2, -1. );
+
+   if (sound_disabled)
+      return 0;
+
+   soundLock();
+   alSpeedOfSound( speed );
+   if (absorption > 0.)
+      sound_setAbsorption( absorption );
+   al_checkErr();
+   soundUnlock();
+   return 0;
 }

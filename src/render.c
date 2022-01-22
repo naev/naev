@@ -154,8 +154,8 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
  *
  * Blitting order (layers):
  *   - BG
- *     - stars and planets
- *     - background player stuff (planet targeting)
+ *     - stars and spobs
+ *     - background player stuff (spob targeting)
  *     - background particles
  *     - back layer weapons
  *   - N
@@ -200,10 +200,13 @@ void render_all( double game_dt, double real_dt )
 
    dt = (paused) ? 0. : game_dt;
 
+   /* Set up the default viewport. */
+   gl_defViewport();
+
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    hooks_run( "renderbg" );
-   planets_render();
+   spobs_render();
    spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* Middle stuff */
@@ -228,6 +231,9 @@ void render_all( double game_dt, double real_dt )
 
    if (pp_gui)
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
+
+   /* We set the to fullscreen, ignoring the GUI modifications. */
+   gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
 
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */

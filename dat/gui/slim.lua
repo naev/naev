@@ -6,7 +6,7 @@ local fmt = require "format"
 local playerform = require "playerform"
 
 local radar_gfx, radar_x, radar_y, screen_h, screen_w
-local aset, cargo, nav_planet, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
+local aset, cargo, nav_spob, nav_pnt, pp, ptarget, slot_w, slot_h, slot_y, timers
 local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, pl_pane_y
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
@@ -14,6 +14,7 @@ local ta_pane_w, ta_pane_x, ta_pane_y, ta_pnt_pane_x, ta_pnt_pane_y, pl_pane_x, 
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
+local fps_y = 32
 
 -- Namespaces
 local bgs = {}
@@ -112,7 +113,7 @@ function create()
    cargo_light_off = tex.open( base .. "cargo_off.png" )
    cargo_light_on =  tex.open( base .. "cargo_on.png" )
    question = tex.open( base .. "question.png" )
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.
@@ -281,7 +282,7 @@ function create()
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
    -- Set FPS
-   gui.fpsPos( 20, screen_h - 48 - deffont_h )
+   gui.fpsPos( 15, screen_h - fps_y )
 
    -- Set OSD
    gui.osdInit( 23, screen_h - 63, 150, 500 )
@@ -305,6 +306,7 @@ function create()
    update_nav()
    update_faction()
    update_cargo()
+   update_effects()
 end
 
 function update_target()
@@ -332,13 +334,13 @@ function update_target()
 end
 
 function update_nav()
-   nav_planet = {}
+   nav_spob = {}
    nav_pnt, nav_hyp = pp:nav()
    local autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
-      gui.fpsPos( ta_pnt_pane_x + ta_pnt_pane_w + 3, screen_h - 28 - 15 - deffont_h )
+      gui.fpsPos( ta_pnt_pane_x+ta_pnt_pane_w+3, screen_h - fps_y )
 
       ta_pnt_gfx = nav_pnt:gfxSpace()
       ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
@@ -355,27 +357,28 @@ function update_nav()
          ta_pnt_faction_gfx = ta_pntfact:logo()
       end
 
-      nav_planet = { -- Table for convenience.
+      nav_spob = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
-         class = nav_pnt:class(),
+         class = _(nav_pnt:class()),
          col = nav_pnt:colour(),
          services = {}
       }
+      nav_spob.class_w = gfx.printDim( nil, nav_spob.class )
 
       if pntflags.land then
-         local services = { "missions", "outfits", "shipyard", "commodity" }
+         local services = { "refuel", "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( nav_planet.services, N_("Spaceport") )
+         table.insert( nav_spob.services, N_("Spaceport") )
          for k,v in ipairs(services) do
-            table.insert( nav_planet.services, pntflags[v] )
+            table.insert( nav_spob.services, pntflags[v] )
          end
-         nav_planet.nservices = #nav_planet.services
+         nav_spob.nservices = #nav_spob.services
       end
    else
       gui.osdInit( 23, screen_h - 63, 150, 500 )
-      gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
+      gui.fpsPos( 15, screen_h - fps_y )
    end
    if nav_hyp then
       if nav_hyp:known() then
@@ -393,7 +396,7 @@ end
 
 function update_faction()
    if nav_pnt then -- Colour the planet name based on friendliness.
-      nav_planet.col = nav_pnt:colour()
+      nav_spob.col = nav_pnt:colour()
    end
 end
 
@@ -421,6 +424,11 @@ end
 
 function update_system()
    sysname = system.cur():name()
+end
+
+local effects
+function update_effects()
+   effects = pp:effectGet()
 end
 
 local function update_wset()
@@ -640,12 +648,19 @@ function render( dt, dt_mod )
    gfx.renderTex( radar_gfx, radar_x, radar_y )
    gui.radarRender( radar_x + 2, radar_y + 2 )
 
+   -- Effects
+   local ex, ey = radar_x-48, screen_h-32-32
+   for k,e in ipairs(effects) do
+      gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      ex = ex - 48
+   end
+
    --Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
    local filler_h = #wset * 28 -- extend the pane according to the number of weapon bars
    filler_h = math.max( filler_h - 6, 0 )
 
-   gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h, 1, 1, 0, 0, 1, 1)
+   gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h)
    gfx.renderTex( player_pane_b, pl_pane_x + 33, pl_pane_y - filler_h - pl_pane_h_b )
 
    local txt = {}
@@ -996,12 +1011,12 @@ function render( dt, dt_mod )
    -- Planet pane
    local services_h
    if nav_pnt then
-      local ta_pnt_dist = pp:pos():dist( nav_planet.pos )
+      local ta_pnt_dist = pp:pos():dist( nav_spob.pos )
 
       -- Extend the pane depending on the services available.
-      services_h = 44
+      services_h = 46
       if pntflags.land then
-         services_h = services_h + (14 * nav_planet.nservices)
+         services_h = services_h + (14 * nav_spob.nservices)
       end
 
       -- Render background images.
@@ -1026,7 +1041,7 @@ function render( dt, dt_mod )
          gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
-      local x1, y1 = vec2.get(nav_planet.pos)
+      local x1, y1 = vec2.get(nav_spob.pos)
       local x2, y2 = vec2.get(player.pos())
       local ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
@@ -1034,22 +1049,22 @@ function render( dt, dt_mod )
       local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, cols.txt_top )
 
-      gfx.print( true, nav_planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, cols.txt_top )
-      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, cols.txt_top )
+      gfx.print( true, nav_spob.class, ta_pnt_pane_x + 150 - nav_spob.class_w, ta_pnt_pane_y - 34, cols.txt_top )
+      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 48, cols.txt_top )
 
       -- Space out the text.
       if pntflags.land then
-         services_h = 60
-         for k,v in ipairs(nav_planet.services) do
+         services_h = 62
+         for k,v in ipairs(nav_spob.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, cols.txt_top )
             services_h = services_h + 14
          end
       else
-         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, cols.txt_una )
+         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 48, cols.txt_una )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, cols.txt_std, 63, false )
-      gfx.print( true, nav_planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, nav_planet.col )
+      gfx.print( true, nav_spob.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, nav_spob.col )
    end
 
    --Bottom bar

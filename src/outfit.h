@@ -16,7 +16,7 @@
  */
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
-#define OUTFIT_PROP_UNIQUE             (1<<0) /**< Unique item (can only have one). Not sellable.*/
+#define OUTFIT_PROP_UNIQUE             (1<<0)  /**< Unique item (can only have one). Not sellable.*/
 #define OUTFIT_PROP_WEAP_SECONDARY     (1<<10) /**< Is a secondary weapon? */
 #define OUTFIT_PROP_WEAP_SPIN          (1<<11) /**< Should weapon spin around? */
 #define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<12) /**< Weapon blows up (armour spfx)
@@ -47,44 +47,42 @@ struct Outfit_;
  * @note If you modify this DON'T FORGET TO MODIFY outfit_getType too!!!
  */
 typedef enum OutfitType_ {
-   OUTFIT_TYPE_NULL, /**< Null type. */
-   OUTFIT_TYPE_BOLT, /**< Fixed bolt cannon. */
-   OUTFIT_TYPE_BEAM, /**< Fixed beam cannon. */
-   OUTFIT_TYPE_TURRET_BOLT, /**< Rotary bolt turret. */
-   OUTFIT_TYPE_TURRET_BEAM, /**< Rotary beam turret. */
-   OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
-   OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
+   OUTFIT_TYPE_NULL,       /**< Null type. */
+   OUTFIT_TYPE_BOLT,       /**< Fixed bolt cannon. */
+   OUTFIT_TYPE_BEAM,       /**< Fixed beam cannon. */
+   OUTFIT_TYPE_TURRET_BOLT,/**< Rotary bolt turret. */
+   OUTFIT_TYPE_TURRET_BEAM,/**< Rotary beam turret. */
+   OUTFIT_TYPE_LAUNCHER,   /**< Launcher. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
    OUTFIT_TYPE_MODIFICATION, /**< Modifies the ship base features. */
-   OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
-   OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
-   OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
-   OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
-   OUTFIT_TYPE_LOCALMAP, /**< Gives the player more knowledge about the current system. */
-   OUTFIT_TYPE_GUI, /**< GUI for the player. */
-   OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
-   OUTFIT_TYPE_SENTINEL /**< indicates last type */
+   OUTFIT_TYPE_AFTERBURNER,/**< Gives the ship afterburn capability. */
+   OUTFIT_TYPE_FIGHTER_BAY,/**< Contains other ships. */
+   OUTFIT_TYPE_MAP,        /**< Gives the player more knowledge about systems. */
+   OUTFIT_TYPE_LOCALMAP,   /**< Gives the player more knowledge about the current system. */
+   OUTFIT_TYPE_GUI,        /**< GUI for the player. */
+   OUTFIT_TYPE_LICENSE,    /**< License that allows player to buy special stuff. */
+   OUTFIT_TYPE_SENTINEL    /**< indicates last type */
 } OutfitType;
 
 /**
  * @brief Outfit slot types.
  */
 typedef enum OutfitSlotType_ {
-   OUTFIT_SLOT_NULL, /**< Invalid slot type. */
-   OUTFIT_SLOT_NA, /**< Slot type not applicable. */
-   OUTFIT_SLOT_STRUCTURE, /**< Low energy slot. */
-   OUTFIT_SLOT_UTILITY, /**< Medium energy slot. */
-   OUTFIT_SLOT_WEAPON /**< High energy slot. */
+   OUTFIT_SLOT_NULL,       /**< Invalid slot type. */
+   OUTFIT_SLOT_NA,         /**< Slot type not applicable. */
+   OUTFIT_SLOT_STRUCTURE,  /**< Low energy slot. */
+   OUTFIT_SLOT_UTILITY,    /**< Medium energy slot. */
+   OUTFIT_SLOT_WEAPON      /**< High energy slot. */
 } OutfitSlotType;
 
 /**
  * @brief Outfit slot sizes.
  */
 typedef enum OutfitSlotSize_ {
-   OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
+   OUTFIT_SLOT_SIZE_NA,    /**< Not applicable slot size. */
    OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
-   OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
-   OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
+   OUTFIT_SLOT_SIZE_MEDIUM,/**< Medium slot size. */
+   OUTFIT_SLOT_SIZE_HEAVY  /**< Heavy slot size. */
 } OutfitSlotSize;
 
 /**
@@ -92,8 +90,8 @@ typedef enum OutfitSlotSize_ {
  */
 typedef enum OutfitAmmoAI_ {
    AMMO_AI_UNGUIDED, /**< No AI. */
-   AMMO_AI_SEEK, /**< Aims at the target. */
-   AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
+   AMMO_AI_SEEK,     /**< Aims at the target. */
+   AMMO_AI_SMART     /**< Aims at the target, correcting for relative velocity. */
 } OutfitAmmoAI;
 
 /**
@@ -131,6 +129,9 @@ typedef struct OutfitBoltData_ {
    double trackmin;  /**< Ewarfare minimal tracking. */
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
+   double dispersion;/**< Angle amount to spread particles around independent of heat. */
+   double speed_dispersion;/**< Dispersion, but for speed. */
+   int shots;        /**< Number of particles shot when fired. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -142,7 +143,7 @@ typedef struct OutfitBoltData_ {
    int spfx_shield;  /**< special effect on hit. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
+   CollPoly *polygon;/**< Array (array.h): Collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -182,8 +183,6 @@ typedef struct OutfitBeamData_ {
  */
 typedef struct OutfitLauncherData_ {
    double delay;     /**< Delay between shots. */
-   char *ammo_name;  /**< Name of the ammo to use. */
-   const struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
 
@@ -194,12 +193,11 @@ typedef struct OutfitLauncherData_ {
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
-} OutfitLauncherData;
+   double dispersion;/**< Angle amount to spread particles around independent of heat. */
+   double speed_dispersion;/**< Dispersion, but for speed. */
+   int shots;        /**< Number of particles shot when fired. */
 
-/**
- * @brief Represents ammunition for a launcher.
- */
-typedef struct OutfitAmmoData_ {
+   double ammo_mass; /**< How heavy it is. */
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
    OutfitAmmoAI ai;  /**< Smartness of ammo. */
@@ -218,11 +216,11 @@ typedef struct OutfitAmmoData_ {
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
    const TrailSpec* trail_spec; /**< Trail style if applicable, else NULL. */
-   double trail_x_offset;       /**< Offset x. */
+   double trail_x_offset; /**< Offset x. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
-} OutfitAmmoData;
+} OutfitLauncherData;
 
 /**
  * @brief Represents a ship modification.
@@ -235,27 +233,7 @@ typedef struct OutfitModificationData_ {
    double duration;  /**< Time the active outfit stays on (in seconds). */
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* All the modifiers are based on the outfit's ship stats, nothing here but
-    * Lua and active stuff. */
-
-   /* Lua function references. Set to LUA_NOREF if not used. */
-   char *lua_file;   /**< Lua File. */
-   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
-   int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
-   int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
-   int lua_init;     /**< Run when pilot enters a system. */
-   int lua_cleanup;  /**< Run when the pilot is erased. */
-   int lua_update;   /**< Run periodically. */
-   int lua_ontoggle; /**< Run when toggled. */
-   int lua_onhit;    /**< Run when pilot takes damage. */
-   int lua_outofenergy; /**< Run when the pilot runs out of energy. */
-   int lua_onshoot;  /**< Run when pilot shoots. */
-   int lua_onstealth;/**< Run when pilot toggles stealth. */
-   int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
-   int lua_onscan;   /**< Run when the pilot scans another pilot. */
-   int lua_cooldown; /**< Run when cooldown is started or stopped. */
-   int lua_land;     /**< Run when the player lands. */
-   int lua_takeoff;  /**< Run when the player takes off. */
+   /* All the modifiers are based on the outfit's ship stats, nothing here but active stuff. */
 } OutfitModificationData;
 
 /**
@@ -270,7 +248,7 @@ typedef struct OutfitAfterburnerData_ {
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
-   double mass_limit; /**< Limit at which effectiveness starts to drop. */
+   double mass_limit;/**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
    double heat_cap;  /**< Temperature at which the outfit overheats (K). */
@@ -281,20 +259,14 @@ typedef struct OutfitAfterburnerData_ {
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ammo_name;  /**< Name of the ships to use as ammo. */
+   char *ship;       /**< Name of the ships to use as ammo. */
+   double ship_mass; /**< Mass of a fighter. */
    const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
-   double reload_time; /**< Time it takes to reload 1 ammo. */
+   double reload_time;/**< Time it takes to reload 1 ammo. */
+   int sound;        /**< Sound to use when launching. */
 } OutfitFighterBayData;
-
-/**
- * @brief Represents a fighter for a fighter bay.
- */
-typedef struct OutfitFighterData_ {
-   char *ship; /**< Ship to use for fighter. */
-   int sound;  /**< Sound to make when launching. */
-} OutfitFighterData;
 
 /* Forward declaration */
 struct OutfitMapData_s;
@@ -305,7 +277,7 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  */
 typedef struct OutfitLocalMapData_ {
    double jump_detect;  /**< Ability to detect jumps. */
-   double asset_detect; /**< Ability to detect assets. */
+   double spob_detect; /**< Ability to detect spobs. */
 } OutfitLocalMapData;
 
 /**
@@ -333,6 +305,8 @@ typedef struct Outfit_ {
    /* General specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
+   char *cond;       /**< Conditional Lua string. */
+   char *condstr;    /**< Human readable description of the conditional. */
    double mass;      /**< How much weapon capacity is needed. */
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
@@ -345,11 +319,11 @@ typedef struct Outfit_ {
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
-   glTexture* gfx_store;      /**< Store graphic. */
-   glTexture** gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
+   glTexture *gfx_store;   /**< Store graphic. */
+   glTexture **gfx_overlays;/**< Array (array.h): Store overlay graphics. */
 
-   unsigned int properties;   /**< Properties stored bitwise. */
-   unsigned int group;        /**< Weapon group to use when autoweap is enabled. */
+   unsigned int properties;/**< Properties stored bitwise. */
+   unsigned int group;     /**< Weapon group to use when autoweap is enabled. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -357,17 +331,37 @@ typedef struct Outfit_ {
    /* Tags. */
    char **tags;      /**< Outfit tags. */
 
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
+   int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_ontoggle; /**< Run when toggled. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
+   int lua_outofenergy;/**< Run when the pilot runs out of energy. */
+   int lua_onshoot;  /**< Run when pilot shoots. */
+   int lua_onstealth;/**< Run when pilot toggles stealth. */
+   int lua_onscanned;/**< Run when the pilot is scanned by another pilot. */
+   int lua_onscan;   /**< Run when the pilot scans another pilot. */
+   int lua_cooldown; /**< Run when cooldown is started or stopped. */
+   int lua_land;     /**< Run when the player lands. */
+   int lua_takeoff;  /**< Run when the player takes off. */
+   int lua_jumpin;   /**< Run when the player jumps in. */
+   /* Weapons only. */
+   int lua_onimpact; /**< Run when weapon hits the enemy. */
+
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
    union {
       OutfitBoltData blt;         /**< BOLT */
       OutfitBeamData bem;         /**< BEAM */
       OutfitLauncherData lau;     /**< MISSILE */
-      OutfitAmmoData amm;         /**< AMMO */
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb;  /**< AFTERBURNER */
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
-      OutfitFighterData fig;      /**< FIGHTER */
       OutfitMapData_t *map;       /**< MAP */
       OutfitLocalMapData lmap;    /**< LOCALMAP */
       OutfitGUIData gui;          /**< GUI */
@@ -394,7 +388,6 @@ int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
-int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
 int outfit_isLocalMap( const Outfit* o );
 int outfit_isGUI( const Outfit* o );
@@ -437,7 +430,6 @@ int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 const Damage *outfit_damage( const Outfit* o );
 double outfit_delay( const Outfit* o );
-const Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_heat( const Outfit* o );
@@ -449,6 +441,7 @@ double outfit_trackmin( const Outfit* o );
 double outfit_trackmax( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
+double outfit_ammoMass( const Outfit *o );
 /* Active outfits. */
 double outfit_duration( const Outfit* o );
 double outfit_cooldown( const Outfit* o );

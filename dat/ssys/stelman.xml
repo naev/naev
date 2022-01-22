@@ -10,11 +10,11 @@
   <x>-531.489999</x>
   <y>-1138.350257</y>
  </pos>
- <assets>
-  <asset>Scorch</asset>
-  <asset>Stein</asset>
-  <asset>Stelman I-3</asset>
- </assets>
+ <spobs>
+  <spob>Scorch</spob>
+  <spob>Stein</spob>
+  <spob>Stelman I-3</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-1317">
    <autopos/>

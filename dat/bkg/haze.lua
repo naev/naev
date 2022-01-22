@@ -1,5 +1,5 @@
 --[[
-   Some sort of stellar wind type background.
+   Some sort of hazy background.
 --]]
 local graphics = require "love.graphics"
 local bgshaders = require "bkg.lib.bgshaders"
@@ -21,9 +21,9 @@ function background ()
 
 const int ITERATIONS = 5;
 const float SCALAR = 2.0;
-const float SCALE = 300.0;
+const float SCALE = 900.0;
 const float TIME_SCALE = 50.0;
-const float VISIBILITY = 200.0;
+const float VISIBILITY = 400.0;
 
 uniform float u_time = 0.0;
 uniform vec3 u_camera;
@@ -50,7 +50,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]], rnd.rnd(), rnd.rnd(), rnd.rnd() )
    shader = graphics.newShader( pixelcode, love_shaders.vertexcode )
-   shader._dt = 0
+   shader._dt = -1000*rnd.rnd()
    shader.update = function( self, dt )
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
@@ -59,13 +59,18 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    -- Default nebula background
    background_default()
+
+   -- Set some fancy effects
+   audio.setEffect( "haze", require("reverb_preset").forest() )
+   audio.setGlobalEffect( "haze" )
+   audio.setGlobalAirAbsorption( 3000, 1 )
 end
 
 function renderov( dt )
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, z )
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, z*sf )
 
    --shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
    shaze:render( dt, {0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 1.0} )

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="NS-144">
+ <pos>
+  <x>3041.314718</x>
+  <y>1871.314718</y>
+ </pos>
+ <GFX>
+  <space>001.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <base>350.000000</base>
+  <bonus>50.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>1000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+ </general>
+</spob>

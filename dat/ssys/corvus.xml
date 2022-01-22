@@ -10,14 +10,14 @@
   <x>-96.686600</x>
   <y>495.100213</y>
  </pos>
- <assets>
-  <asset>Corax</asset>
-  <asset>Corvus I</asset>
-  <asset>Corvus VI</asset>
-  <asset>Corvus VI-a</asset>
-  <asset>Corvus VI-b</asset>
-  <asset>Crow</asset>
- </assets>
+ <spobs>
+  <spob>Corax</spob>
+  <spob>Corvus I</spob>
+  <spob>Corvus VI</spob>
+  <spob>Corvus VI-a</spob>
+  <spob>Corvus VI-b</spob>
+  <spob>Crow</spob>
+ </spobs>
  <jumps>
   <jump target="Moordra">
    <autopos/>

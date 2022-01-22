@@ -14,14 +14,16 @@
  <trail_generator x="-30" y="-15" h="-3">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel</license>
- <description>This military grade version of the Vigilance has stronger armour and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>
+ <cond>faction.playerStanding("Dvaered") &gt;= 50</cond>
+ <condstr>You need at least 50 reputation with House Dvaered.</condstr>
+ <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
  <health>
-  <armour>650</armour>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>410</mass>
+  <mass>430</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>
@@ -32,13 +34,13 @@
   <weapon size="medium" x="10" y="3" h="2" />
   <weapon size="medium" prop="fighter_bay" x="-22" y="-8" h="-0" />
   <weapon size="medium" prop="fighter_bay" x="-22" y="8" h="-0" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
@@ -46,12 +48,13 @@
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <armour_mod>20</armour_mod>
+  <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>10</fwd_heat>
-  <fwd_damage>20</fwd_damage>
-  <fwd_energy>10</fwd_energy>
+  <fwd_heat>5</fwd_heat>
+  <fwd_damage>10</fwd_damage>
+  <fwd_energy>5</fwd_energy>
+  <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>

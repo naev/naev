@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Duran Shipyard">
+ <pos>
+  <x>-15054.449668</x>
+  <y>4039.606298</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>6.666667</base>
+  <bonus>3.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3500</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Duran Shipyard produces light support craft used by the Dvaered military machine. It also has a line of civilian and cargo ships which it makes available to retailers and consumers. Since the ships produced here are combat-ready and the facility always has at least one completed squadron standing by, Duran Shipyard is an important contributor to the stability in the region.</description>
+  <bar>The spacedock bar provides visitors with a view over part of the assembly line. It is quite impressive to see a spacecraft being built, even if it is only a relatively small one.</bar>
+ </general>
+ <tech>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</spob>

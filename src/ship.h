@@ -60,8 +60,10 @@ typedef struct ShipMount_ {
  */
 typedef struct ShipOutfitSlot_ {
    OutfitSlot slot;  /**< Outfit slot type. */
+   char *name;       /**< Name of the slot if applicable. */
    int exclusive;    /**< Outfits must match property to fit. */
    int required;     /**< Outfit slot must be equipped for the ship to work. */
+   int locked;       /**< Outfit slot is locked. */
    const Outfit *data;/**< Outfit by default if applicable. */
    ShipMount mount;  /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
@@ -81,18 +83,20 @@ typedef struct ShipTrailEmitter_ {
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
-   char* name;       /**< Ship name */
-   char* base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
-   ShipClass class;  /**< Ship class */
+   char *name;       /**< Ship name. */
+   char *base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
+   ShipClass class;  /**< Ship class. */
    char *class_display;/**< Custom ship class, overrides class when displaying. */
    int points;       /**< Number of points the ship costs (used for presence et al.) */
    int rarity;       /**< Rarity. */
 
    /* store stuff */
-   credits_t price;  /**< Cost to buy */
-   char* license;    /**< License needed to buy it. */
-   char* fabricator; /**< company that makes it */
-   char* description; /**< selling description */
+   credits_t price;  /**< Cost to buy. */
+   char *license;    /**< License needed to buy it. */
+   char *cond;       /**< Conditional string to see if it can be bought. Must return a boolean. */
+   char *condstr;    /**< Human readable conditional. */
+   char *fabricator; /**< Company or organization that fabricates it. */
+   char *description;/**< Shipyard description. */
 
    /* movement */
    double thrust;    /**< Ship's thrust in "pixel/sec^2" (not multiplied by mass) */
@@ -125,8 +129,8 @@ typedef struct Ship_ {
    glTexture *gfx_target;  /**< Targeting window graphic. */
    glTexture *gfx_store;   /**< Store graphic. */
    char* gfx_comm;         /**< Name of graphic for communication. */
-   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
-   ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
+   glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
 
    /* Collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
@@ -135,7 +139,8 @@ typedef struct Ship_ {
    char* gui;        /**< Name of the GUI the ship uses by default. */
 
    /* Sound */
-   int sound;        /**< Sound motor uses. */
+   int sound;        /**< Sound engine uses. */
+   double engine_pitch; /**< Sets the base pitch of the engine. */
 
    /* Outfits */
    ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */

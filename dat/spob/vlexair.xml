@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Vlexair">
+ <pos>
+  <x>-23920.000000</x>
+  <y>1840.000000</y>
+ </pos>
+ <GFX>
+  <space>P01.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>4500</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
+  <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
+ </general>
+</spob>

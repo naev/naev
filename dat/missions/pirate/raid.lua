@@ -104,12 +104,12 @@ function create ()
    local cargoes = {
       -- Standard stuff
       {N_("Corporate Documents"), N_("Documents detailing transactions and operations of certain corporations.")},
-      {N_("Technology Blueprints"), N_("Blueprints of under development advanced technology.")},
-      {N_("Research Prototypes"), N_("Advanced prototypes of cutting edge research. Doesn't seem like of much use outside of an academic environment.")},
-      {N_("High-end Implants"), N_("Some of the newest and fanciest cybernetic implants available. They included nose implants that allow amplifying and modifying smells beyond human imagination.")},
-      {N_("Synthetic Organs"), N_("Special synthetic copies of natural human organs that are able to ")},
+      {N_("Technology Blueprints"), N_("Blueprints of advanced technology under development.")},
+      {N_("Research Prototypes"), N_("Advanced prototypes of cutting edge research. Doesn't seem to be of much use outside of an academic environment.")},
+      {N_("High-end Implants"), N_("Some of the newest and fanciest cybernetic implants available. They include nose implants that allow amplifying and modifying smells beyond human imagination.")},
+      {N_("Synthetic Organs"), N_("Special synthetic copies of natural human organs.")},
       {N_("Brand Goods"), N_("A variety of high quality brand luxury goods.")},
-      {N_("Rare Ores"), N_("Rare ores that are hard to find, usually only located in isolated asteroid fields.")},
+      {N_("Rare Ores"), N_("Rare ores that are usually only located in isolated asteroid fields.")},
       {N_("Fine Arts"), N_("Museum-quality artwork done in all sorts of mediums.")},
       {N_("Highly Refined Metals"), N_("High quality refined metals suitable for building space craft and other advanced technological objects.")},
       {N_("Nebula Artefacts"), N_("Rare and weird artefacts of ship debris and unidentified objects found in the Nebula.")},
@@ -126,12 +126,12 @@ function create ()
       {N_("High Quality Pasta"), N_("Dried pasta of the highest quality.")},
       {N_("Premium Body Soap"), N_("Incredibly silky soap that creates a seemingly infinite amount of bubbles.")},
       {N_("Luxury Captain Chairs"), N_("Very comfortable chairs meant for ship captains. Every captain dreams of having such chairs.")},
-      {N_("Incredibly Spicy Sauce"), N_("Hot sauce made from the spiciest peppers that have been genetically engineered. Not really suited for human consumption, but people use them anyway.")},
-      {N_("Exquisite Cat Toys"), N_("Cat toys with built in light and motion system to stimulate any cat to the max. They also don't use cheap glue that make them break down within 5 minutes of playing with a cat.")},
+      {N_("Incredibly Spicy Sauce"), N_("Hot sauce made from the spiciest, genetically engineered peppers. Not really suited for human consumption, but people use them anyway.")},
+      {N_("Exquisite Cat Toys"), N_("Cat toys with built in lights and motion systems to stimulate any cat to the max. They also don't use cheap glue that make them break down within 5 minutes of playing with a cat.")},
    }
 
    -- Finish mission details
-   mem.returnpnt, mem.returnsys = planet.cur()
+   mem.returnpnt, mem.returnsys = spob.cur()
    mem.cargo = cargoes[ rnd.rnd(1,#cargoes) ]
    mem.misn_cargo = commodity.new( mem.cargo[1], mem.cargo[2] )
    mem.enemyfaction = faction.get("Trader")
@@ -161,12 +161,7 @@ function create ()
    mem.reward_cargo = 2e3 + rnd.rnd() * 2e3 + 3e3*math.sqrt(mem.tier)
 
    local faction_text = pir.reputationMessage( mem.reward_faction )
-   local faction_title = ""
-   if pir.factionIsClan( mem.reward_faction ) then
-      faction_title = fmt.f(_(" ({fct})"), {fct=mem.reward_faction})
-   end
-
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys, msg=faction_title} ))
+   misn.setTitle(fmt.f(pir.prefix(mem.reward_faction).._("Raid a {adjective} {name} convoy in the {sys} system"), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys} ))
    misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
          {cargo=mem.misn_cargo, sys=mem.targetsys, entersys=mem.convoy_enter:dest(), exitsys=mem.convoy_exit:dest(), reputation=faction_text}))
    misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(mem.reward_base), rcargo=fmt.credits(mem.reward_cargo), cargo=mem.misn_cargo}))
@@ -189,8 +184,7 @@ end
 function enter ()
    local q = player.pilot():cargoHas( mem.misn_cargo )
    if mem.convoy_spawned and q <= 0 then
-      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
-      misn.finish(false)
+      lmisn.fail(fmt.f(_("You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
    end
    if mem.convoy_spawned and q > 0 then
       misn.osdActive(3)
@@ -207,7 +201,7 @@ end
 function land ()
    local pp = player.pilot()
    local q = pp:cargoHas( mem.misn_cargo )
-   if mem.convoy_spawned and q > 0 and planet.cur()==mem.returnpnt then
+   if mem.convoy_spawned and q > 0 and spob.cur()==mem.returnpnt then
       q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
       local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()
@@ -310,7 +304,7 @@ function spawn_convoy ()
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()
-   sconvoy[1]:hyperspace( mem.convoy_exit, true )
+   sconvoy[1]:hyperspace( mem.convoy_exit )
    hook.pilot( sconvoy[1], "death", "convoy_done" )
 end
 

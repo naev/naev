@@ -10,7 +10,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
-  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
+  <cond>spob.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]
@@ -34,7 +34,7 @@ local target -- Non-persistent state
 -- mission variables
 mem.t_sys = {}
 mem.t_pla = {}
---mem.t_pla[1], mem.t_sys[1] = planet.getS("Gastan")
+--mem.t_pla[1], mem.t_sys[1] = spob.getS("Gastan")
 mem.t_sys[2] = system.get("Shikima")
 local reward = 1e6
 local shpnm = _("Tokera")
@@ -42,12 +42,12 @@ local shpnm = _("Tokera")
 function create ()
    -- Have to be at center of operations.
    mem.t_pla[1], mem.t_sys[1] = sciwrong.getCenterOperations()
-   if planet.cur() ~= mem.t_pla[1] then
+   if spob.cur() ~= mem.t_pla[1] then
       misn.finish(false)
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently he has another job for you.") )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently, he has another job for you.") )
 end
 function accept()
    -- Mission details:
@@ -55,8 +55,8 @@ function accept()
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
-    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
+   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told, it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship, and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
       fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=mem.t_sys[2], plt=shpnm}),
@@ -77,9 +77,8 @@ function sys_enter ()
    if system.cur() == mem.t_sys[2] and mem.targetalive then
       local dist = rnd.rnd() * system.cur():radius() *1/2
       local location = vec2.newP(dist, rnd.angle())
-      target = pilot.add( "Soromid Odium", "Soromid", location )
+      target = pilot.add( "Soromid Odium", "Soromid", location, shpnm )
       target:control()
-      target:rename(shpnm)
       target:setFaction("Soromid")
       target:memory().aggressive = true
       target:setHilight(true)
@@ -114,39 +113,37 @@ function targetExploded()
 end
 
 function targetDeath()
-   mem.sor= faction.get("Soromid")
+   local sor = faction.get("Soromid")
    hook.rm(mem.hexp)
    if mem.boarded then
-      mem.sor.modPlayer(-5)
+      sor:modPlayer(-5)
       return
    end
    tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
-   mem.sor.modPlayer(-5)
+   sor:modPlayer(-5)
    misn.finish(false)
 end
 
 function targetBoard()
    player.unboard()
-   tk.msg(_([[In the ship]]), _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
-    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]]))
+   tk.msg(_([[In the ship]]), _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumours that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
+    You manage to locate a box on a table in the crews' chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]]))
    target:setHilight(false)
    target:setVisplayer(false)
    local c = commodity.new(N_("Secret Technology"), N_("A mysterious box of stolen Soromid technology."))
    c:illegalto( "Soromid" )
    mem.cargoID = misn.cargoAdd(c, 0)
    misn.osdActive(3)
-   misn.markerRm(mem.misn_mark)
-   mem.misn_mark = misn.markerAdd( mem.t_sys[1], "high" )
+   misn.markerMove( mem.misn_mark, mem.t_pla[1], "high" )
    mem.hland = hook.land("land")
    mem.boarded = true
    hook.rm(mem.hboard)
 end
 
 function land()
-   if planet.cur() == mem.t_pla[1] then
-      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
+   if spob.cur() == mem.t_pla[1] then
+      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but instead of erasing, it sharpens. This is exactly what I needed. With this, I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
       hook.rm(mem.hland)
-      misn.markerRm(mem.misn_mark)
       player.pay(reward)
       sciwrong.addLog( _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]]) )
       misn.finish(true)

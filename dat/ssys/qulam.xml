@@ -10,12 +10,12 @@
   <x>-644.763483</x>
   <y>-853.715546</y>
  </pos>
- <assets>
-  <asset>Cantina Station</asset>
-  <asset>Katar</asset>
-  <asset>Katar I</asset>
-  <asset>Qulam Primus</asset>
- </assets>
+ <spobs>
+  <spob>Cantina Station</spob>
+  <spob>Katar</spob>
+  <spob>Katar I</spob>
+  <spob>Qulam Primus</spob>
+ </spobs>
  <jumps>
   <jump target="Eiger">
    <autopos/>

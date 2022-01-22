@@ -10,7 +10,7 @@
   <location>Bar</location>
   <faction>Dvaered</faction>
   <done>Destroy the FLF base!</done>
-  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (planet.cur():services().shipyard == nil)</cond>
+  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
  </avail>
  <notes>
   <campaign>Frontier Invasion</campaign>
@@ -39,10 +39,10 @@ local fmt = require "format"
 local pir = require "common.pirate"
 
 -- Mission constants
-local destpla1, destsys1 = planet.getS("Ginni")
-local destpla2, destsys2 = planet.getS(fw.wlrd_planet)
-local destpla3, destsys3 = planet.getS("Laarss")
-local fleepla, fleesys = planet.getS("Odonga m1")
+local destpla1, destsys1 = spob.getS("Ginni")
+local destpla2, destsys2 = spob.getS(fw.wlrd_planet)
+local destpla3, destsys3 = spob.getS("Laarss")
+local fleepla, fleesys = spob.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
 local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
@@ -68,15 +68,15 @@ function create()
 
    misn.setNPC(_("Dvaered officer"), fw.portrait_tam, _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?"))
 
-   mem.previous = planet:cur()
+   mem.previous = spob.cur()
 end
 
 function accept()
-   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
-      tk.msg(_("Too bad"), _([[Tam seems disappointed by your answer. "Mwell, then, maybe we will meet again later, who knows?"]]))
+   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Sigur. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more use of your services. That is why I propose to you now a simple escort mission. All that you need is a fast combat ship that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
+      tk.msg(_("Too bad"), _([[Tam seems disappointed by your answer. "Well, then, maybe we will meet again later, who knows?"]]))
       misn.finish(false)
    end
-   tk.msg(_("Instructions"), fmt.f(_([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]]), {sys1=destsys1, sys2=destsys2, sys3=destsys3}))
+   tk.msg(_("Instructions"), fmt.f(_([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and engage any hostile who might try to intercept me."]]), {sys1=destsys1, sys2=destsys2, sys3=destsys3}))
 
    misn.accept()
    misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla1})} )
@@ -156,13 +156,13 @@ function testPlayerSpeed()
   local stats = player.pilot():stats()
   local playershipspeed = stats.speed_max
   if playershipspeed < 300 then
-      tk.msg(_("Your ship is too slow"), _("Did you really expect to catch up with Major Tam with your current ship?"))
+      tk.msg(_("Your ship is too slow"), _("Did you really expect to keep up with Major Tam with your current ship?"))
       misn.finish(false)
   end
 end
 
 function explain_battle()
-   tk.msg(_("That was really close!"), fmt.f(_([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to {pnt} at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
+   tk.msg(_("That was really close!"), fmt.f(_([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to {pnt} at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
    You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]]), {pnt=fleepla}))
 end
 
@@ -178,8 +178,7 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
-   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
-   majorTam:rename(_("Major Tam"))
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction("DHC")
@@ -207,8 +206,7 @@ function encounterWarlord( name, origin )
       pilot.clearSelect(f)
    end
 
-   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin )
-   warlord:rename( name )
+   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin, name )
    warlord:control(true)
    warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.angle()) )
 
@@ -237,7 +235,7 @@ function tamDied()
    if hamelsen ~= nil then
       hamelsen:rm() -- Because she is immortal and could kill the player
    end
-   tk.msg(_("Mission failed"), _([[As you watch the final explosion of Major Tam's ship dispatching around the system the remains of what once was a proud Vendetta, you realize that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have another chance sooner or later."]]))
+   tk.msg(_("Mission failed"), _([[As you watch the final explosion of Major Tam's ship hurl the remains of what once was a proud Vendetta to the far corners of the system, you realize that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have another chance sooner or later."]]))
    misn.finish(false)
 end
 
@@ -256,8 +254,8 @@ function land() -- The player is only allowed to land on special occasions
       mem.mark3 = misn.markerAdd(destsys3, "low")
    elseif mem.stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.append( "dvaered_military", _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
-      tk.msg(_("Thank you, citizen"), fmt.f(_([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth {credits}! One always needs Gauss Guns, no?"]]), {credits=fmt.credits(fw.credits_00)}))
+      shiplog.append( "dvaered_military", _("Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
+      tk.msg(_("Thank you, citizen"), fmt.f(_([[As you land, Major Tam greets you at the spaceport. "After the losses they suffered today, I doubt those mercenaries will come after me again anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I no longer need an escort. Oh, and, err... about the payment, I am afraid there is a little setback..." You start to fear he will try to stiff you on the payment, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth {credits}! One always needs Gauss Guns, no?"]]), {credits=fmt.credits(fw.credits_00)}))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       mem.GGprice = outfit.get("Gauss Gun"):price()
@@ -270,7 +268,7 @@ function land() -- The player is only allowed to land on special occasions
    end
    --hook.rm(mem.jumpingTam)
    mem.tamJumped = true
-   mem.previous = planet.cur()
+   mem.previous = spob.cur()
    misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
@@ -301,7 +299,7 @@ function meeting()
    elseif mem.stage == 2 then
 
       mem.nextsys = fleesys
-      tk.msg(_("They're after me!"), fmt.f(_([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to {sys}! Let me jump first!"]]), {sys=mem.nextsys}))
+      tk.msg(_("They're after me!"), fmt.f(_([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! Quick, we must head to {sys}! Let me jump first!"]]), {sys=mem.nextsys}))
       mem.stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
@@ -343,9 +341,8 @@ function moreBadGuys()
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")
    end
-   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2 )
+   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2, _("Colonel Hamelsen") )
    buff:setFaction("Warlords")
-   buff:rename(_("Colonel Hamelsen"))
    buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
@@ -412,8 +409,8 @@ function hamelsenAmbush()
 end
 
 function ambush_msg()
-   tk.msg(_("Say hello to my mace rockets"), _([[As your ship decelerates to its normal speed after jumping in, you realize that there are hostile ships around. An enemy Shark then broadcasts the following message: "Tam, you small fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]]))
-   ambush[1]:comm(_("You wanted to meet Lord Jim? What about you meet your doom instead?"))
+   tk.msg(_("Say hello to my mace rockets"), _([[As your ship decelerates to its normal speed after jumping in, you realize there are hostile ships around. An enemy Shark broadcasts the following message: "Tam, you small, fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]]))
+   ambush[1]:comm(_("You wanted to meet Lord Jim? How about you meet your doom instead?"))
 
    majorTam:control(false)
    hook.rm(mem.proxHook) -- To avoid triggering by mistake
@@ -448,20 +445,20 @@ end
 
 -- The end of the Ambush: a message that explains what happened
 function ambush_end()
-   tk.msg(_("Hostiles eliminated"), fmt.f(_([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   Tam responds: "By the way, {player}, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. {player} is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]]), {player=player.name()}))
-   tk.msg(_("Two attacks are one too many"), _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
-   "He will have to answer for this, trust me." answers Tam, "I will refer this matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]]))
+   tk.msg(_("Hostiles eliminated"), fmt.f(_([[As the remaining attackers flee, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir." the other answers, "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old scumbag had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
+   Tam responds: "By the way, {player}, let me introduce you the Captain Leblanc. She belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. {player} is the private pilot I told you about, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]]), {player=player.name()}))
+   tk.msg(_("Two attacks are one too many"), _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard means of expression for a warlord, but setting an ambush here denotes a true lack of respect."
+   "He will answer for this, trust me." answers Tam, "I will refer this matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]]))
 end
 
 function discussWithTam()
    -- Major Tam is not senile: he says different things at the different stops
    if mem.stage == 2 then
-      tk.msg(_("Major Tam is ready"), _([[How do you do, citizen? Did you enjoy the trip so far? I'm ready for next stop. I'll follow you when you take off.]]))
+      tk.msg(_("Major Tam is ready"), _([[How do you do, citizen? Did you enjoy the trip so far? I'm ready for the next stop. I'll follow you when you take off.]]))
    elseif mem.stage == 5 then
-      if tk.yesno(_("Major Tam is talkative today"), _([["Hello, citizen. Did you already recover from Lord Battleaddict's last joke? It reminded me of my youth, when I used to belong to a fighter's squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])) then
-         tk.msg(_("Major Tam before he was at the Headquarters"), _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords.
-   "Warlords' forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
+      if tk.yesno(_("Major Tam is talkative today"), _([["Hello, citizen. Did you already recover from Lord Battleaddict's last trick? It reminded me of my youth, when I used to belong to a fighter squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])) then
+         tk.msg(_("Major Tam before he was at the Headquarters"), _([["You know, I've not always worked at Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stands for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords."
+   "Warlords' forces can be requisitioned by DHC, but only to fight forces that threaten the integrity of the Dvaered Nation, so, in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]]))
       end
    end

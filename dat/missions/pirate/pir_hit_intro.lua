@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket() or planet.cur():tags().criminal ~= nil</cond>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
   <chance>100</chance>
   <location>Bar</location>
   <faction>Wild Ones</faction>
@@ -34,7 +34,7 @@ local lmisn = require "lmisn"
 local vn = require "vn"
 local portrait = require "portrait"
 
-local fail, spawn_target -- Forward-declared functions
+local spawn_target -- Forward-declared functions
 -- luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 local hunters = {}
@@ -49,7 +49,7 @@ mem.giverimage = portrait.getFullPath(mem.giverportrait)
 
 function create ()
    -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( planet.cur():faction() ) and rnd.rnd() < 0.2 then
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.2 then
       misn.finish(false)
    end
 
@@ -75,7 +75,7 @@ function create ()
    end
 
    mem.name = pilotname.generic()
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
 
    misn.setNPC( givername, mem.giverportrait, _("You see a shady individual who seems to be looking for pilots to do a mission for them. You're not entirely sure you want to associate with them though.") )
 end
@@ -92,7 +92,7 @@ function accept ()
       vn.na(_([[You approach the shady character who begins to speak in a low voice, almost as if they don't want to be heard.]]))
       g(fmt.f(_([["You look like a decent pilot. I represent some clients, who value pilots who can get the job done with a bit of secrecy. You know what I mean? Getting the job done means making sure nothing gets in the way. My clients want a certain pilot by the name of {name} to be responsible for their actions. It's not very fair to ask for favours and not doing anything in return right?"]]),
          {name=mem.name}))
-      g(fmt.f(_([["My clients want a pilot to go find {name} and get compensation for the damages caused. However, it is past the time that the problem can be solved by paying back the favour. {name} has to punished for their excesses in more drastic measures. Would you be willing to meet up with {name} and express my clients discontent with, say, the full brunt of hot plasma? You will well compensated."
+      g(fmt.f(_([["My clients want a pilot to go find {name} and get compensation for the damages caused. However, it is past the time that the problem can be solved by paying back the favour. {name} has to be punished for their excesses through more... drastic measures. Would you be willing to meet up with {name} and express my clients' discontent with, say, the full brunt of hot plasma? You will be compensated well."
 They grin.]]),
          {name=mem.name}))
       talked = true
@@ -106,7 +106,7 @@ They grin.]]),
    }
 
    vn.label("accept")
-   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system. Leaving their ship as a charred memento to their avarice will be a fitting end to them."]]),
+   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
       {name=mem.name, sys=mem.missys}))
    vn.func( function () accepted = true end )
    vn.done()
@@ -116,7 +116,7 @@ They grin.]]),
    vn.run()
 
    if not accepted then
-      misn.finish(false)
+      return
    end
 
    misn.accept()
@@ -168,7 +168,7 @@ function jumpout ()
    mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
-      fail( fmt.f( _("MISSION FAILURE! You have left the {sys} system."), {sys=mem.last_sys} ) )
+      lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
 
@@ -205,11 +205,11 @@ function pilot_death( _p, _attacker )
    mem.state = 2
    player.msg(fmt.f(_("Target eliminated! Return to {pnt} ({sys} system)."), {pnt=mem.retpnt,sys=mem.retsys}))
    misn.osdActive( 3 )
-   mem.marker = misn.markerMove( mem.marker, mem.retpnt )
+   misn.markerMove( mem.marker, mem.retpnt )
 end
 
 function pilot_jump ()
-   fail( _("MISSION FAILURE! Target got away.") )
+   lmisn.fail( _("Target got away.") )
 end
 
 -- Spawn the ship at the location param.
@@ -220,7 +220,7 @@ function spawn_target( param )
    end
 
    if mem.jumps_permitted < 0 then
-      fail( _("MISSION FAILURE! Target got away.") )
+      lmisn.fail( _("Target got away.") )
       return
    end
 
@@ -240,23 +240,8 @@ function spawn_target( param )
 end
 
 
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
-end
-
-
 function land ()
-   if mem.state ~= 2 or planet.cur() ~= mem.retpnt then
+   if mem.state ~= 2 or spob.cur() ~= mem.retpnt then
       return
    end
 

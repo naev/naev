@@ -48,7 +48,7 @@ function create()
    frame    = tex.open( base .. "minimal.png" )
    energy   = tex.open( base .. "minimal_energy.png" )
    fuel     = tex.open( base .. "minimal_fuel.png" )
-   gui.targetPlanetGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex.open( base .. "minimal_planet.png", 2, 2 ) )
    gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png", 2, 2 ) )
 
    -- OSD
@@ -103,6 +103,9 @@ function create()
 
    -- Bottom bar
    --gui.viewport( 0, 20, screen_w, screen_h-20 )
+
+   -- Overlay bounds
+   gui.setMapOverlayBounds(15, 185, 15, 185)
 
    -- Update stuff
    update_cargo()

@@ -95,8 +95,8 @@ function enter ()
 
          local ro, ms, nf
 
-         ro = planet.get( "Raelid Outpost" )
-         ms = planet.get( "Marius Station" )
+         ro = spob.get( "Raelid Outpost" )
+         ms = spob.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
          dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
@@ -326,9 +326,9 @@ end
 
 
 function land ()
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( _("Victory on the Horizon"), _([[As you return to the base, you are welcomed with all manner of cheers and enthusiasm. You can understand why, too; this is a huge victory for the FLF, and surely just one of many victories to come. But still...
-    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic of a victory this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more periods before finally excusing yourself.]]) )
+    You manage to make your way over to Benito, who is clearly pleased with the outcome. "Outstanding job!" she says. "That base has been a burden on us for so long. Now it is gone, 100% gone! I don't think I need to tell you how fantastic a triumph this is. Victory is within our grasp!" That's when all doubt is erased from your mind. She's right; so what if the Empire is against you now? You exchange some more words with Benito, after which she hands you your pay for a job well done and excuses herself. You, on the other hand, stay behind to celebrate for a few more periods before finally excusing yourself.]]) )
       finish()
    end
 end

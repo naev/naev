@@ -5,7 +5,7 @@
  <GFX sx="10" sy="10">sting</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class>Corvette</class>
  <price>1300000</price>
  <time_mod>1</time_mod>
@@ -15,6 +15,8 @@
  <trail_generator x="-25" y="-7" h="-7" always_under="1">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel</license>
+ <cond>faction.playerStanding("Za'lek") &gt;= 40</cond>
+ <condstr>You need at least 40 reputation with House Za'lek.</condstr>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>
  <health>
   <armour>230</armour>
@@ -32,13 +34,13 @@
   <weapon size="medium" prop="fighter_bay" x="4" y="-2" h="-5" />
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
+  <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

@@ -10,10 +10,7 @@
   <x>-610.826672</x>
   <y>-44.492670</y>
  </pos>
- <assets>
-  <asset_virtual>Empire Unpresence (Range 1)</asset_virtual>
-  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs/>
  <jumps>
   <jump target="Klintus">
    <autopos/>

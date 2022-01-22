@@ -60,13 +60,13 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 local cargo_land = {}
 cargo_land[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you #g{credits}#0 without speaking a word.")
-cargo_land[2] = _("The containers of {cargo} are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip worth #g{credits}#0 in your hand and departs.")
+cargo_land[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Before you can even collect your thoughts, one of the workers presses a credit chip worth #g{credits}#0 in your hand and departs.")
 cargo_land[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay of #g{credits}#0 upon completion of the job.")
 cargo_land[4] = _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay of #g{credits}#0 when they finish.")
 
 local cargo_land_slow = {}
 cargo_land_slow[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only {credits} of the {reward} you were promised.")
-cargo_land_slow[2] = _("The containers of {cargo} are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that.")
+cargo_land_slow[2] = _("Shortly after you land, a team rushes the containers of {cargo} out of your vessel. Your late arrival is stretching quite a few schedules! Your pay is only {credits} instead of {reward} because of that.")
 cargo_land_slow[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only {credits} instead of the {reward} you were hoping for.")
 
 -- Create the mission
@@ -140,8 +140,7 @@ function accept()
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          misn.finish()
       end
-   elseif system.cur():jumpDist(mem.destsys, false, true) == nil
-         or system.cur():jumpDist(mem.destsys, false, true) < mem.numjumps then
+   elseif system.cur():jumpDist(mem.destsys, false, true) > mem.numjumps then
       if not tk.yesno( _("Unknown route"), fmt.f(
             _("The fastest route to {pnt} is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than {jumps} may cause you to miss the deadline. Accept the mission anyway?"),
 	    {pnt=mem.destplanet, jumps=fmt.jumps(mem.numjumps)} ) ) then
@@ -158,7 +157,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       if mem.intime then
       -- Semi-random message.
       lmisn.sfxMoney()

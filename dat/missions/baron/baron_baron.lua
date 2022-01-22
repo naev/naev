@@ -26,7 +26,7 @@ local neu = require "common.neutral"
 
 local sys1 = system.get("Darkstone")
 local sys2 = system.get("Ingot")
-local pnt = planet.get("Varia")
+local pnt = spob.get("Varia")
 
 local credits = baron.rewards.baron
 local pinnacle, vendetta1, vendetta2 -- Non-persistent state
@@ -42,8 +42,8 @@ function create ()
 
    tk.msg(_("You've been scouted!"), _([[Your viewscreen flashes to life. You're greeted by a nondescript pilot who doesn't seem to be affiliated with anyone you know.]]))
    tk.msg(_("You've been scouted!"), _([["Hello there! I represent a man by the name of Baron Sauterfeldt. You may have heard of him in your travels? No? Well, I suppose you can't have it all. My employer is a moderately influential man, you see, and... But no, I'll not bore you with the details. The bottom line is, Lord Sauterfeldt is looking for hired help, and you seem like the sort he needs, judging by your ship."]]))
-   tk.msg(_("You've been scouted!"), _([[You inquire what it is exactly this Mr. Sauterfeldt needs from you. "Oh, nothing too terribly invasive, I assure you. His Lordship currently needs a courier, nothing more. Erm, well, a courier who can't be traced back to him, if you understand what I mean. So what do you think? Sounds like a suitable job for you? The pay is good, I can assure you that!"]]))
-   local c = tk.choice(_("You've been scouted!"), _([[You pause for a moment before responding to this sudden offer. It's not everyday that people come to bring you work instead of making you look for it, but then again this job sounds like it could get you in trouble with the authorities. What will you do?]]), _("Accept the job"), _("Politely decline"), _("Angrily refuse"))
+   tk.msg(_("You've been scouted!"), _([[You inquire what it is exactly this Mr. Sauterfeldt needs from you. "Oh, nothing too terribly invasive, I assure you. His Lordship currently needs a courier, nothing more. Erm, well, a courier who can't be traced back to him, if you understand what I mean. So what do you think? Sound like a suitable job for you? The pay is good, I can assure you that!"]]))
+   local c = tk.choice(_("You've been scouted!"), _([[You pause for a moment before responding to this sudden offer. It's not everyday that people come to you with work instead of you looking for it, but then again this job sounds like it could get you in trouble with the authorities. What will you do?]]), _("Accept the job"), _("Politely decline"), _("Angrily refuse"))
    if c == 1 then
       accept()
    elseif c == 2 then
@@ -61,7 +61,7 @@ function accept()
    tk.msg(_("A risky retrieval"), fmt.f(_([["Oh, that's great! Okay, here's what Baron Sauterfeldt needs you to do. You should fly to the Dvaered world {pnt}. There's an art museum dedicated to one of the greatest Warlords in recent Dvaered history. I forget his name. Drovan or something? Durvan? Uh, anyway. This museum has a holopainting of the Warlord and his military entourage. His Lordship really wants this piece of art, but the museum has refused to sell it to him. So, we've sent agents to... appropriate... the holopainting."]]), {pnt=pnt}))
    tk.msg(_("A risky retrieval"), fmt.f(_([[You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture. "So, right, you're going to {pnt} to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."]]), {pnt=pnt}))
    tk.msg(_("A risky retrieval"), _([[You smirk at that. You know from experience that things seldom 'go off without a hitch', and this particular plan doesn't seem to be all that well thought out. Still, it doesn't seem like you'll be in a lot of danger. If things go south, they'll go south well before you are even in the picture. And even if the authorities somehow get on your case, you'll only have to deal with the planetary police, not the entirety of House Dvaered.]]))
-   tk.msg(_("A risky retrieval"), fmt.f(_([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the {sys} system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet {pnt}.]]), {sys=sys2, pnt=pnt}))
+   tk.msg(_("A risky retrieval"), fmt.f(_([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the {sys} system, aboard his ship, the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet {pnt}.]]), {sys=sys2, pnt=pnt}))
 
    misn.accept()
 
@@ -85,7 +85,7 @@ function accept()
 end
 
 function land()
-   if planet.cur() == pnt and not mem.talked then
+   if spob.cur() == pnt and not mem.talked then
       local npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
       mem.thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       mem.thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
@@ -95,23 +95,24 @@ end
 
 function jumpin()
    if mem.talked and system.cur() == sys2 then
-      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
+      local homepos = spob.get("Ulios"):pos()
+      pinnacle = pilot.add( "Proteron Kahan", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
-      pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(homepos + vec2.new( 400, -400), false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   local homepos = spob.get("Ulios"):pos()
+   pinnacle:moveto(homepos + vec2.new( 400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400, -400), false)
+   pinnacle:moveto(homepos + vec2.new( 400, -400), false)
 end
 
 function hail()
@@ -172,10 +173,9 @@ function takeoff()
 end
 
 function takeoff_delay ()
-   vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
-   vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
+   vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, _("Dvaered Police Vendetta"), {ai="dvaered_norun"} )
+   vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, _("Dvaered Police Vendetta"), {ai="dvaered_norun"} )
    for k,v in ipairs{vendetta1, vendetta2} do
-      v:rename(_("Dvaered Police Vendetta"))
       v:setHostile(true)
    end
    vendetta1:broadcast(fmt.f(_("All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"), {ship_type=player.pilot():ship():baseType(), ship_name=player.ship(), pnt=pnt}), true)

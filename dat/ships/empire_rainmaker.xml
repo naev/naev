@@ -19,6 +19,8 @@
  <trail_generator x="-44" y="-19" h="-2" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Large Civilian Vessel</license>
+ <cond>faction.playerStanding("Empire") &gt;= 60</cond>
+ <condstr>You need at least 60 reputation with the Empire.</condstr>
  <description>The Rainmaker is the largest freighter used by the Empire. It is capable of transporting extensive amounts of material through dangerous territory as small groups of pirates are no threat due to its heavy armour. The name is derived from a series of events when, shortly after the incident, they were used to deliver supplies to starving cut-of worlds by doing low atmospheric flybys while opening the cargo holds, resulting in a literal rain of supplies. After the events an EE-1891-392 official ship rename form was approved and Rainmaker became the official ship name.</description>
  <health>
   <armour>900</armour>
@@ -37,14 +39,14 @@
   <weapon size="medium" x="41" y="-14" h="0" />
   <weapon size="medium" x="-23" y="14" h="0" />
   <weapon size="medium" x="-23" y="-14" h="0" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -62,5 +64,6 @@
  </stats>
  <tags>
   <tag>empire</tag>
+  <tag>transport</tag>
  </tags>
 </ship>

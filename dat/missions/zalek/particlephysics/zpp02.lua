@@ -7,13 +7,12 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 1</done>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
-  <tier>1</tier>
  </notes>
 </mission>
 --]]
@@ -34,11 +33,11 @@ local reward = zpp.rewards.zpp02
 local cargo_name = _("drone interface controllers")
 local cargo_amount = 50 -- Amount of cargo to take
 
-local retpnt, retsys = planet.getS( "Katar I" )
+local retpnt, retsys = spob.getS( "Katar I" )
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
-      return p:tags().research
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 3, 8, "Za'lek", false, function( p )
+      return p:tags().research and p:services()["bar"]
    end )
    if not mem.destpnt then
       misn.finish()
@@ -55,8 +54,8 @@ function accept ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_([[You approach Noona who seems to have a slight frown on her face.]]))
-   n(fmt.f(_([["It seems I underestimated the facilities here. I was hoping they would have the XR-578 drone controller interfaces, but it seems like they are still on XR-321. I found a colleague who would be able to provide me with them, but I need someone to go pick them up."
+   vn.na(_([[You approach Noona, who seems to have a slight frown on her face.]]))
+   n(fmt.f(_([["It seems I overestimated the facilities here. I was hoping they would have the XR-578 drone controller interfaces, but it seems like they are still on XR-321. I found a colleague who can provide me with them, but I need someone to go pick them up."
 "Would you be so kind to go to {pnt} in the {sys} system and bring {amount} of drone interface controllers? I should be able to make it worth your time with {credits}."]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
@@ -65,12 +64,12 @@ function accept ()
    }
 
    vn.label("decline")
-   n(fmt.f(_([["I see. I'll have to figure out some way to get it over here…"
-She furrows her brow.]]),{pnt=mem.destpnt}))
+   n(_([["I see. I'll have to figure out some way to get it over here…"
+She furrows her brow.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Thanks! Once I get the interface up and working I should be able to start my particle physics experiments. I'm so excited. I guess I'll double check all my code while you are gone to calm down. It's going to be great!"]]))
+   n(_([["Thanks! Once I get the interface up and working, I should be able to start my particle physics experiments. I'm so excited. While you're gone, I guess I'll double check all my code just to calm down. It's going to be great!"]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -82,7 +81,7 @@ She furrows her brow.]]),{pnt=mem.destpnt}))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 
@@ -101,7 +100,7 @@ end
 
 local npcguy
 function land ()
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if (mem.state==1 or mem.state==2) and pcur==mem.destpnt then
       npcguy = misn.npcAdd( "approach_guy", _("Noona's Colleague"), "zalek2.png", _("You see a Za'lek scientist who seems to fit the description of Noona's colleague.") )
 
@@ -110,12 +109,12 @@ function land ()
       vn.scene()
       local n = vn.newCharacter( zpp.vn_noona() )
       vn.transition( zpp.noona.transition )
-      vn.na(_([[You land and the lone loading drone starts to slowly remove the cargo from your ship. While waiting, you decide to go find Noona, who you quickly find staring at the testing site at the observation deck of the base.]]))
-      n(_([["Look at it, isn't it breathtaking?"
+      vn.na(_([[You land and the lone loading drone starts to slowly remove the cargo from your ship. While waiting, you decide to look for Noona, who you quickly find staring at the testing site at the observation deck of the base.]]))
+      n(_([["Look at it! Isn't it breathtaking?"
 She motions towards the testing site.
 "To think of all of the brains that went into designing and preparing for this. All the famous experiments run on that platform. The advancement of humanity as a whole! What new technological wonders are awaiting for us on the other side of the particle physics conundrums?"]]))
       n(_([[She breathes deeply and turns to you.
-"Did you get the interface controllers? That's great! Let me try to get it hooked up and I'll finally be able to start my tests. I'm so excited!"
+"Did you get the interface controllers? That's great! Let me try to get them hooked up and I'll finally be able to start my tests. I'm so excited!"
 She starts to prance off, when she suddenly turns to you and tosses you a credstick.
 "Almost forgot. See you around!"]]))
       vn.sfxVictory()
@@ -123,6 +122,7 @@ She starts to prance off, when she suddenly turns to you and tosses you a credst
       vn.done( zpp.noona.transition )
       vn.run()
 
+      faction.modPlayer("Za'lek", zpp.fctmod.zpp02)
       player.pay( reward )
       zpp.log(_("You brought some drone interface controllers to Noona so that she can begin her particle physics experiments."))
       misn.finish(true)
@@ -145,7 +145,7 @@ function approach_guy ()
          c(_([[They raise an eyebrow as you approach.
 "You must be Dr. Sanderaite's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
 They scratch their head.]]))
-         c(_([["I tried to take a look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped to Rulkar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot at it."]]))
+         c(_([["I tried to take a look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot at it."]]))
          talked_once = true
       end
 
@@ -185,7 +185,7 @@ They scratch their head.]]))
    vn.run()
 
    -- Failed to do the Sokoban
-   if not mem.state==2 or not cargo_space then
+   if mem.state~=2 or not cargo_space then
       return
    end
 

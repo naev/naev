@@ -73,10 +73,12 @@ void sound_pauseGroup( int group );
 void sound_resumeGroup( int group );
 void sound_speedGroup( int group, int enable );
 void sound_volumeGroup( int group, double volume );
+void sound_pitchGroup( int group, double pitch );
 
 /*
  * Environmental functions.
  */
+void sound_setAbsorption( double value );
 int sound_env( SoundEnv_t env, double param );
 
 /* Lock for OpenAL operations. */

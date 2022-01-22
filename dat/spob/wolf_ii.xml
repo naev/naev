@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wolf II">
+ <pos>
+  <x>3714.113093</x>
+  <y>1291.286631</y>
+ </pos>
+ <GFX>
+  <space>moon-P02.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

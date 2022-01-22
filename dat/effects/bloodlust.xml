@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Blood Lust">
+ <description>The ship has had a taste of blood and wants more!</description>
+ <duration>10</duration>
+ <icon>/gfx/misc/icons/delighted.webp</icon>
+ <overwrite>bloodlust</overwrite>
+ <stats>
+  <fwd_damage>25</fwd_damage>
+  <tur_damage>25</tur_damage>
+ </stats>
+</effect>

@@ -10,15 +10,15 @@
   <x>-884.101035</x>
   <y>-937.472566</y>
  </pos>
- <assets>
-  <asset>Wa'kan</asset>
- </assets>
+ <spobs>
+  <spob>Wa'kan</spob>
+ </spobs>
  <jumps>
   <jump target="Gorman">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="NGC-5631">
+  <jump target="NGC-5362">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

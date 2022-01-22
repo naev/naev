@@ -6,16 +6,15 @@ local eparams = require 'equipopt.params'
 
 local dvaered_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Railgun", "Repeating Railgun",
-   "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
+   "Railgun", "Repeating Railgun", "Railgun Turret",
    -- Medium Weapons
    "Mass Driver", "Turreted Vulcan Gun",
-   "Unicorp Caesar IV Launcher", "TeraCom Imperator Launcher",
+   "Repeating Banshee Launcher",
+   "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+   "Enygma Systems Turreted Fury Launcher", "Enygma Systems Turreted Headhunter Launcher",
    -- Small Weapons
-   "Shredder",
-   "Vulcan Gun", "Gauss Gun",
-   "Unicorp Mace Launcher", "TeraCom Mace Launcher",
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+   "Shredder", "Vulcan Gun", "Gauss Gun",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
@@ -36,6 +35,12 @@ local dvaered_params = {
    ["Dvaered Vendetta"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,4) },
+         }
+      } end,
+   ["Dvaered Phalanx"] = function () return {
+         turret = 1.25,
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(2,3) },
          }
       } end,
    ["Dvaered Vigilance"] = function () return {

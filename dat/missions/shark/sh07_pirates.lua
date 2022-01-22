@@ -9,7 +9,7 @@
   <done>A Journey To Arandon</done>
   <chance>50</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
  </avail>
  <notes>
@@ -34,7 +34,7 @@ local baddie -- Non-persistent state
 -- luacheck: globals attacked enter gawain_dead generic_dead goddard_dead idle kestrel_dead1 kestrel_dead2 land (Hook functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 mem.osd_title = _("The Last Detail")
 
@@ -82,8 +82,8 @@ function accept()
    mem.godname = fmt.f( _("{name} II"), {name=pilotname.pirate()} )
 
    if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
-    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
-    "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
+    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
+    "So what we want you to do, quite simply, is to eliminate these pirates. There's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
       tk.msg(_("Very good"), fmt.f(_([["So, here are the details we have gathered about these pirates:
     "{gawname} should be in {gawsys}, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
@@ -117,7 +117,7 @@ end
 
 function land ()
    --Job is done
-   if mem.stage == 1 and planet.cur() == planet.get("Darkshed") then
+   if mem.stage == 1 and spob.cur() == paypla then
       tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
     He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
@@ -169,7 +169,7 @@ function enter ()
       pilot.toggleSpawn(false)
       local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), mem.kername1, {ai="pirate_norun"} )
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
          pilot.add( "Pirate Hyena", fenemy, vec2.new(0,100) ),
@@ -178,7 +178,6 @@ function enter ()
          p:setLeader( baddie )
       end
 
-      baddie:rename(mem.kername1)
       baddie:setHilight()
       baddie:setHostile()
 
@@ -189,7 +188,7 @@ function enter ()
       pilot.toggleSpawn(false)
       local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), mem.kername2, {ai="pirate_norun"} )
       local enemies = {
          pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
          pilot.add( "Pirate Shark", fenemy, vec2.new(0,100) ),
@@ -200,7 +199,6 @@ function enter ()
       end
 
 
-      baddie:rename(mem.kername2)
       baddie:setHilight()
       baddie:setHostile()
 
@@ -273,6 +271,6 @@ function generic_dead()
       tk.msg(_("Mission accomplished"), fmt.f(_("You have killed the four pirates. Now to return to {sys} and collect your payment..."), {sys=paysys}))
       mem.stage = 1
       misn.osdActive(2)
-      mem.marker2 = misn.markerAdd(paysys, "low")
+      mem.marker2 = misn.markerAdd(paypla, "low")
    end
 end

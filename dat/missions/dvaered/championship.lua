@@ -8,7 +8,7 @@
    <priority>4</priority>
    <chance>50</chance>
    <location>Bar</location>
-   <planet>Dvaer Prime</planet>
+   <spob>Dvaer Prime</spob>
   </avail>
   <notes>
    <tier>3</tier>
@@ -31,6 +31,7 @@
 local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
+local bioship = require "bioship"
 
 -- NPC
 mem.npc_portrait = {}
@@ -46,7 +47,7 @@ local usedNames = {}   --In order not to have two pilots with the same name
 local opponent, sec11, sec12, sec21, sec22, tv1, tv2
 
 --Change here to change the planet and the system
-local mispla, missys = planet.getS("Dvaer Prime")
+local mispla, missys = spob.getS("Dvaer Prime")
 
 local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
 -- luacheck: globals assault enter escort_attacked jumpout land oppo_attacked oppo_boarded oppo_dead oppo_disabled oppo_jump player_disabled (Hook functions passed by name)
@@ -92,13 +93,13 @@ function competitor2()
    tk.msg(_("Hello"), _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]]))
 end
 function competitor3()
-   tk.msg(_("Imperial Pilot"), _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]]))
+   tk.msg(_("Imperial Pilot"), _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armour and firepower are useful."]]))
 end
 function competitor4()
    tk.msg(_("Dvaered Pilot"), _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]]))
 end
 function competitor5()
-   tk.msg(_("Obvious Pirate"), _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]]))
+   tk.msg(_("Obvious Pirate"), _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in action. It helps to know how they fly in my job."]]))
 end
 
 function accept()
@@ -194,22 +195,17 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie"} )
-
-      opponent:outfitRm("all")
-      opponent:outfitRm("cores")
+      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
       --The core systems
-      if oppotype == ship.get("Hyena") or  oppotype == ship.get("Shark") then
+      if oppotype == ship.get("Hyena") or oppotype == ship.get("Shark") then
          opponent:outfitAdd("Tricon Zephyr Engine")
          opponent:outfitAdd("Milspec Orion 2301 Core System")
          opponent:outfitAdd("S&K Ultralight Combat Plating")
       elseif oppotype == ship.get("Soromid Reaver") then
-         opponent:outfitAdd("Light Brain Stage X")
-         opponent:outfitAdd("Light Fast Gene Drive Stage X")
-         opponent:outfitAdd("Light Shell Stage X")
+         bioship.simulate( opponent, bioship.maxstage( opponent ) )
       else
          opponent:outfitAdd("Tricon Zephyr II Engine")
          opponent:outfitAdd("Milspec Orion 3701 Core System")
@@ -306,7 +302,7 @@ function enter()
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(_("You are dismissed"), _("You aren't allowed to use missiles"))
+      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles"))
       misn.finish(false)
    elseif mem.playerclass ~= "Fighter" then
       tk.msg(_("You are dismissed"), _("You had to use a fighter"))
@@ -317,7 +313,7 @@ end
 function land_everyone()
    for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22, opponent}) do
       k:control()
-      k:land("Dvaer Prime")
+      k:land("Dvaer Prime", true)
    end
 end
 
@@ -339,7 +335,7 @@ end
 function assault()
    mem.stage = 1
    misn.osdActive(2)
-   opponent:attack(player.pilot())
+   opponent:attack(player.pilot()) -- Probably fine to just attack player
    hook.rm(mem.prox)
    hook.rm(mem.attackhook)
    system.mrkRm(mem.mark)
@@ -347,14 +343,14 @@ end
 
 function land()
 
-   if mem.stage == 2 and planet.cur() == mispla then  --player goes to next round
+   if mem.stage == 2 and spob.cur() == mispla then  --player goes to next round
       --Manage the player's progress
       tk.msg(_("You won this round"), _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]]))
 
       populate_bar()
       mem.official = misn.npcAdd("cleanNbegin", _("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 
-      elseif mem.stage == 3 and planet.cur() == mispla then  --player will be payed
+      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be payed
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
@@ -398,7 +394,7 @@ function player_disabled()  --player has lost
    misn.osdActive(3)
    mem.stage = 3
    opponent:taskClear()
-   opponent:land("Dvaer Prime")
+   opponent:land("Dvaer Prime",true)
    hook.rm(mem.opdihook)
 end
 

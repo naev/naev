@@ -2,6 +2,7 @@
 <ssys name="Kretogg">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>17500.000000</radius>
   <stars>400</stars>
@@ -12,16 +13,21 @@
   <x>-193.696759</x>
   <y>-1129.907407</y>
  </pos>
- <assets>
-  <asset>Kretogg I</asset>
-  <asset>Kretogg II</asset>
-  <asset>Kretogg III</asset>
-  <asset>Vorca</asset>
-  <asset>Warden's End</asset>
- </assets>
+ <spobs>
+  <spob>Kretogg I</spob>
+  <spob>Kretogg II</spob>
+  <spob>Kretogg III</spob>
+  <spob>Vorca</spob>
+  <spob>Warden's End</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-1098">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-14549">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Unicorn">
@@ -30,6 +36,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

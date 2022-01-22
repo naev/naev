@@ -27,7 +27,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local shadow = require "common.shadow"
 
-local pnt, sys = planet.getS("Durea") -- Where SHITMAN lives
+local pnt, sys = spob.getS("Durea") -- Where SHITMAN lives
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")
 
@@ -54,10 +54,10 @@ function accept()
       tk.msg(_("A dark-haired woman"), _([[Rebina nods at you to acknowledge your existence. "We meet again. I'm glad to see you've not gotten yourself killed yet." She smiles meaningfully. "As it happens I haven't found anyone to take care of my business yet. Perhaps you would reconsider? Allow me to remind you what this is about."]]))
    else
       tk.msg(_("A dark-haired woman"), _([[The woman calmly watches you as you approach her, seemingly not at all surprised to see you. Clad in a plain yet expensive-looking black dress and sipping from her martini, she emits an aura of class that is almost intimidating.
-    "Hello," she greets you. "I had a feeling you might want to talk to me. You are different from most..." she gestures at the other patrons of the bar, "And so am I. But where are my manners, I haven't introduced myself. My name is Rebina. I am what you might call a talent hunter. I visit places such as these to find people of exceptional talent. People such as you."
+    "Hello," she greets you. "I had a feeling you might want to talk to me. You are different from most..." she gestures at the other patrons of the bar, "And so am I. But where are my manners, I haven't introduced myself. My name is Rebina. I am what you might call a talent hunter. I visit places such as these to find people of exceptional skill. People such as you."
     You begin to introduce yourself, but Rebina waves it away, perhaps because your name doesn't interest her, or possibly because she already knows who you are. "Let's not waste words on idle formalities," she says. "I am here to talk business, and I've got a proposition for you, if you're interested."]]))
    end
-   if tk.yesno(_("Rebina's proposition"), _([["What I need is a pilot and a ship. Specifically, I need a skilled pilot and a capable ship. Do you fit that description? I have a feeling you do. You see, what I am about to suggest you do is both profitable and dangerous." Rebina takes another sip of her drink before continuing, allowing what she just said to fully register. "I will not lie to you. There are... rivalries out there, and working for me will mean you'll take sides in some of them. People will take notice of you, and some of them will try to kill you."
+   if tk.yesno(_("Rebina's proposition"), _([["What I need is a pilot and a ship. Specifically, I need a skilled pilot and a capable ship. Do you fit that description? I have a feeling you do. You see, what I am about to propose to you is both profitable and dangerous." Rebina takes another sip of her drink before continuing, allowing what she just said to fully register. "I will not lie to you. There are... rivalries out there, and working for me will mean you'll take sides in some of them. People will take notice of you, and some of them will try to kill you."
     You explain that taking risks comes with being an independent pilot and that you took the captain's chair with appropriate resolve, but Rebina pins you with a piercing gaze. "These are no ordinary pirate raids we're talking about," she admonishes you. "If you take this assignment, you will be a painted target. I want you to be well aware of this." There is another pause, but then she continues in a milder tone of voice. "That being said, I can assure you that the reward is well worth the risk. Pull this off, and you'll walk away considerably richer than you were."
     Rebina leans back, levelly meeting your gaze. "That's all I can tell you at this point. You'll get more details only once you accept this job. If you accept this job. What say you?"]])) then
       misn.accept()
@@ -68,7 +68,7 @@ function accept()
 
       -- Translator note: If the plural forms are a problem, assume the numbers here are 20 and 50.
       tk.msg(_("Rebina's explanation"), fmt.f(_([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on {pnt}. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
-    "You will be on a time schedule. You must meet Jorek within {t1} periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point {t2} periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the {plt} and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the {plt} will leave."
+    "You will be on a time schedule. You must meet Jorek within {t1} periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point {t2} periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him off-world for any other reason, make your way to the {plt} and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the {plt} will leave."
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=mem.timelimit1, t2=mem.timelimit2, plt=shipname}))
 
@@ -83,7 +83,7 @@ function accept()
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
          fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
       })
-      mem.misn_marker = misn.markerAdd( sys, "low" )
+      mem.misn_marker = misn.markerAdd( pnt, "low" )
       mem.shadowrun = 2
 
       mem.dateres = 500
@@ -92,14 +92,14 @@ function accept()
       hook.enter("enter")
    else
       tk.msg(_("A dark-haired woman"), _([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
-    Rebina finishes her drink and gets up. Then, with a cordial wave of her hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]]))
+    Rebina finishes her drink and gets up. Then, with a cordial wave of her, hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]]))
       var.push("shadowrun", 1) -- For future appearances of this mission
       misn.finish(false)
    end
 end
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if pnt == landed then
       misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
       misn.npcAdd( "officer", _("Officer at the bar"), portrait.getMaleMil("Empire"), _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...") )

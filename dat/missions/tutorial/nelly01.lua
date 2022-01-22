@@ -17,6 +17,7 @@
   <faction>Sirius</faction>
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
+  <chapter>[01]</chapter>
  </avail>
  <notes>
   <campaign>Tutorial Nelly</campaign>
@@ -71,7 +72,7 @@ local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion c
 
 function create ()
    -- Save current system to return to
-   mem.retpnt, mem.retsys = planet.cur()
+   mem.retpnt, mem.retsys = spob.cur()
    if not misn.claim( mem.retsys ) then
       misn.finish()
    end
@@ -99,7 +100,7 @@ function create ()
       end
       return false
    end
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not mem.destpnt then
       misn.finish()
    end
@@ -156,7 +157,7 @@ They cock their head a bit at you.
 
    vn.label("novice_yes")
    nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window."]]), {sys=mem.destsys}))
+"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
    vn.done( tutnel.nelly.transition )
 
    vn.label("novice_no")
@@ -191,7 +192,7 @@ function land ()
       mem.hk_info_timer = nil
    end
 
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if mem.misn_state==1 and pcur == mem.destpnt then
       local wanthelp = true
 
@@ -211,7 +212,7 @@ function land ()
       }
 
       vn.label("help_no")
-      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pnt} in {sys}."]]),{outfit=outfit_tobuy:name(), pnt=mem.retpnt, sys=mem.retsys}))
+      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pnt} in {sys}."]]),{outfit=outfit_tobuy, pnt=mem.retpnt, sys=mem.retsys}))
       vn.func( function ()
          wanthelp = false
       end )
@@ -319,9 +320,8 @@ function enter ()
       hook.timer( 5e3, "talk_derelict" )
 
       local pos = player.pos() * 0.6 -- Should be to the center of the system
-      derelict = pilot.add( "Koala", "Derelict", pos )
+      derelict = pilot.add( "Koala", "Derelict", pos, _("Derelict") )
       derelict:disable()
-      derelict:rename(_("Derelict"))
       derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
       derelict:setHilight(true)
       hook.pilot( derelict, "board", "board" )
@@ -337,7 +337,7 @@ function talk_derelict ()
    vn.transition( tutnel.nelly.transition )
    vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
    -- TODO autoboard!
-   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try #odouble-click#0ing or selecting the derelict and pressing {boardkey}. It should enable your autonav system to board the ship. You can toggle the overlay to see exactly where the ship is with {overlay}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
+   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try #odouble-click#0ing or selecting the derelict and pressing {boardkey}. It should enable your autonav system to board the ship. You can toggle the overlay to see exactly where the ship is with {overlaykey}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 end
@@ -431,7 +431,7 @@ function info_cargo ()
 end
 
 function info_mission ()
-   info_msg( fmt.f(_([["The #oMission Info#0 shows you information of all currently accepted missions. Selecting each mission will center the map on mission markers if available. Clicking on systems here also allows you to set routes directly. Make sure this mission is selected and try setting a route to {destsys} is marked on your map."]]), {destsys=mem.destsys} ) )
+   info_msg( fmt.f(_([["The #oMission Info#0 shows you information of all currently accepted missions. Selecting each mission will centre the map on mission markers if available. Clicking on systems here also allows you to set routes directly. Make sure this mission is selected and try setting a route to {destsys} is marked on your map."]]), {destsys=mem.destsys} ) )
    hook.rm( mem.hk_info_mission )
    mem.hk_info_mission = nil
 
@@ -473,7 +473,7 @@ function info_shiplog ()
 end
 
 function outfits ()
-   info_msg( fmt.f(_([["Here you can see all the outfits available for sale at this planet. Look for the #o{outfit}#0 and either #oright-click on it#0 or click on it and click the buy button to buy it."]]), {outfit=outfit_tobuy:name()} ) )
+   info_msg( fmt.f(_([["Here you can see all the outfits available for sale at this planet. Look for the #o{outfit}#0 and either #oright-click on it#0 or click on it and click the buy button to buy it."]]), {outfit=outfit_tobuy} ) )
 
    mem.hk_outfit_buy = hook.outfit_buy( "outfit_buy" )
 
@@ -488,11 +488,11 @@ function outfit_buy( name, _q )
       return
    end
    if o ~= outfit_tobuy then
-      info_msg( fmt.f(_([["You bought a #o{bought}#0 instead of #o{tobuy}#0! Don't worry, you can sell most outfits back for the price you bought them at. Please try to buy a #o{tobuy}#0. It should come in handy later."]]), {bought=o:name(), tobuy=outfit_tobuy:name()}))
+      info_msg( fmt.f(_([["You bought a #o{bought}#0 instead of #o{tobuy}#0! Don't worry, you can sell most outfits back for the price you bought them at. Please try to buy a #o{tobuy}#0. It should come in handy later."]]), {bought=o, tobuy=outfit_tobuy}))
       return
    end
 
-   info_msg( fmt.f(_([["Great! You bought the #o{bought}#0. Outfits don't get equipped right away. To be able to use it, please navigate to the #oEquipment Tab#0 of the landing window."]]), {bought=o:name()}))
+   info_msg( fmt.f(_([["Great! You bought the #o{bought}#0. Outfits don't get equipped right away. To be able to use it, please navigate to the #oEquipment Tab#0 of the landing window."]]), {bought=o}))
 
    hook.rm( mem.hk_outfit_buy )
    mem.hk_outfit_buy = nil
@@ -501,7 +501,7 @@ function outfit_buy( name, _q )
 end
 
 function equipment ()
-   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows to handle your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right clicking on the slot you want to equip it at. If you have free slots you can also right click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy:name()}) )
+   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows to handle your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right clicking on the slot you want to equip it at. If you have free slots you can also right click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy}) )
 
    mem.hk_equip = hook.equip( "equip" )
 end
@@ -520,7 +520,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil

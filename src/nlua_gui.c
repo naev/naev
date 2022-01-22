@@ -32,7 +32,7 @@ static int guiL_mesgInit( lua_State *L );
 static int guiL_omsgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
-static int guiL_targetPlanetGFX( lua_State *L );
+static int guiL_targetSpobGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
@@ -47,7 +47,7 @@ static const luaL_Reg guiL_methods[] = {
    { "omsgInit", guiL_omsgInit },
    { "radarInit", guiL_radarInit },
    { "radarRender", guiL_radarRender },
-   { "targetPlanetGFX", guiL_targetPlanetGFX },
+   { "targetSpobGFX", guiL_targetSpobGFX },
    { "targetPilotGFX", guiL_targetPilotGFX },
    { "mouseClickEnable", guiL_mouseClickEnable },
    { "mouseMoveEnable", guiL_mouseMoveEnable },
@@ -253,15 +253,15 @@ static int guiL_radarRender( lua_State *L )
 }
 
 /**
- * @brief Sets the Lua planet target GFX.
+ * @brief Sets the Lua spob target GFX.
  *
- *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX
+ *    @luatparam Tex tex Texture to set for the spob targeting.
+ * @luafunc targetSpobGFX
  */
-static int guiL_targetPlanetGFX( lua_State *L )
+static int guiL_targetSpobGFX( lua_State *L )
 {
    NLUA_CHECKRW(L);
-   gui_targetPlanetGFX( luaL_checktex( L, 1 ) );
+   gui_targetSpobGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
 

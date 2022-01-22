@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Porro III">
+ <pos>
+  <x>-3085.195104</x>
+  <y>10959.171778</y>
+ </pos>
+ <GFX>
+  <space>moon-C00.webp</space>
+  <exterior>desertic.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

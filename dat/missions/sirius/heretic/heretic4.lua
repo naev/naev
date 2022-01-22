@@ -10,7 +10,7 @@
   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>The Wringer</planet>
+  <spob>The Wringer</spob>
  </avail>
  <notes>
   <campaign>Heretic</campaign>
@@ -34,7 +34,7 @@ local srs = require "common.sirius"
 -- luacheck: globals attacked lastsys misn_over takeoff (Hook functions passed by name)
 
 -- Mission constants
-local targetasset, targetsys = planet.getS("Ulios") --this will be the new HQ for the Nasin in the next part.
+local targetasset, targetsys = spob.getS("Ulios") --this will be the new HQ for the Nasin in the next part.
 
 function create()
    --this mission make no system claims.
@@ -42,7 +42,7 @@ function create()
    mem.nasin_rep = faction.playerStanding("Nasin")
    mem.misn_tracker = var.peek("heretic_misn_tracker")
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
-   mem.homeasset = planet.cur()
+   mem.homeasset = spob.cur()
    --set some mission stuff
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
 end
@@ -50,7 +50,7 @@ end
 function accept()
    --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
-   local msg = fmt.f(_([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me and as many Nasin as you can carry to {pnt} in the {sys} system? This is our most desperate hour!"]]), {pnt=targetasset, sys=targetsys} )
+   local msg = fmt.f(_([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me, and as many Nasin as you can carry, to {pnt} in the {sys} system? This is our most desperate hour!"]]), {pnt=targetasset, sys=targetsys} )
    if not tk.yesno(_("The Egress"), msg) then
       misn.finish ()
    end
@@ -59,7 +59,7 @@ function accept()
    tk.msg(_("The Egress"),_([["Thank you! I knew you would do it!" Draga then proceeds to file as many people as can possibly fit onto your ship, enough to fill your ship's cargo hold to the brim. The number of Nasin members shocks you as they are packed into your ship.
     As the Sirii approach ever closer, Draga yells at you to get the ship going and take off. You begin taking off just in time to see Draga under fire by a Sirian soldier who has infiltrated the base. The last thing you see as you take off is him lying on the ground, lifeless.]]))
    --convo over. time to finish setting the mission stuff.
-   misn.markerAdd(targetsys,"high")
+   misn.markerAdd(targetasset, "high")
    local free_cargo = player.pilot():cargoFree()
    mem.people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(_("The Egress"))
@@ -133,7 +133,7 @@ function attacked() --several systems where the Sirius have 'strategically place
 end
 
 function misn_over() --aren't you glad thats over?
-   if planet.cur() == planet.get("Ulios") then
+   if spob.cur() == spob.get("Ulios") then
       --introing one of the characters in the next chapter.
       tk.msg(_("The Egress"), fmt.f(_([[You land on {pnt} and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]), {pnt=targetasset} ))
       player.pay(mem.reward)

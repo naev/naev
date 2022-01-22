@@ -2,8 +2,8 @@
 <ship name="Raglan Outpost">
  <points>1000</points>
  <base_type>Raglan Outpost</base_type>
- <gfx_space sx="1" sy="1">planet/space/station-battlestation.webp</gfx_space>
- <gfx_comm>planet/exterior/station05.webp</gfx_comm>
+ <gfx_space sx="1" sy="1">spob/space/station-battlestation.webp</gfx_space>
+ <gfx_comm>spob/exterior/station05.webp</gfx_comm>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
@@ -43,9 +43,9 @@
   <weapon size="large" x="0" y="0" h="5" />
   <weapon size="large" x="0" y="0" h="5" />
   <weapon size="large" x="0" y="0" h="5" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Dummy Systems</utility>
-  <structure size="large" prop="engines" exclusive="1" required="1">Dummy Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Dummy Plating</structure>
+  <utility size="large" prop="systems">Dummy Systems</utility>
+  <structure size="large" prop="engines">Dummy Engine</structure>
+  <structure size="large" prop="hull">Dummy Plating</structure>
  </slots>
  <tags>
   <tag>noplayer</tag>

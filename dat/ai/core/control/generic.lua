@@ -73,7 +73,7 @@ control_rate   = 2
 --[[
    Binary flags for the different states that default to nil (false).
    - forced: the task is forced and shouldn't be changed
-   - attack: the pilot is attacked their target
+   - attack: the pilot is attacking their target
    - fighting: the pilot is engaged in combat (including running away )
    - noattack: do not try to find new targets to attack
 --]]
@@ -116,6 +116,9 @@ local stateinfo = {
    },
    flyback = {
       forced   = true,
+      noattack = true,
+   },
+   jumpin_wait = {
       noattack = true,
    },
 }
@@ -339,6 +342,7 @@ function handle_messages( si, dopush )
                -- Clear orders
                elseif msgtype == "e_clear" then
                   p:taskClear()
+                  taskchange = true
                end
             end
          end
@@ -752,6 +756,7 @@ function attacked( attacker )
    local p = ai.pilot()
    if not mem.attacked then
       mem.attacked = true
+      mem.found_illegal = false -- We clear here so the player can't attack and still bribe
       if ai.hasfighterbays() then
          for k,v in ipairs(p:followers()) do
             p:msg( v, "e_clear" )
@@ -838,12 +843,12 @@ function create_post ()
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
-      ai.pushtask("idle_wait")
+      ai.pushtask("jumpin_wait")
    end
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
-   mem.Kd = 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82;
+   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82 );
 
    -- Just give some random fuel
    if p ~= player.pilot() then
@@ -855,6 +860,18 @@ function create_post ()
          p:setFuel( f )
       end
    end
+end
+
+-- Set transport ship parameters
+function transportParam ( price )
+   mem.aggressive  = false
+   mem.whiteknight = false
+   mem.loiter      = 0
+   mem.land_planet = true
+   mem.defensive   = false
+   mem.enemyclose  = 500
+   mem.careful     = true
+   ai.setcredits( rnd.rnd(price/100, price/25) )
 end
 
 -- taunts

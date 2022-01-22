@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Blackwell I">
+ <pos>
+  <x>1057.754972</x>
+  <y>739.568517</y>
+ </pos>
+ <GFX>
+  <space>moon-J00.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -10,16 +10,16 @@
   <x>38.000000</x>
   <y>-55.000000</y>
  </pos>
- <assets>
-  <asset>Caladan</asset>
-  <asset>Delta Pavonis I</asset>
-  <asset>Delta Pavonis II</asset>
-  <asset>Delta Pavonis IIa</asset>
-  <asset>Nappi</asset>
-  <asset>Ridrack</asset>
-  <asset>Seanich</asset>
-  <asset_virtual>Dvaered Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Caladan</spob>
+  <spob>Delta Pavonis I</spob>
+  <spob>Delta Pavonis II</spob>
+  <spob>Delta Pavonis IIa</spob>
+  <spob>Nappi</spob>
+  <spob>Ridrack</spob>
+  <spob>Seanich</spob>
+  <spob_virtual>Dvaered Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alteris">
    <autopos/>

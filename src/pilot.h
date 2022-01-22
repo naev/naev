@@ -7,6 +7,7 @@
 
 #include "ai.h"
 #include "commodity.h"
+#include "effect.h"
 #include "faction.h"
 #include "ntime.h"
 #include "outfit.h"
@@ -26,9 +27,9 @@
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           2. * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
-#define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
-#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
+#define HYPERSPACE_VEL           (2.*HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ENTER_MIN     (HYPERSPACE_VEL*0.3) /**< Minimum entering distance. */
+#define HYPERSPACE_ENTER_MAX     (HYPERSPACE_VEL*0.4) /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 /* Land/takeoff. */
 #define PILOT_LANDING_DELAY      1. /**< Delay for land animation. */
@@ -48,8 +49,9 @@
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
-   PILOT_HOOK_BOARDING,  /**< Pilot is boarding. */
-   PILOT_HOOK_BOARD,     /**< Pilot got boarded. */
+   PILOT_HOOK_BOARDING,  /**< Player is boarding. */
+   PILOT_HOOK_BOARD,     /**< Player got boarded. */
+   PILOT_HOOK_BOARD_ALL,  /**< Pilot got boarded. */
    PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
    PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
    PILOT_HOOK_JUMP,      /**< Pilot jumped. */
@@ -92,7 +94,6 @@ typedef enum PilotOutfitState_ {
  * @brief Stores outfit ammo.
  */
 typedef struct PilotOutfitAmmo_ {
-   const Outfit *outfit;/**< Type of ammo. */
    int quantity;        /**< Amount of ammo. */
    int deployed;        /**< For fighter bays. */
    double lockon_timer; /**< Locking on timer. */
@@ -130,7 +131,7 @@ typedef struct PilotOutfitSlot_ {
    union {
       unsigned int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo;/**< Ammo for launchers. */
-   } u; /**< Stores type specific data. */
+   } u;
 
    /* In the case of Lua stuff. */
    int lua_mem; /**< Lua reference to the memory table of the specific outfit. */
@@ -281,6 +282,9 @@ typedef struct Pilot_ {
    ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics, used for comparisons.. */
 
+   /* Ship effects. */
+   Effect *effects; /**< Pilot's current activated effects. */
+
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
    void (*update)(struct Pilot_*, const double); /**< Updates the pilot. */
@@ -292,6 +296,7 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_structure;/**< Array (array.h): The structure slots. */
    PilotOutfitSlot *outfit_utility;  /**< Array (array.h): The utility slots. */
    PilotOutfitSlot *outfit_weapon;   /**< Array (array.h): The weapon slots. */
+   PilotOutfitSlot *outfit_intrinsic;/**< Array (array.h): The intrinsic slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */
@@ -300,6 +305,7 @@ typedef struct Pilot_ {
    int nfighterbays;  /**< Number of fighter bays available. */
    int nafterburners; /**< Number of afterburners equipped. */
    int outfitlupdate; /**< Has outfits with Lua update scripts. */
+   double refuel_amount; /**< Amount to refuel. */
 
    /* For easier usage. */
    PilotOutfitSlot *afterburner; /**< the afterburner */
@@ -330,7 +336,7 @@ typedef struct Pilot_ {
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
    void *ptarget;       /**< AI pilot real target. */
-   int nav_planet;      /**< Planet land target. */
+   int nav_spob;      /**< Spob land target. */
    int nav_hyperspace;  /**< Hyperspace target. */
    int nav_anchor;      /**< Asteroid anchor target. */
    int nav_asteroid;    /**< Asteroid target. */
@@ -406,15 +412,15 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
-      const Damage *dmg, int reset );
+double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
+      const Damage *dmg, const Outfit *outfit, int lua_mem, int reset );
 void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
 double pilot_brakeDist( Pilot *p, Vector2d *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
-void pilot_cooldown( Pilot *p );
+void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, const Pilot *target );
 
@@ -451,7 +457,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_replacePlayer( Pilot* after );
-void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
+void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
 /*
@@ -507,5 +513,6 @@ char pilot_getFactionColourChar( const Pilot *p );
  */
 credits_t pilot_worth( const Pilot *p );
 void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
+void pilot_clearTrails( Pilot *p );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );

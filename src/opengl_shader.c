@@ -2,6 +2,8 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
+#include <ctype.h>
+
 #include "naev.h"
 /** @endcond */
 
@@ -24,6 +26,7 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
 static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
+static int gl_log_says_anything( const char* log );
 
 /**
  * @brief Loads a GLSL file with some simple preprocessing like adding #version and handling #include.
@@ -148,7 +151,7 @@ static void print_with_line_numbers( const char *str )
       if ((i==0) || (str[i]=='\n'))
          logprintf( stderr, 0, "\n%03d: ", ++counter );
       if (str[i]!='\n')
-         logprintf( stdout, 0, "%c", str[i] );
+         logprintf( stderr, 0, "%c", str[i] );
    }
    logprintf( stderr, 0, "\n" );
 }
@@ -173,8 +176,10 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
    if (log_length > 0) {
       char *log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
-      print_with_line_numbers( buf );
-      WARN("compile_status=%d: %s\n%s\n", compile_status, filename, log);
+      if (gl_log_says_anything( log )) {
+         print_with_line_numbers( buf );
+         WARN("compile_status==%d: %s: [[\n%s\n]]", compile_status, filename, log);
+      }
       free(log);
       if (compile_status == GL_FALSE)
          shader = 0;
@@ -200,10 +205,10 @@ static int gl_program_link( GLuint program )
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
    if (log_length > 0) {
       char *log;
-      glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
-      WARN("link_status==%d: %s\n", link_status, log);
+      if (gl_log_says_anything( log ))
+         WARN("link_status==%d: [[\n%s\n]]", link_status, log);
       free(log);
       if (link_status == GL_FALSE)
          return -1;
@@ -311,4 +316,12 @@ void gl_uniformColor(GLint location, const glColour *c)
 void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
 {
    glUniform4f(location, c->r, c->g, c->b, a);
+}
+
+static int gl_log_says_anything( const char* log )
+{
+   for (size_t i=0; log[i]; i++)
+      if (!isspace(log[i]))
+         return 1;
+   return 0;
 }

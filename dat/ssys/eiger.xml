@@ -10,9 +10,9 @@
   <x>-724.335242</x>
   <y>-793.433910</y>
  </pos>
- <assets>
-  <asset>Stormy</asset>
- </assets>
+ <spobs>
+  <spob>Stormy</spob>
+ </spobs>
  <jumps>
   <jump target="Armorhead">
    <autopos/>

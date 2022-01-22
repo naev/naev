@@ -45,14 +45,14 @@ mem.osd_msg[1] = _("Look for Harja in Sirian bars")
 mem.osd_msg[2] = _("Convince Harja to come with you")
 
 -- Mission constants
-local startplanet, startsys = planet.getS("Eenerim")
+local startplanet, startsys = spob.getS("Eenerim")
 local reward = 1.5e6
 local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 
 function create()
    -- Note: this mission does not make any system claims.
    tk.msg(_("You have mail"), fmt.f(_([[Your computer console flashes you a notice. It seems you received a message through the Sirian information exchange network. You play it.
-    The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {pnt} system. Please meet me there at the earliest opportunity."
+    The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {sys} system. Please meet me there at the earliest opportunity."
     The message ends. You save it for later reference. Maybe you should swing by {pnt} to see what Joanne wants.]]), {player=player.name(), pnt=startplanet, sys=startsys}))
 
    mem.stage = stages.start
@@ -63,27 +63,27 @@ function create()
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")
-   mem.mark = misn.markerAdd( startsys, "low" )
+   mem.mark = misn.markerAdd( startplanet, "low" )
 end
 
 -- Land hook.
 function land()
-   mem.enter_src = planet.cur()
+   mem.enter_src = spob.cur()
    local harjadesc = _("You've found Harja. He's sourly watching the galactic news, and hasn't noticed you yet.")
 
-   if planet.cur() == startplanet and mem.stage == stages.start then
+   if spob.cur() == startplanet and mem.stage == stages.start then
       mem.joanne_npc = misn.npcAdd("talkJoanne", _("Joanne"), "sirius/unique/joanne.webp", _("Joanne the Serra military officer is here, enjoying a drink by herself."), 4)
-   elseif planet.cur() == mem.harjaplanet and mem.stage <= stages.fetchHarja then
+   elseif spob.cur() == mem.harjaplanet and mem.stage <= stages.fetchHarja then
       mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), "sirius/unique/harja.webp", harjadesc, 4)
-   elseif planet.cur() ~= startplanet and mem.stage == stages.findHarja then
+   elseif spob.cur() ~= startplanet and mem.stage == stages.findHarja then
       -- Harja appears randomly in the spaceport bar.
       -- TODO: Add checks for planet metadata. Harja must not appear on military installations and such.
       if rnd.rnd() < 0.25 then
          mem.harja_npc = misn.npcAdd("talkHarja", _("Harja"), "sirius/unique/harja.webp", harjadesc, 4)
-         mem.harjaplanet, mem.harjasys = planet.cur() -- Harja, once he spawns, stays put.
+         mem.harjaplanet, mem.harjasys = spob.cur() -- Harja, once he spawns, stays put.
       end
-   elseif planet.cur() == startplanet and mem.stage == stages.finish then
-      tk.msg(_("Building a bridge"), fmt.f(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
+   elseif spob.cur() == startplanet and mem.stage == stages.finish then
+      tk.msg(_("Building a bridge"), fmt.f(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this, he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.
     Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today." She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with {player} here, I was told that you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."
     There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]]), {player=player.name()}))
       tk.msg(_("Building a bridge"), fmt.f(_([[There is silence again. Harja's oath sounded practiced and formal, but despite that you feel he was being very sincere when he spoke it.
@@ -113,7 +113,7 @@ function talkJoanne()
    else
       -- accepted
       mem.stage = mem.stage + 1
-      tk.msg(_("Once more, with feeling"), fmt.f(_([[You pocket the data unit and tell Joanne you will see what you can do. "Thank you {player}," she says. "I'm still pretty busy with my job, so I won't be here all the time, but just ping me on the information exchange when you've found Harja, and I'll make sure to be here when you arrive."
+      tk.msg(_("Once more, with feeling"), fmt.f(_([[You pocket the data unit and tell Joanne you will see what you can do. "Thank you, {player}," she says. "I'm still pretty busy with my job, so I won't be here all the time, but just ping me on the information exchange when you've found Harja, and I'll make sure to be here when you arrive."
     When Joanne is gone, you take a moment to reflect that you're going to have to deal with Harja again. Joanne wanted no violence, but will Harja leave room for that? You'll find out when you catch him.]]), {player=player.name()}))
       mem.osd_msg[3] = fmt.f(_("Return to {pnt} ({sys})"), {pnt=startplanet, sys=startsys})
       misn.markerRm(mem.mark)
@@ -153,7 +153,7 @@ function talkHarja()
 
       misn.osdActive(3)
       misn.npcRm(mem.harja_npc)
-      misn.markerMove(mem.marker, startsys)
+      misn.markerMove(mem.marker, startplanet)
 
       hook.enter("enter")
       hook.jumpout("jumpout")

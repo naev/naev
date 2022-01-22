@@ -10,7 +10,7 @@
    <done>Collective Espionage 2</done>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>Omega Station</planet>
+   <spob>Omega Station</spob>
   </avail>
   <notes>
    <campaign>Collective</campaign>
@@ -36,7 +36,7 @@ local emp = require "common.empire"
 
 -- Mission constants
 local dronequota = 5 -- The amount of drones the player must whack to win
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base = spob.get("Omega Station")
 local misn_target_sys = system.get("C-59")
 
 -- luacheck: globals death jumpin land (Hook functions passed by name)
@@ -59,17 +59,17 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar as usual.") )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar, as usual.") )
 end
 
 
 function accept ()
-   mem.commando_planet = planet.get("Eiroik")
+   mem.commando_planet = spob.get("Eiroik")
    mem.credits = emp.rewards.ec03
 
    -- Intro text
-   if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
-    "It looks like you got something. It's not very clear because of {pnt}'s atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), {pnt=mem.commando_planet}) )
+   if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri, you notice he seems somewhat excited.
+    "It looks like you got something! It's not very clear because of {pnt}'s atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), {pnt=mem.commando_planet}) )
       then
       misn.accept()
 
@@ -115,14 +115,14 @@ function death(pilot)
         if mem.droneleft == 0 then
             mem.misn_stage = 1
             misn.osdActive(3)
-            misn.markerMove(mem.misn_marker, misn_base_sys)
+            misn.markerMove(mem.misn_marker, misn_base)
         end
     end
 end
 
 -- Handles arrival back to base
 function land()
-   if mem.misn_stage == 1 and planet.cur() == misn_base then
+   if mem.misn_stage == 1 and spob.cur() == misn_base then
       tk.msg(_("Mission Accomplished"), _([[Your ship touches ground and you once again see the face of Lt. Commander Dimitri.
     "How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now when they get back, but I believe everything went well.
     "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))
@@ -134,7 +134,7 @@ function land()
       player.pay(mem.credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
+      emp.addCollectiveLog( _([[You provided a distraction while a commando team was inserted into Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
 
       misn.finish(true)
    end

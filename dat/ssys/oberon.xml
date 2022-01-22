@@ -10,14 +10,14 @@
   <x>330.666667</x>
   <y>267.066667</y>
  </pos>
- <assets>
-  <asset>M.K.</asset>
-  <asset>Oberon I</asset>
-  <asset>Oberon III</asset>
-  <asset>Oberon IV</asset>
-  <asset>Soromid Customs Central</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>M.K.</spob>
+  <spob>Oberon I</spob>
+  <spob>Oberon III</spob>
+  <spob>Oberon IV</spob>
+  <spob>Soromid Customs Central</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Defa">
    <pos x="-15366.904607" y="-17565.639958"/>

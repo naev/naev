@@ -10,9 +10,9 @@
   <x>153.430101</x>
   <y>-958.738334</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="PSO">
    <autopos/>

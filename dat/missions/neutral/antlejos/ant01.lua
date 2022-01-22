@@ -25,7 +25,7 @@ local vn = require "vn"
 local fmt = require "format"
 local ant = require "common.antlejos"
 
-local destpnt, destsys = planet.getS("Antlejos V")
+local destpnt, destsys = spob.getS("Antlejos V")
 
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
@@ -33,7 +33,7 @@ local reward = ant.rewards.ant01
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
-   misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for them.") )
+   misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for him.") )
 end
 
 function accept ()
@@ -82,7 +82,7 @@ function accept ()
    misn.cargoAdd(c, cargo_amount)
 
    misn.setTitle( _("Verner's Request") )
-   misn.setDesc(fmt.f(_("Verner asked you to take them to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
+   misn.setDesc(fmt.f(_("Verner asked you to take him to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate(_("Verner's Request"), {
       fmt.f(_("Take Verner to {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),
@@ -94,7 +94,7 @@ end
 
 -- Land hook.
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 
@@ -102,11 +102,11 @@ function land ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_([[You land on the barren moon, not really understanding whan Verner is going to do here, since there really isn't anything but dust and rocks. You and Verner don space suits and unload the cargo.]]))
+   vn.na(_([[You land on the barren moon, not really understanding what Verner is going to do here, since there really isn't anything but dust and rocks. You and Verner don space suits and unload the cargo.]]))
    v(_([[After getting off the ship he reaches down and swipes his finger across the lunar surface before bringing it up to inspect it.
 "More silica content than expected. This is perfect!", he mumbles to himself.]]))
    v(_([[He turns to you and speaks.
-"Thank you for bringing me here. This is much better than expected. You are probably asking what I've come to do to such an inhospitable place, but it should be obvious. I'm going to terraform this wonderful place into a paradise!"]]))
+"Thank you for bringing me here. This is much better than expected. You are probably wondering what I've come to do to such an inhospitable place, but it should be obvious. I'm going to terraform this wonderful place into a paradise!"]]))
    v(_([["I'm going to be setting up camp, but come back in a bit and I'll have more work for you. This is going to be very exciting indeed!"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

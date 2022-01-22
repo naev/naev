@@ -10,14 +10,14 @@
   <x>165.388889</x>
   <y>-38.555556</y>
  </pos>
- <assets>
-  <asset>Anubis</asset>
-  <asset>Europea</asset>
-  <asset>Tau Prime</asset>
-  <asset>Tau Secundus</asset>
-  <asset>Tau Station</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Anubis</spob>
+  <spob>Europea</spob>
+  <spob>Tau Prime</spob>
+  <spob>Tau Secundus</spob>
+  <spob>Tau Station</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Draconis">
    <autopos/>

@@ -5,11 +5,11 @@
   <unique />
  </flags>
  <avail>
-  <priority>30</priority>
+  <priority>3</priority>
   <done>The FLF Contact</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Darkshed</planet>
+  <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
  </avail>
  <notes>
@@ -33,7 +33,7 @@ local pacifier -- Non-persistent state
 
 --Change here to change the planets and the systems
 local missys = system.get("Arandon")
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
    if not misn.claim(missys) then
@@ -74,7 +74,7 @@ end
 
 function land()
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       if misn.cargoRm(mem.smith) then
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
@@ -138,7 +138,7 @@ function board()
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paysys, "low")
+   mem.marker2 = misn.markerAdd(paypla, "low")
 end
 
 function dead()  --Actually, I don't know how it could happened...

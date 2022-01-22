@@ -155,6 +155,9 @@ function luatk.Window:draw()
    local scs = lg.getScissor()
    lg.setScissor( x, y, w, h )
 
+   -- Clear depth
+   naev.gfx.clearDepth()
+
    -- Draw widgets ontop
    for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
@@ -329,14 +332,25 @@ end
 luatk.Rect = {}
 setmetatable( luatk.Rect, { __index = luatk.Widget } )
 luatk.Rect_mt = { __index = luatk.Rect }
-function luatk.newRect( parent, x, y, w, h, col )
+function luatk.newRect( parent, x, y, w, h, col, rot )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Rect_mt )
    wgt.col     = col or {1,1,1}
+   wgt.rot     = rot
    return wgt
 end
 function luatk.Rect:draw( bx, by )
    lg.setColor( self.col )
+   if self.rot then
+      lg.push()
+      -- TODO this is still off...
+      lg.translate( bx+self.x, by+self.y )
+      lg.rotate( self.rot )
+      lg.translate( -self.w/2, -self.h/2 )
+      lg.rectangle( "fill", 0, 0, self.w, self.h )
+      lg.pop()
+      return
+   end
    lg.rectangle( "fill", bx+self.x, by+self.y, self.w, self.h )
 end
 
@@ -412,7 +426,7 @@ end
    High Level dialogue stuff
 --]]
 local function msgbox_size( title, msg )
-   local font = luatk._deffont
+   local font = luatk._deffont or lg.getFont()
    local titlelen = font:getWidth( title )
    local msglen = font:getWidth( msg )
    local wi = 10
@@ -472,11 +486,13 @@ function luatk.yesno( title, msg, funcyes, funcno )
 end
 
 function luatk.drawAltText( bx, by, alt, w )
-   local font = luatk._deffont
-   w = w or 250
-   local _w, tw = font:getWrap( alt, w-20 )
+   naev.gfx.clearDepth()
+   local font = luatk._deffont or lg.getFont()
+   w = w or 400
+   local maxw, tw = font:getWrap( alt, w-20 )
    local h = #tw * font:getLineHeight() + 20
    local lw, lh = lg.getDimensions()
+   w = math.min( maxw+20, w )
 
    local x = bx + 10
    local y = by
@@ -487,7 +503,7 @@ function luatk.drawAltText( bx, by, alt, w )
       x = lw-w-10
    end
 
-   lg.setColor( {0.0, 0.0, 0.0, 0.9} )
+   lg.setColor( {0.0, 0.0, 0.0, 0.95} )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColor( {0.5, 0.5, 0.5, 0.9} )
    lg.rectangle( "line", x, y, w, h )

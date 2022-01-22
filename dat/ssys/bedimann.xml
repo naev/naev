@@ -10,10 +10,10 @@
   <x>-834.313048</x>
   <y>-785.181493</y>
  </pos>
- <assets>
-  <asset>Bedimann Shipyards</asset>
-  <asset>Neo Pomerania</asset>
- </assets>
+ <spobs>
+  <spob>Bedimann Shipyards</spob>
+  <spob>Neo Pomerania</spob>
+ </spobs>
  <jumps>
   <jump target="Eiger">
    <autopos/>

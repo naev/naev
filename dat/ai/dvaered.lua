@@ -1,5 +1,6 @@
 require 'ai.core.core'
 local fmt = require "format"
+local mt = require 'merge_tables'
 
 -- Settings
 mem.aggressive = true
@@ -13,10 +14,12 @@ local bribe_no_list = {
    _([["Bribery carries a harsh penalty."]]),
    _([["House Dvaered does not lower itself to common scum."]])
 }
-local taunt_list = {
-   _("Prepare to face annihilation!"),
+local taunt_list_warship = {
    _("I shall wash my hull in your blood!"),
    _("Your head will make a great trophy!"),
+}
+local taunt_list_default = {
+   _("Prepare to face annihilation!"),
    _("You're no match for the Dvaered!"),
    _("Death awaits you!")
 }
@@ -25,9 +28,17 @@ local taunt_list = {
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
+   local price = ps:price()
 
-   -- Credits.
-   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/100) )
+   -- See if it's a transport ship
+   mem.istransport = ps:tags().transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/100) )
+   end
 
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
@@ -79,6 +90,12 @@ function taunt ( target, _offense )
    end
 
    -- Offense is not actually used
-   local taunts = taunt_list
+   local taunts
+   if mem.istransport then
+      taunts = taunt_list_default
+   else
+      taunts = mt.merge_tables( taunt_list_warship, taunt_list_default )
+   end
+
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
 end

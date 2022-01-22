@@ -10,10 +10,10 @@
   <x>-329.000000</x>
   <y>-23.000000</y>
  </pos>
- <assets>
-  <asset>Gamma Station</asset>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Gamma Station</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Paradox">
    <autopos/>

@@ -2,6 +2,7 @@
 <ssys name="Volus">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>18900.000000</radius>
   <stars>400</stars>
@@ -12,7 +13,7 @@
   <x>-161.148148</x>
   <y>-972.078704</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Sheffield">
    <autopos/>
@@ -24,6 +25,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

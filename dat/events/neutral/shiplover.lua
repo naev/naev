@@ -136,13 +136,14 @@ local function gen_question( difficulty )
    end
 end
 
+local nplayed
 function create ()
-   local pnt = planet.cur()
+   local pnt = spob.cur()
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
-   -- Do not spawn on restricted assets
+   -- Do not spawn on restricted spobs
    if pnt:tags().restricted then evt.finish() end
 
    -- Ignore on uninhabited and planets without bars
@@ -172,7 +173,7 @@ function create ()
    -- Make sure not same system as last time
    local lastplanet = var.peek("shiplover_lastplanet")
    if lastplanet then
-      if planet.get(lastplanet):system() == system.cur() then
+      if spob.get(lastplanet):system() == system.cur() then
          evt.finish()
       end
    end
@@ -201,7 +202,7 @@ function create ()
       nwon = nwon + nw
       nlost = nlost + nl
    end
-   local nplayed = nwon + nlost
+   nplayed = nwon + nlost
 
    -- Clear met if didn't play last time
    if nplayed == 0 then
@@ -259,7 +260,10 @@ function create ()
          shiplog.append( "shiplover", fmt.f(_("You obtained {credits} from the Ship Enthusiast for getting a quiz right."), {credits=fmt.credits(cash_reward)}) )
          player.pay( cash_reward, true ) -- Don't trigger hooks
       end
-      reward.msg_shiplover = fmt.f(_([["That's right! Damn, I thought you wouldn't know this one. You've solved my quiz {n} times now! Here, take this as a reward for your performance."]]), {n=nwon+1})
+      reward.msg_shiplover = fmt.f(n_(
+         [["That's right! Damn, I thought you wouldn't know this one. You've solved my quiz {n} time now! Here, take this as a reward for your performance."]],
+         [["That's right! Damn, I thought you wouldn't know this one. You've solved my quiz {n} times now! Here, take this as a reward for your performance."]],
+         nwon+1), {n=nwon+1})
       reward.msg_obtain = fmt.reward(cash_reward)
    end
 
@@ -321,7 +325,7 @@ They stick their tongue out at you as they still play with the space ship.]]))
 
       vn.label("first_showoff")
       sl(_([["Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know what that is? Stop messing with me, it's probably just another mass-produced Lancelot without any history behind it. This is a masterpiece!"
-The lift up their toy Lancelot. You can barely make out a golden Efreeti etched on the side.]]))
+They lift up their toy Lancelot. You can barely make out a golden Efreeti etched on the side.]]))
       vn.jump("first_cont1")
 
       vn.label("first_cont1")
@@ -329,13 +333,13 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       vn.func( function ()
          var.push("shiplover_met",true)
       end )
-   elseif var.peek( "shiplover_quiz")==nil and var.peek("shiplover_met") then
+   elseif nplayed==0 and var.peek("shiplover_met") then
       -- Met, didn't play quiz and came back
       vn.na(_("You once again approach the ship enthusiast."))
       sl(_([["So you're back. Did you change your mind about playing my ship quiz?"]]))
    else
       vn.na(_("You once again approach the ship enthusiast. They seem to move about a lot."))
-      sl(_([["Would you like to play another round of the ship quiz? I think the question I prepared will stump you completely."]]))
+      sl(_([["Would you like to play another round of the ship quiz? I think the question I prepared will stump you completely!"]]))
    end
    vn.menu{
       { _([["Yes!"]]), "play_yes" },
@@ -420,7 +424,7 @@ They take their leave.]]), {answer=_(question_data.answer)}))
    -- Finish event (removes npc)
    if remove_npc then
       var.push( "shiplover_lastplayed", time.get():tonumber() )
-      var.push( "shiplover_lastplanet", planet.cur():nameRaw() )
+      var.push( "shiplover_lastplanet", spob.cur():nameRaw() )
       evt.finish()
    end
 end

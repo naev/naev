@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tu'halar">
+ <pos>
+  <x>21126.743433</x>
+  <y>-1663.789124</y>
+ </pos>
+ <GFX>
+  <space>moon-M03.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

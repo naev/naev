@@ -10,11 +10,11 @@
   <x>750.675353</x>
   <y>-143.313578</y>
  </pos>
- <assets>
-  <asset>Anger I</asset>
-  <asset>Anger II</asset>
-  <asset>Rage</asset>
- </assets>
+ <spobs>
+  <spob>Anger I</spob>
+  <spob>Anger II</spob>
+  <spob>Rage</spob>
+ </spobs>
  <jumps>
   <jump target="Ryder">
    <autopos/>

@@ -28,7 +28,7 @@
 
 #define conf_loadInt( env, n, i )            \
    {                                         \
-      nlua_getenv( env, n );                 \
+      nlua_getenv( naevL, env, n );          \
       if ( lua_isnumber( naevL, -1 ) ) {     \
          i = (int)lua_tonumber( naevL, -1 ); \
       }                                      \
@@ -37,7 +37,7 @@
 
 #define conf_loadFloat( env, n, f )             \
    {                                            \
-      nlua_getenv( env, n );                    \
+      nlua_getenv( naevL, env, n );             \
       if ( lua_isnumber( naevL, -1 ) ) {        \
          f = (double)lua_tonumber( naevL, -1 ); \
       }                                         \
@@ -46,7 +46,7 @@
 
 #define conf_loadBool( env, n, b )                \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isnumber( naevL, -1 ) )            \
          b = ( lua_tonumber( naevL, -1 ) != 0. ); \
       else if ( !lua_isnil( naevL, -1 ) )         \
@@ -56,7 +56,7 @@
 
 #define conf_loadString( env, n, s )              \
    {                                              \
-      nlua_getenv( env, n );                      \
+      nlua_getenv( naevL, env, n );               \
       if ( lua_isstring( naevL, -1 ) ) {          \
          free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
@@ -66,6 +66,7 @@
 
 /* Global configuration. */
 PlayerConf_t conf = {
+   .loaded = 0,
    .ndata = NULL,
    .language=NULL,
    .joystick_nam = NULL
@@ -146,6 +147,7 @@ void conf_setDefaults (void)
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
+   conf.lua_repl     = 0;
    conf.lastversion = strdup( "" );
    conf.translation_warning_seen = 0;
 
@@ -167,7 +169,7 @@ void conf_setDefaults (void)
    /* Editor. */
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
+   conf.dev_save_spob = strdup( DEV_SAVE_SPOB_DEFAULT );
 }
 
 /**
@@ -197,6 +199,7 @@ void conf_setAudioDefaults (void)
    conf.nosound      = MUTE_SOUND_DEFAULT;
    conf.sound        = SOUND_VOLUME_DEFAULT;
    conf.music        = MUSIC_VOLUME_DEFAULT;
+   conf.engine_vol   = ENGINE_VOLUME_DEFAULT;
 }
 
 /**
@@ -327,6 +330,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "nebu_scale", conf.nebu_scale );
       conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
+      conf_loadBool( lEnv, "notresizable", conf.notresizable );
       conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
@@ -347,9 +351,10 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "nosound", conf.nosound );
       conf_loadFloat( lEnv, "sound", conf.sound );
       conf_loadFloat( lEnv, "music", conf.music );
+      conf_loadFloat( lEnv, "engine_vol", conf.engine_vol );
 
       /* Joystick. */
-      nlua_getenv( lEnv, "joystick" );
+      nlua_getenv( naevL, lEnv, "joystick" );
       if (lua_isnumber(naevL, -1))
          conf.joystick_ind = (int)lua_tonumber(naevL, -1);
       else if (lua_isstring(naevL, -1))
@@ -394,6 +399,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "lua_repl", conf.lua_repl );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
       conf_loadString( lEnv, "lastversion", conf.lastversion );
       conf_loadBool( lEnv, "translation_warning_seen", conf.translation_warning_seen );
@@ -404,13 +410,13 @@ int conf_loadConfig ( const char* file )
       /* Editor. */
       conf_loadString( lEnv, "dev_save_sys", conf.dev_save_sys );
       conf_loadString( lEnv, "dev_save_map", conf.dev_save_map );
-      conf_loadString( lEnv, "dev_save_asset", conf.dev_save_asset );
+      conf_loadString( lEnv, "dev_save_spob", conf.dev_save_spob );
 
       /*
        * Keybindings.
        */
       for (i=0; keybind_info[i][0] != NULL; i++) {
-         nlua_getenv( lEnv, keybind_info[ i ][ 0 ] );
+         nlua_getenv( naevL, lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);
@@ -518,6 +524,7 @@ int conf_loadConfig ( const char* file )
    }
 
    nlua_freeEnv( lEnv );
+   conf.loaded = 1;
    return 0;
 }
 
@@ -848,6 +855,10 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("modesetting",conf.modesetting);
    conf_saveEmptyLine();
 
+   conf_saveComment(_("Disable allowing resizing the window."));
+   conf_saveBool("notresizable",conf.notresizable);
+   conf_saveEmptyLine();
+
    conf_saveComment(_("Disable window decorations. Use with care and know the keyboard controls to quit and toggle fullscreen."));
    conf_saveBool("borderless",conf.borderless);
    conf_saveEmptyLine();
@@ -902,6 +913,8 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Volume of sound effects and music, between 0.0 and 1.0"));
    conf_saveFloat("sound",(sound_disabled) ? conf.sound : sound_getVolume());
    conf_saveFloat("music",(music_disabled) ? conf.music : music_getVolume());
+   conf_saveComment(_("Relative engine sound volume. Should be between 0.0 and 1.0"));
+   conf_saveFloat("engine_vol", conf.engine_vol);
    conf_saveEmptyLine();
 
    /* Joystick. */
@@ -1011,6 +1024,10 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
+   conf_saveComment(_("Enable the experimental CLI based on lua-repl."));
+   conf_saveBool("lua_repl",conf.lua_repl);
+   conf_saveEmptyLine();
+
    conf_saveComment(_("Save the config every time game exits (rewriting this bit)"));
    conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
@@ -1032,7 +1049,7 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Paths for saving different files from the editor"));
    conf_saveString("dev_save_sys",conf.dev_save_sys);
    conf_saveString("dev_save_map",conf.dev_save_map);
-   conf_saveString("dev_save_asset",conf.dev_save_asset);
+   conf_saveString("dev_save_spob",conf.dev_save_spob);
    conf_saveEmptyLine();
 
    /*
@@ -1130,7 +1147,7 @@ void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
    STRDUP(lastversion);
    STRDUP(dev_save_sys);
    STRDUP(dev_save_map);
-   STRDUP(dev_save_asset);
+   STRDUP(dev_save_spob);
 #undef STRDUP
 }
 
@@ -1146,7 +1163,7 @@ void conf_free( PlayerConf_t *config )
    free(config->lastversion);
    free(config->dev_save_sys);
    free(config->dev_save_map);
-   free(config->dev_save_asset);
+   free(config->dev_save_spob);
 
    /* Clear memory. */
    memset( config, 0, sizeof(PlayerConf_t) );

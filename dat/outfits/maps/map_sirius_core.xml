@@ -1,73 +1,61 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Sirius Core">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the location of Mutris, home of Sirichana and capital to the Sirians, as well as the surrounding systems.</description>
   <gfx_store>map.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Aesir">
-   <jump>Vanir</jump>
-   <asset>Aesir IV</asset>
-   <asset>Gayathi</asset>
-   <asset>Mutris</asset>
-   <asset>Sirius Ordnance</asset>
-   <asset>Sirius Shipyards</asset>
-   <asset>Urail</asset>
+  <sys name="Eiderdown">
+   <jump>Gilligan's Tomb</jump>
+   <spob>Adrian</spob>
+   <spob>Ember</spob>
   </sys>
-  <sys name="Vanir">
+  <sys name="Gilligan's Tomb">
    <jump>Adraia</jump>
-   <jump>Aesir</jump>
-   <jump>Botarn</jump>
-   <asset>Fort Sirius</asset>
-   <asset>Sinass</asset>
-   <asset>Vanir I</asset>
-   <asset>Vanir II</asset>
-   <asset>Vanir Ia</asset>
-   <asset>Yrina</asset>
-  </sys>
-  <sys name="Botarn">
-   <jump>Monogram</jump>
-   <jump>Vanir</jump>
-   <asset>Arashu</asset>
-   <asset>Botarn I</asset>
-   <asset>Dundrop Station</asset>
-  </sys>
-  <sys name="Monogram">
-   <jump>Botarn</jump>
-   <asset>Monogram III</asset>
-   <asset>Monogram IV</asset>
-   <asset>Monogram V</asset>
-   <asset>Oort Farming Station</asset>
-   <asset>Saraab</asset>
-   <asset>Wikon</asset>
+   <jump>Eiderdown</jump>
+   <spob>Gilligan's Tomb</spob>
   </sys>
   <sys name="Adraia">
    <jump>Gilligan's Tomb</jump>
    <jump>Ulysses</jump>
    <jump>Vanir</jump>
   </sys>
-  <sys name="Gilligan's Tomb">
-   <jump>Adraia</jump>
-   <jump>Eiderdown</jump>
-   <asset>Gilligan's Tomb</asset>
-  </sys>
   <sys name="Ulysses">
    <jump>Adraia</jump>
-   <asset>Socrates Military Academy</asset>
-   <asset>Ulysses III</asset>
-   <asset>Ulysses IV</asset>
-   <asset>Ummula</asset>
-   <asset>Vao Vos</asset>
+   <spob>Socrates Military Academy</spob>
+   <spob>Ummula</spob>
+   <spob>Vao Vos</spob>
   </sys>
-  <sys name="Eiderdown">
-   <jump>Gilligan's Tomb</jump>
-   <asset>Adrian</asset>
-   <asset>Eiderdown I</asset>
-   <asset>Eiderdown III</asset>
-   <asset>Ember</asset>
-   <asset>Forge</asset>
+  <sys name="Vanir">
+   <jump>Adraia</jump>
+   <jump>Aesir</jump>
+   <jump>Botarn</jump>
+   <spob>Fort Sirius</spob>
+   <spob>Sinass</spob>
+   <spob>Yrina</spob>
+  </sys>
+  <sys name="Aesir">
+   <jump>Vanir</jump>
+   <spob>Gayathi</spob>
+   <spob>Mutris</spob>
+   <spob>Sirius Ordnance</spob>
+   <spob>Sirius Shipyards</spob>
+   <spob>Urail</spob>
+  </sys>
+  <sys name="Botarn">
+   <jump>Monogram</jump>
+   <jump>Vanir</jump>
+   <spob>Arashu</spob>
+   <spob>Dundrop Station</spob>
+  </sys>
+  <sys name="Monogram">
+   <jump>Botarn</jump>
+   <spob>Oort Farming Station</spob>
+   <spob>Saraab</spob>
+   <spob>Wikon</spob>
   </sys>
  </specific>
 </outfit>

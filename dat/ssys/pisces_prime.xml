@@ -10,13 +10,13 @@
   <x>187.975467</x>
   <y>758.358667</y>
  </pos>
- <assets>
-  <asset>Aldernael</asset>
-  <asset>Doro</asset>
-  <asset>Priscus</asset>
-  <asset>Skater</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Aldernael</spob>
+  <spob>Doro</spob>
+  <spob>Priscus</spob>
+  <spob>Skater</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Feye">
    <autopos/>

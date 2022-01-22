@@ -10,9 +10,13 @@
   <x>1056.180111</x>
   <y>-258.931248</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Korma">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-10284">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -1,11 +1,16 @@
 #!/bin/bash
 
-# WINDOWS INSTALL SCRIPT FOR NAEV
-# This script is called by "meson install" if building for Windows.
-# It builds the appropriate NSIS installer into the root naev directory.
-# Requires mingw-w64-x86_64-nsis to be installed.
-
 set -e
+
+usage() {
+    cat <<EOF
+WINDOWS INSTALL SCRIPT FOR NAEV
+This script is called by "meson install" if building for Windows.
+It builds the appropriate NSIS installer into the root naev directory.
+Requires mingw-w64-x86_64-nsis to be installed.
+EOF
+    exit 1
+}
 
 # Defaults
 NIGHTLY="false"
@@ -15,6 +20,9 @@ while getopts n: OPTION "$@"; do
     case $OPTION in
     n)
         NIGHTLY="${OPTARG}"
+        ;;
+    *)
+        usage
         ;;
     esac
 done
@@ -53,7 +61,7 @@ echo "creating distribution folder if it doesn't exist"
 mkdir -p "${MESON_BUILD_ROOT}/dist"
 
 # Build installer
-makensis -DSUFFIX=$SUFFIX "$MESON_SOURCE_ROOT/extras/windows/installer/naev.nsi"
+makensis -DSUFFIX="$SUFFIX" "$MESON_SOURCE_ROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
 mv "$MESON_SOURCE_ROOT/extras/windows/installer/naev-$SUFFIX.exe" "${MESON_BUILD_ROOT}/dist"
@@ -62,7 +70,7 @@ echo "Successfully built Windows Installer for $SUFFIX"
 
 # Package steam windows tarball
 pushd "$STAGING"
-tar -cJvf ../steam-win64.tar.xz *.dll *.exe
+tar -cJvf ../steam-win64.tar.xz -- *.dll *.exe
 popd
 mv "$STAGING"/../*.xz "${MESON_BUILD_ROOT}/dist"
 

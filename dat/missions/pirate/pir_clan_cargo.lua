@@ -36,13 +36,13 @@ local portrait = require "portrait"
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed = planet.cur():nameRaw()
+   local landed = spob.cur():nameRaw()
 
    -- target destination
    local planets = {}
    for k, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
       if p ~= landed then
-         planets[#planets+1] = { planet.getS(p) }
+         planets[#planets+1] = { spob.getS(p) }
       end
    end
 
@@ -55,7 +55,7 @@ end
 
 
 function accept ()
-   misn.markerAdd( mem.sys, "low" )
+   misn.markerAdd( mem.dest, "low" )
 
    -- Intro text
    if not tk.yesno( _("Spaceport Bar"), _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
@@ -74,7 +74,7 @@ Will you accept the mission?]]) ) then
    misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeve and head off to your ship.]]) )
+   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeves and head off to your ship.]]) )
    misn.osdCreate(_("Spaceport Bar"), {
       fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}),
    })
@@ -90,7 +90,7 @@ end
 
 
 function land()
-   local landed = planet.cur()
+   local landed = spob.cur()
    if landed == mem.dest then
       if misn.cargoRm(mem.packages) then
          tk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.") )

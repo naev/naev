@@ -1,17 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="The Substitute Speaker">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>Emergency of Immediate Inspiration</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Jorla</planet>
-  </avail>
- </mission>
+<mission name="The Substitute Speaker">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>Emergency of Immediate Inspiration</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <spob>Jorla</spob>
+ </avail>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
+</mission>
 --]]
 --[[
 
@@ -30,8 +33,8 @@ local nebu_research = require "common.nebu_research"
 local student_portrait = nebu_research.student.portrait
 
 -- Mission constants
-local homeworld, homeworld_sys = planet.getS("Jorla")
-local dest_planet, dest_sys = planet.getS("Neo Pomerania")
+local homeworld, homeworld_sys = spob.getS("Jorla")
+local dest_planet, dest_sys = spob.getS("Neo Pomerania")
 local lab_coat_price = 25e3
 local glasses_price = 40e3
 
@@ -77,7 +80,7 @@ function accept()
     misn.setTitle(_("The Substitute Speaker"))
     misn.setReward(_("a reputation as scientist (?)"))
     misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=mem.timelimit}))
-    mem.misn_marker = misn.markerAdd(dest_sys, "high")
+    mem.misn_marker = misn.markerAdd(dest_planet, "high")
 
     misn.accept()
     hook.land("land")
@@ -87,7 +90,7 @@ end
 
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == dest_planet then
         vn.clear()
         vn.scene()
@@ -99,7 +102,6 @@ function land()
         vn.na(_("This message is followed by what you assume is the text you have to recite."))
         vn.done()
         vn.run()
-        
         enter_ship()
     end
 end

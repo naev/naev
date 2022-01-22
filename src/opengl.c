@@ -247,7 +247,9 @@ static int gl_getFullscreenMode (void)
  */
 static int gl_createWindow( unsigned int flags )
 {
-   flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
+   flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
+   if (!conf.notresizable)
+      flags |= SDL_WINDOW_RESIZABLE;
    if (conf.borderless)
       flags |= SDL_WINDOW_BORDERLESS;
 
@@ -372,7 +374,8 @@ static int gl_setupScaling (void)
 
    /* Combine scale factor from OS with the one in Naev's config */
    gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
-   glLineWidth(1 / gl_screen.scale);
+   glLineWidth(1. / gl_screen.scale);
+   glPointSize(1. / gl_screen.scale + 2.0);
 
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;

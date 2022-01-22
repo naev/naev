@@ -10,13 +10,13 @@
   <x>-353.272018</x>
   <y>-254.614213</y>
  </pos>
- <assets>
-  <asset>Griffin  II</asset>
-  <asset>Griffin I</asset>
-  <asset>Griffin III</asset>
-  <asset>Griffin VI</asset>
-  <asset>Sander</asset>
- </assets>
+ <spobs>
+  <spob>Griffin  II</spob>
+  <spob>Griffin I</spob>
+  <spob>Griffin III</spob>
+  <spob>Griffin VI</spob>
+  <spob>Sander</spob>
+ </spobs>
  <jumps>
   <jump target="Yarn">
    <autopos/>

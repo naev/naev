@@ -1,34 +1,58 @@
 #!/bin/bash
 
-ROOT=${1-$(pwd)}
+set -e
 
-if [[ ! -f "$ROOT/naev.6" ]]; then
-   echo "Please run from Naev root directory, or run with update-po.sh [source_root]" >&2
-   exit -1
+# ============================= Enter source root =============================
+if [ -n "$1" ]; then
+   cd "$1"
+elif [ -n "$MESON_SOURCE_ROOT" ]; then
+   cd "$MESON_SOURCE_ROOT"
 fi
 
-cd $ROOT
+if [[ ! -f naev.6 ]]; then
+   echo "Please run from the source root dir, or pass it as an argument." >&2
+   exit 1
+fi
 
-# Put plaintext files before C/Lua files.
-# Otherwise, xgettext's language detection "sticks" across files and *-format flags get wrongly applied to text containing '%'.
-
-# Step 1: extract the lines of our intro/AUTHORS files (plain text).
-python3 "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS artwork/gfx/loading/*.txt > "$ROOT/po/credits.pot"
-echo po/credits.pot > "$ROOT/po/POTFILES.in"
-
-# Steps 2/3: list out the xml/source files in the tree.
-XML_SKIP_PATTERN='/((space|ship)_polygon)/'
-
+# ============================== Helper commands ==============================
+# find_files <dir> <suffix>
 if [ -d .git ]; then
-   git ls-files -- 'dat/**.xml' | egrep -v "$XML_SKIP_PATTERN" | LC_ALL=C sort
-   git ls-files -- 'dat/**.lua' 'src/**.[ch]' | LC_ALL=C sort
+   unset GIT_INDEX_FILE  # Don't let whatever pre-commit does fuck up the results.
+   find_files() { git ls-files -- "$1/**.$2"; }
 else
-   find dat -name "*.xml" | egrep -v "$XML_SKIP_PATTERN" | LC_ALL=C sort
-   (find dat -name "*.lua"; find src -name "*.[ch]") | LC_ALL=C sort
-fi >> "$ROOT/po/POTFILES.in"
+   find_files() {
+      find dat -name "*.xml"
+      (find dat -name "*.lua"; find src -name "*.[ch]")
+   }
+fi
+# And some pipeline commands:
+filter_skipped() { grep -vE '/((space|ship)_polygon)/.*\.xml'; }
+deterministic_sort() { LC_ALL=C sort; }
+
+# =================================== Main ===================================
+
+# Prepare POTFILES.in (which lists all files with translatable text).
+# We also have plaintext files, whose lines should all be translatable strings.
+# We collect these strings into a .pot file, and let xgettext handle the rest.
+# The text strings must come first, or else gettext "remembers" its most recent
+# language detection and gives them unwanted "c-format" or "lua-format" tags.
+
+# shellcheck disable=SC2046
+po/credits_pot.py \
+   dat/intro \
+   dat/AUTHORS \
+   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|') \
+   > po/credits.pot
+
+(
+   echo po/credits.pot
+   find_files dat xml | deterministic_sort
+   ( find_files dat lua; find_files src "[ch]") | deterministic_sort
+   echo dat/outfits/bioship/generate.py
+) | filter_skipped > po/POTFILES.in
 
 if [ "$2" = "--pre-commit" ]; then
-   # Operate as required by this product -- https://pre-commit.com/ -- and return a failure status if we achieved anything.
+   # The "pre-commit" package requires hooks to fail if they touch any files.
    git diff --exit-code po/POTFILES.in && exit 0
    echo Fixing po/POTFILES.in
 fi

@@ -4,6 +4,7 @@ local sllama      = ship.get("Llama")
 local skoala      = ship.get("Koala")
 local squicksilver= ship.get("Quicksilver")
 local smule       = ship.get("Mule")
+local szebra      = ship.get("Zebra")
 local srhino      = ship.get("Rhino")
 local sshark      = ship.get("Shark")
 
@@ -18,6 +19,9 @@ local function add_quicksilver( pilots )
 end
 local function add_mule( pilots )
    scom.addPilot( pilots, smule, {name=_("Trader Mule")})
+end
+local function add_zebra( pilots )
+   scom.addPilot( pilots, szebra, {name=_("Trader Zebra")})
 end
 local function add_rhino( pilots )
    scom.addPilot( pilots, srhino, {name=_("Trader Rhino")})
@@ -42,8 +46,10 @@ local function spawn_loner ()
       add_koala( pilots )
    elseif r < 0.7 then
       add_quicksilver( pilots )
-   elseif r < 0.85 then
+   elseif r < 0.79 then
       add_mule( pilots )
+   elseif r < 0.85 then
+      add_zebra( pilots )
    else
       add_rhino( pilots )
    end
@@ -101,10 +107,14 @@ local function spawn_fleet_med ()
    local pilots = {}
 
    -- Leader
-   local mule_leader = false
-   if rnd.rnd() < 0.6 then
+   local big_leader = false
+   local r = rnd.rnd()
+   if r < 0.2 then
+      add_zebra( pilots )
+      big_leader = true
+   elseif r < 0.6 then
       add_mule( pilots )
-      mule_leader = true
+      big_leader = true
    else
       add_rhino( pilots )
    end
@@ -112,7 +122,7 @@ local function spawn_fleet_med ()
    -- Determine type of fleet (small or large ships)
    if rnd.rnd() < 0.5 then
       for i=2,4 do
-         local r = rnd.rnd()
+         r = rnd.rnd()
          if r < 0.3 then
             add_llama( pilots )
          elseif r < 0.8 then
@@ -123,7 +133,7 @@ local function spawn_fleet_med ()
       end
    else
       for i=1,2 do
-         if mule_leader or rnd.rnd() < 0.6 then
+         if big_leader or rnd.rnd() < 0.6 then
             add_mule( pilots )
          else
             add_rhino( pilots )

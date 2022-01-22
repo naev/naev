@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Crippling Plasma">
+ <description>Plasma is interfering with the weapon systems!</description>
+ <duration>7.5</duration>
+ <overwrite>crippling_plasma</overwrite>
+ <icon>/gfx/misc/icons/chemical-bolt.webp</icon>
+ <stats>
+  <fwd_firerate>-20</fwd_firerate>
+  <tur_firerate>-20</tur_firerate>
+  <launch_rate>-20</launch_rate>
+  <fbay_rate>-20</fbay_rate>
+ </stats>
+</effect>

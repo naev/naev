@@ -40,9 +40,6 @@ int cond_init (void)
  */
 void cond_exit (void)
 {
-   if (cond_env == LUA_NOREF)
-      return;
-
    nlua_freeEnv(cond_env);
    cond_env = LUA_NOREF;
 }

@@ -1,3 +1,3 @@
 function love.conf(t)
-   t.gammacorrect = false
+   t.gammacorrect = true
 end

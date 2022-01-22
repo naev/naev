@@ -2,6 +2,7 @@
 <ssys name="Defa">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>12250.000000</radius>
   <stars>400</stars>
@@ -12,9 +13,9 @@
   <x>287.000000</x>
   <y>205.000000</y>
  </pos>
- <assets>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Oberon">
    <autopos/>
@@ -31,6 +32,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

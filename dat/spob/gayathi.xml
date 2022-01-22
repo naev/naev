@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gayathi">
+ <pos>
+  <x>29970.000000</x>
+  <y>-28268.000000</y>
+ </pos>
+ <GFX>
+  <space>O02.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>The colony on Gayathi has been around since before Sirichana settled on Mutris. In those days it was an outpost of one of the Factions that were destroyed in the Faction Wars, forgotten and overlooked by all. With its source of funding and supplies gone, Gayathi never had a chance to fully develop its economic infrastructure. Then, when Sirius rose as a galactic power, Gayathi came to fall under its influence. Now it is home to some of the most devout believers found in Sirius space.</description>
+ </general>
+</spob>

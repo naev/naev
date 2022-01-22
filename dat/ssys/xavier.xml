@@ -10,11 +10,11 @@
   <x>-315.118348</x>
   <y>-952.475452</y>
  </pos>
- <assets>
-  <asset>Akios Station</asset>
-  <asset>Cyrene</asset>
-  <asset>Isador</asset>
- </assets>
+ <spobs>
+  <spob>Akios Station</spob>
+  <spob>Cyrene</spob>
+  <spob>Isador</spob>
+ </spobs>
  <jumps>
   <jump target="Auger">
    <autopos/>

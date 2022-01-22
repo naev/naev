@@ -103,6 +103,19 @@ local function derelict_msg( title, text )
    } )
 end
 
+local function islucky ()
+   local pp = player.pilot()
+   if pp:ship():tags().lucky then
+      return true
+   end
+   for k,o in ipairs(pp:outfits("all")) do
+      if o:tags().lucky then
+         return true
+      end
+   end
+   return false
+end
+
 function board()
    player.unboard()
 
@@ -117,12 +130,22 @@ function board()
    end
 
    -- Roll for events
+   local badprob, neuprob, goodprob
+   if islucky() then
+      badprob = 0.025
+      neuprob = 0.15
+      goodprob = 0.6
+   else
+      badprob = 0.125
+      neuprob = 0.25
+      goodprob = 0.6
+   end
    local prob = rnd.rnd()
-   if prob <= 0.125 then
+   if prob <= badprob then
       badevent()
-   elseif prob <= 0.25 then
+   elseif prob <= neuprob then
       neutralevent()
-   elseif prob <= 0.6 then
+   elseif prob <= goodprob then
       goodevent()
    else
       missionevent()
@@ -141,7 +164,7 @@ function neutralevent()
       _([[This derelict seems to have at one time been used as an illegal casino. There are roulette tables and slot machines set up in the cargo hold. However, it seems the local authorities caught wind of the operation, because there are also scorch marks on the furniture and the walls, and there are assault rifle shells underfoot. You don't reckon you're going to find anything here, so you leave.]]),
       _([[When the airlock opens, you are hammered in the face by an ungodly smell that almost makes you pass out on the spot. You hurriedly close the airlock again and flee back into your own ship. Whatever is on that derelict, you don't want to find out!]]),
       _([[This derelict has really been beaten up badly. Most of the corridors are blocked by mangled metal, and your scans read depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict alone.]]),
-      _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushies hanging from the doorways, drapes on every viewport, colored pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, it turned out none of them really knew how to fly a space ship, and so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]),
+      _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushies hanging from the doorways, drapes on every viewport, coloured pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, it turned out none of them really knew how to fly a space ship, and so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]),
       _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship, but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you again smack against the deck plates.]]),
       _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open, but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship, and return to your own.]]),
       _([[You have attached your docking clamp to the derelict's airlock, but the door refuses to open. A few diagnostics reveal that the other side isn't pressurized. The derelict must have suffered hull breaches over the years. It doesn't seem like there's much you can do here.]]),
@@ -162,8 +185,43 @@ function goodevent()
          player.pay( rnd.rnd(5e3,30e3) )
       end,
       function ()
-         local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Za'lek", "Frontier"}
-         local rndfact = factions[rnd.rnd(1, #factions)]
+         local csys = system.cur()
+         local sysset = { [csys:nameRaw()] = csys:faction() }
+         for i=1,3 do
+            for s,f in pairs(sysset) do
+               for j,n in ipairs(system.get(s):adjacentSystems()) do
+                  sysset[ n:nameRaw() ] = n:faction()
+               end
+            end
+         end
+         local whitelist = {
+            ["Empire"]  = true,
+            ["Dvaered"] = true,
+            ["Sirius"]  = true,
+            ["Soromid"] = true,
+            ["Za'lek"]  = true,
+            ["Frontier"]= true,
+            ["Goddard"] = true
+         }
+         local sysfct = {}
+         for s,f in pairs(sysset) do
+            if f then
+               local nr = f:nameRaw()
+               if whitelist[nr] then
+                  sysfct[ nr ] = true
+               end
+            end
+         end
+         local fcts = {}
+         for f,i in pairs(sysfct) do
+            table.insert( fcts, f )
+         end
+         if #fcts == 0 then
+            for f,i in pairs(whitelist) do
+               table.insert( fcts, f )
+            end
+         end
+         local rndfact = fcts[ rnd.rnd(1, #fcts) ]
          derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {fct=rndfact}))
          faction.modPlayerSingle(rndfact, 3)
       end,

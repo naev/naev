@@ -11,15 +11,15 @@
   <x>1293.344592</x>
   <y>-479.636824</y>
  </pos>
- <assets>
-  <asset>Aesir IV</asset>
-  <asset>Gayathi</asset>
-  <asset>Mutris</asset>
-  <asset>Sirius Ordnance</asset>
-  <asset>Sirius Shipyards</asset>
-  <asset>Urail</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Aesir IV</spob>
+  <spob>Gayathi</spob>
+  <spob>Mutris</spob>
+  <spob>Sirius Ordnance</spob>
+  <spob>Sirius Shipyards</spob>
+  <spob>Urail</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Vanir">
    <autopos/>

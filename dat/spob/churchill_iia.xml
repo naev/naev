@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Churchill IIa">
+ <pos>
+  <x>-22900.414847</x>
+  <y>-8138.338803</y>
+ </pos>
+ <GFX>
+  <space>moon-M01.webp</space>
+  <exterior>forest2.webp</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

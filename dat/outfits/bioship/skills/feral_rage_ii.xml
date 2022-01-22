@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Feral Rage II">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>Through careful manipulation of the brain stem, the bioship can be induced into a primitive state of feral rage in which forward and turret weapon output is significantly increased. Armour damage is needed to enter the trance-like state. Further coupling with the cerebellum allows the trance to also increase the ship agility temporarily.</description>
+  <gfx_store>/gfx/misc/icons/oni.webp</gfx_store>
+  <desc_extra>Active for 5 seconds since armour was last damaged.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/bioship/skills/feral_rage_i.lua</lua>
+  <fwd_damage>25</fwd_damage>
+  <tur_damage>25</tur_damage>
+  <speed_mod>25</speed_mod>
+  <thrust_mod>25</thrust_mod>
+  <turn_mod>15</turn_mod>
+ </specific>
+</outfit>

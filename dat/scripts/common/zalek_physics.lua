@@ -11,13 +11,13 @@ local lg = require "love.graphics"
 
 local zpp = {}
 
--- Noona Sanderaite
+-- Fullname: Noona Sanderaite
 zpp.noona = {
-   portrait = "zalek3.png",
-   image = "zalek3.png",
+   portrait = "noona.png",
+   image = "noona.png",
    name = _("Noona"),
-   color = nil,
-   transition = nil, -- Use default
+   colour = { 1, 0.8, 0.8},
+   transition = "hexagon",
    description = _("You see Noona who looks like she might have a job for you."),
 }
 
@@ -29,7 +29,6 @@ function zpp.vn_noona( params )
          }, params) )
 end
 
--- Function for adding log entries for miscellaneous one-off missions.
 function zpp.log( text )
    shiplog.create( "zlk_physics", _("Particle Physics"), _("Za'lek") )
    shiplog.append( "zlk_physics", text )
@@ -42,6 +41,15 @@ zpp.rewards = {
    zpp04 = 400e3,
    --zpp05 = 0, -- No payment, reall small flashback really
    zpp06 = 500e3, -- + "Heavy Combat Vessel License" permission
+}
+
+zpp.fctmod = {
+   zpp01 = 2,
+   zpp02 = 2,
+   zpp03 = 3,
+   zpp04 = 2,
+   zpp05 = 1,
+   zpp06 = 3,
 }
 
 function zpp.shader_focal ()
@@ -97,7 +105,7 @@ const float hue         = 300.0;
 const float view        = 300.0;
 const float sf          = %f;
 uniform float u_time    = 0.0;
-uniform vec3 u_camera   = vec3(0.0);
+uniform vec3 u_camera   = vec3(0.0, 0.0, 1.0);
 uniform float u_progress= 0.0;
 uniform float u_mode    = 0;
 
@@ -105,7 +113,7 @@ vec4 nebula_bg( vec2 screen_coords )
 {
    vec2 rel_pos = screen_coords * u_camera.z + u_camera.xy;
    rel_pos /= view;
-   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.1 );
+   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, u_time*0.1, hue, 1.0, 0.0, 0.1 );
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -121,7 +129,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    else if (u_mode==2)
       color.a *= 1.0-smoothstep( -800.0 / sf, 0.0,  -d );
 
-   if (color.a > 0) {
+   if (color.a > 0.0) {
       vec4 nebucol = nebula_bg( uv );
       nebucol.a *= color.a;
       return nebucol;

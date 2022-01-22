@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Trinel">
+ <pos>
+  <x>6823.479385</x>
+  <y>5299.789814</y>
+ </pos>
+ <GFX>
+  <space>D01.webp</space>
+  <exterior>mining4.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>12500</population>
+  <hide>1.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Trinel is a cold, empty mining world with a single colony upon it. Only the bare minimum of Za'lek forces are here to maintain order. Most of the people working the mines are criminals who are kept here for life. The main spaceport is separated from the prison complex.</description>
+ </general>
+ <tags>
+  <tag>prison</tag>
+  <tag>mining</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

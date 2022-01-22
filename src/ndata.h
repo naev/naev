@@ -6,8 +6,8 @@
 /*
  * Define various paths
  */
-#define PLANET_GFX_SPACE_PATH    "gfx/planet/space/" /**< Location of planet space graphics. */
-#define PLANET_GFX_EXTERIOR_PATH "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
+#define SPOB_GFX_SPACE_PATH      "gfx/spob/space/" /**< Location of spob space graphics. */
+#define SPOB_GFX_EXTERIOR_PATH   "gfx/spob/exterior/" /**< Location of spob exterior graphics (when landed). */
 #define GFX_PATH                 "gfx/" /**< Location of the graphics root. */
 #define OVERLAY_GFX_PATH         "gfx/overlays/" /**< Location of overlays such as those used with graphics and ships. */
 #define GUI_GFX_PATH             "gfx/gui/" /**< Location of the GUI graphics. */
@@ -38,13 +38,16 @@
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
 #define OUTFIT_DATA_PATH         "outfits/" /**< Path to outfits. */
+#define EFFECT_DATA_PATH         "effects/" /**< Path to effects. */
 #define MAP_DATA_PATH            "outfits/maps/" /**< Path to maps. */
-#define PLANET_DATA_PATH         "assets/" /**< Path to planets. */
-#define VIRTUALASSET_DATA_PATH   "assets_virtual/" /**< Path to planets. */
+#define SPOB_DATA_PATH           "spob/" /**< Path to spobs. */
+#define VIRTUALSPOB_DATA_PATH    "spob_virtual/" /**< Path to spobs. */
 #define SYSTEM_DATA_PATH         "ssys/" /**< Path to systems. */
 #define SHIP_DATA_PATH           "ships/" /**< Path to ships. */
 
+#define LUA_COMMON_PATH          "common.lua" /**< Common Lua functions. */
 #define LANDING_DATA_PATH        "landing.lua" /**< Lua script containing landing data. */
+#define LOADSCREEN_DATA_PATH     "loadscreen.lua" /**< Script for the load screen. */
 
 #define MUSIC_PATH               "snd/music/" /**< Prefix of where to find musics. */
 #define MUSIC_LUA_PATH           "snd/music.lua" /**< Lua music control file. */
@@ -75,7 +78,6 @@
 #define AUTOEQUIP_PATH           "autoequip.lua"
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
-#define SHIPAI_PATH              "shipai.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"
 
 void ndata_setupWriteDir (void);

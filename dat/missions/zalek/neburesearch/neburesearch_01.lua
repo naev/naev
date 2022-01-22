@@ -9,11 +9,11 @@
   <done>Novice Nebula Research</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Vilati Vilata</planet>
+  <spob>Vilati Vilata</spob>
  </avail>
-  <notes>
-   <campaign>Nebula Research</campaign>
-  </notes>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
 </mission>
 --]]
 --[[
@@ -35,7 +35,7 @@ local vntk = require "vntk"
 local mensing_portrait = nebu_research.mensing.portrait
 
 local ships, transporter -- Non-persistent state
-local fail, spawnTransporter, updateGoalDisplay -- Forward-declared functions
+local spawnTransporter, updateGoalDisplay -- Forward-declared functions
 -- luacheck: globals ambushHail jumpin jumpout land startAmbush takeoff timer_transporterSafe transporterAttacked transporterDeath transporterJump transporterLand transporterShutup (Hook functions passed by name)
 
 -- Mission info stuff
@@ -44,8 +44,8 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system.")
 osd_msg[2] = _("Land on {pnt} in the {sys} system.")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system.")
 
-local station = planet.get("PSO Monitor")
-local homeworld = planet.get("Bastion Station")
+local station = spob.get("PSO Monitor")
+local homeworld = spob.get("Bastion Station")
 local t_sys = {
     system.get("Ksher"),
     system.get("Sultan"),
@@ -57,10 +57,10 @@ local t_sys = {
     system.get("Pultatis"),
 }
 local t_planet = {
-    [1] = planet.get("Qoman"),
+    [1] = spob.get("Qoman"),
     [5] = station,
-    [6] = planet.get("Qoman"),
-    [7] = planet.get("Vilati Vilata"),
+    [6] = spob.get("Qoman"),
+    [7] = spob.get("Vilati Vilata"),
     [8] = homeworld,
 }
 
@@ -96,15 +96,14 @@ function accept()
     vn.run()
 
     if not accepted then
-        misn.finish()
+    misn.finish()
         return
     end
 
     mem.stage = 1
     mem.exited = false
     mem.firstTakeOff = true
-    mem.origin = planet.cur()
-
+    mem.origin = spob.cur()
     vn.clear()
     vn.scene()
     mensing = vn.newCharacter( nebu_research.vn_mensing() )
@@ -112,7 +111,7 @@ function accept()
     mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
     vn.done()
     vn.run()
-
+    
     -- Set up mission information
     mem.destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))
@@ -164,7 +163,7 @@ end
 
 function jumpin()
      if system.cur() ~= mem.nextsys then
-        fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
+        lmisn.fail(_("You jumped into the wrong system. You failed science miserably!"))
     else
         mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
         updateGoalDisplay()
@@ -184,7 +183,7 @@ end
 
 function jumpout()
     if not mem.exited then
-        fail(_("MISSION FAILED! You jumped before the transport ship you were escorting."))
+        lmisn.fail(_("You jumped before the transport ship you were escorting."))
     end
     mem.origin = system.cur()
     if mem.nextsys == t_sys[mem.stage] then
@@ -202,7 +201,7 @@ function land()
     if not mem.exited then
         vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
-    elseif planet.cur() == station and not mem.station_visited then
+    elseif spob.cur() == station and not mem.station_visited then
         vn.clear()
         vn.scene()
         local mensing = vn.newCharacter( nebu_research.vn_mensing() )
@@ -213,7 +212,7 @@ function land()
         vn.done()
         vn.run()
         mem.station_visited = true
-    elseif planet.cur() == homeworld then
+    elseif spob.cur() == homeworld then
         vn.clear()
         vn.scene()
         local mensing = vn.newCharacter( nebu_research.vn_mensing() )
@@ -226,7 +225,7 @@ function land()
         nebu_research.log(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
         misn.finish(true)
     end
-    mem.origin = planet.cur()
+    mem.origin = spob.cur()
 end
 
 local function continueToDest(pilot)
@@ -235,10 +234,10 @@ local function continueToDest(pilot)
         pilot:setNoJump(false)
         pilot:setNoLand(false)
         if mem.destplanet ~= nil then
-            pilot:land(mem.destplanet, true)
-            misn.markerMove(mem.misn_marker, mem.destplanet:system())
+            pilot:land(mem.destplanet)
+            misn.markerMove(mem.misn_marker, mem.destplanet)
         else
-            pilot:hyperspace(mem.nextsys, true)
+            pilot:hyperspace(mem.nextsys)
             misn.markerMove(mem.misn_marker, mem.nextsys)
         end
     end
@@ -287,7 +286,7 @@ function timer_transporterSafe()
 end
 
 function spawnTransporter()
-    transporter = pilot.add( "Rhino", "Za'lek", mem.origin, _("Nebula Research Shuttle") )
+    transporter = pilot.add( "Rhino", "Za'lek", mem.origin, _("Research Shuttle") )
     hook.pilot(transporter, "death", "transporterDeath")
     hook.pilot(transporter, "jump", "transporterJump")
     hook.pilot(transporter, "land", "transporterLand")
@@ -298,13 +297,12 @@ function spawnTransporter()
     transporter:setVisplayer()
     transporter:setVisible() -- Hack to make ambushes more reliable.
     transporter:setFriendly()
-    transporter:rename( _("Research Shuttle") )
     continueToDest(transporter)
     hook.timer( 2.0, "timer_transporterSafe" )
 end
 
 function startAmbush()
-    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Mercenary", planet.get("Onyx Shipyard"):pos() + vec2.new(6000,-3000), nil, {ai="dvaered_norun"} )
+    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Mercenary", spob.get("Onyx Shipyard"):pos() + vec2.new(6000,-3000), nil, {ai="dvaered_norun"} )
     for i, j in ipairs(ships) do
         j:control(true)
         j:moveto(vec2.new(-4000,-12000))
@@ -318,7 +316,6 @@ function ambushHail()
         j:setHostile()
         j:setHilight()
         j:control(true)
-        j:taskClear()
         j:attack(transporter)
         j:setVisible()
         j:setVisplayer()
@@ -347,18 +344,4 @@ end
 function transporterDeath()
     vntk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
     misn.finish(false)
-end
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

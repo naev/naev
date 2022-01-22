@@ -10,13 +10,13 @@
   <x>523.000000</x>
   <y>-326.000000</y>
  </pos>
- <assets>
-  <asset>Dawn</asset>
-  <asset>Dusk</asset>
-  <asset>Gilligan's Light III</asset>
-  <asset>The Frontier Council</asset>
-  <asset_virtual>FLF Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Dawn</spob>
+  <spob>Dusk</spob>
+  <spob>Gilligan's Light III</spob>
+  <spob>The Frontier Council</spob>
+  <spob_virtual>FLF Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Ingot">
    <autopos/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Theras II">
+ <pos>
+  <x>8355.533595</x>
+  <y>-4232.622399</y>
+ </pos>
+ <GFX>
+  <space>moon-P02.webp</space>
+  <exterior>mining2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

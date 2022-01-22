@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Luna Skona">
+ <pos>
+  <x>-11744.645642</x>
+  <y>9301.199184</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.webp</space>
+  <exterior>station00.webp</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

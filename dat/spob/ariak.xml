@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ariak">
+ <pos>
+  <x>4737.307524</x>
+  <y>4059.013239</y>
+ </pos>
+ <GFX>
+  <space>C00.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.100000</hide>
+  <services/>
+ </general>
+</spob>

@@ -10,13 +10,13 @@
   <x>-548.590536</x>
   <y>-239.429028</y>
  </pos>
- <assets>
-  <asset>Dun Hill</asset>
-  <asset>Kayel</asset>
-  <asset>Kobopos I</asset>
-  <asset>Kobopos II</asset>
-  <asset>Kobopos IV</asset>
- </assets>
+ <spobs>
+  <spob>Dun Hill</spob>
+  <spob>Kayel</spob>
+  <spob>Kobopos I</spob>
+  <spob>Kobopos II</spob>
+  <spob>Kobopos IV</spob>
+ </spobs>
  <jumps>
   <jump target="Jade">
    <autopos/>

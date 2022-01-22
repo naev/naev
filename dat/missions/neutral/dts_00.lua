@@ -52,7 +52,7 @@ local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
-   mem.this_planet, mem.this_system = planet.cur()
+   mem.this_planet, mem.this_system = spob.cur()
    if ( pir.systemPresence(mem.this_system) > 0
          or mem.this_system:presences()["Collective"]
          or mem.this_system:presences()["FLF"] ) then
@@ -69,7 +69,7 @@ function create ()
     There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
     "Are you brave enough?"]]), {pnt=mem.this_planet} ) ) then
       misn.accept()
-      tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]))
+      tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to your ships and take off to face the pirate horde.]]))
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
@@ -84,7 +84,7 @@ function create ()
    else
       -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
-      tk.msg( _("Left behind"), _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
+      tk.msg( _("Left behind"), _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those who stayed behind.
     "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]]))
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
@@ -191,7 +191,7 @@ end
 function celebrate_victory()
    if mem.victory == true then
       tk.msg( _("Welcome back"), _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
-    "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
+    "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering us again. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
     Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]) )
       player.pay( reward )
       faction.modPlayerSingle( "Empire", 3)
@@ -221,8 +221,8 @@ function abort()
    if mem.victory ~= true then
       faction.modPlayerSingle( "Empire", -10)
       faction.modPlayerSingle( "Trader", -10)
-      player.msg( fmt.f( _("Comm Trader>You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
+      player.msg( fmt.f( _("Comm Trader> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
    else
-      player.msg( fmt.f( _("Comm Trader>You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
+      player.msg( fmt.f( _("Comm Trader> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
    end
 end

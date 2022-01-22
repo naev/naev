@@ -22,9 +22,10 @@ typedef struct nsave_s {
    char *data; /**< Data name. */
 
    /* Player info. */
-   char *planet; /**< Planet player is at. */
+   char *spob; /**< Spob player is at. */
    ntime_t date; /**< Date. */
    uint64_t credits; /**< Credits player has. */
+   char *chapter; /**< Player's current chapter. */
 
    /* Ship info. */
    char *shipname; /**< Name of the ship. */

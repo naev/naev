@@ -20,16 +20,14 @@ end
 outfits.standard = {}
 outfits.standard.weapons = {
    -- Heavy Weapons
-   "Lancelot Fighter Bay",
-   "Hyena Fighter Dock",
+   "Lancelot Bay",
+   "Hyena Bay",
    "Heavy Laser Turret", "Railgun Turret", "Heavy Ion Turret",
    "Railgun", "Grave Beam",
    -- Medium Weapons
-   "Hyena Fighter Bay",
+   "Hyena Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",

@@ -12,6 +12,7 @@
 
 #include "map.h"
 
+#include "conf.h"
 #include "array.h"
 #include "colour.h"
 #include "dialogue.h"
@@ -33,6 +34,15 @@
 #include "toolkit.h"
 #include "utf8.h"
 
+#define BUTTON_WIDTH    100 /**< Map button width. */
+#define BUTTON_HEIGHT   30 /**< Map button height. */
+
+#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
+
+#define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
+
+#define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
+
 /**
  * @brief Faction presence container to be used for the map information stuff.
  */
@@ -43,37 +53,28 @@ typedef struct FactionPresence_ {
 } FactionPresence;
 
 /**
- * @brief Different map modes available to the player.
+ * @brief Map widget data.
  */
-typedef enum MapMode_ {
-   MAPMODE_TRAVEL,   /**< Standard mode with lots of shiny stuff. */
-   MAPMODE_DISCOVER, /**< Indicates whether or not systems are fully discovered. */
-   MAPMODE_TRADE,    /**< Shows price values and the likes. */
-} MapMode;
-
-#define BUTTON_WIDTH    100 /**< Map button width. */
-#define BUTTON_HEIGHT   30 /**< Map button height. */
-
-#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
-
-#define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
-
-#define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
+typedef struct CstMapWidget_ {
+   double zoom;            /**< Level of zoom. */
+   double xpos;            /**< Centered x position. */
+   double ypos;            /**< Centered y position. */
+   double xtarget;         /**< Target X position. */
+   double ytarget;         /**< Target Y position. */
+   int drag;               /**< Is the user dragging the map? */
+   double alpha_decorators;/**< Alpha for decorators. */
+   double alpha_faction;   /**< Alpha for factions. */
+   double alpha_env;       /**< Alpha for environmental stuff. */
+   double alpha_path;      /**< Alpha for path stuff. */
+   double alpha_names;     /**< Alpha for system names. */
+   double alpha_markers;   /**< Alpha for system markers. */
+   MapMode mode;           /**< Default map mode. */
+} CstMapWidget;
 
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 
-static double map_zoom        = 1.; /**< Zoom of the map. */
-static double map_xpos        = 0.; /**< Map X position. */
-static double map_ypos        = 0.; /**< Map Y position. */
-static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-double map_alpha_decorators   = 1.; /**< Alpha for decorators. */
-double map_alpha_faction      = 1.; /**< Alpha for factions. */
-double map_alpha_env          = 1.; /**< Alpha for environmental stuff. */
-double map_alpha_path         = 1.; /**< Alpha for path stuff. */
-double map_alpha_names        = 1.; /**< Alpha for system names. */
-double map_alpha_markers      = 1.; /**< Alpha for system markers. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 static int cur_commod         = -1; /**< Current commodity selected. */
@@ -84,6 +85,7 @@ static int listMapModeVisible = 0; /**< Whether the map mode list widget is visi
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 static double map_dt     = 0.; /**< Nebula animation stuff. */
 static int map_minimal_mode = 0; /**< Map is in minimal mode. */
+static double map_flyto_speed = 1500.; /**< Linear speeed at which the map flies to a location. */
 
 /*
  * extern
@@ -93,7 +95,7 @@ extern StarSystem *systems_stack;
 
 /*land.c*/
 extern int landed;
-extern Planet* land_planet;
+extern Spob* land_spob;
 
 /*
  * prototypes
@@ -102,20 +104,22 @@ extern Planet* land_planet;
 static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
-static void map_renderPath( double x, double y, double radius, double alpha );
-static void map_renderMarkers( double x, double y, double r, double a );
+static void map_renderPath( double x, double y, double zoom, double radius, double alpha );
+static void map_renderMarkers( double x, double y, double zoom, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
-                              double w, double h, double r, int editor );
-static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c );
-static void map_drawMarker( double x, double y, double r, double a,
-      int num, int cur, int type );
+                              double zoom, double w, double h, double r, int editor );
+static void map_renderCommodIgnorance( double x, double y, double zoom, StarSystem *sys, Commodity *c );
+static void map_drawMarker( double x, double y, double zoom,
+      double r, double a, int num, int cur, int type );
 /* Mouse. */
 static void map_focusLose( unsigned int wid, const char* wgtname );
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_setup (void);
-static void map_reset (void);
+static void map_updateInternal( CstMapWidget *cst, double dt );
+static void map_reset( CstMapWidget* cst, MapMode mode );
+static CstMapWidget* map_globalCustomData( unsigned int wid );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
@@ -171,19 +175,18 @@ static void map_setup (void)
       StarSystem *sys = &systems_stack[i];
       sys_rmFlag( sys, SYSTEM_DISCOVERED );
 
-      /* Check to see if system has landable assets. */
+      /* Check to see if system has landable spobs. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
-      for (int j=0; j<array_size(sys->planets); j++) {
-         Planet *p = sys->planets[j];
-         if (!planet_isKnown(p))
+      for (int j=0; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
+         if (!spob_isKnown(p))
             continue;
-         if (!planet_hasService(p, PLANET_SERVICE_LAND) || !planet_hasService(p, PLANET_SERVICE_INHABITED))
+         if (!spob_hasService(p, SPOB_SERVICE_LAND))
             continue;
-         planet_updateLand( p );
-         if (p->can_land) {
+         sys_setFlag( sys, SYSTEM_HAS_KNOWN_LANDABLE );
+         spob_updateLand( p );
+         if (p->can_land)
             sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
-            break;
-         }
       }
 
       int known = 1;
@@ -197,10 +200,10 @@ static void map_setup (void)
          }
       }
       if (known) {
-         /* Check planets. */
-         for (int j=0; j<array_size(sys->planets); j++) {
-            Planet *p = sys->planets[j];
-            if (!planet_isKnown(p)) {
+         /* Check spobs. */
+         for (int j=0; j<array_size(sys->spobs); j++) {
+            Spob *p = sys->spobs[j];
+            if (!spob_isKnown(p)) {
                known = 0;
                break;
             }
@@ -223,11 +226,9 @@ void map_open (void)
    unsigned int wid;
    StarSystem *cur;
    int w, h, x, y, rw;
-   const int indent = MAP_TEXT_INDENT;
+   CstMapWidget *cst;
 
-   /* Not displaying commodities */
    map_minimal_mode = player.map_minimal;
-   map_reset();
    listMapModeVisible = 0;
 
    /* Not under manual control. */
@@ -244,10 +245,6 @@ void map_open (void)
 
    /* Set up stuff. */
    map_setup();
-
-   /* set position to focus on current system */
-   map_xpos = cur_system->pos.x;
-   map_ypos = cur_system->pos.y;
 
    /* Attempt to select current map if none is selected */
    if (map_selected == -1)
@@ -273,8 +270,8 @@ void map_open (void)
     * Status:
     *   $Status
     *
-    * Planets:
-    *   $Planet1, $Planet2, ...
+    * Spobs:
+    *   $Spob1, $Spob2, ...
     *
     * Services:
     *   $Services
@@ -285,9 +282,9 @@ void map_open (void)
     * [ Close ]
     */
 
-   x  = -70; /* Right column X offset. */
+   x  = -20; /* Right column X offset. */
    y  = -20;
-   rw = ABS(x) + 60; /* Right column indented width maximum. */
+   rw = 130; /* Right column indented width maximum. */
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
@@ -299,37 +296,37 @@ void map_open (void)
    y -= 64 + 10;
 
    /* Faction */
-   window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
+   window_addText( wid, x, y, 140, 20, 0, "txtSFaction",
          &gl_smallFont, &cFontGrey, _("Faction:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
-   window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
+   window_addText( wid, x, y, 140, 20, 0, "txtSStanding",
          &gl_smallFont, &cFontGrey, _("Standing:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
-   window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
+   window_addText( wid, x, y, 140, 20, 0, "txtSPresence",
          &gl_smallFont, &cFontGrey, _("Presence:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
-   /* Planets */
-   window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, &cFontGrey, _("Planets:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
+   /* Spobs */
+   window_addText( wid, x, y, 140, 20, 0, "txtSSpobs",
+         &gl_smallFont, &cFontGrey, _("Space Objects:") );
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
-   window_addText( wid, x, y, 90, 20, 0, "txtSServices",
+   window_addText( wid, x, y, 140, 20, 0, "txtSServices",
          &gl_smallFont, &cFontGrey, _("Services:") );
-   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
+   window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
@@ -354,11 +351,15 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButtonKey( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
-   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
+   window_addButtonKey( wid, -60, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, -20, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
+
+   /* Fuel. */
+   window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, 30, 0,
+         "txtPlayerStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
 
@@ -366,7 +367,8 @@ void map_open (void)
     * The map itself.
     */
    map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
-
+   cst = map_globalCustomData(wid);
+   map_reset( cst, map_mode );
    map_update( wid );
 
    /*
@@ -400,12 +402,12 @@ static void map_update_commod_av_price (void)
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)))
             continue;
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             double sumPrice = 0;
             int sumCnt = 0;
             double thisPrice;
-            for (int j=0 ; j<array_size(sys->planets); j++) {
-               Planet *p = sys->planets[j];
+            for (int j=0 ; j<array_size(sys->spobs); j++) {
+               Spob *p = sys->spobs[j];
                for (int k=0; k<array_size(p->commodities); k++) {
                   if (p->commodities[k] == c) {
                      if (p->commodityPrice[k].cnt > 0) { /*commodity is known about*/
@@ -442,19 +444,22 @@ static void map_update( unsigned int wid )
    int found, multiple;
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
-   unsigned int services, services_h, services_u;
-   int hasPlanets;
+   unsigned int services, services_u, services_h, services_f, services_r;
+   int hasSpobs;
    char t;
    const char *sym, *adj;
    char buf[STRMAX];
    int p;
    const glTexture *logo;
    double w, dmg, itf;
-   const int indent = MAP_TEXT_INDENT;
+   int jumps, autonav, rw, th;
 
    /* Needs map to update. */
    if (!map_isOpen())
       return;
+
+   /* Propagate updates to map_mode, if an. */
+   map_globalCustomData(wid)->mode = map_mode;
 
    /* Get selected system. */
    sys = system_getIndex( map_selected );
@@ -488,8 +493,8 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
-   x = -70; /* Side bar X offset. */
-   w = ABS(x) + 60; /* Width of the side bar. */
+   x = -20; /* Side bar X offset. */
+   w = 130; /* Width of the side bar. */
    y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
 
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
@@ -504,31 +509,31 @@ static void map_update( unsigned int wid )
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", x, y);
-      window_moveWidget( wid, "txtFaction", x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtFaction", x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtFaction", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Standing */
       window_moveWidget( wid, "txtSStanding", x, y );
-      window_moveWidget( wid, "txtStanding", x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtStanding", x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtStanding", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Presence. */
       window_moveWidget( wid, "txtSPresence", x, y );
-      window_moveWidget( wid, "txtPresence",  x + indent, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtPresence",  x, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPresence", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Planets */
-      window_moveWidget( wid, "txtSPlanets", x, y );
-      window_moveWidget( wid, "txtPlanets", x + indent, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPlanets", _("Unknown") );
+      /* Spobs */
+      window_moveWidget( wid, "txtSSpobs", x, y );
+      window_moveWidget( wid, "txtSpobs", x, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtSpobs", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Services */
       window_moveWidget( wid, "txtSServices", x, y );
-      window_moveWidget( wid, "txtServices", x + indent, y -gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtServices", x, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", _("Unknown") );
 
       /*
@@ -543,18 +548,18 @@ static void map_update( unsigned int wid )
 
    f = -1;
    multiple = 0;
-   for (int i=0; i<array_size(sys->planets); i++) {
-      if (!planet_isKnown(sys->planets[i]))
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      if (!spob_isKnown(sys->spobs[i]))
          continue;
-      if ((sys->planets[i]->presence.faction > 0)
-            && (!faction_isKnown(sys->planets[i]->presence.faction)) )
+      if ((sys->spobs[i]->presence.faction > 0)
+            && (!faction_isKnown(sys->spobs[i]->presence.faction)) )
          continue;
 
-      if ((f == -1) && (sys->planets[i]->presence.faction > 0)) {
-         f = sys->planets[i]->presence.faction;
+      if ((f == -1) && (sys->spobs[i]->presence.faction > 0)) {
+         f = sys->spobs[i]->presence.faction;
       }
-      else if (f != sys->planets[i]->presence.faction /** @todo more verbosity */
-               && (sys->planets[i]->presence.faction > 0)) {
+      else if (f != sys->spobs[i]->presence.faction /** @todo more verbosity */
+               && (sys->spobs[i]->presence.faction > 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
          multiple = 1;
          break;
@@ -589,82 +594,95 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + indent, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + indent, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
-   window_moveWidget( wid, "txtPresence", x + indent, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtPresence", x, y-gl_smallFont.h-5 );
    map_updateFactionPresence( wid, "txtPresence", sys, 0 );
    /* Scroll down. */
    h = window_getTextHeight( wid, "txtPresence" );
    y -= 40 + (h - gl_smallFont.h);
 
-   /* Get planets */
-   hasPlanets = 0;
+   /* Get spobs */
+   hasSpobs = 0;
    p = 0;
    buf[0] = '\0';
-   for (int i=0; i<array_size(sys->planets); i++) {
-      if (!planet_isKnown(sys->planets[i]))
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      if (!spob_isKnown(sys->spobs[i]))
          continue;
 
       /* Colourize output. */
-      planet_updateLand(sys->planets[i]);
-      t = planet_getColourChar(sys->planets[i]);
-      sym = planet_getSymbol(sys->planets[i]);
+      spob_updateLand(sys->spobs[i]);
+      t = spob_getColourChar(sys->spobs[i]);
+      sym = spob_getSymbol(sys->spobs[i]);
 
-      if (!hasPlanets)
+      if (!hasSpobs)
          p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
-               t, sym, _(sys->planets[i]->name) );
+               t, sym, spob_name(sys->spobs[i]) );
       else
          p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
-               t, sym, _(sys->planets[i]->name) );
-      hasPlanets = 1;
+               t, sym, spob_name(sys->spobs[i]) );
+      hasSpobs = 1;
    }
-   if (hasPlanets == 0) {
+   if (hasSpobs == 0) {
       strncpy( buf, _("None"), sizeof(buf)-1 );
       buf[sizeof(buf)-1] = '\0';
    }
    /* Update text. */
-   window_modifyText( wid, "txtPlanets", buf );
-   window_moveWidget( wid, "txtSPlanets", x, y );
-   window_moveWidget( wid, "txtPlanets", x + indent, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtSpobs", buf );
+   window_moveWidget( wid, "txtSSpobs", x, y );
+   window_moveWidget( wid, "txtSpobs", x, y-gl_smallFont.h-5 );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
    window_moveWidget( wid, "txtSServices", x, y );
-   window_moveWidget( wid, "txtServices", x + indent, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtServices", x, y-gl_smallFont.h-5 );
    services = 0;
-   services_h = 0;
    services_u = 0;
-   for (int i=0; i<array_size(sys->planets); i++) {
-      Planet *pnt = sys->planets[i];
-      if (!planet_isKnown(pnt))
+   services_h = 0;
+   services_f = 0;
+   services_r = 0;
+   for (int i=0; i<array_size(sys->spobs); i++) {
+      Spob *pnt = sys->spobs[i];
+      if (!spob_isKnown(pnt))
          continue;
 
-      if (pnt->can_land)
-         services |= pnt->services;
+      if (!spob_hasService( pnt, SPOB_SERVICE_INHABITED ))
+         services_u |= pnt->services;
+      else if (pnt->can_land) {
+         if (areAllies(pnt->presence.faction,FACTION_PLAYER))
+            services_f |= pnt->services;
+         else
+            services |= pnt->services;
+      }
       else if (areEnemies(pnt->presence.faction,FACTION_PLAYER))
          services_h |= pnt->services;
       else
-         services_u |= pnt->services;
+         services_r |= pnt->services;
    }
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   for (int i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
-      if (services & i)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(planet_getServiceName(i)) );
+   for (int i=SPOB_SERVICE_LAND; i<=SPOB_SERVICE_SHIPYARD; i<<=1) {
+      if (services_f & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#F+ %s\n", _(spob_getServiceName(i)) );
+      else if (services & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#N~ %s\n", _(spob_getServiceName(i)) );
       else if (services_h & i)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "#H!! %s\n", _(planet_getServiceName(i)) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#H!! %s\n", _(spob_getServiceName(i)) );
+      else if (services_r & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#R* %s\n", _(spob_getServiceName(i)) );
       else if (services_u & i)
-         p += scnprintf( &buf[p], sizeof(buf)-p, "#R* %s\n", _(planet_getServiceName(i)) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#I= %s\n", _(spob_getServiceName(i)) );
+   }
    if (buf[0] == '\0')
       p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
 
@@ -680,6 +698,18 @@ static void map_update( unsigned int wid )
       /* Special feature text. */
       if (sys->features != NULL)
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(sys->features) );
+
+      /* Mention spob features. */
+      for (int i=0; i<array_size(sys->spobs); i++) {
+         Spob *spob = sys->spobs[i];
+         if (spob->feature == NULL)
+            continue;
+         if (!spob_isKnown(spob))
+            continue;
+         if (buf[0] != '\0')
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", spob->feature);
+      }
 
       /* Mention trade lanes if applicable. */
       found = 0;
@@ -710,14 +740,21 @@ static void map_update( unsigned int wid )
 
          /* Volatility */
          dmg = sys->nebu_volatility;
-         if (sys->nebu_volatility > 50.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rVolatile %sNebula (%.1f MW)#0"), adj, dmg);
-         else if (sys->nebu_volatility > 20.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDangerous %sNebula (%.1f MW)#0"), adj, dmg);
-         else if (sys->nebu_volatility > 0.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yUnstable %sNebula (%.1f MW)#0"), adj, dmg);
+         if (sys->nebu_volatility > 50.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula (%.1f MW)"), adj, dmg);
+         }
+         else if (sys->nebu_volatility > 20.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula (%.1f MW)"), adj, dmg);
+         }
+         else if (sys->nebu_volatility > 0.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula (%.1f MW)"), adj, dmg);
+         }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("%sNebula"), adj);
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Interference. */
       if (sys->interference > 0.) {
@@ -725,12 +762,19 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          itf = sys->interference;
-         if (sys->interference > 700.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rDense Interference (%.0f%%)#0"), itf);
-         else if (sys->interference < 300.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oLight Interference (%.0f%%)#0"), itf);
-         else
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yInterference (%.0f%%)#0"), itf);
+         if (sys->interference > 700.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Interference (%.0f%%)"), itf);
+         }
+         else if (sys->interference < 300.) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference (%.0f%%)"), itf);
+         }
+         else {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Interference (%.0f%%)"), itf);
+         }
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
@@ -744,15 +788,42 @@ static void map_update( unsigned int wid )
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
 
-         if (density >= 1.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDense Asteroid Field#0"));
-         else if (density <= 0.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yLight Asteroid Field"));
+         if (density >= 1.5) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
+         }
+         else if (density <= 0.5) {
+            p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
+         }
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       window_modifyText( wid, "txtSystemStatus", buf );
    }
+
+   /* Player info. */
+   jumps = floor(player.p->fuel / player.p->fuel_consumption);
+   p = 0;
+   rw = 140;
+   p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
+   p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
+   sys = map_getDestination( &autonav );
+   p += scnprintf(&buf[p], sizeof(buf)-p, "\n#n%s#0", _("Autonav: ") );
+   if (sys==NULL)
+      p += scnprintf(&buf[p], sizeof(buf)-p, _("Off") );
+   else {
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#r" );
+      p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", autonav), autonav );
+      if (autonav > jumps)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
+   }
+   th = gl_printHeightRaw( &gl_smallFont, rw, buf );
+   window_resizeWidget( wid, "txtPlayerStatus", rw, th );
+   window_moveWidget( wid, "txtPlayerStatus", -20, 40+BUTTON_HEIGHT*2 );
+   window_modifyText( wid, "txtPlayerStatus", buf );
 }
 
 /**
@@ -776,9 +847,10 @@ int map_isOpen (void)
  * @param cur Current marker to draw.
  * @param type Type to draw.
  */
-static void map_drawMarker( double x, double y, double r, double a,
-      int num, int cur, int type )
+static void map_drawMarker( double x, double y, double zoom,
+      double r, double a, int num, int cur, int type )
 {
+   (void) zoom;
    const glColour* colours[] = {
       &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer
    };
@@ -827,109 +899,73 @@ static void map_drawMarker( double x, double y, double r, double a,
  */
 static void map_render( double bx, double by, double w, double h, void *data )
 {
-   (void) data;
-   double x,y,r;
-   double dt = naev_getrealdt();
+   CstMapWidget *cst = data;
+   double x,y,z,r;
    glColour col;
    StarSystem *sys;
-   double mapmin = 1.-map_minimal_mode;
+   double dt = naev_getrealdt();
 
    /* Update timer. */
-   map_dt += naev_getrealdt();
-
-#define AMAX(x) (x) = MIN( 1., (x) + dt )
-#define AMIN(x) (x) = MAX( 0., (x) - dt )
-#define ATAR(x,y) \
-if ((x) < y) (x) = MIN( y, (x) + dt ); \
-else (x) = MAX( y, (x) - dt )
-   switch (map_mode) {
-      case MAPMODE_TRAVEL:
-         ATAR( map_alpha_decorators, mapmin );
-         ATAR( map_alpha_faction, mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMAX( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMAX( map_alpha_markers );
-         break;
-
-      case MAPMODE_DISCOVER:
-         ATAR( map_alpha_decorators, 0.5 * mapmin );
-         ATAR( map_alpha_faction, 0.5 * mapmin );
-         ATAR( map_alpha_env, mapmin );
-         AMIN( map_alpha_path );
-         AMAX( map_alpha_names );
-         AMIN( map_alpha_markers );
-         break;
-
-      case MAPMODE_TRADE:
-         AMIN( map_alpha_decorators );
-         AMIN( map_alpha_faction );
-         AMIN( map_alpha_env );
-         AMIN( map_alpha_path );
-         AMIN( map_alpha_names );
-         AMIN( map_alpha_markers );
-         break;
-   }
-#undef AMAX
-#undef AMIN
-#undef ATAR
+   map_dt += dt;
+   map_updateInternal( cst, dt );
 
    /* Parameters. */
-   map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
+   map_renderParams( bx, by, cst->xpos, cst->ypos, w, h, cst->zoom, &x, &y, &r );
+   z = cst->zoom;
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (map_alpha_decorators > 0.)
-      map_renderDecorators( x, y, 0, map_alpha_decorators );
+   if (cst->alpha_decorators > 0.)
+      map_renderDecorators( x, y, z, 0, cst->alpha_decorators );
 
    /* Render faction disks. */
-   if (map_alpha_faction > 0.)
-      map_renderFactionDisks( x, y, r, 0, map_alpha_faction );
+   if (cst->alpha_faction > 0.)
+      map_renderFactionDisks( x, y, z, r, 0, cst->alpha_faction );
 
       /* Render environmental features. */
-   if (map_alpha_env > 0.)
-      map_renderSystemEnvironment( x, y, 0, map_alpha_env );
+   if (cst->alpha_env > 0.)
+      map_renderSystemEnvironment( x, y, z, 0, cst->alpha_env );
 
    /* Render jump routes. */
-   map_renderJumps( x, y, r, 0 );
+   map_renderJumps( x, y, z, r, 0 );
 
    /* Render the player's jump route. */
-   if (map_alpha_path > 0.)
-      map_renderPath( x, y, r, map_alpha_path );
+   if (cst->alpha_path > 0.)
+      map_renderPath( x, y, z, r, cst->alpha_path );
 
    /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+   map_renderSystems( bx, by, x, y, z, w, h, r, cst->mode );
 
    /* Render system names. */
-   if (map_alpha_names > 0.)
-      map_renderNames( bx, by, x, y, w, h, 0, map_alpha_names );
+   if (cst->alpha_names > 0.)
+      map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
 
    /* Render system markers. */
-   if (map_alpha_markers > 0.)
-     map_renderMarkers( x, y, r, map_alpha_markers );
+   if (cst->alpha_markers > 0.)
+     map_renderMarkers( x, y, z, r, cst->alpha_markers );
 
    /* Render commodity info. */
-   if (map_mode == MAPMODE_TRADE)
-      map_renderCommod(  bx, by, x, y, w, h, r, 0 );
+   if (cst->mode == MAPMODE_TRADE)
+      map_renderCommod(  bx, by, x, y, z, w, h, r, 0 );
 
-   /* Values from cRadar_tPlanet */
-   col.r = cRadar_tPlanet.r;
-   col.g = cRadar_tPlanet.g;
-   col.b = cRadar_tPlanet.b;
+   /* Values from cRadar_tSpob */
+   col.r = cRadar_tSpob.r;
+   col.g = cRadar_tSpob.g;
+   col.b = cRadar_tSpob.b;
 
    /* Selected system. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, map_dt ); /* good enough. */
-      gl_renderShader( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tPlanet, 1 );
+      glUseProgram( shaders.selectspob.program );
+      glUniform1f( shaders.selectspob.dt, map_dt ); /* good enough. */
+      gl_renderShader( x + sys->pos.x * z, y + sys->pos.y * z,
+            1.7*r, 1.7*r, 0., &shaders.selectspob, &cRadar_tSpob, 1 );
    }
 
-   /* Current planet. */
-   gl_renderCircle( x + cur_system->pos.x * map_zoom,
-         y + cur_system->pos.y * map_zoom,
+   /* Current spob. */
+   gl_renderCircle( x + cur_system->pos.x * z,
+         y + cur_system->pos.y * z,
          1.5*r, &col, 0 );
 }
 
@@ -949,7 +985,7 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
  *
  * TODO visibility check should be cached and computed when opening only.
  */
-void map_renderDecorators( double x, double y, int editor, double alpha )
+void map_renderDecorators( double x, double y, double zoom, int editor, double alpha )
 {
    glColour ccol = { .r=1., .g=1., .b=1., .a=2./3. }; /**< White */
 
@@ -984,11 +1020,11 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
       }
 
       if (editor || visible==1) {
-         double tx = x + decorator->x*map_zoom;
-         double ty = y + decorator->y*map_zoom;
+         double tx = x + decorator->x*zoom;
+         double ty = y + decorator->y*zoom;
 
-         int sw = decorator->image->sw*map_zoom;
-         int sh = decorator->image->sh*map_zoom;
+         int sw = decorator->image->sw*zoom;
+         int sh = decorator->image->sh*zoom;
 
          gl_renderScale( decorator->image,
                tx - sw/2, ty - sh/2, sw, sh, &ccol );
@@ -999,7 +1035,7 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderFactionDisks( double x, double y, double r, int editor, double alpha )
+void map_renderFactionDisks( double x, double y, double zoom, double r, int editor, double alpha )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       glColour c;
@@ -1009,11 +1045,11 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
 
-      if (!sys_isKnown(sys) && !editor)
+      if ((!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) || !sys_isKnown(sys)) && !editor)
          continue;
 
-      tx = x + sys->pos.x*map_zoom;
-      ty = y + sys->pos.y*map_zoom;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
 
       /* System has faction and is known or we are in editor. */
       if (sys->faction != -1) {
@@ -1021,7 +1057,7 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
          double presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
-         double sr = (40. + presence * 3.) * map_zoom * 0.5;
+         double sr = (40. + presence * 3.) * zoom * 0.5;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
@@ -1039,13 +1075,11 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
 /**
  * @brief Renders the faction disks.
  */
-void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
+void map_renderSystemEnvironment( double x, double y, double zoom, int editor, double alpha )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
-      int sw, sh;
       double tx, ty;
       /* Fade in the disks to allow toggling between commodity and nothing */
-      gl_Matrix4 projection;
       StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
@@ -1054,13 +1088,15 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
       if (!sys_isKnown(sys) && !editor)
          continue;
 
-      tx = x + sys->pos.x*map_zoom;
-      ty = y + sys->pos.y*map_zoom;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
 
       /* Draw background. */
       /* TODO draw asteroids too! */
       if (sys->nebu_density > 0.) {
-         sw = (50. + sys->nebu_density * 50. / 1000.) * map_zoom;
+         gl_Matrix4 projection;
+         double sw, sh;
+         sw = (50. + sys->nebu_density * 50. / 1000.) * zoom;
          sh = sw;
 
          /* Set the vertex. */
@@ -1075,9 +1111,9 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
-         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );
@@ -1089,13 +1125,43 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
          glUseProgram(0);
          gl_checkErr();
       }
+      else if (sys->map_shader != NULL) {
+         gl_Matrix4 projection;
+         double sw, sh;
+         sw = 100. * zoom;
+         sh = sw;
+
+         /* Set the vertex. */
+         projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, tx-sw/2., ty-sh/2., 0);
+         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+
+         /* Start the program. */
+         glUseProgram( sys->ms.program );
+
+         /* Set shader uniforms. */
+         gl_Matrix4_Uniform(sys->ms.projection, projection);
+         glUniform1f(sys->ms.time, map_dt);
+         glUniform2f(sys->ms.globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(sys->ms.alpha, alpha);
+
+         /* Draw. */
+         glEnableVertexAttribArray( sys->ms.vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms.vertex, 0, 2, GL_FLOAT, 0 );
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clean up. */
+         glDisableVertexAttribArray( sys->ms.vertex );
+         glUseProgram(0);
+         gl_checkErr();
+      }
    }
 }
 
 /**
  * @brief Renders the jump routes between systems.
  */
-void map_renderJumps( double x, double y, double radius, int editor )
+void map_renderJumps( double x, double y, double zoom, double radius, int editor )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       double x1,y1;
@@ -1107,8 +1173,8 @@ void map_renderJumps( double x, double y, double radius, int editor )
       if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
-      x1 = x + sys->pos.x * map_zoom;
-      y1 = y + sys->pos.y * map_zoom;
+      x1 = x + sys->pos.x * zoom;
+      y1 = y + sys->pos.y * zoom;
 
       for (int j=0; j < array_size(sys->jumps); j++) {
          double x2,y2, rx,ry, r, rw,rh;
@@ -1137,8 +1203,8 @@ void map_renderJumps( double x, double y, double radius, int editor )
          else
             col = &cAquaBlue;
 
-         x2 = x + jsys->pos.x * map_zoom;
-         y2 = y + jsys->pos.y * map_zoom;
+         x2 = x + jsys->pos.x * zoom;
+         y2 = y + jsys->pos.y * zoom;
          rx = x2-x1;
          ry = y2-y1;
          r  = atan2( ry, rx );
@@ -1164,7 +1230,7 @@ void map_renderJumps( double x, double y, double radius, int editor )
  * @brief Renders the systems.
  */
 void map_renderSystems( double bx, double by, double x, double y,
-      double w, double h, double r, int editor)
+      double zoom, double w, double h, double r, MapMode mode )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       const glColour *col;
@@ -1176,33 +1242,35 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-           && !space_sysReachable(sys)) && !editor)
+           && !space_sysReachable(sys)) && mode != MAPMODE_EDITOR)
          continue;
 
-      tx = x + sys->pos.x*map_zoom;
-      ty = y + sys->pos.y*map_zoom;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
 
       /* Skip if out of bounds. */
       if (!rectOverlap(tx-r, ty-r, 2.*r, 2.*r, bx, by, w, h))
          continue;
 
       /* Draw an outer ring. */
-      if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE)
+      if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE)
          gl_renderCircle( tx, ty, r, &cInert, 0 );
 
       /* Ignore not known systems when not in the editor. */
-      if (!editor && !sys_isKnown(sys))
+      if (mode != MAPMODE_EDITOR && !sys_isKnown(sys))
          continue;
 
-      if (editor || map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE) {
-         if (!system_hasPlanet(sys))
+      if (mode == MAPMODE_EDITOR || mode == MAPMODE_TRAVEL || mode == MAPMODE_TRADE) {
+         if (!system_hasSpob(sys))
             continue;
-         /* Planet colours */
-         if (!editor && !sys_isKnown(sys))
+         if (!sys_isFlag(sys, SYSTEM_HAS_KNOWN_LANDABLE) && mode != MAPMODE_EDITOR)
+            continue;
+         /* Spob colours */
+         if (mode != MAPMODE_EDITOR && !sys_isKnown(sys))
             col = &cInert;
          else if (sys->faction < 0)
             col = &cInert;
-         else if (editor)
+         else if (mode == MAPMODE_EDITOR)
             col = &cNeutral;
          else if (areEnemies(FACTION_PLAYER,sys->faction))
             col = &cHostile;
@@ -1213,14 +1281,14 @@ void map_renderSystems( double bx, double by, double x, double y,
          else
             col = &cNeutral;
 
-         if (editor) {
+         if (mode == MAPMODE_EDITOR) {
             /* Radius slightly shorter. */
             gl_renderCircle( tx, ty, 0.5 * r, col, 1 );
          }
          else
             gl_renderCircle( tx, ty, 0.65 * r, col, 1 );
       }
-      else if (map_mode == MAPMODE_DISCOVER) {
+      else if (mode == MAPMODE_DISCOVER) {
          gl_renderCircle( tx, ty, r, &cInert, 0 );
          if (sys_isFlag( sys, SYSTEM_DISCOVERED ))
             gl_renderCircle( tx, ty,  0.65 * r, &cGreen, 1 );
@@ -1231,7 +1299,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 /**
  * @brief Render the map path.
  */
-static void map_renderPath( double x, double y, double radius, double alpha )
+static void map_renderPath( double x, double y, double zoom, double radius, double alpha )
 {
    StarSystem *sys1 = cur_system;
    int jmax, jcur;
@@ -1256,10 +1324,10 @@ static void map_renderPath( double x, double y, double radius, double alpha )
          col = cYellow;
       col.a = alpha;
 
-      x1 = x + sys1->pos.x * map_zoom;
-      y1 = y + sys1->pos.y * map_zoom;
-      x2 = x + sys2->pos.x * map_zoom;
-      y2 = y + sys2->pos.y * map_zoom;
+      x1 = x + sys1->pos.x * zoom;
+      y1 = y + sys1->pos.y * zoom;
+      x2 = x + sys2->pos.x * zoom;
+      y2 = y + sys2->pos.y * zoom;
       rx = x2-x1;
       ry = y2-y1;
       r  = atan2( ry, rx );
@@ -1281,7 +1349,7 @@ static void map_renderPath( double x, double y, double radius, double alpha )
  * @brief Renders the system names on the map.
  */
 void map_renderNames( double bx, double by, double x, double y,
-      double w, double h, int editor, double alpha )
+      double zoom, double w, double h, int editor, double alpha )
 {
    double tx,ty, vx,vy, d,n;
    int textw;
@@ -1296,14 +1364,14 @@ void map_renderNames( double bx, double by, double x, double y,
          continue;
 
       /* Skip system. */
-      if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
+      if ((!editor && !sys_isKnown(sys)) || (zoom <= 0.5 ))
          continue;
 
-      font = (map_zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
+      font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
 
       textw = gl_printWidthRaw( font, _(sys->name) );
-      tx = x + (sys->pos.x+12.) * map_zoom;
-      ty = y + (sys->pos.y) * map_zoom - font->h*0.5;
+      tx = x + (sys->pos.x+12.) * zoom;
+      ty = y + (sys->pos.y) * zoom - font->h*0.5;
 
       /* Skip if out of bounds. */
       if (!rectOverlap(tx, ty, textw, font->h, bx, by, w, h))
@@ -1316,7 +1384,7 @@ void map_renderNames( double bx, double by, double x, double y,
    }
 
    /* Raw hidden values if we're in the editor. */
-   if (!editor || (map_zoom <= 1.0))
+   if (!editor || (zoom <= 1.0))
       return;
 
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -1329,9 +1397,9 @@ void map_renderNames( double bx, double by, double x, double y,
          n   = sqrt( pow2(vx) + pow2(vy) );
          vx /= n;
          vy /= n;
-         d   = MAX(n*0.3*map_zoom, 15);
-         tx  = x + map_zoom*sys->pos.x + d*vx;
-         ty  = y + map_zoom*sys->pos.y + d*vy;
+         d   = MAX(n*0.3*zoom, 15);
+         tx  = x + zoom*sys->pos.x + d*vx;
+         ty  = y + zoom*sys->pos.y + d*vy;
          /* Display. */
          n = sys->jumps[j].hide;
          if (n == 0.)
@@ -1348,7 +1416,7 @@ void map_renderNames( double bx, double by, double x, double y,
 /**
  * @brief Renders the map markers.
  */
-static void map_renderMarkers( double x, double y, double r, double a )
+static void map_renderMarkers( double x, double y, double zoom, double r, double a )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty;
@@ -1360,8 +1428,8 @@ static void map_renderMarkers( double x, double y, double r, double a )
          continue;
 
       /* Get the position. */
-      tx = x + sys->pos.x*map_zoom;
-      ty = y + sys->pos.y*map_zoom;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
@@ -1373,23 +1441,23 @@ static void map_renderMarkers( double x, double y, double r, double a )
       /* Draw the markers. */
       j = 0;
       if (sys_isFlag(sys, SYSTEM_CMARKED)) {
-         map_drawMarker( tx, ty, r, a, n, j, 0 );
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 0 );
          j++;
       }
       for (m=0; m<sys->markers_plot; m++) {
-         map_drawMarker( tx, ty, r, a, n, j, 1 );
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 1 );
          j++;
       }
       for (m=0; m<sys->markers_high; m++) {
-         map_drawMarker( tx, ty, r, a, n, j, 2 );
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 2 );
          j++;
       }
       for (m=0; m<sys->markers_low; m++) {
-         map_drawMarker( tx, ty, r, a, n, j, 3 );
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 3 );
          j++;
       }
       for (m=0; m<sys->markers_computer; m++) {
-         map_drawMarker( tx, ty, r, a, n, j, 4 );
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 4 );
          j++;
       }
    }
@@ -1398,7 +1466,7 @@ static void map_renderMarkers( double x, double y, double r, double a )
 /*
  * Makes all systems dark grey.
  */
-static void map_renderSysBlack(double bx, double by, double x,double y, double w, double h, double r, int editor)
+static void map_renderSysBlack( double bx, double by, double x, double y, double zoom, double w, double h, double r, int editor )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx,ty;
@@ -1413,15 +1481,15 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
            && !space_sysReachable(sys)) && !editor)
          continue;
 
-      tx = x + sys->pos.x*map_zoom;
-      ty = y + sys->pos.y*map_zoom;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
 
       /* Skip if out of bounds. */
       if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
          continue;
 
       /* If system is known fill it. */
-      if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+      if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
          ccol = cGrey10;
          gl_renderCircle( tx, ty , r, &ccol, 1 );
       }
@@ -1431,19 +1499,18 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
 /*
  * Renders the economy information
  */
-
 void map_renderCommod( double bx, double by, double x, double y,
-      double w, double h, double r, int editor)
+      double zoom, double w, double h, double r, int editor)
 {
    int i,j,k;
    StarSystem *sys;
    double tx, ty;
-   Planet *p;
+   Spob *p;
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
    /* If not plotting commodities, return */
-   if (cur_commod == -1 || map_selected == -1)
+   if (cur_commod == -1 || map_selected == -1 || commod_known == NULL)
       return;
 
    c = commod_known[cur_commod];
@@ -1454,26 +1521,26 @@ void map_renderCommod( double bx, double by, double x, double y,
       curMinPrice=0.;
       sys = system_getIndex( map_selected );
       if (sys == cur_system && landed) {
-         for (k=0; k<array_size(land_planet->commodities); k++) {
-            if (land_planet->commodities[k] == c) {
-               /* current planet has the commodity of interest */
-               curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
+         for (k=0; k<array_size(land_spob->commodities); k++) {
+            if (land_spob->commodities[k] == c) {
+               /* current spob has the commodity of interest */
+               curMinPrice = land_spob->commodityPrice[k].sum / land_spob->commodityPrice[k].cnt;
                curMaxPrice = curMinPrice;
                break;
             }
          }
-         if ( k == array_size(land_planet->commodities) ) { /* commodity of interest not found */
-            map_renderCommodIgnorance( x, y, sys, c );
-            map_renderSysBlack(bx,by,x,y,w,h,r,editor);
+         if ( k == array_size(land_spob->commodities) ) { /* commodity of interest not found */
+            map_renderCommodIgnorance( x, y, zoom, sys, c );
+            map_renderSysBlack(bx,by,x,y,zoom,w,h,r,editor);
             return;
          }
       } else {
          /* not currently landed, so get max and min price in the selected system. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
-            for (j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for (j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for (k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1487,15 +1554,15 @@ void map_renderCommod( double bx, double by, double x, double y,
 
             }
             if ( maxPrice == 0 ) {/* no prices are known here */
-               map_renderCommodIgnorance( x, y, sys, c );
-               map_renderSysBlack(bx,by,x,y,w,h,r,editor);
+               map_renderCommodIgnorance( x, y, zoom, sys, c );
+               map_renderSysBlack(bx,by,x,y,zoom,w,h,r,editor);
                return;
             }
             curMaxPrice=maxPrice;
             curMinPrice=minPrice;
          } else {
-            map_renderCommodIgnorance( x, y, sys, c );
-            map_renderSysBlack(bx,by,x,y,w,h,r,editor);
+            map_renderCommodIgnorance( x, y, zoom, sys, c );
+            map_renderSysBlack(bx,by,x,y,zoom,w,h,r,editor);
             return;
          }
       }
@@ -1509,19 +1576,19 @@ void map_renderCommod( double bx, double by, double x, double y,
               && !space_sysReachable(sys)) && !editor)
             continue;
 
-         tx = x + sys->pos.x*map_zoom;
-         ty = y + sys->pos.y*map_zoom;
+         tx = x + sys->pos.x*zoom;
+         ty = y + sys->pos.y*zoom;
 
          /* Skip if out of bounds. */
          if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
             continue;
 
          /* If system is known fill it. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for ( j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1540,12 +1607,12 @@ void map_renderCommod( double bx, double by, double x, double y,
                best = maxPrice - curMinPrice ;
                worst= minPrice - curMaxPrice ;
                if ( best >= 0 ) {/* draw circle above */
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cLightBlue, "%.1f",best);
+                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
                   col_blend( &ccol, &cFontBlue, &cFontYellow, best );
                   gl_renderCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                } else {/* draw circle below */
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
+                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cOrange, "%.1f",worst);
                   worst = tanh ( -2*worst/ curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   gl_renderCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
@@ -1572,19 +1639,19 @@ void map_renderCommod( double bx, double by, double x, double y,
               && !space_sysReachable(sys)) && !editor)
             continue;
 
-         tx = x + sys->pos.x*map_zoom;
-         ty = y + sys->pos.y*map_zoom;
+         tx = x + sys->pos.x*zoom;
+         ty = y + sys->pos.y*zoom;
 
          /* Skip if out of bounds. */
          if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
             continue;
 
          /* If system is known fill it. */
-         if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+         if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
             double sumPrice=0;
             int sumCnt=0;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
+            for ( j=0 ; j<array_size(sys->spobs); j++) {
+               p=sys->spobs[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
@@ -1609,7 +1676,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                   frac = tanh(5*(sumPrice / commod_av_gal_price - 1));
                   col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
-               gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &ccol, "%.1f",sumPrice);
+               gl_print(&gl_smallFont, x + (sys->pos.x+11)*zoom , y + (sys->pos.y-22)*zoom, &ccol, "%.1f",sumPrice);
                gl_renderCircle( tx, ty , r, &ccol, 1 );
             } else {
                /* Commodity not sold here */
@@ -1624,7 +1691,7 @@ void map_renderCommod( double bx, double by, double x, double y,
 /*
  * Renders the economy information
  */
-static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
+static void map_renderCommodIgnorance( double x, double y, double zoom, StarSystem *sys, Commodity *c ) {
    int textw;
    char buf[80], *line2;
    size_t charn;
@@ -1634,10 +1701,10 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    if ( line2 != NULL ) {
       *line2++ = '\0';
       textw = gl_printWidthRaw( &gl_smallFont, line2 );
-      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, -1, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*zoom - textw/2, y + (sys->pos.y-15)*zoom, &cRed, -1, line2 );
    }
    textw = gl_printWidthRaw( &gl_smallFont, buf );
-   gl_printRaw( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, -1, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *zoom- textw/2, y + (sys->pos.y+10)*zoom, &cRed, -1, buf );
 }
 
 static int factionPresenceCompare( const void *a, const void *b )
@@ -1729,9 +1796,9 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
  */
 static void map_focusLose( unsigned int wid, const char* wgtname )
 {
-   (void) wid;
    (void) wgtname;
-   map_drag = 0;
+   CstMapWidget *cst = map_globalCustomData( wid );
+   cst->drag = 0;
 }
 
 /**
@@ -1747,9 +1814,10 @@ static void map_focusLose( unsigned int wid, const char* wgtname )
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data )
 {
-   (void) data;
    (void) rx;
    (void) ry;
+   CstMapWidget *cst = data;
+
    const double t = 15.*15.; /* threshold */
 
    switch (event->type) {
@@ -1758,9 +1826,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
          return 0;
       if (event->wheel.y > 0)
-         map_buttonZoom( 0, "btnZoomIn" );
+         map_buttonZoom( wid, "btnZoomIn" );
       else if (event->wheel.y < 0)
-         map_buttonZoom( 0, "btnZoomOut" );
+         map_buttonZoom( wid, "btnZoomOut" );
       return 1;
 
    case SDL_MOUSEBUTTONDOWN:
@@ -1770,9 +1838,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       window_setFocus( wid, "cstMap" );
 
       /* selecting star system */
-      mx -= w/2 - map_xpos;
-      my -= h/2 - map_ypos;
-      map_drag = 1;
+      mx -= w/2 - cst->xpos;
+      my -= h/2 - cst->ypos;
+      cst->drag = 1;
 
       for (int i=0; i<array_size(systems_stack); i++) {
          double x, y;
@@ -1787,14 +1855,14 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             continue;
 
          /* get position */
-         x = sys->pos.x * map_zoom;
-         y = sys->pos.y * map_zoom;
+         x = sys->pos.x * cst->zoom;
+         y = sys->pos.y * cst->zoom;
 
          if ((pow2(mx-x)+pow2(my-y)) < t) {
             if (map_selected != -1) {
                if (sys == system_getIndex( map_selected ) && sys_isKnown(sys)) {
                   map_system_open( map_selected );
-                  map_drag = 0;
+                  cst->drag = 0;
                }
             }
             map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
@@ -1804,14 +1872,14 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       return 1;
 
    case SDL_MOUSEBUTTONUP:
-      map_drag = 0;
+      cst->drag = 0;
       break;
 
    case SDL_MOUSEMOTION:
-      if (map_drag) {
+      if (cst->drag) {
          /* axis is inverted */
-         map_xpos -= rx;
-         map_ypos += ry;
+         cst->xtarget = cst->xpos -= rx;
+         cst->ytarget = cst->ypos += ry;
       }
       break;
    }
@@ -1826,27 +1894,31 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
  */
 static void map_buttonZoom( unsigned int wid, const char* str )
 {
-   (void) wid;
+   CstMapWidget *cst = map_globalCustomData(wid);
 
    /* Transform coords to normal. */
-   map_xpos /= map_zoom;
-   map_ypos /= map_zoom;
+   cst->xpos /= cst->zoom;
+   cst->ypos /= cst->zoom;
+   cst->xtarget /= cst->zoom;
+   cst->ytarget /= cst->zoom;
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      map_zoom *= 1.2;
-      map_zoom = MIN(2.5, map_zoom);
+      cst->zoom *= 1.2;
+      cst->zoom = MIN(2.5, cst->zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      map_zoom *= 0.8;
-      map_zoom = MAX(0.5, map_zoom);
+      cst->zoom *= 0.8;
+      cst->zoom = MAX(0.5, cst->zoom);
    }
 
-   map_setZoom(map_zoom);
+   map_setZoom( wid, cst->zoom );
 
    /* Transform coords back. */
-   map_xpos *= map_zoom;
-   map_ypos *= map_zoom;
+   cst->xpos *= cst->zoom;
+   cst->ypos *= cst->zoom;
+   cst->xtarget *= cst->zoom;
+   cst->ytarget *= cst->zoom;
 }
 
 /**
@@ -1862,8 +1934,8 @@ static void map_genModeList(void)
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
-      for (int j=0 ; j<array_size(sys->planets); j++) {
-         Planet *p = sys->planets[j];
+      for (int j=0 ; j<array_size(sys->spobs); j++) {
+         Spob *p = sys->spobs[j];
          for (int k=0; k<array_size(p->commodities); k++) {
             if (p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                int l;
@@ -1905,11 +1977,11 @@ static void map_genModeList(void)
 static void map_modeUpdate( unsigned int wid, const char* str )
 {
    (void) str;
-   int listpos = listpos=toolkit_getListPos( wid, "lstMapMode" );
    if (listMapModeVisible==2) {
       listMapModeVisible=1;
    }
    else if (listMapModeVisible == 1) {
+      int listpos = toolkit_getListPos( wid, "lstMapMode" );
       /* TODO: make this more robust. */
       if (listpos == 0) {
          map_mode = MAPMODE_TRAVEL;
@@ -1936,6 +2008,7 @@ static void map_modeUpdate( unsigned int wid, const char* str )
 static void map_modeActivate( unsigned int wid, const char* str )
 {
    map_modeUpdate( wid, str );
+   listMapModeVisible = 0;
    window_destroyWidget( wid, str );
 }
 
@@ -2029,7 +2102,6 @@ static void map_window_close( unsigned int wid, const char *str )
       free( map_modes[i] );
    array_free( map_modes );
    map_modes = NULL;
-   map_reset();
    window_close(wid,str);
 }
 
@@ -2054,35 +2126,83 @@ void map_close (void)
  */
 void map_clear (void)
 {
-   map_setZoom(1.);
-   cur_commod = -1;
-   map_mode = MAPMODE_TRAVEL;
-   if (cur_system != NULL) {
-      map_xpos = cur_system->pos.x;
-      map_ypos = cur_system->pos.y;
-   }
-   else {
-      map_xpos = 0.;
-      map_ypos = 0.;
-   }
    array_free(map_path);
    map_path = NULL;
-
-   /* default system is current system */
-   map_selectCur();
+   map_selected = -1;
 }
 
-static void map_reset (void)
+static void map_updateInternal( CstMapWidget *cst, double dt )
 {
+   double dx, dy, mod, angle;
    double mapmin = 1.-map_minimal_mode;
-   cur_commod = -1;
-   map_mode = MAPMODE_TRAVEL;
-   map_alpha_decorators   = mapmin;
-   map_alpha_faction      = mapmin;
-   map_alpha_env          = mapmin;
-   map_alpha_path         = 1.;
-   map_alpha_names        = 1.;
-   map_alpha_markers      = 1.;
+
+#define AMAX(x) (x) = MIN( 1., (x) + dt )
+#define AMIN(x) (x) = MAX( 0., (x) - dt )
+#define ATAR(x,y) \
+if ((x) < y) (x) = MIN( y, (x) + dt ); \
+else (x) = MAX( y, (x) - dt )
+   switch (cst->mode) {
+      case MAPMODE_EDITOR: /* fall through */
+      case MAPMODE_TRAVEL:
+         ATAR( cst->alpha_decorators, mapmin );
+         ATAR( cst->alpha_faction, mapmin );
+         ATAR( cst->alpha_env, mapmin );
+         AMAX( cst->alpha_path );
+         AMAX( cst->alpha_names );
+         AMAX( cst->alpha_markers );
+         break;
+
+      case MAPMODE_DISCOVER:
+         ATAR( cst->alpha_decorators, 0.5 * mapmin );
+         ATAR( cst->alpha_faction, 0.5 * mapmin );
+         ATAR( cst->alpha_env, mapmin );
+         AMIN( cst->alpha_path );
+         AMAX( cst->alpha_names );
+         AMIN( cst->alpha_markers );
+         break;
+
+      case MAPMODE_TRADE:
+         AMIN( cst->alpha_decorators );
+         AMIN( cst->alpha_faction );
+         AMIN( cst->alpha_env );
+         AMIN( cst->alpha_path );
+         AMIN( cst->alpha_names );
+         AMIN( cst->alpha_markers );
+         break;
+   }
+#undef AMAX
+#undef AMIN
+#undef ATAR
+
+   dx = (cst->xtarget - cst->xpos);
+   dy = (cst->ytarget - cst->ypos);
+   mod = MOD(dx,dy);
+   if (mod > 1e-5) {
+      angle = ANGLE(dx,dy);
+      /* TODO we should really do this with some nicer easing. */
+      mod = MIN( mod, dt*map_flyto_speed);
+      cst->xpos += mod * cos(angle);
+      cst->ypos += mod * sin(angle);
+   }
+}
+
+/**
+ * @brief Set the steady-state values.
+ */
+static void map_reset( CstMapWidget* cst, MapMode mode )
+{
+   cst->mode = mode;
+   map_updateInternal( cst, 1000. );
+}
+
+/**
+ * @brief Returns the data pointer for "the" map window's widget (or NULL if map isn't open).
+ */
+static CstMapWidget* map_globalCustomData( unsigned int wid )
+{
+   if (wid==0)
+      wid = window_get(MAP_WDWNAME);
+   return (wid > 0) ? window_custGetData( wid, "cstMap" ) : NULL;
 }
 
 /**
@@ -2122,14 +2242,11 @@ void map_jump (void)
    /* set selected system to self */
    map_selectCur();
 
-   map_xpos = cur_system->pos.x;
-   map_ypos = cur_system->pos.y;
-
    /* update path if set */
    if (array_size(map_path) != 0) {
       array_erase( &map_path, &map_path[0], &map_path[1] );
       if (array_size(map_path) == 0)
-         player_targetHyperspaceSet( -1 );
+         player_targetHyperspaceSet( -1, 0 );
       else { /* get rid of bottom of the path */
          int j;
          /* set the next jump to be to the next in path */
@@ -2138,17 +2255,17 @@ void map_jump (void)
                /* Restore selected system. */
                map_selected = array_back( map_path ) - systems_stack;
 
-               player_targetHyperspaceSet( j );
+               player_targetHyperspaceSet( j, 1 );
                break;
             }
          }
          /* Overrode jump route manually, must clear target. */
          if (j>=array_size(cur_system->jumps))
-            player_targetHyperspaceSet( -1 );
+            player_targetHyperspaceSet( -1, 0 );
       }
    }
    else
-      player_targetHyperspaceSet( -1 );
+      player_targetHyperspaceSet( -1, 0 );
 
    gui_setNav();
 }
@@ -2185,7 +2302,7 @@ void map_select( const StarSystem *sys, char shifted )
 
          if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
-            player_targetHyperspaceSet( -1 );
+            player_targetHyperspaceSet( -1, 0 );
             player_autonavAbortJump(NULL);
             autonav = 0;
          }
@@ -2194,7 +2311,7 @@ void map_select( const StarSystem *sys, char shifted )
             for (int i=0; i<array_size(cur_system->jumps); i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
-                  player_targetHyperspaceSet( i );
+                  player_targetHyperspaceSet( i, 0 );
                   break;
                }
             }
@@ -2202,7 +2319,7 @@ void map_select( const StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         player_targetHyperspaceSet( -1 );
+         player_targetHyperspaceSet( -1, 0 );
          player_autonavAbortJump(NULL);
          autonav = 0;
       }
@@ -2354,9 +2471,10 @@ static void A_freeList( SysNode *first )
 }
 
 /** @brief Sets map_zoom to zoom and recreates the faction disk texture. */
-void map_setZoom(double zoom)
+void map_setZoom( unsigned int wid, double zoom )
 {
-   map_zoom = zoom;
+   CstMapWidget *cst = map_globalCustomData(wid);
+   cst->zoom = zoom;
 }
 
 /**
@@ -2507,8 +2625,8 @@ int map_map( const Outfit *map )
    for (int i=0; i<array_size(map->u.map->systems);i++)
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   for (int i=0; i<array_size(map->u.map->assets);i++)
-      planet_setKnown(map->u.map->assets[i]);
+   for (int i=0; i<array_size(map->u.map->spobs);i++)
+      spob_setKnown(map->u.map->spobs[i]);
 
    for (int i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
@@ -2529,11 +2647,11 @@ int map_isUseless( const Outfit* map )
       if (!sys_isKnown(map->u.map->systems[i]))
          return 0;
 
-   for (int i=0; i<array_size(map->u.map->assets);i++) {
-      Planet *p = map->u.map->assets[i];
-      if (!planet_hasSystem( p->name ) )
+   for (int i=0; i<array_size(map->u.map->spobs);i++) {
+      Spob *p = map->u.map->spobs[i];
+      if (!spob_hasSystem( p->name ) )
          continue;
-      if (!planet_isKnown(p))
+      if (!spob_isKnown(p))
          return 0;
    }
 
@@ -2565,13 +2683,13 @@ int localmap_map( const Outfit *lmap )
          jp_setFlag( jp, JP_KNOWN );
    }
 
-   detect = lmap->u.lmap.asset_detect;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
-      if (!planet_hasSystem( p->name ) )
+   detect = lmap->u.lmap.spob_detect;
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
+      if (!spob_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
-         planet_setKnown( p );
+         spob_setKnown( p );
    }
    return 0;
 }
@@ -2598,10 +2716,10 @@ int localmap_isUseless( const Outfit *lmap )
          return 0;
    }
 
-   detect = lmap->u.lmap.asset_detect;
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *p = cur_system->planets[i];
-      if ((mod*p->hide <= detect) && !planet_isKnown( p ))
+   detect = lmap->u.lmap.spob_detect;
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *p = cur_system->spobs[i];
+      if ((mod*p->hide <= detect) && !spob_isKnown( p ))
          return 0;
    }
    return 1;
@@ -2619,44 +2737,50 @@ int localmap_isUseless( const Outfit *lmap )
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
-   StarSystem *sys;
+   CstMapWidget *cst = calloc( 1, sizeof(CstMapWidget) );
+
+   /* New widget. */
+   window_addCust( wid, x, y, w, h,
+         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, cst );
+   window_custAutoFreeData( wid, "cstMap" );
 
    /* Set up stuff. */
    map_setup();
 
    /* Set position to focus on current system. */
-   map_xpos = cur_system->pos.x * zoom;
-   map_ypos = cur_system->pos.y * zoom;
+   cst->xtarget = cst->xpos = cur_system->pos.x * zoom;
+   cst->ytarget = cst->ypos = cur_system->pos.y * zoom;
 
    /* Set zoom. */
-   map_setZoom(zoom);
+   map_setZoom( wid, zoom );
 
-   /* Make sure selected is valid. */
-   sys = system_getIndex( map_selected );
-   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
-         !sys_isKnown(sys) && !space_sysReachable(sys))
-      map_selectCur();
-
-   window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse, NULL, map_focusLose, NULL );
+   map_reset( cst, MAPMODE_TRAVEL );
 }
 
 /**
- * @brief Centers the map on a planet.
+ * @brief Centers the map on a spob.
  *
+ *    @param wid ID of the window with the map widget, or 0 for "the" map window.
  *    @param sys System to center the map on (internal name).
  *    @return 0 on success.
  */
-int map_center( const char *sys )
+int map_center( int wid, const char *sys )
 {
+   double d;
+   CstMapWidget *cst = map_globalCustomData( wid );
+
    /* Get the system. */
    StarSystem *ssys = system_get( sys );
    if (ssys == NULL)
       return -1;
 
    /* Center on the system. */
-   map_xpos = ssys->pos.x * map_zoom;
-   map_ypos = ssys->pos.y * map_zoom;
+   cst->xtarget = ssys->pos.x * cst->zoom;
+   cst->ytarget = ssys->pos.y * cst->zoom;
+
+   /* Compute flyto speed. */
+   d = MOD( cst->xtarget-cst->xpos, cst->ytarget-cst->ypos );
+   map_flyto_speed = MIN( 2000., d / 0.2 );
 
    return 0;
 }
@@ -2670,6 +2794,7 @@ int map_load (void)
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Uint32 time = SDL_GetTicks();
 
    decorator_stack = array_create( MapDecorator );
 
@@ -2703,7 +2828,12 @@ int map_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d map decorator in %.3f s", "Loaded %d map decorators in %.3f s", array_size(decorator_stack) ), array_size(decorator_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
 
    return 0;
 }

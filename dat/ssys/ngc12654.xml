@@ -10,9 +10,9 @@
   <x>-532.145427</x>
   <y>-1304.358536</y>
  </pos>
- <assets>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-10789">
    <autopos/>

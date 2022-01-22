@@ -10,13 +10,13 @@
   <x>769.363938</x>
   <y>-844.003329</y>
  </pos>
- <assets>
-  <asset>Arai</asset>
-  <asset>Arch Arai</asset>
-  <asset>Ruttwi I</asset>
-  <asset>Ruttwi II</asset>
-  <asset_virtual>Dvaered Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Arai</spob>
+  <spob>Arch Arai</spob>
+  <spob>Ruttwi I</spob>
+  <spob>Ruttwi II</spob>
+  <spob_virtual>Dvaered Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Druss">
    <pos x="1406.230514" y="19670.467799"/>

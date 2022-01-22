@@ -2,6 +2,7 @@
 <ssys name="Pilatis">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>15400.000000</radius>
   <stars>300</stars>
@@ -12,13 +13,13 @@
   <x>259.000000</x>
   <y>131.000000</y>
  </pos>
- <assets>
-  <asset>Pilatis I</asset>
-  <asset>Pilatis II</asset>
-  <asset>Pilatis III</asset>
-  <asset>Wildwood Station</asset>
-  <asset_virtual>Trade Lane (Empire)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Pilatis I</spob>
+  <spob>Pilatis II</spob>
+  <spob>Pilatis III</spob>
+  <spob>Wildwood Station</spob>
+  <spob_virtual>Trade Lane (Empire)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Defa">
    <autopos/>
@@ -38,6 +39,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

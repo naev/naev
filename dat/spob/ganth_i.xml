@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ganth I">
+ <pos>
+  <x>-7430.205851</x>
+  <y>-5372.576113</y>
+ </pos>
+ <GFX>
+  <space>O02.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -8,12 +8,12 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Jorla</planet>
+  <spob>Jorla</spob>
  </avail>
-  <notes>
-   <campaign>Nebula Research</campaign>
-   <tier>2</tier>
-  </notes>
+ <notes>
+  <campaign>Nebula Research</campaign>
+  <tier>2</tier>
+ </notes>
 </mission>
 --]]
 --[[
@@ -172,17 +172,17 @@ His last words are supposed to be reassuring but instead you start to think that
 end
 
 function jumpin()
-    mem.sys = system.cur()
-    if mem.misn_stage == 0 and mem.sys == t_sys[1] then
-        hook.timer(5.0, "beginFirstScan")
-    elseif mem.misn_stage == 1 and mem.sys == t_sys[2] then
-        mem.misn_stage = 2
-        hook.timer(5.0, "beginSecondScan")
-    end
+   mem.sys = system.cur()
+   if mem.misn_stage == 0 and mem.sys == t_sys[1] then
+      hook.timer(5.0, "beginFirstScan")
+   elseif mem.misn_stage == 1 and mem.sys == t_sys[2] then
+      mem.misn_stage = 2
+      hook.timer(5.0, "beginSecondScan")
+   end
 end
 
 function beginFirstScan()
-    vn.clear()
+   vn.clear()
     vn.scene()
     local student = vn.newCharacter( nebu_research.vn_student() )
     vn.transition("fade")
@@ -197,25 +197,25 @@ function beginFirstScan()
 end
 
 function startProblems()
-    -- Cancel autonav.
-    player.cinematics(true)
-    player.cinematics(false)
-    local ps = player.pilot()
-    ps:control()
-    mem.phook = hook.timer(0.1, "drainShields")
-    hook.timer(4.0, "noticeProblems")
+   -- Cancel autonav.
+   player.cinematics(true)
+   player.cinematics(false)
+   local ps = player.pilot()
+   ps:control()
+   mem.phook = hook.timer(0.1, "drainShields")
+   hook.timer(4.0, "noticeProblems")
 end
 
 function drainShields()
-    local ps = player.pilot()
-    local armour = ps:health()
-    ps:setHealth(armour, 0)
-    ps:setEnergy(0)
-    mem.phook = hook.timer(0.1, "drainShields")
+   local ps = player.pilot()
+   local armour = ps:health()
+   ps:setHealth(armour, 0)
+   ps:setEnergy(0)
+   mem.phook = hook.timer(0.1, "drainShields")
 end
 
 function noticeProblems()
-    vn.clear()
+   vn.clear()
     vn.scene()
     vn.transition("fade")
     vn.na(_("Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship."))
@@ -271,4 +271,3 @@ function endSecondScan()
     misn.markerMove(mem.misn_marker, homeworld_sys)
     misn.osdActive(3)
 end
-

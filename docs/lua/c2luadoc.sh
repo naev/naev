@@ -54,11 +54,11 @@ sed -n                                                                         \
  -e 's|^\s*$||p'                                                               \
 `# Delete everything else, just in case:`                                      \
  -e 'd'                                                                        \
-   $1 | awk '
+   "$1" | awk '
 # Skips all comment blocks without an @ tag
    BEGIN {
       RS="\n\n"
    }
    /@/ {
       print $0, "\n"
-   }' > $2
+   }' > "$2"

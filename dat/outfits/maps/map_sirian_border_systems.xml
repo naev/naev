@@ -9,26 +9,26 @@
  <specific type="map">
   <sys name="Esker">
    <jump>Nougat</jump>
-   <asset>Esker I</asset>
-   <asset>Esker II</asset>
-   <asset>Esker IV</asset>
-   <asset>Fyruse Station</asset>
-   <asset>Madria</asset>
-   <asset>Suoer</asset>
+   <spob>Esker I</spob>
+   <spob>Esker II</spob>
+   <spob>Esker IV</spob>
+   <spob>Fyruse Station</spob>
+   <spob>Madria</spob>
+   <spob>Suoer</spob>
   </sys>
   <sys name="Eye of Night">
    <jump>Fidelis</jump>
-   <asset>Eye of Night I</asset>
-   <asset>Eye of Night II</asset>
-   <asset>Eye of Night III</asset>
-   <asset>Inios Station</asset>
-   <asset>Traal</asset>
+   <spob>Eye of Night I</spob>
+   <spob>Eye of Night II</spob>
+   <spob>Eye of Night III</spob>
+   <spob>Inios Station</spob>
+   <spob>Traal</spob>
   </sys>
   <sys name="Pike">
    <jump>Atlantis</jump>
-   <asset>Coral Station</asset>
-   <asset>Ohon</asset>
-   <asset>Pike I</asset>
+   <spob>Coral Station</spob>
+   <spob>Ohon</spob>
+   <spob>Pike I</spob>
   </sys>
  </specific>
 </outfit>

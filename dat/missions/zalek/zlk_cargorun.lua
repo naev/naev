@@ -32,8 +32,8 @@ function create ()
    misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.webp", _("This Za'lek scientist seems to be looking for someone.") )  -- creates the scientist at the bar
 
    -- Planets
-   mem.pickupWorld, mem.pickupSys  = planet.getLandable("Vilati Vilata")
-   mem.delivWorld, mem.delivSys    = planet.getLandable("Oberon")
+   mem.pickupWorld, mem.pickupSys  = spob.getLandable("Vilati Vilata")
+   mem.delivWorld, mem.delivSys    = spob.getLandable("Oberon")
    -- Have to claim so Logan doesn't get cleared upon takeoff at destination
    if not misn.claim( mem.delivSys ) then
       misn.finish(false)
@@ -42,7 +42,7 @@ function create ()
    if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
       misn.finish(false)
    end
-   mem.origWorld, mem.origSys      = planet.cur()
+   mem.origWorld, mem.origSys      = spob.cur()
 
 --   origtime = time.get()
 end
@@ -68,7 +68,7 @@ function accept ()
 
       mem.marker = misn.markerAdd( mem.pickupSys, "low" )  -- pickup
       -- OSD
-      misn.osdCreate( _("Za'lek Cargo Monkey"), {
+      misn.osdCreate( _("Za'lek Cargo Jockey"), {
          fmt.f(_("Go pick up some equipment at {pnt} in the {sys} system"), {pnt=mem.pickupWorld, sys=mem.pickupSys}),
          fmt.f(_("Drop off the equipment at {pnt} in the {sys} system"), {pnt=mem.delivWorld, sys=mem.delivSys}),
       } )
@@ -82,7 +82,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == mem.pickupWorld and not mem.pickedup then
+   if spob.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < 20 then
          tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
          misn.finish()
@@ -98,7 +98,7 @@ function land ()
 
          misn.osdActive(2)  --OSD
       end
-   elseif planet.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
+   elseif spob.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
       tk.msg( _("Success"), _([[You land on the Za'lek planet and find your ship swarmed by dockhands in red and advanced-looking droids rapidly. They unload the equipment and direct you to a rambling edifice for payment.
     When you enter, your head spins at a combination of the highly advanced and esoteric-looking tech so casually on display as well as the utter chaos of the facility. It takes a solid ten hectoseconds before someone comes to you asking what you need, looking quite frazzled. You state that you delivered some equipment and are looking for payment. The man types in a wrist-pad for a few seconds and says that the person you are looking for has not landed yet. He gives you a code to act as a beacon so you can catch the shuttle in-bound.]]) )
       misn.cargoRm (mem.cargoID)
@@ -112,9 +112,7 @@ end
 
 function takeoff()
    if system.cur() == mem.delivSys and mem.droppedoff then
-
-      logan = pilot.add( "Gawain", "Independent", player.pos() + vec2.new(-500,-500) )
-      logan:rename(_("Dr. Logan"))
+      logan = pilot.add( "Gawain", "Independent", player.pos() + vec2.new(-500,-500), _("Dr. Logan") )
       logan:setFaction("Za'lek")
       logan:setFriendly()
       logan:setInvincible()

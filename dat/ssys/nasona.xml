@@ -10,10 +10,10 @@
   <x>606.000000</x>
   <y>87.000000</y>
  </pos>
- <assets>
-  <asset_virtual>Empire Unpresence</asset_virtual>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Arandon">
    <autopos/>

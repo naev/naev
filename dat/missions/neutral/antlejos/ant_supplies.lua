@@ -5,11 +5,10 @@
   <priority>4</priority>
   <chance>350</chance>
   <location>Computer</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 5</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
@@ -29,7 +28,7 @@ local car = require "common.cargo"
 
 local cargo_name = _("Volunteers and Equipment")
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 local levelup = {
    0,
@@ -38,7 +37,7 @@ local levelup = {
    0,
    0, -- bar, missions
    -- Up to 5 already done
-   1000, -- +commodity (TODO commodities are bugged)
+   1000, -- +commodity
    1500, -- +bad outfits
    2000, -- +better outfits
    2500, -- +bad spaceships
@@ -102,7 +101,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < mem.amount then
@@ -119,7 +118,7 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -138,7 +137,7 @@ function land ()
       local total = ant.supplied_total()
       for l = 1,#levelup do
          if level < l and total > levelup[l] then
-            -- TODO bette messages
+            -- TODO better messages
             vntk.msg(_("Terraforming Progress"),_("Through the new supplies and volunteers, Antlejos V has been able to expand its facilities."))
             ant.unidiff( ant.unidiff_list[6] )
             break

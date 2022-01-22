@@ -1,15 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot_hook.c
  *
  * @brief Handles the pilot hook stuff.
  */
-
-
 /** @cond */
 #include <limits.h>
 #include <math.h>
@@ -26,10 +22,8 @@
 #include "nstring.h"
 #include "nxml.h"
 
-
 static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
 static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
-
 
 /**
  * @brief Tries to run a pilot hook if he has it.
@@ -100,7 +94,6 @@ int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int npa
    return run;
 }
 
-
 /**
  * @brief Tries to run a pilot hook if he has it.
  *
@@ -112,7 +105,6 @@ int pilot_runHook( Pilot* p, int hook_type )
 {
    return pilot_runHookParam( p, hook_type, NULL, 0 );
 }
-
 
 /**
  * @brief Adds a hook to the pilot.
@@ -135,7 +127,6 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
    phook->id    = hook;
 }
 
-
 /**
  * @brief Adds a pilot global hook.
  */
@@ -153,22 +144,18 @@ void pilots_addGlobalHook( int type, unsigned int hook )
    phook->id   = hook;
 }
 
-
 /**
  * @brief Removes a pilot global hook.
  */
 void pilots_rmGlobalHook( unsigned int hook )
 {
-   int i;
-
-   for (i=0; i<array_size(pilot_globalHooks); i++) {
-      if (pilot_globalHooks[i].id == hook) {
-         array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
-         return;
-      }
+   for (int i=0; i<array_size(pilot_globalHooks); i++) {
+      if (pilot_globalHooks[i].id != hook)
+         continue;
+      array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
+      return;
    }
 }
-
 
 /**
  * @brief Removes all the pilot global hooks.
@@ -178,7 +165,6 @@ void pilots_clearGlobalHooks (void)
    array_erase( &pilot_globalHooks, array_begin(pilot_globalHooks), array_end(pilot_globalHooks) );
 }
 
-
 /**
  * @brief Removes a hook from all the pilots.
  *
@@ -186,8 +172,7 @@ void pilots_clearGlobalHooks (void)
  */
 void pilots_rmHook( unsigned int hook )
 {
-   int i, j;
-   Pilot *p, *const*plist;
+   Pilot *const*plist;
 
    /* Cleaning up a pilot's hooks. */
    if (pilot_hookCleanup)
@@ -197,10 +182,10 @@ void pilots_rmHook( unsigned int hook )
    pilots_rmGlobalHook( hook );
 
    plist = pilot_getAll();
-   for (i=0; i<array_size(plist); i++) {
-      p = plist[i];
+   for (int i=0; i<array_size(plist); i++) {
+      Pilot *p = plist[i];
 
-      for (j=0; j<array_size(p->hooks); j++) {
+      for (int j=0; j<array_size(p->hooks); j++) {
          /* Hook not found. */
          if (p->hooks[j].id != hook)
             continue;
@@ -211,7 +196,6 @@ void pilots_rmHook( unsigned int hook )
    }
 }
 
-
 /**
  * @brief Clears the pilots hooks.
  *
@@ -219,18 +203,15 @@ void pilots_rmHook( unsigned int hook )
  */
 void pilot_clearHooks( Pilot *p )
 {
-   int i;
-
    /* Remove the hooks. */
    pilot_hookCleanup = 1;
-   for (i=0; i<array_size(p->hooks); i++)
+   for (int i=0; i<array_size(p->hooks); i++)
       hook_rm( p->hooks[i].id );
    pilot_hookCleanup = 0;
 
    array_free(p->hooks);
    p->hooks  = NULL;
 }
-
 
 /**
  * @brief Clears global pilot hooks.

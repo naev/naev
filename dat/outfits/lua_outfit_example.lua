@@ -1,7 +1,7 @@
 --[[
 
 Example of what can be done with Lua outfits. This is only the Lua-side of the
-API and must be set in the XML file.
+API and must be set in the XML file. This only works for *Modifier* outfits!
 
 * All functions are optional. In the case they don't exist, nothing happens.
 * ontoggle is a special case that allows the player to toggle the outfit if it exists.
@@ -11,6 +11,11 @@ API and must be set in the XML file.
 * You have access to the pilotoutfit API which is meant for manipulating po.
 * Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
+
+-- The onload is run once when the outfit Lua is loaded. Useful for setting up
+-- variables. The passed variable is the outfit itself.
+function onload( _o )
+end
 
 -- The init is run when the pilot is created
 function init( _p, _po )
@@ -51,12 +56,32 @@ end
 function onstealth( _p, _po, _stealthed )
 end
 
+-- Run when the pilot is scanned by a scanner pilot.
+function onscanned( _p, _po, _scanner )
+end
+
+-- Run when the pilot scans a target pilot.
+function onscan( _p, _po, _target )
+end
+
 -- The cooldown function is triggered when both cooldown starts and when
 -- it ends. The done is a boolean value which indicates whether or not it
 -- finished. In the case done is false, opt will indicate the number of
 -- seconds the cooldown will take. If done is true, then opt will be a
 -- a boolean indicating whether or not it successfully completed.
 function cooldown( _p, _po, _done, _opt )
+end
+
+-- Triggered when pilot lands (player only)
+function land( _p, _po )
+end
+
+-- Triggered when pilot takes off (player only)
+function takeoff( _p, _po )
+end
+
+-- Triggered when pilot jumps in (player only)
+function jumpin( _p, _po )
 end
 
 

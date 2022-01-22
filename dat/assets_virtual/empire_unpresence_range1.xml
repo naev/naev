@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="Empire Unpresence (Range 1)">
- <presence>
-  <faction>Empire</faction>
-  <bonus>-100000.000000</bonus>
-  <range>1</range>
- </presence>
-</asset>

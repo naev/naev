@@ -1,6 +1,6 @@
 -- vim: set expandtab shiftwidth=3 syntax=lua:
 
-std = "lua51c+love+Basic"
+std = "lua51+love+Basic"
 
 -- It would be nice to enforce a ~120 char limit for regular lines of code, but missions etc. have inline text of considerable size.
 -- Note: there's a `max_string_line_length` option, but that only applies when the line ending is inside a string. Useless.
@@ -23,8 +23,9 @@ stds.Basic={
          fields={"unpack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
+      "inlist",
    },
-   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn" },
+   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn"},
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
@@ -34,9 +35,9 @@ stds.Canvas = {read_globals={"canvas"}}
 stds.Col = {read_globals={"colour"}}
 stds.Commodity = {read_globals={"commodity"}}
 stds.Data = {read_globals={"data"}}
-stds.Debug = {read_globals={"debug"}}
 stds.Diff = {read_globals={"diff"}}
 stds.Evt = {read_globals={"evt"}}
+stds.CLI = {read_globals={"script", "printRaw"}} -- Actually set in cli_initLua()
 stds.Faction = {read_globals={"faction"}}
 stds.File = {read_globals={"file"}}
 stds.Font = {read_globals={"font"}}
@@ -52,7 +53,7 @@ stds.News = {read_globals={"news"}}
 stds.Outfit = {read_globals={"outfit"}}
 stds._Pilot = {read_globals={"pilot"}}
 stds.PilotOutfit = {read_globals={"pilotoutfit"}}
-stds.Planet = {read_globals={"planet"}}
+stds.Spob = {read_globals={"spob"}}
 stds.Player = {read_globals={"player"}}
 stds.Rnd = {read_globals={"rnd"}}
 stds.Safelanes = {read_globals={"safelanes"}}
@@ -68,7 +69,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship"
-STANDARD = "+Naev+Var+Planet+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 
@@ -101,6 +102,7 @@ stds.AI.globals = {
    "moveto",                    -- pilotL_moveto
    "moveto_nobrake",            -- pilotL_moveto
    "moveto_nobrake_raw",        -- pilotL_moveto
+   "lunge",                     -- the_bite
    "runaway",                   -- pilotL_runaway
    "runaway_jump",              -- pilotL_runaway
    "runaway_land",              -- pilotL_runaway
@@ -112,9 +114,12 @@ stds.AI.globals = {
    "idle",                      -- a task, commonly called and overridden
    "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.
    "taunt",                     -- everyone has their own!
+   "transportParam",            -- initialization helper for the AIs
 }
 stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
+stds.API_datapath = {globals={"datapath"}} -- C functon: conf_loadConfigPath
+stds.API_loadscreen = {globals={"render"}}    -- C function: loadscreen_render()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
@@ -122,14 +127,25 @@ stds.API_faction = {globals={
 }}
 stds.API_land = {globals={"land"}}      -- C function: planet_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
-stds.API_save_updater = {globals={"outfit"}}    -- C function: player_tryGetOutfit
+stds.API_save_updater = {globals={
+   "license",                           -- C function: player_tryAddLicense
+   "outfit",                            -- C function: player_tryGetOutfit
+}}
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={
    "create",                            -- C function: system_scheduler()
    "decrease",                          -- C function: system_rmCurrentPresence()
    "spawn",                             -- C function: system_scheduler()
 }}
-stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
+stds.API_spob = {globals={
+   "load",     -- C function: planet_gfxLoad
+   "unload",   -- C function: planet_gfxUnload
+   "can_land", -- C function: planet_updateLand
+   "land",     -- C function: player_land
+   "render",   -- C function: space_renderSpob
+   "update",   -- C function: space_updateSpob
+}}
+stds.Background.globals={"background", "renderbg", "rendermg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
    "create",
@@ -143,6 +159,7 @@ stds.GUI.globals = {
    "update_nav",
    "update_ship",
    "update_system",
+   "update_effects",
    "update_target",
 }
 stds.Misn.globals={"abort", "accept", "create", "mem"}
@@ -154,6 +171,7 @@ stds.PilotOutfit.globals={
    "land",
    "onadd",
    "onhit",
+   "onimpact",
    "onload",
    "onremove",
    "onscan",
@@ -163,27 +181,41 @@ stds.PilotOutfit.globals={
    "ontoggle",
    "outofenergy",
    "takeoff",
+   "jumpin",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+AI"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera" .. GFX
+files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera+Audio" .. GFX
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
+files["dat/common.lua"].std = STANDARD
+files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
+files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
 files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
-files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
+files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera"
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+Audio+LinOpt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
+files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+
+files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
+files["docs/missions/**/*.lua"].std = files["dat/missions/**/*.lua"].std
+
+files["extras/autotests.lua"].std = STANDARD
+files["utils/**/*.lua"].std = STANDARD
+
+files["**/datapath.lua"].std = "API_datapath"

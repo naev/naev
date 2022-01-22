@@ -23,9 +23,19 @@ local taunt_list = {
 
 -- Create function
 function create ()
-   -- Credits
-   local price = ai.pilot():ship():price()
-   ai.setcredits( rnd.rnd(price/300, price/70) )
+   local p = ai.pilot()
+   local ps = p:ship()
+   local price = ps:price()
+
+   -- See if it's a transport ship
+   mem.istransport = ps:tags().transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    -- Finish up creation
    create_post()

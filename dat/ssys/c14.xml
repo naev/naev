@@ -10,11 +10,11 @@
   <x>-345.467593</x>
   <y>81.645062</y>
  </pos>
- <assets>
-  <asset>P9234</asset>
-  <asset>S49281</asset>
-  <asset>S49335</asset>
- </assets>
+ <spobs>
+  <spob>P9234</spob>
+  <spob>S49281</spob>
+  <spob>S49335</spob>
+ </spobs>
  <jumps>
   <jump target="C-00">
    <autopos/>

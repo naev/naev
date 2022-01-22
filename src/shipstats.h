@@ -26,6 +26,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURN_MOD,         /**< Turn multiplier. */
    SS_TYPE_D_THRUST_MOD,       /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
+   SS_TYPE_D_FUEL_MOD,         /**< Fuel capacity multiplier. */
    SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
    SS_TYPE_D_SHIELD_MOD,       /**< Shield multiplier. */
@@ -55,6 +56,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
+   SS_TYPE_D_LAUNCH_CALIBRATION,/**< Calibration speed of launchers. */
    SS_TYPE_D_LAUNCH_RELOAD,   /**< Regeneration rate of launcher ammo. */
 
    /* Fighter Bays. */
@@ -91,6 +93,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
    SS_TYPE_D_COOLDOWN_TIME,   /**< Speeds up or slows down the cooldown time. */
    SS_TYPE_D_JUMP_DISTANCE,   /**< Modifies the distance from a jump point at which the pilot can jump. */
+   SS_TYPE_D_JUMP_WARMUP,     /**< Modifies the time it takes to warm up to jump. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -110,6 +113,8 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ARMOUR,          /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,    /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS,/**< Flat armour regeneration modifier (not multiplied). */
+   SS_TYPE_A_DAMAGE,          /**< Flat damage modifier (eats through shield first then armour like normal damage). */
+   SS_TYPE_A_DISABLE,         /**< Flat disable modifier (acts like normal disable damage). */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,         /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
@@ -213,9 +218,12 @@ typedef struct ShipStats_ {
    double armour_mod;         /**< Armour multiplier. */
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
    double armour_regen_malus; /**< Armour regeneration (flat). */
+   double damage;             /**< Damage over time. */
+   double disable;            /**< Disable over time. */
 
    /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
+   double fuel_mod;           /**< Fuel capacity multiplier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
    double absorb;             /**< Flat damage absorption. */
@@ -247,6 +255,7 @@ typedef struct ShipStats_ {
    double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
+   double launch_calibration;/**< Calibration speed of launchers. */
    double launch_reload;   /**< Reload rate of launchers. */
 
    /* Fighter bays. */
@@ -281,19 +290,20 @@ typedef struct ShipStats_ {
 
    /* Misc. */
    double nebu_absorb;     /**< Shield nebula resistance. */
-   int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
-   int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
-   int misc_asteroid_scan;   /**< Able to scan asteroids. */
+   int misc_instant_jump;  /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust;/**< Slows down the ship instead of turning it around. */
+   int misc_asteroid_scan; /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
-   int fuel;                  /**< Maximum fuel modifier. */
-   double fuel_regen;         /**< Absolute fuel regeneration. */
-   int cargo;                 /**< Maximum cargo modifier. */
-   int crew;                  /**< Crew modifier. */
-   double loot_mod;           /**< Boarding loot reward bonus. */
-   double time_mod;           /**< Time dilation modifier. */
-   double time_speedup;       /**< Makes the pilot operate at higher speeds. */
-   double cooldown_time;      /**< Modifies cooldown time. */
-   double jump_distance;      /**< Modifies how far the pilot can jump from the jump point. */
+   int fuel;               /**< Maximum fuel modifier. */
+   double fuel_regen;      /**< Absolute fuel regeneration. */
+   int cargo;              /**< Maximum cargo modifier. */
+   int crew;               /**< Crew modifier. */
+   double loot_mod;        /**< Boarding loot reward bonus. */
+   double time_mod;        /**< Time dilation modifier. */
+   double time_speedup;    /**< Makes the pilot operate at higher speeds. */
+   double cooldown_time;   /**< Modifies cooldown time. */
+   double jump_distance;   /**< Modifies how far the pilot can jump from the jump point. */
+   double jump_warmup;     /**< Modifies the time that is necessary to jump. */
 } ShipStats;
 
 /*
@@ -306,6 +316,7 @@ int ss_check (void);
  */
 ShipStatList* ss_listFromXML( xmlNodePtr node );
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll );
+int ss_sort( ShipStatList **ll );
 void ss_free( ShipStatList *ll );
 
 /*
@@ -313,8 +324,10 @@ void ss_free( ShipStatList *ll );
  */
 int ss_statsInit( ShipStats *stats );
 int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list );
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
+int ss_statsModSingle( ShipStats *stats, const ShipStatList *list );
+int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale );
+int ss_statsModFromList( ShipStats *stats, const ShipStatList *list );
+int ss_statsModFromListScale( ShipStats *stats, const ShipStatList *list, double scale );
 
 /*
  * Lookup.

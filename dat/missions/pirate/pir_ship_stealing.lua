@@ -55,7 +55,7 @@ local faction_tags = {
 local ships = {}
 for i, ship in ipairs(ship.getAll()) do
    local tags = ship:tags()
-   if not tags["noplayer"] then
+   if not tags["noplayer"] and not tags["nosteal"] then
       for fctname, tag in pairs(faction_tags) do
          if tags[tag] then
             ships[fctname] = ships[fctname] or {}
@@ -89,7 +89,7 @@ local function random_planet()
       minimum_distance, maximum_distance,
 
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             local f = v:faction()
             if f and ships[f:nameRaw()] and v:services().shipyard then
                planets[#planets + 1] = v
@@ -200,12 +200,12 @@ function accept()
 end
 
 function land()
-   local landed = planet.cur()
+   local landed, landsys = spob.cur()
    if landed == mem.planet then
       -- Try to swap ships
       local tmp = pilot.add( mem.ship, "Independent" )
       equip_generic( tmp )
-      if not swapship.swap( tmp ) then
+      if not swapship.swap( tmp, fmt.f(_("You acquired the ship through illegitimate means at {pnt} in the {sys} system. Yarr!"),{pnt=landed, sys=landsys}) ) then
          -- Failed to swap ship!
          tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
          tmp:rm() -- Get rid of the temporary pilot

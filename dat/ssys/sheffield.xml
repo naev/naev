@@ -2,6 +2,7 @@
 <ssys name="Sheffield">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>14000.000000</radius>
   <stars>400</stars>
@@ -12,7 +13,7 @@
   <x>-198.870017</x>
   <y>-906.945482</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="Gold">
    <autopos/>
@@ -33,6 +34,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

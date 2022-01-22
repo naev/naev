@@ -14,7 +14,7 @@
  <trail_generator x="-33" y="0" h="0">fire</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel</license>
- <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favorite target of pirates, so avoiding dangerous systems is strongly advised.</description>
+ <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favourite target of pirates, so avoiding dangerous systems is strongly advised.</description>
  <health>
   <armour>350</armour>
   <armour_regen>0</armour_regen>
@@ -28,13 +28,13 @@
  <slots>
   <weapon size="medium" prop="fighter_bay" x="-15" y="0" h="4" />
   <weapon size="medium" prop="fighter_bay" x="15" y="0" h="4" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -49,5 +49,6 @@
  </stats>
  <tags>
   <tag>standard</tag>
+  <tag>transport</tag>
  </tags>
 </ship>

@@ -10,9 +10,9 @@
   <x>-221.960242</x>
   <y>-1283.525202</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate All Unpresence (Range 1)</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-2836">
    <autopos/>

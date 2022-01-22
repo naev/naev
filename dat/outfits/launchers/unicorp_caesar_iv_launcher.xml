@@ -7,12 +7,11 @@
   <rarity>1</rarity>
   <mass>55</mass>
   <price>180000</price>
-  <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down light cruisers.</description>
+  <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down cruisers.</description>
   <gfx_store>caesarlauncher.webp</gfx_store>
   <cpu>-13</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Caesar IV Torpedo</ammo>
   <delay>7</delay>
   <reload_time>90</reload_time>
   <lockon>2</lockon>
@@ -21,5 +20,23 @@
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
   <amount>6</amount>
+  <ammo_mass>4</ammo_mass>
+  <gfx>caesar.png</gfx>
+  <sound>torpedo</sound>
+  <sound_hit>lrgexp0</sound_hit>
+  <spfx_shield>ExpL</spfx_shield>
+  <spfx_armour>ExpL</spfx_armour>
+  <trail_generator x="-10">fire-missileL</trail_generator>
+  <duration blowup="armour">33</duration>
+  <thrust>70</thrust>
+  <turn>25</turn>
+  <speed_max>180</speed_max>
+  <resist>100</resist>
+  <damage>
+   <type>impact</type>
+   <penetrate>70</penetrate>
+   <physical>700</physical>
+  </damage>
+  <ai>smart</ai>
  </specific>
 </outfit>

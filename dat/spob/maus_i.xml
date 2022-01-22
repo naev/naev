@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Maus I">
+ <pos>
+  <x>-985.724438</x>
+  <y>-965.188513</y>
+ </pos>
+ <GFX>
+  <space>moon-M02.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

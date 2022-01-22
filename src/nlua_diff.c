@@ -61,6 +61,10 @@ int nlua_loadDiff( nlua_env env )
 /**
  * @brief Applies a diff by name.
  *
+ * If your diff modifies a Spob or a system, the safe lanes will be re-computed
+ * just after it is applied, causing the game to freeze for a short time.
+ * As a result, prefer not to apply a diff when the player is in space.
+ *
  *    @luatparam string name Name of the diff to apply.
  * @luafunc apply
  */

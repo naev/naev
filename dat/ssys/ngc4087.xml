@@ -10,7 +10,9 @@
   <x>-522.166667</x>
   <y>-21.166667</y>
  </pos>
- <assets/>
+ <spobs>
+  <spob>Wormhole NGC-4087</spob>
+ </spobs>
  <jumps>
   <jump target="Antlejos">
    <autopos/>

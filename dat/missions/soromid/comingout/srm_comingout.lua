@@ -26,7 +26,7 @@ local srm = require "common.soromid"
 -- luacheck: globals do_chatter init_chatter land (Hook functions passed by name)
 
 -- Mission constants
-local misplanet, missys = planet.getS( "Durea" )
+local misplanet, missys = spob.getS( "Durea" )
 local credits = 50e3
 
 local chatter = {}
@@ -80,7 +80,7 @@ function accept ()
       misn.setTitle( _("Coming Out") )
       misn.setDesc( fmt.f(_("Your new friend needs you to take them to their parents in {sys}."), {sys=missys} ) )
       misn.setReward( _("The satisfaction of helping out a new friend") )
-      mem.marker = misn.markerAdd( missys, "low" )
+      mem.marker = misn.markerAdd( misplanet, "low" )
 
       misn.osdCreate( _("Coming Out"), {
          fmt.f(_("Go to the {sys} system and land on the planet {pnt}."), {sys=missys, pnt=misplanet} ),
@@ -127,7 +127,7 @@ end
 
 
 function land ()
-   if planet.cur() == misplanet then
+   if spob.cur() == misplanet then
       -- Use any remaining chatter boxes (make sure the player gets the
       -- whole story)
       while mem.chatter_index < #chatter do
@@ -135,7 +135,7 @@ function land ()
          tk.msg( "", chatter[ mem.chatter_index ] )
       end
 
-      tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favor. "Can you come with me, as a friend?" You smile and say that you can.
+      tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favour. "Can you come with me, as a friend?" You smile and say that you can.
     As it turns out, Chelsea has arranged to see her parents at the bar. When you arrive, Chelsea's parents immediately recognize and greet her, calling her by a different name. A look of sadness appears on Chelsea's face as she hears this, but she quickly hides it and her parents don't seem to notice. Chelsea greets her parents, introduces you as her friend, then sits down. You sit down next to her.]]) )
       tk.msg( "", _([["It's been so long!" Chelsea's mother says. "Your hair's getting long! I'm so glad you were able to make it over."
     Chelsea laughs nervously. "There's something I have to tell you," she says. "I, um... I'm transgender. I would like for you to call me Chelsea and refer to me with she/her pronouns from now on... if that's okay."

@@ -31,7 +31,7 @@
 #include "nlua_faction.h"
 #include "nlua_hook.h"
 #include "nlua_music.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_player.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
@@ -185,7 +185,7 @@ Mission* misn_getFromLua( lua_State *L )
 {
    Mission *misn, **misnptr;
 
-   nlua_getenv(__NLUA_CURENV, "__misn");
+   nlua_getenv( L, __NLUA_CURENV, "__misn" );
    misnptr = lua_touserdata( L, -1 );
    misn = misnptr ? *misnptr : NULL;
    lua_pop( L, 1 );
@@ -201,10 +201,10 @@ void misn_runStart( Mission *misn, const char *func )
    Mission **misnptr;
    misnptr = lua_newuserdata( naevL, sizeof(Mission*) );
    *misnptr = misn;
-   nlua_setenv( misn->env, "__misn" );
+   nlua_setenv( naevL, misn->env, "__misn" );
 
    /* Set the Lua state. */
-   nlua_getenv( misn->env, func );
+   nlua_getenv( naevL, misn->env, func );
 }
 
 /**
@@ -232,7 +232,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    ret = nlua_pcall(env, nargs, 0);
 
    /* The mission can change if accepted. */
-   nlua_getenv(env, "__misn");
+   nlua_getenv(naevL, env, "__misn");
    cur_mission = *(Mission**) lua_touserdata(naevL, -1);
    lua_pop(naevL, 1);
 
@@ -249,7 +249,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    }
 
    /* Get delete. */
-   nlua_getenv(env, "__misn_delete");
+   nlua_getenv(naevL, env, "__misn_delete");
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 
@@ -343,7 +343,7 @@ static int misn_setReward( lua_State *L )
  *  - "low": Low importance mission marker (lower than high).<br/>
  *  - "computer": Mission computer marker.<br/>
  *
- *    @luatparam System|Planet target System or planet to mark.
+ *    @luatparam System|Spob target System or spob to mark.
  *    @luatparam[opt="high"] string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd
@@ -356,33 +356,33 @@ static int misn_markerAdd( lua_State *L )
    Mission *cur_mission;
 
    /* Check parameters. */
-   if (lua_isplanet(L,1)) {
+   if (lua_isspob(L,1)) {
       issys = 0;
-      objid = luaL_checkplanet(L,1);
+      objid = luaL_checkspob(L,1);
    }
    else {
       issys = 1;
-      objid = luaL_checksystem(L,1);
+      objid = system_index( luaL_validsystem(L,1) );
    }
    stype = luaL_optstring( L, 2, "high" );
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
-      type = PNTMARKER_COMPUTER;
+      type = SPOBMARKER_COMPUTER;
    else if (strcmp(stype, "low")==0)
-      type = PNTMARKER_LOW;
+      type = SPOBMARKER_LOW;
    else if (strcmp(stype, "high")==0)
-      type = PNTMARKER_HIGH;
+      type = SPOBMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
-      type = PNTMARKER_PLOT;
+      type = SPOBMARKER_PLOT;
    else {
       NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
-   /* Convert planet -> system. */
+   /* Convert spob -> system. */
    if (issys)
-      type = mission_markerTypePlanetToSystem( type );
+      type = mission_markerTypeSpobToSystem( type );
 
    cur_mission = misn_getFromLua(L);
 
@@ -414,9 +414,9 @@ static int misn_markerMove( lua_State *L )
 
    /* Handle parameters. */
    id    = luaL_checkinteger( L, 1 );
-   if (lua_isplanet(L,2)) {
+   if (lua_isspob(L,2)) {
       issys = 0;
-      objid = luaL_checkplanet(L,2);
+      objid = luaL_checkspob(L,2);
    }
    else {
       issys = 1;
@@ -440,9 +440,9 @@ static int misn_markerMove( lua_State *L )
 
    /* Update system. */
    if (issys)
-      marker->type = mission_markerTypePlanetToSystem( marker->type );
+      marker->type = mission_markerTypeSpobToSystem( marker->type );
    else
-      marker->type = mission_markerTypeSystemToPlanet( marker->type );
+      marker->type = mission_markerTypeSystemToSpob( marker->type );
    marker->objid = objid;
 
    /* Update system markers. */
@@ -553,18 +553,13 @@ static int misn_setNPC( lua_State *L )
  */
 static int misn_factions( lua_State *L )
 {
-   int i;
-   MissionData *dat;
-   LuaFaction f;
-   Mission *cur_mission;
-
-   cur_mission = misn_getFromLua(L);
-   dat = cur_mission->data;
+   Mission *cur_mission = misn_getFromLua(L);
+   const MissionData *dat = cur_mission->data;
 
    /* we'll push all the factions in table form */
    lua_newtable(L);
-   for (i=0; i<array_size(dat->avail.factions); i++) {
-      f = dat->avail.factions[i];
+   for (int i=0; i<array_size(dat->avail.factions); i++) {
+      LuaFaction f = dat->avail.factions[i];
       lua_pushfaction(L, f); /* value */
       lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
@@ -605,7 +600,7 @@ static int misn_accept( lua_State *L )
       /* Need to change pointer. */
       misnptr = lua_newuserdata( L, sizeof(Mission*) );
       *misnptr = cur_mission;
-      nlua_setenv(cur_mission->env, "__misn");
+      nlua_setenv( L, cur_mission->env, "__misn" );
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to Lua */
@@ -623,23 +618,13 @@ static int misn_accept( lua_State *L )
  */
 static int misn_finish( lua_State *L )
 {
-   int b;
-   Mission *cur_mission;
-
-   if (lua_isboolean(L,1))
-      b = lua_toboolean(L,1);
-   else {
-      lua_pushstring(L, NLUA_DONE);
-      lua_error(L); /* THERE IS NO RETURN */
-      return 0;
-   }
-
-   cur_mission = misn_getFromLua(L);
+   int b = lua_toboolean(L,1);
+   Mission *cur_mission = misn_getFromLua(L);
 
    lua_pushboolean( L, 1 );
-   nlua_setenv(cur_mission->env, "__misn_delete");
+   nlua_setenv( L, cur_mission->env, "__misn_delete" );
 
-   if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
+   if (b)
       player_missionFinished( mission_getID( cur_mission->data->name ) );
 
    lua_pushstring(L, NLUA_DONE);

@@ -29,9 +29,9 @@ local spawnGenbu, spawnSquads -- Forward-declared functions
 -- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
-local seirplanet, seirsys = planet.getS("Edergast")
-local jorekplanet1, joreksys1 = planet.getS("Manis")
-local jorekplanet2, joreksys2 = planet.getS("The Wringer")
+local seirplanet, seirsys = spob.getS("Edergast")
+local jorekplanet1, joreksys1 = spob.getS("Manis")
+local jorekplanet2, joreksys2 = spob.getS("The Wringer")
 local ambushsys = system.get("Herakin")
 local safesys = system.get("Eiderdown")
 
@@ -40,7 +40,7 @@ local function dest_updated(pnt, sys)
    misn.osdCreate(_("Dark Shadow"), {
       fmt.f(_("Look for Jorek on {pnt} in the {sys} system"), {pnt=pnt, sys=sys}),
    })
-   misn.markerMove(mem.marker, sys)
+   misn.markerMove(mem.marker, pnt)
 end
 
 function create()
@@ -72,7 +72,7 @@ end
 -- This is the "real" start of the mission. Get yer mission variables here!
 local function accept2()
    mem.tick = {false, false, false, false, false}
-   mem.marker = misn.markerAdd(joreksys1, "low")
+   mem.marker = misn.markerAdd(jorekplanet1, "low")
    dest_updated(jorekplanet1, joreksys1)
    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
    misn.setReward(_("A sum of money."))
@@ -87,13 +87,13 @@ function seiryuuBoard()
    player.unboard()
    if mem.stage == 1 then -- Briefing
       tk.msg(_("Disclosure"), fmt.f(_([[You make your way through the now familiar corridors of the Seiryuu. You barely notice the strange environment anymore. It seems unimportant compared to the strange events that surround your every encounter with these Four Winds.
-    You step onto the bridge, where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."
-    The captain motions you to take a seat at what looks like a holotable in the center of the bridge. "Before I tell you what I've called you here for, I feel I should explain to you in full who we are, what we do and what your part in all this is." She takes a seat opposite from yours, and leans on the holotable. "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few."]]), {player=player.name()}))
-      tk.msg(_("Disclosure"), fmt.f(_([["The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
+    You step onto the bridge where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."
+    The captain motions you to take a seat at what looks like a holotable in the centre of the bridge. "Before I tell you what I've called you here for, I feel I should explain to you in full who we are, what we do, and what your part in all this is." She takes a seat opposite from yours, and leans on the holotable. "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few."]]), {player=player.name()}))
+      tk.msg(_("Disclosure"), fmt.f(_([["The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
     "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()}))
       shadow.addLog( fmt.f(_([[Captain Rebina has further explained the organization she works for.
     "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
-    "The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
+    "The Four Winds are old, {player}. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity and prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
     "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]), {player=player.name()} ) )
       tk.msg(_("Disclosure"), _([[Captain Rebina sits back in her chair and heaves a sigh. "I think that may have been when things started to change. We used to be committed to our purpose, but apparently things are different now. No doubt you remember what happened to the diplomatic exchange between the Empire and the Dvaered some time ago. Well, suffice to say that increasing the tension between the two is definitely not part of our mandate. In fact, it's completely at odds with what we stand for. And that was not just an isolated incident either. Things have been happening that suggest Four Winds involvement, things that bode ill."
     She activates the holotable, and it displays four cruisers, all seemingly identical to the Seiryuu, though you notice subtle differences in the hull designs.
@@ -248,17 +248,15 @@ function spawnSquads(highlight)
    -- Shorthand notation for the leader pilots
    leader = {}
 
-   for i, start in ipairs(squads) do
+   for i, start in ipairs(leaderstart) do
       squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
-         k:control()
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
-	 k:setNoDisable()
-         k:follow(squads[i][1]) -- Each ship in the squad follows the squad leader
+         k:setNoDisable()
       end
-      squads[i][1]:taskClear() --...except the leader himself.
+      squads[i][1]:control() -- Only need to control leader. Others will follow
       leader[i] = squads[i][1]
    end
 
@@ -297,8 +295,8 @@ function attacked()
    for _, squad in ipairs(squads) do
       for _, k in ipairs(squad) do
          k:hookClear()
-         k:control()
-         k:attack(player.pilot())
+         k:control(false)
+         k:setHostile()
       end
    end
 end
@@ -319,7 +317,7 @@ end
 
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
-   for _, patroller in ipairs(leader) do
+   for j, patroller in ipairs(leader) do
       if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
          patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
          attacked()
@@ -377,6 +375,7 @@ function spawnInterceptors()
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
       j:outfitAdd("Improved Stabilizer", 1)
+      j:setLeader( genbu )
       j:control()
       j:attack(player.pilot())
    end
@@ -388,12 +387,12 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == jorekplanet1 and mem.stage == 2 then
+   if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
-      mem.barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
-   elseif planet.cur() == jorekplanet2 and mem.stage == 3 then
-      mem.joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
+      mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
+   elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
+      mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end
 
@@ -405,7 +404,7 @@ function barman()
     "Well, your description was given to me by an old friend of mine. His name is Jarek. Do you know him?"
     You tell him that you don't know anyone by the name of Jarek, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.
     "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the {sys} system and land on {pnt}. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
-    You thank the barman, pay for your drink and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]), {player=player.name(), sys=joreksys2, pnt=jorekplanet2}))
+    You thank the barman, pay for your drink, and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]), {player=player.name(), sys=joreksys2, pnt=jorekplanet2}))
    dest_updated(jorekplanet2, joreksys2)
    misn.npcRm(mem.barmanNPC)
    mem.stage = 3
@@ -415,7 +414,7 @@ end
 function jorek()
    tk.msg(_("Still an unpleasant man"), fmt.f(_([["Well hello there {player}," Jorek says when you approach his table. "It's about damn time you showed up. I've been wastin' credits on this awful swill for days now."
     Not at all surprised that Jorek is still as disagreeable as the last time you encountered him, you decide to ask him to explain the situation, beginning with how he knew that it was you who would be coming for him. Jorek laughs heartily at that.
-    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favors already. In fact, you're the only one she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
+    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favours already. In fact, you're the only one she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
     That answers one question. But you still don't know why Jorek hasn't been reporting in like he should have.
     "Yeah, right, about that. You know about the deal with the other branches getting too big for their britches? Good. Well, I've been lookin' into that, pokin' my nose into their business. Since I'm dealin' with my fellow Shadows here, I couldn't afford to give myself away. So that's that. But there's more."]]), {player=player.name()}))
    tk.msg(_("Still an unpleasant man"), _([["I dunno if you've seen them on your way here, but there's guys of ours hangin' around in the system. And when I say guys of ours, I mean guys of theirs, since they sure ain't our guys any more. They've been on my ass ever since I left Manis, so I think I know what they want. They want to get me and see what I know, or maybe they just want to blow me into space dust. Either way, I need you to help me get out of this rathole."
@@ -436,7 +435,7 @@ end
 
 -- Capsule function for camera.set, for timer use
 function zoomTo(target)
-   camera.set(target, true, mem.zoomspeed)
+   camera.set(target, false, mem.zoomspeed)
 end
 
 -- Capsule function for player.msg, for timer use

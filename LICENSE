@@ -34,7 +34,7 @@ the GNU General Public License:
 * Justin Blanchard (@UncombedCoconut)
 
 Specific, more permissive, licenses cover code in "distance_field.c", "edtaa3func.c", and "perlin.c".
-They are included in the dat/licenses directory.
+They are included in the dat/LICENSE directory.
 
 Under "dat" and/or "artwork":
 * Licensing of graphical assets contained in "gfx/" is documented by "gfx/ARTWORK_LICENSE.yaml".

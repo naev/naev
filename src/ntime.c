@@ -184,7 +184,6 @@ char* ntime_pretty( ntime_t t, int d )
  *    @param max Maximum length of the buffer (recommended 64).
  *    @param t Time to print (in seconds), if 0 it'll use the current time.
  *    @param d Number of digits to use.
- *    @return The time in a human readable format (must free).
  */
 void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
 {

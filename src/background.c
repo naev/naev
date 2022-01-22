@@ -19,6 +19,7 @@
 #include "ndata.h"
 #include "nebula.h"
 #include "nlua.h"
+#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
@@ -56,6 +57,7 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
 static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
 static int bkg_L_renderbg = LUA_NOREF; /**< Background rendering function. */
+static int bkg_L_rendermg = LUA_NOREF; /**< Middleground rendering function. */
 static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
 static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
 
@@ -148,12 +150,10 @@ void background_moveStars( double x, double y )
 void background_renderStars( const double dt )
 {
    (void) dt;
-   GLfloat h, w;
-   GLfloat x, y, m;
+   GLfloat x, y, h, w;
    double z;
    gl_Matrix4 projection;
-
-   glUseProgram(shaders.stars.program);
+   int points = 1;
 
    /* Do some scaling for now. */
    z = cam_getZoom();
@@ -162,27 +162,30 @@ void background_renderStars( const double dt )
    projection = gl_Matrix4_Scale( projection, z, z, 1 );
 
    /* Decide on shade mode. */
-   x = 0;
-   y = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
-         m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
+         GLfloat m = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
-         x = m*cos(VANGLE(player.p->solid->vel));
-         y = m*sin(VANGLE(player.p->solid->vel));
+         if (m > 1.) {
+            x = m*cos(VANGLE(player.p->solid->vel));
+            y = m*sin(VANGLE(player.p->solid->vel));
+            points = 0;
+         }
       }
       else if (dt_mod * VMOD(player.p->solid->vel) > 500. ) {
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
           * speed just so happens to make very short lines. A 5px minimum
-          * is long enough to (mostly) alleviate the flickering.
-          */
-         m = MAX( 5, dt_mod*VMOD(player.p->solid->vel)/25. - 20 );
-         x = m*cos(VANGLE(player.p->solid->vel));
-         y = m*sin(VANGLE(player.p->solid->vel));
+          * is long enough to (mostly) alleviate the flickering. */
+         GLfloat m = MAX( 5., dt_mod*VMOD(player.p->solid->vel)/25. - 20 );
+         if (m > 1.) {
+            x = m*cos(VANGLE(player.p->solid->vel));
+            y = m*sin(VANGLE(player.p->solid->vel));
+            points = 0;
+         }
       }
    }
 
@@ -192,20 +195,34 @@ void background_renderStars( const double dt )
    h  = (SCREEN_H + 2.*STAR_BUF);
    h += conf.zoom_stars * (h / conf.zoom_far - 1.);
 
-   /* Render. */
-   glEnableVertexAttribArray( shaders.stars.vertex );
-   glEnableVertexAttribArray( shaders.stars.brightness );
-   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
-         2, GL_FLOAT, 3 * sizeof(GLfloat) );
-   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
-         1, GL_FLOAT, 3 * sizeof(GLfloat) );
-
+   /* Common shader stuff. */
+   glUseProgram(shaders.stars.program);
    gl_Matrix4_Uniform(shaders.stars.projection, projection);
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
-   glUniform2f(shaders.stars.wh, w, h);
-   glUniform2f(shaders.stars.xy, x, y);
-   glUniform1f(shaders.stars.scale, 1 / gl_screen.scale);
-   glDrawArrays( GL_LINES, 0, nstars );
+   glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
+   glUniform1i(shaders.stars.use_lines, !points);
+
+   /* Vertices. */
+   glEnableVertexAttribArray( shaders.stars.vertex );
+   glEnableVertexAttribArray( shaders.stars.brightness );
+
+   /* Set up the vertices. */
+   if (points) {
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
+            2, GL_FLOAT, 6 * sizeof(GLfloat) );
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
+            1, GL_FLOAT, 6 * sizeof(GLfloat) );
+      glUniform2f(shaders.stars.xy, 0., 0.);
+      glDrawArrays( GL_POINTS, 0, nstars/2 );
+   }
+   else {
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
+            2, GL_FLOAT, 3 * sizeof(GLfloat) );
+      gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
+            1, GL_FLOAT, 3 * sizeof(GLfloat) );
+      glUniform2f(shaders.stars.xy, x, y);
+      glDrawArrays( GL_LINES, 0, nstars );
+   }
 
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.stars.vertex );
@@ -219,12 +236,14 @@ void background_renderStars( const double dt )
 
 /**
  * @brief Render the background.
+ *
+ *    @param dt Real delta ticks elapsed.
  */
 void background_render( double dt )
 {
    if (bkg_L_renderbg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
-      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderbg' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
@@ -232,12 +251,22 @@ void background_render( double dt )
    }
 
    background_renderImages( bkg_image_arr_bk );
+
+   if (bkg_L_rendermg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_rendermg );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'rendermg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
+
    background_renderStars(dt);
    background_renderImages( bkg_image_arr_ft );
 
    if (bkg_L_renderfg != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
-      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderfg' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
@@ -252,7 +281,7 @@ void background_renderOverlay( double dt )
 {
    if (bkg_L_renderov != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
-      lua_pushnumber( naevL, dt );
+      lua_pushnumber( naevL, dt ); /* Note that this is real_dt. */
       if (nlua_pcall( bkg_cur_env, 1, 0 )) {
          WARN( _("Background script 'renderov' error:\n%s"), lua_tostring(naevL,-1));
          lua_pop( naevL, 1 );
@@ -371,6 +400,7 @@ static nlua_env background_create( const char *name )
    nlua_loadBackground(env);
    nlua_loadCamera(env);
    nlua_loadGFX(env);
+   nlua_loadAudio(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
@@ -414,7 +444,7 @@ int background_load( const char *name )
    nlua_env env;
 
    /* Free if exists. */
-   background_clearCurrent();
+   background_clear();
 
    /* Load default. */
    if (name == NULL)
@@ -429,7 +459,7 @@ int background_load( const char *name )
       return -1;
 
    /* Run Lua. */
-   nlua_getenv(env,"background");
+   nlua_getenv(naevL, env,"background");
    ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
       const char *err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
@@ -440,6 +470,7 @@ int background_load( const char *name )
 
    /* See if there are render functions. */
    bkg_L_renderbg = nlua_refenv( env, "renderbg" );
+   bkg_L_rendermg = nlua_refenv( env, "rendermg" );
    bkg_L_renderfg = nlua_refenv( env, "renderfg" );
    bkg_L_renderov = nlua_refenv( env, "renderov" );
 
@@ -452,15 +483,16 @@ int background_load( const char *name )
 static void background_clearCurrent (void)
 {
    if (bkg_cur_env != bkg_def_env) {
-      if (bkg_cur_env != LUA_NOREF)
-         nlua_freeEnv( bkg_cur_env );
+      nlua_freeEnv( bkg_cur_env );
    }
    bkg_cur_env = LUA_NOREF;
 
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_rendermg );
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
    bkg_L_renderbg = LUA_NOREF;
+   bkg_L_rendermg = LUA_NOREF;
    bkg_L_renderfg = LUA_NOREF;
    bkg_L_renderov = LUA_NOREF;
 }
@@ -501,8 +533,7 @@ void background_free (void)
 {
    /* Free the Lua. */
    background_clear();
-   if (bkg_def_env != LUA_NOREF)
-      nlua_freeEnv( bkg_def_env );
+   nlua_freeEnv( bkg_def_env );
    bkg_def_env = LUA_NOREF;
 
    /* Free the images. */
@@ -512,8 +543,7 @@ void background_free (void)
    bkg_image_arr_bk = NULL;
 
    /* Free the Lua. */
-   if (bkg_cur_env != LUA_NOREF)
-      nlua_freeEnv( bkg_cur_env );
+   nlua_freeEnv( bkg_cur_env );
    bkg_cur_env = LUA_NOREF;
 
    gl_vboDestroy( star_vertexVBO );

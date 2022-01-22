@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
  </avail>
  <notes>
@@ -24,6 +24,7 @@
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- Mission constants:
 local time_needed = 15 -- in seconds
@@ -41,7 +42,7 @@ local dronepos = vec2.new( -12000, -12000 )
 --    3: Run away
 --    4: Get back to Minerva STation
 mem.misn_state = nil
-local boss, drone, thugs -- Non-persistent state
+local boss, drone, fdrone, fthugs, thugs -- Non-persistent state
 -- luacheck: globals enter harassed heartbeat land thugs_attacked thugs_dead (Hook functions passed by name)
 
 
@@ -65,7 +66,7 @@ function accept ()
    vn.label( "leave" )
    vn.na(_("You approach the sketchy individual who seems to be calling your attention."))
    pir(_([["What do you think about them Za'leks and Dvaereds? Quite a work, eh? Always getting into fights with each other and creating trouble for those who just want to enjoy life. Such a bother."]]))
-   pir(_([["Say what, I know you're a pretty decent pilot. Would you be interested in a somewhat non-standard job? Nothing very out of the ordinary, just want to ruff up some feathers."]]))
+   pir(_([["Say what, I know you're a pretty decent pilot. Would you be interested in a somewhat non-standard job? Nothing very out of the ordinary, just want to ruffle some feathers."]]))
    vn.menu( {
       {_("Accept the job"), "accept"},
       {_("Kindly decline"), "decline"},
@@ -79,11 +80,11 @@ function accept ()
    vn.func( function ()
       mem.misn_state=0
    end )
-   pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
+   pir(_([["Excellent. As you probably know, the Za'lek and Dvaered want to take control of this station, hence the large amount of military crawling all over the station. This leads to inevitable disagreements, quarrels, brawls, altercations, fights, you name it. Instead of trying to take care of it directly, we can sort of encourage them to take care of each other and problem solved, no?"]]))
    pir(_([["I know what you're thinking, that's a great idea right? So it's very simple. Some Dvaered thugs are stationed around the system, they are not the cleverest of folks, so I want you to provoke them. You know, just rough them up a little and get out of there."]]))
-   pir(_([["Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons nor gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind  of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
+   pir(_([["Sounds naïve, yes? Might be. So, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons or gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
    pir(_([["To make sure they are all riled up, I want you to spend 15 seconds harassing them near their original location. Make sure to harass them, but don't kill them! We want them to tell the other Dvaereds about this. Once the time is up, get the hell away from there, in one piece if possible."]]))
-   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it,"
+   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one more thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it."
 They beam a smile at you.]]), {sys=runawaysys}))
    vn.run()
 
@@ -92,7 +93,7 @@ They beam a smile at you.]]), {sys=runawaysys}))
       return
    end
 
-   minerva.log.pirate(_("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
+   minerva.log.pirate(_("You accepted a job from a sketchy individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
    misn.osdCreate( _("Thug Decoy"),
@@ -117,7 +118,7 @@ function land ()
       vn.music( minerva.loops.pirate )
       local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.transition()
-      vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job dealing with the Dvaered thugs."))
+      vn.na(_("After you land on Minerva Station you are once again greeted by the sketchy character that gave you the job dealing with the Dvaered thugs."))
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
       pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you want more information. I have also transferred a sum of credits to your account as a reward for your services."
 She winks at you and walks way.]]))
@@ -136,18 +137,16 @@ end
 
 function enter ()
    if mem.misn_state==1 or mem.misn_state==2 then
-      player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to harass the thugs with the drone."))
    end
 
    if mem.misn_state==3 then
       if system.cur()==runawaysys then
          mem.misn_state=4
          misn.osdActive(4)
-         misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
+         misn.markerMove( mem.misnmarker, spob.get("Minerva Station") )
       else
-         player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
-         misn.finish(false)
+         lmisn.fail(fmt.f(_("You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
       end
    end
 
@@ -155,10 +154,10 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      mem.fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
+      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
 
       local pos = thugpos
-      boss = pilot.add( "Dvaered Vigilance", mem.fthugs, pos )
+      boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
       boss:control()
       boss:brake()
       hook.pilot( boss, "attacked", "thugs_attacked" )
@@ -166,15 +165,15 @@ function enter ()
       thugs = { boss }
       for i = 1,3 do
          pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.angle() )
-         local p = pilot.add( "Dvaered Vendetta", mem.fthugs, pos )
+         local p = pilot.add( "Dvaered Vendetta", fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
          hook.pilot( p, "death", "thugs_dead" )
          table.insert( thugs, p )
       end
 
-      mem.fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
-      drone = pilot.add( "Za'lek Light Drone", mem.fdrone, dronepos )
+      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
+      drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
       drone:control()
       drone:brake()
 
@@ -190,7 +189,7 @@ function heartbeat ()
    local pp = player.pilot()
    local dist =  pp:pos():dist( drone:pos() )
    if dist < 1000 then
-      player.msg(_("#gThe drone begins to follow you."))
+      player.msg(_("#gThe drone begins to follow you."), true)
       mem.misn_state=1
       misn.osdActive(2)
       drone:taskClear()
@@ -204,11 +203,10 @@ end
 
 function thugs_attacked ()
    if mem.misn_state==0 then
-      player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
       pilot.toggleSpawn(true)
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to harass the thugs with the drone."))
    elseif mem.misn_state==1 then
-      faction.dynEnemy( mem.fdrone, mem.fthugs ) -- Make enemies
+      faction.dynEnemy( fdrone, fthugs ) -- Make enemies
       boss:broadcast(_("I'm going to wash my ship's hull with your blood, Za'lek Scum!"))
       boss:control(false)
       mem.misn_state=2
@@ -222,9 +220,8 @@ end
 
 
 function thugs_dead ()
-   player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs, not kill them!"))
    pilot.toggleSpawn(true)
-   misn.finish(false)
+   lmisn.fail(_("You were supposed to harass the thugs, not kill them!"))
 end
 
 
@@ -233,14 +230,13 @@ function harassed ()
    local dist = pp:pos():dist( thugpos )
    if dist > 5000 then
       if mem.failingdistance==nil then
-         player.msg(_("#rYou are moving too far away from the harassment point!"))
+         player.msg(_("#rYou are moving too far away from the harassment point!"), true)
          mem.failingdistance = 0
       end
       mem.failingdistance = mem.failingdistance + 1
       if mem.failingdistance > 6 then
-         player.msg(_("#rMISSION FAILED! You moved too far away from the harassment location!"))
          pilot.toggleSpawn(true)
-         misn.finish(false)
+         lmisn.fail(_("You moved too far away from the harassment location!"))
       end
    else
       mem.failingdistance = nil
@@ -251,6 +247,7 @@ function harassed ()
       mem.misn_state=3
       misn.osdActive(3)
       system.mrkRm( mem.thugsmarker )
+      misn.markerMove( mem.misnmarker, runawaysys )
       return
    end
    hook.timer( 1.0, "harassed" )

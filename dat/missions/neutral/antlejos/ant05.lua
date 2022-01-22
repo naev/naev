@@ -8,11 +8,10 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 4</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
@@ -25,10 +24,11 @@
 local vn = require "vn"
 local fmt = require "format"
 local ant = require "common.antlejos"
+local lmisn = require "lmisn"
 
 local reward = ant.rewards.ant05
 
-local mainpnt, mainsys = planet.getS("Antlejos V")
+local mainpnt, mainsys = spob.getS("Antlejos V")
 local nextsys = system.get("Delta Polaris")
 local rearsys = system.get("Klintus")
 local entrypoint = jump.get( mainsys, nextsys )
@@ -92,7 +92,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==2 and planet.cur() == mainpnt then
+   if mem.state==2 and spob.cur() == mainpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
@@ -102,9 +102,9 @@ function land ()
       elseif supplydied < 3 then
          v(_([["Almost all the ships made it! Against those odds I think we did very good."]]))
       else
-         v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take more than I was hoping for."]]))
+         v(_([["I guess that was better than nothing. With so few supplies making it through it seems like terraforming will take longer than I was hoping for."]]))
       end
-      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up ad working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
+      v(_([["With these supplies, I think we will be able to start the next important step on scaling up the terraforming operation. We're almost there, but we'll still need more assistance. The mission terminal should up and working and you should be able to find new supply requests there if you want to help. We still need all the hands we can get!"]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
@@ -120,8 +120,7 @@ function land ()
       ant.dateupdate()
       misn.finish(true)
    else
-      player.msg(_("#rMISSION FAILED: You were supposed to guard the supply ships!"))
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to guard the supply ships!"))
    end
 end
 
@@ -145,7 +144,7 @@ local function add_supplyship( shipname )
    p:setHilight(true)
    p:setInvincPlayer(true)
    p:control(true)
-   p:land( mainpnt, true )
+   p:land( mainpnt )
    hook.pilot( p, "land", "supplyland" )
    hook.pilot( p, "death", "supplydeath" )
    hook.pilot( p, "attacked", "supplyattacked" )
@@ -177,9 +176,7 @@ function enter ()
    end
    -- Wrong system
    if system.cur() ~= mainsys then
-      player.msg(fmt.f(_("#rMISSION FAILED: You were not supposed to leave {sys}!"),{sys=mainsys}))
-      misn.finish(false)
-      return
+      lmisn.fail(fmt.f(_("You were not supposed to leave {sys}!"),{sys=mainsys}))
    end
 
    pilot.clear()
@@ -302,12 +299,11 @@ function heartbeat ()
    end
 
    if supplylanded <= 0 then
-      player.msg(_("#rMISSION FAILED: No supply ships made it through!"))
-      misn.finish(false)
+      lmisn.fail(_("No supply ships made it through!"))
    end
 
    -- Tell the player to land
    misn.osdActive(3)
    mem.state = 2
-   mem.mrk = misn.markerMove( mem.mrk, mainpnt )
+   misn.markerMove( mem.mrk, mainpnt )
 end

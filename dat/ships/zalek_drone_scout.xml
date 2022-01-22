@@ -4,7 +4,7 @@
  <base_type>Za'lek Scout Drone</base_type>
  <GFX size="38">zalek_drone_scout</GFX>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class display="Robotic Scout">Scout</class>
  <price>180000</price>
  <time_mod>0.75</time_mod>
@@ -49,6 +49,8 @@
  </stats>
  <tags>
   <tag>noplayer</tag>
+  <tag>noequip</tag>
   <tag>zalek</tag>
+  <tag>drone</tag>
  </tags>
 </ship>

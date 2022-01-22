@@ -44,6 +44,7 @@ local function _clearfuncs()
       "mousepressed",
       "mousereleased",
       "wheelmoved",
+      "resize",
    }
    for k,v in ipairs(f) do
       love[v] = _noop
@@ -134,9 +135,11 @@ local function _update( dt )
 end
 local function _mouse( x, y, mtype, button )
    if not love.mouse then return false end
-   y = love.h-y-1
-   love.mouse.x = x
-   love.mouse.y = y
+   if mtype ~= 4 then -- if not a mouse-wheel event
+      y = love.h-y-1
+      love.mouse.x = x
+      love.mouse.y = y
+   end
    if mtype==1 then
       love.mouse.down[button] = true
       return love.mousepressed( x, y, button, false )
@@ -149,6 +152,8 @@ local function _mouse( x, y, mtype, button )
       love.mouse.lx = x
       love.mouse.ly = y
       return love.mousemoved( x, y, dx, dy, false )
+   elseif mtype==4 then
+      return love.wheelmoved( x, y )
    end
 end
 local function _keyboard( pressed, key, _mod )
@@ -159,6 +164,12 @@ local function _keyboard( pressed, key, _mod )
       return love.keypressed( k, k, false )
    else
       return love.keyreleased( k, k )
+   end
+end
+local function _resize( w, h )
+   if w ~= 0 and h ~= 0 and (w ~= love.w or h ~= love.h) then
+      naev.tk.customFullscreen( love.fullscreen )
+      return love.resize( w, h )
    end
 end
 
@@ -255,7 +266,7 @@ function love.exec( path )
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
@@ -304,7 +315,7 @@ function love.run()
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 

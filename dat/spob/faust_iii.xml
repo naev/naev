@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Faust III">
+ <pos>
+  <x>4714.548602</x>
+  <y>3300.184021</y>
+ </pos>
+ <GFX>
+  <space>L00.webp</space>
+  <exterior>desertic3.webp</exterior>
+ </GFX>
+ <general>
+  <class>L</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

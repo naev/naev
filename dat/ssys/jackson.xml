@@ -10,13 +10,13 @@
   <x>1003.249859</x>
   <y>-519.627595</y>
  </pos>
- <assets>
-  <asset>Jackson II</asset>
-  <asset>Jackson V</asset>
-  <asset>Jomos</asset>
-  <asset>Paxadon</asset>
-  <asset>Zuner</asset>
- </assets>
+ <spobs>
+  <spob>Jackson II</spob>
+  <spob>Jackson V</spob>
+  <spob>Jomos</spob>
+  <spob>Paxadon</spob>
+  <spob>Zuner</spob>
+ </spobs>
  <jumps>
   <jump target="Duros">
    <autopos/>

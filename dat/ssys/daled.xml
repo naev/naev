@@ -2,6 +2,7 @@
 <ssys name="Daled">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>15600.000000</radius>
   <stars>400</stars>
@@ -12,9 +13,9 @@
   <x>-25.039635</x>
   <y>246.979987</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate Small</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Pirate Small</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Capricorn">
    <autopos/>
@@ -41,6 +42,6 @@
   </jump>
  </jumps>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

@@ -10,13 +10,13 @@
   <x>-128.833333</x>
   <y>-346.333333</y>
  </pos>
- <assets>
-  <asset>Hekaras III</asset>
-  <asset>Hekaras IV</asset>
-  <asset>Hurada</asset>
-  <asset>Three and a Half Kings</asset>
-  <asset>Vino</asset>
- </assets>
+ <spobs>
+  <spob>Hekaras III</spob>
+  <spob>Hekaras IV</spob>
+  <spob>Hurada</spob>
+  <spob>Three and a Half Kings</spob>
+  <spob>Vino</spob>
+ </spobs>
  <jumps>
   <jump target="Apez">
    <pos x="-26069.057388" y="26604.261598"/>

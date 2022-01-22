@@ -8,9 +8,7 @@
   <location>Computer</location>
   <done>Pirate Smuggle Cake</done>
  </avail>
- <notes>
-  <tier>1</tier>
- </notes>
+ <notes/>
 </mission>
 --]]
 --[[
@@ -22,6 +20,7 @@
 local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -33,7 +32,7 @@ local fmt = require "format"
 -- This is in common.cargo, but we need to increase the range
 function create()
    -- Note: this mission does not make any system claims.
-   local pntf = planet.cur():faction()
+   local pntf = spob.cur():faction()
    -- Lower chance of appearing to 1/3 on non-pirate planets
    if not pir.factionIsPirate( pntf ) and rnd.rnd() < 2/3 then
       misn.finish(false)
@@ -46,7 +45,7 @@ function create()
    mem.reward_faction = pir.systemClanP( system.cur() )
    local faction_text = pir.reputationMessage( mem.reward_faction )
 
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
@@ -59,15 +58,15 @@ function create()
       -- Serious stuff here
       {N_("Stolen Goods"), N_("A lot of goods obtained by illicit and illegal means.")},
       {N_("Hacked Electronics"), N_("An assortment of illegally modified electronic goods.")},
-      {N_("Illegal Waste"), N_("A diversity of highly illegal waste.")},
+      {N_("Illegal Waste"), N_("A melange of highly illegal waste.")},
       {N_("Powerful Stimulants"), N_("A bunch of illegal stimulants.")},
-      {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items.")},
-      {N_("Exotic Animals"), N_("A bunch of exotic animals that can not be legally traded.")},
+      {N_("Unmarked Boxes"), N_("A multitude of unmarked boxes containing what you can only assume to be highly illegal items.")},
+      {N_("Exotic Animals"), N_("A collection of exotic animals that can not be legally traded.")},
       {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials.")},
-      {N_("Illegal Drugs"), N_("A bunch of drugs made illegal in most systems.")},
-      {N_("Illegal Body Mods"), N_("A lot of illegal body modifications.")},
-      {N_("Unauthorized Weapons"), N_("A bunch of illegal weapons.")},
-      {N_("Contraband"), N_("An diverse assortment of illegal contraband goods.")},
+      {N_("Illegal Drugs"), N_("A batch of drugs made illegal in most systems.")},
+      {N_("Illegal Body Mods"), N_("An array of illegal body modifications.")},
+      {N_("Unauthorized Weapons"), N_("An assemblage of illegal weapons.")},
+      {N_("Contraband"), N_("A diverse assortment of illegal contraband goods.")},
       {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
       {N_("Stolen Art"), N_("Artwork that was illegally seized from a collector or gallery.")},
       -- Below less serious stuff
@@ -76,7 +75,7 @@ function create()
       {N_("Catnip"), N_("Highly illegal drug that is very attractive to cats.")},
       {N_("Hypnotoads"), N_("Illegal amphibian with some mind-control abilities.")},
       {N_("Extra Spicy Burritos"), N_("Burritos that are so spicy, they are illegal.")},
-      {N_("Pineapple Pizza"), N_("Pizza with pineapple on it, there is no way this is legal.")},
+      {N_("Pineapple Pizza"), N_("Pizza with pineapple on it. There is no way this is legal.")},
       {N_("Illicit Shader Code"), N_("Program used for rendering images with nefarious and illegal purposes.")},
    }
    local fact_cargoes = {
@@ -95,7 +94,7 @@ function create()
       },
       ["Soromid"] = {
          {N_("Unstable DNA"), N_("Illegal DNA with strong reactive properties.")},
-         {N_("Bio-weapons"), N_("Highly dangerous illegal biological weapons.")},
+         {N_("Bio-weapons"), N_("Highly dangerous, illegal biological weapons.")},
          {N_("Abducted Drosophila"), N_("Genetically modified small fruit flies illegally stolen from a laboratory.")},
          {N_("Mislabeled Plasmids"), N_("Independently replicating DNA that has been mislabeled and is no longer clear what exactly it does. Illegal for its uncertain and dangerous nature.")},
       },
@@ -143,17 +142,11 @@ function create()
    local distreward = 0.50
    mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward + math.max(1,mem.amount/20)) * (1 + 0.05*rnd.twosigma())
 
-   if pir.factionIsClan( mem.reward_faction ) then
-      misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(mem.amount),
-         cargo=_(mem.cargo), fct=mem.reward_faction} ) )
-   else
-      misn.setTitle( fmt.f(
-         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(mem.amount),
-         cargo=_(mem.cargo)} ) )
-   end
+   misn.setTitle( fmt.f(
+      pir.prefix(mem.reward_faction).._("Smuggle {tonnes} of {cargo}"),
+         {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    misn.markerAdd(mem.destplanet, "computer")
-   if pir.factionIsPirate( planet.cur():faction() ) then
+   if pir.factionIsPirate( spob.cur():faction() ) then
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    else
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
@@ -192,7 +185,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
          tk.msg( _("Successful Delivery"), fmt.f(
             _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
@@ -215,7 +208,6 @@ function tick()
       })
    elseif mem.timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))
-      misn.finish(false)
+      lmisn.fail(_("You have failed to deliver the goods on time!"))
    end
 end

@@ -10,13 +10,13 @@
   <x>138.000000</x>
   <y>-487.000000</y>
  </pos>
- <assets>
-  <asset>Blunderbuss II</asset>
-  <asset>DVNN Central</asset>
-  <asset>Greis</asset>
-  <asset>Onar</asset>
-  <asset>Utsuwa</asset>
- </assets>
+ <spobs>
+  <spob>Blunderbuss II</spob>
+  <spob>DVNN Central</spob>
+  <spob>Greis</spob>
+  <spob>Onar</spob>
+  <spob>Utsuwa</spob>
+ </spobs>
  <jumps>
   <jump target="Ekkodu">
    <autopos/>

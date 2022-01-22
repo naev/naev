@@ -10,10 +10,10 @@
   <x>-906.343448</x>
   <y>-855.280693</y>
  </pos>
- <assets>
-  <asset>Kan'ar</asset>
-  <asset>Rulk'ar</asset>
- </assets>
+ <spobs>
+  <spob>Kan'ar</spob>
+  <spob>Rulk'ar</spob>
+ </spobs>
  <jumps>
   <jump target="Bedimann">
    <autopos/>

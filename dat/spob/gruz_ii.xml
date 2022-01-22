@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gruz II">
+ <pos>
+  <x>2654.706991</x>
+  <y>-3478.207935</y>
+ </pos>
+ <GFX>
+  <space>A04.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -10,11 +10,11 @@
   <x>-504.427835</x>
   <y>-709.039620</y>
  </pos>
- <assets>
-  <asset>Jorla</asset>
-  <asset>Lugun</asset>
-  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Jorla</spob>
+  <spob>Lugun</spob>
+  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Hargen">
    <autopos/>

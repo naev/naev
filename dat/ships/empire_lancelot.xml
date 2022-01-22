@@ -15,6 +15,8 @@
  <trail_generator x="-20" y="-5" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel</license>
+ <cond>faction.playerStanding("Empire") &gt;= 30</cond>
+ <condstr>You need at least 30 reputation with the Empire.</condstr>
  <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <armour>70</armour>
@@ -31,13 +33,13 @@
   <weapon size="small" x="-3" y="3" h="5" />
   <weapon size="small" x="-3" y="-3" h="5" />
   <weapon size="small" x="-5" y="0" h="5" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
+  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>

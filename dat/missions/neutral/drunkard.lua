@@ -36,18 +36,18 @@ function create ()
    misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.webp", _("You see a drunkard at the bar mumbling about how he was so close to getting his break.") )  -- creates the drunkard at the bar
 
    -- Planets
-   mem.pickupWorld, mem.pickupSys  = planet.getLandable("INSS-2")
-   mem.delivWorld, mem.delivSys    = planet.getLandable("Darkshed")
+   mem.pickupWorld, mem.pickupSys  = spob.getLandable("INSS-2")
+   mem.delivWorld, mem.delivSys    = spob.getLandable("Darkshed")
    if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
       misn.finish(false)
    end
-   mem.origWorld, mem.origSys      = planet.cur()
+   mem.origWorld, mem.origSys      = spob.cur()
 
 --   origtime = time.get()
 end
 
 function accept ()
-   if not tk.yesno( _("Spaceport Bar"), _([[You sit next to the drunk man at the bar and listen to him almost sob into his drink. "I was so close! I almost had it! I could feel it in my grasp! And then I messed it all up! Why did I do it? Hey, wait! You! You can help me!" The man grabs your collar. "How'd you like to make a bit of money and help me out? You can help me! It'll be good for you, it'll be good for me, it'll be good for everyone! Will you help me?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[You sit next to the drunk man at the bar and listen to him almost sob into his drink. "I was so close! I almost had it! I could feel it in my grasp! And then I messed it all up! Why did I do it? Hey, wait! You! You can help me!" The man grabs your collar. "How'd you like to make a bit of money and help me out? You can help me! It'll be good for you. It'll be good for me. It'll be good for everyone! Will you help me?"]]) ) then
       misn.finish()
 
    elseif player.pilot():cargoFree() < 45 then
@@ -72,7 +72,7 @@ function accept ()
          fmt.f(_("Drop off the goods at {pnt} in the {sys} system"), {pnt=mem.delivWorld, sys=mem.delivSys}),
       } )
 
-      tk.msg( _("Pick Up the Countess's Goods"), fmt.f(_([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess, she's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
+      tk.msg( _("Pick Up the Countess's Goods"), fmt.f(_([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess. She's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
     Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at {pickup_pnt} in the {pickup_sys} system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to {dropoff_pnt} in the {dropoff_sys} system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]), {pickup_pnt=mem.pickupWorld, pickup_sys=mem.pickupSys, dropoff_pnt=mem.delivWorld, dropoff_sys=mem.delivSys} ) )
 
       mem.landhook = hook.land ("land")
@@ -81,7 +81,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == mem.pickupWorld and not mem.pickedup then
+   if spob.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < 45 then
          tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
          misn.finish()
@@ -97,7 +97,7 @@ function land ()
 
          misn.osdActive(2)  --OSD
       end
-   elseif planet.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
+   elseif spob.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
       tk.msg( _("Success"), _([[You finally arrive at your destination, bringing your ship down to land right beside a beautiful woman with long blonde locks in a long extravagant gown. You know this must be the countess, but you're unsure how she knew you were going to arrive, to be waiting for you. When you get out of your ship, you notice there are no dock workers anywhere in sight, only a group of heavily armed private militia that weren't there when you landed.
     You gulp as she motions to them without showing a hint of emotion. In formation, they all raise their weapons. As you think your life is about to end, every other row turns and hands off their weapon, and then marches forward and quickly unloads your cargo onto a small transport carrier, and march off. The countess smirks at you and winks before walking off. You breath a sigh of relief, only to realize you haven't been paid. As you walk back onto your ship, you see a card laying on the floor with simply her name, Countess Amelia Vollana.]]) )
       misn.cargoRm (mem.cargoID)
@@ -112,8 +112,7 @@ end
 function takeoff()
    if system.cur() == mem.delivSys and mem.droppedoff then
 
-      willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Trader Mule") )
-      willie:rename(_("Ol Bess"))
+      willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Ol Bess") )
       willie:setFaction("Independent")
       willie:setFriendly()
       willie:setInvincible()

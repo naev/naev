@@ -10,7 +10,6 @@
 --]]
 
 local fmt = require 'format'
-local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
 local love_math = require 'love.math'
@@ -18,15 +17,6 @@ local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
 -- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
-
--- Since we don't actually activate the Love framework we have to fake the
--- the dimensions and width, and set up the origins.
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
 
 -- These trigger at specific places
 local system_events = {
@@ -42,7 +32,7 @@ local system_events = {
    ["Gamma Polaris"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Emperor's Wrath"):pos(),
+      pos  = spob.get("Emperor's Wrath"):pos(),
       name = "disc_emperorswrath",
       title = _("Emperor's Wrath"),
       subtitle = _("Human Made Divine"),
@@ -50,7 +40,7 @@ local system_events = {
    ["Za'lek"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("House Za'lek Central Station"):pos(),
+      pos  = spob.get("House Za'lek Central Station"):pos(),
       name = "disc_zalekcentral",
       title = _("House Za'lek Central Station"),
       subtitle = _("Bastion of Knowledge"),
@@ -58,7 +48,7 @@ local system_events = {
    Ruadan = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Ruadan Prime"):pos(),
+      pos  = spob.get("Ruadan Prime"):pos(),
       name = "disc_zalekruadan",
       title = _("Ruadan Prime"),
       subtitle = _("New Heart of the Za'lek"),
@@ -66,7 +56,7 @@ local system_events = {
    Dvaer = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Dvaered High Command"):pos(),
+      pos  = spob.get("Dvaered High Command"):pos(),
       name = "disc_dvaeredhigh",
       title = _("Dvaered High Command"),
       subtitle = _("Convening of the Warlords"),
@@ -80,7 +70,7 @@ local system_events = {
    Aesir = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Mutris"):pos(),
+      pos  = spob.get("Mutris"):pos(),
       name = "disc_mutris",
       title = _("Crater City"),
       subtitle = _("Touching the Universe"),
@@ -94,10 +84,10 @@ local system_events = {
    Limbo = {
       -- Discover will not work if the planet is found through maps
       --type = "discover",
-      --asset = planet.get("Minerva Station"),
+      --asset = spob.get("Minerva Station"),
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Minerva Station"):pos(),
+      pos  = spob.get("Minerva Station"):pos(),
       name = "disc_minerva",
       title = _("Minerva Station"),
       subtitle = _("Gambler's Paradise"),
@@ -105,7 +95,7 @@ local system_events = {
    Beeklo = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("Totoran"):pos(),
+      pos  = spob.get("Totoran"):pos(),
       name = "disc_totoran",
       title = _("Totoran"),
       subtitle = _("Brave your Fate in the #rCrimson Gauntlet#0"),
@@ -122,7 +112,7 @@ local system_events = {
    ["New Haven"] = {
       type = "distance",
       dist = 5e3,
-      pos  = planet.get("New Haven"):pos(),
+      pos  = spob.get("New Haven"):pos(),
       name = "disc_newhaven",
       title = _("New Haven"),
       subtitle = _("They Will Never Destroy Us"),
@@ -198,6 +188,28 @@ local function test_systems( syslist )
    end
    return false
 end
+local function pir_discovery( fname, disc, subtitle )
+   return {
+      test = function ()
+         local p = system.cur():presences()[ fname ]
+         return (p and p>0)
+      end,
+      type = "enter",
+      name = disc,
+      title = "#H"..fmt.f(_("{fname} Territory"),{fname=fname}).."#0",
+      subtitle = "#H"..subtitle.."#0",
+      func = function()
+         local fpir = faction.get(fname)
+         fpir:setKnown( true )
+         for k,p in ipairs( pilot.get( {fpir}, true ) ) do
+            if p:name() == _("Unknown") then
+               p:rename( p:ship():name() )
+            end
+         end
+      end,
+   }
+end
+
 local custom_events = {
    Nebula = {
       test = function ()
@@ -252,50 +264,19 @@ local custom_events = {
       title = _("Southern Stellar Winds"),
       --subtitle = _("None"),
    },
-   WildOnes = {
+   BlackHole = {
       test = function ()
-         local p = system.cur():presences()["Wild Ones"]
-         return (p and p>0)
+         return system.cur():background() == "blackhole"
       end,
       type = "enter",
-      name = "disc_wildones",
-      title = _("#HWild Ones Territory#0"),
-      subtitle = _("#HUncontrolled and Raging Pirate Fury#0"),
-      func = function() faction.get("Wild Ones"):setKnown( true ) end
+      name = "disc_blackhole",
+      title = _("Anubis Black Hole"),
+      subtitle = _("Gaping Maw of the Abyss"),
    },
-   RavenClan = {
-      test = function ()
-         local p = system.cur():presences()["Raven Clan"]
-         return (p and p>0)
-      end,
-      type = "enter",
-      name = "disc_ravenclan",
-      title = _("#HRaven Clan Territory#0"),
-      subtitle = _("#HDark Hand of the Black Market#0"),
-      func = function() faction.get("Raven Clan"):setKnown( true ) end
-   },
-   BlackLotus = {
-      test = function ()
-         local p = system.cur():presences()["Black Lotus"]
-         return (p and p>0)
-      end,
-      type = "enter",
-      name = "disc_blacklotus",
-      title = _("#HBlack Lotus Territory#0"),
-      subtitle = _("#HPiracy has never been Snazzier#0"),
-      func = function() faction.get("Black Lotus"):setKnown( true ) end
-   },
-   DreamerClan = {
-      test = function ()
-         local p = system.cur():presences()["Dreamer Clan"]
-         return (p and p>0)
-      end,
-      type = "enter",
-      name = "disc_dreamerclan",
-      title = _("#HDreamer Clan Territory#0"),
-      subtitle = _("#HPiracy to Rebel against Reality#0"),
-      func = function() faction.get("Dreamer Clan"):setKnown( true ) end
-   },
+   WildOnes = pir_discovery( "Wild Ones", "disc_wildones", _("Uncontrolled and Raging Pirate Fury") ),
+   RavenClan = pir_discovery( "Raven Clan", "disc_ravenclan", _("Dark Hand of the Black Market") ),
+   BlackLotus = pir_discovery( "Black Lotus", "disc_blacklotus", _("Piracy has never been Snazzier") ),
+   DreamerClan = pir_discovery( "Dreamer Clan", "disc_dreamerclan", _("Piracy to Rebel against Reality") ),
 }
 
 local discover_trigger, textinit -- function forward-declaration
@@ -326,7 +307,9 @@ local function handle_event( event )
    return true
 end
 
+local nw, nh
 function create()
+   nw, nh = gfx.dim()
    local sc = system.cur()
    local event = system_events[ sc:nameRaw() ]
    local hasevent = false
@@ -369,7 +352,7 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
-   local template = (event.subtitle and _("You found #o{title} - {subtitle}!")) or _("You found #o{title}!")
+   local template = (event.subtitle and _("You found #o{title} - {subtitle}#0!")) or _("You found #o{title}#0!")
    local msg = fmt.f(template, event)
    -- Log and message
    player.msg( msg )
@@ -501,8 +484,8 @@ function textfg ()
 
    lg.setColor( 1, 1, 1, 1 )
 
-   local x = (love.w-textcanvas.w)*0.5
-   local y = (love.h-textcanvas.h)*0.3
+   local x = (nw-textcanvas.w)*0.5
+   local y = (nh-textcanvas.h)*0.3
    x = math.floor(x)
    y = math.floor(y)
    lg.draw( textcanvas, x, y )

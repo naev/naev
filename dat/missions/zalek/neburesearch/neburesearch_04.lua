@@ -25,7 +25,6 @@
    Difficulty: Easy to Medium
 
 --]]
-
 local fmt = require "format"
 local nebu_research = require "common.nebu_research"
 
@@ -34,9 +33,9 @@ local mensing_portrait = nebu_research.mensing.portrait
 -- luacheck: globals cannotLand jumpin land secondWarningMessage startAmbush takeoff warningMessage (Hook functions passed by name)
 
 -- Mission constants
+local homeworld, homeworld_sys = spob.getS("Jorla")
+local dest_planet, dest_sys = spob.getS("Jurai")
 local credits = nebu_research.rewards.credits04
-local homeworld, homeworld_sys = planet.getS("Jorla")
-local dest_planet, dest_sys = planet.getS("Jurai")
 
 function create()
     misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
@@ -89,15 +88,15 @@ function accept()
 end
 
 local function dest_updated()
-    misn.markerMove(mem.misn_marker, dest_sys)
-    misn.osdCreate(_("Shielding Prototype Funding"), {
-        fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
-        fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
+   misn.markerMove(mem.misn_marker, dest_planet)
+   misn.osdCreate(_("Shielding Prototype Funding"), {
+      fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
+      fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
     })
 end
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == dest_planet then
         vn.clear()
         vn.scene()
@@ -159,34 +158,33 @@ function land()
 end
 
 function jumpin()
-    if mem.stage == 1 and system.cur() == dest_sys then
-        local scom = {}
-        mem.stage = 2
-        scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet)
-        scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet)
-        scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", dest_planet)
-        for i=1,#scom do
-            scom[i]:setHostile(false)
-            scom[i]:control()
-            scom[i]:attack(player.pilot())
-        end
-        hook.timer(10.0, "warningMessage")
-    elseif mem.stage == 3 and system.cur() == dest_sys then
-        hook.timer(60.0, "cannotLand")
-    end
+   if mem.stage == 1 and system.cur() == dest_sys then
+      local scom = {}
+      mem.stage = 2
+      scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
+      scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
+      scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
+      for k,p in ipairs(scom) do
+         p:setHostile(true)
+         p:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
+      end
+      hook.timer(10.0, "warningMessage")
+   elseif mem.stage == 3 and system.cur() == dest_sys then
+      hook.timer(60.0, "cannotLand")
+   end
 end
 
 function takeoff()
-    if mem.stage == 5 then
-        mem.stage = 6
-        hook.timer(2.0, "startAmbush")
-        hook.timer(12.0, "secondWarningMessage")
-    end
+   if mem.stage == 5 then
+      mem.stage = 6
+      hook.timer(2.0, "startAmbush")
+      hook.timer(12.0, "secondWarningMessage")
+   end
 end
 
 function warningMessage()
     tk.msg(_("Caution!"), fmt.f(_([[You receive a system wide broadcast. It appears to be a warning. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
-    Why is this happening so frequently in Za'lek space? On a second glance you see on your radar that a drone squadron is flying right towards your ship.]]), {sys=system.cur()}))
+    Why is this happening so frequently in Za'lek space? A second glance at your radar shows that a drone squadron is flying right towards your ship.]]), {sys=system.cur()}))
 end
 
 function secondWarningMessage()
@@ -195,26 +193,26 @@ function secondWarningMessage()
 end
 
 function startAmbush()
-    local scom = {}
-    local origins = {}
-    origins[1] = system.get("Vauban")
-    origins[2] = system.get("Woreck")
-    origins[3] = system.get("Damien")
-    for i=1,#origins do
-        scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
-        scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])
-    end
-    for i=1,#scom do
-        scom[i]:setHostile(false)
-        scom[i]:control()
-        scom[i]:attack(player.pilot())
-    end
+   local scom = {}
+   local origins = {}
+   origins[1] = system.get("Vauban")
+   origins[2] = system.get("Woreck")
+   origins[3] = system.get("Damien")
+   for i=1,#origins do
+      scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
+      scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])
+   end
+   for i=1,#scom do
+      scom[i]:setHostile(false)
+      scom[i]:control()
+      scom[i]:attack(player.pilot())
+   end
 end
 
 function cannotLand()
     local cur_planet = dest_planet
     mem.stage = 4
-    dest_planet, dest_sys = planet.getS("Ruadan Station")
+    dest_planet, dest_sys = spob.getS("Ruadan Station")
     vn.clear()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )

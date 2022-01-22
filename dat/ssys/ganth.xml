@@ -10,11 +10,11 @@
   <x>-481.800000</x>
   <y>-621.600000</y>
  </pos>
- <assets>
-  <asset>Ganth I</asset>
-  <asset>Gerhart Station</asset>
-  <asset>Outbound Station</asset>
- </assets>
+ <spobs>
+  <spob>Ganth I</spob>
+  <spob>Gerhart Station</spob>
+  <spob>Outbound Station</spob>
+ </spobs>
  <jumps>
   <jump target="Hargen">
    <autopos/>

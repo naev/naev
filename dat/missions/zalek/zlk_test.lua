@@ -3,7 +3,7 @@
 <mission name="Za'lek Test">
  <avail>
   <priority>3</priority>
-  <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
+  <cond>faction.playerStanding("Za'lek") &gt; 5 and spob.cur():services()["outfits"] == "Outfits"</cond>
   <chance>450</chance>
   <location>Computer</location>
   <faction>Za'lek</faction>
@@ -25,6 +25,7 @@
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local zlk = require "common.zalek"
 
 local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
 -- luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
@@ -54,10 +55,10 @@ local znpcs = {}
 znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
 znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
-znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
+znpcs[4] = _([[A Za'lek researcher needs you to test the new propulsion system they have implemented in this engine.]])
 
 function create()
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
@@ -83,7 +84,7 @@ function create()
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
-   misn.setTitle( fmt.f(_("#rZLK:#0 Test of {engine}"), {engine=typeOfEng} ))
+   misn.setTitle( fmt.f( zlk.prefix.._("Test of {engine}"), {engine=typeOfEng} ))
    misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=mem.destplanet, sys=mem.destsys} ), nil, nil, mem.destplanet )
    misn.setReward(fmt.credits(mem.reward))
@@ -100,7 +101,7 @@ function accept()
       mem.stage = 0
       player.outfitAdd("Za'lek Test Engine")
       tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
+      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measurements during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
 
       misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
       mem.takehook = hook.takeoff( "takeoff" )
@@ -111,7 +112,7 @@ function accept()
    end
 
    mem.isSlow = false     --Flag to know if the pilot has limited speed
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
 end
 
 function takeoff()  --must trigger at every takeoff to check if the player forgot the engine
@@ -157,8 +158,8 @@ function land()
       mem.isSlow = false
    end
 
-   if planet.cur() == mem.destplanet and mem.stage == 0 then
-      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
+   if spob.cur() == mem.destplanet and mem.stage == 0 then
+      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land.  An excited group of Za'lek scientists quickly remove the experimental engine and eagerly download your flight data before paying you your fee."))
       player.pay(mem.reward)
       player.outfitRm("Za'lek Test Engine")
 
@@ -168,12 +169,12 @@ function land()
       misn.finish(true)
    end
 
-   if planet.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
+   if spob.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
       tk.msg( _("Mission failed"), _("You traveled without the engine."))
       abort()
    end
 
-   mem.curplanet = planet.cur()
+   mem.curplanet = spob.cur()
 end
 
 --  Breakdowns
@@ -287,14 +288,15 @@ function abort()
 end
 
 function rmTheOutfit( addengine )
+   local pp = player.pilot()
    if isMounted("Za'lek Test Engine") then
-      player.pilot():outfitRm("Za'lek Test Engine")
+      pp:outfitRm("Za'lek Test Engine")
    end
 
    -- Give them a bad engine just in case they are landed or on a planet
    -- where they can't equip. The bad engine is free so it shouldn't matter.
    if addengine then
-      player.pilot():outfitAdd("Beat Up Small Engine")
+      pp:outfitAdd("Beat Up Small Engine")
    end
 
    -- TODO Remove copies from all ships

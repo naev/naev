@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
  </avail>
  <notes>
@@ -42,6 +42,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 local maikki_portrait = minerva.maikki.portrait
 
@@ -99,12 +100,12 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Cerberus") then
+   if spob.cur() == spob.get("Cerberus") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
-   elseif planet.cur() == planet.get("Minerva Station") then
+   elseif spob.cur() == spob.get("Minerva Station") then
       misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
 end
@@ -133,7 +134,7 @@ She trails off.]]) )
       maikki(_([[She frowns a bit.
 "…unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
       maikki(_([[She suddenly remembers why she came here and your eyes light up.
-"You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
+"You wouldn't happen to be familiar with the station? I'm looking for someone."]]))
       vn.menu( {
          { _("Offer to help her"), "accept" },
          { _("Decline to help"), "decline" },
@@ -196,7 +197,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.menu( opts )
 
    vn.label( "father" )
-   maikki(_([["I don't remember him at all since he disappeared when I was only 5 cycles old, but before my mother died, she told me he was a famous space pilot."]]))
+   maikki(_([["I don't remember him at all. He disappeared when I was only 5 cycles old. Before my mother died, she told me he was a famous space pilot."]]))
    maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artefacts of human history."]]))
    vn.menu( {
       { _([["He was a scavenger?"]]), "menuscholar" },
@@ -204,7 +205,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    } )
    vn.label( "menuscholar" )
    maikki(_([["I like to think that he was a scholar, but most people would call him a scavenger."]]))
-   maikki(_([["My mother died without telling me, but after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
+   maikki(_([["My mother died without telling me, but, after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
    maikki(_([["Apparently, one day he went into the nebula with his business partner Mireia and they were never seen again. All attempts to find them failed."]]))
    maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
    maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
@@ -214,7 +215,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn.osdCreate( _("Finding Maikki's Father"),
             { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
          mem.misn_marker = misn.markerAdd( searchsys, "low" )
-         minerva.log.maikki(_("You were told her father colud be near Doeston.") )
+         minerva.log.maikki(_("You were told her father could be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -227,14 +228,14 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([["He looks so goofy in this picture, and my mother looks so happy… This is what should have been my childhood…"
 She reminisces.]]))
    -- TODO flashback with her family
-   vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
+   vn.na(_("You give a few moments to recover before explaining to her what you saw in the wreck and your encounter with the scavengers."))
    maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
 "From what you tell me, it seems like it wasn't an accident…"
 She looks up expectantly.]]))
-   maikki(_([["If you didn't find a body I'm sure he survived! He shouldn't be a guy that dies that easily!"
+   maikki(_([["If you didn't find a body I'm sure he survived! He wouldn't be someone who dies that easily!"
 She looks clearly excited at the possibility.]]))
    maikki(_([[She furrows her brows.
-"The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father so far away? I always thought those creeps couldn't be up to anything good."]]))
+"The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father? I always thought those creeps couldn't be up to anything good."]]))
    maikki(_([[Her face glows.
 "I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.sfxVictory()
@@ -267,7 +268,7 @@ function approach_oldman ()
    local om = vn.newCharacter( _("Old Man"),
          { image=oldman_image } )
    vn.transition()
-   vn.na( _("You see an old man casually drinking at the bar. He has a sort of self-complacent bored look on his face.") )
+   vn.na( _("You see an old man casually drinking at the bar. He has a sort of distant, bored look on his face.") )
 
    vn.label( "menu" )
    local opts = {
@@ -303,9 +304,9 @@ He takes a long swig from his drink.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
-   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."
+   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were younger I would be with them exploring, but can't with this bad knee."
 He pats his left knee.]]))
-   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Mireia."
+   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here any more. Especially not after the disappearance of famous scavengers like Kex and Mireia."
 He muses thoughtfully.]]))
    om(_([["To better times."
 He downs his drink and orders another.]]))
@@ -315,9 +316,9 @@ He downs his drink and orders another.]]))
    om(_([[He whistles casually.
 "The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
    vn.sfxEerie()
-   om(_([[He goes a bit quieter and gets closer to you.
+   om(_([[He goes a bit quieter and leans towards you.
 "Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, claiming they seen them."]]))
-   om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
+   om(_([["I believe it be the boredom getting to their heads. Likely naught but another scavenger or some debris."]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
@@ -373,7 +374,7 @@ function approach_scavengers ()
 
    if mem.misn_state==4 then
       -- Already got mission, just give player a refresher
-      scavB(_([["Aren't you drinking too much. Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
+      scavB(_([["Aren't you drinking too much? Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
       scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
 He takes another long swig of his drink and burps.]]))
    else
@@ -389,7 +390,7 @@ He shivers exaggeratedly.]]))
       scavB(_([["How many times do I have to tell you? My sensors were acting up, didn't want to spend too long in Zerantix with all them ghosts around."]]))
       scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"
 He pats his biceps in a fairly uninspiring way.]]))
-      scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers get there."]]))
+      scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers do."]]))
       scavA(_([["To our future success in Zerantix!"]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
@@ -560,7 +561,7 @@ function stealthstart ()
    -- Start the cinematics
    mem.stealthanimation = 0
    player.cinematics( true )
-   camera.set( waypoints[1], true )
+   camera.set( waypoints[1] )
    hook.timer( 1.0, "stealthstartanimation" )
 end
 
@@ -585,14 +586,14 @@ function stealthstartanimation ()
    elseif mem.stealthanimation==6 then
       -- Back to player
       player.cinematics( false )
-      camera.set( nil, true )
+      camera.set()
       player.pilot():control(false)
       mem.stealthtarget = 0
       hook.timer( 4.0, "stealthheartbeat" )
    end
 end
 
-
+local stealthbroadcasthook
 function stealthbroadcast ()
    stealthmessages = {
       { pscavA, 4.0, _("This place always gives me the creeps.") },
@@ -627,7 +628,7 @@ function stealthbroadcast ()
    msg[1]:broadcast( msg[3] )
 
    if msg[2] > 0 then
-      mem.stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
+      stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
    end
 end
 
@@ -637,23 +638,24 @@ function stealthheartbeat ()
    if not pp:flags("stealth") and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg("#rYou are about to be discovered!")
+         player.msg( _("#rYou are about to be discovered!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
          pscavA:broadcast( _("Run!") )
-         pscavB:broadcast( _("There's definately something there! Scram!") )
+         pscavB:broadcast( _("There's definitely something there! Scram!") )
          for k,p in ipairs{pscavA, pscavB} do
             p:taskClear()
             p:hyperspace( cutscenesys )
          end
-         player.msg( _("#rYou have been detected! Stealth failed!") )
+         player.msg( _("#rYou have been detected! Stealth failed!"), true )
+         hook.rm( stealthbroadcasthook )
          return
       end
    elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg( _("#rYou are about to lose track of the scavengers!!") )
+         player.msg( _("#rYou are about to lose track of the scavengers!!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
@@ -662,7 +664,8 @@ function stealthheartbeat ()
          if wreck ~= nil then
             wreck:rm()
          end
-         player.msg( _("#rYou lost track of the scavengers! Stealth failed!") )
+         player.msg( _("#rYou lost track of the scavengers! Stealth failed!"), true )
+         hook.rm( stealthbroadcasthook )
          return
       end
    else
@@ -695,7 +698,7 @@ function stealthheartbeat ()
             pp:control()
             pp:brake()
             player.cinematics( true )
-            camera.set( waypoints[ #waypoints ], true )
+            camera.set( waypoints[ #waypoints ] )
             mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
             return
@@ -754,7 +757,7 @@ function wreckcutscene ()
       local pp = player.pilot()
       pp:control( false )
       player.cinematics( false )
-      camera.set( nil, true )
+      camera.set()
       return
    end
    hook.timer( 3.0, "wreckcutscene" )
@@ -834,8 +837,9 @@ He seems to be clutching his head. A headache perhaps?]]))
    vn.na(_("You detect they are powering up their weapon systems."))
    vn.func( function ()
       for k,p in ipairs{ pscavA, pscavB } do
-         p:taskClear()
-         p:attack( player.pilot() )
+         p:control(false)
+         p:changeAI("baddiepos")
+         p:setHostile(true)
          -- TODO add angry messages
       end
       minerva.log.maikki(_("You found a wreck and were attacked by scavengers.") )
@@ -848,13 +852,12 @@ end
 
 function scav_attacked ()
    if mem.found_wreck then return end
-   player.msg(_("MISSION FAILED! Scavenger attacked."))
    for k,p in ipairs{pscavA, pscavB} do
       if p:exists() then
          p:control( false )
       end
    end
-   misn.finish( false )
+   lmisn.fail(_("Scavenger attacked."))
 end
 
 
@@ -886,7 +889,7 @@ function board_wreck ()
    end )
 
    vn.label("bridge")
-   vn.na(_("You make your way to what is left of the bridge. You can see what appears to be very old space-weathered bloodstains over most of the controls. However, there are no bodies to be seen around."))
+   vn.na(_("You make your way to what is left of the bridge. You can see what appears to be very old space-weathered bloodstains over most of the controls. However, there are no bodies to be seen."))
    vn.func( function () saw_bridge = true end )
    vn.jump("menu")
 
@@ -913,7 +916,7 @@ function board_wreck ()
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
          { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=mainsys}) } )
-   misn.markerMove( mem.misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( mem.misn_marker, spob.get("Minerva Station") )
    mem.misn_state=5
 
    -- Clear scavengers if exist

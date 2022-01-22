@@ -1,6 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Map: Dvaered-Soromid trade route">
  <general>
+  <rarity>0</rarity>
   <mass>0</mass>
   <price>30000</price>
   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
@@ -9,19 +10,29 @@
  <specific type="map">
   <sys name="Draygar">
    <jump>Tau Prime</jump>
+   <spob>Anecu</spob>
+   <spob>Durumdra</spob>
+   <spob>Hikatalat</spob>
+   <spob>INSS-3</spob>
   </sys>
   <sys name="Tau Prime">
    <jump>Draconis</jump>
    <jump>Draygar</jump>
+   <spob>Anubis</spob>
+   <spob>Europea</spob>
+   <spob>Tau Station</spob>
   </sys>
   <sys name="Draconis">
    <jump>Pilatis</jump>
    <jump>Tau Prime</jump>
+   <spob>Draconis Epsilon</spob>
+   <spob>Draconis Omega</spob>
+   <spob>Zabween</spob>
   </sys>
   <sys name="Pilatis">
    <jump>Defa</jump>
    <jump>Draconis</jump>
-   <asset>Wildwood Station</asset>
+   <spob>Wildwood Station</spob>
   </sys>
   <sys name="Defa">
    <jump>Oberon</jump>
@@ -29,7 +40,7 @@
   </sys>
   <sys name="Oberon">
    <jump>Defa</jump>
-   <asset>Soromid Customs Central</asset>
+   <spob>Soromid Customs Central</spob>
   </sys>
  </specific>
 </outfit>

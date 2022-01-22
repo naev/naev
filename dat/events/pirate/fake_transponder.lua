@@ -5,7 +5,7 @@
   <unique/>
  </flags>
  <trigger>land</trigger>
- <cond>require("common.pirate").factionIsPirate( planet.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
+ <cond>require("common.pirate").factionIsPirate( spob.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
  <chance>50</chance>
 </event>
 --]]
@@ -61,6 +61,7 @@ function approach_pirate ()
          vn.jump("broke")
          return
       end
+      player.pay( -cost )
       player.outfitAdd( transponder )
    end )
    vn.na( fmt.reward(transponder:name()) )

@@ -10,14 +10,14 @@
   <x>171.666667</x>
   <y>561.066667</y>
  </pos>
- <assets>
-  <asset>Larling</asset>
-  <asset>Sergio Vix I</asset>
-  <asset>Sergio Vix III</asset>
-  <asset>Soromid Wards Beta</asset>
-  <asset>Zepei</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Larling</spob>
+  <spob>Sergio Vix I</spob>
+  <spob>Sergio Vix III</spob>
+  <spob>Soromid Wards Beta</spob>
+  <spob>Zepei</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Cerberus">
    <autopos/>

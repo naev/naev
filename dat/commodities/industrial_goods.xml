@@ -7,9 +7,9 @@
  <standard/>
  <period>60</period>
  <population_modifier>-0.25</population_modifier>
- <planet_modifier type="0">1.4</planet_modifier>
- <planet_modifier type="1">1.5</planet_modifier>
- <planet_modifier type="2">1.4</planet_modifier>
+ <spob_modifier type="0">1.4</spob_modifier>
+ <spob_modifier type="1">1.5</spob_modifier>
+ <spob_modifier type="2">1.4</spob_modifier>
  <faction_modifier type="FLF">1.2</faction_modifier>
  <faction_modifier type="Raven Clan">1.2</faction_modifier>
  <faction_modifier type="Wild Ones">1.2</faction_modifier>

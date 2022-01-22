@@ -10,14 +10,14 @@
   <x>382.975467</x>
   <y>762.525333</y>
  </pos>
- <assets>
-  <asset>Kaulas</asset>
-  <asset>Moor I</asset>
-  <asset>Moor II</asset>
-  <asset>Moor III</asset>
-  <asset>Moorline Station</asset>
-  <asset>Werlen</asset>
- </assets>
+ <spobs>
+  <spob>Kaulas</spob>
+  <spob>Moor I</spob>
+  <spob>Moor II</spob>
+  <spob>Moor III</spob>
+  <spob>Moorline Station</spob>
+  <spob>Werlen</spob>
+ </spobs>
  <jumps>
   <jump target="Longbow">
    <autopos/>
@@ -28,6 +28,10 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Stint">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Taxumi">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

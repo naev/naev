@@ -8,7 +8,7 @@ local playerform = require "playerform"
 
 local radar_x, radar_y, screen_h, screen_w
 local bar_w, bar_h, bar_x, bar_y, buttons, margin, pp, ptarget, ta_pnt_pane_x, ta_pnt_pane_y, tbar_h, tbar_y
-local fields_w, fields_x, fields_y, nav_planet, nav_pnt, popup_right_x, popup_right_y, tbar_center_w, tbar_center_h, tbar_center_x
+local fields_w, fields_x, fields_y, nav_spob, nav_pnt, popup_right_x, popup_right_y, tbar_center_w, tbar_center_h, tbar_center_x
 local target_image_w, ta_flt_pane_x
 -- This script has a lot of globals. It really loves them.
 -- The below variables aren't part of the GUI API and aren't accessed via _G:
@@ -132,7 +132,7 @@ function create()
    button_mouseover = tex_open( "buttonHil.png" )
    button_pressed = tex_open( "buttonPre.png" )
    button_disabled = tex_open( "buttonDis.png" )
-   gui.targetPlanetGFX( tex_open( "radar_planet.png", 2, 2 ) )
+   gui.targetSpobGFX( tex_open( "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex_open( "radar_ship.png", 2, 2 ) )
 
 
@@ -281,6 +281,7 @@ function create()
    update_system()
    update_nav()
    update_cargo()
+   update_effects()
 end
 
 local function roundto(num, idp)
@@ -337,7 +338,7 @@ function update_target()
 end
 
 function update_nav()
-   nav_planet = {}
+   nav_spob = {}
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp, autonav_jumps = player.autonavDest()
    if nav_pnt then
@@ -358,23 +359,23 @@ function update_nav()
          ta_pnt_faction_gfx = ta_pntfact:logo()
       end
 
-      nav_planet = { -- Table for convenience.
+      nav_spob = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
-         class = nav_pnt:class(),
+         class = _(nav_pnt:class()),
          col = nav_pnt:colour(),
          services = {}
       }
 
       if pntflags.land then
-         services = { "bar", "missions", "outfits", "shipyard", "commodity" }
+         services = { "refuel", "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( nav_planet.services, N_("Spaceport") )
+         table.insert( nav_spob.services, N_("Spaceport") )
          for k,v in ipairs(services) do
-            table.insert( nav_planet.services, pntflags[v] )
+            table.insert( nav_spob.services, pntflags[v] )
          end
-         nav_planet.nservices = #nav_planet.services
+         nav_spob.nservices = #nav_spob.services
       end
    end
    if nav_hyp then
@@ -424,6 +425,11 @@ function update_ship()
 end
 
 function update_system()
+end
+
+local effects
+function update_effects()
+   effects = pp:effectGet()
 end
 
 local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
@@ -493,10 +499,10 @@ local function renderWeapBar( weapon, x, y )
    local name_offset = 17
    local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
    if weapon ~= nil then
-      if weapon.ammo ~= nil then
+      if weapon.left_p ~= nil then
          width = bar_w/2
       else
-          width = bar_w
+         width = bar_w
       end
 
       if weapon.is_outfit then
@@ -527,6 +533,8 @@ local function renderWeapBar( weapon, x, y )
             bottom_icon = icon_missile
          elseif weapon.type == "Fighter Bay" then
             bottom_icon = icon_ship
+         else
+            bottom_icon = icon_projectile
          end
 
          top_icon_w, top_icon_h = top_icon:dim()
@@ -543,7 +551,7 @@ local function renderWeapBar( weapon, x, y )
 
       if weapon.is_outfit then
          gfx.renderTex( icon_outfit, x + offsets[1], y + offsets[5] )
-         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34, 1, 1, 0, 0, 1, 1 )
+         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34 )
          if weapon.weapset ~= nil then
             local ws_name
             if weapon.weapset == 10 then
@@ -555,7 +563,7 @@ local function renderWeapBar( weapon, x, y )
          end
       else
          local col = nil
-         if weapon.ammo ~= nil then
+         if weapon.left_p ~= nil then
             gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
             if weapon.left_p < 1 then
                gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
@@ -623,7 +631,7 @@ local function renderField( text, x, y, w, col, icon )
 
    gfx.renderTex( field_frame_left, x, y )
    if w > 28 then
-      gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h )
    end
    if w >= 28 then
       gfx.renderTex( field_frame_right, x+w-14, y )
@@ -684,7 +692,7 @@ function render( _dt )
    local lockons = pp:lockon()
 
    -- Top Bar
-   gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h )
    gfx.renderTex( top_bar_left, margin, tbar_y )
    gfx.renderTex( top_bar_right, screen_w - margin - tbar_right_w, tbar_y )
 
@@ -698,9 +706,9 @@ function render( _dt )
    local gui_w = right_side_w + left_side_w - 10
    local mod_x = math.max( margin, math.min(
          screen_w - 2*margin - math.max( gui_w, 1024 ),
-         math.floor( (screen_w - 2*margin - gui_w)/3 ) ) )
+         math.floor( (screen_w - 2*margin - gui_w)/2 ) ) )
    local mod_y = margin
-   gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
 
    local right_side_h = end_right_h
@@ -714,9 +722,9 @@ function render( _dt )
       right_side_h = right_side_h + height
       gfx.renderTex( popup_bottom2, popup_right_x + mod_x, popup_right_y + mod_y )
       gfx.renderTex( popup_top, popup_right_x + mod_x, popup_right_y + 6 + height + mod_y )
-      gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6 + mod_y, 165, height, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6 + mod_y, 165, height )
       gfx.renderTex( popup_bottom_side_left, popup_right_x + 7 + mod_x, popup_right_y + mod_y )
-      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y + mod_y, -3, 19, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y + mod_y, -3, 19 )
 
       for i=1, (amount+1) do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
@@ -872,7 +880,15 @@ function render( _dt )
 
    --System name
    local sysname = system.cur():name()
-   gfx.print( false, sysname, screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19, col_text, 132, true )
+   local sysx, sysy = screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19
+   gfx.print( false, sysname, sysx, sysy, col_text, 132, true )
+
+   -- Effects
+   local ex, ey = sysx-60, sysy+20
+   for k,e in ipairs(effects) do
+      gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      ex = ex - 48
+   end
 
    for k, v in ipairs(buttontypes) do
       renderButton( v )
@@ -880,36 +896,34 @@ function render( _dt )
 
    -- Planet pane
    if nav_pnt then
-      local ta_pnt_dist = pp:pos():dist( nav_planet.pos )
+      local ta_pnt_dist = pp:pos():dist( nav_spob.pos )
 
       -- Extend the pane depending on the services available.
       local services_h = 60
       if pntflags.land then
-         services_h = services_h + (20 * nav_planet.nservices)
+         services_h = services_h + (20 * nav_spob.nservices)
       end
 
       -- Render background images.
       gfx.renderTex( planet_pane_t, ta_pnt_pane_x, ta_pnt_pane_y )
-      local y
       for yy = ta_pnt_pane_y, ta_pnt_pane_y-services_h, -ta_pnt_pane_h_m do
-         y = yy
-         gfx.renderTex( planet_pane_m, ta_pnt_pane_x, y )
+         gfx.renderTex( planet_pane_m, ta_pnt_pane_x, yy )
       end
-      gfx.renderTex( planet_pane_b, ta_pnt_pane_x, y - ta_pnt_pane_h_b )
+      gfx.renderTex( planet_pane_b, ta_pnt_pane_x, ta_pnt_pane_y - services_h - ta_pnt_pane_h_b )
       gfx.renderTex( planet_bg, ta_pnt_image_x, ta_pnt_image_y )
 
       --Render planet image.
       if ta_pnt_gfx_w > 140 or ta_pnt_gfx_h > 140 then
-         gfx.renderTexRaw( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_draw_w / 2, ta_pnt_center_y - ta_pnt_gfx_draw_h / 2, ta_pnt_gfx_draw_w, ta_pnt_gfx_draw_h, 1, 1, 0, 0, 1, 1)
+         gfx.renderTexRaw( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_draw_w / 2, ta_pnt_center_y - ta_pnt_gfx_draw_h / 2, ta_pnt_gfx_draw_w, ta_pnt_gfx_draw_h )
       else
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
       gfx.print( true, _("TARGETED"), ta_pnt_pane_x + 14, ta_pnt_pane_y + 170, col_text )
-      gfx.print( true, nav_planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, nav_planet.col )
+      gfx.print( true, nav_spob.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, nav_spob.col )
       gfx.print( true, string.format(
             _("DISTANCE: %s"), largeNumber(ta_pnt_dist, 1) ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 20, col_text )
-      gfx.print( true, string.format( _("CLASS: %s"), nav_planet.class ),
+      gfx.print( true, string.format( _("CLASS: %s"), nav_spob.class ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 40, col_text )
 
       if ta_pnt_faction_gfx then
@@ -921,7 +935,7 @@ function render( _dt )
       -- Space out the text.
       if pntflags.land then
          gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 60, col_text )
-         for k,v in ipairs(nav_planet.services) do
+         for k,v in ipairs(nav_spob.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 40, ta_pnt_pane_y - 60 - k*20, col_text )
          end
       else

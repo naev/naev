@@ -53,7 +53,7 @@ quotes.clue[5] = _([["If I was looking for {plt}, I would look in the {sys} syst
 
 quotes.dono    = {}
 quotes.dono[1] = _("This person has never heard of {plt}. It seems you will have to ask someone else.")
-quotes.dono[2] = _("This person is also looking for {plt}, but doesn't seem to know anything you don't.")
+quotes.dono[2] = _("This person is also looking for {plt}, but doesn't seem to know anything more than you.")
 quotes.dono[3] = _([["{plt}? Nope, I haven't seen that person in many cycles at this point."]])
 quotes.dono[4] = _([["Sorry, I have no idea where {plt} is."]])
 quotes.dono[5] = _([["Oh, hell no, I stay as far away from {plt} as I possibly can."]])
@@ -64,7 +64,7 @@ quotes.dono[9] = _("When you ask about {plt}, you are promptly told to get lost.
 quotes.dono[10] = _([["I'd love to get back at {plt} for last cycle, but I haven't seen them in quite some time now."]])
 quotes.dono[11] = _([["I've not seen {plt}, but good luck in your search!"]])
 quotes.dono[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, though. Sorry!"]])
-quotes.dono[13] = _([["I used to work with {plt}. We haven't seen each other since they stole my favorite ship, though."]])
+quotes.dono[13] = _([["I used to work with {plt}. We haven't seen each other since they stole my favourite ship, though."]])
 
 quotes.money    = {}
 quotes.money[1] = _([["{plt}, you say? Well, I don't offer my services for free. Pay me {credits} and I'll tell you where to look; how does that sound?"]])
@@ -114,7 +114,7 @@ comms.ambush[3] = _("Why are you following {plt}?")
 comms.ambush[4] = _("Quit following {plt}!")
 comms.ambush[5] = _("Your quest for {plt} ends here!")
 comms.ambush[6] = _("You ask too many questions about {plt}!")
-comms.ambush[7] = _("You were not supposed to get on the trail of {plt}!")
+comms.ambush[7] = _("You were not supposed to pick up the trail of {plt}!")
 
 quotes.pay    = {}
 quotes.pay[1] = _("An officer hands you your pay.")
@@ -123,7 +123,7 @@ quotes.pay[2] = _("No one will miss this outlaw pilot! The bounty has been depos
 mem.osd_msg    = {}  -- 3-part OSD: Search a system, do the deed, get paid.
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    -- Choose the target faction among Pirate and FLF
    adm_factions = {faction.get("Pirate"), faction.get("FLF")}
@@ -195,16 +195,6 @@ function create ()
          {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
    misn.setReward( fmt.credits( mem.credits ) )
    mem.marker = misn.markerAdd( mem.mysys[1], "computer" )
-end
-
--- Test if an element is in a list
-local function elt_inlist( elt, list )
-   for i, elti in ipairs(list) do
-      if elti == elt then
-         return true
-      end
-   end
-   return false
 end
 
 function accept ()
@@ -347,7 +337,7 @@ end
 function hail_ad()
    hook.rm(mem.hailie)
    hook.rm(mem.hailie2)
-   tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction of your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
+   tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
 end
 
 -- Player hails a ship for info
@@ -357,7 +347,7 @@ function hail( target )
       return
    end
 
-   if system.cur() == mem.mysys[mem.cursys] and mem.stage == 0 and not elt_inlist( target, hailed ) then
+   if system.cur() == mem.mysys[mem.cursys] and mem.stage == 0 and not inlist( hailed, target ) then
       hailed[#hailed+1] = target -- A pilot can be hailed only once
 
       if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
@@ -519,7 +509,7 @@ function land()
       mem.mynpc = misn.npcAdd("clue_bar", _("Shifty Person"), portrait.get("Pirate"), _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information."))
 
    -- Player wants to be paid
-   elseif planet.cur():faction() == mem.paying_faction and mem.stage == 4 then
+   elseif spob.cur():faction() == mem.paying_faction and mem.stage == 4 then
       tk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)] )
       player.pay( mem.credits )
       mem.paying_faction:modPlayerSingle( rnd.rnd(1,2) )

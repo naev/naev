@@ -49,7 +49,7 @@ local defend_system, second_wave_attacks -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
-   mem.this_planet, mem.this_system = planet.cur()
+   mem.this_planet, mem.this_system = spob.cur()
    if ( pir.systemPresence(mem.this_system) > 0
          or mem.this_system:presences()["Collective"]
          or mem.this_system:presences()["FLF"]
@@ -64,7 +64,7 @@ function create()
       misn.finish(false)
    end
 
-   if tk.yesno( _("In the bar"), _([[The bar rests in the dull clink of glasses and the scattered murmur of conversation when the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
+   if tk.yesno( _("In the bar"), _([[The dull clink of glasses and the scattered murmur of conversation drifts through the bar until the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
     "Our son... his ship was supposed to land a hectosecond ago," her partner says mechanically. "But pirates, suddenly everywhere-" he swallows. "-they didn't make it."  His wife throws her head back and wails.
     Two young men rise abruptly from a table in the back of the room and come stiffly forward. One goes to the grieving couple while the other turns address the room.
     "These raiders must be stopped. We are cadets at the Imperial Flight School. If you feel the injustice of this family's loss, will you fly with us to avenge their son's death?"]]) ) then
@@ -247,11 +247,11 @@ function celebrate_victory()
       if mem.victory == true then
          tk.msg( _("A public occasion"), fmt.f( _([[Night is falling by the time you land back on {pnt}. Looking solemn in front of a gathering crowd and news recorders, a large man with a fleshy face comes forward to greet the survivors of the fight. A flock of men and women follow him.
     When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
-    After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]]), {pnt=mem.this_planet}) )
+    After meeting each surviving pilot, the tall man stands still for aide to attach an microphone to his lapel. Then he turns to the news-casters and the crowd.]]), {pnt=mem.this_planet}) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
          tk.msg( _("The Governor's speech"), fmt.f( _([[
-"Even here on {pnt}, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
+"Even here on {pnt}, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they threaten the very foundations of our peace. We are grateful for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they, and their volunteers, will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
     The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), {pnt=mem.this_planet} ) )
          misn.finish( true)
       else

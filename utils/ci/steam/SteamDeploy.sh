@@ -1,15 +1,20 @@
 #!/bin/bash
 
-# STEAM DEPLOYMENT SCRIPT FOR NAEV
-# Requires SteamCMD to be installed within a Github Actions ubuntu-latest runner.
-#
-# This script should be run after downloading all build artefacts
-# If -n is passed to the script, a nightly build will be generated
-# and uploaded to Steam
-#
-# Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
-
 set -e
+
+usage() {
+    cat <<EOF
+STEAM DEPLOYMENT SCRIPT FOR NAEV
+Requires SteamCMD to be installed within a Github Actions ubuntu-latest runner.
+
+This script should be run after downloading all build artefacts
+If -n is passed to the script, a nightly build will be generated
+and uploaded to Steam
+
+Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+EOF
+    exit 1
+}
 
 # Defaults
 NIGHTLY="false"
@@ -39,6 +44,9 @@ while getopts dnpc:s:t:o: OPTION "$@"; do
         ;;
     o)
         STEAMPATH="${OPTARG}"
+        ;;
+    *)
+        usage
         ;;
     esac
 done
@@ -88,7 +96,7 @@ tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 if [ "$DRYRUN" == "false" ]; then
 
     # Trigger 2FA request and get 2FA code
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+    steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit || true
 
     # Wait a bit for the email to arrive
     sleep 60s
@@ -97,11 +105,11 @@ if [ "$DRYRUN" == "false" ]; then
 
     if [ "$NIGHTLY" == "true" ]; then
         # Run steam upload with 2fa key
-        retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_nightly.vdf +quit
+        retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
     else
         if [ "$PRERELEASE" == "true" ]; then
             # Run steam upload with 2fa key
-            retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_prerelease.vdf +quit
+            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
 
         elif [ "$PRERELEASE" == "false" ]; then
             mkdir -p "$STEAMPATH"/content/soundtrack
@@ -109,8 +117,8 @@ if [ "$DRYRUN" == "false" ]; then
             cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
 
             # Run steam upload with 2fa key
-            retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_release.vdf +quit
-            retry 5 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http $STEAMPATH/scripts/app_build_1411430_soundtrack.vdf +quit
+            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
+            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
 
         else
             echo "Something went wrong determining if this is a PRERELEASE or not."

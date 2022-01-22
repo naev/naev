@@ -10,13 +10,13 @@
   <x>428.645567</x>
   <y>-706.178283</y>
  </pos>
- <assets>
-  <asset>Infinity III</asset>
-  <asset>Infinity IV</asset>
-  <asset>Infinity VII</asset>
-  <asset>Ramen</asset>
-  <asset>Timu</asset>
- </assets>
+ <spobs>
+  <spob>Infinity III</spob>
+  <spob>Infinity IV</spob>
+  <spob>Infinity VII</spob>
+  <spob>Ramen</spob>
+  <spob>Timu</spob>
+ </spobs>
  <jumps>
   <jump target="Gruz">
    <autopos/>

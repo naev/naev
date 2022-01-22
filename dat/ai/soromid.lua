@@ -35,9 +35,17 @@ local taunt_list_defensive= {
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
+   local price = ps:price()
 
-   -- Not too many credits.
-   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
+   -- See if it's a transport ship
+   mem.istransport = ps:tags().transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    -- Set how far they attack
    mem.enemyclose = 2000 + 2000 * ps:size()
@@ -84,7 +92,7 @@ function hail ()
 
    -- Handle bribing
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and (standing > 20 or
+   if mem.found_illegal or mem.allowbribe or (mem.natural and (standing > 20 or
          (standing > 0 and mem.bribe_rng > 0.8) or
          (standing > -20 and mem.bribe_rng > 0.6) or
          (standing > -50 and mem.bribe_rng > 0.4) or

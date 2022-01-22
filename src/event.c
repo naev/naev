@@ -20,10 +20,12 @@
 
 #include "event.h"
 
+#include "conf.h"
 #include "array.h"
 #include "cond.h"
 #include "hook.h"
 #include "log.h"
+#include "land.h"
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_audio.h"
@@ -55,6 +57,11 @@ typedef struct EventData_ {
    char *lua; /**< Lua code. */
    unsigned int flags; /**< Bit flags. */
 
+   /* For specific cases. */
+   char *spob; /**< Spob name. */
+   char *system; /**< System name. */
+   char *chapter; /**< Chapter name. */
+
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
@@ -77,7 +84,7 @@ static Event_t *event_active     = NULL; /**< Active events. */
  */
 static unsigned int event_genID (void);
 static int event_cmp( const void* a, const void* b );
-static int event_parseFile( const char* file );
+static int event_parseFile( const char* file, EventData *temp );
 static int event_parseXML( EventData *temp, const xmlNodePtr parent );
 static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
@@ -206,7 +213,7 @@ static int event_create( int dataid, unsigned int *id )
 
    /* Create the "mem" table for persistence. */
    lua_newtable(naevL);
-   nlua_setenv(ev->env, "mem");
+   nlua_setenv(naevL, ev->env, "mem");
 
    /* Load file. */
    if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {
@@ -305,29 +312,40 @@ int event_alreadyRunning( int data )
  */
 void events_trigger( EventTrigger_t trigger )
 {
-   int i, c;
-   int created;
+   int created = 0;
+   for (int i=0; i<array_size(event_data); i++) {
+      EventData *ed = &event_data[i];
 
-   created = 0;
-   for (i=0; i<array_size(event_data); i++) {
       /* Make sure trigger matches. */
-      if (event_data[i].trigger != trigger)
+      if (ed->trigger != trigger)
+         continue;
+
+      /* Spob. */
+      if ((ed->spob != NULL) && (strcmp(ed->spob,land_spob->name)!=0))
+         continue;
+
+      /* System. */
+      if ((ed->system != NULL) && (strcmp(ed->system,cur_system->name)!=0))
+         continue;
+
+      /* If chapter, must match chapter. TODO make this regex. */
+      if ((ed->chapter != NULL) && (strcmp(ed->chapter,player.chapter)!=0))
          continue;
 
       /* Make sure chance is succeeded. */
-      if (RNGF() > event_data[i].chance)
+      if (RNGF() > ed->chance)
          continue;
 
       /* Test uniqueness. */
-      if ((event_data[i].flags & EVENT_FLAG_UNIQUE) &&
-            (player_eventAlreadyDone( i ) || event_alreadyRunning(i)))
+      if ((ed->flags & EVENT_FLAG_UNIQUE) &&
+            (player_eventAlreadyDone(i) || event_alreadyRunning(i)))
          continue;
 
       /* Test conditional. */
-      if (event_data[i].cond != NULL) {
-         c = cond_check(event_data[i].cond);
+      if (ed->cond != NULL) {
+         int c = cond_check(ed->cond);
          if (c<0) {
-            WARN(_("Conditional for event '%s' failed to run."), event_data[i].name);
+            WARN(_("Conditional for event '%s' failed to run."), ed->name);
             continue;
          }
          else if (!c)
@@ -357,17 +375,26 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
    memset( temp, 0, sizeof(EventData) );
 
+   /* Defaults. */
+   temp->trigger = EVENT_TRIGGER_NULL;
+
    /* get the name */
    xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
       WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
    node = parent->xmlChildrenNode;
-
    do { /* load all the data */
-
       /* Only check nodes. */
       xml_onlyNodes(node);
+
+      xmlr_strd(node,"spob",temp->spob);
+      xmlr_strd(node,"system",temp->system);
+      xmlr_strd(node,"chapter",temp->chapter);
+
+      xmlr_strd(node,"cond",temp->cond);
+      xmlr_float(node,"chance",temp->chance);
+      xmlr_int(node,"priority",temp->priority);
 
       /* Trigger. */
       if (xml_isNode(node,"trigger")) {
@@ -406,15 +433,6 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"notes"))
          continue;
 
-      /* Condition. */
-      xmlr_strd(node,"cond",temp->cond);
-
-      /* Get chance. */
-      xmlr_float(node,"chance",temp->chance);
-
-      /* Get proirity. */
-      xmlr_int(node,"priority",temp->priority);
-
       DEBUG(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
    } while (xml_nextNode(node));
 
@@ -423,8 +441,8 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
+   MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
 #undef MELEMENT
 
    return 0;
@@ -449,11 +467,13 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   /* Run over events. */
    char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   Uint32 time = SDL_GetTicks();
+
+   /* Run over events. */
    event_data = array_create_size( EventData, array_size( event_files ) );
    for (int i=0; i < array_size( event_files ); i++) {
-      event_parseFile( event_files[ i ] );
+      event_parseFile( event_files[i], NULL );
       free( event_files[ i ] );
    }
    array_free( event_files );
@@ -462,22 +482,29 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
-   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Event in %.3f s", "Loaded %d Events in %.3f s", array_size(event_data) ), array_size(event_data), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
    return 0;
 }
 
 /**
  * @brief Parses an event file.
+ *
+ *    @param file Source file path.
+ *    @param temp Data to load into, or NULL for initial load.
  */
-static int event_parseFile( const char* file )
+static int event_parseFile( const char* file, EventData *temp )
 {
    size_t bufsize;
    xmlNodePtr node;
    xmlDocPtr doc;
    char *filebuf;
    const char *pos, *start_pos;
-   EventData *temp;
 
 #ifdef DEBUGGING
    /* To check if event is valid. */
@@ -523,7 +550,8 @@ static int event_parseFile( const char* file )
       return -1;
    }
 
-   temp = &array_grow(&event_data);
+   if (temp == NULL)
+      temp = &array_grow(&event_data);
    event_parseXML( temp, node );
    temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
@@ -554,8 +582,13 @@ static int event_parseFile( const char* file )
 static void event_freeData( EventData *event )
 {
    free( event->name );
-   free( event->lua );
    free( event->sourcefile );
+   free( event->lua );
+
+   free( event->spob );
+   free( event->system );
+   free( event->chapter );
+
    free( event->cond );
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );
@@ -705,12 +738,11 @@ int events_saveActive( xmlTextWriterPtr writer )
  */
 int events_loadActive( xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    /* cleanup old events */
    events_cleanup();
 
-   node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"events"))
          if (events_parseActive( node ) < 0) return -1;
@@ -727,14 +759,14 @@ int events_loadActive( xmlNodePtr parent )
  */
 static int events_parseActive( xmlNodePtr parent )
 {
-   char *buf;
-   unsigned int id;
-   int data;
-   xmlNodePtr node, cur;
-   Event_t *ev;
-
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
+      char *buf;
+      unsigned int id;
+      int data;
+      xmlNodePtr cur;
+      Event_t *ev;
+
       if (!xml_isNode(node,"event"))
          continue;
 
@@ -778,4 +810,19 @@ static int events_parseActive( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+int event_reload( const char *name )
+{
+   int res, edat = event_dataID( name );
+   EventData save, *temp = edat<0 ? NULL : &event_data[edat];
+   if (temp == NULL)
+      return -1;
+   save = *temp;
+   res = event_parseFile( save.sourcefile, temp );
+   if (res == 0)
+      event_freeData( &save );
+   else
+      *temp = save;
+   return res;
 }

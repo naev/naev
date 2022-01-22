@@ -10,12 +10,12 @@
   <x>853.000000</x>
   <y>360.000000</y>
  </pos>
- <assets>
-  <asset>Meya</asset>
-  <asset>New Konnor</asset>
-  <asset>SY-159</asset>
-  <asset>SY-256</asset>
- </assets>
+ <spobs>
+  <spob>Meya</spob>
+  <spob>New Konnor</spob>
+  <spob>SY-159</spob>
+  <spob>SY-256</spob>
+ </spobs>
  <jumps>
   <jump target="Seport">
    <autopos/>

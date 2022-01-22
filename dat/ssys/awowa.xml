@@ -10,13 +10,13 @@
   <x>315.034736</x>
   <y>-553.511064</y>
  </pos>
- <assets>
-  <asset>Awowa IV</asset>
-  <asset>Awowa V</asset>
-  <asset>Odonga</asset>
-  <asset>Odonga m1</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Awowa IV</spob>
+  <spob>Awowa V</spob>
+  <spob>Odonga</spob>
+  <spob>Odonga m1</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Beeklo">
    <autopos/>

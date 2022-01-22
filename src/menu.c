@@ -120,10 +120,10 @@ static int menu_main_bkg_system (void)
       load_gameDiff( ns[0].path );
 
       /* Get start position. */
-      if (planet_exists( ns[0].planet )) {
-         Planet *pnt = planet_get( ns[0].planet );
+      if (spob_exists( ns[0].spob )) {
+         Spob *pnt = spob_get( ns[0].spob );
          if (pnt != NULL) {
-            sys = planet_getSystem( ns[0].planet );
+            sys = spob_getSystem( ns[0].spob );
             if (sys != NULL) {
                cx = pnt->pos.x;
                cy = pnt->pos.y;
@@ -466,7 +466,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
    unsigned int info_wid;
 
    /* if landed we must save anyways */
-   if (landed) {
+   if (landed && land_canSave()) {
       save_all();
       land_cleanup();
    }
@@ -494,7 +494,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
 static void exit_game (void)
 {
    /* if landed we must save anyways */
-   if (landed) {
+   if (landed && land_canSave()) {
       save_all();
       land_cleanup();
    }
@@ -515,6 +515,7 @@ static void menu_death_continue( unsigned int wid, const char *str )
 
    save_reload();
    player.death_counter++; /* Add death here. */
+   player.ps.death_counter++;
 }
 
 /**

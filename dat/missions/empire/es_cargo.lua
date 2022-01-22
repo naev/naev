@@ -1,16 +1,16 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping">
-  <avail>
-   <priority>3</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
-   <chance>350</chance>
-   <done>Empire Recruitment</done>
-   <location>Computer</location>
-   <faction>Empire</faction>
-  </avail>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+  <chance>350</chance>
+  <done>Empire Recruitment</done>
+  <location>Computer</location>
+  <faction>Empire</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    Handles the randomly generated Empire mem.cargo missions.
@@ -19,6 +19,8 @@
 local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
+local lmisn = require "lmisn"
+local emp = require "common.empire"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
@@ -37,7 +39,7 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 function create()
    -- Note: this mission does not make any system claims.
 
-   mem.origin_p, mem.origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination
    mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
@@ -82,10 +84,9 @@ function create()
    local distreward = math.log(300*commodity.price(mem.cargo))/80
    mem.reward     = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( fmt.f(
-      -- TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
-      _("#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
-   misn.markerAdd(mem.destsys, "computer")
+   misn.setTitle( fmt.f( emp.prefix.._("Cargo transport to {pnt} in {sys} ({tonnes})"),
+         {pnt=mem.destplanet, sys=mem.destsys, tonnes=fmt.tonnes(mem.amount)} ) )
+   misn.markerAdd(mem.destplanet, "computer")
    car.setDesc( fmt.f(_("Official Empire cargo transport to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit, piracyrisk )
    misn.setReward( fmt.credits(mem.reward) )
 end
@@ -120,7 +121,7 @@ end
 
 -- Land hook
 function land()
-   if planet.cur() == mem.destplanet then
+   if spob.cur() == mem.destplanet then
       tk.msg( _("Successful Delivery"), fmt.f(
          _("The Empire workers unload the {cargo} at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
@@ -149,7 +150,6 @@ function tick()
       misn.osdCreate(_("Empire Shipping"), osd_msg)
    elseif mem.timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(_("#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!#0"))
-      misn.finish(false)
+      lmisn.fail(_("You have failed to deliver the goods to the Empire on time!"))
    end
 end

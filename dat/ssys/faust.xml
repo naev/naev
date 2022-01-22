@@ -10,11 +10,11 @@
   <x>190.678211</x>
   <y>-888.714763</y>
  </pos>
- <assets>
-  <asset>Faust III</asset>
-  <asset>Faust VI</asset>
-  <asset>PSO 2345</asset>
- </assets>
+ <spobs>
+  <spob>Faust III</spob>
+  <spob>Faust VI</spob>
+  <spob>PSO 2345</spob>
+ </spobs>
  <jumps>
   <jump target="Allous">
    <pos x="13930.243258" y="7187.553192"/>

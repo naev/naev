@@ -28,10 +28,11 @@
 
 --]]
 local fmt = require "format"
+local lmisn = require "lmisn"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
--- luacheck: globals board_fail bounty_setup fail get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
+-- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (from base mission neutral.pirbounty_dead)
 
 local kill_instead_text = {
    _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {plt}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]]),
@@ -42,7 +43,7 @@ local kill_instead_text = {
 
 pay_capture_text = {
    _("An officer takes {plt} into custody and hands you your pay."),
-   _("The officer seems to think your acceptance of the alive bounty for {plt} was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay."),
+   _("The officer seems to think you were foolish to accept a live bounty for {plt}. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay."),
    _("The officer you deal with seems to especially dislike {plt}. They take the pirate off your hands and hand you your pay without speaking a word."),
    _("A fearful-looking officer rushes {plt} into a secure hold, pays you the appropriate bounty, and then hurries off."),
    _("The officer you deal with thanks you profusely for capturing {plt} alive, pays you, and sends you off."),
@@ -53,8 +54,8 @@ pay_capture_text = {
 pay_kill_text = {
    _("After verifying that you killed {plt}, an officer hands you your pay."),
    _("After verifying that {plt} is indeed dead, the officer sighs and hands you your pay."),
-   _("This officer is clearly annoyed that {plt} is dead. They mumble something about incompetent bounty hunters the entire time as they takes care of the paperwork and hand you your bounty."),
-   _("The officer seems disappointed, yet unsurprised that you failed to capture {plt} alive. You are handed your lesser bounty without a word."),
+   _("This officer is clearly annoyed that {plt} is dead. They mumble something about incompetent bounty hunters the entire time as they take care of the paperwork and hand you your bounty."),
+   _("The officer seems disappointed, yet unsurprised, that you failed to capture {plt} alive. You are handed your lesser bounty without a word."),
    _("When you ask the officer for your bounty on {plt}, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless bounty hunters are."),
    _("The officer verifies the death of {plt}, goes through the necessary paperwork, and hands you your pay, looking annoyed the entire time."),
 }
@@ -76,7 +77,7 @@ function pilot_death ()
       succeed()
       mem.target_killed = true
    else
-      fail( fmt.f( _("MISSION FAILURE! {plt} has been killed."), {plt=mem.name} ) )
+      lmisn.fail( fmt.f( _("{plt} has been killed."), {plt=mem.name} ) )
    end
 end
 

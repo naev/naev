@@ -10,10 +10,10 @@
   <x>-707.110498</x>
   <y>-1113.835725</y>
  </pos>
- <assets>
-  <asset>Poller D-2</asset>
-  <asset>Poller I-1</asset>
- </assets>
+ <spobs>
+  <spob>Poller D-2</spob>
+  <spob>Poller I-1</spob>
+ </spobs>
  <jumps>
   <jump target="NGC-11231">
    <autopos/>

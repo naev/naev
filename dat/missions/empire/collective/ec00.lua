@@ -10,7 +10,7 @@
   <chance>40</chance>
   <location>Bar</location>
   <done>Empire Shipping 3</done>
-  <planet>Omega Station</planet>
+  <spob>Omega Station</spob>
  </avail>
  <notes>
   <campaign>Collective</campaign>
@@ -36,7 +36,7 @@ local emp = require "common.empire"
 -- Mission constants
 local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
-local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Station")
 
 local p -- Non-persistent state
 -- luacheck: globals enter idle jumpout kill land spotdrone (Hook functions passed by name)
@@ -71,8 +71,8 @@ function accept ()
    misn.setDesc( fmt.f(_("Find a scout last seen in the {sys} system"), {sys=misn_nearby}))
 
    -- Flavour text and mini-briefing
-   local brief = fmt.f( _([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments.
-    "You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occurred, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik, and the other worlds they hit. We managed to stop them here, in {sys}, and constructed this base. Since then it's been more or less a stalemate."]]), {sys=misn_base_sys} )
+   local brief = fmt.f( _([["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well, you'll be reporting to me for the next assignments.
+    "You've heard about the Collective, right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occurred, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik and the other worlds they hit. We managed to stop them here, in {sys}, and constructed this base. Since then it's been more or less a stalemate."]]), {sys=misn_base_sys} )
    tk.msg( _("Briefing"), brief )
    emp.addCollectiveLog( brief )
    tk.msg( _("Briefing"), fmt.f( _([["Collective activity has increased heavily the last few decaperiods. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in {misn_nearby}, which saw it jumping out to {misn_target}. You are to locate the scout and report back to {pnt} in the {sys} system. It seems like the Collective is planning something and we want to follow their game a little closer.
@@ -129,11 +129,11 @@ function spotdrone()
    player.msg(_("Drone spotted!"))
    misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys}) )
    mem.misn_stage = 1
-   misn.markerMove( mem.misn_marker, misn_base_sys )
+   misn.markerMove( mem.misn_marker, misn_base )
 end
 
 function land()
-   local pnt = planet.cur()
+   local pnt = spob.cur()
 
    if mem.misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.

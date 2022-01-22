@@ -20,7 +20,7 @@ enum {
    PILOT_EMPTY,         /**< Do not add pilot to stack. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
    /*
-    * Dinamic flags
+    * Dynamic flags
     */
    /* Hyperspace. */
    PILOT_HYP_PREP,      /**< Pilot is getting ready for hyperspace. */
@@ -76,7 +76,7 @@ enum {
    /* Manual control and limits. */
    PILOT_MANUAL_CONTROL,/**< Pilot is under manual control of a mission or event. */
    PILOT_NOJUMP,        /**< Pilot cannot engage hyperspace engines. */
-   PILOT_NOLAND,        /**< Pilot cannot land on stations or planets. */
+   PILOT_NOLAND,        /**< Pilot cannot land on spobs. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_BRAKING,       /**< Pilot is braking. */
    PILOT_PERSIST,       /**< Persist pilot on jump. */

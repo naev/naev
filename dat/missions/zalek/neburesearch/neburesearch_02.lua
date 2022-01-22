@@ -10,8 +10,11 @@
   <chance>30</chance>
   <location>Bar</location>
   <faction>Empire</faction>
-  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  </avail>
+ <notes>
+  <campaign>Nebula Research</campaign>
+ </notes>
 </mission>
 --]]
 --[[
@@ -33,15 +36,15 @@ local mensing_portrait = nebu_research.mensing.portrait
 
 -- Mission constants
 local credits = nebu_research.rewards.credits02
-local homeworld, homeworld_sys = planet.getS("Jorla")
+local homeworld, homeworld_sys = spob.getS("Jorla")
 
 function create()
     -- mission variables
-    mem.origin = planet.cur()
+    mem.origin = spob.cur()
     mem.origin_sys = system.cur()
 
     -- Spaceport bar stuff
-    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("It appears she wants to talk with you."))
+    misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("It appears she wants to talk with you."))
 end
 
 function accept()
@@ -97,7 +100,7 @@ But before I forget, there's some issue..."]]))
     misn.setTitle(_("Emergency of Immediate Inspiration"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
-    mem.misn_marker = misn.markerAdd(homeworld_sys, "low")
+    mem.misn_marker = misn.markerAdd(homeworld, "low")
 
     local c = commodity.new( N_("Dr. Mensing"), N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!") )
     c:illegalto( {"Empire"} )
@@ -112,7 +115,7 @@ But before I forget, there's some issue..."]]))
 end
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.landed == homeworld then
         vn.clear()
         vn.scene()

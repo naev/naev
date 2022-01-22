@@ -414,12 +414,14 @@ function comm( plt )
       if mem.refuel_no then
          vn.jump("refuel_no")
       end
-      local pps = player.pilot():stats()
+      local pp = player.pilot()
+      local pps = pp:stats()
       if pps.fuel >= pps.fuel_max then
          vn.jump("refuel_full")
       end
+      -- Want to have at least 100 units of fuel extra
       local ps = plt:stats()
-      if ps.fuel < 200 then
+      if ps.fuel <= ps.fuel_consumption+100 then
          vn.jump("refuel_low")
       end
       local val = mem.refuel
@@ -436,17 +438,36 @@ function comm( plt )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = fmt.f(_([["I should be able to refuel you for {credits}."]]), {credits=cstr})
+         str = fmt.f(_([["I should be able to refuel you for {credits} for 100 units of fuel."]]), {credits=cstr})
       end
       if cost <= 0 then
          vn.jump("refuel_trypay")
       end
-      return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} )
+      return fmt.f(_("{msg}\n\nYou have {credits}. Pay for refueling??"), {msg=str, credits=chave} )
    end )
-   vn.menu{
-      {_("Pay"), "refuel_trypay"},
-      {_("Refuse"), "refuel_refuse"},
-   }
+   vn.menu( function ()
+      local pps = player.pilot():stats()
+      local plts = plt:stats()
+      local cons = pps.fuel_consumption
+      local cost = mem.refuel
+      local opts = {
+         {fmt.f(_("Pay #r{cost}#0 (100 fuel, {jumps:.1f} jumps)"),{cost=fmt.credits(cost),jumps=100/cons}), "refuel_trypay"},
+         {_("Refuse"), "refuel_refuse"},
+      }
+      -- Only allow multiples of 100
+      local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
+      if maxfuel > cons then
+         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel, {jumps:.1f} jumps)"),
+               {cost=fmt.credits(cost*maxfuel/100), amount=maxfuel, jumps=maxfuel/cons}),
+               "refuel_trypay_max"})
+      end
+      if cons > 100 and maxfuel >= cons then
+         table.insert( opts, 2, {fmt.f(_("Pay #r{cost}#0 ({amount} fuel, {jumps:.1f} jumps)"),
+               {cost=fmt.credits(cost*cons/100), amount=cons, jumps=1}),
+               "refuel_trypay_jump"})
+      end
+      return opts
+   end )
 
    vn.label("refuel_nomoney")
    vn.na( function ()
@@ -469,8 +490,49 @@ function comm( plt )
       plt:credits( cost )
       plt:refuel( player.pilot() )
    end )
+   vn.label("refuel_startmsg")
    p(_([["On my way."]]))
    vn.jump("menu")
+
+   vn.label("refuel_trypay_jump")
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local cons = pps.fuel_consumption
+      local cost = mem.refuel * cons / 100
+      if cost > player.credits() then
+         vn.jump("refuel_nomoney")
+      end
+   end )
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local cons = pps.fuel_consumption
+      local cost = mem.refuel * cons / 100
+      player.pay( -cost, true )
+      plt:credits( cost )
+      plt:refuel( player.pilot(), cons )
+   end )
+   vn.jump("refuel_startmsg")
+
+   vn.label("refuel_trypay_max")
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local plts = plt:stats()
+      local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
+      local cost = mem.refuel * maxfuel / 100
+      if cost > player.credits() then
+         vn.jump("refuel_nomoney")
+      end
+   end )
+   vn.func( function ()
+      local pps = player.pilot():stats()
+      local plts = plt:stats()
+      local maxfuel = math.floor( math.min( pps.fuel_max-pps.fuel, plts.fuel-plts.fuel_consumption ) / 100 ) * 100
+      local cost = mem.refuel * maxfuel / 100
+      player.pay( -cost, true )
+      plt:credits( cost )
+      plt:refuel( player.pilot(), maxfuel )
+   end )
+   vn.jump("refuel_startmsg")
 
    vn.label("close")
    vn.run()

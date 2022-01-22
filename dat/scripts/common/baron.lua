@@ -13,7 +13,7 @@ end
 
 baron.rewards = {
    baron = 300e3,
-   prince = 500e3, -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+   prince = 500e3, -- The price of each artefact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 }
 
 return baron

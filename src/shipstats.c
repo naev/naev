@@ -85,6 +85,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            N_("Turn") ),
    D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          N_("Thrust") ),
    D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           N_("Cargo Space") ),
+   D__ELEM( SS_TYPE_D_FUEL_MOD,           fuel_mod,            N_("Fuel Cpacity") ),
    D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          N_("Armour Strength") ),
    D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    N_("Armour Regeneration") ),
    D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          N_("Shield Strength") ),
@@ -111,6 +112,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       N_("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       N_("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       N_("Launch Lock-on") ),
+   DI_ELEM( SS_TYPE_D_LAUNCH_CALIBRATION, launch_calibration,  N_("Launch Calibration") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RELOAD,      launch_reload,       N_("Ammo Reload Rate") ),
 
    D__ELEM( SS_TYPE_D_FBAY_DAMAGE,        fbay_damage,         N_("Fighter Damage") ),
@@ -143,6 +145,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        N_("Speed-Up") ),
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       N_("Ship Cooldown Time") ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       N_("Jump Distance") ),
+   DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
 
    A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
    A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
@@ -157,6 +160,8 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("MJ Armour") ),
    A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("MW Armour Regeneration") ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("MW Armour Damage") ),
+   A__ELEM( SS_TYPE_A_DAMAGE,             damage,              N_("MW Damage") ),
+   A__ELEM( SS_TYPE_A_DISABLE,            disable,             N_("MW Disable") ),
 
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
@@ -220,19 +225,19 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         ll->d.d     = xml_getFloat(node) / 100.;
+         ll->d.d  = xml_getFloat(node) / 100.;
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         ll->d.d     = xml_getFloat(node);
+         ll->d.d  = xml_getFloat(node);
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
-         ll->d.i     = !!xml_getInt(node);
+         ll->d.i  = !!xml_getInt(node);
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         ll->d.i     = xml_getInt(node);
+         ll->d.i  = xml_getInt(node);
          break;
    }
 
@@ -248,26 +253,71 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
  */
 int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll )
 {
-   for ( ; ll!=NULL; ll=ll->next) {
-      const ShipStatsLookup *sl = &ss_lookup[ ll->type ];
+   for (const ShipStatList *l=ll; l!=NULL; l=l->next) {
+      const ShipStatsLookup *sl = &ss_lookup[ l->type ];
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-            xmlw_elem( writer, sl->name, "%f", ll->d.d * 100 );
+            xmlw_elem( writer, sl->name, "%f", l->d.d * 100 );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            xmlw_elem( writer, sl->name, "%f", ll->d.d );
+            xmlw_elem( writer, sl->name, "%f", l->d.d );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
          case SS_DATA_TYPE_INTEGER:
-            xmlw_elem( writer, sl->name, "%d", ll->d.i );
+            xmlw_elem( writer, sl->name, "%d", l->d.i );
             break;
       }
    }
    return 0;
 }
+
+static int shipstat_sort( const void *a, const void *b )
+{
+   const ShipStatList **la = (const ShipStatList**) a;
+   const ShipStatList **lb = (const ShipStatList**) b;
+   const ShipStatsLookup *sla = &ss_lookup[ (*la)->type ];
+   const ShipStatsLookup *slb = &ss_lookup[ (*lb)->type ];
+   return strcmp( sla->name, slb->name );
+}
+
+/**
+ * @brief Sorts the ship stats, useful if doing saving stuff.
+ *
+ *    @param ll Ship stat list to sort.
+ *    @return 0 on success.
+ */
+int ss_sort( ShipStatList **ll )
+{
+   int n, i;
+   ShipStatList **arr;
+
+   /* Nothing to do. */
+   if (*ll==NULL)
+      return 0;
+
+   n = 0;
+   for (ShipStatList *l=*ll; l!=NULL; l=l->next)
+      n++;
+
+   arr = malloc( sizeof(ShipStatList*) * n );
+   i = 0;
+   for (ShipStatList *l=*ll; l!=NULL; l=l->next) {
+      arr[i] = l;
+      i++;
+   }
+   qsort( arr, n, sizeof(ShipStatList*), shipstat_sort );
+
+   *ll = arr[0];
+   for (i=1; i<n; i++)
+      arr[i-1]->next = arr[i];
+   arr[n-1]->next = NULL;
+   free( arr );
+   return 0;
+}
+
 
 /**
  * @brief Checks for validity.
@@ -388,7 +438,7 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  *    @param list Single element to apply.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
+int ss_statsModSingle( ShipStats *stats, const ShipStatList *list )
 {
    char *ptr;
    char *fieldptr;
@@ -430,6 +480,55 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
 }
 
 /**
+ * @brief Modifies a stat structure using a single element.
+ *
+ *    @param stats Stat structure to modify.
+ *    @param list Single element to apply.
+ *    @param scale Scaling factor.
+ *    @return 0 on success.
+ */
+int ss_statsModSingleScale( ShipStats *stats, const ShipStatList *list, double scale )
+{
+   char *ptr;
+   char *fieldptr;
+   double *dbl;
+   int *i;
+   const ShipStatsLookup *sl = &ss_lookup[ list->type ];
+
+   ptr = (char*) stats;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl *= 1.0+list->d.d * scale;
+         if (*dbl < 0.) /* Don't let the values go negative. */
+            *dbl = 0.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl += list->d.d * scale;
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
+         *i   += list->d.i * scale;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
+         *i    = 1; /* Can only set to true. */
+         break;
+   }
+
+   return 0;
+}
+
+/**
  * @brief Updates a stat structure from a stat list.
  *
  *    @param stats Stats to update.
@@ -440,7 +539,21 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
    int ret = 0;
    for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
       ret |= ss_statsModSingle( stats, ll );
+   return ret;
+}
 
+/**
+ * @brief Updates a stat structure from a stat list.
+ *
+ *    @param stats Stats to update.
+ *    @param list List to update from.
+ *    @param scale Scaling factor.
+ */
+int ss_statsModFromListScale( ShipStats *stats, const ShipStatList* list, double scale )
+{
+   int ret = 0;
+   for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
+      ret |= ss_statsModSingleScale( stats, ll, scale );
    return ret;
 }
 

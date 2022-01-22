@@ -71,6 +71,7 @@
 
 #include "ai.h"
 
+#include "conf.h"
 #include "array.h"
 #include "board.h"
 #include "escort.h"
@@ -81,7 +82,7 @@
 #include "nlua.h"
 #include "nlua_faction.h"
 #include "nlua_pilot.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_rnd.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
@@ -126,6 +127,7 @@ static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
+static int ai_sort( const void *p1, const void *p2 );
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
@@ -176,10 +178,10 @@ static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
-static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
-static int aiL_getplanetfrompos( lua_State *L ); /* Vec2 getplanetfrompos() */
-static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
-static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
+static int aiL_getnearestspob( lua_State *L ); /* Vec2 getnearestspob() */
+static int aiL_getspobfrompos( lua_State *L ); /* Vec2 getspobfrompos() */
+static int aiL_getrndspob( lua_State *L ); /* Vec2 getrndspob() */
+static int aiL_getlandspob( lua_State *L ); /* Vec2 getlandspob() */
 static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
@@ -267,10 +269,10 @@ static const luaL_Reg aiL_methods[] = {
    { "getgatherable", aiL_getGatherable },
    { "instantJump", aiL_instantJump },
    /* movement */
-   { "nearestplanet", aiL_getnearestplanet },
-   { "planetfrompos", aiL_getplanetfrompos },
-   { "rndplanet", aiL_getrndplanet },
-   { "landplanet", aiL_getlandplanet },
+   { "nearestspob", aiL_getnearestspob },
+   { "spobfrompos", aiL_getspobfrompos },
+   { "rndspob", aiL_getrndspob },
+   { "landspob", aiL_getlandspob },
    { "land", aiL_land },
    { "accel", aiL_accel },
    { "turn", aiL_turn },
@@ -395,9 +397,9 @@ Task* ai_curTask( Pilot* pilot )
 static void ai_setMemory (void)
 {
    nlua_env env = cur_pilot->ai->env;
-   nlua_getenv(env, AI_MEM); /* pm */
+   nlua_getenv(naevL, env, AI_MEM); /* pm */
    lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
-   nlua_setenv(env, "mem"); /* pm */
+   nlua_setenv(naevL, env, "mem"); /* pm */
    lua_pop(naevL, 1); /* */
 }
 
@@ -457,7 +459,7 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
 
    /* Adds a new pilot memory in the memory table. */
-   nlua_getenv(p->ai->env, AI_MEM);  /* pm */
+   nlua_getenv(naevL, p->ai->env, AI_MEM);  /* pm */
    lua_newtable(naevL);              /* pm, nt */
    lua_pushvalue(naevL, -1);         /* pm, nt, nt */
    lua_rawseti(naevL, -3, p->id);    /* pm, nt */
@@ -510,7 +512,7 @@ void ai_destroy( Pilot* p )
 
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
-      nlua_getenv(env, AI_MEM);  /* t */
+      nlua_getenv(naevL, env, AI_MEM);  /* t */
       lua_pushnil(naevL);        /* t, nil */
       lua_rawseti(naevL,-2, p->id);/* t */
       lua_pop(naevL, 1);         /* */
@@ -518,6 +520,13 @@ void ai_destroy( Pilot* p )
 
    /* Clear the tasks. */
    ai_cleartasks( p );
+}
+
+static int ai_sort( const void *p1, const void *p2 )
+{
+   AI_Profile *ai1 = (AI_Profile*) p1;
+   AI_Profile *ai2 = (AI_Profile*) p2;
+   return strcmp( ai1->name, ai2->name );
 }
 
 /**
@@ -529,6 +538,7 @@ int ai_load (void)
 {
    char** files;
    int suflen;
+   Uint32 time = SDL_GetTicks();
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -549,11 +559,17 @@ int ai_load (void)
             WARN( _("Error loading AI profile '%s'"), path);
       }
    }
-
-   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+   qsort( profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
 
    /* More clean up. */
    PHYSFS_freeList( files );
+
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d AI Profile in %.3f s", "Loaded %d AI Profiles in %.3f s", array_size(profiles) ), array_size(profiles), time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* Load equipment thingy. */
    return ai_loadEquip();
@@ -569,8 +585,7 @@ static int ai_loadEquip (void)
    const char *filename = AI_EQUIP_PATH;
 
    /* Make sure doesn't already exist. */
-   if (equip_env != LUA_NOREF)
-      nlua_freeEnv(equip_env);
+   nlua_freeEnv(equip_env);
 
    /* Create new state. */
    equip_env = nlua_newEnv(1);
@@ -625,13 +640,13 @@ static int ai_loadProfile( const char* filename )
    /* Add the pilot memory table. */
    lua_newtable(naevL);              /* pm */
    lua_pushvalue(naevL, -1);         /* pm, pm */
-   nlua_setenv(env, AI_MEM);         /* pm */
+   nlua_setenv(naevL, env, AI_MEM);  /* pm */
 
    /* Set "mem" to be default template. */
    lua_newtable(naevL);              /* pm, nt */
    lua_pushvalue(naevL,-1);          /* pm, nt, nt */
-   lua_setfield(naevL,-3,AI_MEM_DEF); /* pm, nt */
-   nlua_setenv(env, "mem");          /* pm */
+   lua_setfield(naevL,-3,AI_MEM_DEF);/* pm, nt */
+   nlua_setenv(naevL, env, "mem");   /* pm */
    lua_pop(naevL, 1);                /*  */
 
    /* Now load the file since all the functions have been previously loaded */
@@ -670,14 +685,13 @@ static int ai_loadProfile( const char* filename )
  *    @param[in] name Name of the profile to get.
  *    @return The profile or NULL on error.
  */
-AI_Profile* ai_getProfile( char* name )
+AI_Profile* ai_getProfile( const char *name )
 {
-   for (int i=0; i<array_size(profiles); i++)
-      if (strcmp(name,profiles[i].name)==0)
-         return &profiles[i];
-
-   WARN( _("AI Profile '%s' not found in AI stack"), name);
-   return NULL;
+   const AI_Profile ai = { .name = (char*)name };
+   AI_Profile *ret = bsearch( &ai, profiles, array_size(profiles), sizeof(AI_Profile), ai_sort );
+   if (ret==NULL)
+      WARN( _("AI Profile '%s' not found in AI stack"), name);
+   return ret;
 }
 
 /**
@@ -693,8 +707,7 @@ void ai_exit (void)
    array_free( profiles );
 
    /* Free equipment Lua. */
-   if (equip_env != LUA_NOREF)
-      nlua_freeEnv(equip_env);
+   nlua_freeEnv(equip_env);
    equip_env = LUA_NOREF;
 }
 
@@ -744,7 +757,7 @@ void ai_think( Pilot* pilot, const double dt )
          ai_run(env, 0); /* run control */
       }
 
-      nlua_getenv(env, "control_rate");
+      nlua_getenv(naevL, env, "control_rate");
       cur_pilot->tcontrol = lua_tonumber(naevL,-1);
       lua_pop(naevL,1);
 
@@ -819,10 +832,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
    HookParam hparam[2];
 
    /* Custom hook parameters. */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp       = attacker;
-   hparam[1].type       = HOOK_PARAM_NUMBER;
-   hparam[1].u.num      = dmg;
+   hparam[0].type    = HOOK_PARAM_PILOT;
+   hparam[0].u.lp    = attacker;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = dmg;
 
    /* Behaves differently if manually overridden. */
    pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, hparam, 2 );
@@ -833,9 +846,9 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
-      nlua_getenv(cur_pilot->ai->env, "attacked_manual");
+      nlua_getenv(naevL, cur_pilot->ai->env, "attacked_manual");
    else
-      nlua_getenv(cur_pilot->ai->env, "attacked");
+      nlua_getenv(naevL, cur_pilot->ai->env, "attacked");
 
    lua_pushpilot(naevL, attacker);
    if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
@@ -863,7 +876,7 @@ void ai_discovered( Pilot* discovered )
    ai_setPilot( discovered ); /* Sets cur_pilot. */
 
    /* Only run if discovered function exists. */
-   nlua_getenv(cur_pilot->ai->env, "discovered");
+   nlua_getenv(naevL, cur_pilot->ai->env, "discovered");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -893,7 +906,7 @@ void ai_hail( Pilot* recipient )
    ai_setPilot( recipient ); /* Sets cur_pilot. */
 
    /* Only run if hail function exists. */
-   nlua_getenv(cur_pilot->ai->env, "hail");
+   nlua_getenv(naevL, cur_pilot->ai->env, "hail");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -956,7 +969,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
    ai_setPilot(p);
 
    /* See if function exists. */
-   nlua_getenv(cur_pilot->ai->env, "distress");
+   nlua_getenv(naevL, cur_pilot->ai->env, "distress");
    if (lua_isnil(naevL,-1)) {
       lua_pop(naevL,1);
       return;
@@ -998,18 +1011,18 @@ static void ai_create( Pilot* pilot )
          env = faction_getEquipper( pilot->faction );
          func = "equip";
       }
-      nlua_getenv(env, func);
-      nlua_pushenv(env);
+      nlua_getenv(naevL, env, func);
+      nlua_pushenv(naevL, env);
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
       if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
          WARN( _("Pilot '%s' equip '%s' -> '%s': %s"), pilot->name, pilot->ai->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
-   }
 
-   /* Since the pilot changes outfits and cores, we must heal him up. */
-   pilot_healLanded( pilot );
+      /* Since the pilot changes outfits and cores, we must heal him up. */
+      pilot_healLanded( pilot );
+   }
 
    /* Must have AI. */
    if (pilot->ai == NULL)
@@ -1019,7 +1032,7 @@ static void ai_create( Pilot* pilot )
    ai_setPilot( pilot );
 
    /* Prepare stack. */
-   nlua_getenv(cur_pilot->ai->env, "create");
+   nlua_getenv(naevL, cur_pilot->ai->env, "create");
 
    /* Run function. */
    if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
@@ -1038,16 +1051,20 @@ static void ai_create( Pilot* pilot )
 Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
-   nlua_env env = p->ai->env;
+
+   if (p->ai==NULL) {
+      WARN(_("Trying to create new task for pilot '%s' that has no AI!"), p->name);
+      return NULL;
+   }
 
    /* Check if the function is good. */
-   nlua_getenv( env, func );
-   luaL_checktype( naevL, -1, LUA_TFUNCTION );
+   nlua_getenv( L, p->ai->env, func );
+   luaL_checktype( L, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
-   t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   t->func     = luaL_ref( L, LUA_REGISTRYINDEX );
    t->dat      = LUA_NOREF;
 
    /* Handle subtask and general task. */
@@ -2106,115 +2123,115 @@ static int aiL_brake( lua_State *L )
 }
 
 /**
- * @brief Get the nearest friendly planet to the pilot.
+ * @brief Get the nearest friendly spob to the pilot.
  *
- *    @luatreturn Planet|nil
- *    @luafunc nearestplanet
+ *    @luatreturn Spob|nil
+ *    @luafunc nearestspob
  */
-static int aiL_getnearestplanet( lua_State *L )
+static int aiL_getnearestspob( lua_State *L )
 {
    double dist, d;
    int i, j;
-   LuaPlanet planet;
+   LuaSpob spob;
 
-   /* cycle through planets */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+   /* cycle through spobs */
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+      if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
-      d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
-            (d < dist)) { /* closer friendly planet */
+      d = vect_dist( &cur_system->spobs[i]->pos, &cur_pilot->solid->pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
+            (d < dist)) { /* closer friendly spob */
          j = i;
          dist = d;
       }
    }
 
-   /* no friendly planet found */
+   /* no friendly spob found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
-   planet = cur_system->planets[j]->id;
-   lua_pushplanet(L, planet);
+   cur_pilot->nav_spob = j;
+   spob = cur_system->spobs[j]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get the nearest friendly planet to a given position.
+ * @brief Get the nearest friendly spob to a given position.
  *
- *    @luatparam vec2 pos Position close to the planet.
- *    @luatreturn Planet|nil
- *    @luafunc planetfrompos
+ *    @luatparam vec2 pos Position close to the spob.
+ *    @luatreturn Spob|nil
+ *    @luafunc spobfrompos
  */
-static int aiL_getplanetfrompos( lua_State *L )
+static int aiL_getspobfrompos( lua_State *L )
 {
    Vector2d *pos;
    double dist, d;
    int i, j;
-   LuaPlanet planet;
+   LuaSpob spob;
 
    pos = luaL_checkvector(L,1);
 
-   /* cycle through planets */
-   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+   /* cycle through spobs */
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->spobs); i++) {
+      if (!spob_hasService(cur_system->spobs[i],SPOB_SERVICE_INHABITED))
          continue;
-      d = vect_dist( &cur_system->planets[i]->pos, pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
-            (d < dist)) { /* closer friendly planet */
+      d = vect_dist( &cur_system->spobs[i]->pos, pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->spobs[i]->presence.faction)) &&
+            (d < dist)) { /* closer friendly spob */
          j = i;
          dist = d;
       }
    }
 
-   /* no friendly planet found */
+   /* no friendly spob found */
    if (j == -1) return 0;
 
-   cur_pilot->nav_planet = j;
-   planet = cur_system->planets[j]->id;
-   lua_pushplanet(L, planet);
+   cur_pilot->nav_spob = j;
+   spob = cur_system->spobs[j]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get a random planet.
+ * @brief Get a random spob.
  *
- *    @luatreturn Planet|nil
- *    @luafunc rndplanet
+ *    @luatreturn Spob|nil
+ *    @luafunc rndspob
  */
-static int aiL_getrndplanet( lua_State *L )
+static int aiL_getrndspob( lua_State *L )
 {
-   LuaPlanet planet;
+   LuaSpob spob;
    int p;
 
-   /* No planets. */
-   if (array_size(cur_system->planets) == 0)
+   /* No spobs. */
+   if (array_size(cur_system->spobs) == 0)
       return 0;
 
-   /* get a random planet */
-   p = RNG(0, array_size(cur_system->planets)-1);
+   /* get a random spob */
+   p = RNG(0, array_size(cur_system->spobs)-1);
 
    /* Copy the data into a vector */
-   planet = cur_system->planets[p]->id;
-   lua_pushplanet(L, planet);
+   spob = cur_system->spobs[p]->id;
+   lua_pushspob(L, spob);
 
    return 1;
 }
 
 /**
- * @brief Get a random friendly planet.
+ * @brief Get a random friendly spob.
  *
- *    @luatparam[opt=false] boolean only_friend Only check for ally planets.
- *    @luatreturn Planet|nil
- * @luafunc landplanet
+ *    @luatparam[opt=false] boolean only_friend Only check for ally spobs.
+ *    @luatreturn Spob|nil
+ * @luafunc landspob
  */
-static int aiL_getlandplanet( lua_State *L )
+static int aiL_getlandspob( lua_State *L )
 {
    int *ind;
    int id;
-   LuaPlanet planet;
-   Planet *p;
+   LuaSpob spob;
+   Spob *p;
    int only_friend;
 
    /* If pilot can't land ignore. */
@@ -2225,15 +2242,15 @@ static int aiL_getlandplanet( lua_State *L )
    only_friend = lua_toboolean(L, 1);
 
    /* Allocate memory. */
-   ind = array_create_size( int, array_size(cur_system->planets) );
+   ind = array_create_size( int, array_size(cur_system->spobs) );
 
-   /* Copy friendly planet.s */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+   /* Copy friendly spob.s */
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
 
-      if (!planet_hasService(pnt, PLANET_SERVICE_LAND))
+      if (!spob_hasService(pnt, SPOB_SERVICE_LAND))
          continue;
-      if (!planet_hasService(pnt, PLANET_SERVICE_INHABITED))
+      if (!spob_hasService(pnt, SPOB_SERVICE_INHABITED))
          continue;
 
       /* Check conditions. */
@@ -2246,65 +2263,65 @@ static int aiL_getlandplanet( lua_State *L )
       array_push_back( &ind, i );
    }
 
-   /* no planet to land on found */
+   /* no spob to land on found */
    if (array_size(ind)==0) {
       array_free(ind);
       return 0;
    }
 
-   /* we can actually get a random planet now */
+   /* we can actually get a random spob now */
    id = RNG(0,array_size(ind)-1);
-   p = cur_system->planets[ ind[ id ] ];
-   planet = p->id;
-   lua_pushplanet( L, planet );
-   cur_pilot->nav_planet = ind[ id ];
+   p = cur_system->spobs[ ind[ id ] ];
+   spob = p->id;
+   lua_pushspob( L, spob );
+   cur_pilot->nav_spob = ind[ id ];
    array_free(ind);
 
    return 1;
 }
 
 /**
- * @brief Lands on a planet.
+ * @brief Lands on a spob.
  *
- *    @luatparam[opt] Planet pnt planet to land on
+ *    @luatparam[opt] Spob pnt spob to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
-   Planet *planet;
+   Spob *spob;
    HookParam hparam;
 
    if (!lua_isnoneornil(L,1)) {
       int i;
-      Planet *pnt = luaL_validplanet( L, 1 );
+      Spob *pnt = luaL_validspob( L, 1 );
 
-      /* Find the planet. */
-      for (i=0; i < array_size(cur_system->planets); i++) {
-         if (cur_system->planets[i] == pnt) {
+      /* Find the spob. */
+      for (i=0; i < array_size(cur_system->spobs); i++) {
+         if (cur_system->spobs[i] == pnt) {
             break;
          }
       }
-      if (i >= array_size(cur_system->planets)) {
-         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+      if (i >= array_size(cur_system->spobs)) {
+         NLUA_ERROR( L, _("Spob '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
 
-      cur_pilot->nav_planet = i;
+      cur_pilot->nav_spob = i;
    }
 
-   if (cur_pilot->nav_planet < 0) {
+   if (cur_pilot->nav_spob < 0) {
       NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
       return 0;
    }
 
-   /* Get planet. */
-   planet = cur_system->planets[ cur_pilot->nav_planet ];
+   /* Get spob. */
+   spob = cur_system->spobs[ cur_pilot->nav_spob ];
 
    /* Check landability. */
-   if (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
+   if (!spob_hasService(spob,SPOB_SERVICE_LAND) ||
          (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-            !planet_hasService(planet,PLANET_SERVICE_INHABITED))) {
+            !spob_hasService(spob,SPOB_SERVICE_INHABITED))) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2316,14 +2333,13 @@ static int aiL_land( lua_State *L )
    }
 
    /* Check distance. */
-   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius)) {
+   if (vect_dist2(&cur_pilot->solid->pos,&spob->pos) > pow2(spob->radius)) {
       lua_pushboolean(L,0);
       return 1;
    }
 
    /* Check velocity. */
-   if ((pow2(VX(cur_pilot->solid->vel)) + pow2(VY(cur_pilot->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL)) {
+   if (vect_odist2( &cur_pilot->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2332,8 +2348,8 @@ static int aiL_land( lua_State *L )
    cur_pilot->ptimer = cur_pilot->landing_delay;
    pilot_setFlag( cur_pilot, PILOT_LANDING );
 
-   hparam.type    = HOOK_PARAM_ASSET;
-   hparam.u.la    = planet->id;
+   hparam.type    = HOOK_PARAM_SPOB;
+   hparam.u.la    = spob->id;
 
    pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
    lua_pushboolean(L,1);
@@ -2427,6 +2443,9 @@ static int aiL_nearhyptarget( lua_State *L )
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* TODO should they try to use systems only with their faction? */
+
       /* Get nearest distance. */
       dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
       if (dist < mindist) {
@@ -2470,11 +2489,36 @@ static int aiL_rndhyptarget( lua_State *L )
    id    = array_create_size( int, array_size(cur_system->jumps) );
    for (int i=0; i < array_size(cur_system->jumps); i++) {
       JumpPoint *jiter = &cur_system->jumps[i];
+
       /* We want only standard jump points to be used. */
       if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
+
+      /* Only jump if there is presence there. */
+      if (system_getPresence( jiter->target, cur_pilot->faction ) <= 0.)
+         continue;
+
       array_push_back( &id, i );
       array_push_back( &jumps, jiter );
+   }
+
+   /* Try to be more lax. */
+   if (array_size(jumps) <= 0) {
+      for (int i=0; i < array_size(cur_system->jumps); i++) {
+         JumpPoint *jiter = &cur_system->jumps[i];
+
+         /* We want only standard jump points to be used. */
+         if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
+            continue;
+
+         array_push_back( &id, i );
+         array_push_back( &jumps, jiter );
+      }
+   }
+
+   if (array_size(jumps) <= 0) {
+      WARN(_("Pilot '%s' can't find jump to leave system!"), cur_pilot->name);
+      return 0;
    }
 
    /* Choose random jump point. */
@@ -2704,6 +2748,9 @@ static int aiL_setasterotarget( lua_State *L )
 
    cur_pilot->nav_anchor = field;
    cur_pilot->nav_asteroid = ast;
+
+   /* Untarget pilot. */
+   cur_pilot->target = cur_pilot->id;
 
    return 0;
 }
@@ -3234,7 +3281,7 @@ static int aiL_credits( lua_State *L )
 static int aiL_messages( lua_State *L )
 {
    lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
-   lua_newtable(naevL);
+   lua_newtable(L);
    lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
    return 1;
 }

@@ -2,6 +2,7 @@
 <ssys name="NGC-10452">
  <general>
   <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>15000.000000</radius>
   <stars>400</stars>
@@ -12,7 +13,7 @@
   <x>-267.267103</x>
   <y>407.127345</y>
  </pos>
- <assets/>
+ <spobs/>
  <jumps>
   <jump target="NGC-3371">
    <autopos/>

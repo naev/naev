@@ -13,6 +13,8 @@
  <trail_generator x="-52" y="-5" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Sirius") &gt;= 70</cond>
+ <condstr>You need at least 70 reputation with House Sirius.</condstr>
  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
  <health>
   <armour>1400</armour>
@@ -32,14 +34,14 @@
   <weapon size="large" x="-20" y="0" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="0" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

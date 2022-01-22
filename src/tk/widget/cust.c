@@ -17,6 +17,7 @@ static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
 static void cst_focusGain( Widget* cst );
 static void cst_focusLose( Widget* cst );
+static void cst_cleanup( Widget* cst );
 static Widget *cst_getWidget( unsigned int wid, const char *name );
 
 
@@ -63,6 +64,7 @@ void window_addCust( unsigned int wid,
 
    /* specific */
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->cleanup         = cst_cleanup;
    wgt->focusGain       = cst_focusGain;
    wgt->focusLose       = cst_focusLose;
    wgt->render          = cst_render;
@@ -74,6 +76,7 @@ void window_addCust( unsigned int wid,
    wgt->dat.cst.focusGain  = focusGain;
    wgt->dat.cst.focusLose  = focusLose;
    wgt->dat.cst.userdata   = data;
+   wgt->dat.cst.autofree   = 0;
 
    /* position/size */
    wgt->w = (double) w;
@@ -153,6 +156,18 @@ static void cst_renderOverlay( Widget* cst, double bx, double by )
 
 
 /**
+ * @brief Clean up function for custom widgets.
+ *
+ *    @param cst Custom widget to clean up.
+ */
+static void cst_cleanup( Widget *cst )
+{
+   if (cst->dat.cst.autofree)
+      free( cst->dat.cst.userdata );
+}
+
+
+/**
  * @brief Gets a custom widget.
  */
 static Widget *cst_getWidget( unsigned int wid, const char *name )
@@ -224,4 +239,18 @@ void* window_custGetData( unsigned int wid, const char *name )
       return NULL;
 
    return wgt->dat.cst.userdata;
+}
+
+
+/**
+ * @brief Marks the widget's data as owned, so that it will be freed upon cleanup.
+ *
+ *    @param wid Window to which widget belongs.
+ *    @param name Name of the widget.
+ */
+void window_custAutoFreeData( unsigned int wid, const char *name )
+{
+   Widget *wgt = cst_getWidget( wid, name );
+   if (wgt != NULL)
+      wgt->dat.cst.autofree = 1;
 }

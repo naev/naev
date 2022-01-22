@@ -10,12 +10,12 @@
   <x>144.544000</x>
   <y>-836.920000</y>
  </pos>
- <assets>
-  <asset>PSO 1234</asset>
-  <asset>PSO 2212</asset>
-  <asset>Sultan III</asset>
-  <asset>Sultan VI</asset>
- </assets>
+ <spobs>
+  <spob>PSO 1234</spob>
+  <spob>PSO 2212</spob>
+  <spob>Sultan III</spob>
+  <spob>Sultan VI</spob>
+ </spobs>
  <jumps>
   <jump target="Faust">
    <autopos/>

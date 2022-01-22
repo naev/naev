@@ -21,6 +21,7 @@
 --]]
 local pir = require 'common.pirate'
 local fmt = require "format"
+local dv  = require "common.dvaered"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
@@ -37,14 +38,14 @@ local function update_osd()
       osd_msg[2] = fmt.f(_("Destroy some pirates! You have killed {n} and have earned {credits}. If finished, return to {pnt}."),
                          {n=mem.pirates_killed, credits=fmt.credits(mem.bounty_earned), pnt=mem.planet_start})
    end
-   misn.osdCreate(_("DV: Assault on Unicorn"), osd_msg)
+   misn.osdCreate(_("Assault on Unicorn"), osd_msg)
 end
 
 function create ()
    local rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
    mem.max_payment = rep * 50e3
-   misn.setTitle(_("DV: Assault on Unicorn"))
+   misn.setTitle(dv.prefix.._("Assault on Unicorn"))
    misn.setReward(_("Variable"))
    misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."), {credits=fmt.credits(mem.max_payment)} ))
 
@@ -58,7 +59,7 @@ function accept ()
       mem.pirates_killed = 0
       -- Makes sure only one copy of the mission can run.
       var.push( "assault_on_unicorn_check", true)
-      mem.planet_start = planet.cur()
+      mem.planet_start = spob.cur()
       mem.pirates_killed = 0
       mem.bounty_earned = 0
       mem.misn_stage = 0
@@ -81,28 +82,17 @@ function death(pilot,killer)
    if pir.factionIsPirate( pilot:faction() )
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
-      local reward_table = {
-         ["Pirate Hyena"]      =  10e3,
-         ["Pirate Shark"]      =  30e3,
-         ["Pirate Vendetta"]   =  80e3,
-         ["Pirate Ancestor"]   = 100e3,
-         ["Pirate Rhino"]      = 120e3,
-         ["Pirate Phalanx"]    = 140e3,
-         ["Pirate Admonisher"] = 150e3,
-         ["Pirate Kestrel"]    = 600e3,
-      }
 
-      mem.killed_ship = pilot:ship():nameRaw()
-      mem.reward_earned = reward_table[mem.killed_ship]
+      local reward_earned = pilot:ship():price()/10
       mem.pirates_killed = mem.pirates_killed + 1
-      mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + mem.reward_earned )
+      mem.bounty_earned = math.min( mem.max_payment, mem.bounty_earned + reward_earned )
       update_osd()
       misn.osdActive(2)
    end
 end
 
 function land()
-   if planet.cur() == mem.planet_start and mem.pirates_killed > 0 then
+   if spob.cur() == mem.planet_start and mem.pirates_killed > 0 then
       var.pop( "assault_on_unicorn_check" )
 
       tk.msg(_("Mission accomplished"), fmt.f(_("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth {credits}."), {credits=fmt.credits(mem.bounty_earned)}))

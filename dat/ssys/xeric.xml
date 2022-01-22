@@ -10,11 +10,11 @@
   <x>-789.867057</x>
   <y>-1196.104886</y>
  </pos>
- <assets>
-  <asset>Tesla Station</asset>
-  <asset>Vaal</asset>
-  <asset_virtual>Independent All Unpresence</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Tesla Station</spob>
+  <spob>Vaal</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Poller">
    <autopos/>

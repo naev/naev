@@ -22,7 +22,7 @@
 
 #define EW_ASTEROID_DIST      7.5e3
 #define EW_JUMPDETECT_DIST    7.5e3
-#define EW_PLANETDETECT_DIST  20e3 /* TODO something better than this. */
+#define EW_SPOBDETECT_DIST  20e3 /* TODO something better than this. */
 
 static double ew_interference = 1.; /**< Interference factor. */
 
@@ -188,7 +188,7 @@ static double pilot_ewJumpPoint( const Pilot *p )
    /* Gets lower when near jump. */
    for (int i=0; i<array_size(cur_system->jumps); i++) {
       JumpPoint *jp = &cur_system->jumps[i];
-      if (jp_isFlag(jp,JP_EXITONLY))
+      if (jp_isFlag(jp,JP_EXITONLY) || jp_isFlag(jp,JP_HIDDEN))
          continue;
       double d2 = vect_dist2( &jp->pos, &p->solid->pos );
       if (d2 <= pow2(EW_JUMP_BONUS_RANGE))
@@ -245,10 +245,8 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
    double d;
 
    /* Get distance if needed. */
-   if (dist2 != NULL) {
-      d = vect_dist2( &p->solid->pos, &target->solid->pos );
-      *dist2 = d;
-   }
+   if (dist2 != NULL)
+      *dist2 = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -256,45 +254,40 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
          target->parent == p->id)
       return 1;
 
-   /* Get distance if still needed */
-   if (dist2 == NULL)
-      d = vect_dist2( &p->solid->pos, &target->solid->pos );
-
    /* Stealth detection. */
    if (pilot_isFlag( target, PILOT_STEALTH ))
       return 0;
 
    /* No stealth so normal detection. */
-   else {
-      if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
-         return 1;
-      else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
-         return -1;
-   }
+   d = (dist2!=NULL ? *dist2 : vect_dist2( &p->solid->pos, &target->solid->pos ) );
+   if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
+      return 1;
+   else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
+      return -1;
 
    return 0;
 }
 
 /**
- * @brief Check to see if a planet is in sensor range of the pilot.
+ * @brief Check to see if a spob is in sensor range of the pilot.
  *
- *    @param p Pilot who is trying to check to see if the planet is in sensor range.
- *    @param target Planet to see if is in sensor range.
+ *    @param p Pilot who is trying to check to see if the spob is in sensor range.
+ *    @param target Spob to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-int pilot_inRangePlanet( const Pilot *p, int target )
+int pilot_inRangeSpob( const Pilot *p, int target )
 {
    double d;
-   Planet *pnt;
+   Spob *pnt;
    double sense;
 
    /* pilot must exist */
    if (p == NULL)
       return 0;
 
-   /* Get the planet. */
-   pnt = cur_system->planets[target];
-   sense = EW_PLANETDETECT_DIST;
+   /* Get the spob. */
+   pnt = cur_system->spobs[target];
+   sense = EW_SPOBDETECT_DIST;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );

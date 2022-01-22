@@ -10,13 +10,13 @@
   <x>-77.256077</x>
   <y>603.910705</y>
  </pos>
- <assets>
-  <asset>Benedict</asset>
-  <asset>Jacqueline</asset>
-  <asset>Tandar I</asset>
-  <asset>Tandar IIX</asset>
-  <asset>Tandar Ia</asset>
- </assets>
+ <spobs>
+  <spob>Benedict</spob>
+  <spob>Jacqueline</spob>
+  <spob>Tandar I</spob>
+  <spob>Tandar IIX</spob>
+  <spob>Tandar Ia</spob>
+ </spobs>
  <jumps>
   <jump target="Corvus">
    <autopos/>

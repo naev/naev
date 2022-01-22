@@ -61,6 +61,7 @@ static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
+static int ship_mode = 0; /**< Ship mode. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 static nlua_env autoequip_env = LUA_NOREF; /* Autoequip env. */
@@ -97,6 +98,7 @@ static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, const char* str );
 static void equipment_renameShip( unsigned int wid, const char *str );
+static void equipment_shipMode( unsigned int wid, const char *str );
 static void equipment_transChangeShip( unsigned int wid, const char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, const char* str );
@@ -299,8 +301,6 @@ void equipment_open( unsigned int wid )
    int ew, eh;
    int cw, ch;
    int x, y;
-   char buf[STRMAX];
-   size_t l = 0;
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
@@ -360,37 +360,15 @@ void equipment_open( unsigned int wid )
    equipment_addAmmo();
 
    /* text */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Evasion:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
    x = 20+sw+20+180+10;
    y = -40;
    window_addText( wid, x, y,
-         130, y-20+h-bh, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+         130, y-20+h-bh, 0, "txtSDesc", &gl_defFont, &cFontGrey, NULL );
+   window_addText( wid, x, y,
+         w-x-128-30, y-20+h-bh, 0, "txtAcquired", &gl_defFont, NULL, NULL );
    x += 130;
    window_addText( wid, x, y,
-         w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
+         w-x-20-128-20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
@@ -403,6 +381,9 @@ void equipment_open( unsigned int wid )
    window_addButtonKey( wid, -16, -20-150-ch-bh,
          128+8, bh, "btnRenameShip",
          _("Rename"), equipment_renameShip, SDLK_r );
+   window_addButtonKey( wid, -16, -20-150-ch-2*bh-10,
+         128+8, bh, "btnShipMode",
+         _("Toggle Display"), equipment_shipMode, SDLK_d );
 
    /* Generate lists. */
    equipment_genLists( wid );
@@ -509,7 +490,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render a thick frame with a yes/no color, and geometric cue. */
-         int ok = (pilot_canEquip( p, &lst[i], o ) == NULL);
+         int ok = (!lst[i].sslot->locked && pilot_canEquip( p, &lst[i], o ) == NULL);
          glUseProgram( shaders.status.program );
          glUniform1f( shaders.status.paramf, ok );
          gl_renderShader( x, y, w, h, 0., &shaders.status, NULL, 0 );
@@ -518,7 +499,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Must rechoose colour based on slot properties. */
       rc = dc;
       if (wgt->canmodify) {
-         if (lst[i].sslot->required)
+         if (lst[i].sslot->locked)
+            rc = NULL;
+         else if (lst[i].sslot->required)
             rc = &cBrightRed;
          else if (lst[i].sslot->exclusive)
             rc = &cWhite;
@@ -527,7 +510,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
 
       /* Draw outline. */
-      toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
+      if (rc != NULL)
+         toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
       // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
@@ -707,15 +691,18 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) &&
-               ((lst[i].u.ammo.outfit == NULL) ||
-                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit)))
             subtitle = 1;
       }
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
          display = NULL;
-         if ((i==mover) && (wgt->canmodify)) {
-            if (lst[i].outfit != NULL) {
+         if ((i==mover) && wgt->canmodify) {
+            if (lst[i].sslot->locked) {
+               display = _("Locked");
+               c = &cFontRed;
+            }
+            else if (lst[i].outfit != NULL) {
                top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], NULL );
                if (display != NULL)
@@ -838,17 +825,21 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Slot is empty. */
    if (o == NULL) {
-      if (slot->sslot->slot.spid)
+      if (slot->sslot->slot.spid) {
          pos = scnprintf( alt, sizeof(alt),
-               "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
-      else {
-         pos = scnprintf( alt, sizeof(alt), _( "#%c%s #%c%s #0slot" ),
-               outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
-               outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+               "#o%s\n", _( sp_display( slot->sslot->slot.spid ) ) );
       }
-      if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
+      else
+         pos = 0;
+      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _( "#%c%s #%c%s #0slot" ),
+            outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
+            outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+      if (slot->sslot->exclusive && (pos < (int)sizeof(alt)))
          pos += scnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
+      if (slot->sslot->locked && (pos < (int)sizeof(alt)))
+         pos += scnprintf( &alt[pos], sizeof(alt)-pos,
+               "#r%s#0", _(" [locked]") );
       if (slot->sslot->slot.spid)
          scnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
@@ -1005,7 +996,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          if (event->button.button == SDL_BUTTON_LEFT)
             wgt->slot = selected + ret;
          else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-               wgt->canmodify) {
+               wgt->canmodify && !os[ret].sslot->locked) {
             equipment_swapSlot( wid, p, &os[ret] );
             hooks_run( "equip" ); /* Equipped. */
          }
@@ -1099,6 +1090,12 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          (event->type != SDL_MOUSEMOTION))
       return 0;
 
+   /* Is covered by something. */
+   if (widget_isCovered( wid, "cstEquipment", mx, my )) {
+      wgt->mouseover = -1;
+      return 0;
+   }
+
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
    tw = bw / (double)n;
@@ -1147,7 +1144,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Remove outfit. */
    if (slot->outfit != NULL) {
       int ret;
-      const Outfit *ammo;
       const Outfit *o = slot->outfit;
 
       /* Must be able to remove. */
@@ -1155,9 +1151,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if ( ammo != NULL )
-         pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
+      pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
 
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
@@ -1318,8 +1312,9 @@ void equipment_addAmmo (void)
  *    @param max_len Maximum length of the string to allocate.
  *    @param s Pilot to get stats of.
  *    @param dpseps Whether or not to display dps and eps.
+ *    @param name Whether or not to display the pilot name.
  */
-int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps, int name )
 {
    int l;
    double eps, dps;
@@ -1331,10 +1326,13 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
       pilot_dpseps( s, &dps, &eps );
 
    /* Write to buffer. */
-   l = scnprintf( buf, max_len, "%s", s->name );
+   if (name)
+      l = scnprintf( buf, max_len, "%s\n", s->name );
+   else
+      l = 0;
    if (dps > 0.)
       l += scnprintf( &buf[l], (max_len-l),
-            _("\n%.2f DPS [%.2f EPS]"), dps, eps );
+            _("%.2f DPS [%.2f EPS]"), dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
@@ -1347,7 +1345,7 @@ static void equipment_toggleFav( unsigned int wid, const char *wgt )
    int state = window_checkboxState( wid, wgt );
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
-      player.favourite = state;
+      player.ps.favourite = state;
    }
    else {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
@@ -1401,7 +1399,7 @@ static void equipment_genShipList( unsigned int wid )
       return;
 
    eq_wgt.selected = NULL;
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+   if (spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD))
       nships   = player_nships()+1;
    else
       nships   = 1;
@@ -1412,7 +1410,7 @@ static void equipment_genShipList( unsigned int wid )
    cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
    t = gl_newImage( OVERLAY_GFX_PATH"active.webp", 0 );
    cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
-   if (player.favourite) {
+   if (player.ps.favourite) {
       t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
    }
@@ -1421,7 +1419,7 @@ static void equipment_genShipList( unsigned int wid )
       t = gl_newImage( r, 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
    }
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+   if (spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
       player_shipsSort();
       ps = player_getShipStack();
       for (int i=1; i<=array_size(ps); i++) {
@@ -1444,7 +1442,7 @@ static void equipment_genShipList( unsigned int wid )
       s  = player_getShip( cships[i].caption );
       cships[i].alt = malloc( STRMAX_SHORT );
       l  = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
-      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
+      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1, 1 );
       if (l == 0) {
          free( cships[i].alt );
          cships[i].alt = NULL;
@@ -1644,17 +1642,19 @@ void equipment_updateShips( unsigned int wid, const char* str )
 {
    (void) str;
    char buf[STRMAX], buf_price[ECON_CRED_STRLEN];
-   char errorReport[STRMAX_SHORT];
-   const char *shipname;
+   char errorReport[STRMAX_SHORT], tbuf[64];
+   const char *shipname, *acquired;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship, *prevship;
    PlayerShip_t *ps;
    char *nt;
-   int onboard;
-   int cargo, jumps;
-   int favourite;
+   int onboard, cargo, jumps, favourite, x, h;
+   int ww, wh, sw, sh, hacquired, hname;
+   int wgtw, wgth;
    size_t l = 0;
+
+   equipment_getDim( wid, &ww, &wh, &sw, &sh, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL );
 
    /* Clear defaults. */
    eq_wgt.slot          = -1;
@@ -1664,16 +1664,15 @@ void equipment_updateShips( unsigned int wid, const char* str )
    /* Get the ship. */
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
-      ship    = player.p;
+      ps      = &player.ps;
       onboard = 1;
-      favourite = player.favourite;
    }
    else {
       ps      = player_getPlayerShip( shipname );
-      ship    = ps->p;
       onboard = 0;
-      favourite = ps->favourite;
    }
+   favourite = ps->favourite;
+   ship      = ps->p;
    prevship = eq_wgt.selected;
    eq_wgt.selected = ship;
 
@@ -1687,6 +1686,14 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
+   /* Get acquired text length. */
+   x = 20+sw+20+180+10;
+   acquired = (ps->acquired) ? ps->acquired : _("You do not remember how you acquired this ship.");
+   window_dimWidget( wid, "txtAcquired", &wgtw, &wgth );
+   hacquired = gl_printLinesRaw( &gl_defFont, wgtw, acquired );
+   window_dimWidget( wid, "txtDDesc", &wgtw, &wgth );
+   hname = gl_printLinesRaw( &gl_defFont, wgtw, ship->name );
+
    /* Stealth stuff. */
    num2str( sdet, ship->ew_detection, 0 );
    num2str( seva, ship->ew_evasion, 0 );
@@ -1694,50 +1701,122 @@ void equipment_updateShips( unsigned int wid, const char* str )
    num2str( smass, ship->solid->mass, 0 );
    num2str( sfuel, ship->fuel_max, 0 );
 
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
+   for (int i=0; i<hname-1; i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Acquired Date:") );
+   for (int i=0; i<hacquired+1; i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   if (ship_mode==0) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Thrust:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Speed:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Turn:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Constant:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Evasion:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
+   }
+   else {
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Time Flown:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jumped Times:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Landed Times:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Done:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Damage Taken:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ships Destroyed:") );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n\n%s", _("Intrinsic Outfits:") );
+   }
+   window_modifyText( wid, "txtSDesc", buf );
+
    /* Fill the buffer. */
    /* Generic. */
+   l = 0;
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", ship->name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->ship->name) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship_classDisplay(ship->ship)) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   /* Movement. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 kN/tonne"),
-         EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"),
-         EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
-            solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 deg/s"),
-         EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default * 100 );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sdet );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%.1f secs for scan)"), seva, pilot_ewScanTime(ship) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sste );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   /* Health. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, "#%c%s%.0f%%\n", EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-         EQ_COMP( ship->shield_max, ship->ship->shield, 0 ), EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-         EQ_COMP( ship->armour_max, ship->ship->armour, 0 ), EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
-         EQ_COMP( ship->energy_max, ship->ship->energy, 0 ), EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   /* Misc. */
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%d / #%c%s%d#0 %s"),
-         pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ), n_( "tonne", "tonnes", ship->ship->cap_cargo ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
-         sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
+   if (ps->acquired_date==0)
+      snprintf( tbuf, sizeof(tbuf), _("Unknown") );
+   else
+      ntime_prettyBuf( tbuf, sizeof(tbuf), ps->acquired_date, 2 );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", tbuf );
+
+   h = gl_printHeightRaw( &gl_defFont, wgtw, buf );
+   window_moveWidget( wid, "txtAcquired", x, -40-h-6 );
+   window_modifyText( wid, "txtAcquired", acquired );
+
+   for (int i=0; i<hacquired+1; i++)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   if (ship_mode==0) {
+      /* Some core stats. */
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s average"), nt );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 kN/tonne"),
+            EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"),
+            EQ_COMP( ship->speed, ship->ship->speed, 0 ), EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
+               solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\n#%c%s%.0f#0 deg/s"),
+            EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f%%", ship->stats.time_mod * ship->ship->dt_default * 100 );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sdet );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s (%.1f secs for scan)"), seva, pilot_ewScanTime(ship) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s\n", sste );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      /* Health. */
+      l += scnprintf( &buf[l], sizeof(buf)-l, "#%c%s%.0f%%\n", EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
+            EQ_COMP( ship->shield_max, ship->ship->shield, 0 ), EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
+            EQ_COMP( ship->armour_max, ship->ship->armour, 0 ), EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"),
+            EQ_COMP( ship->energy_max, ship->ship->energy, 0 ), EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      /* Misc. */
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%d / #%c%s%d#0 %s"),
+            pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ), n_( "tonne", "tonnes", ship->ship->cap_cargo ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s %s (%d %s)"),
+            sfuel, n_( "unit", "units", ship->fuel_max ), jumps, n_( "jump", "jumps", jumps ) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s#0", pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
+   }
+   else {
+      int destroyed = 0;
+      for (int i=0; i<SHIP_CLASS_TOTAL; i++)
+         destroyed += ps->ships_destroyed[i];
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.1f hours"), ps->time_played/3600. );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->jumped_times,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(ps->landed_times,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_done_shield+ps->dmg_done_armour,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%s MJ"), num2strU(ps->dmg_taken_shield+ps->dmg_taken_armour,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", num2strU(destroyed,0) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
+      for (int i=0; i<array_size(ps->p->outfit_intrinsic); i++)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ps->p->outfit_intrinsic[i].outfit->name) );
+   }
    window_modifyText( wid, "txtDDesc", buf );
 
    /* Clean up. */
@@ -1971,21 +2050,22 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    /* Remove all outfits. */
    for (int i=0; i<array_size(ship->outfits); i++) {
       int ret;
-      const Outfit *ammo;
-      const Outfit *o = ship->outfits[i]->outfit;
+      PilotOutfitSlot *s = ship->outfits[i];
+      const Outfit *o = s->outfit;
 
       /* Skip null outfits. */
       if (o==NULL)
          continue;
 
+      /* Ignore locked slots. */
+      if (s->sslot->locked)
+         continue;
+
       /* Remove ammo first. */
-      ammo = outfit_ammo(o);
-      if (ammo != NULL) {
-         pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
-      }
+      pilot_rmAmmo( ship, s, pilot_maxAmmoO(ship, o) );
 
       /* Remove rest. */
-      ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
+      ret = pilot_rmOutfitRaw( ship, s );
       if (ret==0)
          equipment_playerAddOutfit( o, 1 );
    }
@@ -2054,7 +2134,7 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    }
 
    /* Run func. */
-   nlua_getenv( autoequip_env, "autoequip" );
+   nlua_getenv( naevL, autoequip_env, "autoequip" );
    if (!lua_isfunction(naevL,-1)) {
       WARN(_("'%s' doesn't have valid required 'autoequip' function!"), file);
       lua_pop(naevL,1);
@@ -2165,6 +2245,15 @@ static void equipment_renameShip( unsigned int wid, const char *str )
 
    /* Destroy widget - must be before widget. */
    equipment_regenLists( wid, 0, 1 );
+}
+
+/**
+ * @brief Toggles the ship visualization mode.
+ */
+static void equipment_shipMode( unsigned int wid, const char *str )
+{
+   ship_mode = 1-ship_mode;
+   equipment_updateShips( wid, str );
 }
 
 /**

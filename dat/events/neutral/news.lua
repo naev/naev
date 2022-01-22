@@ -306,8 +306,8 @@ articles["Pirate"] = {
       Business
    --]]
    {
-      tag = N_([[Draconis Favorite Plundering Space]]),
-      desc = _([[Draconis has recently passed Delta Pavonis in the pirate polls as the most favored plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits.]])
+      tag = N_([[Draconis Favourite Plundering Space]]),
+      desc = _([[Draconis has recently passed Delta Pavonis in the pirate polls as the most favoured plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits.]])
    },
    {
       tag = N_([[New Ships for Skull and Bones]]),
@@ -469,7 +469,7 @@ end
 
 -- create news
 function create()
-   local p = planet.cur()
+   local p = spob.cur()
    local s = p:services()
    -- Needs to be inhabited and have a bar for there to be news
    if not s["inhabited"] or not s["bar"] then evt.finish(false) end
@@ -553,7 +553,7 @@ function add_econ_article ()
          and rnd.rnd() < 0.75 then
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
-         for j, p in ipairs( s:planets() ) do
+         for j, p in ipairs( s:spobs() ) do
             if not pir.factionIsPirate( p:faction() )
                   and p:faction() ~= faction.get("FLF")
                   and #(p:commoditiesSold()) > 0 then
@@ -584,7 +584,7 @@ function add_econ_article ()
    local cur_t = time.get()
    local body = ""
    for i, sys in ipairs( lmisn.getSysAtDistance( system.cur(), 0, 1 ) ) do
-      for j, plnt in ipairs( sys:planets() ) do
+      for j, plnt in ipairs( sys:spobs() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then
             body = body .. "\n\n" .. fmt.f( _("{pnt} in {sys}"), {pnt=plnt, sys=sys} )

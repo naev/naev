@@ -8,7 +8,9 @@ local fmt = require "format"
 local swapship = {}
 
 --[[--
-Tests to see if it is possible to swap ships for the player.
+   Tests to see if it is possible to swap ships for the player.
+
+   @tparam Pilot template Template pilot to try to swap ships with the player.
 --]]
 function swapship.test( template )
    local pp = player.pilot()
@@ -23,12 +25,15 @@ function swapship.test( template )
 end
 
 --[[--
-Swaps the player's ship.
+   Swaps the player's ship. Performs checks to make sure things don't break. Use in place of player.swapShip() unless you really know what you're doing.
 
-      @param template Should be a pilot template.
-      @return true on success, false otherwise
+   Can fail if the player can't copy all the mission cargo over.
+
+   @tparam Pilot template Template pilot to swap with the player. Note that the template pilot gets removed on success.
+   @tparam string acquired Description of how the new ship was acquired.
+   @treturn boolean true on success, false otherwise
 --]]
-function swapship.swap( template )
+function swapship.swap( template, acquired )
    local pp = player.pilot()
 
    local total_cargo = 0
@@ -102,7 +107,7 @@ function swapship.swap( template )
    end
 
    -- Create new ship and swap to it
-   local newship = player.addShip( template:ship() )
+   local newship = player.addShip( template:ship(), nil, acquired )
    player.swapShip( newship )
    pp = player.pilot() -- Update struct to new pilot
 

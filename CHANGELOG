@@ -1,4 +1,122 @@
-* 0.9.0 (unreleased)
+* 0.10.0 (unreleased)
+   * New Mechanics
+      * Support for restrictions for outfits and ships
+      * Significantly improved how faction reputation caps are handled
+      * Pilots can have intrinsic outfits
+      * Bioships go rawr (new skill system)
+      * Plasma has a burning effect
+      * Scripting support for space objects (spob)
+   * Gameplay Changes
+      * Weapon types are more differenciated
+      * Removed nearly redundant launchers
+   * New Content
+      * Added a gigantic black hole
+      * Added space anomalies
+      * More engine sounds
+      * 17 New missions
+         * More terraforming
+         * Continuation of the Za'lek story
+         * Help the Dvaered do tasks
+      * 3 New ships
+   * Quality of Life
+      * Can ask pilots to refuel you more than 100 units at a time
+      * Engine sound volume is configurable
+   * Engine changes
+      * Simplified terminology with spob (space objects) replacing planet/asset
+      * Support for tags in missions
+      * Player ships can store their own variables now
+      * Weapon outfits support some Lua scripting
+      * Ammunition/fighters merged into launchers/fighter bays
+      * Support for "shotgun"-type weapons
+
+* 0.9.2
+   * Fix reward messages in the Particle Physics campaign
+   * Can no longer steal a certain Soromid ship
+   * Enhanced the logic for deciding whether it's safe to save the game after landing
+   * Fix mission bugs: "Assault on Unicorn", "Emergency of Immediate Inspiration", "The Search for Cynthia"
+   * Fix zombie autonav toward deselected targets
+
+* 0.9.1
+   * Minor countermeasures for long player ship names
+   * Fix mission breakage in "Minerva Pirates 4", "Runaway Search", "Particle Physics 3", "Shadow Vigil", "Baron Prince", and "Dvaered Ballet"
+   * Fix exploit in "Travelling Merchant" event (mission prize for sale that shouldn't have been)
+   * Fix many missions that explicitly attack the player overriding stealth and visibility mechanics
+   * Fix some text labels that couldn't be translated from English
+   * Fix equipment slot information displaying over filter widget
+   * Fix phantom acceleration after an auto-board and undock sequence
+   * Darkened nebulas and lowered default background darkness
+   * Improved upstream metainfo for packagers
+   * Can no longer steal a certain Za'lek ship
+   * Fix crash under certain conditions when using the console
+   * Masochists and LTS distro packagers may build with Meson 0.54 (no subproject fallbacks) or 0.53 (also no "meson compile", only "ninja")
+   * Slightly reduced rendered nebula quality to stop breakage on some intel GPUs
+   * VN music uses logarithmic scale like internal music
+   * Fixed some offset issues with the slim GUI
+
+* 0.9.0
+   * Fixed glitchy appearance of the map's mode menu
+   * Map mode is remembered throughout the gaming session
+   * Music transitions better for impatient players
+   * Tighten up alt-text
+   * Don't show aiming helper in cinematic mode
+   * A busy volunteer proofreader kept editing almost as quickly as we could add errores
+   * Some more outfit graphics
+   * Pilots should be a bit less trigger happy when jumping in
+   * Fixed minor visual artefacts with pirate trails
+   * Centered the bottom bar (Brushed GUI)
+   * FPS and Time Compression factors are monospaced when displayed
+   * Added option for disabling resizing of window
+   * Stealthed pilots don't affect autonav
+   * Meow meow
+
+* 0.9.0-beta.3
+   * Fixed warning about cargo rush deliveries when you don't know the best route
+   * Fixed another crash related to pilot removal
+   * Fixed wonky backgrounds during death cutscenes, for the sake of *other* players of course
+   * Fixed crash when techs are first patched to planets through unidiff
+   * Fixed potential spurious warnings about incomplete translations, even when running in English
+   * Fixed failure to resolve regional translations (like pt_BT or pt_PT) from the locale
+   * Fixed VN log text overlap issues
+   * Fixed commodities not being added through unidiff
+   * Fixed safe lane rendering alpha being wrong
+   * Fixed misbehaviours with Maikki, Nelly 2, Shark 3, Shipwreck, Travelling Merchant, Warlords Battle, and Particle Physics 2
+   * Fixed backgrounds accumulating when messing with options
+   * Fixed issues with board scripts getting deferred with respect to boarding script
+   * Fixed some instances of background text interfering with how foreground text was drawn
+   * Fixed some missions causing trouble when saved/reloaded (due to dynamic factions)
+   * Fixed minor Ship AI issues (rename at game start)
+   * Fixed autonav via the map during a landing sequence
+   * Fixed autonav giving away autofollowed pilots and unknown destination systems
+   * Improved speed and accuracy of autonav stopping
+   * Improved mission marker behavior (show planets more, always clean up at end of mission)
+   * Kicked Empire patrols out of the Arandon system
+   * Gave pirate ships dodgier outfits
+   * Proofread too many parts of the game to mention
+   * AI should only try to jump to systems with their faction presence
+   * Wrap OSD titles as necessary
+   * Don't allow illegal characters in pilot name
+   * Be kinder to old video drivers
+   * More music
+   * More meow
+
+* 0.9.0-beta.2
+   * Prevented Naev from losing the player's (pre-0.9.0-beta) licenses on first load
+   * Fixed missing credits and translation coverage data
+   * Improved phrasing
+   * Prevented players from getting stranded without access to fuel
+   * Mission script fixes for "Helping Nelly" and "The one with the Visit"
+   * Outfit script fix for "Weapons Ionizer"
+   * Fixed issues impacting at least some Windows / Intel graphics combinations
+   * Hulls are more widely available
+   * Improved some of the map outfits
+   * Do not render systems with unknown assets as restricted
+   * Added gamma correction to Options
+   * Fixed reproducible crash when boarded pilots get removed
+   * Added counterfeit licenses to pirate worlds
+   * Remove minor energy malus from sensor array and jump detector
+   * Electron burst cannon is no longer widely available
+
+* 0.9.0 (beta)
    * New mechanics
       * Added new utility outfits with complex effects
       * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
@@ -89,7 +207,6 @@
       * Lua support for advanced sound effects
       * Most markers and indicators use signed distance functions now
       * Internally using linear colourspace
-      * Lots of optimization
       * Faction presence computed with base and bonus values
       * Virtual assets have been redone and are more flexible than before
       * Point value system for ships to help with presence and other things
@@ -103,26 +220,26 @@
    * Gameplay
       * Fixed duplicate rewards from pirate ship-stealing missions. (Sorry.)
       * Fixed the Advanced Nebula Research mission's failure condition in case you don't stick with the transport ship. (Sorry.)
-      * Fixed the "The one with the Runaway" mission so the captured drone doesn't appear back in space.
+      * Fixed the "The one with the Runaway" mission so the captured drone doesn't appear back in space
    * Engine
-      * Fixed a bug loading games with short (1-character) names.
-      * Tweaked chances of seeing Spaceport Bar missions.
-      * Updated German translation.
-      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse".
+      * Fixed a bug loading games with short (1-character) names
+      * Tweaked chances of seeing Spaceport Bar missions
+      * Updated German translation
+      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse"
       * Fixed source .tar.gz so ./configure is immediately usable again. (Note: 0.9.x will use Meson for builds.)
 
 * 0.8.1
    * Gameplay
-      * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%.
-      * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations.
+      * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%
+      * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations
    * Engine
       * Restored macOS support. (Catalina users will have to bypass Gatekeeper: See https://github.com/naev/naev/wiki/FAQ for details.)
-      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
-      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'".
-      * Fixed rare/potential bugs in font and save-file code.
-      * Fixed crash when navigating landing screens with the tab key.
-      * Updated German translation.
-      * Improved text in minor ways.
+      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files
+      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'"
+      * Fixed rare/potential bugs in font and save-file code
+      * Fixed crash when navigating landing screens with the tab key
+      * Updated German translation
+      * Improved text in minor ways
 
 * 0.8.0
    * Gameplay

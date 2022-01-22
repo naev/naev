@@ -7,6 +7,7 @@
 
 #include "nstring.h"
 #include "pilot.h"
+#include "lvar.h"
 
 /** Player flag enum. */
 enum {
@@ -59,11 +60,43 @@ enum {
 #include "player_autonav.h"
 
 /**
+ * @brief Wrapper for outfits.
+ */
+typedef struct PlayerOutfit_s {
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
+} PlayerOutfit_t;
+
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot *p;      /**< Pilot. */
+   int autoweap;  /**< Automatically update weapon sets. */
+   int favourite; /**< Whether or not it is favourited. */
+   lvar *shipvar; /**< Per-ship version of lua mission variables. */
+
+   /* Some meta-data. */
+   double time_played;        /**< Total time the player has used ship. */
+   char *acquired;            /**< How it got acquired. */
+   time_t acquired_date;      /**< When the player was created. */
+   double dmg_done_shield;    /**< Total damage done to shields. */
+   double dmg_done_armour;    /**< Total damage done to armour. */
+   double dmg_taken_shield;   /**< Total damage taken to shields. */
+   double dmg_taken_armour;   /**< Total damage taken to armour. */
+   unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
+   unsigned int jumped_times; /**< Times the player jumped. */
+   unsigned int landed_times; /**< Times the player landed. */
+   unsigned int death_counter;/**< Times the player got annihilated. */
+} PlayerShip_t;
+
+/**
  * The player struct.
  */
 typedef struct Player_s {
    /* Player intrinsics. */
    Pilot *p;         /**< Player's pilot. */
+   PlayerShip_t ps;  /**< Player's ship with extra information. */
    char *name;       /**< Player's name. */
    double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
 
@@ -80,6 +113,7 @@ typedef struct Player_s {
    double mousex;    /**< Mouse X position (for mouse flying). */
    double mousey;    /**< Mouse Y position (for mouse flying). */
    double speed;     /**< Gameplay speed modifier, multiplies the ship base speed. */
+   char *chapter;    /**< Chapter information. */
 
    /* Loaded game version. */
    char *loaded_version;/**< Version of the loaded save game. */
@@ -87,7 +121,6 @@ typedef struct Player_s {
    /* Stuff we save. */
    char *gui;        /**< Player's GUI. */
    int guiOverride;  /**< GUI is overridden (not default). */
-   int favourite;    /**< Whether or not this ship is favourited. */
    double radar_res; /**< Player's radar resolution. */
    int eq_outfitMode;/**< Equipment outfit mode. */
    int map_minimal;  /**< Map is set in minimal mode. */
@@ -108,23 +141,6 @@ typedef struct Player_s {
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */
 } Player_t;
-
-/**
- * @brief Wrapper for outfits.
- */
-typedef struct PlayerOutfit_s {
-   const Outfit *o;  /**< Actual associated outfit. */
-   int q;            /**< Amount of outfit owned. */
-} PlayerOutfit_t;
-
-/**
- * @brief Player ship.
- */
-typedef struct PlayerShip_s {
-   Pilot* p;      /**< Pilot. */
-   int autoweap;  /**< Automatically update weapon sets. */
-   int favourite; /**< Whether or not it is favourited. */
-} PlayerShip_t;
 
 /*
  * Local player.
@@ -150,7 +166,7 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
 int player_init (void);
 void player_new (void);
 Pilot* player_newShip( const Ship* ship, const char *def_name,
-      int trade, int noname );
+      int trade, const char *acquired, int noname );
 void player_cleanup (void);
 
 /*
@@ -222,12 +238,14 @@ int player_rmOutfit( const Outfit *o, int quantity );
  */
 void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
+int* player_missionsDoneList (void); /* Returns array that should not be freed. */
 
 /*
  * Player events.
  */
 void player_eventFinished( int id );
 int player_eventAlreadyDone( int id );
+int* player_eventsDoneList (void); /* Returns array that should not be freed. */
 
 /*
  * Licenses.
@@ -260,13 +278,13 @@ double player_dt_default (void);
 /* Clearing. */
 void player_targetClear (void);
 void player_targetClearAll (void);
-/* Planets. */
-void player_targetPlanetSet( int id );
-void player_targetPlanet (void);
+/* Spobs. */
+void player_targetSpobSet( int id );
+void player_targetSpob (void);
 /* Asteroids. */
 void player_targetAsteroidSet( int id_field, int id );
 /* Hyperspace. */
-void player_targetHyperspaceSet( int id );
+void player_targetHyperspaceSet( int id, int autonavcont );
 void player_targetHyperspace (void);
 /* Pilots. */
 void player_targetSet( unsigned int id );
@@ -287,7 +305,7 @@ void player_screenshot (void);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);
-void player_hailPlanet (void);
+void player_hailSpob (void);
 void player_autohail (void);
 void player_toggleMouseFly (void);
 void player_brake (void);

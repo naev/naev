@@ -5,7 +5,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Totoran</planet>
+  <spob>Totoran</spob>
  </avail>
 </mission>
 --]]
@@ -18,13 +18,12 @@ local fmt = require "format"
 local equipopt = require 'equipopt'
 
 local logidstr = "log_gauntlet"
-local enemies, gmods, wave_enemies, wave_killed -- Non-persistent state
+local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
 -- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
 -- luacheck: globals approach_gauntlet (NPC functions passed by name)
 
--- TODO replace portraits/images
-local npc_portrait   = "minerva_terminal.png"
+local npc_portrait   = "/gfx/misc/crimson_gauntlet.webp"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 local gauntletsys = system.get("Crimson Gauntlet")
@@ -153,7 +152,7 @@ function leave_the_ring ()
    pp:setInvincible( false )
    pp:setInvisible( false )
    player.cinematics( false )
-   player.land( planet.get("Totoran") )
+   player.land( spob.get("Totoran") )
 end
 
 --[[
@@ -175,7 +174,7 @@ function countdown_done ()
    -- TODO play sound and cooler text
    player.omsgChange( mem.omsg_id, _("FIGHT!"), 3 )
    mem.wave_started = true
-   mem.wave_started_time = naev.ticks()
+   mem.wave_started_time = naev.ticksGame()
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
@@ -254,7 +253,7 @@ function enter_wave ()
    pilot.toggleSpawn(false)
 
    -- Metafactions
-   mem.enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
+   enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
 
    -- Start round
    mem.total_score = 0
@@ -275,27 +274,7 @@ function wave_round_setup ()
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
 
-   local function addenemy( shipname, pos )
-      local p = pilot.add( shipname, mem.enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
-      equipopt.generic( p, nil, "elite" )
-      p:setInvincible(true)
-      p:control(true)
-      p:setHostile(true)
-      p:brake()
-      p:face( pp )
-      if gmods.doubledmgtaken then
-         p:intrinsicSet("fwd_damage",   100)
-         p:intrinsicSet("tur_damage",   100)
-         p:intrinsicSet("launch_damage",100)
-         p:intrinsicSet("fbay_damage",  100)
-      end
-      local aimem = p:memory()
-      aimem.comm_no = _("No response.") -- Don't allow talking
-      hook.pilot( p, "disable", "p_disabled" )
-      hook.pilot( p, "death", "p_death" )
-      return p
-   end
-   local function addenemies( ships )
+   local function addenemies( ships, equipfunc )
       local e = {}
       local posbase = vec2.new( -1500, 1500 )
       local boss = nil
@@ -323,7 +302,32 @@ function wave_round_setup ()
 
          -- Add ship
          local shipname = v
-         local p = addenemy( shipname, pos )
+         local p
+         if ships.func then
+            p = ships.func( shipname, enemy_faction, pos, k )
+         else
+            p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
+            if equipfunc then
+               equipfunc( p )
+            else
+               equipopt.generic( p, nil, "elite" )
+            end
+         end
+         p:setInvincible(true)
+         p:control(true)
+         p:setHostile(true)
+         p:brake()
+         p:face( pp )
+         if gmods.doubledmgtaken then
+            p:intrinsicSet("fwd_damage",   100)
+            p:intrinsicSet("tur_damage",   100)
+            p:intrinsicSet("launch_damage",100)
+            p:intrinsicSet("fbay_damage",  100)
+         end
+         local aimem = p:memory()
+         aimem.comm_no = _("No response.") -- Don't allow talking
+         hook.pilot( p, "disable", "p_disabled" )
+         hook.pilot( p, "death", "p_death" )
          if boss then
             p:setLeader( boss )
          else
@@ -344,7 +348,7 @@ function wave_round_setup ()
       end
       enemies_list = doublelist
    end
-   enemies = addenemies( enemies_list )
+   enemies = addenemies( enemies_list, round_enemies.equip )
    wave_enemies = enemies_list
 
    -- Count down
@@ -359,7 +363,7 @@ local function wave_compute_score ()
    local bonus = 100
    local str = {}
 
-   local elapsed = (naev.ticks()-mem.wave_started_time)
+   local elapsed = (naev.ticksGame()-mem.wave_started_time)
    table.insert( str, string.format(_("%.1f seconds"), elapsed) )
 
    wave_killed = wave_killed or {}

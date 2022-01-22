@@ -49,7 +49,6 @@
 #include "nxml.h"
 #include "opengl.h"
 #include "pause.h"
-#include "perlin.h"
 #include "pilot.h"
 #include "pilot.h"
 #include "player.h"
@@ -64,12 +63,12 @@
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
-#define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
+#define RADAR_BLINK_PILOT     0.5 /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_SPOB      1. /**< Blink rate of the spob target on radar. */
 
 /* some blinking stuff. */
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
-static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
+static double blink_spob      = 0.; /**< Timer on spob blinking on radar. */
 static double animation_dt    = 0.; /**< Used for animations. */
 
 /* for VBO. */
@@ -147,7 +146,7 @@ static double gui_bl = 0.; /**< Border bottom-left. */
 
 /* Intrinsic graphical stuff. */
 static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
-static glTexture *gui_target_planet = NULL; /**< Planet targeting icon. */
+static glTexture *gui_target_spob = NULL; /**< Spob targeting icon. */
 static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 
 /* Lua Stuff. */
@@ -163,6 +162,7 @@ static int gui_lua_update_target    = LUA_NOREF;
 static int gui_lua_update_ship      = LUA_NOREF;
 static int gui_lua_update_system    = LUA_NOREF;
 static int gui_lua_update_faction   = LUA_NOREF;
+static int gui_lua_update_effects   = LUA_NOREF;
 
 /*
  * prototypes
@@ -180,10 +180,10 @@ static void gui_renderTargetReticles( const SimpleShader *shd, double x, double 
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget (void);
-static void gui_renderPlanetTarget (void);
+static void gui_renderSpobTarget (void);
 static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
-static const glColour *gui_getPlanetColour( int i );
+static const glColour *gui_getSpobColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
 static void gui_blink( double cx, double cy, double vr, const glColour *col, double blinkInterval, double blinkVar );
 static const glColour* gui_getPilotColour( const Pilot* p );
@@ -298,7 +298,7 @@ void player_messageRaw( const char *str )
    if (!gui_getMessage)
       return;
 
-   gl_printLineIteratorInit( &iter, NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45 : 15) );
+   gl_printLineIteratorInit( &iter, &gl_smallFont, str, gui_mesg_w - ((str[0] == '\t') ? 45 : 15) );
    while (gl_printLineIteratorNext( &iter )) {
       /* Move pointer. */
       mesg_pointer   = (mesg_pointer + 1) % mesg_max;
@@ -345,9 +345,9 @@ void player_message( const char *fmt, ... )
 }
 
 /**
- * @brief Sets up rendering of planet and jump point targeting reticles.
+ * @brief Sets up rendering of spob and jump point targeting reticles.
  */
-static void gui_renderPlanetTarget (void)
+static void gui_renderSpobTarget (void)
 {
    double x,y, r;
    const glColour *c;
@@ -358,37 +358,37 @@ static void gui_renderPlanetTarget (void)
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0)
+   if ((player.p->nav_spob < 0) && (player.p->nav_hyperspace < 0)
        && (player.p->nav_asteroid < 0))
       return;
 
    /* Make sure targets are still in range. */
 #if 0
-   if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-      player_targetPlanetSet( -1 );
+   if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
+      player_targetSpobSet( -1 );
       return;
    }
 #endif
 
-   /* Draw planet and jump point target graphics. */
+   /* Draw spob and jump point target graphics. */
    if (player.p->nav_hyperspace >= 0) {
       JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
 
-      c = &cGreen;
-
-      x = jp->pos.x;
-      y = jp->pos.y;
-      r = jumppoint_gfx->sw * 0.5;
-      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
+      if (jp_isKnown(jp)) {
+         c = &cGreen;
+         x = jp->pos.x;
+         y = jp->pos.y;
+         r = jumppoint_gfx->sw * 0.5;
+         gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
+      }
    }
-   if (player.p->nav_planet >= 0) {
-      Planet *planet = cur_system->planets[player.p->nav_planet];
-      c = planet_getColour( planet );
-
-      x = planet->pos.x;
-      y = planet->pos.y;
-      r = planet->gfx_space->w * 0.5;
-      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
+   if (player.p->nav_spob >= 0) {
+      Spob *spob = cur_system->spobs[player.p->nav_spob];
+      c = spob_getColour( spob );
+      x = spob->pos.x;
+      y = spob->pos.y;
+      r = spob->radius;
+      gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
       AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
@@ -410,7 +410,7 @@ static void gui_renderPlanetTarget (void)
 }
 
 /**
- * @brief Renders planet and jump point targeting reticles.
+ * @brief Renders spob and jump point targeting reticles.
  *
  *    @param shd Shader to use to render.
  *    @param x X position of reticle segment.
@@ -423,7 +423,7 @@ static void gui_renderTargetReticles( const SimpleShader *shd, double x, double 
 {
    double rx, ry, r;
    /* Must not be NULL. */
-   if (gui_target_planet == NULL)
+   if (gui_target_spob == NULL)
       return;
 
    gl_gameToScreenCoords( &rx, &ry, x, y );
@@ -529,7 +529,7 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
 }
 
 /**
- * @brief Renders the ships/planets in the border.
+ * @brief Renders the ships/spobs in the border.
  *
  *    @param dt Current delta tick.
  */
@@ -552,21 +552,21 @@ static void gui_renderBorder( double dt )
    gl_renderRect( 15., 0., SCREEN_W - 30., 15., &cBlackHilight );
    gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
-   /* Draw planets. */
-   for (int i=0; i<array_size(cur_system->planets); i++) {
-      Planet *pnt = cur_system->planets[i];
+   /* Draw spobs. */
+   for (int i=0; i<array_size(cur_system->spobs); i++) {
+      Spob *pnt = cur_system->spobs[i];
 
       /* Skip if unknown. */
-      if (!planet_isKnown( pnt ))
+      if (!spob_isKnown( pnt ))
          continue;
 
       /* Check if out of range. */
-      if (!gui_onScreenAsset( &rx, &ry, NULL, pnt )) {
+      if (!gui_onScreenSpob( &rx, &ry, NULL, pnt )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
-         col = gui_getPlanetColour(i);
+         col = gui_getSpobColour(i);
          gl_renderCircle(cx, cy, 5, col, 0);
       }
    }
@@ -580,7 +580,7 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Check if out of range. */
-      if (!gui_onScreenAsset( &rx, &ry, jp, NULL )) {
+      if (!gui_onScreenSpob( &rx, &ry, jp, NULL )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -652,15 +652,15 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 }
 
 /**
- * @brief Takes a planet or jump point and returns whether it's on screen, plus its relative position.
+ * @brief Takes a spob or jump point and returns whether it's on screen, plus its relative position.
  *
  * @param[out] rx Relative X position (factoring in viewport offset)
  * @param[out] ry Relative Y position (factoring in viewport offset)
  * @param jp Jump point to determine the visibility and position of
- * @param pnt Planet to determine the visibility and position of
- * @return Whether or not the given asset is on-screen.
+ * @param pnt Spob to determine the visibility and position of
+ * @return Whether or not the given spob is on-screen.
  */
-int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet *pnt )
+int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp, const Spob *pnt )
 {
    double z;
    int cw, ch;
@@ -684,8 +684,12 @@ int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet
    *ry -= gui_yoff;
 
    /* Compare dimensions. */
-   cw = SCREEN_W/2 + tex->sw/2;
-   ch = SCREEN_H/2 + tex->sh/2;
+   cw = SCREEN_W/2;
+   ch = SCREEN_H/2;
+   if (tex != NULL) {
+      cw += tex->sw/2;
+      ch += tex->sh/2;
+   }
 
    if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
@@ -706,7 +710,7 @@ void gui_renderReticles( double dt )
    if (player.p == NULL)
       return;
 
-   gui_renderPlanetTarget();
+   gui_renderSpobTarget();
    gui_renderPilotTarget();
 }
 
@@ -718,15 +722,15 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  */
 void gui_render( double dt )
 {
-   int i;
-   gl_Matrix4 projection;
    double fade, direction;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
          (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
             ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
+      gl_viewport( 0., 0., SCREEN_W, SCREEN_H );
       spfx_cinematic();
+      gl_defViewport();
       return;
    }
 
@@ -745,9 +749,9 @@ void gui_render( double dt )
    blink_pilot    -= dt / dt_mod;
    if (blink_pilot < 0.)
       blink_pilot += RADAR_BLINK_PILOT;
-   blink_planet   -= dt / dt_mod;
-   if (blink_planet < 0.)
-      blink_planet += RADAR_BLINK_PLANET;
+   blink_spob   -= dt / dt_mod;
+   if (blink_spob < 0.)
+      blink_spob += RADAR_BLINK_SPOB;
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
@@ -779,9 +783,8 @@ void gui_render( double dt )
 
    /* Noise when getting near a jump. */
    if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
-
       /* Determine if we have to play the "enter hyperspace range" sound. */
-      i = space_canHyperspace(player.p);
+      int i = space_canHyperspace(player.p);
       if ((i != 0) && (i != can_jump))
          if (!pilot_isFlag(player.p, PILOT_HYPERSPACE))
             player_soundPlayGUI(snd_jump, 1);
@@ -802,13 +805,14 @@ void gui_render( double dt )
    }
    /* Perform the fade. */
    if (fade > 0.) {
+      gl_Matrix4 projection = gl_view_matrix;
+
       /* Set up the program. */
       glUseProgram( shaders.jump.program );
       glEnableVertexAttribArray( shaders.jump.vertex );
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
 
       /* Set up the projection. */
-      projection = gl_view_matrix;
       projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
 
       /* Pass stuff over. */
@@ -898,20 +902,22 @@ void gui_radarRender( double x, double y )
             x, y, 0 );
 
    /*
-    * planets
+    * spobs
     */
-   for (int i=0; i<array_size(cur_system->planets); i++)
-      if (i != player.p->nav_planet)
-         gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
-   if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
+   for (int i=0; i<array_size(cur_system->spobs); i++)
+      if (i != player.p->nav_spob)
+         gui_renderSpob( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
+   if (player.p->nav_spob > -1)
+      gui_renderSpob( player.p->nav_spob, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
    /*
     * Jump points.
     */
-   for (int i=0; i<array_size(cur_system->jumps); i++)
-      if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
+      if (i != player.p->nav_hyperspace && jp_isUsable(jp))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
+   }
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
@@ -977,8 +983,9 @@ void gui_clearMessages (void)
 static void gui_renderMessages( double dt )
 {
    double x, y, h, hs, vx, vy, dy;
-   int v, i, m, o;
-   glColour c, msgc;
+   int v, o;
+   glColour c = {.r=1., .g=1., .b=1.};
+   const glColour msgc = {.r=0., .g=0., .b=0., .a=0.6};
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -988,15 +995,6 @@ static void gui_renderMessages( double dt )
    v = mesg_viewpoint;
    if (v == -1)
       v = mesg_pointer;
-
-   /* Colour. */
-   c.r = 1.;
-   c.g = 1.;
-   c.b = 1.;
-   msgc.r = 0.;
-   msgc.g = 0.;
-   msgc.b = 0.;
-   msgc.a = 0.6;
 
    /* Render background. */
    h = 0;
@@ -1017,9 +1015,9 @@ static void gui_renderMessages( double dt )
    }
 
    /* Render text. */
-   for (i=0; i<conf.mesg_visible; i++) {
+   for (int i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
-      m  = (v - i) % mesg_max;
+      int m  = (v - i) % mesg_max;
       if (m < 0)
          m += mesg_max;
 
@@ -1033,11 +1031,11 @@ static void gui_renderMessages( double dt )
          if (mesg_stack[m].str != NULL) {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
-               dy = gl_printHeightRaw( NULL, gui_mesg_w, mesg_stack[m].str) + 6;
+               dy = gl_printHeightRaw( &gl_smallFont, gui_mesg_w, mesg_stack[m].str) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
@@ -1262,35 +1260,35 @@ void gui_renderPlayer( double res, int overlay )
 }
 
 /**
- * @brief Gets the colour of a planet.
+ * @brief Gets the colour of a spob.
  *
- *    @param i Index of the planet to get colour of.
- *    @return Colour of the planet.
+ *    @param i Index of the spob to get colour of.
+ *    @return Colour of the spob.
  */
-static const glColour *gui_getPlanetColour( int i )
+static const glColour *gui_getSpobColour( int i )
 {
    const glColour *col;
-   Planet *planet = cur_system->planets[i];
+   Spob *spob = cur_system->spobs[i];
 
-   if (i == player.p->nav_planet)
-      col = &cRadar_tPlanet;
+   if (i == player.p->nav_spob)
+      col = &cRadar_tSpob;
    else
-      col = planet_getColour( planet );
+      col = spob_getColour( spob );
 
    return col;
 }
 
 /**
- * @brief Force sets the planet and pilot radar blink.
+ * @brief Force sets the spob and pilot radar blink.
  */
 void gui_forceBlink (void)
 {
    blink_pilot  = 0.;
-   blink_planet = 0.;
+   blink_spob = 0.;
 }
 
 /**
- * @brief Renders the planet blink around a position on the minimap.
+ * @brief Renders the spob blink around a position on the minimap.
  */
 static void gui_blink( double cx, double cy, double vr, const glColour *col, double blinkInterval, double blinkVar )
 {
@@ -1301,7 +1299,7 @@ static void gui_blink( double cx, double cy, double vr, const glColour *col, dou
 }
 
 /**
- * @brief Renders an out of range marker for the planet.
+ * @brief Renders an out of range marker for the spob.
  */
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col )
 {
@@ -1339,33 +1337,34 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
 }
 
 /**
- * @brief Draws the planets in the minimap.
+ * @brief Draws the spobs in the minimap.
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
+void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
 {
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
-   Planet *planet;
+   Spob *spob;
+   const SimpleShader *shd;
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
-   if (!planet_isKnown( cur_system->planets[ind] ))
+   if (!spob_isKnown( cur_system->spobs[ind] ))
       return;
 
    /* Default values. */
-   planet = cur_system->planets[ind];
-   r     = planet->radius / res;
-   vr    = overlay ? planet->mo.radius : MAX( r, 7.5 );
+   spob = cur_system->spobs[ind];
+   r     = spob->radius / res;
+   vr    = overlay ? spob->mo.radius : MAX( r, 7.5 );
 
    if (overlay) {
-      cx    = planet->pos.x / res;
-      cy    = planet->pos.y / res;
+      cx    = spob->pos.x / res;
+      cy    = spob->pos.y / res;
    }
    else {
-      cx    = (planet->pos.x - player.p->solid->pos.x) / res;
-      cy    = (planet->pos.y - player.p->solid->pos.y) / res;
+      cx    = (spob->pos.x - player.p->solid->pos.x) / res;
+      cy    = (spob->pos.y - player.p->solid->pos.y) / res;
    }
 
    /* Check if in range. */
@@ -1374,8 +1373,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-2*r)) {
-         if ((player.p->nav_planet == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
+         if ((player.p->nav_spob == ind) && !overlay)
+            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tSpob );
          return;
       }
    }
@@ -1383,8 +1382,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       if (shape == RADAR_RECT) {
          /* Out of range. */
          if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-            if ((player.p->nav_planet == ind) && !overlay)
-               gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
+            if ((player.p->nav_spob == ind) && !overlay)
+               gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tSpob );
             return;
          }
       }
@@ -1401,7 +1400,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    }
 
    /* Is marked. */
-   if (planet_isKnown( planet ) && planet_isFlag( planet, PLANET_MARKED )) {
+   if (spob_isKnown( spob ) && spob_isFlag( spob, SPOB_MARKED )) {
       glColour highlighted = cRadar_hilight;
       highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
@@ -1410,20 +1409,26 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    }
 
    /* Get the colour. */
-   col = *gui_getPlanetColour(ind);
+   col = *gui_getSpobColour(ind);
    col.a *= alpha;
 
    /* Do the blink. */
-   if (ind == player.p->nav_planet)
-      gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_PLANET, blink_planet);
+   if (ind == player.p->nav_spob)
+      gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_SPOB, blink_spob);
 
-   glUseProgram(shaders.planetmarker.program);
-   glUniform1i(shaders.planetmarker.parami, planet_hasService(planet,PLANET_SERVICE_LAND));
-   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, &col, 1 );
+   if (spob->marker != NULL)
+      shd = spob->marker;
+   else if (spob_hasService(spob,SPOB_SERVICE_LAND))
+      shd = &shaders.spobmarker_earth;
+   else
+      shd = &shaders.spobmarker_empty;
+
+   glUseProgram(shd->program);
+   gl_renderShader( cx, cy, vr, vr, 0., shd, &col, 1 );
 
    if (overlay) {
-      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
-      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
+      snprintf( buf, sizeof(buf), "%s%s", spob_getSymbol(spob), spob_name(spob) );
+      gl_printMarkerRaw( &gl_smallFont, cx+spob->mo.text_offx, cy+spob->mo.text_offy, &col, buf );
    }
 }
 
@@ -1467,7 +1472,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
+            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tSpob );
          return;
       }
    }
@@ -1477,7 +1482,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       /* Out of range. */
       if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
+            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tSpob );
          return;
       }
    }
@@ -1511,11 +1516,11 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    col.a *= alpha;
 
    glUseProgram(shaders.jumpmarker.program);
-   gl_renderShader( cx, cy, vr*1.5, vr*1.5, -jp->angle, &shaders.jumpmarker, &col, 1 );
+   gl_renderShader( cx, cy, vr*1.5, vr*1.5, M_PI-jp->angle, &shaders.jumpmarker, &col, 1 );
 
    /* Blink ontop. */
    if (ind == player.p->nav_hyperspace)
-      gui_blink( cx, cy, vr*3., &col, RADAR_BLINK_PLANET, blink_planet );
+      gui_blink( cx, cy, vr*3., &col, RADAR_BLINK_SPOB, blink_spob );
 
    /* Render name. */
    if (overlay) {
@@ -1776,8 +1781,14 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (player.p != NULL && player.p->nav_planet != -1)
+   if (player.p != NULL && player.p->nav_spob != -1)
       gui_doFunc( gui_lua_update_faction, "update_faction" );
+}
+
+void gui_updateEffects (void)
+{
+   if (player.p != NULL)
+      gui_doFunc( gui_lua_update_effects, "update_effects" );
 }
 
 /**
@@ -1846,10 +1857,8 @@ int gui_load( const char* name )
    }
 
    /* Clean up. */
-   if (gui_env != LUA_NOREF) {
-      nlua_freeEnv(gui_env);
-      gui_env = LUA_NOREF;
-   }
+   nlua_freeEnv(gui_env);
+   gui_env = LUA_NOREF;
 
    /* Create Lua state. */
    gui_env = nlua_newEnv(1);
@@ -1883,6 +1892,7 @@ int gui_load( const char* name )
    LUA_FUNC( update_ship );
    LUA_FUNC( update_system );
    LUA_FUNC( update_faction );
+   LUA_FUNC( update_effects );
 #undef LUA_FUNC
 
    /* Run create function. */
@@ -1912,18 +1922,19 @@ void gui_cleanup (void)
    /* Set the viewport. */
    gui_clearViewport();
 
+   /* Set overlay bounds. */
+   ovr_boundsSet( 0, 0, 0, 0 );
+
    /* Reset FPS. */
-   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFontMono.h) );
 
    /* Destroy offset. */
    gui_xoff = 0.;
    gui_yoff = 0.;
 
    /* Destroy lua. */
-   if (gui_env != LUA_NOREF) {
-      nlua_freeEnv( gui_env );
-      gui_env = LUA_NOREF;
-   }
+   nlua_freeEnv( gui_env );
+   gui_env = LUA_NOREF;
 
    /* OMSG */
    omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );
@@ -1949,6 +1960,7 @@ void gui_cleanup (void)
    LUA_CLEANUP( gui_lua_update_ship );
    LUA_CLEANUP( gui_lua_update_system );
    LUA_CLEANUP( gui_lua_update_faction );
+   LUA_CLEANUP( gui_lua_update_effects );
 #undef LUA_CLEANUP
 }
 
@@ -1971,8 +1983,8 @@ void gui_free (void)
 
    gl_freeTexture( gui_ico_hail );
    gui_ico_hail = NULL;
-   gl_freeTexture( gui_target_planet );
-   gui_target_planet = NULL;
+   gl_freeTexture( gui_target_spob );
+   gui_target_spob = NULL;
    gl_freeTexture( gui_target_pilot );
    gui_target_pilot = NULL;
 
@@ -2022,12 +2034,12 @@ glTexture* gui_hailIcon (void)
 }
 
 /**
- * @brief Sets the planet target GFX.
+ * @brief Sets the spob target GFX.
  */
-void gui_targetPlanetGFX( glTexture *gfx )
+void gui_targetSpobGFX( glTexture *gfx )
 {
-   gl_freeTexture( gui_target_planet );
-   gui_target_planet = gl_dupTexture( gfx );
+   gl_freeTexture( gui_target_spob );
+   gui_target_spob = gl_dupTexture( gfx );
 }
 
 /**

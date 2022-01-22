@@ -6,10 +6,10 @@
  </flags>
  <avail>
   <priority>4</priority>
-  <chance>100</chance>
+  <chance>20</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
-  <cond>planet.cur() ~= planet.get("Katar I")</cond>
+  <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
@@ -29,12 +29,11 @@ local zpp = require "common.zalek_physics"
 -- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp01
-local destpnt, destsys = planet.getS("Katar I")
+local destpnt, destsys = spob.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
-   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist that seems to be looking or someone to do something for them.") )
+   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking or someone to do something for them.") )
 end
 
 function accept ()
@@ -45,7 +44,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You approach the Za'lek scientist who seems to be a bit relieved with your presence.]]))
-   n(fmt.f(_([["You wouldn't happen to be a pilot? I was supposed to get on a shuttle to {pnt}, but they refused to take my equipment with me. Can you believe the audacity of that!"
+   n(fmt.f(_([["You wouldn't happen to be a pilot? I was supposed to get on a shuttle to {pnt}, but they refused to take my equipment with me. Can you believe the audacity?!"
 "Would you be able to take me and {amount} of equipment to {pnt} in the {sys} system? I will pay you {credits}."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
@@ -93,7 +92,7 @@ That doesn't sound very reassuring.
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Take Noona and some equipment to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )
@@ -106,7 +105,7 @@ That doesn't sound very reassuring.
 end
 
 function land ()
-   if planet.cur() ~= destpnt then
+   if spob.cur() ~= destpnt then
       return
    end
 
@@ -114,9 +113,9 @@ function land ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_("Your ship touches down at the smaller than expected research center and a single loading drone begins to slowly unload your ship. Talk about understaffed."))
+   vn.na(_("Your ship touches down at the smaller-than-expected research centre and a single loading drone begins to slowly unload your ship. Talk about understaffed."))
    n(_([[Her eyes seem to be sparkling.
-"This… is… awesome! Did you see the testing site from the ship? I thought I saw a flash, maybe it was a Dirac-Bosemann supersymmetry feedback flare. I've never seen one of those in person yet!"
+"This… is… awesome! Did you see the testing site from the ship? I thought I saw a flash! Maybe it was a Dirac-Bosemann supersymmetry feedback flare. I've never seen one of those in person yet!"
 As she keeps on babbling she sort of wanders off into the base, and you make no attempt to follow her.]]))
    vn.na(_([[You head back to your ship and wonder how you should get in touch with her for your payment, when you notice a small letter with a credstick that she seems to have left in your ship. It reads "Please see your attached payment. I may have more need of your services, please find me later. -n". She must have anticipated her overexcitement. You wonder if this happens a lot.]]))
    vn.sfxVictory()
@@ -124,6 +123,7 @@ As she keeps on babbling she sort of wanders off into the base, and you make no 
    vn.done( zpp.noona.transition )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp01)
    player.pay( reward )
    zpp.log(fmt.f(_("You helped deliver Noona and her equipment to {pnt}. It seems like she may still have more work for you."),{pnt=destpnt}))
    misn.finish(true)

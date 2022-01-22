@@ -75,7 +75,7 @@ are portions that will be filled in later by the mission via the
 -- There are two ways to set values usable from outside the create() function:
 -- - Define them at file scope in a statement like "local credits = 250e3" (good for constants)
 -- - Define them as fields of a special "mem" table: "mem.credits = 250e3" (will persist across games in the player's save file)
-local misplanet, missys = planet.getS("Ulios")
+local misplanet, missys = spob.getS("Ulios")
 local credits = 250e3
 
 -- Here we use the `fmt.credits()` function to convert our credits
@@ -133,9 +133,9 @@ function accept ()
       -- (via the `tostring` built-in) know to write its name in the player's native language.
       text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, reward=reward_text})
    else
-      text = fmt.f(_([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
+      text = fmt.f(_([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favourite suit! I had it custom tailored, you know.
     "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]]),
-         {pnt=misplanet, sys=missys, reward=reward_text}))
+         {pnt=misplanet, sys=missys, reward=reward_text})
       mem.talked = true
    end
 
@@ -144,8 +144,7 @@ function accept ()
    -- For more full-fledged visual novel API please see the vn module. The
    -- vntk module wraps around that and provides a more simple and easy to use
    -- interface, although it is much more limited.
-   if vntk.yesno( _("My Suit Collection"),
-         fmt.f(ask_text, {reward=reward_text}) ) then
+   if vntk.yesno( _("My Suit Collection"), text ) then
       -- Followup text.
       vntk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
 
@@ -190,7 +189,7 @@ end
 -- this function will be called any time the player lands.
 function land ()
    -- First check to see if we're on our target planet.
-   if planet.cur() == misplanet then
+   if spob.cur() == misplanet then
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.

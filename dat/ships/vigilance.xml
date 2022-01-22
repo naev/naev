@@ -13,14 +13,14 @@
  <trail_generator x="-30" y="-15" h="-3">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel</license>
- <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
+ <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible with forward weapons. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
  <health>
   <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>410</mass>
+  <mass>430</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>
@@ -31,13 +31,13 @@
   <weapon size="medium" x="10" y="3" h="2" />
   <weapon size="medium" prop="fighter_bay" x="-22" y="-8" h="-0" />
   <weapon size="medium" prop="fighter_bay" x="-22" y="8" h="-0" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

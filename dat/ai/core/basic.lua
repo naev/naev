@@ -144,7 +144,7 @@ end
 -- Goes to a target position without braking
 --]]
 function moveto_nobrake( target )
-   local dir      = ai.face( target, nil, true )
+   local dir   = ai.face( target, nil, true )
    __moveto_generic( target, dir )
 end
 
@@ -153,7 +153,7 @@ end
 -- Goes to a target position without braking
 --]]
 function moveto_nobrake_raw( target )
-   local dir      = ai.face( target )
+   local dir   = ai.face( target )
    __moveto_generic( target, dir )
 end
 
@@ -162,8 +162,8 @@ end
 -- Goes to a target position
 --]]
 function moveto( target )
-   local dir      = ai.face( target, nil, true )
-   local dist     = ai.dist( target )
+   local dir   = ai.face( target, nil, true )
+   local dist  = ai.dist( target )
 
    -- Handle finished
    if ai.isstopped() and dist < 10 then
@@ -189,8 +189,21 @@ end
 --]]
 -- luacheck: globals inspect_moveto (AI Task functions passed by name)
 function inspect_moveto( target )
-   local dir      = ai.face( target, nil, true )
+   local dir   = ai.face( target, nil, true )
    __moveto_generic( target, dir )
+end
+
+
+--[[
+-- Lunges towards the target always thrusting
+--]]
+function lunge( target )
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+   ai.aim( target )
+   ai.accel()
 end
 
 
@@ -198,8 +211,8 @@ end
 -- Generic moveto function.
 --]]
 function __moveto_generic( target, dir )
-   local dist     = ai.dist( target )
-   local bdist    = 50
+   local dist  = ai.dist( target )
+   local bdist = 50
 
    -- Need to get closer
    if dir < math.rad(10) and dist > bdist then
@@ -368,13 +381,13 @@ function __choose_land_target ( target )
 
    -- Make sure target is valid
    if target == nil then
-      local landplanet = ai.landplanet()
-      if landplanet ~= nil then
-         target = landplanet
+      local landspob = ai.landspob()
+      if landspob ~= nil then
+         target = landspob
 
       -- Bail out if no valid planet could be found.
       else
-         warn(fmt.f(_("Pilot '{plt}' tried to land with no landable assets!"),
+         warn(fmt.f(_("Pilot '{plt}' tried to land with no landable spob!"),
                {plt=ai.pilot():name()}))
          ai.poptask()
          return
@@ -447,7 +460,7 @@ function runaway( target )
 
    -- See if there's a target to use when running
    local t = ai.nearhyptarget()
-   local p = ai.nearestplanet()
+   local p = ai.nearestspob()
 
    if p == nil and t == nil then
       ai.pushsubtask( "_run_target" )
@@ -1126,6 +1139,13 @@ end
 
 -- luacheck: globals idle_wait (AI Task functions passed by name)
 function idle_wait ()
+   if ai.timeup(0) then
+      ai.poptask()
+   end
+end
+
+-- luacheck: globals jumpin_wait (AI Task functions passed by name)
+function jumpin_wait ()
    if ai.timeup(0) then
       ai.poptask()
    end

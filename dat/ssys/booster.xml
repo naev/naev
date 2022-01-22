@@ -10,9 +10,9 @@
   <x>555.000000</x>
   <y>401.000000</y>
  </pos>
- <assets>
-  <asset_virtual>Thurion Local</asset_virtual>
- </assets>
+ <spobs>
+  <spob_virtual>Thurion Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Katami">
    <autopos/>

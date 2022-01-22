@@ -32,7 +32,7 @@ local fmt = require "format"
 local vntk = require "vntk"
 
 local convoy -- Non-persistent state
-local continueToDest, fail, spawnConvoy -- Forward-declared functions
+local continueToDest, spawnConvoy -- Forward-declared functions
 -- luacheck: globals jumpin jumpout land takeoff timer_traderSafe traderAttacked traderDeath traderJump traderLand traderShutup (Hook functions passed by name)
 
 local misn_title = {}
@@ -106,7 +106,7 @@ function accept()
    end
 
    mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
-   mem.origin = planet.cur() -- The place where the AI ships spawn from.
+   mem.origin = spob.cur() -- The place where the AI ships spawn from.
 
    mem.orig_alive = nil
    mem.alive = nil
@@ -131,7 +131,7 @@ end
 
 function jumpin()
    if system.cur() ~= mem.nextsys then
-      fail( _("MISSION FAILED! You jumped into the wrong system.") )
+      lmisn.fail( _("You jumped into the wrong system.") )
    else
       spawnConvoy()
    end
@@ -139,7 +139,7 @@ end
 
 function jumpout()
    if mem.alive <= 0 or mem.exited <= 0 then
-      fail( _("MISSION FAILED! You jumped before the convoy you were escorting.") )
+      lmisn.fail( _("You jumped before the convoy you were escorting.") )
    else
       -- Treat those that didn't exit as dead
       mem.alive = math.min( mem.alive, mem.exited )
@@ -151,7 +151,7 @@ end
 function land()
    mem.alive = math.min( mem.alive, mem.exited )
 
-   if planet.cur() ~= mem.destplanet then
+   if spob.cur() ~= mem.destplanet then
       vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
       misn.finish(false)
    elseif mem.alive <= 0 then
@@ -181,7 +181,7 @@ end
 function traderDeath()
    mem.alive = mem.alive - 1
    if mem.alive <= 0 then
-      fail( _("MISSION FAILED! The convoy you were escorting has been destroyed.") )
+      lmisn.fail( _("The convoy you were escorting has been destroyed.") )
    end
 end
 
@@ -347,23 +347,9 @@ function continueToDest( p )
       p:setNoLand( false )
 
       if system.cur() == mem.destsys then
-         p:land( mem.destplanet, true )
+         p:land( mem.destplanet )
       else
-         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ), true )
+         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ) )
       end
    end
-end
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

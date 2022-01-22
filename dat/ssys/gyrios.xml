@@ -10,14 +10,14 @@
   <x>799.000000</x>
   <y>-417.000000</y>
  </pos>
- <assets>
-  <asset>Gyrios II</asset>
-  <asset>Gyrios IV</asset>
-  <asset>Gyrios V</asset>
-  <asset>Jaegnhild</asset>
-  <asset>Lapra</asset>
-  <asset>Uuries</asset>
- </assets>
+ <spobs>
+  <spob>Gyrios II</spob>
+  <spob>Gyrios IV</spob>
+  <spob>Gyrios V</spob>
+  <spob>Jaegnhild</spob>
+  <spob>Lapra</spob>
+  <spob>Uuries</spob>
+ </spobs>
  <jumps>
   <jump target="Fulcrum">
    <pos x="29692.320869" y="-16918.303096"/>

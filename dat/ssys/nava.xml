@@ -10,15 +10,15 @@
   <x>895.000000</x>
   <y>501.000000</y>
  </pos>
- <assets>
-  <asset>Anya</asset>
-  <asset>HS-37</asset>
-  <asset>Kaso</asset>
-  <asset>NS-1</asset>
-  <asset>NS-42</asset>
-  <asset>Nava I</asset>
-  <asset>Sabe</asset>
- </assets>
+ <spobs>
+  <spob>Anya</spob>
+  <spob>HS-37</spob>
+  <spob>Kaso</spob>
+  <spob>NS-1</spob>
+  <spob>NS-42</spob>
+  <spob>Nava I</spob>
+  <spob>Sabe</spob>
+ </spobs>
  <jumps>
   <jump target="Vean">
    <autopos/>

@@ -11,13 +11,13 @@
   <x>-374.705351</x>
   <y>-157.314213</y>
  </pos>
- <assets>
-  <asset>Aldous</asset>
-  <asset>Aldous' moon</asset>
-  <asset>Ruin</asset>
-  <asset>Turnpike Station</asset>
-  <asset>Zemur III</asset>
- </assets>
+ <spobs>
+  <spob>Aldous</spob>
+  <spob>Aldous' moon</spob>
+  <spob>Ruin</spob>
+  <spob>Turnpike Station</spob>
+  <spob>Zemur III</spob>
+ </spobs>
  <jumps>
   <jump target="Delta Polaris">
    <autopos/>

@@ -10,14 +10,14 @@
   <x>-443.368000</x>
   <y>-134.944000</y>
  </pos>
- <assets>
-  <asset>Benteen</asset>
-  <asset>Bolero</asset>
-  <asset>Delta Polaris I</asset>
-  <asset>Delta Polaris II</asset>
-  <asset>Delta Polaris VI</asset>
-  <asset>Falas</asset>
- </assets>
+ <spobs>
+  <spob>Benteen</spob>
+  <spob>Bolero</spob>
+  <spob>Delta Polaris I</spob>
+  <spob>Delta Polaris II</spob>
+  <spob>Delta Polaris VI</spob>
+  <spob>Falas</spob>
+ </spobs>
  <jumps>
   <jump target="Antlejos">
    <autopos/>

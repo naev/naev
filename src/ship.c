@@ -119,6 +119,12 @@ int ship_compareTech( const void *arg1, const void *arg2 )
    s1 = * (const Ship**) arg1;
    s2 = * (const Ship**) arg2;
 
+   /* Compare requirements. */
+   if ((s1->condstr!=NULL) && (s2->condstr==NULL))
+      return -1;
+   else if ((s2->condstr!=NULL) && (s1->condstr==NULL))
+      return +1;
+
    /* Compare class. */
    if (s1->class < s2->class)
       return +1;
@@ -556,7 +562,6 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 {
    OutfitSlotSize base_size;
    char *buf;
-   const Outfit *o;
 
    /* Initialize. */
    memset( slot, 0, sizeof(ShipOutfitSlot) );
@@ -586,12 +591,13 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       slot->slot.spid = sp_get( buf );
       slot->exclusive = sp_exclusive( slot->slot.spid );
       slot->required  = sp_required( slot->slot.spid );
+      slot->locked    = sp_locked( slot->slot.spid );
       free( buf );
    }
    //TODO: consider inserting those two parse blocks below inside the parse block above
 
    /* Parse exclusive flag, default false. */
-   xmlr_attr_int( node, "exclusive", slot->exclusive );
+   xmlr_attr_int_def( node, "exclusive", slot->exclusive, slot->exclusive );
    /* TODO: decide if exclusive should even belong in ShipOutfitSlot,
     * remove this hack, and fix slot->exclusive to slot->slot.exclusive
     * in it's two previous occurrences, meaning three lines above and 12
@@ -600,12 +606,18 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    slot->slot.exclusive = slot->exclusive;
 
    /* Parse required flag, default false. */
-   xmlr_attr_int( node, "required", slot->required );
+   xmlr_attr_int_def( node, "required", slot->required, slot->required );
+
+   /* Parse locked flag, default false. */
+   xmlr_attr_int_def( node, "locked", slot->locked, slot->locked );
+
+   /* Name if applicable. */
+   xmlr_attr_strd( node, "name", slot->name );
 
    /* Parse default outfit. */
    buf = xml_get(node);
    if (buf != NULL) {
-      o = outfit_get( buf );
+      const Outfit *o = outfit_get( buf );
       if (o == NULL)
          WARN( _("Ship '%s' has default outfit '%s' which does not exist."), temp->name, buf );
       slot->data = o;
@@ -764,6 +776,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       xmlr_strd(node,"GUI",temp->gui);
       if (xml_isNode(node,"sound")) {
+         xmlr_attr_float_def( node, "pitch", temp->engine_pitch, 1. );
          temp->sound = sound_get( xml_get(node) );
          continue;
       }
@@ -775,6 +788,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
+      xmlr_strd(node,"cond",temp->cond);
+      xmlr_strd(node,"condstr",temp->condstr);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"points",temp->points);
@@ -910,7 +925,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                   array_push_back( &temp->tags, strdup(tmp) );
                continue;
             }
-            DEBUG(_("Ship '%s' has unknown node '%s'."), temp->name, cur->name);
+            WARN(_("Ship '%s' has unknown node in tags '%s'."), temp->name, cur->name );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -943,6 +958,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->armour==0.,"armour");
+   MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
+   MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
    /*MELEMENT(temp->thrust==0.,"thrust");
    MELEMENT(temp->turn==0.,"turn");
    MELEMENT(temp->speed==0.,"speed");
@@ -970,6 +987,7 @@ int ships_load (void)
 {
    char **ship_files;
    size_t nfiles;
+   Uint32 time = SDL_GetTicks();
 
    /* Validity. */
    ss_check();
@@ -1021,7 +1039,12 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
-   DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Ship in %.3f s", "Loaded %d Ships in %.3f s", array_size(ship_stack) ), array_size(ship_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
    PHYSFS_freeList( ship_files );
@@ -1045,6 +1068,8 @@ void ships_free (void)
       free(s->base_type);
       free(s->fabricator);
       free(s->license);
+      free(s->cond);
+      free(s->condstr);
       free(s->desc_stats);
 
       /* Free outfits. */

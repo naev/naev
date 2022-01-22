@@ -7,13 +7,12 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 3</done>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
-  <tier>1</tier>
  </notes>
 </mission>
 --]]
@@ -31,11 +30,11 @@ local fleet = require "fleet"
 -- luacheck: globals land approach_guy enter heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp04
-local cargo_name = _("nebula artefact")
+local cargo_name = _("strange container")
 local cargo_amount = 5 -- Amount of cargo to take
 
-local destpnt, destsys = planet.getS( "Thaddius Station" )
-local retpnt, retsys = planet.getS( "Katar I" )
+local destpnt, destsys = spob.getS( "Thaddius Station" )
+local retpnt, retsys = spob.getS( "Katar I" )
 
 -- TODO redo the portrait
 mem.shady_dealer = portrait.get("Pirate")
@@ -55,7 +54,7 @@ function accept ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You once again meet up with Noona.]]))
-   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're pretty hard to get usually, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
+   n(fmt.f(_([["It's a worse setback than expected. I'm going to have to get new materials to be able to do the experiments. Since they're usually pretty hard to get, and I don't have time to fill in all the usual academic bureaucracy, I decided to go the black market route. Would you be willing to go pick up the materials at {pnt} in the {sys} system? The materials should only be {amount}, so you should not have a trouble fitting them on your ship. I would be able to pay you {credits} for your troubles this time."]]),
       {pnt=destpnt, sys=destsys, amount=fmt.tonnes(cargo_amount), credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -63,8 +62,8 @@ function accept ()
    }
 
    vn.label("decline")
-   n(fmt.f(_([["OK. I'll try to figure something out…"
-She furrows her brow.]]),{pnt=destpnt}))
+   n(_([["OK. I'll try to figure something out…"
+She furrows her brow.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
@@ -80,9 +79,9 @@ She furrows her brow.]]),{pnt=destpnt}))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
-   misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
-      {cargo=cargo_name, pnt=destpnt, sys=destsys, retpnt=retpnt} ))
+   misn.setReward( fmt.credits(reward) )
+   misn.setDesc( fmt.f(_("Pick up some cargo from {pnt} in the {sys} system and deliver them to {retpnt}."),
+      {pnt=destpnt, sys=destsys, retpnt=retpnt} ))
 
    mem.mrk = misn.markerAdd( destpnt )
 
@@ -100,7 +99,7 @@ end
 
 local npcguy
 function land ()
-   local pcur = planet.cur()
+   local pcur = spob.cur()
    if mem.state==1 and pcur==destpnt then
       npcguy = misn.npcAdd( "approach_guy", _("Shady Dealer"), mem.shady_dealer, _("A fairly shady dealer seems to be staring at you and beckoning for you to come over. Could this be the individual Noona told you to meet…?") )
 
@@ -112,12 +111,13 @@ function land ()
       vn.na(_([[You land and the lone cargo drone begins to unload the container. It seems to have trouble balancing it and you amuse yourself by looking at its antics until you are startled by Noona.]]))
       n(_([["The drones sure are cute. I like to call that one Laboriosi."
 She points at the lone cargo drone.
-"Thanks a lot for bringing me my materials. I don't know what I would do without them. I was able to go over the drones, and I think it might be best to not rely on them for the final experiment. I think the electromagnetic radiation from Katar doesn't work too well with them. If you could help me do the experiments, I would be very grateful. Meet me up at the bar, I have to do some small preparations."]]))
+"Thanks a lot for bringing me my materials. I don't know what I would do without them. I was able to go over the drones, and I think it might be best to not rely on them for the final experiment. I think the electromagnetic radiation from Katar doesn't agree too well with them. If you could help me do the experiments, I would be very grateful. Meet me up at the bar, I have to do some small preparations."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.done( zpp.noona.transition )
       vn.run()
 
+      faction.modPlayer("Za'lek", zpp.fctmod.zpp04)
       player.pay( reward )
       zpp.log(_("You helped Noona get some materials from a shady dealer in order for her to pursue her research and perform experiments."))
       misn.finish(true)
@@ -139,9 +139,9 @@ Their grin makes your feel uneasy.]]))
    else
       vn.na(_([[As you approach the shady dealer, you can barely make out some movement in the background.]]))
       d(_([[They start to grin and begin to speak with an almost serpent-like accent.
-"Ah, pleasure to meet you. Your must be the one in charge of the delivery. Your friend has quite a refined taste too. It's not often we get a sample as good as this one."
+"Ah, pleasure to meet you. You must be the one in charge of the delivery. Your friend has quite a refined taste, too. It's not often we get a sample as good as this one."
 They lick their lips.]]))
-      d(_([["The arrangements have all been made, and you'll soon have it aboard your ship. If I were you, I would put it as far away from the any personnel as possible."
+      d(_([["The arrangements have all been made, and you'll soon have it aboard your ship. If I were you, I would put it as far away from any personnel as possible."
 They then lean it to whisper to you.
 "You might want to watch your back, your friend is not the only one that wants it."]]))
       talked_once = true
@@ -157,14 +157,14 @@ They then lean it to whisper to you.
       cargo_space = true
    end
 
-   vn.na(fmt.f(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+   vn.na(_("When you get back to your ship, the cargo has already been taken care of and is properly secured on your ship. As you get close to it, you hear a weird running river sound that seems to come from the cargo container. What have you gotten into?"))
    vn.run()
 
    if not cargo_space then
       return
    end
 
-   local crg = commodity.new( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird signs coming from inside it, almost like some sort of running river.") )
+   local crg = commodity.new( N_("Strange Container"), N_("A large strange container that seems oddly warm to the touch. You can swear you hear weird sounds coming from inside it, almost like some sort of running river.") )
    misn.cargoAdd( crg, cargo_amount )
 
    misn.osdActive(2)

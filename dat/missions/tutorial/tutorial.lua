@@ -26,9 +26,9 @@ local msg_info, spawn_captain_tp -- Forward-declared functions
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )
-local start_planet = planet.get( "Bolero" )
+local start_planet = spob.get( "Bolero" )
 local start_planet_r = 200
-local dest_planet = planet.get( "Benteen" )
+local dest_planet = spob.get( "Benteen" )
 local dest_planet_r = 200
 
 function create ()
@@ -127,7 +127,7 @@ They stare at you for a few seconds.
    vn.func( function ()
       dotut = true
    end )
-   sai(fmt.f(_([["Alrght, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and thrust to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {destpnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), destpnt=dest_planet:name()}))
+   sai(fmt.f(_([["Alrght, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and thrust to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
    vn.done( tut.shipai.transition )
    vn.run()
 
@@ -177,7 +177,7 @@ function timer ()
       sai(fmt.f(_([["Perfect! That was easy enough, right? I recommend this manner of flight, known as 'keyboard flight'. However, there is one other way you can fly if you so choose: press {mouseflykey} on your console and your ship will follow your #bmouse pointer#0 automatically. It's up to you which method you prefer to use."]]),{mouseflykey=tut.getKey("mousefly")}))
       sai(_([["You may also have noticed the mission on-screen display on your monitor. As you can see, you completed your first objective of the Tutorial mission, so the next objective is now being focused."]]))
       sai(fmt.f(_([["On that note, let's go over landing. All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pnt}?"]]),{pnt=start_planet}))
-      sai(fmt.f(_([["To land on {pnt}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pnt=start_planet, targetplanetkey=tut.getKey("target_planet"), landkey=tut.getKey("land")}))
+      sai(fmt.f(_([["To land on {pnt}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pnt=start_planet, targetplanetkey=tut.getKey("target_spob"), landkey=tut.getKey("land")}))
       vn.done( tut.shipai.transition )
       vn.run()
 
@@ -305,7 +305,7 @@ function enter_timer ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Welcome back to space, {playername}! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships. You can trust me as I've only under 4 fatal accidents."]]),{playername=player.name()}))
+      sai(fmt.f(_([["Welcome back to space, {playername}! After landing, the game will be automatically saved, so you do not need to worry about losing your progress. Now let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships. You can trust me as I've only had under 4 fatal accidents."]]),{playername=player.name()}))
       sai(fmt.f(_([["Autonav is simple and elegant. Simply press {overlaykey} to open your ship's overlay map, then simply #bright-click#0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but time compression allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, the Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's #oOptions#0 menu, which you can access by pressing {menukey}.]]),{overlaykey=tut.getKey("overlay"), menukey=tut.getKey("menu")}))
       sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pnt}? You should be able to see it highlighted on your overlay map which you can activate with {overlaykey}."]]),{pnt=dest_planet, overlaykey=tut.getKey("overlay")}))
       vn.done( tut.shipai.transition )

@@ -10,10 +10,10 @@
   <x>1181.787195</x>
   <y>-632.145111</y>
  </pos>
- <assets>
-  <asset>Gilligan's Tomb</asset>
-  <asset_virtual>Trade Lane (Sirius)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Gilligan's Tomb</spob>
+  <spob_virtual>Trade Lane (Sirius)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Adraia">
    <autopos/>

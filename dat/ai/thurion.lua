@@ -34,10 +34,19 @@ end
 mem.distressmsgfunc = sos
 
 function create ()
-   local price = ai.pilot():ship():price()
+   local p = ai.pilot()
+   local ps = p:ship()
+   local price = ps:price()
 
-   -- Credits.
-   ai.setcredits( rnd.rnd( price/300, price/70 ) )
+   -- See if it's a transport ship
+   mem.istransport = ps:tags().transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    create_post()
 end

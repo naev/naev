@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P9234">
+ <pos>
+  <x>-6710.000000</x>
+  <y>715.000000</y>
+ </pos>
+ <GFX>
+  <space>H00.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Independent All Unpresence">
+ <presence>
+  <faction>Independent</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Miner</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+ <presence>
+  <faction>Trader</faction>
+  <bonus>-100000.000000</bonus>
+ </presence>
+</spob>

@@ -34,8 +34,8 @@ local emp = require "common.empire"
 
 function create ()
    -- Target destination
-   mem.dest,mem.destsys = planet.getLandable( faction.get("Frontier") )
-   mem.ret,mem.retsys   = planet.getLandable( "Halir" )
+   mem.dest,mem.destsys = spob.getLandable( faction.get("Frontier") )
+   mem.ret,mem.retsys   = spob.getLandable( "Halir" )
    if mem.dest == nil or mem.ret == nil or not misn.claim(mem.destsys) then
       misn.finish(false)
    end
@@ -56,7 +56,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   mem.misn_marker = misn.markerAdd( mem.destsys, "low" )
+   mem.misn_marker = misn.markerAdd( mem.dest, "low" )
 
    -- Mission details
    mem.misn_stage = 0
@@ -65,15 +65,15 @@ function accept ()
    misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Prisoner Exchange"), fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more neutral pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
-    "Once you get the men they captured back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]), {dest_pnt=mem.dest, dest_sys=mem.destsys, ret_pnt=mem.ret, ret_sys=mem.retsys} ))
+   tk.msg( _("Prisoner Exchange"), fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more 'neutral' pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will use ships in nearby sectors to monitor your status.
+    "Once you get our captured people back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]), {dest_pnt=mem.dest, dest_sys=mem.destsys, ret_pnt=mem.ret, ret_sys=mem.retsys} ))
    misn.osdCreate(_("Prisoner Exchange"), {
       fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}),
    })
    -- Set up the goal
    local c = commodity.new( N_("Prisoners"), N_("FLF prisoners.") )
    mem.prisoners = misn.cargoAdd( c, 0 )
-   tk.msg( _("Prisoner Exchange"), _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
+   tk.msg( _("Prisoner Exchange"), _([[The prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
 
    -- Set hooks
    hook.land("land")
@@ -83,7 +83,7 @@ end
 
 
 function land ()
-   mem.landed = planet.cur()
+   mem.landed = spob.cur()
    if mem.landed == mem.dest and mem.misn_stage == 0 then
       if misn.cargoRm(mem.prisoners) then
          -- Go on to next stage
@@ -91,10 +91,10 @@ function land ()
 
          -- Some text
          tk.msg(_("Prisoner Exchange"), _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
-    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
+    From the cockpit you see the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
          tk.msg(_("Prisoner Exchange"), _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
-    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]) )
-         misn.markerMove( mem.misn_marker, mem.retsys )
+    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. This didn't go as you expected.]]) )
+         misn.markerMove( mem.misn_marker, mem.ret )
          misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}) )
          misn.osdCreate(_("Prisoner Exchange"), {
             fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}),
@@ -118,9 +118,9 @@ function land ()
       -- Flavour text
       tk.msg(_("Mission Report"), _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
     "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
-    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]]) )
+    He sighs. "We had good people there. And we certainly didn't want you to start with a mess like this, but if you're interested in more missions, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]]) )
 
-      emp.addShippingLog( _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]]) )
+      emp.addShippingLog( _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in more missions.]]) )
 
       misn.finish(true)
    end

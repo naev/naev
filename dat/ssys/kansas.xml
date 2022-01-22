@@ -2,6 +2,7 @@
 <ssys name="Kansas">
  <general>
   <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>30000.000000</radius>
   <stars>400</stars>
@@ -12,16 +13,16 @@
   <x>199.642133</x>
   <y>820.858667</y>
  </pos>
- <assets>
-  <asset>Jankelo</asset>
-  <asset>Jemard</asset>
-  <asset>Kansas I</asset>
-  <asset>Kansas III</asset>
-  <asset>Kansas IV</asset>
-  <asset>Kansas VI</asset>
-  <asset>Shade &amp; Sunshine Station</asset>
-  <asset>Zalebus</asset>
- </assets>
+ <spobs>
+  <spob>Jankelo</spob>
+  <spob>Jemard</spob>
+  <spob>Kansas I</spob>
+  <spob>Kansas III</spob>
+  <spob>Kansas IV</spob>
+  <spob>Kansas VI</spob>
+  <spob>Shade &amp; Sunshine Station</spob>
+  <spob>Zalebus</spob>
+ </spobs>
  <jumps>
   <jump target="Sylph">
    <autopos/>

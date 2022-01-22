@@ -18,6 +18,7 @@
 #include "land_shipyard.h"
 
 #include "array.h"
+#include "cond.h"
 #include "dialogue.h"
 #include "hook.h"
 #include "log.h"
@@ -117,7 +118,7 @@ void shipyard_open( unsigned int wid )
    window_addText( wid, 20+iw+20, -462, w-(iw+40) - (sw+40), -482+h-bh, 0, "txtDescription", &gl_defFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   shipyard_list = tech_getShip( land_planet->tech );
+   shipyard_list = tech_getShip( land_spob->tech );
    nships = array_size( shipyard_list );
    cships = calloc( MAX(1,nships), sizeof(ImageArrayCell) );
    if (nships <= 0) {
@@ -213,7 +214,7 @@ void shipyard_update( unsigned int wid, const char* str )
    if (ship->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
    else if (player_hasLicense( ship->license ) ||
-         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
+         (land_spob != NULL && spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET )))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
@@ -246,11 +247,13 @@ void shipyard_update( unsigned int wid, const char* str )
    }
    if (ship->speed) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Speed:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f m/s", ship->speed );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f m/s"), ship->speed );
    }
    if (ship->turn) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Turn:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%.0f deg/s", ship->turn*180/M_PI );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("%.0f deg/s"), ship->turn*180/M_PI );
    }
    if (ship->dt_default != 1.) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Time Constant:") );
@@ -298,6 +301,13 @@ void shipyard_update( unsigned int wid, const char* str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
    k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
+   if (ship->condstr) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
+      if (cond_check( ship->cond ))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(ship->condstr) );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(ship->condstr) );
+   }
 
    /* Calculate layout. */
    window_dimWindow( wid, &w, &h );
@@ -318,7 +328,7 @@ void shipyard_update( unsigned int wid, const char* str )
    window_resizeWidget( wid, "txtDescription", w-(20+iw+20) - (sw+40), y-20+h-bh );
    window_moveWidget( wid, "txtDescription", 20+iw+20, y );
 
-   if (!shipyard_canBuy( ship->name, land_planet ))
+   if (!shipyard_canBuy( ship->name, land_spob ))
       window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
@@ -371,7 +381,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
-   char buf[ECON_CRED_STRLEN];
+   char buf[STRMAX_SHORT];
    Ship* ship;
    HookParam hparam[2];
 
@@ -391,8 +401,9 @@ static void shipyard_buy( unsigned int wid, const char* str )
          _("Do you really want to spend %s on a new ship?"), buf )==0)
       return;
 
-   /* player just got a new ship */
-   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
+   /* Player just got a new ship */
+   snprintf( buf, sizeof(buf), _("You bought at %s in the %s system."), spob_name(land_spob), _(cur_system->name) );
+   if (player_newShip( ship, NULL, 0, buf, 0 ) == NULL) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -413,20 +424,28 @@ static void shipyard_buy( unsigned int wid, const char* str )
 /**
  * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
- *    @param planet Where the player is shopping.
+ *    @param spob Where the player is shopping.
  */
-int shipyard_canBuy( const char *shipname, Planet *planet )
+int shipyard_canBuy( const char *shipname, const Spob *spob )
 {
-   const Ship* ship = ship_get( shipname );
+   const Ship *ship = ship_get( shipname );
    int failure = 0;
    credits_t price = ship_buyPrice(ship);
+   int blackmarket = ((spob != NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
-   /* Must have enough credits and the necessary license. */
-   if ((!player_hasLicense(ship->license)) &&
-         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
+   /* Must have the necessary license. */
+   if (!blackmarket && !player_hasLicense(ship->license)) {
       land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }
+
+   /* Must meet conditional requirement. */
+   if (!blackmarket && (ship->cond!=NULL) && !cond_check( ship->cond )) {
+      land_errDialogueBuild( "%s", _(ship->condstr) );
+      failure = 1;
+   }
+
+   /* Must have enough credits. */
    if (!player_hasCredits( price )) {
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, price - player.p->credits, 2 );
@@ -490,7 +509,7 @@ int shipyard_canTrade( const char *shipname )
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if ((!player_hasLicense(ship->license)) &&
-         ((land_planet == NULL) || (!planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))) {
+         ((land_spob == NULL) || (!spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET )))) {
       land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
       failure = 1;
    }
@@ -515,7 +534,7 @@ static void shipyard_trade( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
-   char buf[ECON_CRED_STRLEN], buf2[ECON_CRED_STRLEN],
+   char buf[STRMAX_SHORT], buf2[ECON_CRED_STRLEN],
          buf3[ECON_CRED_STRLEN], buf4[ECON_CRED_STRLEN];
    Ship* ship;
 
@@ -557,7 +576,8 @@ static void shipyard_trade( unsigned int wid, const char* str )
    }
 
    /* player just got a new ship */
-   if (player_newShip( ship, NULL, 1, 0 ) == NULL)
+   snprintf( buf, sizeof(buf), _("Bought at %s in the %s system."), spob_name(land_spob), _(cur_system->name) );
+   if (player_newShip( ship, NULL, 1, buf, 0 ) == NULL)
       return; /* Player aborted the naming process. */
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */

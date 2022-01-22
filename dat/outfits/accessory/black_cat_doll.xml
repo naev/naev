@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A crude doll of a black cat made from authentic "Felis catus" fur you that was all over your ship. It's quite cute.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>black_cat_doll.webp</gfx_store>
   <desc_extra>#pOnly active when in stealth.#0</desc_extra>
  <rarity>6</rarity></general>
  <specific type="modification">

@@ -10,14 +10,14 @@
   <x>767.558889</x>
   <y>-326.583333</y>
  </pos>
- <assets>
-  <asset>Avoss</asset>
-  <asset>Kotori</asset>
-  <asset>Shickhaw I</asset>
-  <asset>Shickhaw II</asset>
-  <asset>Shickhaw IV</asset>
-  <asset>Tori</asset>
- </assets>
+ <spobs>
+  <spob>Avoss</spob>
+  <spob>Kotori</spob>
+  <spob>Shickhaw I</spob>
+  <spob>Shickhaw II</spob>
+  <spob>Shickhaw IV</spob>
+  <spob>Tori</spob>
+ </spobs>
  <jumps>
   <jump target="Atlantis">
    <autopos/>

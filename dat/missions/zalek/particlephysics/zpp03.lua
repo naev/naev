@@ -7,13 +7,12 @@
  <avail>
   <priority>4</priority>
   <chance>100</chance>
-  <planet>Katar I</planet>
+  <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 2</done>
  </avail>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
-  <tier>1</tier>
  </notes>
 </mission>
 --]]
@@ -32,7 +31,7 @@ local sokoban = require "minigames.sokoban"
 -- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp03
-local mainpnt, mainsys = planet.getS("Katar I")
+local mainpnt, mainsys = spob.getS("Katar I")
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -48,7 +47,7 @@ function accept ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_([[You approach Noona who doesn't seem too happy.]]))
+   vn.na(_([[You approach Noona, who doesn't seem too happy.]]))
    n(_([["I have no idea what went wrong."
 She has trouble keeping her composure.
 "I double checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
@@ -65,7 +64,7 @@ She goes back to ruminating on what to do.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Thanks again. I'll give you the password to the hull so you can access the black box control panel. Depending on the damage, you may have to realign the memory to be able to retrieve the data, but I heard that you mastered that from my colleague. I've sent you the coordinates for the drones so you should be able to find them easy. Best of luck!"]]))
+   n(_([["Thanks again. I'll give you the security password so you can access the black box control panel. Depending on the damage, you may have to realign the memory to be able to retrieve the data, but I heard that you mastered that from my colleague. I've sent you the coordinates for the drones so you should be able to easily find them. Best of luck!"]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -77,7 +76,7 @@ She goes back to ruminating on what to do.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.reward(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc(fmt.f(_("Investigate the issue with the drones near the particle physics testing site at {sys}."),
       {sys=mainsys}))
 
@@ -95,7 +94,7 @@ She goes back to ruminating on what to do.]]))
 end
 
 function land ()
-   if mem.state==1 or planet.cur() ~= mainpnt then
+   if mem.state==1 or spob.cur() ~= mainpnt then
       return
    end
    local getlicense = not diff.isApplied( "heavy_weapons_license" )
@@ -105,7 +104,7 @@ function land ()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
    vn.na(_([[You land and find Noona waiting outside your ship expectantly.]]))
-   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece right? Great! Let me look into it and see what happened. I have no idea how this happened."
+   n(_([["That was scary! I have no idea what happened with the drone powering up and attacking you. I'm glad I sent you, I would have been fried with my flying skills, even if I still had my flying license. You got the black box in one piece, right? Great! Let me look into it and see what happened."
 She tosses you a credstick and runs to her room with the black box.]]))
    if getlicense then
       n(_([[Just before she disappears around the corner she turns back to you and yells.
@@ -117,6 +116,7 @@ Without giving you time to process what she yelled, she vanishes.]]))
    vn.done( zpp.noona.transition )
    vn.run()
 
+   faction.modPlayer("Za'lek", zpp.fctmod.zpp03)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_weapons_license")
@@ -127,18 +127,20 @@ Without giving you time to process what she yelled, she vanishes.]]))
    misn.finish(true)
 end
 
-local pdis, phost
+local pdis, phost, stage
 function enter ()
    if mem.state~=1 or system.cur() ~= mainsys then
       return
    end
+
+   stage = 0 -- Initialize state
 
    -- Temp faction
    local fdrone = faction.dynAdd( "Za'lek", "haywire_drone", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
 
    -- Spawn the drones
    -- TODO better location once testing center object is created
-   local pkatar = planet.get("Katar"):pos()
+   local pkatar = spob.get("Katar"):pos()
    local pkatari = mainpnt:pos()
    local pos = (pkatar - pkatari)*1.5 + pkatar
    -- Disabled drone
@@ -162,7 +164,6 @@ function enter ()
    hook.timer( 5, "heartbeat" )
 end
 
-local stage = 0
 function heartbeat ()
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
@@ -217,7 +218,7 @@ function drone_board ()
    end )
 
    vn.label([[sokoban_done]])
-   vn.na(_([[You manage recover the entire black box intact and load the information on your ship.]]))
+   vn.na(_([[You manage to recover the entire black box intact and load the information on your ship.]]))
    vn.done()
 
    vn.label("sokoban_fail")

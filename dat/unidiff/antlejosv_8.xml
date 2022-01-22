@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="antlejosv_8">
- <asset name="Antlejos V">
-  <description>A heavily terraformed moon with a large sprawling base camp clearly visible from space. Despite the low gravity, there is a breathable atmosphere and a diversity of simple life forms such as fungus and lichens are colonizing the surface of the place. Faint sounds of heavy machinery operating under the surface can be heard from all around the moon. It doesn't seem like a great place to live at, but it has gone leaps and bounds from how the moon was when you first landed on it. People have started to flock from other points of the galaxy and a trade center has recently begun operations.</description>
+ <spob name="Antlejos V">
+  <description>A heavily terraformed moon with a large sprawling base camp clearly visible from space. Despite the low gravity, there is a breathable atmosphere and a diversity of simple life forms such as fungus and lichens are colonizing the surface of the place. Faint sounds of heavy machinery operating under the surface can be heard from all around the moon. It doesn't seem like a great place to live at, but it has gone leaps and bounds from how the moon was when you first landed on it. People have started to flock from other points of the galaxy and a trade centre has recently begun operations.</description>
   <bar>The Antlejos V cantina is fairly loud and crowded with terraforming workers, with the sound of heavy machinery near the moon core acting as background music. The bartender says he is working on developing a local brew, but you have no idea whether or not that is possible, nor if you even should brave to drink it if distilled.</bar>
   <population>7000</population>
   <faction>Independent</faction>
@@ -18,6 +18,6 @@
   <tech_add>Star Maps</tech_add>
   <tech_add>Engines Low</tech_add>
   <tech_add>Hulls Low</tech_add>
-  <exterior>rocky_small.webp</exterior>
- </asset>
+  <gfx_exterior>rocky_small.webp</gfx_exterior>
+ </spob>
 </unidiff>

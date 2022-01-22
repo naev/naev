@@ -10,12 +10,12 @@
   <x>241.018776</x>
   <y>-510.626286</y>
  </pos>
- <assets>
-  <asset>Buritt</asset>
-  <asset>Ginger II</asset>
-  <asset>Ginger III</asset>
-  <asset>Ullnorn</asset>
- </assets>
+ <spobs>
+  <spob>Buritt</spob>
+  <spob>Ginger II</spob>
+  <spob>Ginger III</spob>
+  <spob>Ullnorn</spob>
+ </spobs>
  <jumps>
   <jump target="Awowa">
    <autopos/>

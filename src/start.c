@@ -24,16 +24,18 @@
  * @brief The start data structure.
  */
 typedef struct ndata_start_s {
-   char *name; /**< Name of ndata. */
-   char *ship; /**< Default starting ship model. */
-   char *shipname; /**< Default starting ship name. */
+   char *name;       /**< Name of ndata. */
+   char *ship;       /**< Default starting ship model. */
+   char *shipname;   /**< Default starting ship name. */
+   char *acquired;   /**< How the player acquired their first ship. */
    unsigned int credits; /**< Starting credits. */
-   ntime_t date; /**< Starting date. */
-   char *system; /**< Starting system. */
-   double x; /**< Starting X position. */
-   double y; /**< Starting Y position. */
-   char *mission; /**< Starting mission. */
-   char *event; /**< Starting event. */
+   ntime_t date;     /**< Starting date. */
+   char *system;     /**< Starting system. */
+   double x;         /**< Starting X position. */
+   double y;         /**< Starting Y position. */
+   char *mission;    /**< Starting mission. */
+   char *event;      /**< Starting event. */
+   char *chapter;    /**< Starting chapter. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -82,10 +84,12 @@ int start_load (void)
             xmlr_uint( cur, "credits", start_data.credits );
             xmlr_strd( cur, "mission", start_data.mission );
             xmlr_strd( cur, "event",   start_data.event );
+            xmlr_strd( cur, "chapter", start_data.chapter );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr_strd( cur, "name",    start_data.shipname );
-               xmlr_strd( cur, "ship",    start_data.ship );
+               xmlr_attr_strd( cur, "name", start_data.shipname );
+               xmlr_attr_strd( cur, "acquired", start_data.acquired );
+               xmlr_strd( cur, "ship", start_data.ship );
             }
             else if (xml_isNode(cur, "system")) {
                xmlNodePtr tmp = cur->children;
@@ -134,6 +138,7 @@ int start_load (void)
    MELEMENT( cycles<0, "scu" );
    MELEMENT( periods<0, "stp" );
    MELEMENT( seconds<0, "stu" );
+   MELEMENT( start_data.chapter==NULL, "chapter" );
 #undef MELEMENT
 
    /* Post process. */
@@ -149,10 +154,12 @@ void start_cleanup (void)
 {
    free( start_data.name );
    free( start_data.shipname );
+   free( start_data.acquired );
    free( start_data.ship );
    free( start_data.system );
    free( start_data.mission );
    free( start_data.event );
+   free( start_data.chapter );
    memset( &start_data, 0, sizeof(start_data) );
 }
 
@@ -181,6 +188,15 @@ const char* start_ship (void)
 const char* start_shipname (void)
 {
    return start_data.shipname;
+}
+
+/**
+ * @brief Gets the module's starting ship was acquired.
+ *    @return The default acquiration method of the starting ship.
+ */
+const char* start_acquired (void)
+{
+   return start_data.acquired;
 }
 
 /**
@@ -237,4 +253,13 @@ const char* start_mission (void)
 const char* start_event (void)
 {
    return start_data.event;
+}
+
+/**
+ * @brief Gets the player's starting chapter.
+ *    @return The starting chapter of the player.
+ */
+const char* start_chapter (void)
+{
+   return start_data.chapter;
 }

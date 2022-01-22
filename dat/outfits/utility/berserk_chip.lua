@@ -17,7 +17,6 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 }
 ]])
 
-
 local function turnon( p, po )
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then

@@ -111,8 +111,7 @@ PilotOutfitSlot* luaL_validpilotoutfit( lua_State *L, int ind )
  */
 PilotOutfitSlot** lua_pushpilotoutfit( lua_State *L, PilotOutfitSlot *po )
 {
-   PilotOutfitSlot **lpo;
-   lpo = (PilotOutfitSlot**) lua_newuserdata(L, sizeof(PilotOutfitSlot*));
+   PilotOutfitSlot **lpo = (PilotOutfitSlot**) lua_newuserdata(L, sizeof(PilotOutfitSlot*));
    *lpo = po;
    luaL_getmetatable(L, PILOTOUTFIT_METATABLE);
    lua_setmetatable(L, -2);
@@ -168,6 +167,9 @@ static int poL_state( lua_State *L )
    const char *state = luaL_optstring(L,2,NULL);
    PilotOutfitState pos = po->state;
 
+   if (!outfit_isMod( po->outfit ))
+      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "state");
+
    if (state==NULL || strcmp(state,"off")==0)
       po->state = PILOT_OUTFIT_OFF;
    else if (strcmp(state,"warmup")==0)
@@ -196,6 +198,10 @@ static int poL_state( lua_State *L )
 static int poL_progress( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
+
+   if (!outfit_isMod( po->outfit ))
+      NLUA_ERROR( L, _("'pilotoutfit.%s' only works with modifier outfits!"), "progress");
+
    po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
    return 0;
 }

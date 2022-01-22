@@ -6,14 +6,12 @@ local eparams = require 'equipopt.params'
 
 local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Fidelity Fighter Bay",
+   "Fidelity Bay",
    "Heavy Razor Turret", "Ragnarok Beam",
    "Heavy Ion Turret", "Grave Beam",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",

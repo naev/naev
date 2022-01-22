@@ -30,6 +30,7 @@
    <enemy>Dreamer Clan</enemy>
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
+   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction>
@@ -52,6 +53,7 @@
    <enemy>Dreamer Clan</enemy>
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
+   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction>
@@ -381,6 +383,7 @@
    <enemy>Dreamer Clan</enemy>
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
+   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction>
@@ -444,6 +447,9 @@
    <enemy>Dreamer Clan</enemy>
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Traders Guild</enemy>
   </enemies>
  </faction>
  <faction>
@@ -609,7 +615,7 @@
  </faction>
  <faction>
   <name>Rogue Four Winds</name>
-  <ai>trader</ai>
+  <ai>baddie</ai>
   <display>Four Winds</display>
   <static />
   <invisible />

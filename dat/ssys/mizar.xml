@@ -10,13 +10,13 @@
   <x>254.000000</x>
   <y>609.000000</y>
  </pos>
- <assets>
-  <asset>Ahmed</asset>
-  <asset>Mizar III</asset>
-  <asset>Mizar IV</asset>
-  <asset>Mizar VI</asset>
-  <asset>Westeros Station</asset>
- </assets>
+ <spobs>
+  <spob>Ahmed</spob>
+  <spob>Mizar III</spob>
+  <spob>Mizar IV</spob>
+  <spob>Mizar VI</spob>
+  <spob>Westeros Station</spob>
+ </spobs>
  <jumps>
   <jump target="Hatter">
    <pos x="-7960.892232" y="-26332.526438"/>

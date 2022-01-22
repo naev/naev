@@ -26,15 +26,17 @@
 typedef struct translation {
    char *language;              /**< Language code (allocated string). */
    msgcat_t *chain;             /**< Array of message catalogs to try in order. */
+   char **chain_lang;           /**< Array of those catalogs' names. */
    struct translation *next;    /**< Next entry in the list of loaded translations. */
 } translation_t;
 
-static char gettext_systemLanguage[64] = "";            /**< Language, or :-delimited list of them, from the system at startup. */
+static char *gettext_systemLanguage = NULL;             /**< Language, or :-delimited list of them, from the system at startup. */
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
 static uint32_t gettext_nstrings = 0;                   /**< Number of translatable strings in the game. */
 
 static void gettext_readStats (void);
+static const char* gettext_matchLanguage( const char* lang, size_t lang_len, char*const* available );
 
 /**
  * @brief Initialize the translation system.
@@ -51,28 +53,28 @@ void gettext_init()
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
+   free( gettext_systemLanguage );
    for (size_t i=0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
       const char *language = getenv( env_vars[i] );
-      /* Extract languages codes, e.g. "en_US:de_DE" -> "en:de" */
-      size_t j = 0;
-      while (language != NULL && *language != 0 && j < sizeof(gettext_systemLanguage)-1) {
-         if (isalpha(*language) || *language == ':')
-            gettext_systemLanguage[j++] = *language++;
-         else
-            language = strchr(language, ':');
-         gettext_systemLanguage[j] = 0;
-      }
-      if (j > 0)
+      if (language != NULL && *language != 0) {
+         gettext_systemLanguage = strdup( language );
          return; /* The first env var with language settings wins. */
+      }
    }
+   gettext_systemLanguage = strdup( "" );
 }
 
 /**
- * @brief Gets the active translation language.
+ * @brief Gets the active (primary) translation language. Even in case of a complex locale, this will be the name of
+ *        the first message catalog to be checked (or the "en" language code for untranslated English).
+ *        The purpose is to provide a simple answer to things like libunibreak which ask which language we're using.
  */
 const char* gettext_getLanguage (void)
 {
-   return gettext_activeTranslation->language;
+   if (array_size( gettext_activeTranslation->chain_lang ))
+      return gettext_activeTranslation->chain_lang[0];
+   else
+      return "en";
 }
 
 /**
@@ -83,8 +85,7 @@ const char* gettext_getLanguage (void)
 void gettext_setLanguage( const char* lang )
 {
    translation_t *newtrans;
-   char root[256], **paths;
-   size_t map_size, lang_part_len;
+   char root[256], **paths, **available_langs;
 
    if (lang == NULL)
       lang = gettext_systemLanguage;
@@ -102,14 +103,18 @@ void gettext_setLanguage( const char* lang )
    newtrans = calloc( 1, sizeof( translation_t ) );
    newtrans->language = strdup( lang );
    newtrans->chain = array_create( msgcat_t );
+   newtrans->chain_lang = array_create( char* );
    newtrans->next = gettext_translations;
    gettext_translations = newtrans;
+
+   available_langs = PHYSFS_enumerateFiles( GETTEXT_PATH );
 
    /* @TODO This code orders the translations alphabetically by file path.
     * That doesn't make sense, but this is a new use case and it's unclear
     * how we should determine precedence in case multiple .mo files exist. */
    while (lang != NULL && *lang != 0) {
-      const char *lang_part = lang;
+      size_t map_size, lang_part_len;
+      const char *lang_part = lang, *lang_match;
       lang = strchr(lang, ':');
       if (lang == NULL)
          lang_part_len = strlen(lang_part);
@@ -117,22 +122,47 @@ void gettext_setLanguage( const char* lang )
          lang_part_len = (size_t)(lang-lang_part);
          lang++;
       }
-      if (lang_part_len == 0)
+      lang_match = gettext_matchLanguage( lang_part, lang_part_len, available_langs );
+      if (lang_match == NULL)
          continue;
-      strncpy( root, GETTEXT_PATH, sizeof(root)-1 );
-      strncat( root, lang_part, MIN( sizeof(root)-sizeof(GETTEXT_PATH), lang_part_len) );
+      snprintf( root, sizeof(root), GETTEXT_PATH"%s", lang_match );
       paths = ndata_listRecursive( root );
       for (int i=0; i<array_size(paths); i++) {
          const char *map = ndata_read( paths[i], &map_size );
          if (map != NULL) {
             msgcat_init( &array_grow( &newtrans->chain ), map, map_size );
+            array_push_back( &newtrans->chain_lang, strdup( lang_match ) );
             DEBUG( _("Adding translations from %s"), paths[i] );
          }
          free( paths[i] );
       }
       array_free( paths );
    }
+   PHYSFS_freeList( available_langs );
    gettext_activeTranslation = newtrans;
+}
+
+/**
+ * @brief Pick the best match from "available" (a physfs listing) for the string-slice with address lang, length lang_len.
+ *
+ * @return The best match, if any, else NULL.
+ */
+static const char* gettext_matchLanguage( const char* lang, size_t lang_len, char*const* available )
+{
+   const char *best = NULL;
+
+   if (lang_len == 0)
+      return NULL;
+
+   /* Good enough for now: Return the greatest (thus longest) string matching up to their common length. */
+   for (size_t i=0; available[i]!=NULL; i++) {
+      int c = strncmp( lang, available[i], MIN( lang_len, strlen(available[i]) ) );
+      if (c < 0)
+         break;
+      else if (c == 0)
+         best = available[i];
+   }
+   return best;
 }
 
 /**

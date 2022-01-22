@@ -10,10 +10,10 @@
   <x>-347.000000</x>
   <y>-740.000000</y>
  </pos>
- <assets>
-  <asset>Sollav II</asset>
-  <asset>Sollav VI</asset>
- </assets>
+ <spobs>
+  <spob>Sollav II</spob>
+  <spob>Sollav VI</spob>
+ </spobs>
  <jumps>
   <jump target="Fried">
    <autopos/>

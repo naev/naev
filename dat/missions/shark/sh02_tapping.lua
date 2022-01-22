@@ -6,7 +6,6 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>diff.isApplied("collective_dead")</cond>
   <done>Sharkman Is Back</done>
   <chance>5</chance>
   <location>Bar</location>
@@ -20,7 +19,6 @@
   <faction>Za'lek</faction>
  </avail>
  <notes>
-  <requires name="The Collective is dead and no one will miss them"/>
   <campaign>Nexus show their teeth</campaign>
  </notes>
 </mission>
@@ -42,10 +40,10 @@ local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb 
 -- luacheck: globals beginrun (NPC functions passed by name)
 
 -- Mission constants
-local paypla, paysys = planet.getS("Darkshed")
+local paypla, paysys = spob.getS("Darkshed")
 
 function create ()
-   mem.mispla, mem.missys = planet.getLandable(faction.get("Sirius"))
+   mem.mispla, mem.missys = spob.getLandable(faction.get("Sirius"))
 
    if not misn.claim(mem.missys) or not mem.mispla:services()["bar"] then
       misn.finish(false)
@@ -59,7 +57,7 @@ function accept()
    mem.proba = 0.4  --the chances you have to get an ambush
 
    if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
-    "Listen, I need to explain some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
+    "Listen, I need to give some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
     "But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism.
     "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.
     "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]), {pnt=paypla, sys=paysys})) then
@@ -75,7 +73,7 @@ function accept()
       })
       misn.osdActive(1)
 
-      mem.marker = misn.markerAdd(mem.missys, "low")
+      mem.marker = misn.markerAdd(mem.mispla, "low")
 
       mem.landhook = hook.land("land")
       mem.enterhook = hook.enter("enter")
@@ -87,12 +85,12 @@ end
 
 function land()
    --The player is landing on the mission planet to get the box
-   if mem.stage == 0 and planet.cur() == mem.mispla then
+   if mem.stage == 0 and spob.cur() == mem.mispla then
       mem.agent = misn.npcAdd("beginrun", _("Nexus's agent"), "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done
-   if mem.stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and spob.cur() == paypla then
       if misn.cargoRm(mem.records) then
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
@@ -124,7 +122,7 @@ function beginrun()
    mem.stage = 1
    misn.osdActive(2)
    misn.markerRm(mem.marker)
-   mem.marker2 = misn.markerAdd(paysys, "low")
+   mem.marker2 = misn.markerAdd(paypla, "low")
 
    --remove the spy
    misn.npcRm(mem.agent)
@@ -246,7 +244,7 @@ function corvette()
       badguys[i]:outfitAdd("Unicorp PT-200 Core System")
       badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
-      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("TeraCom Headhunter Launcher",2)
       badguys[i]:outfitAdd("Razor Turret MK2")
       badguys[i]:outfitAdd("Razor Turret MK1",2)
 
@@ -276,7 +274,7 @@ function cruiser()
       badguy:outfitAdd("Krain Remige Engine")
 
       badguy:outfitAdd("Heavy Laser Turret",2)
-      badguy:outfitAdd("Unicorp Headhunter Launcher",4)
+      badguy:outfitAdd("TeraCom Headhunter Launcher",4)
 
       badguy:outfitAdd("Pinpoint Combat AI")
       badguy:outfitAdd("Photo-Voltaic Nanobot Coating")

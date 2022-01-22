@@ -134,6 +134,8 @@ end
 
 --the preaching's about to begin!
 function theFunBegins()
+   if system.cur() ~= curr then return end -- Probably system tour event
+
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
@@ -163,7 +165,7 @@ function theFunBegins()
    hook.pilot(preacher,"jump","jumpCleanup")
    hook.jumpout("cleanup")
 
-   camera.set(preacher, true)
+   camera.set(preacher)
    player.cinematics(true,{gui=true, abort=presence[rnd.rnd(1,#presence)]})
 
    --you're hooked till you hear him out!
@@ -235,7 +237,7 @@ function theFunBegins()
 end
 
 function preacherSpeak()
-   camera.set(preacher,true)
+   camera.set(preacher)
    if rep < 0 then
       preacher:comm(fmt.f(althoughEnemy[rnd.rnd(1,#althoughEnemy)], {player=player.name()}), true)
    else
@@ -252,7 +254,7 @@ end
 
 --random praise for the Sirichana
 function praise()
-   camera.set(praiser,true)
+   camera.set(praiser)
    praiser:broadcast(praiseSirichana[rnd.rnd(1,#praiseSirichana)],true)
 end
 
@@ -267,7 +269,7 @@ function pirateSpawn()
       thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], "Pirate", curr)
       if num==curiousNumber then
          thepilot:broadcast(whatHappened[rnd.rnd(1,#whatHappened)],true)
-         camera.set(thepilot,true)
+         camera.set(thepilot)
       end
       thepilot:control()
       thepilot:attack(followers[rnd.rnd(1,#followers)])
@@ -330,7 +332,7 @@ local function getPreacherTarget()
    local sirius=faction.get( "Sirius" )
 
    --look for nearby landable Sirian planet to land
-   for key, planet in ipairs( system.cur():planets() ) do
+   for key, planet in ipairs( system.cur():spobs() ) do
       if planet:faction()==sirius and planet:services()["land"]  then
          target = planet
          break
@@ -360,7 +362,7 @@ end
 
 --releases the player after the cutscene
 function release()
-   camera.set(nil, true)
+   camera.set()
    player.cinematics(false)
    playerP:setInvincible(false)
    playerP:control(false)
@@ -372,7 +374,7 @@ end
 
 --when hailed back, show the message
 function hail()
-   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
+   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral, yet intense, gaze.
     "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
     You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
    player.commClose()
@@ -384,7 +386,7 @@ function cleanup()
    local pp = player.pilot()
    pp:setInvincible(false)
    pp:control(false)
-   camera.set()
+   camera.set( nil, true )
    player.cinematics(false)
    evt.finish(true)
 end
@@ -427,7 +429,7 @@ function jumpCleanup()
       if j:exists() then
          j:taskClear()
          j:control()
-         j:hyperspace(target,true) --attack back as they move away?
+         j:hyperspace(target)
       end
    end
    evt.finish(true)

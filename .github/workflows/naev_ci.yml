@@ -6,7 +6,7 @@ jobs:
   "Package_Source":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-release:latest"
+      image: "ghcr.io/naev/naev-release:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -43,7 +43,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+      image: "ghcr.io/naev/${{ matrix.image }}:latest"
 
     steps:
       - name: Get Source
@@ -70,7 +70,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -82,7 +82,7 @@ jobs:
           meson compile -C build
 
       - name: Upload Compile Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-compile-log
@@ -96,13 +96,15 @@ jobs:
             ${{ github.workspace }}/build
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
         env:
           DESTDIR: "${{ github.workspace }}/staging"
 
       - name: Upload Install Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
@@ -132,7 +134,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+      image: "ghcr.io/naev/${{ matrix.image }}:latest"
 
     steps:
       - name: Get Source
@@ -189,11 +191,13 @@ jobs:
           if-no-files-found: error
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
 
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
@@ -210,7 +214,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+      image: "ghcr.io/naev/${{ matrix.image }}:latest"
 
     steps:
       - name: Get Source
@@ -239,7 +243,7 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Upload Setup Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-setup-log
@@ -266,19 +270,21 @@ jobs:
           if-no-files-found: error
 
       - name: Test Install
+        id: install
         run: |
           meson install -C build
 
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.install.outcome == 'failure' }}
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
-  "Lua_Lint":
+  "Luacheck":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
+      image: "ghcr.io/naev/naev-linux-latest:latest"
     needs:
       [
         Package_Source,
@@ -312,11 +318,13 @@ jobs:
               -Ddocs_lua=disabled
 
       - name: Meson Test
+        id: test
         run: |
-          meson test lua_lint -C build
+          meson test luacheck -C build
 
       - name: Upload Test Log
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.test.outcome == 'failure' }}
         with:
           name: ${{ github.sha }}-lualint-testlog
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -324,8 +332,8 @@ jobs:
   "Lua_Documentation":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-docs:latest"
-    needs: Lua_Lint
+      image: "ghcr.io/naev/naev-docs:latest"
+    needs: Luacheck
 
     steps:
       - name: Get Source
@@ -345,13 +353,23 @@ jobs:
               -Dexecutable=disabled
 
       - name: Meson Compile
+        id: compile
         run: |
           meson compile -C build
 
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-ldoc-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-        run: |
-          curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
-          --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+        uses: convictional/trigger-workflow-and-wait@v1.5.0
+        with:
+          owner: naev
+          repo: naev.github.io
+          github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+          workflow_file_name: website_publish.yml
+          inputs: '{ "publish_type": "api" }'

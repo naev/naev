@@ -5,6 +5,8 @@
 --]]
 local zlk = {}
 
+zlk.prefix = "#r".._("ZA'LEK: ").."#0" -- Repeatable mission prefix
+
 function zlk.addNebuResearchLog( text )
    shiplog.create( "zlk_neburesearch", _("Nebula Research"), _("Za'lek") )
    shiplog.append( "zlk_neburesearch", text )
@@ -18,8 +20,7 @@ end
 
 -- Checks to see if the player has a Za'lek ship.
 function zlk.hasZalekShip()
-   local shipname = player.pilot():ship():nameRaw()
-   return string.find( shipname, "Za'lek" ) ~= nil
+   return player.pilot():ship():tags().zalek
 end
 
 return zlk

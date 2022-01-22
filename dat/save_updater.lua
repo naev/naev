@@ -2,7 +2,37 @@
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
 
+--[[
+   The format is ["oldname"] = newvalue where newvalue can either take a string
+   for the new name of the outfit (if there is a direct equivalent) or a number
+   value indicating the amount of credits to refund the player.
+--]]
 local outfit_list = {
+   -- Below is a list of changes from 0.9.0 to 0.10.0
+   ["Drone Fighter Bay"] = "Drone Bay",
+   ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
+   ["Fidelity Fighter Bay"] = "Fidelity Bay",
+   ["Hyena Fighter Dock"] = "Hyena Bay",
+   ["Hyena Fighter Bay"] = "Hyena Dock",
+   ["Lancelot Fighter Bay"] = "Lancelot Bay",
+   ["Pirate Hyena Fighter Dock"] = "Pirate Hyena Bay",
+   ["Pirate Hyena Fighter Bay"] = "Pirate Hyena Dock",
+   ["Proteron Derivative Fighter Bay"] = "Proteron Derivative Bay",
+   ["Soromid Brigand Fighter Bay"] = "Soromid Brigand Bay",
+   ["Thurion Perspicacity Fighter Dock"] = "Thurion Perspicacity Bay",
+   ["Thurion Perspicacity Fighter Bay"] = "Thurion Perspicacity Dock",
+   ["Za'lek Bomber Drone Fighter Dock"] = "Za'lek Bomber Drone Bay",
+   ["Za'lek Bomber Drone Fighter Bay"] = "Za'lek Bomber Drone Mini Bay",
+   ["Za'lek Heavy Drone Fighter Dock"] = "Za'lek Heavy Drone Bay",
+   ["Za'lek Heavy Drone Fighter Bay"] = "Za'lek Heavy Drone Mini Bay",
+   ["Za'lek Light Drone Fighter Dock"] = "Za'lek Light Drone Bay",
+   ["Za'lek Light Drone Fighter Bay"] = "Za'lek Light Drone Mini Bay",
+   ["Unicorp Banshee Launcher"] = 35e3,
+   ["Unicorp Mace Launcher"] = 19e3,
+   ["Unicorp Fury Launcher"] = 65e3,
+   ["Unicorp Headhunter Launcher"] = 70e3,
+   ["Unicorp Medusa Launcher"] = 73e3,
+   ["Unicorp Vengeance Launcher"] = 78e3,
    -- Below is a list of changes from 0.8.2 to 0.9.0
    ["Unicorp PT-900 Core System"] = "Unicorp PT-500 Core System",
    ["Unicorp PT-600 Core System"] = "Unicorp PT-310 Core System",
@@ -236,4 +266,21 @@ local outfit_list = {
 --]]
 function outfit( name )
    return outfit_list[name]
+end
+
+local license_list = {
+   -- Below is a list of changes from 0.9.0-alpha to 0.9.0-beta
+   ["Heavy Combat Vessel License"] = "Heavy Combat Vessel",
+   ["Heavy Weapon License"] = "Heavy Weapon",
+   ["Large Civilian Vessel License"] = "Large Civilian Vessel",
+   ["Light Combat Vessel License"] = "Light Combat Vessel",
+   ["Medium Combat Vessel License"] = "Medium Combat Vessel",
+   ["Medium Weapon License"] = "Medium Weapon",
+   ["Mercenary License"] = "Mercenary",
+}
+--[[--
+   Takes a license name and should return either a new license name or the amount of credits to give back to the player.
+--]]
+function license( name )
+   return license_list[name]
 end

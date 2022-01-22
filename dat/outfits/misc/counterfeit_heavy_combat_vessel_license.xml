@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Counterfeit Heavy Combat Vessel License">
+ <general>
+  <rarity>3</rarity>
+  <mass>0</mass>
+  <price>2500000</price>
+  <gfx_store>license.webp</gfx_store>
+  <description>Through marksman craftsmanship, pirate software engineers are able to create near perfect replicas of the Heavy Combat Vessel License. However, this comes at a significant mark-up compared to the standard license prices. This license will authorize you to buy cruiser and carrier-class ships on worlds that perform background checks.</description>
+ </general>
+ <specific type="license">
+  <provides>Heavy Combat Vessel</provides>
+ </specific>
+</outfit>

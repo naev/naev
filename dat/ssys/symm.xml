@@ -10,16 +10,16 @@
   <x>23.000000</x>
   <y>616.000000</y>
  </pos>
- <assets>
-  <asset>Heii</asset>
-  <asset>Juran</asset>
-  <asset>Silverstone</asset>
-  <asset>Symm II</asset>
-  <asset>Symm III</asset>
-  <asset>Symm IIIa</asset>
-  <asset>Symm IIIb</asset>
-  <asset>Wigheta</asset>
- </assets>
+ <spobs>
+  <spob>Heii</spob>
+  <spob>Juran</spob>
+  <spob>Silverstone</spob>
+  <spob>Symm II</spob>
+  <spob>Symm III</spob>
+  <spob>Symm IIIa</spob>
+  <spob>Symm IIIb</spob>
+  <spob>Wigheta</spob>
+ </spobs>
  <jumps>
   <jump target="Hadosh">
    <autopos/>

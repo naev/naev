@@ -10,14 +10,14 @@
   <x>-485.105351</x>
   <y>-204.314213</y>
  </pos>
- <assets>
-  <asset>Jade Court</asset>
-  <asset>Jade I</asset>
-  <asset>Jade II</asset>
-  <asset>Jade III</asset>
-  <asset>Jade VI</asset>
-  <asset>Stormgard</asset>
- </assets>
+ <spobs>
+  <spob>Jade Court</spob>
+  <spob>Jade I</spob>
+  <spob>Jade II</spob>
+  <spob>Jade III</spob>
+  <spob>Jade VI</spob>
+  <spob>Stormgard</spob>
+ </spobs>
  <jumps>
   <jump target="Blackwell">
    <autopos/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gammacron Vb">
+ <pos>
+  <x>18823.239218</x>
+  <y>9932.323873</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

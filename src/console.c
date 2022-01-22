@@ -33,7 +33,6 @@
 #include "nlua_camera.h"
 #include "nlua_cli.h"
 #include "nlua_col.h"
-#include "nlua_debug.h"
 #include "nlua_linopt.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"
@@ -49,6 +48,8 @@
  * Global stuff.
  */
 static nlua_env cli_env     = LUA_NOREF; /**< Lua CLI env. */
+static lua_State *cli_thread= NULL; /**< REPL coroutine's thread */
+static int cli_thread_ref   = LUA_NOREF; /**< Reference keeping cli_thread alive */
 static glFont *cli_font     = NULL; /**< CLI font to use. */
 
 /*
@@ -62,22 +63,17 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /** Number of lines displayed at once */
 #define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5))
 static char **cli_buffer; /**< CLI buffer. */
+static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
-static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
+static int cli_scroll_pos  = -1; /**< Position in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
-
-/*
- * Input handling.
- */
-static int cli_firstline   = 1; /**< Is this the first line? */
+static int cli_firstline   = 1; /**< Original CLI: Is this the first line? */
 
 /*
  * CLI stuff.
  */
 static int cli_script( lua_State *L );
-//static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "print", cli_print },
    { "script", cli_script },
    { "warn", cli_warn },
    {NULL, NULL}
@@ -89,7 +85,7 @@ static const luaL_Reg cli_methods[] = {
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
 static void cli_printCoreString( const char *s, int escape );
-static int cli_printCore( lua_State *L, int cli_only );
+static int cli_printCore( lua_State *L, int cli_only, int escape );
 void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
 
@@ -115,11 +111,6 @@ static void cli_printCoreString( const char *s, int escape )
    int len;
    glPrintLineIterator iter;
 
-   if (s[0] == '\0') {
-      cli_addMessageMax( NULL, 0 );
-      return;
-   }
-
    gl_printLineIteratorInit( &iter, cli_font, s, CLI_WIDTH-40 );
    while (gl_printLineIteratorNext( &iter )) {
       if (escape) {
@@ -135,19 +126,20 @@ static void cli_printCoreString( const char *s, int escape )
 /**
  * @brief Back end for the Lua print functionality.
  */
-static int cli_printCore( lua_State *L, int cli_only )
+static int cli_printCore( lua_State *L, int cli_only, int escape )
 {
-   int n; /* number of arguments */
-   int i;
-   const char *s;
-
-   n = lua_gettop(L);
+   int n = lua_gettop(L); /* Number of arguments. */
 
    lua_getglobal(L, "tostring");
-   for (i=1; i<=n; i++) {
+   for (int i=1; i<=n; i++) {
+      const char *s;
       lua_pushvalue(L, -1);  /* function to be called */
       lua_pushvalue(L, i);   /* value to print */
-      lua_call(L, 1, 1);
+      if (lua_pcall(L, 1, 1, 0) != 0) {
+         WARN(_("Error calling 'tostring':\n%s"), lua_tostring(L,-1));
+         lua_pop(L,1);
+         continue;
+      }
       s = lua_tostring(L, -1);  /* get result */
       if (s == NULL)
          return NLUA_ERROR(L, LUA_QL("tostring") " must return a string to "
@@ -156,7 +148,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      cli_printCoreString( s, 1 );
+      cli_printCoreString( s, escape );
 
       lua_pop(L, 1);  /* pop result */
    }
@@ -183,18 +175,18 @@ int cli_warn( lua_State *L )
  */
 int cli_print( lua_State *L )
 {
-   return cli_printCore( L, 0 );
+   return cli_printCore( L, 0, 1 );
 }
 
 /**
- * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ * @brief Prints raw markup to the console.
+ *
+ * @luafunc printRaw
  */
-#if 0
-static int cli_printOnly( lua_State *L )
+int cli_printRaw( lua_State *L )
 {
-   return cli_printCore( L, 1 );
+   return cli_printCore( L, 1, 0 );
 }
-#endif
 
 /**
  * @brief Would be like "dofile" from the base Lua lib.
@@ -212,7 +204,7 @@ static int cli_script( lua_State *L )
 
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
-      nlua_getenv( cli_env, "_LOADED" );
+      nlua_getenv( L, cli_env, "_LOADED" );
       if (lua_istable(L,-1)) {
          lua_pushnil(L);                     /* t, nil */
          while (lua_next(L, -2) != 0) {      /* t, key, val */
@@ -232,9 +224,13 @@ static int cli_script( lua_State *L )
    free( buf );
 
    /* Return the stuff. */
-   nlua_pushenv(cli_env);
+   nlua_pushenv(L, cli_env);
    lua_setfenv(L, -2);
-   lua_call(L, 0, LUA_MULTRET);
+   if (lua_pcall(L, 0, LUA_MULTRET, 0) != 0) {
+      WARN(_("Error running 'script':\n%s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return 0;
+   }
    return lua_gettop(L) - n;
 }
 
@@ -296,17 +292,15 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
-   int i, pos;
-   char *str;
 
    switch (key) {
 
       /* Go up in history. */
       case SDLK_UP:
-         for (i=cli_history; i>=0; i--) {
+         for (int i=cli_history; i>=0; i--) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                /* Strip escape codes from beginning and end */
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
                   strcmp(window_getInput(wid, "inpInput"), str) == 0) {
                   free(str);
@@ -329,25 +323,23 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          }
 
          /* Find next buffer. */
-         for (i=cli_history+1; i<array_size(cli_buffer); i++) {
+         for (int i=cli_history+1; i<array_size(cli_buffer); i++) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
-               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
-               cli_history = i;
                return 1;
             }
          }
-         cli_history = i-1;
+         cli_history = array_size(cli_buffer)-1;
          window_setInput( wid, "inpInput", NULL );
          return 1;
 
       /* Scroll up */
       case SDLK_PAGEUP:
-         pos = cli_scroll_pos;
-         if (pos == -1)
-            pos = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
-         cli_scroll_pos = MAX(0, pos - CLI_MAX_LINES);
+         if (cli_scroll_pos == -1)
+            cli_scroll_pos = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
+         cli_scroll_pos = MAX(0, cli_scroll_pos - CLI_MAX_LINES);
          return 1;
 
       /* Scroll down */
@@ -382,7 +374,7 @@ void cli_tabComplete( unsigned int wid )
    old = window_getInput( wid, "inpInput" );
    str = strdup(old);
 
-   nlua_pushenv(cli_env);
+   nlua_pushenv(naevL, cli_env);
    cur = str;
    for (int i=0; str[i] != '\0'; i++) {
       if (str[i] == '.' || str[i] == ':') {
@@ -410,7 +402,7 @@ void cli_tabComplete( unsigned int wid )
       /* Start over on other non-identifier character */
       } else if (!isalnum(str[i]) && str[i] != '_') {
          lua_pop(naevL, 1);
-         nlua_pushenv(cli_env);
+         nlua_pushenv(naevL, cli_env);
          cur = str + i + 1;
       }
    }
@@ -439,6 +431,9 @@ void cli_tabComplete( unsigned int wid )
 
 static int cli_initLua (void)
 {
+   int status;
+   char *buf;
+   size_t blen;
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
       return 0;
@@ -456,14 +451,40 @@ static int cli_initLua (void)
    nlua_loadTk( cli_env );
    nlua_loadLinOpt( cli_env );
 
-   /* Mark as console. */
-   lua_pushboolean( naevL, 1 );
-   nlua_setenv( cli_env, "__cli" );
-
-   nlua_pushenv(cli_env);
+   nlua_pushenv( naevL, cli_env );
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
+   if (conf.lua_repl) {
+      buf = ndata_read( "rep.lua", &blen );
+      status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
+      if (status) {
+         lua_settop( naevL, 0 );
+         return status;
+      }
+      if (lua_gettop( naevL ) != 1) {
+         WARN( _("rep.lua failed to return a single coroutine.") );
+         lua_settop( naevL, 0 );
+         return -1;
+      }
+      cli_thread = lua_tothread( naevL, -1 );
+      cli_thread_ref = luaL_ref( naevL, LUA_REGISTRYINDEX );
+      if (cli_thread == NULL) {
+         WARN( _("rep.lua failed to return a single coroutine.") );
+         lua_settop( naevL, 0 );
+         return -1;
+      }
+      status = lua_resume( cli_thread, 0 );
+      cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+      if (status == 0) {
+         WARN( _("REPL thread exited.") );
+         return 1;
+      }
+      else if (status != LUA_YIELD) {
+         WARN( "%s", cli_prompt );
+         return -1;
+      }
+   }
    return 0;
 }
 
@@ -472,14 +493,14 @@ static int cli_initLua (void)
  */
 int cli_init (void)
 {
-   cli_initLua();
-
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, _(FONT_MONOSPACE_PATH), conf.font_size_console, FONT_PATH_PREFIX, 0 );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);
+
+   cli_initLua();
 
    return 0;
 }
@@ -490,10 +511,10 @@ int cli_init (void)
 void cli_exit (void)
 {
    /* Destroy the state. */
-   if (cli_env != LUA_NOREF) {
-      nlua_freeEnv( cli_env );
-      cli_env = LUA_NOREF;
-   }
+   luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
+   nlua_freeEnv( cli_env );
+   cli_thread = NULL;
+   cli_env = cli_thread_ref = LUA_NOREF;
 
    gl_freeFont( cli_font );
    free( cli_font );
@@ -504,6 +525,8 @@ void cli_exit (void)
       free(cli_buffer[i]);
    array_free(cli_buffer);
    cli_buffer = NULL;
+   free(cli_prompt);
+   cli_prompt = NULL;
 }
 
 /**
@@ -516,7 +539,7 @@ static void cli_input( unsigned int wid, const char *unused )
 {
    (void) unused;
    int status, len;
-   const char *str;
+   const char *str, *prompt;
    char *escaped;
    char buf[CLI_MAX_INPUT+7];
 
@@ -524,72 +547,94 @@ static void cli_input( unsigned int wid, const char *unused )
    str = window_getInput( wid, "inpInput" );
 
    /* Ignore useless stuff. */
-   if (str == NULL)
+   if (str == NULL || (conf.lua_repl && cli_thread == NULL))
       return;
 
    /* Put the message in the console. */
    escaped = cli_escapeString( &len, str, strlen(str) );
-   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
-         cli_firstline ? "> " : ">>", escaped );
+   if (conf.lua_repl)
+      prompt = cli_prompt; /* Remembered from last time lua-repl requested input */
+   else
+      prompt = cli_firstline ? "> " : ">>";
+   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0", prompt, escaped );
    free(escaped);
    cli_printCoreString( buf, 0 );
 
-   /* Set up for concat. */
-   if (!cli_firstline)               /* o */
-      lua_pushliteral(naevL, "\n");  /* o \n */
-
-   /* Load the string. */
-   lua_pushstring( naevL, str );     /* s */
-
-   /* Concat. */
-   if (!cli_firstline)               /* o \n s */
-      lua_concat(naevL, 3);          /* s */
-
-   status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
-
-   /* String isn't proper Lua yet. */
-   if (status == LUA_ERRSYNTAX) {
-      size_t lmsg;
-      const char *msg = lua_tolstring(naevL, -1, &lmsg);
-      const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
-      const char *s;
-      if (strstr(msg, LUA_QL("<eof>")) == tp) {
-         /* Pop the loaded buffer. */
-         lua_pop(naevL, 1);
-         cli_firstline = 0;
+   if (conf.lua_repl) {
+      /* Resume the REPL. */
+      lua_pushstring( cli_thread, str );
+      status = lua_resume( cli_thread, 1 );
+      if (status == 0) {
+         cli_printCoreString( _("REPL thread exited."), 0 );
+         luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
+         cli_thread = NULL;
+         cli_thread_ref = LUA_NOREF;
       }
       else {
-         /* Real error, spew message and break. */
-         s = lua_tostring(naevL, -1);
-         WARN( "%s", s );
-         cli_printCoreString( s, 1 );
+         free( cli_prompt );
+         cli_prompt = strdup( lua_tostring( cli_thread, -1 ) );
+         lua_settop( cli_thread, 0 );
+         if (status != LUA_YIELD)
+            cli_printCoreString( cli_prompt, 0 );
+      }
+   }
+   else {
+      /* Set up for concat. */
+      if (!cli_firstline)               /* o */
+         lua_pushliteral(naevL, "\n");  /* o \n */
+
+      /* Load the string. */
+      lua_pushstring( naevL, str );     /* s */
+
+      /* Concat. */
+      if (!cli_firstline)               /* o \n s */
+         lua_concat(naevL, 3);          /* s */
+
+      status = luaL_loadbuffer( naevL, lua_tostring(naevL,-1), lua_strlen(naevL,-1), "=cli" );
+
+      /* String isn't proper Lua yet. */
+      if (status == LUA_ERRSYNTAX) {
+         size_t lmsg;
+         const char *msg = lua_tolstring(naevL, -1, &lmsg);
+         const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
+         const char *s;
+         if (strstr(msg, LUA_QL("<eof>")) == tp) {
+            /* Pop the loaded buffer. */
+            lua_pop(naevL, 1);
+            cli_firstline = 0;
+         }
+         else {
+            /* Real error, spew message and break. */
+            s = lua_tostring(naevL, -1);
+            WARN( "%s", s );
+            cli_printCoreString( s, 1 );
+            lua_settop(naevL, 0);
+            cli_firstline = 1;
+         }
+      }
+      /* Print results - all went well. */
+      else if (status == 0) {
+         lua_remove(naevL,1);
+
+         nlua_pushenv(naevL, cli_env);
+         lua_setfenv(naevL, -2);
+
+         if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
+            cli_printCoreString( lua_tostring(naevL, -1), 1 );
+            lua_pop(naevL, 1);
+         }
+
+         if (lua_gettop(naevL) > 0) {
+            nlua_getenv(naevL, cli_env, "print");
+            lua_insert(naevL, 1);
+            if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
+               cli_addMessage( _("Error printing results.") );
+         }
+
+         /* Clear stack. */
          lua_settop(naevL, 0);
          cli_firstline = 1;
       }
-   }
-
-   /* Print results - all went well. */
-   else if (status == 0) {
-      lua_remove(naevL,1);
-
-      nlua_pushenv(cli_env);
-      lua_setfenv(naevL, -2);
-
-      if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
-         cli_printCoreString( lua_tostring(naevL, -1), 1 );
-         lua_pop(naevL, 1);
-      }
-
-      if (lua_gettop(naevL) > 0) {
-         nlua_getenv(cli_env, "print");
-         lua_insert(naevL, 1);
-         if (lua_pcall(naevL, lua_gettop(naevL)-1, 0, 0) != 0)
-            cli_addMessage( _("Error printing results.") );
-      }
-
-      /* Clear stack. */
-      lua_settop(naevL, 0);
-      cli_firstline = 1;
    }
 
    /* Clear the box now. */
@@ -611,12 +656,7 @@ void cli_open (void)
       if (cli_init())
          return;
 
-   /* Make sure main menu isn't open. */
-   if (menu_isOpen(MENU_MAIN))
-      return;
-
-   /* Must not be already open. */
-   if (window_exists( "wdwLuaConsole" ))
+   if (menu_isOpen(MENU_MAIN) || cli_isOpen())
       return;
 
    /* Put a friendly message at first. */
@@ -652,4 +692,12 @@ void cli_open (void)
    window_addCust( wid, 20, -40,
          CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL, NULL, NULL );
+
+   /* Reinitilaized. */
+   cli_firstline = 1;
+}
+
+int cli_isOpen (void)
+{
+   return window_exists( "wdwLuaConsole" );
 }

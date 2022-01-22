@@ -17,6 +17,7 @@
 #include "land_outfits.h"
 
 #include "array.h"
+#include "cond.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
@@ -311,7 +312,7 @@ static void outfits_genList( unsigned int wid )
    data = window_getData( wid );
    array_free( iar_outfits[active] );
    /* Use custom list; default to landed outfits. */
-   iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_planet->tech );
+   iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
    noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
 
@@ -340,14 +341,22 @@ void outfits_update( unsigned int wid, const char *str )
    (void) str;
    int i, active;
    Outfit* outfit;
-   char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT], buf_mass[ECON_MASS_STRLEN];
-   size_t l = 0;
+   char buf[STRMAX], lbl[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_mass[ECON_MASS_STRLEN];
+   size_t l = 0, k = 0;
    double th;
-   int iw, ih, w, h;
+   int iw, ih, w, h, blackmarket;
    double mass;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
+
+   blackmarket = ((land_spob!=NULL) && spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET ));
+
+   /* Set up keys. */
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "%s", _("Owned:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Mass:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Price:") );
+   k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Money:") );
 
    /* Get and set parameters. */
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
@@ -360,7 +369,7 @@ void outfits_update( unsigned int wid, const char *str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("N/A") );
+      window_modifyText( wid, "txtSDesc", buf );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
       window_modifyText( wid, "txtDescShort", NULL );
@@ -378,7 +387,7 @@ void outfits_update( unsigned int wid, const char *str )
    /* new image */
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 256, 256 );
 
-   if (outfit_canBuy(outfit->name, land_planet) > 0)
+   if (outfit_canBuy(outfit->name, land_spob) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
@@ -394,19 +403,11 @@ void outfits_update( unsigned int wid, const char *str )
    price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf_credits, player.p->credits, 2 );
 
-   if (outfit->license == NULL)
-      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-   else if (player_hasLicense( outfit->license ) ||
-         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
-      strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
-   else
-      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
-
    mass = outfit->mass;
-   if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
-         (outfit_ammo(outfit) != NULL)) {
-      mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
-   }
+   if (outfit_isLauncher(outfit))
+      mass += outfit_amount(outfit) * outfit->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(outfit))
+      mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
    tonnes2str( buf_mass, (int)round( mass ) );
 
    outfit_getNameWithClass( outfit, buf, sizeof(buf) );
@@ -417,11 +418,26 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_mass );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_license );
+   if (outfit->license) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
+      if (blackmarket || player_hasLicense( outfit->license ))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->license );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->license );
+   }
+   if (outfit->cond) {
+      k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
+      if (cond_check(outfit->cond))
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->condstr );
+      else
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->condstr );
+   }
+   window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
+   th = MAX( th, 200 );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
@@ -435,11 +451,11 @@ void outfits_update( unsigned int wid, const char *str )
 void outfits_updateEquipmentOutfits( void )
 {
    if (landed && land_doneLoading()) {
-      if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
+      if (spob_hasService(land_spob, SPOB_SERVICE_OUTFITS)) {
          int ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );
       }
-      else if (!planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      else if (!spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD))
          return;
 
       int ew = land_getWid( LAND_WINDOW_EQUIPMENT );
@@ -544,10 +560,10 @@ int outfit_altText( char *buf, int n, const Outfit *o )
 
    /* Compute total mass of launcher and ammo if necessary. */
    mass = o->mass;
-   if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
-         (outfit_ammo(o) != NULL)) {
-      mass += outfit_amount(o) * outfit_ammo(o)->mass;
-   }
+   if (outfit_isLauncher(o))
+      mass += outfit_amount(o) * o->u.lau.ammo_mass;
+   else if (outfit_isFighterBay(o))
+      mass += outfit_amount(o) * o->u.bay.ship_mass;
 
    p  = outfit_getNameWithClass( o, buf, n );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
@@ -627,11 +643,11 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param name Outfit to buy.
- *    @param planet Where the player is shopping.
+ *    @param spob Where the player is shopping.
  */
-int outfit_canBuy( const char *name, Planet *planet )
+int outfit_canBuy( const char *name, const Spob *spob )
 {
-   int failure;
+   int failure, blackmarket;
    credits_t price;
    const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
@@ -639,6 +655,7 @@ int outfit_canBuy( const char *name, Planet *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
+   blackmarket = ((spob!=NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Unique. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {
@@ -669,10 +686,14 @@ int outfit_canBuy( const char *name, Planet *planet )
       failure = 1;
    }
    /* Needs license. */
-   if ((!player_hasLicense(outfit->license)) &&
-         ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
+   if (!blackmarket && !player_hasLicense(outfit->license)) {
       land_errDialogueBuild( _("You need the '%s' license to buy this outfit."),
                _(outfit->license) );
+      failure = 1;
+   }
+   /* Needs requirements. */
+   if (!blackmarket && (outfit->cond!=NULL) && !cond_check(outfit->cond)) {
+      land_errDialogueBuild( "%s", _(outfit->condstr) );
       failure = 1;
    }
 

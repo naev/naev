@@ -46,40 +46,26 @@
   <item>Heavy Neutron Disruptor</item>
   <item>Electron Burst Cannon</item>
   <item>Tesla Cannon</item>
-  <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
-  <item>Unicorp Headhunter Launcher</item>
   <item>TeraCom Headhunter Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
-  <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
-  <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>TeraCom Banshee Launcher</item>
+  <item>Super-Fast Collider Launcher</item>
+  <item>Repeating Banshee Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
   <item>TeraCom Imperator Launcher</item>
   <item>EMP Grenade Launcher</item>
   <item>Shatterer Launcher</item>
-  <item>Unicorp Medusa Launcher</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
-  <item>BioPlasma Stinger Stage 1</item>
-  <item>BioPlasma Stinger Stage X</item>
-  <item>BioPlasma Claw Stage 1</item>
-  <item>BioPlasma Claw Stage X</item>
-  <item>BioPlasma Fang Stage 1</item>
-  <item>BioPlasma Fang Stage X</item>
-  <item>BioPlasma Talon Stage 1</item>
-  <item>BioPlasma Talon Stage X</item>
-  <item>BioPlasma Tentacle Stage 1</item>
-  <item>BioPlasma Tentacle Stage X</item>
   <item>Battery I</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -141,23 +127,24 @@
   <item>Milspec Jammer</item>
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
-  <item>Lancelot Fighter Bay</item>
-  <item>Hyena Fighter Bay</item>
-  <item>Hyena Fighter Dock</item>
-  <item>Pirate Hyena Fighter Bay</item>
-  <item>Pirate Hyena Fighter Dock</item>
-  <item>Empire Lancelot Fighter Bay</item>
-  <item>Fidelity Fighter Bay</item>
-  <item>Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter Bay</item>
-  <item>Za'lek Heavy Drone Fighter Bay</item>
-  <item>Za'lek Bomber Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter Dock</item>
-  <item>Za'lek Heavy Drone Fighter Dock</item>
-  <item>Za'lek Bomber Drone Fighter Dock</item>
-  <item>Thurion Perspicacity Fighter Bay</item>
-  <item>Proteron Derivative Fighter Bay</item>
-  <item>Soromid Brigand Fighter Bay</item>
+  <item>Lancelot Bay</item>
+  <item>Hyena Dock</item>
+  <item>Hyena Bay</item>
+  <item>Pirate Hyena Dock</item>
+  <item>Pirate Hyena Bay</item>
+  <item>Empire Lancelot Bay</item>
+  <item>Fidelity Bay</item>
+  <item>Drone Bay</item>
+  <item>Za'lek Light Drone Mini Bay</item>
+  <item>Za'lek Heavy Drone Mini Bay</item>
+  <item>Za'lek Bomber Drone Mini Bay</item>
+  <item>Za'lek Light Drone Bay</item>
+  <item>Za'lek Heavy Drone Bay</item>
+  <item>Za'lek Bomber Drone Bay</item>
+  <item>Thurion Perspicacity Bay</item>
+  <item>Thurion Perspicacity Dock</item>
+  <item>Proteron Derivative Bay</item>
+  <item>Soromid Brigand Bay</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -227,54 +214,6 @@
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
   <item>S&amp;K Superheavy Combat Plating</item>
-  <item>Ultralight Brain Stage 1</item>
-  <item>Light Brain Stage 1</item>
-  <item>Medium Brain Stage 1</item>
-  <item>Medium-Heavy Brain Stage 1</item>
-  <item>Heavy Brain Stage 1</item>
-  <item>Superheavy Brain Stage 1</item>
-  <item>Ultralight Shell Stage 1</item>
-  <item>Light Shell Stage 1</item>
-  <item>Medium Shell Stage 1</item>
-  <item>Medium-Heavy Shell Stage 1</item>
-  <item>Heavy Shell Stage 1</item>
-  <item>Superheavy Shell Stage 1</item>
-  <item>Ultralight Fast Gene Drive Stage 1</item>
-  <item>Light Fast Gene Drive Stage 1</item>
-  <item>Medium Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
-  <item>Heavy Fast Gene Drive Stage 1</item>
-  <item>Superheavy Fast Gene Drive Stage 1</item>
-  <item>Ultralight Strong Gene Drive Stage 1</item>
-  <item>Light Strong Gene Drive Stage 1</item>
-  <item>Medium Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
-  <item>Heavy Strong Gene Drive Stage 1</item>
-  <item>Superheavy Strong Gene Drive Stage 1</item>
-  <item>Ultralight Brain Stage X</item>
-  <item>Light Brain Stage X</item>
-  <item>Medium Brain Stage X</item>
-  <item>Medium-Heavy Brain Stage X</item>
-  <item>Heavy Brain Stage X</item>
-  <item>Superheavy Brain Stage X</item>
-  <item>Ultralight Shell Stage X</item>
-  <item>Light Shell Stage X</item>
-  <item>Medium Shell Stage X</item>
-  <item>Medium-Heavy Shell Stage X</item>
-  <item>Heavy Shell Stage X</item>
-  <item>Superheavy Shell Stage X</item>
-  <item>Ultralight Fast Gene Drive Stage X</item>
-  <item>Light Fast Gene Drive Stage X</item>
-  <item>Medium Fast Gene Drive Stage X</item>
-  <item>Medium-Heavy Fast Gene Drive Stage X</item>
-  <item>Heavy Fast Gene Drive Stage X</item>
-  <item>Superheavy Fast Gene Drive Stage X</item>
-  <item>Ultralight Strong Gene Drive Stage X</item>
-  <item>Light Strong Gene Drive Stage X</item>
-  <item>Medium Strong Gene Drive Stage X</item>
-  <item>Medium-Heavy Strong Gene Drive Stage X</item>
-  <item>Heavy Strong Gene Drive Stage X</item>
-  <item>Superheavy Strong Gene Drive Stage X</item>
   <item>Weapons Ionizer</item>
   <item>Boarding Androids MK1</item>
   <item>Boarding Androids MK2</item>
@@ -289,6 +228,7 @@
   <item>Cryogenic Repair Nanobots</item>
   <item>Cloaking Device</item>
   <item>Low Radiation Sensor Modulator</item>
+  <item>Camouflage Burster</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
   <item>Milspec Impacto-Plastic Coating</item>
@@ -360,9 +300,12 @@
   <item>Rhino</item>
   <item>Pirate Rhino</item>
   <item>Mule</item>
+  <item>Zebra</item>
   <item>Empire Rainmaker</item>
   <item>Dvaered Arsenal</item>
   <item>Za'lek Mammon</item>
+  <item>Soromid Copia</item>
+  <item>Sirius Providence</item>
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
@@ -447,7 +390,6 @@
   <item>Grave Lance</item>
   <item>Grave Beam</item>
   <item>Ragnarok Beam</item>
-  <item>Electron Burst Cannon</item>
  </tech>
 
  <!-- Generic Outfits -->
@@ -466,7 +408,6 @@
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
-  <item>Unicorp Fury Launcher</item>
   <item>Battery I</item>
   <item>Small Fuel Pod</item>
   <item>Large Civilian Vessel License</item>
@@ -502,7 +443,6 @@
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
-  <item>Unicorp Banshee Launcher</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor I</item>
   <item>Plasteel Plating</item>
@@ -515,7 +455,6 @@
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
-  <item>Unicorp Medusa Launcher</item>
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Local System Map</item>
@@ -557,12 +496,13 @@
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
+  <item>TeraCom Vengeance Launcher</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Weapons Ionizer</item>
-  <item>Hyena Fighter Bay</item>
-  <item>Hyena Fighter Dock</item>
+  <item>Hyena Dock</item>
+  <item>Hyena Bay</item>
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
@@ -574,7 +514,7 @@
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
-  <item>Lancelot Fighter Bay</item>
+  <item>Lancelot Bay</item>
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery I</item>
@@ -653,26 +593,23 @@
   <item>Neural Accelerator Interface</item>
  </tech>
  <tech name="Missiles 1">
-  <item>Unicorp Banshee Launcher</item>
-  <item>Unicorp Fury Launcher</item>
-  <item>Unicorp Medusa Launcher</item>
-  <item>Unicorp Headhunter Launcher</item>
+  <item>TeraCom Mace Launcher</item>
+  <item>TeraCom Fury Launcher</item>
   <item>Unicorp Caesar IV Launcher</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>TeraCom Vengeance Launcher</item>
  </tech>
  <tech name="Missiles 2">
-  <item>Unicorp Headhunter Launcher</item>
-  <item>Unicorp Mace Launcher</item>
-  <item>TeraCom Mace Launcher</item>
-  <item>Unicorp Caesar IV Launcher</item>
+  <item>TeraCom Banshee Launcher</item>
   <item>TeraCom Imperator Launcher</item>
   <item>Enygma Systems Huntsman Launcher</item>
-  <item>Enygma Systems Spearhead Launcher</item>
   <item>TeraCom Banshee Launcher</item>
   <item>TeraCom Medusa Launcher</item>
-  <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Enygma Systems Turreted Headhunter Launcher</item>
-  <item>Unicorp Vengeance Launcher</item>
+ </tech>
+ <tech name="Criminal Outfits">
+  <item>Camouflage Burster</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -694,13 +631,15 @@
  </tech>
  <tech name="Empire Military Outfits">
   <item>Turbolaser</item>
-  <item>Empire Lancelot Fighter Bay</item>
+  <item>Empire Lancelot Bay</item>
  </tech>
  <tech name="Dvaered Elite Outfits">
+  <item>Repeating Banshee Launcher</item>
   <item>Milspec Impacto-Plastic Coating</item>
   <item>Cyclic Combat AI</item>
  </tech>
  <tech name="Dvaered Military Outfits">
+  <item>Super-Fast Collider Launcher</item>
   <item>Repeating Railgun</item>
   <item>Active Plating</item>
  </tech>
@@ -710,21 +649,23 @@
  </tech>
  <tech name="Sirius Military Outfits">
   <item>Heavy Razor Turret</item>
-  <item>Fidelity Fighter Bay</item>
+  <item>Fidelity Bay</item>
  </tech>
- <tech name="Za'lek Elite Outfits">
+ <tech name="Za'lek Outfits Low">
   <item>Faraday Tempest Coating</item>
-  <item>Hive Combat AI</item>
- </tech>
- <tech name="Za'lek Military Outfits">
   <item>Za'lek Hunter Launcher</item>
+ </tech>
+ <tech name="Za'lek Outfits Medium">
+  <item>Hive Combat AI</item>
+  <item>Za'lek Light Drone Mini Bay</item>
+  <item>Za'lek Heavy Drone Mini Bay</item>
+  <item>Za'lek Bomber Drone Mini Bay</item>
+ </tech>
+ <tech name="Za'lek Outfits High">
   <item>Za'lek Reaper Launcher</item>
-  <item>Za'lek Light Drone Fighter Bay</item>
-  <item>Za'lek Heavy Drone Fighter Bay</item>
-  <item>Za'lek Bomber Drone Fighter Bay</item>
-  <item>Za'lek Light Drone Fighter Dock</item>
-  <item>Za'lek Heavy Drone Fighter Dock</item>
-  <item>Za'lek Bomber Drone Fighter Dock</item>
+  <item>Za'lek Light Drone Bay</item>
+  <item>Za'lek Heavy Drone Bay</item>
+  <item>Za'lek Bomber Drone Bay</item>
  </tech>
  <tech name="Soromid Elite Outfits">
   <item>Nexus Stealth Coating</item>
@@ -737,7 +678,8 @@
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
   <item>Adaptive Stealth Plating</item>
-  <item>Thurion Perspicacity Fighter Bay</item>
+  <item>Thurion Perspicacity Bay</item>
+  <item>Thurion Perspicacity Dock</item>
   <item>Map: Thurion Core</item>
  </tech>
  <tech name="Thurion Military Outfits">
@@ -749,7 +691,7 @@
   <item>Local System Map</item>
  </tech>
  <tech name="Proteron Military Outfits">
-  <item>Proteron Derivative Fighter Bay</item>
+  <item>Proteron Derivative Bay</item>
  </tech>
  <tech name="Proteron Maps">
   <item>Map: Sol</item>
@@ -758,42 +700,15 @@
  <tech name="Pirate Elite Outfits">
   <item>Low Radiation Sensor Modulator</item>
   <item>Scanning Combat AI</item>
-  <item>Pirate Hyena Fighter Bay</item>
-  <item>Pirate Hyena Fighter Dock</item>
+  <item>Pirate Hyena Dock</item>
+  <item>Pirate Hyena Bay</item>
+  <item>Counterfeit Heavy Weapon License</item>
+  <item>Counterfeit Heavy Combat Vessel License</item>
  </tech>
 
  <!-- outfits -->
  <tech name="Bioship Outfits">
-  <item>BioPlasma Stinger Stage 1</item>
-  <item>BioPlasma Claw Stage 1</item>
-  <item>BioPlasma Fang Stage 1</item>
-  <item>BioPlasma Talon Stage 1</item>
-  <item>BioPlasma Tentacle Stage 1</item>
-  <item>Ultralight Brain Stage 1</item>
-  <item>Light Brain Stage 1</item>
-  <item>Medium Brain Stage 1</item>
-  <item>Medium-Heavy Brain Stage 1</item>
-  <item>Heavy Brain Stage 1</item>
-  <item>Superheavy Brain Stage 1</item>
-  <item>Ultralight Shell Stage 1</item>
-  <item>Light Shell Stage 1</item>
-  <item>Medium Shell Stage 1</item>
-  <item>Medium-Heavy Shell Stage 1</item>
-  <item>Heavy Shell Stage 1</item>
-  <item>Superheavy Shell Stage 1</item>
-  <item>Ultralight Fast Gene Drive Stage 1</item>
-  <item>Light Fast Gene Drive Stage 1</item>
-  <item>Medium Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
-  <item>Heavy Fast Gene Drive Stage 1</item>
-  <item>Superheavy Fast Gene Drive Stage 1</item>
-  <item>Ultralight Strong Gene Drive Stage 1</item>
-  <item>Light Strong Gene Drive Stage 1</item>
-  <item>Medium Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
-  <item>Heavy Strong Gene Drive Stage 1</item>
-  <item>Superheavy Strong Gene Drive Stage 1</item>
-  <item>Soromid Brigand Fighter Bay</item>
+  <item>Soromid Brigand Bay</item>
  </tech>
 
  <!-- Ships -->
@@ -813,6 +728,7 @@
   <item>Quicksilver</item>
   <item>Rhino</item>
   <item>Mule</item>
+  <item>Zebra</item>
  </tech>
  <tech name="Light Civilian Combat Ships">
   <item>Ancestor</item>
@@ -879,6 +795,21 @@
   <item>Sirius Preacher</item>
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
+  <item>Sirius Providence</item>
+ </tech>
+ <tech name="Soromid Ships Small">
+  <item>Soromid Brigand</item>
+  <item>Soromid Reaver</item>
+  <item>Soromid Marauder</item>
+ </tech>
+ <tech name="Soromid Ships Medium">
+  <item>Soromid Odium</item>
+  <item>Soromid Nyx</item>
+ </tech>
+ <tech name="Soromid Ships Large">
+  <item>Soromid Copia</item>
+  <item>Soromid Ira</item>
+  <item>Soromid Arx</item>
  </tech>
  <tech name="Soromid Military Ships">
   <item>Soromid Brigand</item>
@@ -903,8 +834,14 @@
   <item>Thurion Certitude</item>
  </tech>
  <tech name="Za'lek Military Ships">
+  <item>Za'lek Ships Medium</item>
+  <item>Za'lek Ships Large</item>
+ </tech>
+ <tech name="Za'lek Ships Medium">
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
+ </tech>
+ <tech name="Za'lek Ships Large">
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
   <item>Za'lek Mammon</item>
@@ -918,7 +855,7 @@
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Shatterer Launcher</item>
-  <item>Drone Fighter Bay</item>
+  <item>Drone Bay</item>
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>
@@ -1007,6 +944,9 @@
   <item>Unicorp D-24 Medium Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
  </tech>
  <tech name="Hulls High">
   <item>S&amp;K Ultralight Combat Plating</item>
@@ -1014,9 +954,6 @@
   <item>Nexus Light Stealth Plating</item>
   <item>S&amp;K Medium Combat Plating</item>
   <item>S&amp;K Medium-Heavy Combat Plating</item>
-  <item>S&amp;K Small Cargo Hull</item>
-  <item>S&amp;K Medium Cargo Hull</item>
-  <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
  </tech>
  <tech name="Hulls Elite">

@@ -78,7 +78,7 @@ function heartbeat( proteron_blockade )
       end
    end
 
-   hook.timer(0.5, "heartbeat")
+   hook.timer( 0.5, "heartbeat", proteron_blockade )
 end
 
 function cleanup ()

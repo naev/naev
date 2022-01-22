@@ -20,6 +20,7 @@
 
 #include "commodity.h"
 
+#include "conf.h"
 #include "array.h"
 #include "economy.h"
 #include "hook.h"
@@ -185,8 +186,8 @@ static void commodity_freeOne( Commodity* com )
    free(com->description);
    gl_freeTexture(com->gfx_store);
    gl_freeTexture(com->gfx_space);
-   next = com->planet_modifier;
-   com->planet_modifier = NULL;
+   next = com->spob_modifier;
+   com->spob_modifier = NULL;
    while (next != NULL ) {
       this = next;
       next = this->next;
@@ -300,12 +301,12 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
-      if (xml_isNode(node, "planet_modifier")) {
+      if (xml_isNode(node, "spob_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
-         newdict->next = temp->planet_modifier;
+         newdict->next = temp->spob_modifier;
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
-         temp->planet_modifier = newdict;
+         temp->spob_modifier = newdict;
          continue;
       }
       if (xml_isNode(node, "faction_modifier")) {
@@ -628,6 +629,7 @@ int commodity_tempIllegalto( Commodity *com, int faction )
 int commodity_load (void)
 {
    char **commodities = PHYSFS_enumerateFiles( COMMODITY_DATA_PATH );
+   Uint32 time = SDL_GetTicks();
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
@@ -668,7 +670,12 @@ int commodity_load (void)
 
    PHYSFS_freeList( commodities );
 
-   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_( "Loaded %d Commodity in %.3f s", "Loaded %d Commodities in %.3f s", array_size(commodity_stack) ), array_size(commodity_stack), time/1000. );
+   }
+   else
+      DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 
    return 0;
 }

@@ -27,6 +27,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "player.h"
+#include "render.h"
 #include "sound.h"
 #include "toolkit.h"
 
@@ -82,6 +83,7 @@ static void opt_videoRes( unsigned int wid, const char *str );
 static int opt_videoSave( unsigned int wid, const char *str );
 static void opt_videoDefaults( unsigned int wid, const char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
+static void opt_setGammaCorrection( unsigned int wid, const char *str );
 static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
@@ -96,6 +98,7 @@ static void opt_audioDefaults( unsigned int wid, const char *str );
 static void opt_audioUpdate( unsigned int wid );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
 static void opt_setAudioLevel( unsigned int wid, const char *str );
+static void opt_setEngineLevel( unsigned int wid, const char *str );
 static void opt_beep( unsigned int wid, const char *str );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
@@ -184,8 +187,9 @@ static void opt_close( unsigned int wid, const char *name )
 
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
-   sound_volume(conf.sound);
-   music_volume(conf.music);
+   sound_volume( conf.sound );
+   music_volume( conf.music );
+   render_setGamma( conf.gamma_correction );
 
    window_destroy( opt_wid );
    opt_wid = 0;
@@ -195,7 +199,7 @@ static void opt_close( unsigned int wid, const char *name )
 }
 
 /**
- * @brief Handles resize events nfor the options menu.
+ * @brief Handles resize events for the options menu.
  */
 void opt_resize (void)
 {
@@ -327,12 +331,12 @@ static void opt_gameplay( unsigned int wid )
          "macOS\n"
 #elif WIN32
          "Windows\n"
-#else
+#else /* LINUX */
          "Unknown OS\n"
-#endif
+#endif /* LINUX */
 #if HAVE_LUAJIT
          "Using LuaJIT\n"
-#endif
+#endif /* HAVE_LUAJIT */
          );
 
    y -= window_getTextHeight(wid, "txtFlags") + 10;
@@ -539,7 +543,7 @@ static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
    autonav_reset = window_getFaderValue(wid, str);
 
    /* Generate message. */
-   if (autonav_reset >= 1.)
+   if (autonav_reset >= 1.0)
       snprintf( buf, sizeof(buf), _("Enemy Presence") );
    else if (autonav_reset > 0.5)
       snprintf( buf, sizeof(buf), _("Enemy within %s distance"), num2strU( (autonav_reset - 0.5) / 0.5 * AUTONAV_RESET_DIST_MAX, 0) );
@@ -823,6 +827,15 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
    dialogue_msgRaw( _("Defaults Restored"), _("Keybindings restored to defaults."));
 }
 
+static void opt_setEngineLevel( unsigned int wid, const char *str )
+{
+   char buf[32];
+   double vol = window_getFaderValue(wid, str);
+   conf.engine_vol = vol;
+   snprintf( buf, sizeof(buf), "Engine Volume: %.0f%%", vol*100. );
+   window_modifyText( wid, "txtEngine", buf );
+}
+
 /**
  * @brief Callback to set the sound or music level.
  *
@@ -832,9 +845,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
 static void opt_setAudioLevel( unsigned int wid, const char *str )
 {
    char buf[32], *widget;
-   double vol;
-
-   vol = window_getFaderValue(wid, str);
+   double vol = window_getFaderValue(wid, str);
    if (strcmp(str,"fadSound")==0) {
       sound_volume(vol);
       widget = "txtSound";
@@ -879,8 +890,7 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
-   int cw;
-   int w, h, y, x;
+   int cw, w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -920,7 +930,7 @@ static void opt_audio( unsigned int wid )
    window_addFader( wid, x, y, cw, 20, "fadSound", 0., 1.,
          sound_getVolume(), opt_setAudioLevel );
    window_faderScrollDone( wid, "fadSound", opt_beep );
-   y -= 40;
+   y -= 30;
 
    /* Music fader. */
    window_addText( wid, x, y, cw, 20, 1, "txtMusic",
@@ -928,6 +938,15 @@ static void opt_audio( unsigned int wid )
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadMusic", 0., 1.,
          music_getVolume(), opt_setAudioLevel );
+   y -= 30;
+
+   /* Engine fader. */
+   window_addText( wid, x, y, cw, 20, 1, "txtEngine",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x, y, cw, 20, "fadEngine", 0., 1.,
+         conf.engine_vol, opt_setEngineLevel );
+   opt_setEngineLevel( wid, "fadEngine" );
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
@@ -966,6 +985,7 @@ static int opt_audioSave( unsigned int wid, const char *str )
    /* Faders. */
    conf.sound = window_getFaderValue(wid, "fadSound");
    conf.music = window_getFaderValue(wid, "fadMusic");
+   conf.engine_vol = window_getFaderValue(wid, "fadEngine");
 
    return 0;
 }
@@ -981,6 +1001,7 @@ static void opt_audioDefaults( unsigned int wid, const char *str )
    /* Faders. */
    window_faderValue( wid, "fadSound", SOUND_VOLUME_DEFAULT );
    window_faderValue( wid, "fadMusic", MUSIC_VOLUME_DEFAULT );
+   window_faderValue( wid, "fadEngine", ENGINE_VOLUME_DEFAULT );
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
@@ -999,6 +1020,7 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
+   window_faderValue( wid, "fadEngine", conf.engine_vol );
 }
 
 /**
@@ -1180,8 +1202,7 @@ static void opt_video( unsigned int wid )
    (void) wid;
    int i, j, nres, res_def;
    char buf[16];
-   int cw;
-   int w, h, y, x, l;
+   int cw, w, h, y, x, l;
    char **res;
    const char *s;
 
@@ -1265,6 +1286,12 @@ static void opt_video( unsigned int wid )
          log(conf.zoom_near+1.), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
+   y -= 30;
+   window_addText( wid, x, y-3, 130, 20, 0, "txtGammaCorrection",
+         NULL, NULL, NULL );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadGammaCorrection", -log(3.), log(3.),
+         log(conf.gamma_correction), opt_setGammaCorrection );
+   opt_setGammaCorrection( wid, "fadGammaCorrection" );
    y -= 40;
 
    /* FPS stuff. */
@@ -1419,6 +1446,9 @@ static int opt_videoSave( unsigned int wid, const char *str )
    /* GUI. */
    conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
 
+   /* Reload background. */
+   background_load( cur_system->background );
+
    return 0;
 }
 
@@ -1548,6 +1578,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadScale", log(SCALE_FACTOR_DEFAULT) );
    window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
+   window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
@@ -1613,6 +1644,22 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    }
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
       opt_needRestart();
+}
+
+/**
+ * @brief Callback to set the gamma correction value (reciprocal of exponent).
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setGammaCorrection( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double scale = window_getFaderValue(wid, str);
+   conf.gamma_correction = exp(scale);
+   snprintf( buf, sizeof(buf), _("Gamma: %.1f"), conf.gamma_correction );
+   window_modifyText( wid, "txtGammaCorrection", buf );
+   render_setGamma( conf.gamma_correction );
 }
 
 /**

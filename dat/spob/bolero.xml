@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Bolero">
+ <pos>
+  <x>-11735.014766</x>
+  <y>-3466.579854</y>
+ </pos>
+ <GFX>
+  <space>M00.webp</space>
+  <exterior>oceanic.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>4.56745e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Bolero is one of the Empire's most successful planets. The population is prosperous and successful, and the planet's conditions are mild. Although it is still treated as something of a backwater due to its location, it is becoming increasingly important in Imperial politics. A lot of Bolero's popularity comes from its Earth-like climate, giving a reassuring sense of nostalgia to all those who were able to visit Earth before the Incident. However, some people avoid it for exactly the same reason…</description>
+  <bar>Making the most of Bolero's similarity with Earth, the bar here is an old-Earth style pub, with a low ceiling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all. There seems to be relatively few locals mixed in with the patrons, with the majority of people looking like temporary visitors, either arriving for vacations or business trips.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Engines High</item>
+ </tech>
+ <tags>
+  <tag>tourism</tag>
+ </tags>
+</spob>

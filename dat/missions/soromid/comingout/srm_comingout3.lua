@@ -28,8 +28,7 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
-local fail -- Forward-declared functions
--- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
 -- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 
 mem.misn_title = _("A Friend's Aid")
@@ -53,27 +52,27 @@ function accept ()
    if mem.started then
       txt = _([["I could still use your help with that mission! Could you help me out?"]])
    else
-      txt = fmt.f( _([[Chelsea gleefully waves you over. "It's nice to see you again!" she says. The two of you chat a bit about her venture into the piloting business; all is well from the sound of it. "Say," she says, "someone offered me a really interesting mission recently, but I had to decline because my ship isn't really up to task. If you could just escort my ship through that mission I could share the pay with you! Your half would be {credits}. How about it?"]]), {credits=fmt.credits(mem.credits)} )
+      txt = fmt.f( _([[Chelsea gleefully waves you over. "It's nice to see you again!" she says. The two of you chat a bit about her venture into the piloting business; all is well from the sound of it. "Say," she says, "someone offered me a really interesting mission recently, but I had to decline because my ship isn't really up to the task. If you could just escort my ship through that mission, I could share the pay with you! Your half would be {credits}. How about it?"]]), {credits=fmt.credits(mem.credits)} )
    end
    mem.started = true
 
    if tk.yesno( _("A Friend's Aid"), txt ) then
       tk.msg( _("A Friend's Aid"), fmt.f( _([["Awesome! I really appreciate it!
-    "So the mission is in theory a pretty simple one: I need to deliver some cargo to {pnt} in the {sys} system. Trouble is apparently I'll be getting in the middle of some sort of trade dispute with a shady Soromid company that's bribed the local Soromid pilots. Needless to say we can expect to be attacked by some thugs and the Soromid military isn't likely to be of much help.
-    "That's where you come in. I just need you to follow me along, make sure I finish jumping or landing before you do, and if we encounter any hostilities, help me shoot them down. Shouldn't be too too hard as long as you've got a decent ship. I'll meet you out in space!"]]), {pnt=mem.misplanet, sys=mem.missys} ) )
+    "So the mission is, in theory, a pretty simple one: I need to deliver some cargo to {pnt} in the {sys} system. Trouble is, apparently, I'll be getting in the middle of some sort of trade dispute with a shady Soromid company that's bribed the local Soromid pilots. Needless to say, we can expect to be attacked by some thugs and the Soromid military isn't likely to be of much help.
+    "That's where you come in. I just need you to follow me, make sure I finish jumping or landing before you do, and, if we encounter any hostilities, help me shoot them down. Shouldn't be too too hard as long as you've got a decent ship. I'll meet you out in space!"]]), {pnt=mem.misplanet, sys=mem.missys} ) )
 
       misn.accept()
 
       misn.setTitle( mem.misn_title )
       misn.setDesc( fmt.f( mem.misn_desc, {pnt=mem.misplanet} ) )
       misn.setReward( fmt.credits( mem.credits ) )
-      mem.marker = misn.markerAdd( mem.missys, "low" )
+      mem.marker = misn.markerAdd( mem.misplanet, "low" )
 
       misn.osdCreate( mem.misn_title, {
          fmt.f(_("Escort Chelsea to {pnt} in the {sys} system."), {pnt=mem.misplanet, sys=mem.missys} ),
       } )
 
-      mem.startplanet = planet.cur()
+      mem.startplanet = spob.cur()
 
       hook.takeoff( "takeoff" )
       hook.jumpout( "jumpout" )
@@ -87,9 +86,9 @@ end
 
 
 function spawnChelseaShip( param )
-   mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
 
-   chelsea = pilot.add( "Llama", mem.fass, param, _("Chelsea") )
+   chelsea = pilot.add( "Llama", fass, param, _("Chelsea") )
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
    chelsea:outfitAdd( "Unicorp PT-68 Core System" )
@@ -121,12 +120,12 @@ end
 
 
 function spawnThug( param )
-   mem.fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
-   mem.fthug:dynEnemy(mem.fass)
+   fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+   fthug:dynEnemy(fass)
 
    local shiptypes = { "Hyena", "Hyena", "Hyena", "Shark", "Lancelot" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   local thug = pilot.add( shiptype, mem.fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
@@ -141,9 +140,9 @@ function jumpNext ()
       chelsea:taskClear()
       chelsea:control()
       if system.cur() == mem.missys then
-         chelsea:land( mem.misplanet, true )
+         chelsea:land( mem.misplanet )
       else
-         chelsea:hyperspace( lmisn.getNextSystem( system.cur(), mem.missys ), true )
+         chelsea:hyperspace( lmisn.getNextSystem( system.cur(), mem.missys ) )
       end
    end
 end
@@ -167,13 +166,13 @@ function jumpin ()
       jumpNext()
       hook.timer( 5.0, "thug_timer" )
    else
-      fail( _("MISSION FAILED: You have abandoned the mission.") )
+      lmisn.fail( _("You have abandoned the mission.") )
    end
 end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( _("Another Happy Landing"), fmt.f( _([[You successfully land and dock alongside Chelsea and she approaches the worker for the cargo delivery. The worker gives her a weird look, but collects the cargo with the help of some robotic drones and hands her a credit chip. When you get back to your ships, Chelsea transfers the sum of {credits} to your account, and you idly chat with her for a while.
     "Anyway, I should probably get going now," she says. "But I really appreciated the help there! Get in touch with me again sometime. We make a great team!" You agree, and you both go your separate ways once again.]]), {credits=fmt.credits(mem.credits)} ) )
       player.pay( mem.credits )
@@ -195,7 +194,7 @@ end
 
 
 function chelsea_death ()
-   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
+   lmisn.fail( _("A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
@@ -204,7 +203,7 @@ function chelsea_jump( _p, jump_point )
       player.msg( fmt.f( _("Chelsea has jumped to {sys}."), {sys=jump_point:dest()} ) )
       mem.chelsea_jumped = true
    else
-      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+      lmisn.fail( _("Chelsea has abandoned the mission.") )
    end
 end
 
@@ -214,7 +213,7 @@ function chelsea_land( _p, planet )
       player.msg( fmt.f( _("Chelsea has landed on {pnt}."), {pnt=planet} ) )
       mem.chelsea_jumped = true
    else
-      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+      lmisn.fail( _("Chelsea has abandoned the mission.") )
    end
 end
 
@@ -237,19 +236,4 @@ function thug_removed ()
    spawnThug()
    hook.rm( mem.distress_timer_hook )
    jumpNext()
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

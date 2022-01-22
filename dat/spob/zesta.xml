@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Zesta">
+ <pos>
+  <x>-5564.779304</x>
+  <y>11195.805981</y>
+ </pos>
+ <GFX>
+  <space>A03.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <base>450.000000</base>
+  <bonus>50.000000</bonus>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>400000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Mineral-rich, but unbearably hot, Zesta has been established as a high-intensity mining colony by the Proteron. Water and ice taken from Amianta is routinely used as part of the extraction process, and to prevent severe burns to the miners.</description>
+ </general>
+</spob>

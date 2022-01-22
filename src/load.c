@@ -34,12 +34,13 @@
 #include "outfit.h"
 #include "player.h"
 #include "shiplog.h"
+#include "start.h"
 #include "space.h"
 #include "toolkit.h"
 #include "unidiff.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
-#define LOAD_HEIGHT     500 /**< Load window height. */
+#define LOAD_HEIGHT     530 /**< Load window height. */
 
 #define BUTTON_WIDTH    200 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -60,7 +61,7 @@ extern int save_loaded; /**< From save.c */
  */
 /* externs */
 /* player.c */
-extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+extern Spob* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
@@ -141,8 +142,9 @@ static int load_load( nsave_t *save, const char *path )
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node, "location", save->planet);
+            xmlr_strd(node, "location", save->spob);
             xmlr_ulong(node, "credits", save->credits);
+            xmlr_strd(node, "chapter", save->chapter);
 
             /* Time. */
             if (xml_isNode(node, "time")) {
@@ -167,6 +169,10 @@ static int load_load( nsave_t *save, const char *path )
          continue;
       }
    } while (xml_nextNode(parent));
+
+   /* Defaults. */
+   if (save->chapter==NULL)
+      save->chapter = strdup( start_chapter() );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -300,7 +306,8 @@ void load_free (void)
       free(ns->name);
       free(ns->version);
       free(ns->data);
-      free(ns->planet);
+      free(ns->spob);
+      free(ns->chapter);
       free(ns->shipname);
       free(ns->shipmodel);
    }
@@ -416,8 +423,10 @@ static void load_menu_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Planet:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->planet );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
@@ -434,7 +443,7 @@ static void load_menu_update( unsigned int wid, const char *str )
  */
 static void load_menu_load( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    const char *save;
    int wid, pos;
    int diff;
@@ -617,7 +626,7 @@ static int load_gameInternal( const char* file, const char* version )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   Planet *pnt;
+   Spob *pnt;
    int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
 
    /* Make sure it exists. */
@@ -657,12 +666,12 @@ static int load_gameInternal( const char* file, const char* version )
    }
 
    /* Load more stuff. */
+   space_sysLoad(node);
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
    news_loadArticles( node );
    hook_load(node);
-   space_sysLoad(node);
 
    /* Initialize the economy. */
    economy_init();

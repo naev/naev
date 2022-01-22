@@ -10,7 +10,7 @@
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>100</chance>
    <location>Bar</location>
-   <planet>The Wringer</planet>
+   <spob>The Wringer</spob>
   </avail>
   <notes>
    <campaign>Heretic</campaign>
@@ -38,7 +38,7 @@ function create()
    mem.misn_tracker = var.peek("heretic_misn_tracker")
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.planding = 0
-   mem.homeasset, mem.homesys = planet.cur()
+   mem.homeasset, mem.homesys = spob.cur()
    mem.msg_checker = 0
    --set the mission stuff
    if not misn.claim(mem.homesys) then
@@ -57,7 +57,7 @@ function accept()
 
       misn.accept()
       misn.setDesc(fmt.f(_([[A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin in destroying this fleet.]]), {sys=mem.homesys}))
-      misn.markerAdd(mem.homesys, "high")
+      misn.markerAdd(mem.homeasset, "high")
       misn.osdCreate(_("The Assault"), {
          fmt.f(_("Defend {pnt} against the Sirius assault"), {pnt=mem.homeasset}),
          fmt.f(_("Return to {pnt}"), {pnt=mem.homeasset}),
@@ -157,7 +157,7 @@ end
 
 function return_to_base()
    if not mem.returnchecker then --feel like landing early? AWOL!
-      tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]]))
+      tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you duck your head and make a mental note to get out of here as soon as possible.]]))
       faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else

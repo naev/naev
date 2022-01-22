@@ -7,6 +7,7 @@ local snyx        = ship.get("Soromid Nyx")
 local sodium      = ship.get("Soromid Odium")
 local sarx        = ship.get("Soromid Arx")
 local sira        = ship.get("Soromid Ira")
+local scopia      = ship.get("Soromid Copia")
 
 -- @brief Spawns a small patrol fleet.
 local function spawn_patrol ()
@@ -55,7 +56,9 @@ local function spawn_capship ()
    local r = rnd.rnd()
 
    -- Generate the capship
-   if r < 0.7 then
+   if r < 0.1 then
+      scom.addPilot( pilots, scopia )
+   elseif r < 0.7 then
       scom.addPilot( pilots, sira )
    else
       scom.addPilot( pilots, sarx )

@@ -35,7 +35,6 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-local fail -- Forward-declared functions
 -- luacheck: globals abandon_text msg pay_text (shared with derived mission pirate.patrol)
 -- luacheck: globals enter jumpout land pilot_leave timer (Hook functions passed by name)
 
@@ -61,8 +60,8 @@ msg = {
    _("Hostiles detected. Engage hostiles."),
    _("Hostiles eliminated."),
    _("Patrol complete. You can now collect your pay."),
-   _("MISSION FAILURE! You showed up too late."),
-   _("MISSION FAILURE! You have left the {sys} system."),
+   _("You showed up too late."),
+   _("You have left the {sys} system."),
 }
 
 mem.osd_msg = {
@@ -89,7 +88,7 @@ end
 
 
 function create ()
-   mem.paying_faction = planet.cur():faction()
+   mem.paying_faction = spob.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
@@ -107,7 +106,7 @@ function create ()
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   local planets = mem.missys:planets()
+   local planets = mem.missys:spobs()
    local numpoints = math.min( rnd.rnd( 2, 5 ), #planets )
    mem.points = {}
    while numpoints > 0 and #planets > 0 do
@@ -184,9 +183,9 @@ function jumpout ()
    local last_sys = system.cur()
    if not mem.job_done then
       if last_sys == mem.missys then
-         fail( fmt.f( msg[6], {sys=last_sys} ) )
+         lmisn.fail( fmt.f( msg[6], {sys=last_sys} ) )
       elseif mem.jumps_permitted < 0 then
-         fail( msg[5] )
+         lmisn.fail( msg[5] )
       end
    end
 end
@@ -199,7 +198,7 @@ function land ()
    end
 
    mem.jumps_permitted = mem.jumps_permitted - 1
-   if mem.job_done and planet.cur():faction() == mem.paying_faction then
+   if mem.job_done and spob.cur():faction() == mem.paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       vntk.msg( _("Mission Completed"), txt )
       player.pay( mem.credits )
@@ -307,19 +306,4 @@ function timer ()
    if not mem.job_done then
       mem.timer_hook = hook.timer( 0.05, "timer" )
    end
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

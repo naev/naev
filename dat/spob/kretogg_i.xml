@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Kretogg I">
+ <pos>
+  <x>-7954.714288</x>
+  <y>1876.054512</y>
+ </pos>
+ <GFX>
+  <space>J03.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

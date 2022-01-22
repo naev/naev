@@ -10,15 +10,15 @@
   <x>306.666667</x>
   <y>632.066667</y>
  </pos>
- <assets>
-  <asset>Cutha</asset>
-  <asset>Heronus</asset>
-  <asset>Heronus Orbital</asset>
-  <asset>Terminus</asset>
-  <asset>Uridhrion I</asset>
-  <asset>Uridhrion II</asset>
-  <asset>Uridhrion III</asset>
- </assets>
+ <spobs>
+  <spob>Cutha</spob>
+  <spob>Heronus</spob>
+  <spob>Heronus Orbital</spob>
+  <spob>Terminus</spob>
+  <spob>Uridhrion I</spob>
+  <spob>Uridhrion II</spob>
+  <spob>Uridhrion III</spob>
+ </spobs>
  <jumps>
   <jump target="Feye">
    <pos x="-8480.227727" y="3424.977223"/>

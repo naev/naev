@@ -28,34 +28,34 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission constants
-local targetworld, targetworld_sys = planet.getS("Madria")
+local targetworld, targetworld_sys = spob.getS("Madria")
 
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
  -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc, from the Empire Armada Shipping Division, is sitting at the bar.") )
 end
 
 
 function accept ()
-   -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.markerAdd( targetworld_sys, "low")
+   misn.markerAdd( targetworld, "low" )
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favorite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favourite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Sirius Long Distance Recruitment"), _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at Madria in the Esker system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]]) )
+   tk.msg( _("Sirius Long Distance Recruitment"), fmt.f( _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]]), {pnt=targetworld, sys=targetworld_sys} ) )
    ---Accept the mission
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setTitle(_("Sirius Long Distance Recruitment"))
    misn.setReward( fmt.credits( emp.rewards.ldc5 ) )
-   misn.setDesc( _("Deliver a shipping diplomat for the Empire to Madria in the Esker system") )
-   misn.osdCreate(_("Sirius Long Distance Recruitment"), {_("Deliver a shipping diplomat for the Empire to Madria in the Esker system")})
+   local misn_desc = fmt.f(_("Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"), {pnt=targetworld, sys=targetworld_sys})
+   misn.setDesc( misn_desc )
+   misn.osdCreate(_("Sirius Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
    hook.land("land")
    local c = commodity.new( N_("Diplomat"), N_("An Imperial trade representative.") )
@@ -65,13 +65,13 @@ end
 
 function land()
 
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
          misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc5 )
          -- More flavour text
-         tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Madria, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]) )
+         tk.msg( _("Mission Accomplished"), fmt.f( _([[You drop the diplomat off on {pnt}, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]), {pnt=targetworld} ) )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( _([[You delivered a shipping bureaucrat to Madria for the Empire. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]) )
+         emp.addShippingLog( fmt.f( _([[You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]), {pnt=targetworld} ) )
          misn.finish(true)
    end
 end

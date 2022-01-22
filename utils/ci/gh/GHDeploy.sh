@@ -13,7 +13,6 @@ set -e
 # Defaults
 NIGHTLY="false"
 PRERELEASE="false"
-REPO="naev/naev"
 TEMPPATH="$(pwd)"
 OUTDIR="$(pwd)/dist"
 DRYRUN="false"
@@ -45,39 +44,25 @@ while getopts dnpct:o:r:g: OPTION "$@"; do
     g)
         REPONAME="${OPTARG}"
         ;;
+    *)
+        ;;
     esac
 done
 
 if [[ -z "$TAGNAME" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
-    exit -1
+    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -t <TEMPPATH> (build artefact location) -o <OUTDIR> (dist output directory) -r <TAGNAME> (tag of release *required*) -g <REPONAME> (defaults to naev/naev)"
+    exit 1
 fi
 
-retry() {
-    local -r -i max_attempts="$1"; shift
-    local -i attempt_num=1
-    until "$@"
-    do
-        if ((attempt_num==max_attempts))
-        then
-            echo "Attempt $attempt_num failed and there are no more attempts left!"
-            return 1
-        else
-            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
-            sleep $((attempt_num++))
-        fi
-    done
-}
-
-if ! [ -x "$(command -v gh)" ]; then
-    echo "You don't have gh (github cli client) in PATH"
-    exit -1
+if ! [ -x "$(command -v github-assets-uploader)" ]; then
+    echo "You don't have github-assets-uploader in PATH"
+    exit 1
 else
-    GH="gh"
+    GH="github-assets-uploader"
 fi
 
-run_gh () {
-    retry 5 $GH $@
+run_gau () {
+    $GH -retry 5 -logtostderr "$@"
 }
 
 # Collect date and assemble the VERSION suffix
@@ -86,8 +71,6 @@ BUILD_DATE="$(date +%Y%m%d)"
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
 if [ "$NIGHTLY" == "true" ]; then
-    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
-elif [ "$PRERELEASE" == "true" ]; then
     SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
 else
     SUFFIX="$VERSION"
@@ -102,76 +85,54 @@ mkdir -p "$OUTDIR"/win64
 mkdir -p "$OUTDIR"/soundtrack
 
 # Move all build artefacts to deployment locations
-# Move Linux binary and set as executable
-cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-chmod +x "$OUTDIR"/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+# Move Linux AppImage, zsync files and set AppImage as executable
+cp "$TEMPPATH"/naev-linux-x86-64/*.AppImage "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
+cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync
 
-# Move macOS bundle to deployment location
-cp "$TEMPPATH"/naev-macos/*.zip -d "$OUTDIR"/macos/naev-$SUFFIX-macos.zip
+chmod +x "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage
+
+# Move macOS dmg image to deployment location
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg
 
 # Move Windows installer to deployment location
-cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-$SUFFIX-win64.exe
+cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe
 
 # Move Dist to deployment location
-cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-$SUFFIX-source.tar.xz
+cp "$TEMPPATH"/naev-dist/source.tar.xz "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz
 
 # Move Soundtrack to deployment location if this is a release.
-if [ "$NIGHTLY" == "true" ]; then
+if [ "$NIGHTLY" == "true" ] || [ "$PRERELEASE" == "true" ]; then
     echo "not preparing soundtrack"
-elif [ "$PRERELEASE" == "false" ]; then
-    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-$SUFFIX-soundtrack.zip
+else
+    cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip
 fi
 
 # Push builds to github via gh
+#
+# Media types taken from: https://www.iana.org/assignments/media-types/media-types.xhtml
+#
 
 if [ "$DRYRUN" == "false" ]; then
-    run_gh --version
-    if [ "$NIGHTLY" == "true" ]; then
-        run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-        run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-    else
-        if [ "$PRERELEASE" == "true" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-        elif [ "$PRERELEASE" == "false" ]; then
-            run_gh release upload "$TAGNAME" "$OUTDIR"/lin64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/macos/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/win64/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/soundtrack/* --clobber
-            run_gh release upload "$TAGNAME" "$OUTDIR"/dist/* --clobber
-
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
+    run_gau -version
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$SUFFIX"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$SUFFIX"-macos.dmg -mediatype "application/octet-stream" -overwrite
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$SUFFIX"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
+    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+        run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-soundtrack.zip -mediatype "application/zip" -overwrite
     fi
+    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$SUFFIX"-source.tar.xz -mediatype "application/x-gtar" -overwrite
 elif [ "$DRYRUN" == "true" ]; then
-    run_gh --version
+    run_gau -version
     if [ "$NIGHTLY" == "true" ]; then
-        # Run github nightly upload
         echo "github nightly upload"
-        ls -l -R "$OUTDIR"
+    elif [ "$PRERELEASE" == "true" ]; then
+        echo "github beta upload"
     else
-        if [ "$PRERELEASE" == "true" ]; then
-            # Run github beta upload
-            echo "github beta upload"
-            ls -l -R "$OUTDIR"
-        elif [ "$PRERELEASE" == "false" ]; then
-            # Run github release upload
-            echo "github release upload"
-            echo "github soundtrack upload"
-            ls -l -R "$OUTDIR"
-
-        else
-            echo "Something went wrong determining if this is a PRERELEASE or not."
-        fi
+        echo "github release upload"
+        echo "github soundtrack upload"
     fi
-
+    ls -l -R "$OUTDIR"
 else
     echo "Something went wrong determining which mode to run this script in."
     exit 1

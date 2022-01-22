@@ -6,12 +6,12 @@ local eoutfits = require 'equipopt.outfits'
 
 local zalek_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Za'lek Light Drone Fighter Dock", "Za'lek Heavy Drone Fighter Dock",
-   "Za'lek Bomber Drone Fighter Dock",
+   "Za'lek Light Drone Bay", "Za'lek Heavy Drone Bay",
+   "Za'lek Bomber Drone Bay",
    "Ragnarok Beam", "Grave Beam",
    -- Medium Weapons
-   "Za'lek Heavy Drone Fighter Bay", "Za'lek Light Drone Fighter Bay",
-   "Za'lek Bomber Drone Fighter Bay",
+   "Za'lek Heavy Drone Mini Bay", "Za'lek Light Drone Mini Bay",
+   "Za'lek Bomber Drone Mini Bay",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    "Enygma Systems Spearhead Launcher", "TeraCom Fury Launcher",

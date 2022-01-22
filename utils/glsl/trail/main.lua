@@ -367,11 +367,11 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Create three beams with varying parameters
    ncoord = vec2( 0.03 * pos_px.x, 7.0*dt ) + 1000.0 * r;
    s =  0.6 * smoothstep(0.0, 0.2, 1.0-pos_tex.x);
-   p = pos_tex.y + s * snoise( ncoord );
+   p = clamp( pos_tex.y + s * snoise( ncoord ), -1.0, 1.0 );
    v = sharpbeam( p, m );
-   p = pos_tex.y + s * snoise( 1.5*ncoord );
+   p = clamp( pos_tex.y + s * snoise( 1.5*ncoord ), -1.0, 1.0 );
    v += sharpbeam( p, 2.0*m );
-   p = pos_tex.y + s * snoise( 2.0*ncoord );
+   p = clamp( pos_tex.y + s * snoise( 2.0*ncoord ), -1.0, 1.0 );
    v += sharpbeam( p, 4.0*m );
 
    v = abs(v);
@@ -444,7 +444,9 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-function set_shader( num )
+local img, scaling, shader, shader_color, shader_type
+
+local function set_shader( num )
    shader_type = num
    shader:send( "type", shader_type )
 
@@ -478,6 +480,7 @@ function love.load()
    love.graphics.setNewFont( 24 )
    -- Scaling
    scaling = 2
+   love.graphics.setBackgroundColor( 0.5, 0.5, 0.5, 1 )
 end
 
 function love.keypressed(key)
@@ -515,8 +518,9 @@ function love.draw ()
    end
 end
 
+local global_dt = 0
 function love.update( dt )
-   global_dt = (global_dt or 0) + dt
+   global_dt = global_dt + dt
    if shader:hasUniform("dt") then
       shader:send( "dt", global_dt )
    end

@@ -126,8 +126,8 @@ artwork submodule.
 To get in touch, you can visit [naev.org](https://naev.org/) which links to the project's Discord chat and Wiki.
 There are also Lua API docs there.
 
-Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) and `luacheck` packages,
-and run `pre-commit install`. The dev team is teaching `pre-commit` to handle various fussy and forgettable steps.
+Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 2.17 or newer, and run `pre-commit install`.
+The dev team is teaching `pre-commit` to handle various fussy and forgettable steps.
 
 ### ONLINE TRANSLATION
 

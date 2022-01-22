@@ -10,10 +10,10 @@
   <x>458.333333</x>
   <y>116.733333</y>
  </pos>
- <assets>
-  <asset>Aluben</asset>
-  <asset>Tenal-P</asset>
- </assets>
+ <spobs>
+  <spob>Aluben</spob>
+  <spob>Tenal-P</spob>
+ </spobs>
  <jumps>
   <jump target="Behar">
    <autopos/>

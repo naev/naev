@@ -8,8 +8,8 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Pirate Hyena Fighter Dock",
-   "Pirate Hyena Fighter Bay",
+   "Pirate Hyena Dock",
+   "Pirate Hyena Bay",
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
@@ -18,8 +18,6 @@ local pirate_outfits = eoutfits.merge{{
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
-   "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
-   "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
@@ -30,7 +28,7 @@ local pirate_outfits = eoutfits.merge{{
    "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
    "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
    "Plasma Turret MK1", "Particle Beam",
-   "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
+   "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Unicorp Scrambler", "Unicorp Light Afterburner",
    "Sensor Array", "Hellburner", "Emergency Shield Booster",
@@ -60,12 +58,13 @@ local pirate_params = {
 }
 local pirate_cores = {
    ["Pirate Kestrel"] = function (p)
-         local heavy = rnd.rnd() < 0.3
-         if heavy then
-            return ecores.get( p, { all=pirate_class, heavy=heavy } )
-         end
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class, heavy=false } )
          table.insert( c, choose_one{ "Nexus Bolt 3500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
+         return c
+      end,
+   ["Pirate Starbridge"] = function (p)
+         local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class, heavy=false } )
+         table.insert( c, choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine", } )
          return c
       end,
 }

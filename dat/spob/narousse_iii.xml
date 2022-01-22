@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Narousse III">
+ <pos>
+  <x>543.288947</x>
+  <y>-5926.751427</y>
+ </pos>
+ <GFX>
+  <space>I03.webp</space>
+  <exterior>mining2.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

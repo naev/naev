@@ -17,6 +17,8 @@
  <trail_generator x="5" y="-5" h="-45" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Heavy Combat Vessel</license>
+ <cond>faction.playerStanding("Empire") &gt;= 70</cond>
+ <condstr>You need at least 70 reputation with the Empire.</condstr>
  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>
  <health>
   <armour>2400</armour>
@@ -37,16 +39,16 @@
   <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="0" h="7" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-15" y="0" h="7" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-33" y="0" h="7" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

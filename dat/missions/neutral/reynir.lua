@@ -10,7 +10,7 @@
   <location>Bar</location>
   <cond>(function ()
            local count = 0
-           for i, p in pairs(system.cur():planets()) do
+           for i, p in pairs(system.cur():spobs()) do
               if p:services()["inhabited"] then
                  count=count+1
               end
@@ -48,7 +48,7 @@ function create ()
    misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", _("You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted.") )
 
    -- Mission variables
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
    mem.misn_bleeding = false
 end
 
@@ -57,7 +57,7 @@ function accept ()
    -- make sure there are at least 2 inhabited planets
    if (function ()
             local count = 0
-            for i, p in ipairs (system.cur():planets()) do
+            for i, p in ipairs (system.cur():spobs()) do
                if p:services()["inhabited"] then
                   count=count+1
                end
@@ -65,7 +65,7 @@ function accept ()
             return count > 1
          end) ()
       and tk.yesno( _("Spaceport Bar"), _([["Do you like money?"]]) ) and tk.yesno( _("Spaceport Bar"), _([["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]) ) then
+    "I am getting old now, as you can see. Before I die, I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]) ) then
 
       misn.accept()  -- For missions from the Bar only.
 
@@ -85,7 +85,7 @@ end
 
 function landed()
    -- If landed on mem.misn_base then give reward
-   if planet.cur() == mem.misn_base then
+   if spob.cur() == mem.misn_base then
       misn.cargoRm( mem.cargoID )
       local reward_text, log_text
       if mem.misn_bleeding then
@@ -104,7 +104,7 @@ function landed()
       misn.finish(true)
    -- If we're in mem.misn_base_sys but not on mem.misn_base then...
    elseif system.cur() == mem.misn_base_sys then
-      tk.msg( _("Reynir"), fmt.f(_([[Reynir walks out of the ship, amazed by the view. "So this is how {pnt_cur} looks like! I've always wondered... I want to go back to {pnt} now, please."]]), {pnt_cur=planet.cur(), pnt=mem.misn_base}) )
+      tk.msg( _("Reynir"), fmt.f(_([[Reynir walks out of the ship, amazed by the view. "So this is how {pnt_cur} looks like! I've always wondered... I want to go back to {pnt} now, please."]]), {pnt_cur=spob.cur(), pnt=mem.misn_base}) )
       misn.osdCreate(_("Rich reward from space!"), {fmt.f(_("Take Reynir home to {pnt}"), {pnt=mem.misn_base})})
    -- If we're in another system then make Reynir bleed out his ears ;)
    else

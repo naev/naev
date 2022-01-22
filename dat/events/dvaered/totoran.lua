@@ -3,7 +3,7 @@
 <event name="Totoran Station Events">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur()==planet.get("Totoran")</cond>
+ <cond>spob.cur()==spob.get("Totoran")</cond>
 </event>
 --]]
 
@@ -38,7 +38,7 @@ local spectator_messages = {
    _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
-      {pnt=planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )} -- No Dvaered
+      {pnt=spob.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )} -- No Dvaered
    ) end,
    _([["The Dvaered sure know how to put on a good show. I love seeing it rain Mace Rockets!"]]),
    _([["It's a shame that they require you to own the ship you want to use to enter the virtual reality competitions. I would love to try fly one of those majestic Dvaered Goddards."]]),
@@ -70,6 +70,15 @@ local pilot_messages = {
    _([["Sometimes I get motion sickness from the virtual reality. What's more troublesome is it also happens when I fly my real ship!"]]),
    _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
 }
+
+local function hasIntrinsic( p, o )
+   for k,v in ipairs( p:outfits("intrinsic") ) do
+      if v==o then
+         return true
+      end
+   end
+   return false
+end
 
 local guide_priority = 6
 
@@ -139,7 +148,7 @@ function approach_guide ()
    }
 
    vn.label("info_overview")
-   guide(_("The Crimson Gauntlet is allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
+   guide(_("The Crimson Gauntlet allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
    vn.jump("menu_info")
 
    vn.label("info_gauntlet")
@@ -174,6 +183,7 @@ function approach_guide ()
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
       {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
+      {name=("Gauntlet Deluxe"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
    }
    local tradein_item = nil
    local handler = function (idx)
@@ -194,6 +204,8 @@ function approach_guide ()
 
       if t.type == "var" then
          tradein_item.description = t.description
+      elseif t.type == "intrinsic" then
+         tradein_item.description = t.outfit:description()
       else
          error(_("unknown tradein type"))
       end
@@ -208,6 +220,9 @@ function approach_guide ()
             toadd = false
          end
          if v.type=="var" and var.peek(v.var) then
+            toadd = false
+         end
+         if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
             toadd = false
          end
          if toadd then
@@ -244,6 +259,8 @@ Is there anything else you would like to purchase?"]]), {
       gauntlet.emblems_pay( -t.cost )
       if t.type == "var" then
          var.push( t.var, true )
+      elseif t.type == "intrinsic" then
+         player.pilot():outfitAddIntrinsic( t.outfit )
       else
          error(_("unknown tradein type"))
       end

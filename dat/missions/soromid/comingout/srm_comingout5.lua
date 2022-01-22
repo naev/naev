@@ -25,13 +25,13 @@ local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
 local srm = require "common.soromid"
 
--- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
 
 mem.misn_title = _("Waste Collector")
 mem.misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
 
 function create ()
-   mem.misplanet, mem.missys = planet.getS( "The Stinker" )
+   mem.misplanet, mem.missys = spob.getS( "The Stinker" )
    if mem.misplanet == nil or mem.missys == nil or system.cur():jumpDist(mem.missys) > 4 then
       misn.finish( false )
    end
@@ -61,13 +61,13 @@ function accept ()
       misn.setTitle( mem.misn_title )
       misn.setDesc( fmt.f( mem.misn_desc, {pnt=mem.misplanet} ) )
       misn.setReward( fmt.credits( mem.credits ) )
-      mem.marker = misn.markerAdd( mem.missys, "low" )
+      mem.marker = misn.markerAdd( mem.misplanet, "low" )
 
       misn.osdCreate( mem.misn_title, {
          fmt.f( _("Escort Chelsea to {pnt} in the {sys} system."), {pnt=mem.misplanet, sys=mem.missys} ),
       } )
 
-      mem.startplanet = planet.cur()
+      mem.startplanet = spob.cur()
 
       hook.takeoff( "takeoff" )
       hook.jumpout( "jumpout" )
@@ -81,11 +81,11 @@ end
 
 
 function spawnChelseaShip( param )
-   if not mem.fass then
-      mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   if not fass then
+      fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    end
 
-   chelsea = pilot.add( "Rhino", mem.fass, param, _("Chelsea") )
+   chelsea = pilot.add( "Rhino", fass, param, _("Chelsea") )
 
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
@@ -94,7 +94,6 @@ function spawnChelseaShip( param )
    chelsea:outfitAdd( "S&K Medium Cargo Hull" )
    chelsea:outfitAdd( "Heavy Ripper Turret", 2 )
    chelsea:outfitAdd( "Enygma Systems Turreted Fury Launcher", 2 )
-   chelsea:outfitAdd( "Fury Missile", 80 )
    chelsea:outfitAdd( "Medium Shield Booster" )
    chelsea:outfitAdd( "Targeting Array" )
    chelsea:outfitAdd( "Droid Repair Crew" )
@@ -123,14 +122,14 @@ end
 
 
 function spawnThug( param )
-   if not mem.fthug then
-      mem.fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
-      mem.fthug:dynEnemy(mem.fass)
+   if not fthug then
+      fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+      fthug:dynEnemy(fass)
    end
 
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   local thug = pilot.add( shiptype, mem.fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
@@ -149,7 +148,7 @@ end
 
 
 function land ()
-   if planet.cur() == mem.misplanet then
+   if spob.cur() == mem.misplanet then
       tk.msg( _("The Unbearable Smell Now Ends"), _([[As you dock, you can't help but notice the foul smell of garbage all around you. The planet really does fit the name. You grimace as you watch workers unload what must be hundreds of tonnes of garbage from Chelsea's ship, some of which is leaking. Eventually Chelsea's ship is emptied and you and Chelsea are handed your credit chips for the job. You and Chelsea part ways, vowing to take a shower immediately while Chelsea vows to scrub the cargo hold of their ship clean.]]) )
       player.pay( mem.credits )
 

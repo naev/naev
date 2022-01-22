@@ -27,7 +27,7 @@ local reward = 200e3
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
-local targetworld, targetworld_sys = planet.getS("Zhiru")
+local targetworld, targetworld_sys = spob.getS("Zhiru")
 
 -- luacheck: globals land (Hook functions passed by name)
 
@@ -74,11 +74,11 @@ end
 
 function land ()
   --If we land, check if we're at our destination
-   if planet.cur() == targetworld then
+   if spob.cur() == targetworld then
       misn.cargoRm( mem.cargoID )
       player.pay( reward )
 
-      tk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind yourself.
+      tk.msg( _("The Runaway"), _([[As you walk into the docking bay, she warns you to look out behind you.
     When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]) )
 
       neu.addMiscLog( _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you got there, she suddenly disappeared, leaving behind a tidy pile of credit chips and a worthless pendant.]]) )

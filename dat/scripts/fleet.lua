@@ -10,7 +10,7 @@ local function _buildDupeTable( input, count )
    local tmp = {}
    if type(input) == "table" then
       if #input ~= count then
-         print(_("Warning: Tables are different lengths."))
+         warn(_("Tables are different lengths."))
       end
       return input
    else

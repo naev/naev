@@ -42,7 +42,7 @@ enum {
  * Landed at.
  */
 extern int landed;
-extern Planet* land_planet;
+extern Spob* land_spob;
 extern int land_takeoff;
 
 /* Tracking for which tabs have been generated. */
@@ -54,8 +54,9 @@ extern unsigned int land_generated;
  * Main interface.
  */
 void land_queueTakeoff (void);
+int land_canSave (void);
 int land_doneLoading (void);
-void land( Planet* p, int load );
+void land( Spob* p, int load );
 void land_genWindows( int load, int changetab );
 void takeoff( int delay );
 void land_cleanup (void);
@@ -74,8 +75,8 @@ void bar_regen (void);
 /*
  * Error dialogue generation and associated checks.
  */
-int  can_swap( const char *shipname );
-int  can_swapEquipment( const char *shipname );
-int  can_sell( const char *shipname );
-int  land_errDialogue( const char *name, const char *type );
+int can_swap( const char *shipname );
+int can_swapEquipment( const char *shipname );
+int can_sell( const char *shipname );
+int land_errDialogue( const char *name, const char *type );
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );

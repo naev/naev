@@ -10,16 +10,16 @@
   <x>858.710496</x>
   <y>-822.702879</y>
  </pos>
- <assets>
-  <asset>Daal</asset>
-  <asset>Hankies</asset>
-  <asset>Huan'xi</asset>
-  <asset>Mastodon Station</asset>
-  <asset>Orville Shipyard</asset>
-  <asset>Rhu II</asset>
-  <asset>Rhu III</asset>
-  <asset>Rhu IV</asset>
- </assets>
+ <spobs>
+  <spob>Daal</spob>
+  <spob>Hankies</spob>
+  <spob>Huan'xi</spob>
+  <spob>Mastodon Station</spob>
+  <spob>Orville Shipyard</spob>
+  <spob>Rhu II</spob>
+  <spob>Rhu III</spob>
+  <spob>Rhu IV</spob>
+ </spobs>
  <jumps>
   <jump target="Ruttwi">
    <autopos/>

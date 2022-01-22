@@ -314,9 +314,6 @@ cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
 end
 
--- Load Soromid Exceptions
-require "equipopt.cores_soromid"( cores )
-
 --[[
 cores.get( "Fighter", { all="elite" } )
 cores.get( "Fighter", { all={"standard","elite"} )
@@ -327,6 +324,9 @@ function cores.get( p, params )
       return nil
    end
    local s = p:ship()
+   if s:tags().bioship then
+      return
+   end
    local shipclass = s:class()
    local shipname = s:nameRaw()
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fortitude II">
+ <pos>
+  <x>5694.944255</x>
+  <y>9618.349768</y>
+ </pos>
+ <GFX>
+  <space>J08.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

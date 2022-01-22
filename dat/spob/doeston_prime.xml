@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Doeston Prime">
+ <pos>
+  <x>3101.780922</x>
+  <y>-3707.348429</y>
+ </pos>
+ <GFX>
+  <space>J07.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

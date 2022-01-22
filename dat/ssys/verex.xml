@@ -10,12 +10,12 @@
   <x>208.000000</x>
   <y>-450.000000</y>
  </pos>
- <assets>
-  <asset>Verex I</asset>
-  <asset>Verex II</asset>
-  <asset>Verex III</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Verex I</spob>
+  <spob>Verex II</spob>
+  <spob>Verex III</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Blunderbuss">
    <autopos/>

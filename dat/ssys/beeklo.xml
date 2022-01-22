@@ -11,14 +11,14 @@
   <x>240.000000</x>
   <y>-573.000000</y>
  </pos>
- <assets>
-  <asset>Adham</asset>
-  <asset>Beeklo II</asset>
-  <asset>Diabolos</asset>
-  <asset>Icarus</asset>
-  <asset>Totoran</asset>
-  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Adham</spob>
+  <spob>Beeklo II</spob>
+  <spob>Diabolos</spob>
+  <spob>Icarus</spob>
+  <spob>Totoran</spob>
+  <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Awowa">
    <autopos/>

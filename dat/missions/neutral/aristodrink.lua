@@ -45,7 +45,7 @@ moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approa
 local worktxt = {}
 worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my specialty." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
-worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to them and he interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to him and he interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as he's about to start making it, though, you stop him and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully his trained hands move, flipping bottles and shaking various containers. Before you know it, he's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
@@ -56,7 +56,7 @@ function create ()
    -- creates the NPC at the bar to create the mission
    misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.webp", _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.") )
 
-   mem.startplanet, mem.startsys = planet.cur()
+   mem.startplanet, mem.startsys = spob.cur()
    mem.prevPlanets[1] = mem.startplanet
    mem.numjumps = 0
 
@@ -66,9 +66,9 @@ function create ()
 end
 
 function accept ()
-   if not tk.yesno( _("Drinking Aristocrat"), fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
+   if not tk.yesno( _("Drinking Aristocrat"), fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so... common.
     You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]), {pnt=mem.clueplanet, sys=mem.cluesys} ) ) then
-      tk.msg( _("Refuse"), _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]) )
+      tk.msg( _("Refuse"), _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. Ignoring you, he puts his drink back on the table and motions to the bartender.]]) )
       misn.finish()
 
    else
@@ -81,7 +81,7 @@ function accept ()
       misn.setReward( _("He will pay handsomely.") )
       misn.setDesc( _("Go find a specific drink for an aristocrat.") )
 
-      tk.msg( _("Leave Immediately"), _([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]]) )
+      tk.msg( _("Leave Immediately"), _([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." Ignoring you, the aristocrat goes back to sipping his drink, making an awful face every time he tastes it. You walk away, a bit confused.]]) )
 
       -- how many systems you'll have to run through
       mem.numclues = rnd.rnd(1,5)
@@ -97,7 +97,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == mem.clueplanet then
+   if spob.cur() == mem.clueplanet then
       if mem.numclues > 0 then   -- first clue
          mem.numclues = mem.numclues - 1
          mem.numjumps = mem.numjumps + 1
@@ -145,9 +145,9 @@ function land ()
             end
          end
       end
-   elseif mem.hasDrink and planet.cur() == mem.startplanet then
+   elseif mem.hasDrink and spob.cur() == mem.startplanet then
       lmisn.sfxVictory()
-      tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
+      tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your efforts. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
     When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]), {credits=fmt.credits(payment)} ) )
       player.outfitAdd( "Swamp Bombing" )
@@ -165,7 +165,7 @@ function getclueplanet ( mini, maxi )
 
    lmisn.getSysAtDistance( system.cur(), mini, maxi,
       function(s)
-         for i, v in ipairs(s:planets()) do
+         for i, v in ipairs(s:spobs()) do
             if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then
                planets[#planets + 1] = {v, s}
             end

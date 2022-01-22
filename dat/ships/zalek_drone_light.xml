@@ -4,7 +4,7 @@
  <base_type>Za'lek Light Drone</base_type>
  <GFX size="40">zalek_drone_light</GFX>
  <GUI>brushed</GUI>
- <sound>engine</sound>
+ <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>90000</price>
  <time_mod>0.8</time_mod>
@@ -34,12 +34,14 @@
   <cpu>10</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="10" y="-1" h="-3" />
+  <weapon size="small" x="10" y="-1" h="-3">Particle Lance</weapon>
   <utility size="small" />
   <structure size="small" />
  </slots>
  <tags>
   <tag>noplayer</tag>
+  <tag>noequip</tag>
   <tag>zalek</tag>
+  <tag>drone</tag>
  </tags>
 </ship>

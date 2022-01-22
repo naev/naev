@@ -9,7 +9,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <cond>var.peek("flfbase_intro") == 2</cond>
-  <planet>Sindbad</planet>
+  <spob>Sindbad</spob>
  </avail>
  <notes>
   <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
@@ -35,7 +35,7 @@ local fmt = require "format"
 require "missions.flf.flf_patrol"
 
 -- luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (from base mission flf_patrol)
--- luacheck: globals hail land_dv returnFLFControl timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
+-- luacheck: globals hail land_dv timer_hail timer_rehail timer_spawnFLF timer_spawnHostileFLF (Hook functions passed by name)
 
 local boss -- Non-persistent state
 
@@ -70,7 +70,7 @@ function accept ()
       mem.marker = misn.markerAdd( mem.missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      mem.DVplanet, mem.DVsys = planet.getS("Raelid Outpost")
+      mem.DVplanet, mem.DVsys = spob.getS("Raelid Outpost")
 
       mem.reinforcements_arrived = false
       mem.dv_ships_left = 0
@@ -169,7 +169,7 @@ function hail ()
    player.commClose()
    tk.msg( _("A tempting offer"), _([[Your viewscreen shows a Dvaered Colonel. He looks tense. Normally, a tense Dvaered would be bad news, but then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye.]]) )
    tk.msg( _("A tempting offer"), _([["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has looked through our records and found that you were recently a law-abiding citizen, doing honest freelance missions."]]) )
-   local choice = tk.choice( _("A tempting offer"), fmt.f( _([["I know your type, {player}. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]), {player=player.name()} ),
+   local choice = tk.choice( _("A tempting offer"), fmt.f( _([["I know your type, {player}. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on the FLF's base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]), {player=player.name()} ),
       _("Accept the offer"), _("Remain loyal to the FLF") )
    if choice == 1 then
       tk.msg( _("Opportunism is an art"), fmt.f( _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to {pnt} in the {sys} system, citizen. I will personally meet you there."]]), {pnt=mem.DVplanet, sys=mem.DVsys} ) )
@@ -193,7 +193,7 @@ function hail ()
       misn.osdActive( 1 )
       misn.osdCreate( _("Dvaered Patrol"), mem.osd_desc )
       misn.markerRm( mem.marker )
-      mem.marker = misn.markerAdd( mem.DVsys, "high" )
+      mem.marker = misn.markerAdd( mem.DVplanet, "high" )
 
       mem.spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
@@ -241,22 +241,12 @@ function timer_spawnHostileFLF ()
    spawnFLF()
    local pp = player.pilot()
    for i, j in ipairs( fleetFLF ) do
+      j:changeAI( "baddiepos" )
       j:setHostile()
-      j:control()
-      j:attack( pp )
+      j:memory().guardpos = pp:pos()
    end
 
-   hook.pilot( pp, "death", "returnFLFControl" )
    fleetFLF[1]:broadcast( fmt.f( _("{player} is selling us out! Eliminate the traitor!"), {player=player.name()} ) )
-end
-
-
-function returnFLFControl()
-   for i, j in ipairs( fleetFLF ) do
-      if j:exists() then
-         j:control( false )
-      end
-   end
 end
 
 
@@ -301,11 +291,11 @@ end
 
 function land_flf ()
    leave()
-   if planet.cur():faction() == faction.get("FLF") then
+   if spob.cur():faction() == faction.get("FLF") then
       tk.msg( _("Breaking the ice"), _([[When you left Sindbad Station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been.
     But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.]]) )
       tk.msg( _("Breaking the ice"), fmt.f( _([["Welcome back, {player}, and congratulations. I didn't expect the Dvaered to send reinforcements, much less a Vigilance. I certainly wouldn't have sent you alone if I did, and I might not have sent you at all. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"]]), {player=player.name()} ) )
-      tk.msg( _("Breaking the ice"), _([[Benito takes you to the station's bar and buys you what for lack of a better word must be called a drink.
+      tk.msg( _("Breaking the ice"), _([[Benito takes you to the station's bar and buys you what, for lack of a better word, must be called a drink.
     "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF doesn't have that big a budget. Financial support is tricky, and the Frontier doesn't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, so from today on, you can call yourself one of us! How about that, huh?"]]) )
       tk.msg( _("Breaking the ice"), _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Pentagram of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]]) )
@@ -322,13 +312,13 @@ end
 
 function land_dv ()
    leave()
-   if planet.cur() == mem.DVplanet then
+   if spob.cur() == mem.DVplanet then
       tk.msg( _("A reward for a job well botched"), _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
     "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]]) )
       tk.msg( _("A reward for a job well botched"), _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.
-    "Anyway. I promised you money, status and opportunities, and I intend to make good on those promises. Your money is already in your account. Check your balance sheet later. As for status, I can assure you that no Dvaered will find out what you've been up to. As far as the military machine is concerned, you have nothing to do with the FLF. In fact, you're known as an important ally in the fight against them! Finally, opportunities. We're analyzing the data from your flight recorder as we speak, and you'll be asked a few questions after we're done here. Based on that, we can form a new strategy against the FLF. Unless I miss my guess by a long shot, we'll be moving against them in force very soon, and I will make sure you'll be given the chance to be part of that. I'm sure it'll be worth your while."]]) )
+    "Anyway. I promised you money, status, and opportunities, and I intend to make good on those promises. Your money is already in your account. Check your balance later. As for status, I can assure you that no Dvaered will find out what you've been up to. As far as the military machine is concerned, you have nothing to do with the FLF. In fact, you're known as an important ally in the fight against them! Finally, opportunities. We're analyzing the data from your flight recorder as we speak, and you'll be asked a few questions after we're done here. Based on that, we can form a new strategy against the FLF. Unless I miss my guess by a long shot, we'll be moving against them in force very soon, and I will make sure you'll be given the chance to be part of that. I'm sure it'll be worth your while."]]) )
       tk.msg( _("A reward for a job well botched"), _([[Urnus stands up, a sign that this meeting is drawing to a close. "Keep your eyes open for one of our liaisons, citizen. He'll be your ticket into the upcoming battle. Now, I'm a busy man so I'm going to have to ask you to leave. But I hope we'll meet again, and if you continue to build your career like you have today, I'm sure we will. Good day to you!"
-    You leave the Colonel's office. You are then taken to an interrogation room, where Dvaered petty officers question you politely yet persistently about your brief stay with the FLF. Once their curiosity is satisfied, they let you go, and you are free to return to your ship.]]) )
+    You leave the Colonel's office. You are then taken to an interrogation room, where Dvaered petty officers question you politely yet persistently, about your brief stay with the FLF. Once their curiosity is satisfied, they let you go, and you are free to return to your ship.]]) )
       player.pay( 70e3 )
       var.push( "flfbase_intro", 3 )
       if diff.isApplied( "FLF_base" ) then diff.remove( "FLF_base" ) end

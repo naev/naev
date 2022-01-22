@@ -10,15 +10,15 @@
   <x>818.745371</x>
   <y>208.025463</y>
  </pos>
- <assets>
-  <asset>Ariak</asset>
-  <asset>HS-232</asset>
-  <asset>Onasan</asset>
-  <asset>SY-1206</asset>
-  <asset>SY-894</asset>
-  <asset>SY-920</asset>
-  <asset>Servax</asset>
- </assets>
+ <spobs>
+  <spob>Ariak</spob>
+  <spob>HS-232</spob>
+  <spob>Onasan</spob>
+  <spob>SY-1206</spob>
+  <spob>SY-894</spob>
+  <spob>SY-920</spob>
+  <spob>Servax</spob>
+ </spobs>
  <jumps>
   <jump target="Rotide">
    <autopos/>

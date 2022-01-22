@@ -10,9 +10,9 @@
   <x>98.481300</x>
   <y>236.146136</y>
  </pos>
- <assets>
-  <asset>Fury I</asset>
- </assets>
+ <spobs>
+  <spob>Fury I</spob>
+ </spobs>
  <jumps>
   <jump target="Bastion">
    <autopos/>

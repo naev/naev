@@ -10,13 +10,13 @@
   <x>816.000000</x>
   <y>545.000000</y>
  </pos>
- <assets>
-  <asset>HS-54</asset>
-  <asset>Kaira</asset>
-  <asset>NS-27</asset>
-  <asset>Nasano</asset>
-  <asset>Sevlow</asset>
- </assets>
+ <spobs>
+  <spob>HS-54</spob>
+  <spob>Kaira</spob>
+  <spob>NS-27</spob>
+  <spob>Nasano</spob>
+  <spob>Sevlow</spob>
+ </spobs>
  <jumps>
   <jump target="Aesria">
    <autopos/>

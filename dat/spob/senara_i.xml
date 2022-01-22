@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Senara I">
+ <pos>
+  <x>-2848.637025</x>
+  <y>-4703.563460</y>
+ </pos>
+ <GFX>
+  <space>D03.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

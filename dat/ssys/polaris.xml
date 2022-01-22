@@ -10,7 +10,9 @@
   <x>662.000000</x>
   <y>132.000000</y>
  </pos>
- <assets/>
+ <spobs>
+  <spob>Hypergate Polaris</spob>
+ </spobs>
  <jumps>
   <jump target="Nasona">
    <autopos/>

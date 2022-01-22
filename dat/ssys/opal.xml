@@ -10,11 +10,11 @@
   <x>-114.364587</x>
   <y>663.152480</y>
  </pos>
- <assets>
-  <asset>Edorn</asset>
-  <asset>Opal I</asset>
-  <asset>Sharak</asset>
- </assets>
+ <spobs>
+  <spob>Edorn</spob>
+  <spob>Opal I</spob>
+  <spob>Sharak</spob>
+ </spobs>
  <jumps>
   <jump target="Hadosh">
    <autopos/>

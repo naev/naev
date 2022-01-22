@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
- <price>400000</price>
+ <price>450000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="3" y="18" h="0">nebula</trail_generator>
  <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
@@ -15,14 +15,16 @@
  <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel</license>
- <description>This military grade version of the Vendetta has stronger armour and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>
+ <cond>faction.playerStanding("Dvaered") &gt;= 30</cond>
+ <condstr>You need at least 30 reputation with House Dvaered.</condstr>
+ <description>On this military grade version of the Vendetta, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
-  <armour>110</armour>
+  <armour>100</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>80</mass>
+  <mass>100</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
@@ -33,20 +35,19 @@
   <weapon size="small" x="13" y="13" h="0" />
   <weapon size="small" x="19" y="0" h="-2" />
   <weapon size="small" x="3" y="0" h="2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
+  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <turn_mod>-5</turn_mod>
-  <armour_mod>20</armour_mod>
+  <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>-15</fwd_heat>
+  <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
   <tag>dvaered</tag>

@@ -63,13 +63,13 @@ enum {
 /** @brief Object type: like SafeLaneLocType, but with Naev stack indexing in mind.
  *  @TODO Converge these after beefing up nlua APIs (#1862 or just jump point from internal indices).
  */
-typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
+typedef enum VertexType_ {VERTEX_SPOB, VERTEX_JUMP} VertexType;
 
-/** @brief Reference to a planet or jump point. */
+/** @brief Reference to a spob or jump point. */
 typedef struct Vertex_ {
    int system;      /**< ID of the system containing the object. */
    VertexType type; /**< Which of Naev's list contains it? */
-   int index;       /**< Index in the system's planets or jumps array. */
+   int index;       /**< Index in the system's spobs or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -99,7 +99,7 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_planet_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
+static int *tmp_spob_indices; /**< Array (array.h): The vertex IDs of spobs, to set up ftilde/PPl. Unrelated to spob IDs. */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to set up "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to set up "stiff". */
@@ -227,9 +227,9 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
       l->faction = lane_faction[i];
       for (int j=0; j<2; j++) {
          switch (v[j]->type) {
-            case VERTEX_PLANET:
-               l->point_type[j]   = SAFELANE_LOC_PLANET;
-               l->point_id[j]     = system->planets[v[j]->index]->id;
+            case VERTEX_SPOB:
+               l->point_type[j]   = SAFELANE_LOC_SPOB;
+               l->point_id[j]     = system->spobs[v[j]->index]->id;
                break;
             case VERTEX_JUMP:
                l->point_type[j]   = SAFELANE_LOC_DEST_SYS;
@@ -262,7 +262,7 @@ void safelanes_recalculate (void)
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
    if (conf.devmode)
-      DEBUG( n_("Charted safe lanes for %d object in %.3f s.", "Charted safe lanes for %d objects in %.3f s.", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
+      DEBUG( n_("Charted safe lanes for %d object in %.3f s", "Charted safe lanes for %d objects in %.3f s", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
 
    safelanes_calculated_once = 1;
 }
@@ -355,7 +355,7 @@ static void safelanes_initStacks_vertex (void)
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
-   tmp_planet_indices = array_create( int );
+   tmp_spob_indices = array_create( int );
    tmp_jump_edges = array_create( Edge );
    for (int system=0; system<array_size(systems_stack); system++) {
       const StarSystem *sys = &systems_stack[system];
@@ -363,11 +363,11 @@ static void safelanes_initStacks_vertex (void)
       if (sys_isFlag( sys, SYSTEM_NOLANES ))
          continue;
 
-      for (int i=0; i<array_size(sys->planets); i++) {
-         const Planet *p = sys->planets[i];
+      for (int i=0; i<array_size(sys->spobs); i++) {
+         const Spob *p = sys->spobs[i];
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
-            Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
-            array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
+            Vertex v = {.system = system, .type = VERTEX_SPOB, .index = i};
+            array_push_back( &tmp_spob_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
       }
@@ -519,8 +519,8 @@ static void safelanes_destroyStacks (void)
 static void safelanes_destroyTmp (void)
 {
    unionfind_free( &tmp_sys_uf );
-   array_free( tmp_planet_indices );
-   tmp_planet_indices = NULL;
+   array_free( tmp_spob_indices );
+   tmp_spob_indices = NULL;
    array_free( tmp_jump_edges );
    tmp_jump_edges = NULL;
    array_free( tmp_edge_conduct );
@@ -619,7 +619,7 @@ static void safelanes_initQtQ (void)
 static void safelanes_initFTilde (void)
 {
    cholmod_sparse *eye = cholmod_speye( array_size(vertex_stack), array_size(vertex_stack), CHOLMOD_REAL, &C );
-   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_planet_indices, array_size(tmp_planet_indices), 1, SORTED, &C );
+   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_spob_indices, array_size(tmp_spob_indices), 1, SORTED, &C );
    cholmod_free_dense( &ftilde, &C );
    ftilde = cholmod_sparse_to_dense( sp, &C );
    cholmod_free_sparse( &sp, &C );
@@ -632,7 +632,7 @@ static void safelanes_initFTilde (void)
 static void safelanes_initPPl (void)
 {
    int *component;
-   int np = array_size(tmp_planet_indices);
+   int np = array_size(tmp_spob_indices);
 
    for (int fi=0; fi<array_size(PPl); fi++)
       cholmod_free_dense( &PPl[fi], &C );
@@ -646,12 +646,12 @@ static void safelanes_initPPl (void)
 
    component = calloc( np, sizeof(int) );
    for (int i=0; i<np; i++)
-      component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_planet_indices[i]].system );
+      component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_spob_indices[i]].system );
 
    for (int i=0; i<np; i++) {
       double *Di;
-      int sys = vertex_stack[tmp_planet_indices[i]].system;
-      Planet *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
+      int sys = vertex_stack[tmp_spob_indices[i]].system;
+      Spob *pnt = system_getIndex( sys )->spobs[vertex_stack[tmp_spob_indices[i]].index];
       double pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
       int fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)
@@ -852,8 +852,8 @@ static int vertex_faction( int vi )
 {
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
-      case VERTEX_PLANET:
-         return sys->planets[vertex_stack[vi].index]->presence.faction;
+      case VERTEX_SPOB:
+         return sys->spobs[vertex_stack[vi].index]->presence.faction;
       case VERTEX_JUMP:
          return -1;
       default:
@@ -868,8 +868,8 @@ static const Vector2d* vertex_pos( int vi )
 {
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
-      case VERTEX_PLANET:
-         return &sys->planets[vertex_stack[vi].index]->pos;
+      case VERTEX_SPOB:
+         return &sys->spobs[vertex_stack[vi].index]->pos;
       case VERTEX_JUMP:
          return &sys->jumps[vertex_stack[vi].index].pos;
       default:

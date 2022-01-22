@@ -19,7 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_outfit.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_time.h"
@@ -258,12 +258,12 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
 
       /* User data must be handled here. */
       case LUA_TUSERDATA:
-         if (lua_isplanet(L,-1)) {
-            Planet *pnt = planet_getIndex( lua_toplanet(L,-1) );
+         if (lua_isspob(L,-1)) {
+            Spob *pnt = spob_getIndex( lua_tospob(L,-1) );
             if (pnt != NULL)
-               nxml_saveData( writer, PLANET_METATABLE, name, name_len, pnt->name, keynum );
+               nxml_saveData( writer, SPOB_METATABLE, name, name_len, pnt->name, keynum );
             else
-               WARN(_("Failed to save invalid planet."));
+               WARN(_("Failed to save invalid spob."));
             /* key, value */
             break;
          }
@@ -368,7 +368,7 @@ int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
-   nlua_getenv(env, "mem");
+   nlua_getenv(naevL, env, "mem");
 
    lua_pushnil(naevL);         /* nil */
    /* str, nil */
@@ -434,18 +434,19 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushboolean(L,xml_getInt(node));
          else if (strcmp(type,"string")==0)
             lua_pushstring(L,xml_get(node));
-         else if ( strcmp( type, "string_base64" ) == 0 ) {
+         else if (strcmp( type, "string_base64" ) == 0) {
             data = base64_decode_cstr( &len, xml_get( node ) );
             lua_pushlstring( L, data, len );
             free( data );
          }
-         else if (strcmp(type,PLANET_METATABLE)==0) {
-            Planet *pnt = planet_get(xml_get(node));
+         else if (strcmp(type,SPOB_METATABLE)==0 ||
+               (strcmp(type,"planet")==0)) { /* TODO "planet" check remove in 0.11.0. */
+            Spob *pnt = spob_get(xml_get(node));
             if (pnt != NULL) {
-               lua_pushplanet(L,planet_index(pnt));
+               lua_pushspob(L,spob_index(pnt));
             }
             else
-               WARN(_("Failed to load nonexistent planet '%s'"), xml_get(node));
+               WARN(_("Failed to load nonexistent spob '%s'"), xml_get(node));
          }
          else if (strcmp(type,SYSTEM_METATABLE)==0) {
             StarSystem *ss = system_get(xml_get(node));
@@ -518,7 +519,7 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 {
    int ret;
 
-   nlua_getenv(env, "mem");
+   nlua_getenv(naevL, env, "mem");
    ret = nxml_unpersistDataNode(naevL,parent);
    lua_pop(naevL,1);
 

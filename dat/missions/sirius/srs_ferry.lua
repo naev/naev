@@ -36,13 +36,13 @@
 -- All missions can be made in a Fidelity with an afterburner
 --
 --]]
-
 local car = require "common.cargo"
 local fmt = require "format"
+local srs = require "common.sirius"
 
 -- luacheck: globals land tick (Hook functions passed by name)
 
-local dest_planet, dest_sys = planet.getS("Mutris")
+local dest_planet, dest_sys = spob.getS("Mutris")
 
 -- passenger rank
 local prank = {}
@@ -83,7 +83,7 @@ ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the l
 
 -- Customization of car.calculateRoute in common.cargo
 local function ferry_calculateRoute (dplanet, dsys)
-    mem.origin_p, mem.origin_s = planet.cur()
+    mem.origin_p, mem.origin_s = spob.cur()
     local routesys = mem.origin_s
     local routepos = mem.origin_p:pos()
 
@@ -119,7 +119,7 @@ function create()
        misn.finish(false)
     end
 
-    mem.origin_p, mem.origin_s = planet.cur()
+    mem.origin_p, mem.origin_s = spob.cur()
     if mem.origin_s == dest_sys then
        misn.finish(false)
     end
@@ -157,8 +157,8 @@ function create()
     mem.distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
     mem.distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
-    misn.markerAdd(mem.destsys, "computer")
-    misn.setTitle( fmt.f(_("SR: {tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
+    misn.markerAdd(mem.destplanet, "computer")
+    misn.setTitle( fmt.f(srs.prefix.._("{tier} pilgrimage transport for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], rank=prank[mem.rank]}) )
     car.setDesc( fmt.f(_("{tier} space transport to {pnt} for {rank}-class citizen"), {tier=ferrytime[mem.print_speed], pnt=mem.destplanet, rank=prank[mem.rank]}), nil, nil, mem.destplanet, mem.timelimit )
     misn.setReward(fmt.credits(mem.reward))
 
@@ -200,7 +200,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
         local counter = 0
         local altplanets = {}
-        for key,dplanet in ipairs( mem.destsys:planets() ) do
+        for key,dplanet in ipairs( mem.destsys:spobs() ) do
             if dplanet:canLand() then
                 counter = counter + 1
                 altplanets[counter] = dplanet
@@ -296,7 +296,7 @@ end
 
 -- Land hook
 function land()
-    if planet.cur() == mem.destplanet then
+    if spob.cur() == mem.destplanet then
 
         -- Check if we're still flying a Sirian ship
         mem.has_sirian_ship = player_has_sirian_ship()

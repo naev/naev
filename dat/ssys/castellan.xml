@@ -10,14 +10,14 @@
   <x>316.155052</x>
   <y>-693.384912</y>
  </pos>
- <assets>
-  <asset>Castellan Epsilon</asset>
-  <asset>Castellan I</asset>
-  <asset>Castellan III</asset>
-  <asset>Castellan VI</asset>
-  <asset>Dunmer</asset>
-  <asset>Leszec</asset>
- </assets>
+ <spobs>
+  <spob>Castellan Epsilon</spob>
+  <spob>Castellan I</spob>
+  <spob>Castellan III</spob>
+  <spob>Castellan VI</spob>
+  <spob>Dunmer</spob>
+  <spob>Leszec</spob>
+ </spobs>
  <jumps>
   <jump target="Farizel">
    <autopos/>

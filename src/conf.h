@@ -7,55 +7,56 @@
  * CONFIGURATION DEFAULTS
  */
 /* Gameplay options */
-#define DOUBLETAP_SENSITIVITY_DEFAULT        250   /**< Default afterburner sensitivity. */
-#define TIME_COMPRESSION_DEFAULT_MAX         5000. /**< Maximum default level of time compression (target speed to match). */
-#define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
-#define REDIRECT_FILE_DEFAULT                1     /**< Whether output should be redirected to a file. */
-#define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
-#define MOUSE_FLY_DEFAULT                    1     /**< Whether or not middle clicking enables mouse flying. */
-#define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
-#define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
-#define AUTONAV_RESET_DIST_DEFAULT           5000. /**< Distance of an enemy to reset autonav speed at. */
-#define AUTONAV_RESET_SHIELD_DEFAULT         1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
-#define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
-#define ZOOM_FAR_DEFAULT                     0.5   /**< Far zoom distance (smaller is further) */
-#define ZOOM_NEAR_DEFAULT                    1.0   /**< Close zoom distance (bigger is larger) */
-#define MAP_OVERLAY_OPACITY_DEFAULT          0.3   /**< Opacity fraction (0-1) for the overlay map. */
-#define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
+#define DOUBLETAP_SENSITIVITY_DEFAULT  250   /**< Default afterburner sensitivity. */
+#define TIME_COMPRESSION_DEFAULT_MAX   5000. /**< Maximum default level of time compression (target speed to match). */
+#define TIME_COMPRESSION_DEFAULT_MULT  200   /**< Default level of time compression multiplier. */
+#define REDIRECT_FILE_DEFAULT          1     /**< Whether output should be redirected to a file. */
+#define SAVE_COMPRESSION_DEFAULT       1     /**< Whether or not saved games should be compressed. */
+#define MOUSE_FLY_DEFAULT              1     /**< Whether or not middle clicking enables mouse flying. */
+#define MOUSE_THRUST_DEFAULT           1     /**< Whether or not to use mouse thrust controls. */
+#define MOUSE_DOUBLECLICK_TIME         0.5   /**< How long to consider double-clicks for. */
+#define AUTONAV_RESET_DIST_DEFAULT     5000. /**< Distance of an enemy to reset autonav speed at. */
+#define AUTONAV_RESET_SHIELD_DEFAULT   1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
+#define MANUAL_ZOOM_DEFAULT            0     /**< Whether or not to enable manual zoom controls. */
+#define ZOOM_FAR_DEFAULT               0.5   /**< Far zoom distance (smaller is further) */
+#define ZOOM_NEAR_DEFAULT              1.0   /**< Close zoom distance (bigger is larger) */
+#define MAP_OVERLAY_OPACITY_DEFAULT    0.3   /**< Opacity fraction (0-1) for the overlay map. */
+#define INPUT_MESSAGES_DEFAULT         5     /**< Amount of messages to display. */
 /* Video options */
-#define RESOLUTION_W_MIN                     1280  /**< Minimum screen width (below which graphics are downscaled). */
-#define RESOLUTION_H_MIN                     720   /**< Minimum screen height (below which graphics are downscaled). */
-#define RESOLUTION_W_DEFAULT                 RESOLUTION_W_MIN /**< Default screen width. */
-#define RESOLUTION_H_DEFAULT                 RESOLUTION_H_MIN /**< Default screen height. */
-#define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
-#define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
-#define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
-#define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
-#define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
-#define NEBULA_SCALE_FACTOR_DEFAULT          4.    /**< Default scale factor for nebula rendering. */
-#define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
-#define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
-#define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
-#define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
-#define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
-#define BG_BRIGHTNESS_DEFAULT                1.    /**< How much to darken (or lighten) the backgrounds. */
-#define NEBU_BRIGHTNESS_DEFAULT              1.    /**< How much to darken (or lighten) the nebula stuff. */
-#define GAMMA_CORRECTION_DEFAULT             1.    /**< How much gamma correction to do. */
-#define BACKGROUND_FANCY_DEFAULT             0     /**< Default fancy background. */
-#define BIG_ICONS_DEFAULT                    0     /**< Whether to display BIGGER icons. */
-#define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
-#define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
-#define FONT_SIZE_DEF_DEFAULT                12    /**< Default font size. */
-#define FONT_SIZE_SMALL_DEFAULT              11    /**< Default small font size. */
+#define RESOLUTION_W_MIN               1280  /**< Minimum screen width (below which graphics are downscaled). */
+#define RESOLUTION_H_MIN               720   /**< Minimum screen height (below which graphics are downscaled). */
+#define RESOLUTION_W_DEFAULT           RESOLUTION_W_MIN /**< Default screen width. */
+#define RESOLUTION_H_DEFAULT           RESOLUTION_H_MIN /**< Default screen height. */
+#define FULLSCREEN_DEFAULT             0     /**< Whether to run in fullscreen mode. */
+#define FULLSCREEN_MODESETTING         0     /**< Whether fullscreen uses video modesetting. */
+#define FSAA_DEFAULT                   1     /**< Whether to use Full Screen Anti-Aliasing. */
+#define VSYNC_DEFAULT                  0     /**< Whether to wait for vertical sync. */
+#define SCALE_FACTOR_DEFAULT           1.    /**< Default scale factor. */
+#define NEBULA_SCALE_FACTOR_DEFAULT    4.    /**< Default scale factor for nebula rendering. */
+#define SHOW_FPS_DEFAULT               0     /**< Whether to display FPS on screen. */
+#define FPS_MAX_DEFAULT                60    /**< Maximum FPS. */
+#define SHOW_PAUSE_DEFAULT             1     /**< Whether to display pause status. */
+#define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
+#define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
+#define BG_BRIGHTNESS_DEFAULT          0.7   /**< How much to darken (or lighten) the backgrounds. */
+#define NEBU_BRIGHTNESS_DEFAULT        1.    /**< How much to darken (or lighten) the nebula stuff. */
+#define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
+#define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
+#define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
+#define FONT_SIZE_CONSOLE_DEFAULT      10    /**< Default console font size. */
+#define FONT_SIZE_INTRO_DEFAULT        18    /**< Default intro font size. */
+#define FONT_SIZE_DEF_DEFAULT          12    /**< Default font size. */
+#define FONT_SIZE_SMALL_DEFAULT        11    /**< Default small font size. */
 /* Audio options */
-#define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
-#define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
-#define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
-#define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
+#define USE_EFX_DEFAULT                1     /**< Whether or not to use EFX (if using OpenAL). */
+#define MUTE_SOUND_DEFAULT             0     /**< Whether sound should be disabled. */
+#define SOUND_VOLUME_DEFAULT           0.6   /**< Default sound volume. */
+#define MUSIC_VOLUME_DEFAULT           0.8   /**< Default music volume. */
+#define ENGINE_VOLUME_DEFAULT          0.8   /**< Default engine volume. */
 /* Editor Options */
-#define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
-#define DEV_SAVE_ASSET_DEFAULT            "../assets/"
-#define DEV_SAVE_MAP_DEFAULT              "../outfits/maps/"
+#define DEV_SAVE_SYSTEM_DEFAULT        "../dat/ssys/"
+#define DEV_SAVE_SPOB_DEFAULT          "../dat/spob/"
+#define DEV_SAVE_MAP_DEFAULT           "../dat/outfits/maps/"
 
 /**
  * @brief Struct containing player options.
@@ -63,6 +64,7 @@
  * @note Input is not handled here.
  */
 typedef struct PlayerConf_s {
+   int loaded; /**< Configuration file has been loaded. */
 
    /* ndata. */
    char *ndata; /**< Ndata path to use. */
@@ -83,6 +85,7 @@ typedef struct PlayerConf_s {
    double nebu_scale; /**< Downscaling factor for the expensively rendered nebula. */
    int fullscreen; /**< Whether or not game is fullscreen. */
    int modesetting; /**< Whether to use modesetting for fullscreen. */
+   int notresizable; /**< Whether or not the window is resizable. */
    int borderless; /**< Whether to disable window decorations. */
    int minimize; /**< Whether to minimize on focus loss. */
    int colorblind; /**< Whether to enable colorblindness simulation. */
@@ -96,6 +99,7 @@ typedef struct PlayerConf_s {
    int nosound; /**< Whether or not sound is on. */
    double sound; /**< Sound level for sound effects. */
    double music; /**< Sound level for music. */
+   double engine_vol; /**< Sound level for engines (relative). */
 
    /* FPS. */
    int fps_show; /**< Whether or not FPS should be shown */
@@ -144,6 +148,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
+   int lua_repl; /**< Enable the experimental CLI based on lua-repl. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
 
@@ -153,7 +158,7 @@ typedef struct PlayerConf_s {
    /* Editor. */
    char *dev_save_sys; /**< Path to save systems to. */
    char *dev_save_map; /**< Path to save maps to. */
-   char *dev_save_asset; /**< Path to save assets to. */
+   char *dev_save_spob; /**< Path to save spobs to. */
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */

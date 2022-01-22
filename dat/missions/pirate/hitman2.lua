@@ -42,7 +42,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiety seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
       misn.finish()
    end
    misn.accept()
@@ -51,7 +51,7 @@ function accept ()
    mem.misn_done      = false
    mem.attackedTraders = {}
    mem.deadTraders = 0
-   mem.misn_base, mem.misn_base_sys = planet.cur()
+   mem.misn_base, mem.misn_base_sys = spob.cur()
 
    -- Set mission details
    misn.setTitle( _("Assassin") )
@@ -63,7 +63,7 @@ function accept ()
       fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=mem.misn_base, sys=mem.misn_base_sys} ),
    } )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]) )
+   tk.msg( _("Spaceport Bar"), _([[He nods approvingly. "It seems that the traders are rather stubborn. They didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "That simply won't do. It's bad for business. Perhaps if a few of their ships disappear, they'll get the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]) )
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -101,14 +101,14 @@ function attack_finished()
    mem.misn_done = true
    player.msg( _("MISSION SUCCESS! Return for payment.") )
    misn.markerRm( mem.misn_marker )
-   mem.misn_marker = misn.markerAdd( mem.misn_base_sys, "low" )
+   mem.misn_marker = misn.markerAdd( mem.misn_base, "low" )
    misn.osdActive(2)
    hook.land("landed")
 end
 
 -- landed
 function landed()
-   if planet.cur() == mem.misn_base then
+   if spob.cur() == mem.misn_base then
       tk.msg(_("Mission Complete"), _([[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]]))
       player.pay(500e3)
       pir.modDecayFloor(3)

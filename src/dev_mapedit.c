@@ -18,7 +18,7 @@
 #include "conf.h"
 #include "array.h"
 #include "commodity.h"
-#include "dev_planet.h"
+#include "dev_spob.h"
 #include "dev_uniedit.h"
 #include "dev_sysedit.h"
 #include "dev_system.h"
@@ -143,9 +143,6 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
 
    /* Pause. */
    pause_game();
-
-   /* Needed to generate faction disk. */
-   map_setZoom( 1. );
 
    /* Must have no diffs applied. */
    diff_clear();
@@ -340,7 +337,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
    /* Parameters. */
    map_renderParams( bx, by, mapedit_xpos, mapedit_ypos, w, h, mapedit_zoom, &x, &y, &r );
 
-   uniedit_renderMap( bx, by, w, h, x, y, r );
+   uniedit_renderMap( bx, by, w, h, x, y, mapedit_zoom, r );
 
    /* Render the selected system selections. */
    for (int i=0; i<mapedit_nsys; i++) {
@@ -397,7 +394,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-	 window_setFocus( wid, "cstSysEdit" );
+         window_setFocus( wid, "cstSysEdit" );
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_X1) {
@@ -583,7 +580,6 @@ void mapedit_selectText (void)
 static void mapedit_buttonZoom( unsigned int wid, const char* str )
 {
    (void) wid;
-
    /* Transform coords to normal. */
    mapedit_xpos /= mapedit_zoom;
    mapedit_ypos /= mapedit_zoom;
@@ -597,9 +593,6 @@ static void mapedit_buttonZoom( unsigned int wid, const char* str )
       mapedit_zoom /= MAPEDIT_ZOOM_STEP;
       mapedit_zoom = MAX(pow(MAPEDIT_ZOOM_STEP, MAPEDIT_ZOOM_MIN), mapedit_zoom);
    }
-
-   /* Hack for the circles to work. */
-   map_setZoom(mapedit_zoom);
 
    /* Transform coords back. */
    mapedit_xpos *= mapedit_zoom;
@@ -1062,9 +1055,9 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
          }
       }
 
-      /* Iterate assets and add them */
-      for (int j=0; j < array_size(s->planets); j++)
-         xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
+      /* Iterate spobs and add them */
+      for (int j=0; j < array_size(s->spobs); j++)
+         xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
    }

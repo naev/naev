@@ -10,44 +10,44 @@
  <specific type="map">
   <sys name="New Haven">
    <jump>Titus</jump>
-   <asset>Green Eye</asset>
-   <asset>New Haven</asset>
-   <asset>Old Man Jack</asset>
-   <asset>Red Eye</asset>
+   <spob>Green Eye</spob>
+   <spob>New Haven</spob>
+   <spob>Old Man Jack</spob>
+   <spob>Red Eye</spob>
   </sys>
   <sys name="Kretogg">
    <jump>Unicorn</jump>
-   <asset>Kretogg I</asset>
-   <asset>Kretogg II</asset>
-   <asset>Kretogg III</asset>
-   <asset>Vorca</asset>
-   <asset>Warden's End</asset>
+   <spob>Kretogg I</spob>
+   <spob>Kretogg II</spob>
+   <spob>Kretogg III</spob>
+   <spob>Vorca</spob>
+   <spob>Warden's End</spob>
   </sys>
   <sys name="Teller">
    <jump>Penn</jump>
-   <asset>Jezza</asset>
-   <asset>Killerog</asset>
-   <asset>Old King Cole</asset>
-   <asset>Sanchez</asset>
+   <spob>Jezza</spob>
+   <spob>Killerog</spob>
+   <spob>Old King Cole</spob>
+   <spob>Sanchez</spob>
   </sys>
   <sys name="Effetey">
    <jump>Frolina</jump>
    <jump>Trohem</jump>
-   <asset>Efferey</asset>
+   <spob>Efferey</spob>
   </sys>
   <sys name="Qorel">
    <jump>Ekkodu</jump>
    <jump>Trask</jump>
-   <asset>Qorellia</asset>
+   <spob>Qorellia</spob>
   </sys>
   <sys name="Terminus">
    <jump>Akodu</jump>
-   <asset>Foundation Station</asset>
+   <spob>Foundation Station</spob>
   </sys>
   <sys name="Unicorn">
    <jump>Kretogg</jump>
-   <asset>Unicorn I</asset>
-   <asset>Unicorn II</asset>
+   <spob>Unicorn I</spob>
+   <spob>Unicorn II</spob>
   </sys>
   <sys name="Trohem">
    <jump>Effetey</jump>
@@ -72,20 +72,20 @@
   </sys>
 
   <sys name="Suna">
-   <asset>The Wringer</asset>
+   <spob>The Wringer</spob>
   </sys>
   <sys name="Alteris">
-   <asset>Darkshed</asset>
+   <spob>Darkshed</spob>
   </sys>
 
   <sys name="Eridani">
-   <asset>The Crucible</asset>
+   <spob>The Crucible</spob>
   </sys>
   <sys name="Doranthex">
-   <asset>Secundus Station</asset>
+   <spob>Secundus Station</spob>
   </sys>
   <sys name="Brimstone">
-   <asset>Alleyway</asset>
+   <spob>Alleyway</spob>
   </sys>
  </specific>
 </outfit>

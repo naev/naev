@@ -72,6 +72,9 @@ function log.open( font )
 end
 
 function log.draw ()
+   -- Drawn ontop of text so have to clear depth
+   naev.gfx.clearDepth()
+
    graphics.setColor( 0, 0, 0, 0.9*log.alpha )
    local lw, lh = graphics.getDimensions()
    graphics.rectangle( "fill", 0, 0, lw, lh )

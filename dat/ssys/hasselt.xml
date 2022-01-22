@@ -2,6 +2,7 @@
 <ssys name="Hasselt">
  <general>
   <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>23000.000000</radius>
   <stars>400</stars>
@@ -12,15 +13,15 @@
   <x>66.468747</x>
   <y>904.819147</y>
  </pos>
- <assets>
-  <asset>Hasselt II</asset>
-  <asset>Hasselt IV</asset>
-  <asset>Haurn</asset>
-  <asset>Phosarrus</asset>
-  <asset>Yak Station</asset>
-  <asset>Zhang Lu</asset>
-  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
- </assets>
+ <spobs>
+  <spob>Hasselt II</spob>
+  <spob>Hasselt IV</spob>
+  <spob>Haurn</spob>
+  <spob>Phosarrus</spob>
+  <spob>Yak Station</spob>
+  <spob>Zhang Lu</spob>
+  <spob_virtual>Trade Lane (Soromid)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Bonanza">
    <autopos/>

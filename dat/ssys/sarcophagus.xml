@@ -10,15 +10,15 @@
   <x>392.666667</x>
   <y>653.066667</y>
  </pos>
- <assets>
-  <asset>Ebenezer</asset>
-  <asset>Sarcophagus I</asset>
-  <asset>Sarcophagus II</asset>
-  <asset>Sarcophagus IIb</asset>
-  <asset>Sarcophagus V</asset>
-  <asset>Thymo</asset>
-  <asset>Turawee</asset>
- </assets>
+ <spobs>
+  <spob>Ebenezer</spob>
+  <spob>Sarcophagus I</spob>
+  <spob>Sarcophagus II</spob>
+  <spob>Sarcophagus IIb</spob>
+  <spob>Sarcophagus V</spob>
+  <spob>Thymo</spob>
+  <spob>Turawee</spob>
+ </spobs>
  <jumps>
   <jump target="Point Zero">
    <autopos/>

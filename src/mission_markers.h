@@ -11,10 +11,10 @@ typedef enum MissionMarkerType_ {
    SYSMARKER_LOW,       /**< Marker is for low priority mission targets. */
    SYSMARKER_HIGH,      /**< Marker is for high priority mission targets. */
    SYSMARKER_PLOT,      /**< Marker is for plot priority (ultra high) mission targets. */
-   PNTMARKER_COMPUTER,  /**< Marker is for mission computer missions. */
-   PNTMARKER_LOW,       /**< Marker is for low priority planet targets. */
-   PNTMARKER_HIGH,      /**< Marker is for high priority planet targets. */
-   PNTMARKER_PLOT,      /**< Marker is for plot priority planet targets. */
+   SPOBMARKER_COMPUTER,  /**< Marker is for mission computer missions. */
+   SPOBMARKER_LOW,       /**< Marker is for low priority spob targets. */
+   SPOBMARKER_HIGH,      /**< Marker is for high priority spob targets. */
+   SPOBMARKER_PLOT,      /**< Marker is for plot priority spob targets. */
 } MissionMarkerType;
 
 /**

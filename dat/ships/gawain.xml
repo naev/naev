@@ -12,7 +12,7 @@
  <trail_generator x="-2" y="-15" h="-2">nebula</trail_generator>
  <trail_generator x="-15" y="0" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
- <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
+ <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meagre weapons space and relative fragility.</description>
  <health>
   <armour>40</armour>
   <armour_regen>0</armour_regen>
@@ -26,13 +26,13 @@
  <slots>
   <weapon size="small" x="12" y="0" h="-2" />
   <weapon size="small" x="-5" y="0" h="1" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
+  <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>
@@ -46,5 +46,6 @@
  </stats>
  <tags>
   <tag>standard</tag>
+  <tag>transport</tag>
  </tags>
 </ship>

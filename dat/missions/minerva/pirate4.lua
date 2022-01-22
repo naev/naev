@@ -8,7 +8,7 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Minerva Station</planet>
+  <spob>Minerva Station</spob>
   <done>Minerva Pirates 3</done>
  </avail>
  <notes>
@@ -25,6 +25,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 local reward_amount = minerva.rewards.pirate4
 
@@ -68,9 +69,9 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   mem.sysmarker = misn.markerAdd( planet.get("Minerva Station") )
+   mem.sysmarker = misn.markerAdd( spob.get("Minerva Station") )
 
-   minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
+   minerva.log.pirate(_("You accepted another job from the sketchy individual to deal with a mole at Minerva Station.") )
 
    hook.load("generate_npc")
    hook.land("generate_npc")
@@ -82,7 +83,7 @@ end
 
 function generate_npc ()
    mem.npc_pir = nil
-   if planet.cur() == planet.get("Minerva Station") and mem.misn_state < 1 then
+   if spob.cur() == spob.get("Minerva Station") and mem.misn_state < 1 then
       mem.npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
    end
 end
@@ -105,12 +106,12 @@ They beam you a smile.]]))
       } )
 
       vn.label("decline")
-      vn.na(_("You decline their offer and take your leave."))
+      vn.na(_("You decline her offer and take your leave."))
       vn.done()
 
       vn.label("accept")
       vn.func( function () mem.misn_state=0 end )
-      pir(_([["Glad to have you onboard again! So we have tracked down the mole and know that they are infiltrated in the station from the intercepted messages. It appears that they are most likely working at the station. Now there are not many places to work at the station so it is likely that they are involved in the gambling facility."]]))
+      pir(_([["Glad to have you onboard again! So we have tracked down the mole and know from intercepted messages that they are most likely working at the station. Now, there are not many places to work at the station, so it is likely that they are involved in the gambling facility."]]))
       pir(_([["The bad news is we don't exactly know who the mole is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
 They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on it and hands it to you.]]))
       vn.func( function ()
@@ -120,7 +121,7 @@ They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on i
       pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
    else
       -- Accepted.
-      vn.na(_("You approach the shady character you have become familiarized with."))
+      vn.na(_("You approach the sketchy character you have become familiarized with."))
    end
 
    vn.label("menu_msg")
@@ -146,12 +147,12 @@ function found_mole ()
    vn.scene()
    local mole = vn.newCharacter( minerva.vn_mole() )
    vn.transition()
-   vn.na(_("After the chuck-a-luck dealers shift you follow him to a back alley in the station."))
+   vn.na(_("After the chuck-a-luck dealer's shift you follow him to a back alley in the station."))
    mole(_([["I don't recognize you, are you the new messenger? Last guy got sliced up."
 They make a cutting gesture from their belly up to their neck.
 "Poor kid, not the best way to leave this world."]]))
    mole(_([["Hey, wait a moment. Haven't I seen you around?"]]))
-   vn.na(_("While they wrinkle their eyebrows, you suddenly hear a soft thud and while you hear the sound of strong electric current, you see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
+   vn.na(_("While they furrow their brows, you suddenly hear a soft thud and the sound of strong electric current. You see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
 
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )
@@ -181,9 +182,8 @@ end
 
 function enter ()
    if mem.misn_state==2 then
-      player.msg(_("#rMISSION FAILED! You were supposed to protect the interrogation ship!"))
       var.pop("minerva_chuckaluck_change")
-      misn.finish(false)
+      lmisn.fail(_("You were supposed to protect the interrogation ship!"))
    end
 
    if mem.misn_state==1 and system.cur()==mainsys then
@@ -193,14 +193,13 @@ function enter ()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, nil, {ai="guard"} )
+      mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, _("Interrogation Ship"), {ai="guard"} )
       local aimem = mainship:memory()
       aimem.aggressive = false -- only fight back
       aimem.guardpos = shippos -- Stay around origin
       aimem.guarddodist = 2500
       aimem.guardreturndist = 4000
       aimem.enemyclose = aimem.guarddodist
-      mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
       mainship:setHilight(true)
@@ -227,12 +226,12 @@ function mainship_board ()
    local pir = vn.newCharacter( minerva.vn_pirate() )
    local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
    vn.transition()
-   vn.na(_("You board the ship and are once again greeting by the shady figure you are getting used to."))
+   vn.na(_("You board the ship and are once again greeting by the sketchy figure you are getting used to."))
    pir(_([["I was worried. Glad you made it here in one piece!"
-Some crew member escort the Dvaered mole towards the inner part of the ship. They have a fairly rough and burly complexion.]]))
+Some crew members escort the Dvaered mole towards the inner part of the ship. They have fairly rough and burly complexions.]]))
    pir(_([["Don't worry about the mole, we'll take care of them from now on."
-They beam you a smile.
-"If all goes well, we'll get the information we were looking for in the next periods and we can all go ]]))
+She beams you a smile.
+"If all goes well, we'll get the information we were looking for in the next few periods and we can all go ]]))
    maikki(_([[You faintly hear an angry voice that sounds strangely familiar.
 "What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
    pir(_([[They visibly wince when they hear the angry voice.
@@ -244,8 +243,8 @@ They beam you a smile.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
    pir:rename(_("Zuri"))
    pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
-They rush off into the depths of the ship.]]))
-   vn.na(_("You rush to get back to your ship before the Dvaereds jump in."))
+She rushes off into the depths of the ship.]]))
+   vn.na(_("You race to get back to your ship before the Dvaereds jump in."))
    vn.run()
 
    -- Set up stuff
@@ -278,7 +277,7 @@ function mainship_attacked ()
 
    mainship:comm(_("We are under attack!"), true)
    mem.attacked_spam = true
-   hook.time( 6e3, "attack_spam_over" )
+   hook.timer( 6e3, "attack_spam_over" )
 end
 function attack_spam_over ()
    mem.attacked_spam = false
@@ -291,9 +290,8 @@ function mainship_stealth( _p, status )
 end
 
 function mainship_dead ()
-   player.msg(_("#rMISSION FAILED! The interrogation ship was destroyed!"))
    var.pop("minerva_chuckaluck_change")
-   misn.finish(false)
+   lmisn.fail(_("The interrogation ship was destroyed!"))
 end
 
 function pir_reinforcements ()
@@ -326,7 +324,7 @@ function pir_reinforcements ()
       _("Clean up the Dvaered patrols"),
    } )
 
-   -- Detect all Dvaered dead
+   -- Detect all Dvaered deaths
    hook.timer( 3.0, "heartbeat" )
 end
 
@@ -427,8 +425,8 @@ function followup ()
 "Zuri! Get your ass back to navigation! Wait until I tell you how that Dvaered squealed like a pig!"]]))
    pir(_([[Zuri makes a somewhat complicated face at the unwanted interruption.
 "I have some business to attend to."
-They give you a tired grin.
-"Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
+She gives you a tired grin.
+"Anyway, I'll wire you a reward. Meet me back at Minerva Station."]]))
    vn.na(fmt.reward(reward_amount))
    vn.func( function () -- Rewards
       player.pay( reward_amount )

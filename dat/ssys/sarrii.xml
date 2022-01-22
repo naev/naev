@@ -10,12 +10,12 @@
   <x>438.594517</x>
   <y>-878.616203</y>
  </pos>
- <assets>
-  <asset>Sarrii Station</asset>
-  <asset>Wayline</asset>
-  <asset>Wayline m1</asset>
-  <asset>Wayline m2</asset>
- </assets>
+ <spobs>
+  <spob>Sarrii Station</spob>
+  <spob>Wayline</spob>
+  <spob>Wayline m1</spob>
+  <spob>Wayline m2</spob>
+ </spobs>
  <jumps>
   <jump target="Felzen">
    <autopos/>

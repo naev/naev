@@ -4,7 +4,7 @@
 
 -- triggered when pilot is hit by something
 function attacked ( attacker )
-   task = ai.taskname()
+   local task = ai.taskname()
    if task ~= "attack" and task ~= "runaway" then
 
       -- some taunting
@@ -29,10 +29,10 @@ function taunt( target )
       _("You'll regret this!"),
    }
    local msg = taunts[ rnd.rnd(1, #taunts) ]
-   if msg then ai.pilot():comm( attacker, msg ) end
+   if msg then ai.pilot():comm( target, msg ) end
 end
 
--- attacks
+-- luacheck: globals attack (AI task which attacks the target)
 function attack( target )
    -- make sure pilot exists
    if not target:exists() then

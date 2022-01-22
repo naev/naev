@@ -12,14 +12,14 @@
   <x>-280.578704</x>
   <y>-793.416667</y>
  </pos>
- <assets>
-  <asset>Claudius Mehan</asset>
-  <asset>Fried I</asset>
-  <asset>Fried II</asset>
-  <asset>Fried III</asset>
-  <asset>Fried IIIa</asset>
-  <asset>Fried Ia</asset>
- </assets>
+ <spobs>
+  <spob>Claudius Mehan</spob>
+  <spob>Fried I</spob>
+  <spob>Fried II</spob>
+  <spob>Fried III</spob>
+  <spob>Fried IIIa</spob>
+  <spob>Fried Ia</spob>
+ </spobs>
  <jumps>
   <jump target="Effetey">
    <pos x="16966.529931" y="-4082.991631"/>
@@ -51,6 +51,6 @@
   </asteroid>
  </asteroids>
  <stats>
-  <fuel_regen>1</fuel_regen>
+  <fuel_regen>1.000000</fuel_regen>
  </stats>
 </ssys>

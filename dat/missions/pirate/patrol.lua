@@ -31,7 +31,7 @@ require "missions.neutral.patrol"
 pay_text = {
    _("The crime boss grins and hands you your pay."),
    _("The local crime boss pays what you were promised, though not before trying (and failing) to pick your pocket."),
-   _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and let out a grin."),
+   _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and manage a grin."),
    _("You are handed your pay in what seems to be a million different credit chips by the crime boss, but sure enough, it adds up to exactly the amount promised."),
 }
 
@@ -40,18 +40,14 @@ abandon_text = {
 }
 
 
--- Mission details
-mem.misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fct})")
-mem.misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
-
 -- Messages
 msg = {
    _("Point secure."),
    _("Outsiders detected. Eliminate all outsiders."),
    _("Outsiders eliminated."),
    _("Patrol complete. You can now collect your pay."),
-   _("MISSION FAILURE! You showed up too late."),
-   _("MISSION FAILURE! You have left the {sys} system."),
+   _("You showed up too late."),
+   _("You have left the {sys} system."),
 }
 
 mem.osd_msg = {
@@ -66,6 +62,8 @@ mem.use_hidden_jumps = true
 local create_original = create
 function create ()
    mem.paying_faction = pir.systemClanP()
+   mem.misn_title  = pir.prefix(mem.paying_faction).._("Patrol of the {sys} System")
+   mem.misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
    if pir.factionIsClan( mem.paying_faction ) then
       -- mem.misn_desc gets fmt.f'd in the main script
       mem.misn_desc = mem.misn_desc..pir.reputationMessage( mem.paying_faction )

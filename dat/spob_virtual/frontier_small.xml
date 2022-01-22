@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Frontier Small">
+ <presence>
+  <faction>Frontier</faction>
+  <base>40.000000</base>
+  <bonus>20.000000</bonus>
+  <range>2</range>
+ </presence>
+</spob>

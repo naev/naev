@@ -30,7 +30,7 @@ local equipopt = require 'equipopt'
 local lmisn = require "lmisn"
 
 local chelsea -- Non-persistent state
-local fail, spawn -- Forward-declared functions
+local spawn -- Forward-declared functions
 -- luacheck: globals chelsea_death chelsea_leave enter leave pirate_death win_timer (Hook functions passed by name)
 
 function create ()
@@ -61,7 +61,7 @@ function accept ()
       txt = fmt.f( _([["Hey, {player}! Any chance you could reconsider? I could use your help."]]), {player=player.name()} )
    else
       txt = fmt.f(_([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
-    "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as {plt}. Trouble is they're piloting a ship that's stronger than my own...."
+    "It's a lot better than before. The work is tough, though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as {plt}. Trouble is they're piloting a ship that's stronger than my own...."
     Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in {sys}. I'll give you {credits} for the trouble. How about it?"]]), {plt=mem.pirname, sys=mem.missys, credits=fmt.credits(mem.credits)} )
    end
    mem.started = true
@@ -107,9 +107,9 @@ function spawn ()
    p:setVisible( true )
    p:setHilight( true )
 
-   mem.fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   local fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    -- Spawn Chelsea
-   chelsea = pilot.add( "Lancelot", mem.fass, mem.lastsys, _("Chelsea"), {naked=true} )
+   chelsea = pilot.add( "Lancelot", fass, mem.lastsys, _("Chelsea"), {naked=true} )
    equipopt.generic( chelsea, nil, "elite" )
 
    chelsea:setHealth( 100, 100 )
@@ -131,18 +131,18 @@ end
 function leave ()
    mem.lastsys = system.cur()
    if mem.lastsys == mem.missys then
-      fail( _("MISSION FAILED: You have abandoned the mission.") )
+      lmisn.fail( _("You have abandoned the mission.") )
    end
 end
 
 
 function chelsea_death ()
-   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
+   lmisn.fail( _("A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
 function chelsea_leave ()
-   fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
+   lmisn.fail( _("Chelsea has abandoned the mission.") )
 end
 
 
@@ -163,19 +163,4 @@ function win_timer ()
    srm.addComingOutLog( _([[You helped Chelsea hunt down a wanted pirate, earning a bounty for both of you and allowing Chelsea to acquire a retired Dvaered warlord's old Vigilance.]]) )
 
    misn.finish( true )
-end
-
-
--- Fail the mission, showing message to the player.
-function fail( message )
-   if message ~= nil then
-      -- Pre-colourized, do nothing.
-      if message:find("#") then
-         player.msg( message )
-      -- Colourize in red.
-      else
-         player.msg( "#r" .. message .. "#0" )
-      end
-   end
-   misn.finish( false )
 end

@@ -9,7 +9,7 @@
   <done>Shielding Prototype Funding</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Jorla</planet>
+  <spob>Jorla</spob>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>
@@ -35,8 +35,8 @@ local mensing_portrait = nebu_research.mensing.portrait
 
 -- Mission constants
 local credits = nebu_research.rewards.credits05
-local homeworld, homeworld_sys = planet.getS("Jorla")
-local dest_planet, dest_sys = planet.getS("Cerberus")
+local homeworld, homeworld_sys = spob.getS("Jorla")
+local dest_planet, dest_sys = spob.getS("Cerberus")
 local testing_sys = system.get("Nasona")
 local sol_sys = system.get("Sol")
 
@@ -103,7 +103,7 @@ function accept()
 end
 
 function land()
-    if stage == 0 and planet.cur() == dest_planet then
+    if stage == 0 and spob.cur() == dest_planet then
         vn.clear()
         vn.scene()
         local student = vn.newCharacter( nebu_research.vn_student() )
@@ -118,7 +118,7 @@ function land()
         vn.run()
         misn.osdActive(2)
         stage = 1
-    elseif stage == 5 and planet.cur() == homeworld then
+    elseif stage == 5 and spob.cur() == homeworld then
         vn.clear()
         vn.scene()
         local student = vn.newCharacter( nebu_research.vn_student() )

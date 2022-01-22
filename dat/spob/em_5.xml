@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Em 5">
+ <pos>
+  <x>-26760.000000</x>
+  <y>2884.722224</y>
+ </pos>
+ <GFX>
+  <space>M03.webp</space>
+  <exterior>oceanic2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>150000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Deep within Empire space, Em 5 is a quiet world. Few would have ranked it highly in the spectrum of galactic politics, yet after the Incident it gained notability when it became a temporary refuge of the Emperor. In the time since it's become a popular place for the aristocracy to meet.</description>
+  <bar>The Drunken Lobster has a plaque commemorating the time the Emperor spent on Em 5. It seems unlikely he ever visited this bar, though, given its less than refined patrons and threadbare furniture.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Laser 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Hulls High</item>
+ </tech>
+</spob>

@@ -14,6 +14,7 @@
 
 #include "nlua_naev.h"
 
+#include "console.h"
 #include "input.h"
 #include "land.h"
 #include "log.h"
@@ -31,13 +32,16 @@ static int naevL_version( lua_State *L );
 static int naevL_versionTest( lua_State *L);
 static int naevL_lastplayed( lua_State *L );
 static int naevL_ticks( lua_State *L );
+static int naevL_ticksGame( lua_State *L );
 static int naevL_clock( lua_State *L );
 static int naevL_keyGet( lua_State *L );
 static int naevL_keyEnable( lua_State *L );
 static int naevL_keyEnableAll( lua_State *L );
 static int naevL_keyDisableAll( lua_State *L );
 static int naevL_eventStart( lua_State *L );
+static int naevL_eventReload( lua_State *L );
 static int naevL_missionStart( lua_State *L );
+static int naevL_missionReload( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
 static int naevL_confSet( lua_State *L );
@@ -47,13 +51,16 @@ static const luaL_Reg naev_methods[] = {
    { "versionTest", naevL_versionTest },
    { "lastplayed", naevL_lastplayed },
    { "ticks", naevL_ticks },
+   { "ticksGame", naevL_ticksGame },
    { "clock", naevL_clock },
    { "keyGet", naevL_keyGet },
    { "keyEnable", naevL_keyEnable },
    { "keyEnableAll", naevL_keyEnableAll },
    { "keyDisableAll", naevL_keyDisableAll },
    { "eventStart", naevL_eventStart },
+   { "eventReload", naevL_eventReload },
    { "missionStart", naevL_missionStart },
+   { "missionReload", naevL_missionReload },
    { "isSimulation", naevL_isSimulation },
    { "conf", naevL_conf },
    { "confSet", naevL_confSet },
@@ -147,6 +154,20 @@ static int naevL_lastplayed( lua_State *L )
 {
    double d = difftime( time(NULL), player.last_played );
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
+   return 1;
+}
+
+/**
+ * @brief Gets the game seconds since the program started running.
+ *
+ * These are modified by whatever speed up the player has.
+ *
+ *    @luatreturn number The seconds since the application started running.
+ * @luafunc ticksGame
+ */
+static int naevL_ticksGame( lua_State *L )
+{
+   lua_pushnumber(L, elapsed_time_mod );
    return 1;
 }
 
@@ -263,15 +284,11 @@ static int naevL_eventStart( lua_State *L )
    const char *str;
 
    NLUA_CHECKRW(L);
-
    str = luaL_checkstring(L, 1);
    ret = event_start( str, NULL );
 
-   /* Get if console. */
-   nlua_getenv(__NLUA_CURENV, "__cli");
-   if (lua_toboolean(L,-1) && landed)
+   if (cli_isOpen() && landed)
       bar_regen();
-   lua_pop(L,1);
 
    lua_pushboolean( L, !ret );
    return 1;
@@ -291,15 +308,56 @@ static int naevL_missionStart( lua_State *L )
    const char *str;
 
    NLUA_CHECKRW(L);
-
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, NULL );
 
-   /* Get if console. */
-   nlua_getenv(__NLUA_CURENV, "__cli");
-   if (lua_toboolean(L,-1) && landed)
+   if (cli_isOpen() && landed)
       bar_regen();
-   lua_pop(L,1);
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Reloads an event's script, providing a convenient way to test and hopefully not corrupt the game's state.
+ *        Use with caution, and only during development as a way to get quicker feedback.
+ *
+ * @usage naev.eventReload( "Some Event" )
+ *    @luatparam string evtname Name of the event to start.
+ *    @luatreturn boolean true on success.
+ * @luafunc eventReload
+ */
+static int naevL_eventReload( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   NLUA_CHECKRW(L);
+   str = luaL_checkstring(L, 1);
+   ret = event_reload( str );
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Reloads a mission's script, providing a convenient way to test and hopefully not corrupt the game's state.
+ *        Use with caution, and only during development as a way to get quicker feedback.
+ *
+ * @usage naev.missionReload( "Some Mission" )
+ *    @luatparam string misnname Name of the mission to start.
+ *    @luatreturn boolean true on success.
+ * @luafunc missionReload
+ */
+static int naevL_missionReload( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   NLUA_CHECKRW(L);
+
+   str = luaL_checkstring(L, 1);
+   ret = mission_reload( str );
 
    lua_pushboolean( L, !ret );
    return 1;
@@ -352,6 +410,7 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "nebu_scale", conf.nebu_scale );
    PUSH_BOOL( L, "fullscreen", conf.fullscreen );
    PUSH_BOOL( L, "modesetting", conf.modesetting );
+   PUSH_BOOL( L, "notresizable", conf.notresizable );
    PUSH_BOOL( L, "borderless", conf.borderless );
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_BOOL( L, "colorblind", conf.colorblind );
@@ -397,7 +456,7 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "fpu_except", conf.fpu_except );
    PUSH_STRING( L, "dev_save_sys", conf.dev_save_sys );
    PUSH_STRING( L, "dev_save_map", conf.dev_save_map );
-   PUSH_STRING( L, "dev_save_asset", conf.dev_save_asset );
+   PUSH_STRING( L, "dev_save_spob", conf.dev_save_spob );
    return 1;
 }
 #undef PUSH_STRING
@@ -415,6 +474,7 @@ static int naevL_conf( lua_State *L )
 static int naevL_confSet( lua_State *L )
 {
    (void) L;
+   /* TODO implement. */
    return 0;
 }
 

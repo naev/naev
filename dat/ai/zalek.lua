@@ -11,13 +11,6 @@ mem.aggressive    = true
 mem.whiteknight   = true
 mem.formation     = "circle"
 
-local drones = {
-   ["Za'lek Heavy Drone"] = true,
-   ["Za'lek Bomber Drone"] = true,
-   ["Za'lek Light Drone"] = true,
-   ["Za'lek Scout Drone"] = true,
-}
-
 local bribe_no_list = {
    _([["Keep your cash, you troglodyte."]]),
    _([["Don't make me laugh. Eat laser beam!"]]),
@@ -50,15 +43,20 @@ local taunt_list_defensive_drone = {
 }
 
 function create()
-   local p = ai.pilot()
+   local p  = ai.pilot()
    local ps = p:ship()
+   local pt = ps:tags()
+   local price = ps:price()
 
    -- See if a drone
-   mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
+   mem.isdrone = pt.drone
    if mem.isdrone then
       local msg = _([["ACCESS DENIED.]])
       mem.refuel_no = msg
       mem.bribe_no = msg
+      mem.scan_msg = _("COMMENCING SCAN PROCEDURE.")
+      mem.scan_msg_ok = _("SCAN COMPLETED.")
+      mem.scan_msg_bad = _("ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!")
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
       mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
@@ -66,8 +64,15 @@ function create()
       return
    end
 
-   -- Not too many credits.
-   ai.setcredits( rnd.rnd( ps:price()/200, ps:price()/50) )
+   -- See if it's a transport ship
+   mem.istransport = pt.transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/200, price/50) )
+   end
 
    -- Set how far they attack
    mem.enemyclose = 3000 + 1000 * ps:size()
@@ -109,7 +114,7 @@ function hail ()
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
-   if mem.allowbribe or (mem.natural and (standing > 0 or
+   if mem.found_illegal or mem.allowbribe or (mem.natural and (standing > 0 or
          (standing > -20 and mem.bribe_rng > 0.8) or
          (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4))) then

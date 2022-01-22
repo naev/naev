@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<asset name="FLF Small">
- <presence>
-  <faction>FLF</faction>
-  <base>53.333333</base>
-  <bonus>26.666667</bonus>
-  <range>1</range>
- </presence>
-</asset>

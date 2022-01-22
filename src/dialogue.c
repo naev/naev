@@ -478,7 +478,9 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          font, NULL, msg );
    /* input */
    window_addInput( input_dialogue.input_wid, 20, 20+30+10, w, 30,"inpInput", max, 1, NULL );
-   window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
+   /* Illegal characters on Linux FS: : */
+   /* Illegal characters on Windows FS: < > : " / \ | ? * */
+   window_setInputFilter( input_dialogue.input_wid, "inpInput", "/:<>\"\\|?*" ); /* Remove illegal stuff. */
    /* button */
    window_addButton( input_dialogue.input_wid, -20, 20, 80, 30,
          "btnClose", _("Done"), dialogue_inputClose );
@@ -680,7 +682,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    else
       h = MAX( 300, list_height );
 
-   h = MIN( (SCREEN_H*2)/3, h );
+   h = MIN( ((double)SCREEN_H*2.)/3., h );
    w = MAX( list_width + 60, 500 );
 
    winw = w + extrawidth;
@@ -878,8 +880,8 @@ void dialogue_custom( const char* caption, int width, int height,
 
    /* custom widget for all! */
    if (fullscreen) {
-      width  = SCREEN_W;
-      height = SCREEN_H;
+      width  = gl_screen.nw;
+      height = gl_screen.nh;
       wgtx = wgty = 0;
    }
    else {
@@ -918,18 +920,14 @@ int dialogue_customFullscreen( int enable )
 {
    struct dialogue_custom_data_s *cd;
    unsigned int wid = window_get( "dlgMsg" );
-   int w, h, fullscreen;
+   int w, h;
    if (wid == 0)
       return -1;
 
    cd = (struct dialogue_custom_data_s*) window_getData( wid );
    window_dimWindow( wid, &w, &h );
-   fullscreen = (w==SCREEN_W && h==SCREEN_H);
 
    if (enable) {
-      if (fullscreen)
-         return 0;
-
       cd->last_w = cd->w+40;
       cd->last_h = cd->h+60;
       window_resize( wid, -1, -1 );
@@ -939,8 +937,6 @@ int dialogue_customFullscreen( int enable )
       window_setBorder( wid, 0 );
    }
    else {
-      if (!fullscreen)
-         return 0;
       window_resize( wid, cd->last_w, cd->last_h );
       window_moveWidget( wid, "cstCustom", 20, 20 );
       window_move( wid, -1, -1 );
@@ -1015,10 +1011,8 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             }
          }
          else if (event.type == SDL_WINDOWEVENT &&
-               event.window.event == SDL_WINDOWEVENT_RESIZED) {
+               event.window.event == SDL_WINDOWEVENT_RESIZED)
             naev_resize();
-            continue;
-         }
 
          input_handle(&event); /* handles all the events and player keybinds */
       }

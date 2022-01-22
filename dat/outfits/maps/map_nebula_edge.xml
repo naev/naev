@@ -13,10 +13,10 @@
   <sys name="Raelid">
    <jump>Arcanis</jump>
    <jump>Zacron</jump>
-   <asset>Marius Station</asset>
-   <asset>Raelid II</asset>
-   <asset>Raelid Outpost</asset>
-   <asset>Raelid Prime</asset>
+   <spob>Marius Station</spob>
+   <spob>Raelid II</spob>
+   <spob>Raelid Outpost</spob>
+   <spob>Raelid Prime</spob>
   </sys>
   <sys name="Arcanis">
    <jump>Raelid</jump>
@@ -28,8 +28,8 @@
   </sys>
   <sys name="Doeston">
    <jump>Zylex</jump>
-   <asset>Cerberus</asset>
-   <asset>Doeston Prime</asset>
+   <spob>Cerberus</spob>
+   <spob>Doeston Prime</spob>
   </sys>
  </specific>
 </outfit>

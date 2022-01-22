@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Sharak">
+ <pos>
+  <x>-2669.241196</x>
+  <y>-5912.913110</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>50000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Sharak is a place where the wealthy make their homes. Rather than breathe the same air as the commoners on Edorn below, the people on this moon elect to form their own elite society here on Sharak.</description>
+  <bar>There's a small public city built around the spaceport for servicing ships and handling the usual planetary logistics, but most of Sharak's surface is private property. The spaceport bar is the only public recreational facility on the face of Sharak.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Ion 2</item>
+  <item>Laser 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Soromid Elite Outfits</item>
+  <item>Soromid Ships Small</item>
+ </tech>
+ <tags>
+  <tag>rich</tag>
+ </tags>
+</spob>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="HZNSS-3">
+ <pos>
+  <x>-3527.591660</x>
+  <y>-6367.413876</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.webp</space>
+  <exterior>forest2.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>7000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>One of House Za'leks nutrition stations, this simple agristation services the local sector, augmenting what worlds are unable to feed themselves.</description>
+ </general>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
+</spob>

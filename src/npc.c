@@ -375,7 +375,7 @@ void npc_generateMissions (void)
 
    /* Get the missions. */
    missions = missions_genList( &nmissions,
-         land_planet->presence.faction, land_planet->name, cur_system->name,
+         land_spob->presence.faction, land_spob, cur_system,
          MIS_AVAIL_BAR );
    /* Mission sshould already be generated and have had their 'create' function
     * run, so NPCs should be running wild (except givers). */
@@ -522,7 +522,7 @@ glTexture *npc_getBackground( int i )
    if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
 
-   /* TODO choose the background based on the planet or something. */
+   /* TODO choose the background based on the spob or something. */
    if (npc_array[i].background == NULL)
       npc_array[i].background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
    return npc_array[i].background;

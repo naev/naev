@@ -3,6 +3,7 @@
 import argparse
 import glob
 import os
+import re
 import tempfile
 import yaml
 import zipfile
@@ -27,6 +28,7 @@ def generate_soundtrack( source_dir, output, generate_csv=False ):
             license = data['license']
             songs = data.get('music', [])
             for song in songs:
+                song = re.sub(r' \(http[^)]*\)', '', song)  # Strip parenthetical source info
                 song_licensing[song] = {'artist':name,'license':license}
 
     # Get all existing songs to check for duplicates and missing songs

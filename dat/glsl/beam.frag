@@ -177,11 +177,11 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    // Modulate width
    ncoord = vec2( 0.03 * pos_px.x, 7.0*ANIM_SPEED*dt ) + 1000.0 * r;
-   y = pos_tex.y + 0.7 * snoise( ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( ncoord ), -1.0, 1.0 );
    v = sharpbeam( y, m );
-   y = pos_tex.y + 0.7 * snoise( 1.5*ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( 1.5*ncoord ), -1.0, 1.0 );
    v += sharpbeam( y, 2.0*m );
-   y = pos_tex.y + 0.7 * snoise( 2.0*ncoord );
+   y = clamp( pos_tex.y + 0.7 * snoise( 2.0*ncoord ), -1.0, 1.0 );
    v += sharpbeam( y, 4.0*m );
 
    v = abs(v);
@@ -235,7 +235,7 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate alpha based on dispersion
    m = 3.0;
 
-   coords = pos_px + vec2( -320.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   coords = pos_px + vec2( -200.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
    p = 1.0 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
@@ -252,6 +252,31 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
   return color;
 }
 
+BEAM_FUNC_PROTOTYPE
+vec4 beam_reverse( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   vec2 coords;
+   float m;
+   const float range = 0.3;
+
+   color.a *= beamfade( pos_px.x, pos_tex.x );
+
+   // Normal beam
+   coords = pos_px / 500.0 + vec2( 3.0*ANIM_SPEED*dt, 0 );
+   m = 1.5 + 0.5*snoise( coords );
+   float a = smoothbeam( pos_tex.y, m );
+   color.rgb = mix( color.rgb, vec3(0.0), 3.0*smoothbeam( pos_tex.y, 0.2 ) );
+   color.a *= a;
+
+   // Do fancy noise effect
+   coords = pos_px * vec2( 0.03, 5.0 ) + vec2( 10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   float v = snoise( coords );
+   v = max( 0.0, v-(1.0-range) ) * (2.0/range) - 0.1;
+   color.a += v * (1.0 - smoothstep( 0.0, 0.05, pos_tex.x-0.95 ) );
+
+   return color;
+}
+
 void main(void) {
    vec2 pos_tex, pos_px;
 
@@ -260,10 +285,10 @@ void main(void) {
    pos_px = pos * dimensions;
 
 #ifdef HAS_GL_ARB_shader_subroutine
-   // Use subroutines
+   /* Use subroutines */
    color_out = beam_func( color, pos_tex, pos_px );
 #else /* HAS_GL_ARB_shader_subroutine */
-   //* Just use default
+   /* Just use default */
    color_out = beam_default( color, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
 }

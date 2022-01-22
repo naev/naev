@@ -149,8 +149,11 @@ void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );
 void sound_al_speedGroup( int group, int enable );
 void sound_al_volumeGroup( int group, double volume );
+void sound_al_pitchGroup( int group, double pitch );
 
 /*
  * Env.
  */
+extern ALuint sound_efx_directSlot; /**< Direct 3d source slot. */
+void sound_al_setAbsorption( double value );
 int sound_al_env( SoundEnv_t env, double param );

@@ -338,9 +338,14 @@ function sokoban.draw()
       drawLevel( lxo, lyo+headersize, prevlevel, 1-transition )
    end
 
-   setcol{ 1, 1, 1 }
    local cy = y + h + 20
-   lg.printf( _("#barrow keys#0: move, #br#0: restart, #bq#0: abort"), 0, cy, nw, "center" )
+   local controls = _("#barrow keys#0: move, #br#0: restart, #bq#0: abort")
+   local cw = lg.getFont():getWidth( controls ) + 10
+   naev.gfx.clearDepth()
+   setcol{ 0, 0, 0 }
+   lg.rectangle( 'fill', (nw-cw)/2, cy, cw, 20 )
+   setcol{ 1, 1, 1 }
+   lg.printf( controls, 0, cy, nw, "center" )
 end
 
 function sokoban.update( dt )

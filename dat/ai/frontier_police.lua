@@ -24,9 +24,19 @@ local taunt_list = {
 
 -- Create function
 function create ()
-   -- Credits.
-   local price = ai.pilot():ship():price()
-   ai.setcredits( rnd.rnd(price/300, price/70) )
+   local p = ai.pilot()
+   local ps = p:ship()
+   local price = ps:price()
+
+   -- See if it's a transport ship
+   mem.istransport = ps:tags().transport
+
+   -- Credits, and other transport-specific stuff
+   if mem.istransport then
+      transportParam( price )
+   else
+      ai.setcredits( rnd.rnd(price/300, price/70) )
+   end
 
    create_post()
 end
@@ -39,7 +49,7 @@ function hail ()
    if not mem.hailsetup then
       mem.refuel_base = mem.refuel_base or rnd.rnd( 1000, 3000 )
       mem.refuel_rng = rnd.rnd()
-      mem.bribe_base = mem.bribe_base or math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
+      mem.bribe_base = mem.bribe_base or math.sqrt( p:stats().mass ) * (750 * rnd.rnd() + 2500)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end

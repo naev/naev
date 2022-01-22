@@ -8,11 +8,10 @@
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
-  <planet>Antlejos V</planet>
+  <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 2</done>
  </avail>
  <notes>
-  <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
 </mission>
@@ -32,14 +31,14 @@ local cargo_name = _("atmosphere generator")
 local cargo_amount = 70 -- Amount in mass
 local reward = ant.rewards.ant03
 
-local returnpnt, returnsys = planet.getS("Antlejos V")
+local returnpnt, returnsys = spob.getS("Antlejos V")
 
 -- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
       return p:tags().industrial
    end )
    if not mem.destpnt then
@@ -54,7 +53,7 @@ function create ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("As soon as you land, Verner comes bouncing up to you."))
-   v(fmt.f(_([["Everything is going great thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Could you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
+   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -66,7 +65,7 @@ function create ()
    vn.done()
 
    vn.label("accept")
-   v(_([["Perfect! We're starting to make true progress!."]]))
+   v(_([["Perfect! We're starting to make true progress!"]]))
    vn.func( function () accepted = true end )
 
    vn.run()
@@ -93,7 +92,7 @@ end
 
 -- Land hook.
 function land ()
-   if mem.state==1 and  planet.cur() == mem.destpnt then
+   if mem.state==1 and  spob.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
@@ -110,12 +109,12 @@ function land ()
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif mem.state==2 and planet.cur() == returnpnt then
+   elseif mem.state==2 and spob.cur() == returnpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
-      vn.na(fmt.f(_([[As soon as your ship sets foot, Verner and his gang scramble to carefully unload the {cargo} to start setting it up.]]),
+      vn.na(fmt.f(_([[As soon as your ship alights, Verner and his gang scramble to carefully unload the {cargo} and start setting it up.]]),
          {cargo=cargo_name}))
       v(_([["Wow, great work! You sure are proving to be invaluable to the project. Once we start getting an atmosphere we should almost be there. It seems like my calculations were all spot on!"
 You can see glee in his eyes.

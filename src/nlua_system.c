@@ -24,7 +24,7 @@
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
-#include "nlua_planet.h"
+#include "nlua_spob.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "rng.h"
@@ -39,6 +39,7 @@ static int systemL_name( lua_State *L );
 static int systemL_nameRaw( lua_State *L );
 static int systemL_position( lua_State *L );
 static int systemL_faction( lua_State *L );
+static int systemL_background( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_interference( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
@@ -51,7 +52,7 @@ static int systemL_asteroidPos( lua_State *L );
 static int systemL_asteroidDestroyed( lua_State *L );
 static int systemL_addGatherable( lua_State *L );
 static int systemL_presences( lua_State *L );
-static int systemL_planets( lua_State *L );
+static int systemL_spobs( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
@@ -72,6 +73,7 @@ static const luaL_Reg system_methods[] = {
    { "nameRaw", systemL_nameRaw },
    { "pos", systemL_position },
    { "faction", systemL_faction },
+   { "background", systemL_background },
    { "nebula", systemL_nebula },
    { "interference", systemL_interference },
    { "jumpDist", systemL_jumpdistance },
@@ -84,7 +86,7 @@ static const luaL_Reg system_methods[] = {
    { "asteroidDestroyed", systemL_asteroidDestroyed },
    { "addGatherable", systemL_addGatherable },
    { "presences", systemL_presences },
-   { "planets", systemL_planets },
+   { "spobs", systemL_spobs },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "known", systemL_isknown },
@@ -236,28 +238,28 @@ static int systemL_cur( lua_State *L )
  *
  * Behaves differently depending on what you pass as param: <br/>
  *    - string : Gets the system by raw (untranslated) name. <br/>
- *    - planet : Gets the system by planet. <br/>
+ *    - spob : Gets the system by spob. <br/>
  *
- * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
+ * @usage sys = system.get( p ) -- Gets system where spob 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *
- *    @luatparam string|Planet param Read description for details.
+ *    @luatparam string|Spob param Read description for details.
  *    @luatreturn System System matching param.
  * @luafunc get
  */
 static int systemL_get( lua_State *L )
 {
    StarSystem *ss;
-   Planet *pnt;
+   Spob *pnt;
 
    /* Passing a string (systemname) */
    if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
    }
-   /* Passing a planet */
-   else if (lua_isplanet(L,1)) {
-      pnt = luaL_validplanet(L,1);
-      ss = system_get( planet_getSystem( pnt->name ) );
+   /* Passing a spob */
+   else if (lua_isspob(L,1)) {
+      pnt = luaL_validspob(L,1);
+      ss = system_get( spob_getSystem( pnt->name ) );
    }
    else NLUA_INVALID_PARAMETER(L);
 
@@ -379,6 +381,23 @@ static int systemL_faction( lua_State *L )
    if (s->faction == -1)
       return 0;
    lua_pushfaction(L,s->faction);
+   return 1;
+
+}
+
+/**
+ * @brief Gets system background.
+ *
+ *    @luatparam System s System to get the background of.
+ *    @luatreturn string|nil The background of the system or nil for default.
+ * @luafunc background
+ */
+static int systemL_background( lua_State *L )
+{
+   StarSystem *s = luaL_validsystem(L,1);
+   if (s->background==NULL)
+      return 0;
+   lua_pushstring(L,s->background);
    return 1;
 
 }
@@ -819,22 +838,22 @@ static int systemL_presences( lua_State *L )
 }
 
 /**
- * @brief Gets the planets in a system.
+ * @brief Gets the spobs in a system.
  *
- * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
- * @usage if \#sys:planets() > 0 then -- System has planets
+ * @usage for key, spob in ipairs( sys:spobs() ) do -- Iterate over spobs in system
+ * @usage if \#sys:spobs() > 0 then -- System has spobs
  *
- *    @luatparam System s System to get planets of
- *    @luatreturn {Planet,...} A table with all the planets
- * @luafunc planets
+ *    @luatparam System s System to get spobs of
+ *    @luatreturn {Spob,...} A table with all the spobs
+ * @luafunc spobs
  */
-static int systemL_planets( lua_State *L )
+static int systemL_spobs( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-   /* Push all planets. */
+   /* Push all spobs. */
    lua_newtable(L);
-   for (int i=0; i<array_size(s->planets); i++) {
-      lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
+   for (int i=0; i<array_size(s->spobs); i++) {
+      lua_pushspob(L,spob_index( s->spobs[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
    return 1;
@@ -954,7 +973,7 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luatparam System  s System to set known.
  *    @luatparam[opt=false] boolean b Whether or not to set as known.
- *    @luatparam[opt=false] boolean r Whether or not to iterate over the system's assets and jump points.
+ *    @luatparam[opt=false] boolean r Whether or not to iterate over the system's spobs and jump points.
  * @luafunc setKnown
  */
 static int systemL_setknown( lua_State *L )
@@ -977,14 +996,14 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (int i=0; i < array_size(sys->planets); i++)
-            planet_setKnown( sys->planets[i] );
+         for (int i=0; i < array_size(sys->spobs); i++)
+            spob_setKnown( sys->spobs[i] );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (int i=0; i < array_size(sys->planets); i++)
-            planet_rmFlag( sys->planets[i], PLANET_KNOWN );
+         for (int i=0; i < array_size(sys->spobs); i++)
+            spob_rmFlag( sys->spobs[i], SPOB_KNOWN );
          for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }

@@ -29,6 +29,12 @@ local planet_songs = {
    ["Minerva Station"] = { "meeting_mtfox" },
    ["Strangelove Lab"] = { "landing_sinister" },
    ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
+   ["Research Post Sigma-13"] = function ()
+         if not diff.isApplied("sigma13_fixed1") and
+            not diff.isApplied("sigma13_fixed2") then
+            return "landing_sinister"
+         end
+      end,
 }
 
 -- System-specific songs
@@ -137,16 +143,25 @@ end
 Chooses landing songs.
 --]]
 function choose_table.land ()
-   local pnt   = planet.cur()
+   local pnt   = spob.cur()
    local class = pnt:class()
    local mus
 
    -- Planet override
    local override = planet_songs[ pnt:nameRaw() ]
    if override then
-      music.load( override[ rnd.rnd(1, #override) ] )
-      music.play()
-      return true
+      if type(override)=="function" then
+         local song = override()
+         if song then
+            music.load( song )
+            music.play()
+            return true
+         end
+      else
+         music.load( override[ rnd.rnd(1, #override) ] )
+         music.play()
+         return true
+      end
    end
 
    -- Standard to do it based on type of planet
@@ -190,7 +205,7 @@ local ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6",
       "void_sensor", "ambiphonic",
       "ambient4", "terminal", "eureka",
-      "ambient2_5" }
+      "ambient2_5", "78pulse", "therewillbestars" }
 --[[--
 Chooses ambient songs.
 --]]
@@ -212,6 +227,7 @@ function choose_table.ambient ()
       -- Do not change songs so soon
       if songpos < 10. then
          music.delay( "ambient", 10. - songpos )
+         last = "ambient"  -- or else a periodic "idle" may stomp the change!
          return false
       end
    end

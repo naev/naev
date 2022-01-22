@@ -410,7 +410,7 @@ static int jumpL_setKnown( lua_State *L )
 
    /* True if boolean isn't supplied. */
    if (lua_gettop(L) > offset)
-      b  = lua_toboolean(L, 1 + offset);
+      b = lua_toboolean(L, 1 + offset);
    else
       b = 1;
 
@@ -421,7 +421,7 @@ static int jumpL_setKnown( lua_State *L )
    else
       jp_rmFlag( jp, JP_KNOWN );
 
-   /* Update outfits image array. */
+   /* Update outfits image array - in the case it changes map owned status. */
    if (changed)
       outfits_updateEquipmentOutfits();
 

@@ -6,7 +6,7 @@ local eparams = require 'equipopt.params'
 
 local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Proteron Derivative Fighter Bay",
+   "Proteron Derivative Bay",
    "Heavy Razor Turret", "Grave Beam", "Railgun",
    "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
    "Heavy Ripper Turret",
@@ -14,7 +14,7 @@ local proteron_outfits = eoutfits.merge{{
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    -- Small Weapons
-   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+   "TeraCom Banshee Launcher",
    "Laser Cannon MK1", "Plasma Blaster MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",

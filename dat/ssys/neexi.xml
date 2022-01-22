@@ -2,6 +2,7 @@
 <ssys name="Neexi">
  <general>
   <background>haze</background>
+  <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
   <radius>16000.000000</radius>
   <stars>400</stars>
@@ -12,10 +13,10 @@
   <x>-98.531254</x>
   <y>761.485813</y>
  </pos>
- <assets>
-  <asset>Neexi I</asset>
-  <asset>Neexi II</asset>
- </assets>
+ <spobs>
+  <spob>Neexi I</spob>
+  <spob>Neexi II</spob>
+ </spobs>
  <jumps>
   <jump target="Malebolge">
    <autopos/>

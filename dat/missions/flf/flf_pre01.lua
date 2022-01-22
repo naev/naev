@@ -111,21 +111,21 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if diff.isApplied("FLF_base") and planet.cur() == planet.get("Sindbad") then
-        tk.msg(_("Gregar leaves the party"), fmt.f( _([[You and Gregar step out of your airlock and onto Sindbad. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with mistrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
+    if diff.isApplied("FLF_base") and spob.cur() == spob.get("Sindbad") then
+        tk.msg(_("Gregar leaves the party"), fmt.f( _([[You and Gregar step out of your airlock and onto Sindbad. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with distrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
     "Alright, {player}," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]), {player=player.name()}))
         tk.msg(_("Gregar leaves the party"), _([[The moment of tension passes, and the officer leans back in his chair.
     "That threat delivered, I should at least extend my gratitude for helping one of ours in his time of need, though you had no reason to do so. That's why I will allow you to move freely on this station, at least to some extent, and I will allow you to leave when you please, as well as to return if you see the need. Who knows, maybe if you hit it off with the personnel stationed here, we might even come to consider you a friend."
-    You exchange a few more polite words with the officer, then leave his office. As you head back to your ship, you consider your position. You have gained access to a center of FLF activity. Should you want to make an enemy of House Dvaered, perhaps this would be a good place to start...]]))
+    You exchange a few more polite words with the officer, then leave his office. As you head back to your ship, you consider your position. You have gained access to a centre of FLF activity. Should you want to make an enemy of House Dvaered, perhaps this would be a good place to start...]]))
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
         flf.addLog( _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]]) )
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.cur():faction() == faction.get("Dvaered") and not mem.basefound then
+    elseif spob.cur():faction() == faction.get("Dvaered") and not mem.basefound then
         if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
     Would you like to do so?]])) then
-            tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar and take him away before he even comprehends what's going on.
+            tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar, and take him away before he even comprehends what's going on.
     "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
     The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]))
             faction.get("Dvaered"):modPlayerSingle(5)
@@ -159,7 +159,7 @@ function wakeUpGregarYouLazyBugger()
     end
     if not mem.flfdead then
         tk.msg(_("Gregar puts an end to hostilities"), _([["Wha- hey! What's going on!"
-    You were too busy dodging incoming fire, rebalancing your shields and generally trying to kill your attackers before they kill you to notice that Gregar, your passenger, has roused from his slumber. Clearly the noise and the rocking have jolted him awake. You snap at him not to distract you from this fight, but he desperately interrupts.
+    You were too busy dodging incoming fire, rebalancing your shields, and generally trying to kill your attackers before they kill you to notice that Gregar, your passenger, has roused from his slumber. Clearly the noise and the rocking have jolted him awake. You snap at him not to distract you from this fight, but he desperately interrupts.
     "These guys are my contacts, my friends! I was supposed to meet them here! Oh crap, this is not good. I didn't realize I'd be out this long! Look, I need to use your comm array right now. Trust me!"
     Before you have a chance to ask him what he thinks he's doing, Gregar begins tuning your communications array, and soon finds the frequency he wants.
     "FLF sentinel formation, this is Lt. Gregar Fletcher, authorization code six-six-niner-four-seven-Gamma-Foxtrot! Cease fire, I repeat, cease fire!" He then turns to you. "Same to you. Stop shooting. This is a misunderstanding, they're not your enemies."]]))
@@ -230,7 +230,7 @@ function spawnbase()
         diff.apply("FLF_base")
 
         -- Safety measure to ensure the player can land.
-        mem.base = planet.get("Sindbad")
+        mem.base = spob.get("Sindbad")
         mem.base:landOverride()
 
         mem.basefound = true

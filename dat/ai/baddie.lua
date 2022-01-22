@@ -14,3 +14,14 @@ mem.atk_kill       = true
 mem.atk_board      = false
 mem.bribe_no       = _("You can't bribe me!")
 mem.refuel_no      = _("I won't give you fuel!")
+
+function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
+   local pt = ps:tags()
+   mem.isdrone = pt.drone
+   if mem.isdrone then
+      mem.comm_no = _("ACCESS DENIED.")
+   end
+   create_post()
+end

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Nohinohi">
+ <points>40</points>
+ <base_type>Reaver</base_type>
+ <GFX size="68">reaver</GFX>
+ <rarity>5</rarity>
+ <GUI>brushed</GUI>
+ <sound>engine_soromid</sound>
+ <class display="Bio-Fighter">Fighter</class>
+ <price>570000</price>
+ <time_mod>0.9</time_mod>
+ <trail_generator x="-20" y="0" h="0" always_under="1">soromid</trail_generator>
+ <fabricator>Soromid</fabricator>
+ <description>Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, although the process is not entirely clear, when the original Soromid Reaver is abandoned or lost through misfortune, it can undergo a remarkable transformation where the biological components of the ship end up dominating the synthetic parts. These ships are commonly referred to as feral bioships and not much is known about them.</description>
+ <health>
+  <armour>75</armour>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>60</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" prop="bio_weapon" name="weap1" x="12" y="0" h="0">Stinger Organ III</weapon>
+  <weapon size="small" prop="bio_weapon" name="weap2" x="12" y="0" h="0">Stinger Organ III</weapon>
+  <weapon size="small" prop="bio_weapon" name="weap3" x="12" y="0" h="0">Stinger Organ III</weapon>
+  <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum II</utility>
+  <utility size="small" prop="bio_organ" name="adrenal_gland" />
+  <utility size="small" prop="bio_organ" name="the_bite" />
+  <utility size="small" prop="accessory" />
+  <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive II</structure>
+  <structure size="small" prop="bio_hull" name="shell">Laevis Cortex II</structure>
+ </slots>
+ <stats>
+  <ew_hide>10</ew_hide>
+ </stats>
+ <tags>
+  <tag>feral</tag>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <!--<tag>bioship</tag>-->
+ </tags>
+</ship>
