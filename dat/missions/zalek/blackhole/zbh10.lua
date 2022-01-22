@@ -11,9 +11,6 @@
   <location>Bar</location>
   <done>Za'lek Black Hole 9</done>
  </avail>
- <tags>
-  <tag>zlk_cap_ch01_lrg</tag>
- </tags>
  <notes>
   <campaign>Za'lek Black Hole</campaign>
  </notes>
