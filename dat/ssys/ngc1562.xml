@@ -17,6 +17,11 @@
   <spob_virtual>Za'lek Unpresence (Range 1)</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Anubis Black Hole">
+   <pos x="14678.661683" y="4165.051147"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-13674">
    <autopos/>
    <hide>0.500000</hide>
