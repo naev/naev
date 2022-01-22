@@ -1569,7 +1569,7 @@ void space_init( const char* sysname, int do_simulate )
       }
       else {
          /* Background is starry */
-         background_initStars( cur_system->stars );
+         background_initDust( cur_system->stars );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );

@@ -86,7 +86,7 @@ static void bkg_sort( background_image_t *arr );
  *
  *    @param n Number of stars to add (stars per 800x640 screen).
  */
-void background_initStars( int n )
+void background_initDust( int n )
 {
    GLfloat w, h, hw, hh;
    double size;
@@ -133,7 +133,7 @@ void background_initStars( int n )
 /**
  * @brief Displaces the stars, useful with camera.
  */
-void background_moveStars( double x, double y )
+void background_moveDust( double x, double y )
 {
    star_x += (GLfloat) x;
    star_y += (GLfloat) y;
@@ -147,7 +147,7 @@ void background_moveStars( double x, double y )
  *
  *    @param dt Current delta tick.
  */
-void background_renderStars( const double dt )
+void background_renderDust( const double dt )
 {
    (void) dt;
    GLfloat x, y, h, w;
@@ -261,7 +261,7 @@ void background_render( double dt )
       }
    }
 
-   background_renderStars(dt);
+   background_renderDust(dt);
    background_renderImages( bkg_image_arr_ft );
 
    if (bkg_L_renderfg != LUA_NOREF) {
