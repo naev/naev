@@ -188,7 +188,6 @@ int land_doneLoading (void)
  */
 int can_swapEquipment( const char *shipname )
 {
-   int failure = 0;
    Pilot *newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
@@ -202,15 +201,15 @@ int can_swapEquipment( const char *shipname )
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
             diff );
-      failure = 1;
+      return 0;
    }
    if (pilot_hasDeployed( player.p )) {
       if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
          land_errDialogueBuild( _("You have deployed fighters.") );
-         failure = 1;
+         return 0;
       }
    }
-   return !failure;
+   return 1;
 }
 
 /**
