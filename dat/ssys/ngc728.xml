@@ -10,7 +10,10 @@
   <x>-704.675051</x>
   <y>-91.783693</y>
  </pos>
- <spobs/>
+ <spobs>
+  <spob_virtual>Empire Unpresence</spob_virtual>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-3219">
    <autopos/>
