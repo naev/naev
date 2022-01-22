@@ -4,15 +4,19 @@ set -e
 
 usage() {
     echo "usage: $(basename "$0") [-d] -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)>"
-    echo "Manually runs the nightly workflow when sent."
-    echo "Pass in -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)> -g <github repo name e.g. (naev/naev)>"
+    echo "Manually sends a workflow dispatch when run."
+    echo "PAT Requires 'workflow' scope"
+    echo "Pass in -t <Github PAT> -r <release type> e.g. (nightly, prerelease, release) -g <github repo name> defaults to: (naev/naev) -b <ref/branch name> defaults to: (main)"
     exit 1
 }
 
 # Defaults
 REPO="naev/naev"
+REF="main"
+GITHUB_API_URL="${API_URL:-https://api.github.com}"
+GITHUB_SERVER_URL="${SERVER_URL:-https://github.com}"
 
-while getopts d:t:r:g: OPTION "$@"; do
+while getopts dt:r:g:b: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -21,10 +25,13 @@ while getopts d:t:r:g: OPTION "$@"; do
         TOKEN="${OPTARG}"
         ;;
     r)
-        RELEASETYPE="${OPTARG}"
+        RELEASE_TYPE="${OPTARG}"
         ;;
     g)
         REPO="${OPTARG}"
+        ;;
+    b)
+        REF="${OPTARG}"
         ;;
     *)
         usage
@@ -32,32 +39,34 @@ while getopts d:t:r:g: OPTION "$@"; do
     esac
 done
 
-if [[ -z "$TOKEN" ]] || [[ -z "$RELEASETYPE" ]]; then
+if [[ -z "$TOKEN" ]] || [[ -z "$RELEASE_TYPE" ]]; then
     usage
 fi
 
-if [[ "$RELEASETYPE" == "nightly" ]]; then
-  curl \
-    -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token $TOKEN" \
-    https://api.github.com/repos/"$REPO"/dispatches \
-    -d '{"event_type":"manual-nightly"}'
-elif [[ "$RELEASETYPE" == "prerelease" ]]; then
-  curl \
-    -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token $TOKEN" \
-    https://api.github.com/repos/"$REPO"/dispatches \
-    -d '{"event_type":"manual-prerelease"}'
-elif [[ "$RELEASETYPE" == "release" ]]; then
-  curl \
-    -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token $TOKEN" \
-    https://api.github.com/repos/"$REPO"/dispatches \
-    -d '{"event_type":"manual-release"}'
-else
+case $RELEASE_TYPE in
+  "nightly")
+    WORKFLOW_FILE_NAME="naev_$RELEASE_TYPE.yml"
+    ;;
+  "prerelease")
+    WORKFLOW_FILE_NAME="naev_$RELEASE_TYPE.yml"
+    ;;
+  "release")
+    WORKFLOW_FILE_NAME="naev_$RELEASE_TYPE.yml"
+    ;;
+  *)
     echo "-r must be either nightly, prerelease or release"
     exit 1
-fi
+    ;;
+esac
+
+trigger_workflow() {
+  echo "View run progress at: ${GITHUB_SERVER_URL}/${REPO}/actions/workflows/${WORKFLOW_FILE_NAME}"
+
+  curl --fail -X POST "${GITHUB_API_URL}/repos/${REPO}/actions/workflows/${WORKFLOW_FILE_NAME}/dispatches" \
+    -H "Accept: application/vnd.github.v3+json" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer ${TOKEN}" \
+    --data "{\"ref\":\"${REF}\"}"
+}
+
+trigger_workflow
