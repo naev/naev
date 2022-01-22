@@ -179,7 +179,7 @@ int can_swapEquipment( const char *shipname )
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
-      failure = 1;
+      return 0;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       int diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
