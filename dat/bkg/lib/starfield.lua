@@ -56,6 +56,7 @@ local function star_add( added, num_added )
    local nmove = math.max( 0.05, prng:random()*0.1 )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
+   scale = scale * 0.75
    bkg.image( img, x, y, move, scale ) -- On the background
    return num
 end
