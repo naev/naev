@@ -214,6 +214,9 @@ int can_swapEquipment( const char *shipname )
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
+ *
+ * @TODO don't use strings here and use some switch case with an enum.
+ *
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
