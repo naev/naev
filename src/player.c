@@ -3054,7 +3054,7 @@ int player_addEscorts (void)
 
          /* Must not have all deployed. */
          q = po->u.ammo.deployed + po->u.ammo.quantity;
-         if (q >= outfit_amount(po->outfit))
+         if (q >= pilot_maxAmmoO(player.p,po->outfit))
             continue;
 
          dockslot = j;

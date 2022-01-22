@@ -2062,7 +2062,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
          continue;
 
       /* Remove ammo first. */
-      pilot_rmAmmo( ship, s, outfit_amount(o) );
+      pilot_rmAmmo( ship, s, pilot_maxAmmoO(ship, o) );
 
       /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, s );

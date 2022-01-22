@@ -2717,7 +2717,7 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
 
    /* Add ammo if needed. */
    if (ret==0)
-      pilot_addAmmo( p, s, outfit_amount(o) );
+      pilot_addAmmo( p, s, pilot_maxAmmoO(p,o) );
    return 1;
 }
 
