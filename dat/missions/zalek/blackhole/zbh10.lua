@@ -100,6 +100,7 @@ function land ()
    vn.clear()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
+   local i = zbh.vn_icarus{ pos="farleft"}
    vn.transition( zbh.zach.transition )
    vn.na(_([[You land amidst a swarm of feral bioships circling the station. Zach seems a bit distraught at the enormous behemoths visible from the docks.]]))
    z(_([["I had somehow gotten used to Icarus, but this is a bit too much."
@@ -114,6 +115,20 @@ He laughs nervously.
    z(_([["What still is weird is how they went through all the effort to destroy the research station, instead of a more indirect approach."
 He lets out a sigh.
 "If it weren't for Icarus, we would have also joined my late colleagues as research martyrs…"]]))
+   vn.sfx( zbh.sfx.spacewhale1 )
+   vn.na(_([[Suddenly, you are surprised by a large commotion coming from the docs. You and Zach rush out to see what is going on.]]))
+   z(_([["Oh shit. Are they nibbling on the station?"]]))
+   vn.appear( i )
+   i(_([[You enter the docks again and are met with an incredibly close Icarus. After the initial surprise, you can see they are carrying something in their mouth and offering it to you. They seem oddly proud of themselves.]]))
+   z(_([["Is that… a drone?"]]))
+   vn.na(_([[Icarus gently releases the drone and a cautious Zach approaches it, like one would approach a dead jellyfish on the beach.]]))
+   z(_([["Wait, this isn't one of my drones… could this be?…"
+Zach grabs the drone and runs into the station, leaving you alone face to face with Icarus.]]))
+   vn.disappear( z, zbh.zach.transition )
+   vn.sfx( zbh.sfx.spacewhale2 )
+   i(_([[Icarus seems to nod at you before taking off to rejoin his tribe. They let out a strong electromagnetic impulse that resonates inside the space station as they head off to the depths of space.]]))
+   vn.disappear( i )
+   vn.na(_("You are left alone to reflect on all the recent happenings. When you have time you feel like you should probably check up on Zach to see how he is doing."))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zbh.zach.transition )
