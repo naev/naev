@@ -2965,8 +2965,10 @@ int player_addEscorts (void)
          break;
       }
 
-      if (dockslot == -1)
-         DEBUG(_("Escort is undeployed"));
+      if (dockslot == -1) {
+         WARN(_("Escort is undeployed, removing."));
+         continue;
+      }
 
       /* Create escort. */
       e = escort_create( player.p, player.p->escorts[i].ship,
