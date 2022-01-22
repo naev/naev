@@ -114,7 +114,7 @@ He laughs nervously.
 He lets out a sigh.
 "If it weren't for Icarus, we would have also joined my late colleagues as research martyrs…"]]))
    vn.sfx( zbh.sfx.spacewhale1 )
-   vn.na(_([[Suddenly, you are surprised by a large commotion coming from the docs. You and Zach rush out to see what is going on.]]))
+   vn.na(_([[Suddenly, you are surprised by a large commotion coming from the docks. You and Zach rush out to see what is going on.]]))
    z(_([["Oh shit. Are they nibbling on the station?"]]))
    vn.appear( i )
    i(_([[You enter the docks again and are met with an incredibly close Icarus. After the initial surprise, you can see they are carrying something in their mouth and offering it to you. They seem oddly proud of themselves.]]))
