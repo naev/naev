@@ -1,7 +1,5 @@
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: manual-nightly
   schedule:
     - cron: "0 0 * * *"
 

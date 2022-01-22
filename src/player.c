@@ -3032,7 +3032,7 @@ int player_addEscorts (void)
          continue;
       }
 
-      a = RNGF() * 2 * M_PI;
+      a = RNGF() * 2. * M_PI;
       vect_cset( &v, player.p->solid->pos.x + 50.*cos(a),
             player.p->solid->pos.y + 50.*sin(a) );
 
@@ -3054,15 +3054,17 @@ int player_addEscorts (void)
 
          /* Must not have all deployed. */
          q = po->u.ammo.deployed + po->u.ammo.quantity;
-         if (q >= outfit_amount(po->outfit))
+         if (q >= pilot_maxAmmoO(player.p,po->outfit))
             continue;
 
          dockslot = j;
          break;
       }
 
-      if (dockslot == -1)
-         DEBUG(_("Escort is undeployed"));
+      if (dockslot == -1) {
+         WARN(_("Escort is undeployed, removing."));
+         continue;
+      }
 
       /* Create escort. */
       e = escort_create( player.p, player.p->escorts[i].ship,

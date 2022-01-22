@@ -10,10 +10,7 @@
   <x>-610.826672</x>
   <y>-44.492670</y>
  </pos>
- <spobs>
-  <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
-  <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
- </spobs>
+ <spobs/>
  <jumps>
   <jump target="Klintus">
    <autopos/>
