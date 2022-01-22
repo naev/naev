@@ -35,7 +35,7 @@
   </jump>
  </jumps>
  <stats>
-  <energy_mod>-50</energy_mod>
-  <stress_dissipation>-50</stress_dissipation>
+  <energy_mod>-50.000000</energy_mod>
+  <stress_dissipation>-50.000000</stress_dissipation>
  </stats>
 </ssys>
