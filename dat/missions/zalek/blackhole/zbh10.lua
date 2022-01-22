@@ -100,7 +100,7 @@ function land ()
    vn.clear()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
-   local i = zbh.vn_icarus{ pos="farleft"}
+   local i = zbh.vn_icarus{pos="farleft"}
    vn.transition( zbh.zach.transition )
    vn.na(_([[You land amidst a swarm of feral bioships circling the station. Zach seems a bit distraught at the enormous behemoths visible from the docks.]]))
    z(_([["I had somehow gotten used to Icarus, but this is a bit too much."
@@ -287,6 +287,7 @@ function heartbeat ()
             icarus:setVisplayer(true)
             icarus:setInvincible(true)
             icarus:setFriendly(true)
+            icarus:setHilight(true)
             icarus:control(true)
             icarus:follow( l )
             table.insert( feralpack, icarus )

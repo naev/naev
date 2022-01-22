@@ -25,7 +25,7 @@ zbh.zach = {
    description = _("Zach looks like he is idle at the bar. You wonder what he's thinking about."),
 }
 zbh.icarus = {
-   name = _("Feral Bioship"),
+   name = _("Icarus"),
    portrait = nil,
    -- TODO change image to proper one when Nohinohi graphics are changed
    image = 'gfx/ship/reaver/reaver_comm.webp',
