@@ -16,16 +16,25 @@ function background ()
    local nconf = naev.conf()
    sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
-   prng:setSeed( system.cur():nameRaw() )
+   local sysname = system.cur():nameRaw()
+   prng:setSeed( sysname )
 
    local off = system.cur():pos() - vec2.new( -765, -490 )
    local _m, a = off:polar()
-   off = vec2.newP( 4, a )
+   local scale
+
+   if sysname == "Anubis Black Hole" then
+      scale = 7
+      off = vec2.new()
+   else
+      scale = 1
+      off = vec2.newP( 4, a )
+   end
    bx, by = off:get()
 
    -- Set up the shader
    local ax, ay, az = 0.2*prng:random(), 0.2*prng:random(), 2*prng:random()-1
-   shader = lg.newShader( string.format( pixelcode, ax, ay, az ), love_shaders.vertexcode )
+   shader = lg.newShader( string.format( pixelcode, scale, ax, ay, az ), love_shaders.vertexcode )
    time = -1000 * rnd.rnd()
 
    bgstars = lg.newCanvas()
