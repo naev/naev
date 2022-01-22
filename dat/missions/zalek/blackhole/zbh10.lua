@@ -91,6 +91,7 @@ end
 
 function land ()
    if mem.state~=2 or spob.cur() ~= mainpnt then
+      lmisn.fail(_("You were supposed to eliminate the hostiles!"))
       return
    end
 
