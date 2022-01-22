@@ -24,48 +24,84 @@
 
 --]]
 
-local car = require "common.cargo"
 local fmt = require "format"
-local zlk = require "common.zalek"
+local nebu_research = require "common.nebu_research"
+
+local mensing_portrait = nebu_research.mensing.portrait
 
 -- luacheck: globals land (Hook functions passed by name)
 
 -- Mission constants
-local credits = 400e3
+local credits = nebu_research.rewards.credits02
 local homeworld, homeworld_sys = planet.getS("Jorla")
-local request_text = _([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"
-    With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student.]])
 
 function create()
     -- mission variables
     mem.origin = planet.cur()
     mem.origin_sys = system.cur()
 
-    local numjumps = mem.origin_sys:jumpDist(homeworld_sys, false)
-    local traveldist = car.calculateDistance(mem.origin_sys, mem.origin:pos(), homeworld_sys, homeworld)
-    local stuperpx   = 0.15
-    local stuperjump = 10000
-    local stupertakeoff = 10000
-    local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
-    mem.timelimit  = time.get() + time.create(0, 0, allowance)
-
     -- Spaceport bar stuff
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("It appears she wants to talk with you."))
 end
 
 function accept()
-    if not tk.yesno(_("Bar"), fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
-    "Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {player=player:name(), pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)})) then
+    local accepted = false
+    vn.clear()
+    vn.scene()
+    local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+    vn.transition("fade")
+
+    mensing(fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service."]]), {player=player:name()}))
+    mensing(_([["I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway."]]))
+    mensing(_([["But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."]]))
+    mensing(fmt.f(_([["Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)}))
+    vn.menu( {
+        { _("Accept"), "accept" },
+        { _("Decline"), "decline" },
+    } )
+    vn.label( "decline" )
+    vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
+    vn.done()
+    vn.label( "accept" )
+    vn.func( function () accepted = true end )
+    vn.run()
+
+    if not accepted then
         misn.finish()
+        return
     end
-    tk.msg(_("Bar"), fmt.f(_([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to {pnt} we go!"
-    With that being said she drags you out of the bar. When realizing that she actually does not know on which landing pad your ship is parked she lets you loose and orders you to lead the way.]]), {pnt=homeworld}))
+
+    vn.clear()
+    vn.scene()
+    mensing = vn.newCharacter( nebu_research.vn_mensing() )
+    mensing(_([["Splendid! I'd like to start with my work as soon as possible.
+But before I forget, there's some issue..."]]))
+    mensing(_([["You see, I'm not allowed to leave officially. Therefore I'd rather let them think that I was kidnapped. I'm sure it'll be fine! But don't let an Empire ship scan your ship! I don't know how they would react finding me onboard of your ship. Try to be stealthy and once we're in Za'lek territory there will be no problem."]]))
+    vn.menu( {
+        { fmt.f(_("Take her to {sys}"), {sys=homeworld_sys}), "accept" },
+        { _("Leave her"), "decline" },
+    } )
+    vn.label( "decline" )
+    vn.func( function () accepted = false end )
+    vn.na(_("That sounds too risky for you. You'll probably end up dead or in prison."))
+    vn.done()
+    vn.label( "accept" )
+    vn.func( function () accepted = true end )
+    vn.run()
+    if not accepted then
+        misn.finish()
+        return
+    end
 
     -- Set up mission information
     misn.setTitle(_("Emergency of Immediate Inspiration"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     mem.misn_marker = misn.markerAdd(homeworld_sys, "low")
+
+    local c = commodity.new( N_("Dr. Mensing"), N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!") )
+    c:illegalto( {"Empire"} )
+    mem.carg_id = misn.cargoAdd( c, 0 )
 
     misn.accept()
     misn.osdCreate(_("Emergency of Immediate Inspiration"), {
@@ -78,15 +114,18 @@ end
 function land()
     mem.landed = planet.cur()
     if mem.landed == homeworld then
-        if mem.timelimit < time.get() then
-            tk.msg(_("Mission accomplished"), fmt.f(_([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of {credits} for educational reasons." She hands you over a credit chip.]]), {credits=fmt.credits(credits / 2)} .. "\n\n" .. request_text))
-            player.pay(credits / 2)
-        else
-            tk.msg(_("Mission accomplished"), fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}) .. "\n\n" .. request_text)
-            player.pay(credits)
-        end
+        vn.clear()
+        vn.scene()
+        local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+        vn.transition("fade")
+        mensing(fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}))
+        mensing(_([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"]]))
+        mensing(_("With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student."))
+        vn.done()
+        vn.run()
+        player.pay(credits)
         misn.markerRm(mem.misn_marker)
-        zlk.addNebuResearchLog(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
+        nebu_research.log(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end
 end

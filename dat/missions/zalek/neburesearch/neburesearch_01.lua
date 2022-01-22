@@ -28,7 +28,11 @@
 local lmisn = require "lmisn"
 local fleet = require "fleet"
 local fmt = require "format"
-local zlk = require "common.zalek"
+local nebu_research = require "common.nebu_research"
+local vn = require 'vn'
+local vntk = require "vntk"
+
+local mensing_portrait = nebu_research.mensing.portrait
 
 local ships, transporter -- Non-persistent state
 local fail, spawnTransporter, updateGoalDisplay -- Forward-declared functions
@@ -60,20 +64,40 @@ local t_planet = {
     [8] = homeworld,
 }
 
-local credits = 800e3
+local credits = nebu_research.rewards.credits01
 
 function create()
     mem.ambush = false
     mem.stage = 0
 
     -- Spaceport bar stuff
-    misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", _("You see a scientist who is apparently looking for someone."))
+    misn.setNPC(_("A scientist"), mensing_portrait, _("You see a scientist who is apparently looking for someone."))
 end
 
 function accept()
-    if not tk.yesno(_("Bar"), fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
-    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]), {player=player:name()})) then
+    local accepted = false
+    vn.clear()
+    vn.scene()
+    local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+    mensing:rename(_("A scientist"))
+    vn.transition("fade")
+
+    mensing(fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well."]]), {player=player:name()}))
+    mensing(_([["Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]))
+    vn.menu( {
+        { _("Accept the job"), "accept" },
+        { _("Decline to help"), "decline" },
+    } )
+    vn.label( "decline" )
+    vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
+    vn.done()
+    vn.label( "accept" )
+    vn.func( function () accepted = true end )
+    vn.run()
+
+    if not accepted then
         misn.finish()
+        return
     end
 
     mem.stage = 1
@@ -81,8 +105,13 @@ function accept()
     mem.firstTakeOff = true
     mem.origin = planet.cur()
 
-    tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
-    We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
+    vn.clear()
+    vn.scene()
+    mensing = vn.newCharacter( nebu_research.vn_mensing() )
+    mensing(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort."]]))
+    mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
+    vn.done()
+    vn.run()
 
     -- Set up mission information
     mem.destsys = t_sys[1]
@@ -119,7 +148,13 @@ end
 
 function takeoff()
     if mem.firstTakeOff then
-        tk.msg(_("Departure"), fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player:name()}))
+        vn.clear()
+        vn.scene()
+        local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+        vn.transition("fade")
+        mensing(fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player:name()}))
+        vn.done()
+        vn.run()
         mem.firstTakeOff = false
     end
     mem.destplanet = nil
@@ -137,7 +172,7 @@ function jumpin()
         if not mem.ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
-            local ambushers = fleet.add( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
+            local ambushers = fleet.add( 1,  {"Pirate Admonisher", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Marauder", vec2.new(0,7500), nil, {ai="baddie_norun"} )
             for i, j in ipairs(ambushers) do
                 j:setHostile()
                 j:control(true)
@@ -165,18 +200,30 @@ end
 
 function land()
     if not mem.exited then
-        tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
+        vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
     elseif planet.cur() == station and not mem.station_visited then
-        tk.msg(_("A short break"), fmt.f(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
-    "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
-    She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
+        vn.clear()
+        vn.scene()
+        local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+        vn.transition("fade")
+        vn.na(_("Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship."))
+        mensing(_([["I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."]]))
+        mensing(fmt.f(_([[She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
+        vn.done()
+        vn.run()
         mem.station_visited = true
     elseif planet.cur() == homeworld then
-        tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
-    "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
+        vn.clear()
+        vn.scene()
+        local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+        vn.transition("fade")
+        vn.na(fmt.f(_("After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help."), {credits=fmt.credits(credits)}))
+        mensing(_([["We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]))
+        vn.done()
+        vn.run()
         player.pay(credits)
-        zlk.addNebuResearchLog(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
+        nebu_research.log(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
         misn.finish(true)
     end
     mem.origin = planet.cur()
@@ -257,10 +304,10 @@ function spawnTransporter()
 end
 
 function startAmbush()
-    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Dvaered", vec2.new(-1000,0), nil, {ai="dvaered_norun"} )
+    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Mercenary", planet.get("Onyx Shipyard"):pos() + vec2.new(6000,-3000), nil, {ai="dvaered_norun"} )
     for i, j in ipairs(ships) do
         j:control(true)
-        j:moveto(vec2.new(-8000,0))
+        j:moveto(vec2.new(-4000,-12000))
     end
     mem.ambush = true
     hook.timer(15.0, "ambushHail")
@@ -271,25 +318,34 @@ function ambushHail()
         j:setHostile()
         j:setHilight()
         j:control(true)
+        j:taskClear()
         j:attack(transporter)
         j:setVisible()
         j:setVisplayer()
     end
-    tk.msg(_("Trouble inbound"), _([[Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
-    "I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.
-    The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."
-    "Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."
-    The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]]))
-    tk.msg(_("Trouble inbound"), _([[Dr. Mensing  pauses, apparently choosing her words with care.
-    "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]]))
-    tk.msg(_("Trouble inbound"), fmt.f(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
-    "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I hadn't considered this point.
-    I'm counting on you, {player}. Please help us."]]), {player=player:name()}))
+    vn.clear()
+    vn.scene()
+    local mensing = vn.newCharacter( nebu_research.vn_mensing() )
+    local officer = vn.newCharacter( nebu_research.vn_dvaered_officer() )
+    vn.transition("fade")
+    vn.na(_("Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship."))
+    mensing(_([["I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.]]))
+    officer(_([[The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."]]))
+    mensing(_([["Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."]]))
+    officer(_([[The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]]))
+    mensing(_([[Dr. Mensing  pauses, apparently choosing her words with care.
+"Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect."]]))
+    vn.na(_("With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter."))
+    mensing(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.]]))
+    mensing(_([["I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I hadn't considered this point."]]))
+    mensing(fmt.f(_([["I'm counting on you, {player}. Please help us."]]), {player=player:name()}))
+    vn.done()
+    vn.run()
 end
 
 -- Handle the destruction of the transporter. Abort the mission.
 function transporterDeath()
-    tk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
+    vntk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
     misn.finish(false)
 end
 
