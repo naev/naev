@@ -3032,7 +3032,7 @@ int player_addEscorts (void)
          continue;
       }
 
-      a = RNGF() * 2 * M_PI;
+      a = RNGF() * 2. * M_PI;
       vect_cset( &v, player.p->solid->pos.x + 50.*cos(a),
             player.p->solid->pos.y + 50.*sin(a) );
 
