@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: naev 0.9.1\n"
+"Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-19 00:33-0500\n"
+"POT-Creation-Date: 2022-01-22 10:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27519,8 +27519,25 @@ msgstr ""
 msgid "Explanation"
 msgstr ""
 
-#: dat/events/minerva/station.lua:410 dat/events/minerva/station.lua:486
-msgid "explanation"
+#: dat/events/minerva/station.lua:414
+msgid ""
+"Cyborg Chicken's eyes blink one second and go blank as a pre-recorded "
+"explanation is played from its back. Wait… are those embedded speakers?"
+msgstr ""
+
+#: dat/events/minerva/station.lua:415
+msgid ""
+"\"Welcome to MINERVA STATIONS blackjack table. The objective of this card "
+"game is to get as close to a value of 21 without going over. All cards are "
+"worth their rank except for Jack, Queen, and King which are all worth 10, "
+"and ace is either worth 1 or 11. You win if you have a higher value than "
+"CYBORG CHICKEN without going over 21.\""
+msgstr ""
+
+#: dat/events/minerva/station.lua:416
+msgid ""
+"Cyborg Chicken eyes flutter as it seems like conciousness returns to its "
+"body."
 msgstr ""
 
 #. Resize the window
@@ -34758,7 +34775,7 @@ msgstr ""
 #. the Gawain is going away
 #. Are there still other pirates to kill ?
 #. She "jumped" into the current system by taking off.
-#: dat/missions/dvaered/assault_on_unicorn.lua:108
+#: dat/missions/dvaered/assault_on_unicorn.lua:97
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:227
 #: dat/missions/shark/sh07_pirates.lua:271
 #: dat/missions/sirius/achack/achack02.lua:118
@@ -34769,7 +34786,7 @@ msgstr ""
 msgid "Mission accomplished"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:108
+#: dat/missions/dvaered/assault_on_unicorn.lua:97
 msgid ""
 "As you land, you see a Dvaered military official approaching. Thanking you "
 "for your hard and diligent work, he hands you the bounty you've earned, a "
@@ -35355,6 +35372,11 @@ msgstr ""
 #. Non-persistent state
 #. Forward-declared functions
 #. luacheck: globals attacked attackedObstinate broadcast control deathBase deathDVbomber deathFLF deathObstinate destroyBase engageBase enter idle land operationStart spawnDVbomber spawnFLFbombers spawnFLFdestroyers spawnFLFfighters timer_plcontrol (Hook functions passed by name)
+#: dat/missions/dvaered/dv_antiflf02.lua:45
+#: dat/missions/dvaered/dv_antiflf03.lua:49
+msgid "Dvaered liaison"
+msgstr ""
+
 #: dat/missions/dvaered/dv_antiflf02.lua:45
 #: dat/missions/dvaered/dv_antiflf03.lua:49
 msgid ""
@@ -37229,7 +37251,7 @@ msgstr ""
 #. 4) Runaway
 #. 5) Player has been hailed by Captain HewHew
 #. 6) Player has met the Empire and Pirate agent, but did not accept any of their offers
-#. 7) Accepted Empire solution: can cross blockade of Alteris->Goddard
+#. 7) Accepted Empire solution: can cross blockade of Arcturus->Goddard
 #. 8) Accepted Pirate solution: can cross any blockade
 #. 9) Accepted Pirate solution: can cross any blockade, but has paid cash
 #. --
@@ -38058,8 +38080,8 @@ msgid ""
 "problem.\" You look suspiciously at the agent and ask: \"What do you want in "
 "exchange?\" The agent smiles: \"Simple. I want to speak with the Dvaered "
 "captain. Give me 10 hecotseconds on the spacedock alone with him, not more, "
-"and the commander of the fleet in Arcturus will forget to scan your ship when "
-"you jump to Goddard.\"\n"
+"and the commander of the fleet in Arcturus will forget to scan your ship "
+"when you jump to Goddard.\"\n"
 "   This is certainly an unusual request. You think of all the state secrets "
 "a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. But, "
 "Hamfresser is a professional after all, trained avoid revealing any valuable "
@@ -38296,14 +38318,13 @@ msgid ""
 "crossfire, and we will annihilate them to the last ship. Actually, that "
 "sounds much more enticing than a three-period-long meeting with rogue Sirian "
 "diplomats, doesn't it?\n"
-"   \"Our side will not have much firepower, so I'm counting on you to "
-"arrive with a lot of armour and guns (but you should still be able "
-"to outrun mid-range destroyers). Because you two worked so well in the past, "
-"you'll again team up with Lieutenant Strafer, and two other pilots. But the "
-"SOF does not have an endless supply of pilots, so your reward will depend on "
-"how many of them come back. Strafer will fly a scout with high performance "
-"sensors. He will be our eyes, so his death would mean the end of the "
-"mission.\n"
+"   \"Our side will not have much firepower, so I'm counting on you to arrive "
+"with a lot of armour and guns (but you should still be able to outrun mid-"
+"range destroyers). Because you two worked so well in the past, you'll again "
+"team up with Lieutenant Strafer, and two other pilots. But the SOF does not "
+"have an endless supply of pilots, so your reward will depend on how many of "
+"them come back. Strafer will fly a scout with high performance sensors. He "
+"will be our eyes, so his death would mean the end of the mission.\n"
 "   \"If you have any additional questions, I'll stay at the bar until we "
 "take off.\""
 msgstr ""
@@ -48355,7 +48376,7 @@ msgid "Mayday! Requesting assistance. Wait, what was that?"
 msgstr ""
 
 #. Get rid of the timeout hook
-#: dat/missions/minerva/maikki1.lua:499 dat/missions/minerva/maikki2.lua:615
+#: dat/missions/minerva/maikki1.lua:499
 msgid ""
 "#pYour ship has detected a curious signal originating from inside the system."
 "#0"
@@ -49686,6 +49707,11 @@ msgstr ""
 #. Spawn the drones
 #: dat/missions/minerva/maikki2.lua:597
 msgid "Feral Alpha Drone"
+msgstr ""
+
+#: dat/missions/minerva/maikki2.lua:615
+msgid ""
+"Your ship has detected a curious signal originating from inside the system."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:637
@@ -61075,7 +61101,16 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shadow/darkshadow.lua:393
+msgid "Barman"
+msgstr ""
+
+#: dat/missions/shadow/darkshadow.lua:393
 msgid "The barman seems to be eyeing you in particular."
+msgstr ""
+
+#: dat/missions/shadow/darkshadow.lua:395
+#: dat/missions/shadow/darkshadow.lua:425
+msgid "Jorek"
 msgstr ""
 
 #: dat/missions/shadow/darkshadow.lua:395
@@ -61166,10 +61201,6 @@ msgid ""
 "    Jorek sits back in his chair. \"Well, there you have it. I'll fill you "
 "in on the details once we're spaceborne. Show me to your ship, buddy, and "
 "let's get rollin'. I've had enough of this damn place.\""
-msgstr ""
-
-#: dat/missions/shadow/darkshadow.lua:425
-msgid "Jorek"
 msgstr ""
 
 #. For future appearances of this mission
