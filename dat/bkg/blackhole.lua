@@ -44,7 +44,7 @@ function background ()
    blackhole = bgshaders.init( shader, sf )
 end
 
-function renderfg( dt )
+function renderbg( dt )
    local x, y = camera.get():get()
    local z = camera.getZoom()
    time = time + dt
