@@ -46,10 +46,11 @@ end
 
 function renderbg( dt )
    local x, y = camera.get():get()
-   local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.00025, -by-y*0.00025, z*sf )
+
+   local m = 0.00025
+   shader:send( "u_camera", bx+x*m, -by-y*m, sf )
 
    lg.setCanvas( bgstars )
    starfield.render( dt )
