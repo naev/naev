@@ -188,12 +188,11 @@ int land_doneLoading (void)
  */
 int can_swapEquipment( const char *shipname )
 {
-   int failure = 0;
    Pilot *newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
-      failure = 1;
+      return 0;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       int diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
@@ -202,19 +201,22 @@ int can_swapEquipment( const char *shipname )
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
             diff );
-      failure = 1;
+      return 0;
    }
    if (pilot_hasDeployed( player.p )) {
       if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
          land_errDialogueBuild( _("You have deployed fighters.") );
-         failure = 1;
+         return 0;
       }
    }
-   return !failure;
+   return 1;
 }
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
+ *
+ * @TODO don't use strings here and use some switch case with an enum.
+ *
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
