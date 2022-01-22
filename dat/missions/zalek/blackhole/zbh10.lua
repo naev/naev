@@ -168,8 +168,13 @@ function enter ()
    end
 
    -- Fleets should have leaders with different speeds or they clump together
-   if player.pilot():ship():size() >= 5 then
-      create_fleet{"Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon", "Za'lek Demon" }
+   local ppss = player.pilot():ship():size()
+   if ppss >= 5 then
+      local bossfleet = {"Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon", "Za'lek Demon" }
+      if ppss >= 6 then
+         table.insert( bossfleet, "Za'lek Diablo" )
+      end
+      create_fleet( bossfleet )
       create_fleet{"Za'lek Demon", "Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
       create_fleet{"Za'lek Sting", "Za'lek Sting", "Za'lek Light Drone", "Za'lek Light Drone"}
       create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
@@ -185,6 +190,7 @@ function enter ()
    l:rename( pi_shipname )
    l:setVisplayer(true)
    l:setHilight(true)
+   l:setNoDeath(true)
    hook.pilot( l, "death", "pi_death" )
 
    fightstart = naev.ticksGame()
@@ -264,6 +270,7 @@ function heartbeat ()
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()
             fferals:dynEnemy( fbadguys )
+            bl:setNoDeath(false)
 
             zach_say( _("I'm detecting incoming ships… Wait, are those Icarus' kin?") )
 
