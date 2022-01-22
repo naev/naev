@@ -407,13 +407,13 @@ function approach_blackjack()
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
-      { _("Explanation"), _("explanation") },
+      { _("Explanation"), "explanation" },
       { _("Leave"), "leave" },
    } )
    vn.label( "explanation" )
-   vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait… are those embedded speakers?" )
-   cc([["Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21."]])
-   vn.na( "Cyborg Chicken eyes flutter as it seems like conciousness returns to its body." )
+   vn.na( _("Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait… are those embedded speakers?") )
+   cc(_([["Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21."]]))
+   vn.na( _("Cyborg Chicken eyes flutter as it seems like conciousness returns to its body.") )
    vn.jump("menu")
    vn.label( "blackjack" )
    -- Resize the window
@@ -483,7 +483,7 @@ function approach_chuckaluck ()
    vn.label("menu")
    vn.menu( {
       { _("Play"), "chuckaluck" },
-      { _("Explanation"), _("explanation") },
+      { _("Explanation"), "explanation" },
       { _("Leave"), "leave" },
    } )
    vn.label( "explanation" )

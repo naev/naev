@@ -46,7 +46,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
+    misn.setNPC(_("Dvaered liaison"), portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
 end
 
 function accept()

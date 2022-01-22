@@ -390,9 +390,9 @@ function land()
    if planet.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
-      mem.barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
+      mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
    elseif planet.cur() == jorekplanet2 and mem.stage == 3 then
-      mem.joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
+      mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end
 
