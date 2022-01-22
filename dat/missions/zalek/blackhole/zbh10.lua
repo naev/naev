@@ -31,17 +31,17 @@ local fleet = require "fleet"
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat feral_hail feral_check (Hook functions passed by name)
+-- luacheck: globals land enter heartbeat feral_hail feral_check pi_death (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh10
 local title = _("Sigma-13 Showdown")
+local pi_shipname = _("Godheart")
 
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
 local jumpsys = system.get("NGC-23")
 local feraljumpsys = system.get("NGC-13674")
 
 function create ()
-   misn.finish()
    if not misn.claim( mainsys ) then
       misn.finish()
    end
@@ -185,9 +185,10 @@ function enter ()
 
    -- Main boss gets hilighted
    local l = badguys[1]
-   l:rename(_("Godheart"))
+   l:rename( pi_shipname )
    l:setVisplayer(true)
    l:setHilight(true)
+   hook.pilot( l, "death", "pi_death" )
 
    fightstart = naev.ticksGame()
 
@@ -204,7 +205,7 @@ function heartbeat ()
       vn.scene()
       local pi = vn.newCharacter( zbh.vn_pi{ pos="left", shader=love_shaders.hologram() } )
       local z = vn.newCharacter( zbh.vn_zach{ pos="right", shader=love_shaders.hologram() } )
-      pi:rename(_("Unknown Individual"))
+      pi:rename(fmt.f(_("Captain of the {shipname}"),{shipname=pi_shipname}))
       vn.transition("electric")
       vn.na(fmt.f(_([[You suddenly get a read-only transmission from {pnt}. You accept and a hologram of Zach and an individual appears on your screen.]]),
          {pnt=mainpnt}))
@@ -216,7 +217,7 @@ function heartbeat ()
 "You either are playing a fool or a lot more obtuse than I originally thought."]]))
       z(_([["What?"]]))
       pi(_([["Even if you don't know anything, it is too late now. Prepare to be eviscerated. For science!"]]))
-      pi:disappear("electric")
+      vn.disappear(pi, "electric")
       vn.na(_([[After the individual disappears, the transmission switches to read-write mode.]]))
       z(_([[Zach turns to you.
 "Shit, we're pretty outgunned. He's flying a Mephisto… That's going to wreck you pretty bad if you get close to it.I have no idea how we're going to pull this off. At least try to buy me some time while I try to save what I can from the station!"]]))
@@ -294,12 +295,14 @@ function heartbeat ()
          end
 
       else
+         local pp = player.pilot()
          for k,p in ipairs(feralpack) do
             if p:exists() then
                p:setInvincible(true)
                p:setInvisible(false)
                p:control(true, true)
                p:moveto( mainpnt:pos() + vec2.newP( 200+200*rnd.rnd(), rnd.angle() ) )
+               p:face( pp )
             end
          end
 
@@ -350,4 +353,8 @@ function feral_check ()
       end
    end
    hook.timer( 0.3, "feral_check" )
+end
+
+function pi_death( p )
+   p:broadcast(_("Aaaargggh…"))
 end
