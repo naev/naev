@@ -2844,6 +2844,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
    sys->nebu_hue  = NEBULA_DEFAULT_HUE;
+   sys->stars     = -1;
 
    xmlr_attr_strd( parent, "name", sys->name );
 
@@ -2971,7 +2972,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(sys->stars==0,"stars");
+   MELEMENT(sys->stars<0,"stars");
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
