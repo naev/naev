@@ -17,11 +17,15 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 local global_dt, img, shader, shader_type
 
 local function set_shader( num )
-   local w, h = love.graphics.getDimensions()
-   shader_type = frag_files[num+1]
+   local s = frag_files[num+1]
+   if not s then
+      return
+   end
+   shader_type = s
    shader = love.graphics.newShader( pixelcode_noise .. love.filesystem.read(shader_type), vertexcode)
    global_dt = 0
    if shader:hasUniform("u_resolution") then
+      local w, h = love.graphics.getDimensions()
       shader:send( "u_resolution", {w, h} )
    end
 end
