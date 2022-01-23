@@ -25,7 +25,7 @@
   <damage>
    <type>normal</type>
    <penetrate>95</penetrate>
-   <physical>300</physical>
+   <physical>250</physical>
    <disable>18</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
