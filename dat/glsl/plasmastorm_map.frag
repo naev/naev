@@ -28,8 +28,7 @@ void main (void)
    }
 
    /* Coordinates. */
-   /* TODO figure out why it hates globalpos (probably scale issue :/) */
-   uv.xy = localpos; //(localpos + globalpos) / SCALE;
+   uv.xy = (localpos + globalpos) / SCALE;
    uv.z  = time;
 
    /* Generate the base noise. */
