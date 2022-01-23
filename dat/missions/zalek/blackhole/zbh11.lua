@@ -68,7 +68,33 @@ function accept ()
    vn.label("accept")
    vn.func( function () accepted = true end )
    z(_([["The drone that Icarus brought over supplements greatly the notes I was able to piece together and greatly surpasses them. Apparently, they were really onto something given the depth of the documents. However, another drone that is mentioned in the documents is even more interesting, and we should spare no efforts to try to recover it as soon as possible, given the expected location."]]))
-   z(_([[""]]))
+   z(_([["So, it seems like one of the drones they sent out, not only contains many additional notes, but it was also performing one last experiment. However, from some of the preliminary flight data, it seems like they were in too much of a hurry and the drone ended up malfunctioning. I'm not certain it was able to perform the task it was set to do, but hopefully it failed afterwards. The tricky thing is where the drone is located: in an orbit of the Anubis Black Hole."]]))
+   vn.menu{
+      {_([["You want to fly into the black hole?"]]), "01bh" },
+      {_([["That's suicidal!"]]), "01bh" },
+      {_([["How do we get there?"]]), "01bh" },
+      {_([[Stay silent.]]), "01bh" },
+   }
+
+   vn.label("01bh")
+   z(_([["It's not as bad as it sounds. We won't be travelling into the black hole, just pretty close to it, but at a distance that the ship should be able to easily avoid the gravitational pull. Nothing to worry about. However, we will have to disable all the ship's built-in security jump systems to allow it to make the jump."]]))
+
+   vn.menu{
+      {_([["Isn't that dangerous?"]]), "02danger" },
+      {_([["Who needs security anyway?"]]), "02security" },
+      {_([[Stay silent.]]), "02silent" },
+   }
+
+   vn.label("02danger")
+   vn.jump("02cont")
+
+   vn.label("02security")
+   vn.jump("02cont")
+
+   vn.label("02silent")
+   vn.jump("02cont")
+
+   vn.label("02cont")
 
    vn.done( zbh.zach.transition )
    vn.run()
