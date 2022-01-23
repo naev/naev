@@ -35,7 +35,8 @@ function rendermg( dt )
    -- Get camera properties
    local x, y = camera.get():get()
    local z = camera.getZoom()
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, z*sf )
+   local m = 0.5
+   shader:send( "u_camera", x*m/sf, -y*m/sf, m+(1-m)*z )
 
    sstorm:render( dt )
 end
