@@ -14,7 +14,7 @@
  <spobs/>
  <jumps>
   <jump target="NGC-1562">
-   <autopos/>
+   <pos x="-1611.267106" y="-4666.244514"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
