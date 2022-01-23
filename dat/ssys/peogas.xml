@@ -22,6 +22,10 @@
   <spob>Yaroslav Farming Station</spob>
  </spobs>
  <jumps>
+  <jump target="NGC-10081">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Ulysses">
    <autopos/>
    <hide>1.000000</hide>

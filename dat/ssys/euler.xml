@@ -23,6 +23,10 @@
   <spob_virtual>Pirate Small</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="NGC-14337">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Narousse">
    <autopos/>
    <hide>1.000000</hide>

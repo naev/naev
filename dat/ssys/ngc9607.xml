@@ -16,9 +16,13 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="NGC-15670">
+  <jump target="NGC-14676">
    <autopos/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-15670">
+   <pos x="-13063.785592" y="7015.449563"/>
+   <hide>0.400000</hide>
   </jump>
   <jump target="NGC-6901">
    <autopos/>

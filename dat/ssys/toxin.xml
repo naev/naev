@@ -19,6 +19,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-22375">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Narousse">
    <autopos/>
    <hide>1.000000</hide>
