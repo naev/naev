@@ -35,6 +35,9 @@ local retpnt, retsys = spob.getS("Research Post Sigma-13")
 local targetsys = system.get("Anubis Black Hole")
 local jret, jtarget = jump.get( retsys, targetsys )
 
+local title = _("Anubis Black Hole") -- For OSD and stuff
+local mass_limit = 500 -- Maximum mass of the ship the player can fly
+
 function create ()
    misn.finish()
    if not misn.claim( {retsys, targetsys} ) then
@@ -51,8 +54,8 @@ function accept ()
    vn.scene()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.transition( zbh.zach.transition )
-   vn.na(_([[TODO]]))
-   z(_([["TODO"]]))
+   vn.na(_([[You find Zach scrunched over his cyberdeck, endlessly pouring over the data he obtained from the drone that Icarus brought over.]]))
+   z(_([["This is fascinating. My colleagues, foretelling their demise, were able to load their research notes into drones, and launch them to try to save them. Apparently there were several, although some seem to have been destroyed by Dr. Slorn and his team. It looks like there should be one nearby, would you be willing to help me go retrieve it?"]]))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -64,7 +67,8 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () accepted = true end )
-   z(_([["TODO"]]))
+   z(_([["The drone that Icarus brought over supplements greatly the notes I was able to piece together and greatly surpasses them. Apparently, they were really onto something given the depth of the documents. However, another drone that is mentioned in the documents is even more interesting, and we should spare no efforts to try to recover it as soon as possible, given the expected location."]]))
+   z(_([[""]]))
 
    vn.done( zbh.zach.transition )
    vn.run()
@@ -75,7 +79,6 @@ function accept ()
    misn.accept()
 
    -- mission details
-   local title = _("Anubis Black Hole")
    misn.setTitle( title )
    misn.setReward( _("Unknown") )
    misn.setDesc(_("Perform a non-stand jump towards the Anubis Black hole to recover a damaged scout drone."))
@@ -83,10 +86,8 @@ function accept ()
    mem.mrk = misn.markerAdd( retsys )
    mem.state = 1
 
-   misn.osdCreate( title, {
-      fmt.f(_("Perform a non-standard jump to the black hole from {sys}"),{sys=retsys}),
-      fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=retpnt,sys=retsys}),
-   } )
+   local c = commodity.new( N_("Zach"), N_("A Za'lek scientist.") )
+   misn.cargoAdd(c, 0)
 
    hook.land( "land" )
    hook.enter( "enter" )
@@ -116,13 +117,27 @@ end
 local pexp
 function enter ()
    if mem.state==1 and system.cur() == retsys then
-      hook.timer(  5, "zach_say", _("I've marked the safest point to try the non-standard jump on your map.") )
-      hook.timer( 12, "zach_say", _("Non-standard doesn't mean non-safe though.") )
-      hook.timer( 17, "zach_say", _("Actually, in this case it does though…") )
-      hook.timer( 22, "zach_say", _("Statistically, we're more likely to survive.") )
-      hook.timer( 27, "zach_say", _("I'll shut up now.") )
-      system.mrkAdd( jret:pos() )
-      hook.timer( 30, "heartbeat" )
+      local pp = player.pilot()
+      if pp:mass() > mass_limit then
+         misn.osdCreate( title, {
+            fmt.f(_("Get into a ship with less than {mass} of mass"),{mass=fmt.tonnes(mass_limit)})
+         } )
+         hook.timer(  5, "zach_say", fmt.f(_("The ship we are in is too heavy. We'll need a ship under {mass} to make the jump."), {mass=fmt.tonnes(mass_limit)} ))
+
+      else
+         misn.osdCreate( title, {
+            fmt.f(_("Perform a non-standard jump to the black hole from {sys}"),{sys=retsys}),
+            fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=retpnt,sys=retsys}),
+         } )
+
+         hook.timer(  5, "zach_say", _("I've marked the safest point to try the non-standard jump on your map.") )
+         hook.timer( 12, "zach_say", _("Non-standard doesn't mean non-safe though.") )
+         hook.timer( 17, "zach_say", _("Actually, in this case it does though…") )
+         hook.timer( 22, "zach_say", _("Statistically, we're more likely to survive.") )
+         hook.timer( 27, "zach_say", _("I'll shut up now.") )
+         system.mrkAdd( jret:pos() )
+         hook.timer( 30, "heartbeat" )
+      end
 
    elseif mem.state==2 and system.cur() == retsys then
       local pp = player.pilot()
@@ -208,6 +223,7 @@ function board_drone ()
 
    misn.osdActive(2)
    system.mrkAdd( jtarget:pos() )
+   misn.markerMove( mem.mrk, retpnt )
    hook.timer( 1, "heartbeat_bh" )
 
    mem.state = 2
