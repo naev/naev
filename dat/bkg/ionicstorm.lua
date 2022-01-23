@@ -36,7 +36,7 @@ function renderfg( dt )
    local x, y = camera.get():get()
    local z = camera.getZoom()
    local m = 0.5
-   shader:send( "u_camera", x*m/sf, -y*m/sf, m+(1-m)*z )
+   shader:send( "u_camera", x*m/sf, -y*m/sf, (1-m)+m*z )
 
    sstorm:render( dt )
 end
