@@ -810,12 +810,27 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
    /* targeting */
-   } else if (INGAME() && NODEAD() && KEY("target_next")) {
-      if (value==KEY_PRESS) player_targetNext(0);
-   } else if (INGAME() && NODEAD() && KEY("target_prev")) {
-      if (value==KEY_PRESS) player_targetPrev(0);
-   } else if (INGAME() && NODEAD() && KEY("target_nearest")) {
-      if (value==KEY_PRESS) player_targetNearest();
+   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_next")) {
+      if (value==KEY_PRESS) {
+         if (map_isOpen())
+            map_cycleMissions(1);
+         else
+            player_targetNext(0);
+      }
+   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_prev")) {
+      if (value==KEY_PRESS) {
+         if (map_isOpen())
+            map_cycleMissions(-1);
+         else
+            player_targetPrev(0);
+      }
+   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_nearest")) {
+      if (value==KEY_PRESS) {
+         if (map_isOpen())
+            map_cycleMissions(1);
+         else
+            player_targetNearest();
+      }
    } else if (INGAME() && NODEAD() && KEY("target_nextHostile")) {
       if (value==KEY_PRESS) player_targetNext(1);
    } else if (INGAME() && NODEAD() && KEY("target_prevHostile")) {
@@ -908,45 +923,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          } else
             player_land(1);
       }
-   } else if (KEY("thyperspace") && NOHYP() && (NOLAND()||map_isOpen()) && NODEAD()) {
-      if (value==KEY_PRESS) {
-         if (map_isOpen()) {
-            StarSystem* systems_stack = system_getAll();
-            StarSystem* dest=map_getDestination( NULL );
-            int found_i=-1;
-            GLboolean found_b=0;
-
-            /* Default : points to current system */
-            if (dest==NULL) dest = cur_system;
-
-            for (int i=0;i<array_size(systems_stack);i++)
-               if (sys_isMarked(&systems_stack[i]) && space_sysReachable(&systems_stack[i])) {
-
-                  /* Pre-select first in case we will wrap */
-                  if (found_i<0) found_i=i;
-
-                  /* We found next system */
-                  if (found_b) {
-                     found_i=i;
-                     break;
-                  }
-
-                  /* We found currently selected system */
-                  if (&systems_stack[i]==dest)
-                     found_b=1;
-               }
-
-            if (found_i>=0) {
-               /* Select found system */
-               map_select( &systems_stack[found_i], 0 );
-
-               /* Autonav to system */
-               player_hyperspacePreempt( 1 );
-               player_autonavStart();
-            }
-         } else
-            player_targetHyperspace();
-      }
+   } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
+      if (value==KEY_PRESS) player_targetHyperspace();
    } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
