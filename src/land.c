@@ -336,8 +336,6 @@ static void bar_open( unsigned int wid )
 
    /* Generate the mission list. */
    bar_genList( wid );
-   /* Set default keyboard focuse to the list */
-   window_setFocus( wid , "iarMissions" );
 }
 
 /**
@@ -348,7 +346,6 @@ static void bar_open( unsigned int wid )
 static int bar_genList( unsigned int wid )
 {
    ImageArrayCell *portraits;
-   char *focused;
    int w, h, iw, ih, bw, bh;
    int n, pos;
 
@@ -358,9 +355,6 @@ static int bar_genList( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-
-   /* Save focus. */
-   focused = window_getFocus( wid );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -414,9 +408,8 @@ static int bar_genList( unsigned int wid )
    /* write the outfits stuff */
    bar_update( wid, NULL );
 
-   /* Restore focus. */
-   window_setFocus( wid, focused );
-   free(focused);
+   /* Set default keyboard focus. */
+   window_setFocus( wid, "iarMissions" );
 
    return 0;
 }
@@ -622,8 +615,6 @@ static void misn_open( unsigned int wid )
          w/2 - 30, h/2 - 35, 0.75 );
 
    misn_genList(wid, 1);
-   /* Set default keyboard focuse to the list */
-   window_setFocus( wid , "lstMission" );
 }
 /**
  * @brief Closes the mission computer window.
@@ -695,17 +686,25 @@ static void misn_accept( unsigned int wid, const char *str )
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
       if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
-         if (ret==-1)
+         int changed = 0;
+         if (ret==-1) {
             mission_cleanup( &mission_computer[pos] );
-         memmove( &mission_computer[pos], &mission_computer[pos+1],
-               sizeof(Mission) * (mission_ncomputer-pos-1) );
-         mission_ncomputer--;
+            changed = 1;
+         }
+         if (misn->accepted)
+            changed = 1;
 
-         /* Regenerate list. */
-         misn_genList(wid, 0);
-         /* Add position persistancey after a mission has been accepted */
-         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         if (changed) {
+            memmove( &mission_computer[pos], &mission_computer[pos+1],
+                  sizeof(Mission) * (mission_ncomputer-pos-1) );
+            mission_ncomputer--;
+
+            /* Regenerate list. */
+            misn_genList(wid, 0);
+            /* Add position persistancey after a mission has been accepted */
+            /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+            toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         }
       }
 
       /* Reset markers. */
@@ -719,11 +718,8 @@ static void misn_accept( unsigned int wid, const char *str )
  */
 static void misn_genList( unsigned int wid, int first )
 {
-   char** misn_names, *focused;
+   char** misn_names;
    int j, w,h;
-
-   /* Save focus. */
-   focused = window_getFocus(wid);
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -752,10 +748,8 @@ static void misn_genList( unsigned int wid, int first )
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update, misn_accept );
 
-   /* Restore focus. */
-   window_setFocus( wid, focused );
-   free(focused);
-   /* duplicateed the save focus functionaility from the bar */
+   /* Set default keyboard focus. */
+   window_setFocus( wid, "lstMission" );
 }
 /**
  * @brief Updates the mission list.

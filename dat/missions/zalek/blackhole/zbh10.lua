@@ -58,7 +58,7 @@ function accept ()
    vn.na(_([[You clear your throat to catch his attention, and after your third try, he finally seems to recognize your presence.]]))
    z(_([["Hey, how's it going? Wait… didn't I have something for you? One second."
 He fumbles with his cyberdeck looking for something.
-"I've been looking over the scan analysis of the area and haven't rally found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…]]))
+"I've been looking over the scan analysis of the area and haven't really found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(fmt.f(_([[He gets suddenly cut off by the blaring siren.
 "ALERT: Large hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
