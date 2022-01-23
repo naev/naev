@@ -518,6 +518,21 @@ function spawnDrones()
    mem.tronkDeath = true -- This says that at next jump, Tronk will die
 end
 
+-- Spawns a group of civilian ships whose role is to discover a stealth player
+local function spawnStealthBreakers( pos )
+   local radius = 2000
+   local dist   = 1000
+   local nb     = math.ceil(2*math.pi*radius / dist)
+   local theta  = 2*math.pi/nb
+
+   local group = {}
+   for i = 1, nb do
+      group[i] = pilot.add( "Mule", "Trader", pos + vec2.newP( radius, i*theta ) )
+      group[i]:setSpeedLimit( .0001 )
+      group[i]:setFriendly( false )
+   end
+end
+
 -- Spawn blockade ships
 function spawnZlkSquadron( pos, bloc )
    squad = {}
@@ -570,21 +585,6 @@ function spawnEmpSquadron( pos, bloc )
       j:setHostile(bloc)
    end
    spawnStealthBreakers( pos )
-end
-
--- Spawns a group of civilian ships whose role is to discover a stealth player
-function spawnStealthBreakers( pos )
-   local radius = 2000
-   local dist   = 1000
-   local nb     = math.ceil(2*math.pi*radius / dist)
-   local theta  = 2*math.pi/nb
-
-   local group = {}
-   for i = 1, nb do
-      group[i] = pilot.add( "Mule", "Trader", pos + vec2.newP( radius, i*theta ) )
-      group[i]:setSpeedLimit( .0001 )
-      group[i]:setFriendly( false )
-   end
 end
 
 -- The player sees the blocus fleet
