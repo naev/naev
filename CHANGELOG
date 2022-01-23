@@ -29,6 +29,7 @@
       * Weapon outfits support some Lua scripting
       * Ammunition/fighters merged into launchers/fighter bays
       * Support for "shotgun"-type weapons
+      * Backgrounds no longer use an orthographic projection
 
 * 0.9.2
    * Fix reward messages in the Particle Physics campaign
