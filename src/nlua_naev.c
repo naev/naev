@@ -475,6 +475,7 @@ static int naevL_confSet( lua_State *L )
 {
    (void) L;
    /* TODO implement. */
+   NLUA_ERROR(L, _("unimplemented"));
    return 0;
 }
 
