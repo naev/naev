@@ -2345,38 +2345,39 @@ void map_cycleMissions(int dir)
 {
   // StarSystem* systems_stack = system_getAll();
    StarSystem* dest=map_getDestination( NULL );
-   int found_next_i=-1;
-   int found_prev_i=-1;
-   GLboolean found_b=0;
+   int found_next_i = -1;
+   int found_prev_i = -1;
+   int found_b = 0;
    int i;
 
    /* Select current selection - do nothing */
    if (dir==0) return;
 
    /* Default : points to current system */
-   if (dest==NULL) dest = cur_system;
+   if (dest==NULL)
+      dest = cur_system;
 
    /* Universally find prev and next mission system */
+   for (i=0;i<array_size(systems_stack);i++) {
+      if (!sys_isMarked(&systems_stack[i]) || !space_sysReachable(&systems_stack[i]))
+         continue;
 
-   for (i=0;i<array_size(systems_stack);i++)
-      if (sys_isMarked(&systems_stack[i]) && space_sysReachable(&systems_stack[i])) {
+      /* Pre-select first in case we will wrap */
+      if (found_next_i<0) found_next_i=i;
 
-         /* Pre-select first in case we will wrap */
-         if (found_next_i<0) found_next_i=i;
-
-         /* We found next system */
-         if (found_b) {
-            found_next_i=i;
-            break;
-         }
-
-         /* We found currently selected system */
-         if (&systems_stack[i]==dest)
-            found_b=1;
-         else
-            /* Follow trail as we go */
-            found_prev_i=i;
+      /* We found next system */
+      if (found_b) {
+         found_next_i=i;
+         break;
       }
+
+      /* We found currently selected system */
+      if (&systems_stack[i]==dest)
+         found_b=1;
+      else
+         /* Follow trail as we go */
+         found_prev_i=i;
+   }
 
    /* No trail for prev system - current one was first one in list - just finish loop and find last one */
    if (found_prev_i<0)
@@ -2387,10 +2388,12 @@ void map_cycleMissions(int dir)
    /* Select found system or return if no suitable was found */
    if (dir>0 && found_next_i>=0) {
       map_select( &systems_stack[found_next_i], 0 );
-   } else
-   if (dir<0 && found_prev_i>=0) {
+   }
+   else if (dir<0 && found_prev_i>=0) {
       map_select( &systems_stack[found_prev_i], 0 );
-   } else return;
+   }
+   else
+      return;
 
    /* Autonav to selected system */
    player_hyperspacePreempt( 1 );
