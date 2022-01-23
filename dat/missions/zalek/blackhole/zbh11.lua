@@ -82,19 +82,23 @@ function accept ()
    vn.menu{
       {_([["Isn't that dangerous?"]]), "02danger" },
       {_([["Who needs security anyway?"]]), "02security" },
-      {_([[Stay silent.]]), "02silent" },
+      {_([[Stay silent.]]), "02cont" },
    }
 
    vn.label("02danger")
+   z(_([["It should be in the acceptable parameters, and my simulations only give a 7% chance of disaster. Much better than the average of what we've been doing up until now. There is no need to worry, the math is solid!…　Wait, did I forget to carry the one again?"
+He furrows his brows a bit as he tries to remember.]]))
    vn.jump("02cont")
 
    vn.label("02security")
-   vn.jump("02cont")
-
-   vn.label("02silent")
+   z(_([["According to some studies, pilots have 97% chance of meeting a horrible fate without the security jump system. However, for responsible captains who run all the simulations and properly compute the trajectories, there is only a 13% chance of the ship hitting a large gravitational body. Wait, what point was I making again?"]]))
    vn.jump("02cont")
 
    vn.label("02cont")
+   z(_([["All you have to do is get to the optimal jump point, and a custom AI I've written should handle all the jump intricacies for us. I'll also be joining you in case anything goes wrong, but it should all be well within parameters. Once we get there, I'll provide you with a rough estimate of the drone location so we can go recover it. All we need is the data, the drone itself is not necessary to recover."]]))
+   z(fmt.f(_([["One important thing I forgot to mention, my calculations only work for ships up to {mass} of mass. Anything larger and not getting sucked into the black hole and crushed to the size of a hairpin becomes a rather complicated affair."]])
+      {mass=fmt.tonnes(mass_limit)}))
+   z(_([["The drone is in a decaying orbit around the black hole, so we do not have much time to spare before it gets sucked in. Let us make haste to recover it."]]))
 
    vn.done( zbh.zach.transition )
    vn.run()
