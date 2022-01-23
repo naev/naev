@@ -2344,7 +2344,8 @@ void map_select( const StarSystem *sys, char shifted )
 void map_cycleMissions(int dir)
 {
   // StarSystem* systems_stack = system_getAll();
-   StarSystem* dest=map_getDestination( NULL );
+   StarSystem *dest = map_getDestination( NULL );
+   StarSystem *target;
    int found_next_i = -1;
    int found_prev_i = -1;
    int found_b = 0;
@@ -2386,18 +2387,20 @@ void map_cycleMissions(int dir)
                found_prev_i=i;
 
    /* Select found system or return if no suitable was found */
-   if (dir>0 && found_next_i>=0) {
-      map_select( &systems_stack[found_next_i], 0 );
-   }
-   else if (dir<0 && found_prev_i>=0) {
-      map_select( &systems_stack[found_prev_i], 0 );
-   }
+   if (dir>0 && found_next_i>=0)
+      target = &systems_stack[found_next_i];
+   else if (dir<0 && found_prev_i>=0)
+      target = &systems_stack[found_prev_i];
    else
       return;
 
+   /* Select and center system. */
+   map_select( target, 0 );
+   map_center( window_get( MAP_WDWNAME ), target->name );
+
    /* Autonav to selected system */
-   player_hyperspacePreempt( 1 );
-   player_autonavStart();
+   //player_hyperspacePreempt( 1 );
+   //player_autonavStart();
 }
 
 /*
