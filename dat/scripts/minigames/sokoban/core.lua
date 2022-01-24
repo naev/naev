@@ -167,6 +167,65 @@ function sokoban.load()
    loadLevel()
 end
 
+local function push( dx, dy )
+   local playerX
+   local playerY
+
+   for testY, row in ipairs(level) do
+      for testX, cell in ipairs(row) do
+         if cell == player or cell == playerOnStorage then
+            playerX = testX
+            playerY = testY
+         end
+      end
+   end
+
+   local current  = level[playerY][playerX]
+   local adjacent = level[playerY + dy][playerX + dx]
+   local beyond
+   if level[playerY + dy + dy] then
+      beyond = level[playerY + dy + dy][playerX + dx + dx]
+   end
+
+   local nextAdjacent = {
+      [empty]   = player,
+      [storage] = playerOnStorage,
+   }
+
+   local nextCurrent = {
+      [player]          = empty,
+      [playerOnStorage] = storage,
+   }
+
+   local nextBeyond = {
+      [empty]   = box,
+      [storage] = boxOnStorage,
+   }
+
+   local nextAdjacentPush = {
+      [box]          = player,
+      [boxOnStorage] = playerOnStorage,
+   }
+
+   -- Player just moved
+   if nextAdjacent[adjacent] then
+      level[playerY][playerX]           = nextCurrent[current]
+      level[playerY + dy][playerX + dx] = nextAdjacent[adjacent]
+      return "move"
+
+   -- Player pushed something
+   elseif nextBeyond[beyond] and nextAdjacentPush[adjacent] then
+      level[playerY][playerX]           = nextCurrent[current]
+      level[playerY + dy][playerX + dx] = nextAdjacentPush[adjacent]
+      level[playerY + dy + dy][playerX + dx + dx] = nextBeyond[beyond]
+      if nextBeyond[beyond] == boxOnStorage then
+         return "goal"
+      end
+      return "push"
+
+   end
+end
+
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
       done = true
@@ -177,84 +236,36 @@ function sokoban.keypressed( key )
    elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
          key == movekeys[1] or key == movekeys[2] or
          key == movekeys[3] or key == movekeys[4] then
-      local playerX
-      local playerY
 
-      for testY, row in ipairs(level) do
-         for testX, cell in ipairs(row) do
-            if cell == player or cell == playerOnStorage then
-               playerX = testX
-               playerY = testY
-            end
-         end
-      end
-
-      local dx = 0
-      local dy = 0
+      local change
       if key == 'left' then
-         dx = -1
+         change = push( -1,  0 )
       elseif key == 'right' then
-         dx = 1
+         change = push( 1,  0 )
       elseif key == 'up' then
-         dy = -1
+         change = push( 0, -1 )
       elseif key == 'down' then
-         dy = 1
+         change = push( 0, 1 )
       elseif key == movekeys[1] then
-         dx = -1
+         change = push( -1,  0 )
       elseif key == movekeys[2] then
-         dx = 1
+         change = push( 1,  0 )
       elseif key == movekeys[3] then
-         dy = -1
+         change = push( 0, -1 )
       elseif key == movekeys[4] then
-         dy = 1
+         change = push( 0, 1 )
       end
 
-      local current  = level[playerY][playerX]
-      local adjacent = level[playerY + dy][playerX + dx]
-      local beyond
-      if level[playerY + dy + dy] then
-         beyond = level[playerY + dy + dy][playerX + dx + dx]
-      end
-
-      local nextAdjacent = {
-         [empty]   = player,
-         [storage] = playerOnStorage,
-      }
-
-      local nextCurrent = {
-         [player]          = empty,
-         [playerOnStorage] = storage,
-      }
-
-      local nextBeyond = {
-         [empty]   = box,
-         [storage] = boxOnStorage,
-      }
-
-      local nextAdjacentPush = {
-         [box]          = player,
-         [boxOnStorage] = playerOnStorage,
-      }
-
-      -- Player just moved
-      if nextAdjacent[adjacent] then
-         level[playerY][playerX]           = nextCurrent[current]
-         level[playerY + dy][playerX + dx] = nextAdjacent[adjacent]
-         -- TODO play mmotion sound
-
-      -- Player pushed something
-      elseif nextBeyond[beyond] and nextAdjacentPush[adjacent] then
-         level[playerY][playerX]           = nextCurrent[current]
-         level[playerY + dy][playerX + dx] = nextAdjacentPush[adjacent]
-         level[playerY + dy + dy][playerX + dx + dx] = nextBeyond[beyond]
-         if nextBeyond[beyond] == boxOnStorage then
-            sokoban.sfx.goal:play()
-         end
-
-      else
-         sokoban.sfx.invalid:play()
-
-      end
+   -- Invalid move
+   if change == nil then
+      sokoban.sfx.invalid:play()
+   -- Player just moved
+   -- elseif change == "move" then
+      -- TODO play motion sound
+   -- Player pushed something
+   elseif change == "goal" then
+      sokoban.sfx.goal:play()
+   end
 
       local complete = true
       for y, row in ipairs(level) do
