@@ -21,6 +21,7 @@ local zbh = require "common.zalek_blackhole"
 local sys1 = system.get("NGC-13674")
 local sys2 = system.get("Copernicus")
 local j1, j2 = jump.get( sys1, sys2 )
+local reward = outfit.get("Antimatter Lance")
 
 function create ()
    evt.npcAdd( "approach_zach", _("Zach"), zbh.zach.portrait, zbh.zach.description )
@@ -42,7 +43,14 @@ function approach_zach ()
       j2:setKnown(true)
 
    else
-      z(_([["Heya, back already?"]]))
+      local msglist = {
+         _([["Heya, back already?"]]),
+         _([["I wonder what Icarus is up to…"]]),
+         fmt.f(_([["How are you liking the {outfit}?"]]),{outfit=reward}),
+      }
+
+      local msg = msglist[ rnd.rnd(1,#msglist) ]
+      z(msg)
 
    end
 
