@@ -36,11 +36,10 @@ local targetsys = system.get("Anubis Black Hole")
 local jret, jtarget = jump.get( retsys, targetsys )
 
 local title = _("Anubis Black Hole") -- For OSD and stuff
-local mass_limit = 500 -- Maximum mass of the ship the player can fly
+local mass_limit = 1000 -- Maximum mass of the ship the player can fly
 local reward = outfit.get("Antimatter Lance")
 
 function create ()
-   misn.finish()
    if not misn.claim( {retsys, targetsys} ) then
       misn.finish()
    end
@@ -97,7 +96,7 @@ He furrows his brows a bit as he tries to remember.]]))
 
    vn.label("02cont")
    z(_([["All you have to do is get to the optimal jump point, and a custom AI I've written should handle all the jump intricacies for us. I'll also be joining you in case anything goes wrong, but it should all be well within parameters. Once we get there, I'll provide you with a rough estimate of the drone location so we can go recover it. All we need is the data, the drone itself is not necessary to recover."]]))
-   z(fmt.f(_([["One important thing I forgot to mention, my calculations only work for ships up to {mass} of mass. Anything larger and not getting sucked into the black hole and crushed to the size of a hairpin becomes a rather complicated affair."]])
+   z(fmt.f(_([["One important thing I forgot to mention, my calculations only work for ships up to {mass} of mass. Anything larger and not getting sucked into the black hole and crushed to the size of a hairpin becomes a rather complicated affair."]]),
       {mass=fmt.tonnes(mass_limit)}))
    z(_([["The drone is in a decaying orbit around the black hole, so we do not have much time to spare before it gets sucked in. Let us make haste to recover it."]]))
 
