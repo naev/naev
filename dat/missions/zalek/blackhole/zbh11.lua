@@ -233,6 +233,7 @@ function enter ()
       p:disable()
       p:setVisplayer(true)
       p:setHilight(true)
+      p:setInvincible(true)
       p:setActiveBoard(true) -- To allow reboarding
       pexp = p
       hook.pilot( p, "board", "board_drone" )
