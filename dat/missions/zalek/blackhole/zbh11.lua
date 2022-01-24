@@ -212,7 +212,7 @@ function enter ()
          hook.timer( 17, "zach_say", _("Actually, in this case it does though…") )
          hook.timer( 22, "zach_say", _("Statistically, we're more likely to survive.") )
          hook.timer( 27, "zach_say", _("I'll shut up now.") )
-         system.mrkAdd( jret:pos() )
+         system.mrkAdd( jret:pos(), _("Safest Jump Point") )
          hook.timer( 30, "heartbeat" )
       end
 
@@ -235,7 +235,7 @@ function enter ()
       p:setHilight(true)
       p:setActiveBoard(true) -- To allow reboarding
       pexp = p
-      pilot.hook( p, "board", "board_drone" )
+      hook.pilot( p, "board", "board_drone" )
 
       hook.timer(  5, "zach_say", _("Damn! That was closer than I wanted.") )
       hook.timer( 12, "zach_say", _("Stabilizers… check. Engine… check. Gravitational pull… acceptable.") )
@@ -299,7 +299,7 @@ function board_drone ()
    end
 
    misn.osdActive(2)
-   system.mrkAdd( jtarget:pos() )
+   system.mrkAdd( jtarget:pos(), _("Jump Point") )
    misn.markerMove( mem.mrk, retpnt )
    hook.timer( 1, "heartbeat_bh" )
 
