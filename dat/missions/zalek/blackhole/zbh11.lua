@@ -37,6 +37,7 @@ local jret, jtarget = jump.get( retsys, targetsys )
 
 local title = _("Anubis Black Hole") -- For OSD and stuff
 local mass_limit = 500 -- Maximum mass of the ship the player can fly
+local reward = outfit.get("Antimatter Lance")
 
 function create ()
    misn.finish()
@@ -130,16 +131,63 @@ function land ()
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
-      vn.na(_([[TODO]]))
-      z(_([["TODO"]]))
+      vn.na(_([[Your ship lands on the station. The moment you and Zach get out of the ship, you hear a loud groan and amidst a shower of sparks, half the engine sputters and falls down onto the ground. As you take cover, your now imbalanced ship falls off to the side and slides on the metal floor in a cacophony of clangs and groans.]]))
+      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we know know why the ships have the security jump mechanisms."]]))
+      vn.menu{
+         {fmt.f(_([["{shipname}! My ship!"]]),{shipname=player.pilot():name()}), "01ship"},
+         {_([["We're not doing that again are we…"]]), "01again"},
+         {_([["About the repairs…"]]), "01ship"},
+         {_([[Glare at him.]]), "01ship"},
+      }
+
+      vn.label("01again")
+      z(_([[He stops to think for a moment before speaking.
+"I do not think that would be advisable, no. I'll have to revise my simulation, but I'm pretty sure it was an optimistic lower bound."]]))
+
+      vn.label("01ship")
+      z(_([["Don't worry about the damage. I'll have the drones fix it up. A small price to pay for all the experimental data we were able to recover!"
+He gives a sign to the drones that start working like ants to lift the ship back up and stabilizer it, and then starts to lead you into the station.]]))
+      z(_([["One of the major issues of creating antimatter is the volatility and energy requirements. Most of the time it is infeasible to generate in any large amounts, which is why its use is restricted to very particular experiments and military applications. You wouldn't imagine the amount of paperwork you need to get a single nanogram of antimatter!"]]))
+      z(_([["Now normally, you slowly collect antimatter from nuclei collisions with careful slowing down of the anti-protons to avoid volatility issues. While this allows them to be generated anywhere, it's pretty impracticable with no way of scaling it up."]]))
+      z(_([["The beauty of my colleagues, of Mie's research, is to take a completely different approach using hyper-relativistic acceleration in a Schwarzschild frame such that the Birkhoff-Kerr radiation does the brunt of the work. It's a really interesting novel take that was only theorized about. That is, up until now!"]]))
+      z(_([["By using a reverse tachyon depolarizer in the we recovered, they were able to…"
+Zach realizes that he lost you a while back.
+"Ummm, long story short, we may have a way of generating much more antimatter that was feasible up until now!"]]))
+      vn.disappear( z, zbh.zach.transition )
+      vn.na(_([[Eventually he leads you to a room who don't recall seeing before, filled with experimental devices and drones flying around. He hands you a book titled "Black Holes for Non-Za'leks" and indicates you to take a seat. You sit down, book in hand, and wait for whatever he's going to do.]]))
+      vn.appear( z, zbh.zach.transition )
+      vn.na(_([[After what seems like an eternity of you trying to make sense of what is written in the book, which seems to be purposely written to be hard to understand, Zach appears once again and motions for you to follow. He leads you to a room separated by a curtain where there seems to be a large device, and beams a triumphant smile at your, eagerly waiting a reaction.]]))
+      vn.menu{
+         {_([["It's awesome!"]]), "02awesome"},
+         {_([[Stay silent.]]), "02silent"},
+      }
+
+      vn.label("02silent")
+      z(_([["Loss of words, eh? I know it's pretty incredible. It's hard to know what to say in front of such a beauty."]]))
+      vn.jump("02cont")
+
+      vn.label("02awesome")
+      z(_([["I know, right? I've been working on the outer design for quite a while now. The bevel radius over here follows the golden ratio!"
+He points at a part that you can't tell what's different from any other standard outfit available at most outfitters.]]))
+      vn.jump("02cont")
+
+      vn.label("02cont")
+      z(fmt.f(_([["Behold, the first {outfit}! A new marvel of technology! I modified one of the Orion lances with some of the collected antimatter to generate this beauty. I had to redesign most of the internals to compensate. This is just a prototype, but it's a taste of the things to come with abundant antimatter."]]),
+         {outfit=reward}))
+      z(_([["For all your help, I want to give you the first prototype, which passed all laboratory tests already. Hopefully you'll be able to put it to good use. I'm going to remain here to advance and perfect this research. There is still a ton of things to do. However, I think you've done everything I needed and more. I will be grateful forever."]]))
+      z(_([["I'm not much for emotions, but you should leave before I get teary. Hopefully our paths will cross again."]]))
+      vn.na(_([[You wish him the best and say farewell. You are certain he has a bright future ahead of him.]]))
+
       vn.sfxVictory()
-      --vn.na( fmt.reward(reward) )
+      vn.na( fmt.reward(reward) )
       vn.done( zbh.zach.transition )
       vn.run()
 
       faction.modPlayer("Za'lek", zbh.fctmod.zbh11)
       --player.pay( reward )
-      zbh.log(_([[TODO]]))
+      player.outfitAdd( reward )
+      zbh.log(fmt.f(_([[You helped Zach recover a drone containing notes and experiments from his deceased colleagues by doing a non-standard jump to and from the Anubis Black Hole. Zach was able to use the technology to create the first {outfit} prototype which was given to you.]]),
+         {outfit=reward}))
       misn.finish(true)
    end
 end
