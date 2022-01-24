@@ -23,7 +23,7 @@ local sys2 = system.get("Copernicus")
 local j1, j2 = jump.get( sys1, sys2 )
 
 function create ()
-   evt.npcAdd( "approach_zach", _("Zach"), zbh.zach.portairt, zbh.zach.description )
+   evt.npcAdd( "approach_zach", _("Zach"), zbh.zach.portrait, zbh.zach.description )
    hook.takeoff( "leave" )
 end
 
