@@ -6,27 +6,40 @@ const float SPEED = 1.0; /**< Accretion disk rotation speed. */
 const float STEPS = 6.0; /**< Iterations on accretion disk layers. */
 const float SIZE  = 3.0 * %f; /**< Size of the black hole relative to texture. */
 /* Set up rotation matrix at compile-time for efficiency. */
+/* We also need its inverse, and some GLSL compilers in the wild lack a const inverse() function. */
 const vec3 rotang = vec3( %f, %f, %f );
 const float cx = cos(rotang.x);
 const float sx = sin(rotang.x);
 const mat3 Rx = mat3(
    1.0, 0.0, 0.0,
    0.0, cx, -sx,
-   0.0, sx,  cx   );
+   0.0, sx,  cx );
+const mat3 Rnegx = mat3(
+   1.0, 0.0, 0.0,
+   0.0, cx,  sx,
+   0.0, -sx, cx );
 const float cy = cos(rotang.y);
 const float sy = sin(rotang.y);
 const mat3 Ry = mat3(
    cy,  0.0, sy,
    0.0, 1.0, 0.0,
-   -sy, 0.0, cy   );
+   -sy, 0.0, cy );
+const mat3 Rnegy = mat3(
+   cy,  0.0, -sy,
+   0.0, 1.0, 0.0,
+    sy, 0.0, cy );
 const float cz = cos(rotang.z);
 const float sz = sin(rotang.z);
 const mat3 Rz = mat3(
    cz, -sz,  0.0,
    sz,  cz,  0.0,
    0.0, 0.0, 1.0 );
+const mat3 Rnegz = mat3(
+    cz, sz,  0.0,
+   -sz, cz,  0.0,
+   0.0, 0.0, 1.0 );
 const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */
-const mat3 Rinv = inverse(R);
+const mat3 Rinv = Rnegz * Rnegy * Rnegx;
 
 /* Uniforms. Most is hardcoded. */
 uniform float u_time = 0.0;
