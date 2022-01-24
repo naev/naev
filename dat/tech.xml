@@ -852,10 +852,12 @@
  <tech name="__Heavy Combat Vessel License">
   <item>Heavy Combat Vessel License</item>
  </tech>
- <tech name="__Collective">
+ <tech name="__Collective Outfits">
   <item>Neutron Disruptor</item>
   <item>Shatterer Launcher</item>
   <item>Drone Bay</item>
+ </tech>
+ <tech name="__Collective Ships">
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>
