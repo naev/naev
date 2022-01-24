@@ -228,16 +228,30 @@ local function push( dx, dy )
 end
 
 function sokoban.keypressed( key )
+   local change, is_replay
+
    if key=="q" or key=="escape" then
       done = true
       return
    elseif key == 'r' then
       loadLevel()
       return
-   end
-
-   local change
-   if key == 'left' then
+   elseif key == 'z' then
+      if historyIndex > 0 then
+         change = {}
+         for i, delta in ipairs(history[historyIndex]) do
+            table.insert( change, { delta[1], delta[2], delta[4], delta[3] } ) -- inverse change
+         end
+         historyIndex = historyIndex - 1
+         is_replay = true
+      end
+   elseif key == 'y' then
+      if historyIndex < #history then
+         is_replay = true
+         historyIndex = historyIndex + 1
+         change = history[historyIndex]
+      end
+   elseif key == 'left' then
       change = push( -1,  0 )
    elseif key == 'right' then
       change = push( 1,  0 )
@@ -266,9 +280,14 @@ function sokoban.keypressed( key )
       local x, y, _from, to = table.unpack( delta )
       level[y][x] = to
    end
-   history[historyIndex] = change
-   historyIndex = historyIndex + 1
-   local _shut_up_luacheck = history
+
+   if not is_replay then
+      historyIndex = historyIndex + 1
+      history[historyIndex] = change
+      for i = historyIndex+1, #history do
+         history[i] = nil
+      end
+   end
 
    if #change == 2 then
       if sokoban.sfx.motion ~= nil then
@@ -359,7 +378,7 @@ function sokoban.draw()
    end
 
    local cy = y + h + 20
-   local controls = _("#barrow keys#0: move, #br#0: restart, #bq#0: abort")
+   local controls = _("#barrow keys#0: move, #bz#0/#by#0/#br#0: undo/redo/restart, #bq#0: abort")
    local cw = lg.getFont():getWidth( controls ) + 10
    naev.gfx.clearDepth()
    setcol{ 0, 0, 0 }
