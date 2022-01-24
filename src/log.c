@@ -57,18 +57,17 @@ static void log_purge (void);
 int logprintf( FILE *stream, int newline, const char *fmt, ... )
 {
    va_list ap;
-   char buf[STRMAX];
+   char *buf;
    size_t n;
 
-   if (fmt == NULL)
-      return 0;
-   else { /* get the message */
-      /* Print variable text. */
-      va_start( ap, fmt );
-      /* Offset to add error colour header as necessary. */
-      n = vsnprintf( &buf[2], sizeof(buf)-4, fmt, ap )-1;
-      va_end( ap );
-   }
+   /* Offset to add error colour header as necessary. */
+   va_start( ap, fmt );
+   n = vsnprintf( NULL, 0, fmt, ap );
+   va_end( ap );
+   buf = malloc( 2+n+2 );
+   va_start( ap, fmt );
+   n = vsnprintf( &buf[2], n + 1, fmt, ap );
+   va_end( ap );
 
 #ifndef NOLOGPRINTFCONSOLE
    /* Add to console. */
@@ -83,24 +82,24 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 
    /* Finally add newline if necessary. */
    if (newline) {
-      buf[2+n+1] = '\n';
-      buf[2+n+2] = '\0';
+      buf[2+n] = '\n';
+      buf[2+n+1] = '\0';
    }
    else
-      buf[2+n+1] = '\0';
+      buf[2+n] = '\0';
 
    /* Append to buffer. */
    if (copying)
       log_append(stream, &buf[2]);
 
    if (stream == stdout && logout_file != NULL) {
-      PHYSFS_writeBytes( logout_file, &buf[2], newline ? n+2 : n+1 );
+      PHYSFS_writeBytes( logout_file, &buf[2], newline ? n+1 : n );
       if (newline)
          PHYSFS_flush( logout_file );
    }
 
    if (stream == stderr && logerr_file != NULL) {
-      PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+2 : n+1 );
+      PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+1 : n );
       if ( newline )
          PHYSFS_flush( logerr_file );
    }
@@ -109,6 +108,8 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    n = fprintf( stream, "%s", &buf[ 2 ] );
    if (newline)
       fflush( stream );
+
+   free( buf );
    return n;
 }
 
