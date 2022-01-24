@@ -141,6 +141,7 @@ zbh.fctmod = {
    zbh08 = 2,
    zbh09 = 3,
    zbh10 = 3,
+   zbh11 = 2,
 }
 
 return zbh

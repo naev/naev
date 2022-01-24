@@ -253,12 +253,12 @@ function board_drone ()
 
    vn.clear()
    vn.scene()
-   vn.transition( zbh.zach.transition )
 
    local z = zbh.vn_zach()
    local d = vn.newCharacter( pexp:name(), {
       image = "gfx/ship/zalek/zalek_drone_light_comm.webp",
    } )
+   vn.transition( zbh.zach.transition )
    vn.na("You hook up to the damage drone and are able to access the control panel. Since Zach seems to be distracted, it seems like you have to access it yourself.")
 
    sokoban.vn{ levels={8,9}, header="Drone Control Panel"}
@@ -295,6 +295,7 @@ function board_drone ()
 
    -- Didn't hack through
    if not hacked then
+      player.unboard()
       return
    end
 
