@@ -14,7 +14,7 @@ const mat3 Rx = mat3(
    1.0, 0.0, 0.0,
    0.0, cx, -sx,
    0.0, sx,  cx );
-const mat3 Rnegx = mat3(
+const mat3 Rinvx = mat3(
    1.0, 0.0, 0.0,
    0.0, cx,  sx,
    0.0, -sx, cx );
@@ -24,7 +24,7 @@ const mat3 Ry = mat3(
    cy,  0.0, sy,
    0.0, 1.0, 0.0,
    -sy, 0.0, cy );
-const mat3 Rnegy = mat3(
+const mat3 Rinvy = mat3(
    cy,  0.0, -sy,
    0.0, 1.0, 0.0,
     sy, 0.0, cy );
@@ -34,12 +34,12 @@ const mat3 Rz = mat3(
    cz, -sz,  0.0,
    sz,  cz,  0.0,
    0.0, 0.0, 1.0 );
-const mat3 Rnegz = mat3(
+const mat3 Rinvz = mat3(
     cz, sz,  0.0,
    -sz, cz,  0.0,
    0.0, 0.0, 1.0 );
 const mat3 R = Rx * Ry * Rz; /**< Final camera rotation matrix. */
-const mat3 Rinv = Rnegz * Rnegy * Rnegx;
+const mat3 Rinv = Rinvz * Rinvy * Rinvx;
 
 /* Uniforms. Most is hardcoded. */
 uniform float u_time = 0.0;
