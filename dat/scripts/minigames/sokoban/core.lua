@@ -44,7 +44,8 @@ local coloursText = {
 local cellSize = 30
 local headersize = 80
 local levels
-local prevlevel, level, currentLevel
+local prevlevel, level, levelIndex   -- A level is a 2D array of the above characters (player, ..., emptyOut)
+local history, historyIndex          -- Each entry is a sequence of {x, y, char_from, char_to} tables.
 local lx, ly, lxo, lyo
 local bgshader
 local transition
@@ -53,11 +54,13 @@ local function loadLevel()
    local w = 0
    local h
    local lw, lh = love.window.getDesktopDimensions()
+   history = {}
+   historyIndex = 0
    prevlevel = level
    transition = 0
    lxo, lyo = lx, ly
 
-   local loadlev = levels[ currentLevel ]
+   local loadlev = levels[ levelIndex ]
    h = #loadlev
    for y, row in ipairs( loadlev ) do
       w = math.max( w, #row )
@@ -135,6 +138,7 @@ function sokoban.load()
          goal     = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
          invalid  = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
          level    = audio.newSource( 'snd/sounds/sokoban/level.ogg' ),
+         -- TODO: motion = ...
       }
    end
 
@@ -160,7 +164,7 @@ function sokoban.load()
    bgshader = love_shaders.circuit()
 
    alpha = 0
-   currentLevel = 1
+   levelIndex = 1
    completed = false
    done = false
 
@@ -209,19 +213,16 @@ local function push( dx, dy )
 
    -- Player just moved
    if nextAdjacent[adjacent] then
-      level[playerY][playerX]           = nextCurrent[current]
-      level[playerY + dy][playerX + dx] = nextAdjacent[adjacent]
-      return "move"
+      return {
+         { playerX,      playerY,      current,  nextCurrent[current] },
+         { playerX + dx, playerY + dy, adjacent, nextAdjacent[adjacent] } }
 
    -- Player pushed something
    elseif nextBeyond[beyond] and nextAdjacentPush[adjacent] then
-      level[playerY][playerX]           = nextCurrent[current]
-      level[playerY + dy][playerX + dx] = nextAdjacentPush[adjacent]
-      level[playerY + dy + dy][playerX + dx + dx] = nextBeyond[beyond]
-      if nextBeyond[beyond] == boxOnStorage then
-         return "goal"
-      end
-      return "push"
+      return {
+         { playerX       , playerY       , current,  nextCurrent[current] },
+         { playerX +   dx, playerY +   dy, adjacent, nextAdjacentPush[adjacent] },
+         { playerX + 2*dx, playerY + 2*dy, beyond,   nextBeyond[beyond] } }
 
    end
 end
@@ -229,66 +230,74 @@ end
 function sokoban.keypressed( key )
    if key=="q" or key=="escape" then
       done = true
-
+      return
    elseif key == 'r' then
       loadLevel()
+      return
+   end
 
-   elseif key == 'up' or key == 'down' or key == 'left' or key == 'right' or
-         key == movekeys[1] or key == movekeys[2] or
-         key == movekeys[3] or key == movekeys[4] then
+   local change
+   if key == 'left' then
+      change = push( -1,  0 )
+   elseif key == 'right' then
+      change = push( 1,  0 )
+   elseif key == 'up' then
+      change = push( 0, -1 )
+   elseif key == 'down' then
+      change = push( 0, 1 )
+   elseif key == movekeys[1] then
+      change = push( -1,  0 )
+   elseif key == movekeys[2] then
+      change = push( 1,  0 )
+   elseif key == movekeys[3] then
+      change = push( 0, -1 )
+   elseif key == movekeys[4] then
+      change = push( 0, 1 )
+   else
+      return
+   end
 
-      local change
-      if key == 'left' then
-         change = push( -1,  0 )
-      elseif key == 'right' then
-         change = push( 1,  0 )
-      elseif key == 'up' then
-         change = push( 0, -1 )
-      elseif key == 'down' then
-         change = push( 0, 1 )
-      elseif key == movekeys[1] then
-         change = push( -1,  0 )
-      elseif key == movekeys[2] then
-         change = push( 1,  0 )
-      elseif key == movekeys[3] then
-         change = push( 0, -1 )
-      elseif key == movekeys[4] then
-         change = push( 0, 1 )
-      end
-
-   -- Invalid move
    if change == nil then
       sokoban.sfx.invalid:play()
-   -- Player just moved
-   -- elseif change == "move" then
-      -- TODO play motion sound
-   -- Player pushed something
-   elseif change == "goal" then
+      return
+   end
+
+   for i, delta in ipairs(change) do
+      local x, y, _from, to = table.unpack( delta )
+      level[y][x] = to
+   end
+   history[historyIndex] = change
+   historyIndex = historyIndex + 1
+   local _shut_up_luacheck = history
+
+   if #change == 2 then
+      if sokoban.sfx.motion ~= nil then
+         sokoban.sfx.motion:play()
+      end
+   elseif change[3][4] == boxOnStorage then
       sokoban.sfx.goal:play()
    end
 
-      local complete = true
-      for y, row in ipairs(level) do
-         for x, cell in ipairs(row) do
-            if cell == box then
-               complete = false
-            end
+   local complete = true
+   for y, row in ipairs(level) do
+      for x, cell in ipairs(row) do
+         if cell == box then
+            complete = false
          end
       end
+   end
 
-      if complete then
-         sokoban.sfx.level:play()
-         currentLevel = currentLevel + 1
-         if currentLevel > #levels then
-            done = true
-            completed = true
-            naev.cache().sokoban.completed = true
-            currentLevel = currentLevel-1
-         else
-            loadLevel()
-         end
+   if complete then
+      sokoban.sfx.level:play()
+      levelIndex = levelIndex + 1
+      if levelIndex > #levels then
+         done = true
+         completed = true
+         naev.cache().sokoban.completed = true
+         levelIndex = levelIndex-1
+      else
+         loadLevel()
       end
-
    end
 end
 
@@ -339,7 +348,7 @@ function sokoban.draw()
    if completed then
       subheader = _("Completed!")
    else
-      subheader = fmt.f(_("Layer {cur} / {total}"), {cur=currentLevel, total=#levels} )
+      subheader = fmt.f(_("Layer {cur} / {total}"), {cur=levelIndex, total=#levels} )
    end
    lg.printf( subheader, 0, y+40, nw, "center" )
    y = y + headersize
