@@ -18,4 +18,4 @@ This is a small set of missions designed to let the player get some understandin
 1. **zpp03:** fight a droid and hack another
 1. **zpp04:** bring back some stuff from Thaddius Station
 1. **zpp05:** perform an experiment that goes weird
-1. **zpp06:** take a mission to PRP-1 (epilogue)
+1. **zpp06:** take a message to PRP-1 (epilogue)
