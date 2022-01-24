@@ -2274,6 +2274,7 @@ dat/events/tutorial/tut_enter.lua
 dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
 dat/events/wormhole.lua
+dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
