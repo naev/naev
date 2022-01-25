@@ -731,7 +731,7 @@ void player_cleanup (void)
    /* Free stuff. */
    free(player.name);
    player.name = NULL;
-   array_free( player.ps.shipvar );
+   lvar_freeArray( player.ps.shipvar );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);
@@ -746,8 +746,10 @@ void player_cleanup (void)
    info_buttonClear();
 
    /* clean up the stack */
-   for (int i=0; i<array_size(player_stack); i++)
+   for (int i=0; i<array_size(player_stack); i++) {
+      lvar_freeArray( player_stack[i].shipvar );
       pilot_free(player_stack[i].p);
+   }
    array_free(player_stack);
    player_stack = NULL;
    /* nothing left */

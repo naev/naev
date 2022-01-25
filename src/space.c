@@ -3960,6 +3960,7 @@ void space_exit (void)
 
       free(sys->name);
       free(sys->background);
+      free(sys->map_shader);
       free(sys->features);
       array_free(sys->jumps);
       array_free(sys->presence);

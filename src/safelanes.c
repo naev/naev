@@ -340,7 +340,6 @@ static void safelanes_initStacks (void)
    safelanes_destroyStacks();
    safelanes_initStacks_faction(); /* Dependency for vertex. */
    safelanes_initStacks_vertex(); /* Dependency for edge. */
-   safelanes_initStacks_faction();
    safelanes_initStacks_edge();
    safelanes_initStacks_anchor();
 }

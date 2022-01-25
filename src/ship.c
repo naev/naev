@@ -51,6 +51,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
+static void ship_freeSlot( ShipOutfitSlot* s );
 
 /**
  * @brief Compares two ship pointers for qsort.
@@ -1074,11 +1075,11 @@ void ships_free (void)
 
       /* Free outfits. */
       for (int j=0; j<array_size(s->outfit_structure); j++)
-         outfit_freeSlot( &s->outfit_structure[j].slot );
+         ship_freeSlot( &s->outfit_structure[j] );
       for (int j=0; j<array_size(s->outfit_utility); j++)
-         outfit_freeSlot( &s->outfit_utility[j].slot );
+         ship_freeSlot( &s->outfit_utility[j] );
       for (int j=0; j<array_size(s->outfit_weapon); j++)
-         outfit_freeSlot( &s->outfit_weapon[j].slot );
+         ship_freeSlot( &s->outfit_weapon[j] );
       array_free(s->outfit_structure);
       array_free(s->outfit_utility);
       array_free(s->outfit_weapon);
@@ -1113,4 +1114,10 @@ void ships_free (void)
 
    array_free(ship_stack);
    ship_stack = NULL;
+}
+
+static void ship_freeSlot( ShipOutfitSlot* s )
+{
+   outfit_freeSlot( &s->slot );
+   free( s->name );
 }
