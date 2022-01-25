@@ -641,9 +641,8 @@ int commodity_load (void)
       char *file;
 
       asprintf( &file, "%s%s", COMMODITY_DATA_PATH, commodities[i] );
-
-      /* Load the file. */
       doc = xml_parsePhysFS( file );
+      free( file );
       if (doc == NULL)
          return -1;
 
