@@ -142,7 +142,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    N_("Engine Mass Limit") ),
    D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            N_("Boarding Bonus") ),
    DI_ELEM( SS_TYPE_D_TIME_MOD,           time_mod,            N_("Time Constant") ),
-   D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        N_("Speed-Up") ),
+   D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        N_("Action Speed") ),
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       N_("Ship Cooldown Time") ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       N_("Jump Distance") ),
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
