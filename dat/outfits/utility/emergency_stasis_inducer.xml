@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>2</mass>
   <price>400000</price>
-  <description>The emergency stasis inducer works by creating a strong electromagnetic field around the ship making it seem like time moves slower while significantly speeding up the ship action, and is triggered upon armour damage. It is not entirely clear how this effect is created, however, doctors do not recommend prolonged usage.</description>
+  <description>The emergency stasis inducer works by creating a strong electromagnetic field around the ship, making it seem like time slows down for everything outside of the field, thus excluding the triggering ship. The mechanism is triggered automatically upon armour damage, without need of manual intervention. It is not entirely clear how this effect is created, however, doctors do not recommend prolonged usage.</description>
   <desc_extra>Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown.</desc_extra>
   <gfx_store>emergency_stasis_inducer.webp</gfx_store>
   <limit>emergency_stasis_inducer</limit>
