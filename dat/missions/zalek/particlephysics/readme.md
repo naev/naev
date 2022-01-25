@@ -8,7 +8,7 @@ This is a small set of missions designed to let the player get some understandin
 * **Requirements:** >0 Za'lek Standing
 * **Main Location:** Katar I (Qulam System)
 * **Notable Characters:**
-   * Noona
+   * Noona (Za'lek Scientist and Chairwoman)
 * **Notable Rewards:**
    * `heavy_weapons_license` diff (zpp03)
    * `heavy_combat_vessel_license` diff (zpp06)
