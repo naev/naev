@@ -5,11 +5,14 @@ This is a small set of missions designed to let the player get some understandin
 ### Campaign Sheet
 
 * **Name:** Za'lek Particle Physics
+* **Requirements:** >0 Za'lek Standing
+* **Main Location:** Katar I (Qulam System)
 * **Notable Characters:**
    * Noona
 * **Notable Rewards:**
    * `heavy_weapons_license` diff (zpp03)
    * `heavy_combat_vessel_license` diff (zpp06)
+   * `zlk_cap_ch01_lrg` Za'lek standing cap (zpp06)
 
 ### Mission Overview
 
