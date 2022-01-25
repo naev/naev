@@ -86,7 +86,6 @@ if buildExec.disabled() == false
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
-   config_data.set('NOLOGPRINTFCONSOLE', 1)
    summary('Enabled' , debug   , section: 'Debug', bool_yn: true)
    summary('Paranoid', paranoid, section: 'Debug', bool_yn: true)
 
