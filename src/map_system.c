@@ -191,7 +191,7 @@ void map_system_open( int sys_selected )
    h = MAX(540, SCREEN_H - 140);
 
    /* create the window. */
-   wid = window_create( MAP_SYSTEM_WDWNAME, _("System Map"), -1, -1, w, h );
+   wid = window_create( MAP_SYSTEM_WDWNAME, _("System Info"), -1, -1, w, h );
    window_setCancel( wid, map_system_close );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
