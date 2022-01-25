@@ -123,6 +123,7 @@ static CstMapWidget* map_globalCustomData( unsigned int wid );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
+static void map_buttonSystemMap( unsigned int wid, const char* str );
 static void map_buttonMinimal( unsigned int wid, const char* str );
 static void map_buttonCommodity( unsigned int wid, const char* str );
 static void map_selectCur (void);
@@ -344,6 +345,9 @@ void map_open (void)
    window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
    map_setMinimal( wid, map_minimal_mode );
+   /* System info button */
+   window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnSystem", _("System info"), map_buttonSystemMap, SDLK_s );
 
    /*
     * Bottom stuff
@@ -2017,6 +2021,18 @@ static void map_setMinimal( unsigned int wid, int value )
    map_minimal_mode = value;
    player.map_minimal = value;
    window_buttonCaption( wid, "btnMinimal", (value) ? _("Normal View") : _("Minimal View") );
+}
+
+/**
+ * @brief Open system info.
+ */
+static void map_buttonSystemMap( unsigned int wid, const char* str )
+{
+   (void) wid;
+   (void) str;
+   if (map_selected != -1)
+      if (sys_isKnown(system_getIndex( map_selected )))
+         map_system_open( map_selected );
 }
 
 /**
