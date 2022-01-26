@@ -184,8 +184,8 @@ Nelly raises her eyes and lets her gaze wander on the filthy ceiling.
 "I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddenly, an accident occurred!
 "A kid shot the ball in the wrong direction, and it crashed into the side of my poor Llama, breaking through the plating!"]]))
    vn.menu{
-      {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"},
-      {_("Was it easy to repair?"), "repair"},
+      {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"}
+   --   {_("Was it easy to repair?"), "repair"}, TODO Uncomment when this is actually written :boar:
    }
 
    vn.label("blaster")
@@ -201,7 +201,7 @@ It is actually sad, but I guess it is like that. They chose independence after a
    vn.menu{ dvaered, sausage, leave }
 
    vn.label("sausage")
-   nel(_([["What? But of course not! It is the worst mistake possible. Didn't you read any book on sausage infusion in your life? Everyone knows that you must never, NEVER prick the sausage with a fork. At any cost!"]]))
+   nel(_([["What? But of course not! It is the worst mistake possible. Haven't you read any book on sausage infusion in your life? Everyone knows that you must never, NEVER prick the sausage with a fork. At any cost!"]]))
    vn.menu{ dvaered, warlord, leave }
 
    vn.label("leave")
