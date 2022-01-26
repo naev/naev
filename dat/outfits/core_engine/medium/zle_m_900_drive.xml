@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="ZLE-M-500 Drive">
+<outfit name="ZLE-M-900 Drive">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <mass>10</mass>
-  <price>360000</price>
+  <mass>15</mass>
+  <price>675000</price>
   <description>TODO</description>
-  <gfx_store>engine13.webp</gfx_store>
+  <gfx_store>engine14.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>10</energy_regen_malus>
-  <engine_limit>500</engine_limit>
-  <fuel>400</fuel>
-  <speed>240</speed>
-  <thrust>110</thrust>
-  <turn>95</turn>
+  <energy_regen_malus>20</energy_regen_malus>
+  <engine_limit>900</engine_limit>
+  <fuel>600</fuel>
+  <speed>160</speed>
+  <thrust>90</thrust>
+  <turn>80</turn>
  </specific>
 </outfit>
