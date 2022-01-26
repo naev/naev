@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Auxiliary Proccessing Unit I">
+ <general>
+  <typename>CPU Modifier</typename>
+  <slot>structure</slot>
+  <size>small</size>
+  <mass>15</mass>
+  <price>20000</price>
+  <description>An additional proccessing unit to supplement the main processor of the core system, giving small ships a little more processing power.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>5</cpu>
+ </general>
+ <specific type="modification">
+  <energy_regen_malus>4</energy_regen_malus>
+ </specific>
+</outfit>
