@@ -81,6 +81,7 @@ dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml
 dat/outfits/core_engine/medium/tricon_cyclone_engine.xml
 dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml
 dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml
+dat/outfits/core_engine/medium/zle_m_500_drive.xml
 dat/outfits/core_engine/small/beat_up_small_engine.xml
 dat/outfits/core_engine/small/melendez_ox_xl_engine.xml
 dat/outfits/core_engine/small/nexus_dart_150_engine.xml
@@ -124,6 +125,7 @@ dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml
 dat/outfits/core_system/medium/previous_generation_medium_systems.xml
 dat/outfits/core_system/medium/unicorp_pt200_core_system.xml
 dat/outfits/core_system/medium/unicorp_pt310_core_system.xml
+dat/outfits/core_system/medium/zlc_m_40_kernel.xml
 dat/outfits/core_system/small/milspec_orion_2301_core_system.xml
 dat/outfits/core_system/small/milspec_orion_3701_core_system.xml
 dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml
