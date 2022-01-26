@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Auxiliary Proccessing Unit II">
+ <general>
+  <typename>CPU Modifier</typename>
+  <slot>structure</slot>
+  <size>medium</size>
+  <mass>30</mass>
+  <price>60000</price>
+  <description>An additional proccessing unit to supplement the main processor of the core system, giving medium ships a little more processing power.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>20</cpu>
+ </general>
+ <specific type="modification">
+  <energy_regen_malus>8</energy_regen_malus>
+ </specific>
+</outfit>
