@@ -185,7 +185,7 @@ Nelly raises her eyes and lets her gaze wander on the filthy ceiling.
 "A kid shot the ball in the wrong direction, and it crashed into the side of my poor Llama, breaking through the plating!"]]))
    vn.menu{
       {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"}
-   --   {_("Was it easy to repair?"), "repair"}, Uncomment when this is actually written :boar:
+   --   {_("Was it easy to repair?"), "repair"}, TODO Uncomment when this is actually written :boar:
    }
 
    vn.label("blaster")
