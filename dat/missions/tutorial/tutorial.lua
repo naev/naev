@@ -38,7 +38,7 @@ function create ()
    end
 
    misn.setTitle( _("Tutorial") )
-   misn.setDesc( _("Your ship AI has offered to teach you how to fly your ship.") )
+   misn.setDesc( _("Your Ship AI has offered to teach you how to fly your ship.") )
    misn.setReward( _("Skills to play the game!") )
 
    local dotut = false
@@ -48,10 +48,10 @@ function create ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(_("As you are admiring the view from your cockpit, suddenly a holographic projection appears in front of you."))
-   sai(fmt.f(_([["Congratulations on your first space ship, {playername}! What, what am I? I am your personal Ship AI. Always ready to be of your assistance."
+   sai(fmt.f(_([["Congratulations on your first space ship, {playername}! What, what am I? I am your personal Ship AI. Always ready to be of assistance."
 They stare at you for a few seconds.
 "Say, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
-   sai(_([["Anyway, from now on, I will be your ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any question or comment about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
+   sai(_([["Anyway, from now on, I will be your Ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any questions or comments about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
    vn.func( function ()
@@ -127,7 +127,7 @@ They stare at you for a few seconds.
    vn.func( function ()
       dotut = true
    end )
-   sai(fmt.f(_([["Alrght, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and thrust to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
+   sai(fmt.f(_([["Alright, let's go over how to pilot your new state-of-the-art ship, then! Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and thrust to move your ship forward with {accelkey}! You can also use {reversekey} to rotate your ship to the opposite direction you are moving, or to reverse thrust if you purchase and install a reverse thruster onto your starship. Give it a try by flying over to {pnt}! You see it on your screen, right? It's the planet right next to you."]]),{leftkey=tut.getKey("left"), rightkey=tut.getKey("right"), accelkey=tut.getKey("accel"), reversekey=tut.getKey("reverse"), pnt=start_planet}))
    vn.done( tut.shipai.transition )
    vn.run()
 
@@ -191,7 +191,7 @@ function timer ()
       vn.transition( tut.shipai.transition )
       sai(_([["Great job! As you can see, by using your ship's Autonav features, the perceived duration of your trip was cut substantially. You will grow to appreciate this feature in your ship in time, especially as you travel from system to system delivering goods and such, given the vastness of space."]]))
       sai(_([["I hope you noticed some of the features of the overview map when you had it activated. Not only are objects such as planets, ships, and asteroids visible on the overview map, but faction #opatrol routes#0 are also shown with thick lines. These routes denote areas that are commonly patrolled and used by ships. Sticking to these routes is generally the best way to travel around, but they don't guarantee your safety. When starting out it is probably best to not stray too far."]]))
-      sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up like ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
+      sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up a ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
       sai(fmt.f(_([["I will launch a combat practice drone off of {pnt} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
 "Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pnt=dest_planet, targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       sai(_([["The Drone's AI has been said to be a bit odd, but don't pay attention to it. Being an artificial intelligence it is unable to compute feelings you know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED"]]))
@@ -305,7 +305,7 @@ function enter_timer ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Welcome back to space, {playername}! After landing, the game will be automatically saved, so you do not need to worry about losing your progress. Now let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships. You can trust me as I've only had under 4 fatal accidents."]]),{playername=player.name()}))
+      sai(fmt.f(_([["Welcome back to space, {playername}! After landing, the game will be automatically saved, so you do not need to worry about losing your progress. Now let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your Ship AI, using the Autonav functionality available on all ships. You can trust me as I've only had under 4 fatal accidents."]]),{playername=player.name()}))
       sai(fmt.f(_([["Autonav is simple and elegant. Simply press {overlaykey} to open your ship's overlay map, then simply #bright-click#0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but time compression allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, the Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's #oOptions#0 menu, which you can access by pressing {menukey}.]]),{overlaykey=tut.getKey("overlay"), menukey=tut.getKey("menu")}))
       sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pnt}? You should be able to see it highlighted on your overlay map which you can activate with {overlaykey}."]]),{pnt=dest_planet, overlaykey=tut.getKey("overlay")}))
       vn.done( tut.shipai.transition )
@@ -328,7 +328,7 @@ function enter_timer ()
       vn.run()
 
       -- Normal finish of the tutorial
-      tut.log(_([[Your ship AI gave you a tutorial on how to pilot your ship. Hopefully you will fair better than their late previous owner.]]))
+      tut.log(_([[Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you will fair better than their late previous owner.]]))
       misn.finish( true )
    end
 end
