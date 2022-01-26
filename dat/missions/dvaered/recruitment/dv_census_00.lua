@@ -62,7 +62,7 @@ function accept()
 
    vn.transition( tutnel.nelly.transition )
    if player.misnDone( 'Helping Nelly Out 1' ) then
-      nel(fmt.f(_([["Hi, {player}! How do you do? How long have you been here in Dvaered space? Not so long, he?"]]), {player=player.name()}))
+      nel(fmt.f(_([["Hi, {player}! How do you do? How long have you been here in Dvaered space? Not so long, eh?"]]), {player=player.name()}))
    else
       nel(_([["Hi, I'm Nelly! Oh! I guess you are new to Dvaered space, right?"]]))
    end
@@ -104,12 +104,12 @@ Once you have seen enough ships, you can land on any Dvaered-controlled planet t
    -- Check to see if truly accepted
    if not doaccept then return end
 
-   -- Create NPC for casual chatting
-   misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is still there.") )
-
    misn.accept()
    mem.misn_state = 0
    mem.misn_marker = misn.markerAdd( mem.sys )
+
+   -- Create NPC for casual chatting
+   misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is still there.") )
 
    -- Mission details
    misn.setTitle(fmt.f(_("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
