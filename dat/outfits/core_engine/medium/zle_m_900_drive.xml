@@ -9,6 +9,7 @@
   <description>TODO</description>
   <gfx_store>engine14.webp</gfx_store>
   <priority>3</priority>
+  <cpu>-25</cpu>
  </general>
  <specific type="modification">
   <energy_regen_malus>20</energy_regen_malus>

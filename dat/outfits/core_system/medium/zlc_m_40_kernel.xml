@@ -11,7 +11,7 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>600</cpu_max>
+  <cpu_max>625</cpu_max>
   <energy>400</energy>
   <energy_regen>25</energy_regen>
   <shield>500</shield>
