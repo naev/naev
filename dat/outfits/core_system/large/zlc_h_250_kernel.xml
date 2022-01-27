@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="ZLC-H-250 Kernel">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>250</mass>
+  <price>2000000</price>
+  <description>TODO</description>
+  <gfx_store>core_system_cpu_l1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cpu_max>1500</cpu_max>
+  <energy>1500</energy>
+  <energy_regen>90</energy_regen>
+  <shield>900</shield>
+  <shield_regen>15</shield_regen>
+ </specific>
+</outfit>
