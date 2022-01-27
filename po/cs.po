@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-01-22 15:43-0500\n"
 "PO-Revision-Date: 2022-01-27 17:54+0000\n"
-"Last-Translator: Jirka Justra <jjustra@seznam.cz>\n"
+"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -86986,7 +86986,7 @@ msgstr "Neznámý var typ '%s'"
 
 #: src/map.c:307
 msgid "Standing:"
-msgstr ""
+msgstr "Reputace:"
 
 #: src/map.c:321
 msgid "Space Objects:"
