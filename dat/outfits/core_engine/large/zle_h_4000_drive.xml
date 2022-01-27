@@ -9,7 +9,6 @@
   <price>3600000</price>
   <description>TODO</description>
   <gfx_store>engine5.webp</gfx_store>
-  <cpu>-200</cpu>
  </general>
  <specific type="modification">
   <energy_regen_malus>100</energy_regen_malus>
@@ -18,5 +17,6 @@
   <speed>85</speed>
   <thrust>45</thrust>
   <turn>55</turn>
+  <cpu_max>-200</cpu_max>
  </specific>
 </outfit>
