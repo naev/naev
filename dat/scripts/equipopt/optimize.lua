@@ -77,6 +77,7 @@ local goodness_override = {
 
 -- Special weights
 local goodness_special = {
+   ["Black Cat Doll"] = 0.25, -- Only active when stealthing
    ["TeraCom Mace Launcher"] = 0.5,
    ["Enygma Systems Huntsman Launcher"] = 0.5,
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
