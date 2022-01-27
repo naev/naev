@@ -12,6 +12,6 @@
   <cpu>-100</cpu>
  </general>
  <specific type="modification">
-  <energy_regen>10</energy_regen>
+  <energy_regen>7</energy_regen>
  </specific>
 </outfit>
