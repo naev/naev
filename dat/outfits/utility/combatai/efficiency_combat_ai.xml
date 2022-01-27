@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Efficiency Combat AI">
+ <general>
+  <typename>Combat AI</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Heavy Weapon</license>
+  <mass>0</mass>
+  <price>850000</price>
+  <description>This Combat AI utilizes advanced energy routing to make the ship's computing power more efficient, allowing more power to be packed into the same energy usage.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>combatai</limit>
+ </general>
+ <specific type="modification">
+  <cpu_mod>5</cpu_mod>
+ </specific>
+</outfit>

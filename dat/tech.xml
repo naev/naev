@@ -77,6 +77,10 @@
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
+  <item>Auxiliary Proccessing Unit I</item>
+  <item>Auxiliary Proccessing Unit II</item>
+  <item>Auxiliary Proccessing Unit III</item>
+  <item>Auxiliary Proccessing Unit IV</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
   <item>Large Shield Booster</item>
@@ -247,6 +251,7 @@
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
   <item>Nebula Resistant Coating</item>
+  <item>Efficiency Combat AI</item>
   <item>Bio-Neural Combat AI</item>
   <item>Cyclic Combat AI</item>
   <item>Hive Combat AI</item>
@@ -548,6 +553,8 @@
   <item>Mercenary License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
+  <item>Auxiliary Proccessing Unit I</item>
+  <item>Auxiliary Proccessing Unit II</item>
   <item>Battery I</item>
   <item>Battery II</item>
   <item>Reactor Class I</item>
@@ -575,12 +582,15 @@
   <item>Emergency Shield Booster</item>
   <item>Asteroid Scanner</item>
   <item>Agility Combat AI</item>
+  <item>Efficiency Combat AI</item>
   <item>Boarding Androids MK1</item>
   <item>Targeting Conduit</item>
   <item>Blink Drive</item>
   <item>Cryogenic Repair Nanobots</item>
  </tech>
  <tech name="High Tech Upgrades 2">
+  <item>Auxiliary Proccessing Unit III</item>
+  <item>Auxiliary Proccessing Unit IV</item>
   <item>Battery III</item>
   <item>Battery IV</item>
   <item>Reactor Class II</item>
