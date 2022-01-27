@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="ZLE-H-4000 Drive">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>80</mass>
+  <price>3600000</price>
+  <description>TODO</description>
+  <gfx_store>engine5.webp</gfx_store>
+  <cpu>-200</cpu>
+ </general>
+ <specific type="modification">
+  <energy_regen_malus>100</energy_regen_malus>
+  <engine_limit>4000</engine_limit>
+  <fuel>1200</fuel>
+  <speed>85</speed>
+  <thrust>45</thrust>
+  <turn>55</turn>
+ </specific>
+</outfit>
