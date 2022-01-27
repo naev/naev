@@ -9,7 +9,6 @@
   <description>TODO</description>
   <gfx_store>engine2.webp</gfx_store>
   <priority>3</priority>
-  <cpu>-100</cpu>
  </general>
  <specific type="modification">
   <energy_regen_malus>40</energy_regen_malus>
@@ -18,5 +17,6 @@
   <speed>120</speed>
   <thrust>60</thrust>
   <turn>70</turn>
+  <cpu_max>-100</cpu_max>
  </specific>
 </outfit>
