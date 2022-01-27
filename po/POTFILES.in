@@ -240,6 +240,8 @@ dat/outfits/structure/shield_capacitor_iv.xml
 dat/outfits/structure/small_cargo_pod.xml
 dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
+dat/outfits/structure/zlg_h_500_arc_cell.xml
+dat/outfits/structure/zlg_m_100_arc_cell.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/hades_torch.xml
 dat/outfits/unique/valkyrie_beam.xml
