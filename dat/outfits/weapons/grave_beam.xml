@@ -16,7 +16,7 @@
   <duration min="1.5">5</duration>
   <range>700</range>
   <turn>45</turn>
-  <energy>24</energy>
+  <energy>42</energy>
   <heatup>75</heatup>
   <damage>
    <type>normal</type>
