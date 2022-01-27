@@ -214,6 +214,10 @@ dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
+dat/outfits/structure/auxiliary_processing_unit_i.xml
+dat/outfits/structure/auxiliary_processing_unit_ii.xml
+dat/outfits/structure/auxiliary_processing_unit_iii.xml
+dat/outfits/structure/auxiliary_processing_unit_iv.xml
 dat/outfits/structure/battery_i.xml
 dat/outfits/structure/battery_ii.xml
 dat/outfits/structure/battery_iii.xml
@@ -258,6 +262,7 @@ dat/outfits/utility/combat_hologram_projector.xml
 dat/outfits/utility/combatai/agility_combat_ai.xml
 dat/outfits/utility/combatai/bioneural_combat_ai.xml
 dat/outfits/utility/combatai/cyclic_combat_ai.xml
+dat/outfits/utility/combatai/efficiency_combat_ai.xml
 dat/outfits/utility/combatai/hive_combat_ai.xml
 dat/outfits/utility/combatai/hunting_combat_ai.xml
 dat/outfits/utility/combatai/pinpoint_combat_ai.xml
