@@ -83,7 +83,6 @@ if (fabs(val) > 1e-5) { \
  */
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
-static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -418,21 +417,6 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
 
    WARN(_("'%s' does not match any outfit slot sizes."), s);
    return OUTFIT_SLOT_SIZE_NA;
-}
-
-/**
- * @brief Sets the outfit slot size from default outfit properties.
- */
-static int outfit_setDefaultSize( Outfit *o )
-{
-   if (o->mass <= 10.)
-      o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
-   else if (o->mass <= 30.)
-      o->slot.size = OUTFIT_SLOT_SIZE_MEDIUM;
-   else
-      o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
-   WARN(_("Outfit '%s' has implicit slot size, setting to '%s'."),o->name,outfit_slotSize(o));
-   return 0;
 }
 
 /**
@@ -1296,10 +1280,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
             STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.blt.heatup * temp->u.blt.delay;
 
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
@@ -1448,10 +1428,6 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    temp->u.bem.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
             STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.bem.heatup * (temp->u.bem.delay+temp->u.bem.warmup+temp->u.bem.duration) / temp->u.bem.delay;
-
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1644,10 +1620,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       WARN(_("Max speed of ammo '%s' will be ignored."), temp->name);
    temp->u.lau.resist /= 100.;
 
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-
    /* Short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
@@ -1764,10 +1736,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
@@ -1858,10 +1826,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
             STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
          temp->u.afb.heatup;
 
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->u.afb.thrust==0.,"thrust");
@@ -1904,10 +1868,6 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
-
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2242,6 +2202,8 @@ static int outfit_parse( Outfit* temp, const char* file )
                   temp->slot.type = OUTFIT_SLOT_UTILITY;
                else if (strcmp(cprop,"weapon") == 0)
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
+               else if (strcmp(cprop,"intrinsic") == 0)
+                  temp->slot.type = OUTFIT_SLOT_NA;
                else
                   WARN(_("Outfit '%s' has unknown slot type '%s'."), temp->name, cprop);
 
