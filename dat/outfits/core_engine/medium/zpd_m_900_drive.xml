@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="ZLE-M-900 Drive">
+<outfit name="ZPD-M-900 Drive">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>

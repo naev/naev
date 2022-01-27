@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="ZLE-H-2500 Drive">
+<outfit name="ZPD-H-2500 Drive">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
