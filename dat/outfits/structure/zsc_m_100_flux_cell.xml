@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Shield Capacitor II">
+ <general>
+  <typename>Shield Modifier</typename>
+  <slot>structure</slot>
+  <size>medium</size>
+  <mass>10</mass>
+  <price>112000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <priority>3</priority>
+  <cpu>-100</cpu>
+ </general>
+ <specific type="modification">
+  <shield>50</shield>
+ </specific>
+</outfit>

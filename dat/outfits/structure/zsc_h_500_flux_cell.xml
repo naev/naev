@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="ZSC-H-500 Flux Cell">
+ <general>
+  <typename>Shield Modifier</typename>
+  <slot>structure</slot>
+  <size>large</size>
+  <mass>50</mass>
+  <price>370000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <priority>3</priority>
+  <cpu>-500</cpu>
+ </general>
+ <specific type="modification">
+  <shield>200</shield>
+ </specific>
+</outfit>
