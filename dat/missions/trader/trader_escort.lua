@@ -102,6 +102,12 @@ function accept()
       end
    end
 
+   misn.accept()
+   misn.osdCreate(_("Convey Escort"), {
+      fmt.f(_("Escort a convoy of traders to {pnt} ({sys} system)"), {pnt=mem.destspob, sys=mem.destsys}),
+   })
+   misn.markerAdd( mem.destspob )
+
    -- Choose convoy
    local convoy_ships
    if mem.convoysize == 1 then
