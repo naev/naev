@@ -152,7 +152,7 @@ local last_spammed = 0
 function miner_attacked( p )
    local t = naev.ticks()
    if (t-last_spammed) > 10 then
-      p:comm( _("Under attack! Support requested!"), true )
+      p:comm( _("Under attack! Support requested!") )
       last_spammed = t
    end
 end

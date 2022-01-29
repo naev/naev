@@ -28,10 +28,9 @@ local lmisn = require "lmisn"
 local car = require "common.cargo"
 local fmt = require "format"
 local vntk = require "vntk"
+local escort = require "escort"
 
-local convoy -- Non-persistent state
-local continueToDest, spawnConvoy -- Forward-declared functions
--- luacheck: globals jumpin jumpout land takeoff timer_traderSafe traderAttacked traderDeath traderJump traderLand traderShutup (Hook functions passed by name)
+-- luacheck: globals success trader_create trader_attacked trader_safe spawn_ambush (Hook functions passed by name)
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
@@ -48,9 +47,9 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
    --This mission does not make any system claims
-   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
+   mem.destspob, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
 
-   if mem.destplanet == nil then
+   if mem.destspob == nil then
       misn.finish(false)
    elseif mem.numjumps == 0 then
       misn.finish(false) -- have to escort them at least one jump!
@@ -90,9 +89,9 @@ function create()
    end
    mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destplanet, sys=mem.destsys} ) )
-   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} in {sys}. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, nil, mem.destplanet, nil, piracyrisk )
-   misn.markerAdd(mem.destplanet, "computer")
+   misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destspob, sys=mem.destsys} ) )
+   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} ({sys} system). You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destspob, sys=mem.destsys} ), mem.cargo, nil, mem.destspob, nil, piracyrisk )
+   misn.markerAdd(mem.destspob, "computer")
    misn.setReward( fmt.credits(mem.reward) )
 end
 
@@ -103,142 +102,81 @@ function accept()
       end
    end
 
-   mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
-   mem.origin = spob.cur() -- The place where the AI ships spawn from.
+   -- Choose convoy
+   local convoy_ships
+   if mem.convoysize == 1 then
+      convoy_ships = trepeat( {"Llama"}, 3 )
+   elseif mem.convoysize == 2 then
+      convoy_ships = trepeat( {"Koala"}, 4 )
+   else
+      convoy_ships = trepeat( {"Rhino", "Mule"}, mem.convoysize-1 )
+   end
+   mem.num_ships = #convoy_ships
 
-   mem.orig_alive = nil
-   mem.alive = nil
-   mem.exited = 0
-   mem.misnfail = false
-   mem.unsafe = false
-
-   misn.accept()
-   misn.osdCreate(_("Convey Escort"), {
-      fmt.f(_("Escort a convoy of traders to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys}),
+   -- Begin the escort
+   escort.init( convoy_ships, {
+      func_pilot_create = "trader_create",
+      func_pilot_attacked = "trader_attacked",
    })
+   escort.setDest( mem.destspob, "success" )
 
-   hook.takeoff("takeoff")
-   hook.jumpin("jumpin")
-   hook.jumpout("jumpout")
-   hook.land("land")
+   hook.enter( "spawn_ambush" )
 end
 
-function takeoff()
-   spawnConvoy()
-end
+function success ()
+   local alive = escort.num_alive()
+   local alive_frac = alive / mem.num_ships
 
-function jumpin()
-   if system.cur() ~= mem.nextsys then
-      lmisn.fail( _("You jumped into the wrong system.") )
+   local reward_orig = mem.reward
+   mem.reward = mem.reward * alive_frac
+
+   if alive_frac >= 1 then
+      vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
+      --faction.get("Traders Guild"):modPlayer(1)
+   elseif alive_frac >= 0.6 then
+      vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
    else
-      spawnConvoy()
+      vntk.msg( _("Success with Heavy Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
    end
+   player.pay( mem.reward )
+   pir.reputationNormalMission(rnd.rnd(2,3))
+   misn.finish( true )
 end
 
-function jumpout()
-   if mem.alive <= 0 or mem.exited <= 0 then
-      lmisn.fail( _("You jumped before the convoy you were escorting.") )
-   else
-      -- Treat those that didn't exit as dead
-      mem.alive = math.min( mem.alive, mem.exited )
+function trader_create( p )
+   for j, c in ipairs( p:cargoList() ) do
+      p:cargoRm( c.name, c.q )
    end
-   mem.origin = system.cur()
-   mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
+   p:cargoAdd( mem.cargo, p:cargoFree() )
 end
 
-function land()
-   mem.alive = math.min( mem.alive, mem.exited )
-
-   if spob.cur() ~= mem.destplanet then
-      vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
-      misn.finish(false)
-   elseif mem.alive <= 0 then
-      vntk.msg(_("You landed before the convoy!"), _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]))
-      misn.finish(false)
-   else
-      if mem.alive >= mem.orig_alive then
-         vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
-         player.pay( mem.reward )
-         faction.get("Traders Guild"):modPlayer(1)
-      elseif mem.alive / mem.orig_alive >= 0.6 then
-         local reward_orig = mem.reward
-         mem.reward = mem.reward * mem.alive / mem.orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
-         player.pay( mem.reward )
-      else
-         local reward_orig = mem.reward
-         mem.reward = mem.reward * mem.alive / mem.orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
-         player.pay( mem.reward )
-      end
-      pir.reputationNormalMission(rnd.rnd(2,3))
-      misn.finish( true )
-   end
-end
-
-function traderDeath()
-   mem.alive = mem.alive - 1
-   if mem.alive <= 0 then
-      lmisn.fail( _("The convoy you were escorting has been destroyed.") )
-   end
-end
-
--- Handle the jumps of convoy.
-function traderJump( p, j )
-   if j:dest() == lmisn.getNextSystem( system.cur(), mem.destsys ) then
-      mem.exited = mem.exited + 1
-      if p:exists() then
-         player.msg( fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ) )
-      end
-   else
-      traderDeath()
-   end
-end
-
---Handle landing of convoy
-function traderLand( p, plnt )
-   if plnt == mem.destplanet then
-      mem.exited = mem.exited + 1
-      if p:exists() then
-         player.msg( fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=plnt} ) )
-      end
-   else
-      traderDeath()
-   end
-end
-
+local last_spammed = 0
+local unsafe = false
 -- Handle the convoy getting attacked.
-function traderAttacked( p, _attacker )
-   mem.unsafe = true
+function trader_attacked( p, _attacker )
+   unsafe = true
    p:control( false )
    p:setNoJump( true )
    p:setNoLand( true )
 
-   if not mem.shuttingup then
-      mem.shuttingup = true
-      p:comm( player.pilot(), _("Convoy ships under attack! Requesting immediate assistance!") )
-      hook.timer( 5.0, "traderShutup" ) -- Shuts him up for at least 5s.
+   local t = naev.ticks()
+   if (t-last_spammed) > 10 then
+      p:comm( _("Convoy ships under attack! Requesting immediate assistance!") )
+      last_spammed = t
    end
 end
 
-function traderShutup()
-    mem.shuttingup = false
-end
-
-function timer_traderSafe()
-   hook.timer( 2.0, "timer_traderSafe" )
-
-   if mem.unsafe then
-      mem.unsafe = false
-      for i, j in ipairs( convoy ) do
-         continueToDest( j )
-      end
+function trader_safe()
+   hook.timer( 2.0, "trader_safe" )
+   if unsafe then
+      unsafe = false
+      escort.reset_ai()
    end
 end
 
-function spawnConvoy ()
-   --Make it interesting
-   local ambush_src = mem.destplanet
+function spawn_ambush ()
+   -- Make it interesting
+   local ambush_src = mem.destspob
    if system.cur() ~= mem.destsys then
       ambush_src = lmisn.getNextSystem( system.cur(), mem.destsys )
    end
@@ -266,88 +204,5 @@ function spawnConvoy ()
       p:setHostile(true)
    end
 
-   --Spawn the convoy
-   local convoy_n = mem.convoysize - 1
-   local convoy_ships = {"Rhino", "Mule"}
-   local convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
-   if mem.convoysize == 1 then
-      convoy_n = 3
-      convoy_ships = "Llama"
-      convoy_names = _("Convoy Llama")
-   elseif mem.convoysize == 2 then
-      convoy_n = 4
-      convoy_ships = "Koala"
-      convoy_names = _("Convoy Koala")
-   elseif mem.convoysize == 3 then
-      convoy_n = 1
-      convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
-      convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
-   end
-
-   convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", mem.origin, convoy_names )
-   local minspeed = nil
-   for i, p in ipairs(convoy) do
-      if mem.alive ~= nil and mem.alive < i then
-         p:rm()
-      end
-      if p:exists() then
-         for _j, c in ipairs( p:cargoList() ) do
-            p:cargoRm( c.name, c.q )
-         end
-         p:cargoAdd( mem.cargo, p:cargoFree() )
-
-         local myspd = p:stats().speed_max
-         if minspeed == nil or myspd < minspeed then
-            minspeed = myspd
-         end
-
-         p:control()
-         p:setHilight(true)
-         p:setInvincPlayer()
-         continueToDest( p )
-
-         hook.pilot( p, "death", "traderDeath" )
-         hook.pilot( p, "attacked", "traderAttacked", p )
-         hook.pilot( p, "land", "traderLand" )
-         hook.pilot( p, "jump", "traderJump" )
-      end
-   end
-
-   if minspeed ~= nil then
-      for _i, p in ipairs(convoy) do
-         if p ~= nil and p:exists() then
-            p:setSpeedLimit( minspeed )
-         end
-      end
-   end
-
-   mem.exited = 0
-   if mem.orig_alive == nil then
-      mem.orig_alive = 0
-      for _i, p in ipairs( convoy ) do
-         if p ~= nil and p:exists() then
-            mem.orig_alive = mem.orig_alive + 1
-         end
-      end
-      mem.alive = mem.orig_alive
-
-      -- Shouldn't happen
-      if mem.orig_alive <= 0 then misn.finish(false) end
-   end
-
-   hook.timer( 1.0, "timer_traderSafe" )
-end
-
-function continueToDest( p )
-   if p ~= nil and p:exists() then
-      p:control( true )
-      p:setNoJump( false )
-      p:setNoLand( false )
-
-      if system.cur() == mem.destsys then
-         p:land( mem.destplanet )
-      else
-         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ) )
-      end
-   end
+   hook.timer( 1.0, "trader_safe" )
 end

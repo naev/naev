@@ -112,7 +112,15 @@ local function run_success ()
    _G[mem._escort.func_success]()
 end
 
-local function control_ai( l )
+function escort.reset_ai ()
+   for k,p in ipairs(_escort_convoy) do
+      p:control(false)
+      p:setNoJump(false)
+      p:setNoLand(false)
+   end
+
+   local l = _escort_convoy[1]
+   if not l or not l:exists() then return end
    l:control(true)
    local scur = system.cur()
    if scur == mem._escort.destsys then
@@ -146,7 +154,7 @@ function _escort_e_death( p )
                   e:setLeader( l )
                end
             end
-            control_ai( l )
+            escort.reset_ai()
          end
          return
       end
@@ -232,7 +240,7 @@ function escort.spawn( pos )
    -- Have the leader move as slow as the slowest ship
    l:setSpeedLimit( minspeed )
    -- Moving to system
-   control_ai( l )
+   escort.reset_ai()
 
    -- Mark destination
    local scur = system.cur()
