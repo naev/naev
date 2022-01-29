@@ -11,10 +11,8 @@
   <faction>Frontier</faction>
   <faction>Goddard</faction>
   <faction>Independent</faction>
-  <faction>Proteron</faction>
   <faction>Sirius</faction>
   <faction>Soromid</faction>
-  <faction>Thurion</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
  </avail>
