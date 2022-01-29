@@ -43,6 +43,7 @@ typedef struct LandOutfitData_ {
 
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< C-array of Arrays: Outfits associated with the image array cells. */
+static int outfit_Mode = 0; /**< Outfit mode for filtering. */
 
 /* Modifier for buying and selling quantity. */
 static int outfits_mod = 1;
@@ -59,6 +60,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 static void outfits_rmouse( unsigned int wid, const char* widget_name );
 static void outfits_find( unsigned int wid, const char *str );
 static credits_t outfit_getPrice( const Outfit *outfit );
+static void outfit_Popdown( unsigned int wid, const char* str );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static void outfits_onClose( unsigned int wid, const char *str );
@@ -116,6 +118,9 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    LandOutfitData *data = NULL;
    char buf[STRMAX_SHORT];
    size_t l = 0;
+
+   /* initialize the outfit mode. */
+   outfit_Mode = 0;
 
    /* Set up window data. */
    if (outfits!=NULL) {
@@ -244,6 +249,61 @@ void outfits_regenList( unsigned int wid, const char *str )
 }
 
 /**
+ * Ad-hoc filter functions.
+*/
+
+static int outfitLand_filter( const Outfit *o ) {
+   Pilot *p;
+   const PlayerShip_t *ps;
+
+   switch (outfit_Mode) {
+      case 0:
+         return 1;
+
+      case 1: /* Fits any ship of the player. */
+         ps = player_getShipStack();
+         for (int j=0; j < array_size(ps); j++) {
+            p = ps[j].p;
+            for (int i=0; i < array_size(p->outfits); i++) {
+               if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+                  return 1;
+            }
+         }
+         return 0;
+
+      case 2: /* Fits currently selected ship. */
+         p = player.p;
+         if (p==NULL)
+            return 1;
+         for (int i=0; i < array_size(p->outfits); i++) {
+            if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+               return 1;
+         }
+         return 0;
+
+      case 3:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_LIGHT);
+      case 4:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_MEDIUM);
+      case 5:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_HEAVY);
+   }
+   return 1;
+}
+static int outfitLand_filterWeapon( const Outfit *o ) {
+   return outfitLand_filter(o) && outfit_filterWeapon(o);
+}
+static int outfitLand_filterUtility( const Outfit *o ) {
+   return outfitLand_filter(o) && outfit_filterUtility(o);
+}
+static int outfitLand_filterStructure( const Outfit *o ) {
+   return outfitLand_filter(o) && outfit_filterStructure(o);
+}
+static int outfitLand_filterCore( const Outfit *o ) {
+   return outfitLand_filter(o) && outfit_filterCore(o);
+}
+
+/**
  * @brief Generates the outfit list.
  *
  *    @param wid Window to generate the list on.
@@ -251,11 +311,11 @@ void outfits_regenList( unsigned int wid, const char *str )
 static void outfits_genList( unsigned int wid )
 {
    int (*tabfilters[])( const Outfit *o ) = {
-      NULL,
-      outfit_filterWeapon,
-      outfit_filterUtility,
-      outfit_filterStructure,
-      outfit_filterCore,
+      outfitLand_filter,
+      outfitLand_filterWeapon,
+      outfitLand_filterUtility,
+      outfitLand_filterStructure,
+      outfitLand_filterCore,
       outfit_filterOther
    };
    const char *tabnames[] = {
@@ -286,8 +346,14 @@ static void outfits_genList( unsigned int wid )
       fx = iw - fw + 15;
       fy = ih - 25 -1 + 20;
 
-      /* Only create the filter widget if it will be a reasonable size. */
-      if (iw >= 30) {
+      /* Only create the filter widgets if it will be a reasonable size. */
+      if (iw >= 65) {
+         /* Add popdown menu stuff. */
+         window_addButton( wid, fx+fw-30, fy, 30, 30, "btnOutfitFilter", NULL, outfit_Popdown );
+         window_buttonCustomRender( wid, "btnOutfitFilter", window_buttonCustomRenderGear );
+         fw -= 35;
+
+         /* Set text filter. */
          window_addInput( wid, fx, fy, fw, fh, OUTFITS_FILTER, 32, 1, &gl_defFont );
          inp_setEmptyText( wid, OUTFITS_FILTER, _("Filter…") );
          window_setInputCallback( wid, OUTFITS_FILTER, outfits_regenList );
@@ -638,6 +704,56 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
       }
    }
    return coutfits;
+}
+
+/**
+ * Functions for the popdown menu (filter outfits by size)
+ */
+
+static void outfit_PopdownSelect( unsigned int wid, const char *str )
+{
+   int m = toolkit_getListPos( wid, str );
+   if (m == outfit_Mode)
+      return;
+
+   outfit_Mode = m;
+   outfits_regenList( wid, NULL );
+}
+
+static void outfit_PopdownActivate( unsigned int wid, const char *str )
+{
+   outfit_PopdownSelect( wid, str );
+   window_destroyWidget( wid, str );
+}
+
+static void outfit_Popdown( unsigned int wid, const char* str )
+{
+   const char *name = "lstOutfitPopdown";
+   const char *modes[] = {
+      N_("Show all outfits"),
+      N_("Show only outfits equipable on any of your ships"),
+      N_("Show only outfits equipable on current ship"),
+      N_("Show only light outfits"),
+      N_("Show only medium outfits"),
+      N_("Show only heavy outfits"),
+   };
+   char **modelist;
+   const size_t n = sizeof(modes) / sizeof(const char*);
+   int x, y, w, h;
+
+   if (widget_exists( wid, name )) {
+      window_destroyWidget( wid, name );
+      return;
+   }
+
+   modelist = malloc(sizeof(modes));
+   for (size_t i=0; i<n; i++)
+      modelist[i] = strdup( _(modes[i]) );
+
+   window_dimWidget( wid, str, &w, &h );
+   window_posWidget( wid, str, &x, &y );
+   window_addList( wid, x+w, y-120+h, 350, 120, name, modelist, n, outfit_Mode, outfit_PopdownSelect, outfit_PopdownActivate );
+   window_setFocus( wid, name );
 }
 
 /**
