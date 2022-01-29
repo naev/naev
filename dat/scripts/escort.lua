@@ -1,5 +1,7 @@
---[[
-   Library for dealing with escorts in missions
+--[[--
+Library for dealing with escorts in missions.
+
+@module escort
 --]]
 -- luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
 local escort = {}
@@ -9,6 +11,12 @@ local fmt = require "format"
 local fleet = require "fleet"
 local vntk = require "vntk"
 
+--[[--
+Initializes the library by setting all the necessary hooks.
+
+   @tparam table ships List of ships to add.
+   @tparam[opt] table params List of optional parameters.
+--]]
 function escort.init( ships, params )
    params = params or {}
    mem._escort = {
@@ -51,20 +59,40 @@ local function clear_hooks ()
    end
 end
 
+--[[--
+Cleans up the escort framework when done, eliminating all hooks.
+--]]
 function escort.exit ()
    clear_hooks()
    mem._escort = nil
 end
 
+--[[--
+Gets the number of escorts that are still alive.
+
+   @treturn number Number of escorts still alive.
+--]]
 function escort.num_alive ()
    return #mem._escort.ships
 end
 
 local _escort_convoy
+--[[--
+Gets the list of pilots.
+
+   @treturn table Table containing the existing pilots. The first will be the leader.
+--]]
 function escort.pilots ()
    return _escort_convoy
 end
 
+--[[--
+Sets the destination of the
+
+   @tparam system|spob dest Destination of the escorts.
+   @tparam string success Name of the global function to call on success.
+   @tparam[opt] string failure Name of the global function to call on failure. Default will give a vntk message and fail the mission.
+--]]
 function escort.setDest( dest, success, failure )
    if dest.system then
       mem._escort.destspob = dest
@@ -151,6 +179,12 @@ function _escort_e_jump( p, j )
    end
 end
 
+--[[--
+Spawns the escorts at location. This can be useful at the beginning if you want them to jump in or take of while in space. It is handled automatically when the player takes off or jumps into a system.
+
+   @tparam Vector|Spob|System pos Position to spawn the fleet at. The argument is directly passed to pilot.add.
+   @return table Table of newly created pilots.
+--]]
 function escort.spawn( pos )
    pos = pos or mem._escort.origin
 
@@ -187,6 +221,8 @@ function escort.spawn( pos )
    l:setSpeedLimit( minspeed )
    -- Moving to system
    control_ai( l )
+
+   return _escort_convoy
 end
 
 function _escort_spawn ()
@@ -194,6 +230,7 @@ function _escort_spawn ()
 end
 
 function _escort_takeoff ()
+   -- We want to defer it one frame in case an enter hook clears all pilots
    hook.safe( "_escort_spawn" )
 end
 
@@ -202,6 +239,7 @@ function _escort_jumpin ()
       lmisn.fail( _("You jumped into the wrong system.") )
       return
    end
+   -- We want to defer it one frame in case an enter hook clears all pilots
    hook.safe( "_escort_spawn" )
 end
 

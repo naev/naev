@@ -1,5 +1,6 @@
 lua_source = files(
    'equipopt/optimize.lua',
+   'escort.lua',
    'fleet.lua',
    'format.lua',
    'lazyload.lua',
