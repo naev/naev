@@ -37,6 +37,7 @@ local atksys = system.get("Yarn")
 -- luacheck: globals approaching enter land escort_success miner_create miner_attacked (Hook functions passed by name)
 
 function create ()
+   misn.finish()
    if not misn.claim{mainsys,atksys} then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
 end
