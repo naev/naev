@@ -43,6 +43,8 @@
 
 #define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
+#define MAP_MOVE_THRESHOLD 10. /**< Mouse movement threshold */
+
 /**
  * @brief Faction presence container to be used for the map information stuff.
  */
@@ -74,18 +76,20 @@ typedef struct CstMapWidget_ {
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 
-static int map_selected       = -1; /**< What system is selected on the map. */
+static int map_selected       = -1;     /**< What system is selected on the map. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
-static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
-static int cur_commod         = -1; /**< Current commodity selected. */
-static int cur_commod_mode    = 0; /**< 0 for cost, 1 for difference. */
+static StarSystem **map_path  = NULL;   /**< Array (array.h): The path to current selected system. */
+static int cur_commod         = -1;     /**< Current commodity selected. */
+static int cur_commod_mode    = 0;      /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
-static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
-static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
-static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
-static double map_dt     = 0.; /**< Nebula animation stuff. */
-static int map_minimal_mode = 0; /**< Map is in minimal mode. */
-static double map_flyto_speed = 1500.; /**< Linear speeed at which the map flies to a location. */
+static char** map_modes = NULL;         /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
+static int listMapModeVisible = 0;      /**< Whether the map mode list widget is visible. */
+static double commod_av_gal_price = 0;  /**< Average price across the galaxy. */
+static double map_dt     = 0.;          /**< Nebula animation stuff. */
+static int map_minimal_mode = 0;        /**< Map is in minimal mode. */
+static double map_flyto_speed = 1500.;  /**< Linear speeed at which the map flies to a location. */
+static double map_mx=0.;                /**< X mouse position */
+static double map_my=0.;                /**< Y mouse position */
 
 /*
  * extern
@@ -860,7 +864,7 @@ static void map_drawMarker( double x, double y, double zoom,
 {
    (void) zoom;
    const glColour* colours[] = {
-      &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer
+      &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer, &cMarkerNew
    };
    double alpha;
    glColour col;
@@ -949,9 +953,11 @@ static void map_render( double bx, double by, double w, double h, void *data )
    if (cst->alpha_names > 0.)
       map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
 
-   /* Render system markers. */
-   if (cst->alpha_markers > 0.)
-     map_renderMarkers( x, y, z, r, cst->alpha_markers );
+   /* Render system markers and notes. */
+   if (cst->alpha_markers > 0.) {
+      map_renderMarkers( x, y, z, r, cst->alpha_markers );
+      map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
+   }
 
    /* Render commodity info. */
    if (cst->mode == MAPMODE_TRADE)
@@ -1354,6 +1360,59 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
 }
 
 /**
+ * @brief Renders the system note on the map if mouse is close.
+ */
+void map_renderNote( double bx, double by, double x, double y,
+      double zoom, double w, double h, int editor, double alpha )
+{
+   double tx,ty, mx,my;
+   glColour col;
+   glFont *font;
+   StarSystem *sys;
+
+   (void)bx;
+   (void)by;
+   (void)w;
+   (void)h;
+   (void)editor;
+
+   if (zoom <= 0.5) return;
+
+   /* Correct coordinates. */
+   mx = map_mx + x;
+   my = map_my + y;
+
+   /* Find mouse over system and draw. */
+   for (int i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex(i);
+
+      /*DEBUG*/
+      col = cGrey60;
+      col.a = alpha;
+      gl_printRaw( &gl_defFont, sys->pos.x-mx,sys->pos.y-my, &col, -1, "SYS" );
+
+      if (!sys_isFlag(sys,SYSTEM_PMARKED))
+         continue;
+      if (sys->note == NULL)
+         continue;
+
+      if ((pow2(sys->pos.x-map_mx)+pow2(sys->pos.y-map_my)) > pow2(MAP_MOVE_THRESHOLD))
+         continue;
+
+      font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
+      tx = x + (sys->pos.x+12.) * zoom;
+      ty = y + (sys->pos.y) * zoom - font->h*0.5;
+
+      /* Render note */
+      col = cGrey60;
+      col.a = alpha;
+      gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+
+      break;
+   }
+}
+
+/**
  * @brief Renders the system names and notes on the map.
  */
 void map_renderNames( double bx, double by, double x, double y,
@@ -1365,6 +1424,8 @@ void map_renderNames( double bx, double by, double x, double y,
    glColour col;
    glFont *font;
 
+   if (zoom <= 0.5) return;
+
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
 
@@ -1372,7 +1433,7 @@ void map_renderNames( double bx, double by, double x, double y,
          continue;
 
       /* Skip system. */
-      if ((!editor && !sys_isKnown(sys)) || (zoom <= 0.5 ))
+      if (!editor && !sys_isKnown(sys))
          continue;
 
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
@@ -1392,8 +1453,8 @@ void map_renderNames( double bx, double by, double x, double y,
       /* Render note */
       col = cGrey60;
       col.a = alpha;
-      if (sys->note != NULL)
-         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+     // if (sys->note != NULL)
+     //    gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
 
    }
 
@@ -1900,6 +1961,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          cst->xtarget = cst->xpos -= rx;
          cst->ytarget = cst->ypos += ry;
       }
+      map_mx = mx;
+      map_my = my;
       break;
    }
 
