@@ -123,6 +123,7 @@ static CstMapWidget* map_globalCustomData( unsigned int wid );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
+static void map_buttonMarkSystem( unsigned int wid, const char* str );
 static void map_buttonSystemMap( unsigned int wid, const char* str );
 static void map_buttonMinimal( unsigned int wid, const char* str );
 static void map_buttonCommodity( unsigned int wid, const char* str );
@@ -348,6 +349,9 @@ void map_open (void)
    /* System info button */
    window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnSystem", _("System info"), map_buttonSystemMap, SDLK_s );
+   /* Mark this system button */
+   window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnMarkSystem", _("Mark system"), map_buttonMarkSystem, SDLK_k );
 
    /*
     * Bottom stuff
@@ -1428,7 +1432,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED | SYSTEM_PMARKED))
          continue;
 
       /* Get the position. */
@@ -1436,7 +1440,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       ty = y + sys->pos.y*zoom;
 
       /* Count markers. */
-      n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
+      n  = (sys_isFlag(sys, SYSTEM_CMARKED | SYSTEM_PMARKED)) ? 1 : 0;
       n += sys->markers_plot;
       n += sys->markers_high;
       n += sys->markers_low;
@@ -1444,7 +1448,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Draw the markers. */
       j = 0;
-      if (sys_isFlag(sys, SYSTEM_CMARKED)) {
+      if (sys_isFlag(sys, SYSTEM_CMARKED | SYSTEM_PMARKED)) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 0 );
          j++;
       }
@@ -2024,6 +2028,25 @@ static void map_setMinimal( unsigned int wid, int value )
 }
 
 /**
+ * @brief Mark current system.
+ */
+static void map_buttonMarkSystem( unsigned int wid, const char* str )
+{
+   (void) wid;
+   (void) str;
+   StarSystem *sys;
+   if (map_selected != -1) {
+      sys=system_getIndex( map_selected );
+      if (sys_isKnown(sys)) {
+         if (sys_isFlag(sys, SYSTEM_PMARKED))
+            sys_rmFlag(sys, SYSTEM_PMARKED);
+         else
+            sys_setFlag(sys, SYSTEM_PMARKED);
+      }
+   }
+}
+
+/**
  * @brief Open system info.
  */
 static void map_buttonSystemMap( unsigned int wid, const char* str )
@@ -2376,7 +2399,7 @@ void map_cycleMissions(int dir)
 
    /* Universally find prev and next mission system */
    for (i=0;i<array_size(systems_stack);i++) {
-      if (!sys_isMarked(&systems_stack[i]) || !space_sysReachable(&systems_stack[i]))
+      if (!sys_isFlag(&systems_stack[i], SYSTEM_MARKED | SYSTEM_PMARKED) || !space_sysReachable(&systems_stack[i]) )
          continue;
 
       /* Pre-select first in case we will wrap */
