@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-01-22 15:43-0500\n"
-"PO-Revision-Date: 2021-04-04 21:26+0000\n"
+"PO-Revision-Date: 2022-01-27 17:54+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -221,7 +221,7 @@ msgstr "   * Zprostředkovatel automatických vydání"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 #, fuzzy
@@ -695,31 +695,31 @@ msgstr "Hlavní přispěvatelé"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "ADMONISHER"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "PIRÁTSKÝ ADMONISHER"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANCESTOR"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "PIRÁTSKÝ ANCESTOR"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
-msgstr ""
+msgstr "ARCHIMEDES"
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
-msgstr ""
+msgstr "DERIVATIVE"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "ZA'LEK DIABLO"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
@@ -727,39 +727,39 @@ msgstr ""
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "SIRIUS FIDELITY"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/kahan.webp.txt:1
 msgid "KAHAN"
-msgstr ""
+msgstr "KAHAN"
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
-msgstr ""
+msgstr "PIRÁTSKÝ KESTREL"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
@@ -767,67 +767,70 @@ msgstr ""
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PACIFIER"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "ŘÍŠSKÝ PEACEMAKER"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
+#, fuzzy
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "SIRIUS PREACHER"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
+#, fuzzy
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "QUICKSILVER"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
+#, fuzzy
 msgid "RHINO"
-msgstr ""
+msgstr "RHINO"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "PIRÁTSKÝ RHINO"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "SIRIUS SHAMAN"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "SHARK"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "ŘÍŠSKÝ SHARK"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "PIRÁTSKÝ SHARK"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "ZA'LEK STING"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "PIRÁTSKÁ VENDETTA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILANCE"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -838,10 +841,15 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"Diamant je jiná forma grafitu, která byla zkrystalizována, za obrovských "
+"tlaků a teplot, hluboko pod povrchem některých typů planet. Tento materiál "
+"je užitečný při řezání díky své tvrdosti a je často používán i jako "
+"dekorace. Diamanty jsou nyní, nicméně, snadné na syntetickou výrobu a "
+"nejsou, tedy, tak vyhledávané jako kdysi."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Jídlo"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -849,10 +857,12 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Vyvinutá z armádních přídělů z dávné minulosti, moderní balená strava je "
+"bohatá na živiny a schopná přečkat mnoho cyklů díky vakuovému balení."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Zlato"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -861,28 +871,31 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"Zlato je ceněno pro svou odolnost proti korozi a vodivost, což je využíváno "
+"k prodloužení životnosti elektronických zařízení, i když jeho nejčastější "
+"aplikací jsou dekorativní výrobky, jako třeba šperky."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Průmyslové zboží"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
-msgstr ""
+msgstr "Směs různého průmyslového zboží od řezacích laserů po zpracované kovy."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Luxusní zboží"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Všechny druhy luxusního zboží vysoké kvality."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Léky"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
@@ -86883,14 +86896,12 @@ msgid "Ship Name:"
 msgstr ""
 
 #: src/load.c:434
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "Ship Model:"
-msgstr "   * Modely lodí"
+msgstr "Model lodi:"
 
 #: src/load.c:462
 msgid "Save game version mismatch"
-msgstr ""
+msgstr "Verze uložené hry nesouhlasí"
 
 #: src/load.c:463
 #, c-format
@@ -86900,6 +86911,10 @@ msgid ""
 "   Naev version: %s\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
+"Verze uložené hry '%s' nesouhlasí s Naev verzí:\n"
+"   Uložená verze: #r%s#0\n"
+"   Naev verze: %s\n"
+"Určitě chcete tuto hru načíst? Můžete přijít o data."
 
 #: src/load.c:502
 msgid "Permanently Delete?"
@@ -86908,69 +86923,70 @@ msgstr ""
 #: src/load.c:503
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
-msgstr ""
+msgstr "Určitě chcete permanentně odstranit '%s'?"
 
 #: src/load.c:569 src/load.c:634
 msgid "Saved game file seems to have been deleted."
-msgstr ""
+msgstr "Zdá se, že soubor uložené hry byl odstraněn."
 
 #: src/load.c:592 src/load.c:716
 #, c-format
 msgid "Saved game '%s' invalid!"
-msgstr ""
+msgstr "Chyba v uložené hře '%s'!"
 
 #. Welcome message - must be before space_init.
 #: src/load.c:651 src/player.c:339
 #, c-format
 msgid "#gWelcome to %s!"
-msgstr ""
+msgstr "#gVítejte v %s!"
 
 #: src/load.c:664
+#, fuzzy
 msgid "Old version detected. Sanitizing ships for slots"
-msgstr ""
+msgstr "Rozpoznána stará verze. Čistím sloty lodí"
 
 #: src/log.c:135
 msgid "Unable to redirect stdout to file"
-msgstr ""
+msgstr "Stdout nejde přesměrovat do souboru"
 
 #: src/log.c:139
 msgid "Unable to redirect stderr to file"
-msgstr ""
+msgstr "Stderr nejde přesměrovat do souboru"
 
 #: src/log.c:278
 #, c-format
 msgid "An error occurred while buffering %s!"
-msgstr ""
+msgstr "Objevila se chyba při bufferování %s!"
 
 #: src/log.h:17
 #, c-format
 msgid "WARNING %s:%d [%s]: "
-msgstr ""
+msgstr "VAROVÁNÍ %s:%d [%s]: "
 
 #: src/log.h:19
 #, c-format
 msgid "Warning: [%s] "
-msgstr ""
+msgstr "Varování: [%s] "
 
 #: src/log.h:21
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr ""
+msgstr "CHYBA %s:%d [%s]: "
 
 #: src/lvar.c:248
 #, c-format
 msgid "Lua Var stack has unknown node '%s'!"
-msgstr ""
+msgstr "Neznámý node '%s' na Lua Var stacku!"
 
 #. super error checking
 #: src/lvar.c:274
 #, c-format
 msgid "Unknown var type '%s'"
-msgstr ""
+msgstr "Neznámý var typ '%s'"
 
 #: src/map.c:307
 msgid "Standing:"
-msgstr ""
+msgstr "Reputace:"
 
 #: src/map.c:321
 msgid "Space Objects:"

@@ -2,6 +2,7 @@
    Some sort of stellar wind type background.
 --]]
 local bgshaders = require "bkg.lib.bgshaders"
+local love = require 'love'
 local love_shaders = require 'love_shaders'
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
@@ -120,6 +121,8 @@ function starfield.init( params )
       motionblur = 0
    end
 
+   -- Ensure we're caught up with the current window/screen dimensions.
+   love.origin()
    -- Initialize shader
    shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
