@@ -35,7 +35,7 @@ local mainpnt, mainsys = spob.getS("Griffin III")
 local atksys1 = system.get("Yarn")
 local atksys2 = system.get("Delta Polaris")
 
--- luacheck: globals approaching enter land escort_success miner_create miner_attacked protest (Hook functions passed by name)
+-- luacheck: globals approaching enter land escort_success miner_salute miner_create miner_attacked protest (Hook functions passed by name)
 
 function create ()
    misn.finish()
@@ -50,9 +50,9 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_("TODO"))
-   --v(fmt.f(_([["TODO"]]),
-   --   {pnt=retpnt, destpnt=mainpnt, destsys=mainsys}))
+   vn.na(_("You find Verner enjoying a horribly smelling drink."))
+   v(fmt.f(_([["Hey, you seen how everything is chugging along? This beats my wildest expectations. However, we've recently run into a small setback. We're trying to strengthen the gravitational field to minimize the effect of space adaptation syndrome, however, the core seems to be much harder than expected and our current machinery is unable to cut it. Our contacts at Gordon's Exchange will loan us a Melendez Zebra that has been adapted as a core miner, but given the recent PUAAA activity, I need someone to escort it over here from {pnt} in the {sys} system. Would you be willing to do me the favour?"]]),
+      {pnt=mainpnt, sys=mainsys}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -63,7 +63,8 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   v(_([["TODO"]]))
+   v(fmt.f(_([["Great! The core miner isn't really equipped with proper defenses, so it's somewhat of a sitting duck. It was recently doing some operations on the Sander seafloor, but I gave them an offer they can't refuse and they're willing to come immediately if they get some protection given the recent… incidents. I've been feeding some fake data to the PUAAA to hopefully distract them a bit, but I don't think we'll be able to sneak in such a large ship, so prepare for the worst. Try to protect the core miner at all costs on the way here from {pnt}! It'll be nearly impossible to replace if lost."]]),
+      {pnt=mainpnt}))
    vn.func( function () accepted = true end )
 
    vn.run()
@@ -77,7 +78,7 @@ function accept ()
 
    misn.accept()
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_("TODO")),
+   misn.setDesc(fmt.f(_("Verner needs you to escort a core miner from {pnt} in the {sys} system to {retpnt} to help with the terraforming efforts.")),
       {pnt=mainpnt, sys=mainsys, retpnt=retpnt})
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate( title, {
@@ -97,7 +98,9 @@ function land ()
       vn.clear()
       vn.scene()
       vn.transition()
-      vn.na(_([[TODO]]))
+      vn.na(fmt.f(_([[You land and are promptly greeted by the captain of the core miner "GE Talpini". After an exchange of some pleasantries, they show you around their ship. It is in an impressive behemoth loaded with an array of fearsome looking drills. However, you can see that the heavy modifications on the ship make it much less suited for movement in space than underground or underwater. Looks like it will be mainly up to you to keep it in one piece on the way to {pnt}.]]),
+         {pnt=retpnt}))
+      vn.na(_("The captain "))
       vn.run()
 
       -- Advance mission
@@ -120,8 +123,10 @@ function escort_success ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_([[TODO]]))
-   v(_([["TODO"]]))
+   vn.na(_([[You land and are met with an awe-struck Verner, who seems earnestly impressive by the massive GE Talpini that dwarfs most of the spaceport.]]))
+   v(_([["Damn, look at all those drills! It's much more impressive in person that what you see on the holograms. This should make the core mining look like child's play! Thansk a bunch for bringing it over here in one piece."]]))
+   v(_([["Oh, by the way, in one of our routine patrols around the system, we recently found a really curious pecularity. It seems like there is a very faint jump lane leading out of Antlejos. It doesn't seem like it goes anywhere really interesting, but you might want to take a look. I've updated your system navigation so you should be able to use it now."]]))
+   v(_([["If you're still interested, we still need all the help we can get with terraforming. There are still a lot of tasks to do!"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.run()
@@ -131,7 +136,7 @@ function escort_success ()
    j1:setKnown(true)
    j2:setKnown(true)
    player.pay( reward )
-   ant.log(_("TODO"))
+   ant.log(_("You helped escort the core mining ship GE Talpini to Antlejos V to continue the terraforming efforts."))
    misn.finish(true)
 end
 
@@ -142,15 +147,24 @@ local function fct_miner ()
       return f
    end
    local puaaa = ant.puaaa()
-   f = faction.dynAdd( "Independent", id, _("Core Miner") )
+   f = faction.dynAdd( "Independent", id, _("GE Talpini") )
    f:dynEnemy( puaaa )
    return f
 end
 
+function miner_salute( p )
+   p:comm( fmt.f(_("I'm counting on you on the way to {pnt}!"),{pnt=retpnt}) )
+end
+
+local firstcreate = true
 function miner_create( p )
    p:setFaction( fct_miner() )
    p:outfitAdd( "Laser Turret MK1" )
    p:outfitAdd( "Laser Turret MK1" )
+   if firstcreate then
+      hook.timer( 10, "miner_salute", p )
+      firstcreate = false
+   end
 end
 
 local last_spammed = 0
@@ -190,7 +204,7 @@ function protest ()
 end
 
 local function spawn_protestors( pos, ships )
-   local f = fleet.add( 1, ships, ant.puaaa(), pos, _("PUAAA Fighter"), {ai="baddiepos"} )
+   local f = fleet.add( 1, ships, ant.puaaa(), pos, _("PUAAA Protestor"), {ai="baddiepos"} )
    protestors = {}
    for k,p in ipairs(f) do
       p:setHostile(true)
