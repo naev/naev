@@ -155,7 +155,7 @@ function enter ()
    for k,s in ipairs{ "Lancelot", "Shark", "Shark" } do
       local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
       p:setLeader( supplyship )
-      table.insert( protestors, supplyship )
+      table.insert( protestors, p )
    end
 
    for k,p in ipairs(protestors) do
