@@ -104,7 +104,8 @@ function land ()
       misn.osdActive(2)
 
       escort.init( {"Zebra"}, {
-         func_ship_create = "miner_create",
+         func_pilot_create = "miner_create",
+         pilot_params = { naked = true, }, -- Don't give any weapons
       })
       escort.setDest( retpnt, "escort_success" )
 
@@ -141,7 +142,10 @@ local function fct_miner ()
 end
 
 function miner_create( p )
+   print( p )
    p:setFaction( fct_miner() )
+   p:outfitAdd( "Laser Turret MK1" )
+   p:outfitAdd( "Laser Turret MK1" )
 end
 
 local function spawn_protestors( pos, ships )
@@ -155,7 +159,7 @@ end
 
 function enter ()
    if mem.state==1 and system.cur()==atksys then
-      spawn_protestors( vec2.new( 9000, 3000 ), {"Admonisher", "Hyena", "Hyena"} )
+      spawn_protestors( vec2.new( 9000, 3000 ), {"Admonisher", "Hyena", "Hyena", "Ancestor"} )
 
    elseif mem.state==1 and system.cur()==retsys then
       local f = spawn_protestors( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )

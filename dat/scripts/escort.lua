@@ -192,7 +192,7 @@ function escort.spawn( pos )
    _escort_convoy = {}
    local l
    for k,s in ipairs( mem._escort.ships ) do
-      local p = pilot.add( s, mem._escort.faction, pos )
+      local p = pilot.add( s, mem._escort.faction, pos, nil, mem._escort.pilot_params )
       if not l then
          l = p
       else
@@ -203,8 +203,8 @@ function escort.spawn( pos )
 
    -- See if we have a post-processing function
    local fcreate
-   if mem._escort.params.func_ship_create then
-      fcreate = _G[mem._escort.params.func_ship_create]
+   if mem._escort.params.func_pilot_create then
+      fcreate = _G[mem._escort.params.func_pilot_create]
    end
 
    -- Some post-processing for the convoy
