@@ -153,7 +153,10 @@ function _escort_e_death( p )
    end
 end
 
-function _escort_e_attacked( _p )
+function _escort_e_attacked( p )
+   if mem._escort.params.func_pilot_attacked then
+      _G[mem._escort.params.func_pilot_attacked]( p )
+   end
 end
 
 function _escort_e_land( p, landed_spob )
@@ -299,7 +302,7 @@ end
 
 function _escort_land()
    update_left ()
-   if spob.cur() ~= mem._escort.dest or escort.num_alive() <= 0 then
+   if spob.cur() ~= mem._escort.destspob or escort.num_alive() <= 0 then
       _G[mem._escort.func_failure]()
    else
       run_success()

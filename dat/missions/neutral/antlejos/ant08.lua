@@ -34,7 +34,7 @@ local retpnt, retsys = spob.getS("Antlejos V")
 local mainpnt, mainsys = spob.getS("Griffin III")
 local atksys = system.get("Yarn")
 
--- luacheck: globals approaching enter land escort_success miner_create (Hook functions passed by name)
+-- luacheck: globals approaching enter land escort_success miner_create miner_attacked (Hook functions passed by name)
 
 function create ()
    if not misn.claim{mainsys,atksys} then misn.finish() end
@@ -105,6 +105,7 @@ function land ()
 
       escort.init( {"Zebra"}, {
          func_pilot_create = "miner_create",
+         func_pilot_attacked = "miner_attacked",
          pilot_params = { naked = true, }, -- Don't give any weapons
       })
       escort.setDest( retpnt, "escort_success" )
@@ -142,10 +143,18 @@ local function fct_miner ()
 end
 
 function miner_create( p )
-   print( p )
    p:setFaction( fct_miner() )
    p:outfitAdd( "Laser Turret MK1" )
    p:outfitAdd( "Laser Turret MK1" )
+end
+
+local last_spammed = 0
+function miner_attacked( p )
+   local t = naev.ticks()
+   if (t-last_spammed) > 10 then
+      p:comm( _("Under attack! Support requested!"), true )
+      last_spammed = t
+   end
 end
 
 local function spawn_protestors( pos, ships )
@@ -159,7 +168,7 @@ end
 
 function enter ()
    if mem.state==1 and system.cur()==atksys then
-      spawn_protestors( vec2.new( 9000, 3000 ), {"Admonisher", "Hyena", "Hyena", "Ancestor"} )
+      spawn_protestors( vec2.new( 9000, 3000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
       local f = spawn_protestors( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
