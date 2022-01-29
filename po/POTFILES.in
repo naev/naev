@@ -2420,6 +2420,7 @@ dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
 dat/missions/neutral/antlejos/ant06.lua
 dat/missions/neutral/antlejos/ant07.lua
+dat/missions/neutral/antlejos/ant08.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -2604,6 +2605,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/equipopt/wrapper.lua
+dat/scripts/escort.lua
 dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
