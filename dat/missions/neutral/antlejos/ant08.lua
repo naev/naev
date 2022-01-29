@@ -32,13 +32,14 @@ local reward = ant.rewards.ant08
 
 local retpnt, retsys = spob.getS("Antlejos V")
 local mainpnt, mainsys = spob.getS("Griffin III")
-local atksys = system.get("Yarn")
+local atksys1 = system.get("Yarn")
+local atksys2 = system.get("Delta Polaris")
 
--- luacheck: globals approaching enter land escort_success miner_create miner_attacked (Hook functions passed by name)
+-- luacheck: globals approaching enter land escort_success miner_create miner_attacked protest (Hook functions passed by name)
 
 function create ()
    misn.finish()
-   if not misn.claim{mainsys,atksys} then misn.finish() end
+   if not misn.claim{mainsys,atksys1,atksys2} then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
 end
 
@@ -72,7 +73,7 @@ function accept ()
       return
    end
 
-   local title = _("Miner Escort")
+   local title = _("Antlejos Miner Escort")
 
    misn.accept()
    misn.setTitle( title )
@@ -158,18 +159,53 @@ function miner_attacked( p )
    end
 end
 
+local protestors = {}
+local protest_lines = ant.protest_lines
+local protest_id, protest_hook
+function protest ()
+   if protest_id == nil then
+      protest_id = rnd.rnd(1,#protest_lines)
+   end
+
+   -- See surviving pilots
+   local nprotestors = {}
+   for _k,p in ipairs(protestors) do
+      if p:exists() then
+         table.insert( nprotestors, p )
+      end
+   end
+   protestors = nprotestors
+   if #protestors > 0 then
+      -- Say some protest slogan
+      local p = protestors[ rnd.rnd(1,#protestors) ]
+      p:broadcast( protest_lines[ protest_id ], true )
+      protest_id = math.fmod(protest_id, #protest_lines)+1
+   end
+
+   -- Protest again
+   protest_hook = hook.timer( 15, "protest" )
+end
+
 local function spawn_protestors( pos, ships )
-   local puaaa = ant.puaaa()
-   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Fighters"), {ai="baddiepos"} )
+   local f = fleet.add( 1, ships, ant.puaaa(), pos, _("PUAAA Fighter"), {ai="baddiepos"} )
+   protestors = {}
    for k,p in ipairs(f) do
       p:setHostile(true)
+      table.insert( protestors, p )
    end
+   if protest_hook then
+      hook.rm( protest_hook )
+   end
+   protest_hook = hook.timer( 25, "protest" )
    return f
 end
 
 function enter ()
-   if mem.state==1 and system.cur()==atksys then
-      spawn_protestors( vec2.new( 9000, 3000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
+   if mem.state==1 and system.cur()==atksys1 then
+      spawn_protestors( vec2.new( 9000, 3000 ), {"Lancelot","Lancelot","Shark","Shark"} )
+
+   elseif mem.state==1 and system.cur()==atksys2 then
+      spawn_protestors( vec2.new( -18000, 7000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
       local f = spawn_protestors( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
