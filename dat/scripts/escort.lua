@@ -1,7 +1,7 @@
 --[[
    Library for dealing with escorts in missions
 --]]
--- luacheck: globals _escort_jumpin _escort_jumpout _escort_land _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
+-- luacheck: globals _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
 local escort = {}
 
 local lmisn = require "lmisn"
@@ -15,11 +15,12 @@ function escort.init( ships, params )
       params = params,
       ships_orig = ships,
       ships = tcopy(ships),
-      faction = params.faction or "independent",
+      faction = params.faction or "Independent",
       hooks = {
          jumpin = hook.jumpin( "_escort_jumpin" ),
          jumpout = hook.jumpout( "_escort_jumpout" ),
          land = hook.land( "_escort_land" ),
+         takeoff = hook.takeoff( "_escort_takeoff"),
       },
    }
 end
@@ -27,12 +28,19 @@ end
 local function clear_hooks ()
    if mem._escort.hooks.jumpin then
       hook.rm( mem._escort.hooks.jumpin )
+      mem._escort.hooks.jumpin = nil
    end
    if mem._escort.hooks.jumpout then
       hook.rm( mem._escort.hooks.jumpout )
+      mem._escort.hooks.jumpout = nil
    end
    if mem._escort.hooks.land then
       hook.rm( mem._escort.hooks.land )
+      mem._escort.hooks.land = nil
+   end
+   if mem._escort.hooks.takeoff then
+      hook.rm( mem._escort.hooks.takeoff )
+      mem._escort.hooks.takeoff = nil
    end
 end
 
@@ -52,11 +60,11 @@ end
 
 function escort.setDest( dest, success, failure )
    if dest.system then
-      mem._escort.destspob = nil
-      mem._escort.destsys = dest
-   else
       mem._escort.destspob = dest
       mem._escort.destsys = dest:system()
+   else
+      mem._escort.destspob = nil
+      mem._escort.destsys = dest
    end
    mem._escort.func_failure = failure
    mem._escort.func_success = success
@@ -134,12 +142,7 @@ function _escort_e_jump( p, j )
    end
 end
 
-function _escort_jumpin()
-   if system.cur() ~= mem._escort.nextsys then
-      lmisn.fail( _("You jumped into the wrong system.") )
-      return
-   end
-
+local function convoy_spawn ()
    -- Set up the new convoy for the new system
    exited = {}
    _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction )
@@ -173,6 +176,18 @@ function _escort_jumpin()
    l:setSpeedLimit( minspeed )
    -- Moving to system
    control_ai( l )
+end
+
+function _escort_takeoff ()
+   convoy_spawn()
+end
+
+function _escort_jumpin ()
+   if system.cur() ~= mem._escort.nextsys then
+      lmisn.fail( _("You jumped into the wrong system.") )
+      return
+   end
+   convoy_spawn()
 end
 
 local function update_left ()
