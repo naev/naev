@@ -956,7 +956,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render system markers and notes. */
    if (cst->alpha_markers > 0.) {
       map_renderMarkers( x, y, z, r, cst->alpha_markers );
-      map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
+      //map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
    }
 
    /* Render commodity info. */
@@ -1386,7 +1386,7 @@ void map_renderNote( double bx, double by, double x, double y,
    for (int i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex(i);
 
-      /*DEBUG*/
+      /*DEBUG thingy - delete at will*/
       col = cGrey60;
       col.a = alpha;
       gl_printRaw( &gl_defFont, sys->pos.x-mx,sys->pos.y-my, &col, -1, "SYS" );
@@ -1453,8 +1453,8 @@ void map_renderNames( double bx, double by, double x, double y,
       /* Render note */
       col = cGrey60;
       col.a = alpha;
-     // if (sys->note != NULL)
-     //    gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+      if (sys->note != NULL)
+         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
 
    }
 
