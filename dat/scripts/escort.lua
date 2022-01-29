@@ -23,6 +23,12 @@ function escort.init( ships, params )
          takeoff = hook.takeoff( "_escort_takeoff"),
       },
    }
+
+   if player.isLanded() then
+      mem._escort.origin = spob.cur()
+   else
+      mem._escort.origin = system.cur()
+   end
 end
 
 local function clear_hooks ()
@@ -145,7 +151,7 @@ end
 local function convoy_spawn ()
    -- Set up the new convoy for the new system
    exited = {}
-   _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction )
+   _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction, mem._escort.origin )
 
    -- See if we have a post-processing function
    local fcreate
