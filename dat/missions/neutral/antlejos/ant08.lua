@@ -38,7 +38,6 @@ local atksys2 = system.get("Delta Polaris")
 -- luacheck: globals approaching enter land escort_success miner_salute miner_create miner_attacked protest (Hook functions passed by name)
 
 function create ()
-   misn.finish()
    if not misn.claim{mainsys,atksys1,atksys2} then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
 end
@@ -78,8 +77,8 @@ function accept ()
 
    misn.accept()
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_("Verner needs you to escort a core miner from {pnt} in the {sys} system to {retpnt} to help with the terraforming efforts.")),
-      {pnt=mainpnt, sys=mainsys, retpnt=retpnt})
+   misn.setDesc(fmt.f(_("Verner needs you to escort a core miner from {pnt} in the {sys} system to {retpnt} to help with the terraforming efforts."),
+      {pnt=mainpnt, sys=mainsys, retpnt=retpnt}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate( title, {
       fmt.f(_("Go to {pnt} ({sys} system)"),{pnt=mainpnt, sys=mainsys}),
@@ -100,7 +99,7 @@ function land ()
       vn.transition()
       vn.na(fmt.f(_([[You land and are promptly greeted by the captain of the core miner "GE Talpini". After an exchange of some pleasantries, they show you around their ship. It is in an impressive behemoth loaded with an array of fearsome looking drills. However, you can see that the heavy modifications on the ship make it much less suited for movement in space than underground or underwater. Looks like it will be mainly up to you to keep it in one piece on the way to {pnt}.]]),
          {pnt=retpnt}))
-      vn.na(_("The captain "))
+      vn.na(_("The captain mentions that they will not be making any stops on the way to {pnt}, so you should make sure you have enough fuel for the entire trip. Furthermore, in order to ensure the safety of the GE Talpini, you must jump and land only after the GE Talpini has done so."))
       vn.run()
 
       -- Advance mission
