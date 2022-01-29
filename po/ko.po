@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-22 10:28-0500\n"
+"POT-Creation-Date: 2022-01-29 16:39-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -31864,6 +31864,20 @@ msgid "\"What is the name of this ship?\""
 msgstr ""
 
 #. elseif difficulty == 2 then
+#. Create the log if necessary.
+#: dat/events/neutral/shiplover.lua:141
+#, fuzzy
+#| msgid "Ship"
+msgid "Ship Quiz"
+msgstr "선박"
+
+#: dat/events/neutral/shiplover.lua:141 dat/factions/standing/lib/base.lua:42
+#: dat/factions/standing/lib/base.lua:51 dat/scripts/common/antlejos.lua:29
+#: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
+#: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
+msgid "Neutral"
+msgstr ""
+
 #. Ignore claimed systems (don't want to ruin the atmosphere)
 #. Do not spawn on restricted assets
 #. Ignore on uninhabited and planets without bars
@@ -31874,40 +31888,26 @@ msgstr ""
 #. Clear met if didn't play last time
 #. Increase the difficulty as progresses
 #. Generate the question
-#. Create the log if necessary.
-#: dat/events/neutral/shiplover.lua:227
-#, fuzzy
-#| msgid "Ship"
-msgid "Ship Quiz"
-msgstr "선박"
-
-#: dat/events/neutral/shiplover.lua:227 dat/factions/standing/lib/base.lua:42
-#: dat/factions/standing/lib/base.lua:51 dat/scripts/common/antlejos.lua:29
-#: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
-#: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
-msgid "Neutral"
-msgstr ""
-
 #. Determine reward
-#: dat/events/neutral/shiplover.lua:234
+#: dat/events/neutral/shiplover.lua:237
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:237
+#: dat/events/neutral/shiplover.lua:240
 msgid ""
 "\"Wow. This is the 5th time you got my quiz right. This deserves a special "
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:243
+#: dat/events/neutral/shiplover.lua:246
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
 "right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:246
+#: dat/events/neutral/shiplover.lua:249
 msgid ""
 "\"Wow. This is the 10th time you got my quiz right. You are doing much "
 "better than I anticipated. Here, take one of my favourite trading cards. "
@@ -31915,13 +31915,13 @@ msgid ""
 "better quizzes from now on.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:252
+#: dat/events/neutral/shiplover.lua:255
 msgid ""
 "You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
 "right."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:255
+#: dat/events/neutral/shiplover.lua:258
 msgid ""
 "\"Damn. This is the 25th time you got my quiz right. Nobody has played my "
 "quiz with me for this long. I guess I have to commemorate this in a special "
@@ -31930,13 +31930,13 @@ msgid ""
 "of the card foil! It might get damaged that way!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:260
+#: dat/events/neutral/shiplover.lua:263
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr ""
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:264
+#: dat/events/neutral/shiplover.lua:267
 msgid ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} time now! Here, take this as a reward for your performance.\""
@@ -31946,52 +31946,52 @@ msgid_plural ""
 msgstr[0] ""
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:271 dat/events/neutral/shiplover.lua:285
+#: dat/events/neutral/shiplover.lua:274 dat/events/neutral/shiplover.lua:288
 msgid "Ship Enthusiast"
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:271
+#: dat/events/neutral/shiplover.lua:274
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr ""
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:290
+#: dat/events/neutral/shiplover.lua:293
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:294
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:294
+#: dat/events/neutral/shiplover.lua:297
 msgid "\"It looks great!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:295
+#: dat/events/neutral/shiplover.lua:298
 msgid "\"It's awful.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:296
+#: dat/events/neutral/shiplover.lua:299
 msgid "\"Aren't you too young to be here?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:307
+#: dat/events/neutral/shiplover.lua:310
 msgid "\"You know I own a real one.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:313
+#: dat/events/neutral/shiplover.lua:316
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:317
+#: dat/events/neutral/shiplover.lua:320
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -32000,13 +32000,13 @@ msgid ""
 "is fairly ridiculous."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:322
+#: dat/events/neutral/shiplover.lua:325
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:327
+#: dat/events/neutral/shiplover.lua:330
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -32015,7 +32015,7 @@ msgid ""
 "etched on the side."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:332
+#: dat/events/neutral/shiplover.lua:335
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -32023,56 +32023,56 @@ msgid ""
 msgstr ""
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:338
+#: dat/events/neutral/shiplover.lua:341
 #, fuzzy
 #| msgid "You are no match for the Empire!"
 msgid "You once again approach the ship enthusiast."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: dat/events/neutral/shiplover.lua:339
+#: dat/events/neutral/shiplover.lua:342
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:341
+#: dat/events/neutral/shiplover.lua:344
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:342
+#: dat/events/neutral/shiplover.lua:345
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:345 dat/missions/minerva/maikki2.lua:196
+#: dat/events/neutral/shiplover.lua:348 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:346 dat/missions/minerva/kex4.lua:149
+#: dat/events/neutral/shiplover.lua:349 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:350
+#: dat/events/neutral/shiplover.lua:353
 msgid "\"Oh well, your loss!\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:355
+#: dat/events/neutral/shiplover.lua:358
 msgid "\"Great! So here it goes. Listen carefully.\""
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:372
+#: dat/events/neutral/shiplover.lua:375
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr ""
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:412
+#: dat/events/neutral/shiplover.lua:415
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr ""
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:416
+#: dat/events/neutral/shiplover.lua:419
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -33746,11 +33746,11 @@ msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:105
 msgid ""
-"\"Looks like you finally got your hand on the #oHeavy Combat Vessel "
+"\"Looks like you finally got your hands on the #oHeavy Combat Vessel "
 "License#0! This will allow you to pilot the largest of the combat ships, "
 "which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. "
 "These ships sacrifice size and utility for survivability and firepower, "
-"being able to lay devasting barrages to devastate enemy forces.\""
+"being able to lay devastating barrages to lay waste to enemy forces.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:106
@@ -33759,18 +33759,18 @@ msgid ""
 "mass and highest manoeuvrability. They can be seen more or less as a heavier "
 "version of a destroyer. #oBattleships#0 push the firepower to the max and "
 "can chew through any ship that is unable to evade their concentrated "
-"firepower. #oCarriers#0 use a different strategy of using fighter to do the "
+"firepower. #oCarriers#0 use a different strategy of using fighters to do the "
 "combat for them while maximizing survivability.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:107
 msgid ""
-"\"Flying a heavy combat vessel is very different from other clases of ships. "
-"Given their size, usually time seems to pass at a faster rate than smaller "
-"ships which can be seen by their '#oTime dilation#0' value. Furthermore, "
-"given their size, stealth becomes difficult and they can be vulnerable to "
-"volleys of torpedoes. Escorts and fighter bays can help them deal with enemy "
-"bombers.\""
+"\"Flying a heavy combat vessel is very different from other classes of "
+"ships. Given their size, usually time seems to pass at a faster rate than "
+"smaller ships which can be seen by their '#oTime dilation#0' value. "
+"Furthermore, given their size, stealth becomes difficult and they can be "
+"vulnerable to volleys of torpedoes. Escorts and fighter bays can help them "
+"deal with enemy bombers.\""
 msgstr ""
 
 #: dat/events/tutorial/tut_land.lua:113
@@ -33787,7 +33787,7 @@ msgstr ""
 msgid ""
 "\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
 "ship, when you buy a new ship it is added to your available ships. Usually, "
-"ships come with only core outfits quipped, so you should head over to the "
+"ships come with only core outfits equipped, so you should head over to the "
 "#oEquipment#0 window to deck the ship out and swap it with your current one "
 "if you want to use it. You can swap ships at any planet or station with a "
 "shipyard and there is no penalty nor cost associated with swapping. In fact, "
@@ -69471,7 +69471,7 @@ msgid "Tutorial"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:41
-msgid "Your ship AI has offered to teach you how to fly your ship."
+msgid "Your Ship AI has offered to teach you how to fly your ship."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:42
@@ -69487,7 +69487,7 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:51
 msgid ""
 "\"Congratulations on your first space ship, {playername}! What, what am I? I "
-"am your personal Ship AI. Always ready to be of your assistance.\"\n"
+"am your personal Ship AI. Always ready to be of assistance.\"\n"
 "They stare at you for a few seconds.\n"
 "\"Say, you look very familiar. You wouldn't be related my late previous "
 "owner? Terrible what happened…\""
@@ -69495,10 +69495,11 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:54
 msgid ""
-"\"Anyway, from now on, I will be your ship AI, but don't worry if you get a "
+"\"Anyway, from now on, I will be your Ship AI, but don't worry if you get a "
 "new ship, I will be transferred over without an issue. If you have any "
-"question or comment about how your ship works or how to do things, I believe "
-"I can be of help. As your new Ship AI, would you like to give me a name?\""
+"questions or comments about how your ship works or how to do things, I "
+"believe I can be of help. As your new Ship AI, would you like to give me a "
+"name?\""
 msgstr ""
 
 #. Can't use rename here
@@ -69576,7 +69577,7 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:130
 msgid ""
-"\"Alrght, let's go over how to pilot your new state-of-the-art ship, then! "
+"\"Alright, let's go over how to pilot your new state-of-the-art ship, then! "
 "Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and "
 "thrust to move your ship forward with {accelkey}! You can also use "
 "{reversekey} to rotate your ship to the opposite direction you are moving, "
@@ -69668,9 +69669,9 @@ msgid ""
 "systems in the Empire core, but sadly, we are likely to encounter hostile "
 "ships if you venture further out, so you need to know how to defend "
 "yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art "
-"laser cannon for just that reason! If all goes well you won't end up like "
-"ship ornament like my late previous owner after encountering… Anyway, on to "
-"the drone.\""
+"laser cannon for just that reason! If all goes well you won't end up a ship "
+"ornament like my late previous owner after encountering… Anyway, on to the "
+"drone.\""
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:195
@@ -69850,7 +69851,7 @@ msgid ""
 "Now let's continue discussing moving around in space. As mentioned before, "
 "you can move around space manually, no problem. However, you will often want "
 "to travel large distances, and navigating everywhere manually could be a bit "
-"tedious. A good option is to delegate the travelling to me, your ship AI, "
+"tedious. A good option is to delegate the travelling to me, your Ship AI, "
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
@@ -69907,8 +69908,8 @@ msgstr ""
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:331
 msgid ""
-"Your ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
-"will fair better than their late previous owner."
+"Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
+"will fare better than their late previous owner."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:349
