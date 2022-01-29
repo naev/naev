@@ -192,7 +192,7 @@ function escort.spawn( pos )
    _escort_convoy = {}
    local l
    for k,s in ipairs( mem._escort.ships ) do
-      local p = pilot.add( s, mem._escort.faction, pos, nil, mem._escort.pilot_params )
+      local p = pilot.add( s, mem._escort.faction, pos, nil, mem._escort.params.pilot_params )
       if not l then
          l = p
       else
