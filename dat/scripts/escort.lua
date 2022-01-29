@@ -1,7 +1,7 @@
 --[[
    Library for dealing with escorts in missions
 --]]
--- luacheck: globals _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
+-- luacheck: globals _escort_spawn _escort_jumpin _escort_jumpout _escort_land _escort_takeoff _escort_failure _escort_e_death _escort_e_land _escort_e_jump _escort_e_attacked(Hook functions passed by name)
 local escort = {}
 
 local lmisn = require "lmisn"
@@ -73,8 +73,8 @@ function escort.setDest( dest, success, failure )
       mem._escort.destspob = nil
       mem._escort.destsys = dest
    end
-   mem._escort.func_failure = failure
    mem._escort.func_success = success
+   mem._escort.func_failure = failure or "_escort_failure"
 
    mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
 end
@@ -151,10 +151,12 @@ function _escort_e_jump( p, j )
    end
 end
 
-local function convoy_spawn ()
+function escort.spawn( pos )
+   pos = pos or mem._escort.origin
+
    -- Set up the new convoy for the new system
    exited = {}
-   _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction, mem._escort.origin )
+   _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction, pos )
 
    -- See if we have a post-processing function
    local fcreate
@@ -187,8 +189,12 @@ local function convoy_spawn ()
    control_ai( l )
 end
 
+function _escort_spawn ()
+   escort.spawn()
+end
+
 function _escort_takeoff ()
-   convoy_spawn()
+   hook.safe( "_escort_spawn" )
 end
 
 function _escort_jumpin ()
@@ -196,7 +202,7 @@ function _escort_jumpin ()
       lmisn.fail( _("You jumped into the wrong system.") )
       return
    end
-   convoy_spawn()
+   hook.safe( "_escort_spawn" )
 end
 
 local function update_left ()
