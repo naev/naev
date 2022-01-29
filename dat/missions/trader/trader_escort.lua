@@ -173,7 +173,7 @@ function trader_attacked( p, _attacker )
 end
 
 function trader_safe()
-   hook.timer( 2.0, "trader_safe" )
+   hook.timer( 3.0, "trader_safe" )
    if unsafe then
       unsafe = false
       escort.reset_ai()
