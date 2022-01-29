@@ -1354,7 +1354,7 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
 }
 
 /**
- * @brief Renders the system names on the map.
+ * @brief Renders the system names and notes on the map.
  */
 void map_renderNames( double bx, double by, double x, double y,
       double zoom, double w, double h, int editor, double alpha )
@@ -1388,6 +1388,12 @@ void map_renderNames( double bx, double by, double x, double y,
       col = cWhite;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, _(sys->name) );
+
+      /* Render note */
+      col = cGrey60;
+      col.a = alpha;
+      if (sys->note != NULL)
+         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
 
    }
 
@@ -2037,11 +2043,19 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
    StarSystem *sys;
    if (map_selected != -1) {
       sys=system_getIndex( map_selected );
-      if (sys_isKnown(sys)) {
-         if (sys_isFlag(sys, SYSTEM_PMARKED))
-            sys_rmFlag(sys, SYSTEM_PMARKED);
-         else
-            sys_setFlag(sys, SYSTEM_PMARKED);
+
+      /* Remove old note */
+      if (sys->note != NULL) {
+         free(sys->note);
+         sys->note = NULL;
+      }
+
+      /* Switch marking */
+      if (sys_isFlag(sys, SYSTEM_PMARKED))
+         sys_rmFlag(sys, SYSTEM_PMARKED);
+      else {
+         sys->note=dialogue_input(_("System note"), 0, 60, _("You can write note to this system"));
+         sys_setFlag(sys, SYSTEM_PMARKED);
       }
    }
 }

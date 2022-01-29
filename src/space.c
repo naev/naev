@@ -3619,8 +3619,10 @@ static int systems_load (void)
       free( file );
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
-   for (int j=0; j<array_size(systems_stack); j++)
+   for (int j=0; j<array_size(systems_stack); j++) {
       systems_stack[j].id = j;
+      systems_stack[j].note = NULL; /* just to be sure */
+   }
 
    /*
     * Second pass - loads all the jump routes.
@@ -3962,6 +3964,7 @@ void space_exit (void)
       free(sys->background);
       free(sys->map_shader);
       free(sys->features);
+      free(sys->note);
       array_free(sys->jumps);
       array_free(sys->presence);
       array_free(sys->spobs);

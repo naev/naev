@@ -359,6 +359,7 @@ struct StarSystem_ {
    char **tags;         /**< Star system tags. */
    unsigned int flags;  /**< flags for system properties */
    ShipStatList *stats; /**< System stats. */
+   char *note;          /**< Note to player marked system */
 };
 
 /* Some useful externs. */
