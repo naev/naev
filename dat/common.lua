@@ -14,3 +14,13 @@ function tcopy( tbl, copy )
    end
    return copy
 end
+
+function trepeat( tbl, num )
+   local t = {}
+   for i=1,num do
+      for k,v in ipairs(tbl) do
+         table.insert( t, v )
+      end
+   end
+   return t
+end
