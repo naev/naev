@@ -40,7 +40,7 @@ local atksys2 = system.get("Delta Polaris")
 function create ()
    misn.finish()
    if not misn.claim{mainsys,atksys1,atksys2} then misn.finish() end
-   misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
+   misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
 end
 
 function accept ()
@@ -127,6 +127,9 @@ function escort_success ()
    vn.run()
 
    -- Done
+   local j1, j2 = jump.get("Antlejos", "NGC-4087")
+   j1:setKnown(true)
+   j2:setKnown(true)
    player.pay( reward )
    ant.log(_("TODO"))
    misn.finish(true)
@@ -139,7 +142,7 @@ local function fct_miner ()
       return f
    end
    local puaaa = ant.puaaa()
-   f = faction.dynAdd( "Independent", id, _("Miner") )
+   f = faction.dynAdd( "Independent", id, _("Core Miner") )
    f:dynEnemy( puaaa )
    return f
 end

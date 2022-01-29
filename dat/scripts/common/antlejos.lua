@@ -13,6 +13,7 @@ antlejos.verner = {
    image = "verner.webp",
    name = _("Verner"),
    color = nil,
+   description = _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar."),
    transition = nil, -- Use default
 }
 

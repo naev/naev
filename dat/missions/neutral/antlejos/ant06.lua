@@ -37,7 +37,7 @@ local mainsys = system.get("Knave")
 
 function create ()
    if not misn.claim(mainsys) then misn.finish() end
-   misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
+   misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
 end
 
 local firsttime = true
