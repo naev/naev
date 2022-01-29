@@ -24,6 +24,7 @@ function escort.init( ships, params )
       },
    }
 
+   -- Initialize to wherever the player is
    if player.isLanded() then
       mem._escort.origin = spob.cur()
    else
@@ -74,6 +75,8 @@ function escort.setDest( dest, success, failure )
    end
    mem._escort.func_failure = failure
    mem._escort.func_success = success
+
+   mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
 end
 
 local exited
@@ -138,7 +141,7 @@ function _escort_e_land( p, landed_spob )
 end
 
 function _escort_e_jump( p, j )
-   if j:dest() == lmisn.getNextSystem( system.cur(), mem.destsys ) then
+   if j:dest() == mem._escort.nextsys then
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ).."#0" )
