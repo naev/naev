@@ -258,6 +258,21 @@ function handle_messages( si, dopush )
    for _, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(msg)
 
+      -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
+      if sender == l then
+         if msgtype == "hyperspace" then
+            if dopush then
+               ai.pushtask("hyperspace", data)
+               taskchange = true
+            end
+         elseif msgtype == "land" then
+            if dopush then
+               ai.pushtask("land", data)
+               taskchange = true
+            end
+         end
+      end
+
       -- Skip message from nonexistent sender
       if sender:exists() then
 
@@ -297,16 +312,6 @@ function handle_messages( si, dopush )
          elseif sender == l then
             if msgtype == "form-pos" then
                mem.form_pos = data
-            elseif msgtype == "hyperspace" then
-               if dopush then
-                  ai.pushtask("hyperspace", data)
-                  taskchange = true
-               end
-            elseif msgtype == "land" then
-               if dopush then
-                  ai.pushtask("land", data)
-                  taskchange = true
-               end
             elseif msgtype == "l_attacked" then
                if not si.fighting and should_attack( data, si ) then
                   if dopush then
