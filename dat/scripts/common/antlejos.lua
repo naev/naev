@@ -79,7 +79,7 @@ function antlejos.puaaa ()
    return faction.dynAdd( nil, "puaaa", _("PUAAA") )
 end
 
-antlejos.protest_lines = {
+antlejos.protest_lines = rnd.permutation{
    _("No to terraforming!"),
    _("Leave the planets alone!"),
    _("The Universe is beautiful as it is!"),
