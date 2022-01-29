@@ -1446,7 +1446,8 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       ty = y + sys->pos.y*zoom;
 
       /* Count markers. */
-      n  = (sys_isFlag(sys, SYSTEM_CMARKED | SYSTEM_PMARKED)) ? 1 : 0;
+      n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
+      n += (sys_isFlag(sys, SYSTEM_PMARKED)) ? 1 : 0;
       n += sys->markers_plot;
       n += sys->markers_high;
       n += sys->markers_low;
