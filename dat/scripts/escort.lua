@@ -149,6 +149,7 @@ function _escort_e_death( p )
          -- Set a new leader and tell them to move on
          if k==1 then
             local l = _escort_convoy[1]
+            l:setHilight(true)
             for i,e in ipairs(_escort_convoy) do
                if i~=1 then
                   e:setLeader( l )
@@ -221,7 +222,6 @@ function escort.spawn( pos )
    -- Some post-processing for the convoy
    local minspeed = math.huge
    for k,p in ipairs(_escort_convoy) do
-      p:setHilight(true)
       p:setInvincPlayer(true)
       p:setFriendly(true)
 
@@ -239,6 +239,7 @@ function escort.spawn( pos )
 
    -- Have the leader move as slow as the slowest ship
    l:setSpeedLimit( minspeed )
+   l:setHilight(true)
    -- Moving to system
    escort.reset_ai()
 
