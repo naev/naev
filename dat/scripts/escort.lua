@@ -232,8 +232,6 @@ function escort.spawn( pos )
    control_ai( l )
 
    -- Mark destination
-   print( system.cur() )
-   print( mem._escort.nextsys )
    if mem._escort.nextsys then
       system.mrkAdd( jump.get( system.cur(), mem._escort.nextsys ):pos() )
    else
