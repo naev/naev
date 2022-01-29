@@ -1454,7 +1454,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Draw the markers. */
       j = 0;
-      if (sys_isFlag(sys, SYSTEM_CMARKED | SYSTEM_PMARKED)) {
+      if (sys_isFlag(sys, SYSTEM_CMARKED)) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 0 );
          j++;
       }
@@ -1472,6 +1472,10 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       }
       for (m=0; m<sys->markers_computer; m++) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 4 );
+         j++;
+      }
+      if (sys_isFlag(sys, SYSTEM_PMARKED)) {
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 5 );
          j++;
       }
    }
@@ -2054,7 +2058,7 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
       if (sys_isFlag(sys, SYSTEM_PMARKED))
          sys_rmFlag(sys, SYSTEM_PMARKED);
       else {
-         sys->note=dialogue_input(_("System note"), 0, 60, _("You can write note to this system"));
+         sys->note=dialogue_input(_("System note"), 0, 60, _("Write a note about this system."));
          sys_setFlag(sys, SYSTEM_PMARKED);
       }
    }
