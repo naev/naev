@@ -154,6 +154,7 @@ function trader_create( p )
       p:cargoRm( c.name, c.q )
    end
    p:cargoAdd( mem.cargo, p:cargoFree() )
+   p:rename(_("Convoy"))
 end
 
 local last_spammed = 0
