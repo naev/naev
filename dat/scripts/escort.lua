@@ -8,7 +8,6 @@ local escort = {}
 
 local lmisn = require "lmisn"
 local fmt = require "format"
-local fleet = require "fleet"
 local vntk = require "vntk"
 
 --[[--
@@ -25,10 +24,10 @@ function escort.init( ships, params )
       ships = tcopy(ships),
       faction = params.faction or "Independent",
       hooks = {
-         jumpin = hook.jumpin( "_escort_jumpin" ),
-         jumpout = hook.jumpout( "_escort_jumpout" ),
-         land = hook.land( "_escort_land" ),
-         takeoff = hook.takeoff( "_escort_takeoff"),
+         jumpin   = hook.jumpin(  "_escort_jumpin" ),
+         jumpout  = hook.jumpout( "_escort_jumpout" ),
+         land     = hook.land(    "_escort_land" ),
+         takeoff  = hook.takeoff( "_escort_takeoff"),
       },
    }
 
@@ -190,7 +189,17 @@ function escort.spawn( pos )
 
    -- Set up the new convoy for the new system
    exited = {}
-   _escort_convoy = fleet.add( 1, mem._escort.ships, mem._escort.faction, pos )
+   _escort_convoy = {}
+   local l
+   for k,s in ipairs( mem._escort.ships ) do
+      local p = pilot.add( s, mem._escort.faction, pos )
+      if not l then
+         l = p
+      else
+         p:setLeader( l )
+      end
+      table.insert( _escort_convoy, p )
+   end
 
    -- See if we have a post-processing function
    local fcreate
@@ -203,6 +212,7 @@ function escort.spawn( pos )
    for k,p in ipairs(_escort_convoy) do
       p:setHilight(true)
       p:setInvincPlayer(true)
+      p:setFriendly(true)
 
       hook.pilot( p, "death", "_escort_e_death" )
       hook.pilot( p, "attacked", "_escort_e_attacked" )
@@ -217,10 +227,20 @@ function escort.spawn( pos )
    end
 
    -- Have the leader move as slow as the slowest ship
-   local l = _escort_convoy[1]
    l:setSpeedLimit( minspeed )
    -- Moving to system
    control_ai( l )
+
+   -- Mark destination
+   print( system.cur() )
+   print( mem._escort.nextsys )
+   if mem._escort.nextsys then
+      system.mrkAdd( jump.get( system.cur(), mem._escort.nextsys ):pos() )
+   else
+      if mem._escort.destspob then
+         system.mrkAdd( mem._escort.destspob:pos() )
+      end
+   end
 
    return _escort_convoy
 end
@@ -239,6 +259,7 @@ function _escort_jumpin ()
       lmisn.fail( _("You jumped into the wrong system.") )
       return
    end
+   mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
    -- We want to defer it one frame in case an enter hook clears all pilots
    hook.safe( "_escort_spawn" )
 end
@@ -259,12 +280,8 @@ function _escort_jumpout()
    update_left ()
    if #exited <= 0 then
       lmisn.fail( _("You jumped before the convoy you were escorting.") )
-   else
-      -- Treat those that didn't exit as dead
-      mem._escort.alive = math.min( mem._escort.alive, mem._escort.exited )
    end
    mem._escort.origin = system.cur()
-   mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
 end
 
 function _escort_failure ()
