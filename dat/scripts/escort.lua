@@ -117,6 +117,7 @@ function escort.reset_ai ()
       p:control(false)
       p:setNoJump(false)
       p:setNoLand(false)
+      p:taskClear()
    end
 
    local l = _escort_convoy[1]
@@ -149,9 +150,11 @@ function _escort_e_death( p )
          -- Set a new leader and tell them to move on
          if k==1 then
             local l = _escort_convoy[1]
+            l:setLeader()
             l:setHilight(true)
             for i,e in ipairs(_escort_convoy) do
                if i~=1 then
+                  e:taskClear()
                   e:setLeader( l )
                end
             end
