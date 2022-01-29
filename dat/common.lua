@@ -17,8 +17,8 @@ end
 
 function trepeat( tbl, num )
    local t = {}
-   for i=1,num do
-      for k,v in ipairs(tbl) do
+   for k,v in ipairs(tbl) do
+      for i=1,num do
          table.insert( t, v )
       end
    end
