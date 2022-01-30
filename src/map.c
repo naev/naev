@@ -1387,7 +1387,7 @@ void map_renderNotes( double bx, double by, double x, double y,
 
    /* Find mouse over system and draw. */
    for (int i=0; i<array_size(systems_stack); i++) {
-      double tx,ty;
+      double tx,ty, tw,th;
       glColour col;
       glFont *font;
       StarSystem *sys = &systems_stack[i];
@@ -1412,6 +1412,13 @@ void map_renderNotes( double bx, double by, double x, double y,
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
       tx += 12.*zoom;
       ty -= font->h*2.;
+      tw = gl_printWidthRaw( font, sys->note )+8.;
+      th = font->h+8.;
+
+      /* Background. */
+      col = cBlack;
+      col.a = alpha*0.8;
+      gl_renderRect( tx-4., ty-4., tw, th, &col );
 
       /* Render note */
       col = cFontOrange;
