@@ -27,11 +27,14 @@ local vntk = require "vntk"
 local fmt = require "format"
 local ant = require "common.antlejos"
 local lmisn = require "lmisn"
+local lg = require "love.graphics"
 
 local reward = ant.rewards.ant09
 
 local retpnt, retsys = spob.getS("Antlejos V")
 local mainsys = system.get("Klintus")
+
+local mothership_name = _("Planet Saviour")
 
 -- luacheck: globals approaching enter land mothershipdeath mothershipboard (Hook functions passed by name)
 
@@ -48,8 +51,10 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_([[TODO]]))
-   v(_([["TODO"]]))
+   vn.na(_([[You find a dust-covered Verner once again enjoying a horribly smelling drink at the bar.]]))
+   v(fmt.f(_([["Hello! The core drilling is going slow but great. The dust is a pain to get off though, it seems to permeate into clothing. This was my favourite set too. Oh well."
+"Speaking of which, some of my scouts have recently been able to track down some PUAAA activity to be originating from {sys}. It seems like there is a mothership or something like that over there. I know it's quite a challenge, but I would need you to take care of it. Would you be willing to help {pnt} again?"]]),
+      {sys=mainsys, pnt=retpnt}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -60,7 +65,10 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   v(_([[""]]))
+   v(fmt.f(_([["Great! I know you're thinking about doing the same you did with the supply ship you took out in the Knave system, but this time it won't be that easy. This seems to be the source of almost all of the PUAAA attacks. In particular, I believe it's the notorious '{shipname}', which is well-known for having stopped the terraforming of Em 2. Normally, we wouldn't have much of a chance against the {shipname}, but in a stroke of luck, it seems like they've had some trouble and they're not stuck offline in {sys}, meaning it's the perfect time to take it down once and for all."]]),
+      {shipname=mothership_name, sys=mainsys}))
+   v(fmt.f(_([["The plan is pretty straight forward: I've got some extra explosives we've been using to terraform {pnt}, but I think they could be put to better use "terraforming" the {shipname}. All you have to do is fly to the {sys} system, get to the {shipname}, plant the explosives, and get back here. Now, that's probably easier said than done, and the system is going to be probably crawling with those asteroid huggers, but I've seen your flying skills and have the faith you can pull it off."]]),
+      {shipname=mothership_name, sys=mainsys, pnt=retpnt}))
    vn.func( function () accepted = true end )
 
    vn.run()
@@ -73,15 +81,19 @@ function accept ()
 
    misn.accept()
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_("Eliminate the PUAAA mothership located in the {sys} system. You have been provided explosives to detonate the mothership if you are able to get close enough to it."),{sys=mainsys}))
+   misn.setDesc(fmt.f(_("Eliminate the PUAAA mothership named {shipname} that islocated in the {sys} system. You have been provided explosives to detonate the mothership if you are able to get close enough to it."),
+      {sys=mainsys,shipname=mothership_name}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate( title , {
       fmt.f(_("Go to {sys}"),{sys=mainsys}),
-      _("Destroy the PUAAA mothership"),
+      fmt.f(_("Plant explosives on the {shipname}"),{shipname=mothership_name}),
       fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=retpnt, sys=retsys}),
    })
    mem.mrk = misn.markerAdd( mainsys )
    mem.state = 0
+
+   local c = commodity.new( N_("Terraforming Explosives"), N_("Terraforming explosives meant to perform drastic changes to planet topology.") )
+   misn.cargoAdd(c, 0)
 
    hook.land( "land" )
    hook.enter( "enter" )
@@ -92,10 +104,65 @@ function land ()
    if mem.state==2 and spob.cur() == retpnt then
       vn.clear()
       vn.scene()
-      local v = vn.newCharacter( ant.vn_verner() )
+      local v = ant.vn_verner()
+      vn.newCharacter( v )
       vn.transition()
-      vn.na(_([[TODO]]))
+      vn.na(_([[You land and are promptly greeted by the always enthusiastic Verner.]]))
+      v(_([["How did it go? … I see, better than expected! This calls for a celebration, now where did I put it? Ah, there it is."
+Verner picks up what seems to be an industrial barrel labelled 'Ammonia' and sloppily dumps it into two steel mugs. He notices you giving him a following look.
+"Ah, don't worry about that, I cleaned the barrel before filling it. This is the bartender's specialty "Antlejos Brew'! It's made with all natural ingredients found exclusively here!"]]))
+      vn.na(_([[Quickly a really strong stench fills the docks, almost like some sort of bleach. He offers you a drink, what do you do?]]))
+      vn.menu{
+         {_([[Carefully try the drink.]]), "drink_little"},
+         {_([[Chug the drink.]]), "drink_alot"},
+         {_([[Refuse the drink.]]), "drink_refuse"},
+      }
+
+      vn.label("drink_little")
+      vn.na(_([[You carefully bring the drink up to your moth and first take a whiff. It's awful. It's horrible and much worse up close. Giving Verner the benefit of the doubt, you bring it up to your lips and take a small sip, it could taste better than what it smells like, right?]]))
+      vn.na(_([[Immediately the indescribable taste invades your moth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep conciousness. You spend awhile trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
+      v(_([["I've never seen that reaction on first taste! Maybe it's still a bit too soon for you to be able to savour Antlejos delicacies."
+He takes a long swig and finishes his mug.
+"Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it."]]))
+      vn.jump("cont01")
+
+      vn.label("drink_alot")
+      vn.na(_([[You grab the mug, and in an extreme act of determination, ignore all the warning signs your body screams at you and you begin to chug the drink. With the first sip, your body convulses briefly, but you continue to drink until nothing is left. Or at least that's what you think happened before you passed out.]]))
+      vn.scene()
+      vn.func( function ()
+         local lw, lh = lg.getDimensions()
+         vn.setBackground( function ()
+            lg.setColor( 0, 0, 0, 1 )
+            lg.rectangle( "fill", 0, 0, lw, lh )
+         end )
+         music.stop(true)
+      end )
+      vn.transition( "circleopen" )
+      vn.na(_([[Time stops. You try to move your body, but nothing responds, you are lost in darkness.]]))
+      vn.na(_([[You struggle in vein until you realize you aren't feeling anything. You feel no sensory input, it's like your body doesn't exist.]]))
+      vn.na(_([[You try to focus and see what's going on, but realize something is really amiss. You have a really subtle feeling of movement, like many little things vibrating. Could this be the vibrations of the cells of your body? The vibration of your atoms?]]))
+      vn.scene()
+      vn.newCharacter( v )
+      vn.func( function ()
+         vn.setBackground()
+         music.play()
+      end )
+      vn.transition( "circleopen" )
+      vn.na(_([[You are awoken to a splash of water and a strong burning sensation throughout your entire body. As if your internals organs had caught on fire and were relentlessly burning.]]))
+      v(_([["Glad to have you back with us. I'm pretty sure your heart stopped beating for a few seconds. Maybe I should have warned you about the Antlejos delicacies."
+He takes a long swig and finishes his mug.
+"Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it."]]))
+      vn.na(_([[You spend a few minutes on the ground, with Verner patiently waiting, before you finally feel like you can sit up and follow a conversation.]]))
+      vn.jump("cont01")
+
+      vn.label("drink_refuse")
+      vn.na(_([[You refuse the drink and Verner chuckles.]]))
+      v(_([["I guess it may be a bit much if you aren't used to it. It's especially good at clearing terraforming dust that gets caught in your throat! Maybe next time you'll give it a shot."]]))
+      vn.jump("cont01")
+
+      vn.label("cont01")
       v(_([["TODO"]]))
+
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
@@ -171,7 +238,7 @@ function enter ()
    -- Initialize ship stuff
    local puaaa = ant.puaaa()
 
-   mothership = pilot.add( "Zebra", puaaa, pos_mothership, _("Planet Saver"), {ai="baddiepos"} )
+   mothership = pilot.add( "Zebra", puaaa, pos_mothership, mothership_name, {ai="baddiepos"} )
    mothership:setVisplayer(true)
    mothership:setHilight(true)
    mothership:control()
