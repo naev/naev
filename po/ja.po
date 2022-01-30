@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-01-29 16:39-0500\n"
-"PO-Revision-Date: 2022-01-23 17:55+0000\n"
+"PO-Revision-Date: 2022-01-30 17:55+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -28747,8 +28747,7 @@ msgid ""
 "\"I played 20 hands of blackjack with that Cyborg Chicken. I may have lost "
 "them all, but that was worth every credit!\""
 msgstr ""
-"｢あのサイボーグチキンとブラックジャックの 20 ハンドをプレイしたんだよ。全部負"
-"けたかもしれないけど、どれもクレジットぶんの価値はあったね！｣"
+"｢あのサイボーグチキンとブラックジャックの 20 ハンドをプレイしたんだよ。ぜんぶ負けたかもしれないけど、どれもクレジットぶんの価値はあったね！｣"
 
 #: dat/events/minerva/station.lua:70
 msgid ""
@@ -28877,15 +28876,15 @@ msgstr "すばやく進む、さいころを使った運だよりの賭け。"
 #. Some conditional NPCs
 #: dat/events/minerva/station.lua:100
 msgid "You see Maikki enjoying a parfait."
-msgstr "あなたはパフェを楽しんでいるメイキーに気がついた。"
+msgstr "あなたはパフェを楽しんでいるメイッキーに気がついた。"
 
 #: dat/events/minerva/station.lua:101
 msgid "You see Maikki talking on a transponder."
-msgstr "あなたは応答機と話しているメイキーに気がついた。"
+msgstr "あなたは応答機と話しているメイッキーに気がついた。"
 
 #: dat/events/minerva/station.lua:102
 msgid "You see Maikki looking thoughtfully into the distance."
-msgstr "あなたは考えこんで遠くを見つめているメイキーに気がついた。"
+msgstr "あなたは考えこんで遠くを見つめているメイッキーに気がついた。"
 
 #. Create random noise NPCs
 #. avoids duplicates
@@ -29293,7 +29292,7 @@ msgstr "｢なにを見てるんだよ？｣"
 #. local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
 #: dat/events/minerva/station.lua:595
 msgid "You find Maikki, who beams you a smile as you approach."
-msgstr "あなたはメイキーを見つけた。あなたが近づくとほほえんで見せた。"
+msgstr "あなたはメイッキーを見つけた。あなたが近づくとほほえんで見せた。"
 
 #: dat/events/minerva/station.lua:597
 msgid "\"Did you find anything new?\""
@@ -29328,8 +29327,7 @@ msgid ""
 "You decide against telling Maikki anything. It does not seem like it is the "
 "time, unless you wish to get murdered by a rampant cyborg duck."
 msgstr ""
-"あなたはメイキーになにもいわないことに決めた。ほんとうにその時ではないよう"
-"だ。過激なサイボーグアヒルに殺されたいと思っているのでなければだが。"
+"あなたはメイッキーになにもいわないことに決めた。ほんとうにその時ではないようだ。過激なサイボーグアヒルに殺されたいと思っているのでなければだが。"
 
 #. played backwards so slides left
 #: dat/events/minerva/station.lua:631
@@ -32524,9 +32522,8 @@ msgid ""
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
 "two; it makes it much easier to dodge those turrets on the larger ships.\""
 msgstr ""
-"｢砲塔による自動的な目標追跡は、覆い隠せば鈍くなるって知ってた？　ほら、もう"
-"知った！　小さな船ならひとつか二つスクランブラーがあればかなり役に立つよ。大"
-"きな船の砲塔を避けるのがずっと簡単になるね｣"
+"｢砲塔による自動的な目標追跡は、覆いかくせば鈍くなるって知ってた？　ほら、もう知った！　"
+"小さな船ならひとつか二つスクランブラーがあればかなり役に立つよ。大きな船の砲塔を避けるのがずっと簡単になるね｣"
 
 #: dat/events/neutral/npc.lua:257
 msgid ""
@@ -34763,7 +34760,7 @@ msgstr "変化以外に永続するものはない"
 #. Socrates
 #: dat/events/taiomi/system.lua:93
 msgid "those that have the most are those who are most content with the least"
-msgstr "多くを持つ者とは、もっともすくないもので最大限満足する者である"
+msgstr "多くを持つ者とは、もっとも少ないもので最大限満足する者である"
 
 #. Diogenes (rephrased)
 #: dat/events/taiomi/system.lua:94
@@ -35044,11 +35041,9 @@ msgid ""
 "target. By mixing and matching weapons with complementary strengths you can "
 "greatly increase your combat ability.\""
 msgstr ""
-"｢ああ、それは#o中型武器免許#0ですね？　それは砲塔や発射機のようなもっと大きな"
-"武器の装備を可能にしてくれます。砲塔は全方向に回転して、狙いをつけるという重"
-"荷を船から取り除きます。発射機は弾薬を使って敵の船を捕捉できるようにして、弾"
-"頭を目標に命中するようにします。相補的な強みをもつ武器を混ぜてそろえると、戦"
-"闘能力を大きく向上させることもできるでしょう｣"
+"｢ああ、それは#o中型武器免許#0ですね？　それは砲塔や発射機のようなもっと大きな武器の装備を可能にしてくれます。砲塔は全方向に回転して、ねらいをつけると"
+"いう重荷を船から取り除きます。発射機は弾薬を使って敵の船を捕捉できるようにして、弾頭を目標に命中するようにします。相補的な強みをもつ武器を混ぜてそろえると"
+"、戦闘能力を大きく向上させることもできるでしょう｣"
 
 #: dat/events/tutorial/tut_land.lua:77
 msgid ""
@@ -35190,14 +35185,6 @@ msgstr ""
 "です｣"
 
 #: dat/events/tutorial/tut_land.lua:106
-#, fuzzy
-#| msgid ""
-#| "\"#oCruisers#0 are the smallest of the three categories, but also the "
-#| "lowest mass and highest manoeuvrability. They can be seen more or less as "
-#| "a heavier version of a destroyer. #oBattleships#0 push the firepower to "
-#| "the max and can chew through any ship that is unable to evade their "
-#| "concentrated firepower. #oCarriers#0 use a different strategy of using "
-#| "fighter to do the combat for them while maximizing survivability.\""
 msgid ""
 "\"#oCruisers#0 are the smallest of the three categories, but also the lowest "
 "mass and highest manoeuvrability. They can be seen more or less as a heavier "
@@ -35206,11 +35193,9 @@ msgid ""
 "firepower. #oCarriers#0 use a different strategy of using fighters to do the "
 "combat for them while maximizing survivability.\""
 msgstr ""
-"｢#o巡洋艦#0は、3 つの種類のなかでは最小ですが、もっとも小さい質量ともっとも高"
-"い操縦性をもっています。これはだいたい大きめな駆逐艦とみなすこともできます。"
-"#o戦艦#0は、火力を完全に押しすすめたもので、集中した火力を避けられなかった船"
-"はなんでも粉砕できます。#o母艦#0は異なった方策をとっていて、戦いには戦闘機を"
-"使いながら、生存性も最大限に高めています｣"
+"｢#o巡洋艦#0は、3 つの種類のなかでは最小ですが、もっとも小さい質量ともっとも高い操縦性をもっています。これはだいたい大きめな駆逐艦とみなすこともでき"
+"ます。#o戦艦#0は、火力を完全に押しすすめたもので、集中した火力を避けられなかった船はなんでも粉砕できます。#o母艦#0は異なった方策をとっていて、戦い"
+"には戦闘機を使いながら、生存性も最大限に高めています｣"
 
 #: dat/events/tutorial/tut_land.lua:107
 #, fuzzy
@@ -35250,16 +35235,6 @@ msgstr ""
 "が戦いにむけた適切な装備になっているのか確かめてください｣"
 
 #: dat/events/tutorial/tut_land.lua:140
-#, fuzzy
-#| msgid ""
-#| "\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
-#| "ship, when you buy a new ship it is added to your available ships. "
-#| "Usually, ships come with only core outfits quipped, so you should head "
-#| "over to the #oEquipment#0 window to deck the ship out and swap it with "
-#| "your current one if you want to use it. You can swap ships at any planet "
-#| "or station with a shipyard and there is no penalty nor cost associated "
-#| "with swapping. In fact, getting a diversity of ships and switching to the "
-#| "one that best fits your need is a great way to get things done.\""
 msgid ""
 "\"Congratulations on buying a brand new {ship}! Unless you trade-in your "
 "ship, when you buy a new ship it is added to your available ships. Usually, "
@@ -35270,13 +35245,10 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
-"｢新しい{ship}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買う"
-"と、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが装備"
-"されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と使"
-"いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこでも船"
-"を交換できます。交換にさいして不利益や費用はかかりません。じつは、多様な船を"
-"手にして必要性をいちばんよく満たす船に変えるのが、ものごとをこなすすぐれた方"
-"法なんです｣"
+"｢新しい{ship}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買うと、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが"
+"装備されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と使いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこ"
+"でも船を交換できます。交換にさいして不利益や費用はかかりません。じつは、多様な船を手にして必要性をいちばんよく満たす船に変えるのが、ものごとをこなすすぐれ"
+"た方法なんです｣"
 
 #: dat/events/tutorial/tut_land.lua:141
 msgid ""
@@ -52133,11 +52105,11 @@ msgstr "???"
 #: dat/missions/minerva/maikki2.lua:806 dat/missions/minerva/maikki2.lua:870
 #: dat/scripts/common/minerva.lua:105
 msgid "Finding Maikki's Father"
-msgstr "メイキーの父親の発見"
+msgstr "メイッキーの父親の発見"
 
 #: dat/missions/minerva/maikki1.lua:78
 msgid "Maikki wants you to help her find her father."
-msgstr "メイキーがあなたに助けてもらって父親を見つけたがっている。"
+msgstr "メイッキーがあなたに助けてもらって父親を見つけたがっている。"
 
 #. If not accepted, mem.misn_state will still be nil
 #. Clear just in case
@@ -52221,7 +52193,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:150
 msgid "You have agreed to help Maikki find her father (Kex)."
-msgstr "あなたはメイキーを助けて父親 (ケクス) をさがすのに同意した。"
+msgstr "あなたはメイッキーを助けて父親 (ケクス) をさがすのに同意した。"
 
 #: dat/missions/minerva/maikki1.lua:152
 msgid ""
@@ -52235,11 +52207,11 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:155
 msgid "\"My name is Maisie, but you can call me Maikki.\""
-msgstr "｢わたしの名前はメイジーです。でもメイキーと呼んでもいいですよ｣"
+msgstr "｢わたしの名前はメイジーです。でもメイッキーと呼んでもいいですよ｣"
 
 #: dat/missions/minerva/maikki1.lua:157
 msgid "Offer her a drink ({tokens})"
-msgstr "メイキーのために飲み物を勧める ({tokens})"
+msgstr "メイッキーのために飲み物を勧める ({tokens})"
 
 #: dat/missions/minerva/maikki1.lua:158
 msgid "Ask her who she is looking for"
@@ -52251,9 +52223,8 @@ msgid ""
 "a strawberry cheesecake caramel parfait with extra berries. Wait, was that "
 "even on the menu?"
 msgstr ""
-"あなたはメイキーに飲み物を勧めた。熱心に飲み物のメニューをにらんでから、メイ"
-"キーはストロベリーチーズケーキキャラメルパフェに追加のベリーをつけて頼んだ。"
-"ちょっと、そんなのがメニューにあった？"
+"あなたはメイッキーに飲み物を勧めた。熱心に飲み物のメニューをにらんでから、メイッキーはストロベリーチーズケーキキャラメルパフェに追加のベリーをつけて頼んだ"
+"。ちょっと、そんなのがメニューにあった？"
 
 #: dat/missions/minerva/maikki1.lua:170
 msgid ""
@@ -52261,7 +52232,7 @@ msgid ""
 "She starts eating the parfait, which seems to be larger than her head."
 msgstr ""
 "｢ありがとう！　すくなくともここの食べ物は悪くない！｣\n"
-"メイキーはパフェを食べはじめた。そのパフェは、メイキーの頭より大きく見える。"
+"メイッキーはパフェを食べはじめた。そのパフェは、メイッキーの頭より大きく見える。"
 
 #: dat/missions/minerva/maikki1.lua:175
 msgid "You do not have enough Minerva Tokens to buy her a drink."
@@ -52277,7 +52248,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:185
 msgid "You approach Maikki who seems to be enjoying a parfait."
-msgstr "あなたはパフェを楽しんでいるらしい、メイキーに近づいた。"
+msgstr "あなたはパフェを楽しんでいるらしい、メイッキーに近づいた。"
 
 #. Normal chitchat
 #: dat/missions/minerva/maikki1.lua:190
@@ -52363,16 +52334,16 @@ msgstr "{sys}星系を見てまわれ。"
 
 #: dat/missions/minerva/maikki1.lua:218
 msgid "You were told her father could be near Doeston."
-msgstr "あなたはメイキーの父親がドズトンの近くにいるかもしれないと聞いた。"
+msgstr "あなたはメイッキーの父親がドズトンの近くにいるかもしれないと聞いた。"
 
 #: dat/missions/minerva/maikki1.lua:224
 msgid "You show her the picture you found in Zerantix of her and her parents."
-msgstr "あなたはゼランティクスで見つけたメイキーと両親の写真を見せた。"
+msgstr "あなたはゼランティクスで見つけたメイッキーと両親の写真を見せた。"
 
 #. TODO show picture
 #: dat/missions/minerva/maikki1.lua:226
 msgid "As she stares deeply at the picture, her eyes tear up."
-msgstr "メイキーはその写真を食いいるように見つめて、目から涙を流した。"
+msgstr "メイッキーはその写真を食いいるように見つめて、目から涙を流した。"
 
 #: dat/missions/minerva/maikki1.lua:227
 msgid ""
@@ -52389,18 +52360,15 @@ msgid ""
 "what should have been my childhood…\"\n"
 "She reminisces."
 msgstr ""
-"｢この写真の父はとても滑稽で、母はとても幸せそう……。わたしが小さかったときはこ"
-"うだったはずなのね……｣\n"
-"メイキーは思い出にふけった。"
+"｢この写真の父はとても滑稽で、母はとても幸せそう……。わたしが小さかったときはこうだったはずなのね……｣\n"
+"メイッキーは思い出にふけった。"
 
 #. TODO flashback with her family
 #: dat/missions/minerva/maikki1.lua:231
 msgid ""
 "You give a few moments to recover before explaining to her what you saw in "
 "the wreck and your encounter with the scavengers."
-msgstr ""
-"あなたは落ちつくまでちょっと時間をとってから、難破船内で見たことと、ごみあさ"
-"りたちに出会ったことをメイキーに説明した。"
+msgstr "あなたは落ちつくまでちょっと時間をとってから、難破船内で見たことと、ごみあさりたちに出会ったことをメイッキーに説明した。"
 
 #: dat/missions/minerva/maikki1.lua:232
 msgid ""
@@ -52409,10 +52377,9 @@ msgid ""
 "\"From what you tell me, it seems like it wasn't an accident…\"\n"
 "She looks up expectantly."
 msgstr ""
-"メイキーは目をハンカチでふいた。化粧を乱さないように努力していたが、うまく"
-"いっていなかった。\n"
+"メイッキーは目をハンカチでふいた。化粧を乱さないように努力していたが、うまくいっていなかった。\n"
 "｢あなたが教えてくれたことからすると、事故ではなかったようですね……｣\n"
-"メイキーは期待しつつ目を上げた。"
+"メイッキーは期待しつつ目を上げた。"
 
 #: dat/missions/minerva/maikki1.lua:235
 msgid ""
@@ -52420,9 +52387,8 @@ msgid ""
 "dies that easily!\"\n"
 "She looks clearly excited at the possibility."
 msgstr ""
-"｢亡骸が見つからなかったのであれば、生きているのはたしかです！　そんな簡単に死"
-"ぬような人じゃないんです！｣\n"
-"メイキーは疑いもなくその可能性に興奮していた。"
+"｢亡骸が見つからなかったのであれば、生きているのはたしかです！　そんな簡単に死ぬような人じゃないんです！｣\n"
+"メイッキーは疑いもなくその可能性に興奮していた。"
 
 #: dat/missions/minerva/maikki1.lua:237
 msgid ""
@@ -52431,10 +52397,9 @@ msgid ""
 "have to do with my father? I always thought those creeps couldn't be up to "
 "anything good.\""
 msgstr ""
-"メイキーが眉をひそめる。\n"
-"｢ごみあさりはザレクに売っていたってことですね？　ザレクが父にどうかかわってい"
-"たんでしょう？　わたしはいつも、あのぞっとする人たちはなにかよくないことをた"
-"くらんでいるのかもしれないと思っていました｣"
+"メイッキーが眉をひそめる。\n"
+"｢ごみあさりはザレクに売っていたってことですね？　ザレクが父にどうかかわっていたんでしょう？　"
+"わたしはいつも、あのぞっとする人たちはなにかよくないことをたくらんでいるのかもしれないと思っていました｣"
 
 #: dat/missions/minerva/maikki1.lua:239
 msgid ""
@@ -52442,17 +52407,14 @@ msgid ""
 "\"I think I have an idea for our next steps. Meet me up here in a bit. I "
 "have to get some information first.\""
 msgstr ""
-"メイキーの顔が赤くほてる。\n"
-"｢次の一歩については心あたりがあると思います。もうちょっとしたらここで会ってく"
-"ださい。さきにいくつか情報を集めなきゃなりません｣"
+"メイッキーの顔が赤くほてる。\n"
+"｢次の一歩については心あたりがあると思います。もうちょっとしたらここで会ってください。さきにいくつか情報を集めなきゃなりません｣"
 
 #. no reward, yet...
 #: dat/missions/minerva/maikki1.lua:245
 msgid ""
 "You gave Maikki the information you found in the nebula about her father."
-msgstr ""
-"あなたはメイキーに、星雲の中でメイキーの父親について見つけてきた情報を教え"
-"た。"
+msgstr "あなたはメイッキーに、星雲の中でメイッキーの父親について見つけてきた情報を教えた。"
 
 #: dat/missions/minerva/maikki1.lua:250 dat/missions/minerva/maikki2.lua:286
 msgid "\"Is there anything you would like to know about?\""
@@ -52460,7 +52422,7 @@ msgstr "｢知りたいことはなにかありますか？｣"
 
 #: dat/missions/minerva/maikki1.lua:254 dat/missions/minerva/maikki2.lua:290
 msgid "You take your leave to continue the search for her father."
-msgstr "あなたはメイキーの父親をさがしつづけるために出発した。"
+msgstr "あなたはメイッキーの父親をさがしつづけるために出発した。"
 
 #: dat/missions/minerva/maikki1.lua:271
 msgid ""
@@ -52499,6 +52461,8 @@ msgid ""
 "\"Kex? Now that is not a name I've heard in a while.\"\n"
 "He nods reflectively."
 msgstr ""
+"｢ケクス？　今となってはしばらく聞くこともない名前だな｣\n"
+"老人は反射的にうなずいた。"
 
 #: dat/missions/minerva/maikki1.lua:294
 msgid ""
@@ -52506,6 +52470,8 @@ msgid ""
 "nebula, spending his time with the useless lot of us. Shame that he went "
 "missing.\""
 msgstr ""
+"｢ケクスはすごいやつだった。星雲へ冒険に行くまえは、よくここに出入りしてたよ。おれたちみたいなたくさんの役立たずといっしょにすごしてさ。いなくなったのは残"
+"念だよ｣"
 
 #: dat/missions/minerva/maikki1.lua:295
 msgid ""
@@ -52513,12 +52479,14 @@ msgid ""
 "other side of the nebula, if there is one.\"\n"
 "He takes a long swig from his drink."
 msgstr ""
+"｢ケクスの船はまったく見つからなかったから、星雲のむこう側に行ったんだと思いたいね。もしむこうがあるならな｣\n"
+"老人が飲み物をいっきに飲んだ。"
 
 #: dat/missions/minerva/maikki1.lua:297
 msgid ""
 "\"Still that doesn't stop the odd folk here and there from trying to find "
 "it, they usually don't end up much past Arandon.\""
-msgstr ""
+msgstr "｢それでも、あれでそこらじゅうの妙な連中がさがすのをやめることはなかったな。ふつうはアランドンをあまりすぎたとこまで着かないが｣"
 
 #: dat/missions/minerva/maikki1.lua:307
 msgid ""
@@ -52527,6 +52495,9 @@ msgid ""
 "exploring, but can't with this bad knee.\"\n"
 "He pats his left knee."
 msgstr ""
+"｢ドズトンですることなんかあまりないよ。たいていは星雲に向かう頭のおかしいやつらの中継所になってるだけだ。たぶん、おれがもっと若かったら、いっしょに探検に"
+"行っただろう。だがこのひざが悪くてな｣\n"
+"老人は左ひざを軽くたたいた。"
 
 #: dat/missions/minerva/maikki1.lua:309
 msgid ""
@@ -52536,12 +52507,17 @@ msgid ""
 "Mireia.\"\n"
 "He muses thoughtfully."
 msgstr ""
+"｢昔はもっと人気のある場所だったが、簡単に取れるものはほとんどがあさられて星雲の外へ持ちだされたから、もうここに来る者はあまり多くない。とくにケクスやミレ"
+"イアのような有名なごみあさりたちが消え去ってからはな｣\n"
+"老人は深い思いにふけった。"
 
 #: dat/missions/minerva/maikki1.lua:311
 msgid ""
 "\"To better times.\"\n"
 "He downs his drink and orders another."
 msgstr ""
+"｢よき時代に｣\n"
+"老人が飲み物を降ろして、次を頼んだ。"
 
 #: dat/missions/minerva/maikki1.lua:316
 msgid ""
@@ -52550,6 +52526,9 @@ msgid ""
 "it, however, it do got quite a character. If you try to go too deep into 'er "
 "you can't easily get back. Many a soul has been lost in there.\""
 msgstr ""
+"老人がさりげなく口笛を吹いた。\n"
+"｢星雲は本物の傑作だ。あれを抜けて飛ぶのは魅惑的といってもいいが、じっさいひとかどの者でも捕らわれてしまう。深みに行こうとするなら、簡単に戻ることはできな"
+"い。多数の魂があの中で失われたんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:319
 msgid ""
@@ -52557,92 +52536,100 @@ msgid ""
 "\"Rumour has it that there are ghosts lurking in the depths. I've seen "
 "people come back, pale as snow, claiming they seen them.\""
 msgstr ""
+"老人はちょっと静かになると、あなたの方へ身を乗りだした。\n"
+"｢うわさだと、深みに隠れる亡霊がいるんだそうだ。戻ってきたやつらを見たことがあるよ。雪みたいに白くなって、亡霊を見たといいはってた｣"
 
 #: dat/missions/minerva/maikki1.lua:321
 msgid ""
 "\"I believe it be the boredom getting to their heads. Likely naught but "
 "another scavenger or some debris.\""
-msgstr ""
+msgstr "｢退屈で頭がいっちまったにちがいないな。たぶん、ほかのごみあさりやいくつか破片がある以外はなにもないんだよ｣"
 
 #: dat/missions/minerva/maikki1.lua:325
 msgid ""
 "\"It's not uncommon to see scavengers around here. Although there are no "
 "where near as many as there were in Kex's time.\""
-msgstr ""
+msgstr "｢このあたりでごみあさりを見るのはまれなことじゃない。もっとも、ケクスの時代にいたのと比べるとほど遠いけどな｣"
 
 #: dat/missions/minerva/maikki1.lua:326
 msgid ""
 "He takes a long sip, gets close and whispers.\n"
 "\"You wouldn't suppose they found something interesting?\""
 msgstr ""
+"老人は長々とひと口飲んでから、近よってささやいた。\n"
+"｢あいつらがなにかおもしろいものを見つけたんだって思ってないよな？｣"
 
 #: dat/missions/minerva/maikki1.lua:328
 msgid ""
 "\"Suppose not. However, you could ask them over there. Those two look like "
 "they could be scavengers.\""
-msgstr ""
+msgstr "｢ないだろうな。とはいえ、むこうの連中に聞いてみればいい。あの二人はごみあさりのように見えるぞ｣"
 
 #: dat/missions/minerva/maikki1.lua:329
 msgid "He points to a table with two fairly drunk people."
-msgstr ""
+msgstr "老人はかなり酔った二人がいるテーブルを指さした。"
 
 #: dat/missions/minerva/maikki1.lua:339
 msgid ""
 "\"{stealthsys}? That should be just past {cutscenesys}. Do you think the "
 "scavengers could have found something there?\""
-msgstr ""
+msgstr "｢{stealthsys}？　{cutscenesys}のちょうど先にあるはずだ。ごみあさりがそこでなにか見つけたと思ってるのか？｣"
 
 #: dat/missions/minerva/maikki1.lua:340
 msgid ""
 "\"If you plan to go, you should bring your best sensors. It's very hard to "
 "see anything due to the density of the nebula there.\""
-msgstr ""
+msgstr "｢行くつもりなら、いちばんいいセンサーを持っていくべきだ。あそこは星雲が濃いからなにかを見つけるのはとても難しい｣"
 
 #: dat/missions/minerva/maikki1.lua:344
 msgid ""
 "\"Wow! Where did you find that picture of Kex? He looks younger than I "
 "remember him!\""
-msgstr ""
+msgstr "｢おお！　そのケクスの写真をどこで見つけた？　おれが覚えてるより若く見えるな｣"
 
 #: dat/missions/minerva/maikki1.lua:348
 msgid ""
 "He gives you a bored look as he takes a sip from his drink.\n"
 "\"Is there anything else you would like to know about?\""
 msgstr ""
+"老人は退屈した表情を見せて、飲み物をひと口飲んだ。\n"
+"｢ほかになにか聞きたいことはあるか？｣"
 
 #: dat/missions/minerva/maikki1.lua:373
 msgid ""
 "You see some scavengers at the bar. They are clearly plastered. They don't "
 "really seem to be aware of your presence."
-msgstr ""
+msgstr "あなたはごみあさりたちがバーにいるのに気がついた。あきらかに酔っぱらっている。あなたがいるのをほんとうに気づいていないようだ。"
 
 #. Already got mission, just give player a refresher
 #: dat/missions/minerva/maikki1.lua:377
 msgid ""
 "\"Aren't you drinking too much? Don't forget to fix my sensors before we "
 "leave to Zerantix tomorrow.\""
-msgstr ""
+msgstr "｢あまり飲んでないな？　明日ゼランティクスへ出発するまえに、おれのセンサーを修理するのを忘れるなよ｣"
 
 #: dat/missions/minerva/maikki1.lua:378
 msgid ""
 "\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\"\n"
 "He takes another long swig of his drink and burps."
 msgstr ""
+"｢おれええ？　飲みみしぎ？　にゃにをばきゃなことをを｣\n"
+"男はまたぐっと一気飲みをしてから、げっぷをした。"
 
 #. Blabber target to player
 #: dat/missions/minerva/maikki1.lua:382
 msgid ""
 "\"…and then I said to him 'while that may look like a hamster, it's got a "
 "bite like a moose!'\""
-msgstr ""
+msgstr "｢……それからおれはやつにいったんだ｡『そいつはハムスターみたいに見えるが、ヘラジカみたいにかみつくんだ！』ってね｣"
 
 #: dat/missions/minerva/maikki1.lua:383
 msgid "The scavengers hoot with laughter."
-msgstr ""
+msgstr "ごみあさりたちは笑ってはやしたてた。"
 
 #: dat/missions/minerva/maikki1.lua:384
 msgid "\"That's a great story. Them space hamsters be wicked.\""
-msgstr ""
+msgstr "｢それはすげえ話だな。宇宙のハムスターは意地悪なんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:385
 msgid ""
@@ -52650,23 +52637,25 @@ msgid ""
 "nebula always gives me the chills.\"\n"
 "He shivers exaggeratedly."
 msgstr ""
+"｢明日のことだが、情報が正しいのはたしかなんだな？　星雲の深くに行くといつも寒気がするんだ｣\n"
+"ごみあさりがおおげさに震えてみせた。"
 
 #: dat/missions/minerva/maikki1.lua:387
 msgid ""
 "\"Yeah! I saw it with my own eyes. That shit is legit. Seems to be the wreck "
 "of a scavenger.\""
-msgstr ""
+msgstr "｢ああ！　自分の目で見たんだよ。あのくそは本物だ。ごみあさりの難破船みたいだった｣"
 
 #: dat/missions/minerva/maikki1.lua:388
 msgid ""
 "\"Why didn't you haul it back then? We might not be able to find it again!\""
-msgstr ""
+msgstr "｢じゃあどうして引っぱってこなかった？　もういちど見つけることはできないかもしれないんだぞ！｣"
 
 #: dat/missions/minerva/maikki1.lua:390
 msgid ""
 "\"How many times do I have to tell you? My sensors were acting up, didn't "
 "want to spend too long in Zerantix with all them ghosts around.\""
-msgstr ""
+msgstr "｢何回いわなきゃならないんだよ？　おれのセンサーは調子が悪くて、亡霊がそこらじゅうにいるゼランティクスにあまり長くいたくないんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:391
 msgid ""
@@ -52674,34 +52663,36 @@ msgid ""
 "fix!\"\n"
 "He pats his biceps in a fairly uninspiring way."
 msgstr ""
+"｢おれがセンサーを見てなおしてやるよ。このちくしょうどもになおせないものはなにもないんじゃないのか！｣\n"
+"そのごみあさりはかなり退屈なやりかたで自分の腕を軽くたたいた。"
 
 #: dat/missions/minerva/maikki1.lua:393
 msgid ""
 "\"Yeah, let's do that after one more round of drinks. Got to get there "
 "before other scroungers do.\""
-msgstr ""
+msgstr "｢ああ、もう一回飲んだらそいつをやっちまおう。ほかのたかり屋がやるまえに、むこうに行くんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:394
 msgid "\"To our future success in Zerantix!\""
-msgstr ""
+msgstr "｢ゼランティクスでの将来の成功に！｣"
 
 #: dat/missions/minerva/maikki1.lua:395
 msgid ""
 "They cheer, down their drinks, and order another round. Perhaps the wreck in "
 "Zerantix is related to Kex somehow."
-msgstr ""
+msgstr "ごみあさりたちが乾杯した。飲み物を降ろすと、もう一回注文をする。おそらくゼランティクスの難破船はどうもケクスと関係しているようだ。"
 
 #: dat/missions/minerva/maikki1.lua:399
 msgid "Follow the scavengers in the {sys} system"
-msgstr ""
+msgstr "{sys}星系でごみあさりたちについていけ。"
 
 #: dat/missions/minerva/maikki1.lua:402
 msgid "You overheard some scavengers talking about a wreck in Zerantix."
-msgstr ""
+msgstr "あなたはごみあさりたちがゼランティクス星系の難破船について話しているのを耳にした。"
 
 #: dat/missions/minerva/maikki1.lua:407
 msgid "You take your leave without them noticing you."
-msgstr ""
+msgstr "あなたは気づかれないように立ち去った。"
 
 #. Set up system
 #. Cutscene with scavengerB
@@ -52718,205 +52709,205 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:423 dat/missions/minerva/maikki1.lua:446
 #: dat/missions/minerva/maikki1.lua:509
 msgid "Scavenger"
-msgstr ""
+msgstr "ごみあさり"
 
 #: dat/missions/minerva/maikki1.lua:424
 msgid "Scavenger Vendetta"
-msgstr ""
+msgstr "ごみあさりのベンデッタ"
 
 #: dat/missions/minerva/maikki1.lua:463
 msgid "Sensors damaged. Requesting assistance."
-msgstr ""
+msgstr "センサーが壊れた。援助を要請する"
 
 #: dat/missions/minerva/maikki1.lua:464
 msgid "S.O.S. Scavenger here, sensors damaged."
-msgstr ""
+msgstr "緊急援助を要請する。ごみあさりがここにいて、センサーが故障した。"
 
 #: dat/missions/minerva/maikki1.lua:465
 msgid "Is anybody out there? Sensors damaged, requesting assistance."
-msgstr ""
+msgstr "だれかそのへんにいないか？　センサーが壊れた。援助を要請する。"
 
 #: dat/missions/minerva/maikki1.lua:466
 msgid "Mayday! Requesting assistance. Wait, what was that?"
-msgstr ""
+msgstr "メイデイ！　援助を要請する。待った、あれはなんだ？"
 
 #. Get rid of the timeout hook
 #: dat/missions/minerva/maikki1.lua:499
 msgid ""
 "#pYour ship has detected a curious signal originating from inside the system."
 "#0"
-msgstr ""
+msgstr "#pあなたの船は、この星系の中から発せられた不思議な信号を検出した。#0"
 
 #: dat/missions/minerva/maikki1.lua:500 dat/missions/minerva/maikki2.lua:617
 msgid "Curious Signal"
-msgstr ""
+msgstr "不思議な信号"
 
 #: dat/missions/minerva/maikki1.lua:513
 msgid ""
 "The comm flickers as a scavenger appears into view. He looks a bit pale."
-msgstr ""
+msgstr "通信機がまたたいて、ごみあさりが画面に現れた。そのごみあさりはちょっと青くなっているようだ。"
 
 #: dat/missions/minerva/maikki1.lua:514
 msgid ""
 "\"Thank you. I thought I was a goner. My sensors failed me at the worst time "
 "and it's impossible to see shit in this nebula.\""
-msgstr ""
+msgstr "｢ありがとう。もう助からないかと思った。センサーが最悪な時に動かなくなって、この星雲の中でくそを見つけられなくなったんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:515
 msgid ""
 "\"Could you tell me the way to {sys}? I have to get out of here as soon as "
 "possible.\""
-msgstr ""
+msgstr "｢{sys}星系へ行く方法を教えてくれないか？　できるだけ早くここから出なきゃならん｣"
 
 #: dat/missions/minerva/maikki1.lua:517
 msgid "Give him directions"
-msgstr ""
+msgstr "指示をする"
 
 #: dat/missions/minerva/maikki1.lua:522
 msgid "You close the comm and leave the scavenger to his fate."
-msgstr ""
+msgstr "あなたは通信を切って、ごみあさりを運命に任せた。"
 
 #: dat/missions/minerva/maikki1.lua:527
 msgid "\"Thanks! I can't wait to get out of this hellhole.\""
-msgstr ""
+msgstr "｢ありがとう！　この地獄のような場所から出るのが待ちきれない｣"
 
 #: dat/missions/minerva/maikki1.lua:528
 msgid ""
 "\"Don't tell me you've also come here to scavenge? I'm telling you, this "
 "place is haunted.\""
-msgstr ""
+msgstr "｢まさかあんたもここへごみあさりに来たんじゃないだろうね？　いっておくけど、この場所には幽霊が出るんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:529
 msgid ""
 "\"I was told this would be easy money on the blackmarket, but this wasn't "
 "what I expected at all.\""
-msgstr ""
+msgstr "｢ここのはやみ市場で簡単にかねにできるといわれたんだが、こんなのはまったく予想してなかった｣"
 
 #: dat/missions/minerva/maikki1.lua:530
 msgid "\"Anyway, good luck scavenging.\""
-msgstr ""
+msgstr "｢とにかく、ごみあさりの幸運を祈る｣"
 
 #: dat/missions/minerva/maikki1.lua:531
 msgid "The scavenger disappears from view."
-msgstr ""
+msgstr "あのごみあさりが画面から消えた。"
 
 #. Close comm immediately
 #. Was player an asshole?
 #: dat/missions/minerva/maikki1.lua:540
 msgid "Asshole!"
-msgstr ""
+msgstr "くそったれ！"
 
 #. reset timer
 #: dat/missions/minerva/maikki1.lua:544
 msgid "Thanks!"
-msgstr ""
+msgstr "ありがとう！"
 
 #. reset timer
 #: dat/missions/minerva/maikki1.lua:551
 msgid "You helped a scavenger in Arandon."
-msgstr ""
+msgstr "あなたはアランドンでごみあさりを助けた。"
 
 #. Start the cinematics
 #: dat/missions/minerva/maikki1.lua:572
 msgid "Damnit! I thought I told you to fix the sensors."
-msgstr ""
+msgstr "ちくしょう！　センサーをなおせといったと思ったがな"
 
 #: dat/missions/minerva/maikki1.lua:575
 msgid ""
 "Hey! I fixed them, it's this damn nebula that must have broken them again."
-msgstr ""
+msgstr "おい！　なおしたよ。このくそ星雲でまた壊れたにちがいないな"
 
 #: dat/missions/minerva/maikki1.lua:578
 msgid ""
 "Damnit. I really dislike broadcasting, but my encryption also seems damaged "
 "now."
-msgstr ""
+msgstr "ちくしょう。一斉送信はほんとうにやなんだよ。でも暗号装置ももう壊れたらしい"
 
 #: dat/missions/minerva/maikki1.lua:581
 msgid "Don't worry, it's not like there's anybody else here."
-msgstr ""
+msgstr "心配するな。ここじゃほかにだれもいそうにないし"
 
 #: dat/missions/minerva/maikki1.lua:584
 msgid "Let's just get this over with."
-msgstr ""
+msgstr "ちょっと片づけさせてくれ"
 
 #. Back to player
 #: dat/missions/minerva/maikki1.lua:599
 msgid "This place always gives me the creeps."
-msgstr ""
+msgstr "この場所はいつもぞっとするな"
 
 #: dat/missions/minerva/maikki1.lua:600
 msgid "C'mon, the guy said that this was a great wreck."
-msgstr ""
+msgstr "おいおい、あいつはこれがすごい難破船だっていってた"
 
 #: dat/missions/minerva/maikki1.lua:601
 msgid "You know the Za'lek pay premium for this sort of shit, right?"
-msgstr ""
+msgstr "ザレクがこの手のくそに割増を払うんだってわかってるんだよな？"
 
 #: dat/missions/minerva/maikki1.lua:602
 msgid "Yeah, yeah…  just hope we don't see any ghosts."
-msgstr ""
+msgstr "ああ、ああ……。亡霊を見ないことだけを祈ってるよ"
 
 #: dat/missions/minerva/maikki1.lua:603
 msgid "You don't really believe in them do you?"
-msgstr ""
+msgstr "ほんとうは亡霊がいるなんて信じてないんだろ？"
 
 #: dat/missions/minerva/maikki1.lua:604
 msgid "Dude, there's really freaky shit out there."
-msgstr ""
+msgstr "だて男さんよ、むこうはほんとうにとっぴなことがあるんだよ"
 
 #: dat/missions/minerva/maikki1.lua:605
 msgid "Yeah, but most of that freaky shit are Soromid bioengineered crap."
-msgstr ""
+msgstr "ああ、だがとっぴなくそのほとんどは、ソロミドの生物工学的くずだ"
 
 #: dat/missions/minerva/maikki1.lua:606
 msgid "Ugh, Soromids give me the creeps."
-msgstr ""
+msgstr "ううっ、ソロミドにはぞっとするな"
 
 #: dat/missions/minerva/maikki1.lua:607
 msgid ""
 "I'd take them over Za'leks any day. I have no idea what Za'leks are thinking."
-msgstr ""
+msgstr "いつでもザレクにあれを渡すよ。ザレクの考えてることはわからんな"
 
 #. 37 seconds
 #: dat/missions/minerva/maikki1.lua:609
 msgid "Hey, did you see something?"
-msgstr ""
+msgstr "おい、なんか見たか？"
 
 #: dat/missions/minerva/maikki1.lua:610
 msgid ""
 "How the hell am I supposed to see anything with my sensors broken, dipshit?"
-msgstr ""
+msgstr "センサーが壊れてるのに、いったいなにを見るっていうんだよ、役立たず？"
 
 #: dat/missions/minerva/maikki1.lua:611
 msgid "I already said I was sorry!"
-msgstr ""
+msgstr "すまんっていっただろ！"
 
 #: dat/missions/minerva/maikki1.lua:612
 msgid "This is coming out of your cut."
-msgstr ""
+msgstr "これはおまえの分け前から出してもらう"
 
 #. 53 seconds
 #: dat/missions/minerva/maikki1.lua:614
 msgid "C'mon!"
-msgstr ""
+msgstr "おい！"
 
 #. Cut off point here, restarts at heading to waypoint[4]
 #: dat/missions/minerva/maikki1.lua:616
 msgid "We should be there soon."
-msgstr ""
+msgstr "すぐに着くはずだ"
 
 #: dat/missions/minerva/maikki1.lua:617
 msgid "I swear I'll never come to the nebula again after this…"
-msgstr ""
+msgstr "これが終わったら、二度と星雲に来ないと誓う……"
 
 #: dat/missions/minerva/maikki1.lua:618
 msgid "That's what you said last time too!"
-msgstr ""
+msgstr "それは前回もいっただろ！"
 
 #: dat/missions/minerva/maikki1.lua:641
 msgid "#rYou are about to be discovered!"
-msgstr ""
+msgstr "#rあなたは発見されようとしている！"
 
 #: dat/missions/minerva/maikki1.lua:645
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
@@ -52925,24 +52916,24 @@ msgstr "逃げろ！"
 
 #: dat/missions/minerva/maikki1.lua:646
 msgid "There's definitely something there! Scram!"
-msgstr ""
+msgstr "確実にあそこにはなにかいる！　逃げろ！"
 
 #: dat/missions/minerva/maikki1.lua:651
 msgid "#rYou have been detected! Stealth failed!"
-msgstr ""
+msgstr "#rあなたは探知された！　隠れて追跡するのに失敗！"
 
 #: dat/missions/minerva/maikki1.lua:658
 msgid "#rYou are about to lose track of the scavengers!!"
-msgstr ""
+msgstr "#rあなたはごみあさりを見失いつつある !!"
 
 #: dat/missions/minerva/maikki1.lua:667
 msgid "#rYou lost track of the scavengers! Stealth failed!"
-msgstr ""
+msgstr "#rあなたはごみあさりを見失った！　隠れて追跡するのに失敗！"
 
 #. Starting out
 #: dat/missions/minerva/maikki1.lua:677
 msgid "Let's get going."
-msgstr ""
+msgstr "行こうか"
 
 #. Check if made it to next target
 #. Finished current target, go to next
@@ -52950,48 +52941,48 @@ msgstr ""
 #. pscavA is following pscavB
 #: dat/missions/minerva/maikki1.lua:711
 msgid "Did you see something?"
-msgstr ""
+msgstr "なにか見たか？"
 
 #. Should trigger another catch
 #: dat/missions/minerva/maikki1.lua:717
 msgid "It's your imagination. Let's get this over with."
-msgstr ""
+msgstr "想像の産物だろ。片づけてしまおう"
 
 #. Spawn the wreck
 #: dat/missions/minerva/maikki1.lua:731
 msgid "Ship Wreck"
-msgstr ""
+msgstr "難破船"
 
 #. Else, still travelling to target
 #: dat/missions/minerva/maikki1.lua:747
 msgid "Looks like we made it!"
-msgstr ""
+msgstr "うまくやったようだな！"
 
 #: dat/missions/minerva/maikki1.lua:749
 msgid "We came all the way for this wreck? It better be worth it…"
-msgstr ""
+msgstr "ずっと来たのはこの難破船のためか？　その価値があればもっといいんだが……"
 
 #: dat/missions/minerva/maikki1.lua:751
 msgid "They said it was whatshisname… Xex? Vex? Some famous guy's wreck."
-msgstr ""
+msgstr "あいつらはこれがなんとかいうやつ……ゼクス？　ベクス？　有名なやつの難破船だといってた"
 
 #: dat/missions/minerva/maikki1.lua:753
 msgid "Wait, someone is there!"
-msgstr ""
+msgstr "待った、だれかそこにいるぞ！"
 
 #: dat/missions/minerva/maikki1.lua:780
 msgid "Two angry scavengers appear on your screen."
-msgstr ""
+msgstr "二人の怒ったごみあさりたちが、あなたの画面に現れた。"
 
 #: dat/missions/minerva/maikki1.lua:781
 msgid "\"You better beat it, punk. We are doing business here.\""
-msgstr ""
+msgstr "｢帰ったほうがいいぞ、ちんぴら。おれたちはここで仕事をしてるんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:782
 msgid ""
 "\"Yeah, the Za'lek wouldn't like it if we weren't able to deliver the goods "
 "they want.\""
-msgstr ""
+msgstr "｢ああ、もしおれたちが望みの品物を持っていかなかったら、ザレクは喜ばないだろうな｣"
 
 #: dat/missions/minerva/maikki1.lua:783
 msgid ""
@@ -53000,124 +52991,131 @@ msgid ""
 "worse state than that wreck over there.\"\n"
 "He points at the wreck nearby."
 msgstr ""
+"このごみあさりは仲間をにらみつけてから、あなたの方をまたじっと見つめた。\n"
+"｢ここはあんたのような者が来る場所じゃない。消えるんだな。さもないと、そこで難破してるやつよりもっと悪いありさまで放置されることになる｣\n"
+"男は近くの難破船を指した。"
 
 #: dat/missions/minerva/maikki1.lua:787
 msgid "\"What is that about the Za'lek?\""
-msgstr ""
+msgstr "｢ザレクどうこうっていうのはなんのことなんです？｣"
 
 #: dat/missions/minerva/maikki1.lua:788
 msgid "Lock your weapon systems on their ships"
-msgstr ""
+msgstr "ごみあさりたちの船に武器システムのねらいをつける"
 
 #: dat/missions/minerva/maikki1.lua:792
 msgid ""
 "He glares at his partner.\n"
 "\"This is why I always tell you to keep your mouth shut!\""
 msgstr ""
+"男が仲間をねめつける。\n"
+"｢口を閉じとけっていつもいってる理由がこれだよ！｣"
 
 #: dat/missions/minerva/maikki1.lua:794
 msgid ""
 "\"Damnit, why can't shit go right for a change?\"\n"
 "He seems to be clutching his head. A headache perhaps?"
 msgstr ""
+"｢ちくしょう、くそったれがたまにはうまくいったりしないってのはなんでだよ？｣\n"
+"この男は頭を手でおさえているようだ。頭痛？　もしかして。"
 
 #: dat/missions/minerva/maikki1.lua:797
 msgid "\"Look I just want to talk\""
-msgstr ""
+msgstr "｢ほら、ちょっと話したかっただけですよ｣"
 
 #: dat/missions/minerva/maikki1.lua:798
 msgid "Try to bribe them (#r{credits}#0)"
-msgstr ""
+msgstr "わいろを試す (#r{credits}#0)"
 
 #. TODO possibly add a pacifist option here too
 #: dat/missions/minerva/maikki1.lua:803
 msgid "\"What do you want to talk about asshole? This is our job.\""
-msgstr ""
+msgstr "｢なにについて話したいんだ、くそったれ？　これはおれたちの仕事だ｣"
 
 #: dat/missions/minerva/maikki1.lua:818
 msgid "You found a wreck and bribed scavengers so that they left."
-msgstr ""
+msgstr "あなたは難破船を見つけ、ごみあさりにわいろを渡したので、ごみあさりたちはいなくなった。"
 
 #: dat/missions/minerva/maikki1.lua:822
 msgid "You wire them {credits}."
-msgstr ""
+msgstr "あなたはごみあさりたちに {credits} 送った。"
 
 #: dat/missions/minerva/maikki1.lua:823
 msgid ""
 "\"I guess this isn't worth our trouble. We already got enough stuff for the "
 "Za'leks already.\""
-msgstr ""
+msgstr "｢これは面倒なことにするほどの価値はないと思うぞ。もうザレクのためにはじゅうぶん取ってきてやったよ｣"
 
 #: dat/missions/minerva/maikki1.lua:824
 msgid ""
 "\"C'mon, let's get out of here. This place gives me the creeps. Feel like a "
 "ghost is going to pop out any minute.\""
-msgstr ""
+msgstr "｢行こうぜ、ここから出よう。この場所にはぞっとするんだ。亡霊がすぐにでも出てきそうな感じで｣"
 
 #: dat/missions/minerva/maikki1.lua:825
 msgid "\"Next round in Doeston is on me.\""
-msgstr ""
+msgstr "｢ドズトンでの次の飲みはおれがもつよ｣"
 
 #: dat/missions/minerva/maikki1.lua:826
 msgid ""
 "The scavengers disappear from your screen as you see their ships start to "
 "head back to Arandon."
-msgstr ""
+msgstr "ごみあさりたちがあなたの画面から消え去って、ごみあさりたちの船がアランドンへ戻りはじめたことがわかった。"
 
 #. Fight to the death :D
 #: dat/missions/minerva/maikki1.lua:831
 msgid "You don't have enough money to bribe them and fumble with words."
-msgstr ""
+msgstr "あなたにはわいろを渡せるだけのかねがなかったので、言葉につまった。"
 
 #: dat/missions/minerva/maikki1.lua:833
 msgid "\"He's stalling for time! He must have reinforcements coming!\""
-msgstr ""
+msgstr "｢あいつは時間を稼いでる！　増援が来るにちがいない！｣"
 
 #: dat/missions/minerva/maikki1.lua:835
 msgid "\"Shit man! I knew we shouldn't have come here.\""
-msgstr ""
+msgstr "｢くそったれめ！　ここへ来るべきじゃないってわかってたんだ｣"
 
 #: dat/missions/minerva/maikki1.lua:836
 msgid "\"Shut up and follow my lead!\""
-msgstr ""
+msgstr "｢だまっておれの指揮に従え！｣"
 
 #: dat/missions/minerva/maikki1.lua:837
 msgid "You detect they are powering up their weapon systems."
-msgstr ""
+msgstr "あなたはごみあさりたちの武器システムが起動したのを探知した。"
 
 #. TODO add angry messages
 #: dat/missions/minerva/maikki1.lua:845
 msgid "You found a wreck and were attacked by scavengers."
-msgstr ""
+msgstr "あなたは難破船を発見し、ごみあさりたちに攻撃された。"
 
 #: dat/missions/minerva/maikki1.lua:860
 msgid "Scavenger attacked."
-msgstr ""
+msgstr "ごみあさりに攻撃された。"
 
 #: dat/missions/minerva/maikki1.lua:870
 msgid ""
 "You can see clear laser burns on the hull of the wreck as you approach the "
 "ship and prepare to board. This doesn't look like it was an accident."
-msgstr ""
+msgstr "船に近づいて乗りこむ用意をしていると、難破船の船殻にレーザーのこげ跡があるのがはっきりと見えた。これは事故らしくない。"
 
 #: dat/missions/minerva/maikki1.lua:871
 msgid ""
 "You board the wreck in your space suit and begin to investigate the insides "
 "of the ship."
-msgstr ""
+msgstr "宇宙服を着て難破船に乗りこむと、船の中の調査を開始した。"
 
 #. Give player the illusion of choice
 #: dat/missions/minerva/maikki1.lua:877
 msgid "Investigate the bridge"
-msgstr ""
+msgstr "船橋の調査"
 
 #: dat/missions/minerva/maikki1.lua:880
 msgid "Investigate the dormitories"
-msgstr ""
+msgstr "船室の調査"
 
 #: dat/missions/minerva/maikki1.lua:883
 msgid "Investigate the engine room"
-msgstr ""
+msgstr "機関室の調査"
 
 #: dat/missions/minerva/maikki1.lua:892
 msgid ""
@@ -53125,6 +53123,8 @@ msgid ""
 "be very old space-weathered bloodstains over most of the controls. However, "
 "there are no bodies to be seen."
 msgstr ""
+"あなたは船橋の残り物の方へと向かう。あなたにわかったのは、真空にさらされたとても古い血痕が、ほとんどの制御卓についているように見えることだった。とはいえ、"
+"死体はどこにも見えなかった。"
 
 #: dat/missions/minerva/maikki1.lua:897
 msgid ""
@@ -53132,6 +53132,8 @@ msgid ""
 "best shape, if you don't count all the damage that seems to have been done "
 "by scavengers trying to find parts to sell."
 msgstr ""
+"船室は、船のなかでもいちばんよく本来の姿が保たれているように見える場所だった。ごみあさりたちが売れるものを見つけようとして作ったらしい損害を、まったく数に"
+"入れなければだが。"
 
 #: dat/missions/minerva/maikki1.lua:898
 msgid ""
@@ -53139,12 +53141,14 @@ msgid ""
 "catches your eye. You grab what appears to be a picture of two adults and a "
 "child. The child looks very familiar."
 msgstr ""
+"価値のあるものはなにも残ってないようだったが、小さな紙片があなたの目にとまる。手にとってみると、二人の大人と子どもがひとり写った写真のようだった。子どもは"
+"とてもよく知っている人に見える。"
 
 #: dat/missions/minerva/maikki1.lua:900
 msgid ""
 "You turn the picture around and you see that 'Maikki 596:0928' is written in "
 "the corner. You should probably bring this back to Maikki."
-msgstr ""
+msgstr "写真を裏返すと、隅に『メイッキー 596:0928』と書いてあるのがわかった。おそらくこれはメイッキーのために持ってかえるべきだろう。"
 
 #: dat/missions/minerva/maikki1.lua:905
 msgid ""
@@ -53152,12 +53156,13 @@ msgid ""
 "like most of it was sliced off by some powerful beam weapon. Someone really "
 "didn't want this ship getting away."
 msgstr ""
+"機関室はもっとも打撃をうけた場所であるようだ。ほとんどは、なにか強力なビーム兵器でそぎとられたらしい。だれかはほんとうにこの船を逃したくなかったのだ。"
 
 #: dat/missions/minerva/maikki1.lua:910
 msgid ""
 "After your thorough investigation, you leave the wreck behind and get back "
 "into your ship."
-msgstr ""
+msgstr "完全に調査をしてから、あなたは難破船をあとにして、自分の船に戻った。"
 
 #: dat/missions/minerva/maikki1.lua:914
 msgid ""
@@ -53165,10 +53170,11 @@ msgid ""
 "his family and signs that this was not an accident with possible Za'lek "
 "involvement."
 msgstr ""
+"あなたはケクスの船らしい難破船に乗りこんだ。あなたはケクスの家族の写真を見つけ、これが事故ではなくザレクが関係する可能性があるという徴候に気づいた。"
 
 #: dat/missions/minerva/maikki1.lua:918
 msgid "Return to {name} in the {sys} system"
-msgstr ""
+msgstr "{sys}星系にいる{name}のところへ戻れ。"
 
 #. Clear scavengers if exist
 #. Unboard
@@ -53209,22 +53215,22 @@ msgstr ""
 #. --
 #: dat/missions/minerva/maikki2.lua:42
 msgid "Prof. Sato"
-msgstr ""
+msgstr "サトー教授"
 
 #. Computer Science / Mathematics
 #: dat/missions/minerva/maikki2.lua:47
 msgid "Prof. Stova"
-msgstr ""
+msgstr "ストーバ教授"
 
 #. Material Science
 #: dat/missions/minerva/maikki2.lua:52
 msgid "Prof. Hsu"
-msgstr ""
+msgstr "シュー教授"
 
 #. Philosophy
 #: dat/missions/minerva/maikki2.lua:57
 msgid "Dr. Cayne"
-msgstr ""
+msgstr "ケイン博士"
 
 #. Dr. Shrimp
 #. Should coincide with "Strangelove Lab"
@@ -53243,18 +53249,18 @@ msgstr ""
 #. luacheck: globals approach_eccentric approach_hint1 approach_hint2 approach_hint3 approach_hint4 approach_maikki (NPC functions passed by name)
 #: dat/missions/minerva/maikki2.lua:99
 msgid "Maikki wants you to help her find out what happened to her father."
-msgstr ""
+msgstr "メイッキーは父親になにがあったのか見つけだす手助けをあなたにしてほしがっている。"
 
 #. If not accepted, mem.misn_state will still be nil
 #. Set up mission stuff
 #. Re-add Maikki if accepted
 #: dat/missions/minerva/maikki2.lua:129
 msgid "Investigate the Za'lek"
-msgstr ""
+msgstr "ザレクの調査。"
 
 #: dat/missions/minerva/maikki2.lua:132
 msgid "\tGo to {pnt} in {sys}"
-msgstr ""
+msgstr "\t{sys}星系の{pnt}へ行け。"
 
 #: dat/missions/minerva/maikki2.lua:162
 msgid ""
@@ -53263,11 +53269,15 @@ msgid ""
 "{name2} in the {sys2} system,\n"
 "and {name3} in the {sys3} system.\""
 msgstr ""
+"｢あなたがさがしだすことになる 3 人のザレクの研究員は、\n"
+"{sys1}星系にいる{name1}と、\n"
+"{sys2}星系にいる{name2}と、\n"
+"{sys3}星系にいる{name3}です｣"
 
 #: dat/missions/minerva/maikki2.lua:173
 msgid ""
 "You approach Maikki who seems to have a fierce determination in her eyes."
-msgstr ""
+msgstr "あなたはメイッキーに近づいた。目にはすさまじい決意があるように見える。"
 
 #: dat/missions/minerva/maikki2.lua:175
 msgid ""
@@ -53275,16 +53285,19 @@ msgid ""
 "\"From what you told me, I think I have a good idea for our next lead. Would "
 "you be interested in helping again?\""
 msgstr ""
+"メイッキーはあなたが星雲で発見したものに励まされたらしい。\n"
+"｢あなたが教えてくれたことから、次に進む方向についていい考えが浮かんだと思います。また手を貸すことに興味はありますか？｣"
 
 #: dat/missions/minerva/maikki2.lua:178
 msgid "Help Maikki again"
-msgstr ""
+msgstr "またメイッキーを助ける"
 
 #: dat/missions/minerva/maikki2.lua:189
 msgid ""
 "You agreed to continue helping Maikki find her father. She told you to try "
 "to find hints from three Za'lek researchers."
 msgstr ""
+"あなたは手助けをつづけてメイッキーの父親をさがすのに同意した。メイッキーは 3 人のザレクの研究者から手がかりを見つけるように努力してほしいといった。"
 
 #: dat/missions/minerva/maikki2.lua:191
 msgid ""
@@ -53294,6 +53307,8 @@ msgid ""
 "them could also be related to whatever happened to the ship in the first "
 "place.\""
 msgstr ""
+"｢星雲で父の船になにがあったのか、見つけだせるはずだと思ってます。だれかは星雲で見つかるものにとても興味をもっているらしいし、あなたが会ったごみあさりたち"
+"の背後にいるのはその人のようです。どんな人が背後にいるとしても、最初にあの船におきたことならどんなことにも関係している可能性があります｣"
 
 #: dat/missions/minerva/maikki2.lua:192
 msgid ""
@@ -53302,6 +53317,8 @@ msgid ""
 "was able to get a list of three researchers. I'll give you the details on "
 "them and you should pay them a visit to see if they know anything.\""
 msgstr ""
+"｢星雲から取ってきたものに興味をもっていそうなザレクの研究者を調べてみました。わたしが想像していたよりは少ないみたいです。3 "
+"人の研究者の名簿を手に入れられました。その 3 人の詳細を教えるので、訪問してなにか知っていないか確認してください｣"
 
 #: dat/missions/minerva/maikki2.lua:193
 msgid ""
@@ -53309,10 +53326,12 @@ msgid ""
 "determination.\n"
 "\"You will do whatever it takes to find him right?\""
 msgstr ""
+"メイッキーがあなたの方に身を寄せて、すさまじい決意であなたの目をのぞきこむ。\n"
+"｢父を見つけるためならいくらでもかけてくれるんですよね？｣"
 
 #: dat/missions/minerva/maikki2.lua:197
 msgid "\"Maybe…\""
-msgstr ""
+msgstr "｢たぶん……｣"
 
 #: dat/missions/minerva/maikki2.lua:198 dat/missions/tutorial/nelly01.lua:154
 msgid "\"No\""
@@ -53324,12 +53343,14 @@ msgid ""
 "convincing.\"\n"
 "She winks at you."
 msgstr ""
+"｢ザレクはときどきとても強情になることがあって、いくらか説得が必要かもしれないってわかってますね｣\n"
+"メイッキーがあなたにウィンクした。"
 
 #: dat/missions/minerva/maikki2.lua:209
 msgid ""
 "\"I thought that after your experience in the nebula you would understand "
 "how dangerous this can get.\""
-msgstr ""
+msgstr "｢星雲で経験したことがあるから、これがどれだけ危険になりえるのかあなたは理解してるんだろうって考えてました｣"
 
 #: dat/missions/minerva/maikki2.lua:219
 msgid ""
@@ -53337,6 +53358,8 @@ msgid ""
 "\"I hope you're joking. This is very important to me and I hope you don't "
 "lose this lead…\""
 msgstr ""
+"メイッキーがあなたを見つめる。\n"
+"｢冗談をいっているならいいんですけど。これはわたしにとってとても重要なので、この手がかりは見失わないでほしいんです……｣"
 
 #: dat/missions/minerva/maikki2.lua:225
 msgid ""
@@ -53345,6 +53368,8 @@ msgid ""
 "think that they must know something about this; the disappearance of my "
 "father was big news!\""
 msgstr ""
+"｢どうもこの 3 人の研究者は、星雲の原因にかんする研究でいっしょに働いていたようです。でもじっさいのところ、まったくなにも公開されてません。その 3 "
+"人は父の件についてなにか知っているにちがいないとはっきり思ってます。父の失踪は大きなニュースだったんですよ！｣"
 
 #: dat/missions/minerva/maikki2.lua:226
 msgid ""
@@ -53353,19 +53378,22 @@ msgid ""
 "Za'lek researchers a visit and see if you can find out what happened to my "
 "father!\""
 msgstr ""
+"メイッキーが期待してあなたを見た。\n"
+"｢わたしはここにいて、父をさがしつづけます。どうか気色の悪いザレクの研究者と会ってきてください。それでわたしの父におきたことがわかるかどうかたしかめてみる"
+"んです！｣"
 
 #: dat/missions/minerva/maikki2.lua:231
 msgid "Ask about the researchers"
-msgstr ""
+msgstr "研究者についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:232
 msgid "Ask about her father (Kex)"
-msgstr ""
+msgstr "父親 (ケクス) についてたずねる"
 
 #. TODO more options as more researchers are found
 #: dat/missions/minerva/maikki2.lua:237
 msgid "Tell her want you found"
-msgstr ""
+msgstr "求められていた発見について教える"
 
 #: dat/missions/minerva/maikki2.lua:243
 msgid ""
@@ -53374,6 +53402,8 @@ msgid ""
 "from the nebula. Most of it is classified so I wasn't able to get much "
 "information.\""
 msgstr ""
+"｢わたしがいった研究者たちは、ある種の研究計画に関係していました。その計画は、星雲から得られた人工遺物を分析して、事象の原因を理解しようとするものです。そ"
+"のほとんどは機密扱いなので、あまり情報は得られませんでした｣"
 
 #: dat/missions/minerva/maikki2.lua:244
 msgid ""
@@ -53383,6 +53413,9 @@ msgid ""
 "understands and makes them move constantly from research laboratory to "
 "research laboratory. So droll!\""
 msgstr ""
+"｢どうもその計画は理由かなにかがあって解散させられたようです。それに行方不明になった参加者もいます。ですが、そのなかの二、三人は追うことができました。それ"
+"でも簡単ではありませんでしたけど。あの人たちにはテニュアと呼ばれるだれも理解してない妙な制度があって、たえまなく研究所から研究所へと渡り歩いてるんです。ほ"
+"んとうにおかしいですよね！｣"
 
 #: dat/missions/minerva/maikki2.lua:246
 msgid ""
@@ -53391,13 +53424,16 @@ msgid ""
 "\"ma'am that beaker of acid is not a toy\". So boring!\"\n"
 "She frowns and shakes her head."
 msgstr ""
+"｢ザレクから簡単には情報を得られないと思ってます。ザレクはけっしてすなおな答えをしませんし、みんな『それは非論理的です』とか『お嬢さん、その酸のビーカーは"
+"おもちゃじゃありません』とかなんだから。ほんとうにうんざり！｣\n"
+"メイッキーは顔をしかめて首を振った。"
 
 #. TODO messages regarding each of the researchers
 #: dat/missions/minerva/maikki2.lua:252
 msgid ""
 "\"I don't remember much about my father, most of what I know about him are "
 "from stories from my late mother and pilots who knew him.\""
-msgstr ""
+msgstr "｢父についてはあまり覚えていません。知っていることのほとんどは、最近亡くなった母と、父を知っていたパイロットから聞いた話です｣"
 
 #: dat/missions/minerva/maikki2.lua:253
 msgid ""
@@ -53406,6 +53442,9 @@ msgid ""
 "thrusters making them point the wrong way and he had to fly backwards "
 "through five systems in the nebula while chased by pirates? Sounds crazy!\""
 msgstr ""
+"メイッキーの目が輝いた。\n"
+"｢聞いたことあります？　事象直後のごみあさりの最中に、エンジンに小惑星が当たって向きがおかしくなったので、うしろ向きで星雲内の 5 "
+"星系を海賊から追われながら飛ばなきゃならなかったって？　正気じゃないですよね！｣"
 
 #: dat/missions/minerva/maikki2.lua:255
 msgid ""
@@ -53414,6 +53453,8 @@ msgid ""
 "parts of the last emperor's flagship stopped him from going back and back to "
 "the nebula.\""
 msgstr ""
+"｢父は事象後に星雲内のすべての星系を図にした最初のパイロットでもあるといわれています。最後の皇帝の旗艦の部品を回収してて戻れずにいたあいだにも足を折ること"
+"はなく、それから星雲に戻ったんです｣"
 
 #: dat/missions/minerva/maikki2.lua:256
 msgid ""
@@ -53422,6 +53463,9 @@ msgid ""
 "the time and my mother was probably very lonely. She told me he never came "
 "to any of my birthdays…\""
 msgstr ""
+"メイッキーの目がちょっと暗くなり、声が低くなった。\n"
+"｢父が真実を見つけることに取りつかれていたということは、ほとんどの時間は家にいなかったということを意味します。たぶん母はとても孤独だったと思います。わたし"
+"の誕生日にいたことがないと母はいっていました……｣"
 
 #: dat/missions/minerva/maikki2.lua:258
 msgid ""
@@ -53430,6 +53474,9 @@ msgid ""
 "history as humans was lost! I would love to be able to meet him again and be "
 "able to ask him all sorts of things.\""
 msgstr ""
+"メイッキーの目がまた輝いた。\n"
+"｢そうはいっても、あれは異常な時代たったから。宇宙とわたしたちの人類としての歴史がほとんど失われてしまった！　"
+"父とまた会えて、いろいろなことを聞けたらほんとうにうれしいでしょうね｣"
 
 #: dat/missions/minerva/maikki2.lua:260
 msgid ""
@@ -53439,6 +53486,10 @@ msgid ""
 "have to find out what happened and set things right!\"\n"
 "Her eyes sparkle with determination."
 msgstr ""
+"｢星雲で父の船を見つけたんだし、おきたことの真相をつきとめなければならないの！　"
+"事故だったはずはないし、ザレクがこれに関係しているのはたしかです。あなたは亡骸を見なかったんだから、父は生きてるにちがいないです！　"
+"なにがおきたのか見つけだして、きちんと片をつけないと！｣\n"
+"メイッキーの目は決意できらめいていた。"
 
 #: dat/missions/minerva/maikki2.lua:265
 msgid ""
@@ -53446,6 +53497,8 @@ msgid ""
 "Strangelove, in particular. This includes the good news that Kex should be "
 "at Minerva Station, taken into custody by some thugs."
 msgstr ""
+"あなたはメイッキーに、ザレクの研究者と会ったときの苦難について教えた。とくにストレンジラブ博士のときのことだ。これにはよい知らせが含まれていて、ケクスはミ"
+"ネルバ・ステーションにいるはずだった。ここでならず者たちに監禁されているのだ。"
 
 #: dat/missions/minerva/maikki2.lua:266
 msgid ""
@@ -53453,6 +53506,8 @@ msgid ""
 "thought: that he's somewhere here being held captive or something… This is "
 "still all very weird though.\""
 msgstr ""
+"｢ザレクたちは思ったとおりくそったれですね。でもわたしが思っていたことを見つけてくれてうれしいです。父はここにどこかにいて、捕虜かなにかになっていると……"
+"。それでもこれはやっぱり全体的にとても妙ですけどね｣"
 
 #: dat/missions/minerva/maikki2.lua:267
 msgid ""
@@ -53461,6 +53516,9 @@ msgid ""
 "nor what they want with my father. Instead of answering questions we keep on "
 "finding new questions. I suppose that this is progress?…\""
 msgstr ""
+"｢そのストレンジラブ博士のことはちょっと心配です。厳密にはどういう意味でいったんでしょう？　ほんとうに本物の博士なんでしょうか？　わたしたちはまだ星雲でな"
+"にがおきたのかも、博士が父になにを望んだのかも知りません。わたしたちは質問に答えを得るかわりに、新しい質問を見つけつづけています。前進しているんですよね？"
+"　……｣"
 
 #: dat/missions/minerva/maikki2.lua:268
 msgid ""
@@ -53469,6 +53527,8 @@ msgid ""
 "tend to lie, they only bend the truth. All we have to do is find my father "
 "now and everything should fall in place.\""
 msgstr ""
+"｢それはともかく、もしストレンジラブ博士を信じられるなら、父は生きていて、ここのどこかにいるんです！　博士を疑う理由はないと思います。ザレクはどちらかとい"
+"えばうそをつきませんし、真実を曲げるだけです。もうわたしたちがしなければならないのは、父を見つけることだけですね。そうすればすべてに片がつくはずです｣"
 
 #: dat/missions/minerva/maikki2.lua:269
 msgid ""
@@ -53477,6 +53537,9 @@ msgid ""
 "is so great! I don't know what to tell him first. Do you think he'll "
 "recognize me?\""
 msgstr ""
+"メイッキーは目に見えて興奮していた。\n"
+"｢あとはみんないっしょになるだけです！　やっとまた父に会えるんですよ！　ほんとうにすばらしいです！　"
+"最初になんていえばいいのかわからないな。わたしのことわかると思います？｣"
 
 #: dat/missions/minerva/maikki2.lua:271
 msgid ""
@@ -53484,6 +53547,8 @@ msgid ""
 "open and if you find anything that looks suspicious, please get in touch "
 "with me! I'll also be keeping my eyes open.\""
 msgstr ""
+"｢今のところ手がかりはありませんが、見当ちがいはしていないはずです。観察をつづけて、怪しそうなことが見つかったら、どうかわたしに連絡してください！　"
+"わたしも観察しつづけるつもりです｣"
 
 #: dat/missions/minerva/maikki2.lua:272
 msgid ""
@@ -53491,6 +53556,8 @@ msgid ""
 "Minerva Tokens and a lifetime supply of parfaits! Since I don't need the "
 "tokens to buy anything anymore, here, you can take them.\""
 msgstr ""
+"｢ああ、忘れるところでした。パチンコの機械でついていて、ミネルバトークンをたくさん勝ちとったんです。だから一生ぶんのパフェを手に入れました！　"
+"これ以上なにか買うのにトークンは必要ないので、はい、受けとってください｣"
 
 #. no reward, yet...
 #. roughly 1M if you consider winning rates
@@ -53500,16 +53567,20 @@ msgid ""
 "doesn't have any leads at the moment, but it does seem like he is at Minerva "
 "Station."
 msgstr ""
+"あなたはメイッキーに、ストレンジラブ博士がメイッキーの父についてあなたにいったことを報告した。メイッキーに今のところ手がかりはないが、父親はたしかにミネル"
+"バ・ステーションにいるらしい。"
 
 #: dat/missions/minerva/maikki2.lua:281
 msgid "\"I'll be around here if you find anything.\""
-msgstr ""
+msgstr "｢もしなにか見つけたら、わたしはこのあたりにいますから｣"
 
 #: dat/missions/minerva/maikki2.lua:282
 msgid ""
 "You take your leave. Without any leads, it might prove hard to find where "
 "Kex is. You wonder what your next steps should be…"
 msgstr ""
+"あなたは辞去した。手がかりがないので、ケクスがどこにいるのか見つけるのは難しいとわかることになるのかもしれない。次の一歩はどうなるのかとあなたは疑問に思っ"
+"た……"
 
 #. Can't run it in the VN or it causes an error
 #: dat/missions/minerva/maikki2.lua:306 dat/missions/minerva/maikki2.lua:309
@@ -53517,29 +53588,29 @@ msgstr ""
 msgid ""
 "You see a person in a fancy lab coat. It seems like they are enjoying their "
 "time off."
-msgstr ""
+msgstr "あなたは派手な白衣を着た人に気がついた。余暇を楽しんでいるように見える。"
 
 #: dat/missions/minerva/maikki2.lua:315
 msgid ""
 "You see a young fellow intently reading a book. There seems to be a shrimp "
 "floating in a nearby aquarium bowl."
-msgstr ""
+msgstr "あなたは若者が熱心に本を読んでいるのに気がついた。近くにある養魚容器に小エビが浮いているのが見える。"
 
 #: dat/missions/minerva/maikki2.lua:318
 msgid "Hologram Projector"
-msgstr ""
+msgstr "ホログラム映写機"
 
 #: dat/missions/minerva/maikki2.lua:318
 msgid ""
 "An old decrepit hologram projector sits in the corner. It looks like you "
 "could use this to communicate with the owner of the station."
-msgstr ""
+msgstr "古くてぼろぼろのホログラム映写機が隅にある。これはステーションの所有者との通信に使えるようだ。"
 
 #: dat/missions/minerva/maikki2.lua:342
 msgid ""
 "You met the three researchers that Maikki told you about and found out a "
 "lead about another researcher."
-msgstr ""
+msgstr "あなたはメイッキーがいっていた 3 人の研究者と会い、もうひとりの研究者につながる手がかりを発見した。"
 
 #: dat/missions/minerva/maikki2.lua:351
 msgid ""
@@ -53547,23 +53618,25 @@ msgid ""
 "candidate working on the project by the name of Cayne. I think he was last "
 "working at {pnt} in the {sys} system.\""
 msgstr ""
+"｢ああ、いま思いだしました。博士号を取得したあとの研究者候補がひとりあの研究計画で働いていて、名前はケインでした。最近は{sys}星系の{pnt}で働いて"
+"いるんだと思います｣"
 
 #. The mission state will be updated afterwards
 #: dat/missions/minerva/maikki2.lua:369 dat/missions/minerva/maikki2.lua:399
 #: dat/missions/minerva/maikki2.lua:432
 msgid "You approach the professor."
-msgstr ""
+msgstr "あなたは教授に近づいた。"
 
 #: dat/missions/minerva/maikki2.lua:370
 msgid "\"Hello, how can I help you?\""
-msgstr ""
+msgstr "｢こんにちは、なにかご用ですか？｣"
 
 #: dat/missions/minerva/maikki2.lua:371 dat/missions/minerva/maikki2.lua:401
 #: dat/missions/minerva/maikki2.lua:434
 msgid ""
 "You inquire to about whether or not they are interested in artefacts from "
 "the nebula."
-msgstr ""
+msgstr "あなたは星雲内から持ってきた人工遺物に興味があるかどうかたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:372
 msgid ""
@@ -53571,6 +53644,8 @@ msgid ""
 "cycles ago. It was really a mess of a project. The project leader was "
 "pushing us very hard due to the other competition.\""
 msgstr ""
+"｢とても興味があります。でも数周期まえにその線での研究に取りくむのはやめました。それがほんとうにめちゃくちゃな計画で。ほかに競争相手がいるというんで、研究"
+"計画の主任がわれわれにとてもきつい圧力をかけていたんです｣"
 
 #: dat/missions/minerva/maikki2.lua:373
 msgid ""
@@ -53578,6 +53653,8 @@ msgid ""
 "barred from doing research. That was too much for them and they took their "
 "own life. How illogical!\""
 msgstr ""
+"｢けっきょく、論文の結果には偽造されたものがあって、主任は研究にたずさわることを禁じられました。それは主任には耐えがたいことだったので、自殺してしまいまし"
+"た。なんと非論理的な！｣"
 
 #: dat/missions/minerva/maikki2.lua:374
 msgid ""
@@ -53585,6 +53662,7 @@ msgid ""
 "of nebula artefacts. Although due to administrative changes, I don't think "
 "it'll open again for a few cycles.\""
 msgstr ""
+"｢もし星雲の研究に興味があるなら、星雲の人工遺物の博物館へ行くべきですよ。ただし管理上の変更があったので、二、三周期でまた開くことはないと思います｣"
 
 #: dat/missions/minerva/maikki2.lua:375
 msgid ""
@@ -53592,6 +53670,8 @@ msgid ""
 "However, most of us have moved on from that traumatic experience and are now "
 "researching new topics.\""
 msgstr ""
+"｢ああ、運がよければあの研究計画のほかの参加者と話せるかもしれませんね。とはいえ、ほとんどの人はあの心に傷を残す経験からさきに進み、いまでは新しい題材の研"
+"究をしています｣"
 
 #: dat/missions/minerva/maikki2.lua:376
 msgid ""
@@ -53601,6 +53681,9 @@ msgid ""
 "non-convex elliptic reflections without any meta-heuristics!\"\n"
 "They are getting excited."
 msgstr ""
+"｢わたしが無限メタ再帰ハイパーテーブルにかんする仕事を始めたって説明しましたっけ？　これは自己参照グラスマンマニフォールド準投射をもとにした、魅力的なデー"
+"タ構造の型なんですよ。どんなメタヒューリスティックもなく暗黙的に非凸楕円反射を扱いもするんです！｣\n"
+"教授は興奮している。"
 
 #: dat/missions/minerva/maikki2.lua:378
 msgid ""
@@ -53610,16 +53693,20 @@ msgid ""
 "they may even have a practical application!\"\n"
 "Their excitement grows."
 msgstr ""
+"｢助成金は 5 "
+"回却下されましたが、くそ審査会はまだ古くさいリーマン代数型普遍的近似理論を押していて、ほかのものに耳を貸すつもりがないんです。あれはぜったいに有望なのに！"
+"　実用的な応用だってあるかもしれないと思ってるんです！｣\n"
+"興奮が増していく。"
 
 #: dat/missions/minerva/maikki2.lua:380
 msgid ""
 "They don't seem like they will stop talking anytime soon… You take your "
 "leave as they start rambling in a trance-like state."
-msgstr ""
+msgstr "教授はすぐに話をやめてくれそうにない……。教授が夢中になってとりとめがなくなりはじめると、あなたはいとまを告げた。"
 
 #: dat/missions/minerva/maikki2.lua:400
 msgid "\"What can I do for you?\""
-msgstr ""
+msgstr "｢なにがご用がおありでしょうか？｣"
 
 #: dat/missions/minerva/maikki2.lua:402
 msgid ""
@@ -53627,12 +53714,14 @@ msgid ""
 "\"Ah, the nebula artefacts… Not very good experiences with those, no, not "
 "really interested in them anymore.\""
 msgstr ""
+"教授はこめかみをこすった。\n"
+"｢ああ、星雲の人工遺物……。それについてはあまりよい経験はしてないですね。いいえ、もうあれにはほんとうに興味ありません｣"
 
 #: dat/missions/minerva/maikki2.lua:404
 msgid ""
 "\"I was part of a really ambitious project to try to track down the origin "
 "of the incident, which just end up being a bureaucratic nightmare.\""
-msgstr ""
+msgstr "｢わたしは事象の原因を追求しようという、ほんとうに野心的な計画に参加していました。それは官僚主義的悪夢になって終わっただけでした｣"
 
 #: dat/missions/minerva/maikki2.lua:405
 msgid ""
@@ -53640,6 +53729,8 @@ msgid ""
 "co-leaders want to have meetings and goals and work packages.\"\n"
 "They shudder when they says the word \"work packages\"."
 msgstr ""
+"｢わかるでしょう。研究計画が大きくなればなるほど、主任や副主任たちは打ちあわせや目標や作業群を多くしたがるんです｣\n"
+"教授は ｢作業群｣ といったときに身震いをした。"
 
 #: dat/missions/minerva/maikki2.lua:407
 msgid ""
@@ -53648,6 +53739,9 @@ msgid ""
 "intern for the mid-project evaluation and almost lost all the funding. The "
 "project leader panicked and it all went to hell from there.\""
 msgstr ""
+"｢けっきょく、わたちたちは打ちあわせに縛りつけられて、電子メールにこたえるだけで、なにもできなかったんです。"
+"最後には実習生に計画途中の評価について書かせた 5 ページの報告書を提出して終わりました。だから発見したものはほぼすべてが失われています。研究計画の主任は"
+"うろたえてしまって、そこからちょっと地獄へ行ってしまいました｣"
 
 #: dat/missions/minerva/maikki2.lua:408
 msgid ""
@@ -53655,10 +53749,12 @@ msgid ""
 "succeed yet, despite all the proposal calls attempting to address the issue."
 "\""
 msgstr ""
+"｢星雲の研究はみんなそのような終わりを運命づけられています。まだ成功したものはひとつも見ていません。どの計画でもその問題にはまじめに取りもうとしているとい"
+"ってるのにね｣"
 
 #: dat/missions/minerva/maikki2.lua:409
 msgid "You inquire about other project members."
-msgstr ""
+msgstr "あなたは研究計画のほかの参加者についてたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:410
 msgid ""
@@ -53666,6 +53762,8 @@ msgid ""
 "away as possible from nebula research. As far as I know all the project "
 "members moved to new topics, although none as exciting as mine.\""
 msgstr ""
+"｢あの心に傷を残す経験をしたら、唯一の論理的処置は星雲研究からできるだけ遠くに離れていることになります。わたしが知るかぎり、計画参加者はみんな新しい題材に"
+"変えました。わたしのものほど興奮するものはありませんけどね｣"
 
 #: dat/missions/minerva/maikki2.lua:411
 msgid ""
@@ -53676,6 +53774,9 @@ msgid ""
 "they naturally form octahedral quasi-lattices that allow absorbing most low-"
 "spectrum frequencies!\""
 msgstr ""
+"｢ハイドロナノ格子に満たされたグラフェンのことを聞いたことはありますか？　強烈なコリオリ電磁誘導場効果のもとでグラフェンの薄片を取って強力な側方張力を作っ"
+"てやることで乱流下の水中翼と似たようなふるまいを得ることが可能になります。そのうえずっといいのは、自然に八面体準格子を形作って、ほとんどの低周波スペクトル"
+"を吸収できることなんです！｣"
 
 #: dat/missions/minerva/maikki2.lua:412
 msgid ""
@@ -53686,10 +53787,13 @@ msgid ""
 "able to solve it in no time. By the way, since the accident with my last "
 "assistant, I'm looking for a new one. Would you be interested?\""
 msgstr ""
+"｢これはわたしたちが知る材料科学を変えるかもしれません！　望みどおりほぼどのような特性がある材料でも作れると想像してみてください！　わたちたちはまだ亜原子"
+"微結晶内破の問題をほんとうに解決しなければなりませんが、わたしのこのまえの研究所が残したクレーターから記録を復元しおわわれば、すぐに解決できるはずです。つ"
+"いでですが、このまえの助手に事故があったので、新しい人をさがしています。興味はありませんか？｣"
 
 #: dat/missions/minerva/maikki2.lua:413
 msgid "You get away as fast as you can from them as they keep on rambling."
-msgstr ""
+msgstr "教授はとりとめのないことをしゃべりつづけたので、あなたはできるだけ早く席を立った。"
 
 #: dat/missions/minerva/maikki2.lua:435
 msgid ""
@@ -53697,6 +53801,8 @@ msgid ""
 "the nebula themselves, but I was part of a large project dealing with them "
 "as part of the philosophical and ethical committee.\""
 msgstr ""
+"｢ああ、そんな懐かしい思い出を。星雲の人工遺物自体に興味があったことはありませんが、それを扱う大きな研究計画に参加していました。哲学と倫理面での委員として"
+"ね｣"
 
 #: dat/missions/minerva/maikki2.lua:436
 msgid ""
@@ -53707,6 +53813,9 @@ msgid ""
 "the reality of others, deforming them to a way we can interpret them with "
 "our imperfect minds.\""
 msgstr ""
+"｢とても心が奪われる題材です。絶対的な現実性が存在することを証明する方法はないのだから、実用的観点からすると、相対的な現実性は無限にあります。だれもが自身"
+"でもつものですね。ほかのすべてはわれわれの理解力と、ほかのものがもつ現実性にもとづくわれわれの現実性から投影されるわれわれに由来する幻影です。それはわれわ"
+"れの不完全な精神によって解釈できる形でゆがめられています｣"
 
 #: dat/missions/minerva/maikki2.lua:437
 msgid ""
@@ -53715,6 +53824,8 @@ msgid ""
 "members. This has given me lots of opportunities to work on many interesting "
 "projects.\""
 msgstr ""
+"｢最近、科学と人文科学とのあいだの不合理な不均衡が原因で、大きなザレクの研究計画はすべて最低でも 10% "
+"は人文科学から参加させることが求められています。これはわたしにたくさんの興味深い研究にかかわれる、多くの機会を与えてくれました｣"
 
 #: dat/missions/minerva/maikki2.lua:438
 msgid ""
@@ -53725,10 +53836,13 @@ msgid ""
 "our imperfect organs, can we actually know whether or not there is an "
 "absolute objective reality?\""
 msgstr ""
+"｢ああそうだ、星雲の人工遺物でしたね。同僚と楽しい会話をしたことを覚えています。星雲から取ってきた人工遺物がじっさいに存在するのかどうか、われわれが不完全"
+"な感覚器官を使って見たり、触ったり、感じたりしていることを仮定するのかどうかといったことでした。わかりますよね。われわれが自身のもつ不完全な器官をとおして"
+"現実性を知覚するのであれば、完全に客観的な現実性があるのかどうかじっさいに知ることができるのでしょうか？｣"
 
 #: dat/missions/minerva/maikki2.lua:439
 msgid "You inquire about the other members of the project."
-msgstr ""
+msgstr "あなたは研究計画のほかの参加者についてたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:440
 msgid ""
@@ -53736,6 +53850,9 @@ msgid ""
 "and gave me a windowless room in the basement. What an honour! Anyway, back "
 "to what I was saying.\""
 msgstr ""
+"｢ほかの参加者？　"
+"二、三人は思いだせますが、その人たちはわたしのことをとても好んでいたので、わたしを昇進させて地下にある窓のない部屋を与えてくれました。なんとこっけいな！　"
+"それはともかく、話していたことに戻りましょう｣"
 
 #: dat/missions/minerva/maikki2.lua:441
 msgid ""
@@ -53746,6 +53863,9 @@ msgid ""
 "this too is an illusion, and that our existence itself is something we can't "
 "prove.\""
 msgstr ""
+"｢そのうえさらなる疑問をもたなければならないのは、われわれの感覚器官や星雲人工遺物の存在だけでなく、われわれ自身の存在もです。われわれはあきらかに考えるこ"
+"とができるらしいし、これによってそれを示す者もいるでしょう。われわれが証明できる唯一のことは、不完全な感覚情報からして、われわれ自身の存在です。しかしわた"
+"しはこれも幻影だと主張します。それにわれわれの存在そのものは、われわれが証明できないことであると｣"
 
 #: dat/missions/minerva/maikki2.lua:442
 msgid ""
@@ -53755,18 +53875,21 @@ msgid ""
 "not only impossible to perceive nor understand our self as it is, but also "
 "makes it impossible to draw a line between different individuals…\""
 msgstr ""
+"｢どの瞬間にも、われわれが自分自身として知覚するものは、存在をやめていくものと、新しい存在です。それはいっぽう、それ以前の段階の『われわれ自身』にとても近"
+"く、おそらくは、完全に新しい存在です。この流動性は、それがわれわれ自身であると知覚したり理解したりすることを不可能にするだけでなく、個人の違いに線を引くこ"
+"とも不可能にします……｣"
 
 #: dat/missions/minerva/maikki2.lua:443
 msgid "You thank them and run away while they keeps on talking to themselves."
-msgstr ""
+msgstr "あなたは教授が話つづけているあいだに礼をいい、逃げだした。"
 
 #: dat/missions/minerva/maikki2.lua:453 dat/missions/minerva/maikki2.lua:483
 msgid "Dr. Shrimp"
-msgstr ""
+msgstr "小エビ博士"
 
 #: dat/missions/minerva/maikki2.lua:461
 msgid "Floating Shrimp"
-msgstr ""
+msgstr "浮遊する小エビ"
 
 #: dat/missions/minerva/maikki2.lua:464
 msgid ""
@@ -53774,6 +53897,8 @@ msgid ""
 "lab coat. He seems to be really into a book titled 'SHRIMP: Anatomical "
 "studies of the Neo-neo-neocaridina species'."
 msgstr ""
+"あなたは若い男に近づいた。白衣には博士号取得後研究者と書かれている。この男は『小エビ : "
+"ネオ゠ネオ゠ネオカリディナ種の解剖学的研究』という題名の本に、ほんとうにのめりこんでいるようだ。"
 
 #: dat/missions/minerva/maikki2.lua:466
 msgid ""
@@ -53781,6 +53906,8 @@ msgid ""
 "the book hasn't, it does seem like the strange shrimp-like creature floating "
 "in an aquarium near them has. You feel like it's staring into your soul."
 msgstr ""
+"あなたはこの男があなたの存在に気づくかどうか待ってみた。本を読んでいる若い男は気づかなかったが、近くにある養魚槽の中に浮かんでいる奇妙な小エビのような生き"
+"物はたしかに気づいたようだ。あなたは魂をじっと見つめられているように感じた。"
 
 #: dat/missions/minerva/maikki2.lua:467
 msgid ""
@@ -53789,6 +53916,9 @@ msgid ""
 "noise.\n"
 "\"PERSON. PERSON.\""
 msgstr ""
+"永遠につづくかのようだったあなたと小エビのあいだの見つめあい競争のあとで、あなたは大きくビーという音を聞き、それから小エビのスピーカーが雑音を発しはじめた"
+"。\n"
+"｢人間。人間｣"
 
 #: dat/missions/minerva/maikki2.lua:469
 msgid ""
@@ -53796,6 +53926,8 @@ msgid ""
 "\"I told you I already submitted my temporal research proposal clarification "
 "application yesterday.\""
 msgstr ""
+"若い男が不平をいった。\n"
+"｢もう一時的な研究計画明確化の申請書は昨日送付したっていいましたよね｣"
 
 #: dat/missions/minerva/maikki2.lua:472
 msgid ""
@@ -53803,18 +53935,20 @@ msgid ""
 "if you had appeared out of thin air.\n"
 "\"Wait, what? Who are you?\""
 msgstr ""
+"その若い男は読書による知覚麻痺からとつぜん抜けだして、まるであなたが空気中から出現したかのようにあなたを見つめた。\n"
+"｢待った、なんですか？　どなたですか？｣"
 
 #: dat/missions/minerva/maikki2.lua:474
 msgid "\"PERSON. PERSON. PERSON.\""
-msgstr ""
+msgstr "｢人間。人間。人間｣"
 
 #: dat/missions/minerva/maikki2.lua:475
 msgid "\"C'mon Calliope, I already know that. Here, have a pellet.\""
-msgstr ""
+msgstr "｢なあ、カリオペ。それはもうわかってる。ほら、餌だ｣"
 
 #: dat/missions/minerva/maikki2.lua:476
 msgid "Calliope"
-msgstr ""
+msgstr "カリオペ"
 
 #: dat/missions/minerva/maikki2.lua:477
 msgid ""
@@ -53822,12 +53956,14 @@ msgid ""
 "wastes no time in scarfing it down.\n"
 "   \"HAPPY. GOOD.\""
 msgstr ""
+"小エビの食料の小塊が浮遊する養魚槽の中に落とされた。小エビは時間を無駄にせず、それに巻きついた。\n"
+"   ｢うれしい。おいしい｣"
 
 #: dat/missions/minerva/maikki2.lua:480
 msgid ""
 "You explain to him that you are looking for information related to nebula "
 "artefacts."
-msgstr ""
+msgstr "あなたはこの男に、星雲の人工遺物にかんする情報を求めていると説明した。"
 
 #: dat/missions/minerva/maikki2.lua:481
 msgid ""
@@ -53836,18 +53972,20 @@ msgid ""
 "derailed spectacularly. I'm glad it ended as it did, or I would be still "
 "stuck in that purgatory.\""
 msgstr ""
+"｢ああ、あの地獄のような研究計画ですか。始まりから不運でしたよね。専任の教授や研究者たちがうぬぼれで頭をいっぱいにして、華々しく脱線させました。そういう結"
+"果になってうれしかったですよ。そうでなきゃ、まだあの苦行の場に詰めこまれていたと思います｣"
 
 #: dat/missions/minerva/maikki2.lua:482
 msgid ""
 "\"I don't think most of the people remember me, but I was the one stuck "
 "doing most of the work. If you can call it that.\""
-msgstr ""
+msgstr "｢大部分のひとはわたしのことを覚えていないと思っていましたが、ほとんどの仕事を我慢してやったのはわたしですよ。あれを仕事といえるならね｣"
 
 #: dat/missions/minerva/maikki2.lua:484
 msgid ""
 "\"My name is Cayne, but you can call me Dr. Shrimp. What would you like to "
 "know?\""
-msgstr ""
+msgstr "｢わたしの名前はケインですが、小エビ博士と呼んでもかまいません。なにを知りたいんですか？｣"
 
 #: dat/missions/minerva/maikki2.lua:487
 msgid ""
@@ -53855,30 +53993,32 @@ msgid ""
 "if you had appeared out of thin air.\n"
 "\"Ah, it is you again. Is there anything else you would want to know about?\""
 msgstr ""
+"その若い男は読書による知覚麻痺からとつぜん抜けだして、まるであなたが空気中から出現したかのようにあなたを見つめた。\n"
+"｢ああ、またあなたですか。知りたいことがほかになにかあるんですか？｣"
 
 #: dat/missions/minerva/maikki2.lua:494
 msgid "\"Dr. Shrimp?\""
-msgstr ""
+msgstr "｢小エビ博士？｣"
 
 #: dat/missions/minerva/maikki2.lua:495
 msgid "Ask about nebula artefacts"
-msgstr ""
+msgstr "星雲の人工遺物についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:496
 msgid "Ask about other members."
-msgstr ""
+msgstr "ほかの参加者についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:500
 msgid "Ask about Calliope"
-msgstr ""
+msgstr "カリオペについてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:503
 msgid "Ask about Dr. Strangelove"
-msgstr ""
+msgstr "ストレンジラブ博士についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:505
 msgid "Anything else?…"
-msgstr ""
+msgstr "ほかになにか……？"
 
 #: dat/missions/minerva/maikki2.lua:510
 msgid ""
@@ -53887,6 +54027,8 @@ msgid ""
 "about fresh-water shrimp breeding and became enthralled. One thing led to "
 "another, and now I'm doing shrimp research.\""
 msgstr ""
+"｢星雲計画のあとで、あのチームにいたほかのほとんどの研究者と同じように、わたしは星雲の研究からきっぱりと逃げだしました。ある日{pnt}を訪れたときに、淡"
+"水で飼育されている小エビを見つけて、わたしはそのとりこになったんです。なりゆきで、今は小エビの研究をしています｣"
 
 #: dat/missions/minerva/maikki2.lua:511
 msgid ""
@@ -53897,6 +54039,9 @@ msgid ""
 "of an extremely mentally capable shrimp.\"\n"
 "He taps the tank of the floating shrimp next to him."
 msgstr ""
+"｢ほら、小エビはうっとりするような生き物なんですよ。繁殖周期はほんとうに速いですし、大量に繁殖するので、単純な遺伝子操作が可能です。たいていは色や身体上の"
+"性質を改良しているんですが、一部は精神面での性質もしこんでもいます。このカリオペは、きわめて知的能力のある小エビの例ですよ｣\n"
+"小エビ博士は、隣で浮いている小エビの水槽を軽くたたいた。"
 
 #: dat/missions/minerva/maikki2.lua:513
 msgid ""
@@ -53904,6 +54049,8 @@ msgid ""
 "understand much more about genetic modification than the brute-force "
 "approaches of the Soromid, although our technology is still lagging behind.\""
 msgstr ""
+"｢この小エビたちの能力は無限です。遺伝子改造については、ソロミドの強引なやりかたよりずっと理解を助けてくれています。それでもわれわれの技術はまだ遅れをとっ"
+"ていますけどね｣"
 
 #: dat/missions/minerva/maikki2.lua:514
 msgid ""
@@ -53911,6 +54058,9 @@ msgid ""
 "He enthusiastically points towards Calliope.\n"
 "\"Isn't she the cutest?\""
 msgstr ""
+"｢それにいちばんいいのは、小エビがとってもかわいいってことですよ！｣\n"
+"小エビ博士は熱烈にカリオペの方を指差した。\n"
+"｢とってもかわいくないですか？｣"
 
 #: dat/missions/minerva/maikki2.lua:517
 msgid ""
@@ -53918,6 +54068,8 @@ msgid ""
 "Shrimp and the name stuck. Honestly, it's the best nickname they could give "
 "me. Makes me feel like getting my PhD was finally worth it!\""
 msgstr ""
+"｢二、三周期のあいだ小エビに集中してると、みんながわたしのことを小エビ博士と呼びはじめて、その名前が定着したんです。正直いって、できるかぎりで最高のあだ名"
+"をつけてくれましたよ。わたしの博士号がやっと役に立ったように感じさせてくれますね！｣"
 
 #: dat/missions/minerva/maikki2.lua:522
 msgid ""
@@ -53926,20 +54078,25 @@ msgid ""
 "Not only that, but we kept her good looks! Plus as a neo-neo-neocaridina, "
 "she is much larger than neo-neocaridinas.\""
 msgstr ""
+"｢カリオペは精神的な能力が改良されています。特殊な浮遊する養魚槽があるので、カリオペは異なる単語を 20 個まではっきりと発音できるんですよ！　"
+"信じられないでしょう！　それだけではなくて、見ばえもよく保ちました！　"
+"そのうえネオ゠ネオ゠ネオカリディナであるカリオペは、ネオ゠ネオカリディナよりずっと大きくなっています｣"
 
 #: dat/missions/minerva/maikki2.lua:523
 msgid "\"FOOD. FOOD. FOOD.\""
-msgstr ""
+msgstr "｢食べ物。食べ物。食べ物｣"
 
 #: dat/missions/minerva/maikki2.lua:524
 msgid ""
 "\"What would I do without her?\"\n"
 "He activates her feeding system and a food pellet drops out."
 msgstr ""
+"｢カリオペがいなかったらどうしていたんだろう？｣\n"
+"小エビ博士は給餌システムを起動して、餌の小塊を落とした。"
 
 #: dat/missions/minerva/maikki2.lua:526
 msgid "\"HAPPY. HAPPY.\""
-msgstr ""
+msgstr "｢うれしい。うれしい｣"
 
 #: dat/missions/minerva/maikki2.lua:527
 msgid ""
@@ -53950,6 +54107,9 @@ msgid ""
 "up a whole set of new functionality, given that their reaction speed and "
 "neuro-motor ability is superb.\""
 msgstr ""
+"｢カリオペはわれわれがこれまで作れたものとしては、最高の小エビです。カリオペはまだ自己認識をもつだけの能力がありませんし、適切な訓練をしないと言葉を忘れが"
+"ちです。しかしこれは始まりなんです。その神経機能を拡張することで、やがては神経移植と両立するとわれわれは期待しています。これは新しいひとそろいの機能をまる"
+"ごと開拓することでしょう。反応速度と神経運動能力はすばらしいわけですから｣"
 
 #: dat/missions/minerva/maikki2.lua:528
 msgid ""
@@ -53957,6 +54117,8 @@ msgid ""
 "researching. She is the only thing that keeps me going during my 17th post "
 "doctoral fellowship.\""
 msgstr ""
+"｢カリオペは、研究しているあいだに見つけたある古い宗教の女神から名をとりました。17 "
+"回めの博士号取得後給費研究員をやってるあいだに進みつづけているのは唯一カリオペなんです｣"
 
 #: dat/missions/minerva/maikki2.lua:532
 msgid ""
@@ -53966,6 +54128,9 @@ msgid ""
 "stuff from the outer areas. Many times they were even trying to sell us "
 "random debris as nebula artefacts, but that's really easy to detect.\""
 msgstr ""
+"｢どういう人工遺物を扱っていたか？　あらゆる種類です。われわれが手に入れたものは、かなり多くあります。発端の場所であるソル近辺にもっと近い場所からものを集"
+"めようとしましたが、ほとんどの場合、ごみあさりたちは外側の領域からのものを持ってきました。でたらめな破片を星雲の人工遺物として売りつけようとすることも多く"
+"ありましたね。でもそれはほんとうに簡単に見破れました｣"
 
 #: dat/missions/minerva/maikki2.lua:533
 msgid ""
@@ -53974,6 +54139,8 @@ msgid ""
 "in nearly imperceptible ways. Our tools could detect the alterations easily."
 "\""
 msgstr ""
+"｢ほら、星雲は特定の種類の放射を発しているでしょう。われわれはあまりそのことを知りませんでしたが、ほぼ気づかれないような方法で宇宙にあった破片の亜原子粒子"
+"はたしかに変わっているんです。われわれの工具はその変化を簡単に検出できました｣"
 
 #: dat/missions/minerva/maikki2.lua:534
 msgid ""
@@ -53982,6 +54149,8 @@ msgid ""
 "station, although not entirely sure. It's a bit damaged beyond recognition "
 "you see.\""
 msgstr ""
+"｢計画が失敗すると、人工遺物のほとんどは置かれた場所を知る者に押収されました。ただし、わたしはどうにかナットひとつをとっておきました。わたしの考えでは、宇"
+"宙ステーションのものです。もっとも、完全にたしかじゃありませんけどね。見てわからなくなるくらいちょっと傷んでるんですよ｣"
 
 #: dat/missions/minerva/maikki2.lua:535
 msgid ""
@@ -53991,6 +54160,9 @@ msgid ""
 "still interested in that, but that's about it. Furthermore, it's not "
 "entirely legal if you catch my drift.\""
 msgstr ""
+"｢ほとんどの星雲研究計画は失敗しているので、もう星雲の人工遺物を買う人はだれもいないと思います。その市場もあまり大きくないし、簡単に入手できるものはどのみ"
+"ちすべてあさられています。収集家にはまだそれに興味をもってる人もいますが、それだけですよ。そのうえ、完全に合法ではありませんしね。もしわたしのいっているこ"
+"とをわかっていただけたなら｣"
 
 #: dat/missions/minerva/maikki2.lua:540
 msgid ""
@@ -53998,6 +54170,7 @@ msgid ""
 "failed. Us post-doctoral researchers do all the work and get none of the "
 "credit.\""
 msgstr ""
+"｢研究計画の参加者は教授だらけでした。たぶんそれが失敗した理由です。博士号取得後研究者であるわれわれがすべての仕事をして、名声はなにも得られません｣"
 
 #: dat/missions/minerva/maikki2.lua:541
 msgid ""
@@ -54006,6 +54179,8 @@ msgid ""
 "Sato, and Prof. Hsu. I think they even got some stupid promotion, while the "
 "other post docs and I lost our jobs.\""
 msgstr ""
+"｢あれが地獄行きになると、研究者の多くは職を失うか行方をくらましました。まだ活躍中だと知っている数少ない人たちは、ストーバ教授、サトー教授、シュー教授です"
+"。その人たちも無感覚な昇進をしたと思います。ほかの博士研究員やわたしは職を失ったのに｣"
 
 #: dat/missions/minerva/maikki2.lua:542
 msgid ""
@@ -54014,12 +54189,14 @@ msgid ""
 "results, not a single tenured post opened! It's ridiculous! If industry "
 "wasn't so horrible, I would quit academia in an instant!\""
 msgstr ""
+"｢あの計画にもともと百人くらいの人がいたと思うとかなり驚きますね。そのうえ結果を偽造した人もいたっていうのに、終身在職権がある仕事がたったひとつもあかなか"
+"ったんです！　おかしいですよ！　製造業があんなにひどくなければ、すぐさま研究機関をやめてましたね！｣"
 
 #: dat/missions/minerva/maikki2.lua:543
 msgid ""
 "\"Now that I think of it, there was another guy. What was his name? I "
 "totally forget. Oh well.\""
-msgstr ""
+msgstr "｢今考えてみると、もうひとりいたな。名前はなんだっけ？　完全に忘れました。しかたがないな｣"
 
 #: dat/missions/minerva/maikki2.lua:548
 msgid ""
@@ -54028,6 +54205,8 @@ msgid ""
 "Quite a few went missing during the project and I think it was probably him "
 "who was taking them.\""
 msgstr ""
+"｢いま思いだした！　もうひとり博士号取得後研究員がいて、わたしといっしょに働いていました。そいつはちょっと気味の悪いやつで、星雲の人工遺物についてくよくよ"
+"考えつづけていました。あの研究計画のあいだにかなりたくさん行方不明になっていましたが、たぶん取っていたのはあいつだったと思いますね｣"
 
 #: dat/missions/minerva/maikki2.lua:549
 msgid ""
@@ -54036,6 +54215,9 @@ msgid ""
 "out. Nobody really did much as we were all busy dealing with all the "
 "paperwork of the project cancellation.\""
 msgstr ""
+"｢研究計画が中止になると、あいつはほんとうに心配していました。とても腹をたてたりもしてましたよ。何日か研究室に閉じこもったりしてましたが、みんなでどうにか"
+"なだめて誘いだしたんです。じっさいのところ、だれもたいしたことはしませんでした。計画が中止になったせいでできた書類仕事に対処してて、われわれはずっといそが"
+"しかったんです｣"
 
 #: dat/missions/minerva/maikki2.lua:551
 msgid ""
@@ -54043,84 +54225,86 @@ msgid ""
 "{sys}, which is a bit strange, because not only is there not a research "
 "centre there, but there isn't even an inhabited planet nor station!\""
 msgstr ""
+"｢けっきょくやつは姿を消したみたいです。最後に聞いたのは、{sys}星系に行くといっていたことです。ちょっと不思議ですね。そこには研究拠点がないだけじゃな"
+"く、有人惑星もステーションもないんですよ！｣"
 
 #: dat/missions/minerva/maikki2.lua:552
 msgid ""
 "\"It's really weird but if you are really interested, I suppose you could "
 "try to take a look around there. The whole thing gives me the me the creeps "
 "though.\""
-msgstr ""
+msgstr "｢ほんとうに妙なことですが、もしほんとうに興味があるなら、そこを見てまわってみてもいいと思いますね。それにしてもそのどれもが気味悪く感じます｣"
 
 #: dat/missions/minerva/maikki2.lua:557
 msgid "\tGo to {sys}"
-msgstr ""
+msgstr "\t{sys}星系に行け。"
 
 #: dat/missions/minerva/maikki2.lua:560
 msgid ""
 "You found about a strange researcher who appears to be in Westhaven and is "
 "related to the nebula research."
-msgstr ""
+msgstr "あなたは妙な研究者を見つけだした。その研究者はどうもウエストヘイブンにいるらしく、星雲の研究にかかわっている。"
 
 #: dat/missions/minerva/maikki2.lua:566
 msgid "\"Is there anything else you would like to know?\""
-msgstr ""
+msgstr "｢ほかになにか知りたいことはありますか？｣"
 
 #: dat/missions/minerva/maikki2.lua:584 dat/missions/minerva/maikki2.lua:606
 msgid "Feral Drone"
-msgstr ""
+msgstr "凶暴なドローン"
 
 #. Spawn the drones
 #: dat/missions/minerva/maikki2.lua:597
 msgid "Feral Alpha Drone"
-msgstr ""
+msgstr "凶暴なアルファドローン"
 
 #: dat/missions/minerva/maikki2.lua:615
 msgid ""
 "Your ship has detected a curious signal originating from inside the system."
-msgstr ""
+msgstr "あなたの船は、この星雲の中から発せられた不思議な信号を検出した。"
 
 #: dat/missions/minerva/maikki2.lua:637
 msgid "Security Drone"
-msgstr ""
+msgstr "保安ドローン"
 
 #: dat/missions/minerva/maikki2.lua:641
 msgid "Hostiles detected!"
-msgstr ""
+msgstr "敵を発見！"
 
 #: dat/missions/minerva/maikki2.lua:642
 msgid "UNAUTHORIZED VESSEL DETECTED. ELIMINATING."
-msgstr ""
+msgstr "無許可の船を検出。排除中"
 
 #. All dead
 #: dat/missions/minerva/maikki2.lua:669
 msgid "Your ship detects that one of the asteroids isn't what it seems…"
-msgstr ""
+msgstr "あなたの船は、小惑星のひとつが見かけとはちがうことを見破った……"
 
 #: dat/missions/minerva/maikki2.lua:673
 msgid ""
 "You were attacked by a Za'lek security system and found a laboratory "
 "disguised as an asteroid in Westhaven."
-msgstr ""
+msgstr "あなたはウエストヘイブンでザレクの保安システムに攻撃され、小惑星に偽装した研究室を見つけた。"
 
 #: dat/missions/minerva/maikki2.lua:689
 msgid "Unknown Voice"
-msgstr ""
+msgstr "謎の声"
 
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
 #: dat/missions/minerva/maikki2.lua:691
 msgid ""
 "While the drone is blowing up, you receive a faint, audio-only transmission."
-msgstr ""
+msgstr "ドローンが爆発しているあいだに、あなはたかすかな音声のみの通信を受信した。"
 
 #: dat/missions/minerva/maikki2.lua:693
 msgid "\"Thank you for setting me free…\""
-msgstr ""
+msgstr "｢自由にしてくれてありがとう……｣"
 
 #: dat/missions/minerva/maikki2.lua:694
 msgid ""
 "You wonder what that was about as you watch the drone thrash as it blows up. "
 "Westhaven is a really weird place."
-msgstr ""
+msgstr "これは爆発してのたうつさまをあなたが見守っていた、あのドローンからなのかとあなたは疑問に思った。"
 
 #: dat/missions/minerva/maikki2.lua:695
 msgid ""
@@ -54128,71 +54312,73 @@ msgid ""
 "this is what Dr. Strangelove was referring to as a nebula artefact. "
 "Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
+"あの船の残骸から、あなたはとても傷ついた……もの……を見つけることができた。ストレンジラブ博士が星雲の人工遺物だといっていたのはこれなんだとあなたは見当を"
+"つけた。不思議なことに、あなたの船のセンサーは、それがおもに生体材料であると鑑定している……"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid "Nebula Artefact?"
-msgstr ""
+msgstr "星雲の人工遺物？"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid ""
 "A very damaged thing that seems to be mainly biological. I guess this is the "
 "nebula artefact?"
-msgstr ""
+msgstr "とても傷ついたもので、おもに生物学的なものらしい。あなたの推定では、これが星雲の人工遺物？"
 
 #: dat/missions/minerva/maikki2.lua:702
 msgid "Go back to Dr. Strangelove"
-msgstr ""
+msgstr "ストレンジラブ博士のところへ戻れ。"
 
 #: dat/missions/minerva/maikki2.lua:703
 msgid ""
 "You recovered a nebula artefact that Dr. Strangelove wanted from feral "
 "drones."
-msgstr ""
+msgstr "あなたはストレンジラブ博士が望んでいた星雲の人工遺物を、凶暴なドローンから回収した。"
 
 #: dat/missions/minerva/maikki2.lua:707
 msgid "Just destroy me and put me out of my misery."
-msgstr ""
+msgstr "とにかくわたしを破壊して、悲惨な境遇から解放してくれ"
 
 #: dat/missions/minerva/maikki2.lua:708
 msgid "Why am I still alive?"
-msgstr ""
+msgstr "どうしてまだわたしは生きているんだ？"
 
 #: dat/missions/minerva/maikki2.lua:709
 msgid "I can't deal with this anymore."
-msgstr ""
+msgstr "もうこれ以上やってられない"
 
 #: dat/missions/minerva/maikki2.lua:710
 msgid "Please end me!"
-msgstr ""
+msgstr "どうか終わりにしてくれ！"
 
 #: dat/missions/minerva/maikki2.lua:711
 msgid "Living is suffering."
-msgstr ""
+msgstr "生きているのは苦しみだ"
 
 #: dat/missions/minerva/maikki2.lua:712
 msgid "It all hurts."
-msgstr ""
+msgstr "すべてが痛む"
 
 #: dat/missions/minerva/maikki2.lua:713
 msgid "Please kill me!"
-msgstr ""
+msgstr "どうか殺してくれ！"
 
 #. We go with nebula music
 #: dat/missions/minerva/maikki2.lua:746
 msgid ""
 "The hologram projector flickers and what appears to be a grumpy old man "
 "appears into view. He doesn't look very pleased to be disturbed."
-msgstr ""
+msgstr "ホログラム映写機がまたたいて、気難しげな老人のようなものが画像に現れた。じゃまされてあまりうれしそうではない。"
 
 #: dat/missions/minerva/maikki2.lua:747
 msgid "\"How did you get in there? Who are you!\""
-msgstr ""
+msgstr "｢どうやってそこへ入りこんだ？　あんたは何者だ！｣"
 
 #: dat/missions/minerva/maikki2.lua:748
 msgid ""
 "You explain to him that you are looking for information about nebula "
 "artefacts."
-msgstr ""
+msgstr "あなたは星雲の人工遺物についての情報を求めていると老人に説明した。"
 
 #: dat/missions/minerva/maikki2.lua:749
 msgid ""
@@ -54201,6 +54387,9 @@ msgid ""
 "work, sweat, and tears! They're all mine!\"\n"
 "He cackles manically."
 msgstr ""
+"｢だれがあんたをここへ送った？　ボブ博士か？　あのイタチはいつもわたしの貴重な人工遺物をねらってるからな。まあ、やつの手に入ることはない！　"
+"わたしがこのすべてを手に入れたのは、がんばりと、汗と、涙によるものなのだ！　このすべてはわたしのものだ！｣\n"
+"老人はそう病患者のように甲高い声で笑った。"
 
 #: dat/missions/minerva/maikki2.lua:751
 msgid ""
@@ -54209,6 +54398,8 @@ msgid ""
 "You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the "
 "room."
 msgstr ""
+"｢あれはとてもうまく隠した。あんたがわたしの保安システムをどうにか通りぬけて研究室に入りこんだのだとしても、けっして見つけられはしない！｣\n"
+"あなたは部屋の隅にある ｢星雲人工遺物 #082｣ と荷札の貼られた枠箱をいちべつした。"
 
 #: dat/missions/minerva/maikki2.lua:753
 msgid ""
@@ -54216,32 +54407,34 @@ msgid ""
 "have a new specimen ready and it will be better than ever! The old ones were "
 "fairly inadequate.\""
 msgstr ""
+"｢とにかく、わたしは今とても忙しいんだ。わかるな？　"
+"この学問はすべて勝手に進んだりはしないんだ。新しい標本がもう入手できそうだし、いままで以上によいものになりそうなんだ！　その古いやつはかなり不十分だった｣"
 
 #: dat/missions/minerva/maikki2.lua:755
 msgid "You met an eccentric researcher named Dr. Strangelove in Westhaven."
-msgstr ""
+msgstr "あなたはウエストヘイブンで、ストレンジラブ博士という名前の変人研究者に会った。"
 
 #: dat/missions/minerva/maikki2.lua:757
 msgid ""
 "The hologram projector flickers and Dr. Strangelove comes into view. He "
 "doesn't look very happy to see you again."
-msgstr ""
+msgstr "ホログラム映写機がまたたいて、ストレンジラブ博士が画像に現れた。あなたとまた会ってあまり喜んでいないらしい。"
 
 #: dat/missions/minerva/maikki2.lua:764
 msgid "Ask about the nebula"
-msgstr ""
+msgstr "星雲についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:765
 msgid "Ask about this place"
-msgstr ""
+msgstr "この場所についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:769
 msgid "Hand over the artefact"
-msgstr ""
+msgstr "人工遺物を渡す"
 
 #: dat/missions/minerva/maikki2.lua:771
 msgid "Ask about job"
-msgstr ""
+msgstr "仕事についてたずねる"
 
 #: dat/missions/minerva/maikki2.lua:777
 msgid ""
@@ -54250,6 +54443,8 @@ msgid ""
 "since the incident destroyed my university. Destruction is so pretty, is it "
 "not?\""
 msgstr ""
+"｢ああそうか、星雲。人類の作品における頂点だ！　とにかく魅惑的かつ美しく見えないか？　"
+"事象がわたしの大学を破壊して以来、わたしはずっとあれにひきつけられていた。破壊はとてもこころよい、そうじゃないか？｣"
 
 #: dat/missions/minerva/maikki2.lua:778
 msgid ""
@@ -54259,6 +54454,9 @@ msgid ""
 "mattered.\"\n"
 "He grins as nostalgia takes him over."
 msgstr ""
+"｢わたしは最近、星雲研究に直接取り組むすばらしい機会をもてた。何百人ものとりわけ鋭いザレクの頭脳が協力して働く伝説的な研究計画だったのだ！　"
+"わたしほど目ざましい者はいなかったが、数が重要だった｣\n"
+"過去を懐かしむ思いでいっぱいになり、老人がにっこりした。"
 
 #: dat/missions/minerva/maikki2.lua:780
 msgid ""
@@ -54270,6 +54468,9 @@ msgid ""
 "You see a greasy robot in the corner that is boiling some sort of brown "
 "liquid. Is that… cheese?"
 msgstr ""
+"｢われわれはあらゆる種類の驚くべき品を回収する専用部隊をもつことができたのだ！　プロテロンの自己複製装置の残骸を見つけることさえした！　"
+"そいつはチーズフォンデューを複製できるだけだったが、いままでわたしの健康と調子を保ってくれたのだ！　もしきみも試してみたかったら、バーにあるはずだ｣\n"
+"あなたは隅にある油で汚れたロボットを見た。ある種の茶色の液体が煮えたっている。あれが……チーズ？"
 
 #: dat/missions/minerva/maikki2.lua:782
 msgid ""
@@ -54279,14 +54480,18 @@ msgid ""
 "fancy as the replicator yet, but the bodies have been very interesting.\"\n"
 "He coughs, wracking his body."
 msgstr ""
+"｢それはともかく、中央ステーションの官僚どもがいちばんいいときにあの研究計画を殺してしまったのはほんとうに残念だ。せめてものことは、装置のほとんどをここに"
+"持ってこれたことだな。それにあれからももっと多くの人工遺物を手に入れつづけている。まだ自己複製装置ほど上等なものはなにも見つけていないが、体はとても興味深"
+"い｣\n"
+"老人がせきをして、体を折りまげる。"
 
 #: dat/missions/minerva/maikki2.lua:785
 msgid "\"Bodies…?\""
-msgstr ""
+msgstr "｢体……？｣"
 
 #: dat/missions/minerva/maikki2.lua:786
 msgid "\"What devices?\""
-msgstr ""
+msgstr "｢なんの装置なんです？｣"
 
 #: dat/missions/minerva/maikki2.lua:789
 msgid ""
@@ -54294,14 +54499,16 @@ msgid ""
 "job that I would like you to do, and, in exchange, I might give you the "
 "information you seek.\""
 msgstr ""
+"｢アハハ、興味がある、ない？　"
+"情報が安く手に入ることはない。わたしにはきみにしてもらいたい仕事がある。そして交換に、きみが求めている情報を与えるかもしれない｣"
 
 #: dat/missions/minerva/maikki2.lua:794
 msgid "Refuse the job"
-msgstr ""
+msgstr "仕事を断る"
 
 #: dat/missions/minerva/maikki2.lua:797
 msgid "\"You don't scratch my back and I don't scratch yours.\""
-msgstr ""
+msgstr "｢きみがわたしの背中をかかないのなら、わたしもしない｣"
 
 #: dat/missions/minerva/maikki2.lua:801
 msgid ""
@@ -54310,6 +54517,8 @@ msgid ""
 "the functionality could be improved. Sadly, an incompatibility resulted in "
 "the drones going… ahem… feral.\""
 msgstr ""
+"｢きみは見ためより勇敢だな。わたしはちょっと問題をかかえていてね。ほら、わたしのドローンの一部をある星雲人工遺物で改良して、機能的に改良されたか確認するた"
+"めに試験したんだよ。悲しいことに不適合があって、その結果ドローンが……えへん……凶暴になってしまった｣"
 
 #: dat/missions/minerva/maikki2.lua:802
 msgid ""
@@ -54318,6 +54527,8 @@ msgid ""
 "\"\n"
 "He glares at you."
 msgstr ""
+"｢わたしの保安ドローンで対処しようとしていたんだが、きみにも推測可能なとおり、きみが壊して破片にしてしまったから、もう選択の余地はない｣\n"
+"老人があなたをにらみつけた。"
 
 #: dat/missions/minerva/maikki2.lua:804
 msgid ""
@@ -54326,16 +54537,18 @@ msgid ""
 "asteroid field and should be fairly easy to find. Make sure to recover the "
 "parts in one piece!\""
 msgstr ""
+"｢ドローン自体はなくなってもかまわないが、あれの改良に使った星雲人工遺物は回収してもらう必要がある。あのドローンは小惑星帯をさまよっているはずだから、見つ"
+"けるのはかなり簡単なはずだ。部品はかならず無事に回収するように！｣"
 
 #: dat/missions/minerva/maikki2.lua:807
 msgid "Recover nebula artefacts from the {sys} asteroid field"
-msgstr ""
+msgstr "{sys}星系の小惑星帯で、星雲人工遺物を回収せよ。"
 
 #: dat/missions/minerva/maikki2.lua:810
 msgid ""
 "You accepted Dr. Strangelove's request to recover nebula artefacts from "
 "feral drones in Westhaven."
-msgstr ""
+msgstr "あなたは、ウエストヘイブンにいる凶暴なドローンから星雲人工遺物を回収するという、ストレンジラブ博士の求めに応じた。"
 
 #: dat/missions/minerva/maikki2.lua:815
 msgid ""
@@ -54346,6 +54559,10 @@ msgid ""
 "one piece.\"\n"
 "He glares at you."
 msgstr ""
+"｢簡単な仕事のはずだ。やる必要があるのは、星雲人工遺物を凶暴なドローンから回収することだけだ。ドローンは戦おうとするかもしれない。そうじゃないと捕まえるの"
+"は簡単じゃないな。しかしわたしの保安ドローンをすべて吹き飛ばしたパイロットなら、少数の凶暴なドローンが問題になることはないと思う。無事に人工遺物を持ってく"
+"るようにしてくれ｣\n"
+"老人があなたをにらみつけた。"
 
 #: dat/missions/minerva/maikki2.lua:820
 msgid ""
@@ -54355,6 +54572,9 @@ msgid ""
 "appropriate it!\"\n"
 "He smiles mischievously."
 msgstr ""
+"｢どうだ？　最先端のザレク研究室だ！　過去の勤め口からたくさんのものを借りてこなくてはならなかったが、取り戻せやしないよ。もうすべてわたしのものだからな！"
+"　すべてにわたってたしかにわたしの臭跡を覆いかくすようにしたから、あいつらに盗むことはできないだろうな！｣\n"
+"老人は反抗的な感じをさせてほほえんだ。"
 
 #: dat/missions/minerva/maikki2.lua:822
 msgid ""
@@ -54365,6 +54585,10 @@ msgid ""
 "than me to visit!\"\n"
 "You don't like how he puts emphasis on 'living biological'…"
 msgstr ""
+"｢わたしのドローンがこいつを掘ったんだが、これまでの人生でもっとも居心地よい場所になった。しかし客はあまり多くない。じつのところ、きみは……｣\n"
+"老人は指を使って熱心に数えはじめた。\n"
+"｢……最初の客だ！　そうとも、そういうことだな。わたしを除けば、初めて真に生きている生物学的存在がここへ来た！｣\n"
+"老人が ｢生きている生物学的｣ を強調したのは、あなたの気に入らなかった……"
 
 #: dat/missions/minerva/maikki2.lua:826
 msgid ""
@@ -54374,12 +54598,14 @@ msgid ""
 "wafting from the backroom, you feel like it is best to heed his advice for "
 "your own safety."
 msgstr ""
+"｢好きなように遠慮なく施設を使ってくれてかまわないが、奥の部屋は立入禁止だ｣\n"
+"研究室全体のにおいと、奥の部屋から漂ってくるものすごい臭気のことを考えると、自分自身の安全のためにも老人の助言を心に留めるのがいちばんだとあなたは感じた。"
 
 #: dat/missions/minerva/maikki2.lua:831
 msgid ""
 "You show him the nebula artefact and suddenly a couple of small drones whirl "
 "into the room and start to perform a deeper inspection."
-msgstr ""
+msgstr "あなたが老人に星雲の人工遺物を見せると、とつぜん 2 機の小型ドローンがすばやく部屋に入りこみ、念入りな検査を実施しはじめた。"
 
 #: dat/missions/minerva/maikki2.lua:832
 msgid ""
@@ -54387,6 +54613,8 @@ msgid ""
 "no vitals… not very good… mmmm… nebula radiation at minimum… can't be helped "
 "I guess…\""
 msgstr ""
+"｢エネルギーレベル 7% ……そうか、そうか……小さな粒子束の不安定性が……ひどくはないな……\n"
+"元気はない……あまりよくないぞ……むむむ……星雲放射は最小限……助けられないだろうな……｣"
 
 #: dat/missions/minerva/maikki2.lua:834
 msgid ""
@@ -54394,14 +54622,16 @@ msgid ""
 "you are there.\n"
 "\"Why are you still here? Go back to wherever the hell you came from!\""
 msgstr ""
+"老人は無限と思えるほとそれをつづけていたが、ついにあなたがいることを思いだした。\n"
+"｢どうしてまだここにいるんだ？　どこでもいいからきみがもといた地獄に戻れ！｣"
 
 #: dat/missions/minerva/maikki2.lua:837
 msgid "\"What about my information?\""
-msgstr ""
+msgstr "｢わたしの情報はどうなったんです？｣"
 
 #: dat/missions/minerva/maikki2.lua:838
 msgid "\"What the hell is this thing?\""
-msgstr ""
+msgstr "｢こいつはいったいなんなんです？｣"
 
 #: dat/missions/minerva/maikki2.lua:841
 msgid ""
@@ -54409,6 +54639,8 @@ msgid ""
 "be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
+"｢そうか……。きみはこの人工遺物の重要性を把握していない。きみのような程度の低級な知性にはそれが役に立つことはないと推測する｣\n"
+"老人があざ笑った。"
 
 #: dat/missions/minerva/maikki2.lua:843
 msgid ""
@@ -54417,6 +54649,8 @@ msgid ""
 "biotechnology, but also Za'lek cybertechnology. It is the peak of "
 "technological advancement!\""
 msgstr ""
+"｢これはわたしの最新の作品で、古代の星雲技術と生命を融合したものだ。ソロミドの生物工学だけでなく、ザレクのサイバー技術もすべてしのぐものだと考えてくれ。こ"
+"れは技術的発展の頂点にあるんだよ！｣"
 
 #: dat/missions/minerva/maikki2.lua:844
 msgid ""
@@ -54425,14 +54659,16 @@ msgid ""
 "interesting failure, it is still a failure at heart. Most of my other "
 "creations have had much more success.\""
 msgstr ""
+"｢これには信じられないくらいの可能性があるが、まだ……やっかいな問題がいくらかあってな。精神的能力が安定性に欠ける傾向にある。こいつはとても興味深い失敗で"
+"はあるが、じっさいそれでも失敗だ。ほかの作品のほとんどは、ずっと成功していたが｣"
 
 #: dat/missions/minerva/maikki2.lua:845
 msgid "\"What was it you wanted?\""
-msgstr ""
+msgstr "｢きみの望みはなんだったかな？｣"
 
 #: dat/missions/minerva/maikki2.lua:846
 msgid "You ask him if he knows anything about Kex's ship in the nebula."
-msgstr ""
+msgstr "あなたは星雲にあったケクスの船についてなにか知らないかと老人にたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:847
 msgid ""
@@ -54444,6 +54680,10 @@ msgid ""
 "people who were investigating like us.\"\n"
 "He coughs."
 msgstr ""
+"｢ああ、そうか！　あの難破船は覚えている。じっさい、とても、とても奇妙なものだった。あのときわたしはみずから探検に出向いていて、われわれはとくべつ奇妙なあ"
+"の難破船に出会ったんだ。戦いの痕跡がはっきりとあったな。ごみあさりたちが自分たちのなかでけんかをするのは珍しいことではないが、あれはほとんどの損傷を内部か"
+"らうけていた。外側の損傷はあきらかにあとからつけられたものだ。われわれみたいに調査しようとする者を混乱させようとしたんだな｣\n"
+"老人がせきをした。"
 
 #: dat/missions/minerva/maikki2.lua:849
 msgid ""
@@ -54454,6 +54694,9 @@ msgid ""
 "with so much nebula radiation that they seemed to have potential!\"\n"
 "He starts to get excited."
 msgstr ""
+"｢あれは事象まえの船でも興味深い特徴をなにかもっているわけでもなかったが、内部には驚いたね。触るとまだ温かい 2 体の死体があった。あのような星雲深くでは"
+"時間のたちかたがちがうみたいにな。ふつうあのようなものは無視するんだが、たくさんの星雲放射線にひたされていたんだから、可能性はあるように見えたんだ！｣\n"
+"老人が興奮しはじめた。"
 
 #: dat/missions/minerva/maikki2.lua:851
 msgid ""
@@ -54463,6 +54706,9 @@ msgid ""
 "the potential infused in the nebula! Now I get it! All my research had led "
 "up to this!\""
 msgstr ""
+"｢わたしが気づいたのはその時だ。人類と星雲はまったく同一のものだ。われわれの将来はからみあっている！　"
+"死体に星雲を吸収させると、それは人間性を超越して星々のなかで永遠に生きるんだ！　星雲を満たすことの可能性に限界はない！　"
+"わたしの研究のすべてはこれが誘因となったんだ！｣"
 
 #: dat/missions/minerva/maikki2.lua:852
 msgid ""
@@ -54472,6 +54718,9 @@ msgid ""
 "but with suitable replacements I was able to solve it.\"\n"
 "He laughs manically."
 msgstr ""
+"｢そしてひらめいたのはその時だった。星雲と肉体の融合によって、われわれは自身を超越できる！　わたしはそれをしなければならない。やりとげなければならない！　"
+"そしてそれはうまくいった。ああきみ、たしかにうまくいったよ。肉体の不適合性にはいくらか困難があったが、適切な代替物を使って解決できた｣\n"
+"老人が躁病患者のように笑った。"
 
 #: dat/missions/minerva/maikki2.lua:854
 msgid ""
@@ -54483,6 +54732,10 @@ msgid ""
 "also be perfect. It was so simple!\"\n"
 "He seems delirious."
 msgstr ""
+"｢ああ、あの二人は完璧だった。アダムとイブのようにな。新しく完璧な人類を作る用意ができていた。しかしそれはそこまで単純ではなかった。あの男、恩知らずのばか"
+"は、以前の人生への愛着がありすぎたんだな。なんと弱々しいものか……。わたしが気づいたのはあの時だった。完璧なものを作るには完璧な精神と完璧な肉体が必要なの"
+"だ。星雲があれば、完璧な肉体は達成できる。しかし精神も完璧でなければならない。とても単純なことだった！｣\n"
+"老人はうわごとを言っているように見えた。"
 
 #: dat/missions/minerva/maikki2.lua:856
 msgid ""
@@ -54491,6 +54744,9 @@ msgid ""
 "deteriorates the body.\"\n"
 "He coughs, convulsing."
 msgstr ""
+"｢だからわたしはそれをした。自分を改良しようとしたのだ。しかしそれはそこまで単純ではなかった。わかるだろう。それは死に近い経験を必要とするのだ。健康な肉体"
+"にとって、それはたんに体を劣化させることでしかない｣\n"
+"老人がせきをして、身もだえをした。"
 
 #: dat/missions/minerva/maikki2.lua:858
 msgid ""
@@ -54498,10 +54754,13 @@ msgid ""
 "I'm wasting away. So close and here wasting away. What uselessness.\"\n"
 "He lowers his gaze."
 msgstr ""
+"｢精神はじゅうぶんに良好だったが、わたしの体はそうでなかった。なんともな。それにわたしにはあまり時間がない。わたしはやせ衰えている。もうだめだし、ここも弱"
+"っている。なんと無益なことだ｣\n"
+"老人は視線を下に向けた。"
 
 #: dat/missions/minerva/maikki2.lua:860
 msgid "You ask what happened to the 'individuals' in the experiments."
-msgstr ""
+msgstr "あなたは実験で ｢個人たち｣ はどうなったのかたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:861
 msgid ""
@@ -54510,6 +54769,9 @@ msgid ""
 "space. Not beautiful at all.\"\n"
 "He coughs softly."
 msgstr ""
+"｢わたしはじっさいあの男を追いかけようとしたのだ。前回確認したときは、ミネルバ・ステーションのならず者たちに捕らわれていた。リンボ星系の不快な場所だよ。星"
+"雲もなく、とても古くさい空間だ。まったく美しくもなんともない｣\n"
+"老人は軽くせきをした。"
 
 #: dat/missions/minerva/maikki2.lua:863
 msgid ""
@@ -54518,6 +54780,9 @@ msgid ""
 "need more time. One more cycle…\"\n"
 "His voice gets softer and softer as he keeps on mumbling."
 msgstr ""
+"｢女はわたしを助けようとしてくれたが、女も精神は弱かった。だからある日星々にむけて出発したよ。止めることはできなかったが、仲はじゅうぶんよかったと思ってい"
+"た。とにかくわたしにはもっと時間が必要だ。あともう 1 周期あれば……｣\n"
+"老人はもぐもぐ言いつづけ、声はどんどん静かになっていった。"
 
 #: dat/missions/minerva/maikki2.lua:865
 msgid ""
@@ -54525,10 +54790,12 @@ msgid ""
 "have fallen into a stupor. You feel you have enough information to report to "
 "Maikki again."
 msgstr ""
+"あなたはまた老人の注意をひこうとしてみたが、うまくいかなかったようだ。老人は人事不省におちいっているらしい。あなたはまたメイッキーに報告するのにじゅうぶん"
+"な情報を得たと感じた。"
 
 #: dat/missions/minerva/maikki2.lua:870
 msgid "Report back to Maikki in the Limbo system"
-msgstr ""
+msgstr "リンボ星系にいるメイッキーに報告にもどれ。"
 
 #: dat/missions/minerva/maikki2.lua:873
 msgid ""
@@ -54536,18 +54803,20 @@ msgid ""
 "individual from a wreck in the nebula. Kex appears to have run away and is "
 "likely held by thugs at Minerva station."
 msgstr ""
+"あなたはストレンジラブ博士が星雲の中にあった難破船からケクスらしき人物ともうひとりを救ったことを知った。どうもケクスは逃げて、ミネルバ・ステーションのなら"
+"ず者たちに捕まったらしい。"
 
 #: dat/missions/minerva/maikki2.lua:875
 msgid ""
 "You leave behind the hologram projection and hope you won't have to deal "
 "with Dr. Strangelove in the future."
-msgstr ""
+msgstr "あなたはホログラム映写機をあとにした。将来ストレンジラブ博士に対応する必要がなければいいのだが。"
 
 #: dat/missions/minerva/maikki2.lua:879
 msgid ""
 "You turn off the hologram projector and Dr. Strangelove's image flickers and "
 "disappears."
-msgstr ""
+msgstr "あなたがホログラム映写機をとめると、ストレンジラブ博士の映像がまたたいて消えた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66995,25 +67264,17 @@ msgid ""
 "extension makes them the highest level of authority within the Four Winds. "
 "You know me. The other three are called Giornio, Zurike and Farett.\""
 msgstr ""
-"レビナ船長はいすに深く座り、ため息をついた。｢そこで物事が変わりはじめたのかも"
-"しれないと考えています。かつてわれわれは目的に専念していたものですが、どうも"
-"今では事態が異なっているようです。このまえ帝国とドベーレッドのあいだで外交的"
-"やりとりをしたときにおきたことは、まちがいなく覚えていますよね。まあ、両者の"
-"あいだの緊張を高めるのは、われわれの任務の一部ではぜったいになかったといえば"
-"じゅうぶんでしょう。それどころか、われわれが守ろうとするものとは完全に反する"
-"ものです。それに、あれはただの無関係な出来事でもありませんでした。あのような"
-"なりゆきはフォーウィンズが巻きこまれていることを暗示しています。不吉な前兆と"
-"なる事態です｣\n"
-"    レビナがホロテーブルを起動すると、4 隻の巡洋艦がうつった。全部がうわべは"
-"セイリュウと同一だ。それでもあなたは、船体設計に微妙な違いがあるのに気がつい"
-"た。\n"
-"    ｢これがわれわれの旗艦です。この船を含めて、セイリュウ、スザク、ビャッコ、"
-"ゲンブ。承知しているところでは、この名前は、そしてもちろんわれわれの集団の名"
-"前もですが、古代アジアの神話を起源としています｣。船長が別の制御装置に触れる"
-"と、4 人の写真が現れた。船の上に重ねて表示されている。｢これが旗艦の 4 人の船"
-"長です。それゆえ、フォーウィンズのなかでは最高位の権威をもつことになります。"
-"わたしは知っていますね。ほかの 3 人は、ジョルニオ、ズーリケ、ファレットと呼ば"
-"れています｣"
+"レビナ船長はいすに深く座り、ため息をついた。｢そこで物事が変わりはじめたのかもしれないと考えています。かつてわれわれは目的に専念していたものですが、どうも"
+"今では事態が異なっているようです。このまえ帝国とドベーレッドのあいだで外交的やりとりをしたときにおきたことは、まちがいなく覚えていますよね。まあ、両者のあ"
+"いだの緊張を高めるのは、われわれの任務の一部ではぜったいになかったといえばじゅうぶんでしょう。それどころか、われわれが守ろうとするものとは完全に反するもの"
+"です。それに、あれはただの無関係な出来事でもありませんでした。あのようななりゆきはフォーウィンズが巻きこまれていることを暗示しています。不吉な前兆となる事"
+"態です｣\n"
+"    レビナがホロテーブルを起動すると、4 "
+"隻の巡洋艦がうつった。ぜんぶがうわべはセイリュウと同一だ。それでもあなたは、船体設計に微妙な違いがあるのに気がついた。\n"
+"    ｢これがわれわれの旗艦です。この船を含めて、セイリュウ、スザク、ビャッコ、ゲンブ。承知しているところでは、この名前は、そしてもちろんわれわれの集団"
+"の名前もですが、古代アジアの神話を起源としています｣。船長が別の制御装置に触れると、4 人の写真が現れた。船の上に重ねて表示されている。｢これが旗艦の "
+"4 人の船長です。それゆえ、フォーウィンズのなかでは最高位の権威をもつことになります。わたしは知っていますね。ほかの 3 "
+"人は、ジョルニオ、ズーリケ、ファレットと呼ばれています｣"
 
 #: dat/missions/shadow/darkshadow.lua:101
 msgid ""
@@ -75661,8 +75922,6 @@ msgid "Tutorial"
 msgstr "入門"
 
 #: dat/missions/tutorial/tutorial.lua:41
-#, fuzzy
-#| msgid "Your ship AI has offered to teach you how to fly your ship."
 msgid "Your Ship AI has offered to teach you how to fly your ship."
 msgstr "船の AI があなたに船の飛ばしかたを教えようと申しでた。"
 
@@ -75679,13 +75938,6 @@ msgstr ""
 "の前に現れた。"
 
 #: dat/missions/tutorial/tutorial.lua:51
-#, fuzzy
-#| msgid ""
-#| "\"Congratulations on your first space ship, {playername}! What, what am "
-#| "I? I am your personal Ship AI. Always ready to be of your assistance.\"\n"
-#| "They stare at you for a few seconds.\n"
-#| "\"Say, you look very familiar. You wouldn't be related my late previous "
-#| "owner? Terrible what happened…\""
 msgid ""
 "\"Congratulations on your first space ship, {playername}! What, what am I? I "
 "am your personal Ship AI. Always ready to be of assistance.\"\n"
@@ -75693,21 +75945,12 @@ msgid ""
 "\"Say, you look very familiar. You wouldn't be related my late previous "
 "owner? Terrible what happened…\""
 msgstr ""
-"｢初めての宇宙船おめでとう、{playername}！　えっ、わたしは何者かって？　わたし"
-"はあなた個人のための船の AI です。あなたのお手伝いをする準備はいつでもできて"
-"います｣\n"
+"｢初めての宇宙船おめでとう、{playername}！　えっ、わたしは何者かって？　わたしはあなた個人のための船の AI "
+"です。お手伝いをする準備はいつでもできています｣\n"
 "AI があなたを数秒間見つめる。\n"
-"｢さて、あなたのことはとても親しく思えます。あなたは直前の所有者と関係があった"
-"りしないでしょうね？　ひどいことがおきたんです……｣"
+"｢さて、あなたのことはとても親しく思えます。あなたは直前の所有者と関係があったりしないでしょうね？　ひどいことがおきたんです……｣"
 
 #: dat/missions/tutorial/tutorial.lua:54
-#, fuzzy
-#| msgid ""
-#| "\"Anyway, from now on, I will be your ship AI, but don't worry if you get "
-#| "a new ship, I will be transferred over without an issue. If you have any "
-#| "question or comment about how your ship works or how to do things, I "
-#| "believe I can be of help. As your new Ship AI, would you like to give me "
-#| "a name?\""
 msgid ""
 "\"Anyway, from now on, I will be your Ship AI, but don't worry if you get a "
 "new ship, I will be transferred over without an issue. If you have any "
@@ -75715,11 +75958,9 @@ msgid ""
 "believe I can be of help. As your new Ship AI, would you like to give me a "
 "name?\""
 msgstr ""
-"｢それはともかく、これからわたしはあなたの船の AI になります。新しい船を取得し"
-"ても心配しないでください。わたしはなんの問題もなく転送されます。もし船の仕組"
-"みやなにかをする方法について疑問や意見がすこしでもあるなら、わたしが助けられ"
-"ると信じています。あなたの新しい船の AI として、わたしに名前をつけてくないで"
-"しょうか？｣"
+"｢それはともかく、これからわたしはあなたの船の AI になります。新しい船を取得しても心配しないでください。わたしはなんの問題もなく転送されます。もし船の"
+"仕組みやなにかをする方法について疑問や意見がすこしでもあるなら、わたしが助けられると信じています。あなたの新しい船の AI "
+"として、わたしに名前をつけてくないでしょうか？｣"
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:78
@@ -75808,15 +76049,6 @@ msgid "Disable all hints"
 msgstr "すべてのヒントを無効にする"
 
 #: dat/missions/tutorial/tutorial.lua:130
-#, fuzzy
-#| msgid ""
-#| "\"Alrght, let's go over how to pilot your new state-of-the-art ship, "
-#| "then! Moving is pretty simple: rotate your ship with {leftkey} and "
-#| "{rightkey}, and thrust to move your ship forward with {accelkey}! You can "
-#| "also use {reversekey} to rotate your ship to the opposite direction you "
-#| "are moving, or to reverse thrust if you purchase and install a reverse "
-#| "thruster onto your starship. Give it a try by flying over to {pnt}! You "
-#| "see it on your screen, right? It's the planet right next to you.\""
 msgid ""
 "\"Alright, let's go over how to pilot your new state-of-the-art ship, then! "
 "Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and "
@@ -75826,12 +76058,10 @@ msgid ""
 "your starship. Give it a try by flying over to {pnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
-"｢さて、それでは最新式の船の操縦方法を確認してみましょう！　動かすのはかなり簡"
-"単です。船を {leftkey} や {rightkey} で回転させ、{accelkey} で推力を発生させ"
-"て船を前に動かしてください！　{reversekey} を使えば、動いているのとは逆方向に"
-"船を向けることもできますし、逆推力器を購入して星間船に取りつければ逆方向に推"
-"力を発生させることもできます。{pnt}の上を飛んで試してみましょう！　スクリーン"
-"を見ればわかりますよね？　真横にある惑星です｣"
+"｢さて、それでは最新式の船の操縦方法を確認してみましょう！　動かすのはかなり簡単です。船を {leftkey} や {rightkey} "
+"で回転させ、{accelkey} で推力を発生させて船を前に動かしてください！　{reversekey} を使えば、動いているのとは逆方向に船を向けること"
+"もできますし、逆推力器を購入して星間船に取りつければ逆方向に推力を発生させることもできます。{pnt}の上を飛んで試してみましょう！　"
+"スクリーンを見ればわかりますよね？　真横にある惑星です｣"
 
 #: dat/missions/tutorial/tutorial.lua:142
 msgid "Fly to {startpnt} in the {sys} system with the movement keys"
@@ -75941,15 +76171,6 @@ msgstr ""
 "していません。旅に出たら、あまり遠くまで離れないのがおそらくいちばんです｣"
 
 #: dat/missions/tutorial/tutorial.lua:194
-#, fuzzy
-#| msgid ""
-#| "\"Let's now practice combat. You won't need this if you stick to the safe "
-#| "systems in the Empire core, but sadly, we are likely to encounter hostile "
-#| "ships if you venture further out, so you need to know how to defend "
-#| "yourself. Fortunately, your ship comes pre-equipped with a state-of-the-"
-#| "art laser cannon for just that reason! If all goes well you won't end up "
-#| "like ship ornament like my late previous owner after encountering… "
-#| "Anyway, on to the drone.\""
 msgid ""
 "\"Let's now practice combat. You won't need this if you stick to the safe "
 "systems in the Empire core, but sadly, we are likely to encounter hostile "
@@ -75959,13 +76180,10 @@ msgid ""
 "ornament like my late previous owner after encountering… Anyway, on to the "
 "drone.\""
 msgstr ""
-"｢さあ、戦闘訓練といきましょうか。帝国の中核となる安全な星系に固執していれば、"
-"これは必要とならないでしょう。ですが悲しいことに、思いきってもっと遠くまで乗"
-"りだしていけば、敵対的な船と出会うことになるでしょう。だから身を守る方法は"
-"知っておく必要があります。さいわいにも、この船には最新式のレーザーキャノンが"
-"あらかじめ搭載されています。まさにそれが道理というものですよね！　すべてがう"
-"まくいけば、あなたは船の飾りみたいなものになることはないでしょう。運悪くわた"
-"しの前回の所有者がなったようには……。とにかく、ドローンの話をしましょう｣"
+"｢さあ、戦闘訓練といきましょうか。帝国の中核となる安全な星系に固執していれば、これは必要とならないでしょう。ですが悲しいことに、思いきってもっと遠くまで乗"
+"りだしていけば、敵対的な船と出会うことになるでしょう。だから身を守る方法は知っておく必要があります。さいわいにも、この船には最新式のレーザーキャノンがあら"
+"かじめ搭載されています。まさにそれが道理というものですよね！　"
+"すべてがうまくいけば、あなたが船の飾りになることはないでしょう。運悪くわたしの前回の所有者がなったようには……。とにかく、ドローンの話をしましょう｣"
 
 #: dat/missions/tutorial/tutorial.lua:195
 msgid ""
@@ -76233,17 +76451,6 @@ msgstr ""
 "入っています｣"
 
 #: dat/missions/tutorial/tutorial.lua:308
-#, fuzzy
-#| msgid ""
-#| "\"Welcome back to space, {playername}! After landing, the game will be "
-#| "automatically saved, so you do not need to worry about losing your "
-#| "progress. Now let's continue discussing moving around in space. As "
-#| "mentioned before, you can move around space manually, no problem. "
-#| "However, you will often want to travel large distances, and navigating "
-#| "everywhere manually could be a bit tedious. A good option is to delegate "
-#| "the travelling to me, your ship AI, using the Autonav functionality "
-#| "available on all ships. You can trust me as I've only had under 4 fatal "
-#| "accidents.\""
 msgid ""
 "\"Welcome back to space, {playername}! After landing, the game will be "
 "automatically saved, so you do not need to worry about losing your progress. "
@@ -76254,14 +76461,11 @@ msgid ""
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
-"｢宇宙へおかえり、{playername}！　着陸すると、ゲームは自動的に保存されます。だ"
-"から進んだのを失う心配をする必要はありません。さて、宇宙を飛びまわることにつ"
-"いての話をつづけましょう。まえに説明したとおり、手動で宇宙を飛びまわることが"
-"できます。問題はありません。とはいえ、長距離を移動したくなるのはよくあること"
-"でしょう。すると、どこへ行くにも手動で操縦するのはちょっと退屈ということにも"
-"なりえます。よいやりかたは、船の AI であるわたしに移動を委任することです。す"
-"べての船で利用できる、自動操縦機能を使ってください。わたしのことは信用できま"
-"す。致命的な事故は 4 回未満しかおこしていません｣"
+"｢宇宙へおかえり、{playername}！　着陸すると、ゲームは自動的に保存されます。だから進んだのを失う心配をする必要はありません。さて、宇宙を飛びま"
+"わることについての話をつづけましょう。まえに説明したとおり、手動で宇宙を飛びまわることができます。問題はありません。とはいえ、長距離を移動したくなるのはよ"
+"くあることでしょう。すると、どこへ行くにも手動で操縦するのはちょっと退屈ということにもなりえます。よいやりかたは、船の AI "
+"であるわたしに移動を委任することです。すべての船で利用できる、自動操縦機能を使ってください。わたしのことは信用できます。致命的な事故は 4 "
+"回未満しかおこしていません｣"
 
 #: dat/missions/tutorial/tutorial.lua:309
 msgid ""
@@ -76342,16 +76546,10 @@ msgstr ""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:331
-#, fuzzy
-#| msgid ""
-#| "Your ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
-#| "will fair better than their late previous owner."
 msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their late previous owner."
-msgstr ""
-"船の AI が船の飛ばしかたを指導してくれた。うまくいけば、この AI の前回の所有"
-"者よりはかなりうまくやれるだろう。"
+msgstr "船の AI が船の飛ばしかたを指導してくれた。うまくいけば、この AI の前回の所有者よりはかなりうまくやれるだろう。"
 
 #: dat/missions/tutorial/tutorial.lua:349
 msgid ""
@@ -81252,7 +81450,7 @@ msgstr ""
 #. Orangish
 #: dat/scripts/common/minerva.lua:25
 msgid "Maikki"
-msgstr "メイキー"
+msgstr "メイッキー"
 
 #: dat/scripts/common/minerva.lua:26
 msgid ""
@@ -81265,7 +81463,7 @@ msgstr ""
 #. Pink :D
 #: dat/scripts/common/minerva.lua:32
 msgid "Pirate Lord Maikki"
-msgstr "海賊領主メイキー"
+msgstr "海賊領主メイッキー"
 
 #: dat/scripts/common/minerva.lua:33
 msgid "TODO"
