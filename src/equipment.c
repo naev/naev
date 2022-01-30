@@ -1464,12 +1464,26 @@ static void equipment_genShipList( unsigned int wid )
 }
 
 static int equipment_filter( const Outfit *o ) {
-   Pilot *p = eq_wgt.selected;
+   Pilot *p;
+   const PlayerShip_t *ps;
+
    switch (equipment_outfitMode) {
       case 0:
          return 1;
 
-      case 1:
+      case 1: /* Fits any ship of the player. */
+         ps = player_getShipStack();
+         for (int j=0; j < array_size(ps); j++) {
+            p = ps[j].p;
+            for (int i=0; i < array_size(p->outfits); i++) {
+               if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+                  return 1;
+            }
+         }
+         return 0;
+
+      case 2: /* Fits currently selected ship. */
+         p = eq_wgt.selected;
          if (p==NULL)
             return 1;
          for (int i=0; i < array_size(p->outfits); i++) {
@@ -1478,11 +1492,11 @@ static int equipment_filter( const Outfit *o ) {
          }
          return 0;
 
-      case 2:
-         return (o->slot.size==OUTFIT_SLOT_SIZE_LIGHT);
       case 3:
-         return (o->slot.size==OUTFIT_SLOT_SIZE_MEDIUM);
+         return (o->slot.size==OUTFIT_SLOT_SIZE_LIGHT);
       case 4:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_MEDIUM);
+      case 5:
          return (o->slot.size==OUTFIT_SLOT_SIZE_HEAVY);
    }
    return 1;
@@ -1836,7 +1850,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    }
 
    /* If pilot-dependent outfit filter modes are active, we have to regenerate outfits always. */
-   if ((equipment_outfitMode==1) && (eq_wgt.selected != prevship))
+   if ((equipment_outfitMode==2) && (eq_wgt.selected != prevship))
       equipment_regenLists( wid, 1, 0 );
 }
 #undef EQ_COMP
@@ -1872,6 +1886,10 @@ static void equipment_filterOutfits( unsigned int wid, const char *str )
    equipment_regenLists(wid, 1, 0);
 }
 
+/**
+ * Functions for the popdown menu (filter outfits by size)
+ */
+
 static void equipment_outfitPopdownSelect( unsigned int wid, const char *str )
 {
    int m = toolkit_getListPos( wid, str );
@@ -1894,7 +1912,8 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    const char *name = "lstOutfitPopdown";
    const char *modes[] = {
       N_("Show all outfits"),
-      N_("Show only equipable outfits"),
+      N_("Show only outfits equipable on any of your ships"),
+      N_("Show only outfits equipable on current ship"),
       N_("Show only light outfits"),
       N_("Show only medium outfits"),
       N_("Show only heavy outfits"),
@@ -1914,7 +1933,7 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
 
    window_dimWidget( wid, str, &w, &h );
    window_posWidget( wid, str, &x, &y );
-   window_addList( wid, x+w, y-120+h, 200, 120, name, modelist, n, equipment_outfitMode, equipment_outfitPopdownSelect, equipment_outfitPopdownActivate );
+   window_addList( wid, x+w, y-120+h, 350, 120, name, modelist, n, equipment_outfitMode, equipment_outfitPopdownSelect, equipment_outfitPopdownActivate );
    window_setFocus( wid, name );
 }
 
