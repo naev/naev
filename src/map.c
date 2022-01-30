@@ -82,15 +82,15 @@ static StarSystem **map_path  = NULL;   /**< Array (array.h): The path to curren
 static int cur_commod         = -1;     /**< Current commodity selected. */
 static int cur_commod_mode    = 0;      /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
-static char** map_modes = NULL;         /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
+static char** map_modes       = NULL;   /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0;      /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0;  /**< Average price across the galaxy. */
-static double map_dt     = 0.;          /**< Nebula animation stuff. */
-static int map_minimal_mode = 0;        /**< Map is in minimal mode. */
+static double map_dt          = 0.;     /**< Nebula animation stuff. */
+static int map_minimal_mode   = 0;      /**< Map is in minimal mode. */
 static double map_flyto_speed = 1500.;  /**< Linear speeed at which the map flies to a location. */
-static double map_mx=0.;                /**< X mouse position */
-static double map_my=0.;                /**< Y mouse position */
-static char map_show_notes=0;           /**< Boolean for showing system notes */
+static double map_mx          = 0.;     /**< X mouse position */
+static double map_my          = 0.;     /**< Y mouse position */
+static char map_show_notes    = 0;      /**< Boolean for showing system notes */
 
 /*
  * extern
@@ -288,7 +288,6 @@ void map_open (void)
     * [ Find ]
     * [ Close ]
     */
-
    x  = -20; /* Right column X offset. */
    y  = -20;
    rw = 130; /* Right column indented width maximum. */
@@ -953,7 +952,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render system markers and notes. */
    if (cst->alpha_markers > 0.) {
       map_renderMarkers( x, y, z, r, cst->alpha_markers );
-      map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
+      map_renderNote( bx, by, x, y, z, w, h, r, 0, cst->alpha_markers );
    }
 
    /* Render system names and notes. */
@@ -1364,43 +1363,47 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
  * @brief Renders the system note on the map if mouse is close.
  */
 void map_renderNote( double bx, double by, double x, double y,
-      double zoom, double w, double h, int editor, double alpha )
+      double zoom, double w, double h, double r, int editor, double alpha )
 {
-   double tx,ty;
-   glColour col;
-   glFont *font;
-   StarSystem *sys;
+   (void) w;
+   (void) h;
 
-   (void)bx;
-   (void)by;
-   (void)w;
-   (void)h;
-   (void)editor;
-
-   if (zoom <= 0.5) return;
+   if ((zoom <= 0.5) || editor)
+      return;
 
    /* Find mouse over system and draw. */
    for (int i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex(i);
+      double tx,ty;
+      glColour col;
+      glFont *font;
+      StarSystem *sys = &systems_stack[i];
 
       if (!sys_isFlag(sys,SYSTEM_PMARKED))
          continue;
+
       if (sys->note == NULL)
          continue;
 
-      if ((pow2(sys->pos.x*zoom+x-map_mx-bx)+pow2(sys->pos.y*zoom+y-map_my-by)) > pow2(MAP_MOVE_THRESHOLD))
+      /* Set up colour. */
+      col = cFontBlue;
+      col.a = alpha * 0.5;
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
+
+      /* Draw marker part. */
+      //gl_renderCircle( tx, ty, 1.3*r, &col, 1 );
+
+      /* Mouse is over. */
+      if (!map_show_notes && ((pow2(tx-map_mx-bx)+pow2(ty-map_my-by)) > pow2(MAP_MOVE_THRESHOLD)))
          continue;
 
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
-      tx = x + (sys->pos.x+12.) * zoom;
-      ty = y + (sys->pos.y) * zoom - font->h*2.;
+      tx += 12.*zoom;
+      ty -= font->h*2.;
 
       /* Render note */
-      col = cGrey70;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, sys->note );
-
-      break;
    }
 }
 
@@ -1441,13 +1444,6 @@ void map_renderNames( double bx, double by, double x, double y,
       col = cWhite;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, _(sys->name) );
-
-      /* Render note */
-      if (map_show_notes && sys->note!=NULL) {
-         col = cGrey60;
-         col.a = alpha;
-         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
-      }
    }
 
    /* Raw hidden values if we're in the editor. */
@@ -1491,7 +1487,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED | SYSTEM_PMARKED))
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          continue;
 
       /* Get the position. */
@@ -1500,7 +1496,6 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
-      n += (sys_isFlag(sys, SYSTEM_PMARKED)) ? 1 : 0;
       n += sys->markers_plot;
       n += sys->markers_high;
       n += sys->markers_low;
@@ -1526,10 +1521,6 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       }
       for (m=0; m<sys->markers_computer; m++) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 4 );
-         j++;
-      }
-      if (sys_isFlag(sys, SYSTEM_PMARKED)) {
-         map_drawMarker( tx, ty, zoom, r, a, n, j, 5 );
          j++;
       }
    }
