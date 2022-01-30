@@ -36,7 +36,7 @@ local mainsys = system.get("Klintus")
 
 local mothership_name = _("Planet Saviour")
 
--- luacheck: globals approaching enter land mothershipdeath mothershipboard (Hook functions passed by name)
+-- luacheck: globals approaching enter land mothershipdeath mothershipboard mothershipexplosives (Hook functions passed by name)
 
 function create ()
    if not misn.claim(mainsys) then misn.finish() end
@@ -320,10 +320,14 @@ function mothershipdeath ()
 end
 
 function mothershipboard ()
-   vntk.msg(_("TODO"), _([[TODO]]))
-   mothership:disable() -- Permanently disable
-   mem.state = 2
-   misn.osdActive(3)
-   misn.markerMove( mem.mrk, retpnt )
+   vntk.msg(fmt.f_(_("Terraforming {shipname}"),{shipname=mothership_name}), _([[Without boarding the ship you quickly clamp the terraforming explosives on the hull, set the timer, and detach. Time to get away from there before it blows!]]))
    player.unboard()
+
+   hook.timer( 5, "mothershipexplosives" )
+end
+
+function mothershipexplosives ()
+   if mothership:exists() then
+      mothership:setHealth( -1, -1 )
+   end
 end
