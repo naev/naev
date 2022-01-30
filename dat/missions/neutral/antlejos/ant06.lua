@@ -165,7 +165,7 @@ end
 
 function supplydeath ()
    if mem.state == 2 then return end
-   player.msg(_("#gYou eliminated the target!#0"))
+   player.msg("#g".._("You eliminated the target!").."#0")
    mem.state = 2
    misn.osdActive(3)
    misn.markerMove( mem.mrk, retpnt )
