@@ -2116,9 +2116,8 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
 {
    (void) wid;
    (void) str;
-   StarSystem *sys;
    if (map_selected != -1) {
-      sys=system_getIndex( map_selected );
+      StarSystem *sys = system_getIndex( map_selected );
 
       /* Remove old note */
       if (sys->note != NULL) {
@@ -2130,7 +2129,9 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
       if (sys_isFlag(sys, SYSTEM_PMARKED))
          sys_rmFlag(sys, SYSTEM_PMARKED);
       else {
-         sys->note=dialogue_input(_("System note"), 0, 60, _("Write a note about this system:"));
+         char buf[STRMAX_SHORT];
+         snprintf( buf, sizeof(buf), _("Write a note about the #o%s#0 system:"), sys->name );
+         sys->note = dialogue_input(_("Add System Note"), 0, 60, buf );
          sys_setFlag(sys, SYSTEM_PMARKED);
       }
    }
