@@ -26,6 +26,7 @@ stds.Basic={
       "inlist",
       "tcopy",
       "trepeat",
+      "treverse",
    },
    read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn"},
 }

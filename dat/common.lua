@@ -1,3 +1,10 @@
+--[[--
+Checks to see if an element is in a table. Uses comparison operator.
+
+   @tparam table tbl Table to check to see if element is in it.
+   @param elm Element to check to see if it is in tbl.
+   @treturn boolean true if elm is in tbl, false otherwise.
+--]]
 function inlist( tbl, elm )
    for k,v in ipairs(tbl) do
       if v==elm then
@@ -7,6 +14,13 @@ function inlist( tbl, elm )
    return false
 end
 
+--[[--
+Does a shallow copy of a table.
+
+   @tparam table tbl Table to copy.
+   @tparam[opt={}] copy Initial table to use as a base and add elements of tbl to.
+   @treturn table A new table that is a shallow copy of tbl, or copy if not nil.
+--]]
 function tcopy( tbl, copy )
    copy = copy or {}
    for k,v in pairs(tbl) do
@@ -15,6 +29,15 @@ function tcopy( tbl, copy )
    return copy
 end
 
+--[[--
+Repeats an ordered table a number of tables.
+
+If you have a table {1,2,3}, and you repeat it 2 times, you will get the table {1,1,2,2,3,3}.
+
+   @tparam table tbl Table to repeat.
+   @tparam number num Number of times to repeat the table.
+   @treturn table A new table that is tbl repeated num times.
+--]]
 function trepeat( tbl, num )
    local t = {}
    for k,v in ipairs(tbl) do
@@ -23,4 +46,17 @@ function trepeat( tbl, num )
       end
    end
    return t
+end
+
+--[[--
+Reverses a table. Only works when using contiguous numbers as keys.
+
+   @tparam table tbl Table to reverse.
+   @treturn table A new table with the elements of tbl in reverse order.
+--]]
+function treverse( tbl )
+   local t = {}
+   for i = #tbl, 1, -1 do
+      table.insert( t, tbl[i] )
+   end
 end
