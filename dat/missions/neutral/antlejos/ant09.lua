@@ -118,6 +118,7 @@ Verner picks up what seems to be an industrial barrel labelled 'Ammonia' and slo
       }
 
       vn.label("drink_little")
+      vn.func( function () var.push( "antlejos_drank", true ) end )
       vn.na(_([[You carefully bring the drink up to your moth and first take a whiff. It's awful. It's horrible and much worse up close. Giving Verner the benefit of the doubt, you bring it up to your lips and take a small sip, it could taste better than what it smells like, right?]]))
       vn.na(_([[Immediately the indescribable taste invades your moth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep conciousness. You spend awhile trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
       v(_([["I've never seen that reaction on first taste! Maybe it's still a bit too soon for you to be able to savour Antlejos delicacies."
@@ -126,6 +127,7 @@ He takes a long swig and finishes his mug.
       vn.jump("cont01")
 
       vn.label("drink_alot")
+      vn.func( function () var.push( "antlejos_drank", true ) end )
       vn.na(_([[You grab the mug, and in an extreme act of determination, ignore all the warning signs your body screams at you and you begin to chug the drink. With the first sip, your body convulses briefly, but you continue to drink until nothing is left. Or at least that's what you think happened before you passed out.]]))
       vn.scene()
       vn.func( function ()
@@ -155,6 +157,7 @@ He takes a long swig and finishes his mug.
       vn.jump("cont01")
 
       vn.label("drink_refuse")
+      vn.func( function () var.pop( "antlejos_drank" ) end )
       vn.na(_([[You refuse the drink and Verner chuckles.]]))
       v(_([["I guess it may be a bit much if you aren't used to it. It's especially good at clearing terraforming dust that gets caught in your throat! Maybe next time you'll give it a shot."]]))
       vn.jump("cont01")
