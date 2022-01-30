@@ -352,10 +352,10 @@ void map_open (void)
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
    window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnSystem", _("System info"), map_buttonSystemMap, SDLK_s );
+            "btnSystem", _("System Info"), map_buttonSystemMap, SDLK_s );
    /* Mark this system button */
    window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnMarkSystem", _("Mark system"), map_buttonMarkSystem, SDLK_k );
+            "btnMarkSystem", _("Add Note"), map_buttonMarkSystem, SDLK_n );
 
    /*
     * Bottom stuff
