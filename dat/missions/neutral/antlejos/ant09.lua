@@ -161,7 +161,11 @@ He takes a long swig and finishes his mug.
       vn.jump("cont01")
 
       vn.label("cont01")
-      v(_([["TODO"]]))
+      v(fmt.f(_([["You've been such a help with the PUAAA, now with the {shipname} out of commission, and the end of the terraforming, we'll finally be able to get some peace and quiet here. It's almost like a dream come true. Honestly, I never expected to get this far, and if it weren't for you, I probably never would have. Cheers!"]]),
+         {shipname=mothership_name}))
+      v(fmt.f(_([["I have to take care of some other things now. You make sure to take some rest, OK? I think you've more than deserved it. Here, even though it's much less than you deserve, take this credit stick for all you've done for us here at {pnt}. You sure you don't want to take a barrel of Antlejos brew with you? No? Alright."]]),
+         {pnt=retpnt}))
+      v(_([[He gives you a strong handshake and is off, busy as ever. Alone, you now spend a while roaming around the base, more like a small city now, and make note of all the incredible progress that has gone on this small moon in such a small amount of time.]]))
 
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )

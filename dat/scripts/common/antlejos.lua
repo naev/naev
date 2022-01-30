@@ -106,7 +106,7 @@ antlejos.rewards = {
    ant05 = 700e3,
    ant06 = 400e3,
    ant07 = 500e3,
-   ant08 = 600e3,
+   ant08 = 700e3,
 }
 
 return antlejos
