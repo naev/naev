@@ -43,7 +43,7 @@
 
 #define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
-#define MAP_MOVE_THRESHOLD 10. /**< Mouse movement threshold */
+#define MAP_MOVE_THRESHOLD 20. /**< Mouse movement distance threshold */
 
 /**
  * @brief Faction presence container to be used for the map information stuff.
@@ -956,7 +956,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render system markers and notes. */
    if (cst->alpha_markers > 0.) {
       map_renderMarkers( x, y, z, r, cst->alpha_markers );
-      //map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
+      map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
    }
 
    /* Render commodity info. */
@@ -1365,7 +1365,7 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
 void map_renderNote( double bx, double by, double x, double y,
       double zoom, double w, double h, int editor, double alpha )
 {
-   double tx,ty, mx,my;
+   double tx,ty;
    glColour col;
    glFont *font;
    StarSystem *sys;
@@ -1378,35 +1378,26 @@ void map_renderNote( double bx, double by, double x, double y,
 
    if (zoom <= 0.5) return;
 
-   /* Correct coordinates. */
-   mx = map_mx + x;
-   my = map_my + y;
-
    /* Find mouse over system and draw. */
    for (int i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex(i);
-
-      /*DEBUG thingy - delete at will*/
-      col = cGrey60;
-      col.a = alpha;
-      gl_printRaw( &gl_defFont, sys->pos.x-mx,sys->pos.y-my, &col, -1, "SYS" );
 
       if (!sys_isFlag(sys,SYSTEM_PMARKED))
          continue;
       if (sys->note == NULL)
          continue;
 
-      if ((pow2(sys->pos.x-map_mx)+pow2(sys->pos.y-map_my)) > pow2(MAP_MOVE_THRESHOLD))
+      if ((pow2(sys->pos.x*zoom+x-map_mx-bx)+pow2(sys->pos.y*zoom+y-map_my-by)) > pow2(MAP_MOVE_THRESHOLD))
          continue;
 
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
       tx = x + (sys->pos.x+12.) * zoom;
-      ty = y + (sys->pos.y) * zoom - font->h*0.5;
+      ty = y + (sys->pos.y) * zoom - font->h*2.;
 
       /* Render note */
       col = cGrey60;
       col.a = alpha;
-      gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+      gl_printRaw( font, tx, ty, &col, -1, sys->note );
 
       break;
    }
@@ -1453,8 +1444,8 @@ void map_renderNames( double bx, double by, double x, double y,
       /* Render note */
       col = cGrey60;
       col.a = alpha;
-      if (sys->note != NULL)
-         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+     // if (sys->note != NULL)
+     //    gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
 
    }
 
