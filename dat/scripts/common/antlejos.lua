@@ -77,7 +77,7 @@ function antlejos.puaaa ()
    if f then
       return f
    end
-   return faction.dynAdd( nil, "puaaa", _("PUAAA") )
+   return faction.dynAdd( "Mercenary", "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
 end
 
 antlejos.protest_lines = rnd.permutation{
@@ -106,7 +106,8 @@ antlejos.rewards = {
    ant05 = 700e3,
    ant06 = 400e3,
    ant07 = 500e3,
-   ant08 = 700e3,
+   ant08 = 600e3,
+   ant09 = 800e3,
 }
 
 return antlejos
