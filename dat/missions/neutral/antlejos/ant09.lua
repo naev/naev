@@ -187,11 +187,9 @@ function enter ()
       lmisn.fail(fmt.f(_("You were not supposed to leave {sys}!"),{sys=mainsys}))
       return
    end
-   --[[
    if system.cur() ~= mainsys then
       return
    end
-   --]]
 
    pilot.clear()
    pilot.toggleSpawn(false)
@@ -238,6 +236,10 @@ function enter ()
       vec2.new(  6e3,  10e3 ),
       vec2.new( -6e3,  10e3 ),
       vec2.new( -6e3, -14e3 ),
+   }
+   local route7 = {
+      vec2.new( -6e3, -5e3 ),
+      vec2.new( -4e3, 4e3 ),
    }
 
    -- Initialize ship stuff
@@ -309,6 +311,7 @@ function enter ()
    add_patrol_group( route4, small_group )
    add_patrol_group( route5, medium_group )
    add_patrol_group( route6, large_group )
+   add_patrol_group( route7, small_group )
 end
 
 function mothershipdeath ()
@@ -320,10 +323,10 @@ function mothershipdeath ()
 end
 
 function mothershipboard ()
-   vntk.msg(fmt.f_(_("Terraforming {shipname}"),{shipname=mothership_name}), _([[Without boarding the ship you quickly clamp the terraforming explosives on the hull, set the timer, and detach. Time to get away from there before it blows!]]))
+   vntk.msg(fmt.f(_("Terraforming {shipname}"),{shipname=mothership_name}), _([[Without boarding the ship you quickly clamp the terraforming explosives on the hull, set the timer, and detach. Time to get away from there before it blows!]]))
    player.unboard()
 
-   hook.timer( 5, "mothershipexplosives" )
+   hook.timer( 3, "mothershipexplosives" )
 end
 
 function mothershipexplosives ()
