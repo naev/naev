@@ -59,4 +59,5 @@ function treverse( tbl )
    for i = #tbl, 1, -1 do
       table.insert( t, tbl[i] )
    end
+   return t
 end
