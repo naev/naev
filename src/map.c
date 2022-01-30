@@ -355,7 +355,7 @@ void map_open (void)
             "btnSystem", _("System Info"), map_buttonSystemMap, SDLK_s );
    /* Mark this system button */
    window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnMarkSystem", _("Add Note"), map_buttonMarkSystem, SDLK_n );
+            "btnMarkSystem", _("Toggle Note"), map_buttonMarkSystem, SDLK_n );
 
    /*
     * Bottom stuff
@@ -2123,7 +2123,7 @@ static void map_buttonMarkSystem( unsigned int wid, const char* str )
       if (sys_isFlag(sys, SYSTEM_PMARKED))
          sys_rmFlag(sys, SYSTEM_PMARKED);
       else {
-         sys->note=dialogue_input(_("System note"), 0, 60, _("Write a note about this system."));
+         sys->note=dialogue_input(_("System note"), 0, 60, _("Write a note about this system:"));
          sys_setFlag(sys, SYSTEM_PMARKED);
       }
    }
