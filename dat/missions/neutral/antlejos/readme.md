@@ -11,7 +11,7 @@ Early game campaign where the player can help terraform a small moon to create a
    * Verner (Independent Individual)
 * **Notable Rewards:**
    * `Antlejos`-`NGC-4087` hidden jump point (ant08)
-   * Some unique outfit (accessory maybe?) (ant09, TODO)
+   * Some unique outfit (accessory maybe?) (ant10, TODO)
 
 ### Mission Overview
 
@@ -24,4 +24,5 @@ Early game campaign where the player can help terraform a small moon to create a
 1. **ant07:** try to forge an alliance with Gordon's Exchange
 1. **ant08:** escort ship while defending from PUAAA
 1. **ant09:** blow up critical PUAAA supply ship with explosives or brute-force
+1. **ant10:** short cutscene epilogue
 1. **ant_supplies (repeatable):** bring supplies and defend against PUAA, increases how developed Antlejos V is and enables other missions slowly
