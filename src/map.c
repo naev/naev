@@ -885,6 +885,15 @@ static void map_drawMarker( double x, double y, double zoom,
    y = y + 3.0*r * sin(alpha);
    r *= 2.0;
 
+   /* Special case notes marker. */
+   if (type==5) {
+      col = cFontOrange;
+      col.a *= a;
+      glUseProgram(shaders.notemarker.program);
+      gl_renderShader( x, y, r, r, alpha, &shaders.notemarker, &col, 1 );
+      return;
+   }
+
    glUseProgram(shaders.sysmarker.program);
    if (type==0) {
       col_blend( &col, colours[type], &cWhite, MIN(1.0, 0.75 + 0.25*sin(2.0*M_PI*map_dt)) );
@@ -950,10 +959,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderSystems( bx, by, x, y, z, w, h, r, cst->mode );
 
    /* Render system markers and notes. */
-   if (cst->alpha_markers > 0.) {
+   if (cst->alpha_markers > 0.)
       map_renderMarkers( x, y, z, r, cst->alpha_markers );
-      map_renderNote( bx, by, x, y, z, w, h, r, 0, cst->alpha_markers );
-   }
 
    /* Render system names and notes. */
    if (cst->alpha_names > 0.)
@@ -962,6 +969,10 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render commodity info. */
    if (cst->mode == MAPMODE_TRADE)
       map_renderCommod(  bx, by, x, y, z, w, h, r, 0 );
+
+   /* We want the notes on top of everything. */
+   if (cst->alpha_markers > 0.)
+      map_renderNotes( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
 
    /* Values from cRadar_tSpob */
    col.r = cRadar_tSpob.r;
@@ -1362,14 +1373,17 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
 /**
  * @brief Renders the system note on the map if mouse is close.
  */
-void map_renderNote( double bx, double by, double x, double y,
-      double zoom, double w, double h, double r, int editor, double alpha )
+void map_renderNotes( double bx, double by, double x, double y,
+      double zoom, double w, double h, int editor, double alpha )
 {
    (void) w;
    (void) h;
 
    if ((zoom <= 0.5) || editor)
       return;
+
+   if (map_show_notes)
+      glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Find mouse over system and draw. */
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -1384,24 +1398,23 @@ void map_renderNote( double bx, double by, double x, double y,
       if (sys->note == NULL)
          continue;
 
-      /* Set up colour. */
-      col = cFontBlue;
-      col.a = alpha * 0.5;
+      /* Set up position. */
       tx = x + sys->pos.x*zoom;
       ty = y + sys->pos.y*zoom;
-
-      /* Draw marker part. */
-      //gl_renderCircle( tx, ty, 1.3*r, &col, 1 );
 
       /* Mouse is over. */
       if (!map_show_notes && ((pow2(tx-map_mx-bx)+pow2(ty-map_my-by)) > pow2(MAP_MOVE_THRESHOLD)))
          continue;
+
+      if (!map_show_notes)
+         glClear( GL_DEPTH_BUFFER_BIT );
 
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
       tx += 12.*zoom;
       ty -= font->h*2.;
 
       /* Render note */
+      col = cFontOrange;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, sys->note );
    }
@@ -1487,7 +1500,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED | SYSTEM_PMARKED))
          continue;
 
       /* Get the position. */
@@ -1496,6 +1509,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
+      n += (sys_isFlag(sys, SYSTEM_PMARKED)) ? 1 : 0;
       n += sys->markers_plot;
       n += sys->markers_high;
       n += sys->markers_low;
@@ -1503,6 +1517,10 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Draw the markers. */
       j = 0;
+      if (sys_isFlag(sys, SYSTEM_PMARKED)) { /* Notes have be first. */
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 5 );
+         j++;
+      }
       if (sys_isFlag(sys, SYSTEM_CMARKED)) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 0 );
          j++;

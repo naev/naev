@@ -67,8 +67,8 @@ void map_renderDecorators( double x, double y, double zoom, int editor, double a
 void map_renderJumps( double x, double y, double zoom, double radius, int editor );
 void map_renderSystems( double bx, double by, double x, double y,
       double zoom, double w, double h, double r, MapMode mode );
-void map_renderNote( double bx, double by, double x, double y,
-      double zoom, double w, double h, double r, int editor, double alpha );
+void map_renderNotes( double bx, double by, double x, double y,
+      double zoom, double w, double h, int editor, double alpha );
 void map_renderNames( double bx, double by, double x, double y,
       double zoom, double w, double h, int editor, double alpha );
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient );

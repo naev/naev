@@ -291,6 +291,10 @@ SHADERS = [
       fs_path = "sysmarker.frag",
    ),
    SimpleShader(
+      name = "notemarker",
+      fs_path = "notemarker.frag",
+   ),
+   SimpleShader(
       name = "asteroidmarker",
       fs_path = "asteroidmarker.frag",
    ),
