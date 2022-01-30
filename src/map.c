@@ -90,6 +90,7 @@ static int map_minimal_mode = 0;        /**< Map is in minimal mode. */
 static double map_flyto_speed = 1500.;  /**< Linear speeed at which the map flies to a location. */
 static double map_mx=0.;                /**< X mouse position */
 static double map_my=0.;                /**< Y mouse position */
+static char map_show_notes=0;           /**< Boolean for showing system notes */
 
 /*
  * extern
@@ -949,15 +950,15 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render systems. */
    map_renderSystems( bx, by, x, y, z, w, h, r, cst->mode );
 
-   /* Render system names. */
-   if (cst->alpha_names > 0.)
-      map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
-
    /* Render system markers and notes. */
    if (cst->alpha_markers > 0.) {
       map_renderMarkers( x, y, z, r, cst->alpha_markers );
       map_renderNote( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
    }
+
+   /* Render system names and notes. */
+   if (cst->alpha_names > 0.)
+      map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
 
    /* Render commodity info. */
    if (cst->mode == MAPMODE_TRADE)
@@ -1395,7 +1396,7 @@ void map_renderNote( double bx, double by, double x, double y,
       ty = y + (sys->pos.y) * zoom - font->h*2.;
 
       /* Render note */
-      col = cGrey60;
+      col = cGrey70;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, sys->note );
 
@@ -1442,11 +1443,11 @@ void map_renderNames( double bx, double by, double x, double y,
       gl_printRaw( font, tx, ty, &col, -1, _(sys->name) );
 
       /* Render note */
-      col = cGrey60;
-      col.a = alpha;
-     // if (sys->note != NULL)
-     //    gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
-
+      if (map_show_notes && sys->note!=NULL) {
+         col = cGrey60;
+         col.a = alpha;
+         gl_printRaw( font, tx, ty-(font->h*1.5), &col, -1, sys->note );
+      }
    }
 
    /* Raw hidden values if we're in the editor. */
@@ -2515,6 +2516,13 @@ void map_cycleMissions(int dir)
    //player_autonavStart();
 }
 
+/**
+ * @brief Toggle note-showing on/off.
+ */
+void map_toggleNotes()
+{
+   map_show_notes = !map_show_notes;
+}
 /*
  * A* algorithm for shortest path finding
  *

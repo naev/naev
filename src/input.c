@@ -932,8 +932,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_restoreControl( 0, NULL );
          player_jump();
       }
-   } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
-      ovr_key( value );
+   } else if (KEY("overlay") && NODEAD() && (INGAME()||map_isOpen()) && !repeat) {
+      if (map_isOpen())
+         map_toggleNotes();
+      else
+         ovr_key( value );
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
