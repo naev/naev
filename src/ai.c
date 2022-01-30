@@ -508,6 +508,9 @@ void ai_cleartasks( Pilot* p )
  */
 void ai_destroy( Pilot* p )
 {
+   if (p->ai == NULL)
+      return;
+
    nlua_env env = p->ai->env;
 
    /* Get rid of pilot's memory. */
