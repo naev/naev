@@ -39,7 +39,6 @@ local mothership_name = _("Planet Saviour")
 -- luacheck: globals approaching enter land mothershipdeath mothershipboard (Hook functions passed by name)
 
 function create ()
-   misn.finish(false)
    if not misn.claim(mainsys) then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
 end
@@ -188,9 +187,11 @@ function enter ()
       lmisn.fail(fmt.f(_("You were not supposed to leave {sys}!"),{sys=mainsys}))
       return
    end
+   --[[
    if system.cur() ~= mainsys then
       return
    end
+   --]]
 
    pilot.clear()
    pilot.toggleSpawn(false)
@@ -260,7 +261,7 @@ function enter ()
    hook.pilot( mothership, "board", "mothershipboard" )
 
    local function spawn_ship( s, pos )
-      local p = pilot.add( s, puaaa, pos )
+      local p = pilot.add( s, puaaa, pos, _("PUAAA Figher") )
       p:setHostile(true)
       return p
    end
@@ -271,14 +272,15 @@ function enter ()
       local l
       for k, s in ipairs( ships ) do
          local p = spawn_ship( s, pos )
+         p:changeAI( "baddiepatrol" )
          if k==1 then
             l = p
-            local aimem = p:memory()
-            aimem.waypoints = route
-            aimem.loiter = math.huge -- patrol forever
          else
             p:setLeader( l )
          end
+         local aimem = p:memory()
+         aimem.waypoints = route
+         aimem.loiter = math.huge -- patrol forever
       end
    end
 

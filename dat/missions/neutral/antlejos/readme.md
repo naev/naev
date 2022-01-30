@@ -23,5 +23,5 @@ Early game campaign where the player can help terraform a small moon to create a
 1. **ant06:** destroy a PUAAA supply ship in Knave
 1. **ant07:** try to forge an alliance with Gordon's Exchange
 1. **ant08:** escort ship while defending from PUAAA
-1. **ant09:** blow up critical PUAAA supply ship with explosives or brute-force (TODO)
+1. **ant09:** blow up critical PUAAA supply ship with explosives or brute-force
 1. **ant_supplies (repeatable):** bring supplies and defend against PUAA, increases how developed Antlejos V is and enables other missions slowly
