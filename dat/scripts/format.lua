@@ -163,6 +163,8 @@ function format.humanize( num )
             return sign..string.format(_("%.1f million"), anum/1e6 )
          elseif anum > 1e3 then
             return sign..string.format(_("%.1f thousand"), anum/1e3 )
+         else
+            return string.format("%.0f",num)
          end
 
       elseif inlist( {"ja"}, lang ) then
@@ -171,6 +173,8 @@ function format.humanize( num )
             return sign..string.format(_("%.1f億"), anum/1e8)
          elseif anum > 1e4 then
             return sign..string.format(_("%.1f万"), anum/1e4)
+         else
+            return string.format("%.0f",num)
          end
 
       end
