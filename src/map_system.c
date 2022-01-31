@@ -512,11 +512,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed )
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("You can land here\n") );
+        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#g%s#0", _("You can land here\n") );
      else if (areEnemies( FACTION_PLAYER, p->presence.faction))
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Not advisable to land here\n") );
+        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#o%s#0", _("Not advisable to land here\n") );
      else
-        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("You cannot land here\n") );
+        cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "#r%s#0", _("You cannot land here\n") );
      /* Add a description */
      cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
 
