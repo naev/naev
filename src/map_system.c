@@ -307,16 +307,17 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (!spob_isKnown( p ))
          continue;
       vis_index++;
-      if ( p->gfx_space == NULL) {
+      if (p->gfx_space == NULL) {
          WARN( _("No gfx for %s...\n"),p->name );
-      } else {
-         ih=pitch;
+      }
+      else {
+         ih = pitch;
          iw = ih;
-         if ( p->gfx_space->w > p->gfx_space->h )
+         if (p->gfx_space->w > p->gfx_space->h)
             ih = ih * p->gfx_space->h / p->gfx_space->w;
          else if ( p->gfx_space->w < p->gfx_space->h )
             iw = iw * p->gfx_space->w / p->gfx_space->h;
-         gl_renderScale( p->gfx_space, bx+2, by+(nshow-vis_index-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
+         gl_renderScale( p->gfx_space, bx+(pitch-iw)/2+2, by+(nshow-vis_index-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
       }
       gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-vis_index-0.5)*pitch + offset,
             (cur_spob_sel == vis_index ? &cFontGreen : &cFontWhite), -1., spob_name(p) );
