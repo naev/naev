@@ -21,6 +21,7 @@ dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
+dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
@@ -2422,6 +2423,7 @@ dat/missions/neutral/antlejos/ant06.lua
 dat/missions/neutral/antlejos/ant07.lua
 dat/missions/neutral/antlejos/ant08.lua
 dat/missions/neutral/antlejos/ant09.lua
+dat/missions/neutral/antlejos/ant10.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua

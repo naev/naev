@@ -27,8 +27,8 @@ local broadcastmsg = {
    _("Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your money back!"),
    _("Recommended by the Emperor's pet iguana's third cousin! High quality outfits sold here!"),
    _("Best outfits in the universe! So freaking good that 50% of my clients lose their hair from joy!"),
-   _("Sweeet sweet space outfits! Muaha hahaha ha ha ha erk..."),
-   _("...and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
+   _("Sweeet sweet space outfits! Muaha hahaha ha ha ha erk…"),
+   _("…and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
 -- luacheck: globals board broadcast hail leave (Hook functions passed by name)
@@ -45,6 +45,7 @@ function create ()
    -- Find uninhabited planet
    local planets = {}
    for _k,pk in ipairs(scur:spobs()) do
+      -- TODO add check to make sure no inhabited spob is nearby
       if not pk:services().inhabited then
          table.insert( planets, pk )
       end
@@ -75,7 +76,7 @@ function create ()
    p:brake()
 
    -- Set up hooks
-   timerdelay = 5.0
+   timerdelay = 5
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
    hook.timer( timerdelay, "broadcast" )
@@ -118,7 +119,7 @@ function hail ()
       local mm = vn.newCharacter( trader_name,
          { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
-      mm:say( _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"') )
+      mm:say( _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"') )
       vn.done("electric")
       vn.run()
 
@@ -143,8 +144,6 @@ function board ()
    * Weapon that does double damage to the user if misses
    * Weapon that damages the user each time it is shot (some percent only)
    * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
-   * Something that modifies time compression as an active outfit
-   * Something that lowers damage all over but converts it all to disable (fwd_dam_as_dis)
    --]]
 
    -- Always available outfits
@@ -169,6 +168,9 @@ function board ()
       --{ "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
       { "Operation Cold Metal",     "Left Boot" },
       { "Black Cat",                "Black Cat Doll" },
+      { "Commemorative Stein",      "Terraforming Antlejos 10" },
+   }
+   local event_rewards = {
    }
    -- Special case: this mission has multiple endings, and only one gives the reward.
    if var.peek( "flfbase_intro" ) == nil and var.peek( "invasion_time" ) == nil then
@@ -178,6 +180,13 @@ function board ()
       local m = r[1]
       local o = r[2]
       if player.misnDone(m) and player.numOutfit(o)<1 then
+         table.insert( outfits, o )
+      end
+   end
+   for i,r in ipairs(event_rewards) do
+      local e = r[1]
+      local o = r[2]
+      if player.evtDone(e) and player.numOutfit(o)<1 then
          table.insert( outfits, o )
       end
    end
