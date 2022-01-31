@@ -11,7 +11,7 @@ Early game campaign where the player can help terraform a small moon to create a
    * Verner (Independent Individual)
 * **Notable Rewards:**
    * `Antlejos`-`NGC-4087` hidden jump point (ant08)
-   * Some unique outfit (accessory maybe?) (ant10, TODO)
+   * `Commemorative Stein` (ant10)
 
 ### Mission Overview
 
