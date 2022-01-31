@@ -42,18 +42,41 @@ function create ()
    -- Must not be restricted
    if scur:tags().restricted then evt.finish() end
 
+   -- Check to see if a nearby spob is inhabited
+   local function nearby_spob( pos )
+      for _k,pk in ipairs(scur:spobs()) do
+         if pk:services().inhabited and pos:dist( pk:pos() ) < 1000 then
+            return true
+         end
+      end
+      return false
+   end
+
    -- Find uninhabited planet
    local planets = {}
    for _k,pk in ipairs(scur:spobs()) do
       -- TODO add check to make sure no inhabited spob is nearby
-      if not pk:services().inhabited then
+      if not pk:services().inhabited and not nearby_spob( pk:pos() ) then
          table.insert( planets, pk )
       end
    end
    local spawn_pos
-   if planets == nil or #planets==0 then
+   if #planets==0 then
+      -- Try to find something not near any inhabited planets
       local rad = scur:radius()
-      spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.angle() )
+      local tries = 0
+      while tries < 30 do
+         local pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.angle() )
+         if not nearby_spob( pos ) then
+            spawn_pos = pos
+            break
+         end
+         tries = tries + 1
+      end
+      -- Failed to find anything
+      if not spawn_pos then
+         evt.finish()
+      end
    else
       local pnt = planets[rnd.rnd(1,#planets)]
       spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.angle() )
