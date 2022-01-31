@@ -28,7 +28,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems. Piracy is nearly non-existent in the core systems due to the large standing force stationed here and their routine patrols.</description>
+  <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems from the east. An imposing force force stationed here with constant routine patrols tries to make sure no undesirable ships make it into Empire space.</description>
   <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained and full of off-duty Empire soldiers - not a place to get into a fight.</bar>
  </general>
  <tech>
@@ -52,5 +52,6 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </spob>
