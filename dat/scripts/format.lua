@@ -175,7 +175,29 @@ function format.humanize( num )
 
       end
    end
-   return string.format("%g", num)
+
+   local digits = { "\226\129\176", "\194\185", "\194\178", "\194\179", "\226\129\180", "\226\129\181", "\226\129\182", "\226\129\183", "\226\129\184", "\226\129\185" }
+   local state = 0
+   local COEF = 0
+   local E = 1
+   local EXP = 4
+   local o = ""
+   local s = string.format("%.1e",num)
+   for i=1,#s do
+      local c = string.sub(s,i,i)
+      if state==COEF and c ~= "e" then
+         o = o..c
+      elseif state==COEF then
+         o = o.."\194\183".."10"
+         state = E
+      elseif state==E and (c=="+" or c=="0") then
+         state = E
+      else
+         o = o..digits[ string.byte(c)-string.byte("0") + 1 ]
+         state = EXP
+      end
+   end
+   return o
 end
 
 --[[--
