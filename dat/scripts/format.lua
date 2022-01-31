@@ -144,6 +144,41 @@ function format.list( words )
 end
 
 --[[--
+Converts a number to a human readable string.
+
+Has to be implemented on a per-language basis.
+
+   @tparam num Number to convert to a human readable string.
+   @treturn string Human readable string.
+--]]
+function format.humanize( num )
+   local anum = math.abs(num)
+   if anum < 1e13 then
+      local lang = naev.language()
+      if inlist( {"en", "de"}, lang ) then
+         local sign = (num < 0 and "-") or ""
+         if anum > 1e9 then
+            return sign..string.format(_("%.1f billion"), anum/1e9 )
+         elseif anum > 1e6 then
+            return sign..string.format(_("%.1f million"), anum/1e6 )
+         elseif anum > 1e3 then
+            return sign..string.format(_("%.1f thousand"), anum/1e3 )
+         end
+
+      elseif inlist( {"ja"}, lang ) then
+         local sign = (num < 0 and "-") or ""
+         if anum > 1e8 then
+            return sign..string.format(_("%.1f億"), anum/1e8)
+         elseif anum > 1e4 then
+            return sign..string.format(_("%.1f万"), anum/1e4)
+         end
+
+      end
+   end
+   return string.format("%g", num)
+end
+
+--[[--
 String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
 
    Prefer this over string.format because it allows translations to change the word order.
