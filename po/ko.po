@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-29 16:27-0500\n"
+"POT-Creation-Date: 2022-01-31 09:13-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -1556,6 +1556,7 @@ msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
+#: dat/outfits/accessory/commemorative_stein.xml:5
 #: dat/outfits/accessory/dv_handbook.xml:5
 #: dat/outfits/accessory/fuzzy_dice.xml:5 dat/outfits/accessory/left_boot.xml:5
 #: dat/outfits/accessory/love_letter.xml:5
@@ -1596,6 +1597,21 @@ msgstr ""
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
+msgstr ""
+
+#: dat/outfits/accessory/commemorative_stein.xml:2
+msgid "Commemorative Stein"
+msgstr ""
+
+#: dat/outfits/accessory/commemorative_stein.xml:11
+msgid ""
+"This is a stein commemorating the terraforming and establishment of a "
+"permanent colony on Antlejos V. The stein is intricately engraved with what "
+"seems to be scenes from the short history of the colony. You can make out "
+"what seems to be some individuals wrestling, lots of heavy machinery, and "
+"people doing some sort of circle dance. Did that all happen? On the bottom "
+"there is an inscription saying \"Screw the PUAAA, long live the Hero of "
+"Antlejos!\" with an illegible signature."
 msgstr ""
 
 #: dat/outfits/accessory/dv_handbook.xml:2
@@ -6336,10 +6352,10 @@ msgstr ""
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:243 src/dev_uniedit.c:249
-#: src/dev_uniedit.c:1333 src/dev_uniedit.c:1334 src/land_outfits.c:368
-#: src/land_outfits.c:369 src/land_outfits.c:370 src/land_outfits.c:371
+#: src/dev_uniedit.c:1333 src/dev_uniedit.c:1334 src/land_outfits.c:434
+#: src/land_outfits.c:435 src/land_outfits.c:436 src/land_outfits.c:437
 #: src/land_trade.c:160 src/land_trade.c:162 src/land_trade.c:165
-#: src/land_trade.c:166 src/map.c:574 src/map.c:575 src/outfit.c:285
+#: src/land_trade.c:166 src/map.c:582 src/map.c:583 src/outfit.c:285
 #: src/outfit.c:304
 msgid "N/A"
 msgstr ""
@@ -16039,7 +16055,7 @@ msgstr ""
 #: dat/spob/rogan.xml:30
 msgid ""
 "Rogan is a relatively prosperous world, despite the fact that much of the "
-"planetary surface is desert. However, these deserts conveniently has huge "
+"planetary surface is desert. However, these deserts conveniently have huge "
 "repositories of valuable minerals, and the oceans teem with sea life. The "
 "result is a rich planet with a booming population."
 msgstr ""
@@ -20179,7 +20195,7 @@ msgstr "소로미드 강"
 msgid "Thurion Local"
 msgstr "투리온의 통찰력"
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:729
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:737
 #, fuzzy
 msgid "Trade Lane"
 msgstr "랜슬롯"
@@ -25377,7 +25393,7 @@ msgstr ""
 #: src/dev_uniedit.c:402 src/dev_uniedit.c:1461 src/dev_uniedit.c:1660
 #: src/dev_uniedit.c:1896 src/info.c:399 src/info.c:484 src/info.c:566
 #: src/info.c:702 src/info.c:894 src/info.c:1114 src/info.c:1211
-#: src/info.c:1556 src/land_outfits.c:160 src/map.c:335 src/map_find.c:1016
+#: src/info.c:1556 src/land_outfits.c:165 src/map.c:340 src/map_find.c:1016
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -25615,6 +25631,35 @@ msgstr ""
 msgid "\"On my way.\""
 msgstr ""
 
+#. --
+#. Checks to see if an element is in a table. Uses comparison operator.
+#.
+#. @tparam table tbl Table to check to see if element is in it.
+#. @param elm Element to check to see if it is in tbl.
+#. @treturn boolean true if elm is in tbl, false otherwise.
+#. --
+#. --
+#. Does a shallow copy of a table.
+#.
+#. @tparam table tbl Table to copy.
+#. @tparam[opt={}] copy Initial table to use as a base and add elements of tbl to.
+#. @treturn table A new table that is a shallow copy of tbl, or copy if not nil.
+#. --
+#. --
+#. Repeats an ordered table a number of tables.
+#.
+#. If you have a table {1,2,3}, and you repeat it 2 times, you will get the table {1,1,2,2,3,3}.
+#.
+#. @tparam table tbl Table to repeat.
+#. @tparam number num Number of times to repeat the table.
+#. @treturn table A new table that is tbl repeated num times.
+#. --
+#. --
+#. Reverses a table. Only works when using contiguous numbers as keys.
+#.
+#. @tparam table tbl Table to reverse.
+#. @treturn table A new table with the elements of tbl in reverse order.
+#. --
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Bioship Manager">
@@ -26002,9 +26047,9 @@ msgstr ""
 #: dat/gui/slim.lua:387 dat/gui/slim.lua:986
 #: dat/missions/pirate/blackcat.lua:98 dat/missions/shadow/darkshadow.lua:62
 #: dat/missions/shadow/shadowvigil.lua:63
-#: dat/missions/zalek/blackhole/zbh11.lua:113 src/equipment.c:1752
-#: src/gui.c:1529 src/map.c:511 src/map.c:517 src/map.c:523 src/map.c:529
-#: src/map.c:535 src/map.c:541 src/map.c:1751 src/map_overlay.c:221
+#: dat/missions/zalek/blackhole/zbh11.lua:113 src/equipment.c:1766
+#: src/gui.c:1529 src/map.c:519 src/map.c:525 src/map.c:531 src/map.c:537
+#: src/map.c:543 src/map.c:549 src/map.c:1835 src/map_overlay.c:221
 #: src/map_system.c:479 src/outfit.c:293 src/outfit.c:312 src/outfit.c:886
 #: src/player.c:2028 src/player_autonav.c:92 src/player_autonav.c:217
 #: src/player_autonav.c:460 src/ship.c:212
@@ -26076,7 +26121,7 @@ msgid "You found #o{title}#0!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:360 src/map.c:1964
+#: dat/events/discovery.lua:360 src/map.c:2050
 msgid "Discovery"
 msgstr ""
 
@@ -32642,12 +32687,12 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:30
-msgid "Sweeet sweet space outfits! Muaha hahaha ha ha ha erk..."
+msgid "Sweeet sweet space outfits! Muaha hahaha ha ha ha erk…"
 msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:31
 msgid ""
-"...and that's how I was able to get a third liver haha. Oops is this on? Er, "
+"…and that's how I was able to get a third liver haha. Oops is this on? Er, "
 "nevermind that. Outfits for sale!"
 msgstr ""
 
@@ -32655,8 +32700,12 @@ msgstr ""
 #. TODO boarding VN stuff should allow talking to Misi and such.
 #. Make sure system isn't claimed, but we don't claim it
 #. Must not be restricted
+#. Check to see if a nearby spob is inhabited
 #. Find uninhabited planet
-#: dat/events/neutral/travelling_merchant.lua:63
+#. TODO add check to make sure no inhabited spob is nearby
+#. Try to find something not near any inhabited planets
+#. Failed to find anything
+#: dat/events/neutral/travelling_merchant.lua:87
 #: dat/missions/minerva/maikki1.lua:76 dat/missions/minerva/maikki2.lua:100
 #: dat/missions/shadow/shadowvigil.lua:61 src/faction.c:1038 src/faction.c:1052
 #: src/faction.c:1058 src/faction.c:1088
@@ -32668,15 +32717,15 @@ msgstr ""
 #. event ends on player leaving the system or landing
 #. End the event if for any reason the trader stops existing
 #. Cycle through broadcasts
-#: dat/events/neutral/travelling_merchant.lua:121
+#: dat/events/neutral/travelling_merchant.lua:145
 msgid ""
 "\"Howdy Human! Er, I mean, Greetings! If you want to take a look at my "
-"wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what "
-"was I talking about? Oh yes, please come see my wares on my ship. You are "
+"wonderful, exquisite, propitious, meretricious, effulgent, … wait, what was "
+"I talking about? Oh yes, please come see my wares on my ship. You are "
 "welcome to board anytime!\""
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:134
+#: dat/events/neutral/travelling_merchant.lua:158
 msgid ""
 "You open the airlock and are immediately greeted by an intense humidity and "
 "heat, almost like a jungle. As you advance through the dimly lit ship you "
@@ -32696,8 +32745,6 @@ msgstr ""
 #. * Weapon that does double damage to the user if misses
 #. * Weapon that damages the user each time it is shot (some percent only)
 #. * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
-#. * Something that modifies time compression as an active outfit
-#. * Something that lowers damage all over but converts it all to disable (fwd_dam_as_dis)
 #. --
 #. Always available outfits
 #. TODO add more
@@ -35616,10 +35663,10 @@ msgstr ""
 #: src/dev_sysedit.c:1839 src/dev_sysedit.c:1876 src/dev_sysedit.c:1934
 #: src/dev_uniedit.c:1403 src/dev_uniedit.c:1566 src/dev_uniedit.c:1782
 #: src/dev_uniedit.c:1847 src/info.c:417 src/info.c:510 src/info.c:928
-#: src/info.c:1259 src/input.c:524 src/land.c:872 src/land_outfits.c:374
-#: src/land_outfits.c:595 src/land_shipyard.c:126 src/land_shipyard.c:215
+#: src/info.c:1259 src/input.c:524 src/land.c:872 src/land_outfits.c:440
+#: src/land_outfits.c:661 src/land_shipyard.c:126 src/land_shipyard.c:215
 #: src/land_trade.c:82 src/land_trade.c:84 src/land_trade.c:117 src/load.c:362
-#: src/load.c:410 src/load.c:454 src/map.c:638 src/map.c:691 src/map.c:1790
+#: src/load.c:410 src/load.c:454 src/map.c:646 src/map.c:699 src/map.c:1874
 #: src/map_find.c:702 src/map_system.c:649
 #, c-format
 msgid "None"
@@ -35756,7 +35803,7 @@ msgid "Landing"
 msgstr "조판됨:"
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
-#: src/map.c:819
+#: src/map.c:827
 msgid "Off"
 msgstr ""
 
@@ -35983,7 +36030,7 @@ msgstr "크레딧:"
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1085 src/equipment.c:1730 src/info.c:365 src/info.c:586
+#: dat/gui/slim.lua:1085 src/equipment.c:1744 src/info.c:365 src/info.c:586
 #: src/land_shipyard.c:290 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
@@ -48909,6 +48956,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant06.lua:63
 #: dat/missions/neutral/antlejos/ant07.lua:52
 #: dat/missions/neutral/antlejos/ant08.lua:56
+#: dat/missions/neutral/antlejos/ant09.lua:58
 #: dat/missions/pirate/contraband_cake.lua:86
 #: dat/missions/pirate/pir_hit_intro.lua:104
 #: dat/missions/zalek/blackhole/zbh01.lua:50
@@ -48939,6 +48987,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant06.lua:64
 #: dat/missions/neutral/antlejos/ant07.lua:53
 #: dat/missions/neutral/antlejos/ant08.lua:57
+#: dat/missions/neutral/antlejos/ant09.lua:59
 #: dat/missions/pirate/contraband_cake.lua:87
 #: dat/missions/pirate/pir_hit_intro.lua:105
 #: dat/missions/zalek/blackhole/zbh01.lua:51
@@ -55178,6 +55227,31 @@ msgstr ""
 #. Go pick up a VIP ship at Griffin III and escort them to Antlejos V
 #. --
 #. luacheck: globals approaching enter land escort_success miner_salute miner_create miner_attacked protest (Hook functions passed by name)
+#. luacheck: globals approaching enter land mothershipdeath mothershipboard mothershipexplosives (Hook functions passed by name)
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Terraforming Antlejos 10">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>3</priority>
+#. <chance>100</chance>
+#. <location>Bar</location>
+#. <spob>Antlejos V</spob>
+#. <cond>require('common.antlejos').unidiffLevel() &gt;= 9</cond>
+#. <done>Terraforming Antlejos 9</done>
+#. </avail>
+#. <notes>
+#. <campaign>Terraforming Antlejos</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Campaign to Terraform Antlejos V
+#.
+#. Simple epilogue that gives the player a reward.
+#. --
 #. Taken from http://lua-users.org/wiki/InheritanceTutorial
 #. Implementation of additional OO properties starts here --
 #. Return the class object of the instance
@@ -55193,6 +55267,8 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant06.lua:40
 #: dat/missions/neutral/antlejos/ant07.lua:39
 #: dat/missions/neutral/antlejos/ant08.lua:42
+#: dat/missions/neutral/antlejos/ant09.lua:43
+#: dat/missions/neutral/antlejos/ant10.lua:32
 #: dat/scripts/common/antlejos.lua:14
 msgid "Verner"
 msgstr ""
@@ -55347,6 +55423,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant06.lua:68
 #: dat/missions/neutral/antlejos/ant07.lua:57
 #: dat/missions/neutral/antlejos/ant08.lua:61
+#: dat/missions/neutral/antlejos/ant09.lua:63
 #, fuzzy
 #| msgid "\"I'll be around if you get generous again.\""
 msgid ""
@@ -55782,6 +55859,7 @@ msgstr "선박 하부에 공격! 도움을 요청한다!"
 #. Wrong system
 #: dat/missions/neutral/antlejos/ant05.lua:179
 #: dat/missions/neutral/antlejos/ant06.lua:130
+#: dat/missions/neutral/antlejos/ant09.lua:190
 msgid "You were not supposed to leave {sys}!"
 msgstr ""
 
@@ -55867,6 +55945,7 @@ msgid "Eliminate the PUAAA supply ship at {sys}."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant06.lua:89
+#: dat/missions/neutral/antlejos/ant09.lua:87
 #, fuzzy
 msgid "Go to {sys}"
 msgstr "투리온의 불꽃"
@@ -55877,6 +55956,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant06.lua:91
 #: dat/missions/neutral/antlejos/ant07.lua:78
+#: dat/missions/neutral/antlejos/ant09.lua:89
 #: dat/missions/pirate/pir_hit_intro.lua:136
 #: dat/missions/zalek/blackhole/zbh02.lua:95
 #: dat/missions/zalek/blackhole/zbh03.lua:108
@@ -55930,8 +56010,10 @@ msgid "PUAAA Escort"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant06.lua:168
-msgid "#gYou eliminated the target!#0"
-msgstr ""
+#, fuzzy
+#| msgid "You owe me 20 credits!"
+msgid "You eliminated the target!"
+msgstr "나한테 20 크레딧 빚졌잖아!"
 
 #: dat/missions/neutral/antlejos/ant06.lua:175
 msgid "No more supplies"
@@ -56170,6 +56252,386 @@ msgstr ""
 #| msgid "Vessel under attack! Requesting help!"
 msgid "Under attack! Support requested!"
 msgstr "선박 하부에 공격! 도움을 요청한다!"
+
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Terraforming Antlejos 9">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>3</priority>
+#. <chance>100</chance>
+#. <location>Bar</location>
+#. <spob>Antlejos V</spob>
+#. <cond>require('common.antlejos').unidiffLevel() &gt;= 9</cond>
+#. <done>Terraforming Antlejos 8</done>
+#. </avail>
+#. <notes>
+#. <campaign>Terraforming Antlejos</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Campaign to Terraform Antlejos V
+#.
+#. Deal the final major blow get rid of the PUAAA mothership harassing Antlejos
+#. --
+#: dat/missions/neutral/antlejos/ant09.lua:37
+#, fuzzy
+msgid "Planet Saviour"
+msgstr "투리온의 불꽃"
+
+#: dat/missions/neutral/antlejos/ant09.lua:53
+msgid ""
+"You find a dust-covered Verner once again enjoying a horribly smelling drink "
+"at the bar."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:54
+msgid ""
+"\"Hello! The core drilling is going slow but great. The dust is a pain to "
+"get off though, it seems to permeate into clothing. This was my favourite "
+"set too. Oh well.\"\n"
+"\"Speaking of which, some of my scouts have recently been able to track down "
+"some PUAAA activity to be originating from {sys}. It seems like there is a "
+"mothership or something like that over there. I know it's quite a challenge, "
+"but I would need you to take care of it. Would you be willing to help {pnt} "
+"again?\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:67
+msgid ""
+"\"Great! I know you're thinking about doing the same you did with the supply "
+"ship you took out in the Knave system, but this time it won't be that easy. "
+"This seems to be the source of almost all of the PUAAA attacks. In "
+"particular, I believe it's the notorious '{shipname}', which is well-known "
+"for having stopped the terraforming of Em 2. Normally, we wouldn't have much "
+"of a chance against the {shipname}, but in a stroke of luck, it seems like "
+"they've had some trouble and they're not stuck offline in {sys}, meaning "
+"it's the perfect time to take it down once and for all.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:69
+msgid ""
+"\"The plan is pretty straight forward: I've got some extra explosives we've "
+"been using to terraform {pnt}, but I think they could be put to better use "
+"\"terraforming\" the {shipname}. All you have to do is fly to the {sys} "
+"system, get to the {shipname}, plant the explosives, and get back here. Now, "
+"that's probably easier said than done, and the system is going to be "
+"probably crawling with those asteroid huggers, but I've seen your flying "
+"skills and have the faith you can pull it off.\""
+msgstr ""
+
+#. Not accepted
+#: dat/missions/neutral/antlejos/ant09.lua:79
+msgid "Eliminate the PUAAA Mothership"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:83
+msgid ""
+"Eliminate the PUAAA mothership named {shipname} that islocated in the {sys} "
+"system. You have been provided explosives to detonate the mothership if you "
+"are able to get close enough to it."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:88
+msgid "Plant explosives on the {shipname}"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:94
+msgid "Terraforming Explosives"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:94
+msgid ""
+"Terraforming explosives meant to perform drastic changes to planet topology."
+msgstr ""
+
+#. Land hook.
+#: dat/missions/neutral/antlejos/ant09.lua:109
+msgid "You land and are promptly greeted by the always enthusiastic Verner."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:110
+msgid ""
+"\"How did it go? … I see, better than expected! This calls for a "
+"celebration, now where did I put it? Ah, there it is.\"\n"
+"Verner picks up what seems to be an industrial barrel labelled 'Ammonia' and "
+"sloppily dumps it into two steel mugs. He notices you giving him a following "
+"look.\n"
+"\"Ah, don't worry about that, I cleaned the barrel before filling it. This "
+"is the bartender's specialty \"Antlejos Brew'! It's made with all natural "
+"ingredients found exclusively here!\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:113
+msgid ""
+"Quickly a really strong stench fills the docks, almost like some sort of "
+"bleach. He offers you a drink, what do you do?"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:115
+msgid "Carefully try the drink."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:116
+msgid "Chug the drink."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:117
+#, fuzzy
+#| msgid "Ready for a physics lesson, punk?"
+msgid "Refuse the drink."
+msgstr "물리학 수업을 받을 준비가 되었나요?"
+
+#: dat/missions/neutral/antlejos/ant09.lua:122
+msgid ""
+"You carefully bring the drink up to your moth and first take a whiff. It's "
+"awful. It's horrible and much worse up close. Giving Verner the benefit of "
+"the doubt, you bring it up to your lips and take a small sip, it could taste "
+"better than what it smells like, right?"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:123
+msgid ""
+"Immediately the indescribable taste invades your moth, overloading your "
+"sensory system. Your body reflexively curls up and you almost struggle to "
+"keep conciousness. You spend awhile trying to regain your senses and catch "
+"your breath, all the while under Verner's sly grin."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:124
+msgid ""
+"\"I've never seen that reaction on first taste! Maybe it's still a bit too "
+"soon for you to be able to savour Antlejos delicacies.\"\n"
+"He takes a long swig and finishes his mug.\n"
+"\"Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:131
+msgid ""
+"You grab the mug, and in an extreme act of determination, ignore all the "
+"warning signs your body screams at you and you begin to chug the drink. With "
+"the first sip, your body convulses briefly, but you continue to drink until "
+"nothing is left. Or at least that's what you think happened before you "
+"passed out."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:142
+msgid ""
+"Time stops. You try to move your body, but nothing responds, you are lost in "
+"darkness."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:143
+msgid ""
+"You struggle in vein until you realize you aren't feeling anything. You feel "
+"no sensory input, it's like your body doesn't exist."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:144
+msgid ""
+"You try to focus and see what's going on, but realize something is really "
+"amiss. You have a really subtle feeling of movement, like many little things "
+"vibrating. Could this be the vibrations of the cells of your body? The "
+"vibration of your atoms?"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:152
+msgid ""
+"You are awoken to a splash of water and a strong burning sensation "
+"throughout your entire body. As if your internals organs had caught on fire "
+"and were relentlessly burning."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:153
+msgid ""
+"\"Glad to have you back with us. I'm pretty sure your heart stopped beating "
+"for a few seconds. Maybe I should have warned you about the Antlejos "
+"delicacies.\"\n"
+"He takes a long swig and finishes his mug.\n"
+"\"Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:156
+msgid ""
+"You spend a few minutes on the ground, with Verner patiently waiting, before "
+"you finally feel like you can sit up and follow a conversation."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:161
+msgid "You refuse the drink and Verner chuckles."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:162
+msgid ""
+"\"I guess it may be a bit much if you aren't used to it. It's especially "
+"good at clearing terraforming dust that gets caught in your throat! Maybe "
+"next time you'll give it a shot.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:166
+msgid ""
+"\"You've been such a help with the PUAAA, now with the {shipname} out of "
+"commission, and the end of the terraforming, we'll finally be able to get "
+"some peace and quiet here. It's almost like a dream come true. Honestly, I "
+"never expected to get this far, and if it weren't for you, I probably never "
+"would have. Cheers!\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:168
+msgid ""
+"\"I have to take care of some other things now. You make sure to take some "
+"rest, OK? I think you've more than deserved it. Here, even though it's much "
+"less than you deserve, take this credit stick for all you've done for us "
+"here at {pnt}. You sure you don't want to take a barrel of Antlejos brew "
+"with you? No? Alright.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:170
+msgid ""
+"He gives you a strong handshake and is off, busy as ever. Alone, you now "
+"spend a while roaming around the base, more like a small city now, and make "
+"note of all the incredible progress that has gone on this small moon in such "
+"a small amount of time."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant09.lua:177
+msgid "You eliminated the PUAAA mothership bringing more security to {pnt}."
+msgstr ""
+
+#. Main positions
+#. Define the routes
+#. Initialize ship stuff
+#. Can't detect anything
+#. Much more bulky than normal
+#. Can board them to blow them up
+#: dat/missions/neutral/antlejos/ant09.lua:269
+#, fuzzy
+msgid "PUAAA Figher"
+msgstr "랜슬롯"
+
+#. patrol forever
+#. route0 and route1 can't be random or it might spawn directly on the player
+#. route0 in reverse
+#: dat/missions/neutral/antlejos/ant09.lua:322
+#, fuzzy
+#| msgid "Frontier systems"
+msgid "You eliminated the mothership!"
+msgstr "프론티어 시스템"
+
+#: dat/missions/neutral/antlejos/ant09.lua:329
+#, fuzzy
+#| msgid "Renderer: %s"
+msgid "Terraforming {shipname}"
+msgstr "렌더링: %s"
+
+#: dat/missions/neutral/antlejos/ant09.lua:329
+msgid ""
+"Without boarding the ship you quickly clamp the terraforming explosives on "
+"the hull, set the timer, and detach. Time to get away from there before it "
+"blows!"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:41
+msgid ""
+"You find Verner drinking his usual foul Antlejos Brew at the bar. You can't "
+"help to wince and gag a bit upon the smell pervading your nostrils."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:43
+msgid ""
+"You find Verner drinking his usual foul Antlejos Brew at the bar. He seems "
+"glad to see you."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:45
+msgid ""
+"\"Hey, glad to see you around again. You feel that? We finally breached the "
+"planet core and were able to install the final gravitational wave "
+"generators. It feels much better now!\"\n"
+"He does a little jump to make a point. It does look like there is less "
+"buoyancy than before."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:47
+msgid ""
+"\"We also finally got the paperwork done to be accepted as an independent "
+"trading world by the Empire. With this, most of the PUAAA should be out of "
+"the way, with only maybe a few confused stragglers still coming to harass "
+"us. All in all a great improvement! I never want to go through that "
+"paperwork again, if I have to submit another triple signed verified "
+"EW-104-3920 I'll jump out an airlock.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:48
+msgid ""
+"\"We're going to have a small event to celebrate all the good happenings. As "
+"the hero of Antlejos V, it would be my honour to invite you.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:49
+msgid "Seeing you aren't really given a choice, you accept Verner's offer."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:50
+msgid ""
+"He leads you to the largest room at the base, which is the not very elegant "
+"cafeteria. He opens the door and your are greeted by a myriad of faces, some "
+"which you recognize as colonists you helped bring over to Antlejos V from "
+"different parts of the galaxy. A cheer erupt from the crowd as you go to the "
+"center of the room."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:51
+msgid ""
+"Verner almost slips when he jumps onto a table, likely not entirely used to "
+"the new gravity, and then helps you up. People start pouring and sharing "
+"foul smelling drinks, but Verner hands you a glass with something that "
+"smells much better and winks at you. After a bit it seems like everyone has "
+"gotten their drinks, and Verner directs himself to the crowd."
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:52
+msgid ""
+"\"Thank you everyone for coming. It's been a long journey that has led us up "
+"to this moment. I used to have a place that I could call home, but that was "
+"lost, like a great many other things in that fateful day when everything "
+"went to shit. The incident took a great many things from me, and I thought I "
+"would never be complete again: just a husk of a human doomed to venture "
+"space until their demise. For many periods, that is all I knew. I know I am "
+"not alone. Many of you were just like me. Lost souls.\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:53
+msgid ""
+"\"However, thanks to {playername}, we have finally been able to find that "
+"which we had thought was lost forever. We have finally been able to find a "
+"place that we can call home.\"\n"
+"He raises his stein into the air, with you and everyone else following his "
+"lead.\n"
+"\"To {playername}, the Hero of Antlejos, and the prosperity of Antlejos V. "
+"Our future begins now!\""
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:57
+msgid "The crowd begins cheering and the festivities commence…"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:58
+msgid ""
+"The party is a blur, and you don't recall much other than Verner insists "
+"that you take a commemorative stein as the Hero of Antlejos. While wondering "
+"what the future holds for Antlejos V, you return to your ship, ready to take "
+"once again to the skies…"
+msgstr ""
+
+#: dat/missions/neutral/antlejos/ant10.lua:63
+msgid ""
+"You were given a Commemorative Stein from Verner for helping terraform "
+"Antlejos V."
+msgstr ""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -81019,7 +81481,7 @@ msgstr ""
 #. --
 #. luacheck: globals love (We are *implementing* the love2d API.)
 #. TODO implement.
-#: dat/scripts/love.lua:33 src/nlua_naev.c:478
+#: dat/scripts/love.lua:33 src/nlua_naev.c:492
 msgid "unimplemented"
 msgstr ""
 
@@ -84397,24 +84859,24 @@ msgid "AI profile '%s' has no default memory for pilot '%s'."
 msgstr ""
 
 #. Load the profile
-#: src/ai.c:559
+#: src/ai.c:562
 #, c-format
 msgid "Error loading AI profile '%s'"
 msgstr ""
 
-#: src/ai.c:569
+#: src/ai.c:572
 #, c-format
 msgid "Loaded %d AI Profile in %.3f s"
 msgid_plural "Loaded %d AI Profiles in %.3f s"
 msgstr[0] ""
 
-#: src/ai.c:572
+#: src/ai.c:575
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 
-#: src/ai.c:597 src/board.c:77 src/comm.c:171 src/land.c:1569 src/naev.c:521
+#: src/ai.c:600 src/board.c:77 src/comm.c:171 src/land.c:1569 src/naev.c:521
 #: src/player.c:3479
 #, c-format
 msgid ""
@@ -84423,7 +84885,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/ai.c:655
+#: src/ai.c:658
 #, c-format
 msgid ""
 "Error loading AI file: %s\n"
@@ -84432,50 +84894,50 @@ msgid ""
 msgstr ""
 
 #. Find and set up the necessary references.
-#: src/ai.c:668
+#: src/ai.c:671
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "AI Profile '%s' is missing '%s' function!"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/ai.c:693
+#: src/ai.c:696
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
-#: src/ai.c:855
+#: src/ai.c:858
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/ai.c:886
+#: src/ai.c:889
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/ai.c:916
+#: src/ai.c:919
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/ai.c:932
+#: src/ai.c:935
 #, c-format
 msgid ""
 "Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is "
 "defined!"
 msgstr ""
 
-#: src/ai.c:986
+#: src/ai.c:989
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' ai '%s' -> 'distress': %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
 #. Error has occurred.
-#: src/ai.c:1019
+#: src/ai.c:1022
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
@@ -84483,52 +84945,52 @@ msgstr "Mission Lua '%s'구문 오류: %s"
 
 #. Run function.
 #. error has occurred
-#: src/ai.c:1039
+#: src/ai.c:1042
 #, fuzzy, c-format
 #| msgid "Mission Lua '%s' syntax error: %s"
 msgid "Pilot '%s' ai '%s' -> '%s': %s"
 msgstr "Mission Lua '%s'구문 오류: %s"
 
-#: src/ai.c:1056
+#: src/ai.c:1059
 #, c-format
 msgid "Trying to create new task for pilot '%s' that has no AI!"
 msgstr ""
 
-#: src/ai.c:1086
+#: src/ai.c:1089
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1197 src/ai.c:1263 src/nlua_pilot.c:4288
+#: src/ai.c:1200 src/ai.c:1266 src/nlua_pilot.c:4288
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1267
+#: src/ai.c:1270
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2306 src/nlua_pilot.c:4768
+#: src/ai.c:2309 src/nlua_pilot.c:4768
 #, fuzzy, c-format
 msgid "Spob '%s' not found in system '%s'"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/ai.c:2314
+#: src/ai.c:2317
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2405
+#: src/ai.c:2408
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2520
+#: src/ai.c:2523
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Pilot '%s' can't find jump to leave system!"
 msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 
-#: src/ai.c:2970
+#: src/ai.c:2973
 msgid "Invalid Bounds"
 msgstr ""
 
@@ -85520,7 +85982,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:694 src/map.c:804
+#: src/dev_sysedit.c:694 src/map.c:812
 msgid "Asteroid Field"
 msgstr ""
 
@@ -85537,7 +85999,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1250 src/dev_uniedit.c:1664 src/dev_uniedit.c:1948
-#: src/equipment.c:1704 src/info.c:569 src/load.c:420
+#: src/equipment.c:1718 src/info.c:569 src/load.c:420
 msgid "Name:"
 msgstr "이름:"
 
@@ -85545,7 +86007,7 @@ msgstr "이름:"
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1296 src/map.c:301
+#: src/dev_sysedit.c:1262 src/land.c:1296 src/map.c:306
 msgid "Faction:"
 msgstr "팩션:"
 
@@ -85712,7 +86174,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:232 src/map.c:340 src/map_find.c:1014
+#: src/dev_uniedit.c:232 src/map.c:345 src/map_find.c:1014
 msgid "Find"
 msgstr ""
 
@@ -85721,7 +86183,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr "%s성운"
 
-#: src/dev_uniedit.c:247 src/map.c:315
+#: src/dev_uniedit.c:247 src/map.c:320
 msgid "Presence:"
 msgstr ""
 
@@ -86015,12 +86477,12 @@ msgid "Trying to get unknown effect data '%s'!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
 #: src/equipment.c:323 src/land.c:316 src/land.c:586 src/land.c:1314
-#: src/land_outfits.c:155 src/land_shipyard.c:92 src/land_trade.c:71
+#: src/land_outfits.c:160 src/land_shipyard.c:92 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:327 src/equipment.c:2184
+#: src/equipment.c:327 src/equipment.c:2203
 msgid "Sell Ship"
 msgstr ""
 
@@ -86113,319 +86575,323 @@ msgstr ""
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1520 src/land_outfits.c:262 src/shiplog.c:489
+#: src/equipment.c:1534 src/land_outfits.c:322 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1553
+#: src/equipment.c:1567
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1563 src/land_outfits.c:292
+#: src/equipment.c:1577 src/land_outfits.c:358
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1691
+#: src/equipment.c:1705
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1707 src/info.c:570 src/land_shipyard.c:222
+#: src/equipment.c:1721 src/info.c:570 src/land_shipyard.c:222
 #: src/map_system.c:656
 #, fuzzy
 #| msgid "Mode"
 msgid "Model:"
 msgstr "모드"
 
-#: src/equipment.c:1708 src/info.c:571 src/land.c:1295 src/land_shipyard.c:224
+#: src/equipment.c:1722 src/info.c:571 src/land.c:1295 src/land_shipyard.c:224
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1709
+#: src/equipment.c:1723
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1713
+#: src/equipment.c:1727
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1714 src/info.c:572 src/land_shipyard.c:228
+#: src/equipment.c:1728 src/info.c:572 src/land_shipyard.c:228
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1715 src/info.c:574 src/land_outfits.c:187
-#: src/land_outfits.c:357 src/land_shipyard.c:240 src/map_find.c:642
+#: src/equipment.c:1729 src/info.c:574 src/land_outfits.c:192
+#: src/land_outfits.c:423 src/land_shipyard.c:240 src/map_find.c:642
 #: src/map_system.c:636 src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1716 src/info.c:575
+#: src/equipment.c:1730 src/info.c:575
 #, fuzzy
 msgid "Jump Time:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1717 src/info.c:576 src/land_shipyard.c:244
+#: src/equipment.c:1731 src/info.c:576 src/land_shipyard.c:244
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1718 src/info.c:577 src/land_shipyard.c:249
+#: src/equipment.c:1732 src/info.c:577 src/land_shipyard.c:249
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1719 src/info.c:578 src/land_shipyard.c:254
+#: src/equipment.c:1733 src/info.c:578 src/land_shipyard.c:254
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1720 src/info.c:579 src/land_shipyard.c:259
+#: src/equipment.c:1734 src/info.c:579 src/land_shipyard.c:259
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1721
+#: src/equipment.c:1735
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1722
+#: src/equipment.c:1736
 #, fuzzy
 #| msgid "Faction:"
 msgid "Evasion:"
 msgstr "팩션:"
 
-#: src/equipment.c:1723
+#: src/equipment.c:1737
 msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1725 src/info.c:581 src/land_shipyard.c:264
+#: src/equipment.c:1739 src/info.c:581 src/land_shipyard.c:264
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1726 src/info.c:582 src/land_shipyard.c:269
+#: src/equipment.c:1740 src/info.c:582 src/land_shipyard.c:269
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1727 src/info.c:583 src/land_shipyard.c:274
+#: src/equipment.c:1741 src/info.c:583 src/land_shipyard.c:274
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1728 src/info.c:584 src/land_shipyard.c:279
+#: src/equipment.c:1742 src/info.c:584 src/land_shipyard.c:279
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1729 src/info.c:585 src/land_shipyard.c:286
+#: src/equipment.c:1743 src/info.c:585 src/land_shipyard.c:286
 #: src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1732
+#: src/equipment.c:1746
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1735
+#: src/equipment.c:1749
 #, fuzzy
 msgid "Time Flown:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1736
+#: src/equipment.c:1750
 #, fuzzy
 msgid "Jumped Times:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1737
+#: src/equipment.c:1751
 #, fuzzy
 msgid "Landed Times:"
 msgstr "조판됨:"
 
-#: src/equipment.c:1738
+#: src/equipment.c:1752
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1739
+#: src/equipment.c:1753
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1740
+#: src/equipment.c:1754
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1741
+#: src/equipment.c:1755
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1767 src/equipment.c:1796 src/info.c:619 src/info.c:639
+#: src/equipment.c:1781 src/equipment.c:1810 src/info.c:619 src/info.c:639
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 
-#: src/equipment.c:1769 src/info.c:621
+#: src/equipment.c:1783 src/info.c:621
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1771
+#: src/equipment.c:1785
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr ""
 
-#: src/equipment.c:1773
+#: src/equipment.c:1787
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1776
+#: src/equipment.c:1790
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
 msgstr ""
 
-#: src/equipment.c:1780
+#: src/equipment.c:1794
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1785 src/equipment.c:1788 src/equipment.c:1791
+#: src/equipment.c:1799 src/equipment.c:1802 src/equipment.c:1805
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1795
+#: src/equipment.c:1809
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1798
+#: src/equipment.c:1812
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1799 src/info.c:641 src/land_shipyard.c:291
+#: src/equipment.c:1813 src/info.c:641 src/land_shipyard.c:291
 #: src/land_shipyard.c:295 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 
-#: src/equipment.c:1799 src/info.c:381 src/info.c:642
+#: src/equipment.c:1813 src/info.c:381 src/info.c:642
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 
-#: src/equipment.c:1808 src/info.c:383
+#: src/equipment.c:1822 src/info.c:383
 #, c-format
 msgid "%.1f hours"
 msgstr ""
 
-#: src/equipment.c:1812 src/equipment.c:1814 src/info.c:387 src/info.c:389
+#: src/equipment.c:1826 src/equipment.c:1828 src/info.c:387 src/info.c:389
 #, c-format
 msgid "%s MJ"
 msgstr ""
 
-#: src/equipment.c:1896
+#: src/equipment.c:1914 src/land_outfits.c:733
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1897
-msgid "Show only equipable outfits"
+#: src/equipment.c:1915 src/land_outfits.c:734
+msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:1898
+#: src/equipment.c:1916 src/land_outfits.c:735
+msgid "Show only outfits equipable on current ship"
+msgstr ""
+
+#: src/equipment.c:1917 src/land_outfits.c:736
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1899
+#: src/equipment.c:1918 src/land_outfits.c:737
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1900
+#: src/equipment.c:1919 src/land_outfits.c:738
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2037
+#: src/equipment.c:2056
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2040
+#: src/equipment.c:2059
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2041
+#: src/equipment.c:2060
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2044 src/land.c:207
+#: src/equipment.c:2063 src/land.c:207
 #, fuzzy
 msgid "Recall Fighters"
 msgstr "랜슬롯"
 
-#: src/equipment.c:2044 src/land.c:207
+#: src/equipment.c:2063 src/land.c:207
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2119 src/land.c:1565
+#: src/equipment.c:2138 src/land.c:1565
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/equipment.c:2127
+#: src/equipment.c:2146
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid "Failed to run '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/equipment.c:2139
+#: src/equipment.c:2158
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2145
+#: src/equipment.c:2164
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2185
+#: src/equipment.c:2204
 #, fuzzy, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Naev를 나가겠습니까?"
 
 #. Display widget.
-#: src/equipment.c:2202
+#: src/equipment.c:2221
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2203
+#: src/equipment.c:2222
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2228 src/player.c:407
+#: src/equipment.c:2247 src/player.c:407
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2229
+#: src/equipment.c:2248
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2237
+#: src/equipment.c:2256
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2238 src/player.c:434
+#: src/equipment.c:2257 src/player.c:434
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -86740,7 +87206,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:2897 src/outfit.c:1103 src/ship.c:532
+#: src/faction.c:1532 src/map.c:3018 src/outfit.c:1103 src/ship.c:532
 #: src/ship.c:1025 src/space.c:1860 src/space.c:1918 src/space.c:3608
 #: src/tech.c:113
 #, c-format
@@ -86818,7 +87284,7 @@ msgstr ""
 msgid "Adding translations from %s"
 msgstr ""
 
-#: src/gui.c:401 src/input.c:1303
+#: src/gui.c:401 src/input.c:1306
 msgid "Gfx index out of range"
 msgstr ""
 
@@ -86982,7 +87448,7 @@ msgstr ""
 msgid "Date:"
 msgstr "날짜:"
 
-#: src/info.c:363 src/land.c:1299 src/land_outfits.c:189 src/land_outfits.c:359
+#: src/info.c:363 src/land.c:1299 src/land_outfits.c:194 src/land_outfits.c:425
 #: src/land_shipyard.c:300 src/land_trade.c:90 src/map_find.c:644
 msgid "Money:"
 msgstr ""
@@ -87558,7 +88024,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:95 src/map.c:258 src/outfit.c:855
+#: src/input.c:95 src/map.c:264 src/outfit.c:855
 msgid "Star Map"
 msgstr ""
 
@@ -87950,7 +88416,7 @@ msgstr ""
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:592 src/map.c:343
+#: src/land.c:592 src/map.c:348
 msgid "Autonav"
 msgstr "자동nav"
 
@@ -88002,8 +88468,8 @@ msgstr ""
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:881 src/map.c:714 src/map.c:728 src/map.c:735 src/map.c:766
-#: src/map.c:788
+#: src/land.c:881 src/map.c:722 src/map.c:736 src/map.c:743 src/map.c:774
+#: src/map.c:796
 msgid ", "
 msgstr ", "
 
@@ -88074,101 +88540,101 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:164 src/land_trade.c:69
+#: src/land_outfits.c:169 src/land_trade.c:69
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:167 src/land_shipyard.c:98 src/land_trade.c:67
+#: src/land_outfits.c:172 src/land_shipyard.c:98 src/land_trade.c:67
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:170
+#: src/land_outfits.c:175
 msgid "Find Outfits"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:186 src/land_outfits.c:356 src/map_find.c:641
+#: src/land_outfits.c:191 src/land_outfits.c:422 src/map_find.c:641
 #: src/map_system.c:635
 msgid "Owned:"
 msgstr ""
 
-#: src/land_outfits.c:188 src/land_outfits.c:358 src/land_shipyard.c:298
+#: src/land_outfits.c:193 src/land_outfits.c:424 src/land_shipyard.c:298
 #: src/map_find.c:643 src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
-#: src/land_outfits.c:190 src/land_outfits.c:422 src/land_shipyard.c:302
+#: src/land_outfits.c:195 src/land_outfits.c:488 src/land_shipyard.c:302
 #: src/map_find.c:645 src/map_system.c:685
 #, fuzzy
 #| msgid "License"
 msgid "License:"
 msgstr "라이센스"
 
-#: src/land_outfits.c:262
+#: src/land_outfits.c:322
 msgid "Other"
 msgstr ""
 
-#: src/land_outfits.c:429 src/land_shipyard.c:305
+#: src/land_outfits.c:495 src/land_shipyard.c:305
 msgid "Requires:"
 msgstr ""
 
-#: src/land_outfits.c:570
+#: src/land_outfits.c:636
 msgid "#oUnique#0\n"
 msgstr ""
 
-#: src/land_outfits.c:572
+#: src/land_outfits.c:638
 msgid "#rOnly 1 of type per ship#0\n"
 msgstr ""
 
-#: src/land_outfits.c:574
+#: src/land_outfits.c:640
 #, c-format
 msgid "#o%s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:662
+#: src/land_outfits.c:778
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:669
+#: src/land_outfits.c:785
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:674
+#: src/land_outfits.c:790
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:679
+#: src/land_outfits.c:795
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:685 src/land_shipyard.c:452 src/land_shipyard.c:520
+#: src/land_outfits.c:801 src/land_shipyard.c:452 src/land_shipyard.c:520
 #: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:690
+#: src/land_outfits.c:806
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:769
+#: src/land_outfits.c:885
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:775
+#: src/land_outfits.c:891
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:781
+#: src/land_outfits.c:897
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:787
+#: src/land_outfits.c:903
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:793 src/land_trade.c:245
+#: src/land_outfits.c:909 src/land_trade.c:245
 msgid "You can't sell something you don't have!"
 msgstr ""
 
@@ -88462,30 +88928,35 @@ msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다.
 msgid "Unknown var type '%s'"
 msgstr ""
 
-#: src/map.c:308
+#: src/map.c:313
 msgid "Standing:"
 msgstr "조판됨:"
 
-#: src/map.c:322
+#: src/map.c:327
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:329
+#: src/map.c:334
 msgid "Services:"
 msgstr "제공:"
 
 #. Commodity button
-#: src/map.c:337
+#: src/map.c:342
 msgid "Mode"
 msgstr "모드"
 
-#: src/map.c:350
+#. create the window.
+#: src/map.c:355 src/map_system.c:194
 #, fuzzy
 #| msgid "System"
-msgid "System info"
+msgid "System Info"
 msgstr "시스템"
 
-#: src/map.c:485
+#: src/map.c:358
+msgid "Toggle Note"
+msgstr ""
+
+#: src/map.c:493
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -88493,150 +88964,161 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:490
+#: src/map.c:498
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:567
+#: src/map.c:575
 #, c-format
 msgid "Multiple"
 msgstr "여러개의"
 
-#: src/map.c:739
+#: src/map.c:747
 msgid "Dense "
 msgstr "밀집된 "
 
-#: src/map.c:741
+#: src/map.c:749
 msgid "Light "
 msgstr "빛 "
 
-#: src/map.c:749
+#: src/map.c:757
 #, fuzzy, c-format
 #| msgid "Volatile %sNebula"
 msgid "Volatile %sNebula (%.1f MW)"
 msgstr "휘발성 %s 성운"
 
-#: src/map.c:753
+#: src/map.c:761
 #, fuzzy, c-format
 #| msgid "Dangerous %sNebula"
 msgid "Dangerous %sNebula (%.1f MW)"
 msgstr "위험한 %s성운"
 
-#: src/map.c:757
+#: src/map.c:765
 #, fuzzy, c-format
 #| msgid "Unstable %sNebula"
 msgid "Unstable %sNebula (%.1f MW)"
 msgstr "비안정된 %s성운"
 
-#: src/map.c:760
+#: src/map.c:768
 #, c-format
 msgid "%sNebula"
 msgstr "%s성운"
 
-#: src/map.c:771
+#: src/map.c:779
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "Dense Interference (%.0f%%)"
 msgstr "밀집된 간섭"
 
-#: src/map.c:775
+#: src/map.c:783
 #, fuzzy, c-format
 #| msgid "Light Interference"
 msgid "Light Interference (%.0f%%)"
 msgstr "빛 간섭"
 
-#: src/map.c:779
+#: src/map.c:787
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "Interference (%.0f%%)"
 msgstr "밀집된 간섭"
 
-#: src/map.c:797
+#: src/map.c:805
 #, fuzzy
 #| msgid "Dense Asteroid Field"
 msgid "Dense Asteroid Field"
 msgstr "밀집된 소행성 필드"
 
-#: src/map.c:801
+#: src/map.c:809
 #, fuzzy
 #| msgid "Light Asteroid Field"
 msgid "Light Asteroid Field"
 msgstr "빛 소행성 필드"
 
-#: src/map.c:814
+#: src/map.c:822
 msgid "Fuel: "
 msgstr ""
 
-#: src/map.c:815 src/map.c:823
+#: src/map.c:823 src/map.c:831
 #, c-format
 msgid "%d jump"
 msgid_plural "%d jumps"
 msgstr[0] ""
 
-#: src/map.c:817
+#: src/map.c:825
 #, fuzzy
 #| msgid "Autonav"
 msgid "Autonav: "
 msgstr "자동nav"
 
-#: src/map.c:1703
+#: src/map.c:1787
 #, fuzzy, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr "가격 정보 없음"
 
-#: src/map.c:1963
+#: src/map.c:2049
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:1966
+#: src/map.c:2052
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:1967
+#: src/map.c:2053
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:2023
+#: src/map.c:2109
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:2023
+#: src/map.c:2109
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2891
+#: src/map.c:2133
+#, c-format
+msgid "Write a note about the #o%s#0 system:"
+msgstr ""
+
+#: src/map.c:2134
+#, fuzzy
+#| msgid "System"
+msgid "Add System Note"
+msgstr "시스템"
+
+#: src/map.c:3012
 #, fuzzy, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/map.c:2909 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:3030 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:2916
+#: src/map.c:3037
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
 msgstr[0] ""
 
-#: src/map.c:2919
+#: src/map.c:3040
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
-#: src/map.c:2946
+#: src/map.c:3067
 #, fuzzy, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/map.c:2951
+#: src/map.c:3072
 #, fuzzy, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
@@ -88720,13 +89202,6 @@ msgstr ""
 #: src/map_overlay.c:702
 msgid "TARGET"
 msgstr ""
-
-#. create the window.
-#: src/map_system.c:194
-#, fuzzy
-#| msgid "System"
-msgid "System Info"
-msgstr "시스템"
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
@@ -89100,8 +89575,8 @@ msgid "Conditional for mission '%s' failed to run"
 msgstr "'%s' 미션에 대한 조건부 실행에 실패했습니다"
 
 #: src/mission.c:371 src/mission.c:393 src/mission.c:415 src/mission.c:473
-#: src/mission.c:569 src/mission.c:617 src/space.c:4082 src/space.c:4136
-#: src/space.c:4167 src/space.c:4222
+#: src/mission.c:569 src/mission.c:617 src/space.c:4087 src/space.c:4141
+#: src/space.c:4172 src/space.c:4227
 msgid "Unknown marker type."
 msgstr ""
 
@@ -89319,7 +89794,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:191 src/naev.c:1048 src/nlua_naev.c:132 src/nlua_naev.c:134
+#: src/naev.c:191 src/naev.c:1048 src/nlua_naev.c:134 src/nlua_naev.c:136
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -92127,7 +92602,7 @@ msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
 #: src/player.c:1650 src/space.c:2042 src/space.c:2152 src/space.c:2198
-#: src/space.c:3803 src/space.c:3823
+#: src/space.c:3805 src/space.c:3825
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid ""
@@ -93468,7 +93943,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1239 src/space.c:4772
+#: src/space.c:1239 src/space.c:4799
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -93756,25 +94231,25 @@ msgstr ""
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3654 src/space.c:3660
+#: src/space.c:3656 src/space.c:3662
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 
-#: src/space.c:3656
+#: src/space.c:3658
 #, c-format
 msgid "       with %d Space Object in %.3f s"
 msgid_plural "       with %d Space Objects in %.3f s"
 msgstr[0] ""
 
-#: src/space.c:3662
+#: src/space.c:3664
 #, c-format
 msgid "       with %d Space Object"
 msgid_plural "       with %d Space Objects"
 msgstr[0] ""
 
-#: src/space.c:4108
+#: src/space.c:4113
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Marking spob '%s' that is not in any system!"
@@ -93785,7 +94260,7 @@ msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4764
+#: src/space.c:4791
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
@@ -94660,10 +95135,6 @@ msgstr ""
 msgid "Immanis Cortex III"
 msgstr ""
 
-#, fuzzy
-#~ msgid "PUAAA Fighters"
-#~ msgstr "랜슬롯"
-
 #, fuzzy, c-format
 #~| msgid "Frontier systems"
 #~ msgid "You bought at %s in the %s system."
@@ -94851,10 +95322,6 @@ msgstr ""
 #~| msgid "Mission '%s' missing/invalid '%s' element"
 #~ msgid "Outfit '%s' missing/invalid 'trackmax' element"
 #~ msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
-
-#, fuzzy
-#~ msgid "Planet/Station"
-#~ msgstr "투리온의 불꽃"
 
 #, fuzzy
 #~ msgid "Planets/Stations"

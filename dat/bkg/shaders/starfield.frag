@@ -19,10 +19,10 @@ const vec3 AZ     = normalize( -R );
 const vec3 AX     = normalize( cross( AZ, UP ) );
 const vec3 AY     = normalize( cross( AX, AZ ) );
 */
-const vec3 AX_wtf = cross( AZ, UP );
-const vec3 AX     = normalize( AX_wtf );
-const vec3 AY_wtf = cross( AX, AZ );
-const vec3 AY     = normalize( AY_wtf );
+const vec2 AZ_xz_n= normalize( AZ.xz );
+const vec3 AX     = vec3( -AZ_xz_n.y, 0, AZ_xz_n.x );
+const vec3 AY     = vec3( -AZ.y * AX.z, AX.z * AZ.x - AX.x * AZ.z, AZ.y * AX.x );
+/* The above formulas are equivalent. */
 const mat3 A      = mat3( AX, AY, AZ );
 const float theta = %f;
 const float cx = cos(theta);
