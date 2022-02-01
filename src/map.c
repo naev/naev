@@ -45,6 +45,10 @@
 
 #define MAP_MOVE_THRESHOLD 20. /**< Mouse movement distance threshold */
 
+static int RCOL_X = -20;         /**< Position of text in the right column. */
+static int RCOL_TEXT_W = 135;    /**< Width of normal text in the right column. */
+static int RCOL_HEADER_W = 140;  /**< Width of the header text in the right column. */
+
 /**
  * @brief Faction presence container to be used for the map information stuff.
  */
@@ -288,9 +292,9 @@ void map_open (void)
     * [ Find ]
     * [ Close ]
     */
-   x  = -20; /* Right column X offset. */
+   x  = RCOL_X; /* Right column X offset. */
+   rw = RCOL_TEXT_W; /* Right column indented width maximum. */
    y  = -20;
-   rw = 130; /* Right column indented width maximum. */
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
@@ -302,35 +306,35 @@ void map_open (void)
    y -= 64 + 10;
 
    /* Faction */
-   window_addText( wid, x, y, 140, 20, 0, "txtSFaction",
+   window_addText( wid, x, y, RCOL_HEADER_W, 20, 0, "txtSFaction",
          &gl_smallFont, &cFontGrey, _("Faction:") );
    window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
-   window_addText( wid, x, y, 140, 20, 0, "txtSStanding",
+   window_addText( wid, x, y, RCOL_HEADER_W, 20, 0, "txtSStanding",
          &gl_smallFont, &cFontGrey, _("Standing:") );
    window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
-   window_addText( wid, x, y, 140, 20, 0, "txtSPresence",
+   window_addText( wid, x, y, RCOL_HEADER_W, 20, 0, "txtSPresence",
          &gl_smallFont, &cFontGrey, _("Presence:") );
    window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Spobs */
-   window_addText( wid, x, y, 140, 20, 0, "txtSSpobs",
+   window_addText( wid, x, y, RCOL_HEADER_W, 20, 0, "txtSSpobs",
          &gl_smallFont, &cFontGrey, _("Space Objects:") );
    window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtSpobs",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
-   window_addText( wid, x, y, 140, 20, 0, "txtSServices",
+   window_addText( wid, x, y, RCOL_HEADER_W, 20, 0, "txtSServices",
          &gl_smallFont, &cFontGrey, _("Services:") );
    window_addText( wid, x, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
@@ -505,8 +509,8 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
-   x = -20; /* Side bar X offset. */
-   w = 130; /* Width of the side bar. */
+   x = RCOL_X; /* Side bar X offset. */
+   w = RCOL_TEXT_W; /* Width of the side bar. */
    y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
 
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
