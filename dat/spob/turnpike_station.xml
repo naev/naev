@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>1000</population>
+  <population>3000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -29,7 +29,7 @@
   </services>
   <commodities/>
   <description>Turnpike Station is a semi-privatised commerce facility. It is located on one of the major junctions in Empire space, making it a welcome opportunity for traders to barter with one another. The station also offers private storage and ship moorings for pilots who travel through this region of space a lot.</description>
-  <bar>The bar is abustle with traders making money and, in some cases, losing it. The gears of the free market grind heaviest on stations like these and sometimes someone gets crushed between them.</bar>
+  <bar>The bar is bustling with traders making money and, in some cases, losing it. The gears of the free market grind heaviest on stations like these and sometimes someone gets crushed between them.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
@@ -38,4 +38,7 @@
   <item>Star Maps</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+ </tags>
 </spob>

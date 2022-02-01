@@ -43,4 +43,8 @@
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>rich</tag>
+ </tags>
 </spob>

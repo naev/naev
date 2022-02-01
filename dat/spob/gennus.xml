@@ -26,7 +26,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Gennus is a cold world now, but it wasn't quite this harsh when it was first settled during the Second Growth. Poor climate management and rampant pollution have filled the sky with sunlight-blocking substances, and now the fragile ecosystem has collapsed. The people here only live on Gennus because they have nowhere else to go.</description>
+  <description>Gennus is a cold world now, but it wasn't quite this harsh when it was first settled during the Second Growth. Poor climate management and rampant pollution have filled the sky with sunlight-blocking substances, and now the fragile ecosystem has collapsed. The people here only live on Gennus because they have nowhere else to go. The problem is aggravated by Empire bureaucracy that ensures that change is hard to come by.</description>
   <bar>It's hard to find a smiling face in this spaceport bar. Not too surprising, given how unpleasant life on this planet is.</bar>
  </general>
  <tech>
@@ -37,4 +37,7 @@
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </spob>

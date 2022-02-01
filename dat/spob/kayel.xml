@@ -35,4 +35,9 @@
   <item>Light Civilian Combat Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>agriculture</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

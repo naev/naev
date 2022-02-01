@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>150000</population>
+  <population>1500000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -40,4 +40,7 @@
   <item>Star Maps</item>
   <item>Hulls High</item>
  </tech>
+ <tags>
+  <tag>tourism</tag>
+ </tags>
 </spob>

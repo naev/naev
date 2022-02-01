@@ -45,4 +45,8 @@
   <item>Light Civilian Combat Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>urban</tag>
+ </tags>
 </spob>
