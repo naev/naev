@@ -1617,23 +1617,11 @@ static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
 static int toolkit_mouseEventReverse( Window *w, SDL_Event* event,
    Widget *wgt, int x, int y, int rx, int ry )
 {
-   int ret=0, skip=0;
-
-   /* Focused case, handle first. */
-   if (w->focus == wgt->id) {
-      ret = toolkit_mouseEventSingle( w, event, wgt, x, y, rx, ry );
-      if (ret)
-         return ret;
-      skip = 1;
-   }
-
    if (wgt->next!=NULL) {
-      ret = toolkit_mouseEventReverse( w, event, wgt->next, x, y, rx, ry );
+      int ret = toolkit_mouseEventReverse( w, event, wgt->next, x, y, rx, ry );
       if (ret)
          return ret;
    }
-   if (skip)
-      return ret;
 
    return toolkit_mouseEventSingle( w, event, wgt, x, y, rx, ry );
 }
