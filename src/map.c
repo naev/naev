@@ -43,6 +43,8 @@
 
 #define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
+#define MAP_MOVE_THRESHOLD 20. /**< Mouse movement distance threshold */
+
 /**
  * @brief Faction presence container to be used for the map information stuff.
  */
@@ -74,18 +76,21 @@ typedef struct CstMapWidget_ {
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 
-static int map_selected       = -1; /**< What system is selected on the map. */
+static int map_selected       = -1;     /**< What system is selected on the map. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
-static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
-static int cur_commod         = -1; /**< Current commodity selected. */
-static int cur_commod_mode    = 0; /**< 0 for cost, 1 for difference. */
+static StarSystem **map_path  = NULL;   /**< Array (array.h): The path to current selected system. */
+static int cur_commod         = -1;     /**< Current commodity selected. */
+static int cur_commod_mode    = 0;      /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
-static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
-static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
-static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
-static double map_dt     = 0.; /**< Nebula animation stuff. */
-static int map_minimal_mode = 0; /**< Map is in minimal mode. */
-static double map_flyto_speed = 1500.; /**< Linear speeed at which the map flies to a location. */
+static char** map_modes       = NULL;   /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
+static int listMapModeVisible = 0;      /**< Whether the map mode list widget is visible. */
+static double commod_av_gal_price = 0;  /**< Average price across the galaxy. */
+static double map_dt          = 0.;     /**< Nebula animation stuff. */
+static int map_minimal_mode   = 0;      /**< Map is in minimal mode. */
+static double map_flyto_speed = 1500.;  /**< Linear speeed at which the map flies to a location. */
+static double map_mx          = 0.;     /**< X mouse position */
+static double map_my          = 0.;     /**< Y mouse position */
+static char map_show_notes    = 0;      /**< Boolean for showing system notes */
 
 /*
  * extern
@@ -123,6 +128,7 @@ static CstMapWidget* map_globalCustomData( unsigned int wid );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
 static void map_setMinimal( unsigned int wid, int value );
+static void map_buttonMarkSystem( unsigned int wid, const char* str );
 static void map_buttonSystemMap( unsigned int wid, const char* str );
 static void map_buttonMinimal( unsigned int wid, const char* str );
 static void map_buttonCommodity( unsigned int wid, const char* str );
@@ -282,7 +288,6 @@ void map_open (void)
     * [ Find ]
     * [ Close ]
     */
-
    x  = -20; /* Right column X offset. */
    y  = -20;
    rw = 130; /* Right column indented width maximum. */
@@ -347,7 +352,10 @@ void map_open (void)
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
    window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnSystem", _("System info"), map_buttonSystemMap, SDLK_s );
+            "btnSystem", _("System Info"), map_buttonSystemMap, SDLK_s );
+   /* Mark this system button */
+   window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnMarkSystem", _("Toggle Note"), map_buttonMarkSystem, SDLK_n );
 
    /*
     * Bottom stuff
@@ -856,7 +864,7 @@ static void map_drawMarker( double x, double y, double zoom,
 {
    (void) zoom;
    const glColour* colours[] = {
-      &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer
+      &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer, &cMarkerNew
    };
    double alpha;
    glColour col;
@@ -876,6 +884,15 @@ static void map_drawMarker( double x, double y, double zoom,
    x = x + 3.0*r * cos(alpha);
    y = y + 3.0*r * sin(alpha);
    r *= 2.0;
+
+   /* Special case notes marker. */
+   if (type==5) {
+      col = cFontOrange;
+      col.a *= a;
+      glUseProgram(shaders.notemarker.program);
+      gl_renderShader( x, y, r, r, alpha, &shaders.notemarker, &col, 1 );
+      return;
+   }
 
    glUseProgram(shaders.sysmarker.program);
    if (type==0) {
@@ -941,17 +958,21 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render systems. */
    map_renderSystems( bx, by, x, y, z, w, h, r, cst->mode );
 
-   /* Render system names. */
+   /* Render system markers and notes. */
+   if (cst->alpha_markers > 0.)
+      map_renderMarkers( x, y, z, r, cst->alpha_markers );
+
+   /* Render system names and notes. */
    if (cst->alpha_names > 0.)
       map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
-
-   /* Render system markers. */
-   if (cst->alpha_markers > 0.)
-     map_renderMarkers( x, y, z, r, cst->alpha_markers );
 
    /* Render commodity info. */
    if (cst->mode == MAPMODE_TRADE)
       map_renderCommod(  bx, by, x, y, z, w, h, r, 0 );
+
+   /* We want the notes on top of everything. */
+   if (cst->alpha_markers > 0.)
+      map_renderNotes( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
 
    /* Values from cRadar_tSpob */
    col.r = cRadar_tSpob.r;
@@ -1350,7 +1371,64 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
 }
 
 /**
- * @brief Renders the system names on the map.
+ * @brief Renders the system note on the map if mouse is close.
+ */
+void map_renderNotes( double bx, double by, double x, double y,
+      double zoom, double w, double h, int editor, double alpha )
+{
+   (void) w;
+   (void) h;
+
+   if ((zoom <= 0.5) || editor)
+      return;
+
+   if (map_show_notes)
+      glClear( GL_DEPTH_BUFFER_BIT );
+
+   /* Find mouse over system and draw. */
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx,ty, tw,th;
+      glColour col;
+      glFont *font;
+      StarSystem *sys = &systems_stack[i];
+
+      if (!sys_isFlag(sys,SYSTEM_PMARKED))
+         continue;
+
+      if (sys->note == NULL)
+         continue;
+
+      /* Set up position. */
+      tx = x + sys->pos.x*zoom;
+      ty = y + sys->pos.y*zoom;
+
+      /* Mouse is over. */
+      if (!map_show_notes && ((pow2(tx-map_mx-bx)+pow2(ty-map_my-by)) > pow2(MAP_MOVE_THRESHOLD)))
+         continue;
+
+      if (!map_show_notes)
+         glClear( GL_DEPTH_BUFFER_BIT );
+
+      font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
+      tx += 12.*zoom;
+      ty -= font->h*2.;
+      tw = gl_printWidthRaw( font, sys->note )+8.;
+      th = font->h+8.;
+
+      /* Background. */
+      col = cBlack;
+      col.a = alpha*0.8;
+      gl_renderRect( tx-4., ty-4., tw, th, &col );
+
+      /* Render note */
+      col = cFontOrange;
+      col.a = alpha;
+      gl_printRaw( font, tx, ty, &col, -1, sys->note );
+   }
+}
+
+/**
+ * @brief Renders the system names and notes on the map.
  */
 void map_renderNames( double bx, double by, double x, double y,
       double zoom, double w, double h, int editor, double alpha )
@@ -1361,6 +1439,8 @@ void map_renderNames( double bx, double by, double x, double y,
    glColour col;
    glFont *font;
 
+   if (zoom <= 0.5) return;
+
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
 
@@ -1368,7 +1448,7 @@ void map_renderNames( double bx, double by, double x, double y,
          continue;
 
       /* Skip system. */
-      if ((!editor && !sys_isKnown(sys)) || (zoom <= 0.5 ))
+      if (!editor && !sys_isKnown(sys))
          continue;
 
       font = (zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
@@ -1384,7 +1464,6 @@ void map_renderNames( double bx, double by, double x, double y,
       col = cWhite;
       col.a = alpha;
       gl_printRaw( font, tx, ty, &col, -1, _(sys->name) );
-
    }
 
    /* Raw hidden values if we're in the editor. */
@@ -1428,7 +1507,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
       StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED | SYSTEM_PMARKED))
          continue;
 
       /* Get the position. */
@@ -1437,6 +1516,7 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
+      n += (sys_isFlag(sys, SYSTEM_PMARKED)) ? 1 : 0;
       n += sys->markers_plot;
       n += sys->markers_high;
       n += sys->markers_low;
@@ -1444,6 +1524,10 @@ static void map_renderMarkers( double x, double y, double zoom, double r, double
 
       /* Draw the markers. */
       j = 0;
+      if (sys_isFlag(sys, SYSTEM_PMARKED)) { /* Notes have be first. */
+         map_drawMarker( tx, ty, zoom, r, a, n, j, 5 );
+         j++;
+      }
       if (sys_isFlag(sys, SYSTEM_CMARKED)) {
          map_drawMarker( tx, ty, zoom, r, a, n, j, 0 );
          j++;
@@ -1885,6 +1969,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          cst->xtarget = cst->xpos -= rx;
          cst->ytarget = cst->ypos += ry;
       }
+      map_mx = mx;
+      map_my = my;
       break;
    }
 
@@ -2021,6 +2107,34 @@ static void map_setMinimal( unsigned int wid, int value )
    map_minimal_mode = value;
    player.map_minimal = value;
    window_buttonCaption( wid, "btnMinimal", (value) ? _("Normal View") : _("Minimal View") );
+}
+
+/**
+ * @brief Mark current system.
+ */
+static void map_buttonMarkSystem( unsigned int wid, const char* str )
+{
+   (void) wid;
+   (void) str;
+   if (map_selected != -1) {
+      StarSystem *sys = system_getIndex( map_selected );
+
+      /* Remove old note */
+      if (sys->note != NULL) {
+         free(sys->note);
+         sys->note = NULL;
+      }
+
+      /* Switch marking */
+      if (sys_isFlag(sys, SYSTEM_PMARKED))
+         sys_rmFlag(sys, SYSTEM_PMARKED);
+      else {
+         char buf[STRMAX_SHORT];
+         snprintf( buf, sizeof(buf), _("Write a note about the #o%s#0 system:"), sys->name );
+         sys->note = dialogue_input(_("Add System Note"), 0, 60, buf );
+         sys_setFlag(sys, SYSTEM_PMARKED);
+      }
+   }
 }
 
 /**
@@ -2376,7 +2490,7 @@ void map_cycleMissions(int dir)
 
    /* Universally find prev and next mission system */
    for (i=0;i<array_size(systems_stack);i++) {
-      if (!sys_isMarked(&systems_stack[i]) || !space_sysReachable(&systems_stack[i]))
+      if (!sys_isFlag(&systems_stack[i], SYSTEM_MARKED | SYSTEM_PMARKED) || !space_sysReachable(&systems_stack[i]) )
          continue;
 
       /* Pre-select first in case we will wrap */
@@ -2419,6 +2533,13 @@ void map_cycleMissions(int dir)
    //player_autonavStart();
 }
 
+/**
+ * @brief Toggle note-showing on/off.
+ */
+void map_toggleNotes()
+{
+   map_show_notes = !map_show_notes;
+}
 /*
  * A* algorithm for shortest path finding
  *

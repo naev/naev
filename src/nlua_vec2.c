@@ -22,6 +22,7 @@
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
 static int vectorL_newP( lua_State *L );
+static int vectorL_tostring( lua_State *L );
 static int vectorL_add__( lua_State *L );
 static int vectorL_add( lua_State *L );
 static int vectorL_sub__( lua_State *L );
@@ -42,6 +43,7 @@ static int vectorL_normalize( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
+   { "__tostring", vectorL_tostring },
    { "__add", vectorL_add },
    { "add", vectorL_add__ },
    { "__sub", vectorL_sub },
@@ -217,6 +219,22 @@ static int vectorL_newP( lua_State *L )
 
    vect_pset( &v, m, a );
    lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @brief Converts a vector to a string.
+ *
+ *    @luatparam Vector v Vector to convert to as string.
+ *    @luatreturn string String version of v.
+ * @luafunc __tostring
+ */
+static int vectorL_tostring( lua_State *L )
+{
+   char buf[STRMAX_SHORT];
+   Vector2d *v = luaL_checkvector(L,1);
+   snprintf( buf, sizeof(buf), "vec2( %g, %g )", v->x, v->y );
+   lua_pushstring(L, buf);
    return 1;
 }
 

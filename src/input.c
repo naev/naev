@@ -810,21 +810,21 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
    /* targeting */
-   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_next")) {
+   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY("target_next")) {
       if (value==KEY_PRESS) {
          if (map_isOpen())
             map_cycleMissions(1);
          else
             player_targetNext(0);
       }
-   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_prev")) {
+   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY("target_prev")) {
       if (value==KEY_PRESS) {
          if (map_isOpen())
             map_cycleMissions(-1);
          else
             player_targetPrev(0);
       }
-   } else if ((INGAME()||map_isOpen()) && NODEAD() && KEY("target_nearest")) {
+   } else if ((INGAME() || map_isOpen()) && NODEAD() && KEY("target_nearest")) {
       if (value==KEY_PRESS) {
          if (map_isOpen())
             map_cycleMissions(1);
@@ -932,8 +932,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_restoreControl( 0, NULL );
          player_jump();
       }
-   } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
-      ovr_key( value );
+   } else if (KEY("overlay") && NODEAD() && (INGAME() || map_isOpen()) && !repeat) {
+      if (map_isOpen())
+         map_toggleNotes();
+      else
+         ovr_key( value );
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();

@@ -10,11 +10,12 @@
       * Weapon types are more differentiated
       * Removed nearly redundant launchers
       * Nerfed beams
+      * Factional ships are more widely sold
    * New Content
       * Added a gigantic black hole
       * Added space anomalies
       * More engine sounds
-      * 18 New missions
+      * 20 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do tasks
@@ -33,7 +34,8 @@
 
 * 0.9.3 (unreleased)
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
-   * Fix errors/slowdown in Diversion from (...) missions.
+   * Fix errors/slowdown in Diversion from (...) missions
+   * Work around bugs in at least one OpenGL driver
 
 * 0.9.2
    * Fix reward messages in the Particle Physics campaign

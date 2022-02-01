@@ -13,6 +13,7 @@ antlejos.verner = {
    image = "verner.webp",
    name = _("Verner"),
    color = nil,
+   description = _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar."),
    transition = nil, -- Use default
 }
 
@@ -76,10 +77,10 @@ function antlejos.puaaa ()
    if f then
       return f
    end
-   return faction.dynAdd( nil, "puaaa", _("PUAAA") )
+   return faction.dynAdd( "Mercenary", "puaaa", _("PUAAA"), {clear_allies=true, clear_enemies=true} )
 end
 
-antlejos.protest_lines = {
+antlejos.protest_lines = rnd.permutation{
    _("No to terraforming!"),
    _("Leave the planets alone!"),
    _("The Universe is beautiful as it is!"),
@@ -104,7 +105,9 @@ antlejos.rewards = {
    ant04 = 600e3,
    ant05 = 700e3,
    ant06 = 400e3,
-   ant07 = 600e3,
+   ant07 = 500e3,
+   ant08 = 600e3,
+   ant09 = 800e3,
 }
 
 return antlejos

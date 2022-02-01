@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>It's a nickname, of course. How could it not be? Trouble is, nobody remembers where the name came from, and, bizarrely, there are no records of the station's original name. It's quite a famous story, both within Hekaras and elsewhere. Meanwhile, all involved simply call it Three and a Half Kings. It seems to work for them.</description>
-  <bar>This is a typical stationside bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to.</bar>
+  <description>It's a nickname, of course. How could it not be? Trouble is, nobody remembers where the name came from, and, bizarrely, there are no records of the station's original name. It's quite a famous story, both within Hekaras and elsewhere. Meanwhile, all involved simply call it Three and a Half Kings. It seems to work for them. Despite the curious name, Three and a Half Kings is a fairly unremarkable station, offering its services to ships that pass by.</description>
+  <bar>This is a typical station-side bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to.</bar>
  </general>
  <tech>
   <item>Laser 1</item>
@@ -40,5 +40,6 @@
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
   <item>Low Tech Upgrades</item>
+  <item>Empire Ships Small</item>
  </tech>
 </spob>

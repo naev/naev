@@ -21,6 +21,7 @@ dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
+dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
@@ -813,8 +814,8 @@ dat/spob/grandard.xml
 dat/spob/green_eye.xml
 dat/spob/greenberg.xml
 dat/spob/greis.xml
-dat/spob/griffin__ii.xml
 dat/spob/griffin_i.xml
+dat/spob/griffin_ii.xml
 dat/spob/griffin_iii.xml
 dat/spob/griffin_vi.xml
 dat/spob/grindstone_shipyards.xml
@@ -2432,6 +2433,9 @@ dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
 dat/missions/neutral/antlejos/ant06.lua
 dat/missions/neutral/antlejos/ant07.lua
+dat/missions/neutral/antlejos/ant08.lua
+dat/missions/neutral/antlejos/ant09.lua
+dat/missions/neutral/antlejos/ant10.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -2616,6 +2620,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/equipopt/wrapper.lua
+dat/scripts/escort.lua
 dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua

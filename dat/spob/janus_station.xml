@@ -41,8 +41,11 @@
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </spob>

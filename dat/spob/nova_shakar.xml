@@ -42,5 +42,10 @@
   <item>Laser 2</item>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Outfits 2</item>
+  <item>Empire Ships Small</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>

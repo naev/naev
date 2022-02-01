@@ -86,6 +86,8 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
 static void cli_printCoreString( const char *s, int escape );
 static int cli_printCore( lua_State *L, int cli_only, int escape );
+static void cli_addMessage( const char *msg );
+static void cli_addMessageMax( const char *msg, const int l );
 void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
 
@@ -239,7 +241,7 @@ static int cli_script( lua_State *L )
  *
  *    @param msg Message to add.
  */
-void cli_addMessage( const char *msg )
+static void cli_addMessage( const char *msg )
 {
    char *buf;
    /* Not initialized. */
@@ -256,7 +258,7 @@ void cli_addMessage( const char *msg )
  *    @param msg Message to add.
  *    @param l Max message length.
  */
-void cli_addMessageMax( const char *msg, const int l )
+static void cli_addMessageMax( const char *msg, const int l )
 {
    char *buf;
    /* Not initialized. */
