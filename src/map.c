@@ -455,7 +455,7 @@ static void map_update( unsigned int wid )
 {
    int found, multiple;
    StarSystem *sys;
-   int f, h, x, y, logow, logoh;
+   int f, fh, h, x, y, logow, logoh;
    unsigned int services, services_u, services_h, services_f, services_r;
    int hasSpobs;
    char t;
@@ -582,8 +582,10 @@ static void map_update( unsigned int wid )
       window_modifyText( wid, "txtFaction", _("N/A") );
       window_modifyText( wid, "txtStanding", _("N/A") );
       h = gl_smallFont.h;
+      fh = gl_smallFont.h;
    }
    else {
+      const char *fcttext;
       if (!multiple) /* saw them all and all the same */
          snprintf( buf, sizeof(buf), "%s", faction_longname(f) );
 
@@ -595,13 +597,14 @@ static void map_update( unsigned int wid )
       if (logo != NULL)
          window_moveWidget( wid, "imgFaction",
                -90 + logow/2, -20 - 32 - 10 - gl_defFont.h + logoh/2);
+      fcttext = faction_getStandingText( f );
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
-      window_modifyText( wid, "txtStanding",
-            faction_getStandingText( f ) );
+      window_modifyText( wid, "txtStanding", fcttext );
 
       h = gl_printHeightRaw( &gl_smallFont, w, buf );
+      fh = gl_printHeightRaw( &gl_smallFont, w, fcttext );
    }
 
    /* Faction */
@@ -612,7 +615,7 @@ static void map_update( unsigned int wid )
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
    window_moveWidget( wid, "txtStanding", x, y-gl_smallFont.h - 5 );
-   y -= 2 * gl_smallFont.h + 5 + 15;
+   y -= gl_smallFont.h + fh + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
    window_moveWidget( wid, "txtPresence", x, y-gl_smallFont.h-5 );
