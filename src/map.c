@@ -275,7 +275,7 @@ void map_open (void)
     * The map itself.
     */
    map_show( wid, 0, 0, w, h, 1. ); /* Reset zoom. */
-   const glColour cBG = { 0., 0., 0., 0.9 };
+   const glColour cBG = { 0., 0., 0., 0.95 };
    window_addRect( wid, w-RCOL_W, 0, RCOL_W, h, "rctRCol", &cBG, 0 );
    window_addRect( wid, 0, 0, w, 60, "rctBBar", &cBG, 0 );
 
