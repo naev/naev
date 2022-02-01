@@ -366,7 +366,7 @@ void map_open (void)
    window_addButtonKey( wid, -60, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
    window_addButtonKey( wid, -20, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
-   window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
+   window_addText( wid, 20, 15, w - 40 - 7*(BUTTON_WIDTH+20), 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    /* Fuel. */
