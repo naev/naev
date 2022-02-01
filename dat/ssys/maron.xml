@@ -12,6 +12,7 @@
  </pos>
  <spobs>
   <spob_virtual>Proteron Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Cleai">
