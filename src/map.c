@@ -45,9 +45,10 @@
 
 #define MAP_MOVE_THRESHOLD 20. /**< Mouse movement distance threshold */
 
-static int RCOL_X = -20;         /**< Position of text in the right column. */
-static int RCOL_TEXT_W = 135;    /**< Width of normal text in the right column. */
-static int RCOL_HEADER_W = 140;  /**< Width of the header text in the right column. */
+static const int RCOL_X = -10;         /**< Position of text in the right column. */
+static const int RCOL_TEXT_W = 135;    /**< Width of normal text in the right column. */
+static const int RCOL_HEADER_W = 140;  /**< Width of the header text in the right column. */
+static const int RCOL_W = RCOL_HEADER_W - RCOL_X*2; /**< Real width of the right column. */
 
 /**
  * @brief Faction presence container to be used for the map information stuff.
@@ -271,6 +272,14 @@ void map_open (void)
    window_dimWindow( wid, &w, &h );
 
    /*
+    * The map itself.
+    */
+   map_show( wid, 0, 0, w, h, 1. ); /* Reset zoom. */
+   const glColour cBG = { 0., 0., 0., 0.9 };
+   window_addRect( wid, w-RCOL_W, 0, RCOL_W, h, "rctRCol", &cBG, 0 );
+   window_addRect( wid, 0, 0, w, 60, "rctBBar", &cBG, 0 );
+
+   /*
     * SIDE TEXT
     *
     * $System
@@ -378,11 +387,6 @@ void map_open (void)
          "txtPlayerStatus", &gl_smallFont, NULL, NULL );
 
    map_genModeList();
-
-   /*
-    * The map itself.
-    */
-   map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
    cst = map_globalCustomData(wid);
    map_reset( cst, map_mode );
    map_update( wid );
@@ -999,6 +1003,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
    gl_renderCircle( x + cur_system->pos.x * z,
          y + cur_system->pos.y * z,
          1.5*r, &col, 0 );
+
+   glClear( GL_DEPTH_BUFFER_BIT );
 }
 
 /**
