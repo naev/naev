@@ -2998,8 +2998,8 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    map_setup();
 
    /* Set position to focus on current system. */
-   cst->xtarget = cst->xpos = cur_system->pos.x * zoom;
-   cst->ytarget = cst->ypos = cur_system->pos.y * zoom;
+   cst->xtarget = cst->xpos = cur_system->pos.x * zoom + RCOL_W/2;
+   cst->ytarget = cst->ypos = cur_system->pos.y * zoom + 30;
 
    /* Set zoom. */
    map_setZoom( wid, zoom );
@@ -3025,8 +3025,8 @@ int map_center( int wid, const char *sys )
       return -1;
 
    /* Center on the system. */
-   cst->xtarget = ssys->pos.x * cst->zoom;
-   cst->ytarget = ssys->pos.y * cst->zoom;
+   cst->xtarget = ssys->pos.x * cst->zoom + RCOL_W/2;
+   cst->ytarget = ssys->pos.y * cst->zoom + 30;
 
    /* Compute flyto speed. */
    d = MOD( cst->xtarget-cst->xpos, cst->ytarget-cst->ypos );
