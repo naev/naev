@@ -390,13 +390,17 @@ void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
    /* Get widget. */
    Widget *wgt = window_getwgt(wid, name);
    if (wgt == NULL) {
-      *w = -1;
-      *h = -1;
+      if (w!=NULL)
+         *w = -1;
+      if (h!=NULL)
+         *h = -1;
       return;
    }
 
-   *w = wgt->w;
-   *h = wgt->h;
+   if (w!=NULL)
+      *w = wgt->w;
+   if (h!=NULL)
+      *h = wgt->h;
 }
 
 /**

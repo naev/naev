@@ -111,6 +111,7 @@ extern Spob* land_spob;
  * prototypes
  */
 /* Update. */
+static void map_update_status( unsigned int wid, const char *buf );
 static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
@@ -395,7 +396,7 @@ void map_open (void)
    window_addButtonKey( wid, -20, 30 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 15, w - 40 - 7*(BUTTON_WIDTH+20), 30, 0,
-                   "txtSystemStatus", &gl_smallFont, NULL, NULL );
+         "txtSystemStatus", &gl_smallFont, NULL, NULL );
 
    /* Fuel. */
    window_addText( wid, -20, 40+BUTTON_HEIGHT*2, rw, 30, 0,
@@ -469,6 +470,18 @@ static void map_update_commod_av_price (void)
    }
 }
 
+static void map_update_status( unsigned int wid, const char *buf )
+{
+   int w, h;
+   window_modifyText( wid, "txtSystemStatus", buf );
+   if (buf==NULL)
+      return;
+   window_dimWidget( wid, "txtSystemStatus", &w, NULL );
+   h = gl_printHeightRaw( &gl_smallFont, w, buf );
+   window_moveWidget( wid, "txtSystemStatus", 20, (60-h)/2 );
+   window_resizeWidget( wid, "txtSystemStatus", w, h );
+}
+
 /**
  * @brief Updates the map window.
  *
@@ -516,14 +529,15 @@ static void map_update( unsigned int wid )
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
-         window_modifyText( wid, "txtSystemStatus", buf );
-      } else {
-         snprintf(buf, sizeof(buf), _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
-         window_modifyText( wid, "txtSystemStatus", buf );
+         map_update_status( wid, buf );
       }
-   } else {
-      window_modifyText( wid, "txtSystemStatus", NULL );
+      else {
+         snprintf(buf, sizeof(buf), _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         map_update_status( wid, buf );
+      }
    }
+   else
+      map_update_status( wid, NULL );
 
    /*
     * Right Text
@@ -838,7 +852,8 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
          p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
-      window_modifyText( wid, "txtSystemStatus", buf );
+      /* Update the string. */
+      map_update_status( wid, buf );
    }
 
    /* Player info. */
