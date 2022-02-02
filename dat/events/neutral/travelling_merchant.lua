@@ -191,7 +191,7 @@ function board ()
       --{ "Racing Skills 2",          "Racing Trophy" }, -- This is redoable so no need to give it again
       { "Operation Cold Metal",     "Left Boot" },
       { "Black Cat",                "Black Cat Doll" },
-      { "Commemorative Stein",      "Terraforming Antlejos 10" },
+      { "Terraforming Antlejos 10", "Commemorative Stein" },
    }
    local event_rewards = {
    }
