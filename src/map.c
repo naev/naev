@@ -465,9 +465,9 @@ static void map_update_commod_av_price (void)
          totPrice /= totPriceCnt;
       commod_av_gal_price = totPrice;
 
-   } else {
-      commod_av_gal_price = 0;
    }
+   else
+      commod_av_gal_price = 0;
 }
 
 static void map_update_status( unsigned int wid, const char *buf )
@@ -524,15 +524,15 @@ static void map_update( unsigned int wid )
    /* Economy button */
    if (map_mode == MAPMODE_TRADE) {
       Commodity *c = commod_known[cur_commod];
-      if ( cur_commod_mode == 1 ) {
+      if (cur_commod_mode == 1) {
          snprintf( buf, sizeof(buf),
-                   _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
-                     "while negative/orange values mean a loss when sold at the corresponding system."),
+                   _("Showing %s prices relative to %s:\n"
+                     "Positive/blue indicate profit while negative/orange values indicate loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
          map_update_status( wid, buf );
       }
       else {
-         snprintf(buf, sizeof(buf), _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         snprintf(buf, sizeof(buf), _("Showing known %s prices.\nGalaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          map_update_status( wid, buf );
       }
    }
@@ -588,7 +588,7 @@ static void map_update( unsigned int wid )
       /*
        * Bottom Text
        */
-      window_modifyText( wid, "txtSystemStatus", NULL );
+      map_update_status( wid, NULL );
       return;
    }
 
