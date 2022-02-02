@@ -99,7 +99,8 @@ function land ()
       vn.transition()
       vn.na(fmt.f(_([[You land and are promptly greeted by the captain of the core miner "GE Talpini". After an exchange of some pleasantries, they show you around their ship. It is in an impressive behemoth loaded with an array of fearsome looking drills. However, you can see that the heavy modifications on the ship make it much less suited for movement in space than underground or underwater. Looks like it will be mainly up to you to keep it in one piece on the way to {pnt}.]]),
          {pnt=retpnt}))
-      vn.na(_("The captain mentions that they will not be making any stops on the way to {pnt}, so you should make sure you have enough fuel for the entire trip. Furthermore, in order to ensure the safety of the GE Talpini, you must jump and land only after the GE Talpini has done so."))
+      vn.na(fmt.f(_("The captain mentions that they will not be making any stops on the way to {pnt}, so you should make sure you have enough fuel for the entire trip. Furthermore, in order to ensure the safety of the GE Talpini, you must jump and land only after the GE Talpini has done so."),
+         {pnt=retpnt}))
       vn.run()
 
       -- Advance mission
@@ -123,8 +124,8 @@ function escort_success ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_([[You land and are met with an awe-struck Verner, who seems earnestly impressive by the massive GE Talpini that dwarfs most of the spaceport.]]))
-   v(_([["Damn, look at all those drills! It's much more impressive in person that what you see on the holograms. This should make the core mining look like child's play! Thansk a bunch for bringing it over here in one piece."]]))
-   v(_([["Oh, by the way, in one of our routine patrols around the system, we recently found a really curious pecularity. It seems like there is a very faint jump lane leading out of Antlejos. It doesn't seem like it goes anywhere really interesting, but you might want to take a look. I've updated your system navigation so you should be able to use it now."]]))
+   v(_([["Damn, look at all those drills! It's much more impressive in person that what you see on the holograms. This should make the core mining look like child's play! Thanks a bunch for bringing it over here in one piece."]]))
+   v(_([["Oh, by the way, in one of our routine patrols around the system, we recently found a really curious peculiarity. It seems like there is a very faint jump lane leading out of Antlejos. It doesn't seem like it goes anywhere really interesting, but you might want to take a look. I've updated your system navigation so you should be able to use it now."]]))
    v(_([["If you're still interested, we still need all the help we can get with terraforming. There are still a lot of tasks to do!"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
