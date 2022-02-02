@@ -127,7 +127,6 @@ static void bar_approach( unsigned int wid, const char *str );
 static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
-static void misn_close( unsigned int wid, const char *name );
 static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid, int first );
@@ -300,7 +299,7 @@ static void bar_open( unsigned int wid )
    land_tabGenerate(LAND_WINDOW_BAR);
 
    /* Set window functions. */
-   window_onClose( wid, bar_close );
+   window_onCleanup( wid, bar_close );
 
    /* Get dimensions. */
    desc = (land_spob->bar_description!=NULL) ? _(land_spob->bar_description) : "(NULL)";
@@ -577,9 +576,6 @@ static void misn_open( unsigned int wid )
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
 
-   /* Set window functions. */
-   window_onClose( wid, misn_close );
-
    /* buttons */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
@@ -615,19 +611,6 @@ static void misn_open( unsigned int wid )
          w/2 - 30, h/2 - 35, 0.75 );
 
    misn_genList(wid, 1);
-}
-/**
- * @brief Closes the mission computer window.
- *    @param wid Window to close.
- *    @param name Unused.
- */
-static void misn_close( unsigned int wid, const char *name )
-{
-   (void) wid;
-   (void) name;
-
-   /* Remove computer markers just in case. */
-   space_clearComputerMarkers();
 }
 /**
  * @brief Autonav to selected mission.
@@ -1057,7 +1040,7 @@ void land_genWindows( int load, int changetab )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
-   window_onClose( land_wid, land_cleanupWindow );
+   window_onCleanup( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
    land_setupTabs();
@@ -1610,6 +1593,9 @@ void land_cleanup (void)
    if (gfx_exterior != NULL)
       gl_freeTexture( gfx_exterior );
    gfx_exterior   = NULL;
+
+   /* Remove computer markers just in case. */
+   space_clearComputerMarkers();
 
    /* Clean up mission computer. */
    for (int i=0; i<mission_ncomputer; i++)

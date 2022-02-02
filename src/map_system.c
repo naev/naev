@@ -63,8 +63,7 @@ glTexture **bgImages; /**< array (array.h) of nebula and star textures */
 /*
  * prototypes
  */
-void map_system_close( unsigned int wid, const char *str );
-
+void map_system_cleanup( unsigned int wid, const char *str );
 int map_system_isOpen( void );
 
 /* Update. */
@@ -121,22 +120,22 @@ void map_system_exit( void )
 /**
  * @brief Close the map window.
  */
-void map_system_close( unsigned int wid, const char *str )
+void map_system_cleanup( unsigned int wid, const char *str )
 {
+   (void) wid;
+   (void) str;
+
    if (cur_sys_sel != cur_system)
      space_gfxUnload( cur_sys_sel );
 
    for (int i=0; i<array_size(bgImages); i++)
       gl_freeTexture( bgImages[i] );
    array_free( bgImages );
-   bgImages=NULL;
+   bgImages = NULL;
    array_free( cur_spob_sel_outfits );
    cur_spob_sel_outfits = NULL;
    array_free( cur_spob_sel_ships );
    cur_spob_sel_ships = NULL;
-
-   window_close( wid, str );
-
 }
 
 /**
@@ -146,7 +145,7 @@ static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod 
 {
    (void) mod;
    if (key == SDLK_m) {
-      map_system_close( wid, NULL );
+      window_close( wid, NULL );
       return 1;
    }
    if (key == SDLK_UP) {
@@ -192,14 +191,15 @@ void map_system_open( int sys_selected )
 
    /* create the window. */
    wid = window_create( MAP_SYSTEM_WDWNAME, _("System Info"), -1, -1, w, h );
-   window_setCancel( wid, map_system_close );
+   window_setCancel( wid, window_close );
+   window_onClose( wid, map_system_cleanup );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
          &gl_defFont, &cFontGreen, _(cur_sys_sel->name) );
    window_addImage( wid, -90 + 32, h-30, 0, 0, "imgFaction", NULL, 0 );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", _("Close"), map_system_close );
+            "btnClose", _("Close"), window_close );
    /* commodity price purchase button */
    window_addButton( wid, -40-BUTTON_WIDTH, 20, BUTTON_WIDTH*3, BUTTON_HEIGHT,
                      "btnBuyCommodPrice", _("Buy commodity price info"), map_system_buyCommodPrice );
