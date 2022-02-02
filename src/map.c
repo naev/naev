@@ -2527,7 +2527,8 @@ void map_cycleMissions(int dir)
    int i;
 
    /* Select current selection - do nothing */
-   if (dir==0) return;
+   if (dir==0)
+      return;
 
    /* Default : points to current system */
    if (dest==NULL)
@@ -2539,11 +2540,12 @@ void map_cycleMissions(int dir)
          continue;
 
       /* Pre-select first in case we will wrap */
-      if (found_next_i<0) found_next_i=i;
+      if (found_next_i<0)
+         found_next_i = i;
 
       /* We found next system */
       if (found_b) {
-         found_next_i=i;
+         found_next_i = i;
          break;
       }
 
@@ -2551,15 +2553,14 @@ void map_cycleMissions(int dir)
       if (&systems_stack[i]==dest)
          found_b=1;
       else
-         /* Follow trail as we go */
-         found_prev_i=i;
+         found_prev_i = i; /* Follow trail as we go */
    }
 
    /* No trail for prev system - current one was first one in list - just finish loop and find last one */
    if (found_prev_i<0)
       for (;i<array_size(systems_stack);i++)
          if (sys_isMarked(&systems_stack[i]) && space_sysReachable(&systems_stack[i]))
-               found_prev_i=i;
+               found_prev_i = i;
 
    /* Select found system or return if no suitable was found */
    if (dir>0 && found_next_i>=0)
@@ -3069,10 +3070,9 @@ int map_load (void)
       if (xml_isNode(node, "decorator")) {
          /* Load decorator. */
          map_decorator_parse( &array_grow(&decorator_stack), node );
-
+         continue;
       }
-      else
-         WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
+      WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -3087,14 +3087,15 @@ int map_load (void)
    return 0;
 }
 
-static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
+static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent )
+{
    xmlNodePtr node;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MapDecorator) );
 
-   temp->detection_radius=10;
-   temp->auto_fade=0;
+   temp->detection_radius = 10;
+   temp->auto_fade = 0;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
