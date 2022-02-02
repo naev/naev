@@ -25,6 +25,8 @@ stds.Basic={
       "_LOADED", -- NLUA_LOAD_TABLE
       "inlist",
       "tcopy",
+      "tmerge",
+      "tmerge_r",
       "trepeat",
       "treverse",
    },

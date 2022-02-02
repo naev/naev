@@ -30,6 +30,40 @@ function tcopy( tbl, copy )
 end
 
 --[[--
+   Merges src table into dest. Does not recurse into subtables.
+
+   @tparam table dest Destination table. Must not be nil.
+   @tparam[opt={}] table src Source table to be merged into dest.
+   @treturn table Returns dest.
+--]]
+function tmerge( dest, src )
+   src = src or {}
+   for k,v in pairs(src) do
+      dest[k] = v
+   end
+   return dest
+end
+
+--[[--
+   Merges src table into dest recursively.
+
+   @tparam table dest Destination table. Must not be nil.
+   @tparam[opt={}] table src Source table to be merged into dest.
+   @treturn table Returns dest.
+--]]
+function tmerge_r( dest, src )
+   src = src or {}
+   for k,v in pairs(src) do
+      if type(v)=="table" then
+         dest[k] = tmerge_r( dest[k] or {}, v )
+      else
+         dest[k] = v
+      end
+   end
+   return dest
+end
+
+--[[--
 Repeats an ordered table a number of tables.
 
 If you have a table {1,2,3}, and you repeat it 2 times, you will get the table {1,1,2,2,3,3}.
