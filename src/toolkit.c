@@ -590,6 +590,9 @@ void window_setFade( unsigned int wid, const SimpleShader *shd, double length )
       return;
 
    wdw->timer_max = wdw->timer = length;
+
+   if (wdw->timer <= 0.)
+      window_rmFlag(wdw, WINDOW_FADEIN | WINDOW_FADEOUT);
 }
 
 /**
@@ -661,7 +664,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->focus        = -1;
    wdw->xrel         = -1.;
    wdw->yrel         = -1.;
-   wdw->flags        = flags | WINDOW_FADEIN;
+   wdw->flags        = flags | WINDOW_FADEIN | WINDOW_CREATED;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
    wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
 
@@ -1497,7 +1500,9 @@ void toolkit_render( double dt )
       int use_fb = 0;
       double alpha = 1.;
       if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
-         w->timer -= dt;
+         if (!window_isFlag(w, WINDOW_CREATED) || (dt < fps_min))
+            w->timer -= dt;
+         window_rmFlag( w, WINDOW_CREATED );
          if (w->timer > 0.) {
             use_fb = 1;
             glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );

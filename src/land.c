@@ -1058,6 +1058,9 @@ void land_genWindows( int load, int changetab )
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
+   if (load)
+      window_setFade( land_wid, NULL, 0. );
+
    /* Create tabbed window. */
    land_setupTabs();
 
