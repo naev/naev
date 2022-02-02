@@ -579,6 +579,20 @@ int window_setDisplayname( unsigned int wid, const char *displayname )
 }
 
 /**
+ * @brief Sets the fade-in behaviour of a window.
+ */
+void window_setFade( unsigned int wid, const SimpleShader *shd, double length )
+{
+   (void) shd;
+
+   Window *wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   wdw->timer_max = wdw->timer = length;
+}
+
+/**
  * @brief Gets the ID of a window.
  *
  * @note Gets the top window matching the ID first.
