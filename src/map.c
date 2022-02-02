@@ -51,6 +51,7 @@ static const int RCOL_HEADER_W = 140;  /**< Width of the header text in the righ
 //static const int RCOL_W = RCOL_HEADER_W - RCOL_X*2; /**< Real width of the right column. */
 /* Below is a hack because older GCC claims the above line is not constant... */
 static const int RCOL_W = 140 - (-10*2);
+static const int BBAR_H = 60; /**< Height of the bottom bar. */
 
 /**
  * @brief Faction presence container to be used for the map information stuff.
@@ -294,7 +295,7 @@ void map_open (void)
 
    /* Overlay background. */
    window_addRect( wid, w-RCOL_W, 0, RCOL_W, h, "rctRCol", &cBG, 0 );
-   window_addRect( wid, 0, 0, w, 60, "rctBBar", &cBG, 0 );
+   window_addRect( wid, 0, 0, w, BBAR_H, "rctBBar", &cBG, 0 );
 
    /*
     * SIDE TEXT
@@ -480,7 +481,7 @@ static void map_update_status( unsigned int wid, const char *buf )
       return;
    window_dimWidget( wid, "txtSystemStatus", &w, NULL );
    h = gl_printHeightRaw( &gl_smallFont, w, buf );
-   window_moveWidget( wid, "txtSystemStatus", 20, (60-h)/2 );
+   window_moveWidget( wid, "txtSystemStatus", 20, (BBAR_H-h)/2 );
    window_resizeWidget( wid, "txtSystemStatus", w, h );
 }
 
@@ -2999,7 +3000,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 
    /* Set position to focus on current system. */
    cst->xtarget = cst->xpos = cur_system->pos.x * zoom + RCOL_W/2;
-   cst->ytarget = cst->ypos = cur_system->pos.y * zoom + 30;
+   cst->ytarget = cst->ypos = cur_system->pos.y * zoom + BBAR_H/2;
 
    /* Set zoom. */
    map_setZoom( wid, zoom );
@@ -3026,7 +3027,7 @@ int map_center( int wid, const char *sys )
 
    /* Center on the system. */
    cst->xtarget = ssys->pos.x * cst->zoom + RCOL_W/2;
-   cst->ytarget = ssys->pos.y * cst->zoom + 30;
+   cst->ytarget = ssys->pos.y * cst->zoom + BBAR_H/2;
 
    /* Compute flyto speed. */
    d = MOD( cst->xtarget-cst->xpos, cst->ytarget-cst->ypos );
