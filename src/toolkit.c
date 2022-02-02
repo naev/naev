@@ -632,10 +632,8 @@ unsigned int window_create( const char* name, const char *displayname,
 unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h, unsigned int flags )
 {
-   Window *wcur, *wlast, *wdw;
-
    /* Allocate memory. */
-   wdw = calloc( 1, sizeof(Window) );
+   Window *wdw = calloc( 1, sizeof(Window) );
 
    const int wid = (++genwid); /* unique id */
 
@@ -678,9 +676,10 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    if (windows == NULL)
       windows = wdw;
    else {
+      Window *wlast;
       /* Take focus from the old window. */
       if (wdw->exposed) {
-         wcur = toolkit_getActiveWindow();
+         Window *wcur = toolkit_getActiveWindow();
          if (wcur != NULL)
             toolkit_expose( wcur, 0 ); /* wcur is hidden */
       }
