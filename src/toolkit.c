@@ -20,6 +20,7 @@
 #include "log.h"
 #include "opengl.h"
 #include "pause.h"
+#include "nmath.h"
 #include "tk/toolkit_priv.h"
 
 #define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */
@@ -29,8 +30,8 @@ static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
-static const double WINDOW_FADEIN_TIME    = 0.1; /**< Time it takes to fade in for a window. */
-static const double WINDOW_FADEOUT_TIME   = 0.1; /**< Time it takes to fade out for a window. */
+static const double WINDOW_FADEIN_TIME    = 0.15; /**< Time it takes to fade in for a window. */
+static const double WINDOW_FADEOUT_TIME   = 0.15; /**< Time it takes to fade out for a window. */
 
 /*
  * window stuff
@@ -1540,7 +1541,7 @@ void toolkit_render( double dt )
             glClearColor( 0., 0., 0., 0. );
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            alpha = w->timer / w->timer_max;
+            alpha = ease_QuadraticInOut( w->timer / w->timer_max );
             if (window_isFlag(w, WINDOW_FADEIN))
                alpha = 1. - alpha;
          }
