@@ -984,7 +984,7 @@ int dialogue_customResize( int width, int height )
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    unsigned int time_ms = SDL_GetTicks();
-   const double fps_max = 1./(double)conf.fps_max;
+   const double fps_max = MIN( fps_min, 1./(double)conf.fps_max );
    int quit_game = 0;
 
    /* Delay a toolkit iteration. */
@@ -997,7 +997,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       SDL_Event event;
       unsigned int t;
-      double dt, delay;
+      double dt;
 
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 0 );
@@ -1025,8 +1025,8 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       time_ms = t;
       /* Sleep if necessary. */
       if (dt < fps_max) {
-         delay    = fps_max - dt;
-         SDL_Delay( (unsigned int)(delay * 1000) );
+         double delay = fps_max - dt;
+         SDL_Delay( (unsigned int)(delay * 1000.) );
       }
 
       /* Update stuff. */
