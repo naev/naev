@@ -954,6 +954,7 @@ void window_destroy( unsigned int wid )
          if (w->parent == wid)
             window_destroy( w->id );
 
+      /* Start the fade out. */
       window_setFlag( wdw, WINDOW_FADEOUT );
       wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
 
@@ -982,7 +983,8 @@ void window_destroy( unsigned int wid )
 static void window_kill( Window *wdw )
 {
    for (Window *w = windows; w != NULL; w = w->next)
-      window_setFlag( w, WINDOW_KILL );
+      if (w->parent == wdw->id)
+         window_kill( w );
    window_setFlag( wdw, WINDOW_KILL );
 }
 
