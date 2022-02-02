@@ -79,7 +79,7 @@ void* window_getData( unsigned int wid );
 /*
  * render
  */
-void toolkit_render (void);
+void toolkit_render( double dt );
 
 /*
  * input

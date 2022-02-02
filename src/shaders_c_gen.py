@@ -89,7 +89,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
+      uniforms = ["projection", "color", "tex_mat", "sampler"],
       subroutines = {},
    ),
    Shader(

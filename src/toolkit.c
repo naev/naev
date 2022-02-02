@@ -30,6 +30,9 @@ static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
+static const double WINDOW_FADEIN_TIME    = 0.1; /**< Time it takes to fade in for a window. */
+static const double WINDOW_FADEOUT_TIME   = 0.1; /**< Time it takes to fade out for a window. */
+
 /*
  * window stuff
  */
@@ -637,7 +640,6 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    const int wid = (++genwid); /* unique id */
 
    /* Create the window. */
-
    wdw->id           = wid;
    wdw->name         = strdup(name);
    wdw->displayname  = strdup(displayname);
@@ -647,8 +649,9 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->focus        = -1;
    wdw->xrel         = -1.;
    wdw->yrel         = -1.;
-   wdw->flags        = flags;
+   wdw->flags        = flags | WINDOW_FADEIN;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
+   wdw->timer        = WINDOW_FADEIN_TIME;
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
@@ -685,11 +688,11 @@ unsigned int window_createFlags( const char* name, const char *displayname,
 
       wlast = windows;
       while (1) {
-         if ( ( strcmp( wlast->name, name ) == 0 ) && !window_isFlag( wlast, WINDOW_KILL )
-              && !window_isFlag( wlast, WINDOW_NOFOCUS ) )
+         if ((strcmp( wlast->name, name )==0) && !window_isFlag( wlast, WINDOW_KILL )
+              && !window_isFlag( wlast, WINDOW_NOFOCUS ))
             WARN( _( "Window with name '%s' already exists!" ), wlast->name );
 
-         if ( wlast->next == NULL )
+         if (wlast->next == NULL)
             break;
 
          wlast = wlast->next;
@@ -1460,7 +1463,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
 /**
  * @brief Renders the windows.
  */
-void toolkit_render (void)
+void toolkit_render( double dt )
 {
    /* Only render if open. */
    if (!toolkit_isOpen())
@@ -1470,8 +1473,64 @@ void toolkit_render (void)
    for (Window *w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&
             !window_isFlag(w, WINDOW_KILL)) {
+         int use_fb = 0;
+         double alpha = 1.;
+         if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
+            w->timer -= dt;
+            if (w->timer > 0.) {
+               use_fb = 1;
+               glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+               glClearColor( 0., 0., 0., 0. );
+               glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+               if (window_isFlag(w, WINDOW_FADEIN))
+                  alpha = 1. - w->timer / WINDOW_FADEIN_TIME;
+               else
+                  alpha = w->timer / WINDOW_FADEOUT_TIME;
+            }
+            else {
+               if (window_isFlag(w, WINDOW_FADEOUT)) {
+                  window_destroy(w->id);
+                  continue; /* No need to draw this iteration. */
+               }
+               window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
+            }
+         }
          window_render(w);
          window_renderOverlay(w);
+         if (use_fb) {
+            const gl_Matrix4 tex_mat = gl_Matrix4_Identity();
+            gl_Matrix4 projection = gl_view_matrix;
+            glColour col = { 1., 1., 1., alpha };
+
+            glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+            glClearColor( 0., 0., 0., 1. );
+
+            glUseProgram(shaders.texture.program);
+
+            /* Set texture. */
+            glActiveTexture( GL_TEXTURE0 );
+            glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+            glUniform1i(shaders.texture.sampler, 0);
+
+            /* Set vertex data. */
+            glEnableVertexAttribArray( shaders.texture.vertex );
+            gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+                  0, 2, GL_FLOAT, 0 );
+
+            /* Set shader uniforms. */
+            gl_uniformColor(shaders.texture.color, &col);
+            gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+            gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity() );
+
+            /* Draw. */
+            glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+            /* Clean up. */
+            glDisableVertexAttribArray( shaders.texture.vertex );
+            gl_checkErr();
+            glUseProgram(0);
+         }
       }
    }
 }

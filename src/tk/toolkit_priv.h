@@ -135,6 +135,8 @@ typedef struct Widget_ {
 #define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
 #define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
+#define WINDOW_FADEIN      (1<<10) /**< Window is fading in. */
+#define WINDOW_FADEOUT     (1<<11) /**< Window is fading out. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
@@ -152,6 +154,7 @@ typedef struct Window_ {
    char *displayname; /**< Display name obtained with gettext. */
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
+   double timer; /**< Timer for fancy effects. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
    void (*close_fptr)(unsigned int wid,const char* name); /**< How to close the window. */
