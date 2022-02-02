@@ -1059,11 +1059,6 @@ void land_genWindows( int load, int changetab )
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
-   if (load) {
-      window_setFade( land_wid, NULL, 0. );
-      window_raise( land_wid );
-   }
-
    /* Create tabbed window. */
    land_setupTabs();
 
@@ -1166,7 +1161,8 @@ void land_genWindows( int load, int changetab )
    land_loaded = 1;
 
    /* Necessary if player.land() was run in an abort() function. */
-   window_lower( land_wid );
+   if (!load)
+      window_lower( land_wid );
 }
 
 /**
@@ -1247,6 +1243,10 @@ void land( Spob* p, int load )
 
    /* Just in case? */
    bar_regen();
+
+   /* Don't do a fade in. */
+   if (load)
+      window_setFade( land_wid, NULL, 0. );
 
    /* Do a lua collection pass. */
    lua_gc( naevL, LUA_GCCOLLECT, 0 );

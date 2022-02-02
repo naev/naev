@@ -690,14 +690,14 @@ static int load_gameInternal( const char* file, const char* version )
    /* Create escorts in space. */
    player_addEscorts();
 
-   /* Land the player. */
-   land( pnt, 1 );
-
    /* Load the GUI. */
    if (gui_load( gui_pick() )) {
       if (player.p->ship->gui != NULL)
          gui_load( player.p->ship->gui );
    }
+
+   /* Land the player. */
+   land( pnt, 1 );
 
    /* Sanitize the GUI. */
    gui_setCargo();
