@@ -1,4 +1,3 @@
-local mt = require "merge_tables"
 local fmt = require "format"
 local luatk = require "luatk"
 
@@ -334,7 +333,7 @@ skills.set.misc = {
 function skills.get( sets )
    local s = {}
    for k,v in ipairs(sets) do
-      mt.merge_tables_recursive( s, skills.set[v] )
+      tmerge_r( s, skills.set[v] )
    end
    return s
 end

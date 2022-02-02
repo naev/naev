@@ -3,7 +3,6 @@
 --]]
 local vn = require 'vn'
 local colour = require 'colour'
-local mt = require 'merge_tables'
 local fmt = require "format"
 
 local minerva = {
@@ -144,70 +143,70 @@ local minerva = {
 -- Helpers to create main characters
 function minerva.vn_cyborg_chicken( params )
    return vn.Character.new( minerva.chicken.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.chicken.image,
             color=minerva.chicken.colour,
          }, params) )
 end
 function minerva.vn_kex( params )
    return vn.Character.new( minerva.kex.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.kex.image,
             color=minerva.kex.colour,
          }, params) )
 end
 function minerva.vn_maikki( params )
    return vn.Character.new( minerva.maikki.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.maikki.image,
             color=minerva.maikki.colour,
          }, params) )
 end
 function minerva.vn_maikkiP( params )
    return vn.Character.new( minerva.maikkiP.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.maikkiP.image,
             color=minerva.maikkiP.colour,
          }, params) )
 end
 function minerva.vn_terminal( params )
    return vn.Character.new( minerva.terminal.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.terminal.image,
             color=minerva.terminal.colour,
          }, params) )
 end
 function minerva.vn_pirate( params )
    return vn.Character.new( minerva.pirate.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.pirate.image,
             color=minerva.pirate.colour,
          }, params) )
 end
 function minerva.vn_zuri( params )
    return vn.Character.new( minerva.zuri.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.zuri.image,
             color=minerva.zuri.colour,
          }, params) )
 end
 function minerva.vn_ceo( params )
    return vn.Character.new( minerva.ceo.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.ceo.image,
             color=minerva.ceo.colour,
          }, params) )
 end
 function minerva.vn_strangelove( params )
    return vn.Character.new( minerva.strangelove.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.strangelove.image,
             color=minerva.strangelove.colour,
          }, params) )
 end
 function minerva.vn_mole( params )
    return vn.Character.new( minerva.mole.name,
-         mt.merge_tables( {
+         tmerge( {
             image=minerva.mole.image,
             color=minerva.mole.colour,
          }, params) )

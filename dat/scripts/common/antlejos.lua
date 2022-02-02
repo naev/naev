@@ -4,7 +4,6 @@
 
 --]]
 local vn = require "vn"
-local mt = require 'merge_tables'
 
 local antlejos = {}
 
@@ -19,7 +18,7 @@ antlejos.verner = {
 
 function antlejos.vn_verner( params )
    return vn.Character.new( antlejos.verner.name,
-         mt.merge_tables( {
+         tmerge( {
             image=antlejos.verner.image,
             color=antlejos.verner.colour,
          }, params) )

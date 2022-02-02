@@ -1,6 +1,5 @@
 require 'ai.core.core'
 local fmt = require "format"
-local mt = require 'merge_tables'
 
 -- Settings
 mem.aggressive = true
@@ -94,7 +93,7 @@ function taunt ( target, _offense )
    if mem.istransport then
       taunts = taunt_list_default
    else
-      taunts = mt.merge_tables( taunt_list_warship, taunt_list_default )
+      taunts = tmerge( taunt_list_warship, taunt_list_default )
    end
 
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )

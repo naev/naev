@@ -4,7 +4,6 @@
 
 --]]
 local vn = require "vn"
-local mt = require 'merge_tables'
 local love_shaders = require "love_shaders"
 
 local tut = {}
@@ -35,7 +34,7 @@ end
 
 function tut.vn_shipai( params )
    return vn.Character.new( tut.ainame(),
-         mt.merge_tables( {
+         tmerge( {
             image=tut.shipai.image,
             color=tut.shipai.colour,
             shader=love_shaders.hologram{strength=0.2},
