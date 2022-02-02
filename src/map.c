@@ -238,7 +238,10 @@ void map_open (void)
    unsigned int wid;
    StarSystem *cur;
    int w, h, x, y, rw;
+   //int tw, th;
    CstMapWidget *cst;
+   const char *title = _("Star Map");
+   const glColour cBG = { 0., 0., 0., 0.95 };
 
    map_minimal_mode = player.map_minimal;
    listMapModeVisible = 0;
@@ -266,7 +269,7 @@ void map_open (void)
    cur = system_getIndex( map_selected );
 
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, -1, -1 );
+   wid = window_create( MAP_WDWNAME, title, -1, -1, -1, -1 );
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
    window_dimWindow( wid, &w, &h );
@@ -275,7 +278,18 @@ void map_open (void)
     * The map itself.
     */
    map_show( wid, 0, 0, w, h, 1. ); /* Reset zoom. */
-   const glColour cBG = { 0., 0., 0., 0.95 };
+
+   /* Map title. */
+#if 0
+   rw = gl_printWidthRaw( NULL, title );
+   tw = rw+30;
+   th = gl_defFont.h + 20;
+   window_addRect( wid, (w-tw)/2., h-th, tw, th, "rctTBar", &cBG, 0 );
+   window_addText( wid, (w-rw)/2., h-gl_defFont.h-10., rw, gl_defFont.h, 1, "txtTitle",
+      &gl_defFont, NULL, title );
+#endif
+
+   /* Overlay background. */
    window_addRect( wid, w-RCOL_W, 0, RCOL_W, h, "rctRCol", &cBG, 0 );
    window_addRect( wid, 0, 0, w, 60, "rctBBar", &cBG, 0 );
 
@@ -829,7 +843,7 @@ static void map_update( unsigned int wid )
    /* Player info. */
    jumps = floor(player.p->fuel / player.p->fuel_consumption);
    p = 0;
-   rw = 140;
+   rw = RCOL_HEADER_W;
    p += scnprintf(&buf[p], sizeof(buf)-p, "#n%s#0", _("Fuel: ") );
    p += scnprintf(&buf[p], sizeof(buf)-p, n_("%d jump", "%d jumps", jumps), jumps );
    sys = map_getDestination( &autonav );
@@ -845,7 +859,7 @@ static void map_update( unsigned int wid )
    }
    th = gl_printHeightRaw( &gl_smallFont, rw, buf );
    window_resizeWidget( wid, "txtPlayerStatus", rw, th );
-   window_moveWidget( wid, "txtPlayerStatus", -20, 40+BUTTON_HEIGHT*2 );
+   window_moveWidget( wid, "txtPlayerStatus", RCOL_X, 40+BUTTON_HEIGHT*2 );
    window_modifyText( wid, "txtPlayerStatus", buf );
 }
 
