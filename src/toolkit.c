@@ -1479,65 +1479,71 @@ void toolkit_render( double dt )
 {
    /* Render base. */
    for (Window *w = windows; w!=NULL; w = w->next) {
-      if (!window_isFlag(w, WINDOW_NORENDER) &&
-            !window_isFlag(w, WINDOW_KILL)) {
-         int use_fb = 0;
-         double alpha = 1.;
-         if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
-            w->timer -= dt;
-            if (w->timer > 0.) {
-               use_fb = 1;
-               glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-               glClearColor( 0., 0., 0., 0. );
-               glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      if (window_isFlag(w, WINDOW_NORENDER | WINDOW_KILL))
+         continue;
 
-               alpha = w->timer / w->timer_max;
-               if (window_isFlag(w, WINDOW_FADEIN))
-                  alpha = 1. - alpha;
-            }
-            else {
-               if (window_isFlag(w, WINDOW_FADEOUT)) {
-                  /* Mark for death. */
-                  window_kill( w );
-                  continue; /* No need to draw this iteration. */
-               }
-               window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
-            }
+      int use_fb = 0;
+      double alpha = 1.;
+      if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
+         w->timer -= dt;
+         if (w->timer > 0.) {
+            use_fb = 1;
+            glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+            glClearColor( 0., 0., 0., 0. );
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            alpha = w->timer / w->timer_max;
+            if (window_isFlag(w, WINDOW_FADEIN))
+               alpha = 1. - alpha;
          }
-         window_render(w);
-         window_renderOverlay(w);
-         if (use_fb) {
-            glColour col = { 1., 1., 1., alpha };
-
-            glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-            glClearColor( 0., 0., 0., 1. );
-
-            glUseProgram(shaders.texture.program);
-
-            /* Set texture. */
-            glActiveTexture( GL_TEXTURE0 );
-            glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
-            glUniform1i(shaders.texture.sampler, 0);
-
-            /* Set vertex data. */
-            glEnableVertexAttribArray( shaders.texture.vertex );
-            gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-                  0, 2, GL_FLOAT, 0 );
-
-            /* Set shader uniforms. */
-            gl_uniformColor(shaders.texture.color, &col);
-            gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
-            gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity() );
-
-            /* Draw. */
-            glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-            /* Clean up. */
-            glDisableVertexAttribArray( shaders.texture.vertex );
-            gl_checkErr();
-            glUseProgram(0);
+         else {
+            if (window_isFlag(w, WINDOW_FADEOUT)) {
+               /* Mark for death. */
+               window_kill( w );
+               continue; /* No need to draw this iteration. */
+            }
+            window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
          }
       }
+
+      /* The actual rendering. */
+      window_render(w);
+      window_renderOverlay(w);
+
+      /* Drawing directly to the main framebuffer. */
+      if (!use_fb)
+         continue;
+
+      /* Must draw onto the main screen. */
+      glColour col = { 1., 1., 1., alpha };
+
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      glClearColor( 0., 0., 0., 1. );
+
+      glUseProgram(shaders.texture.program);
+
+      /* Set texture. */
+      glActiveTexture( GL_TEXTURE0 );
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+      glUniform1i(shaders.texture.sampler, 0);
+
+      /* Set vertex data. */
+      glEnableVertexAttribArray( shaders.texture.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      gl_uniformColor(shaders.texture.color, &col);
+      gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+      gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity() );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clean up. */
+      glDisableVertexAttribArray( shaders.texture.vertex );
+      gl_checkErr();
+      glUseProgram(0);
    }
 }
 
