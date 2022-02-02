@@ -22,7 +22,7 @@
 #include "safelanes.h"
 #include "space.h"
 
-#define OVERLAY_FADEIN        (1.0/3.0)
+const double OVERLAY_FADEIN = 1.0/3.0; /**< How long it takes to fade in newly discovered things. */
 
 /**
  * Structure for map overlay size.
