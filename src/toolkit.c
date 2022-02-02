@@ -95,7 +95,7 @@ int toolkit_isOpen (void)
 {
    /* Check to see if there is any active window. */
    for (Window *wdw = windows; wdw != NULL; wdw = wdw->next)
-      if (!window_isFlag( wdw, WINDOW_FADEOUT | WINDOW_KILL ))
+      if (!window_isFlag( wdw, WINDOW_FADEOUT | WINDOW_KILL | WINDOW_NORENDER ))
          return 1;
    return 0;
 }
