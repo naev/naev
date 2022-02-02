@@ -302,14 +302,13 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
    vis_index=0;
    offset = h - pitch*nshow;
-   for ( i=0; i<array_size(sys->spobs); i++ ) {
-      p=sys->spobs[i];
+   for (i=0; i<array_size(sys->spobs); i++) {
+      p = sys->spobs[i];
       if (!spob_isKnown( p ))
          continue;
       vis_index++;
-      if (p->gfx_space == NULL) {
-         WARN( _("No gfx for %s...\n"),p->name );
-      }
+      if (p->gfx_space == NULL)
+         WARN( _("No gfx for %s…"),p->name );
       else {
          ih = pitch;
          iw = ih;
