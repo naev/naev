@@ -984,7 +984,7 @@ int dialogue_customResize( int width, int height )
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    unsigned int time_ms = SDL_GetTicks();
-   const double fps_max = MIN( fps_min, 1./(double)conf.fps_max );
+   const double fps_max = (conf.fps_max > 0) ? 1./(double)conf.fps_max : fps_min;
    int quit_game = 0;
 
    /* Delay a toolkit iteration. */
