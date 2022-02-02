@@ -27,7 +27,6 @@
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
-static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
 static const double WINDOW_FADEIN_TIME    = 0.1; /**< Time it takes to fade in for a window. */
@@ -496,7 +495,7 @@ int window_isTop( unsigned int wid )
       return 0;
    n = w->next;
    while (n != NULL) {
-      if (!window_isFlag(n,WINDOW_KILL | WINDOW_FADEOUT) && !window_isFlag(n,WINDOW_NORENDER))
+      if (!window_isFlag(n,WINDOW_KILL | WINDOW_FADEOUT | WINDOW_NORENDER))
          return 0;
       n = n->next;
    }
@@ -667,9 +666,8 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    else
       toolkit_setWindowPos( wdw, x, y );
 
-   if (toolkit_open==0) { /* toolkit is on */
+   if (!toolkit_isOpen()) {
       input_mouseShow();
-      toolkit_open = 1; /* enable toolkit */
       pause_game();
       gl_defViewport(); /* Reset the default viewport */
    }
@@ -2093,7 +2091,6 @@ void toolkit_update (void)
    /* Killed all the windows. */
    if (!toolkit_isOpen()) {
       input_mouseHide();
-      toolkit_open = 0; /* disable toolkit */
       if (paused && !player_paused)
          unpause_game();
    }
