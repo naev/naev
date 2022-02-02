@@ -117,7 +117,7 @@ static double fps_y     = -15.; /**< FPS Y position. */
 const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 double elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
-static nlua_env load_env = LUA_NOREF;
+static nlua_env load_env = LUA_NOREF; /**< Environment for displaying load messages and stuff. */
 
 /*
  * prototypes
@@ -241,7 +241,7 @@ int main( int argc, char** argv )
    conf_loadConfigPath();
 
    /* Create the home directory if needed. */
-   if ( nfile_dirMakeExist( nfile_configPath() ) )
+   if (nfile_dirMakeExist( nfile_configPath() ))
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
@@ -286,7 +286,7 @@ int main( int argc, char** argv )
     * OpenGL
     */
    if (gl_init()) { /* initializes video output */
-      ERR( _("Initializing video output failed, exiting...") );
+      ERR( _("Initializing video output failed, exiting…") );
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
@@ -303,7 +303,7 @@ int main( int argc, char** argv )
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., _("Initializing subsystems...") );
+   loadscreen_render( 0., _("Initializing subsystems…") );
    time_ms = SDL_GetTicks();
 
    /*
@@ -500,10 +500,10 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   int r = 0;
+   int r;
 
    load_env = nlua_newEnv(1);
-   nlua_loadStandard( load_env );
+   r  = nlua_loadStandard( load_env );
    r |= nlua_loadNaev( load_env );
    r |= nlua_loadRnd( load_env );
    r |= nlua_loadVector( load_env );
@@ -577,52 +577,52 @@ void load_all (void)
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Commodities...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Commodities…") );
    commodity_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects…") );
    spfx_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Effects…") );
    effect_load(); /* no dep */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types…") );
    dtype_load(); /* dep for outfits */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Outfits...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Outfits…") );
    outfit_load(); /* dep for ships, factions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Ships...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Ships…") );
    ships_load(); /* dep for fleet */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions…") );
    factions_load(); /* dep for fleet, space, missions, AI */
 
    /* Handle outfit loading part that may use ships and factions. */
    outfit_loadPost();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI…") );
    ai_load(); /* dep for fleets */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Techs...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Techs…") );
    tech_load(); /* dep for space */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe…") );
    space_load(); /* dep for events/missions */
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events…") );
    events_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions…") );
    missions_load();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs…") );
    diff_loadAvailable();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Populating Maps...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Populating Maps…") );
    outfit_mapParse();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols...") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
    safelanes_init();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details..") );
