@@ -101,6 +101,14 @@ int rectOverlap( double x, double y, double w, double h,
 }
 
 /**
+ * @brief Simple symmetric sine-based easing.
+ */
+double ease_SineInOut( double x )
+{
+   return 0.5 * (1. - cos(x * M_PI));
+}
+
+/**
  * @brief Simple symmetric quadratic easing.
  */
 double ease_QuadraticInOut( double x )

@@ -11,5 +11,6 @@ int rectOverlap( double x, double y, double w, double h,
       double x2, double y2, double w2, double h2 );
 
 /* Easing. */
+double ease_SineInOut( double x );
 double ease_QuadraticInOut( double x );
 double ease_CubicInOut( double x );
