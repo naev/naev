@@ -137,7 +137,7 @@ typedef struct Widget_ {
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
 #define WINDOW_FADEIN      (1<<10) /**< Window is fading in. */
 #define WINDOW_FADEOUT     (1<<11) /**< Window is fading out. */
-#define WINDOW_CREATED     (1<<12) /**< Window has just been created. */
+#define WINDOW_FADEDELAY   (1<<12) /**< Fade has just started and may be delayed. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */

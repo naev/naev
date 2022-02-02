@@ -29,8 +29,8 @@ static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
-static const double WINDOW_FADEIN_TIME    = 0.1; /**< Time it takes to fade in for a window. */
-static const double WINDOW_FADEOUT_TIME   = 0.1; /**< Time it takes to fade out for a window. */
+static const double WINDOW_FADEIN_TIME    = 3.0; /**< Time it takes to fade in for a window. */
+static const double WINDOW_FADEOUT_TIME   = 3.0; /**< Time it takes to fade out for a window. */
 
 /*
  * window stuff
@@ -591,8 +591,11 @@ void window_setFade( unsigned int wid, const SimpleShader *shd, double length )
 
    wdw->timer_max = wdw->timer = length;
 
-   if (wdw->timer <= 0.)
+   if (wdw->timer <= 0.) {
+      if (window_isFlag(wdw, WINDOW_FADEOUT))
+         window_kill( wdw );
       window_rmFlag(wdw, WINDOW_FADEIN | WINDOW_FADEOUT);
+   }
 }
 
 /**
@@ -664,7 +667,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->focus        = -1;
    wdw->xrel         = -1.;
    wdw->yrel         = -1.;
-   wdw->flags        = flags | WINDOW_FADEIN | WINDOW_CREATED;
+   wdw->flags        = flags | WINDOW_FADEIN | WINDOW_FADEDELAY;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
    wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
 
@@ -970,7 +973,8 @@ void window_destroy( unsigned int wid )
             window_destroy( w->id );
 
       /* Start the fade out. */
-      window_setFlag( wdw, WINDOW_FADEOUT );
+      window_rmFlag( wdw, WINDOW_FADEIN );
+      window_setFlag( wdw, WINDOW_FADEOUT | WINDOW_FADEDELAY );
       wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
 
       /* Run the close function first. */
@@ -1500,9 +1504,9 @@ void toolkit_render( double dt )
       int use_fb = 0;
       double alpha = 1.;
       if (window_isFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT)) {
-         if (!window_isFlag(w, WINDOW_CREATED) || (dt < fps_min))
+         if (!window_isFlag(w, WINDOW_FADEDELAY) || (dt < fps_min))
             w->timer -= dt;
-         window_rmFlag( w, WINDOW_CREATED );
+         window_rmFlag( w, WINDOW_FADEDELAY );
          if (w->timer > 0.) {
             use_fb = 1;
             glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );

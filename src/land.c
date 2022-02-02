@@ -1034,7 +1034,8 @@ void land_genWindows( int load, int changetab )
    /* Destroy old window if exists. */
    if (land_wid > 0) {
       land_regen = 2; /* Mark we're regenning. */
-      window_destroy(land_wid);
+      window_destroy( land_wid );
+      window_setFade( land_wid, NULL, 0. );
 
       /* Mark tabs as not generated. */
       land_generated = 0;
@@ -1058,8 +1059,10 @@ void land_genWindows( int load, int changetab )
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
-   if (load)
+   if (load) {
       window_setFade( land_wid, NULL, 0. );
+      window_raise( land_wid );
+   }
 
    /* Create tabbed window. */
    land_setupTabs();
@@ -1072,7 +1075,6 @@ void land_genWindows( int load, int changetab )
     *  3) Generate missions - so that campaigns are fluid.
     *  4) Create other tabs - lists depend on NPC and missions.
     */
-
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 

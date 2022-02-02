@@ -895,7 +895,7 @@ void player_soundResume (void)
  *    @param x X value of the position to warp to.
  *    @param y Y value of the position to warp to.
  */
-void player_warp( const double x, const double y )
+void player_warp( double x, double y )
 {
    vect_cset( &player.p->solid->pos, x, y );
 }
@@ -4051,7 +4051,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player != 0) {
       unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
-      cam_setTargetPilot( pid, 0 );
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );

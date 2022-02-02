@@ -323,8 +323,10 @@ static void main_menu_promptClose( unsigned int wid, const char *unused )
  */
 void menu_main_close (void)
 {
-   if (window_exists( "wdwMainMenu" ))
-      window_destroy( window_get( "wdwMainMenu" ) );
+   if (window_exists( "wdwMainMenu" )) {
+      unsigned int wid = window_get("wdwMainMenu");
+      window_destroy( wid );
+   }
    else
       WARN( _("Main menu does not exist.") );
 
