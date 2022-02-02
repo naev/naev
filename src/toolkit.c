@@ -83,7 +83,6 @@ static void toolkit_expose( Window *wdw, int expose );
 static void window_renderBorder( Window* w );
 /* Death. */
 static void widget_kill( Widget *wgt );
-static void window_kill( Window *wdw );
 static void window_remove( Window *wdw );
 static void toolkit_purgeDead (void);
 
@@ -980,7 +979,7 @@ void window_destroy( unsigned int wid )
  *
  *    @param wdw Window to kill.
  */
-static void window_kill( Window *wdw )
+void window_kill( Window *wdw )
 {
    for (Window *w = windows; w != NULL; w = w->next)
       if (w->parent == wdw->id)
