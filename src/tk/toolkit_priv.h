@@ -155,6 +155,7 @@ typedef struct Window_ {
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
    double timer; /**< Timer for fancy effects. */
+   double timer_max; /**< Max timer. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
    void (*close_fptr)(unsigned int wid,const char* name); /**< How to close the window. */

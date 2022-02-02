@@ -682,8 +682,7 @@ void main_loop( int update )
     */
    input_update( real_dt ); /* handle key repeats. */
    sound_update( real_dt ); /* Update sounds. */
-   if (toolkit_isOpen())
-      toolkit_update(); /* to simulate key repetition */
+   toolkit_update(); /* to simulate key repetition and get rid of windows */
    if (!paused && update) {
       /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
       player_updateAutonav( real_dt );

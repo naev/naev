@@ -38,7 +38,6 @@ static const double WINDOW_FADEOUT_TIME   = 0.1; /**< Time it takes to fade out 
  */
 #define MIN_WINDOWS  3 /**< Minimum windows to prealloc. */
 static Window *windows = NULL; /**< Window linked list, not to be confused with MS windows. */
-static int window_dead = 0; /**< There are dead windows lying around. */
 
 /*
  * simulate keypresses when holding
@@ -95,7 +94,11 @@ static void toolkit_purgeDead (void);
  */
 int toolkit_isOpen (void)
 {
-   return !!toolkit_open;
+   /* Check to see if there is any active window. */
+   for (Window *wdw = windows; wdw != NULL; wdw = wdw->next)
+      if (!window_isFlag( wdw, WINDOW_FADEOUT | WINDOW_KILL ))
+         return 1;
+   return 0;
 }
 
 /**
@@ -493,7 +496,7 @@ int window_isTop( unsigned int wid )
       return 0;
    n = w->next;
    while (n != NULL) {
-      if (!window_isFlag(n,WINDOW_KILL) && !window_isFlag(n,WINDOW_NORENDER))
+      if (!window_isFlag(n,WINDOW_KILL | WINDOW_FADEOUT) && !window_isFlag(n,WINDOW_NORENDER))
          return 0;
       n = n->next;
    }
@@ -538,7 +541,7 @@ int window_exists( const char* wdwname )
    if (windows == NULL)
       return 0;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
          return 1;
    return 0; /* doesn't exist */
 }
@@ -554,7 +557,7 @@ int window_existsID( unsigned int wid )
    if (windows == NULL)
       return 0;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL))
+      if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
          return 1;
    return 0; /* doesn't exist */
 }
@@ -593,7 +596,7 @@ unsigned int window_get( const char* wdwname )
       return 0;
    last = NULL;
    for (Window *w = windows; w != NULL; w = w->next)
-      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL | WINDOW_FADEOUT))
          last = w;
    if (last==NULL)
       return 0;
@@ -651,7 +654,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->yrel         = -1.;
    wdw->flags        = flags | WINDOW_FADEIN;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
-   wdw->timer        = WINDOW_FADEIN_TIME;
+   wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
@@ -688,7 +691,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
 
       wlast = windows;
       while (1) {
-         if ((strcmp( wlast->name, name )==0) && !window_isFlag( wlast, WINDOW_KILL )
+         if ((strcmp( wlast->name, name )==0) && !window_isFlag( wlast, WINDOW_KILL | WINDOW_FADEOUT )
               && !window_isFlag( wlast, WINDOW_NOFOCUS ))
             WARN( _( "Window with name '%s' already exists!" ), wlast->name );
 
@@ -946,7 +949,7 @@ void window_destroy( unsigned int wid )
          continue;
 
       /* Already being killed, skip. */
-      if (window_isFlag( wdw, WINDOW_KILL ))
+      if (window_isFlag( wdw, WINDOW_KILL | WINDOW_FADEOUT ))
          continue;
 
       /* Mark children for death. */
@@ -954,9 +957,8 @@ void window_destroy( unsigned int wid )
          if (w->parent == wid)
             window_destroy( w->id );
 
-      /* Mark for death. */
-      window_setFlag( wdw, WINDOW_KILL );
-      window_dead = 1;
+      window_setFlag( wdw, WINDOW_FADEOUT );
+      wdw->timer_max = wdw->timer = WINDOW_FADEOUT_TIME;
 
       /* Run the close function first. */
       if (wdw->close_fptr != NULL)
@@ -1057,7 +1059,6 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
    toolkit_defocusWidget( wdw, wgt );
 
    /* There's dead stuff now. */
-   window_dead = 1;
    wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    wgt_setFlag( wgt, WGT_FLAG_KILL );
 }
@@ -1465,10 +1466,6 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
  */
 void toolkit_render( double dt )
 {
-   /* Only render if open. */
-   if (!toolkit_isOpen())
-      return;
-
    /* Render base. */
    for (Window *w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&
@@ -1483,14 +1480,14 @@ void toolkit_render( double dt )
                glClearColor( 0., 0., 0., 0. );
                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+               alpha = w->timer / w->timer_max;
                if (window_isFlag(w, WINDOW_FADEIN))
-                  alpha = 1. - w->timer / WINDOW_FADEIN_TIME;
-               else
-                  alpha = w->timer / WINDOW_FADEOUT_TIME;
+                  alpha = 1. - alpha;
             }
             else {
                if (window_isFlag(w, WINDOW_FADEOUT)) {
-                  window_destroy(w->id);
+                  /* Mark for death. */
+                  window_setFlag( w, WINDOW_KILL );
                   continue; /* No need to draw this iteration. */
                }
                window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
@@ -1577,7 +1574,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 
    /* Hack in case window got destroyed in eventevent. */
    ret = 0;
-   if (!window_isFlag(wdw, WINDOW_KILL)) {
+   if (!window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT)) {
       /* Pass it on. */
       switch (event->type) {
          case SDL_MOUSEMOTION:
@@ -2023,12 +2020,7 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
  */
 static void toolkit_purgeDead (void)
 {
-   Window *wdw, *wlast, *wkill;
-   Widget *wgt, *wgtlast, *wgtkill;
-
-   /* Only clean up if necessary. */
-   if (!window_dead)
-      return;
+   Window *wdw, *wlast;
 
    /* Must be windows. */
    if (windows == NULL)
@@ -2040,7 +2032,7 @@ static void toolkit_purgeDead (void)
    while (wdw != NULL) {
       if (window_isFlag( wdw, WINDOW_KILL )) {
          /* Save target. */
-         wkill = wdw;
+         Window *wkill = wdw;
          /* Reattach linked list. */
          if (wlast == NULL)
             windows = wdw->next;
@@ -2052,12 +2044,12 @@ static void toolkit_purgeDead (void)
          window_kill( wkill );
       }
       else {
-         wgtlast = NULL;
-         wgt     = wdw->widgets;
+         Widget *wgtlast = NULL;
+         Widget *wgt     = wdw->widgets;
          while (wgt != NULL) {
             if (wgt_isFlag( wgt, WGT_FLAG_KILL )) {
                /* Save target. */
-               wgtkill = wgt;
+               Widget *wgtkill = wgt;
                /* Reattach linked list. */
                if (wgtlast == NULL)
                   wdw->widgets  = wgt->next;
@@ -2083,9 +2075,6 @@ static void toolkit_purgeDead (void)
       else
          wdw = wdw->next;
    }
-
-   /* Nothing left to purge. */
-   window_dead = 0;
 }
 
 /**
@@ -2102,12 +2091,11 @@ void toolkit_update (void)
    }
 
    /* Killed all the windows. */
-   if (windows == NULL) {
+   if (!toolkit_isOpen()) {
       input_mouseHide();
       toolkit_open = 0; /* disable toolkit */
       if (paused && !player_paused)
          unpause_game();
-      return; /*  No need to handle anything else. */
    }
 }
 
@@ -2295,13 +2283,11 @@ static int toolkit_isFocusable( Widget *wgt )
  */
 Window* toolkit_getActiveWindow (void)
 {
-   Window *wlast;
-
    /* Get window that can be focused. */
-   wlast = NULL;
+   Window *wlast = NULL;
    for (Window *wdw = windows; wdw!=NULL; wdw = wdw->next)
       if (!window_isFlag(wdw, WINDOW_NOFOCUS) &&
-            !window_isFlag(wdw, WINDOW_KILL))
+            !window_isFlag(wdw, WINDOW_KILL | WINDOW_FADEOUT))
          wlast = wdw;
    return wlast;
 }
@@ -2364,10 +2350,8 @@ void window_setFocus( unsigned int wid, const char* wgtname )
  */
 char* window_getFocus( unsigned int wid )
 {
-   Window *wdw;
-
    /* Get window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL)
       return NULL;
 
