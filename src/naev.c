@@ -816,8 +816,6 @@ static double fps_elapsed (void)
  */
 static void fps_control (void)
 {
-   double delay;
-   double fps_max;
 #if HAS_POSIX
    struct timespec ts;
 #endif /* HAS_POSIX */
@@ -828,9 +826,9 @@ static void fps_control (void)
 
    /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
-      fps_max = 1./(double)conf.fps_max;
+      const double fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
-         delay    = fps_max - real_dt;
+         double delay = fps_max - real_dt;
 #if HAS_POSIX
          ts.tv_sec  = floor( delay );
          ts.tv_nsec = fmod( delay, 1. ) * 1e9;

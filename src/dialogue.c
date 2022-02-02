@@ -27,6 +27,7 @@
 
 #include "input.h"
 #include "log.h"
+#include "conf.h"
 #include "menu.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -983,7 +984,7 @@ int dialogue_customResize( int width, int height )
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    unsigned int time_ms = SDL_GetTicks();
-   const double fps_max = 1./30.;
+   const double fps_max = 1./(double)conf.fps_max;
    int quit_game = 0;
 
    /* Delay a toolkit iteration. */
