@@ -4049,7 +4049,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Player is currently on this ship */
    if (is_player != 0) {
-      unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
+      pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
    }
    else

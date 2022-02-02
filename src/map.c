@@ -48,7 +48,9 @@
 static const int RCOL_X = -10;         /**< Position of text in the right column. */
 static const int RCOL_TEXT_W = 135;    /**< Width of normal text in the right column. */
 static const int RCOL_HEADER_W = 140;  /**< Width of the header text in the right column. */
-static const int RCOL_W = RCOL_HEADER_W - RCOL_X*2; /**< Real width of the right column. */
+//static const int RCOL_W = RCOL_HEADER_W - RCOL_X*2; /**< Real width of the right column. */
+/* Below is a hack because older GCC claims the above line is not constant... */
+static const int RCOL_W = 140 - (-10*2);
 
 /**
  * @brief Faction presence container to be used for the map information stuff.
