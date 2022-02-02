@@ -2653,7 +2653,6 @@ dat/scripts/luatk.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
-dat/scripts/merge_tables.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
