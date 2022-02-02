@@ -1499,8 +1499,6 @@ void toolkit_render( double dt )
          window_render(w);
          window_renderOverlay(w);
          if (use_fb) {
-            const gl_Matrix4 tex_mat = gl_Matrix4_Identity();
-            gl_Matrix4 projection = gl_view_matrix;
             glColour col = { 1., 1., 1., alpha };
 
             glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
