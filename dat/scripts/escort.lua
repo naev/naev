@@ -223,7 +223,7 @@ function escort.spawn( pos )
    end
 
    -- Some post-processing for the convoy
-   local minspeed = math.huge
+   local minspeed = player.pilot():stats().speed_max * 0.9
    for k,p in ipairs(_escort_convoy) do
       p:setInvincPlayer(true)
       p:setFriendly(true)
