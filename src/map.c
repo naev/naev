@@ -363,25 +363,26 @@ void map_open (void)
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   y = 15;
+   window_addButton( wid, -20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", _("Close"), map_window_close );
    /* Commodity button */
-   window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommod", _("Mode"), map_buttonCommodity );
+   window_addButton( wid, -20 - (BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommod", _("Mode"), map_buttonCommodity );
    /* Find button */
-   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnFind", _("Find"), map_inputFind );
    /* Autonav button */
-   window_addButtonKey( wid, -20 - 3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20 - 3*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", _("Autonav"), player_autonavStartWindow, SDLK_a );
    /* MInimal button */
-   window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
-   window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20 - 5*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnSystem", _("System Info"), map_buttonSystemMap, SDLK_s );
    /* Mark this system button */
-   window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20 - 6*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnMarkSystem", _("Toggle Note"), map_buttonMarkSystem, SDLK_n );
 
    /*
