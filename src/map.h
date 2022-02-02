@@ -8,11 +8,13 @@
 
 #define MAP_WDWNAME     "wdwStarMap" /**< Map window name. */
 
+/**
+ * @brief Images to be shown on the map.
+ */
 typedef struct MapDecorator_ {
-   glTexture* image;
-   double x,y;
-   int detection_radius;
-   int auto_fade;
+   glTexture* image;    /**< Map decorator image. */
+   double x,y;          /**< Position on the map. */
+   int detection_radius;/**< Distance at which it is detected. */
 } MapDecorator;
 
 /**

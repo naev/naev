@@ -3095,7 +3095,6 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(MapDecorator) );
 
    temp->detection_radius = 10;
-   temp->auto_fade = 0;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -3103,15 +3102,13 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node, "x", temp->x);
       xmlr_float(node, "y", temp->y);
-      xmlr_int(node, "auto_fade", temp->auto_fade);
       xmlr_int(node, "detection_radius", temp->detection_radius);
       if (xml_isNode(node,"image")) {
          temp->image = xml_parseTexture( node,
                MAP_DECORATOR_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
 
-         if (temp->image == NULL) {
+         if (temp->image == NULL)
             WARN(_("Could not load map decorator texture '%s'."), xml_get(node));
-         }
 
          continue;
       }
