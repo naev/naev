@@ -84,6 +84,7 @@ static void window_renderBorder( Window* w );
 /* Death. */
 static void widget_kill( Widget *wgt );
 static void window_kill( Window *wdw );
+static void window_remove( Window *wdw );
 static void toolkit_purgeDead (void);
 
 /**
@@ -195,10 +196,8 @@ void window_move( unsigned int wid, int x, int y )
  */
 void window_resize( unsigned int wid, int w, int h )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL)
       return;
 
@@ -976,11 +975,23 @@ void window_destroy( unsigned int wid )
 }
 
 /**
- * @brief Kills the window.
+ * @brief Kills the window (and children).
  *
- *    @param wdw Window to destroy.
+ *    @param wdw Window to kill.
  */
 static void window_kill( Window *wdw )
+{
+   for (Window *w = windows; w != NULL; w = w->next)
+      window_setFlag( w, WINDOW_KILL );
+   window_setFlag( wdw, WINDOW_KILL );
+}
+
+/**
+ * @brief Frees up a window.
+ *
+ *    @param wdw Window to remove.
+ */
+static void window_remove( Window *wdw )
 {
    Widget *wgt;
 
@@ -1485,7 +1496,7 @@ void toolkit_render( double dt )
             else {
                if (window_isFlag(w, WINDOW_FADEOUT)) {
                   /* Mark for death. */
-                  window_setFlag( w, WINDOW_KILL );
+                  window_kill( w );
                   continue; /* No need to draw this iteration. */
                }
                window_rmFlag(w, WINDOW_FADEIN | WINDOW_FADEOUT);
@@ -2039,7 +2050,7 @@ static void toolkit_purgeDead (void)
          wdw = wlast;
          /* Kill target. */
          wkill->next = NULL;
-         window_kill( wkill );
+         window_remove( wkill );
       }
       else {
          Widget *wgtlast = NULL;
@@ -2090,6 +2101,7 @@ void toolkit_update (void)
 
    /* Killed all the windows. */
    if (!toolkit_isOpen()) {
+
       input_mouseHide();
       if (paused && !player_paused)
          unpause_game();
@@ -2518,7 +2530,7 @@ void toolkit_exit (void)
    while (windows!=NULL) {
       wdw      = windows;
       windows  = windows->next;
-      window_kill(wdw);
+      window_remove(wdw);
    }
 
    /* Free the VBO. */
