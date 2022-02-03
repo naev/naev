@@ -2690,7 +2690,7 @@ static int pilotL_outfitAdd( lua_State *L )
 
       /* Add ammo if needed. */
       if ((ret==0) && (outfit_ammo(o) != NULL))
-         pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), outfit_amount(o) );
+         pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), pilot_maxAmmoO(p,o) );
 
       /* We added an outfit. */
       q--;

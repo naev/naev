@@ -1991,7 +1991,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
-         pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
+         pilot_rmAmmo( ship, ship->outfits[i], pilot_maxAmmoO(ship, o) );
       }
 
       /* Remove rest. */
