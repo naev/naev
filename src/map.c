@@ -1633,25 +1633,23 @@ static void map_renderSysBlack( double bx, double by, double x, double y, double
 void map_renderCommod( double bx, double by, double x, double y,
       double zoom, double w, double h, double r, int editor )
 {
-   int i,j,k;
-   StarSystem *sys;
-   double tx, ty;
-   Spob *p;
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
+
    /* If not plotting commodities, return */
    if (cur_commod == -1 || map_selected == -1 || commod_known == NULL)
       return;
 
    c = commod_known[cur_commod];
    if (cur_commod_mode == 1) {/*showing price difference to selected system*/
-     /* Get commodity price in selected system.  If selected system is current
-        system, and if landed, then get price of commodity where we are */
+      StarSystem *sys = system_getIndex( map_selected );
+      /* Get commodity price in selected system.  If selected system is current
+         system, and if landed, then get price of commodity where we are */
       curMaxPrice = 0.;
       curMinPrice = 0.;
-      sys = system_getIndex( map_selected );
       if (sys == cur_system && landed) {
+         int k;
          for (k=0; k<array_size(land_spob->commodities); k++) {
             if (land_spob->commodities[k] == c) {
                /* current spob has the commodity of interest */
@@ -1669,38 +1667,40 @@ void map_renderCommod( double bx, double by, double x, double y,
       else {
          /* not currently landed, so get max and min price in the selected system. */
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
-            minPrice = 0;
+            minPrice = HUGE_VAL;
             maxPrice = 0;
-            for (j=0 ; j<array_size(sys->spobs); j++) {
-               p=sys->spobs[j];
-               for (k=0; k<array_size(p->commodities); k++) {
-                  if ( p->commodities[k] == c ) {
-                     if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
-                        thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        if (thisPrice > maxPrice)maxPrice=thisPrice;
-                        if (minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
-                        break;
-                     }
-                  }
+            for (int j=0; j<array_size(sys->spobs); j++) {
+               Spob *p = sys->spobs[j];
+               for (int k=0; k<array_size(p->commodities); k++) {
+                  if (p->commodities[k] != c)
+                     continue;
+                  if (p->commodityPrice[k].cnt <= 0) /* commodity is not known about */
+                     continue;
+                  thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+                  maxPrice = MAX( thisPrice, maxPrice );
+                  minPrice = MIN( thisPrice, minPrice );
+                  break;
                }
 
             }
             if (maxPrice == 0) { /* no prices are known here */
                map_renderCommodIgnorance( x, y, zoom, sys, c );
-               map_renderSysBlack(bx,by,x,y,zoom,w,h,r,editor);
+               map_renderSysBlack( bx, by, x, y, zoom, w, h, r, editor );
                return;
             }
-            curMaxPrice=maxPrice;
-            curMinPrice=minPrice;
+            curMaxPrice = maxPrice;
+            curMinPrice = minPrice;
          }
          else {
             map_renderCommodIgnorance( x, y, zoom, sys, c );
-            map_renderSysBlack(bx,by,x,y,zoom,w,h,r,editor);
+            map_renderSysBlack( bx, by, x, y, zoom, w, h, r, editor );
             return;
          }
       }
-      for (i=0; i<array_size(systems_stack); i++) {
+      for (int i=0; i<array_size(systems_stack); i++) {
+         double tx, ty;
          sys = system_getIndex( i );
+
          if (sys_isFlag(sys,SYSTEM_HIDDEN))
             continue;
 
@@ -1718,43 +1718,43 @@ void map_renderCommod( double bx, double by, double x, double y,
 
          /* If system is known fill it. */
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
-            minPrice = 0;
+            minPrice = HUGE_VAL;
             maxPrice = 0;
-            for ( j=0 ; j<array_size(sys->spobs); j++) {
-               p=sys->spobs[j];
-               for ( k=0; k<array_size(p->commodities); k++) {
-                  if ( p->commodities[k] == c ) {
-                     if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
-                        thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        if (thisPrice > maxPrice)maxPrice=thisPrice;
-                        if (minPrice == 0 || thisPrice < minPrice)minPrice = thisPrice;
-                        break;
-                     }
-                  }
+            for (int j=0; j<array_size(sys->spobs); j++) {
+               Spob *p = sys->spobs[j];
+               for (int k=0; k<array_size(p->commodities); k++) {
+                  if (p->commodities[k] != c)
+                     continue;
+                  if (p->commodityPrice[k].cnt <= 0) /*commodity is not known about */
+                     continue;
+                  thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+                  maxPrice = MAX( thisPrice, maxPrice );
+                  minPrice = MIN( thisPrice, minPrice );
+                  break;
                }
             }
 
             /* Calculate best and worst profits */
-            if ( maxPrice > 0 ) {
+            if (maxPrice > 0) {
                /* Commodity sold at this system */
-               best = maxPrice - curMinPrice ;
-               worst= minPrice - curMaxPrice ;
-               if ( best >= 0 ) {/* draw circle above */
+               best = maxPrice - curMinPrice;
+               worst= minPrice - curMaxPrice;
+               if (best >= 0) { /* draw circle above */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
                   col_blend( &ccol, &cFontBlue, &cFontYellow, best );
                   gl_renderCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
-               } else {/* draw circle below */
+               }
+               else {/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cOrange, "%.1f",worst);
                   worst = tanh ( -2*worst/ curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   gl_renderCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
-            } else {
+            }
+            else {
                /* Commodity not sold here */
-               ccol = cGrey10;
-               gl_renderCircle( tx, ty , r, &ccol, 1 );
-
+               gl_renderCircle( tx, ty , r, &cGrey10, 1 );
             }
          }
       }
@@ -1763,8 +1763,10 @@ void map_renderCommod( double bx, double by, double x, double y,
       /* First calculate av price in all systems
        * This has already been done in map_update_commod_av_price
        * Now display the costs */
-      for (i=0; i<array_size(systems_stack); i++) {
-         sys = system_getIndex( i );
+      for (int i=0; i<array_size(systems_stack); i++) {
+         double tx, ty;
+         StarSystem *sys = system_getIndex( i );
+
          if (sys_isFlag(sys,SYSTEM_HIDDEN))
             continue;
 
@@ -1782,19 +1784,19 @@ void map_renderCommod( double bx, double by, double x, double y,
 
          /* If system is known fill it. */
          if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
-            double sumPrice=0;
-            int sumCnt=0;
-            for (j=0 ; j<array_size(sys->spobs); j++) {
-               p=sys->spobs[j];
-               for (k=0; k<array_size(p->commodities); k++) {
-                  if (p->commodities[k] == c) {
-                     if (p->commodityPrice[k].cnt > 0) { /* commodity is known about */
-                        thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        sumPrice+=thisPrice;
-                        sumCnt+=1;
-                        break;
-                     }
-                  }
+            double sumPrice = 0;
+            int sumCnt = 0;
+            for (int j=0; j<array_size(sys->spobs); j++) {
+               Spob *p = sys->spobs[j];
+               for (int k=0; k<array_size(p->commodities); k++) {
+                  if (p->commodities[k] != c)
+                     continue;
+                  if (p->commodityPrice[k].cnt <= 0) /* commodity is not known about */
+                     continue;
+                  thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
+                  sumPrice += thisPrice;
+                  sumCnt += 1;
+                  break;
                }
             }
 
@@ -1802,7 +1804,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                /* Commodity sold at this system */
                /* Colour as a % of global average */
                double frac;
-               sumPrice/=sumCnt;
+               sumPrice /= sumCnt;
                if (sumPrice < commod_av_gal_price) {
                   frac = tanh(5*(commod_av_gal_price / sumPrice - 1));
                   col_blend( &ccol, &cFontOrange, &cFontYellow, frac );
