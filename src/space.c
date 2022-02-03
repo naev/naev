@@ -1427,6 +1427,7 @@ void space_update( double dt, double real_dt )
       for (int j=0; j<ast->nb; j++) {
          double offx, offy, d;
          Asteroid *a = &ast->asteroids[j];
+         int setvel = 0;
 
          /* Skip inexistent asteroids. */
          if (a->state == ASTEROID_XX) {
@@ -1442,10 +1443,29 @@ void space_update( double dt, double real_dt )
          offx = ast->pos.x - a->pos.x;
          offy = ast->pos.y - a->pos.y;
          d = pow2(offx)+pow2(offy);
-         if (d > pow2(ast->radius)) {
+         if (d >= pow2(ast->radius)) {
             d = sqrt(d);
             a->vel.x += ast->thrust * dt * offx / d;
             a->vel.y += ast->thrust * dt * offy / d;
+            setvel = 1;
+         }
+         else {
+            /* Push away from exclusion areas. */
+            for (int k=0; k<array_size(cur_system->astexclude); k++) {
+               AsteroidExclusion *exc = &cur_system->astexclude[k];
+               double ex = a->pos.x - exc->pos.x;
+               double ey = a->pos.y - exc->pos.y;
+               double ed = pow2(ex) + pow2(ey);
+               if (ed <= pow2(exc->radius)) {
+                  ed = sqrt(ed);
+                  a->vel.x += ast->thrust * dt * ex / ed;
+                  a->vel.y += ast->thrust * dt * ey / ed;
+                  setvel = 1;
+               }
+            }
+         }
+
+         if (setvel) {
             /* Enforce max speed. */
             d = MOD(a->vel.x, a->vel.y);
             if (d > ast->maxspeed) {
@@ -1454,6 +1474,7 @@ void space_update( double dt, double real_dt )
             }
          }
 
+         /* Update position. */
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
@@ -3414,14 +3435,13 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
  */
 static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
 {
-   xmlNodePtr cur, node;
-
-   node  = parent->xmlChildrenNode;
-
+   xmlNodePtr node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       if (xml_isNode(node,"asteroids")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"asteroid"))
                system_parseAsteroidField( cur, sys );
             else if (xml_isNode(cur,"exclusion"))
