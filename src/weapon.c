@@ -946,9 +946,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
    Vector2d crash[2];
-   Pilot *p;
-   AsteroidAnchor *ast;
-   Asteroid *a;
    const AsteroidType *at;
    Pilot *const* pilot_stack;
    int isjammed;
@@ -977,7 +974,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else {
-      p = pilot_get( w->parent );
+      Pilot *p = pilot_get( w->parent );
       if (p != NULL) {
          /* Beams need to update their properties online. */
          if (w->outfit->type == OUTFIT_TYPE_BEAM) {
@@ -993,7 +990,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
 
    for (int i=0; i<array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+      Pilot *p = pilot_stack[i];
 
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
@@ -1071,9 +1068,15 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    /* Collide with asteroids*/
    if (outfit_isLauncher(w->outfit)) {
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
-         ast = &cur_system->asteroids[i];
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+         /* Early in-range check. */
+         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+            pow2( ast->radius + ast->margin + gfx->sw/2. ))
+            continue;
+
          for (int j=0; j<ast->nb; j++) {
-            a = &ast->asteroids[j];
+            Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
             at = space_getType ( a->type );
@@ -1088,9 +1091,15 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
    else if (outfit_isBolt(w->outfit)) {
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
-         ast = &cur_system->asteroids[i];
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+         /* Early in-range check. */
+         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+            pow2( ast->radius + ast->margin + gfx->sw/2. ))
+            continue;
+
          for (int j=0; j<ast->nb; j++) {
-            a = &ast->asteroids[j];
+            Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
             at = space_getType ( a->type );
@@ -1105,9 +1114,15 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
    else if (b) { /* Beam */
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
-         ast = &cur_system->asteroids[i];
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+         /* Early in-range check. */
+         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+            pow2( ast->radius + ast->margin + w->outfit->u.bem.range ))
+            continue;
+
          for (int j=0; j<ast->nb; j++) {
-            a = &ast->asteroids[j];
+            Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
             at = space_getType ( a->type );
