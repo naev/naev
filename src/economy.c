@@ -129,8 +129,8 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    }
 
    /* and get the index on this spob */
-   for ( i=0; i<array_size(p->commodities); i++) {
-      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
+   for (i=0; i<array_size(p->commodities); i++) {
+      if ((strcmp(p->commodities[i]->name, com->name)==0))
          break;
    }
    if (i >= array_size(p->commodities)) {
@@ -142,9 +142,9 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    /* price  = (double) com->price; */
    /* price *= sys->prices[i]; */
    price = (commPrice->price + commPrice->sysVariation
-         * sin(2 * M_PI * t / commPrice->sysPeriod)
+         * sin(2. * M_PI * t / commPrice->sysPeriod)
          + commPrice->spobVariation
-         * sin(2 * M_PI * t / commPrice->spobPeriod));
+         * sin(2. * M_PI * t / commPrice->spobPeriod));
    return (credits_t) (price+0.5);/* +0.5 to round */
 }
 
@@ -165,15 +165,15 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t 
    k = com - commodity_stack;
 
    /* Find what commodity this is */
-   for ( i=0; i<array_size(econ_comm); i++ )
+   for (i=0; i<array_size(econ_comm); i++)
       if (econ_comm[i] == k)
          break;
 
    /* Check if found */
-   if ( i>= array_size(econ_comm)) {
+   if (i>= array_size(econ_comm)) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
-      *mean=0;
-      *std=0;
+      *mean = 0;
+      *std = 0;
       return -1;
    }
 
