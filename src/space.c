@@ -126,6 +126,7 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
 static void debris_init( Debris *deb );
 static int systems_load (void);
 static int asteroidTypes_load (void);
+static int asteroidTypes_parse( AsteroidType *at, const char *file );
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
@@ -3491,81 +3492,102 @@ int space_load (void)
  */
 static int asteroidTypes_load (void)
 {
-   int namdef, qttdef;
-   AsteroidType *at;
+   char **asteroid_files = ndata_listRecursive( ASTEROID_DATA_PATH );
+   asteroid_types = array_create( AsteroidType );
+   for (int i=0; i < array_size( asteroid_files ); i++) {
+      if (ndata_matchExt( asteroid_files[i], "xml" )) {
+         int ret = asteroidTypes_parse( &array_grow(&asteroid_types), asteroid_files[i] );
+         if (ret < 0) {
+            int n = array_size(asteroid_types);
+            array_erase( &asteroid_types, &asteroid_types[n-1], &asteroid_types[n] );
+         }
+      }
+      free( asteroid_files[i] );
+   }
+   array_free( asteroid_files );
+
+   /* Shrink to minimum. */
+   array_shrink( &asteroid_types );
+
+   return 0;
+}
+
+/**
+ * @brief Parses the XML of an asteroid type.
+ *
+ *    @param[out] at Outfit asteroid type.
+ *    @param file File containing the XML information.
+ */
+static int asteroidTypes_parse( AsteroidType *at, const char *file )
+{
    char *str;
-   xmlNodePtr node, cur, child;
+   xmlNodePtr parent, node, cur;
    xmlDocPtr doc;
 
    /* Load the data. */
-   doc = xml_parsePhysFS( ASTERO_DATA_PATH );
+   doc = xml_parsePhysFS( file );
    if (doc == NULL)
       return -1;
 
    /* Get the root node. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,"Asteroid_types")) {
-      WARN( _("Malformed '%s' file: missing root element 'Asteroid_types'"), ASTERO_DATA_PATH);
+   parent = doc->xmlChildrenNode;
+   if (!xml_isNode(parent,"asteroid")) {
+      WARN( _("Malformed '%s' file: missing root element 'asteroid'"), file);
       return -1;
    }
 
-   /* Get the first node. */
-   node = node->xmlChildrenNode; /* first event node */
-   if (node == NULL) {
-      WARN( _("Malformed '%s' file: does not contain elements"), ASTERO_DATA_PATH);
-      return -1;
-   }
+   /* Set up the element. */
+   memset( at, 0, sizeof(AsteroidType) );
+   at->gfxs       = array_create( glTexture* );
+   at->material   = array_create( Commodity* );
+   at->quantity   = array_create( int );
 
-   asteroid_types = array_create( AsteroidType );
+   xmlr_attr_strd(parent,"name",at->ID);
+   if (at->ID == NULL)
+      WARN(_("Asteroid '%s' has invalid or no name"), file);
+
+   node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"asteroid")) {
-         /* Load it. */
-         at = &array_grow( &asteroid_types );
-         at->gfxs = array_create( glTexture* );
-         at->material = array_create( Commodity* );
-         at->quantity = array_create( int );
-         at->armour = 0.;
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
 
-         cur = node->children;
+      xmlr_float( node, "armour", at->armour );
+
+      if (xml_isNode(node,"gfx")) {
+         array_push_back( &at->gfxs, xml_parseTexture( node, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
+         continue;
+      }
+      else if (xml_isNode(node,"commodity")) {
+         /* Check that name and quantity are defined. */
+         int namdef = 0;
+         int qttdef = 0;
+
+         cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"gfx"))
-               array_push_back( &at->gfxs, xml_parseTexture( cur, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
-
-            else if (xml_isNode(cur,"id"))
-               at->ID = xml_getStrd(cur);
-
-            else if (xml_isNode(cur,"armour"))
-               at->armour = xml_getFloat(cur);
-
-            else if (xml_isNode(cur,"commodity")) {
-               /* Check that name and quantity are defined. */
-               namdef = 0; qttdef = 0;
-
-               child = cur->children;
-               do {
-                  if (xml_isNode(child,"name")) {
-                     str = xml_get(child);
-                     array_push_back( &at->material, commodity_get( str ) );
-                     namdef = 1;
-                  }
-                  else if (xml_isNode(child,"quantity")) {
-                     array_push_back( &at->quantity, xml_getInt(child) );
-                     qttdef = 1;
-                  }
-               } while (xml_nextNode(child));
-
-               if (namdef == 0 || qttdef == 0)
-                  ERR(_("Asteroid type's commodity lacks name or quantity."));
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"name")) {
+               str = xml_get(cur);
+               array_push_back( &at->material, commodity_get( str ) );
+               namdef = 1;
+               continue;
             }
+            else if (xml_isNode(cur,"quantity")) {
+               array_push_back( &at->quantity, xml_getInt(cur) );
+               qttdef = 1;
+               continue;
+            }
+            WARN(_("Asteroid has unknown node '%s'"), cur->name);
          } while (xml_nextNode(cur));
 
-         if (array_size(at->gfxs)==0)
-            WARN(_("Asteroid type has no gfx associated."));
+         if (namdef == 0 || qttdef == 0)
+            WARN(_("Asteroid type's commodity lacks name or quantity."));
+         continue;
       }
+      WARN(_("Asteroid has unknown node '%s'"), node->name);
    } while (xml_nextNode(node));
 
-   /* Shrink to minimum. */
-   array_shrink( &asteroid_types );
+   if (array_size(at->gfxs)==0)
+      WARN(_("Asteroid type has no gfx associated."));
 
    /* Clean up. */
    xmlFreeDoc(doc);

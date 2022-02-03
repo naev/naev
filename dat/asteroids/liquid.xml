@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="liquid">
+ <gfx>asteroid-D00.webp</gfx>
+ <gfx>asteroid-D07.webp</gfx>
+ <gfx>asteroid-D08.webp</gfx>
+ <gfx>asteroid-D09.webp</gfx>
+ <gfx>asteroid-D10.webp</gfx>
+ <gfx>asteroid-D11.webp</gfx>
+ <gfx>asteroid-D12.webp</gfx>
+ <gfx>asteroid-D13.webp</gfx>
+ <armour>80</armour>
+ <commodity>
+  <name>Ore</name>
+  <quantity>4</quantity>
+ </commodity>
+ <commodity>
+  <name>Water</name>
+  <quantity>4</quantity>
+ </commodity>
+</asteroid>

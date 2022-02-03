@@ -1,5 +1,10 @@
 po/credits.pot
-dat/asteroids.xml
+dat/asteroids/default.xml
+dat/asteroids/diamond.xml
+dat/asteroids/golden.xml
+dat/asteroids/liquid.xml
+dat/asteroids/massive.xml
+dat/asteroids/nodrop.xml
 dat/commodities/diamond.xml
 dat/commodities/food.xml
 dat/commodities/gold.xml
