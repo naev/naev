@@ -71,9 +71,6 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
-#define ASTEROID_EXPLODE_INTERVAL 5. /**< Interval of asteroids randomly exploding */
-#define ASTEROID_EXPLODE_CHANCE   0.1 /**< Chance of asteroid exploding each interval */
-
 /*
  * spob <-> system name stack
  */
@@ -139,7 +136,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void system_scheduler( double dt, int init );
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
+static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_reward );
 /* Markers. */
 static int space_addMarkerSystem( int sysid, MissionMarkerType type );
 static int space_addMarkerSpob( int pntid, MissionMarkerType type );
@@ -637,8 +634,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
          double td;
          Asteroid *as = &f->asteroids[k];
 
-         /* Skip invisible asteroids */
-         if (as->appearing == ASTEROID_INVISIBLE)
+         /* Skip non-interactive asteroids. */
+         if (as->state != ASTEROID_FG)
             continue;
 
          /* Skip out of range asteroids */
@@ -712,8 +709,8 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
          double ta;
          Asteroid *as = &f->asteroids[k];
 
-         /* Skip invisible asteroids */
-         if (as->appearing == ASTEROID_INVISIBLE)
+         /* Skip non-interactive asteroids. */
+         if (as->state != ASTEROID_FG)
             continue;
 
          ta = atan2( y - as->pos.y, x - as->pos.x);
@@ -1428,49 +1425,39 @@ void space_update( double dt, double real_dt )
       for (int j=0; j<ast->nb; j++) {
          Asteroid *a = &ast->asteroids[j];
 
-         /* Skip invisible asteroids */
-         if (a->appearing == ASTEROID_INVISIBLE)
+         /* Skip inexistent asteroids. */
+         if (a->state == ASTEROID_XX)
             continue;
 
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
 
-         if (a->appearing == ASTEROID_VISIBLE) {
-            /* Random explosions */
-            a->timer += dt;
-            if (a->timer >= ASTEROID_EXPLODE_INTERVAL) {
-               a->timer = 0.;
-               if ((RNGF() < ASTEROID_EXPLODE_CHANCE) ||
-                     (space_isInField(&a->pos) < 0)) {
-                  asteroid_explode( a, ast, 0 );
-               }
+         a->timer -= dt;
+         if (a->timer < 0.) {
+            switch (a->state) {
+               /* Transition states. */
+               case ASTEROID_FG:
+               case ASTEROID_XB:
+               case ASTEROID_BX:
+               case ASTEROID_XX_TO_BG:
+               case ASTEROID_BG_TO_XX:
+                  a->timer_max = a->timer = 1. + 3.*RNGF();
+                  break;
+
+               /* Longer states. */
+               case ASTEROID_FG_TO_BG:
+                  a->timer_max = a->timer = 10. + 20.*RNGF();
+                  break;
+               case ASTEROID_BG_TO_FG:
+                  a->timer_max = a->timer = 30. + 60.*RNGF();
+                  break;
+
+               case ASTEROID_XX:
+                  /* Do nothing. */
+                  break;
             }
-         }
-         else if (a->appearing == ASTEROID_GROWING) {
-            /* Grow */
-            a->timer += dt;
-            if (a->timer >= 2.) {
-               a->timer = 0.;
-               a->appearing = ASTEROID_VISIBLE;
-            }
-         }
-         else if (a->appearing == ASTEROID_SHRINKING) {
-            /* Shrink */
-            a->timer += dt;
-            if (a->timer >= 2.) {
-               /* Remove the asteroid target to any pilot. */
-               pilot_untargetAsteroid( a->parent, a->id );
-               /* reinit any disappeared asteroid */
-               asteroid_init( a, ast );
-            }
-         }
-         else if (a->appearing == ASTEROID_EXPLODING) {
-            /* Exploding asteroid */
-            a->timer += dt;
-            if (a->timer >= 0.5) {
-               /* Make it explode */
-               asteroid_explode( a, ast, 1 );
-            }
+            /* States should be in proper order. */
+            a->state = (a->state+1) % ASTEROID_STATE_MAX;
          }
       }
 
@@ -1603,9 +1590,15 @@ void space_init( const char* sysname, int do_simulate )
       /* Add the asteroids to the anchor */
       ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
       for (int j=0; j<ast->nb; j++) {
+         double r = RNGF();
          Asteroid *a = &ast->asteroids[j];
          a->id = j;
-         a->appearing = ASTEROID_INIT;
+         if (r > 0.7)
+            a->state = ASTEROID_FG;
+         else if (r > 0.9)
+            a->state = ASTEROID_XB;
+         else
+            a->state = ASTEROID_BX;
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
@@ -1697,7 +1690,7 @@ void space_init( const char* sysname, int do_simulate )
  */
 void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int i;
+   int id;
    double mod, theta;
    AsteroidType *at;
    int attempts = 0;
@@ -1706,8 +1699,8 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->scanned = 0;
 
    /* randomly init the type of asteroid */
-   i = RNG(0,field->ntype-1);
-   ast->type = field->type[i];
+   id = RNG(0,field->ntype-1);
+   ast->type = field->type[id];
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0, array_size(at->gfxs)-1);
@@ -1721,14 +1714,14 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
-      if ((ast->appearing == ASTEROID_INIT) &&
+      if ((ast->state == ASTEROID_XX_TO_BG) &&
             (space_isInField(&ast->pos) < 0)) {
-         ast->appearing = ASTEROID_INVISIBLE;
+         ast->state = ASTEROID_XX;
          return;
       }
 
       attempts++;
-   } while ( (space_isInField(&ast->pos) < 0) && (attempts < 1000) );
+   } while ((space_isInField(&ast->pos) < 0) && (attempts < 1000));
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -1736,8 +1729,8 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    vect_pset( &ast->vel, mod, theta );
 
    /* Grow effect stuff */
-   ast->appearing = ASTEROID_GROWING;
-   ast->timer = 0.;
+   ast->state = ASTEROID_XX_TO_BG;
+   ast->timer_max = ast->timer = 1.+RNGF()*3.;
 }
 
 /**
@@ -3832,29 +3825,50 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt )
  */
 static void space_renderAsteroid( const Asteroid *a )
 {
-   double scale, nx, ny;
+   double nx, ny;
    AsteroidType *at;
    char c[20];
+   glColour col;
+   double progress;
 
    /* Skip invisible asteroids */
-   if (a->appearing == ASTEROID_INVISIBLE)
+   if (a->state == ASTEROID_XX)
       return;
 
-   /* Check if needs scaling. */
-   if (a->appearing == ASTEROID_GROWING)
-      scale = CLAMP( 0., 1., a->timer / 2. );
-   else if (a->appearing == ASTEROID_SHRINKING)
-      scale = CLAMP( 0., 1., 1. - a->timer / 2. );
-   else
-      scale = 1.;
+   progress = a->timer / a->timer_max;
+   switch (a->state) {
+      case ASTEROID_XX_TO_BG:
+         col   = cBlack;
+         col.a = 1.-progress;
+         break;
+      case ASTEROID_XB:
+      case ASTEROID_BX:
+         col   = cBlack;
+         break;
+      case ASTEROID_BG_TO_FG:
+         col_blend( &col, &cBlack, &cWhite, progress );
+         break;
+      case ASTEROID_FG:
+         col   = cWhite;
+         break;
+      case ASTEROID_FG_TO_BG:
+         col_blend( &col, &cWhite, &cBlack, progress );
+         break;
+      case ASTEROID_BG_TO_XX:
+         col   = cBlack;
+         col.a = progress;
+         break;
+
+      default:
+         break;
+   }
 
    at = &asteroid_types[a->type];
-
-   gl_renderSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
-                                  a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
+   gl_renderSprite( at->gfxs[a->gfxID], a->pos.x, a->pos.y, 0, 0, &col );
 
    /* Add the commodities if scanned. */
-   if (!a->scanned) return;
+   if (!a->scanned || (a->state != ASTEROID_FG))
+      return;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
    for (int i=0; i<array_size(at->material); i++) {
       Commodity *com = at->material[i];
@@ -4679,8 +4693,10 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
 
    a->armour -= darmour;
    if (a->armour <= 0) {
-      a->appearing = ASTEROID_EXPLODING;
-      a->timer = 0.;
+      a->state = ASTEROID_BG_TO_XX;
+      a->timer_max = a->timer = 0.5;
+
+      asteroid_explode( a, &cur_system->asteroids[a->parent], 1 );
    }
 }
 
@@ -4691,7 +4707,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
  *    @param field Asteroid field the asteroid belongs to.
  *    @param give_reward Whether a pilot blew the asteroid up and should be rewarded.
  */
-static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward )
+static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_reward )
 {
    Damage dmg;
    char buf[16];

@@ -683,14 +683,15 @@ static int systemL_asteroid( lua_State *L )
       int field = RNG(0,array_size(cur_system->asteroids)-1);
       int ast   = RNG(0,cur_system->asteroids[field].nb-1);
       int bad_asteroid = 0;
-      if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
-            (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INIT)) {
+      Asteroid *a = &cur_system->asteroids[field].asteroids[ast];
+
+      if (a->state != ASTEROID_FG) {
          /* Switch to next index until we find a valid one, or until we come full-circle. */
          bad_asteroid = 1;
          for (int i=0; i<cur_system->asteroids[field].nb; i++) {
-            ast = (ast + 1) % cur_system->asteroids[field].nb;
-            if ( (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INVISIBLE) &&
-                  (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INIT)) {
+            ast = (ast+1) % cur_system->asteroids[field].nb;
+            a = &cur_system->asteroids[field].asteroids[ast];
+            if (a->state == ASTEROID_FG) {
                bad_asteroid = 0;
                break;
             }
@@ -757,18 +758,18 @@ static int systemL_asteroidDestroyed( lua_State *L )
    int field = luaL_checkint(L,1);
    int ast   = luaL_checkint(L,2);
 
-   if ( field >= array_size(cur_system->asteroids) ) {
+   if (field >= array_size(cur_system->asteroids)) {
       WARN(_("field index %d too high"), field);
       return 0;
    }
 
-   if ( ast >= cur_system->asteroids[field].nb ) {
+   if (ast >= cur_system->asteroids[field].nb) {
       WARN(_("asteroid index too high"));
       return 0;
    }
 
    /* If the asteroid is re-appearing, it was destroyed recently. */
-   isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_GROWING);
+   isdestroyed = (cur_system->asteroids[field].asteroids[ast].state < ASTEROID_FG);
    lua_pushboolean(L, isdestroyed);
    return 1;
 }

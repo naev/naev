@@ -1074,11 +1074,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          ast = &cur_system->asteroids[i];
          for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
+            if (a->state != ASTEROID_FG)
+               continue;
             at = space_getType ( a->type );
-            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
-                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                        at->gfxs[a->gfxID], 0, 0, &a->pos,
-                        &crash[0] ) ) {
+            if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] )) {
                weapon_hitAst( w, a, layer, &crash[0] );
                return; /* Weapon is destroyed. */
             }
@@ -1090,11 +1091,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          ast = &cur_system->asteroids[i];
          for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
+            if (a->state != ASTEROID_FG)
+               continue;
             at = space_getType ( a->type );
-            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
-                  CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                        at->gfxs[a->gfxID], 0, 0, &a->pos,
-                        &crash[0] ) ) {
+            if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     &crash[0] ) ) {
                weapon_hitAst( w, a, layer, &crash[0] );
                return; /* Weapon is destroyed. */
             }
@@ -1106,12 +1108,13 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          ast = &cur_system->asteroids[i];
          for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
+            if (a->state != ASTEROID_FG)
+               continue;
             at = space_getType ( a->type );
-            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
-                  CollideLineSprite( &w->solid->pos, w->solid->dir,
-                        w->outfit->u.bem.range,
-                        at->gfxs[a->gfxID], 0, 0, &a->pos,
-                        crash ) ) {
+            if (CollideLineSprite( &w->solid->pos, w->solid->dir,
+                     w->outfit->u.bem.range,
+                     at->gfxs[a->gfxID], 0, 0, &a->pos,
+                     crash ) ) {
                weapon_hitAstBeam( w, a, layer, crash, dt );
                /* No return because beam can still think, it's not
                 * destroyed like the other weapons.*/
@@ -1290,9 +1293,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w);
-
-   if (a->appearing != ASTEROID_EXPLODING)
-      asteroid_hit( a, &dmg );
+   asteroid_hit( a, &dmg );
 }
 
 /**

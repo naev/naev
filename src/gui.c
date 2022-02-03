@@ -1177,7 +1177,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    const glColour *col;
 
    /* Skip invisible asteroids */
-   if (a->appearing == ASTEROID_INVISIBLE)
+   if (a->state != ASTEROID_FG)
       return;
 
    /* Recover the asteroid and field IDs. */

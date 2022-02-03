@@ -22,14 +22,17 @@ typedef struct JumpPoint_ JumpPoint;
 #define MAX_HYPERSPACE_VEL    25. /**< Speed to brake to before jumping. */
 #define ASTEROID_REF_AREA     500e3/**< The "density" value in an asteroid field means 1 rock per this area. */
 
-/* Asteroid status enum */
+/* Asteroid status enum. Order is based on how asteroids are generated. */
 enum {
-   ASTEROID_VISIBLE,    /**< Asteroid is visible (normal state). */
-   ASTEROID_GROWING,    /**< Asteroid is in the process of appearing. */
-   ASTEROID_SHRINKING,  /**< Asteroid is in the process of disappearing. */
-   ASTEROID_EXPLODING,  /**< Asteroid is in the process of exploding. */
-   ASTEROID_INIT,       /**< Asteroid has not been created yet. */
-   ASTEROID_INVISIBLE,  /**< Asteroid is not used. */
+   ASTEROID_XX,      /**< Asteroid is not visible nor "exists". */
+   ASTEROID_XX_TO_BG,/**< Asteroid is appearing into the background. */
+   ASTEROID_XB,      /**< Asteroid is in the background, coming from nothing and going to foreground next. */
+   ASTEROID_BG_TO_FG,/**< Asteroid is going from the background to the foreground. */
+   ASTEROID_FG,      /**< Asteroid is the foreground (interactive). */
+   ASTEROID_FG_TO_BG,/**< Asteroid is going from the foreground to the background. */
+   ASTEROID_BX,      /**< Asteroid is in the background, coming from foreground and going to nothing next. */
+   ASTEROID_BG_TO_XX,/**< Asteroid is disappearing from the background. */
+   ASTEROID_STATE_MAX,/**< Max amount of states. */
 };
 
 /*
@@ -245,9 +248,9 @@ typedef struct AsteroidType_ {
  * @TODO this should be moved to spfx and probably generated on the fly.
  */
 typedef struct Debris_ {
+   int gfxID;     /**< ID of the asteroid gfx. */
    Vector2d pos;  /**< Position. */
    Vector2d vel;  /**< Velocity. */
-   int gfxID;     /**< ID of the asteroid gfx. */
    double height; /**< height vs player */
 } Debris;
 
@@ -257,11 +260,12 @@ typedef struct Debris_ {
 typedef struct Asteroid_ {
    int id;        /**< ID of the asteroid, for targeting. */
    int parent;    /**< ID of the anchor parent. */
+   int state;     /**< State of the asteroid. */
    Vector2d pos;  /**< Position. */
    Vector2d vel;  /**< Velocity. */
    int gfxID;     /**< ID of the asteroid gfx. */
    double timer;  /**< Internal timer for animations. */
-   int appearing; /**< 1: appearing, 2: disappaering, 3: exploding, 0 otherwise. */
+   double timer_max; /**< Internal timer initial value. */
    int type;      /**< The ID of the asteroid type */
    int scanned;   /**< Wether the player already scanned this asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
