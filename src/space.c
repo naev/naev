@@ -3929,6 +3929,7 @@ static void space_renderAsteroid( const Asteroid *a )
    char c[20];
    glColour col;
    double progress;
+   const glColour darkcol = cGrey20;
 
    /* Skip invisible asteroids */
    if (a->state == ASTEROID_XX)
@@ -3937,24 +3938,24 @@ static void space_renderAsteroid( const Asteroid *a )
    progress = a->timer / a->timer_max;
    switch (a->state) {
       case ASTEROID_XX_TO_BG:
-         col   = cBlack;
+         col   = darkcol;
          col.a = 1.-progress;
          break;
       case ASTEROID_XB:
       case ASTEROID_BX:
-         col   = cBlack;
+         col   = darkcol;
          break;
       case ASTEROID_BG_TO_FG:
-         col_blend( &col, &cBlack, &cWhite, progress );
+         col_blend( &col, &darkcol, &cWhite, progress );
          break;
       case ASTEROID_FG:
          col   = cWhite;
          break;
       case ASTEROID_FG_TO_BG:
-         col_blend( &col, &cWhite, &cBlack, progress );
+         col_blend( &col, &cWhite, &darkcol, progress );
          break;
       case ASTEROID_BG_TO_XX:
-         col   = cBlack;
+         col   = darkcol;
          col.a = progress;
          break;
 
