@@ -74,6 +74,7 @@ typedef struct CstMapWidget_ {
    double alpha_env;       /**< Alpha for environmental stuff. */
    double alpha_path;      /**< Alpha for path stuff. */
    double alpha_names;     /**< Alpha for system names. */
+   double alpha_commod;    /**< Alpha for commodity prices. */
    double alpha_markers;   /**< Alpha for system markers. */
    MapMode mode;           /**< Default map mode. */
 } CstMapWidget;
@@ -118,8 +119,9 @@ static void map_render( double bx, double by, double w, double h, void *data );
 static void map_renderPath( double x, double y, double zoom, double radius, double alpha );
 static void map_renderMarkers( double x, double y, double zoom, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
-                              double zoom, double w, double h, double r, int editor );
-static void map_renderCommodIgnorance( double x, double y, double zoom, StarSystem *sys, Commodity *c );
+                              double zoom, double w, double h, double r, int editor, double a );
+static void map_renderCommodIgnorance( double x, double y, double zoom,
+      const StarSystem *sys, const Commodity *c, double a );
 static void map_drawMarker( double x, double y, double zoom,
       double r, double a, int num, int cur, int type );
 /* Mouse. */
@@ -1008,8 +1010,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
       map_renderNames( bx, by, x, y, z, w, h, 0, EASE_ALPHA(cst->alpha_names) );
 
    /* Render commodity info. */
-   if (cst->mode == MAPMODE_TRADE)
-      map_renderCommod(  bx, by, x, y, z, w, h, r, 0 );
+   if (cst->alpha_commod > 0.)
+      map_renderCommod(  bx, by, x, y, z, w, h, r, 0, EASE_ALPHA(cst->alpha_commod) );
 
    /* We want the notes on top of everything. */
    if (cst->alpha_markers > 0.)
@@ -1622,7 +1624,7 @@ static void map_renderSysBlack( double bx, double by, double x, double y, double
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasSpob(sys))) {
          ccol = cGrey10;
-         gl_renderCircle( tx, ty , r, &ccol, 1 );
+         gl_renderCircle( tx, ty, r, &ccol, 1 );
       }
    }
 }
@@ -1631,7 +1633,7 @@ static void map_renderSysBlack( double bx, double by, double x, double y, double
  * Renders the economy information
  */
 void map_renderCommod( double bx, double by, double x, double y,
-      double zoom, double w, double h, double r, int editor )
+      double zoom, double w, double h, double r, int editor, double a )
 {
    Commodity *c;
    glColour ccol;
@@ -1642,7 +1644,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       return;
 
    c = commod_known[cur_commod];
-   if (cur_commod_mode == 1) {/*showing price difference to selected system*/
+   if (cur_commod_mode == 1) { /*showing price difference to selected system*/
       StarSystem *sys = system_getIndex( map_selected );
       /* Get commodity price in selected system.  If selected system is current
          system, and if landed, then get price of commodity where we are */
@@ -1659,7 +1661,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             }
          }
          if (k==array_size(land_spob->commodities)) { /* commodity of interest not found */
-            map_renderCommodIgnorance( x, y, zoom, sys, c );
+            map_renderCommodIgnorance( x, y, zoom, sys, c, a );
             map_renderSysBlack( bx, by, x, y, zoom, w, h, r, editor );
             return;
          }
@@ -1684,7 +1686,7 @@ void map_renderCommod( double bx, double by, double x, double y,
 
             }
             if (maxPrice == 0) { /* no prices are known here */
-               map_renderCommodIgnorance( x, y, zoom, sys, c );
+               map_renderCommodIgnorance( x, y, zoom, sys, c, a );
                map_renderSysBlack( bx, by, x, y, zoom, w, h, r, editor );
                return;
             }
@@ -1692,7 +1694,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             curMinPrice = minPrice;
          }
          else {
-            map_renderCommodIgnorance( x, y, zoom, sys, c );
+            map_renderCommodIgnorance( x, y, zoom, sys, c, a );
             map_renderSysBlack( bx, by, x, y, zoom, w, h, r, editor );
             return;
          }
@@ -1740,21 +1742,29 @@ void map_renderCommod( double bx, double by, double x, double y,
                best = maxPrice - curMinPrice;
                worst= minPrice - curMaxPrice;
                if (best >= 0) { /* draw circle above */
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cLightBlue, "%.1f",best);
+                  ccol = cLightBlue;
+                  ccol.a = a;
+                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom, y + (sys->pos.y-22)*zoom, &ccol, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
                   col_blend( &ccol, &cFontBlue, &cFontYellow, best );
+                  ccol.a = a;
                   gl_renderCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                }
                else {/* draw circle below */
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom , y + (sys->pos.y-22)*zoom, &cOrange, "%.1f",worst);
+                  ccol = cOrange;
+                  ccol.a = a;
+                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom, y + (sys->pos.y-22)*zoom, &ccol, "%.1f",worst);
                   worst = tanh ( -2*worst/ curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
+                  ccol.a = a;
                   gl_renderCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
             }
             else {
                /* Commodity not sold here */
-               gl_renderCircle( tx, ty , r, &cGrey10, 1 );
+               ccol = cGrey10;
+               ccol.a = a;
+               gl_renderCircle( tx, ty, r, &ccol, 1 );
             }
          }
       }
@@ -1813,13 +1823,15 @@ void map_renderCommod( double bx, double by, double x, double y,
                   frac = tanh(5*(sumPrice / commod_av_gal_price - 1));
                   col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
-               gl_print(&gl_smallFont, x + (sys->pos.x+11)*zoom , y + (sys->pos.y-22)*zoom, &ccol, "%.1f",sumPrice);
-               gl_renderCircle( tx, ty , r, &ccol, 1 );
+               ccol.a = a;
+               gl_print(&gl_smallFont, x + (sys->pos.x+11)*zoom, y + (sys->pos.y-22)*zoom, &ccol, "%.1f",sumPrice);
+               gl_renderCircle( tx, ty, r, &ccol, 1 );
             }
             else {
                /* Commodity not sold here */
                ccol = cGrey10;
-               gl_renderCircle( tx, ty , r, &ccol, 1 );
+               ccol.a = a;
+               gl_renderCircle( tx, ty, r, &ccol, 1 );
             }
          }
       }
@@ -1827,22 +1839,26 @@ void map_renderCommod( double bx, double by, double x, double y,
 }
 
 /*
- * Renders the economy information
+ * Renders the economy information.
  */
-static void map_renderCommodIgnorance( double x, double y, double zoom, StarSystem *sys, Commodity *c ) {
+static void map_renderCommodIgnorance( double x, double y, double zoom,
+      const StarSystem *sys, const Commodity *c, double a )
+{
    int textw;
    char buf[80], *line2;
    size_t charn;
+   glColour col = cFontRed;
+   col.a = a;
 
    snprintf( buf, sizeof(buf), _("No price info for\n%s here"), _(c->name) );
    line2 = u8_strchr( buf, '\n', &charn );
-   if ( line2 != NULL ) {
+   if (line2 != NULL) {
       *line2++ = '\0';
       textw = gl_printWidthRaw( &gl_smallFont, line2 );
-      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*zoom - textw/2, y + (sys->pos.y-15)*zoom, &cRed, -1, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*zoom - textw/2, y + (sys->pos.y-15)*zoom, &col, -1, line2 );
    }
    textw = gl_printWidthRaw( &gl_smallFont, buf );
-   gl_printRaw( &gl_smallFont,x + sys->pos.x *zoom- textw/2, y + (sys->pos.y+10)*zoom, &cRed, -1, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *zoom- textw/2, y + (sys->pos.y+10)*zoom, &col, -1, buf );
 }
 
 static int factionPresenceCompare( const void *a, const void *b )
@@ -2125,13 +2141,13 @@ static void map_modeUpdate( unsigned int wid, const char* str )
       /* TODO: make this more robust. */
       if (listpos == 0) {
          map_mode = MAPMODE_TRAVEL;
-         cur_commod = -1;
-         cur_commod_mode = 0;
+         //cur_commod = -1;
+         //cur_commod_mode = 0;
       }
       else if (listpos == 1) {
          map_mode = MAPMODE_DISCOVER;
-         cur_commod = -1;
-         cur_commod_mode = 0;
+         //cur_commod = -1;
+         //cur_commod_mode = 0;
       }
       else {
          map_mode = MAPMODE_TRADE;
@@ -2329,6 +2345,7 @@ else (x) = MAX( y, (x) - dt )
          ATAR( cst->alpha_env, mapmin );
          AMAX( cst->alpha_path );
          AMAX( cst->alpha_names );
+         AMIN( cst->alpha_commod );
          AMAX( cst->alpha_markers );
          break;
 
@@ -2338,6 +2355,7 @@ else (x) = MAX( y, (x) - dt )
          ATAR( cst->alpha_env, mapmin );
          AMIN( cst->alpha_path );
          AMAX( cst->alpha_names );
+         AMIN( cst->alpha_commod );
          AMIN( cst->alpha_markers );
          break;
 
@@ -2347,6 +2365,7 @@ else (x) = MAX( y, (x) - dt )
          AMIN( cst->alpha_env );
          AMIN( cst->alpha_path );
          AMIN( cst->alpha_names );
+         AMAX( cst->alpha_commod );
          AMIN( cst->alpha_markers );
          break;
    }
