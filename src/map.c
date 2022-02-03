@@ -1484,7 +1484,8 @@ void map_renderNames( double bx, double by, double x, double y,
    glColour col;
    glFont *font;
 
-   if (zoom <= 0.5) return;
+   if (zoom <= 0.5)
+      return;
 
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
@@ -1753,7 +1754,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                else {/* draw circle below */
                   ccol = cOrange;
                   ccol.a = a;
-                  gl_print(&gl_smallFont, x + (sys->pos.x+11) * zoom, y + (sys->pos.y-22)*zoom, &ccol, "%.1f",worst);
+                  gl_print(&gl_smallFont, x + (sys->pos.x+12) * zoom, y + (sys->pos.y)*zoom-gl_smallFont.h*0.5, &ccol, _("%.1f ¤"),worst);
                   worst = tanh ( -2*worst/ curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   ccol.a = a;
@@ -1824,7 +1825,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                   col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
                ccol.a = a;
-               gl_print(&gl_smallFont, x + (sys->pos.x+11)*zoom, y + (sys->pos.y-22)*zoom, &ccol, "%.1f",sumPrice);
+               gl_print(&gl_smallFont, x + (sys->pos.x+12)*zoom, y + (sys->pos.y)*zoom - gl_smallFont.h*0.5, &ccol, _("%.1f ¤"),sumPrice);
                gl_renderCircle( tx, ty, r, &ccol, 1 );
             }
             else {
