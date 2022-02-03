@@ -1425,6 +1425,7 @@ void space_update( double dt, double real_dt )
       AsteroidAnchor *ast = &cur_system->asteroids[i];
 
       for (int j=0; j<ast->nb; j++) {
+         double offx, offy, d;
          Asteroid *a = &ast->asteroids[j];
 
          /* Skip inexistent asteroids. */
@@ -1435,6 +1436,22 @@ void space_update( double dt, double real_dt )
                a->timer_max = a->timer = 1. + RNGF()*3.;
             }
             continue;
+         }
+
+         /* Push back towards center. */
+         offx = ast->pos.x - a->pos.x;
+         offy = ast->pos.y - a->pos.y;
+         d = pow2(offx)+pow2(offy);
+         if (d > pow2(ast->radius)) {
+            d = sqrt(d);
+            a->vel.x += ast->thrust * dt * offx / d;
+            a->vel.y += ast->thrust * dt * offy / d;
+            /* Enforce max speed. */
+            d = MOD(a->vel.x, a->vel.y);
+            if (d > ast->maxspeed) {
+               a->vel.x *= ast->maxspeed / d;
+               a->vel.y *= ast->maxspeed / d;
+            }
          }
 
          a->pos.x += a->vel.x * dt;
@@ -1609,12 +1626,14 @@ void space_init( const char* sysname, int do_simulate )
          Asteroid *a = &ast->asteroids[j];
          a->id = j;
          asteroid_init(a, ast);
-         if (r > 0.7)
+         if (r > 0.6)
             a->state = ASTEROID_FG;
-         else if (r > 0.9)
+         else if (r > 0.8)
             a->state = ASTEROID_XB;
-         else
+         else if (r > 0.9)
             a->state = ASTEROID_BX;
+         else
+            a->state = ASTEROID_XX;
          a->timer = a->timer_max = 30.*RNGF();
       }
       /* Add the debris to the anchor */
@@ -3331,7 +3350,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->ndebris = floor( 100.*a->density );
 
    /* Computed from your standard physics equations (with a bit of margin). */
-   a->margin   = 1.05 * pow2(a->maxspeed) / (4.*a->thrust);
+   a->margin   = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
 
    return 0;
 }
