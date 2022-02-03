@@ -1443,6 +1443,8 @@ void space_update( double dt, double real_dt )
             switch (a->state) {
                /* Transition states. */
                case ASTEROID_FG:
+                  pilot_untargetAsteroid( a->parent, a->id );
+                  FALLTHROUGH;
                case ASTEROID_XB:
                case ASTEROID_BX:
                case ASTEROID_XX_TO_BG:
