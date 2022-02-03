@@ -1426,8 +1426,14 @@ void space_update( double dt, double real_dt )
          Asteroid *a = &ast->asteroids[j];
 
          /* Skip inexistent asteroids. */
-         if (a->state == ASTEROID_XX)
+         if (a->state == ASTEROID_XX) {
+            a->timer -= dt;
+            if (a->timer < 0.) {
+               a->state = ASTEROID_XX_TO_BG;
+               a->timer_max = a->timer = 1. + RNGF()*3.;
+            }
             continue;
+         }
 
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
@@ -1440,7 +1446,6 @@ void space_update( double dt, double real_dt )
                case ASTEROID_XB:
                case ASTEROID_BX:
                case ASTEROID_XX_TO_BG:
-               case ASTEROID_BG_TO_XX:
                   a->timer_max = a->timer = 1. + 3.*RNGF();
                   break;
 
@@ -1450,6 +1455,12 @@ void space_update( double dt, double real_dt )
                   break;
                case ASTEROID_BG_TO_FG:
                   a->timer_max = a->timer = 30. + 60.*RNGF();
+                  break;
+
+               /* Special case needs to respawn. */
+               case ASTEROID_BG_TO_XX:
+                  asteroid_init( a, ast );
+                  a->timer_max = a->timer = 10. + RNGF()*20.;
                   break;
 
                case ASTEROID_XX:
@@ -1717,6 +1728,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       if ((ast->state == ASTEROID_XX_TO_BG) &&
             (space_isInField(&ast->pos) < 0)) {
          ast->state = ASTEROID_XX;
+         ast->timer_max = ast->timer = 10. + RNGF()*20.;
          return;
       }
 
@@ -4749,6 +4761,8 @@ static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_rewar
 
    /* Make it respawn elsewhere */
    asteroid_init( a, field );
+   a->state = ASTEROID_XX;
+   a->timer_max = a->timer = 10. + RNGF()*20.;
 }
 
 /**
