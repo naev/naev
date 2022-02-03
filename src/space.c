@@ -3247,8 +3247,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 {
    AsteroidAnchor *a;
    xmlNodePtr cur;
-   double x, y;
-   char *name;
    int pos;
 
    /* Allocate more space. */
@@ -3279,13 +3277,14 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"type")) {
+         const char *name = xml_get(cur);
+
          a->ntype++;
          if (a->type==NULL)
             a->type = malloc( sizeof(int) );
          else
             a->type = realloc( a->type, (a->ntype)*sizeof(int) );
 
-         name = xml_get(cur);
          /* Find the ID */
          const AsteroidType q = { .name=name };
          AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
@@ -3298,6 +3297,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
+         double x, y;
          pos = 1;
          xmlr_attr_float( cur, "x", x );
          xmlr_attr_float( cur, "y", y );
