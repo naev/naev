@@ -1502,7 +1502,7 @@ void space_update( double dt, double real_dt )
                /* Special case needs to respawn. */
                case ASTEROID_BG_TO_XX:
                   asteroid_init( a, ast );
-                  a->timer_max = a->timer = 10. + RNGF()*20.;
+                  a->timer_max = a->timer = 10. + 20.*RNGF();
                   break;
 
                case ASTEROID_XX:
