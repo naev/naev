@@ -288,6 +288,9 @@ typedef struct AsteroidAnchor_ {
    double area;   /**< Field's area. */
    int *type;     /**< Types of asteroids. */
    int ntype;     /**< Number of types. */
+   double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
+   double thrust; /**< Thrust applied when out of radius towards center. */
+   double margin; /**< Extra margin to use when doing distance computations. */
 } AsteroidAnchor;
 
 /**

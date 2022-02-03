@@ -1741,7 +1741,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20.;
+   mod   = RNGF()*field->maxspeed;
    vect_pset( &ast->vel, mod, theta );
 
    /* Grow effect stuff */
@@ -3257,11 +3257,13 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Initialize stuff. */
    pos         = 1;
-   a->density  = .2;
+   a->density  = 0.2;
    a->area     = 0.;
    a->ntype    = 0;
    a->type     = NULL;
    a->radius   = 0.;
+   a->maxspeed = 20.;
+   a->thrust   = 1.;
    vect_cset( &a->pos, 0., 0. );
 
    /* Parse label if available. */
@@ -3271,6 +3273,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    cur = node->xmlChildrenNode;
    do {
       xmlr_float( cur,"density", a->density );
+      xmlr_float( cur, "radius", a->radius );
+      xmlr_float( cur, "maxspeed", a->maxspeed );
+      xmlr_float( cur, "thrust", a->thrust );
 
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"type")) {
@@ -3288,9 +3293,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
             a->type[a->ntype-1] = at-asteroid_types;
          else
             WARN("Unknown AsteroidType '%s' in StarSystem '%s'", name, sys->name);
+         continue;
       }
-
-      xmlr_float( cur, "radius", a->radius );
 
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
@@ -3300,6 +3304,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
          /* Set position. */
          vect_cset( &a->pos, x, y );
+         continue;
       }
 
    } while (xml_nextNode(cur));
@@ -3323,6 +3328,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Compute number of asteroids */
    a->nb      = floor( ABS(a->area) / ASTEROID_REF_AREA * a->density );
    a->ndebris = floor( 100.*a->density );
+
+   /* Computed from your standard physics equations (with a bit of margin). */
+   a->margin   = 1.05 * pow2(a->maxspeed) / (4.*a->thrust);
 
    return 0;
 }
