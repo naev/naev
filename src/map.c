@@ -36,14 +36,11 @@
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
-
 #define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
-
 #define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
-
 #define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
-
 #define MAP_MOVE_THRESHOLD 20. /**< Mouse movement distance threshold */
+#define EASE_ALPHA   ease_QuadraticInOut /**< Ease function for alpha. */
 
 static const int RCOL_X = -10;         /**< Position of text in the right column. */
 static const int RCOL_TEXT_W = 135;    /**< Width of normal text in the right column. */
@@ -982,33 +979,33 @@ static void map_render( double bx, double by, double w, double h, void *data )
    gl_renderRect( bx, by, w, h, &cBlack );
 
    if (cst->alpha_decorators > 0.)
-      map_renderDecorators( x, y, z, 0, cst->alpha_decorators );
+      map_renderDecorators( x, y, z, 0, EASE_ALPHA(cst->alpha_decorators) );
 
    /* Render faction disks. */
    if (cst->alpha_faction > 0.)
-      map_renderFactionDisks( x, y, z, r, 0, cst->alpha_faction );
+      map_renderFactionDisks( x, y, z, r, 0, EASE_ALPHA(cst->alpha_faction) );
 
       /* Render environmental features. */
    if (cst->alpha_env > 0.)
-      map_renderSystemEnvironment( x, y, z, 0, cst->alpha_env );
+      map_renderSystemEnvironment( x, y, z, 0, EASE_ALPHA(cst->alpha_env) );
 
    /* Render jump routes. */
    map_renderJumps( x, y, z, r, 0 );
 
    /* Render the player's jump route. */
    if (cst->alpha_path > 0.)
-      map_renderPath( x, y, z, r, cst->alpha_path );
+      map_renderPath( x, y, z, r, EASE_ALPHA(cst->alpha_path) );
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, z, w, h, r, cst->mode );
 
    /* Render system markers and notes. */
    if (cst->alpha_markers > 0.)
-      map_renderMarkers( x, y, z, r, cst->alpha_markers );
+      map_renderMarkers( x, y, z, r, EASE_ALPHA(cst->alpha_markers) );
 
    /* Render system names and notes. */
    if (cst->alpha_names > 0.)
-      map_renderNames( bx, by, x, y, z, w, h, 0, cst->alpha_names );
+      map_renderNames( bx, by, x, y, z, w, h, 0, EASE_ALPHA(cst->alpha_names) );
 
    /* Render commodity info. */
    if (cst->mode == MAPMODE_TRADE)
@@ -1016,7 +1013,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* We want the notes on top of everything. */
    if (cst->alpha_markers > 0.)
-      map_renderNotes( bx, by, x, y, z, w, h, 0, cst->alpha_markers );
+      map_renderNotes( bx, by, x, y, z, w, h, 0, EASE_ALPHA(cst->alpha_markers) );
 
    /* Values from cRadar_tSpob */
    col.r = cRadar_tSpob.r;
