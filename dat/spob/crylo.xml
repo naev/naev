@@ -27,7 +27,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, this has attracted people to settle and spawned a flourishing fishing industry.</description>
+  <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, this has attracted people to settle and spawned a flourishing fishing industry, and attracts tourists interested in the old practice of catching their own meals.</description>
   <bar>Fishing is the name of the game on Crylo and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature. Some of the more experimental drinks might also be better avoided unless you like your ingredients very fresh indeed.</bar>
  </general>
  <tech>
@@ -38,5 +38,9 @@
   <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
+  <item>Empire Ships Small</item>
  </tech>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
 </spob>

@@ -328,7 +328,7 @@ function enter_timer ()
       vn.run()
 
       -- Normal finish of the tutorial
-      tut.log(_([[Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you will fair better than their late previous owner.]]))
+      tut.log(_([[Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you will fare better than their late previous owner.]]))
       misn.finish( true )
    end
 end

@@ -759,13 +759,17 @@
  <tech name="Goddard Ship">
   <item>Goddard</item>
  </tech>
- <tech name="Empire Military Ships">
-  <item>Empire Admonisher</item>
-  <item>Empire Hawking</item>
-  <item>Empire Lancelot</item>
-  <item>Empire Pacifier</item>
-  <item>Empire Peacemaker</item>
+ <tech name="Empire Ships Small">
   <item>Empire Shark</item>
+  <item>Empire Lancelot</item>
+ </tech>
+ <tech name="Empire Ships Medium">
+  <item>Empire Admonisher</item>
+  <item>Empire Pacifier</item>
+ </tech>
+ <tech name="Empire Ships Large">
+  <item>Empire Hawking</item>
+  <item>Empire Peacemaker</item>
   <item>Empire Rainmaker</item>
  </tech>
  <tech name="FLF Ships">

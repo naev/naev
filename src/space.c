@@ -3619,8 +3619,10 @@ static int systems_load (void)
       free( file );
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
-   for (int j=0; j<array_size(systems_stack); j++)
+   for (int j=0; j<array_size(systems_stack); j++) {
       systems_stack[j].id = j;
+      systems_stack[j].note = NULL; /* just to be sure */
+   }
 
    /*
     * Second pass - loads all the jump routes.
@@ -3962,6 +3964,7 @@ void space_exit (void)
       free(sys->background);
       free(sys->map_shader);
       free(sys->features);
+      free(sys->note);
       array_free(sys->jumps);
       array_free(sys->presence);
       array_free(sys->spobs);
@@ -4020,6 +4023,8 @@ void space_clearKnown (void)
       sys_rmFlag(sys,SYSTEM_HIDDEN);
       for (int j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
+      free(sys->note);
+      sys->note=NULL;
    }
    for (int j=0; j<array_size(spob_stack); j++)
       spob_rmFlag(&spob_stack[j],SPOB_KNOWN);
@@ -4242,9 +4247,15 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       xmlw_startElem(writer,"known");
 
-      xmlw_attr(writer,"sys","%s",systems_stack[i].name);
-
       sys = &systems_stack[i];
+
+      xmlw_attr(writer,"sys","%s",sys->name);
+
+      if (sys_isFlag(sys, SYSTEM_PMARKED))
+         xmlw_attr(writer,"pmarked","%s","true");
+
+      if (sys->note != NULL)
+         xmlw_attr(writer,"note","%s",sys->note);
 
       for (int j=0; j<array_size(sys->spobs); j++) {
          if (!spob_isKnown(sys->spobs[j]))
@@ -4294,10 +4305,26 @@ int space_sysLoad( xmlNodePtr parent )
                }
                else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
+
                if (sys != NULL) { /* Must exist */
+
                   sys_setFlag(sys,SYSTEM_KNOWN);
+
+                  xmlr_attr_strd(cur,"pmarked",str);
+                  if (str != NULL) {
+                     sys_setFlag(sys,SYSTEM_PMARKED);
+                     free(str);
+                  }
+
+                  xmlr_attr_strd(cur,"note",str);
+                  if (str != NULL) {
+                     xmlr_attr_strd(cur,"note",sys->note);
+                     free(str);
+                  }
+
                   space_parseSpobs(cur, sys);
                }
+
             }
          } while (xml_nextNode(cur));
       }

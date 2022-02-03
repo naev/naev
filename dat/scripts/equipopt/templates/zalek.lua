@@ -1,5 +1,4 @@
 local optimize = require 'equipopt.optimize'
-local mt = require 'merge_tables'
 local eparams = require 'equipopt.params'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
@@ -107,9 +106,9 @@ local function equip_zalek( p, opt_params )
    -- Per ship tweaks
    local sp = zalek_params[ sname ]
    if sp then
-      params = mt.merge_tables_recursive( params, sp() )
+      params = tmerge_r( params, sp() )
    end
-   params = mt.merge_tables( params, opt_params )
+   params = tmerge( params, opt_params )
 
    -- See cores
    local cores

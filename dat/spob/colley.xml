@@ -27,6 +27,10 @@
   </services>
   <commodities/>
   <description>Colley is a popular retirement and vacation spot due to its quiet and unassuming nature. The world has mild weather and is ideally closeted away from the cares and worries of the wider galaxy.</description>
-  <bar>The average age of the patrons here seems to be around seventy, but they look as alert as they have ever been and you feel their eyes look you over as you sit down to order a drink.</bar>
+  <bar>The average age of the patrons here seems to be very high, but they look as alert as they have ever been and you feel their eyes look you over as you sit down to order a drink.</bar>
  </general>
+ <tags>
+  <tag>rural</tag>
+  <tag>tourism</tag>
+ </tags>
 </spob>

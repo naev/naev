@@ -21,6 +21,7 @@ dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
+dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
@@ -206,6 +207,10 @@ dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
+dat/outfits/structure/auxiliary_processing_unit_i.xml
+dat/outfits/structure/auxiliary_processing_unit_ii.xml
+dat/outfits/structure/auxiliary_processing_unit_iii.xml
+dat/outfits/structure/auxiliary_processing_unit_iv.xml
 dat/outfits/structure/battery_i.xml
 dat/outfits/structure/battery_ii.xml
 dat/outfits/structure/battery_iii.xml
@@ -246,6 +251,7 @@ dat/outfits/utility/combat_hologram_projector.xml
 dat/outfits/utility/combatai/agility_combat_ai.xml
 dat/outfits/utility/combatai/bioneural_combat_ai.xml
 dat/outfits/utility/combatai/cyclic_combat_ai.xml
+dat/outfits/utility/combatai/efficiency_combat_ai.xml
 dat/outfits/utility/combatai/hive_combat_ai.xml
 dat/outfits/utility/combatai/hunting_combat_ai.xml
 dat/outfits/utility/combatai/pinpoint_combat_ai.xml
@@ -796,8 +802,8 @@ dat/spob/grandard.xml
 dat/spob/green_eye.xml
 dat/spob/greenberg.xml
 dat/spob/greis.xml
-dat/spob/griffin__ii.xml
 dat/spob/griffin_i.xml
+dat/spob/griffin_ii.xml
 dat/spob/griffin_iii.xml
 dat/spob/griffin_vi.xml
 dat/spob/grindstone_shipyards.xml
@@ -2415,6 +2421,9 @@ dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
 dat/missions/neutral/antlejos/ant06.lua
 dat/missions/neutral/antlejos/ant07.lua
+dat/missions/neutral/antlejos/ant08.lua
+dat/missions/neutral/antlejos/ant09.lua
+dat/missions/neutral/antlejos/ant10.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -2599,6 +2608,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/equipopt/wrapper.lua
+dat/scripts/escort.lua
 dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
@@ -2643,7 +2653,6 @@ dat/scripts/luatk.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
-dat/scripts/merge_tables.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua

@@ -23,7 +23,7 @@
  </health>
  <characteristics>
   <crew>15</crew>
-  <mass>430</mass>
+  <mass>360</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>

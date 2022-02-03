@@ -40,6 +40,7 @@ void window_resize( unsigned int wid, int w, int h );
 void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
 int window_setDisplayname( unsigned int wid, const char *displayname );
+void window_setFade( unsigned int wid, const SimpleShader *shd, double length );
 
 /*
  * get
@@ -69,6 +70,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname );
 void window_setParent( unsigned int wid, unsigned int parent );
 unsigned int window_getParent( unsigned int wid );
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) );
+void window_onCleanup( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 
 /*
  * data
@@ -79,7 +81,7 @@ void* window_getData( unsigned int wid );
 /*
  * render
  */
-void toolkit_render (void);
+void toolkit_render( double dt );
 
 /*
  * input

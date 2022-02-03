@@ -4,7 +4,6 @@
 
 --]]
 local vn = require "vn"
-local mt = require 'merge_tables'
 local audio = require "love.audio"
 
 local zbh = {}
@@ -40,7 +39,7 @@ zbh.pi = {
 
 function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
-         mt.merge_tables( {
+         tmerge( {
             image=zbh.zach.image,
             color=zbh.zach.colour,
          }, params) )
@@ -48,7 +47,7 @@ end
 
 function zbh.vn_icarus( params )
    return vn.Character.new( zbh.icarus.name,
-         mt.merge_tables( {
+         tmerge( {
             image=zbh.icarus.image,
             color=zbh.icarus.colour,
          }, params) )
@@ -56,7 +55,7 @@ end
 
 function zbh.vn_pi( params )
    return vn.Character.new( zbh.pi.name,
-         mt.merge_tables( {
+         tmerge( {
             image=zbh.pi.image,
             color=zbh.pi.colour,
          }, params) )

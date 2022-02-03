@@ -28,7 +28,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Grandard is the home of some of the Empire's most legendary fighter pilots. For reasons unknown, this world has become renowned for its highly-skilled light combat ship specialists. Rather than discourage this anomaly, the Empire has taken full advantage of it.</description>
+  <description>Grandard is the home of some of the Empire's most legendary fighter pilots. For reasons unknown, this world has become renowned for its highly-skilled light combat ship specialists. Rather than discourage this anomaly, the Empire has taken full advantage of it, and established an elite pilot training faculty.</description>
   <bar>This bar has pictures of some of the more renowned fighter pilots in its history. Several imperial officers look at these pictures with what can only be described as burning envy. Prospective aces, then.</bar>
  </general>
  <tech>
@@ -47,5 +47,7 @@
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Engines High</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
  </tech>
 </spob>

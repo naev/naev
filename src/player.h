@@ -195,7 +195,7 @@ void player_restoreControl( int reason, const char *str );
 void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
-void player_warp( const double x, const double y );
+void player_warp( double x, double y );
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);

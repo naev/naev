@@ -29,7 +29,8 @@ static int cache_table = LUA_NOREF; /* No reference. */
 
 /* Naev methods. */
 static int naevL_version( lua_State *L );
-static int naevL_versionTest( lua_State *L);
+static int naevL_versionTest( lua_State *L );
+static int naevL_language( lua_State *L );
 static int naevL_lastplayed( lua_State *L );
 static int naevL_ticks( lua_State *L );
 static int naevL_ticksGame( lua_State *L );
@@ -49,6 +50,7 @@ static int naevL_cache( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
+   { "language", naevL_language },
    { "lastplayed", naevL_lastplayed },
    { "ticks", naevL_ticks },
    { "ticksGame", naevL_ticksGame },
@@ -120,7 +122,7 @@ static int naevL_version( lua_State *L )
  *    @luatreturn number Positive if v1 is newer or negative if v2 is newer.
  * @luafunc versionTest
  */
-static int naevL_versionTest( lua_State *L)
+static int naevL_versionTest( lua_State *L )
 {
    const char *s1, *s2;
    semver_t sv1, sv2;
@@ -141,6 +143,18 @@ static int naevL_versionTest( lua_State *L)
    semver_free( &sv2 );
 
    lua_pushinteger(L,res);
+   return 1;
+}
+
+/**
+ * @brief Gets the current language locale.
+ *
+ *    @luatreturn string Current language locale (such as "en" for English, "de" for German, or "ja" for Japanese).
+ * @luafunc language
+ */
+static int naevL_language( lua_State *L )
+{
+   lua_pushstring( L, gettext_getLanguage() );
    return 1;
 }
 

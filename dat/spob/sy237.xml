@@ -12,7 +12,7 @@
   <faction>Thurion</faction>
   <base>150.000000</base>
   <bonus>50.000000</bonus>
-  <range>0</range>
+  <range>1</range>
  </presence>
  <general>
   <class>1</class>

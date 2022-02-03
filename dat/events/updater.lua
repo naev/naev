@@ -13,6 +13,11 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
 
+-- Runs on saves older than 0.10.0
+local function updater0100 ()
+   -- TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
+end
+
 -- Runs on saves older than 0.9.0
 local function updater090 ()
    -- Changed how the FLF base diff stuff works
@@ -114,6 +119,9 @@ function create ()
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
+   end
+   if naev.versionTest( save_version, "0.10.0" ) < 0 then
+      updater0100()
    end
 
    -- Done

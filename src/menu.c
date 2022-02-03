@@ -208,7 +208,7 @@ void menu_main (void)
 
    /* create background image window */
    bwid = window_create( "wdwBG", "", -1, -1, -1, -1 );
-   window_onClose( bwid, menu_main_cleanBG );
+   window_onCleanup( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
    window_addText( bwid, 0, 10, SCREEN_W, 30., 1, "txtBG", NULL,
@@ -217,6 +217,10 @@ void menu_main (void)
    /* create menu window */
    wid = window_create( "wdwMainMenu", _("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
+
+   /* Handle the fade. */
+   window_setFade( bwid, NULL, 0. );
+   window_setFade( wid, NULL, 1. );
 
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -319,8 +323,10 @@ static void main_menu_promptClose( unsigned int wid, const char *unused )
  */
 void menu_main_close (void)
 {
-   if (window_exists( "wdwMainMenu" ))
-      window_destroy( window_get( "wdwMainMenu" ) );
+   if (window_exists( "wdwMainMenu" )) {
+      unsigned int wid = window_get("wdwMainMenu");
+      window_destroy( wid );
+   }
    else
       WARN( _("Main menu does not exist.") );
 

@@ -135,6 +135,9 @@ typedef struct Widget_ {
 #define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
 #define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
+#define WINDOW_FADEIN      (1<<10) /**< Window is fading in. */
+#define WINDOW_FADEOUT     (1<<11) /**< Window is fading out. */
+#define WINDOW_FADEDELAY   (1<<12) /**< Fade has just started and may be delayed. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
@@ -152,12 +155,15 @@ typedef struct Window_ {
    char *displayname; /**< Display name obtained with gettext. */
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
+   double timer; /**< Timer for fancy effects. */
+   double timer_max; /**< Max timer. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
    void (*close_fptr)(unsigned int wid,const char* name); /**< How to close the window. */
 
    void (*accept_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
+   void (*cleanup_fptr)(unsigned int wid,const char* name); /**< Triggered when window is finally freed. */
    int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
@@ -182,6 +188,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
 void window_render( Window* w );
 void window_renderOverlay( Window* w );
+void window_kill( Window *wdw );
 
 /* Widget stuff. */
 Widget* window_newWidget( Window* w, const char *name );

@@ -1,5 +1,6 @@
 lua_source = files(
    'equipopt/optimize.lua',
+   'escort.lua',
    'fleet.lua',
    'format.lua',
    'lazyload.lua',
@@ -7,7 +8,6 @@ lua_source = files(
    'lmisn.lua',
    'lmusic.lua',
    'love_shaders.lua',
-   'merge_tables.lua',
    'portrait.lua',
    'pp_shaders.lua',
    'prng.lua',
