@@ -1608,13 +1608,14 @@ void space_init( const char* sysname, int do_simulate )
          double r = RNGF();
          Asteroid *a = &ast->asteroids[j];
          a->id = j;
+         asteroid_init(a, ast);
          if (r > 0.7)
             a->state = ASTEROID_FG;
          else if (r > 0.9)
             a->state = ASTEROID_XB;
          else
             a->state = ASTEROID_BX;
-         asteroid_init(a, ast);
+         a->timer = a->timer_max = 30.*RNGF();
       }
       /* Add the debris to the anchor */
       ast->debris = realloc( ast->debris, (ast->ndebris) * sizeof(Debris) );
