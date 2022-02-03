@@ -125,6 +125,7 @@ static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
 static void debris_init( Debris *deb );
 static int systems_load (void);
+static int asteroidTypes_cmp( const void *p1, const void *p2 );
 static int asteroidTypes_load (void);
 static int asteroidTypes_parse( AsteroidType *at, const char *file );
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
@@ -3281,10 +3282,12 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
          name = xml_get(cur);
          /* Find the ID */
-         for (int i=0; i<array_size(asteroid_types); i++) {
-            if ((strcmp(asteroid_types[i].name,name)==0))
-               a->type[a->ntype-1] = i;
-         }
+         const AsteroidType q = { .name=name };
+         AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
+         if (at != NULL)
+            a->type[a->ntype-1] = at-asteroid_types;
+         else
+            WARN("Unknown AsteroidType '%s' in StarSystem '%s'", name, sys->name);
       }
 
       xmlr_float( cur, "radius", a->radius );
@@ -3350,6 +3353,8 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
+      xml_onlyNodes( cur );
+
       xmlr_float( cur, "radius", a->radius );
 
       /* Handle position. */
@@ -3485,6 +3490,14 @@ int space_load (void)
    return 0;
 }
 
+static int asteroidTypes_cmp( const void *p1, const void *p2 )
+{
+   const AsteroidType *at1, *at2;
+   at1 = (const AsteroidType*) p1;
+   at2 = (const AsteroidType*) p2;
+   return strcmp(at1->name,at2->name);
+}
+
 /**
  * @brief Loads the asteroids types.
  *
@@ -3505,6 +3518,8 @@ static int asteroidTypes_load (void)
       free( asteroid_files[i] );
    }
    array_free( asteroid_files );
+
+   qsort( asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
 
    /* Shrink to minimum. */
    array_shrink( &asteroid_types );
