@@ -3286,7 +3286,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
             a->type = realloc( a->type, (a->ntype)*sizeof(int) );
 
          /* Find the ID */
-         const AsteroidType q = { .name=name };
+         const AsteroidType q = { .name=(char*)name };
          AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
          if (at != NULL)
             a->type[a->ntype-1] = at-asteroid_types;
