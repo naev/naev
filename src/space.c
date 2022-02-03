@@ -3282,7 +3282,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
          name = xml_get(cur);
          /* Find the ID */
          for (int i=0; i<array_size(asteroid_types); i++) {
-            if ( (strcmp(asteroid_types[i].ID,name)==0) )
+            if ((strcmp(asteroid_types[i].name,name)==0))
                a->type[a->ntype-1] = i;
          }
       }
@@ -3542,8 +3542,8 @@ static int asteroidTypes_parse( AsteroidType *at, const char *file )
    at->material   = array_create( Commodity* );
    at->quantity   = array_create( int );
 
-   xmlr_attr_strd(parent,"name",at->ID);
-   if (at->ID == NULL)
+   xmlr_attr_strd(parent,"name",at->name);
+   if (at->name == NULL)
       WARN(_("Asteroid '%s' has invalid or no name"), file);
 
    node = parent->xmlChildrenNode;
@@ -4044,7 +4044,7 @@ void space_exit (void)
    /* Free the asteroid types. */
    for (int i=0; i < array_size(asteroid_types); i++) {
       AsteroidType *at = &asteroid_types[i];
-      free(at->ID);
+      free(at->name);
       array_free(at->material);
       array_free(at->quantity);
       for (int j=0; j<array_size(at->gfxs); j++)
