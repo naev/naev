@@ -347,11 +347,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"type")) {
          const char *name = xml_get(cur);
-         const AsteroidType q = { .name=(char*)name };
-         /* Find the ID */
-         AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
-         if (at != NULL)
-            array_push_back( &a->type, at-asteroid_types );
+         int id = asttype_getName( name );
+         if (id >= 0)
+            array_push_back( &a->type, id );
          else
             WARN("Unknown AsteroidType '%s' in StarSystem '%s'", name, sys->name);
          continue;
@@ -825,12 +823,28 @@ const AsteroidType *asttype_getAll (void)
 /**
  * @brief Returns the asteroid type corresponding to an ID
  *
- *    @param ID ID of the type.
+ *    @param id ID of the type.
  *    @return AsteroidType object.
  */
-const AsteroidType *asttype_get( int ID )
+const AsteroidType *asttype_get( int id )
 {
-   return &asteroid_types[ ID ];
+   return &asteroid_types[ id ];
+}
+
+/**
+ * @brief Gets the ID of an asteroid type by name.
+ *
+ *    @param name Name of the asteroid type to get.
+ *    @return ID of the matching asteroid type.
+ */
+int asttype_getName( const char *name )
+{
+   const AsteroidType q = { .name=(char*)name };
+   /* Find the ID */
+   AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
+   if (at != NULL)
+      return at-asteroid_types;
+   return -1;
 }
 
 /**

@@ -1578,7 +1578,7 @@ static void sysedit_editAsteroids (void)
    window_addButton( wid, 20, 20, bw, BUTTON_HEIGHT,
          "btnRmAsteroid", _("Rm Asteroid"), sysedit_btnRmAsteroid );
    window_addButton( wid, 20 + bw + 15, 20, bw, BUTTON_HEIGHT,
-         "btnAddAsteroid", _("Add Asteroid"), sysedit_btnRmAsteroid );
+         "btnAddAsteroid", _("Add Asteroid"), sysedit_btnAddAsteroid );
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
@@ -1627,7 +1627,7 @@ static void sysedit_genAsteroidsList( unsigned int wid )
 
    /* Load all asteroid types. */
    asttypes = asttype_getAll();
-   available = malloc( sizeof(char*) * array_size(ast->type) );
+   available = malloc( sizeof(char*) * array_size(asttypes) );
    for (int i=0; i<array_size(asttypes); i++)
       available[i] = strdup( asttypes[i].name );
    window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, array_size(asttypes), 0, NULL, sysedit_btnAddAsteroid );
@@ -1642,12 +1642,22 @@ static void sysedit_genAsteroidsList( unsigned int wid )
 static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
 {
    (void) unused;
+   int pos = toolkit_getListPos( wid, "lstAsteroidsHave" );
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+
+   array_erase( &ast->type, &ast->type[pos], &ast->type[pos+1] );
+
    sysedit_genAsteroidsList( wid );
 }
 
 static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
 {
    (void) unused;
+   const char *selected = toolkit_getList( wid, "lstAsteroidsAvailable" );
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+
+   array_push_back( &ast->type, asttype_getName( selected ) );
+
    sysedit_genAsteroidsList( wid );
 }
 

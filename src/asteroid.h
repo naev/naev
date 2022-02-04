@@ -109,6 +109,7 @@ void asteroids_renderOverlay (void);
 /* Asteroid types. */
 const AsteroidType *asttype_getAll (void);
 const AsteroidType *asttype_get( int id );
+int asttype_getName( const char *name );
 
 /* Misc functions. */
 int asteroids_inField( const Vector2d *p );
