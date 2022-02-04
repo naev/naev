@@ -146,6 +146,7 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 static void sysedit_editAsteroids (void);
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused );
 static void sysedit_genAsteroidsList( unsigned int wid );
+static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
@@ -1548,7 +1549,7 @@ static void sysedit_editAsteroids (void)
    window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
-   x = 120;
+   x = 200;
    y = -40;
    s = _("Max Speed: ");
    l = gl_printWidthRaw( NULL, s );
@@ -1582,7 +1583,45 @@ static void sysedit_editAsteroids (void)
 
 static void sysedit_genAsteroidsList( unsigned int wid )
 {
-   (void) wid;
+   int hpos, apos;
+   int x, y, w, h;
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+   char **have, **available;
+
+   hpos = apos = -1;
+   if (widget_exists( wid, "lstAsteroidsHave" ) &&
+         widget_exists( wid, "lstAsteroidsAvailable" )) {
+      hpos = toolkit_getListPos( wid, "lstServicesHave" );
+      apos = toolkit_getListPos( wid, "lstServicesLacked" );
+      window_destroyWidget( wid, "lstAsteroidsHave" );
+      window_destroyWidget( wid, "lstAsteroidsAvailable" );
+   }
+
+   /* Set up positions. */
+   x = 20;
+   y = -120;
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4;
+   h = SYSEDIT_EDIT_HEIGHT + y - 100;
+
+   /* Find and add used asteroids. */
+   have = malloc( sizeof(char*) * array_size(ast->type) );
+   for (int i=0; i<array_size(ast->type); i++)
+      have[i] = strdup( space_getType( ast->type[i] )->name );
+   window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, array_size(ast->type), 0, NULL, sysedit_btnRmAsteroid );
+   x += w + 15;
+
+   /* Load all asteroid types. */
+   //window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, array_size(ast->type), 0, NULL, sysedit_btnAddAsteroid );
+
+   /* Restore positions. */
+   if (hpos != -1 && apos != -1) {
+      toolkit_setListPos( wid, "lstAsteroidsHave", hpos );
+      //toolkit_setListPos( wid, "lstServicesLacked", lpos );
+   }
+}
+
+static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
+{
 }
 
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
