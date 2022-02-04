@@ -573,8 +573,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    (void) data;
    StarSystem *sys;
    double x,y, z;
-   const glColour *c;
-   glColour col;
 
    /* Comfort++. */
    sys   = sysedit_sys;
@@ -600,6 +598,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render jump points. */
    for (int i=0; i<array_size(sys->jumps); i++) {
+      const glColour *c;
       JumpPoint *jp = &sys->jumps[i];
       Select_t sel = {
          .type    = SELECT_JUMPPOINT,
@@ -643,6 +642,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       Vector2d *posns[2];
       Spob *pnt;
       JumpPoint *njp;
+      glColour col;
       SafeLane *sf = &safelanes[i];
 
       for (int j=0; j<2; j++) {
