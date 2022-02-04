@@ -3380,6 +3380,17 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
        a->type[0] = 0;
    }
 
+   /* Update internals. */
+   asteroids_computeInternals( a );
+
+   return 0;
+}
+
+/**
+ * @brief Updates internal alues of an asteroid field.
+ */
+int asteroids_computeInternals( AsteroidAnchor *a )
+{
    /* Calculate area */
    a->area = M_PI * a->radius * a->radius;
 
@@ -3389,8 +3400,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Computed from your standard physics equations (with a bit of margin). */
    a->margin   = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
-
-   return 0;
 }
 
 /**

@@ -1532,24 +1532,52 @@ static void sysedit_editAsteroids (void)
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    /* Target lable. */
-   y = -40;
+   y = -20;
 
    /* Input widgets and labels. */
    x = 20;
 
-   s = _("Radius");
+   /* Add some inputs. */
+   y -= 30;
+   s = _("Density: ");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtDensity", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpDensity", 10, 1, NULL );
+   window_setInputFilter( wid, "inpDensity", INPUT_FILTER_NUMBER );
+   y -= 30;
+   s = _("Radius: ");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
+   y -= 30;
+   s = _("Max Speed: ");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtMaxspeed", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpMaxspeed", 10, 1, NULL );
+   window_setInputFilter( wid, "inpMaxspeed", INPUT_FILTER_NUMBER );
+   y -= 30;
+   s = _("Thrust: ");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtThrust", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpThrust", 10, 1, NULL );
+   window_setInputFilter( wid, "inpThrust", INPUT_FILTER_NUMBER );
+
+   /* TODO list with types. */
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
          "btnClose", _("Close"), sysedit_editAsteroidsClose );
 
    /* Load current values. */
+   snprintf( buf, sizeof(buf), "%g", ast->density );
+   window_setInput( wid, "inpDensity", buf );
    snprintf( buf, sizeof(buf), "%g", ast->radius );
    window_setInput( wid, "inpRadius", buf );
+   snprintf( buf, sizeof(buf), "%g", ast->maxspeed );
+   window_setInput( wid, "inpMaxspeed", buf );
+   snprintf( buf, sizeof(buf), "%g", ast->thrust );
+   window_setInput( wid, "inpThrust", buf );
 }
 
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
@@ -1557,7 +1585,13 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
    (void) unused;
    AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
 
+   ast->density = atof(window_getInput( sysedit_widEdit, "inpDensity" ));
    ast->radius = atof(window_getInput( sysedit_widEdit, "inpRadius" ));
+   ast->maxspeed = atof(window_getInput( sysedit_widEdit, "inpMaxspeed" ));
+   ast->thrust = atof(window_getInput( sysedit_widEdit, "inpThrust" ));
+
+   /* Need to update some internals based on new values. */
+   asteroids_computeInternals( ast );
 
    window_close( wid, unused );
 }
