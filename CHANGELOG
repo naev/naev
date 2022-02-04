@@ -23,6 +23,8 @@
    * Quality of Life
       * Can ask pilots to refuel you more than 100 units at a time
       * Engine sound volume is configurable
+      * Revamped the star map to be large and more useful
+      * Can add notes to the star map
    * Engine changes
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
@@ -31,6 +33,7 @@
       * Ammunition/fighters merged into launchers/fighter bays
       * Support for "shotgun"-type weapons
       * Backgrounds no longer use an orthographic projection
+      * Minor transitions added to the toolkit
 
 * 0.9.3 (unreleased)
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
