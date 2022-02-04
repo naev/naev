@@ -15,7 +15,7 @@
 #define ASTEROID_DEFAULT_MAXSPEED   20. /**< Max speed of asteroids in an asteroid field. */
 #define ASTEROID_DEFAULT_THRUST     1.  /**< Thrust applied when asteroid leaves asteroid field. */
 
-#define ASTEROID_REF_AREA     250e3 /**< The "density" value in an asteroid field means 1 rock per this area. */
+#define ASTEROID_REF_AREA     100e3    /**< The "density" value in an asteroid field means 1 rock per this area. */
 
 /* Asteroid status enum. Order is based on how asteroids are generated. */
 enum {
