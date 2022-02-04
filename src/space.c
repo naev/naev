@@ -1445,7 +1445,7 @@ void space_update( double dt, double real_dt )
             a->timer -= dt;
             if (a->timer < 0.) {
                a->state = ASTEROID_XX_TO_BG;
-               a->timer_max = a->timer = 1. + RNGF()*3.;
+               a->timer_max = a->timer = 1. + 3.*RNGF();
             }
             continue;
          }
@@ -4365,7 +4365,6 @@ int space_rmMarker( int objid, MissionMarkerType type )
 int space_sysSave( xmlTextWriterPtr writer )
 {
    xmlw_startElem(writer,"space");
-
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
 
@@ -4406,7 +4405,6 @@ int space_sysSave( xmlTextWriterPtr writer )
 int space_sysLoad( xmlNodePtr parent )
 {
    xmlNodePtr node;
-   StarSystem *sys;
 
    space_clearKnown();
 
@@ -4421,6 +4419,7 @@ int space_sysLoad( xmlNodePtr parent )
       cur = node->xmlChildrenNode;
       do {
          char *str;
+         StarSystem *sys;
 
          xml_onlyNodes( cur );
          if (!xml_isNode(cur,"known"))
