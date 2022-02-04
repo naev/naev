@@ -107,7 +107,7 @@ void asteroids_render (void);
 void asteroids_renderOverlay (void);
 
 /* Asteroid types. */
-const AsteroidType *astttype_getAll (void);
+const AsteroidType *asttype_getAll (void);
 const AsteroidType *asttype_get( int id );
 
 /* Misc functions. */

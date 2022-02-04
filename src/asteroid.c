@@ -817,7 +817,7 @@ int asteroids_inField( const Vector2d *p )
  *
  *    @return All the asteroid types (array.h).
  */
-const AsteroidType *astttype_getAll (void)
+const AsteroidType *asttype_getAll (void)
 {
    return asteroid_types;
 }
