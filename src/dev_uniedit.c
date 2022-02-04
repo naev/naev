@@ -33,7 +33,7 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-#define BUTTON_WIDTH    90 /**< Map button width. */
+#define BUTTON_WIDTH   100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 #define UNIEDIT_EDIT_WIDTH       400 /**< System editor width. */
@@ -158,6 +158,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    (void) unused;
    unsigned int wid;
    int buttonPos = 0;
+   const glColour cBG = { 0., 0., 0., 0.95 };
 
    /* Pause. */
    pause_game();
@@ -181,7 +182,17 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    /* Create the window. */
    wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
    window_handleKeys( wid, uniedit_keys );
+   window_setBorder( wid, 0 );
    uniedit_wid = wid;
+
+   /* Actual viewport, below everything. */
+   window_addCust( wid, 0, 0, SCREEN_W, SCREEN_H,
+         "cstSysEdit", 1, uniedit_render, uniedit_mouse, NULL, uniedit_focusLose, NULL );
+   window_custSetOverlay( wid, "cstSysEdit", uniedit_renderOverlay );
+
+   /* Overlay background. */
+   window_addRect( wid, SCREEN_W-130, 0, 130, SCREEN_H, "rctRCol", &cBG, 0 );
+   window_addRect( wid, 0, 0, SCREEN_W, 60, "rctBBar", &cBG, 0 );
 
    /* Close button. */
    window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -251,11 +262,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    /* Selected text. */
    window_addText( wid, 140, 10, SCREEN_W/2 - 140, 30, 0,
          "txtSelected", &gl_smallFont, NULL, NULL );
-
-   /* Actual viewport. */
-   window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
-         "cstSysEdit", 1, uniedit_render, uniedit_mouse, NULL, uniedit_focusLose, NULL );
-   window_custSetOverlay( wid, "cstSysEdit", uniedit_renderOverlay );
 
    /* Deselect everything. */
    uniedit_deselect();
@@ -746,7 +752,11 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    my /= uniedit_zoom;
 
    /* Display location. */
-   gl_print( &gl_defFontMono, bx+5, by+5, &cWhite, "% 7.2f x % 7.2f", mx, my );
+   gl_print( &gl_defFontMono, bx+5, by+65, &cWhite, "% 7.2f x % 7.2f", mx, my );
+
+   /* Don't cover up stuff if possible. */
+   if ((x > SCREEN_W-130) || (y < 60))
+      return;
 
    if (uniedit_mode == UNIEDIT_NEWSYS) {
       toolkit_drawAltText( x, y, _("Click to add a new system"));
