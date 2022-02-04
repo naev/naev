@@ -4405,49 +4405,52 @@ int space_sysSave( xmlTextWriterPtr writer )
  */
 int space_sysLoad( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    StarSystem *sys;
-   char *str;
 
    space_clearKnown();
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"space")) {
-         cur = node->xmlChildrenNode;
+      xmlNodePtr cur;
 
-         do {
-            if (xml_isNode(cur,"known")) {
-               xmlr_attr_strd(cur,"sys",str);
-               if (str != NULL) { /* check for 5.0 saves */
-                  sys = system_get(str);
-                  free(str);
-               }
-               else /* load from 5.0 saves */
-                  sys = system_get(xml_get(cur));
+      xml_onlyNodes(node);
+      if (!xml_isNode(node,"space"))
+         continue;
 
-               if (sys != NULL) { /* Must exist */
+      cur = node->xmlChildrenNode;
+      do {
+         char *str;
 
-                  sys_setFlag(sys,SYSTEM_KNOWN);
+         xml_onlyNodes( cur );
+         if (!xml_isNode(cur,"known"))
+            continue;
 
-                  xmlr_attr_strd(cur,"pmarked",str);
-                  if (str != NULL) {
-                     sys_setFlag(sys,SYSTEM_PMARKED);
-                     free(str);
-                  }
+         xmlr_attr_strd(cur,"sys",str);
+         if (str != NULL) { /* check for 0.5.0 saves */
+            sys = system_get(str);
+            free(str);
+         }
+         else /* load from 0.5.0 saves */
+            sys = system_get(xml_get(cur));
 
-                  xmlr_attr_strd(cur,"note",str);
-                  if (str != NULL) {
-                     xmlr_attr_strd(cur,"note",sys->note);
-                     free(str);
-                  }
+         if (sys != NULL) { /* Must exist */
+            sys_setFlag(sys,SYSTEM_KNOWN);
 
-                  space_parseSpobs(cur, sys);
-               }
-
+            xmlr_attr_strd(cur,"pmarked",str);
+            if (str != NULL) {
+               sys_setFlag(sys,SYSTEM_PMARKED);
+               free(str);
             }
-         } while (xml_nextNode(cur));
-      }
+
+            xmlr_attr_strd(cur,"note",str);
+            if (str != NULL) {
+               xmlr_attr_strd(cur,"note",sys->note);
+               free(str);
+            }
+            space_parseSpobs(cur, sys);
+         }
+      } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
 
    return 0;
