@@ -107,7 +107,6 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, const Asteroi
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y );
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
-static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_focusLose( unsigned int wid, const char* wgtname );
 static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod, void (*func)(void) );
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
@@ -172,6 +171,7 @@ void sysedit_open( StarSystem *sys )
    unsigned int wid;
    char buf[128];
    int i;
+   const glColour cBG = { 0., 0., 0., 0.95 };
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -190,9 +190,18 @@ void sysedit_open( StarSystem *sys )
    snprintf( buf, sizeof(buf), _("%s - Star System Editor"), sys->name );
    wid = window_create( "wdwSysEdit", buf, -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
+   window_setBorder( wid, 0 );
    sysedit_wid = wid;
 
    window_setAccept( wid, sysedit_close );
+
+   /* Actual viewport, at the bottom. */
+   window_addCust( wid, 0, 0, SCREEN_W, SCREEN_H,
+         "cstSysEdit", 1, sysedit_render, sysedit_mouse, NULL, sysedit_focusLose, NULL );
+
+   /* Overlay background. */
+   window_addRect( wid, SCREEN_W-130, 0, 130, SCREEN_H, "rctRCol", &cBG, 0 );
+   window_addRect( wid, 0, 0, SCREEN_W, 60, "rctBBar", &cBG, 0 );
 
    /* Close button. */
    window_addButtonKey( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -250,11 +259,6 @@ void sysedit_open( StarSystem *sys )
    snprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
    window_addText( wid, 140, 10, SCREEN_W/2-140, 30, 0,
          "txtSelected", &gl_smallFont, NULL, buf );
-
-   /* Actual viewport. */
-   window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
-         "cstSysEdit", 1, sysedit_render, sysedit_mouse, NULL, sysedit_focusLose, NULL );
-   window_custSetOverlay( wid, "cstSysEdit", sysedit_renderOverlay );
 
    /* Deselect everything. */
    sysedit_deselect();
@@ -758,7 +762,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render cursor position. */
-   gl_print( &gl_defFontMono, bx + 5., by + 5.,
+   gl_print( &gl_defFontMono, bx + 5., by + 65.,
          &cWhite, "% 9.2f x % 9.2f",
          (bx + sysedit_mx - x)/z,
          (by + sysedit_my - y)/z );
@@ -899,18 +903,6 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       gl_printMidRaw( &gl_smallFont, gfx->sw*z+100,
             tx - 50, ty - gl_smallFont.h - 5, col, -1., caption );
    }
-}
-
-/**
- * @brief Renders the overlay.
- */
-static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
-{
-   (void) bx;
-   (void) by;
-   (void) bw;
-   (void) bh;
-   (void) data;
 }
 
 /**
