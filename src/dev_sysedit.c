@@ -625,10 +625,12 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *ast = &sys->asteroids[i];
       vect_cset( &ast->pos, ast->pos.x*factor, ast->pos.y*factor );
+      ast->radius *= factor;
    }
    for (int i=0; i<array_size(sys->astexclude); i++) {
       AsteroidExclusion *exc = &sys->astexclude[i];
       vect_cset( &exc->pos, exc->pos.x*factor, exc->pos.y*factor );
+      exc->radius *= factor;
    }
 
    /* Must reconstruct jumps. */
