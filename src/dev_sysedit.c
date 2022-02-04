@@ -709,7 +709,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
          .b = cFontBlue.b,
          .a = 0.5,
       };
-      gl_renderCircle( tx, ty, ast->radius * sysedit_zoom + 25., &csel, 1 );
+      gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &csel, 1 );
    }
 
    gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
@@ -724,8 +724,8 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
  */
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
 {
-   (void) selected;
    double tx, ty, z, r, rr;
+   const glColour *col;
 
    /* Inits. */
    z  = sysedit_zoom;
@@ -736,9 +736,21 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclu
    r = aexcl->radius * sysedit_zoom;
    rr = r * sin(M_PI / 4.);
 
-   gl_renderCircle( tx, ty, r, &cRed, 0 );
-   gl_renderCross( tx, ty, r, &cRed );
-   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, &cRed );
+   if (selected) {
+      const glColour csel = {
+         .r = cFontBlue.r,
+         .g = cFontBlue.g,
+         .b = cFontBlue.b,
+         .a = 0.5,
+      };
+      gl_renderCircle( tx, ty, aexcl->radius * sysedit_zoom, &csel, 1 );
+   }
+
+   col = (selected) ? &cWhite : &cRed;
+
+   gl_renderCircle( tx, ty, r, col, 0 );
+   gl_renderCross( tx, ty, r, col );
+   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, col );
 }
 
 /**
