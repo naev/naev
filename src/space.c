@@ -3152,7 +3152,7 @@ static int systems_load (void)
 
       sys = system_new();
       system_parse( sys, node );
-      system_parseAsteroids(node, sys); /* load the asteroids anchors */
+      asteroids_parse(node, sys); /* load the asteroids anchors */
 
       /* Clean up. */
       xmlFreeDoc(doc);

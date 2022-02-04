@@ -30,7 +30,6 @@ static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
  * Misc.
  */
 static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids. */
-static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 
 /* Prototypes. */
 static int asteroidTypes_cmp( const void *p1, const void *p2 );
@@ -301,7 +300,7 @@ static void debris_init( Debris *deb )
    vect_pset( &deb->vel, mod, theta );
 
    /* Randomly init the gfx ID */
-   deb->gfxID = RNG(0,(int)nasterogfx-1);
+   deb->gfxID = RNG(0,(int)array_size(asteroid_gfx)-1);
 
    /* Random height vs player. */
    deb->height = 0.8 + RNGF()*0.4;
@@ -463,7 +462,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
  *    @param parent System parent node.
  *    @param sys System.
  */
-void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
+void asteroids_parse( const xmlNodePtr parent, StarSystem *sys )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -501,12 +500,11 @@ int asteroids_load (void)
 
    /* Load asteroid graphics. */
    asteroid_files = PHYSFS_enumerateFiles( SPOB_GFX_SPACE_PATH"asteroid/" );
-   for (nasterogfx=0; asteroid_files[nasterogfx]!=NULL; nasterogfx++) {}
-   asteroid_gfx = malloc( sizeof(glTexture*) * nasterogfx );
+   asteroid_gfx = array_create( glTexture* );
 
    for (size_t i=0; asteroid_files[i]!=NULL; i++) {
       snprintf( file, sizeof(file), "%s%s", SPOB_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
-      asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
+      array_push_back( &asteroid_gfx, gl_newImage( file, OPENGL_TEX_MIPMAPS ) );
    }
 
    return 0;
@@ -768,9 +766,9 @@ static void space_renderDebris( const Debris *d, double x, double y )
 void asteroids_free (void)
 {
    /* Free asteroid graphics. */
-   for (int i=0; i<(int)nasterogfx; i++)
+   for (int i=0; i<array_size(asteroid_gfx); i++)
       gl_freeTexture(asteroid_gfx[i]);
-   free(asteroid_gfx);
+   array_free(asteroid_gfx);
 
    /* Free the asteroid types. */
    for (int i=0; i < array_size(asteroid_types); i++) {
@@ -815,12 +813,22 @@ int asteroids_inField( const Vector2d *p )
 }
 
 /**
+ * @brief Gets all the asteroid types.
+ *
+ *    @return All the asteroid types (array.h).
+ */
+const AsteroidType *astttype_getAll (void)
+{
+   return asteroid_types;
+}
+
+/**
  * @brief Returns the asteroid type corresponding to an ID
  *
  *    @param ID ID of the type.
  *    @return AsteroidType object.
  */
-const AsteroidType *space_getType ( int ID )
+const AsteroidType *asttype_get( int ID )
 {
    return &asteroid_types[ ID ];
 }

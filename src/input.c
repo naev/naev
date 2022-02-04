@@ -1301,7 +1301,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       Asteroid *ast = &field->asteroids[astid];
 
       /* Recover the right gfx */
-      at = space_getType( ast->type );
+      at = asttype_get( ast->type );
       if (ast->gfxID >= array_size(at->gfxs))
          WARN(_("Gfx index out of range"));
       r  = MAX( MAX( at->gfxs[ast->gfxID]->w * zoom, minr ),

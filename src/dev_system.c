@@ -198,7 +198,7 @@ int dsys_saveSystem( StarSystem *sys )
          if (!(array_size(ast->type) == 1 && ast->type[0] == 0)) {
             /* With no <type>, the first asteroid type is the default */
             for (int j=0; j<array_size(ast->type); j++)
-               xmlw_elem( writer, "type", "%s", space_getType(ast->type[j])->name );
+               xmlw_elem( writer, "type", "%s", asttype_get(ast->type[j])->name );
          }
 
          /* Radius */

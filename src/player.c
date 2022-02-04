@@ -1468,7 +1468,7 @@ void player_targetAsteroidSet( int field, int id )
             /* Recover and display some info about the asteroid. */
             AsteroidAnchor *anchor = &cur_system->asteroids[field];
             Asteroid *ast = &anchor->asteroids[id];
-            const AsteroidType *at = space_getType( ast->type );
+            const AsteroidType *at = asttype_get( ast->type );
 
             player_message( _("Asteroid targeted, composition: ") );
             for (int i=0; i<array_size(at->material); i++) {

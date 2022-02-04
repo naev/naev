@@ -1606,7 +1606,7 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    /* Find and add used asteroids. */
    have = malloc( sizeof(char*) * array_size(ast->type) );
    for (int i=0; i<array_size(ast->type); i++)
-      have[i] = strdup( space_getType( ast->type[i] )->name );
+      have[i] = strdup( asttype_get( ast->type[i] )->name );
    window_addList( wid, x, y, w, h, "lstAsteroidsHave", have, array_size(ast->type), 0, NULL, sysedit_btnRmAsteroid );
    x += w + 15;
 

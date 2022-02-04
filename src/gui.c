@@ -393,7 +393,7 @@ static void gui_renderSpobTarget (void)
    if (player.p->nav_asteroid >= 0) {
       AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
       Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
-      const AsteroidType *at = space_getType( ast->type );
+      const AsteroidType *at = asttype_get( ast->type );
       c = &cWhite;
 
       /* Recover the right gfx */

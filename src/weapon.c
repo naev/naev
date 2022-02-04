@@ -1079,7 +1079,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
-            at = space_getType ( a->type );
+            at = asttype_get ( a->type );
             if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      at->gfxs[a->gfxID], 0, 0, &a->pos,
                      &crash[0] )) {
@@ -1102,7 +1102,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
-            at = space_getType ( a->type );
+            at = asttype_get ( a->type );
             if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      at->gfxs[a->gfxID], 0, 0, &a->pos,
                      &crash[0] ) ) {
@@ -1125,7 +1125,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
-            at = space_getType ( a->type );
+            at = asttype_get ( a->type );
             if (CollideLineSprite( &w->solid->pos, w->solid->dir,
                      w->outfit->u.bem.range,
                      at->gfxs[a->gfxID], 0, 0, &a->pos,

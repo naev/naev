@@ -98,7 +98,7 @@ typedef struct AsteroidExclusion_ {
 /* Initialization and parsing. */
 int asteroids_load (void);
 void asteroids_free (void);
-void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
+void asteroids_parse( const xmlNodePtr parent, StarSystem *sys );
 void asteroids_init (void);
 
 /* Updating and rendering. */
@@ -107,7 +107,8 @@ void asteroids_render (void);
 void asteroids_renderOverlay (void);
 
 /* Asteroid types. */
-const AsteroidType *space_getType( int ID );
+const AsteroidType *astttype_getAll (void);
+const AsteroidType *asttype_get( int id );
 
 /* Misc functions. */
 int asteroids_inField( const Vector2d *p );
