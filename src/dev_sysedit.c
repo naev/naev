@@ -53,6 +53,8 @@ enum {
    SELECT_NONE,      /**< No selection. */
    SELECT_SPOB,      /**< Selection is a spob. */
    SELECT_JUMPPOINT, /**< Selection is a jump point. */
+   SELECT_ASTEROID,  /**< Selection is an asteroid. */
+   SELECT_ASTEXCLUDE,/**< Selection is an asteroid exclusion zone. */
 };
 
 /**
@@ -64,6 +66,7 @@ typedef struct Select_s {
       int spob;
       int jump;
       int asteroid;
+      int astexclude;
    } u; /**< Data itself. */
 } Select_t;
 static Select_t *sysedit_select  = NULL; /**< Current system selection. */
@@ -141,7 +144,8 @@ static void sysedit_editJump( void );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
-static int sysedit_selectCmp( Select_t *a, Select_t *b );
+static int sysedit_selectCmp( const Select_t *a, const Select_t *b );
+static int sysedit_isSelected( Select_t *s );
 static void sysedit_checkButtons (void);
 static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
@@ -571,8 +575,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    double x,y, z;
    const glColour *c;
    glColour col;
-   int selected;
-   Select_t sel;
 
    /* Comfort++. */
    sys   = sysedit_sys;
@@ -588,42 +590,25 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render spobs. */
    for (int i=0; i<array_size(sys->spobs); i++) {
       Spob *p      = sys->spobs[i];
-
-      /* Check if selected. */
-      sel.type       = SELECT_SPOB;
-      sel.u.spob   = i;
-      selected       = 0;
-      for (int j=0; j<sysedit_nselect; j++) {
-         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
-            selected = 1;
-            break;
-         }
-      }
-
-      /* Render. */
+      Select_t sel = {
+         .type    = SELECT_SPOB,
+         .u.spob  = i,
+      };
+      int selected = sysedit_isSelected( &sel );
       sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
    }
 
    /* Render jump points. */
    for (int i=0; i<array_size(sys->jumps); i++) {
       JumpPoint *jp = &sys->jumps[i];
+      Select_t sel = {
+         .type    = SELECT_JUMPPOINT,
+         .u.jump  = i,
+      };
+      int selected = sysedit_isSelected( &sel );
 
       /* Choose colour. */
-      if (jp->flags & JP_AUTOPOS)
-         c = &cGreen;
-      else
-         c = NULL;
-
-      /* Check if selected. */
-      sel.type       = SELECT_JUMPPOINT;
-      sel.u.spob   = i;
-      selected       = 0;
-      for (int j=0; j<sysedit_nselect; j++) {
-         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
-            selected = 1;
-            break;
-         }
-      }
+      c = (jp->flags & JP_AUTOPOS) ? &cGreen : NULL;
 
       /* Render. */
       sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y,
@@ -633,14 +618,22 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render asteroids */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *ast = &sys->asteroids[i];
-      selected = 0;
+      Select_t sel = {
+         .type    = SELECT_ASTEROID,
+         .u.asteroid = i,
+      };
+      int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidsField( x, y, ast, selected );
    }
 
    /* Render asteroid exclusions */
    for (int i=0; i<array_size(sys->astexclude); i++) {
       AsteroidExclusion *aexcl = &sys->astexclude[i];
-      selected = 0;
+      Select_t sel = {
+         .type    = SELECT_ASTEXCLUDE,
+         .u.astexclude = i,
+      };
+      int selected = sysedit_isSelected( &sel );
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
    }
 
@@ -1231,9 +1224,20 @@ static void sysedit_selectRm( Select_t *sel )
  *
  *    @return 1 if both selections are the same.
  */
-static int sysedit_selectCmp( Select_t *a, Select_t *b )
+static int sysedit_selectCmp( const Select_t *a, const Select_t *b )
 {
    return (memcmp(a, b, sizeof(Select_t)) == 0);
+}
+
+/**
+ * @brief Check to see if something is selected.
+ */
+static int sysedit_isSelected( Select_t *sel )
+{
+   for (int i=0; i<sysedit_nselect; i++)
+      if (sysedit_selectCmp( sel, &sysedit_select[i] ))
+         return 1;
+   return 0;
 }
 
 /**
