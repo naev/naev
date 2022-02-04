@@ -513,18 +513,29 @@ static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
    (void) unused;
    char *file, *filtered;
 
-   if (dialogue_YesNo( _("Remove selected spobs?"), _("This can not be undone.") )) {
+   if (dialogue_YesNo( _("Remove selected objects (excluding jumps)?"), _("This can not be undone.") )) {
       for (int i=0; i<sysedit_nselect; i++) {
          Select_t *sel = &sysedit_select[i];
          if (sel->type == SELECT_SPOB) {
-            filtered = uniedit_nameFilter( sysedit_sys->spobs[ sel->u.spob ]->name );
+            Spob *sp = sysedit_sys->spobs[ sel->u.spob ];
+            filtered = uniedit_nameFilter( sp->name );
             asprintf(&file, "dat/spob/%s.xml", filtered);
             remove(file);
 
             free(filtered);
             free(file);
 
-            system_rmSpob( sysedit_sys, sysedit_sys->spobs[ sel->u.spob ]->name );
+            system_rmSpob( sysedit_sys, sp->name );
+         }
+         else if (sel->type == SELECT_ASTEROID) {
+            AsteroidAnchor *ast = &sysedit_sys->asteroids[ sel->u.asteroid ];
+            asteroid_free( ast );
+            array_erase( &sysedit_sys->asteroids, ast, ast+1 );
+         }
+         else if (sel->type == SELECT_ASTEXCLUDE ){
+            AsteroidExclusion *exc = &sysedit_sys->astexclude[ sel->u.astexclude ];
+
+            array_erase( &sysedit_sys->astexclude, exc, exc+1 );
          }
       }
 
@@ -1215,28 +1226,40 @@ static void sysedit_deselect (void)
  */
 static void sysedit_checkButtons (void)
 {
-   int sel_spob, sel_jump;
+   int sel_spob, sel_jump, sel_asteroid, sel_exclusion;
 
    /* See if a spob or jump is selected. */
    sel_spob  = 0;
-   sel_jump    = 0;
+   sel_jump  = 0;
+   sel_asteroid = 0;
+   sel_exclusion = 0;
    for (int i=0; i<sysedit_nselect; i++) {
       Select_t *sel = &sysedit_select[i];
-      if (sel->type == SELECT_SPOB)
-         sel_spob++;
-      else if (sel->type == SELECT_JUMPPOINT)
-         sel_jump++;
+      switch (sel->type) {
+         case SELECT_SPOB:
+            sel_spob++;
+            break;
+         case SELECT_JUMPPOINT:
+            sel_spob++;
+            break;
+         case SELECT_ASTEROID:
+            sel_asteroid++;
+            break;
+         case SELECT_ASTEXCLUDE:
+            sel_exclusion++;
+            break;
+      }
    }
 
    /* Spob dependent. */
-   if (sel_spob) {
+   if (sel_spob || sel_asteroid || sel_exclusion)
       window_enableButton( sysedit_wid, "btnRemove" );
-      window_enableButton( sysedit_wid, "btnRename" );
-   }
-   else {
+   else
       window_disableButton( sysedit_wid, "btnRemove" );
+   if (sel_spob && (sysedit_nselect==1))
+      window_enableButton( sysedit_wid, "btnRename" );
+   else
       window_disableButton( sysedit_wid, "btnRename" );
-   }
 
    /* Jump dependent. */
    if (sel_jump)
@@ -1245,7 +1268,7 @@ static void sysedit_checkButtons (void)
       window_disableButton( sysedit_wid, "btnReset" );
 
    /* Editor - just one spob. */
-   if (((sel_spob==1) && (sel_jump==0)) || ((sel_spob==0) && (sel_jump==1)))
+   if (sysedit_nselect==1)
       window_enableButton( sysedit_wid, "btnEdit" );
    else
       window_disableButton( sysedit_wid, "btnEdit" );
