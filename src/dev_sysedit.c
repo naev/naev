@@ -441,11 +441,11 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused
    if (strcmp(ret, opts[0])==0) {
       AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
       memset( ast, 0, sizeof(AsteroidAnchor) );
-      ast->density  = 1.;
+      ast->density  = ASTEROID_DEFAULT_DENSITY;
       ast->type     = array_create( int );
       ast->radius   = 2500.;
-      ast->maxspeed = 20.;
-      ast->thrust   = 1.;
+      ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
+      ast->thrust   = ASTEROID_DEFAULT_THRUST;
       ast->pos.x    = sysedit_xpos / sysedit_zoom;
       ast->pos.y    = sysedit_ypos / sysedit_zoom;
       asteroids_computeInternals( ast );

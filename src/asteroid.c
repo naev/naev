@@ -325,11 +325,11 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Initialize stuff. */
    pos         = 1;
-   a->density  = 1.;
+   a->density  = ASTEROID_DEFAULT_DENSITY;
    a->type     = array_create( int );
    a->radius   = 0.;
-   a->maxspeed = 20.;
-   a->thrust   = 1.;
+   a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
+   a->thrust   = ASTEROID_DEFAULT_THRUST;
 
    /* Parse label if available. */
    xmlr_attr_strd( node, "label", a->label );
