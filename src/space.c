@@ -3943,7 +3943,7 @@ static void space_renderAsteroid( const Asteroid *a )
 {
    double nx, ny;
    AsteroidType *at;
-   char c[20];
+   char c[32];
    glColour col;
    double progress;
    const glColour darkcol = cGrey20;
