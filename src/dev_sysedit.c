@@ -145,10 +145,10 @@ static void sysedit_editJump( void );
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
 static int sysedit_selectCmp( const Select_t *a, const Select_t *b );
-static int sysedit_isSelected( Select_t *s );
+static int sysedit_isSelected( const Select_t *s );
 static void sysedit_checkButtons (void);
 static void sysedit_deselect (void);
-static void sysedit_selectAdd( Select_t *sel );
+static void sysedit_selectAdd( const Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
 
 /**
@@ -588,7 +588,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render spobs. */
    for (int i=0; i<array_size(sys->spobs); i++) {
       Spob *p      = sys->spobs[i];
-      Select_t sel = {
+      const Select_t sel = {
          .type    = SELECT_SPOB,
          .u.spob  = i,
       };
@@ -600,7 +600,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    for (int i=0; i<array_size(sys->jumps); i++) {
       const glColour *c;
       JumpPoint *jp = &sys->jumps[i];
-      Select_t sel = {
+      const Select_t sel = {
          .type    = SELECT_JUMPPOINT,
          .u.jump  = i,
       };
@@ -617,7 +617,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render asteroids */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *ast = &sys->asteroids[i];
-      Select_t sel = {
+      const Select_t sel = {
          .type    = SELECT_ASTEROID,
          .u.asteroid = i,
       };
@@ -628,7 +628,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render asteroid exclusions */
    for (int i=0; i<array_size(sys->astexclude); i++) {
       AsteroidExclusion *aexcl = &sys->astexclude[i];
-      Select_t sel = {
+      const Select_t sel = {
          .type    = SELECT_ASTEXCLUDE,
          .u.astexclude = i,
       };
@@ -856,7 +856,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    double x,y, t;
    SDL_Keymod mod;
    StarSystem *sys;
-   Select_t sel;
 
    /* Comfort. */
    sys = sysedit_sys;
@@ -891,14 +890,14 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Check spobs. */
          for (int i=0; i<array_size(sys->spobs); i++) {
             Spob *p = sys->spobs[i];
+            const Select_t sel = {
+               .type = SELECT_SPOB,
+               .u.spob = i,
+            };
 
             /* Position. */
             x = p->pos.x * sysedit_zoom;
             y = p->pos.y * sysedit_zoom;
-
-            /* Set selection. */
-            sel.type       = SELECT_SPOB;
-            sel.u.spob   = i;
 
             /* Threshold. */
             t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
@@ -952,14 +951,14 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Check jump points. */
          for (int i=0; i<array_size(sys->jumps); i++) {
             JumpPoint *jp = &sys->jumps[i];
+            const Select_t sel = {
+               .type = SELECT_JUMPPOINT,
+               .u.jump = i,
+            };
 
             /* Position. */
             x = jp->pos.x * sysedit_zoom;
             y = jp->pos.y * sysedit_zoom;
-
-            /* Set selection. */
-            sel.type       = SELECT_JUMPPOINT;
-            sel.u.spob   = i;
 
             /* Threshold. */
             t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
@@ -1185,7 +1184,7 @@ static void sysedit_checkButtons (void)
 /**
  * @brief Adds a system to the selection.
  */
-static void sysedit_selectAdd( Select_t *sel )
+static void sysedit_selectAdd( const Select_t *sel )
 {
    /* Allocate if needed. */
    if (sysedit_mselect < sysedit_nselect+1) {
@@ -1235,7 +1234,7 @@ static int sysedit_selectCmp( const Select_t *a, const Select_t *b )
 /**
  * @brief Check to see if something is selected.
  */
-static int sysedit_isSelected( Select_t *sel )
+static int sysedit_isSelected( const Select_t *sel )
 {
    for (int i=0; i<sysedit_nselect; i++)
       if (sysedit_selectCmp( sel, &sysedit_select[i] ))
@@ -1966,6 +1965,8 @@ static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
       sysedit_editPnt();
    else if (sel->type==SELECT_JUMPPOINT)
       sysedit_editJump();
+   //else if (sel->type==SELECT_ASTEROID)
+   //   sysedit_editAsteroid();
 }
 
 /**
