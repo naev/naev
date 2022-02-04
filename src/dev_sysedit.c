@@ -695,10 +695,6 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
 {
    double tx, ty, z;
 
-   /* Render icon */
-   sysedit_renderSprite( NULL, bx, by, ast->pos.x, ast->pos.y,
-                         0, 0, NULL, selected, _("Asteroid Field") );
-
    /* Inits. */
    z  = sysedit_zoom;
 
@@ -706,7 +702,20 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
    tx = bx + ast->pos.x*z;
    ty = by + ast->pos.y*z;
 
+   if (selected) {
+      const glColour csel = {
+         .r = cFontBlue.r,
+         .g = cFontBlue.g,
+         .b = cFontBlue.b,
+         .a = 0.5,
+      };
+      gl_renderCircle( tx, ty, ast->radius * sysedit_zoom + 25., &csel, 1 );
+   }
+
    gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
+   gl_printMidRaw( &gl_smallFont, 200,
+         tx - 100, ty - gl_smallFont.h/2.,
+         (selected) ? &cRed : NULL, -1., _("Asteroid Field") );
 }
 
 /**
@@ -785,7 +794,6 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption )
 {
    double tx, ty, z;
-   glColour cc;
    const glColour *col;
 
    /* Comfort. */
@@ -793,23 +801,20 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
 
    /* Selection graphic. */
    if (selected) {
-      cc.r = cFontBlue.r;
-      cc.g = cFontBlue.g;
-      cc.b = cFontBlue.b;
-      cc.a = 0.5;
-      gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
+      const glColour csel = {
+         .r = cFontBlue.r,
+         .g = cFontBlue.g,
+         .b = cFontBlue.b,
+         .a = 0.5,
+      };
+      gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &csel, 1 );
    }
 
-   if (gfx != NULL) {
-      /* Translate coords. */
-      tx = bx + (x - gfx->sw/2.)*z;
-      ty = by + (y - gfx->sh/2.)*z;
-      /* Blit the spob. */
-      gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
-   }
-   else {
-      tx = ty = 0.;
-   }
+   /* Translate coords. */
+   tx = bx + (x - gfx->sw/2.)*z;
+   ty = by + (y - gfx->sh/2.)*z;
+   /* Blit the spob. */
+   gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
 
    /* Display caption. */
    if (caption != NULL) {
